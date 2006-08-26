@@ -1,0 +1,31 @@
+namespace TagLib.Mpeg4
+{
+   public class AppleAdditionalInfoBox : FullBox
+   {
+      //////////////////////////////////////////////////////////////////////////
+      // private properties
+      //////////////////////////////////////////////////////////////////////////
+      private string text;
+      
+      
+      //////////////////////////////////////////////////////////////////////////
+      // public methods
+      //////////////////////////////////////////////////////////////////////////
+      public AppleAdditionalInfoBox (BoxHeader header, Box parent) : base (header, parent)
+      {
+         // The box content is a text string.
+         text = Data.ToString (StringType.Latin1);
+      }
+      
+      
+      //////////////////////////////////////////////////////////////////////////
+      // public properties
+      //////////////////////////////////////////////////////////////////////////
+      public string Text
+      {
+         // When we set the value, store it as a the data too.
+         get {return text;}
+         set {text = value; Data = ByteVector.FromString (text, StringType.Latin1);}
+      }
+   }
+}

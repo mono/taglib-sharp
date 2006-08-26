@@ -1,0 +1,6 @@
+<Namespace Name="TagLib.Id3v2">
+  <Docs>
+    <summary>The TagLib.Id3v2 namespace contains classes for parsing and rendering Id3v2 tags.</summary>
+    <remarks>This namespace provides no methods for reading or writing files. It simply provides the utility for functions handling tags.</remarks>
+  </Docs>
+</Namespace>

@@ -1,0 +1,37 @@
+<Type Name="FrameFactory+FrameCreator" FullName="TagLib.Id3v2.FrameFactory+FrameCreator">
+  <TypeSignature Language="C#" Value="public delegate TagLib.Id3v2.Frame FrameCreator(TagLib.ByteVector data, TagLib.Id3v2.FrameHeader header);" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="data" Type="TagLib.ByteVector" />
+    <Parameter Name="header" Type="TagLib.Id3v2.FrameHeader" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>TagLib.Id3v2.Frame</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="data">A <see cref="T:TagLib.ByteVector" /> containing the (non-header) data stored in the frame.</param>
+    <param name="header">To be added.</param>
+    <summary>This delegate allows third parties to handle frames outside of the standard scope of TagLib#. These functions can be added to the frame factory with <see cref="M:TagLib.Id3v2.FrameFactory.AddFrameCreator(TagLib.Id3v2.FrameFactory+FrameCreator)" />.</summary>
+    <returns>A <see cref="TagLib.Id3v2.Frame" /> based on the arguments is the FrameCreator supports it, otherwise null.</returns>
+    <remarks>
+      <para>Frame creators are used to provide access or support for items that are left out of TagLib#, say syncronized lyrics or a text frame handler that works with badly encoded frames.</para>
+      <example>
+        <code lang="C#">public Frame Creator (TagLib.ByteVector data, TagLib.Id3v2.FrameHeader header)
+{
+   if (header.FrameId == "SYLT")
+      return new SynchronisedLyricsFrame (data, header);
+   else
+      return null;
+}
+...
+TagLib.Id3v2.FrameFactor.AddFrameCreator (new FrameCreator (SynchronisedLyricsFrame.Creator));</code>
+      </example>
+    </remarks>
+  </Docs>
+</Type>

@@ -1,0 +1,61 @@
+<Type Name="File" FullName="TagLib.Mpeg4.File">
+  <TypeSignature Language="C#" Value="public class File : TagLib.File" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>TagLib.File</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public File (string file);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="file" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="file">A <see cref="T:System.String" /> containing the path of the file to read.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.File" /> by loading the provided file name.</summary>
+        <remarks>This constructor will only handle MPEG-4 audio (M4A) files. To handle all files, see <see cref="M:TagLib.File.Create(System.String,System.Boolean,TagLib.AudioProperties+ReadStyle)" />.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public File (string file, TagLib.AudioProperties+ReadStyle properties_style);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="file" Type="System.String" />
+        <Parameter Name="properties_style" Type="TagLib.AudioProperties+ReadStyle" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <param name="properties_style">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>This class is a subclass of <see cref="T:TagLib.File" /> and provides read and write tag access for MPEG-4 audio files.</summary>
+    <remarks>
+      <para>The only tag type contained in this class is <see cref="T:TagLib.Mpeg4.AppleTag" />.</para>
+      <para>
+        <see cref="P:TagLib.Mpeg4.File.Properties" /> will contain a <see cref="T:TagLib.Mpeg4.Properties" />.</para>
+    </remarks>
+  </Docs>
+  <Attributes>
+    <Attribute>
+      <AttributeName>TagLib.SupportedMimeType(MimeType="audio/x-m4a")</AttributeName>
+    </Attribute>
+    <Attribute>
+      <AttributeName>TagLib.SupportedMimeType(MimeType="taglib/mp4")</AttributeName>
+    </Attribute>
+    <Attribute>
+      <AttributeName>TagLib.SupportedMimeType(MimeType="taglib/m4p")</AttributeName>
+    </Attribute>
+    <Attribute>
+      <AttributeName>TagLib.SupportedMimeType(MimeType="taglib/m4a")</AttributeName>
+    </Attribute>
+  </Attributes>
+</Type>

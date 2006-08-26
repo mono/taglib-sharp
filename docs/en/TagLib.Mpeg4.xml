@@ -1,0 +1,6 @@
+<Namespace Name="TagLib.Mpeg4">
+  <Docs>
+    <summary>The TagLib.Mpeg4 namespace contains classes for reading and writing tag information for MPEG-4 audio files. These files most commonly have the extention ".m4a" and are created by Apple's iTunes Music Player.</summary>
+    <remarks>As of the current version of TagLib#, support is only included for metadata stored in the Apple's system of item list boxes.</remarks>
+  </Docs>
+</Namespace>

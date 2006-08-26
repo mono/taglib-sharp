@@ -1,0 +1,66 @@
+<Type Name="StringType" FullName="TagLib.StringType">
+  <TypeSignature Language="C#" Value="public enum StringType" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Members>
+    <Member MemberName="UTF16">
+      <MemberSignature Language="C#" Value="UTF16" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.StringType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This represents a UTF-16 string. As this string is neither big nor little endian, the order is determined by the first two bytes of the string.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Latin1">
+      <MemberSignature Language="C#" Value="Latin1" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.StringType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This represents a Latin-1 string. These are common strings that provide no support for non-english characters.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="UTF8">
+      <MemberSignature Language="C#" Value="UTF8" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.StringType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This represents a UTF-8 string. These strings have variable length and support all Unicode characters. They are the most common strings used on computers.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="UTF16BE">
+      <MemberSignature Language="C#" Value="UTF16BE" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.StringType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This represents a big-endian UTF-16 string.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="UTF16LE">
+      <MemberSignature Language="C#" Value="UTF16LE" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.StringType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This represents a little-endian UTF-16 string.</summary>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

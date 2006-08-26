@@ -1,0 +1,56 @@
+<Type Name="CombinedTag" FullName="TagLib.CombinedTag">
+  <TypeSignature Language="C#" Value="public class CombinedTag : TagLib.Tag" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>TagLib.Tag</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public CombinedTag (TagLib.Tag[] tags);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="tags" Type="TagLib.Tag[]">
+          <Attributes>
+            <Attribute>
+              <AttributeName>System.ParamArray</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="tags">An array of tags to be managed.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.CombinedTag" />.</summary>
+        <remarks>Tag properties will be read and written in the order they are specified in the params and null tags are ignored.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetTags">
+      <MemberSignature Language="C#" Value="public void SetTags (TagLib.Tag[] tags);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="tags" Type="TagLib.Tag[]">
+          <Attributes>
+            <Attribute>
+              <AttributeName>System.ParamArray</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="tags">An array of tags to be managed.</param>
+        <summary>Sets the tags to be managed.</summary>
+        <remarks>Tag properties will be read and written in the order they are specified in the params and null tags are ignored.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>This class provides an method for treating several tags as a single tag. This is used universally in TagLib# for <see cref="P:TagLib.File.Tag" /> when more than one tag type is available.</summary>
+    <remarks />
+  </Docs>
+</Type>

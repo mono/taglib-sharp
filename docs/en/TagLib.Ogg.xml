@@ -1,0 +1,6 @@
+<Namespace Name="TagLib.Ogg">
+  <Docs>
+    <summary>This namespace provides a basic framework for reading and writing files stored in Xiph's OGG media format.</summary>
+    <remarks>This namespace does not provide any support for actual files and is extended by the Flac and Vorbis namespaces.</remarks>
+  </Docs>
+</Namespace>

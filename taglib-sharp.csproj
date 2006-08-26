@@ -1,0 +1,151 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TagLib</RootNamespace>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4CC18776-125E-4318-9D24-D60110AD9697}</ProjectGuid>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>taglib-sharp.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
+    <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <Optimize>False</Optimize>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <Optimize>True</Optimize>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>None</DebugType>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\AssemblyInfo-windows.cs" />
+    <Compile Include="src\TagLib\Tag.cs" />
+    <Compile Include="src\TagLib\AudioProperties.cs" />
+    <Compile Include="src\TagLib\ByteVector.cs" />
+    <Compile Include="src\TagLib\ByteVectorList.cs" />
+    <Compile Include="src\TagLib\CombinedTag.cs" />
+    <Compile Include="src\TagLib\Debugger.cs" />
+    <Compile Include="src\TagLib\File.cs" />
+    <Compile Include="src\TagLib\IntList.cs" />
+    <Compile Include="src\TagLib\StringList.cs" />
+    <Compile Include="src\TagLib\SupportedMimeType.cs" />
+    <Compile Include="src\TagLib\UnsupportedFormatException.cs" />
+    <Compile Include="src\TagLib\WavPack\File.cs" />
+    <Compile Include="src\TagLib\WavPack\Properties.cs" />
+    <Compile Include="src\TagLib\Ogg\File.cs" />
+    <Compile Include="src\TagLib\Ogg\Page.cs" />
+    <Compile Include="src\TagLib\Ogg\PageHeader.cs" />
+    <Compile Include="src\TagLib\Ogg\XiphComment.cs" />
+    <Compile Include="src\TagLib\Ogg\Flac\File.cs" />
+    <Compile Include="src\TagLib\Ogg\Vorbis\File.cs" />
+    <Compile Include="src\TagLib\Ogg\Vorbis\Properties.cs" />
+    <Compile Include="src\TagLib\Mpeg4\AppleTag.cs" />
+    <Compile Include="src\TagLib\Mpeg4\BoxHeader.cs" />
+    <Compile Include="src\TagLib\Mpeg4\File.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Properties.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\UnknownBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\AppleAdditionalInfoBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\AppleAnnotationBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\AppleDataBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\AppleElementaryStreamDescriptor.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\AppleItemListBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\Box.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\FileBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\FullBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\IsoFreeSpaceBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\IsoHandlerBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\IsoMediaBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\IsoMediaInformationBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\IsoMetaBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\IsoMovieBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\IsoMovieHeaderBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\IsoSampleDescriptionBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\IsoSampleEntry.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\IsoSampleTableBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\IsoTrackBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\IsoUserDataBox.cs" />
+    <Compile Include="src\TagLib\Mpeg\File.cs" />
+    <Compile Include="src\TagLib\Mpeg\Header.cs" />
+    <Compile Include="src\TagLib\Mpeg\Properties.cs" />
+    <Compile Include="src\TagLib\Mpeg\XingHeader.cs" />
+    <Compile Include="src\TagLib\Mpc\File.cs" />
+    <Compile Include="src\TagLib\Mpc\Properties.cs" />
+    <Compile Include="src\TagLib\Id3v2\ExtendedHeader.cs" />
+    <Compile Include="src\TagLib\Id3v2\Footer.cs" />
+    <Compile Include="src\TagLib\Id3v2\Frame.cs" />
+    <Compile Include="src\TagLib\Id3v2\FrameFactory.cs" />
+    <Compile Include="src\TagLib\Id3v2\FrameHeader.cs" />
+    <Compile Include="src\TagLib\Id3v2\Header.cs" />
+    <Compile Include="src\TagLib\Id3v2\SynchData.cs" />
+    <Compile Include="src\TagLib\Id3v2\Tag.cs" />
+    <Compile Include="src\TagLib\Id3v2\Frames\UnknownFrame.cs" />
+    <Compile Include="src\TagLib\Id3v2\Frames\AttachedPictureFrame.cs" />
+    <Compile Include="src\TagLib\Id3v2\Frames\CommentsFrame.cs" />
+    <Compile Include="src\TagLib\Id3v2\Frames\PrivateFrame.cs" />
+    <Compile Include="src\TagLib\Id3v2\Frames\RelativeVolumeFrame.cs" />
+    <Compile Include="src\TagLib\Id3v2\Frames\TextIdentificationFrame.cs" />
+    <Compile Include="src\TagLib\Id3v2\Frames\UniqueFileIdentifierFrame.cs" />
+    <Compile Include="src\TagLib\Id3v1\GenreList.cs" />
+    <Compile Include="src\TagLib\Id3v1\StringHandler.cs" />
+    <Compile Include="src\TagLib\Id3v1\Tag.cs" />
+    <Compile Include="src\TagLib\Flac\File.cs" />
+    <Compile Include="src\TagLib\Flac\Properties.cs" />
+    <Compile Include="src\TagLib\Ape\Tag.cs" />
+    <Compile Include="src\TagLib\Ape\Footer.cs" />
+    <Compile Include="src\TagLib\Ape\Item.cs" />
+    <Compile Include="src\TagLib\Asf\ContentDescriptionObject.cs" />
+    <Compile Include="src\TagLib\Asf\File.cs" />
+    <Compile Include="src\TagLib\Asf\HeaderObject.cs" />
+    <Compile Include="src\TagLib\Asf\Properties.cs" />
+    <Compile Include="src\TagLib\Asf\UnknownObject.cs" />
+    <Compile Include="src\TagLib\Asf\ContentDescriptor.cs" />
+    <Compile Include="src\TagLib\Asf\FilePropertiesObject.cs" />
+    <Compile Include="src\TagLib\Asf\Object.cs" />
+    <Compile Include="src\TagLib\Asf\StreamPropertiesObject.cs" />
+    <Compile Include="src\TagLib\Asf\ExtendedContentDescriptionObject.cs" />
+    <Compile Include="src\TagLib\Asf\Guid.cs" />
+    <Compile Include="src\TagLib\Asf\PaddingObject.cs" />
+    <Compile Include="src\TagLib\Asf\Tag.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src" />
+    <Folder Include="src\TagLib" />
+    <Folder Include="src\TagLib\Asf" />
+    <Folder Include="src\TagLib\Ape" />
+    <Folder Include="src\TagLib\Flac" />
+    <Folder Include="src\TagLib\Id3v1" />
+    <Folder Include="src\TagLib\Id3v2" />
+    <Folder Include="src\TagLib\Mpc" />
+    <Folder Include="src\TagLib\Ogg" />
+    <Folder Include="src\TagLib\Ogg\Flac" />
+    <Folder Include="src\TagLib\Ogg\Vorbis" />
+    <Folder Include="src\TagLib\Mpeg4" />
+    <Folder Include="src\TagLib\Mpeg4\Boxes" />
+    <Folder Include="src\TagLib\Mpeg" />
+    <Folder Include="src\TagLib\Id3v2\Frames" />
+    <Content Include="taglib-sharp.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>

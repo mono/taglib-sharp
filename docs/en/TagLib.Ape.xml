@@ -1,0 +1,6 @@
+<Namespace Name="TagLib.Ape">
+  <Docs>
+    <summary>The TagLib.Ape namespace contains classes for parsing and rendering APE tags.</summary>
+    <remarks>This namespace provides no methods for reading or writing files. It simply provides the utility for functions handling tags.</remarks>
+  </Docs>
+</Namespace>

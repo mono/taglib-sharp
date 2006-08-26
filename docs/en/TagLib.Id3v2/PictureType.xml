@@ -1,0 +1,226 @@
+<Type Name="PictureType" FullName="TagLib.Id3v2.PictureType">
+  <TypeSignature Language="C#" Value="public enum PictureType" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Members>
+    <Member MemberName="Media">
+      <MemberSignature Language="C#" Value="Media" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A picture of the record, tape, minidisc, or other medium the song is from.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="FileIcon">
+      <MemberSignature Language="C#" Value="FileIcon" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A 32x32 PNG image that should be used as the file's icon.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="PublisherLogo">
+      <MemberSignature Language="C#" Value="PublisherLogo" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The logo of the publisher or record company that produces the song.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="BandLogo">
+      <MemberSignature Language="C#" Value="BandLogo" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The logo of the band or performer of the song.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="BackCover">
+      <MemberSignature Language="C#" Value="BackCover" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The back cover of the album.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="LeadArtist">
+      <MemberSignature Language="C#" Value="LeadArtist" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A picture of the song's lead artist.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="LeafletPage">
+      <MemberSignature Language="C#" Value="LeafletPage" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A picture of the leaflet that came with the album.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Illustration">
+      <MemberSignature Language="C#" Value="Illustration" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>An illustration related to the track.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ColouredFish">
+      <MemberSignature Language="C#" Value="ColouredFish" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A picture of a large, colored fished.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="OtherFileIcon">
+      <MemberSignature Language="C#" Value="OtherFileIcon" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A file icon not bound by the constrains of <see cref="F:TagLib.Id3v2.PictureType.FileIcon" />.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="DuringPerformance">
+      <MemberSignature Language="C#" Value="DuringPerformance" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A picture taken during the song or album's performance. This could be used for a track recorded live at a concert.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="MovieScreenCapture">
+      <MemberSignature Language="C#" Value="MovieScreenCapture" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A picture from a movie or video (music video) related to this song.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Lyricist">
+      <MemberSignature Language="C#" Value="Lyricist" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A picture of the lyricist of the song.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Composer">
+      <MemberSignature Language="C#" Value="Composer" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A picture of the composer of the song.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="FrontCover">
+      <MemberSignature Language="C#" Value="FrontCover" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The front cover of the album.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Conductor">
+      <MemberSignature Language="C#" Value="Conductor" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A picture of the conductor who conducted the song.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Artist">
+      <MemberSignature Language="C#" Value="Artist" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A picture of the artist that recorded the song.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Other">
+      <MemberSignature Language="C#" Value="Other" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A picture not described by any of the other enumerated items.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="DuringRecording">
+      <MemberSignature Language="C#" Value="DuringRecording" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A picture taken during the track's recording.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Band">
+      <MemberSignature Language="C#" Value="Band" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A picture of the band that recorded the song.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="RecordingLocation">
+      <MemberSignature Language="C#" Value="RecordingLocation" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A picture of the location (recording studio, concert hall, tour bus, private jet, etc.) where the song was recorded.</summary>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>This enumeration describes the types of pictures that can be contained within a <see cref="T:TagLib.Id3v2.AttachedPictureFrame" />.</summary>
+    <remarks />
+  </Docs>
+</Type>

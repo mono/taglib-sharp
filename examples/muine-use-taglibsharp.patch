@@ -1,0 +1,446 @@
+Index: configure.in
+===================================================================
+RCS file: /cvs/gnome/muine/configure.in,v
+retrieving revision 1.152
+diff -u -r1.152 configure.in
+--- configure.in	5 Aug 2006 00:01:35 -0000	1.152
++++ configure.in	7 Aug 2006 20:05:52 -0000
+@@ -27,6 +27,7 @@
+ ICON_THEME_REQUIRED=2.10
+ MONO_REQUIRED=1.1
+ GTKSHARP_REQUIRED=2.4.0
++TAGLIBSHARP_REQUIRED=0.0.91.0
+ DBUSSHARP_REQUIRED=0.21
+ MONODOC_REQUIRED=1.1.9
+ 
+@@ -77,6 +78,9 @@
+ 		  gconf-sharp-2.0 >= $GTKSHARP_REQUIRED \
+ 		  gnome-vfs-sharp-2.0 >= $GTKSHARP_REQUIRED)
+ 
++PKG_CHECK_MODULES(TAGLIBSHARP,
++		  taglib-sharp >= $TAGLIBSHARP_REQUIRED)
++
+ PKG_CHECK_MODULES(DBUSSHARP,
+                   dbus-sharp >= $DBUSSHARP_REQUIRED)
+ 
+@@ -211,8 +215,7 @@
+ AC_PATH_PROG(MONODOCER, monodocer)
+ 
+ dnl Intl
+-ALL_LINGUAS="az bg ca cs da de en_CA en_GB es et eu fi fr hr hu is ja ko lt lv mk ms nb ne nl pa pl pt pt_BR ro ru rw sk sr sr@Latn sv th uk vi 
+-zh_CN"
++ALL_LINGUAS="az bg ca cs da de en_CA en_GB es et eu fi fr hr hu is ja ko lt lv mk ms nb ne nl pa pl pt pt_BR ro ru rw sk sr sr@Latn sv th uk vi zh_CN"
+ GETTEXT_PACKAGE=muine
+ AC_SUBST(GETTEXT_PACKAGE)
+ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package])
+Index: src/Metadata.cs
+===================================================================
+RCS file: /cvs/gnome/muine/src/Metadata.cs,v
+retrieving revision 1.25
+diff -u -r1.25 Metadata.cs
+--- src/Metadata.cs	25 Jan 2006 06:36:53 -0000	1.25
++++ src/Metadata.cs	7 Aug 2006 20:05:52 -0000
+@@ -17,13 +17,10 @@
+  * Boston, MA 02111-1307, USA.
+  */
+ 
+-using System;
+-using System.Runtime.InteropServices;
+-using System.Collections;
+-
+-using Gdk;
+-
+ using Mono.Unix;
++using TagLib;
++using TagLib.Id3v2;
++using TagLib.Mpeg4;
+ 
+ namespace Muine
+ {
+@@ -34,201 +31,208 @@
+ 			Catalog.GetString ("Failed to load metadata: {0}");
+ 
+ 		// Objects
+-		private IntPtr raw = IntPtr.Zero;
+-		private Pixbuf album_art = null;
+-
+-		// Constructor
+-		[DllImport ("libmuine")]
+-		private static extern IntPtr metadata_load (string filename,
+-					                    out IntPtr error_message_return);
++		private TagLib.File file = null;
++		private Gdk.Pixbuf album_art = null;
++		private double peak = 0.0, gain = 0.0;
++		private bool peak_set = false, gain_set = false;
+ 		
++		// Constructor
+ 		public Metadata (string filename)
+ 		{
+-			IntPtr error_ptr;
+-			
+-			raw = metadata_load (filename, out error_ptr);
+-
+-			if (error_ptr != IntPtr.Zero) {
+-				string error = GLib.Marshaller.PtrToStringGFree (error_ptr);
+-				throw new Exception (String.Format (string_error_load, error));
+-			}
++			file = TagLib.File.Create (filename);
++			if (file == null || file.Tag == null || file.AudioProperties == null)
++				throw new System.Exception (System.String.Format (string_error_load, filename));
+ 		}
+ 
+ 		// Properties
+ 		// Properties :: Title (get;)
+-		[DllImport ("libmuine")]
+-		private static extern IntPtr metadata_get_title (IntPtr metadata);
+-
+ 		public string Title {
+-			get {
+-				IntPtr p = metadata_get_title (raw);
+-
+-				return (p == IntPtr.Zero) ? "" : Marshal.PtrToStringAnsi (p).Trim ();
+-			}
++			get { return file.Tag.Title != null ? file.Tag.Title : ""; }
+ 		}
+ 
+ 		// Properties :: Artists (get;)
+ 		//	FIXME: Refactor Artists and Performers properties
+-		[DllImport ("libmuine")]
+-		private static extern int metadata_get_artist_count (IntPtr metadata);
+-
+-		[DllImport ("libmuine")]
+-		private static extern IntPtr metadata_get_artist (IntPtr metadata, int index);
+-
+ 		public string [] Artists {
+-			get {
+-				ArrayList strings = new ArrayList ();
+-
+-				int count = metadata_get_artist_count (raw);
+-
+-				for (int i = 0; i < count; i++) {
+-					string tmp = Marshal.PtrToStringAnsi (metadata_get_artist (raw, i)).Trim ();
+-
+-					if (tmp.Length <= 0)
+-						continue;
+-
+-					strings.Add (tmp);
+-				}
+-
+-				return (string []) strings.ToArray (typeof (string));
+-			}
++			get { return file.Tag.Artists; }
+ 		}
+ 
+ 		// Properties :: Performers (get;)
+ 		//	FIXME: Refactor Artists and Performers properties
+-		[DllImport ("libmuine")]
+-		private static extern IntPtr metadata_get_performer (IntPtr metadata, int index);
+-
+-		[DllImport ("libmuine")]
+-		private static extern int metadata_get_performer_count (IntPtr metadata);
+-
+ 		public string [] Performers {
+-			get {
+-				ArrayList strings = new ArrayList ();
+-
+-				int count = metadata_get_performer_count (raw);
+-
+-				for (int i = 0; i < count; i++) {
+-					string tmp = Marshal.PtrToStringAnsi (metadata_get_performer (raw, i)).Trim ();
+-
+-					if (tmp.Length <= 0)
+-						continue;
+-
+-					strings.Add (tmp);
+-				}
+-
+-				return (string []) strings.ToArray (typeof (string));
+-			}			
++			get { return file.Tag.Performers; }
+ 		}
+ 
+ 		// Properties :: Album (get;)
+-		[DllImport ("libmuine")]
+-		private static extern IntPtr metadata_get_album (IntPtr metadata);
+-
+ 		public string Album {
+-			get { 
+-				IntPtr p = metadata_get_album (raw);
+-				
+-				return (p == IntPtr.Zero) ? "" : Marshal.PtrToStringAnsi (p).Trim ();
+-			}
++			get { return file.Tag.Album != null ? file.Tag.Album : ""; }
+ 		}
+ 
+ 		// Properties :: AlbumArt (get;)
+-		[DllImport ("libmuine")]
+-		private static extern IntPtr metadata_get_album_art (IntPtr metadata);
+-
+-		public Pixbuf AlbumArt {
+-			get { 
+-				if (album_art != null)
+-					return album_art;
+-					
+-				IntPtr p = metadata_get_album_art (raw);
+-
+-				if (p != IntPtr.Zero)
+-					album_art = new Pixbuf (p);
+-
++		public Gdk.Pixbuf AlbumArt {
++			get {
++				if (album_art == null) {
++					TagLib.Mpeg4.AppleTag apple_tag = (TagLib.Mpeg4.AppleTag) file.GetTag (TagTypes.Apple);
++					TagLib.Id3v2.Tag id3v2_tag = (TagLib.Id3v2.Tag) file.GetTag (TagTypes.Id3v2);
++
++					if (id3v2_tag != null) {
++						// Try to get a cover image first.
++						foreach (AttachedPictureFrame f in id3v2_tag.GetFrames ("APIC")) {
++							if (f.Type == PictureType.FrontCover) {
++								album_art = GetPixbuf (f.Picture);
++
++								if (album_art != null)
++									return album_art;
++							}
++						}
++						
++						// Take any image we can get.
++						foreach (AttachedPictureFrame f in id3v2_tag.GetFrames ("APIC")) {
++							album_art = GetPixbuf (f.Picture);
++
++							if (album_art != null)
++								return album_art;
++						}
++					}
++
++					if (apple_tag != null) {
++						foreach (AppleDataBox b in apple_tag.DataBoxes ("covr")) {
++							if (b.Flags == (uint) AppleDataBox.FlagTypes.ContainsJpegData ||
++							    b.Flags == (uint) AppleDataBox.FlagTypes.ContainsPngData) {
++								album_art = GetPixbuf (b.Data);
++
++								if (album_art != null)
++									return album_art;
++							}
++						}
++					}
++				}
+ 				return album_art;
+ 			}
+ 		}
+ 
+ 		// Properties :: TrackNumber (get;)
+-		[DllImport ("libmuine")]
+-		private static extern int metadata_get_track_number (IntPtr metadata);
+-		
+ 		public int TrackNumber {
+-			get { return metadata_get_track_number (raw); }
++			get { return (int) file.Tag.Track; }
+ 		}
+ 
+ 		// Properties :: TotalTracks (get;)
+-		[DllImport ("libmuine")]
+-		private static extern int metadata_get_total_tracks (IntPtr metadata);
+-		
+ 		public int TotalTracks {
+-			get { return metadata_get_total_tracks (raw); }
++			get { return (int) file.Tag.TrackCount; }
+ 		}
+ 
+ 		// Properties :: DiscNumber (get;)
+-		[DllImport ("libmuine")]
+-		private static extern int metadata_get_disc_number (IntPtr metadata);
+-
+ 		public int DiscNumber {
+-			get { return metadata_get_disc_number (raw); }
++			get { return (int) file.Tag.Disc; }
+ 		}
+ 
+ 		// Properties :: Year (get;)
+-		[DllImport ("libmuine")]
+-		private static extern IntPtr metadata_get_year (IntPtr metadata);
+-
+ 		public string Year {
+-			get {
+-				IntPtr p = metadata_get_year (raw);
+-				
+-				return (p == IntPtr.Zero) ? "" : Marshal.PtrToStringAnsi (p);
+-			}
++			get { return file.Tag.Year.ToString ();}
+ 		}
+ 
+ 		// Properties :: Duration (get;)
+-		[DllImport ("libmuine")]
+-		private static extern int metadata_get_duration (IntPtr metadata);
+-
+ 		public int Duration {
+-			get { return metadata_get_duration (raw); }
+-		}
+-
+-		// Properties :: MimeType (get;)
+-		[DllImport ("libmuine")]
+-		private static extern IntPtr metadata_get_mime_type (IntPtr metadata);
+-
+-		public string MimeType {
+-			get {
+-				IntPtr p = metadata_get_mime_type (raw);
+-				
+-				return (p == IntPtr.Zero) ? "" : Marshal.PtrToStringAnsi (p);
+-			}
++			get { return file.AudioProperties.Length; }
+ 		}
+ 
+ 		// Properties :: MTime (get;)
+-		[DllImport ("libmuine")]
+-		private static extern int metadata_get_mtime (IntPtr metadata);
+-
+ 		public int MTime {
+-			get { return metadata_get_mtime (raw); }
++			get {
++				Mono.Unix.Native.Stat buf;
++				Mono.Unix.Native.Syscall.stat (file.Name, out buf);
++				return (int) buf.st_mtime;
++			}
+ 		}
+ 
+ 		// Properties :: Gain (get;)
+-		[DllImport ("libmuine")]
+-		private static extern double metadata_get_gain (IntPtr metadata);
+-
+ 		public double Gain {
+-			get { return metadata_get_gain (raw); }
++			get {
++				if (!gain_set)
++				{
++					gain_set = true;
++					
++					TagLib.Ogg.XiphComment xiph_comment = (TagLib.Ogg.XiphComment) file.GetTag (TagTypes.Xiph);
++					TagLib.Id3v2.Tag id3v2_tag = (TagLib.Id3v2.Tag) file.GetTag (TagTypes.Id3v2);
++
++					if (id3v2_tag != null) {
++						foreach (RelativeVolumeFrame f in id3v2_tag.GetFrames ("RVA2")) {
++							gain = f.VolumeAdjustment (ChannelType.MasterVolume);
++							return gain;
++						}
++					}
++
++					if (xiph_comment != null) {
++						string [] names = {"replaygain_track_gain", "replaygain_album_gain", "rg_audiophile", "rg_radio"};
++						foreach (string name in names) {
++							StringList l = xiph_comment.GetField (name);
++							if (l != null && l.Count != 0)
++								foreach (string s in l)
++									try {
++										gain = System.Double.Parse (s);
++										return gain;
++									} catch {}
++						}
++					}
++				}
++				
++				return gain;
++			}
+ 		}
+ 
+ 		// Properties :: Peak (get;)
+-		[DllImport ("libmuine")]
+-		private static extern double metadata_get_peak (IntPtr metadata);
+-		
+ 		public double Peak {
+-			get { return metadata_get_peak (raw); }
++			get {
++				if (!peak_set)
++				{
++					peak_set = true;
++					
++					TagLib.Ogg.XiphComment xiph_comment = (TagLib.Ogg.XiphComment) file.GetTag (TagTypes.Xiph);
++					TagLib.Id3v2.Tag id3v2_tag = (TagLib.Id3v2.Tag) file.GetTag (TagTypes.Id3v2);
++
++					if (id3v2_tag != null) {
++						foreach (RelativeVolumeFrame f in id3v2_tag.GetFrames ("RVA2")) {
++							peak = f.PeakVolume (ChannelType.MasterVolume);
++							return peak;
++						}
++					}
++
++					if (xiph_comment != null) {
++						string [] names = {"replaygain_track_peak", "replaygain_album_peak", "rg_peak"};
++						foreach (string name in names) {
++							StringList l = xiph_comment.GetField (name);
++							if (l != null && l.Count != 0)
++								foreach (string s in l)
++									try {
++										peak = System.Double.Parse (s);
++										return peak;
++									} catch {}
++						}
++					}
++				}
++				
++				return peak;
++			}
++		}
++		
++		private Gdk.Pixbuf GetPixbuf (ByteVector data)
++		{
++			bool bail = false;
++			Gdk.Pixbuf output;
++			Gdk.PixbufLoader loader = new Gdk.PixbufLoader ();
++			
++			try {
++				if (!loader.Write (data.Data))
++					bail = true;
++			} catch {bail = true;}
++
++			try {
++				if (!loader.Close ())
++					bail = true;
++			} catch {bail = true;}
++
++			output = (!bail) ? loader.Pixbuf : null;
++
++			return output;
+ 		}
+ 	}
+ }
+Index: src/Makefile.am
+===================================================================
+RCS file: /cvs/gnome/muine/src/Makefile.am,v
+retrieving revision 1.78
+diff -u -r1.78 Makefile.am
+--- src/Makefile.am	11 Jan 2006 04:23:58 -0000	1.78
++++ src/Makefile.am	7 Aug 2006 20:05:52 -0000
+@@ -99,7 +99,7 @@
+ 	    < $^ > $@
+ 
+ $(TARGET): $(MUINE_CSFILES) $(MUINE_GENERATED_CSFILES) $(top_builddir)/PluginLib/muine-plugin.dll $(top_builddir)/DBusLib/muine-dbus.dll
+-	$(CSC) -out:$@ $(MUINE_CSFILES) $(MUINE_GENERATED_CSFILES) $(MUINE_ASSEMBLIES) $(MUINE_RESOURCES) $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS)
++	$(CSC) -out:$@ $(MUINE_CSFILES) $(MUINE_GENERATED_CSFILES) $(MUINE_ASSEMBLIES) $(MUINE_RESOURCES) $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) $(TAGLIBSHARP_LIBS)
+ 
+ all: $(TARGET)
+ 
+Index: src/Global.cs
+===================================================================
+RCS file: /cvs/gnome/muine/src/Global.cs,v
+retrieving revision 1.17
+diff -u -r1.17 Global.cs
+--- src/Global.cs	28 Jan 2006 22:25:46 -0000	1.17
++++ src/Global.cs	7 Aug 2006 20:05:52 -0000
+@@ -98,6 +98,10 @@
+ 		public static Actions Actions {
+ 			get { return actions; }
+ 		}
++		
++		[System.Runtime.InteropServices.DllImport("libdbus-glib-1")]
++		private static extern void dbus_g_thread_init();
++
+ 
+ 		// Main
+ 		/// <summary>
+@@ -110,6 +114,7 @@
+ 		public static void Main (string [] args)
+ 		{
+ 			Application.Init ();
++			dbus_g_thread_init ();
+ 
+ 			// Try to find a running Muine
+ 			try {

@@ -1,0 +1,159 @@
+<Overview>
+  <Assemblies>
+    <Assembly Name="taglib-sharp" Version="1.0.0.0">
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyCompany(Company="")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyCopyright(Copyright="Copyright (c) 2006 Brian Nickel")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyDescription(Description="A library for reading and writing audio metatags.")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyTitle(Title="TagLib#")</AttributeName>
+        </Attribute>
+      </Attributes>
+    </Assembly>
+  </Assemblies>
+  <Remarks>To be added.</Remarks>
+  <Copyright>Copyright (c) 2006 Brian Nickel</Copyright>
+  <Types>
+    <Namespace Name="TagLib.Ape">
+      <Type Name="Tag" />
+      <Type Name="Item" />
+      <Type Name="Footer" />
+      <Type Name="ItemType" />
+    </Namespace>
+    <Namespace Name="TagLib">
+      <Type Name="Tag" />
+      <Type Name="AudioProperties" />
+      <Type Name="AudioProperties+ReadStyle" />
+      <Type Name="File" />
+      <Type Name="File+LocalFileAbstraction" />
+      <Type Name="File+AccessMode" />
+      <Type Name="IntList" />
+      <Type Name="ByteVectorList" />
+      <Type Name="ByteVector" />
+      <Type Name="Debugger" />
+      <Type Name="Debugger+DebugMessageSentHandler" />
+      <Type Name="StringList" />
+      <Type Name="StringType" />
+      <Type Name="File+IFileAbstraction" />
+      <Type Name="File+FileAbstractionCreator" />
+      <Type Name="File+FileTypeResolver" />
+      <Type Name="TagTypes" />
+      <Type Name="CombinedTag" />
+      <Type Name="SupportedMimeType" />
+      <Type Name="UnsupportedFormatException" />
+    </Namespace>
+    <Namespace Name="TagLib.Mpc">
+      <Type Name="Properties" />
+      <Type Name="File" />
+    </Namespace>
+    <Namespace Name="TagLib.Ogg.Flac">
+      <Type Name="File" />
+    </Namespace>
+    <Namespace Name="TagLib.Ogg">
+      <Type Name="File" />
+      <Type Name="Page" />
+      <Type Name="Page+ContainsPacketFlags" />
+      <Type Name="Page+PaginationStrategy" />
+      <Type Name="XiphComment" />
+      <Type Name="PageHeader" />
+    </Namespace>
+    <Namespace Name="TagLib.Ogg.Vorbis">
+      <Type Name="Properties" />
+      <Type Name="File" />
+    </Namespace>
+    <Namespace Name="TagLib.Flac">
+      <Type Name="Properties" />
+      <Type Name="File" />
+    </Namespace>
+    <Namespace Name="TagLib.Mpeg">
+      <Type Name="Properties" />
+      <Type Name="XingHeader" />
+      <Type Name="File" />
+      <Type Name="Header" />
+      <Type Name="Version" />
+      <Type Name="ChannelMode" />
+    </Namespace>
+    <Namespace Name="TagLib.Id3v1">
+      <Type Name="Tag" />
+      <Type Name="GenreList" />
+      <Type Name="StringHandler" />
+    </Namespace>
+    <Namespace Name="TagLib.Id3v2">
+      <Type Name="PrivateFrame" />
+      <Type Name="Frame" />
+      <Type Name="RelativeVolumeFrame" />
+      <Type Name="UniqueFileIdentifierFrame" />
+      <Type Name="UnknownFrame" />
+      <Type Name="CommentsFrame" />
+      <Type Name="TextIdentificationFrame" />
+      <Type Name="UserTextIdentificationFrame" />
+      <Type Name="AttachedPictureFrame" />
+      <Type Name="FrameFactory" />
+      <Type Name="Tag" />
+      <Type Name="FrameHeader" />
+      <Type Name="ExtendedHeader" />
+      <Type Name="SynchData" />
+      <Type Name="Header" />
+      <Type Name="Footer" />
+      <Type Name="ChannelType" />
+      <Type Name="PictureType" />
+      <Type Name="FrameFactory+FrameCreator" />
+    </Namespace>
+    <Namespace Name="TagLib.Mpeg4">
+      <Type Name="Properties" />
+      <Type Name="Box" />
+      <Type Name="IsoMediaInformationBox" />
+      <Type Name="IsoFreeSpaceBox" />
+      <Type Name="UnknownBox" />
+      <Type Name="IsoMediaBox" />
+      <Type Name="IsoUserDataBox" />
+      <Type Name="AppleItemListBox" />
+      <Type Name="AppleAnnotationBox" />
+      <Type Name="IsoSampleTableBox" />
+      <Type Name="IsoSampleEntry" />
+      <Type Name="IsoAudioSampleEntry" />
+      <Type Name="IsoMetaBox" />
+      <Type Name="FullBox" />
+      <Type Name="IsoMovieBox" />
+      <Type Name="IsoSampleDescriptionBox" />
+      <Type Name="AppleAdditionalInfoBox" />
+      <Type Name="IsoHandlerBox" />
+      <Type Name="IsoTrackBox" />
+      <Type Name="IsoMovieHeaderBox" />
+      <Type Name="FileBox" />
+      <Type Name="AppleElementaryStreamDescriptor" />
+      <Type Name="AppleDataBox" />
+      <Type Name="AppleDataBox+FlagTypes" />
+      <Type Name="AppleTag" />
+      <Type Name="BoxHeader" />
+      <Type Name="File" />
+    </Namespace>
+    <Namespace Name="TagLib.WavPack">
+      <Type Name="File" />
+      <Type Name="Properties" />
+    </Namespace>
+    <Namespace Name="TagLib.Asf">
+      <Type Name="Guid" />
+      <Type Name="Properties" />
+      <Type Name="StreamPropertiesObject" />
+      <Type Name="Object" />
+      <Type Name="UnknownObject" />
+      <Type Name="Tag" />
+      <Type Name="ExtendedContentDescriptionObject" />
+      <Type Name="ContentDescriptionObject" />
+      <Type Name="HeaderObject" />
+      <Type Name="File" />
+      <Type Name="FilePropertiesObject" />
+      <Type Name="PaddingObject" />
+      <Type Name="ContentDescriptor" />
+      <Type Name="DataType" />
+    </Namespace>
+  </Types>
+  <Title>taglib-sharp</Title>
+</Overview>

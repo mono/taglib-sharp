@@ -1,0 +1,20 @@
+2006-08-25  Brian Nickel  <brian.nickel@gmail.com>
+
+	* Fixed a bug where ByteVector.Find wouldn't find items
+	  at the end of files, resulting in strings with '\0' in
+	  them.
+
+2006-08-25  Brian Nickel  <brian.nickel@gmail.com>
+
+	* Nice big patch by Aaron with:
+	* New attribute allows automatic support for mime types.
+	* Make things easier for Banshee with convenience functions
+	  in TagLib.Tag
+
+2006-08-22  Brian Nickel  <brian.nickel@gmail.com>
+
+	* Adopted changes by Aaron Bockover.
+	* Added TagLib.AudioProperties.Duration
+	* Marked TagLib.AudioProperties.Length obsolete
+	* Added support for Windows Media Audio.
+

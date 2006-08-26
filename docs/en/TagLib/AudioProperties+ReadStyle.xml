@@ -1,0 +1,56 @@
+<Type Name="AudioProperties+ReadStyle" FullName="TagLib.AudioProperties+ReadStyle">
+  <TypeSignature Language="C#" Value="public enum ReadStyle" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Members>
+    <Member MemberName="Fast">
+      <MemberSignature Language="C#" Value="Fast" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.AudioProperties+ReadStyle</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This setting causes the audio data to be read quickly, approximating time consuming information.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Accurate">
+      <MemberSignature Language="C#" Value="Accurate" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.AudioProperties+ReadStyle</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This setting causes the audio data to be read in depth, but not with the highest detail.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Average">
+      <MemberSignature Language="C#" Value="Average" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.AudioProperties+ReadStyle</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This setting causes the reader to precisely judge the size of the file. This process takes the most time to perform.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="None">
+      <MemberSignature Language="C#" Value="None" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.AudioProperties+ReadStyle</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This setting caused the audio properties not to be read.</summary>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>This enumeration is used in determining how accurately to read audio properties. This effects the speed and accuracy of the reading process.</remarks>
+  </Docs>
+</Type>

@@ -1,0 +1,572 @@
+<Type Name="File" FullName="TagLib.File">
+  <TypeSignature Language="C#" Value="public abstract class File" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public File (string file);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="file" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="file">A <see cref="T:System.String" /> containing the path of the file to read.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.File" />.</summary>
+        <remarks>This is the only constructor for this class and is required to initialize file access. It throws an exception if the file is not readable.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Save">
+      <MemberSignature Language="C#" Value="public abstract bool Save ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ReadBlock">
+      <MemberSignature Language="C#" Value="public TagLib.ByteVector ReadBlock (int length);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="length" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="length">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="WriteBlock">
+      <MemberSignature Language="C#" Value="public void WriteBlock (TagLib.ByteVector data);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="data">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Find">
+      <MemberSignature Language="C#" Value="public long Find (TagLib.ByteVector pattern, long from_offset, TagLib.ByteVector before);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="pattern" Type="TagLib.ByteVector" />
+        <Parameter Name="from_offset" Type="System.Int64" />
+        <Parameter Name="before" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the data to search for.</param>
+        <param name="from_offset">To be added.</param>
+        <param name="before">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Find">
+      <MemberSignature Language="C#" Value="public long Find (TagLib.ByteVector pattern, long from_offset);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="pattern" Type="TagLib.ByteVector" />
+        <Parameter Name="from_offset" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the data to search for.</param>
+        <param name="from_offset">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Find">
+      <MemberSignature Language="C#" Value="public long Find (TagLib.ByteVector pattern);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="pattern" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the data to search for.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RFind">
+      <MemberSignature Language="C#" Value="public long RFind (TagLib.ByteVector pattern, long from_offset);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="pattern" Type="TagLib.ByteVector" />
+        <Parameter Name="from_offset" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the data to search for.</param>
+        <param name="from_offset">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RFind">
+      <MemberSignature Language="C#" Value="public long RFind (TagLib.ByteVector pattern);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="pattern" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the data to search for.</param>
+        <summary>Finds a string of bytes in a file searching backwards.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Insert">
+      <MemberSignature Language="C#" Value="public void Insert (TagLib.ByteVector data, long start, long replace);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+        <Parameter Name="start" Type="System.Int64" />
+        <Parameter Name="replace" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="data">To be added.</param>
+        <param name="start">To be added.</param>
+        <param name="replace">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Insert">
+      <MemberSignature Language="C#" Value="public void Insert (TagLib.ByteVector data, long start);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+        <Parameter Name="start" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="data">To be added.</param>
+        <param name="start">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Insert">
+      <MemberSignature Language="C#" Value="public void Insert (TagLib.ByteVector data);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="data">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RemoveBlock">
+      <MemberSignature Language="C#" Value="public void RemoveBlock (long start, long length);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="start" Type="System.Int64" />
+        <Parameter Name="length" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="start">To be added.</param>
+        <param name="length">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RemoveBlock">
+      <MemberSignature Language="C#" Value="public void RemoveBlock (long start);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="start" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="start">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RemoveBlock">
+      <MemberSignature Language="C#" Value="public void RemoveBlock ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Seek">
+      <MemberSignature Language="C#" Value="public void Seek (long offset, System.IO.SeekOrigin p);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="offset" Type="System.Int64" />
+        <Parameter Name="p" Type="System.IO.SeekOrigin" />
+      </Parameters>
+      <Docs>
+        <param name="offset">A <see cref="T:System.Int64" /> representing the number of bytes away from the seek origin.</param>
+        <param name="p">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Seek">
+      <MemberSignature Language="C#" Value="public void Seek (long offset);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="offset" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="offset">A <see cref="T:System.Int64" /> representing the number of bytes away from the beginning of the file.</param>
+        <summary>Moves the internal read/write pointer to a specified offset.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Create">
+      <MemberSignature Language="C#" Value="public static TagLib.File Create (string path);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.File</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="path" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="path">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetValid">
+      <MemberSignature Language="C#" Value="protected void SetValid (bool valid);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="valid" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="valid">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Truncate">
+      <MemberSignature Language="C#" Value="protected void Truncate (long length);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="length" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="length">A <see cref="T:System.Int64" /> representing the number of bytes the file should be.</param>
+        <summary>Truncates the file to a specifed length.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Name">
+      <MemberSignature Language="C#" Value="public string Name { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the path and file name used to access the file.</summary>
+        <value>A <see cref="T:System.String" /> representing the path and file name used internally to open the file.</value>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Tag">
+      <MemberSignature Language="C#" Value="public abstract TagLib.Tag Tag { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Tag</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the tagging information contained in the file.</summary>
+        <value>A <see cref="T:TagLib.Tag" /> containing a generalized tag for reading and writing the file's tagging information.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AudioProperties">
+      <MemberSignature Language="C#" Value="public abstract TagLib.AudioProperties AudioProperties { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.AudioProperties</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the audio properties contained in the file.</summary>
+        <value>A <see cref="T:TagLib.AudioProperties" /> containing information on the file.</value>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="IsReadOnly">
+      <MemberSignature Language="C#" Value="public bool IsReadOnly { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets whether or not the file has write support.</summary>
+        <value>A <see cref="T:System.Boolean" /> returning true if the file cannot be written and false otherwise.</value>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="IsValid">
+      <MemberSignature Language="C#" Value="public bool IsValid { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets whether or not the file is valid or not.</summary>
+        <value>A <see cref="T:System.Boolean" /> returning true if the file is valid based on the class used for reading it and its contents, and false otherwise.</value>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Tell">
+      <MemberSignature Language="C#" Value="public long Tell { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the current read/write offset in the file.</summary>
+        <value>A <see cref="T:System.Int64" /> representing the internal read/write position inside the file.</value>
+        <remarks>Returns 0 if the file is not open for reading or writing.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Length">
+      <MemberSignature Language="C#" Value="public long Length { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the length of the file, in bytes.</summary>
+        <value>A <see cref="T:System.Int64" /> representing the number of bytes in the file.</value>
+        <remarks>Returns 0 if the file is not open for reading or writing.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Mode">
+      <MemberSignature Language="C#" Value="public TagLib.File+AccessMode Mode { set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.File+AccessMode</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets and sets the current access mode of the file.</summary>
+        <value>A <see cref="T:TagLib.File+AccessMode" /> representing the current access mode of the file.</value>
+        <remarks>
+          <para>Setting the access mode to <see cref="F:TagLib.File+AccessMode.Closed" /> will close any active <see cref="T:System.IO.Stream" /> in the file. Setting the access mode to <see cref="F:TagLib.File+AccessMode.Read" /> will open an internal read stream unless a stream is already open. Thus if a write stream is open, it will remain open. Setting the access mode to <see cref="F:TagLib.File+AccessMode.Write" /> will open an internal write stream, closing a read stream if it is open.</para>
+          <para>An exception will be thrown is a stream is being opened which the file cannot support.</para>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="BufferSize">
+      <MemberSignature Language="C#" Value="protected static uint BufferSize { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the number of bytes to read from the file at a time.</summary>
+        <value>A <see cref="T:System.UInt32" /> representing the number of bytes to read.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AddFileTypeResolver">
+      <MemberSignature Language="C#" Value="public static void AddFileTypeResolver (TagLib.File+FileTypeResolver resolver);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="resolver" Type="TagLib.File+FileTypeResolver" />
+      </Parameters>
+      <Docs>
+        <param name="resolver">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetFileAbstractionCreator">
+      <MemberSignature Language="C#" Value="public static void SetFileAbstractionCreator (TagLib.File+FileAbstractionCreator creator);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="creator" Type="TagLib.File+FileAbstractionCreator" />
+      </Parameters>
+      <Docs>
+        <param name="creator">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetTag">
+      <MemberSignature Language="C#" Value="public abstract TagLib.Tag GetTag (TagLib.TagTypes type, bool create);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Tag</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.TagTypes" />
+        <Parameter Name="create" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <param name="create">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetTag">
+      <MemberSignature Language="C#" Value="public TagLib.Tag GetTag (TagLib.TagTypes type);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Tag</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.TagTypes" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Create">
+      <MemberSignature Language="C#" Value="public static TagLib.File Create (string path, TagLib.AudioProperties+ReadStyle style);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.File</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="path" Type="System.String" />
+        <Parameter Name="style" Type="TagLib.AudioProperties+ReadStyle" />
+      </Parameters>
+      <Docs>
+        <param name="path">To be added.</param>
+        <param name="style">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Create">
+      <MemberSignature Language="C#" Value="public static TagLib.File Create (string path, string mimetype, TagLib.AudioProperties+ReadStyle style);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.File</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="path" Type="System.String" />
+        <Parameter Name="mimetype" Type="System.String" />
+        <Parameter Name="style" Type="TagLib.AudioProperties+ReadStyle" />
+      </Parameters>
+      <Docs>
+        <param name="path">To be added.</param>
+        <param name="mimetype">To be added.</param>
+        <param name="style">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MimeType">
+      <MemberSignature Language="C#" Value="public string MimeType { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>This class provides generic access to an audio file. It provides both a framework for accessing tagging and audio properties, and a framework for reading reading and writing data blocks.</summary>
+    <remarks>
+      <para>Generic file access can be done through <see cref="M:TagLib.File.Create" />.</para>
+      <example>
+        <code lang="C#">TagLib.File file = TagLib.File.Create ("song.m4a");
+if (file != null)
+{
+   file.Tag.Artists = new string [] {"Talib Kweli", "Kanye West"};
+   if (!file.Save ())
+      // Error saving
+}
+else
+   // Error loading</code>
+      </example>
+    </remarks>
+  </Docs>
+</Type>
