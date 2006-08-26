@@ -1,3 +1,8 @@
+2006-08-25  Aaron Bockover  <abockover@novell.com>
+
+	* examples/Makefile.am: Added Makefile.am, was missing from forge
+	repository
+
 2006-08-25  Brian Nickel  <brian.nickel@gmail.com>
 
 	* Fixed a bug where ByteVector.Find wouldn't find items
