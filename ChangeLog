@@ -1,3 +1,24 @@
+2006-08-27  Aaron Bockover  <abockover@novell.com>
+
+	* src/TagLib/ReadOnlyException.cs: New exception
+
+	* src/TagLib/File.cs:
+	* src/TagLib/Mpc/File.cs:
+	* src/TagLib/Mpeg/File.cs:
+	* src/TagLib/WavPack/File.cs:
+	* src/TagLib/Flac/File.cs:
+	* src/TagLib/Asf/File.cs:
+	* src/TagLib/Mpeg4/AppleTag.cs:
+	* src/TagLib/Mpeg4/File.cs:
+	* src/TagLib/Ogg/File.cs:
+	* src/TagLib/Ogg/Vorbis/File.cs:
+	* src/TagLib/Ogg/Flac/File.cs: Save is now void, throws exceptions
+	when a problem has arisen instead of eventually returning false, masking
+	the source of the problem
+
+	* taglib-sharp.csproj:
+	* src/Makefile.am: Updated
+
 2006-08-25  Aaron Bockover  <abockover@novell.com>
 
 	* examples/Makefile.am: Added Makefile.am, was missing from forge

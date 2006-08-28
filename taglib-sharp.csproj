@@ -52,7 +52,8 @@
     <Compile Include="src\TagLib\StringList.cs" />
     <Compile Include="src\TagLib\SupportedMimeType.cs" />
     <Compile Include="src\TagLib\UnsupportedFormatException.cs" />
-    <Compile Include="src\TagLib\WavPack\File.cs" />
+    <Compile Include="src\TagLib\ReadOnlyException.cs" />
+	<Compile Include="src\TagLib\WavPack\File.cs" />
     <Compile Include="src\TagLib\WavPack\Properties.cs" />
     <Compile Include="src\TagLib\Ogg\File.cs" />
     <Compile Include="src\TagLib\Ogg\Page.cs" />

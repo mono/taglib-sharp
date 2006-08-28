@@ -59,22 +59,14 @@ namespace TagLib.WavPack
       {
       }
       
-      public override bool Save ()
+      public override void Save ()
       {
-         if (IsReadOnly)
-         {
-            Debugger.Debug ("WavPack.File.Save() -- File is read only.");
-            return false;
+         if(IsReadOnly) {
+            throw new ReadOnlyException();
          }
          
-         try {Mode = AccessMode.Write;}
-         catch
-         {
-            Debugger.Debug ("WavPack.File.Save() -- File is read only.");
-            return false;
-         }
-
-
+         Mode = AccessMode.Write;
+         
          // Update ID3v1 tag
          long id3v1_location = FindId3v1 ();
 
@@ -126,7 +118,6 @@ namespace TagLib.WavPack
             RemoveBlock (ape_location, ape_size);
 
          Mode = AccessMode.Closed;
-         return true;
       }
       
       public override TagLib.Tag GetTag (TagTypes type, bool create)

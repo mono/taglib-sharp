@@ -126,20 +126,13 @@ namespace TagLib.Ogg
             dirty_packets.Add (i, p);
       }
       
-      public override bool Save ()
+      public override void Save ()
       {
-         if (IsReadOnly)
-         {
-            Debugger.Debug ("Ogg.File.Save() - Cannot save to a read only file.");
-            return false;
+         if (IsReadOnly) {
+            throw new ReadOnlyException();
          }
          
-         try {Mode = AccessMode.Write;}
-         catch
-         {
-            Debugger.Debug ("Ogg.File.Save() - Cannot save to a read only file.");
-            return false;
-         }
+         Mode = AccessMode.Write;
          
          IntList page_group = new IntList ();
 
@@ -157,7 +150,6 @@ namespace TagLib.Ogg
          dirty_packets.Clear ();
          
          Mode = AccessMode.Closed;
-         return true;
       }
       
       

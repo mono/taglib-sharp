@@ -70,7 +70,7 @@ namespace TagLib.Ogg.Flac
       {
       }
 
-      public override bool Save ()
+      public override void Save ()
       {
          ClearPageData (); // Force re-reading of the file.
 
@@ -95,7 +95,7 @@ namespace TagLib.Ogg.Flac
 
          SetPacket (comment_packet, v);
 
-         return base.Save ();
+         base.Save ();
       }
       
       

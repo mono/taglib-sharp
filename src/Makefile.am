@@ -91,7 +91,8 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/File.cs                                        \
    $(srcdir)/TagLib/StringList.cs                                  \
    $(srcdir)/TagLib/SupportedMimeType.cs                           \
-   $(srcdir)/TagLib/UnsupportedFormatException.cs
+   $(srcdir)/TagLib/UnsupportedFormatException.cs                  \
+   $(srcdir)/TagLib/ReadOnlyException.cs
 
 taglib-sharp.snk: $(top_srcdir)/taglib-sharp.snk
 	cp $(top_srcdir)/taglib-sharp.snk .

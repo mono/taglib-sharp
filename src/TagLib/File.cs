@@ -107,7 +107,7 @@ namespace TagLib
       
       public abstract AudioProperties AudioProperties {get;}
       
-      public abstract bool Save ();
+      public abstract void Save ();
       
       public ByteVector ReadBlock (int length)
       {

@@ -68,31 +68,31 @@ namespace TagLib.Mpeg
       {
       }
 
-      public bool Save (TagTypes types, bool strip_others)
+      public void Save (TagTypes types, bool strip_others)
       {
-         if (types == TagTypes.NoTags && strip_others)
-            return Strip (TagTypes.AllTags);
+         if (types == TagTypes.NoTags && strip_others) {
+            if(!Strip (TagTypes.AllTags)) {
+                throw new ApplicationException("Could not strip tags");
+            }
+            
+            return;
+         }
 
-         if (id3v2_tag == null && id3v1_tag == null && ape_tag == null)
-         {
-            if (strip_others)
-               return Strip (TagTypes.AllTags);
-
-            return true;
+         if (id3v2_tag == null && id3v1_tag == null && ape_tag == null) {
+            if (strip_others) {
+               if(!Strip (TagTypes.AllTags)) {
+                throw new ApplicationException("Could not strip tags");
+               }
+            }
+            
+            return;
          }
          
-         if (IsReadOnly)
-         {
-            Debugger.Debug ("Mpeg.File.Save() -- File is read only.");
-            return false;
+         if(IsReadOnly) {
+            throw new ReadOnlyException();
          }
          
-         try {Mode = AccessMode.Write;}
-         catch
-         {
-            Debugger.Debug ("Mpeg.File.Save() -- File is read only.");
-            return false;
-         }
+         Mode = AccessMode.Write;
 
          // Create the tags if we've been asked to.  Copy the values from the tag that
          // does exist into the new tag.
@@ -162,17 +162,20 @@ namespace TagLib.Mpeg
             success = Strip (TagTypes.Ape, false) && success;
 
          Mode = AccessMode.Closed;
-         return success;
+         
+         if(!success) {
+            throw new ApplicationException("Cannot write tags");
+         }
       }
 
-      public bool Save (TagTypes tags)
+      public void Save (TagTypes tags)
       {
-         return Save (tags, true);
+         Save (tags, true);
       }
 
-      public override bool Save ()
+      public override void Save ()
       {
-         return Save (TagTypes.AllTags);
+         Save (TagTypes.AllTags);
       }
 
       public override TagLib.Tag GetTag (TagTypes type, bool create)

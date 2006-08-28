@@ -58,20 +58,13 @@ namespace TagLib.Asf
       {
       }
       
-      public override bool Save ()
+      public override void Save ()
       {
-         if (IsReadOnly)
-         {
-            Debugger.Debug ("Mpc.File.Save() -- File is read only.");
-            return false;
+         if(IsReadOnly) {
+            throw new ReadOnlyException();
          }
          
-         try {Mode = AccessMode.Write;}
-         catch
-         {
-            Debugger.Debug ("Mpc.File.Save() -- File is read only.");
-            return false;
-         }
+         Mode = AccessMode.Write;
          
          HeaderObject header = new HeaderObject (this, 0);
          header.AddUniqueObject (asf_tag.ContentDescriptionObject);
@@ -80,7 +73,6 @@ namespace TagLib.Asf
          Insert (header.Render (), 0, header.OriginalSize);
          
          Mode = AccessMode.Closed;
-         return true;
       }
       
       public override TagLib.Tag GetTag (TagTypes type, bool create)

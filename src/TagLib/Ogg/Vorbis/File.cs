@@ -64,7 +64,7 @@ namespace TagLib.Ogg.Vorbis
       {
       }
       
-      public override bool Save ()
+      public override void Save ()
       {
          ClearPageData (); // Force re-reading of the file.
 
@@ -76,7 +76,7 @@ namespace TagLib.Ogg.Vorbis
 
          SetPacket (1, v);
 
-         return base.Save ();
+         base.Save ();
       }
       
       public override TagLib.Tag GetTag (TagTypes type, bool create)

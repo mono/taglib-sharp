@@ -61,22 +61,14 @@ namespace TagLib.Mpc
       {
       }
       
-      public override bool Save ()
+      public override void Save ()
       {
-         if (IsReadOnly)
-         {
-            Debugger.Debug ("Mpc.File.Save() -- File is read only.");
-            return false;
+         if(IsReadOnly) {
+            throw new ReadOnlyException();
          }
          
-         try {Mode = AccessMode.Write;}
-         catch
-         {
-            Debugger.Debug ("Mpc.File.Save() -- File is read only.");
-            return false;
-         }
-
-
+         Mode = AccessMode.Write;
+         
          // Update ID3v2 tag
          long id3v2_location = FindId3v2 ();
          int  id3v2_size     = 0;
@@ -156,7 +148,6 @@ namespace TagLib.Mpc
             RemoveBlock (ape_location, ape_size);
 
          Mode = AccessMode.Closed;
-         return true;
       }
       
       public override TagLib.Tag GetTag (TagTypes type, bool create)

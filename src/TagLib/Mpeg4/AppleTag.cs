@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 
 namespace TagLib.Mpeg4
@@ -168,14 +169,14 @@ namespace TagLib.Mpeg4
       }
 
       // Save the file.
-      public bool Save ()
+      public void Save ()
       {
-         if (ilst_box == null)
-            return false;
+         if (ilst_box == null) {
+            throw new NullReferenceException();
+         }
          
          // Try to get into write mode.
-         try {file.Mode = File.AccessMode.Write;}
-         catch {return false;}
+         file.Mode = File.AccessMode.Write;
          
          // Make a file box.
          FileBox file_box = new FileBox (file);
@@ -279,15 +280,15 @@ namespace TagLib.Mpeg4
                
                // Be nice and close the stream.
                file.Mode = File.AccessMode.Closed;
-               return true;
+               return;
             }
          }
          else
-            Debugger.Debug ("TagLib.Mpeg4.AppleTag.Save() - File doesn't even have a MOOV tag.");
+            throw new ApplicationException("stream does not have MOOV tag");
          
          // We're at the end. Close the stream and admit defeat.
          file.Mode = File.AccessMode.Closed;
-         return false;
+         throw new ApplicationException("Could not complete AppleTag save");
       }
       
       //////////////////////////////////////////////////////////////////////////

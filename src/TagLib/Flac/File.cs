@@ -74,29 +74,17 @@ namespace TagLib.Flac
       {
       }
 
-
-
-
-      public override bool Save ()
+      public override void Save ()
       {
-         if (IsReadOnly)
-         {
-            Debugger.Debug ("Flac.File.Save() - Cannot save to a read only file.");
-            return false;
+         if(IsReadOnly) {
+            throw new ReadOnlyException();
          }
          
-         try {Mode = AccessMode.Write;}
-         catch
-         {
-            Debugger.Debug ("Flac.File.Save() - Cannot save to a read only file.");
-            return false;
-         }
-
-
+         Mode = AccessMode.Write;
+         
          long flac_data_begin;
          long flac_data_end;
          
-
          // Update ID3 tags
          if(id3v2_tag != null)
          {
@@ -214,7 +202,7 @@ namespace TagLib.Flac
                   padding.Resize ((int)(padding_length + 4));
                   
                   Insert (v + padding, next_page_offset, next_keep - next_page_offset);
-               System.Console.WriteLine ("OGG: " + (next_keep - next_page_offset) + " " + (v.Count + padding.Count));
+                  //System.Console.WriteLine ("OGG: " + (next_keep - next_page_offset) + " " + (v.Count + padding.Count));
                   
                   break;
                }
@@ -249,7 +237,6 @@ namespace TagLib.Flac
          }
 
          Mode = AccessMode.Closed;
-         return true;
       }
       
       public override TagLib.Tag GetTag (TagTypes type, bool create)

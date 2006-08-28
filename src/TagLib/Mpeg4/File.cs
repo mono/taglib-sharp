@@ -45,7 +45,10 @@ namespace TagLib.Mpeg4
       public override TagLib.AudioProperties AudioProperties {get {return properties;}}
       
       // Save. This work is done in the AppleTag.
-      public override bool Save () {return (tag == null) ? false : tag.Save ();}
+      public override void Save () 
+      {
+        tag.Save();
+      }
       
       // Get the Apple Tag.
       public override TagLib.Tag GetTag (TagTypes type, bool create)
