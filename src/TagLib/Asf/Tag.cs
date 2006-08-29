@@ -213,11 +213,14 @@ namespace TagLib.Asf
          get
          {
             string value = GetDescriptorString ("WM/PartOfSet");
-            try
-            {
-               return UInt32.Parse (value.Split (new char [] {'/'}) [1]);
-            }
-            catch {return 0;}
+            if (value != null && value.IndexOf ('/') != -1)
+	            try
+   	         {
+      	         return UInt32.Parse (value.Split (new char [] {'/'}) [1]);
+         	   }
+            	catch {}
+            
+            return 0;
          }
          set
          {
