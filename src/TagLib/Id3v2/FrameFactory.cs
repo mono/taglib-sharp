@@ -270,7 +270,8 @@ namespace TagLib.Id3v2
                   frame_id == "RVAD" ||
                   frame_id == "TIME" ||
                   frame_id == "TRDA" ||
-                  frame_id == "TSIZ")
+                  frame_id == "TSIZ" ||
+                  frame_id == "TDAT")
                {
                   Debugger.Debug ("ID3v2.4 no longer supports the frame type "
                   + frame_id.ToString () + ".  It will be discarded from the tag.");
@@ -278,7 +279,6 @@ namespace TagLib.Id3v2
                   return false;
                }
 
-               ConvertFrame ("TDAT", "TDRC", header);
                ConvertFrame ("TORY", "TDOR", header);
                ConvertFrame ("TYER", "TDRC", header);
 

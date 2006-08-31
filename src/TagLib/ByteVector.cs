@@ -166,8 +166,15 @@ namespace TagLib
 
       public ByteVector (int size, byte value)
       {
-         for (int i = 0; i < size; i ++)
-            Add (value);
+      	if (size > 0)
+      	{
+      		byte [] data = new byte [size];
+      		
+            for (int i = 0; i < size; i ++)
+               data [i] = value;
+            
+            SetData (data);
+         }
       }
 
       public ByteVector (int size) : this (size, 0)
@@ -222,9 +229,14 @@ namespace TagLib
       
       public void SetData (byte [] value, int length)
       {
-         Clear ();
-         for (int i = 0; i < length; i ++)
-            Add (value [i]);
+         if (length >= value.Length)
+         	SetData (value);
+         else
+         {
+	         byte [] data = new byte [length];
+	         System.Array.Copy (value, data, length);
+	         SetData (data);
+         }
       }
       
       public void SetData (byte [] value)

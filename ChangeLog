@@ -1,3 +1,10 @@
+2006-08-31  Brian Nickel  <brian.nickel@gmail.com>
+
+	* src/TagLib/ByteVector.cs: Perform a few additions better, getting rid of
+	for (...) Add (byte).
+	* src/TagLib/Id3v2/FrameFactory.cs: Con-current bug fix with TagLib,
+	correcting an invalid frame conversion.
+
 2006-08-28  Brian Nickel  <brian.nickel@gmail.com>
 
 	* src/TagLib/Asf/Tag.cs: Fixes a segmentation fault that can arise from
