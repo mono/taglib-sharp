@@ -22,7 +22,7 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-[assembly:AssemblyVersion("@VERSION@")]
+[assembly:AssemblyVersion("@ASM_VERSION@")]
 [assembly:AssemblyTitle ("TagLib#")]
 [assembly:AssemblyDescription ("A library for reading and writing audio metatags.")]
 [assembly:AssemblyCopyright ("Copyright (c) 2006 Brian Nickel")]

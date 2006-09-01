@@ -1,6 +1,13 @@
 AC_INIT(src/TagLib/File.cs)
 AC_CANONICAL_SYSTEM
-AM_INIT_AUTOMAKE(taglib, 1.0.0.0)
+
+VERSION=1.0.0
+ASM_VERSION="$VERSION.*"
+
+AC_SUBST(VERSION)
+AC_SUBST(ASM_VERSION)
+
+AM_INIT_AUTOMAKE(taglib-sharp, $VERSION)
 AM_MAINTAINER_MODE
 
 AC_PROG_INSTALL
@@ -8,26 +15,28 @@ AC_PROG_INSTALL
 MONO_REQUIRED=1.1
 MONODOC_REQUIRED=1.1.9
 
-dnl Pkgconfig
-PKG_CHECK_MODULES(MONO,
-		  mono >= $MONO_REQUIRED)
+DISTCHECK_CONFIGURE_FLAGS="--disable-docs"
+AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
+
+PKG_CHECK_MODULES(MONO, mono >= $MONO_REQUIRED)
 
 dnl Check for Mono
 AC_PATH_PROG(MCS, mcs)
 if test x$MCS = x; then
-        AC_MSG_ERROR(You need mcs)
+	AC_MSG_ERROR(You need mcs)
 fi
 AC_PATH_PROG(MONO, mono)
 if test x$MONO = x; then
-        AC_MSG_ERROR(You need mono)
+	AC_MSG_ERROR(You need mono)
 fi
 
-MCS_FLAGS="-codepage:utf8 -r:Mono.Posix"
+MCS_FLAGS="-codepage:utf8 -r:Mono.Posix -debug"
 MONO_FLAGS=
+
 if test $USE_MAINTAINER_MODE = yes; then
-	MCS_FLAGS="$MCS_FLAGS -debug"
 	MONO_FLAGS="$MONO_FLAGS --debug"
 fi
+
 AC_SUBST(MCS_FLAGS)
 AC_SUBST(MONO_FLAGS)
 

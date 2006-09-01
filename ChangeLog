@@ -1,3 +1,14 @@
+2006-09-01  Aaron Bockover  <abockover@novell.com>
+
+	* configure.ac: Added ASM_VERSION; added DISTCHECK_CONFIGURE_FLAGS so
+	distcheck target works properly as user (--disable-docs is passed on
+	distcheck now)
+
+	* src/AssemblyInfo.cs.in: Use ASM_VERSION instead of VERSION to get
+	build revisions in version string
+
+	* examples/Makefile.am: Added EXTRA_DIST, fixed distcheck build bug
+
 2006-08-31  Brian Nickel  <brian.nickel@gmail.com>
 
 	* src/TagLib/ByteVector.cs: Perform a few additions better, getting rid of
