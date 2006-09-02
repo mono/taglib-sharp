@@ -1,5 +1,9 @@
 2006-09-01  Aaron Bockover  <abockover@novell.com>
 
+	* tests/: Added test sample audio files
+
+2006-09-01  Aaron Bockover  <abockover@novell.com>
+
 	* configure.ac: Added ASM_VERSION; added DISTCHECK_CONFIGURE_FLAGS so
 	distcheck target works properly as user (--disable-docs is passed on
 	distcheck now)
