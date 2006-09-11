@@ -3,6 +3,7 @@ namespace TagLib.Mpeg4
    [SupportedMimeType("taglib/m4a")]
    [SupportedMimeType("taglib/m4p")]
    [SupportedMimeType("taglib/mp4")]
+   [SupportedMimeType("audio/mp4")]
    [SupportedMimeType("audio/x-m4a")]
    public class File : TagLib.File
    {
