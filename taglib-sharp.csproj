@@ -75,6 +75,8 @@
     <Compile Include="src\TagLib\Mpeg4\Boxes\Box.cs" />
     <Compile Include="src\TagLib\Mpeg4\Boxes\FileBox.cs" />
     <Compile Include="src\TagLib\Mpeg4\Boxes\FullBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\IsoChunkLargeOffsetBox.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\IsoChunkOffsetBox.cs" />
     <Compile Include="src\TagLib\Mpeg4\Boxes\IsoFreeSpaceBox.cs" />
     <Compile Include="src\TagLib\Mpeg4\Boxes\IsoHandlerBox.cs" />
     <Compile Include="src\TagLib\Mpeg4\Boxes\IsoMediaBox.cs" />

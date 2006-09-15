@@ -9,7 +9,7 @@ namespace TagLib.Mpeg4
           ContainsData      = 0x00,
           ForTempo          = 0x15,
           ContainsJpegData  = 0x0D,
-          ContainsPngData   = 0x0D
+          ContainsPngData   = 0x0E
       }
       
       

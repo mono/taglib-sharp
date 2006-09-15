@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace TagLib.Mpeg4
 {
-   public class AppleTag : TagLib.Tag
+   public class AppleTag : TagLib.Tag, IEnumerable
    {
       //////////////////////////////////////////////////////////////////////////
       // private properties
@@ -25,6 +25,11 @@ namespace TagLib.Mpeg4
       
       public AppleTag (File file) : this (null, file)
       {
+      }
+      
+      public IEnumerator GetEnumerator()
+      {
+         return ilst_box.Children.GetEnumerator();
       }
       
       // Get all the data boxes with the provided types.
@@ -86,7 +91,7 @@ namespace TagLib.Mpeg4
       }
       
       // Set the data with the given box type, data, and flags.
-      public void SetData (ByteVector type, ByteVectorList data, uint flags)
+      public void SetData (ByteVector type, AppleDataBox [] boxes)
       {
          // Fix the type.
          type = FixId (type);
@@ -102,8 +107,8 @@ namespace TagLib.Mpeg4
                {
                   // clear its children and add our data boxes.
                   box.ClearChildren ();
-                  foreach (ByteVector v in data)
-                     box.AddChild (new AppleDataBox (v, flags, box));
+                  foreach (AppleDataBox b in boxes)
+                     box.AddChild (b);
                   first = false;
                }
                // Otherwise, it is dead to us.
@@ -117,15 +122,32 @@ namespace TagLib.Mpeg4
             // Add the box and try again.
             Box box = new AppleAnnotationBox (type);
             ilst_box.AddChild (box);
-            SetData (type, data, flags);
+            SetData (type, boxes);
          }
       }
       
+      public void SetData (ByteVector type, ByteVectorList data, uint flags)
+      {
+      	if (data == null || data.Count == 0)
+      	{
+	      	ClearData (type);
+	      	return;
+	      }
+	      	
+      	AppleDataBox [] boxes = new AppleDataBox [data.Count];
+      	for (int i = 0; i < data.Count; i ++)
+      		boxes [i] = new AppleDataBox (data [i], flags);
+      	
+      	SetData (type, boxes);
+      }
       
       // Set the data with the given box type, data, and flags.
       public void SetData (ByteVector type, ByteVector data, uint flags)
       {
-         SetData (type, new ByteVectorList (data), flags);
+      	if (data == null || data.Count == 0)
+	      	ClearData (type);
+	      else
+	         SetData (type, new ByteVectorList (data), flags);
       }
       
       // Set the data with the given box type, strings, and flags.
@@ -272,11 +294,27 @@ namespace TagLib.Mpeg4
                
                // If there is a size difference, resize all parent headers.
                if (size_difference != 0)
+               {
                   while (parent != null)
                   {
                      parent.OverwriteHeader (size_difference);
                      parent = parent.Parent;
                   }
+                  
+                  // ALSO, VERY IMPORTANTLY, YOU MUST UPDATE EVERY 'stco'.
+                  
+                  foreach (Box box in moov_box.Children)
+                     if (box.BoxType == "trak")
+                     {
+                     	IsoChunkLargeOffsetBox co64_box = (IsoChunkLargeOffsetBox) box.FindChildDeep ("co64");
+                        if (co64_box != null)
+                           co64_box.UpdateOffset (size_difference);
+                        
+                     	IsoChunkOffsetBox stco_box = (IsoChunkOffsetBox) box.FindChildDeep ("stco");
+                        if (stco_box != null)
+                           stco_box.UpdateOffset ((int) size_difference);
+                     }
+               }
                
                // Be nice and close the stream.
                file.Mode = File.AccessMode.Closed;
@@ -473,6 +511,65 @@ namespace TagLib.Mpeg4
          }
       }
       
+ 
+      public override IPicture [] Pictures
+      {
+         get
+         {
+         	ArrayList l = new ArrayList ();
+         	
+         	foreach (AppleDataBox box in  DataBoxes(FixId("covr")))
+         	{
+         		string type = null;
+         		string desc = null;
+            	if (box.Flags == (int) AppleDataBox.FlagTypes.ContainsJpegData)
+            	{
+            		type = "image/jpeg";
+            		desc = "cover.jpg";
+            	}
+            	else if (box.Flags == (int) AppleDataBox.FlagTypes.ContainsPngData)
+            	{
+            		type = "image/png";
+            		desc = "cover.png";
+            	}
+            	else continue;
+            	
+            	Picture p = new Picture ();
+            	p.Type = PictureType.FrontCover;
+            	p.Data = box.Data;
+            	p.MimeType = type;
+            	p.Description = desc;
+            	
+            	l.Add (p);
+            }
+            
+            return (Picture []) l.ToArray (typeof (Picture));
+         }
+         
+         set
+         {
+         	if (value == null || value.Length == 0)
+         	{
+         		ClearData ("covr");
+         		return;
+         	}
+         	
+         	AppleDataBox [] boxes = new AppleDataBox [value.Length];
+         	for (int i = 0; i < value.Length; i ++)
+         	{
+         		uint type = (uint) AppleDataBox.FlagTypes.ContainsData;
+         		
+            	if (value [i].MimeType == "image/jpeg")
+            		type = (uint) AppleDataBox.FlagTypes.ContainsJpegData;
+            	else if (value [i].MimeType == "image/png")
+            		type = (uint) AppleDataBox.FlagTypes.ContainsPngData;
+            	
+            	boxes [i] = new AppleDataBox (value [i].Data, type);
+         	}
+         	
+            SetData("covr", boxes);
+         }
+      }
       
       //////////////////////////////////////////////////////////////////////////
       // private methods

@@ -452,6 +452,34 @@ namespace TagLib.Id3v2
          }
       }
       
+      public override IPicture [] Pictures {
+         get { 
+            Frame [] raw_frames = GetFrames("APIC");
+            if(raw_frames == null || raw_frames.Length == 0) {
+               return base.Pictures;
+            }
+            
+            AttachedPictureFrame [] frames = new AttachedPictureFrame[raw_frames.Length];
+            for(int i = 0; i < frames.Length; i++) {
+                frames[i] = (AttachedPictureFrame)raw_frames[i];
+            }
+            
+            return frames;
+         }
+         
+         set {
+            if(value == null || value.Length < 1) {
+               return;
+            }
+            
+            RemoveFrames("APIC");
+            
+            foreach(IPicture picture in value) {
+               AddFrame(new AttachedPictureFrame(picture));
+            }
+         }
+      }
+      
       public override bool IsEmpty {get {return frame_list.Count == 0;}}
 
       public Header         Header         {get {return header;}}

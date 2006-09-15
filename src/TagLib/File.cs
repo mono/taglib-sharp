@@ -589,7 +589,11 @@ namespace TagLib
          if (creator != null)
             file_abstraction_creator = creator;
       }
-      
+            
+      internal static FileAbstractionCreator GetFileAbstractionCreator()
+      {
+         return file_abstraction_creator; 
+      }
       
       //////////////////////////////////////////////////////////////////////////
       // protected members

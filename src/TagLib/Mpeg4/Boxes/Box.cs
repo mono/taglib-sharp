@@ -327,6 +327,12 @@ namespace TagLib.Mpeg4
          if (h.BoxType == "stsd")
             return new IsoSampleDescriptionBox (h, parent);
          
+         if (h.BoxType == "stco")
+            return new IsoChunkOffsetBox (h, parent);
+         
+         if (h.BoxType == "co64")
+            return new IsoChunkLargeOffsetBox (h, parent);
+         
          if (h.BoxType == "trak")
             return new IsoTrackBox (h, parent);
          

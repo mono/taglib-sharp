@@ -25,7 +25,7 @@ using System.Collections;
 
 namespace TagLib.Ogg
 {
-   public class XiphComment : TagLib.Tag
+   public class XiphComment : TagLib.Tag, IEnumerable
    {
       //////////////////////////////////////////////////////////////////////////
       // private properties
@@ -161,6 +161,10 @@ namespace TagLib.Ogg
          return Render (true);
       }
       
+      public IEnumerator GetEnumerator()
+      {
+         return field_list.Keys.GetEnumerator();
+      }
       
       //////////////////////////////////////////////////////////////////////////
       // public properties

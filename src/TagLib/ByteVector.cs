@@ -643,6 +643,67 @@ namespace TagLib
          return FromString (s, StringType.UTF8);
       }
       
+      public static ByteVector FromUri(string uri)
+      {
+         byte [] tmp_out;
+         return FromUri(uri, out tmp_out, false);
+      }
+      
+      internal static ByteVector FromUri(string uri, out byte [] firstChunk, bool copyFirstChunk)
+      {
+         File.FileAbstractionCreator creator = File.GetFileAbstractionCreator();
+         File.IFileAbstraction abstraction = creator(uri);
+
+         using(System.IO.Stream stream = abstraction.ReadStream) {
+            return FromStream(stream, out firstChunk, copyFirstChunk);
+         }
+      }
+      
+      public static ByteVector FromStream(System.IO.Stream stream)
+      {
+         byte [] tmp_out;
+         return FromStream(stream, out tmp_out, false);
+      }
+      
+      internal static ByteVector FromStream(System.IO.Stream stream, out byte [] firstChunk, bool copyFirstChunk)
+      {
+         ByteVector vector = new ByteVector();
+         byte [] bytes = new byte[4096];
+         int read_size = bytes.Length;
+         int bytes_read = 0;
+         bool set_first_chunk = false;
+         
+         firstChunk = null;
+         
+         while(true) {
+            Array.Clear(bytes, 0, bytes.Length);
+            int n = stream.Read(bytes, 0, read_size);
+            vector.Add(bytes);
+            bytes_read += n;
+            
+            if(!set_first_chunk) {
+                if(copyFirstChunk) {
+                    if(firstChunk == null || firstChunk.Length != read_size) {
+                        firstChunk = new byte[read_size];
+                    }
+                    
+                    Array.Copy(bytes, firstChunk, n);
+                }
+                set_first_chunk = true;
+            }
+            
+            if((bytes_read == stream.Length && stream.Length > 0) || 
+                (n < read_size && stream.Length <= 0)) {
+               break;
+            }
+         }
+         
+         if(stream.Length > 0 && vector.Count != stream.Length) {
+            vector.Resize((int)stream.Length);
+         }
+         
+         return vector;
+      }
       
       //////////////////////////////////////////////////////////////////////////
       // private static methods

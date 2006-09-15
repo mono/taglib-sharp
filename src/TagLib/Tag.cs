@@ -37,6 +37,8 @@ namespace TagLib
       public virtual uint      Disc       {get {return 0;}    set {}}
       public virtual uint      DiscCount  {get {return 0;}    set {}}
       
+      public virtual IPicture [] Pictures { get { return new Picture [] { }; } set { } }
+      
       public string FirstArtist    { get { return FirstInGroup(Artists);    } }
       public string FirstPerformer { get { return FirstInGroup(Performers); } }
       public string FirstComposer  { get { return FirstInGroup(Composers);  } }

@@ -23,34 +23,11 @@
 using System.Collections;
 using System;
 
+using TagLib;
+
 namespace TagLib.Id3v2
-{
-   public enum PictureType
-   {
-      Other              = 0x00, // A type not enumerated below
-      FileIcon           = 0x01, // 32x32 PNG image that should be used as the file icon
-      OtherFileIcon      = 0x02, // File icon of a different size or format
-      FrontCover         = 0x03, // Front cover image of the album
-      BackCover          = 0x04, // Back cover image of the album
-      LeafletPage        = 0x05, // Inside leaflet page of the album
-      Media              = 0x06, // Image from the album itself
-      LeadArtist         = 0x07, // Picture of the lead artist or soloist
-      Artist             = 0x08, // Picture of the artist or performer
-      Conductor          = 0x09, // Picture of the conductor
-      Band               = 0x0A, // Picture of the band or orchestra
-      Composer           = 0x0B, // Picture of the composer
-      Lyricist           = 0x0C, // Picture of the lyricist or text writer
-      RecordingLocation  = 0x0D, // Picture of the recording location or studio
-      DuringRecording    = 0x0E, // Picture of the artists during recording
-      DuringPerformance  = 0x0F, // Picture of the artists during performance
-      MovieScreenCapture = 0x10, // Picture from a movie or video related to the track
-      ColouredFish       = 0x11, // Picture of a large, coloured fish
-      Illustration       = 0x12, // Illustration related to the track
-      BandLogo           = 0x13, // Logo of the band or performer
-      PublisherLogo      = 0x14  // Logo of the publisher (record company)
-   }
-   
-   public class AttachedPictureFrame : Frame
+{   
+   public class AttachedPictureFrame : Frame, IPicture
    {
       //////////////////////////////////////////////////////////////////////////
       // private properties
@@ -72,6 +49,15 @@ namespace TagLib.Id3v2
          type = PictureType.Other;
          description = null;
          data = null;
+      }
+      
+      public AttachedPictureFrame (IPicture picture) : base("APIC")
+      {
+         text_encoding = StringType.UTF8;
+         mime_type = picture.MimeType;
+         type = picture.Type;
+         description = picture.Description;
+         data = picture.Data;
       }
 
       public AttachedPictureFrame (ByteVector data) : base (data)
@@ -143,13 +129,12 @@ namespace TagLib.Id3v2
          set {description = value;}
       }
       
-      public ByteVector Picture
+      public ByteVector Data
       {
          get {return data;}
          set {data = value;}
       }
-
-
+      
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////

@@ -1,3 +1,30 @@
+2006-09-15  Brian Nickel  <brian.nickel@gmail.com>
+	* src/TagLib/Picture.cs:
+	* src/TagLib/Tag.cs:
+	* src/TagLib/CombinedTag.cs:
+	* src/TagLib/File.cs:
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:
+	* src/TagLib/ByteVector.cs:
+	* src/TagLib/Mpeg4/Boxes/Box.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoHandlerBox.cs:
+	* src/TagLib/Mpeg4/Boxes/AppleDataBox.cs:
+	* src/TagLib/Mpeg4/AppleTag.cs:
+	* src/TagLib/Ogg/XiphComment.cs: Add generic picture support to TagLib#. This
+	currently supports MP3 and M4A tags although support can and will be added
+	for other tag types in the future.
+	* src/Makefile.am:
+	* taglib-sharp.mds:
+	* taglib-sharp.csproj:
+	* examples/ReadFromUri.cs:
+	* examples/Makefile.am:
+	* examples/SetPictures.mdp:
+	* examples/SetPictures.cs:
+	* examples/ReadFromUri.mdp: New examples from Aaron Bockover.
+	* src/TagLib/Mpeg4/Boxes/IsoChunkLargeOffsetBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoChunkOffsetBox.cs: Eliminate a nasty bug where
+	changes to 'mdat' offsets, ie. any file size change, broke MP4 files.
+
 2006-09-11  Brian Nickel  <brian.nickel@gmail.com>
 
 	* src/TagLib/Mpeg4/File.cs: Added "audio/mp4" to types.

@@ -61,6 +61,8 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Mpeg4/Boxes/UnknownBox.cs                      \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoMediaBox.cs                     \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoUserDataBox.cs                  \
+   $(srcdir)/TagLib/Mpeg4/Boxes/IsoChunkOffsetBox.cs               \
+   $(srcdir)/TagLib/Mpeg4/Boxes/IsoChunkLargeOffsetBox.cs          \
    $(srcdir)/TagLib/Mpeg4/Boxes/AppleItemListBox.cs                \
    $(srcdir)/TagLib/Mpeg4/Boxes/AppleAnnotationBox.cs              \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoSampleTableBox.cs               \
@@ -92,7 +94,8 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/StringList.cs                                  \
    $(srcdir)/TagLib/SupportedMimeType.cs                           \
    $(srcdir)/TagLib/UnsupportedFormatException.cs                  \
-   $(srcdir)/TagLib/ReadOnlyException.cs
+   $(srcdir)/TagLib/ReadOnlyException.cs                           \
+   $(srcdir)/TagLib/Picture.cs
 
 taglib-sharp.snk: $(top_srcdir)/taglib-sharp.snk
 	cp $(top_srcdir)/taglib-sharp.snk .

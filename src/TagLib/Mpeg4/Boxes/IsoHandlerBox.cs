@@ -42,7 +42,7 @@ namespace TagLib.Mpeg4
          output += handler_type;
          output += new ByteVector (12);
          output += ByteVector.FromString (name);
-         output += new ByteVector (1);
+         output += new ByteVector (2);
          return Render (output);
       }
       

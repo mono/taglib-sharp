@@ -1,0 +1,28 @@
+<Combine name="taglib-sharp" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="taglib-sharp" configuration="Debug" />
+      <Entry build="True" name="ReadFromUri" configuration="Debug" />
+      <Entry build="True" name="tests" configuration="Default" />
+      <Entry build="True" name="SetPictures" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="taglib-sharp" configuration="Debug" />
+      <Entry build="True" name="ReadFromUri" configuration="Debug" />
+      <Entry build="True" name="tests" configuration="Default" />
+      <Entry build="True" name="SetPictures" configuration="Debug" />
+    </Configuration>
+  </Configurations>
+  <DeployTargets />
+  <StartMode startupentry="SetPictures" single="True">
+    <Execute type="None" entry="taglib-sharp" />
+    <Execute type="None" entry="ReadFromUri" />
+    <Execute type="None" entry="tests" />
+    <Execute type="None" entry="SetPictures" />
+  </StartMode>
+  <Entries>
+    <Entry filename="./src/taglib-sharp.mdp" />
+    <Entry filename="./examples/ReadFromUri.mdp" />
+    <Entry filename="./examples/SetPictures.mdp" />
+  </Entries>
+</Combine>

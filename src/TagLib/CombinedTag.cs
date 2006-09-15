@@ -258,5 +258,25 @@ namespace TagLib
                   tag.DiscCount = value;
          }
       }
+      
+      public override IPicture [] Pictures {
+         get {
+            foreach(Tag tag in tags) {
+               if(tag.Pictures.Length > 0) {
+                  return tag.Pictures;
+               }
+            }
+            
+            return base.Pictures;
+         }
+         
+         set {
+            foreach(Tag tag in tags) {
+               if(tag != null) {
+                  tag.Pictures = value;
+               }
+            }
+         }
+      } 
    }
 }
