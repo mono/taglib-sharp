@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class File : TagLib.File" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.File</BaseTypeName>
@@ -19,40 +19,6 @@
         <param name="file">A <see cref="T:System.String" /> containing the path of the file to read.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg.File" /> by loading the provided file name.</summary>
         <remarks>This constructor will only handle MPEG Layer-3 (MP3) files. To handle all files, see <see cref="M:TagLib.File.Create(System.String,System.Boolean,TagLib.AudioProperties+ReadStyle)" />.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Save">
-      <MemberSignature Language="C#" Value="public bool Save (TagLib.TagTypes types, bool strip_others);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="types" Type="TagLib.TagTypes" />
-        <Parameter Name="strip_others" Type="System.Boolean" />
-      </Parameters>
-      <Docs>
-        <param name="types">To be added.</param>
-        <param name="strip_others">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Save">
-      <MemberSignature Language="C#" Value="public bool Save (TagLib.TagTypes tags);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="tags" Type="TagLib.TagTypes" />
-      </Parameters>
-      <Docs>
-        <param name="tags">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Strip">
@@ -168,6 +134,38 @@
       <Docs>
         <param name="file">To be added.</param>
         <param name="properties_style">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Save">
+      <MemberSignature Language="C#" Value="public void Save (TagLib.TagTypes types, bool strip_others);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="types" Type="TagLib.TagTypes" />
+        <Parameter Name="strip_others" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="types">To be added.</param>
+        <param name="strip_others">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Save">
+      <MemberSignature Language="C#" Value="public void Save (TagLib.TagTypes tags);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="tags" Type="TagLib.TagTypes" />
+      </Parameters>
+      <Docs>
+        <param name="tags">To be added.</param>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>

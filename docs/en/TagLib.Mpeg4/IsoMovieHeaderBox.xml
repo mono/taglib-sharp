@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class IsoMovieHeaderBox : TagLib.Mpeg4.FullBox" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.Mpeg4.FullBox</BaseTypeName>

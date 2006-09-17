@@ -20,6 +20,7 @@
  ***************************************************************************/
 
 using System;
+using System.Collections;
 
 namespace TagLib.Asf
 {
@@ -252,7 +253,71 @@ namespace TagLib.Asf
          for (; i < names.Length; i ++)
             RemoveDescriptors (names [i]);
       }
-
+		
+      public override IPicture [] Pictures
+      {
+         get
+         {
+         	ArrayList l = new ArrayList ();
+         	
+            foreach (ContentDescriptor descriptor in GetDescriptors ("WM/Picture"))
+         	{
+         		ByteVector data = descriptor.ToByteVector ();
+            	Picture p = new Picture ();
+            	
+            	if (data.Count < 9)
+            		continue;
+            	
+            	int offset = 0;
+            	p.Type = (PictureType) data [0];
+         	   offset += 1;
+         	   int size = (int) data.Mid (offset, 4).ToUInt (false);
+         		offset += 4;
+         		
+         		int found = data.Find ("\0\0", offset, 2);
+         		if (found == -1)
+         			continue;
+         		p.MimeType = data.Mid (offset, found - offset).ToString (StringType.UTF16LE);
+         		offset = found + 2;
+         		
+         		found = data.Find ("\0\0", offset, 2);
+         		if (found == -1)
+         			continue;
+         		p.Description = data.Mid (offset, found - offset).ToString (StringType.UTF16LE);
+         		offset = found + 2;
+         		
+         		p.Data = data.Mid (offset, size);
+         		
+            	l.Add (p);
+            }
+            
+            return (Picture []) l.ToArray (typeof (Picture));
+         }
+         
+         set
+         {
+         	if (value == null || value.Length == 0)
+         	{
+         	   RemoveDescriptors ("WM/Picture");
+         		return;
+         	}
+         	
+         	ContentDescriptor [] descriptors = new ContentDescriptor [value.Length];
+         	for (int i = 0; i < value.Length; i ++)
+         	{
+         		ByteVector v = new ByteVector ();
+         		v.Add ((byte) value [i].Type);
+         		v.Add (Object.RenderDWord ((uint) value [i].Data.Count));
+         		v.Add (Object.RenderUnicode (value [i].MimeType));
+         		v.Add (Object.RenderUnicode (value [i].Description));
+         		v.Add (value [i].Data);
+         		
+            	descriptors [i] = new ContentDescriptor ("WM/Picture", v);
+         	}
+         	
+            SetDescriptors ("WM/Picture", descriptors);
+         }
+      }
       
       
       //////////////////////////////////////////////////////////////////////////

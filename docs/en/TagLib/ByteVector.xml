@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class ByteVector : System.Collections.IList" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -1132,6 +1132,38 @@
         <summary>Gets and sets a byte at a specific position.</summary>
         <value>A <see cref="T:System.Byte" /> describing the data at the specific position.</value>
         <remarks>This propertiy satisfies a requirement of <see cref="T:System.Collections.IList" />.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FromUri">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FromUri (string uri);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="uri" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="uri">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FromStream">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FromStream (System.IO.Stream stream);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="stream" Type="System.IO.Stream" />
+      </Parameters>
+      <Docs>
+        <param name="stream">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

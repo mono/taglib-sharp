@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public abstract class File" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -19,19 +19,6 @@
         <param name="file">A <see cref="T:System.String" /> containing the path of the file to read.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.File" />.</summary>
         <remarks>This is the only constructor for this class and is required to initialize file access. It throws an exception if the file is not readable.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Save">
-      <MemberSignature Language="C#" Value="public abstract bool Save ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ReadBlock">
@@ -548,6 +535,18 @@
       <Docs>
         <summary>To be added.</summary>
         <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Save">
+      <MemberSignature Language="C#" Value="public abstract void Save ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

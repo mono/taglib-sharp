@@ -1,5 +1,5 @@
-<Type Name="File+LocalFileAbstraction" FullName="TagLib.File+LocalFileAbstraction">
-  <TypeSignature Language="C#" Value="" />
+<Type Name="Picture" FullName="TagLib.Picture">
+  <TypeSignature Language="C#" Value="public class Picture : TagLib.IPicture" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.0.0.29834</AssemblyVersion>
@@ -9,40 +9,37 @@
   </Base>
   <Interfaces>
     <Interface>
-      <InterfaceName>TagLib.File+IFileAbstraction</InterfaceName>
+      <InterfaceName>TagLib.IPicture</InterfaceName>
     </Interface>
   </Interfaces>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public LocalFileAbstraction (string file);" />
+      <MemberSignature Language="C#" Value="public Picture ();" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="file" Type="System.String" />
-      </Parameters>
+      <Parameters />
       <Docs>
-        <param name="file">A <see cref="T:System.String" /> containing the path of the file to read.</param>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="CreateFile">
-      <MemberSignature Language="C#" Value="public static TagLib.File+IFileAbstraction CreateFile (string path);" />
+    <Member MemberName="CreateFromUri">
+      <MemberSignature Language="C#" Value="public static TagLib.Picture CreateFromUri (string uri);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.File+IFileAbstraction</ReturnType>
+        <ReturnType>TagLib.Picture</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="path" Type="System.String" />
+        <Parameter Name="uri" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="path">To be added.</param>
+        <param name="uri">To be added.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Name">
-      <MemberSignature Language="C#" Value="public string Name { get; };" />
+    <Member MemberName="MimeType">
+      <MemberSignature Language="C#" Value="public string MimeType { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -53,11 +50,11 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="ReadStream">
-      <MemberSignature Language="C#" Value="public System.IO.Stream ReadStream { get; };" />
+    <Member MemberName="Type">
+      <MemberSignature Language="C#" Value="public TagLib.PictureType Type { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.IO.Stream</ReturnType>
+        <ReturnType>TagLib.PictureType</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -65,11 +62,11 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="WriteStream">
-      <MemberSignature Language="C#" Value="public System.IO.Stream WriteStream { get; };" />
+    <Member MemberName="Description">
+      <MemberSignature Language="C#" Value="public string Description { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.IO.Stream</ReturnType>
+        <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -77,23 +74,11 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="IsReadable">
-      <MemberSignature Language="C#" Value="public bool IsReadable { get; };" />
+    <Member MemberName="Data">
+      <MemberSignature Language="C#" Value="public TagLib.ByteVector Data { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="IsWritable">
-      <MemberSignature Language="C#" Value="public bool IsWritable { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
+        <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>

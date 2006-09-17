@@ -1,6 +1,6 @@
 <Overview>
   <Assemblies>
-    <Assembly Name="taglib-sharp" Version="1.0.0.0">
+    <Assembly Name="taglib-sharp" Version="1.0.0.29834">
       <Attributes>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyCompany(Company="")</AttributeName>
@@ -47,6 +47,10 @@
       <Type Name="CombinedTag" />
       <Type Name="SupportedMimeType" />
       <Type Name="UnsupportedFormatException" />
+      <Type Name="IPicture" />
+      <Type Name="ReadOnlyException" />
+      <Type Name="Picture" />
+      <Type Name="PictureType" />
     </Namespace>
     <Namespace Name="TagLib.Mpc">
       <Type Name="Properties" />
@@ -102,7 +106,6 @@
       <Type Name="Header" />
       <Type Name="Footer" />
       <Type Name="ChannelType" />
-      <Type Name="PictureType" />
       <Type Name="FrameFactory+FrameCreator" />
     </Namespace>
     <Namespace Name="TagLib.Mpeg4">
@@ -133,6 +136,8 @@
       <Type Name="AppleTag" />
       <Type Name="BoxHeader" />
       <Type Name="File" />
+      <Type Name="IsoChunkOffsetBox" />
+      <Type Name="IsoChunkLargeOffsetBox" />
     </Namespace>
     <Namespace Name="TagLib.WavPack">
       <Type Name="File" />

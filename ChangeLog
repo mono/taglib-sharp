@@ -1,4 +1,10 @@
+2006-09-17  Brian Nickel  <brian.nickel@gmail.com>
+
+	* src/TagLib/Asf/Tag.cs: Added generic picture support.
+	* docs/en/*: Updated docs.
+
 2006-09-15  Brian Nickel  <brian.nickel@gmail.com>
+
 	* src/TagLib/Picture.cs:
 	* src/TagLib/Tag.cs:
 	* src/TagLib/CombinedTag.cs:
