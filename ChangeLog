@@ -1,5 +1,7 @@
 2006-09-20  Brian Nickel  <brian.nickel@gmail.com>
 
+	* src/TagLib/Mpc/File.cs: Added mime types.
+	* src/TagLib/Wavpack/File.cs: Added mime types.
 	* src/TagLib/ByteVector.cs: Fixed big endian StringType.UTF16
 	not to fail on big endian. (Confusing naming scheme by Microsoft.)
 

@@ -25,7 +25,9 @@ using System;
 
 namespace TagLib.Mpc
 {
-
+   [SupportedMimeType("taglib/mpc")]
+   [SupportedMimeType("taglib/mp+")]
+   [SupportedMimeType("audio/x-musepack")]
    public class File : TagLib.File
    {
       //////////////////////////////////////////////////////////////////////////
