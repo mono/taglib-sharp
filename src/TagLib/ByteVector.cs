@@ -462,8 +462,7 @@ namespace TagLib
       
       public string ToString (StringType type)
       {
-         string s = StringTypeToEncoding (type).GetString(Data, 0, Count);
-         
+         string s = StringTypeToEncoding (type, Mid (0,2)).GetString(Data, 0, Count);
          if (s.Length != 0 && (s [0] == 0xfffe || s [0] == 0xfeff)) // UTF16 BOM
             s = s.Substring (1);
          return s;
@@ -616,7 +615,7 @@ namespace TagLib
          if (s.Length > length)
             s = s.Substring (0, length);
          
-         byte [] data = StringTypeToEncoding (type).GetBytes (s);
+         byte [] data = StringTypeToEncoding (type, null).GetBytes (s);
          
          if (type != StringType.UTF16)
             return new ByteVector (data);
@@ -739,12 +738,13 @@ namespace TagLib
       }
       */
 
-      private static System.Text.Encoding StringTypeToEncoding (StringType type)
+      private static System.Text.Encoding StringTypeToEncoding (StringType type, ByteVector bom)
       {
          switch (type)
          {
             case StringType.UTF16:
-               return System.Text.Encoding.Unicode;
+               return (bom == null || (bom [0] == 0xFF && bom [1] == 0xFE)) ?
+                  System.Text.Encoding.Unicode : System.Text.Encoding.BigEndianUnicode;
             case StringType.UTF16BE:
                return System.Text.Encoding.BigEndianUnicode;
             case StringType.UTF8:

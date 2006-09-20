@@ -1,3 +1,8 @@
+2006-09-20  Brian Nickel  <brian.nickel@gmail.com>
+
+	* src/TagLib/ByteVector.cs: Fixed big endian StringType.UTF16
+	not to fail on big endian. (Confusing naming scheme by Microsoft.)
+
 2006-09-17  Brian Nickel  <brian.nickel@gmail.com>
 
 	* src/TagLib/Asf/Tag.cs: Added generic picture support.
@@ -9,6 +14,7 @@
 	* src/TagLib/Tag.cs:
 	* src/TagLib/CombinedTag.cs:
 	* src/TagLib/File.cs:
+	* docs/en/*: Updated docs.
 	* src/TagLib/Id3v2/Tag.cs:
 	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:
 	* src/TagLib/ByteVector.cs:
