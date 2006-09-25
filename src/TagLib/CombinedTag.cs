@@ -262,7 +262,7 @@ namespace TagLib
       public override IPicture [] Pictures {
          get {
             foreach(Tag tag in tags) {
-               if(tag.Pictures.Length > 0) {
+               if(tag != null && tag.Pictures.Length > 0) {
                   return tag.Pictures;
                }
             }

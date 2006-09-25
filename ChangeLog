@@ -1,3 +1,8 @@
+2006-09-25  Brian Nickel  <brian.nickel@gmail.com>
+
+	* src/TagLib/CombinedTag.cs: Fixed a bug in CombinedTag.get_Pictures
+	* configure.ac: Don't break the gac on binary compatable versions.
+
 2006-09-20  Brian Nickel  <brian.nickel@gmail.com>
 
 	* src/TagLib/Mpc/File.cs: Added mime types.
