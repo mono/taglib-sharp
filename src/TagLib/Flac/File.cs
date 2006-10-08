@@ -25,7 +25,7 @@ using System;
 
 namespace TagLib.Flac
 {
-   [SupportedMimeType("taglib/flac")]
+   [SupportedMimeType("taglib/flac", "flac")]
    [SupportedMimeType("audio/x-flac")]
    [SupportedMimeType("application/x-flac")]
    [SupportedMimeType("audio/flac")]

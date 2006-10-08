@@ -25,7 +25,7 @@ using System;
 
 namespace TagLib.Mpeg
 {
-   [SupportedMimeType("taglib/mp3")]
+   [SupportedMimeType("taglib/mp3", "mp3")]
    [SupportedMimeType("audio/x-mp3")]
    [SupportedMimeType("application/x-id3")]
    [SupportedMimeType("audio/mpeg")]

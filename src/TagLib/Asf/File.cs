@@ -25,8 +25,8 @@ using System;
 
 namespace TagLib.Asf
 {
-   [SupportedMimeType("taglib/wma")]
-   [SupportedMimeType("taglib/asf")]
+   [SupportedMimeType("taglib/wma", "wma")]
+   [SupportedMimeType("taglib/asf", "asf")]
    [SupportedMimeType("audio/x-ms-wma")]
    [SupportedMimeType("video/x-ms-asf")]
    public class File : TagLib.File

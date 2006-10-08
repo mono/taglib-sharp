@@ -25,7 +25,7 @@ using System;
 
 namespace TagLib.WavPack
 {
-   [SupportedMimeType("taglib/wv")]
+   [SupportedMimeType("taglib/wv", "wv")]
    [SupportedMimeType("audio/x-wavpack")]
    public class File : TagLib.File
    {

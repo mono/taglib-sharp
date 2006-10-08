@@ -25,7 +25,7 @@ using System;
 
 namespace TagLib.Ogg.Vorbis
 {
-   [SupportedMimeType("taglib/ogg")]
+   [SupportedMimeType("taglib/ogg", "ogg")]
    [SupportedMimeType("application/ogg")]
    [SupportedMimeType("application/x-ogg")]
    [SupportedMimeType("audio/vorbis")]

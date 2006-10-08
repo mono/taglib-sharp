@@ -28,26 +28,46 @@ namespace TagLib
     [AttributeUsage(AttributeTargets.Class, AllowMultiple=true)]
     public class SupportedMimeType : Attribute 
     {
-		private static ArrayList mime_types = new ArrayList();
-	
+        private static ArrayList mime_types = new ArrayList();
+    
         private string mime_type;
+        private string extension;
     
         public string MimeType {
             get { return mime_type; }
         }
 
+        public string Extension {
+            get { return extension; }
+        }
+
         public SupportedMimeType(string mime_type)
         {
             this.mime_type = mime_type;
-			mime_types.Add(this);
+            mime_types.Add(this);
         }
 
-		public IEnumerator AllMimeTypes {
-			get { 
-				foreach(SupportedMimeType type in mime_types) {
-					yield return type.MimeType;
-				}
-			}
-		}
+        public SupportedMimeType(string mime_type, string extension) : this(mime_type) 
+        {
+            this.extension = extension;
+        }
+
+        public IEnumerator AllMimeTypes {
+            get { 
+                foreach(SupportedMimeType type in mime_types) {
+                    yield return type.MimeType;
+                }
+            }
+        }
+
+        public IEnumerator AllExtensions {
+            get {
+                foreach(SupportedMimeType type in mime_types) {
+                    if(type.Extension != null) {
+                        yield return type.Extension;
+                    }
+                }
+            }
+        }
     }
 }
