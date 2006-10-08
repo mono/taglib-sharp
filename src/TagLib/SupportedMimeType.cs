@@ -29,7 +29,7 @@ namespace TagLib
     public class SupportedMimeType : Attribute 
     {
         private static ArrayList mime_types = new ArrayList();
-    
+   f 
         private string mime_type;
         private string extension;
     
@@ -52,7 +52,7 @@ namespace TagLib
             this.extension = extension;
         }
 
-        public IEnumerator AllMimeTypes {
+        public static IEnumerator AllMimeTypes {
             get { 
                 foreach(SupportedMimeType type in mime_types) {
                     yield return type.MimeType;
@@ -60,7 +60,7 @@ namespace TagLib
             }
         }
 
-        public IEnumerator AllExtensions {
+        public static IEnumerator AllExtensions {
             get {
                 foreach(SupportedMimeType type in mime_types) {
                     if(type.Extension != null) {
