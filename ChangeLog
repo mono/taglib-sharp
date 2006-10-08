@@ -1,3 +1,7 @@
+2006-10-08  Aaron Bockover  <abock@gnome.org>
+
+	* src/TagLib/SupportedMimeType.cs: Added AllMimeTypes static enumerator
+
 2006-09-25  Brian Nickel  <brian.nickel@gmail.com>
 
 	* src/TagLib/CombinedTag.cs: Fixed a bug in CombinedTag.get_Pictures

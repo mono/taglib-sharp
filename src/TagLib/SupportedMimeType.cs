@@ -21,12 +21,15 @@
  ***************************************************************************/
  
 using System;
+using System.Collections;
 
 namespace TagLib
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple=true)]
     public class SupportedMimeType : Attribute 
     {
+		private static ArrayList mime_types = new ArrayList();
+	
         private string mime_type;
     
         public string MimeType {
@@ -36,6 +39,15 @@ namespace TagLib
         public SupportedMimeType(string mime_type)
         {
             this.mime_type = mime_type;
+			mime_types.Add(this);
         }
+
+		public IEnumerator AllMimeTypes {
+			get { 
+				foreach(SupportedMimeType type in mime_types) {
+					yield return type.MimeType;
+				}
+			}
+		}
     }
 }
