@@ -29,7 +29,7 @@ namespace TagLib
     public class SupportedMimeType : Attribute 
     {
         private static ArrayList mime_types = new ArrayList();
-   f 
+ 
         private string mime_type;
         private string extension;
     
