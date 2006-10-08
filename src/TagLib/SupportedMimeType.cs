@@ -52,7 +52,7 @@ namespace TagLib
             this.extension = extension;
         }
 
-        public static IEnumerator AllMimeTypes {
+        public static IEnumerable AllMimeTypes {
             get { 
                 foreach(SupportedMimeType type in mime_types) {
                     yield return type.MimeType;
@@ -60,7 +60,7 @@ namespace TagLib
             }
         }
 
-        public static IEnumerator AllExtensions {
+        public static IEnumerable AllExtensions {
             get {
                 foreach(SupportedMimeType type in mime_types) {
                     if(type.Extension != null) {
