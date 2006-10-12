@@ -1,3 +1,13 @@
+2006-10-12  Brian Nickel  <brian.nickel@gmail.com>
+
+	* src/TagLib/Mpeg4/Boxes/IsoChunkLargeOffsetBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoChunkOffsetBox.cs:
+	* src/TagLib/Mpeg4/AppleTag.cs: Fixed a bug where changing tag size would
+	devalidate offsets for data before the tag.
+	* examples/BatchSet.cs:
+	* examples/Makefile.am: Add a simple program to update tags on multiple
+	files.
+
 2006-10-08  Aaron Bockover  <abock@gnome.org>
 
 	* src/TagLib/SupportedMimeType.cs: Added extension support

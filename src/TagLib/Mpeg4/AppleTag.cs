@@ -308,11 +308,11 @@ namespace TagLib.Mpeg4
                      {
                      	IsoChunkLargeOffsetBox co64_box = (IsoChunkLargeOffsetBox) box.FindChildDeep ("co64");
                         if (co64_box != null)
-                           co64_box.UpdateOffset (size_difference);
+                           co64_box.UpdateOffset (size_difference, position);
                         
                      	IsoChunkOffsetBox stco_box = (IsoChunkOffsetBox) box.FindChildDeep ("stco");
                         if (stco_box != null)
-                           stco_box.UpdateOffset ((int) size_difference);
+                           stco_box.UpdateOffset ((int) size_difference, position);
                      }
                }
                

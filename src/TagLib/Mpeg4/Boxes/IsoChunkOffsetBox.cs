@@ -20,32 +20,32 @@ namespace TagLib.Mpeg4
 	         offsets [i] = File.ReadBlock (4).ToUInt ();
       }
       
-      private ByteVector UpdateOffsetInternal (int size_difference)
+      private ByteVector UpdateOffsetInternal (int size_difference, long after)
       {
       	ByteVector output = ByteVector.FromUInt ((uint) offsets.Length);
          for (int i = 0; i < offsets.Length; i ++)
          {
-         	offsets [i] = (uint) (offsets [i] + size_difference);
-	         output += ByteVector.FromUInt (offsets [i]);
+            if (offsets [i] >= after)
+               offsets [i] = (uint) (offsets [i] + size_difference);
+            output += ByteVector.FromUInt (offsets [i]);
          }
          
          return output;
       }
       
-      public ByteVector Render (int size_difference)
+      public ByteVector Render (int size_difference, long after)
       {
-         
-         return Render (UpdateOffsetInternal (size_difference));
+         return Render (UpdateOffsetInternal (size_difference, after));
       }
       
       public override ByteVector Render ()
       {
-         return Render (0);
+         return Render (0, 0);
       }
       
-      public void UpdateOffset (int size_difference)
+      public void UpdateOffset (int size_difference, long after)
       {
-      	ByteVector new_data = UpdateOffsetInternal (size_difference);
+         ByteVector new_data = UpdateOffsetInternal (size_difference, after);
          File.Insert (new_data, DataPosition, new_data.Count);
       }
       
