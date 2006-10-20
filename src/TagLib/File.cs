@@ -625,7 +625,7 @@ namespace TagLib
          {
             name = file;
             if (!IsReadable)
-               throw new System.Exception ("File is not readable.");
+               throw new System.Exception ("File \"" + file + "\" is not readable.");
          }
          
          public string Name {get {return name;}}

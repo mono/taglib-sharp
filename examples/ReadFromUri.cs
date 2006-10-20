@@ -7,16 +7,8 @@ public class ReadFromUri
     public static void Main(string [] args)
     {
         if(args.Length == 0) {
-            Console.Error.WriteLine("USAGE: mono ReadFromUri.exe PATH");
+            Console.Error.WriteLine("USAGE: mono ReadFromUri.exe PATH [...]");
             return;
-        }
-      
-        string uri = args[0];
-        
-        try {
-            System.IO.FileInfo file_info = new System.IO.FileInfo(uri);
-            uri = file_info.FullName;
-        } catch {
         }
       
         Gnome.Vfs.Vfs.Initialize();
@@ -25,37 +17,48 @@ public class ReadFromUri
             VfsFileAbstraction.CreateFile));
             
         try {
-            TagLib.File file = TagLib.File.Create(uri);
-      
-            Console.WriteLine("Title:      " +  file.Tag.Title);
-            Console.WriteLine("Artists:    " + (file.Tag.Artists    == null ? "" : System.String.Join ("\n            ", file.Tag.Artists)));
-            Console.WriteLine("Performers: " + (file.Tag.Performers == null ? "" : System.String.Join ("\n            ", file.Tag.Performers)));
-            Console.WriteLine("Composers:  " + (file.Tag.Composers  == null ? "" : System.String.Join ("\n            ", file.Tag.Composers)));
-            Console.WriteLine("Album:      " +  file.Tag.Album);
-            Console.WriteLine("Comment:    " +  file.Tag.Comment);
-            Console.WriteLine("Genres:     " + (file.Tag.Genres     == null ? "" : System.String.Join ("\n            ", file.Tag.Genres)));
-            Console.WriteLine("Year:       " +  file.Tag.Year);
-            Console.WriteLine("Track:      " +  file.Tag.Track);
-            Console.WriteLine("TrackCount: " +  file.Tag.TrackCount);
-            Console.WriteLine("Disc:       " +  file.Tag.Disc);
-            Console.WriteLine("DiscCount:  " +  file.Tag.DiscCount + "\n");
-
-            Console.WriteLine("Length:     " + file.AudioProperties.Duration);
-            Console.WriteLine("Bitrate:    " + file.AudioProperties.Bitrate);
-            Console.WriteLine("SampleRate: " + file.AudioProperties.SampleRate);
-            Console.WriteLine("Channels:   " + file.AudioProperties.Channels + "\n");
+            foreach (string path in args)
+            {
+                string uri = path;
             
-            IPicture [] pictures = file.Tag.Pictures;
-            
-            Console.WriteLine("Embedded Pictures: " + pictures.Length);
-            
-            foreach(IPicture picture in pictures) {
-                Console.WriteLine(picture.Description);
-                Console.WriteLine("   MimeType: " + picture.MimeType);
-                Console.WriteLine("   Size:     " + picture.Data.Count);
-                Console.WriteLine("   Type:     " + picture.Type);
+                try {
+                    System.IO.FileInfo file_info = new System.IO.FileInfo(uri);
+                    uri = file_info.FullName;
+                } catch {
+                }
+                
+                TagLib.File file = TagLib.File.Create(uri);
+                
+                Console.WriteLine("Title:      " +  file.Tag.Title);
+                Console.WriteLine("Artists:    " + (file.Tag.Artists    == null ? "" : System.String.Join ("\n            ", file.Tag.Artists)));
+                Console.WriteLine("Performers: " + (file.Tag.Performers == null ? "" : System.String.Join ("\n            ", file.Tag.Performers)));
+                Console.WriteLine("Composers:  " + (file.Tag.Composers  == null ? "" : System.String.Join ("\n            ", file.Tag.Composers)));
+                Console.WriteLine("Album:      " +  file.Tag.Album);
+                Console.WriteLine("Comment:    " +  file.Tag.Comment);
+                Console.WriteLine("Genres:     " + (file.Tag.Genres     == null ? "" : System.String.Join ("\n            ", file.Tag.Genres)));
+                Console.WriteLine("Year:       " +  file.Tag.Year);
+                Console.WriteLine("Track:      " +  file.Tag.Track);
+                Console.WriteLine("TrackCount: " +  file.Tag.TrackCount);
+                Console.WriteLine("Disc:       " +  file.Tag.Disc);
+                Console.WriteLine("DiscCount:  " +  file.Tag.DiscCount + "\n");
+                
+                Console.WriteLine("Length:     " + file.AudioProperties.Duration);
+                Console.WriteLine("Bitrate:    " + file.AudioProperties.Bitrate);
+                Console.WriteLine("SampleRate: " + file.AudioProperties.SampleRate);
+                Console.WriteLine("Channels:   " + file.AudioProperties.Channels + "\n");
+                
+                IPicture [] pictures = file.Tag.Pictures;
+                
+                Console.WriteLine("Embedded Pictures: " + pictures.Length);
+                
+                foreach(IPicture picture in pictures) {
+                    Console.WriteLine(picture.Description);
+                    Console.WriteLine("   MimeType: " + picture.MimeType);
+                    Console.WriteLine("   Size:     " + picture.Data.Count);
+                    Console.WriteLine("   Type:     " + picture.Type);
+                }
+                
             }
-            
         } finally {
             Gnome.Vfs.Vfs.Shutdown();
         }
@@ -74,7 +77,7 @@ public class VfsFileAbstraction : TagLib.File.IFileAbstraction
             FileInfoOptions.GetAccessRights)).Permissions;
 
         if(!IsReadable) {
-            throw new System.IO.IOException("File is not readable.");
+            throw new System.IO.IOException("File \"" + name + "\" is not readable.");
         }
     }
 

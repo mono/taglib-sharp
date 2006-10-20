@@ -1,3 +1,11 @@
+2006-10-20  Brian Nickel  <brian.nickel@gmail.com>
+
+	* src/TagLib/File.cs: Include the name of the file throwing the exception
+	in LocalFileAbstraction.
+	* src/TagLib/Mpeg/Header.cs: Make frame length logic match Lame (from
+	TagLib Devel List).
+	* examples/ReadFromUri.cs: Read multiple files.
+
 2006-10-12  Brian Nickel  <brian.nickel@gmail.com>
 
 	* src/TagLib/Mpeg4/Boxes/IsoChunkLargeOffsetBox.cs:

@@ -205,8 +205,10 @@ namespace TagLib.Mpeg
          // Calculate the frame length
          if(layer == 1)
             frame_length = 24000 * 2 * bitrate / sample_rate + (IsPadded ? 1 : 0);
+         else if (layer == 3)
+            frame_length = 144000 * bitrate / sample_rate + (IsPadded ? 1 : 0);
          else
-            frame_length = 72000 * bitrate / sample_rate + (IsPadded ? 1 : 0);
+            frame_length = 144000 * bitrate / sample_rate / (version == Version.Version1 ? 1 : 2) + (IsPadded ? 1 : 0);
 
          // Now that we're done parsing, set this to be a valid frame.
          is_valid = true;
