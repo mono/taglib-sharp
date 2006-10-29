@@ -48,15 +48,34 @@ namespace TagLib
       public delegate IFileAbstraction FileAbstractionCreator (string path);
       public delegate File             FileTypeResolver       (string path, AudioProperties.ReadStyle style);
       
+      // A static Type array is used instead of getting types by
+      // reflecting the executing assembly as Assembly.GetTypes is very
+      // inefficient and leaks every type instance under Mono.
+      // Not reflecting taglib-sharp.dll saves about 120KB of heap
+      private static Type [] static_file_types = new Type [] {
+            typeof(TagLib.Asf.File),
+            typeof(TagLib.Flac.File),
+            typeof(TagLib.Mpc.File),
+            typeof(TagLib.Mpeg4.File),
+            typeof(TagLib.Mpeg.File),
+            typeof(TagLib.Ogg.File),
+            typeof(TagLib.WavPack.File),
+            typeof(TagLib.Ogg.Flac.File),
+            typeof(TagLib.Ogg.Vorbis.File)
+      };
+      
       static File()
       {
-         System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+         /* See above message about Assembly.GetTypes */
+         /*System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
          foreach(Type type in assembly.GetTypes()) {
             if(!type.IsSubclassOf(typeof(File))) {
                continue;
             }
-            
+        */
+
+         foreach(Type type in static_file_types) {
             Attribute [] attrs = Attribute.GetCustomAttributes(type, typeof(SupportedMimeType));
             if(attrs == null || attrs.Length == 0) {
                continue;

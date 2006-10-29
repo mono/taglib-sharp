@@ -30,7 +30,7 @@ namespace TagLib.Asf
       // private properties
       //////////////////////////////////////////////////////////////////////////
       private TimeSpan duration;
-      private short codec_id;
+      //private short codec_id;
       private short channels;
       private uint sample_rate;
       private uint bytes_per_second;
@@ -41,7 +41,7 @@ namespace TagLib.Asf
       public Properties (HeaderObject header, ReadStyle style) : base (style)
       {
          duration         = TimeSpan.Zero;
-         codec_id         = 0;
+         //codec_id         = 0;
          channels         = 0;
          sample_rate      = 0;
          bytes_per_second = 0;
@@ -60,7 +60,7 @@ namespace TagLib.Asf
                
                ByteVector data = stream.TypeSpecificData;
                
-               codec_id         = data.Mid (0, 2).ToShort (false);
+               //codec_id         = data.Mid (0, 2).ToShort (false);
                channels         = data.Mid (2, 2).ToShort (false);
                sample_rate      = data.Mid (4, 4).ToUInt  (false);
                bytes_per_second = data.Mid (8, 4).ToUInt  (false);

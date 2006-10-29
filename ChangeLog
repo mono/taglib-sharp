@@ -1,5 +1,15 @@
 2006-10-29  Aaron Bockover  <abock@gnome.org>
 
+	* src/TagLib/File.cs: Do not use reflection (Assembly.GetTypes) to find
+	file formats, instead use a static type table. Assembly.GetTypes leaks
+	types on the heap that will never be GCed (saves about 200KB of heap);
+	this means that if a new type is added, it must be entered in the static
+	type table for it to be available. Also this improves startup time.
+
+	* src/TagLib/Asf/Properties.cs: Suppress unused variable warning
+
+2006-10-29  Aaron Bockover  <abock@gnome.org>
+
 	* tests/samples: Organized into supported and unsupported formats, added
 	vector.bin as data for a checksum test of ByteVector
 
