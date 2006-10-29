@@ -5,7 +5,7 @@ ASSEMBLY_NAME = tests
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 ASSEMBLY_CSFILES = \
 	$(srcdir)/CodeTimer.cs \
-	$(srcdir)/fixtures/*.cs
+	$(srcdir)/fixtures/*/*.cs
 
 NUNIT_TESTER_NAME = ConsoleUi
 NUNIT_TESTER = $(NUNIT_TESTER_NAME).exe

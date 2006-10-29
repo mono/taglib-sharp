@@ -5,16 +5,24 @@ namespace TagLib
     public class CodeTimer : IDisposable
     {
         private DateTime start;
+        private TimeSpan elapsed_time = TimeSpan.Zero;
         private string label;
         
-        public CodeTimer(string label) 
+        public CodeTimer()
+        {
+            start = DateTime.Now;
+        }
+        
+        public CodeTimer(string label) : this()
         {
             this.label = label;
-            start = DateTime.Now;
         }
 
         public TimeSpan ElapsedTime {
-            get { return DateTime.Now - start; }
+            get { 
+                DateTime now = DateTime.Now;
+                return elapsed_time == TimeSpan.Zero ? now - start : elapsed_time;
+            }
         }
 
         public void WriteElapsed(string message)
@@ -24,7 +32,10 @@ namespace TagLib
 
         public void Dispose()
         {
-            WriteElapsed("timer stopped:");
+            elapsed_time = DateTime.Now - start;
+            if(label != null) {
+                WriteElapsed("timer stopped:");
+            }
         }
     }
 }

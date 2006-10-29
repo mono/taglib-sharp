@@ -1,17 +1,18 @@
 using System;
 using NUnit.Framework;
+using TagLib;
 
-namespace TagLib
-{   
+namespace TagLib.FormatTests
+{
     [TestFixture]
-    public class AsfFormatTest
+    public class ApeFormatTest
     {
         private File file;
         
         [TestFixtureSetUp]
         public void Init()
         {
-            file = File.Create("samples/sample.wma");
+            file = File.Create("samples/sample.ape");
         }
     
         [Test]
@@ -24,13 +25,14 @@ namespace TagLib
         [Test]
         public void ReadTags()
         {
-            Assert.AreEqual("WMA album", file.Tag.Album);
-            Assert.AreEqual("WMA artist", file.Tag.FirstArtist);
-            Assert.AreEqual("WMA comment", file.Tag.Comment);
+            Assert.AreEqual("APE album", file.Tag.Album);
+            Assert.AreEqual("APE artist", file.Tag.FirstArtist);
+            Assert.AreEqual("APE comment", file.Tag.Comment);
             Assert.AreEqual("Acid Punk", file.Tag.FirstGenre);
-            Assert.AreEqual("WMA title", file.Tag.Title);
-            Assert.AreEqual(5, file.Tag.Track);
-            Assert.AreEqual(2005, file.Tag.Year);
+            Assert.AreEqual("APE title", file.Tag.Title);
+            Assert.AreEqual(6, file.Tag.Track);
+            Assert.AreEqual(7, file.Tag.TrackCount);
+            Assert.AreEqual(1234, file.Tag.Year);
         }
     }
 }

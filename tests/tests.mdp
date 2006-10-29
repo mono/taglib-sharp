@@ -17,16 +17,22 @@
   <Contents>
     <File name="./CodeTimer.cs" subtype="Code" buildaction="Compile" />
     <File name="./fixtures" subtype="Directory" buildaction="Compile" />
-    <File name="./fixtures/ApeFormatTest.cs" subtype="Code" buildaction="Compile" />
-    <File name="./fixtures/AsfFormatTest.cs" subtype="Code" buildaction="Compile" />
-    <File name="./fixtures/ByteVectorTest.cs" subtype="Code" buildaction="Compile" />
-    <File name="./fixtures/FlacFormatTest.cs" subtype="Code" buildaction="Compile" />
-    <File name="./fixtures/Id3BothFormatTest.cs" subtype="Code" buildaction="Compile" />
-    <File name="./fixtures/Id3V1FormatTest.cs" subtype="Code" buildaction="Compile" />
-    <File name="./fixtures/Id3V2FormatTest.cs" subtype="Code" buildaction="Compile" />
-    <File name="./fixtures/M4aFormatTest.cs" subtype="Code" buildaction="Compile" />
-    <File name="./fixtures/MpcFormatTest.cs" subtype="Code" buildaction="Compile" />
-    <File name="./fixtures/OggFormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/TagLib.FormatTests" subtype="Directory" buildaction="Compile" />
+    <File name="./fixtures/TagLib.FormatTests/ApeFormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/TagLib.FormatTests/AsfFormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/TagLib.FormatTests/FlacFormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/TagLib.FormatTests/Id3BothFormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/TagLib.FormatTests/Id3V1FormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/TagLib.FormatTests/M4aFormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/TagLib.FormatTests/Id3V2FormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/TagLib.FormatTests/MpcFormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/TagLib.FormatTests/OggFormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/TagLib.CollectionTests" subtype="Directory" buildaction="Compile" />
+    <File name="./fixtures/TagLib.CollectionTests/StringListTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/TagLib.CollectionTests/IntListTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/TagLib.CollectionTests/ByteVectorTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/TagLib.CollectionTests/ByteVectorListTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/PerformanceTest.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="nunit.core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />

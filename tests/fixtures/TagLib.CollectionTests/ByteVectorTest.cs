@@ -1,8 +1,9 @@
 using System;
 using System.Security.Cryptography;
 using NUnit.Framework;
+using TagLib;
 
-namespace TagLib
+namespace TagLib.CollectionTests
 {   
     [TestFixture]
     public class ByteVectorTest

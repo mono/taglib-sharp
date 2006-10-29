@@ -1,7 +1,8 @@
 using System;
 using NUnit.Framework;
+using TagLib;
 
-namespace TagLib
+namespace TagLib.FormatTests
 {   
     [TestFixture]
     public class Id3BothFormatTest

@@ -1,5 +1,9 @@
 2006-10-29  Aaron Bockover  <abock@gnome.org>
 
+	* tests/: Added more tests (IntList, StringList), restructured layout
+
+2006-10-29  Aaron Bockover  <abock@gnome.org>
+
 	* src/TagLib/File.cs: Do not use reflection (Assembly.GetTypes) to find
 	file formats, instead use a static type table. Assembly.GetTypes leaks
 	types on the heap that will never be GCed (saves about 200KB of heap);
