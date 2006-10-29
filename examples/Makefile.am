@@ -1,9 +1,10 @@
 READ_FROM_URI = ReadFromUri
 SET_PICTURES = SetPictures
+LIST_TYPES = ListSupportedMimeTypes
 BATCH_SET = BatchSet
 
 REFERENCES = -r:taglib-sharp.dll
-EXAMPLES_BUILD = taglib-sharp.dll $(SET_PICTURES).exe  $(BATCH_SET).exe
+EXAMPLES_BUILD = taglib-sharp.dll $(SET_PICTURES).exe $(LIST_TYPES).exe $(BATCH_SET).exe
 
 if HAVE_GNOME_SHARP
 EXAMPLES_BUILD += $(READ_FROM_URI).exe
@@ -22,11 +23,14 @@ endif
 $(SET_PICTURES).exe: $(SET_PICTURES).cs
 	$(MCS) -out:$@ -debug $(REFERENCES) $<
 
+$(LIST_TYPES).exe: $(LIST_TYPES).cs
+	$(MCS) -out:$@ -debug $(REFERENCES) $<
+
 $(BATCH_SET).exe: $(BATCH_SET).cs
 	$(MCS) -out:$@ -debug $(REFERENCES) $<
 
-EXTRA_DIST = $(READ_FROM_URI).cs $(SET_PICTURES).cs  $(BATCH_SET).cs
-
+EXTRA_DIST = $(READ_FROM_URI).cs $(SET_PICTURES).cs $(LIST_TYPES).cs $(BATCH_SET).cs
+DISTCLEANFILES = *.pidb
 CLEANFILES = *.dll *.exe *.mdb
 MAINTAINERCLEANFILES = Makefile.in
 

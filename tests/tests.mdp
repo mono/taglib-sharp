@@ -1,0 +1,36 @@
+<Project name="UnitTests" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="./" assembly="tests" />
+      <Build debugmode="True" target="Library" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="./" assembly="tests" />
+      <Build debugmode="False" target="Library" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <DeployTargets />
+  <Contents>
+    <File name="./CodeTimer.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures" subtype="Directory" buildaction="Compile" />
+    <File name="./fixtures/ApeFormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/AsfFormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/ByteVectorTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/FlacFormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/Id3BothFormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/Id3V1FormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/Id3V2FormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/M4aFormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/MpcFormatTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/OggFormatTest.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <References>
+    <ProjectReference type="Gac" localcopy="True" refto="nunit.core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <ProjectReference type="Gac" localcopy="True" refto="nunit.framework, Version=2.2.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <ProjectReference type="Project" localcopy="True" refto="taglib-sharp" />
+  </References>
+</Project>

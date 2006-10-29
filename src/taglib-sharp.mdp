@@ -1,0 +1,114 @@
+<Project name="taglib-sharp" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="./" assembly="taglib-sharp" />
+      <Build debugmode="True" target="Library" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="True" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="./" assembly="taglib-sharp" />
+      <Build debugmode="False" target="Library" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="True" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <DeployTargets />
+  <Contents>
+    <File name="./TagLib/AudioProperties.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/ByteVector.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/ByteVectorList.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/CombinedTag.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Debugger.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/File.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/IntList.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Picture.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/ReadOnlyException.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/StringList.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/SupportedMimeType.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Tag.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/UnsupportedFormatException.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Ape/Footer.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Ape/Item.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Ape/Tag.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Asf/ContentDescriptionObject.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Asf/ContentDescriptor.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Asf/ExtendedContentDescriptionObject.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Asf/File.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Asf/FilePropertiesObject.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Asf/Guid.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Asf/HeaderObject.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Asf/Object.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Asf/PaddingObject.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Asf/Properties.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Asf/StreamPropertiesObject.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Asf/Tag.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Asf/UnknownObject.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Flac/File.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Flac/Properties.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v1/GenreList.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v1/StringHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v1/Tag.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v2/Frames/AttachedPictureFrame.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v2/Frames/CommentsFrame.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v2/Frames/PrivateFrame.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v2/Frames/RelativeVolumeFrame.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v2/Frames/TextIdentificationFrame.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v2/Frames/UniqueFileIdentifierFrame.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v2/Frames/UnknownFrame.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v2/ExtendedHeader.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v2/Footer.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v2/Frame.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v2/FrameFactory.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v2/FrameHeader.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v2/Header.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v2/SynchData.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Id3v2/Tag.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpc/File.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpc/Properties.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg/File.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg/Header.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg/Properties.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg/XingHeader.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/AppleTag.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/BoxHeader.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/File.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Properties.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/AppleAdditionalInfoBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/AppleAnnotationBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/AppleDataBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/AppleElementaryStreamDescriptor.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/AppleItemListBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/Box.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/FileBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/FullBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/IsoChunkLargeOffsetBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/IsoChunkOffsetBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/IsoFreeSpaceBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/IsoHandlerBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/IsoMediaBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/IsoMediaInformationBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/IsoMetaBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/IsoMovieBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/IsoMovieHeaderBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/IsoSampleDescriptionBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/IsoSampleEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/IsoSampleTableBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/IsoTrackBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/IsoUserDataBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Boxes/UnknownBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Ogg/File.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Ogg/Page.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Ogg/PageHeader.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Ogg/XiphComment.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Ogg/Flac/File.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Ogg/Vorbis/File.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Ogg/Vorbis/Properties.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/WavPack/File.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/WavPack/Properties.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <References>
+    <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+  </References>
+</Project>

@@ -109,7 +109,7 @@ $(ASSEMBLY): $(TAGLIB_CSFILES) $(taglib_generated_sources) taglib-sharp.snk
 all: $(ASSEMBLY)
 
 EXTRA_DIST = $(TAGLIB_CSFILES) $(taglib_sources_in) AssemblyInfo-windows.cs
-
+DISTCLEANFILES = *.pidb
 CLEANFILES = $(ASSEMBLY) $(ASSEMBLY).mdb taglib-sharp.snk 
 MAINTAINERCLEANFILES = Makefile.in
 

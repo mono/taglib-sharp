@@ -1,3 +1,34 @@
+2006-10-29  Aaron Bockover  <abock@gnome.org>
+
+	* tests/samples: Organized into supported and unsupported formats, added
+	vector.bin as data for a checksum test of ByteVector
+
+	* tests/Makefile.am: Set up NUnit console test driver, can be 
+	run with 'make run-test'
+
+	* tests/AssemblyInfo.cs:
+	* tests/ConsoleUi.cs: NUnit console test driver
+
+	* tests/CodeTimer.cs: Timing utility
+
+	* tests/fixtures/*FormatTest.cs: File format reading test fixtures
+
+	* tests/fixtures/ByteVectorTests.cs: Extensive tests for ByteVector
+
+	* tests/tests.mdp: MonoDevelop project for tests that allows running
+	NUnit tests with in the IDE for graphical results, recommended for
+	running tests as history is logged here (preferred over 'make run-test')
+
+	* configure.ac: NUnit detection, optional
+
+	* examples/tangerine-use-taglibsharp.patch: Removed, tangerine now
+	uses taglib-sharp instead of entagged-sharp
+
+	* examples/Makefile.am:
+	* examples/ListSupportedMimeTypes.cs: New example
+
+	* taglib-sharp.mds: Restored MonoDevelop solution
+
 2006-10-20  Brian Nickel  <brian.nickel@gmail.com>
 
 	* src/TagLib/File.cs: Include the name of the file throwing the exception

@@ -21,7 +21,7 @@ AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
 PKG_CHECK_MODULES(MONO, mono >= $MONO_REQUIRED)
 
 dnl Check for Mono
-AC_PATH_PROG(MCS, mcs)
+AC_PATH_PROG(MCS, gmcs)
 if test x$MCS = x; then
 	AC_MSG_ERROR(You need mcs)
 fi
@@ -79,6 +79,12 @@ else
 	AM_CONDITIONAL(HAVE_GNOME_SHARP, false)
 fi
 
+PKG_CHECK_MODULES(MONO_NUNIT, mono-nunit >= 1.0, do_tests="yes", do_tests="no") AC_SUBST(MONO_NUNIT_LIBS)
+AM_CONDITIONAL(ENABLE_TESTS, test "x$do_tests" = "xyes")
+if test "x$do_tests" = "xno"; then
+	AC_MSG_WARN([Could not find mono-nunit: tests will not be available.])
+fi
+
 AC_OUTPUT([
 Makefile
 taglib-sharp.pc
@@ -86,5 +92,6 @@ src/Makefile
 src/AssemblyInfo.cs
 examples/Makefile
 docs/Makefile
+tests/Makefile
 ])
 
