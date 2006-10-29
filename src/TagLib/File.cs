@@ -1,7 +1,8 @@
 /***************************************************************************
-    copyright            : (C) 2006 by Brian Nickel
+    copyright            : (C) 2005 by Brian Nickel
+                         : (C) 2006 Novell, Inc.
     email                : brian.nickel@gmail.com
-    based on             : audioproperties.cpp from TagLib
+                         : Aaron Bockover <abockover@novell.com>
  ***************************************************************************/
 
 /***************************************************************************
