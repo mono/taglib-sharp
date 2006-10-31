@@ -1,3 +1,17 @@
+2006-10-30  Aaron Bockover  <abock@gnome.org>
+
+	* src/TagLib/IntList.cs:
+	* src/TagLib/ByteVector.cs:
+	* src/TagLib/StringList.cs:
+	* src/TagLib/ByteVectorList.cs: Use generics, refactored code, massive 
+	optimizations; all collections except ByteVector derives new ListBase<T>
+
+	* src/TagLib/ListBase.cs: New generic base collection
+
+	* src/Makefile.am: Updated
+
+	* tests/fixtures/PerformanceTest.cs: Updated
+
 2006-10-20  Brian Nickel  <brian.nickel@gmail.com>
 
 	* src/TagLib/Mpc/Properties.cs: Fix property reading.
