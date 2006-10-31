@@ -370,7 +370,7 @@ namespace TagLib.Mpeg
             // This is kind of bad, because the ID3 tag could be anywhere (and
             // under the old method, if it were an end tag there wouldn't be any
             // room to find a frame. So this is just a "good guess".
-            return NextFrameOffset (id3v2_tag != null ? id3v2_tag.Header.CompleteTagSize : 0);
+            return NextFrameOffset (id3v2_tag.Header.CompleteTagSize > 10 ? id3v2_tag.Header.CompleteTagSize : 0);
          }
       }
 

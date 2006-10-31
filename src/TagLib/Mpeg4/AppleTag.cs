@@ -397,7 +397,8 @@ namespace TagLib.Mpeg4
                   l.Add (box.Text);
                else if (box.Flags == (int) AppleDataBox.FlagTypes.ContainsData)
                {
-                  string genre = Id3v1.GenreList.Genre (box.Data [0]);
+                  // iTunes stores genre's in the GNRE box as (ID3# + 1).
+                  string genre = Id3v1.GenreList.Genre ((byte) (box.Data.ToShort (true) - 1));
                   if (genre != null)
                      l.Add (genre);
                }

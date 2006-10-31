@@ -1,3 +1,11 @@
+2006-10-20  Brian Nickel  <brian.nickel@gmail.com>
+
+	* src/TagLib/Mpc/Properties.cs: Fix property reading.
+	* src/TagLib/Mpc/File.cs: Fix total brokenness.
+	* src/TagLib/Mpeg/File.cs: Fix reading with no ID3v2 Tag.
+	* src/TagLib/Mpeg4/AppleTag.cs: Fix reading of ID3v1 Genres.
+	* tests/fixtures/TagLib.FormatTests/MpcFormatTest.cs: Fixed test. (I think.)
+
 2006-10-29  Aaron Bockover  <abock@gnome.org>
 
 	* tests/: Added more tests (IntList, StringList), restructured layout

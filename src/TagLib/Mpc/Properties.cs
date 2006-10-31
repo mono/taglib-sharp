@@ -74,7 +74,7 @@ namespace TagLib.Mpc
       //////////////////////////////////////////////////////////////////////////
       private void Read (ByteVector data, long stream_length, ReadStyle style)
       {
-         if (data.StartsWith ("MP+"))
+         if (!data.StartsWith ("MP+"))
             return;
 
          version = data [3] & 15;

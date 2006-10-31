@@ -246,7 +246,7 @@ namespace TagLib.Mpc
          
 
          // Look for an APE tag
-         long ape_location = FindApe (id3v1_location != 0);
+         long ape_location = FindApe (id3v1_location >= 0);
 
          if (ape_location >= 0)
             ape_tag = new Ape.Tag (this, ape_location);
@@ -264,11 +264,15 @@ namespace TagLib.Mpc
 
          
          // Look for MPC metadata
-         Seek ((id3v2_location >= 0) ? (id3v2_location + id3v2_tag.Header.CompleteTagSize) : 0);
+         if(properties_style == Properties.ReadStyle.None)
+            return;
          
-         if(properties_style != Properties.ReadStyle.None)
-            properties = new Properties (ReadBlock ((int) Properties.HeaderSize),
-               Length - Tell - ape_tag.Footer.CompleteTagSize);
+         long start_location = (id3v2_location >= 0) ? (id3v2_location + id3v2_tag.Header.CompleteTagSize) : 0;
+         long length = Length - start_location - (id3v1_location >= 0 ? 128 : 0) - (ape_location >= 0 ? ape_tag.Footer.CompleteTagSize : 0);
+         Seek (start_location);
+         
+         properties = new Properties (ReadBlock ((int) Properties.HeaderSize),
+            length);
       }
       
       private long FindApe (bool has_id3v1)
