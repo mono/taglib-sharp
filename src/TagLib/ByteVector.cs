@@ -193,16 +193,45 @@ namespace TagLib
         {
             return Mid(index, Int32.MaxValue);
         }
-
-        public int Find(ByteVector pattern, int offset, int byte_align)
+        
+        public int Find (ByteVector pattern, int offset, int byte_align)
         {
-            // FIXME: Impliment searching as done in TagLib
-            int end_byte = Count - pattern.Count;
+            if (pattern.Count > Count || offset >= Count - 1)
+                return -1;
 
-            for(int i = offset; i <= end_byte; i += byte_align) {
-                if(ContainsAt(pattern, i)) {
-                    return i;
+            // Let's go ahead and special case a pattern of size one since that's common
+            // and easy to make fast.
+
+            if (pattern.Count == 1)
+            {
+                byte p = pattern [0];
+                for (int i = offset; i < Count; i += byte_align)
+                    if (this [i] == p)
+                        return i;
+                return -1;
+            }
+
+            int [] last_occurrence = new int [256];
+
+            for (int i = 0; i < 256; ++i)
+                last_occurrence [i] = pattern.Count;
+
+            for (int i = 0; i < pattern.Count - 1; ++i)
+                last_occurrence [pattern [i]] = pattern.Count - i - 1;
+
+            for (int i = pattern.Count - 1 + offset; i < Count; i += last_occurrence [this [i]])
+            {
+                int iBuffer = i;
+                int iPattern = pattern.Count - 1;
+                
+                while(iPattern >= 0 && this [iBuffer] == pattern [iPattern])
+                {
+                    --iBuffer;
+                    --iPattern;
                 }
+
+                if(-1 == iPattern && (iBuffer + 1) % byte_align == 0)
+                    return iBuffer + 1;
             }
 
             return -1;
@@ -218,20 +247,38 @@ namespace TagLib
             return Find(pattern, 0, 1);
         }
       
-        public int RFind(ByteVector pattern, int offset, int byte_align)
+        public int RFind (ByteVector pattern, int offset, int byte_align)
         {
-            //FIXME: Impliment searching as done in TagLib
-            int end_byte = Count - pattern.Count - offset;
+            if (pattern.Count == 0 || pattern.Count > Count || Count - pattern.Count - offset < 0)
+                return -1;
 
-            for(int i = end_byte; i >= 0; i -= byte_align) {
-                if(ContainsAt(pattern, i)) {
-                    return i;
-                }
+            // Let's go ahead and special case a pattern of size one since that's common
+            // and easy to make fast.
+
+            if (pattern.Count == 1)
+            {
+                byte p = pattern [0];
+                for (int i = Count - offset - 1; i >= 0; i -= byte_align)
+                    if (this [i] == p)
+                        return i;
+                return -1;
             }
+
+            int [] first_occurrence = new int [256];
+
+            for (int i = 0; i < 256; ++i)
+                first_occurrence [i] = pattern.Count;
+
+            for (int i = pattern.Count - 1; i > 0; --i)
+                first_occurrence [pattern [i]] = i;
+            
+            for (int i = Count - offset - pattern.Count; i >= 0; i -= first_occurrence [this [i]])
+                if (ContainsAt (pattern, i))
+                    return i;
 
             return -1;
         }
-
+        
         public int RFind(ByteVector pattern, int offset)
         {
             return RFind(pattern, offset, 1);
