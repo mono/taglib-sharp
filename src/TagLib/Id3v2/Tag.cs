@@ -130,14 +130,15 @@ namespace TagLib.Id3v2
          
          // Set the tag size.
          header.TagSize = (uint) tag_data.Count;
-
+         
+         tag_data.Insert (0, header.Render ());
          if (header.FooterPresent)
          {
             footer = new Footer (header);
-            return header.Render () + tag_data + footer.Render ();
+            tag_data.Add (footer.Render ());
          }
          
-         return header.Render () + tag_data;
+         return tag_data;
       }
       
       

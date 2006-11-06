@@ -55,7 +55,7 @@ namespace TagLib.Asf
          foreach (Object child in children)
             if (child.Guid != Asf.Guid.AsfPaddingObject)
             {
-               output += child.Render ();
+               output.Add (child.Render ());
                child_count ++;
             }
          
@@ -64,11 +64,13 @@ namespace TagLib.Asf
          if (size_diff != 0)
          {
             PaddingObject obj = new PaddingObject ((uint) (size_diff > 0 ? 4096 : - size_diff));
-            output += obj.Render ();
+            output.Add (obj.Render ());
             child_count ++;
          }
          
-         return Render (RenderDWord (child_count) + reserved + output);
+         output.Insert (0, reserved);
+         output.Insert (0, RenderDWord (child_count));
+         return output;
       }
       
       public void AddObject (Object obj)

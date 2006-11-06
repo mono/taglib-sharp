@@ -74,17 +74,16 @@ namespace TagLib.Asf
          ByteVector description_bytes = RenderUnicode (description);
          ByteVector rating_bytes      = RenderUnicode (rating);
          
-         ByteVector output = new ByteVector ();
-         output += RenderWord ((short) title_bytes.Count);
-         output += RenderWord ((short) author_bytes.Count);
-         output += RenderWord ((short) copyright_bytes.Count);
-         output += RenderWord ((short) description_bytes.Count);
-         output += RenderWord ((short) rating_bytes.Count);
-         output += title_bytes;
-         output += author_bytes;
-         output += copyright_bytes;
-         output += description_bytes;
-         output += rating_bytes;
+         ByteVector output = RenderWord ((short) title_bytes.Count);
+         output.Add (RenderWord ((short) author_bytes.Count));
+         output.Add (RenderWord ((short) copyright_bytes.Count));
+         output.Add (RenderWord ((short) description_bytes.Count));
+         output.Add (RenderWord ((short) rating_bytes.Count));
+         output.Add (title_bytes);
+         output.Add (author_bytes);
+         output.Add (copyright_bytes);
+         output.Add (description_bytes);
+         output.Add (rating_bytes);
          
          return Render (output);
       }

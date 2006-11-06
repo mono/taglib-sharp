@@ -27,7 +27,7 @@ namespace TagLib.Mpeg4
          {
             if (offsets [i] >= after)
                offsets [i] = (uint) (offsets [i] + size_difference);
-            output += ByteVector.FromUInt (offsets [i]);
+            output.Add (ByteVector.FromUInt (offsets [i]));
          }
          
          return output;

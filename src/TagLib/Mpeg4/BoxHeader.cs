@@ -60,21 +60,19 @@ namespace TagLib.Mpeg4
             large_size += 8;
          }
          
-         // Get ready to output.
-         ByteVector output = new ByteVector ();
          
          // Add the box size and type to the output.
-         output += ByteVector.FromUInt ((size == 8 || size == 24) ? (uint) large_size : 1);
-         output += box_type;
+         ByteVector output = ByteVector.FromUInt ((size == 8 || size == 24) ? (uint) large_size : 1);
+         output.Add (box_type);
          
          // If the box size is 16 or 32, we must have more a large header to
          // append.
          if (size == 16 || size == 32)
-            output += ByteVector.FromLong ((long) large_size);
+            output.Add (ByteVector.FromLong ((long) large_size));
          
          // The only reason for such a big size is an extended type. Extend!!!
          if (size >= 24)
-            output += (extended_type != null) ? extended_type.Mid (0, 16) : new ByteVector (16);
+            output.Add ((extended_type != null) ? extended_type.Mid (0, 16) : new ByteVector (16));
          
          return output;
       }

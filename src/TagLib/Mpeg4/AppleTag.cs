@@ -439,11 +439,10 @@ namespace TagLib.Mpeg4
          }
          set
          {
-            ByteVector v = new ByteVector ();
-            v += ByteVector.FromShort (0);
-            v += ByteVector.FromShort ((short) value);
-            v += ByteVector.FromShort ((short) TrackCount);
-            v += ByteVector.FromShort (0);
+            ByteVector v = ByteVector.FromShort (0);
+            v.Add (ByteVector.FromShort ((short) value));
+            v.Add (ByteVector.FromShort ((short) TrackCount));
+            v.Add (ByteVector.FromShort (0));
             
             SetData (FixId ("trkn"), v, (int) AppleDataBox.FlagTypes.ContainsData);
          }

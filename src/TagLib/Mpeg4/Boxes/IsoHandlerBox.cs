@@ -39,10 +39,10 @@ namespace TagLib.Mpeg4
       public override ByteVector Render ()
       {
          ByteVector output = new ByteVector (4);
-         output += handler_type;
-         output += new ByteVector (12);
-         output += ByteVector.FromString (name);
-         output += new ByteVector (2);
+         output.Add (handler_type);
+         output.Add (new ByteVector (12));
+         output.Add (ByteVector.FromString (name));
+         output.Add (new ByteVector (2));
          return Render (output);
       }
       

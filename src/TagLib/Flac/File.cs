@@ -104,7 +104,6 @@ namespace TagLib.Flac
                   id3v2_size = (int) header.CompleteTagSize;
 
                Insert (id3v2_tag_data, id3v2_location, id3v2_size);
-               System.Console.WriteLine ("ID3v2: " + id3v2_size + " " + id3v2_tag_data.Count);
                flac_data_begin = id3v2_location + id3v2_tag_data.Count;
             }
             else

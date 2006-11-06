@@ -67,19 +67,17 @@ namespace TagLib.Asf
       
       public override ByteVector Render ()
       {
-         ByteVector output = new ByteVector ();
-         
-         output += file_id.Render ();
-         output += RenderQWord (file_size);
-         output += RenderQWord (creation_date);
-         output += RenderQWord (data_packets_count);
-         output += RenderQWord (play_duration);
-         output += RenderQWord (send_duration);
-         output += RenderQWord (preroll);
-         output += RenderDWord (flags);
-         output += RenderDWord (minimum_data_packet_size);
-         output += RenderDWord (maximum_data_packet_size);
-         output += RenderDWord (maximum_bitrate);
+         ByteVector output = file_id.Render ();
+         output.Add (RenderQWord (file_size));
+         output.Add (RenderQWord (creation_date));
+         output.Add (RenderQWord (data_packets_count));
+         output.Add (RenderQWord (play_duration));
+         output.Add (RenderQWord (send_duration));
+         output.Add (RenderQWord (preroll));
+         output.Add (RenderDWord (flags));
+         output.Add (RenderDWord (minimum_data_packet_size));
+         output.Add (RenderDWord (maximum_data_packet_size));
+         output.Add (RenderDWord (maximum_bitrate));
          
          return Render (output);
       }

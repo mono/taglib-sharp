@@ -50,7 +50,9 @@ namespace TagLib.Asf
       
       public static ByteVector RenderUnicode (string str)
       {
-         return ByteVector.FromString (str, StringType.UTF16LE) + ByteVector.FromShort (0);
+         ByteVector v = ByteVector.FromString (str, StringType.UTF16LE);
+         v.Add (ByteVector.FromShort (0));
+         return v;
       }
       
       public static ByteVector RenderDWord (uint value)
@@ -82,9 +84,11 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       protected ByteVector Render (ByteVector data)
       {
-         if (data == null)
-            data = new ByteVector ();
-         return Guid.Render () + RenderQWord (data.Count + 24) + data;
+         long length = (data != null ? data.Count : 0) + 24;
+         ByteVector v = Guid.Render ();
+         v.Add (RenderQWord (length));
+         v.Add (data);
+         return v;
       }
    }
 }

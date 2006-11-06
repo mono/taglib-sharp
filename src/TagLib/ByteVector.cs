@@ -366,7 +366,21 @@ namespace TagLib
                 data.AddRange(vector);
             }
         }
-
+        
+        public void Insert (int index, ByteVector vector)
+        {
+            if(vector != null) {
+                data.InsertRange (index, vector);
+            }
+        }
+        
+        public void Insert (int index, byte [] vector)
+        {
+            if(vector != null) {
+                data.InsertRange (index, vector);
+            }
+        }
+        
         public ByteVector Resize(int size, byte padding)
         {
             if(Count > size) {

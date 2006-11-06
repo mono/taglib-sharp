@@ -1,3 +1,31 @@
+2006-11-06  Brian Nickel  <brian.nickel@gmail.com>
+
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Id3v2/FrameHeader.cs:
+	* src/TagLib/Id3v2/Frame.cs:
+	* src/TagLib/ByteVector.cs:
+	* src/TagLib/Ape/Tag.cs:
+	* src/TagLib/Flac/File.cs:
+	* src/TagLib/Asf/Tag.cs:
+	* src/TagLib/Asf/HeaderObject.cs:
+	* src/TagLib/Asf/StreamPropertiesObject.cs:
+	* src/TagLib/Asf/FilePropertiesObject.cs:
+	* src/TagLib/Asf/ContentDescriptionObject.cs:
+	* src/TagLib/Asf/ExtendedContentDescriptionObject.cs:
+	* src/TagLib/Asf/Object.cs:
+	* src/TagLib/Asf/Guid.cs:
+	* src/TagLib/Asf/ContentDescriptor.cs:
+	* src/TagLib/Mpeg4/Boxes/FullBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoChunkLargeOffsetBox.cs:
+	* src/TagLib/Mpeg4/Boxes/Box.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoHandlerBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoChunkOffsetBox.cs:
+	* src/TagLib/Mpeg4/AppleTag.cs:
+	* src/TagLib/Mpeg4/BoxHeader.cs: Improve performance by not using plus
+	operator so much. Less allocations.
+	* tests/fixtures/TagLib.FormatTests/Id3BothFormatTest.cs: Fixed multiformat
+	tests. Removed Tag Count test.
+
 2006-11-03  Brian Nickel  <brian.nickel@gmail.com>
 
 	* src/TagLib/ByteVector.cs: Use Boyer-Moore String Searching Algorithm 

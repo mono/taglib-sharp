@@ -43,11 +43,10 @@ namespace TagLib.Mpeg4
       // Render this box with the extra data at the beginning.
       protected override ByteVector Render (ByteVector data)
       {
-         ByteVector output = new ByteVector ();
+         ByteVector output = new ByteVector ((byte) version);
          
-         output += (byte) version;
-         output += ByteVector.FromUInt (flags).Mid (1,3);
-         output += data;
+         output.Add (ByteVector.FromUInt (flags).Mid (1,3));
+         output.Add (data);
          
          return base.Render (output);
       }

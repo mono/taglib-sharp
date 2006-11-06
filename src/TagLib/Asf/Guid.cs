@@ -20,6 +20,7 @@
  *   USA                                                                   *
  ***************************************************************************/
 
+using System.Text;
 using System.Collections;
 using System;
 
@@ -53,11 +54,12 @@ namespace TagLib.Asf
       
       public ByteVector Render ()
       {
-         return ByteVector.FromUInt  (part1, false).Mid (0, 4)
-              + ByteVector.FromShort (part2, false).Mid (0, 2)
-              + ByteVector.FromShort (part3, false).Mid (0, 2)
-              + ByteVector.FromShort (part4, true).Mid (0, 2)
-              + ByteVector.FromLong  (part5, true).Mid (2, 6);
+         ByteVector v = ByteVector.FromUInt  (part1, false).Mid (0, 4);
+         v.Add (ByteVector.FromShort (part2, false).Mid (0, 2));
+         v.Add (ByteVector.FromShort (part3, false).Mid (0, 2));
+         v.Add (ByteVector.FromShort (part4, true).Mid (0, 2));
+         v.Add (ByteVector.FromLong  (part5, true).Mid (2, 6));
+         return v;
       }
       
       public static Guid AsfHeaderObject                     = new Guid (0x75B22630, 0x668E, 0x11CF, 0xA6D9, 0x00AA0062CE6C);
@@ -99,11 +101,18 @@ namespace TagLib.Asf
       
       public new string ToString ()
       {
-         return RenderNumber (part1, 8) + "-"
-              + RenderNumber (part2, 4) + "-"
-              + RenderNumber (part3, 4) + "-"
-              + RenderNumber (part4, 4) + "-"
-              + RenderNumber (part5, 12);
+         string dash = "-";
+         StringBuilder b = new StringBuilder (36);
+         b.Append (RenderNumber (part1, 8));
+         b.Append (dash);
+         b.Append (RenderNumber (part2, 4));
+         b.Append (dash);
+         b.Append (RenderNumber (part3, 4));
+         b.Append (dash);
+         b.Append (RenderNumber (part4, 4));
+         b.Append (dash);
+         b.Append (RenderNumber (part5, 12));
+         return b.ToString ();
       }
       
       private string RenderNumber (long value, int length)
@@ -112,10 +121,11 @@ namespace TagLib.Asf
          if (s.Length > length)
             return s.Substring (s.Length - length);
          
-         while (s.Length < length)
-            s = "0" + s;
+         StringBuilder b = new StringBuilder (length);
+         while (b.Length < length)
+            b.Insert (0, '0');
          
-         return s;
+         return b.ToString ();
       }
    }
 }

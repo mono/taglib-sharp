@@ -183,7 +183,9 @@ namespace TagLib.Id3v2
       {
          ByteVector flags = new ByteVector (2, (byte) 0); // just blank for the moment
          
-         return frame_id + SynchData.FromUInt (frame_size) + flags;
+         flags.Insert (0, SynchData.FromUInt (frame_size));
+         flags.Insert (0, frame_id);
+         return flags;
       }
       
       public static uint Size (uint version)

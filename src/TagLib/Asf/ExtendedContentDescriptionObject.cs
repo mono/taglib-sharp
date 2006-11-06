@@ -66,7 +66,7 @@ namespace TagLib.Asf
          foreach (ContentDescriptor desc in descriptors)
          {
             count ++;
-            output += desc.Render ();
+            output.Add (desc.Render ());
          }
          
          return Render (RenderWord (count) + output);

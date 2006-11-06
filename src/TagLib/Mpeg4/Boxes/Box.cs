@@ -402,9 +402,9 @@ namespace TagLib.Mpeg4
                if (box.GetType () == typeof (IsoFreeSpaceBox))
                   free_found = true;
                else
-                  output += box.Render ();
+                  output.Add (box.Render ());
          else
-            output += Data;
+            output.Add (Data);
          
          // If there was a free, don't take it away, and let meta be a special case.
          if (free_found || BoxType == "meta")
@@ -413,17 +413,19 @@ namespace TagLib.Mpeg4
             
             // If we have room for free space, add it so we don't have to resize the file.
             if (header.DataSize != 0 && size_difference >= 8)
-               output += (new IsoFreeSpaceBox ((ulong) size_difference, this)).Render ();
+               output. Add ((new IsoFreeSpaceBox ((ulong) size_difference, this)).Render ());
             // If we're getting bigger, get a lot bigger so we might not have to again.
             else
-               output += (new IsoFreeSpaceBox (2048, this)).Render ();
+               output.Add ((new IsoFreeSpaceBox (2048, this)).Render ());
          }
          
          // Adjust the header's data size to match the content.
          header.DataSize = (ulong) (data.Count + output.Count);
          
          // Render the full box.
-         return header.Render () + data + output;
+         output.Insert (0, data);
+         output.Insert (0, header.Render ());
+         return output;
       }
       
       

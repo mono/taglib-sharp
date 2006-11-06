@@ -305,8 +305,7 @@ namespace TagLib.Asf
          	ContentDescriptor [] descriptors = new ContentDescriptor [value.Length];
          	for (int i = 0; i < value.Length; i ++)
          	{
-         		ByteVector v = new ByteVector ();
-         		v.Add ((byte) value [i].Type);
+         		ByteVector v = new ByteVector ((byte) value [i].Type);
          		v.Add (Object.RenderDWord ((uint) value [i].Data.Count));
          		v.Add (Object.RenderUnicode (value [i].MimeType));
          		v.Add (Object.RenderUnicode (value [i].Description));

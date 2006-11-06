@@ -72,7 +72,9 @@ namespace TagLib.Ape
          footer.TagSize       = (uint) (data.Count + Footer.Size);
          footer.HeaderPresent = true;
 
-         return footer.RenderHeader () + data + footer.RenderFooter ();
+         data.Insert (0, footer.RenderHeader ());
+         data.Add (footer.RenderFooter ());
+         return data;
       }
       
       public void RemoveItem (string key)

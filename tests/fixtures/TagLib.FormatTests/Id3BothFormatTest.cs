@@ -44,51 +44,26 @@ namespace TagLib.FormatTests
         }
         
         [Test]
-        [Ignore("Multiple tags not supported")]
-        public void TagCounts()
-        {
-            // this test fails on purpose as we do not have support
-            // multiples for any tag, which is possible with combined
-            // with ID3v1 and ID3v2 tags for example - entagged-sharp
-            // supports these cases and we should too
-            
-            //Assert.AreEqual(2, file.Tag.Albums.Length);
-            //Assert.AreEqual(2, file.Tag.Comments.Length);
-            //Assert.AreEqual(2, file.Tag.TrackNumbers.Length);
-            //Assert.AreEqual(1, file.Tag.TrackCounts.Length);
-            //Assert.AreEqual(2, file.Tag.Years.Length);
-            
-            //Assert.AreEqual(1, file.Tag.Artists.Length);
-            //Assert.AreEqual(2, file.Tag.Genres.Length);
-        }
-        
-        [Test]
-        [Ignore("Multiple tags not supported")]
         public void FirstTag()
         {
-            // Again, we don't support multiples
-            
-            //Assert.AreEqual("MP3 title v2", file.Tag.Titles[0] as string);
-            //Assert.AreEqual("MP3 album v2", file.Tag.Albums[0] as string);
-            //Assert.AreEqual("MP3 comment v2", file.Tag.Comments[0] as string);
-            //Assert.AreEqual(1234, (int)file.Tag.Years[0]);
-            //Assert.AreEqual(6, (int)file.Tag.Tracks[0]);
-            //Assert.AreEqual(7, (int)file.Tag.TrackCounts[0]);
+            Assert.AreEqual("MP3 title v2", file.GetTag (TagLib.TagTypes.Id3v2).Title);
+            Assert.AreEqual("MP3 album v2", file.GetTag (TagLib.TagTypes.Id3v2).Album);
+            Assert.AreEqual("MP3 comment v2", file.GetTag (TagLib.TagTypes.Id3v2).Comment);
+            Assert.AreEqual(1234, (int)file.GetTag (TagLib.TagTypes.Id3v2).Year);
+            Assert.AreEqual(6, (int)file.GetTag (TagLib.TagTypes.Id3v2).Track);
+            Assert.AreEqual(7, (int)file.GetTag (TagLib.TagTypes.Id3v2).TrackCount);
         }
 
         [Test]
-        [Ignore("Multiple tags not supported")]
         public void SecondTag()
         {
-            // Again, we don't support multiples
-            
-            //Assert.AreEqual("MP3 title", file.Tag.Titles[1] as string);
-            //Assert.AreEqual("MP3 album", file.Tag.Albums[1] as string);
-            //Assert.AreEqual("MP3 comment", file.Tag.Comments[1] as string);
-            Assert.AreEqual("MP3 artist", file.Tag.Artists[0] as string);
-            //Assert.AreEqual(1235, (int)file.Tag.Years[1]);
-            //Assert.AreEqual(6, (int)file.Tag.Tracks[1]);
-            //Assert.AreEqual(7, (int)file.Tag.TrackCounts[0]);
+            Assert.AreEqual("MP3 title", file.GetTag (TagLib.TagTypes.Id3v1).Title);
+            Assert.AreEqual("MP3 album", file.GetTag (TagLib.TagTypes.Id3v1).Album);
+            Assert.AreEqual("MP3 comment", file.GetTag (TagLib.TagTypes.Id3v1).Comment);
+            Assert.AreEqual("MP3 artist", file.GetTag (TagLib.TagTypes.Id3v1).FirstArtist);
+            Assert.AreEqual(1235, (int)file.GetTag (TagLib.TagTypes.Id3v1).Year);
+            Assert.AreEqual(6, (int)file.GetTag (TagLib.TagTypes.Id3v1).Track);
+            Assert.AreEqual(0, (int)file.GetTag (TagLib.TagTypes.Id3v1).TrackCount);
         }
     }
 }

@@ -47,8 +47,9 @@ namespace TagLib.Id3v2
          ByteVector field_data = RenderFields ();
          header.FrameSize = (uint) field_data.Count;
          ByteVector header_data = header.Render ();
+         header_data.Add (field_data);
 
-         return header_data + field_data;
+         return header_data;
       }
       
       //////////////////////////////////////////////////////////////////////////

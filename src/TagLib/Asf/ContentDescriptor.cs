@@ -151,13 +151,16 @@ namespace TagLib.Asf
 
          ByteVector v = Object.RenderUnicode (name);
          
-         ByteVector data = Object.RenderWord ((short) v.Count) + v + Object.RenderWord ((short) type);
+         ByteVector data = Object.RenderWord ((short) v.Count);
+         data.Add (v);
+         data.Add (Object.RenderWord ((short) type));
          
          switch (type)
          {
             case DataType.Unicode:
                v = Object.RenderUnicode (sValue);
-               data += Object.RenderWord ((short) v.Count) + v;
+               data.Add (Object.RenderWord ((short) v.Count));
+               data.Add (v);
             break;
             
             case DataType.Bytes:

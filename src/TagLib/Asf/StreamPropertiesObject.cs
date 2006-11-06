@@ -61,17 +61,15 @@ namespace TagLib.Asf
       
       public override ByteVector Render ()
       {
-         ByteVector output = new ByteVector ();
-         
-         output += stream_type.Render ();
-         output += error_correction_type.Render ();
-         output += RenderQWord (time_offset);
-         output += RenderDWord ((uint) type_specific_data.Count);
-         output += RenderDWord ((uint) error_correction_data.Count);
-         output += RenderWord  (flags);
-         output += RenderDWord (reserved);
-         output += type_specific_data;
-         output += error_correction_data;
+         ByteVector output = stream_type.Render ();
+         output.Add (error_correction_type.Render ());
+         output.Add (RenderQWord (time_offset));
+         output.Add (RenderDWord ((uint) type_specific_data.Count));
+         output.Add (RenderDWord ((uint) error_correction_data.Count));
+         output.Add (RenderWord  (flags));
+         output.Add (RenderDWord (reserved));
+         output.Add (type_specific_data);
+         output.Add (error_correction_data);
          
          return Render (output);
       }
