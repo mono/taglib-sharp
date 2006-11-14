@@ -43,51 +43,10 @@ namespace TagLib
    }
    
    public abstract class File
-   {
-      private static Hashtable file_types = new Hashtable();
-      
+   {  
       public delegate IFileAbstraction FileAbstractionCreator (string path);
       public delegate File             FileTypeResolver       (string path, AudioProperties.ReadStyle style);
-      
-      // A static Type array is used instead of getting types by
-      // reflecting the executing assembly as Assembly.GetTypes is very
-      // inefficient and leaks every type instance under Mono.
-      // Not reflecting taglib-sharp.dll saves about 120KB of heap
-      private static Type [] static_file_types = new Type [] {
-            typeof(TagLib.Asf.File),
-            typeof(TagLib.Flac.File),
-            typeof(TagLib.Mpc.File),
-            typeof(TagLib.Mpeg4.File),
-            typeof(TagLib.Mpeg.File),
-            typeof(TagLib.Ogg.File),
-            typeof(TagLib.WavPack.File),
-            typeof(TagLib.Ogg.Flac.File),
-            typeof(TagLib.Ogg.Vorbis.File)
-      };
-      
-      static File()
-      {
-         /* See above message about Assembly.GetTypes */
-         /*System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-
-         foreach(Type type in assembly.GetTypes()) {
-            if(!type.IsSubclassOf(typeof(File))) {
-               continue;
-            }
-        */
-
-         foreach(Type type in static_file_types) {
-            Attribute [] attrs = Attribute.GetCustomAttributes(type, typeof(SupportedMimeType));
-            if(attrs == null || attrs.Length == 0) {
-               continue;
-            }
-            
-            foreach(SupportedMimeType attr in attrs) {
-               file_types.Add(attr.MimeType, type);
-            } 
-         }
-      }
-      
+         
       public enum AccessMode
       {
          Read,
@@ -583,12 +542,12 @@ namespace TagLib
             mimetype = "taglib/" + ext.ToLower();
          }
  
-         Type file_type = file_types[mimetype] as Type;
-         if(file_type == null)
-         {
+         if(!FileTypes.AvailableTypes.ContainsKey(mimetype)) {
             throw new UnsupportedFormatException(String.Format("{0} ({1})", path, mimetype));
          }
          
+         Type file_type = FileTypes.AvailableTypes[mimetype];
+                 
          try {
             File file = (File)Activator.CreateInstance(file_type, new object [] { path, style });
             file.MimeType = mimetype;

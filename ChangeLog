@@ -1,3 +1,14 @@
+2006-11-13  Aaron Bockover  <abock@gnome.org>
+
+	* src/TagLib/SupportedMimeType.cs: Load mime types in static constructor
+
+	* src/TagLib/FileTypes.cs: File type loader that initializes the 
+	SupportedMimeType support
+
+	* src/TagLib/File.cs: Use FileTypes.AvailableTypes
+
+	* src/Makefile.am: Added src/TagLib/FileTypes.cs
+
 2006-11-06  Brian Nickel  <brian.nickel@gmail.com>
 
 	* src/TagLib/Id3v2/Tag.cs:

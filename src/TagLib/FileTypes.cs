@@ -1,7 +1,6 @@
 /***************************************************************************
     copyright            : (C) 2006 Novell, Inc.
     email                : abockover@novell.com
-    based on             : Entagged#
  ***************************************************************************/
 
 /***************************************************************************
@@ -25,54 +24,54 @@ using System.Collections.Generic;
 
 namespace TagLib
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple=true)]
-    public class SupportedMimeType : Attribute 
+    public static class FileTypes
     {
-        private static List<SupportedMimeType> mime_types = new List<SupportedMimeType>();
- 
-        private string mime_type;
-        private string extension;
+        private static Dictionary<string, Type> file_types;
 
-        static SupportedMimeType()
+        // A static Type array is used instead of getting types by
+        // reflecting the executing assembly as Assembly.GetTypes is very
+        // inefficient and leaks every type instance under Mono.
+        // Not reflecting taglib-sharp.dll saves about 120KB of heap
+        private static Type [] static_file_types = new Type [] {
+            typeof(TagLib.Asf.File),
+            typeof(TagLib.Flac.File),
+            typeof(TagLib.Mpc.File),
+            typeof(TagLib.Mpeg4.File),
+            typeof(TagLib.Mpeg.File),
+            typeof(TagLib.Ogg.File),
+            typeof(TagLib.WavPack.File),
+            typeof(TagLib.Ogg.Flac.File),
+            typeof(TagLib.Ogg.Vorbis.File)
+        };
+
+        static FileTypes()
         {
-            FileTypes.Init();
+            Init();
         }
 
-        public SupportedMimeType(string mime_type)
+        internal static void Init()
         {
-            this.mime_type = mime_type;
-            mime_types.Add(this);
-        }
-
-        public SupportedMimeType(string mime_type, string extension) : this(mime_type) 
-        {
-            this.extension = extension;
-        }
-    
-        public string MimeType {
-            get { return mime_type; }
-        }
-
-        public string Extension {
-            get { return extension; }
-        }
-        
-        public static IEnumerable<string> AllMimeTypes {
-            get { 
-                foreach(SupportedMimeType type in mime_types) {
-                    yield return type.MimeType;
+            if(file_types != null) {
+                return;
+            }
+            
+            file_types = new Dictionary<string, Type>();
+            
+            foreach(Type type in static_file_types) {
+                Attribute [] attrs = Attribute.GetCustomAttributes(type, typeof(SupportedMimeType));
+                if(attrs == null || attrs.Length == 0) {
+                    continue;
                 }
+
+                foreach(SupportedMimeType attr in attrs) {
+                    file_types.Add(attr.MimeType, type);
+                } 
             }
         }
 
-        public static IEnumerable<string> AllExtensions {
-            get {
-                foreach(SupportedMimeType type in mime_types) {
-                    if(type.Extension != null) {
-                        yield return type.Extension;
-                    }
-                }
-            }
+        public static IDictionary<string, Type> AvailableTypes {
+            get { return file_types; }
         }
     }
 }
+
