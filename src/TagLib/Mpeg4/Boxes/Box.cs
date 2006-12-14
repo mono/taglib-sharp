@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections.Generic;
 
 namespace TagLib.Mpeg4
 {
@@ -11,7 +11,7 @@ namespace TagLib.Mpeg4
       private Box        parent;
       private ByteVector data;
       private bool       load_children_started;
-      private ArrayList  children;
+      private List<Box>  children;
       
       
       //////////////////////////////////////////////////////////////////////////
@@ -23,7 +23,7 @@ namespace TagLib.Mpeg4
          this.header   = header;
          this.parent   = parent;
          this.data     = null;
-         this.children = new ArrayList ();
+         this.children = new List<Box> ();
          this.load_children_started = false;
       }
       
@@ -250,7 +250,7 @@ namespace TagLib.Mpeg4
       public virtual long NextBoxPosition    {get {return header.NextBoxPosition;}}
       
       // All child boxes of this box.
-      public Box [] Children {get {LoadChildren (); return (Box []) children.ToArray (typeof (Box));}}
+      public Box [] Children {get {LoadChildren (); return (Box []) children.ToArray ();}}
       
       // The handler used for this box.
       public IsoHandlerBox Handler

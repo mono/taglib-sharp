@@ -105,7 +105,7 @@ namespace TagLib.Id3v1
          set {title = value != null ? value.Trim () : "";}
       }
       
-      public override string [] Artists
+      public override string [] AlbumArtists
       {
          get {return new string [] {artist};}
          set {artist = (new StringList (value)).ToString (",").Trim ();}

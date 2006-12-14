@@ -1,337 +1,93 @@
 <Type Name="IntList" FullName="TagLib.IntList">
-  <TypeSignature Language="C#" Value="public class IntList : System.Collections.IList" />
+  <TypeSignature Language="C#" Value="public class IntList : TagLib.ListBase&lt;int&gt;" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>System.Object</BaseTypeName>
-  </Base>
+    <BaseTypeName>TagLib.ListBase&lt;System.Int32&gt;</BaseTypeName>
+  <BaseTypeArguments><BaseTypeArgument TypeParamName="T">System.Int32</BaseTypeArgument></BaseTypeArguments></Base>
   <Interfaces>
-    <Interface>
-      <InterfaceName>System.Collections.IList</InterfaceName>
-    </Interface>
   </Interfaces>
-  <Attributes>
-    <Attribute>
-      <AttributeName>System.Reflection.DefaultMember(MemberName="Item")</AttributeName>
-    </Attribute>
-  </Attributes>
   <Members>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public IntList ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public IntList (int s);" />
+      <MemberSignature Language="C#" Value="public IntList (int value);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="s" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="s">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="value" Type="System.Int32" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public IntList (TagLib.IntList s);" />
+      <MemberSignature Language="C#" Value="public IntList (TagLib.IntList list);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="s" Type="TagLib.IntList" />
-      </Parameters>
-      <Docs>
-        <param name="s">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="list" Type="TagLib.IntList" /></Parameters>
+      <Docs><param name="list">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public IntList (int[] s);" />
+      <MemberSignature Language="C#" Value="public IntList (int[] array);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="s" Type="System.Int32[]" />
-      </Parameters>
-      <Docs>
-        <param name="s">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="array" Type="System.Int32[]" /></Parameters>
+      <Docs><param name="array">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
-    <Member MemberName="Add">
-      <MemberSignature Language="C#" Value="public int Add (int value);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="value" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Clear">
-      <MemberSignature Language="C#" Value="public void Clear ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Contains">
-      <MemberSignature Language="C#" Value="public bool Contains (int value);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="value" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="IndexOf">
-      <MemberSignature Language="C#" Value="public int IndexOf (int v);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="v" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="v">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Insert">
-      <MemberSignature Language="C#" Value="public void Insert (int index, int value);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="index" Type="System.Int32" />
-        <Parameter Name="value" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="index">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Remove">
-      <MemberSignature Language="C#" Value="public void Remove (int value);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="value" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="RemoveAt">
-      <MemberSignature Language="C#" Value="public void RemoveAt (int index);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="index" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="index">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Add">
-      <MemberSignature Language="C#" Value="public void Add (TagLib.IntList l);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="l" Type="TagLib.IntList" />
-      </Parameters>
-      <Docs>
-        <param name="l">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Add">
-      <MemberSignature Language="C#" Value="public void Add (int[] l);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="l" Type="System.Int32[]" />
-      </Parameters>
-      <Docs>
-        <param name="l">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="SortedInsert">
-      <MemberSignature Language="C#" Value="public void SortedInsert (int s, bool unique);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="s" Type="System.Int32" />
-        <Parameter Name="unique" Type="System.Boolean" />
-      </Parameters>
-      <Docs>
-        <param name="s">To be added.</param>
-        <param name="unique">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="SortedInsert">
-      <MemberSignature Language="C#" Value="public void SortedInsert (int s);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="s" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="s">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ToArray">
-      <MemberSignature Language="C#" Value="public int[] ToArray ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32[]</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <Member MemberName="IsReadOnly">
       <MemberSignature Language="C#" Value="public bool IsReadOnly { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="IsFixedSize">
       <MemberSignature Language="C#" Value="public bool IsFixedSize { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="Count">
       <MemberSignature Language="C#" Value="public int Count { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="IsSynchronized">
       <MemberSignature Language="C#" Value="public bool IsSynchronized { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="SyncRoot">
       <MemberSignature Language="C#" Value="public object SyncRoot { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Object</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Object</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="IsEmpty">
       <MemberSignature Language="C#" Value="public bool IsEmpty { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="Item">
-      <MemberSignature Language="C#" Value="public int Item[int index] { set; get; };" />
+      <MemberSignature Language="C#" Value="public int this[int ] { set; get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="index" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="index">To be added.</param>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="" Type="System.Int32" /></Parameters>
+      <Docs><param name="">To be added.</param><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
   <Docs>

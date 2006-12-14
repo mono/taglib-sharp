@@ -21,7 +21,7 @@
  *   USA                                                                   *
  ***************************************************************************/
 
-using System.Collections;
+using System.Collections.Generic;
 using System;
 
 #if (!WINDOWS)
@@ -43,7 +43,9 @@ namespace TagLib
    }
    
    public abstract class File
-   {  
+   {
+      private static Dictionary<string, System.Type> file_types = new Dictionary<string, System.Type> ();
+      
       public delegate IFileAbstraction FileAbstractionCreator (string path);
       public delegate File             FileTypeResolver       (string path, AudioProperties.ReadStyle style);
          
@@ -61,7 +63,7 @@ namespace TagLib
       private string mime_type;
       private static uint buffer_size = 1024;
       
-      private static ArrayList file_type_resolvers = new ArrayList ();
+      private static List<FileTypeResolver> file_type_resolvers = new List<FileTypeResolver> ();
       private static FileAbstractionCreator file_abstraction_creator = new FileAbstractionCreator (LocalFileAbstraction.CreateFile);
       
       //////////////////////////////////////////////////////////////////////////

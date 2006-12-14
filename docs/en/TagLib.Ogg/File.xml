@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public abstract class File : TagLib.File" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.File</BaseTypeName>
@@ -12,83 +12,41 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="protected File (string file);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="file" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="file">A <see cref="T:System.String" /> containing the path of the file to read.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="file" Type="System.String" /></Parameters>
+      <Docs><param name="file">A <see cref="T:System.String" /> containing the path of the file to read.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="GetPacket">
       <MemberSignature Language="C#" Value="public TagLib.ByteVector GetPacket (uint i);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="i" Type="System.UInt32" />
-      </Parameters>
-      <Docs>
-        <param name="i">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="i" Type="System.UInt32" /></Parameters>
+      <Docs><param name="i">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="SetPacket">
       <MemberSignature Language="C#" Value="public void SetPacket (uint i, TagLib.ByteVector p);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="i" Type="System.UInt32" />
-        <Parameter Name="p" Type="TagLib.ByteVector" />
-      </Parameters>
-      <Docs>
-        <param name="i">To be added.</param>
-        <param name="p">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="i" Type="System.UInt32" /><Parameter Name="p" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="i">To be added.</param><param name="p">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="FirstPageHeader">
       <MemberSignature Language="C#" Value="public TagLib.Ogg.PageHeader FirstPageHeader { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Ogg.PageHeader</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Ogg.PageHeader</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="LastPageHeader">
       <MemberSignature Language="C#" Value="public TagLib.Ogg.PageHeader LastPageHeader { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Ogg.PageHeader</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Ogg.PageHeader</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="ClearPageData">
       <MemberSignature Language="C#" Value="protected void ClearPageData ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
   <Docs>

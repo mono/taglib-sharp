@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class FrameFactory" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -12,46 +12,22 @@
     <Member MemberName="CreateFrame">
       <MemberSignature Language="C#" Value="public static TagLib.Id3v2.Frame CreateFrame (TagLib.ByteVector data, uint version);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Id3v2.Frame</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="data" Type="TagLib.ByteVector" />
-        <Parameter Name="version" Type="System.UInt32" />
-      </Parameters>
-      <Docs>
-        <param name="data">A <see cref="T:TagLib.ByteVector" /> beginning with an ID3v2 frame header.</param>
-        <param name="version">A <see cref="T:System.UInt32" /> describing the ID3v2 version which the frame is stored in.</param>
-        <summary>Creates an ID3v2.4 frame based from the data provided and version provided.</summary>
-        <returns>An applicable derivative of <see cref="T:TagLib.Id3v2.Frame" /> if the data is valid, otherwise null.</returns>
-        <remarks>The default frame types that are available are contained in this name space. However, additional frame types can be created and added to the frame factory through <see cref="M:TagLib.Id3v2.FrameFactory.AddFrameCreator(TagLib.Id3v2.FrameFactory+FrameCreator)" />.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Id3v2.Frame</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="data" Type="TagLib.ByteVector" /><Parameter Name="version" Type="System.UInt32" /></Parameters>
+      <Docs><param name="data">A <see cref="T:TagLib.ByteVector" /> beginning with an ID3v2 frame header.</param><param name="version">A <see cref="T:System.UInt32" /> describing the ID3v2 version which the frame is stored in.</param><summary>Creates an ID3v2.4 frame based from the data provided and version provided.</summary><returns>An applicable derivative of <see cref="T:TagLib.Id3v2.Frame" /> if the data is valid, otherwise null.</returns><remarks>The default frame types that are available are contained in this name space. However, additional frame types can be created and added to the frame factory through <see cref="M:TagLib.Id3v2.FrameFactory.AddFrameCreator(TagLib.Id3v2.FrameFactory+FrameCreator)" />.</remarks></Docs>
     </Member>
     <Member MemberName="DefaultTextEncoding">
       <MemberSignature Language="C#" Value="public static TagLib.StringType DefaultTextEncoding { set; get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.StringType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>A <see cref="T:TagLib.StringType" /> describing the encoding to use when saving frames.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.StringType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>A <see cref="T:TagLib.StringType" /> describing the encoding to use when saving frames.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="AddFrameCreator">
-      <MemberSignature Language="C#" Value="public static void AddFrameCreator (TagLib.Id3v2.FrameFactory+FrameCreator creator);" />
+      <MemberSignature Language="C#" Value="public static void AddFrameCreator (TagLib.Id3v2.FrameFactory.FrameCreator creator);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="creator" Type="TagLib.Id3v2.FrameFactory+FrameCreator" />
-      </Parameters>
-      <Docs>
-        <param name="creator">A <see cref="T:TagLib.Id3v2.FrameFactory+FrameCreator" /> that provides access to a new frame type.</param>
-        <summary>Adds a new frame creator to the top of the frame creation stack.</summary>
-        <remarks>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="creator" Type="TagLib.Id3v2.FrameFactory+FrameCreator" /></Parameters>
+      <Docs><param name="creator">A <see cref="T:TagLib.Id3v2.FrameFactory+FrameCreator" /> that provides access to a new frame type.</param><summary>Adds a new frame creator to the top of the frame creation stack.</summary><remarks>
           <para>Frame creators are used to provide access or support for items that are left out of TagLib#, say syncronized lyrics or a text frame handler that works with badly encoded frames.</para>
           <example>
             <code lang="C#">public Frame Creator (TagLib.ByteVector data, TagLib.Id3v2.FrameHeader header)
@@ -64,8 +40,7 @@
 ...
 TagLib.Id3v2.FrameFactor.AddFrameCreator (new FrameCreator (SynchronisedLyricsFrame.Creator));</code>
           </example>
-        </remarks>
-      </Docs>
+        </remarks></Docs>
     </Member>
   </Members>
   <Docs>

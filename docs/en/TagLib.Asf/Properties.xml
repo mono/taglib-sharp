@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class Properties : TagLib.AudioProperties" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.AudioProperties</BaseTypeName>
@@ -10,30 +10,16 @@
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Properties (TagLib.Asf.HeaderObject header, TagLib.AudioProperties+ReadStyle style);" />
+      <MemberSignature Language="C#" Value="public Properties (TagLib.Asf.HeaderObject header, TagLib.AudioProperties.ReadStyle style);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="header" Type="TagLib.Asf.HeaderObject" />
-        <Parameter Name="style" Type="TagLib.AudioProperties+ReadStyle" />
-      </Parameters>
-      <Docs>
-        <param name="header">To be added.</param>
-        <param name="style">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="header" Type="TagLib.Asf.HeaderObject" /><Parameter Name="style" Type="TagLib.AudioProperties+ReadStyle" /></Parameters>
+      <Docs><param name="header">To be added.</param><param name="style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Properties (TagLib.Asf.HeaderObject header);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="header" Type="TagLib.Asf.HeaderObject" />
-      </Parameters>
-      <Docs>
-        <param name="header">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="header" Type="TagLib.Asf.HeaderObject" /></Parameters>
+      <Docs><param name="header">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
   <Docs>

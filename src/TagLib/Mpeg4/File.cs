@@ -70,7 +70,7 @@ namespace TagLib.Mpeg4
       {
          // Create a dummie outer box, as perscribed by the specs.
          FileBox file_box = new FileBox (this);
-         
+      
          // Find the movie box and item list. If the movie box doen't exist, an
          // exception will be thrown on the next call, but if there is no movie 
          // box, the file can't possibly be valid.

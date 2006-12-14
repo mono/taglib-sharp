@@ -1,8 +1,8 @@
 <Type Name="Debugger+DebugMessageSentHandler" FullName="TagLib.Debugger+DebugMessageSentHandler">
-  <TypeSignature Language="C#" Value="public delegate void DebugMessageSentHandler(string message);" />
+  <TypeSignature Language="C#" Value="public delegate void Debugger.DebugMessageSentHandler(string message);" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Delegate</BaseTypeName>

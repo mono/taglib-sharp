@@ -1,18 +1,21 @@
 <Overview>
   <Assemblies>
-    <Assembly Name="taglib-sharp" Version="1.0.0.29834">
+    <Assembly Name="taglib-sharp" Version="1.1.0.0">
       <Attributes>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyCompany(Company="")</AttributeName>
+          <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyCopyright(Copyright="Copyright (c) 2006 Brian Nickel")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyCompany("")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyDescription(Description="A library for reading and writing audio metatags.")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyCopyright("Copyright (c) 2006 Brian Nickel")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyTitle(Title="TagLib#")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyDescription("A library for reading and writing audio metatags.")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyTitle("TagLib#")</AttributeName>
         </Attribute>
       </Attributes>
     </Assembly>
@@ -51,6 +54,9 @@
       <Type Name="ReadOnlyException" />
       <Type Name="Picture" />
       <Type Name="PictureType" />
+      <Type Name="ListBase`1" DisplayName="ListBase&lt;T&gt;" />
+      <Type Name="SupportedMimeType+&lt;&gt;c__CompilerGenerated1+&lt;&gt;c__CompilerGenerated3" DisplayName="&lt;&gt;c__CompilerGenerated1+&lt;&gt;c__CompilerGenerated3" />
+      <Type Name="SupportedMimeType+&lt;&gt;c__CompilerGenerated2+&lt;&gt;c__CompilerGenerated4" DisplayName="&lt;&gt;c__CompilerGenerated2+&lt;&gt;c__CompilerGenerated4" />
     </Namespace>
     <Namespace Name="TagLib.Mpc">
       <Type Name="Properties" />

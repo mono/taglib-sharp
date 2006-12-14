@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class UnknownFrame : TagLib.Id3v2.Frame" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.Id3v2.Frame</BaseTypeName>
@@ -12,26 +12,14 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public UnknownFrame (TagLib.ByteVector data);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="data" Type="TagLib.ByteVector" />
-      </Parameters>
-      <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="data" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="data">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="Data">
       <MemberSignature Language="C#" Value="public TagLib.ByteVector Data { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
   <Docs>

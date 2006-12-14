@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class IsoSampleEntry : TagLib.Mpeg4.Box" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.Mpeg4.Box</BaseTypeName>
@@ -12,52 +12,26 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public IsoSampleEntry (TagLib.Mpeg4.BoxHeader header, TagLib.Mpeg4.Box parent);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" />
-        <Parameter Name="parent" Type="TagLib.Mpeg4.Box" />
-      </Parameters>
-      <Docs>
-        <param name="header">To be added.</param>
-        <param name="parent">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" /><Parameter Name="parent" Type="TagLib.Mpeg4.Box" /></Parameters>
+      <Docs><param name="header">To be added.</param><param name="parent">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="DataReferenceIndex">
       <MemberSignature Language="C#" Value="public ushort DataReferenceIndex { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.UInt16</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="DataPosition">
       <MemberSignature Language="C#" Value="protected override long DataPosition { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int64</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="DataSize">
       <MemberSignature Language="C#" Value="protected override ulong DataSize { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.UInt64</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.UInt64</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
   <Docs>

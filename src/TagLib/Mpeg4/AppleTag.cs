@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace TagLib.Mpeg4
 {
@@ -35,7 +36,7 @@ namespace TagLib.Mpeg4
       // Get all the data boxes with the provided types.
       public AppleDataBox [] DataBoxes (ByteVectorList list)
       {
-         ArrayList l = new ArrayList ();
+         List<AppleDataBox> l = new List<AppleDataBox> ();
          
          // Check each box to see if the match any of the provided types.
          // If a match is found, loop through the children and add any data box.
@@ -44,10 +45,10 @@ namespace TagLib.Mpeg4
                if (FixId (v) == box.BoxType)
                   foreach (Box data_box in box.Children)
                      if (data_box.GetType () == typeof (AppleDataBox))
-                        l.Add (data_box);
+                        l.Add ((AppleDataBox)data_box);
          
          // Return the results as an array.
-         return (AppleDataBox []) l.ToArray (typeof (AppleDataBox));
+         return (AppleDataBox []) l.ToArray ();
       }
       
       // Get all the data boxes with a given type.
@@ -59,7 +60,7 @@ namespace TagLib.Mpeg4
       // Find all the data boxes with a given mean and name.
       public AppleDataBox [] DataBoxes (string mean, string name)
       {
-         ArrayList l = new ArrayList ();
+         List<AppleDataBox> l = new List<AppleDataBox> ();
          
          // These children will have a box type of "----"
          foreach (Box box in ilst_box.Children)
@@ -73,11 +74,11 @@ namespace TagLib.Mpeg4
                if (mean_box != null && name_box != null && mean_box.Text == mean && name_box.Text == name)
                   foreach (Box data_box in box.Children)
                      if (data_box.GetType () == typeof (AppleDataBox))
-                        l.Add (data_box);
+                        l.Add ((AppleDataBox)data_box);
             }
          
          // Return the results as an array.
-         return (AppleDataBox []) l.ToArray (typeof (AppleDataBox));
+         return (AppleDataBox []) l.ToArray ();
       }
       
       // Get all the text data boxes from a given box type.
@@ -342,17 +343,38 @@ namespace TagLib.Mpeg4
          set {SetText (FixId ("nam"), value);}
       }
       
-      public override string [] Artists
+      public override string [] AlbumArtists
+      {
+         get {return IsCompilation ? new string [] {"Various Artists"} : Performers;}
+         set
+         {
+            if (value.Length == 1 && value [0].ToLower () == "various artists")
+               IsCompilation = true;
+            else
+            {
+               IsCompilation = false;
+               Performers = value;
+            }
+         }
+      }
+      
+      public bool IsCompilation
+      {
+         get
+         {
+            AppleDataBox [] boxes = DataBoxes ("cpil");
+            return boxes.Length != 0 && boxes [0].Data.ToUInt () != 0;
+         }
+         set
+         {
+            SetData ("cpil", ByteVector.FromUInt ((uint)(value ? 1 : 0)), (uint)AppleDataBox.FlagTypes.ForTempo);
+         }
+      }
+      
+      public override string [] Performers
       {
          get {return GetText (FixId ("ART"));}
          set {SetText (FixId ("ART"), value);}
-      }
-      
-      // FIXME: If we can figure out the performers box, we'll migrate.
-      public override string [] Performers
-      {
-         get {return GetText (FixId ("prf"));}
-         set {SetText (FixId ("prf"), value);}
       }
       
       public override string [] Composers
@@ -516,7 +538,7 @@ namespace TagLib.Mpeg4
       {
          get
          {
-         	ArrayList l = new ArrayList ();
+         	List<Picture> l = new List<Picture> ();
          	
          	foreach (AppleDataBox box in  DataBoxes(FixId("covr")))
          	{
@@ -543,7 +565,7 @@ namespace TagLib.Mpeg4
             	l.Add (p);
             }
             
-            return (Picture []) l.ToArray (typeof (Picture));
+            return (Picture []) l.ToArray ();
          }
          
          set

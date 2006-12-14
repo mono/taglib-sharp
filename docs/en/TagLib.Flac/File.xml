@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class File : TagLib.File" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.File</BaseTypeName>
@@ -12,28 +12,14 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public File (string file);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="file" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="file">A <see cref="T:System.String" /> containing the path of the file to read.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Flac.File" /> by loading the provided file name.</summary>
-        <remarks>This constructor will only handle Free Lossless Audio Codec (FLAC) files. To handle all files, see <see cref="M:TagLib.File.Create(System.String,System.Boolean,TagLib.AudioProperties+ReadStyle)" />.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="file" Type="System.String" /></Parameters>
+      <Docs><param name="file">A <see cref="T:System.String" /> containing the path of the file to read.</param><summary>Constructs and initializes a new instance of <see cref="T:TagLib.Flac.File" /> by loading the provided file name.</summary><remarks>This constructor will only handle Free Lossless Audio Codec (FLAC) files. To handle all files, see <see cref="M:TagLib.File.Create(System.String,System.Boolean,TagLib.AudioProperties+ReadStyle)" />.</remarks></Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public File (string file, TagLib.AudioProperties+ReadStyle properties_style);" />
+      <MemberSignature Language="C#" Value="public File (string file, TagLib.AudioProperties.ReadStyle properties_style);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="file" Type="System.String" />
-        <Parameter Name="properties_style" Type="TagLib.AudioProperties+ReadStyle" />
-      </Parameters>
-      <Docs>
-        <param name="file">To be added.</param>
-        <param name="properties_style">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="file" Type="System.String" /><Parameter Name="properties_style" Type="TagLib.AudioProperties+ReadStyle" /></Parameters>
+      <Docs><param name="file">To be added.</param><param name="properties_style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
   <Docs>
@@ -46,16 +32,16 @@
   </Docs>
   <Attributes>
     <Attribute>
-      <AttributeName>TagLib.SupportedMimeType(MimeType="audio/flac")</AttributeName>
+      <AttributeName>TagLib.SupportedMimeType("audio/flac")</AttributeName>
     </Attribute>
     <Attribute>
-      <AttributeName>TagLib.SupportedMimeType(MimeType="application/x-flac")</AttributeName>
+      <AttributeName>TagLib.SupportedMimeType("application/x-flac")</AttributeName>
     </Attribute>
     <Attribute>
-      <AttributeName>TagLib.SupportedMimeType(MimeType="audio/x-flac")</AttributeName>
+      <AttributeName>TagLib.SupportedMimeType("audio/x-flac")</AttributeName>
     </Attribute>
     <Attribute>
-      <AttributeName>TagLib.SupportedMimeType(MimeType="taglib/flac")</AttributeName>
+      <AttributeName>TagLib.SupportedMimeType("taglib/flac", "flac")</AttributeName>
     </Attribute>
   </Attributes>
 </Type>

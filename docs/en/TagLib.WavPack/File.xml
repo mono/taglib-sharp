@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class File : TagLib.File" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.File</BaseTypeName>
@@ -10,57 +10,30 @@
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public File (string file, TagLib.AudioProperties+ReadStyle properties_style);" />
+      <MemberSignature Language="C#" Value="public File (string file, TagLib.AudioProperties.ReadStyle properties_style);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="file" Type="System.String" />
-        <Parameter Name="properties_style" Type="TagLib.AudioProperties+ReadStyle" />
-      </Parameters>
-      <Docs>
-        <param name="file">To be added.</param>
-        <param name="properties_style">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="file" Type="System.String" /><Parameter Name="properties_style" Type="TagLib.AudioProperties+ReadStyle" /></Parameters>
+      <Docs><param name="file">To be added.</param><param name="properties_style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public File (string file);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="file" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="file">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="file" Type="System.String" /></Parameters>
+      <Docs><param name="file">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="Remove">
       <MemberSignature Language="C#" Value="public void Remove (TagLib.TagTypes types);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="types" Type="TagLib.TagTypes" />
-      </Parameters>
-      <Docs>
-        <param name="types">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="types" Type="TagLib.TagTypes" /></Parameters>
+      <Docs><param name="types">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="Remove">
       <MemberSignature Language="C#" Value="public void Remove ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
   <Docs>
@@ -69,7 +42,10 @@
   </Docs>
   <Attributes>
     <Attribute>
-      <AttributeName>TagLib.SupportedMimeType(MimeType="taglib/wv")</AttributeName>
+      <AttributeName>TagLib.SupportedMimeType("audio/x-wavpack")</AttributeName>
+    </Attribute>
+    <Attribute>
+      <AttributeName>TagLib.SupportedMimeType("taglib/wv", "wv")</AttributeName>
     </Attribute>
   </Attributes>
 </Type>

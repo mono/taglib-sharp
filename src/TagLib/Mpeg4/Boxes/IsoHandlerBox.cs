@@ -14,18 +14,12 @@ namespace TagLib.Mpeg4
       //////////////////////////////////////////////////////////////////////////
       public IsoHandlerBox (BoxHeader header, Box parent) : base (header, parent)
       {
-         // Reserved
+         long end = File.Find ((byte) 0, base.DataPosition + 20);
          File.Seek (base.DataPosition + 4);
-         
-         // Read the handler type.
-         handler_type = File.ReadBlock (4);
-         
-         // Reserved
-         File.Seek (base.DataPosition + 20);
-         
-         // Find the terminating byte and read a string from the data before it.
-         long end = File.Find ((byte) 0, File.Tell);
-         name = File.ReadBlock ((int) (end - File.Tell)).ToString ();
+         ByteVector data = File.ReadBlock ((int)(end - base.DataPosition - 4));
+
+         handler_type = data.Mid (4);
+         name = data.Mid (16).ToString ();
       }
       
       // We can make our own handler.

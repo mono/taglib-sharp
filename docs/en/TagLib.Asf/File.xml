@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class File : TagLib.File" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.File</BaseTypeName>
@@ -10,116 +10,58 @@
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public File (string file, TagLib.AudioProperties+ReadStyle properties_style);" />
+      <MemberSignature Language="C#" Value="public File (string file, TagLib.AudioProperties.ReadStyle properties_style);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="file" Type="System.String" />
-        <Parameter Name="properties_style" Type="TagLib.AudioProperties+ReadStyle" />
-      </Parameters>
-      <Docs>
-        <param name="file">To be added.</param>
-        <param name="properties_style">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="file" Type="System.String" /><Parameter Name="properties_style" Type="TagLib.AudioProperties+ReadStyle" /></Parameters>
+      <Docs><param name="file">To be added.</param><param name="properties_style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public File (string file);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="file" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="file">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="file" Type="System.String" /></Parameters>
+      <Docs><param name="file">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="ReadWord">
       <MemberSignature Language="C#" Value="public short ReadWord ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int16</ReturnType>
-      </ReturnValue>
+      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="ReadDWord">
       <MemberSignature Language="C#" Value="public uint ReadDWord ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.UInt32</ReturnType>
-      </ReturnValue>
+      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="ReadQWord">
       <MemberSignature Language="C#" Value="public long ReadQWord ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int64</ReturnType>
-      </ReturnValue>
+      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="ReadGuid">
       <MemberSignature Language="C#" Value="public TagLib.Asf.Guid ReadGuid ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Asf.Guid</ReturnType>
-      </ReturnValue>
+      <ReturnValue><ReturnType>TagLib.Asf.Guid</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="ReadUnicode">
       <MemberSignature Language="C#" Value="public string ReadUnicode (int length);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="length" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="length" Type="System.Int32" /></Parameters>
+      <Docs><param name="length">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="ReadObjects">
       <MemberSignature Language="C#" Value="public TagLib.Asf.Object[] ReadObjects (uint count, long position);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Asf.Object[]</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="count" Type="System.UInt32" />
-        <Parameter Name="position" Type="System.Int64" />
-      </Parameters>
-      <Docs>
-        <param name="count">To be added.</param>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Asf.Object[]</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="count" Type="System.UInt32" /><Parameter Name="position" Type="System.Int64" /></Parameters>
+      <Docs><param name="count">To be added.</param><param name="position">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
   <Docs>
@@ -128,16 +70,16 @@
   </Docs>
   <Attributes>
     <Attribute>
-      <AttributeName>TagLib.SupportedMimeType(MimeType="video/x-ms-asf")</AttributeName>
+      <AttributeName>TagLib.SupportedMimeType("video/x-ms-asf")</AttributeName>
     </Attribute>
     <Attribute>
-      <AttributeName>TagLib.SupportedMimeType(MimeType="audio/x-ms-wma")</AttributeName>
+      <AttributeName>TagLib.SupportedMimeType("audio/x-ms-wma")</AttributeName>
     </Attribute>
     <Attribute>
-      <AttributeName>TagLib.SupportedMimeType(MimeType="taglib/asf")</AttributeName>
+      <AttributeName>TagLib.SupportedMimeType("taglib/asf", "asf")</AttributeName>
     </Attribute>
     <Attribute>
-      <AttributeName>TagLib.SupportedMimeType(MimeType="taglib/wma")</AttributeName>
+      <AttributeName>TagLib.SupportedMimeType("taglib/wma", "wma")</AttributeName>
     </Attribute>
   </Attributes>
 </Type>

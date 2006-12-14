@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class AudioProperties" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -10,83 +10,43 @@
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected AudioProperties (TagLib.AudioProperties+ReadStyle style);" />
+      <MemberSignature Language="C#" Value="protected AudioProperties (TagLib.AudioProperties.ReadStyle style);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="style" Type="TagLib.AudioProperties+ReadStyle" />
-      </Parameters>
-      <Docs>
-        <param name="style">A <see cref="T:TagLib.AudioProperties+ReadStyle" /> telling how thoroughly to read the audio properties.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.AudioProperties" />.</summary>
-        <remarks />
-      </Docs>
+      <Parameters><Parameter Name="style" Type="TagLib.AudioProperties+ReadStyle" /></Parameters>
+      <Docs><param name="style">A <see cref="T:TagLib.AudioProperties+ReadStyle" /> telling how thoroughly to read the audio properties.</param><summary>Constructs and initializes a new instance of <see cref="T:TagLib.AudioProperties" />.</summary><remarks /></Docs>
     </Member>
     <Member MemberName="Length">
       <MemberSignature Language="C#" Value="public virtual int Length { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Gets the length of the audio stream in seconds.</summary>
-        <value>A <see cref="T:System.Int32" /> representing the number of seconds in the audio stream.</value>
-        <remarks />
-      </Docs>
-      <Attributes>
-        <Attribute>
-          <AttributeName>System.Obsolete(Message="This property is obsolete; use the Duration property instead.", IsError=False)</AttributeName>
-        </Attribute>
-      </Attributes>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Docs><summary>Gets the length of the audio stream in seconds.</summary><value>A <see cref="T:System.Int32" /> representing the number of seconds in the audio stream.</value><remarks /></Docs>
+      <Attributes><Attribute><AttributeName>System.Obsolete("This property is obsolete; use the Duration property instead.")</AttributeName></Attribute></Attributes>
     </Member>
     <Member MemberName="Bitrate">
       <MemberSignature Language="C#" Value="public virtual int Bitrate { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Gets the bitrate, in kilobits per second, of the file.</summary>
-        <value>A <see cref="T:System.Int32" /> representing the bitrate.</value>
-        <remarks />
-      </Docs>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Docs><summary>Gets the bitrate, in kilobits per second, of the file.</summary><value>A <see cref="T:System.Int32" /> representing the bitrate.</value><remarks /></Docs>
     </Member>
     <Member MemberName="SampleRate">
       <MemberSignature Language="C#" Value="public virtual int SampleRate { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Gets the sample rate of the audio data in Hz.</summary>
-        <value>A <see cref="T:System.Int32" /> representing the sample rate.</value>
-        <remarks />
-      </Docs>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Docs><summary>Gets the sample rate of the audio data in Hz.</summary><value>A <see cref="T:System.Int32" /> representing the sample rate.</value><remarks /></Docs>
     </Member>
     <Member MemberName="Channels">
       <MemberSignature Language="C#" Value="public virtual int Channels { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Docs><summary>
           <para>Gets the number of channels (outputs) of the audio stream.</para>
-        </summary>
-        <value>A <see cref="T:System.Int32" /> representing the number of channels.</value>
-        <remarks>The value of this property should typically be 2, representing stereo audio. Another common setting is 1, for mono. These values could vary though, as higher end media files could contain 6 or more channels.</remarks>
-      </Docs>
+        </summary><value>A <see cref="T:System.Int32" /> representing the number of channels.</value><remarks>The value of this property should typically be 2, representing stereo audio. Another common setting is 1, for mono. These values could vary though, as higher end media files could contain 6 or more channels.</remarks></Docs>
     </Member>
     <Member MemberName="Duration">
       <MemberSignature Language="C#" Value="public virtual TimeSpan Duration { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.TimeSpan</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
   <Docs>

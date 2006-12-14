@@ -214,7 +214,7 @@ namespace TagLib.Ogg
          }
       }
       
-      public override string [] Artists
+      public override string [] AlbumArtists
       {
          get
          {

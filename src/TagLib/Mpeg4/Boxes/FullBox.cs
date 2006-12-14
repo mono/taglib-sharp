@@ -17,8 +17,9 @@ namespace TagLib.Mpeg4
          File.Seek (base.DataPosition);
          
          // First 4 bytes contain version and flag data.
-         version = File.ReadBlock (1) [0];
-         flags   = File.ReadBlock (3).ToUInt ();
+         ByteVector data = File.ReadBlock (4);
+         version = data [0];
+         flags   = data.Mid (1, 3).ToUInt ();
       }
       
       // We can create our own box.

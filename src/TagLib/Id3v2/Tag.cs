@@ -159,7 +159,7 @@ namespace TagLib.Id3v2
          }
       }
       
-      public override string [] Artists
+      public override string [] AlbumArtists
       {
          get
          {

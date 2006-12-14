@@ -93,46 +93,48 @@ namespace TagLib.Mpeg4
          // Get into position.
          file.Seek (position);
          
+         ByteVector data = file.ReadBlock (8);
+         
          // Read the size and type of the block.
-         large_size = file.ReadBlock (4).ToUInt ();
-         box_type = file.ReadBlock (4);
+         large_size = data.Mid (0, 4).ToUInt ();
+         box_type = data.Mid (4, 4);
          
          // If the size is zero, the block includes the rest of the file.
          if (large_size == 0)
             large_size = (ulong) space_available;
+
+         
+         int extra_data_size = (large_size == 1 ? 8 : 0) + (box_type == "uuid" ? 16 : 0);
+
+         if (extra_data_size == 0)
+            return;
+         
+         size += (uint) extra_data_size;
+
+         // If we don't have room, we're lost. Abort.
+         if (space_available < size)
+         {
+            large_size = 0;
+            return;
+         }
+
+         data = file.ReadBlock (extra_data_size);
+         int offset = 0;
+         
          // If the size is 1, that just tells us we have a massive ULONG size
          // waiting for us in the next 8 bytes.
-         else if (large_size == 1)
+         if (large_size == 1)
          {
-            // The size is 8 bigger.
-            size += 8;
-            
-            // If we don't have room, we're lost. Abort.
-            if (space_available < size)
-            {
-               large_size = 0;
-               return;
-            }
-            
             // This file is huge. 4GB+ I don't think we can even read it.
-            large_size = (ulong) file.ReadBlock (8).ToLong ();
+            large_size = (ulong) data.Mid (0, 8).ToLong ();
+            offset += 8;
          }
          
          // UUID has a special header with 16 extra bytes.
          if (box_type == "uuid")
          {
-            // Size is 16 bigger.
-            size += 16;
-            
-            // If we don't have room, we're lost. Abort.
-            if (space_available < size)
-            {
-               large_size = 0;
-               return;
-            }
-            
             // Load the extended type.
-            extended_type = file.ReadBlock (16);
+            extended_type = data.Mid (offset, 16);
          }
       }
       

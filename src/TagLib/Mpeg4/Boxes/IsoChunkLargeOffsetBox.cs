@@ -16,8 +16,9 @@ namespace TagLib.Mpeg4
          File.Seek (base.DataPosition);
          offsets = new ulong [(int) File.ReadBlock (4).ToUInt ()];
          
+         ByteVector data = File.ReadBlock (8 * offsets.Length);
          for (int i = 0; i < offsets.Length; i ++)
-	         offsets [i] = (ulong) File.ReadBlock (4).ToLong ();
+	         offsets [i] = (ulong) data.Mid (i * 8, 8).ToLong ();
       }
       
       private ByteVector UpdateOffsetInternal (long size_difference, long after)

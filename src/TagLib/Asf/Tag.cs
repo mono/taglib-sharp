@@ -86,7 +86,7 @@ namespace TagLib.Asf
       // artist and Performers should describe who is in the song.
       // Because this may not be set, we'll return performers if we can't get
       // an artist.
-      public override string [] Artists
+      public override string [] AlbumArtists
       {
          get
          {

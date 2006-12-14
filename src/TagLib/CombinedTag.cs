@@ -61,21 +61,21 @@ namespace TagLib
          }
       }
 
-      public override string [] Artists
+      public override string [] AlbumArtists
       {
          get
          {
             string [] output = new string [] {};
             foreach (Tag tag in tags)
                if (tag != null && output.Length == 0)
-                  output = tag.Artists;
+                  output = tag.AlbumArtists;
             return output;
          }
          set
          {
             foreach (Tag tag in tags)
                if (tag != null)
-                  tag.Artists = value;
+                  tag.AlbumArtists = value;
          }
       }
 

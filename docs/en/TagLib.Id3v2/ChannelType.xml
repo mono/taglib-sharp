@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public enum ChannelType" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Enum</BaseTypeName>
@@ -11,92 +11,56 @@
     <Member MemberName="MasterVolume">
       <MemberSignature Language="C#" Value="MasterVolume" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Id3v2.ChannelType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="FrontRight">
       <MemberSignature Language="C#" Value="FrontRight" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Id3v2.ChannelType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="FrontLeft">
       <MemberSignature Language="C#" Value="FrontLeft" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Id3v2.ChannelType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="BackRight">
       <MemberSignature Language="C#" Value="BackRight" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Id3v2.ChannelType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="BackLeft">
       <MemberSignature Language="C#" Value="BackLeft" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Id3v2.ChannelType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="Subwoofer">
       <MemberSignature Language="C#" Value="Subwoofer" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Id3v2.ChannelType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="BackCentre">
       <MemberSignature Language="C#" Value="BackCentre" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Id3v2.ChannelType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="Other">
       <MemberSignature Language="C#" Value="Other" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Id3v2.ChannelType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="FrontCentre">
       <MemberSignature Language="C#" Value="FrontCentre" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Id3v2.ChannelType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
   </Members>
   <Docs>

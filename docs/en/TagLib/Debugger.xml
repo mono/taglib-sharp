@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class Debugger" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -10,45 +10,24 @@
   <Interfaces />
   <Members>
     <Member MemberName="DebugMessageSent">
-      <MemberSignature Language="C#" Value="public static event TagLib.Debugger+DebugMessageSentHandler DebugMessageSent;" />
+      <MemberSignature Language="C#" Value="public static event TagLib.Debugger.DebugMessageSentHandler DebugMessageSent;" />
       <MemberType>Event</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Debugger+DebugMessageSentHandler</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Debugger+DebugMessageSentHandler</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="Debug">
       <MemberSignature Language="C#" Value="public static void Debug (string message);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="message" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="message">A <see cref="T:System.String" /> containing a message about a debug event.</param>
-        <summary>This method sends a string to all delegates listening to <see cref="F:TagLib.Debugger.DebugMessageSent" />.</summary>
-        <remarks />
-      </Docs>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="message" Type="System.String" /></Parameters>
+      <Docs><param name="message">A <see cref="T:System.String" /> containing a message about a debug event.</param><summary>This method sends a string to all delegates listening to <see cref="F:TagLib.Debugger.DebugMessageSent" />.</summary><remarks /></Docs>
     </Member>
     <Member MemberName="DumpHex">
       <MemberSignature Language="C#" Value="public static void DumpHex (TagLib.ByteVector data);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="data" Type="TagLib.ByteVector" />
-      </Parameters>
-      <Docs>
-        <param name="data">A <see cref="T:TagLib.ByteVector" /> whose contents are to be dumped into the standard output as hex.</param>
-        <summary>This method prints hex values for the bytes in a <see cref="T:TagLib.ByteVector" /> to the console output.</summary>
-        <remarks />
-      </Docs>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="data" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="data">A <see cref="T:TagLib.ByteVector" /> whose contents are to be dumped into the standard output as hex.</param><summary>This method prints hex values for the bytes in a <see cref="T:TagLib.ByteVector" /> to the console output.</summary><remarks /></Docs>
     </Member>
   </Members>
   <Docs>

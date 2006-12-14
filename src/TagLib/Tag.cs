@@ -20,31 +20,36 @@
  *   USA                                                                   *
  ***************************************************************************/
 
+using System;
+
 namespace TagLib
 {
    public class Tag
    {
-      public virtual string    Title      {get {return null;} set {}}
-      public virtual string [] Artists    {get {return new string [] {};} set {}}
-      public virtual string [] Performers {get {return new string [] {};} set {}}
-      public virtual string [] Composers  {get {return new string [] {};} set {}}
-      public virtual string    Album      {get {return null;} set {}}
-      public virtual string    Comment    {get {return null;} set {}}
-      public virtual string [] Genres     {get {return new string [] {};} set {}}
-      public virtual uint      Year       {get {return 0;}    set {}}
-      public virtual uint      Track      {get {return 0;}    set {}}
-      public virtual uint      TrackCount {get {return 0;}    set {}}
-      public virtual uint      Disc       {get {return 0;}    set {}}
-      public virtual uint      DiscCount  {get {return 0;}    set {}}
+      public virtual string    Title           {get {return null;} set {}}
+      public virtual string [] AlbumArtists    {get {return new string [] {};} set {}}
+      public virtual string [] Performers      {get {return new string [] {};} set {}}
+      public virtual string [] Composers       {get {return new string [] {};} set {}}
+      public virtual string    Album           {get {return null;} set {}}
+      public virtual string    Comment         {get {return null;} set {}}
+      public virtual string [] Genres          {get {return new string [] {};} set {}}
+      public virtual uint      Year            {get {return 0;}    set {}}
+      public virtual uint      Track           {get {return 0;}    set {}}
+      public virtual uint      TrackCount      {get {return 0;}    set {}}
+      public virtual uint      Disc            {get {return 0;}    set {}}
+      public virtual uint      DiscCount       {get {return 0;}    set {}}
+      
+      [Obsolete("This property is obsolete; use the AlbumArtists property instead.")]
+      public virtual string [] Artists {get {return AlbumArtists;} set {AlbumArtists = value;}}
       
       public virtual IPicture [] Pictures { get { return new Picture [] { }; } set { } }
       
-      public string FirstArtist    { get { return FirstInGroup(Artists);    } }
+      public string FirstArtist    { get { return FirstInGroup(AlbumArtists);    } }
       public string FirstPerformer { get { return FirstInGroup(Performers); } }
       public string FirstComposer  { get { return FirstInGroup(Composers);  } }
       public string FirstGenre     { get { return FirstInGroup(Genres);     } }
       
-      public string JoinedArtists    { get { return JoinGroup(Artists);     } }
+      public string JoinedArtists    { get { return JoinGroup(AlbumArtists);     } }
       public string JoinedPerformers { get { return JoinGroup(Performers);  } } 
       public string JoinedComposers  { get { return JoinGroup(Composers);   } }
       public string JoinedGenres     { get { return JoinGroup(Genres);      } }
@@ -64,7 +69,7 @@ namespace TagLib
          get
          {
             return ((Title == null || Title.Trim () == "") &&
-                    (Artists == null || Artists.Length == 0) &&
+                    (AlbumArtists == null || AlbumArtists.Length == 0) &&
                     (Performers == null || Performers.Length == 0) &&
                     (Composers == null || Composers.Length == 0) &&
                     (Album == null || Album.Trim () == "") &&
@@ -82,8 +87,8 @@ namespace TagLib
       {
          if (overwrite || target.Title == null || target.Title.Trim () == "")
             target.Title = source.Title;
-         if (overwrite || target.Artists == null || target.Artists.Length == 0)
-            target.Artists = source.Artists;
+         if (overwrite || target.AlbumArtists == null || target.AlbumArtists.Length == 0)
+            target.AlbumArtists = source.AlbumArtists;
          if (overwrite || target.Performers == null || target.Performers.Length == 0)
             target.Performers = source.Performers;
          if (overwrite || target.Composers == null || target.Composers.Length == 0)

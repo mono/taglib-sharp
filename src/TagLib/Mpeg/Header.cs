@@ -195,7 +195,7 @@ namespace TagLib.Mpeg
 
          // The channel mode is encoded as a 2 bit value at the end of the 3nd
          // byte, i.e. xxxxxx11
-         channel_mode = (ChannelMode)((flags >> 16) & 0x3);
+         channel_mode = (ChannelMode)((flags >> 6) & 0x3);
 
          // TODO: Add mode extension for completeness
 

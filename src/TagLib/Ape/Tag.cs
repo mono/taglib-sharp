@@ -150,7 +150,7 @@ namespace TagLib.Ape
          }
       }
       
-      public override string [] Artists
+      public override string [] AlbumArtists
       {
          get
          {

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public struct Guid" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.0.0.29834</AssemblyVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.ValueType</BaseTypeName>
@@ -12,228 +12,114 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Guid (TagLib.ByteVector raw);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="raw" Type="TagLib.ByteVector" />
-      </Parameters>
-      <Docs>
-        <param name="raw">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="raw" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="raw">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Guid (uint part1, uint part2, uint part3, uint part4, long part5);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="part1" Type="System.UInt32" />
-        <Parameter Name="part2" Type="System.UInt32" />
-        <Parameter Name="part3" Type="System.UInt32" />
-        <Parameter Name="part4" Type="System.UInt32" />
-        <Parameter Name="part5" Type="System.Int64" />
-      </Parameters>
-      <Docs>
-        <param name="part1">To be added.</param>
-        <param name="part2">To be added.</param>
-        <param name="part3">To be added.</param>
-        <param name="part4">To be added.</param>
-        <param name="part5">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="part1" Type="System.UInt32" /><Parameter Name="part2" Type="System.UInt32" /><Parameter Name="part3" Type="System.UInt32" /><Parameter Name="part4" Type="System.UInt32" /><Parameter Name="part5" Type="System.Int64" /></Parameters>
+      <Docs><param name="part1">To be added.</param><param name="part2">To be added.</param><param name="part3">To be added.</param><param name="part4">To be added.</param><param name="part5">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="part1">
       <MemberSignature Language="C#" Value="public uint part1;" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>System.UInt32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="part2">
       <MemberSignature Language="C#" Value="public short part2;" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int16</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="part3">
       <MemberSignature Language="C#" Value="public short part3;" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int16</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="part4">
       <MemberSignature Language="C#" Value="public short part4;" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int16</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="part5">
       <MemberSignature Language="C#" Value="public long part5;" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int64</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="AsfHeaderObject">
       <MemberSignature Language="C#" Value="public static TagLib.Asf.Guid AsfHeaderObject;" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Asf.Guid</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Asf.Guid</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="AsfFilePropertiesObject">
       <MemberSignature Language="C#" Value="public static TagLib.Asf.Guid AsfFilePropertiesObject;" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Asf.Guid</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Asf.Guid</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="AsfStreamPropertiesObject">
       <MemberSignature Language="C#" Value="public static TagLib.Asf.Guid AsfStreamPropertiesObject;" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Asf.Guid</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Asf.Guid</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="AsfContentDescriptionObject">
       <MemberSignature Language="C#" Value="public static TagLib.Asf.Guid AsfContentDescriptionObject;" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Asf.Guid</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Asf.Guid</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="AsfExtendedContentDescriptionObject">
       <MemberSignature Language="C#" Value="public static TagLib.Asf.Guid AsfExtendedContentDescriptionObject;" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Asf.Guid</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Asf.Guid</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="AsfPaddingObject">
       <MemberSignature Language="C#" Value="public static TagLib.Asf.Guid AsfPaddingObject;" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Asf.Guid</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Asf.Guid</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="AsfAudioMedia">
       <MemberSignature Language="C#" Value="public static TagLib.Asf.Guid AsfAudioMedia;" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Asf.Guid</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Asf.Guid</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="Render">
       <MemberSignature Language="C#" Value="public TagLib.ByteVector Render ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="ToString">
       <MemberSignature Language="C#" Value="public string ToString ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="op_Equality">
       <MemberSignature Language="C#" Value="public static bool op_Equality (TagLib.Asf.Guid a, TagLib.Asf.Guid b);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="a" Type="TagLib.Asf.Guid" />
-        <Parameter Name="b" Type="TagLib.Asf.Guid" />
-      </Parameters>
-      <Docs>
-        <param name="a">To be added.</param>
-        <param name="b">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="TagLib.Asf.Guid" /><Parameter Name="b" Type="TagLib.Asf.Guid" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="op_Inequality">
       <MemberSignature Language="C#" Value="public static bool op_Inequality (TagLib.Asf.Guid a, TagLib.Asf.Guid b);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="a" Type="TagLib.Asf.Guid" />
-        <Parameter Name="b" Type="TagLib.Asf.Guid" />
-      </Parameters>
-      <Docs>
-        <param name="a">To be added.</param>
-        <param name="b">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="TagLib.Asf.Guid" /><Parameter Name="b" Type="TagLib.Asf.Guid" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
   <Docs>

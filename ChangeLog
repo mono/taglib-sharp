@@ -1,3 +1,28 @@
+2006-12-14  Brian Nickel  <brian.nickel@gmail.com>
+
+	* src/TagLib/Mpeg/Header.cs: Fixed typo causing MP3 channels to always
+	equal 1.
+
+2006-11-15  Brian Nickel  <brian.nickel@gmail.com>
+
+	* src/TagLib/Tag.cs:
+	* src/TagLib/CombinedTag.cs:
+	* src/TagLib/Id3v1/Tag.cs:
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Ape/Tag.cs:
+	* src/TagLib/Asf/Tag.cs:
+	* src/TagLib/Ogg/XiphComment.cs: Renamed Artists -> AlbumArtists.
+	* src/TagLib/Mpeg4/Boxes/FullBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoChunkLargeOffsetBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoHandlerBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoChunkOffsetBox.cs:
+	* src/TagLib/Mpeg4/BoxHeader.cs: Don't read so many times.
+	* src/TagLib/File.cs:
+	* src/TagLib/Mpeg4/Boxes/Box.cs: Generics.
+	* src/TagLib/Mpeg4/AppleTag.cs: Generics and smarter compilation handling.
+	* docs/en/*: Massive docs update.
+	* tests/fixtures/PerformanceTest.cs: A performance test.
+
 2006-11-13  Aaron Bockover  <abock@gnome.org>
 
 	* src/TagLib/SupportedMimeType.cs: Load mime types in static constructor
