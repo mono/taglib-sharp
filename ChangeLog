@@ -1,3 +1,9 @@
+2006-12-15  Brian Nickel  <brian.nickel@gmail.com>
+
+	* src/TagLib/Mpeg/Properties.cs:
+	* src/TagLib/Mpeg/Header.cs: Made some changes based on KDE bug 135459, 
+	which should hopefully improve the accuracy of length reporting.
+
 2006-12-14  Brian Nickel  <brian.nickel@gmail.com>
 
 	* src/TagLib/Mpeg/Header.cs: Fixed typo causing MP3 channels to always

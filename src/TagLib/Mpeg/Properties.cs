@@ -154,9 +154,13 @@ namespace TagLib.Mpeg
 
          if(xing_header.IsValid && first_header.SampleRate > 0 && xing_header.TotalFrames > 0)
          {
-            int [] block_size = {0, 384, 1152, 1152};
+            int [,] block_size = new int [3,4] {
+               { 0, 384, 1152, 1152 }, // Version 1
+               { 0, 384, 1152, 576 },  // Version 2
+               { 0, 384, 1152, 576 }   // Version 2.5
+            };
             
-            double time_per_frame = block_size [first_header.Layer];
+            double time_per_frame = block_size [(int) first_header.Version, first_header.Layer];
             time_per_frame = first_header.SampleRate > 0 ? time_per_frame / first_header.SampleRate : 0;
             duration = new TimeSpan((int)(time_per_frame * xing_header.TotalFrames) * TimeSpan.TicksPerSecond);
             bitrate = (int) (duration > TimeSpan.Zero ? ((xing_header.TotalSize * 8L) / duration.TotalSeconds) / 1000 : 0);
