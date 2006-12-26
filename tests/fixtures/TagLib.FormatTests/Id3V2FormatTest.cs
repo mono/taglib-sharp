@@ -5,7 +5,7 @@ using TagLib;
 namespace TagLib.FormatTests
 {   
     [TestFixture]
-    public class Id3V2FormatTest
+    public class Id3V2FormatTest : IFormatTest
     {
         private File file;
         
@@ -33,6 +33,11 @@ namespace TagLib.FormatTests
             Assert.AreEqual(6, file.Tag.Track);
             Assert.AreEqual(7, file.Tag.TrackCount);
             Assert.AreEqual(1234, file.Tag.Year);
+        }
+        
+        [Test]
+        public void TestCorruptionResistance()
+        {
         }
     }
 }

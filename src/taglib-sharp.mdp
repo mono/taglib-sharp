@@ -107,6 +107,9 @@
     <File name="./TagLib/WavPack/File.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/WavPack/Properties.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/ListBase.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/CorruptFileException.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/FileTypes.cs" subtype="Code" buildaction="Compile" />
+    <File name="./AssemblyInfo-windows.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

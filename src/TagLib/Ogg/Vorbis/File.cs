@@ -106,6 +106,10 @@ namespace TagLib.Ogg.Vorbis
       private void Read (Properties.ReadStyle properties_style)
       {
          ByteVector comment_header_data = GetPacket (1);
+         
+         if(comment_header_data == null) {
+            throw new CorruptFileException();
+         }
 
          if (comment_header_data.Mid (0, 7) != vorbis_comment_header_id)
          {

@@ -5,7 +5,7 @@ using TagLib;
 namespace TagLib.FormatTests
 {
     [TestFixture]
-    public class ApeFormatTest
+    public class ApeFormatTest : IFormatTest
     {
         private File file;
         
@@ -33,6 +33,18 @@ namespace TagLib.FormatTests
             Assert.AreEqual(6, file.Tag.Track);
             Assert.AreEqual(7, file.Tag.TrackCount);
             Assert.AreEqual(1234, file.Tag.Year);
+        }
+                
+        [Test]
+        public void TestCorruptionResistance()
+        {
+            try {
+                File.Create("samples/corrupt/a.ape");
+            } catch(CorruptFileException) {
+            } catch(NullReferenceException e) {
+                throw e;
+            } catch {
+            }
         }
     }
 }

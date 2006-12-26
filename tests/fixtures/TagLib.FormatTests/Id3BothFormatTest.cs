@@ -5,7 +5,7 @@ using TagLib;
 namespace TagLib.FormatTests
 {   
     [TestFixture]
-    public class Id3BothFormatTest
+    public class Id3BothFormatTest : IFormatTest
     {
         private File file;
         
@@ -64,6 +64,17 @@ namespace TagLib.FormatTests
             Assert.AreEqual(1235, (int)file.GetTag (TagLib.TagTypes.Id3v1).Year);
             Assert.AreEqual(6, (int)file.GetTag (TagLib.TagTypes.Id3v1).Track);
             Assert.AreEqual(0, (int)file.GetTag (TagLib.TagTypes.Id3v1).TrackCount);
+        }
+        
+        [Test]
+        public void TestCorruptionResistance()
+        {
+            try {
+                File.Create("samples/corrupt/a.mp3");
+            } catch(NullReferenceException e) {
+                throw e;
+            } catch {
+            }
         }
     }
 }

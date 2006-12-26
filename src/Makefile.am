@@ -97,7 +97,8 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/ReadOnlyException.cs                           \
    $(srcdir)/TagLib/Picture.cs                                     \
    $(srcdir)/TagLib/ListBase.cs                                    \
-   $(srcdir)/TagLib/FileTypes.cs
+   $(srcdir)/TagLib/FileTypes.cs                                   \
+   $(srcdir)/TagLib/CorruptFileException.cs
 
 taglib-sharp.snk: $(top_srcdir)/taglib-sharp.snk
 	cp $(top_srcdir)/taglib-sharp.snk .

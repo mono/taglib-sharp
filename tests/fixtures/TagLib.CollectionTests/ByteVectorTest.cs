@@ -108,6 +108,24 @@ namespace TagLib.CollectionTests
             Assert.AreEqual("1aaa46c484d70c7c80510a5f99e7805d", MD5Hash(vector.Data));
         }
         
+        [Test]
+        public void OperatorAdd()
+        {
+            using(new CodeTimer("Operator Add")) {
+                ByteVector vector = new ByteVector();
+                for(int i = 0; i < 10000; i++) {
+                    vector += ByteVector.FromLong((long)55);
+                }
+            }
+            
+            using(new CodeTimer("Function Add")) {
+                ByteVector vector = new ByteVector();
+                for(int i = 0; i < 10000; i++) {
+                    vector.Add(ByteVector.FromLong((long)55));
+                }
+            }
+        }
+        
         private static string MD5Hash(byte [] bytes)
         {
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();

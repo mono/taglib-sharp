@@ -1,3 +1,19 @@
+2006-12-26  Aaron Bockover  <abockover@novell.com>
+
+	* src/TagLib/CorruptFileException.cs: Added new exception
+
+	* src/TagLib/Mpeg4/File.cs:
+	* src/TagLib/Ogg/Vorbis/File.cs: Guard against nullrefs, if necessary
+	parts are null, throw a CorruptFileException instead to avoid seg violation
+
+	* tests/fixtures/TagLib.FormatTests/IFormatTest.cs: Added interface for
+	the format test
+
+	* tests/fixtures/TagLib.FormatTests/*.cs: Implement IFormatTest,
+	added TestCorruptionResistance
+
+	* tests/samples/corrupt/*: Added some 'corrupt' samples
+
 2006-12-15  Brian Nickel  <brian.nickel@gmail.com>
 
 	* src/TagLib/Mpeg/Properties.cs:

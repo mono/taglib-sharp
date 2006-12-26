@@ -5,7 +5,7 @@ using TagLib;
 namespace TagLib.FormatTests
 {   
     [TestFixture]
-    public class AsfFormatTest
+    public class AsfFormatTest : IFormatTest
     {
         private File file;
         
@@ -32,6 +32,18 @@ namespace TagLib.FormatTests
             Assert.AreEqual("WMA title", file.Tag.Title);
             Assert.AreEqual(5, file.Tag.Track);
             Assert.AreEqual(2005, file.Tag.Year);
+        }
+         
+        [Test]
+        public void TestCorruptionResistance()
+        {
+            try {
+                File.Create("samples/corrupt/a.wma");
+            } catch(CorruptFileException) {
+            } catch(NullReferenceException e) {
+                throw e;
+            } catch {
+            }
         }
     }
 }

@@ -74,9 +74,12 @@ namespace TagLib.Mpeg4
          // Find the movie box and item list. If the movie box doen't exist, an
          // exception will be thrown on the next call, but if there is no movie 
          // box, the file can't possibly be valid.
-         IsoMovieBox moov_box = (IsoMovieBox) file_box.FindChildDeep ("moov");
-         AppleItemListBox ilst_box = (AppleItemListBox) moov_box.FindChildDeep ("ilst");
+         IsoMovieBox moov_box = file_box.FindChildDeep ("moov") as IsoMovieBox;
+         if(moov_box == null) {
+            throw new CorruptFileException();
+         }
          
+         AppleItemListBox ilst_box = moov_box.FindChildDeep ("ilst") as AppleItemListBox;
          // If we have a ItemListBox, deparent it.
          if (ilst_box != null)
             ilst_box.RemoveFromParent ();
@@ -89,8 +92,12 @@ namespace TagLib.Mpeg4
             return;
          
          // Get the movie header box.
-         IsoMovieHeaderBox   mvhd_box = (IsoMovieHeaderBox) moov_box.FindChildDeep ("mvhd");
+         IsoMovieHeaderBox   mvhd_box = moov_box.FindChildDeep ("mvhd") as IsoMovieHeaderBox;
          IsoAudioSampleEntry sample_entry = null;
+         
+         if(mvhd_box == null) {
+            throw new CorruptFileException();
+         }
          
          // Find a TrackBox with a sound Handler.
          foreach (Box box in moov_box.Children)
