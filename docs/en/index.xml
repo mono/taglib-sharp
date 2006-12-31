@@ -34,7 +34,6 @@
       <Type Name="AudioProperties" />
       <Type Name="AudioProperties+ReadStyle" />
       <Type Name="File" />
-      <Type Name="File+LocalFileAbstraction" />
       <Type Name="File+AccessMode" />
       <Type Name="IntList" />
       <Type Name="ByteVectorList" />
@@ -55,8 +54,8 @@
       <Type Name="Picture" />
       <Type Name="PictureType" />
       <Type Name="ListBase`1" DisplayName="ListBase&lt;T&gt;" />
-      <Type Name="SupportedMimeType+&lt;&gt;c__CompilerGenerated1+&lt;&gt;c__CompilerGenerated3" DisplayName="&lt;&gt;c__CompilerGenerated1+&lt;&gt;c__CompilerGenerated3" />
-      <Type Name="SupportedMimeType+&lt;&gt;c__CompilerGenerated2+&lt;&gt;c__CompilerGenerated4" DisplayName="&lt;&gt;c__CompilerGenerated2+&lt;&gt;c__CompilerGenerated4" />
+      <Type Name="FileTypes" />
+      <Type Name="CorruptFileException" />
     </Namespace>
     <Namespace Name="TagLib.Mpc">
       <Type Name="Properties" />
