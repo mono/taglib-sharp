@@ -18,7 +18,7 @@ namespace TagLib.Mpeg4
          File.Seek (base.DataPosition + 4);
          ByteVector data = File.ReadBlock ((int)(end - base.DataPosition - 4));
 
-         handler_type = data.Mid (4);
+         handler_type = data.Mid (0, 4);
          name = data.Mid (16).ToString ();
       }
       

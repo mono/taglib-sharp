@@ -31,6 +31,7 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Ogg/PageHeader.cs                              \
    $(srcdir)/TagLib/Ogg/File.cs                                    \
    $(srcdir)/TagLib/Flac/Properties.cs                             \
+   $(srcdir)/TagLib/Flac/Picture.cs                                \
    $(srcdir)/TagLib/Flac/File.cs                                   \
    $(srcdir)/TagLib/Mpeg/Properties.cs                             \
    $(srcdir)/TagLib/Mpeg/XingHeader.cs                             \
@@ -46,6 +47,7 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Id3v2/Frames/CommentsFrame.cs                  \
    $(srcdir)/TagLib/Id3v2/Frames/TextIdentificationFrame.cs        \
    $(srcdir)/TagLib/Id3v2/Frames/AttachedPictureFrame.cs           \
+   $(srcdir)/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs \
    $(srcdir)/TagLib/Id3v2/FrameFactory.cs                          \
    $(srcdir)/TagLib/Id3v2/Frame.cs                                 \
    $(srcdir)/TagLib/Id3v2/Tag.cs                                   \

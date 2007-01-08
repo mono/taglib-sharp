@@ -1,3 +1,20 @@
+2007-01-07  Brian Nickel  <brian.nickel@gmail.com>
+
+	* src/TagLib/File.cs: Throw ReadOnlyException when it makes sense.
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs: Fix for UTF16.
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs:
+	* src/TagLib/Id3v2/FrameFactory.cs:
+	* src/TagLib/Id3v1/Tag.cs:
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs:
+	* src/TagLib/Mpeg/XingHeader.cs: 
+	* src/TagLib/Mpeg/Header.cs: Improvements from TagLib.
+	* src/TagLib/Flac/Picture.cs:
+	* src/TagLib/Flac/File.cs: Massive code rewrite. Added support for Picture
+	Block.
+	* src/TagLib/Mpeg4/Boxes/IsoHandlerBox.cs: Fix typo.
+	* src/Makefile.am: Add new files.
+	* examples/ReadFromUri.cs: Update for changes in TagLib.Tag
+
 2006-12-26  Aaron Bockover  <abockover@novell.com>
 
 	* src/TagLib/CorruptFileException.cs: Added new exception

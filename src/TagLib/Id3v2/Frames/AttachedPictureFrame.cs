@@ -148,8 +148,8 @@ namespace TagLib.Id3v2
 
          int pos = 0;
 
-         text_encoding = (StringType) data [pos];
-         pos += 1;
+         text_encoding = (StringType) data [pos++];
+         int byte_align = text_encoding == StringType.Latin1 || text_encoding == StringType.UTF8 ? 1 : 2;
          
          int offset;
          
@@ -176,10 +176,9 @@ namespace TagLib.Id3v2
             pos += 3;
          }
          
-         type = (PictureType) data [pos];
-         pos += 1;
+         type = (PictureType) data [pos++];
          
-         offset = data.Find (TextDelimiter (text_encoding), pos);
+         offset = data.Find (TextDelimiter (text_encoding), pos, byte_align);
 
          if(offset < pos)
             return;  

@@ -486,7 +486,7 @@ namespace TagLib
                return;
             
             if (value == AccessMode.Write && IsReadOnly)
-               throw new Exception ("Write access is not available for this file.");
+               throw new ReadOnlyException();
             
             if (file_stream != null)
                file_stream.Close ();

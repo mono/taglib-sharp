@@ -20,11 +20,22 @@
  *   USA                                                                   *
  ***************************************************************************/
 
-using System.Collections;
+using System.Collections.Generic;
 using System;
 
 namespace TagLib.Flac
 {
+   public enum BlockType
+   {
+      StreamInfo = 0,
+      Padding,
+      Application,
+      SeekTable,
+      VorbisComment,
+      CueSheet,
+      Picture
+   }
+
    [SupportedMimeType("taglib/flac", "flac")]
    [SupportedMimeType("audio/x-flac")]
    [SupportedMimeType("application/x-flac")]
@@ -37,15 +48,10 @@ namespace TagLib.Flac
       private Id3v2.Tag          id3v2_tag;
       private Id3v1.Tag          id3v1_tag;
       private Ogg.XiphComment    comment;
+      private PictureTag         picture_tag;
       private CombinedTag        tag;
 
       private Properties         properties;
-      private ByteVector         stream_info_data;
-      private ByteVector         xiph_comment_data;
-      private long               flac_start;
-      private long               stream_start;
-      private long               stream_length;
-      private bool               scanned;
       
       
       //////////////////////////////////////////////////////////////////////////
@@ -53,20 +59,12 @@ namespace TagLib.Flac
       //////////////////////////////////////////////////////////////////////////
       public File (string file, Properties.ReadStyle properties_style) : base (file)
       {
-         id3v2_tag           = null;
-         id3v1_tag           = null;
          comment             = null;
          properties          = null;
-         flac_start          = 0;
-         stream_start        = 0;
-         stream_length       = 0;
-         scanned             = false;
          tag                 = new CombinedTag ();
-         try {Mode = AccessMode.Read;}
-         catch {return;}
          
+         Mode = AccessMode.Read;
          Read (properties_style);
-         
          Mode = AccessMode.Closed;
       }
 
@@ -76,165 +74,76 @@ namespace TagLib.Flac
 
       public override void Save ()
       {
-         if(IsReadOnly) {
-            throw new ReadOnlyException();
-         }
-         
          Mode = AccessMode.Write;
          
-         long flac_data_begin;
-         long flac_data_end;
+         long tag_start, tag_end;
          
-         // Update ID3 tags
+         // Update ID3v2 tag
+         FindId3v2 (out tag_start, out tag_end);
          if(id3v2_tag != null)
          {
             ByteVector id3v2_tag_data = id3v2_tag.Render ();
-            
-            long id3v2_location = FindId3v2 ();
-            if (id3v2_location >= 0)
-            {
-               int id3v2_size = 0;
-               
-               Seek (id3v2_location);
-               Id3v2.Header header = new Id3v2.Header (ReadBlock ((int) Id3v2.Header.Size));
-            
-               if (header.TagSize == 0)
-                  Debugger.Debug ("Flac.File.Save() -- Id3v2 header is broken. Ignoring.");
-               else
-                  id3v2_size = (int) header.CompleteTagSize;
-
-               Insert (id3v2_tag_data, id3v2_location, id3v2_size);
-               flac_data_begin = id3v2_location + id3v2_tag_data.Count;
-            }
-            else
-            {
-               Insert (id3v2_tag_data, 0, 0);
-               flac_data_begin = id3v2_tag_data.Count;
-            }
+            Insert (id3v2_tag_data, tag_start, tag_end);
+            tag_end = tag_start + id3v2_tag_data.Count;
          }
-         else 
-            flac_data_begin = 0;
-
-         if(id3v1_tag != null)
-         {
-            long id3v1_location = FindId3v1 ();
-            
-            if (id3v1_location >= 0)
-               Seek (id3v1_location);
-            else
-               Seek (0, System.IO.SeekOrigin.End);
-            
-            flac_data_end = Tell;
-            WriteBlock (id3v1_tag.Render ());
-         }
-         else
-            flac_data_end = Length;
-
-
+         
+         // Get all the blocks, but don't read the data for ones we're filling
+         // with stored data.
+         BlockType[] types = {BlockType.VorbisComment, BlockType.Picture};
+         List<Block> old_blocks = ReadBlocks (tag_end, Length, types, BlockMode.Blacklist);
+         
+         // Find the range currently holding the blocks.
+         tag_start = old_blocks [0].Position;
+         tag_end   = old_blocks [old_blocks.Count - 1].NextBlockPosition;
+         
          // Create new vorbis comments is they don't exist.
          GetTag (TagTypes.Xiph, true);
-
-         xiph_comment_data = comment.Render (false);
-
-         ByteVector v = ByteVector.FromUInt((uint) xiph_comment_data.Count);
-
-         // Set the type of the comment to be a Xiph / Vorbis comment
-         // (See scan() for comments on header-format)
-         v [0] = 4;
-         v.Add (xiph_comment_data);
-
-
-         // If file already have comment => find and update it
-         //                       if not => insert one
-
-         scanned = false;
          
-         if (Scan (flac_data_begin, flac_data_end) != null)
+         // Create new blocks and add the basics.
+         List<Block> new_blocks = new List<Block> ();
+         new_blocks.Add (old_blocks [0]);
+         new_blocks.Add (new Block (BlockType.VorbisComment, comment.Render (false)));
+         
+         foreach (IPicture picture in picture_tag.Pictures)
+            new_blocks.Add (new Block (BlockType.Picture, Picture.Render (picture)));
+         
+         // Add all other blocks from the file.
+         foreach (Block block in old_blocks)
+            if (block.Type != BlockType.StreamInfo    &&
+                block.Type != BlockType.VorbisComment &&
+                block.Type != BlockType.Picture)
+               new_blocks.Add (block);
+         
+         // Get the length of the blocks.
+         long length = 0;
+         foreach (Block block in new_blocks)
+            length += block.TotalLength;
+         
+         // Find the padding size to avoid trouble. If that fails make some.
+         long padding_size = tag_end - tag_start - BlockHeader.Length - length;
+         if (padding_size < 0)
+            padding_size = 1024 * 4;
+         
+         // Add a padding block.
+         if (padding_size != 0)
          {
-            long next_page_offset = flac_start;
-            Seek (next_page_offset);
-            ByteVector header = ReadBlock (4);
-            uint length = header.Mid(1, 3).ToUInt ();
-
-            next_page_offset += length + 4;
-
-            // Search through the remaining metadata
-
-            byte block_type = (byte) (header[0] & 0x7f);
-            bool last_block = (header[0] & 0x80) != 0;
-
-            while (!last_block)
-            {
-               Seek (next_page_offset);
-
-               header = ReadBlock (4);
-               block_type = (byte) (header[0] & 0x7f);
-               last_block = (header[0] & 0x80) != 0;
-               length = header.Mid(1, 3).ToUInt ();
-               
-               // Type is vorbiscomment
-               if(block_type == 4)
-               {
-                  long next_keep = (last_block ? 0 : FindPaddingBreak (next_page_offset + length + 4,
-                                                                       next_page_offset + XiphCommentData.Count + 8,
-                                                                       ref last_block));
-                  uint padding_length;
-                  if(next_keep != 0)
-                  {
-                     // There is space for comment and padding blocks without rewriting the whole file.
-                     // Note this can not overflow.
-                     padding_length = (uint) (next_keep - (next_page_offset + XiphCommentData.Count + 8));
-                  }
-                  else
-                  {
-                     // Not enough space, so we will have to rewrite the whole file following this block
-                     padding_length = (uint) XiphCommentData.Count;
-                     if (padding_length < 4096)
-                        padding_length = 4096;
-                     next_keep = next_page_offset + length + 4;
-                  }
-                  
-                  ByteVector padding = ByteVector.FromUInt (padding_length);
-                  padding [0] = 1;
-                  if (last_block)
-                     padding [0] = (byte) (padding [0] | 0x80);
-                  padding.Resize ((int)(padding_length + 4));
-                  
-                  Insert (v + padding, next_page_offset, next_keep - next_page_offset);
-                  //System.Console.WriteLine ("OGG: " + (next_keep - next_page_offset) + " " + (v.Count + padding.Count));
-                  
-                  break;
-               }
-
-               next_page_offset += length + 4;
-            }
+            new_blocks.Add (new Block (BlockType.Padding, new ByteVector ((int) length)));
          }
-         else
+         
+         // Render the blocks.
+         ByteVector block_data = new ByteVector ();
+         for (int i = 0; i < new_blocks.Count; i ++)
+            block_data.Add (new_blocks [i].Render (i == new_blocks.Count - 1));
+         
+         // Update the blocks.
+         Insert (block_data, tag_start, tag_end);
+         
+         // Update ID3v1 tag
+         FindId3v1 (out tag_start, out tag_end);
+         if(id3v1_tag != null)
          {
-            long next_page_offset = flac_start;
-
-            Seek (next_page_offset);
-
-            ByteVector header = ReadBlock (4);
-            bool last_block = (header[0] & 0x80) != 0;
-            uint length = header.Mid(1, 3).ToUInt ();
-
-            // If last block was last, make this one last
-
-            if(last_block)
-            {
-               // Copy the bottom seven bits into the new value
-
-               ByteVector h = (byte)(header[0] & 0x7F);
-               Insert (h, next_page_offset, 1);
-
-               // Set the last bit
-               v [0] = (byte) (v [0] | 0x80);
-            }
-
-            Insert (v, next_page_offset + length + 4, 0);
+            Insert (id3v1_tag.Render (), tag_start, tag_end);
          }
-
          Mode = AccessMode.Closed;
       }
       
@@ -251,7 +160,7 @@ namespace TagLib.Flac
                   if (tag != null)
                      TagLib.Tag.Duplicate (tag, id3v1_tag, true);
                   
-                  tag.SetTags (comment, id3v2_tag, id3v1_tag);
+                  tag.SetTags (picture_tag, comment, id3v2_tag, id3v1_tag);
                }
                return id3v1_tag;
             }
@@ -265,7 +174,7 @@ namespace TagLib.Flac
                   if (tag != null)
                      TagLib.Tag.Duplicate (tag, id3v2_tag, true);
                   
-                  tag.SetTags (comment, id3v2_tag, id3v1_tag);
+                  tag.SetTags (picture_tag, comment, id3v2_tag, id3v1_tag);
                }
                return id3v2_tag;
             }
@@ -279,7 +188,7 @@ namespace TagLib.Flac
                   if (tag != null)
                      TagLib.Tag.Duplicate (tag, comment, true);
                   
-                  tag.SetTags (comment, id3v2_tag, id3v1_tag);
+                  tag.SetTags (picture_tag, comment, id3v2_tag, id3v1_tag);
                }
                return comment;
             }
@@ -303,196 +212,250 @@ namespace TagLib.Flac
       //////////////////////////////////////////////////////////////////////////
       private void Read (Properties.ReadStyle properties_style)
       {
-         long flac_data_begin;
-         long flac_data_end;
+         long flac_data_begin, flac_data_end, dummy;
          
-         // Look for an ID3v2 tag
-         long id3v2_location = FindId3v2 ();
          
-         if(id3v2_location >= 0)
-         {
-            id3v2_tag = new Id3v2.Tag (this, id3v2_location);
-            flac_data_begin = id3v2_location + id3v2_tag.Header.CompleteTagSize;
-         }
-         else
-            flac_data_begin = 0;
-
-         // Look for an ID3v1 tag
-         long id3v1_location = FindId3v1 ();
-
-         if(id3v1_location >= 0)
-         {
-            id3v1_tag = new Id3v1.Tag (this, id3v1_location);
-            flac_data_end = id3v1_location;
-         }
-         else
-            flac_data_end = Length;
-
-         // Look for FLAC metadata, including vorbis comments
-
-         xiph_comment_data = Scan (flac_data_begin, flac_data_end);
-
-         if (!IsValid) return;
-
-         if (XiphCommentData.Count > 0)
-            comment = new Ogg.XiphComment (XiphCommentData);
-
-         tag.SetTags (comment, id3v2_tag, id3v1_tag);
+         id3v2_tag = ReadId3v2Tag (out dummy, out flac_data_begin);
+         id3v1_tag = ReadId3v1Tag (out flac_data_end, out dummy);
          
+         BlockType[] types = {BlockType.StreamInfo, BlockType.VorbisComment, BlockType.Picture};
+         List<Block> blocks = ReadBlocks (flac_data_begin, flac_data_end, types, BlockMode.Whitelist);
+         
+         // Find the first vorbis comment inside the blocks.
+         foreach (Block block in blocks)
+            if (block.Type == BlockType.VorbisComment && block.Data.Count > 0)
+            {
+               comment = new Ogg.XiphComment (block.Data);
+               break;
+            }
+         
+         // Find the images.
+         List<IPicture> pictures = new List<IPicture>();
+         foreach (Block block in blocks)
+            if (block.Type == BlockType.Picture && block.Data.Count > 0)
+            {
+               try
+               {
+                  pictures.Add (new Picture (block.Data));
+               } catch {}
+            }
+         
+         picture_tag = new PictureTag (pictures.ToArray ());
+         
+         // Set the tags in the CombinedTag.
+         tag.SetTags (picture_tag, comment, id3v2_tag, id3v1_tag);
+         
+         // Make sure we have a Vorbis Comment.
          GetTag (TagTypes.Xiph, true);
-
+         
+         // The stream exists from the end of the last block to the end of the file.
+         long stream_length = flac_data_end - blocks [blocks.Count - 1].NextBlockPosition;
          if(properties_style != Properties.ReadStyle.None)
-            properties = new Properties (stream_info_data, stream_length, properties_style);
+            properties = new Properties (blocks [0].Data, stream_length, properties_style);
       }
-
-      private ByteVector Scan (long begin, long end)
+      
+      private Id3v2.Tag ReadId3v2Tag (out long start, out long end)
       {
-         ByteVector xiph_comment_data = null;
-         
-         // Scan the metadata pages
-
-         if(scanned || !IsValid)
-            return null;
-         
-         long next_page_offset;
-         long file_size = Length;
-
-         next_page_offset = Find ("fLaC", begin);
-
-         if (next_page_offset < 0)
-         {
-            Debugger.Debug ("Flac.File.Scan () -- FLAC stream not found");
-            SetValid (false);
-            return null;
-         }
-
-         next_page_offset += 4;
-         flac_start = next_page_offset;
-
-         Seek (next_page_offset);
-
-         ByteVector header = ReadBlock (4);
-
-         // Header format (from spec):
-         // <1> Last-metadata-block flag
-         // <7> BLOCK_TYPE
-         //	0 : STREAMINFO
-         //    1 : PADDING
-         //    ..
-         //    4 : VORBIS_COMMENT
-         //    ..
-         // <24> Length of metadata to follow
-
-         byte block_type = (byte) (header [0] & 0x7f);
-         bool last_block = (header [0] & 0x80) != 0;
-         uint length = header.Mid (1, 3).ToUInt ();
-
-         // First block should be the stream_info metadata
-         if (block_type != 0)
-         {
-            Debugger.Debug ("Flac.File.Scan() -- invalid FLAC stream");
-            SetValid (false);
-            return null;
-         }
-         stream_info_data  = ReadBlock ((int) length);
-         next_page_offset += length + 4;
-
-         // Search through the remaining metadata
-
-         while (!last_block)
-         {
-            header = ReadBlock (4);
-            block_type = (byte) (header [0] & 0x7f);
-            last_block = (header [0] & 0x80) != 0;
-            length = header.Mid (1, 3).ToUInt ();
-
-            // Found the vorbis-comment
-            if(block_type == 4)
-               xiph_comment_data  = ReadBlock ((int) length);
-
-            next_page_offset += length + 4;
-            if (next_page_offset >= file_size)
-            {
-               Debugger.Debug ("Flac.File.Scan() -- FLAC stream corrupted");
-               SetValid (false);
-               return null;
-            }
-            Seek (next_page_offset);
-         }
-
-         // End of metadata, now comes the datastream
-         stream_start = next_page_offset;
-         stream_length = end - stream_start;
-
-         scanned = true;
-         
-         return xiph_comment_data;
+         return FindId3v2 (out start, out end) ? new Id3v2.Tag (this, start) : null;
       }
-
-      private long FindId3v1 ()
+      
+      private Id3v1.Tag ReadId3v1Tag (out long start, out long end)
       {
-         if (IsValid)
-         {
-            Seek (-128, System.IO.SeekOrigin.End);
-            long p = Tell;
-
-            if (ReadBlock (3) == Id3v1.Tag.FileIdentifier)
-            return p;
-         }
-         
-         return -1;
+         return FindId3v1 (out start, out end) ? new Id3v1.Tag (this, start) : null;
       }
-
-      private long FindId3v2 ()
+      
+      private enum BlockMode
       {
-         if (IsValid)
-         {
-            Seek (0);
-
-            if (ReadBlock (3) == Id3v2.Header.FileIdentifier)
-               return 0;
-         }
-         
-         return -1;
+         Blacklist,
+         Whitelist
       }
-
-      private long FindPaddingBreak (long next_page_offset, long target_offset, ref bool last)
+      
+      private List<Block> ReadBlocks (long start, long end, BlockType[] types, BlockMode mode)
       {
-         // Starting from nextPageOffset, step over padding blocks to find the
-         // address of a block which is after targetOffset. Return zero if
-         // a non-padding block occurs before that point
+         List<Block> blocks = new List<Block>();
          
-         while (true)
+         long block_position = Find ("fLaC", start);
+         if (block_position < 0)
+            throw new ArgumentException ("FLAC stream not found at starting position.", "start");
+         
+         block_position += 4;
+         
+         Block block;
+         do
          {
-            Seek (next_page_offset);
-         
-            ByteVector header = ReadBlock (4);
-            byte block_type   = (byte) (header[0] & 0x7f);
-            bool last_block   = (header[0] & 0x80) != 0;
-            uint length       = header.Mid(1, 3).ToUInt ();
-         
-            if (block_type != 1)
-               break;
-         
-            next_page_offset += 4 + length;
-         
-            if(next_page_offset >= target_offset)
-            {
-               last = last_block;
-               return next_page_offset;
-            }
+            Seek (block_position);
             
-            if (last_block)
-               break;
+            block = ReadMetadataBlock (types, mode);
+            blocks.Add (block);
+            
+            if (block.NextBlockPosition > end)
+               throw new Exception ("Next block position exceeds length of stream.");
+            
+            block_position = block.NextBlockPosition;
          }
-         return 0;
+         while (!block.IsLastBlock);
+
+         // Check that the first block is a METADATA_BLOCK_STREAMINFO.
+         if (blocks [0].Type != BlockType.StreamInfo)
+            throw new Exception ("FLAC stream does not begin with StreamInfo.");
+         
+         return blocks;
+      }
+      
+      private BlockHeader ReadMetadataBlockHeader ()
+      {
+         return new BlockHeader (ReadBlock (4));
+      }
+      
+      private Block ReadMetadataBlock (BlockType[] types, BlockMode mode)
+      {
+         long position = Tell;
+         BlockHeader header = ReadMetadataBlockHeader ();
+         ByteVector data = null;
+         
+         if (types != null)
+         {
+            bool found = false;
+            foreach (BlockType type in types)
+               if (header.BlockType == type)
+                  found = true;
+            
+            if ((mode == BlockMode.Whitelist &&  found) ||
+                (mode == BlockMode.Blacklist && !found))
+               data = ReadBlock ((int) header.BlockLength);
+         }
+         
+         return new Block (header, data, position);
+      }
+      
+      private bool FindId3v1 (out long start, out long end)
+      {
+         Seek (-128, System.IO.SeekOrigin.End);
+         
+         start = Tell;
+         end = Length;
+         
+         if (ReadBlock (3) == Id3v1.Tag.FileIdentifier)
+            return true;
+         
+         start = end;
+         return false;
       }
 
-      private ByteVector XiphCommentData
+      private bool FindId3v2 (out long start, out long end)
       {
-         get
+         start = end = 0;
+         
+         Seek (0);
+         ByteVector data = ReadBlock (10);
+         
+         if (data.Mid (0, 3) == Id3v2.Header.FileIdentifier)
          {
-            return (IsValid && xiph_comment_data != null) ? xiph_comment_data : new ByteVector ();
+            Id3v2.Header header = new Id3v2.Header (data);
+            if (header.TagSize != 0)
+            {
+               end = header.CompleteTagSize;
+               return true;
+            }
+         }
+         
+         return false;
+      }
+      
+      
+      //////////////////////////////////////////////////////////////////////////
+      // BlockHeader class
+      //////////////////////////////////////////////////////////////////////////
+      private class BlockHeader
+      {
+         private BlockType block_type;
+         private bool      is_last_block;
+         private uint      block_length;
+         
+         public BlockHeader (ByteVector data)
+         {
+            block_type    = (BlockType) (data[0] & 0x7f);
+            is_last_block = (data[0] & 0x80) != 0;
+            block_length  = data.Mid (1,3).ToUInt ();
+         }
+         
+         public BlockHeader (BlockType type, uint length)
+         {
+            block_type    = type;
+            is_last_block = false;
+            block_length  = length;
+         }
+         
+         public ByteVector Render (bool is_last_block)
+         {
+            ByteVector data = ByteVector.FromUInt (block_length);
+            data [0] = (byte)(block_type + (is_last_block ? 0x80 : 0));
+            return data;
+         }
+         
+         public static uint Length    {get {return 4;}}
+         
+         public BlockType BlockType   {get {return block_type;}}
+         public bool      IsLastBlock {get {return is_last_block;}}
+         public uint      BlockLength {get {return block_length;}}
+      }
+      
+      
+      //////////////////////////////////////////////////////////////////////////
+      // Block class
+      //////////////////////////////////////////////////////////////////////////
+      private class Block
+      {
+         private BlockHeader header;
+         private ByteVector  data;
+         private long        position;
+         
+         public Block (BlockHeader header, ByteVector data, long position)
+         {
+            this.header   = header;
+            this.data     = data;
+            this.position = position;
+         }
+         
+         public Block (BlockType type, ByteVector data)
+         {
+            this.header   = new BlockHeader (type, (uint) data.Count);
+            this.data     = data;
+            this.position = 0;
+         }
+         
+         public ByteVector Render (bool is_last_block)
+         {
+            ByteVector data = header.Render (is_last_block);
+            data.Add (this.data);
+            return data;
+         }
+         
+         public BlockType   Type              {get {return header.BlockType;}}
+         public bool        IsLastBlock       {get {return header.IsLastBlock;}}
+         public uint        Length            {get {return header.BlockLength;}}
+         public uint        TotalLength       {get {return Length + 4;}}
+         public ByteVector  Data              {get {return data;}}
+         public long        Position          {get {return position;}}
+         public long        NextBlockPosition {get {return Position + BlockHeader.Length + header.BlockLength;}}
+      }
+      
+      
+      //////////////////////////////////////////////////////////////////////////
+      // PictureTag class
+      //////////////////////////////////////////////////////////////////////////
+      private class PictureTag : Tag
+      {
+         private IPicture[] pictures;
+         public PictureTag (IPicture[] pictures)
+         {
+            this.pictures = pictures;
+         }
+         
+         public override IPicture[] Pictures
+         {
+            get {return pictures != null ? pictures : new IPicture [] {};}
+            set {pictures = value;}
          }
       }
    }

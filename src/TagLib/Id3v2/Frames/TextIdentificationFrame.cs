@@ -110,27 +110,19 @@ namespace TagLib.Id3v2
 
       protected override ByteVector RenderFields ()
       {
-         ByteVector v = new ByteVector ();
+         ByteVector v = new ByteVector ((byte) text_encoding);
 
-         if (field_list.Count > 0)
+         for (int i = 0; i < field_list.Count; i++)
          {
-            v.Add ((byte) text_encoding);
+            // Since the field list is null delimited, if this is not the
+            // first element in the list, append the appropriate delimiter
+            // for this encoding.
+            if (i !=0)
+               v.Add (TextDelimiter (text_encoding));
             
-            bool first = true;
-            foreach (string s in field_list)
-            {
-               // Since the field list is null delimited, if this is not the
-               // first element in the list, append the appropriate delimiter
-               // for this encoding.
-               
-               if (!first)
-                  v.Add (TextDelimiter (text_encoding));
-               first = false;
-               
-               v.Add (ByteVector.FromString (s, text_encoding));
-            }
+            v.Add (ByteVector.FromString (field_list [i], text_encoding));
          }
-
+         
          return v;
       }
 
@@ -160,6 +152,7 @@ namespace TagLib.Id3v2
 
       public UserTextIdentificationFrame (ByteVector data) : base (data)
       {
+         CheckFields ();
       }
 
       public override string ToString ()
@@ -221,13 +214,29 @@ namespace TagLib.Id3v2
             return l;
          }
       }
-
-
+      
+      
+      //////////////////////////////////////////////////////////////////////////
+      // private methods
+      //////////////////////////////////////////////////////////////////////////
+      private void CheckFields ()
+      {
+         int fields = base.FieldList.Count;
+         
+         if (fields == 0)
+            Description = "";
+         
+         if(fields <= 1)
+            SetText ("");
+      }
+      
+      
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
       protected internal UserTextIdentificationFrame (ByteVector data, FrameHeader h) : base (data, h)
       {
+         CheckFields ();
       }
    }
 }

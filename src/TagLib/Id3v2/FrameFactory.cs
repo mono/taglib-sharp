@@ -109,6 +109,10 @@ namespace TagLib.Id3v2
             if(use_default_encoding)
                f.TextEncoding = default_encoding;
             
+            
+            if (frame_id == "TCON" && version < 4)
+               UpdateGenre (f);
+
             return f;
          }
 
@@ -151,7 +155,12 @@ namespace TagLib.Id3v2
          if (frame_id == "PRIV")
             return new PrivateFrame (data, header);
          
-         return new UnknownFrame(data, header);
+         // General Encapsulated Object (frames 4.15)
+         
+         if(frame_id == "GEOB")
+            return new GeneralEncapsulatedObjectFrame (data, header);
+         
+         return new UnknownFrame (data, header);
       }
 
       public static StringType DefaultTextEncoding
@@ -171,6 +180,31 @@ namespace TagLib.Id3v2
       {
          if (creator != null)
             frame_creators.Insert (0, creator);
+      }
+      
+      public static void UpdateGenre (TextIdentificationFrame frame)
+      {
+         StringList fields = new StringList ();
+         string s = frame.ToString ();
+         
+         while (s.Length > 1 && s [0] == '(')
+         {
+            int closing = s.IndexOf (')');
+            if (closing < 0)
+               break;
+            
+            fields.Add (s.Substring (1, closing - 1));
+            
+            s = s.Substring (closing + 1);
+         }
+         
+         if(s != "")
+            fields.Add (s);
+            
+         if (fields.IsEmpty)
+            fields.Add (s);
+         
+         frame.SetText (fields);
       }
       
       

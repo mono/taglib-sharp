@@ -195,12 +195,13 @@ namespace TagLib.Mpeg
 
          // The channel mode is encoded as a 2 bit value at the end of the 3nd
          // byte, i.e. xxxxxx11
-         channel_mode = (ChannelMode)((flags >> 6) & 0x3);
+         channel_mode = (ChannelMode)((data[3] & 0xC0) >> 6);
 
          // TODO: Add mode extension for completeness
 
-         is_copyrighted = (flags & 1) == 1;
-         is_original = ((flags >> 1) & 1) == 1;
+         is_original    = ((flags >> 2) & 1) == 1;
+         is_copyrighted = ((flags >> 3) & 1) == 1;
+         is_padded      = ((flags >> 9) & 1) == 1;
 
          // Calculate the frame length
          if(layer == 1)

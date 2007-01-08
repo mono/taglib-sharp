@@ -86,13 +86,13 @@ namespace TagLib.Mpeg
          // If the XingHeader doesn't contain the number of frames and the total stream
          // info it's invalid.
 
-         if((data [7] & 0x02) == 0)
+         if((data [7] & 0x01) == 0)
          {
             Debugger.Debug ("MPEG::XingHeader::parse() -- Xing header doesn't contain the total number of frames.");
             return;
          }
 
-         if((data[7] & 0x04) == 0)
+         if((data[7] & 0x02) == 0)
          {
             Debugger.Debug ("MPEG::XingHeader::parse() -- Xing header doesn't contain the total stream size.");
             return;

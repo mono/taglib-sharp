@@ -140,13 +140,13 @@ namespace TagLib.Id3v1
             try {return System.UInt32.Parse (year);}
             catch {return 0;}
          }
-         set {year = value.ToString ();}
+         set {year = value > 0 ? value.ToString () : "";}
       }
       
       public override uint Track
       {
          get {return track;}
-         set {track = (byte) value;}
+         set {track = (byte) (value < 256 ? value : 0);}
       }
       
       
