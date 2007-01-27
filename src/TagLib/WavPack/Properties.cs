@@ -88,10 +88,10 @@ namespace TagLib.WavPack
          long SRATE_MASK  = (0xfL << SRATE_LSB);
          
          if (!data.StartsWith ("wvpk"))
-            return;
+            throw new CorruptFileException ();
 
          version = data.Mid (8, 2).ToShort (false);
-  
+         
          uint flags = data.Mid (24, 4).ToUInt (false);
          bits_per_sample = (int) (((flags & BYTES_STORED) + 1) * 8 - ((flags & SHIFT_MASK) >> SHIFT_LSB));
          sample_rate = (int) (sample_rates [(flags & SRATE_MASK) >> SRATE_LSB]);

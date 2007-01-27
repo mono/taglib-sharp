@@ -15,74 +15,22 @@
       <Parameters><Parameter Name="file" Type="System.String" /></Parameters>
       <Docs><param name="file">A <see cref="T:System.String" /> containing the path of the file to read.</param><summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg.File" /> by loading the provided file name.</summary><remarks>This constructor will only handle MPEG Layer-3 (MP3) files. To handle all files, see <see cref="M:TagLib.File.Create(System.String,System.Boolean,TagLib.AudioProperties+ReadStyle)" />.</remarks></Docs>
     </Member>
-    <Member MemberName="Strip">
-      <MemberSignature Language="C#" Value="public bool Strip (TagLib.TagTypes types, bool free_memory);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="types" Type="TagLib.TagTypes" /><Parameter Name="free_memory" Type="System.Boolean" /></Parameters>
-      <Docs><param name="types">To be added.</param><param name="free_memory">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member>
-    <Member MemberName="Strip">
-      <MemberSignature Language="C#" Value="public bool Strip (TagLib.TagTypes types);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="types" Type="TagLib.TagTypes" /></Parameters>
-      <Docs><param name="types">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member>
-    <Member MemberName="Strip">
-      <MemberSignature Language="C#" Value="public bool Strip ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
-      <Parameters />
-      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member>
-    <Member MemberName="NextFrameOffset">
-      <MemberSignature Language="C#" Value="public long NextFrameOffset (long position);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="position" Type="System.Int64" /></Parameters>
-      <Docs><param name="position">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member>
-    <Member MemberName="PreviousFrameOffset">
-      <MemberSignature Language="C#" Value="public long PreviousFrameOffset (long position);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="position" Type="System.Int64" /></Parameters>
-      <Docs><param name="position">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member>
-    <Member MemberName="FirstFrameOffset">
-      <MemberSignature Language="C#" Value="public long FirstFrameOffset { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member>
-    <Member MemberName="LastFrameOffset">
-      <MemberSignature Language="C#" Value="public long LastFrameOffset { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member>
+    
+    
+    
+    
+    
+    
+    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public File (string file, TagLib.AudioProperties.ReadStyle properties_style);" />
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="file" Type="System.String" /><Parameter Name="properties_style" Type="TagLib.AudioProperties+ReadStyle" /></Parameters>
       <Docs><param name="file">To be added.</param><param name="properties_style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
-    <Member MemberName="Save">
-      <MemberSignature Language="C#" Value="public void Save (TagLib.TagTypes types, bool strip_others);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="types" Type="TagLib.TagTypes" /><Parameter Name="strip_others" Type="System.Boolean" /></Parameters>
-      <Docs><param name="types">To be added.</param><param name="strip_others">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member>
-    <Member MemberName="Save">
-      <MemberSignature Language="C#" Value="public void Save (TagLib.TagTypes tags);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="tags" Type="TagLib.TagTypes" /></Parameters>
-      <Docs><param name="tags">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member>
-  </Members>
+    
+    
+  <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public File (string file, TagLib.AudioProperties.ReadStyle properties_style);" /><MemberType>Constructor</MemberType><Parameters><Parameter Name="file" Type="System.String" /><Parameter Name="properties_style" Type="TagLib.AudioProperties+ReadStyle" /></Parameters><Docs><param name="file">To be added.</param><param name="properties_style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Remove"><MemberSignature Language="C#" Value="public void Remove (TagLib.TagTypes types);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="types" Type="TagLib.TagTypes" /></Parameters><Docs><param name="types">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName=".ctor"><MemberSignature Language="C#" Value="public File (string file, TagLib.AudioProperties.ReadStyle properties_style);" /><MemberType>Constructor</MemberType><Parameters><Parameter Name="file" Type="System.String" /><Parameter Name="properties_style" Type="TagLib.AudioProperties+ReadStyle" /></Parameters><Docs><param name="file">To be added.</param><param name="properties_style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Remove"><MemberSignature Language="C#" Value="public void Remove (TagLib.TagTypes types);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="types" Type="TagLib.TagTypes" /></Parameters><Docs><param name="types">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName=".ctor"><MemberSignature Language="C#" Value="public File (string file, TagLib.AudioProperties.ReadStyle properties_style);" /><MemberType>Constructor</MemberType><Parameters><Parameter Name="file" Type="System.String" /><Parameter Name="properties_style" Type="TagLib.AudioProperties+ReadStyle" /></Parameters><Docs><param name="file">To be added.</param><param name="properties_style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Remove"><MemberSignature Language="C#" Value="public void Remove (TagLib.TagTypes types);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="types" Type="TagLib.TagTypes" /></Parameters><Docs><param name="types">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName=".ctor"><MemberSignature Language="C#" Value="public File (string file, TagLib.AudioProperties.ReadStyle properties_style);" /><MemberType>Constructor</MemberType><Parameters><Parameter Name="file" Type="System.String" /><Parameter Name="properties_style" Type="TagLib.AudioProperties+ReadStyle" /></Parameters><Docs><param name="file">To be added.</param><param name="properties_style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Remove"><MemberSignature Language="C#" Value="public void Remove (TagLib.TagTypes types);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="types" Type="TagLib.TagTypes" /></Parameters><Docs><param name="types">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName=".ctor"><MemberSignature Language="C#" Value="public File (string file, TagLib.AudioProperties.ReadStyle properties_style);" /><MemberType>Constructor</MemberType><Parameters><Parameter Name="file" Type="System.String" /><Parameter Name="properties_style" Type="TagLib.AudioProperties+ReadStyle" /></Parameters><Docs><param name="file">To be added.</param><param name="properties_style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Remove"><MemberSignature Language="C#" Value="public void Remove (TagLib.TagTypes types);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="types" Type="TagLib.TagTypes" /></Parameters><Docs><param name="types">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName=".ctor"><MemberSignature Language="C#" Value="public File (string file, TagLib.AudioProperties.ReadStyle properties_style);" /><MemberType>Constructor</MemberType><Parameters><Parameter Name="file" Type="System.String" /><Parameter Name="properties_style" Type="TagLib.AudioProperties+ReadStyle" /></Parameters><Docs><param name="file">To be added.</param><param name="properties_style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Remove"><MemberSignature Language="C#" Value="public void Remove (TagLib.TagTypes types);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="types" Type="TagLib.TagTypes" /></Parameters><Docs><param name="types">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName=".ctor"><MemberSignature Language="C#" Value="public File (string file, TagLib.AudioProperties.ReadStyle properties_style);" /><MemberType>Constructor</MemberType><Parameters><Parameter Name="file" Type="System.String" /><Parameter Name="properties_style" Type="TagLib.AudioProperties+ReadStyle" /></Parameters><Docs><param name="file">To be added.</param><param name="properties_style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Remove"><MemberSignature Language="C#" Value="public void Remove (TagLib.TagTypes types);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="types" Type="TagLib.TagTypes" /></Parameters><Docs><param name="types">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Remove"><MemberSignature Language="C#" Value="public void Remove (TagLib.TagTypes types);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="types" Type="TagLib.TagTypes" /></Parameters><Docs><param name="types">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Remove"><MemberSignature Language="C#" Value="public void Remove (TagLib.TagTypes types);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="types" Type="TagLib.TagTypes" /></Parameters><Docs><param name="types">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member></Members>
   <Docs>
     <summary>This class is a subclass of <see cref="T:TagLib.File" /> and provides read and write tag access for MPEG Layer-3 files.</summary>
     <remarks>

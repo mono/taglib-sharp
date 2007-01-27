@@ -89,10 +89,7 @@ namespace TagLib.Ogg.Vorbis
          int pos = 0;
 
          if (data.Mid (pos, 7) != vorbis_comment_header_id)
-         {
-            Debugger.Debug ("Vorbis.Properties.Read() -- invalid Vorbis identification header");
-            return;
-         }
+            throw new CorruptFileException ("Invalid Vorbis identification header.");
 
          pos += 7;
 

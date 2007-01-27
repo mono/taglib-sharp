@@ -1,5 +1,5 @@
 <Type Name="SupportedMimeType" FullName="TagLib.SupportedMimeType">
-  <TypeSignature Language="C#" Value="public class SupportedMimeType : Attribute" />
+  <TypeSignature Language="C#" Value="public class SupportedMimeType : System.Attribute" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.1.0.0</AssemblyVersion>

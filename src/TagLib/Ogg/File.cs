@@ -62,10 +62,7 @@ namespace TagLib.Ogg
 
          while (packet_to_page_map.Count <= i)
             if (!NextPage ())
-            {
-               Debugger.Debug ("Ogg.File.Packet() -- Could not find the requested packet.");
-               return null;
-            }
+               throw new CorruptFileException ("Could not find the requested packet.");
          
          // Start reading at the first page that contains part (or all) of this packet.
          // If the last read stopped at the packet that we're interested in, don't
@@ -95,10 +92,7 @@ namespace TagLib.Ogg
          {
             page_index ++;
             if (page_index == pages.Count && !NextPage ())
-            {
-               Debugger.Debug ("Ogg.File.Packet() -- Could not find the requested packet.");
-               return null;
-            }
+               throw new CorruptFileException ("Could not find the requested packet.");
             
             current_packet_page = (Page) pages [page_index];
             current_packets = current_packet_page.Packets;
@@ -128,10 +122,6 @@ namespace TagLib.Ogg
       
       public override void Save ()
       {
-         if (IsReadOnly) {
-            throw new ReadOnlyException();
-         }
-         
          Mode = AccessMode.Write;
          
          IntList page_group = new IntList ();

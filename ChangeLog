@@ -1,3 +1,62 @@
+2007-01-26  Brian Nickel  <brian.nickel@gmail.com>
+
+	CLEANUPS! For the most part, internal code has been cleaned up to be less
+	hackish. One major feature is the obsoleting of SetValid and IsValid. If
+	a file is invalid, it will now throw a CorruptFileException.
+	
+	* src/TagLib/Mpc/Properties.cs:
+	* src/TagLib/Mpc/File.cs: Better search functions.
+	* src/TagLib/File.cs: Clean out and Obsolete bad code.
+	* src/TagLib/Id3v1/Tag.cs: Cleaner functions.
+	* src/TagLib/Mpeg/Properties.cs:
+	* src/TagLib/Mpeg/XingHeader.cs:
+	* src/TagLib/Mpeg/File.cs:
+	* src/TagLib/Mpeg/Header.cs: Better search functions, calculations, and
+	exceptions.
+	* src/TagLib/WavPack/Properties.cs:
+	* src/TagLib/WavPack/File.cs: Use better search functions.
+	* src/TagLib/Ape/Footer.cs: Throw better exception.
+	* src/TagLib/Flac/File.cs: Fix padding calculation.
+	* src/TagLib/Asf/PaddingObject.cs:
+	* src/TagLib/Asf/File.cs:
+	* src/TagLib/Asf/HeaderObject.cs:
+	* src/TagLib/Asf/FilePropertiesObject.cs:
+	* src/TagLib/Asf/ContentDescriptionObject.cs:
+	* src/TagLib/Asf/ExtendedContentDescriptionObject.cs: Throw better 
+	exceptions.
+	* src/TagLib/Mpeg4/Boxes/FullBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoMovieHeaderBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoSampleEntry.cs:
+	* src/TagLib/Mpeg4/Boxes/FileBox.cs:
+	* src/TagLib/Mpeg4/Boxes/Box.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoSampleDescriptionBox.cs:
+	* src/TagLib/Mpeg4/File.cs: Read bigger blocks and less often.
+	* src/TagLib/Ogg/XiphComment.cs: Support "XX/XX" values in Track and Disc.
+	* src/TagLib/Ogg/File.cs:
+	* src/TagLib/Ogg/Vorbis/Properties.cs:
+	* src/TagLib/Ogg/Vorbis/File.cs:
+	* src/TagLib/Ogg/Flac/File.cs: Obsolete Set/IsValid and throw useful
+	exceptions.
+	* docs/en/TagLib.Id3v1/Tag.xml:
+	* docs/en/TagLib.Id3v2/FrameFactory.xml:
+	* docs/en/TagLib.Mpeg/Header.xml:
+	* docs/en/TagLib.Mpeg/Properties.xml:
+	* docs/en/TagLib.Mpeg/File.xml:
+	* docs/en/TagLib/UnsupportedFormatException.xml:
+	* docs/en/TagLib/ByteVector.xml:
+	* docs/en/TagLib/ReadOnlyException.xml:
+	* docs/en/TagLib/SupportedMimeType.xml:
+	* docs/en/TagLib/AudioProperties.xml:
+	* docs/en/TagLib/File.xml:
+	* docs/en/index.xml:
+	* docs/en/TagLib.Asf/FilePropertiesObject.xml:
+	* docs/en/TagLib.Asf/StreamPropertiesObject.xml:
+	* docs/en/TagLib.Mpeg4/Box.xml:
+	* docs/en/TagLib.Mpeg4/Properties.xml:
+	* docs/en/TagLib.Mpeg4/IsoMovieHeaderBox.xml:
+	* docs/en/TagLib.Mpeg4/File.xml: Doc updates.
+	* examples/ReadFromUri.cs: Add timer, clean output, and avoid crash.
+
 2007-01-07  Brian Nickel  <brian.nickel@gmail.com>
 
 	* src/TagLib/File.cs: Throw ReadOnlyException when it makes sense.

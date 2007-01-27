@@ -46,11 +46,8 @@ namespace TagLib.Asf
          asf_tag    = null;
          properties = null;
          
-         try {Mode = AccessMode.Read;}
-         catch {return;}
-         
+         Mode = AccessMode.Read;
          Read (properties_style);
-         
          Mode = AccessMode.Closed;
       }
 
@@ -60,10 +57,6 @@ namespace TagLib.Asf
       
       public override void Save ()
       {
-         if(IsReadOnly) {
-            throw new ReadOnlyException();
-         }
-         
          Mode = AccessMode.Write;
          
          HeaderObject header = new HeaderObject (this, 0);

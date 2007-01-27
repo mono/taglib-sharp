@@ -13,8 +13,7 @@ namespace TagLib.Mpeg4
       //////////////////////////////////////////////////////////////////////////
       public IsoSampleEntry (BoxHeader header, Box parent) : base (header, parent)
       {
-         File.Seek (base.DataPosition + 6);
-         data_reference_index   = (ushort) File.ReadBlock (2).ToShort ();
+         data_reference_index   = (ushort) InternalData.Mid (6, 2).ToShort ();
       }
       
       
@@ -42,12 +41,9 @@ namespace TagLib.Mpeg4
       //////////////////////////////////////////////////////////////////////////
       public IsoAudioSampleEntry (BoxHeader header, Box parent) : base (header, parent)
       {
-         File.Seek (base.DataPosition + 8);
-         channel_count = (ushort) File.ReadBlock (2).ToShort ();
-         sample_size   = (ushort) File.ReadBlock (2).ToShort ();
-         
-         File.Seek (base.DataPosition + 16);
-         sample_rate   = (uint)   File.ReadBlock (4).ToUInt  ();
+         channel_count = (ushort) InternalData.Mid (16, 2).ToShort (); //  8 - 10
+         sample_size   = (ushort) InternalData.Mid (18, 2).ToShort (); // 10 - 12
+         sample_rate   = (uint)   InternalData.Mid (24, 4).ToUInt  (); // 16 - 20
       }
       
       

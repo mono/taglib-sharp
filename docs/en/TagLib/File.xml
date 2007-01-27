@@ -170,7 +170,7 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Docs><summary>Gets whether or not the file is valid or not.</summary><value>A <see cref="T:System.Boolean" /> returning true if the file is valid based on the class used for reading it and its contents, and false otherwise.</value><remarks /></Docs>
-    </Member>
+    <Attributes><Attribute><AttributeName>System.Obsolete("This property is obsolete; Invalid files now throw exceptions.")</AttributeName></Attribute></Attributes></Member>
     <Member MemberName="Tell">
       <MemberSignature Language="C#" Value="public long Tell { get; };" />
       <MemberType>Property</MemberType>
@@ -241,7 +241,7 @@
       <Docs><param name="path">To be added.</param><param name="mimetype">To be added.</param><param name="style">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="MimeType">
-      <MemberSignature Language="C#" Value="public string MimeType { get; };" />
+      <MemberSignature Language="C#" Value="public string MimeType {  set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>

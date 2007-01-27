@@ -56,6 +56,8 @@
       <Type Name="ListBase`1" DisplayName="ListBase&lt;T&gt;" />
       <Type Name="FileTypes" />
       <Type Name="CorruptFileException" />
+      <Type Name="File+LocalFileAbstraction" />
+      <Type Name="LapTimer" />
     </Namespace>
     <Namespace Name="TagLib.Mpc">
       <Type Name="Properties" />
@@ -79,6 +81,8 @@
     <Namespace Name="TagLib.Flac">
       <Type Name="Properties" />
       <Type Name="File" />
+      <Type Name="Picture" />
+      <Type Name="BlockType" />
     </Namespace>
     <Namespace Name="TagLib.Mpeg">
       <Type Name="Properties" />
@@ -112,6 +116,7 @@
       <Type Name="Footer" />
       <Type Name="ChannelType" />
       <Type Name="FrameFactory+FrameCreator" />
+      <Type Name="GeneralEncapsulatedObjectFrame" />
     </Namespace>
     <Namespace Name="TagLib.Mpeg4">
       <Type Name="Properties" />

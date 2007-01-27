@@ -38,7 +38,7 @@ namespace TagLib.Asf
       public HeaderObject (Asf.File file, long position) : base (file, position)
       {
          if (!Guid.Equals (Asf.Guid.AsfHeaderObject))
-            throw new System.Exception ("Object GUID incorrect.");
+            throw new CorruptFileException ("Object GUID incorrect.");
          
          children = new ArrayList ();
          

@@ -75,7 +75,7 @@ namespace TagLib.Mpc
       private void Read (ByteVector data, long stream_length, ReadStyle style)
       {
          if (!data.StartsWith ("MP+"))
-            return;
+            throw new CorruptFileException ();
 
          version = data [3] & 15;
 

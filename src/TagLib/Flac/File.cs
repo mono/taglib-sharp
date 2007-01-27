@@ -83,7 +83,7 @@ namespace TagLib.Flac
          if(id3v2_tag != null)
          {
             ByteVector id3v2_tag_data = id3v2_tag.Render ();
-            Insert (id3v2_tag_data, tag_start, tag_end);
+            Insert (id3v2_tag_data, tag_start, tag_end - tag_start);
             tag_end = tag_start + id3v2_tag_data.Count;
          }
          
@@ -102,17 +102,19 @@ namespace TagLib.Flac
          // Create new blocks and add the basics.
          List<Block> new_blocks = new List<Block> ();
          new_blocks.Add (old_blocks [0]);
+         
+         // Add blocks we don't deal with from the file.
+         foreach (Block block in old_blocks)
+            if (block.Type != BlockType.StreamInfo    &&
+                block.Type != BlockType.VorbisComment &&
+                block.Type != BlockType.Picture       &&
+                block.Type != BlockType.Padding)
+               new_blocks.Add (block);
+         
          new_blocks.Add (new Block (BlockType.VorbisComment, comment.Render (false)));
          
          foreach (IPicture picture in picture_tag.Pictures)
             new_blocks.Add (new Block (BlockType.Picture, Picture.Render (picture)));
-         
-         // Add all other blocks from the file.
-         foreach (Block block in old_blocks)
-            if (block.Type != BlockType.StreamInfo    &&
-                block.Type != BlockType.VorbisComment &&
-                block.Type != BlockType.Picture)
-               new_blocks.Add (block);
          
          // Get the length of the blocks.
          long length = 0;
@@ -126,9 +128,7 @@ namespace TagLib.Flac
          
          // Add a padding block.
          if (padding_size != 0)
-         {
-            new_blocks.Add (new Block (BlockType.Padding, new ByteVector ((int) length)));
-         }
+            new_blocks.Add (new Block (BlockType.Padding, new ByteVector ((int) padding_size)));
          
          // Render the blocks.
          ByteVector block_data = new ByteVector ();
@@ -136,13 +136,13 @@ namespace TagLib.Flac
             block_data.Add (new_blocks [i].Render (i == new_blocks.Count - 1));
          
          // Update the blocks.
-         Insert (block_data, tag_start, tag_end);
+         Insert (block_data, tag_start, tag_end - tag_start);
          
          // Update ID3v1 tag
          FindId3v1 (out tag_start, out tag_end);
          if(id3v1_tag != null)
          {
-            Insert (id3v1_tag.Render (), tag_start, tag_end);
+            Insert (id3v1_tag.Render (), tag_start, tag_end - tag_start);
          }
          Mode = AccessMode.Closed;
       }
@@ -276,7 +276,7 @@ namespace TagLib.Flac
          
          long block_position = Find ("fLaC", start);
          if (block_position < 0)
-            throw new ArgumentException ("FLAC stream not found at starting position.", "start");
+            throw new CorruptFileException ("FLAC stream not found at starting position.");
          
          block_position += 4;
          
@@ -289,7 +289,7 @@ namespace TagLib.Flac
             blocks.Add (block);
             
             if (block.NextBlockPosition > end)
-               throw new Exception ("Next block position exceeds length of stream.");
+               throw new CorruptFileException ("Next block position exceeds length of stream.");
             
             block_position = block.NextBlockPosition;
          }
@@ -297,7 +297,7 @@ namespace TagLib.Flac
 
          // Check that the first block is a METADATA_BLOCK_STREAMINFO.
          if (blocks [0].Type != BlockType.StreamInfo)
-            throw new Exception ("FLAC stream does not begin with StreamInfo.");
+            throw new CorruptFileException ("FLAC stream does not begin with StreamInfo.");
          
          return blocks;
       }

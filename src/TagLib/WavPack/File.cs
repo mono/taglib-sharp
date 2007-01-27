@@ -48,11 +48,8 @@ namespace TagLib.WavPack
          tag            = new CombinedTag ();
          properties     = null;
          
-         try {Mode = AccessMode.Read;}
-         catch {return;}
-         
+         Mode = AccessMode.Read;
          Read (properties_style);
-         
          Mode = AccessMode.Closed;
       }
 
@@ -62,61 +59,22 @@ namespace TagLib.WavPack
       
       public override void Save ()
       {
-         if(IsReadOnly) {
-            throw new ReadOnlyException();
-         }
-         
          Mode = AccessMode.Write;
+         long tag_start, tag_end;
          
          // Update ID3v1 tag
-         long id3v1_location = FindId3v1 ();
-
-         if (id3v1_tag != null)
-         {
-            if (id3v1_location >= 0)
-               Insert (id3v1_tag.Render (), id3v1_location, 128);
-            else
-            {
-               Seek (0, System.IO.SeekOrigin.End);
-               id3v1_location = Tell;
-               WriteBlock (id3v1_tag.Render ());
-            }
-         }
-         else if(id3v1_location >= 0)
-         {
-            RemoveBlock (id3v1_location, 128);
-            id3v1_location = -1;
-         }
-
-
-         // Update APE tag
-         long ape_location = FindApe (id3v1_location != -1);
-         long ape_size     = 0;
+         FindId3v1 (out tag_start, out tag_end);
+         if (id3v1_tag == null)
+            RemoveBlock (tag_start, tag_end - tag_start);
+         else
+            Insert (id3v1_tag.Render (), tag_start, tag_end - tag_start);
          
-         if (ape_location != -1)
-         {
-            Seek (ape_location);
-            ape_size = (new Ape.Footer (ReadBlock ((int) Ape.Footer.Size))).CompleteTagSize;
-            ape_location = ape_location + Ape.Footer.Size - ape_size;
-         }
-         
-         if (ape_tag != null)
-         {
-            if (ape_location >= 0)
-               Insert (ape_tag.Render (), ape_location, ape_size);
-            else
-            {
-               if (id3v1_location >= 0)
-                  Insert (ape_tag.Render (), id3v1_location, 0);
-               else
-               {
-                  Seek (0, System.IO.SeekOrigin.End);
-                  WriteBlock (ape_tag.Render ());
-               }
-            }
-         }
-         else if (ape_location >= 0)
-            RemoveBlock (ape_location, ape_size);
+         // Update Ape tag
+         FindApe (id3v1_tag != null, out tag_start, out tag_end);
+         if (ape_tag == null)
+            RemoveBlock (tag_start, tag_end - tag_start);
+         else
+            Insert (ape_tag.Render (), tag_start, tag_end - tag_start);
 
          Mode = AccessMode.Closed;
       }
@@ -188,63 +146,56 @@ namespace TagLib.WavPack
       //////////////////////////////////////////////////////////////////////////
       private void Read (Properties.ReadStyle properties_style)
       {
-         // Look for an ID3v1 tag
-
-         long id3v1_location = FindId3v1 ();
-
-         if (id3v1_location >= 0)
-            id3v1_tag = new Id3v1.Tag (this, id3v1_location);
-
-         // Look for an APE tag
-
-         long ape_location = FindApe (id3v1_location != -1);
-
-         if (ape_location >= 0)
-            ape_tag = new Ape.Tag (this, ape_location);
+         long tag_start, tag_end, ape_tag_start;
+         
+         bool has_id3v1 = FindId3v1 (out tag_start, out tag_end);
+         
+         if (has_id3v1)
+            id3v1_tag = new Id3v1.Tag (this, tag_start);
+         
+         if (FindApe (has_id3v1, out ape_tag_start, out tag_end))
+            ape_tag = new Ape.Tag (this, ape_tag_start);
 
          tag.SetTags (ape_tag, id3v1_tag);
          GetTag (TagTypes.Ape, true);
          
          // Look for MPC metadata
-
          if (properties_style != Properties.ReadStyle.None)
          {
             Seek (0);
             properties = new Properties (ReadBlock ((int) Properties.HeaderSize),
-               ape_location + Ape.Footer.Size - ape_tag.Footer.CompleteTagSize);
+               ape_tag_start);
          }
       }
       
-      private long FindApe (bool has_id3v1)
+      private bool FindApe (bool has_id3v1, out long start, out long end)
       {
-         if (!IsValid)
-            return -1;
-
-         if(has_id3v1)
-            Seek (-160, System.IO.SeekOrigin.End);
-         else
-            Seek (-32, System.IO.SeekOrigin.End);
-
-         long p = Tell;
+         Seek (has_id3v1 ? -160 : -32, System.IO.SeekOrigin.End);
          
-         if(ReadBlock (8) == Ape.Tag.FileIdentifier)
-            return p;
-
-         return -1;
+         start = end = Tell + 32;
+         
+         ByteVector data = ReadBlock (32);
+         if (data.StartsWith (Ape.Tag.FileIdentifier))
+         {
+            Ape.Footer footer = new Ape.Footer (data);
+            start = end - footer.CompleteTagSize;
+            return true;
+         }
+         return false;
       }
       
-      private long FindId3v1 ()
+      private bool FindId3v1 (out long start, out long end)
       {
-         if (!IsValid)
-            return -1;
-
          Seek (-128, System.IO.SeekOrigin.End);
-         long p = Tell;
-
-         if(ReadBlock (3) == Id3v1.Tag.FileIdentifier)
-            return p;
-
-         return -1;
+         
+         start = Tell;
+         end = Length;
+         
+         if (ReadBlock (3) == Id3v1.Tag.FileIdentifier)
+            return true;
+         
+         start = end;
+         return false;
       }
    }
 }

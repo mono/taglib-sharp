@@ -117,7 +117,7 @@ namespace TagLib.Ape
       protected void Parse (ByteVector data)
       {
          if(data.Count < Size)
-            return;
+            throw new CorruptFileException ("Provided data is smaller than object size.");
 
          // The first eight bytes, data[0..7], are the File Identifier, "APETAGEX".
 

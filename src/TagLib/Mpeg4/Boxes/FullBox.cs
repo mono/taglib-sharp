@@ -14,10 +14,8 @@ namespace TagLib.Mpeg4
       //////////////////////////////////////////////////////////////////////////
       public FullBox (BoxHeader header, Box parent) : base (header, parent)
       {
-         File.Seek (base.DataPosition);
-         
          // First 4 bytes contain version and flag data.
-         ByteVector data = File.ReadBlock (4);
+         ByteVector data = InternalData.Mid (0, 4);
          version = data [0];
          flags   = data.Mid (1, 3).ToUInt ();
       }

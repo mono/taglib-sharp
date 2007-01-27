@@ -23,14 +23,8 @@ namespace TagLib.Mpeg4
          tag = null;
          properties = null;
          
-         // Try to open read support.
-         try {Mode = AccessMode.Read;}
-         catch {return;}
-         
-         // Read
+         Mode = AccessMode.Read;
          Read (properties_style);
-         
-         // Be nice and close.
          Mode = AccessMode.Closed;
       }
       

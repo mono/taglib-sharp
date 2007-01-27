@@ -252,6 +252,20 @@ namespace TagLib.Mpeg4
       // All child boxes of this box.
       public Box [] Children {get {LoadChildren (); return (Box []) children.ToArray ();}}
       
+      private ByteVector internal_data = null;
+      public ByteVector InternalData
+      {
+         get
+         {
+            if (internal_data == null)
+            {
+               File.Seek (header.DataPosition);
+               internal_data = File.ReadBlock ((int)(DataPosition - header.DataPosition));
+            }
+            return internal_data;
+         }
+      }
+      
       // The handler used for this box.
       public IsoHandlerBox Handler
       {

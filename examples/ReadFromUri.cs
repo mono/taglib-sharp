@@ -15,20 +15,23 @@ public class ReadFromUri
         
         TagLib.File.SetFileAbstractionCreator(new TagLib.File.FileAbstractionCreator(
             VfsFileAbstraction.CreateFile));
-            
+        
+        DateTime start = DateTime.Now;
+        int songs_read = 0;
         try {
             foreach (string path in args)
             {
                 string uri = path;
-            
+                Console.WriteLine (uri);
+                
                 try {
                     System.IO.FileInfo file_info = new System.IO.FileInfo(uri);
-                    uri = file_info.FullName;
+                    uri = Gnome.Vfs.Uri.GetUriFromLocalPath (file_info.FullName);
                 } catch {
                 }
                 
                 TagLib.File file = TagLib.File.Create(uri);
-                
+                /*
                 Console.WriteLine("Title:      " +  file.Tag.Title);
                 Console.WriteLine("Artists:    " + (file.Tag.AlbumArtists == null ? "" : System.String.Join ("\n            ", file.Tag.AlbumArtists)));
                 Console.WriteLine("Performers: " + (file.Tag.Performers   == null ? "" : System.String.Join ("\n            ", file.Tag.Performers)));
@@ -58,10 +61,21 @@ public class ReadFromUri
                     Console.WriteLine("   Type:     " + picture.Type);
                 }
                 
+                Console.WriteLine ("");
+                Console.WriteLine ("---------------------------------------");
+                Console.WriteLine ("");
+                */
+                songs_read ++;
             }
         } finally {
             Gnome.Vfs.Vfs.Shutdown();
         }
+        
+        DateTime end = DateTime.Now;
+        
+        Console.WriteLine ("Total running time:    " + (end - start));
+        Console.WriteLine ("Total files read:      " + songs_read);
+        Console.WriteLine ("Average time per file: " + new TimeSpan ((end - start).Ticks / songs_read));
     }
 }
 

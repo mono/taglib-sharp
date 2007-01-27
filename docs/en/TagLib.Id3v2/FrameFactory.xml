@@ -42,7 +42,7 @@ TagLib.Id3v2.FrameFactor.AddFrameCreator (new FrameCreator (SynchronisedLyricsFr
           </example>
         </remarks></Docs>
     </Member>
-  </Members>
+  <Member MemberName="UpdateGenre"><MemberSignature Language="C#" Value="public static void UpdateGenre (TagLib.Id3v2.TextIdentificationFrame frame);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="frame" Type="TagLib.Id3v2.TextIdentificationFrame" /></Parameters><Docs><param name="frame">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member></Members>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>

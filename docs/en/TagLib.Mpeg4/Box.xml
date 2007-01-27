@@ -63,14 +63,14 @@
       <Docs><param name="type">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="FindChild">
-      <MemberSignature Language="C#" Value="public TagLib.Mpeg4.Box FindChild (Type type);" />
+      <MemberSignature Language="C#" Value="public TagLib.Mpeg4.Box FindChild (System.Type type);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>TagLib.Mpeg4.Box</ReturnType></ReturnValue>
       <Parameters><Parameter Name="type" Type="System.Type" /></Parameters>
       <Docs><param name="type">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="FindChildDeep">
-      <MemberSignature Language="C#" Value="public TagLib.Mpeg4.Box FindChildDeep (Type type);" />
+      <MemberSignature Language="C#" Value="public TagLib.Mpeg4.Box FindChildDeep (System.Type type);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>TagLib.Mpeg4.Box</ReturnType></ReturnValue>
       <Parameters><Parameter Name="type" Type="System.Type" /></Parameters>
@@ -98,7 +98,7 @@
       <Docs><param name="child">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="RemoveChildren">
-      <MemberSignature Language="C#" Value="public void RemoveChildren (Type type);" />
+      <MemberSignature Language="C#" Value="public void RemoveChildren (System.Type type);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="type" Type="System.Type" /></Parameters>
@@ -225,7 +225,7 @@
       <ReturnValue><ReturnType>TagLib.Mpeg4.IsoHandlerBox</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
-  </Members>
+  <Member MemberName="InternalData"><MemberSignature Language="C#" Value="public TagLib.ByteVector InternalData { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member></Members>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>

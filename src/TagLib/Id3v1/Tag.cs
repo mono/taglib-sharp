@@ -156,23 +156,17 @@ namespace TagLib.Id3v1
 
       protected void Read ()
       {
-         if(file != null && file.IsValid)
-         {
-            file.Seek (tag_offset);
-            
-            // read the tag -- always 128 bytes
-            ByteVector data = file.ReadBlock (128);
-
-            // some initial sanity checking
-            if (data.Count == 128 && data.StartsWith ("TAG"))
-               Parse (data);
-            else
-               Debugger.Debug ("ID3v1 tag is not valid or could not be read at the specified offset.");
-         }
-      }
-
-      protected void Parse (ByteVector data)
-      {
+         file.Seek (tag_offset);
+         
+         // read the tag -- always 128 bytes
+         ByteVector data = file.ReadBlock (128);
+         
+         // some initial sanity checking
+         if (data.Count != 128 || !data.StartsWith ("TAG"))
+            throw new CorruptFileException  ("ID3v1 tag is not valid or could "
+                                           + " not be read at the specified "
+                                           + "offset.");
+         
          int offset = 3;
 
          title = string_handler.Parse (data.Mid (offset, 30));

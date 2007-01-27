@@ -39,10 +39,10 @@ namespace TagLib.Asf
       public ContentDescriptionObject (Asf.File file, long position) : base (file, position)
       {
          if (!Guid.Equals (Asf.Guid.AsfContentDescriptionObject))
-            throw new System.Exception ("Object GUID incorrect.");
+            throw new CorruptFileException ("Object GUID incorrect.");
          
          if (OriginalSize < 34)
-            throw new System.Exception ("Object size too small.");
+            throw new CorruptFileException ("Object size too small.");
          
          short title_length       = file.ReadWord ();
          short author_length      = file.ReadWord ();

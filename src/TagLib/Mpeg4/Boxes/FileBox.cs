@@ -22,7 +22,7 @@ namespace TagLib.Mpeg4
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
-      public    override bool       IsValid           {get {return file.IsValid;}}
+      public    override bool       IsValid           {get {return true;}}
       public    override bool       HasChildren       {get {return true;}}
       public    override File       File              {get {return file;}}
       public    override ByteVector BoxType           {get {return "FILE";}}

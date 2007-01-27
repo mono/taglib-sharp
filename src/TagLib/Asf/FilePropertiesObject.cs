@@ -47,10 +47,10 @@ namespace TagLib.Asf
       public FilePropertiesObject (Asf.File file, long position) : base (file, position)
       {
          if (!Guid.Equals (Asf.Guid.AsfFilePropertiesObject))
-            throw new System.Exception ("Object GUID incorrect.");
+            throw new CorruptFileException ("Object GUID incorrect.");
          
          if (OriginalSize < 104)
-            throw new System.Exception ("Object size too small.");
+            throw new CorruptFileException ("Object size too small.");
          
          file_id                  = file.ReadGuid ();
          file_size                = file.ReadQWord ();

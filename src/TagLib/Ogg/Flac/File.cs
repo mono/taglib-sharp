@@ -58,11 +58,8 @@ namespace TagLib.Ogg.Flac
          has_xiph_comment  = false;
          comment_packet    = 0;
 
-         try {Mode = AccessMode.Read;}
-         catch {scanned = true; return;}
-         
+         Mode = AccessMode.Read;
          Read (properties_style);
-         
          Mode = AccessMode.Closed;
       }
       
@@ -115,21 +112,8 @@ namespace TagLib.Ogg.Flac
       private void Read (AudioProperties.ReadStyle properties_style)
       {
          // Look for FLAC metadata, including vorbis comments
-
          Scan ();
-
-         if (!scanned)
-         {
-            SetValid (false);
-            return;
-         }
-
-
-         if (has_xiph_comment)
-            comment = new Ogg.XiphComment (XiphCommentData);
-         else
-            comment = new Ogg.XiphComment ();
-
+         comment = new Ogg.XiphComment (has_xiph_comment ? XiphCommentData : null);
 
          if (properties_style != AudioProperties.ReadStyle.None)
             properties = new TagLib.Flac.Properties(StreamInfoData, StreamLength, properties_style);
@@ -140,26 +124,23 @@ namespace TagLib.Ogg.Flac
       {
          // Scan the metadata pages
 
-         if(scanned || !IsValid)
+         if (scanned)
             return;
 
          uint ipacket = 0;
          long overhead = 0;
 
          ByteVector metadata_header = GetPacket (ipacket++);
-         if (metadata_header == null)
-            return;
-
          ByteVector header;
 
          if (!metadata_header.StartsWith ("fLaC"))
          {
             // FLAC 1.1.2+
             if (metadata_header.Mid (1,4) != "FLAC")
-               return;
+               throw new CorruptFileException ("FLAC header missing.");
 
             if (metadata_header [5] != 1)
-               return; // not version 1
+               throw new CorruptFileException ("Unsupported FLAC version."); // not version 1
 
             metadata_header = metadata_header.Mid (13);
          }
@@ -167,10 +148,6 @@ namespace TagLib.Ogg.Flac
          {
             // FLAC 1.1.0 & 1.1.1
             metadata_header = GetPacket (ipacket++);
-
-            if (metadata_header == null)
-               return;
-
          }
 
          header = metadata_header.Mid (0,4);
@@ -192,21 +169,15 @@ namespace TagLib.Ogg.Flac
          // Sanity: First block should be the stream_info metadata
 
          if (block_type != 0)
-         {
-            Debugger.Debug ("Ogg.Flac.File.Scan() -- Invalid Ogg/FLAC stream");
-            return;
-         }
-
+            throw new CorruptFileException ("Invalid Ogg/FLAC stream.");
+         
          stream_info_data = metadata_header.Mid (4, (int) length);
 
          // Search through the remaining metadata
-
+         // FIXME: Support new code from TagLib.Flac.
          while (!last_block)
          {
             metadata_header = GetPacket (ipacket++);
-
-            if (metadata_header == null)
-               return;
 
             header = metadata_header.Mid (0, 4);
             block_type = (byte) (header [0] & 0x7f);
@@ -221,8 +192,7 @@ namespace TagLib.Ogg.Flac
                comment_packet = ipacket;
             }
             else if (block_type > 5)
-               Debugger.Debug("Ogg.Flac.File.Scan() -- Unknown metadata block");
-
+               Debugger.Debug ("Ogg.Flac.File.Scan() -- Unknown metadata block");
          }
 
          // End of metadata, now comes the datastream

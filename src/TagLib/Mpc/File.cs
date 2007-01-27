@@ -51,11 +51,8 @@ namespace TagLib.Mpc
          tag        = new CombinedTag ();
          properties = null;
          
-         try {Mode = AccessMode.Read;}
-         catch {return;}
-         
+         Mode = AccessMode.Read;
          Read (properties_style);
-         
          Mode = AccessMode.Closed;
       }
 
@@ -65,89 +62,29 @@ namespace TagLib.Mpc
       
       public override void Save ()
       {
-         if(IsReadOnly) {
-            throw new ReadOnlyException();
-         }
-         
          Mode = AccessMode.Write;
+         long tag_start, tag_end;
          
          // Update ID3v2 tag
-         long id3v2_location = FindId3v2 ();
-         int  id3v2_size     = 0;
+         FindId3v2 (out tag_start, out tag_end);
+         if (id3v2_tag == null)
+            RemoveBlock (tag_start, tag_end - tag_start);
+         else
+            Insert (id3v2_tag.Render (), tag_start, tag_end - tag_start);
          
-         if (id3v2_location != -1)
-         {
-            Seek (id3v2_location);
-            Id3v2.Header header = new Id3v2.Header (ReadBlock ((int) Id3v2.Header.Size));
-            if (header.TagSize == 0)
-            {
-               Debugger.Debug ("Mpc.File.Save() -- Id3v2 header is broken. Ignoring.");
-               id3v2_location = - 1;
-            }
-            else
-               id3v2_size = (int) header.CompleteTagSize;
-         }
-         
-         if(id3v2_tag != null)
-         {
-            if (id3v2_location >= 0)
-               Insert (id3v2_tag.Render (), id3v2_location, id3v2_size);
-            else
-               Insert (id3v2_tag.Render (), 0, 0);
-         }
-         else if (id3v2_location >= 0)
-            RemoveBlock (id3v2_location, id3v2_size);
-
-
          // Update ID3v1 tag
-         long id3v1_location = FindId3v1 ();
-
-         if (id3v1_tag != null)
-         {
-            if (id3v1_location >= 0)
-               Insert (id3v1_tag.Render (), id3v1_location, 128);
-            else
-            {
-               Seek (0, System.IO.SeekOrigin.End);
-               id3v1_location = Tell;
-               WriteBlock (id3v1_tag.Render ());
-            }
-         }
-         else if(id3v1_location >= 0)
-         {
-            RemoveBlock (id3v1_location, 128);
-            id3v1_location = -1;
-         }
-
-
-         // Update APE tag
-         long ape_location = FindApe (id3v1_location != -1);
-         long ape_size     = 0;
+         FindId3v1 (out tag_start, out tag_end);
+         if (id3v1_tag == null)
+            RemoveBlock (tag_start, tag_end - tag_start);
+         else
+            Insert (id3v1_tag.Render (), tag_start, tag_end - tag_start);
          
-         if (ape_location >= 0)
-         {
-            Seek (ape_location);
-            ape_size = (new Ape.Footer (ReadBlock ((int) Ape.Footer.Size))).CompleteTagSize;
-            ape_location = ape_location + Ape.Footer.Size - ape_size;
-         }
-         
-         if (ape_tag != null)
-         {
-            if (ape_location >= 0)
-               Insert (ape_tag.Render (), ape_location, ape_size);
-            else
-            {
-               if (id3v1_location >= 0)
-                  Insert (ape_tag.Render (), id3v1_location, 0);
-               else
-               {
-                  Seek (0, System.IO.SeekOrigin.End);
-                  WriteBlock (ape_tag.Render ());
-               }
-            }
-         }
-         else if (ape_location >= 0)
-            RemoveBlock (ape_location, ape_size);
+         // Update Ape tag
+         FindApe (id3v2_tag != null, out tag_start, out tag_end);
+         if (ape_tag == null)
+            RemoveBlock (tag_start, tag_end - tag_start);
+         else
+            Insert (ape_tag.Render (), tag_start, tag_end - tag_start);
 
          Mode = AccessMode.Closed;
       }
@@ -236,88 +173,79 @@ namespace TagLib.Mpc
       //////////////////////////////////////////////////////////////////////////
       private void Read (Properties.ReadStyle properties_style)
       {
-         // Look for an ID3v1 tag
-         long id3v1_location = FindId3v1 ();
-
-         if (id3v1_location >= 0)
-         {
-            id3v1_tag = new Id3v1.Tag (this, id3v1_location);
-         }
+         long tag_start, tag_end, id3v2_tag_end, ape_tag_start;
          
+         bool has_id3v1 = FindId3v1 (out tag_start, out tag_end);
+         
+         if (has_id3v1)
+            id3v1_tag = new Id3v1.Tag (this, tag_start);
+         
+         if (FindApe (has_id3v1, out ape_tag_start, out tag_end))
+            ape_tag = new Ape.Tag (this, tag_end - Ape.Footer.Size);
 
-         // Look for an APE tag
-         long ape_location = FindApe (id3v1_location >= 0);
-
-         if (ape_location >= 0)
-            ape_tag = new Ape.Tag (this, ape_location);
-
-
-         // Look for an ID3v2 tag
-         long id3v2_location = FindId3v2 ();
-
-         if(id3v2_location >= 0)
-            id3v2_tag = new Id3v2.Tag (this, id3v2_location);
-
-
+         if (FindId3v2 (out tag_start, out id3v2_tag_end))
+            id3v2_tag = new Id3v2.Tag (this, tag_start);
+         
          tag.SetTags (ape_tag, id3v2_tag, id3v1_tag);
          GetTag (TagTypes.Ape, true);
 
-         
          // Look for MPC metadata
-         if(properties_style == Properties.ReadStyle.None)
-            return;
-         
-         long start_location = (id3v2_location >= 0) ? (id3v2_location + id3v2_tag.Header.CompleteTagSize) : 0;
-         long length = Length - start_location - (id3v1_location >= 0 ? 128 : 0) - (ape_location >= 0 ? ape_tag.Footer.CompleteTagSize : 0);
-         Seek (start_location);
-         
-         properties = new Properties (ReadBlock ((int) Properties.HeaderSize),
-            length);
+         if(properties_style != Properties.ReadStyle.None)
+         {
+            Seek (id3v2_tag_end);
+            properties = new Properties (ReadBlock ((int) Properties.HeaderSize),
+               ape_tag_start - id3v2_tag_end);
+         }
       }
       
-      private long FindApe (bool has_id3v1)
+      private bool FindApe (bool has_id3v1, out long start, out long end)
       {
-         if (!IsValid)
-            return -1;
-
-         if(has_id3v1)
-            Seek (-160, System.IO.SeekOrigin.End);
-         else
-            Seek (-32, System.IO.SeekOrigin.End);
-
-         long p = Tell;
+         Seek (has_id3v1 ? -160 : -32, System.IO.SeekOrigin.End);
          
-         if(ReadBlock (8) == Ape.Tag.FileIdentifier)
-            return p;
-
-         return -1;
+         start = end = Tell + 32;
+         
+         ByteVector data = ReadBlock (32);
+         if (data.StartsWith (Ape.Tag.FileIdentifier))
+         {
+            Ape.Footer footer = new Ape.Footer (data);
+            start = end - footer.CompleteTagSize;
+            return true;
+         }
+         return false;
       }
       
-      private long FindId3v1 ()
+      private bool FindId3v1 (out long start, out long end)
       {
-         if (!IsValid)
-            return -1;
-
          Seek (-128, System.IO.SeekOrigin.End);
-         long p = Tell;
-
-         if(ReadBlock (3) == Id3v1.Tag.FileIdentifier)
-            return p;
-
-         return -1;
+         
+         start = Tell;
+         end = Length;
+         
+         if (ReadBlock (3) == Id3v1.Tag.FileIdentifier)
+            return true;
+         
+         start = end;
+         return false;
       }
-      
-      private long FindId3v2 ()
+
+      private bool FindId3v2 (out long start, out long end)
       {
-         if (!IsValid)
-            return -1;
-
+         start = end = 0;
+         
          Seek (0);
-
-         if(ReadBlock (3) == Id3v2.Header.FileIdentifier)
-            return 0;
-
-         return -1;
+         ByteVector data = ReadBlock (10);
+         
+         if (data.Mid (0, 3) == Id3v2.Header.FileIdentifier)
+         {
+            Id3v2.Header header = new Id3v2.Header (data);
+            if (header.TagSize != 0)
+            {
+               end = header.CompleteTagSize;
+               return true;
+            }
+         }
+         
+         return false;
       }
    }
 }

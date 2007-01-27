@@ -59,7 +59,6 @@ namespace TagLib
       private System.IO.Stream file_stream;
       private IFileAbstraction file_abstraction;
       private bool read_only;
-      private bool valid;
       private string mime_type;
       private static uint buffer_size = 1024;
       
@@ -75,7 +74,6 @@ namespace TagLib
          file_stream = null;
          file_abstraction = file_abstraction_creator (file);
          read_only = !file_abstraction.IsWritable;
-         valid = true;
       }
       
       public string Name {get {return file_abstraction.Name;}}
@@ -95,12 +93,7 @@ namespace TagLib
          if (length == 0)
             return new ByteVector ();
          
-         try {Mode = AccessMode.Read;}
-         catch
-         {
-            Debugger.Debug (GetType ().ToString () + ".ReadBlock () failed. Invalid File: " + Name);
-            return null;
-         }
+         Mode = AccessMode.Read;
          
          if (length > buffer_size && (long) length > Length)
             length = (int) Length;
@@ -113,13 +106,7 @@ namespace TagLib
 
       public void WriteBlock (ByteVector data)
       {
-         try {Mode = AccessMode.Write;}
-         catch
-         {
-            Debugger.Debug (GetType ().ToString () + ".WriteBlock () failed. Read-only File: " + Name);
-            return;
-         }
-         
+         Mode = AccessMode.Write;
          file_stream.Write (data.Data, 0, data.Count);
       }
 
@@ -415,8 +402,10 @@ namespace TagLib
       
       public void RemoveBlock (long start, long length)
       {
-         try {Mode = AccessMode.Write;}
-         catch {return;}
+         if (length == 0)
+            return;
+         
+         Mode = AccessMode.Write;
          
          int buffer_length = (int) BufferSize;
          
@@ -439,19 +428,16 @@ namespace TagLib
          Truncate (write_position);
       }
       
-      public void RemoveBlock (long start)
-      {
-         RemoveBlock (start, 0);
-      }
+      [Obsolete("This method is obsolete; it has no real use.")]
+      public void RemoveBlock (long start) {}
       
-      public void RemoveBlock ()
-      {
-         RemoveBlock (0);
-      }
+      [Obsolete("This method is obsolete; it has no real use.")]
+      public void RemoveBlock () {}
       
       public bool IsReadOnly {get {return read_only;}}
       
-      public bool IsValid {get {return valid;}}
+      [Obsolete("This property is obsolete; Invalid files now throw exceptions.")]
+      public bool IsValid {get {return true;}}
       
       public void Seek (long offset, System.IO.SeekOrigin p)
       {
@@ -579,9 +565,11 @@ namespace TagLib
       //////////////////////////////////////////////////////////////////////////
       // protected members
       //////////////////////////////////////////////////////////////////////////
+      [Obsolete("This property is obsolete; invalid files now throw exceptions.")]
       protected void SetValid (bool valid)
       {
-         this.valid = valid;
+         if (valid == false)
+            throw new CorruptFileException ();
       }
       
       protected void Truncate (long length)

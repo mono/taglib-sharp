@@ -13,12 +13,10 @@ namespace TagLib.Mpeg4
       //////////////////////////////////////////////////////////////////////////
       public IsoSampleDescriptionBox (BoxHeader header, Box parent) : base (header, parent)
       {
-         File.Seek (base.DataPosition);
-         
          // This box just contains a number saying how many of the first boxes
          // will be SampleEntries, since they can be named whatever they want to
          // be.
-         entry_count = File.ReadBlock (4).ToUInt ();
+         entry_count = InternalData.Mid (4, 4).ToUInt ();
       }
       
       

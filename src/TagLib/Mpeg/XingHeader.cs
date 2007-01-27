@@ -80,28 +80,20 @@ namespace TagLib.Mpeg
       {
          // Check to see if a valid Xing header is available.
 
-         if(!data.StartsWith ("Xing"))
-            return;
+         if (!data.StartsWith ("Xing"))
+            throw new CorruptFileException ("Not a valid Xing header");
 
          // If the XingHeader doesn't contain the number of frames and the total stream
          // info it's invalid.
 
-         if((data [7] & 0x01) == 0)
-         {
-            Debugger.Debug ("MPEG::XingHeader::parse() -- Xing header doesn't contain the total number of frames.");
-            return;
-         }
+         if ((data [7] & 0x01) == 0)
+            throw new Exception ("Xing header doesn't contain the total number of frames.");
 
-         if((data[7] & 0x02) == 0)
-         {
-            Debugger.Debug ("MPEG::XingHeader::parse() -- Xing header doesn't contain the total stream size.");
-            return;
-         }
+         if ((data[7] & 0x02) == 0)
+            throw new Exception ("Xing header doesn't contain the total stream size.");
 
          frames = data.Mid (8, 4).ToUInt ();
          size = data.Mid (12, 4).ToUInt ();
-
-         valid = true;
       }
    }
 }

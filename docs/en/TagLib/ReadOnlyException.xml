@@ -1,5 +1,5 @@
 <Type Name="ReadOnlyException" FullName="TagLib.ReadOnlyException">
-  <TypeSignature Language="C#" Value="public class ReadOnlyException : ApplicationException" />
+  <TypeSignature Language="C#" Value="public class ReadOnlyException : System.ApplicationException" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.1.0.0</AssemblyVersion>

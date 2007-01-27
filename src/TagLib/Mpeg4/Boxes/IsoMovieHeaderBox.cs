@@ -16,21 +16,13 @@ namespace TagLib.Mpeg4
       private ushort volume;
       private uint   next_track_id;
       
-      private int    box_size;
-      
-      
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
       public IsoMovieHeaderBox (BoxHeader header, Box parent) : base (header, parent)
       {
-         // Size depends on version.
-         box_size = Version == 1 ? 108 : 96;
-         
-         // Get everything.
-         File.Seek (base.DataPosition);
-         ByteVector data = File.ReadBlock (box_size);
-         int pos = 0;
+         ByteVector data = InternalData;
+         int pos = 4;
          
          // Read version one (large integers).
          if (Version == 1)
@@ -111,8 +103,8 @@ namespace TagLib.Mpeg4
       public uint     NextTrackId      {get {return next_track_id;}}
       
       public    override bool       HasChildren  {get {return true;}}
-      protected override long       DataPosition {get {return base.DataPosition + box_size;}}
-      protected override ulong      DataSize     {get {return base.DataSize - (ulong)box_size;}}
+      protected override long       DataPosition {get {return base.DataPosition + (Version == 1 ? 108 : 96);}}
+      protected override ulong      DataSize     {get {return base.DataSize - (ulong)(Version == 1 ? 108 : 96);}}
       public    override ByteVector Data         {get {return null;} set {}}
    }
 }

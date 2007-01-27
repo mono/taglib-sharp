@@ -324,12 +324,13 @@ namespace TagLib.Ogg
             try
             {
                StringList l = GetField ("TRACKNUMBER");
-               return (l != null && l.Count != 0) ? UInt32.Parse (l [0]) : 0;
+               return (l != null && l.Count != 0) ? UInt32.Parse (l [0].Split (new char [] {'/'}) [0]) : 0;
             }
             catch {return 0;}
          }
          set
          {
+            TrackCount = TrackCount;
             AddField ("TRACKNUMBER", value.ToString ());
          }
       }
@@ -341,7 +342,11 @@ namespace TagLib.Ogg
             try
             {
                StringList l = GetField ("TRACKTOTAL");
-               return (l != null && l.Count != 0) ? UInt32.Parse (l [0]) : 0;
+               if (l != null && l.Count != 0)
+                  return UInt32.Parse (l [0]);
+               
+               l = GetField ("TRACKNUMBER");
+               return (l != null && l.Count != 0) ? UInt32.Parse (l [0].Split (new char [] {'/'}) [1]) : 0;
             }
             catch {return 0;}
          }
@@ -358,12 +363,13 @@ namespace TagLib.Ogg
             try
             {
                StringList l = GetField ("DISCNUMBER");
-               return (l != null && l.Count != 0) ? UInt32.Parse (l [0]) : 0;
+               return (l != null && l.Count != 0) ? UInt32.Parse (l [0].Split (new char [] {'/'}) [0]) : 0;
             }
             catch {return 0;}
          }
          set
          {
+            DiscCount = DiscCount;
             AddField ("DISCNUMBER", value.ToString ());
          }
       }
@@ -375,7 +381,11 @@ namespace TagLib.Ogg
             try
             {
                StringList l = GetField ("DISCTOTAL");
-               return (l != null && l.Count != 0) ? UInt32.Parse (l [0]) : 0;
+               if (l != null && l.Count != 0)
+                  return UInt32.Parse (l [0]);
+               
+               l = GetField ("DISCNUMBER");
+               return (l != null && l.Count != 0) ? UInt32.Parse (l [0].Split (new char [] {'/'}) [1]) : 0;
             }
             catch {return 0;}
          }
@@ -391,12 +401,13 @@ namespace TagLib.Ogg
       //////////////////////////////////////////////////////////////////////////
       protected void Parse (ByteVector data)
       {
+         if (data == null)
+            return;
+         
          // The first thing in the comment data is the vendor ID length, followed by a
          // UTF8 string with the vendor ID.
-
          int pos = 0;
-
-         int vendor_length = (int) data.Mid (0, 4).ToUInt (false);
+         int vendor_length = (int) data.Mid (pos, 4).ToUInt (false);
          pos += 4;
 
          vendor_id = data.Mid (pos, vendor_length).ToString (StringType.UTF8);
