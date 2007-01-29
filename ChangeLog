@@ -1,3 +1,7 @@
+2007-01-29  Brian Nickel  <brian.nickel@gmail.com>
+
+	* examples/ReadFromUri.cs: Remove accidental commenting out.
+
 2007-01-26  Brian Nickel  <brian.nickel@gmail.com>
 
 	CLEANUPS! For the most part, internal code has been cleaned up to be less

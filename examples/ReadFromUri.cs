@@ -31,7 +31,7 @@ public class ReadFromUri
                 }
                 
                 TagLib.File file = TagLib.File.Create(uri);
-                /*
+                
                 Console.WriteLine("Title:      " +  file.Tag.Title);
                 Console.WriteLine("Artists:    " + (file.Tag.AlbumArtists == null ? "" : System.String.Join ("\n            ", file.Tag.AlbumArtists)));
                 Console.WriteLine("Performers: " + (file.Tag.Performers   == null ? "" : System.String.Join ("\n            ", file.Tag.Performers)));
@@ -64,7 +64,7 @@ public class ReadFromUri
                 Console.WriteLine ("");
                 Console.WriteLine ("---------------------------------------");
                 Console.WriteLine ("");
-                */
+                
                 songs_read ++;
             }
         } finally {
