@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 using System.Collections;
+using System.Collections.Generic;
 using System;
 
 namespace TagLib.Id3v2
@@ -44,7 +45,7 @@ namespace TagLib.Id3v2
       // private properties
       //////////////////////////////////////////////////////////////////////////
       private string identification;
-      private Hashtable channels;
+      private Dictionary<ChannelType,ChannelData> channels;
       
       
       //////////////////////////////////////////////////////////////////////////
@@ -53,7 +54,7 @@ namespace TagLib.Id3v2
       public RelativeVolumeFrame (ByteVector data) : base (data)
       {
          identification = null;
-         channels = new Hashtable ();
+         channels = new Dictionary<ChannelType,ChannelData> ();
          
          SetData (data);
       }
@@ -61,7 +62,7 @@ namespace TagLib.Id3v2
       public RelativeVolumeFrame (string identification) : base ("RVA2")
       {
          this.identification = identification;
-         channels = new Hashtable ();
+         channels = new Dictionary<ChannelType,ChannelData> ();
       }
 
       public override string ToString ()
@@ -71,12 +72,17 @@ namespace TagLib.Id3v2
       
       public ChannelType [] Channels
       {
-         get {return (ChannelType []) channels.Keys;}
+         get
+         {
+            ChannelType [] output = new ChannelType [channels.Count];
+            channels.Keys.CopyTo (output, channels.Count);
+            return output;
+         }
       }
       
       public short VolumeAdjustmentIndex (ChannelType type)
       {
-         return channels.ContainsKey (type) ? ((ChannelData) channels [type]).VolumeAdjustment : (short) 0;
+         return channels.ContainsKey (type) ? channels [type].VolumeAdjustment : (short) 0;
       }
 
       public void SetVolumeAdjustmentIndex (short index, ChannelType type)
@@ -84,7 +90,7 @@ namespace TagLib.Id3v2
          if (!channels.ContainsKey (type))
             channels.Add (type, new ChannelData (type));
          
-         ((ChannelData) channels [type]).VolumeAdjustment = index;
+         channels [type].VolumeAdjustment = index;
       }
 
       public float VolumeAdjustment (ChannelType type)
@@ -99,7 +105,7 @@ namespace TagLib.Id3v2
       
       public ulong PeakVolumeIndex (ChannelType type)
       {
-         return channels.ContainsKey (type) ? ((ChannelData) channels [type]).PeakVolume : 0;
+         return channels.ContainsKey (type) ? channels [type].PeakVolume : 0;
       }
 
       public void SetPeakVolumeIndex (ulong index, ChannelType type)
@@ -107,7 +113,7 @@ namespace TagLib.Id3v2
          if (!channels.ContainsKey (type))
             channels.Add (type, new ChannelData (type));
          
-         ((ChannelData) channels [type]).PeakVolume = index;
+         channels [type].PeakVolume = index;
       }
 
       public double PeakVolume (ChannelType type)
@@ -187,7 +193,7 @@ namespace TagLib.Id3v2
       protected internal RelativeVolumeFrame (ByteVector data, FrameHeader h) : base (h)
       {
          identification = null;
-         channels = new Hashtable ();
+         channels = new Dictionary<ChannelType,ChannelData> ();
          
          ParseFields (FieldData (data));
       }

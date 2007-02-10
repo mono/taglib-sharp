@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace TagLib.Ogg
 {
@@ -30,7 +31,7 @@ namespace TagLib.Ogg
       //////////////////////////////////////////////////////////////////////////
       // private properties
       //////////////////////////////////////////////////////////////////////////
-      private Hashtable field_list;
+      private Dictionary<string, StringList> field_list;
       private string vendor_id;
       private string comment_field;
       
@@ -39,7 +40,7 @@ namespace TagLib.Ogg
       //////////////////////////////////////////////////////////////////////////
       public XiphComment () : base ()
       {
-         field_list = new Hashtable ();
+         field_list = new Dictionary<string, StringList> ();
          vendor_id = null;
          comment_field = null;
       }
@@ -51,7 +52,7 @@ namespace TagLib.Ogg
       
       public StringList GetField (string key)
       {
-         return (field_list.ContainsKey (key.ToUpper ())) ? (StringList) field_list [key.ToUpper ()] : null;
+         return (field_list.ContainsKey (key.ToUpper ())) ? field_list [key.ToUpper ()] : null;
       }
       
       public void AddField (string key, string value, bool replace)
@@ -64,7 +65,7 @@ namespace TagLib.Ogg
             if (!field_list.ContainsKey (key.ToUpper ()))
                field_list.Add (key.ToUpper (), new StringList ());
          
-            ((StringList) field_list [key.ToUpper ()]).Add (value);
+            field_list [key.ToUpper ()].Add (value);
          }
       }
       
@@ -92,7 +93,7 @@ namespace TagLib.Ogg
          if (!field_list.ContainsKey (key.ToUpper ()))
             return;
          
-         StringList l = (StringList) field_list [key.ToUpper ()];
+         StringList l = field_list [key.ToUpper ()];
          
          if (value == null)
             l.Clear ();
@@ -131,12 +132,12 @@ namespace TagLib.Ogg
          // std::pair<String, StringList> where the first String is the field name and
          // the StringList is the values associated with that field.
 
-         foreach (DictionaryEntry de in field_list)
+         foreach (KeyValuePair<string, StringList> de in field_list)
          {
             // And now iterate over the values of the current list.
 
-            string field_name = (string) de.Key;
-            StringList values = (StringList) de.Value;
+            string field_name = de.Key;
+            StringList values = de.Value;
 
             foreach (string value in values)
             {
@@ -173,7 +174,7 @@ namespace TagLib.Ogg
       {
          get
          {
-            foreach (StringList l in field_list)
+            foreach (StringList l in field_list.Values)
                if (!l.IsEmpty)
                   return false;
             

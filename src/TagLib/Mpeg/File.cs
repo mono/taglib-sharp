@@ -251,20 +251,34 @@ namespace TagLib.Mpeg
       private bool FindId3v2 (out long start, out long end)
       {
          Seek (0);
-         start = end = Find (Id3v2.Header.FileIdentifier);
+         start = end = 0;
          
-         if (start >= 0)
+         long offset = 0;
+         ByteVector buffer;
+         
+         for (buffer = ReadBlock ((int) (BufferSize + Id3v2.Header.Size - 1)); buffer.Count >= Id3v2.Header.Size; buffer.Add (ReadBlock ((int)BufferSize)))
          {
-            Seek (start + 3);
-            Id3v2.Header header = new Id3v2.Header (Id3v2.Header.FileIdentifier + ReadBlock (7));
-            if (header.TagSize != 0)
+            int header_pos = buffer.Find (Id3v2.Header.FileIdentifier);
+            if (header_pos >= 0 && header_pos < BufferSize)
             {
-               end = start + header.CompleteTagSize;
-               return true;
+               Id3v2.Header header = new Id3v2.Header (buffer.Mid (header_pos, (int)Id3v2.Header.Size));
+               if (header.TagSize != 0)
+               {
+                  start = offset + header_pos;
+                  end = start + header.CompleteTagSize;
+                  return true;
+               }
             }
+            
+            int sync_position = -1;
+            while ((sync_position = buffer.Find ((byte) 0xFF, sync_position + 1)) >= 0 && sync_position < buffer.Count)
+               if (SecondSynchByte (buffer [sync_position + 1]))
+                  return false;
+            
+            buffer = buffer.Mid ((int)BufferSize);
+            offset += BufferSize;
          }
          
-         start = end = 0;
          return false;
       }
 

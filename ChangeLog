@@ -1,3 +1,13 @@
+2007-02-10  Brian Nickel  <brian.nickel@gmail.com>
+
+	* src/TagLib/Mpeg/File.cs: Fix bug introduced on 2007-01-26. If a file
+	lacked an Id3v2 tag, TagLib read the whole file. Initial analysis shows this
+	being marginally faster than the even older version.
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
+	* src/TagLib/Ape/Tag.cs:
+	* src/TagLib/Ogg/XiphComment.cs:
+	* src/TagLib/Ogg/File.cs: Abolish Hashtable. ArrayList is next.
+
 2007-01-29  Brian Nickel  <brian.nickel@gmail.com>
 
 	* examples/ReadFromUri.cs: Remove accidental commenting out.

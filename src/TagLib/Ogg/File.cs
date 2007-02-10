@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 using System.Collections;
+using System.Collections.Generic;
 using System;
 
 namespace TagLib.Ogg
@@ -31,11 +32,11 @@ namespace TagLib.Ogg
       // private properties
       //////////////////////////////////////////////////////////////////////////
       private uint       stream_serial_number;
-      private ArrayList  pages;
+      private List<Page>  pages;
       private PageHeader first_page_header;
       private PageHeader last_page_header;
-      private ArrayList  packet_to_page_map;
-      private Hashtable  dirty_packets;
+      private List<IntList>  packet_to_page_map;
+      private Dictionary<uint, ByteVector> dirty_packets;
       private IntList    dirty_pages;
 
       // The current page for the reader -- used by nextPage()
@@ -55,7 +56,7 @@ namespace TagLib.Ogg
          // save:
 
          if (dirty_packets.ContainsKey (i))
-            return (ByteVector) dirty_packets [i];
+            return dirty_packets [i];
 
          // If we haven't indexed the page where the packet we're interested in starts,
          // begin reading pages until we have.
@@ -68,10 +69,10 @@ namespace TagLib.Ogg
          // If the last read stopped at the packet that we're interested in, don't
          // reread its packet list.  (This should make sequential packet reads fast.)
          
-         int page_index = ((IntList) packet_to_page_map [(int)i]) [0];
+         int page_index = (packet_to_page_map [(int)i]) [0];
          if (current_packet_page != pages [page_index])
          {
-            current_packet_page = (Page) pages [page_index];
+            current_packet_page = pages [page_index];
             current_packets = current_packet_page.Packets;
          }
 
@@ -94,7 +95,7 @@ namespace TagLib.Ogg
             if (page_index == pages.Count && !NextPage ())
                throw new CorruptFileException ("Could not find the requested packet.");
             
-            current_packet_page = (Page) pages [page_index];
+            current_packet_page = pages [page_index];
             current_packets = current_packet_page.Packets;
             packet.Add (current_packets [0]);
          }
@@ -111,7 +112,7 @@ namespace TagLib.Ogg
                return;
             }
 
-         foreach (int page in (IntList) packet_to_page_map [(int) i])
+         foreach (int page in packet_to_page_map [(int) i])
             dirty_pages.SortedInsert (page, true);
          
          if (dirty_packets.ContainsKey (i))
@@ -196,11 +197,11 @@ namespace TagLib.Ogg
       protected void ClearPageData ()
       {
          stream_serial_number = 0;
-         pages                = new ArrayList ();
+         pages                = new List<Page> ();
          first_page_header    = null;
          last_page_header     = null;
-         packet_to_page_map   = new ArrayList ();
-         dirty_packets        = new Hashtable ();
+         packet_to_page_map   = new List<IntList> ();
+         dirty_packets        = new Dictionary<uint, ByteVector> ();
          dirty_pages          = new IntList ();
 
          current_page         = null;
@@ -262,7 +263,7 @@ namespace TagLib.Ogg
             current_packet = current_page.FirstPacketIndex + i;
             if (packet_to_page_map.Count <= current_packet)
                packet_to_page_map.Add (new IntList ());
-            ((IntList) packet_to_page_map [current_packet]).Add (pages.Count - 1);
+            (packet_to_page_map [current_packet]).Add (pages.Count - 1);
          }
 
          return true;
@@ -278,8 +279,8 @@ namespace TagLib.Ogg
 
          // If the first page of the group isn't dirty, append its partial content here.
 
-         if(!dirty_pages.Contains (((Page) this.pages [page_group [0]]).FirstPacketIndex))
-            packets.Add (((Page) this.pages [page_group [0]]).Packets [0]);
+         if(!dirty_pages.Contains (this.pages [page_group [0]].FirstPacketIndex))
+            packets.Add (this.pages [page_group [0]].Packets [0]);
 
          int previous_packet = -1;
          int original_size = 0;
@@ -288,25 +289,25 @@ namespace TagLib.Ogg
          {
             int page = page_group [i];
             
-            uint first_packet = (uint) ((Page) this.pages [page]).FirstPacketIndex;
-            uint last_packet  = first_packet + ((Page) this.pages [page]).PacketCount - 1;
+            uint first_packet = (uint) this.pages [page].FirstPacketIndex;
+            uint last_packet  = first_packet + this.pages [page].PacketCount - 1;
 
             for (uint j = first_packet; j <= last_packet; j ++)
             {
 
                if (i == page_group.Count - 1 && j == last_packet && !dirty_pages.Contains ((int)j))
-                  packets.Add (((Page) this.pages [page]).Packets [((Page) this.pages [page]).Packets.Count - 1]);
+                  packets.Add (this.pages [page].Packets [this.pages [page].Packets.Count - 1]);
                else if((int)j != previous_packet)
                {
                   previous_packet = (int) j;
                   packets.Add (GetPacket (j));
                }
             }
-            original_size += ((Page) this.pages [page]).Size;
+            original_size += this.pages [page].Size;
          }
 
-         bool continued = ((Page) this.pages [page_group [0]]).Header.FirstPacketContinued;
-         bool completed = ((Page) this.pages [page_group [page_group.Count - 1]]).Header.LastPacketCompleted;
+         bool continued = this.pages [page_group [0]].Header.FirstPacketContinued;
+         bool completed = this.pages [page_group [page_group.Count - 1]].Header.LastPacketCompleted;
 
          // TODO: This pagination method isn't accurate for what's being done here.
          // This should account for real possibilities like non-aligned packets and such.
@@ -326,7 +327,7 @@ namespace TagLib.Ogg
          // generally only be one page group, so it's not worth the time for the
          // optimization at the moment.
 
-         Insert (data, ((Page) this.pages [page_group [0]]).FileOffset, original_size);
+         Insert (data, this.pages [page_group [0]].FileOffset, original_size);
 
          // Update the page index to include the pages we just created and to delete the
          // old pages.

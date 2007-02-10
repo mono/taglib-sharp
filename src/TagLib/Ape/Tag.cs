@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 using System.Collections;
+using System.Collections.Generic;
 using System;
 
 namespace TagLib.Ape
@@ -32,7 +33,7 @@ namespace TagLib.Ape
       //////////////////////////////////////////////////////////////////////////
       private long      tag_offset;
       private Footer    footer;
-      private Hashtable items;
+      private Dictionary<string,Item> items;
       
       
       //////////////////////////////////////////////////////////////////////////
@@ -48,7 +49,7 @@ namespace TagLib.Ape
       {
          tag_offset = -1;
          footer = new Footer ();
-         items = new Hashtable ();
+         items = new Dictionary<string,Item> ();
       }
       
       public Tag (File file, long tag_offset) : this ()
@@ -84,7 +85,7 @@ namespace TagLib.Ape
       
       public Item GetItem (string key)
       {
-         return items.ContainsKey (key.ToUpper ()) ? (Item) items [key.ToUpper ()] : null;
+         return items.ContainsKey (key.ToUpper ()) ? items [key.ToUpper ()] : null;
       }
 
       public void AddValue (string key, string value, bool replace)
