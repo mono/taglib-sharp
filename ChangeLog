@@ -1,5 +1,23 @@
 2007-02-10  Brian Nickel  <brian.nickel@gmail.com>
 
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Id3v2/FrameFactory.cs:
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:
+	* src/TagLib/Id3v2/Frames/UniqueFileIdentifierFrame.cs:
+	* src/TagLib/Id3v2/Frames/PrivateFrame.cs:
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs:
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs:
+	* src/TagLib/Id3v2/Frames/UnknownFrame.cs:
+	* src/TagLib/Id3v2/Frame.cs:
+	* src/TagLib/ByteVector.cs: VASTLY improved the loading of ID3v2 tags by
+	breaking API compatability. (This isn't a major concern at the moment.)
+	Removed a major piece of code which was causing about 80% of the read time.
+	* src/TagLib/Debugger.cs: Added new way to test for slow code blocks.
+
+2007-02-10  Brian Nickel  <brian.nickel@gmail.com>
+
 	* src/TagLib/Mpeg/File.cs: Fix bug introduced on 2007-01-26. If a file
 	lacked an Id3v2 tag, TagLib read the whole file. Initial analysis shows this
 	being marginally faster than the even older version.

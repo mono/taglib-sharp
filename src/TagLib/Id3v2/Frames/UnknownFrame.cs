@@ -39,7 +39,7 @@ namespace TagLib.Id3v2
       public UnknownFrame (ByteVector data) : base (data)
       {
          field_data = null;
-         SetData (data);
+         SetData (data, 0);
       }
       
       public override string ToString ()
@@ -73,10 +73,10 @@ namespace TagLib.Id3v2
          return field_data;
       }
       
-      protected internal UnknownFrame (ByteVector data, FrameHeader h) : base (h)
+      protected internal UnknownFrame (ByteVector data, int offset, FrameHeader h) : base (h)
       {
          field_data = null;
-         ParseFields (FieldData (data));
+         ParseFields (FieldData (data, offset));
       }
    }
 }

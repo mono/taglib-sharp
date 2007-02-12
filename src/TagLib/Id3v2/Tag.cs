@@ -567,7 +567,7 @@ namespace TagLib.Id3v2
                return;
             }
 
-            Frame frame = FrameFactory.CreateFrame (data.Mid (frame_data_position), header.MajorVersion);
+            Frame frame = FrameFactory.CreateFrame (data, frame_data_position, header.MajorVersion);
 
             if(frame == null)
                return;

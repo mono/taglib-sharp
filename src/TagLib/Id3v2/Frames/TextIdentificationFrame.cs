@@ -47,7 +47,7 @@ namespace TagLib.Id3v2
       {
          field_list = new StringList ();
          text_encoding = StringType.UTF8;
-         SetData (data);
+         SetData (data, 0);
       }
 
       public void SetText (StringList l)
@@ -89,23 +89,9 @@ namespace TagLib.Id3v2
       protected override void ParseFields (ByteVector data)
       {
          // read the string data type (the first byte of the field data)
-         
          text_encoding = (StringType) data [0];
-         
-         // split the byte array into chunks based on the string type (two byte delimiter
-         // for unicode encodings)
-         
-         int byte_align = text_encoding == StringType.Latin1 || text_encoding == StringType.UTF8 ? 1 : 2;
-         
-         ByteVectorList l = ByteVectorList.Split (data.Mid (1), TextDelimiter (text_encoding), byte_align);
-
          field_list.Clear ();
-
-         // append those split values to the list and make sure that the new string's
-         // type is the same specified for this frame
-         
-         foreach (ByteVector v in l)
-            field_list.Add (v.ToString (text_encoding));
+         field_list.Add (data.ToString (text_encoding, 1).Split (new char []{'\0'}));
       }
 
       protected override ByteVector RenderFields ()
@@ -126,12 +112,11 @@ namespace TagLib.Id3v2
          return v;
       }
 
-      protected internal TextIdentificationFrame (ByteVector data, FrameHeader h) : base (h)
+      protected internal TextIdentificationFrame (ByteVector data, int offset, FrameHeader h) : base (h)
       {
          field_list = new StringList ();
          text_encoding = StringType.UTF8;
-         
-         ParseFields (FieldData (data));
+         ParseFields (FieldData (data, offset));
       }
    }
 
@@ -234,7 +219,7 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
-      protected internal UserTextIdentificationFrame (ByteVector data, FrameHeader h) : base (data, h)
+      protected internal UserTextIdentificationFrame (ByteVector data, int offset, FrameHeader h) : base (data, offset, h)
       {
          CheckFields ();
       }

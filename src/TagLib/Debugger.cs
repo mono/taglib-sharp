@@ -20,6 +20,7 @@
  ***************************************************************************/
 
 using System;
+using System.Collections.Generic;
 
 namespace TagLib
 {
@@ -43,6 +44,53 @@ namespace TagLib
          System.Console.WriteLine ("");
       }
       
+      private static Dictionary <object, Dictionary <object, DebugTimeData>>
+         debug_times = new Dictionary <object, Dictionary <object, DebugTimeData>> ();
+      
+      public static void AddDebugTime (object o1, object o2, DateTime start)
+      {
+         DebugTimeData data = new DebugTimeData (DateTime.Now - start, 1);
+         if (debug_times.ContainsKey (o1) && debug_times [o1].ContainsKey (o2))
+         {
+            data.time       += debug_times [o1][o2].time;
+            data.occurances += debug_times [o1][o2].occurances;
+         }
+         
+         if (!debug_times.ContainsKey (o1))
+            debug_times.Add (o1, new Dictionary <object, DebugTimeData> ());
+         
+         if (!debug_times [o1].ContainsKey (o2))
+            debug_times [o1].Add (o2, data);
+         else
+            debug_times [o1][o2] = data;
+      }
+      
+      public static void DumpDebugTime (object o1)
+      {
+         Console.WriteLine (o1.ToString ());
+         foreach (KeyValuePair <object, DebugTimeData> pair in debug_times [o1])
+         {
+            Console.WriteLine ("  " + pair.Key.ToString ());
+            Console.WriteLine ("    Ojbects: " + pair.Value.time);
+            Console.WriteLine ("    Total:   " + pair.Value.occurances);
+            Console.WriteLine ("    Average: " + new TimeSpan (pair.Value.time.Ticks / pair.Value.occurances));
+            Console.WriteLine ("");
+         }
+         debug_times.Remove (o1);
+      }
+      
       private Debugger () {}
+      
+      private struct DebugTimeData
+      {
+         public TimeSpan time;
+         public long     occurances;
+         
+         public DebugTimeData (TimeSpan time, int occurances)
+         {
+            this.time = time;
+            this.occurances = occurances;
+         }
+      }
    }
 }

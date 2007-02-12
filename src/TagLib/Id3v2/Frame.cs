@@ -35,9 +35,9 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public void SetData (ByteVector data)
+      public void SetData (ByteVector data, int offset)
       {
-         Parse (data);
+         Parse (data, offset);
       }
       
       public virtual void SetText (string text) {}
@@ -85,23 +85,23 @@ namespace TagLib.Id3v2
          set {header = value;}
       }
       
-      protected void Parse (ByteVector data)
+      protected void Parse (ByteVector data, int offset)
       {
          if (header != null)
             header.SetData (data);
          else
             header = new FrameHeader (data);
          
-         ParseFields (FieldData (data));
+         ParseFields (FieldData (data, offset));
       }
       
       protected virtual void ParseFields(ByteVector data) {}
       protected virtual ByteVector RenderFields () {return new ByteVector ();}
-      protected ByteVector FieldData (ByteVector frame_data)
+      protected ByteVector FieldData (ByteVector frame_data, int offset)
       {
          uint header_size = FrameHeader.Size (header.Version);
 
-         uint frame_data_offset = header_size;
+         uint frame_data_offset = (uint) (header_size + offset);
          uint frame_data_length = Size;
 
          if (header.Compression || header.DataLengthIndicator)

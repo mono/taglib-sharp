@@ -55,7 +55,7 @@ namespace TagLib.Id3v2
          file_name   = null;
          description = null;
          this.data   = null;
-         SetData (data);
+         SetData (data, 0);
       }
       
       public override string ToString ()
@@ -178,14 +178,14 @@ namespace TagLib.Id3v2
          return v;
       }
 
-      protected internal GeneralEncapsulatedObjectFrame (ByteVector data, FrameHeader h) : base (h)
+      protected internal GeneralEncapsulatedObjectFrame (ByteVector data, int offset, FrameHeader h) : base (h)
       {
          text_encoding = StringType.UTF8;
          mime_type   = null;
          file_name   = null;
          description = null;
          this.data   = null;
-         ParseFields (FieldData (data));
+         ParseFields (FieldData (data, offset));
       }
    }
 }

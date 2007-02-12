@@ -56,7 +56,7 @@ namespace TagLib.Id3v2
          identification = null;
          channels = new Dictionary<ChannelType,ChannelData> ();
          
-         SetData (data);
+         SetData (data, 0);
       }
 
       public RelativeVolumeFrame (string identification) : base ("RVA2")
@@ -190,12 +190,12 @@ namespace TagLib.Id3v2
          return data;
       }
       
-      protected internal RelativeVolumeFrame (ByteVector data, FrameHeader h) : base (h)
+      protected internal RelativeVolumeFrame (ByteVector data, int offset, FrameHeader h) : base (h)
       {
          identification = null;
          channels = new Dictionary<ChannelType,ChannelData> ();
          
-         ParseFields (FieldData (data));
+         ParseFields (FieldData (data, offset));
       }
       
       protected ulong ParsePeakVolume (ByteVector data)

@@ -42,7 +42,7 @@ namespace TagLib.Id3v2
          owner = null;
          identifier = null;
          
-         SetData (data);
+         SetData (data, 0);
       }
 
       public UniqueFileIdentifierFrame (string owner, ByteVector id) : base ("UFID")
@@ -93,11 +93,11 @@ namespace TagLib.Id3v2
          return data;
       }
       
-      protected internal UniqueFileIdentifierFrame (ByteVector data, FrameHeader h) : base (h)
+      protected internal UniqueFileIdentifierFrame (ByteVector data, int offset, FrameHeader h) : base (h)
       {
          owner = null;
          identifier = null;
-         ParseFields (FieldData (data));
+         ParseFields (FieldData (data, offset));
       }
    }
 }

@@ -51,7 +51,7 @@ namespace TagLib.Id3v2
       {
          this.owner = null;
          this.data = null;
-         SetData (data);
+         SetData (data, 0);
       }
 
       public override string ToString ()
@@ -114,11 +114,11 @@ namespace TagLib.Id3v2
          return v;
       }
 
-      protected internal PrivateFrame (ByteVector data, FrameHeader h) : base (h)
+      protected internal PrivateFrame (ByteVector data, int offset, FrameHeader h) : base (h)
       {
          this.owner = null;
          this.data = null;
-         ParseFields (FieldData (data));
+         ParseFields (FieldData (data, offset));
       }
    }
 }

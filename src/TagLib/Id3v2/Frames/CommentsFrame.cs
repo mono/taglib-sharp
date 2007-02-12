@@ -53,7 +53,7 @@ namespace TagLib.Id3v2
          language = null;
          description = null;
          text = null;
-         SetData (data);
+         SetData (data, 0);
       }
 
 
@@ -118,15 +118,10 @@ namespace TagLib.Id3v2
          text_encoding = (StringType) data [0];
          language = data.Mid (1, 3);
 
-         int byte_align = text_encoding == StringType.Latin1 || text_encoding == StringType.UTF8 ? 1 : 2;
-
-         ByteVectorList l = ByteVectorList.Split (data.Mid (4), TextDelimiter (text_encoding), byte_align, 2);
-
-         if (l.Count == 2)
-         {
-            description = l [0].ToString (text_encoding);
-            text        = l [1].ToString (text_encoding);
-         }
+         string [] split = data.ToString (text_encoding, 4).Split (new char [] {'\0'}, 2);
+         
+         description = split [0];
+         text        = split [1];
       }
 
       protected override ByteVector RenderFields ()
@@ -142,13 +137,13 @@ namespace TagLib.Id3v2
          return v;
       }
 
-      protected internal CommentsFrame (ByteVector data, FrameHeader h) : base (h)
+      protected internal CommentsFrame (ByteVector data, int offset, FrameHeader h) : base (h)
       {
          text_encoding = StringType.UTF8;
          language = null;
          description = null;
          text = null;
-         ParseFields (FieldData (data));
+         ParseFields (FieldData (data, offset));
       }
    }
 }

@@ -445,15 +445,21 @@ namespace TagLib
             return ToLong(true);
         }
 
-        public string ToString(StringType type)
+        public string ToString(StringType type, int offset)
         {
-            string s = StringTypeToEncoding(type, Mid(0, 2)).GetString(Data, 0, Count);
+            ByteVector bom = type == StringType.UTF16 ? Mid(offset, 2) : null;
+            string s = StringTypeToEncoding(type, bom).GetString(Data, offset, Count - offset);
             
             if(s.Length != 0 && (s[0] == 0xfffe || s[0] == 0xfeff)) { // UTF16 BOM
                 return s.Substring(1);
             }
             
             return s;
+        }
+
+        public string ToString(StringType type)
+        {
+            return ToString (type, 0);
         }
 
         public override string ToString()

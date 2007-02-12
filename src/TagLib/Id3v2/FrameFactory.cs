@@ -26,7 +26,7 @@ namespace TagLib.Id3v2
 {
    public class FrameFactory
    {
-      public delegate Frame FrameCreator (ByteVector data, FrameHeader header);
+      public delegate Frame FrameCreator (ByteVector data, int offset, FrameHeader header);
 
       //////////////////////////////////////////////////////////////////////////
       // private properties
@@ -38,9 +38,9 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // public members
       //////////////////////////////////////////////////////////////////////////
-      public static Frame CreateFrame (ByteVector data, uint version)
+      public static Frame CreateFrame (ByteVector data, int offset, uint version)
       {
-         FrameHeader header = new FrameHeader (data, version);
+         FrameHeader header = new FrameHeader (data.Mid (offset, (int) FrameHeader.Size (version)), version);
          ByteVector frame_id = header.FrameId;
          // A quick sanity check -- make sure that the frame_id is 4 uppercase
          // Latin1 characters.  Also make sure that there is data in the frame.
@@ -58,7 +58,7 @@ namespace TagLib.Id3v2
          // Windows Media Player may create zero byte frames. Just send them
          // off as unknown.
          if (header.FrameSize == 0)
-            return new UnknownFrame (data, header);
+            return new UnknownFrame (data, offset, header);
          
          // TagLib doesn't mess with encrypted frames, so just treat them
          // as unknown frames.
@@ -66,24 +66,24 @@ namespace TagLib.Id3v2
          if (header.Compression)
          {
             Debugger.Debug ("Compressed frames are currently not supported.");
-            return new UnknownFrame(data, header);
+            return new UnknownFrame(data, offset, header);
          }
          
          if (header.Encryption)
          {
             Debugger.Debug ("Encrypted frames are currently not supported.");
-            return new UnknownFrame(data, header);
+            return new UnknownFrame(data, offset, header);
          }
 
          if(!UpdateFrame (header))
          {
             header.TagAlterPreservation = true;
-            return new UnknownFrame (data, header);
+            return new UnknownFrame (data, offset, header);
          }
          
          foreach (FrameCreator creator in frame_creators)
          {
-            Frame frame = creator (data, header);
+            Frame frame = creator (data, offset, header);
             if (frame != null)
                return frame;
          }
@@ -103,8 +103,8 @@ namespace TagLib.Id3v2
          if(frame_id.StartsWith ("T"))
          {
             TextIdentificationFrame f = frame_id != "TXXX"
-            ? new TextIdentificationFrame (data, header)
-            : new UserTextIdentificationFrame (data, header);
+            ? new TextIdentificationFrame (data, offset, header)
+            : new UserTextIdentificationFrame (data, offset, header);
             
             if(use_default_encoding)
                f.TextEncoding = default_encoding;
@@ -120,7 +120,7 @@ namespace TagLib.Id3v2
 
          if (frame_id == "COMM")
          {
-            CommentsFrame f = new CommentsFrame (data, header);
+            CommentsFrame f = new CommentsFrame (data, offset, header);
             
             if(use_default_encoding)
                f.TextEncoding = default_encoding;
@@ -132,7 +132,7 @@ namespace TagLib.Id3v2
 
          if (frame_id == "APIC")
          {
-            AttachedPictureFrame f = new AttachedPictureFrame (data, header);
+            AttachedPictureFrame f = new AttachedPictureFrame (data, offset, header);
             
             if(use_default_encoding)
                f.TextEncoding = default_encoding;
@@ -143,24 +143,24 @@ namespace TagLib.Id3v2
          // Relative Volume Adjustment (frames 4.11)
 
          if (frame_id == "RVA2")
-            return new RelativeVolumeFrame (data, header);
+            return new RelativeVolumeFrame (data, offset, header);
 
          // Unique File Identifier (frames 4.1)
 
          if (frame_id == "UFID")
-            return new UniqueFileIdentifierFrame (data, header);
+            return new UniqueFileIdentifierFrame (data, offset, header);
 
          // Private (frames 4.27)
 
          if (frame_id == "PRIV")
-            return new PrivateFrame (data, header);
+            return new PrivateFrame (data, offset, header);
          
          // General Encapsulated Object (frames 4.15)
          
          if(frame_id == "GEOB")
-            return new GeneralEncapsulatedObjectFrame (data, header);
+            return new GeneralEncapsulatedObjectFrame (data, offset, header);
          
-         return new UnknownFrame (data, header);
+         return new UnknownFrame (data, offset, header);
       }
 
       public static StringType DefaultTextEncoding
