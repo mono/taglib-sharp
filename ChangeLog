@@ -1,3 +1,19 @@
+2007-02-12  Brian Nickel  <brian.nickel@gmail.com>
+
+	* src/TagLib/File.cs: Remove ReadOnly checking. This is to add compatability
+	with the .NET Compact Framework and to remove some ugly code. Libraries 
+	using TagLib# should check file writability for themselves if they want
+	the writable status before Save() is called. Also use more compatable
+	Array.Copy().
+	* src/TagLib/Mpeg/File.cs: Comment out unused method.
+	* src/TagLib/ByteVector.cs: Use more compatable Array.Copy()
+	* src/TagLib/ReadOnlyException.cs: Removed because unused.
+	* src/AssemblyInfo.cs.in: Update copyright.
+	* src/AssemblyInfo-windows.cs: Update version and copyright.
+	* src/Makefile.am:
+	* src/taglib-sharp.mdp:
+	* taglib-sharp.csproj: Update files.
+
 2007-02-10  Brian Nickel  <brian.nickel@gmail.com>
 
 	* src/TagLib/Id3v2/Tag.cs:

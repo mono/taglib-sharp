@@ -24,10 +24,6 @@
 using System.Collections.Generic;
 using System;
 
-#if (!WINDOWS)
-using Mono.Unix.Native;
-#endif
-
 namespace TagLib
 {
    public enum TagTypes
@@ -56,9 +52,8 @@ namespace TagLib
          Closed
       }
       
-      private System.IO.Stream file_stream;
+      protected System.IO.Stream file_stream;
       private IFileAbstraction file_abstraction;
-      private bool read_only;
       private string mime_type;
       private static uint buffer_size = 1024;
       
@@ -73,7 +68,6 @@ namespace TagLib
       {
          file_stream = null;
          file_abstraction = file_abstraction_creator (file);
-         read_only = !file_abstraction.IsWritable;
       }
       
       public string Name {get {return file_abstraction.Name;}}
@@ -357,7 +351,7 @@ namespace TagLib
          write_position += data.Count;
 
          buffer = new byte [about_to_overwrite.Length];
-         System.Array.Copy (about_to_overwrite, buffer, about_to_overwrite.Length);
+         System.Array.Copy (about_to_overwrite, 0, buffer, 0, about_to_overwrite.Length);
 
          // Ok, here's the main loop.  We want to loop until the read fails, which
          // means that we hit the end of the file.
@@ -380,7 +374,7 @@ namespace TagLib
             write_position += buffer_length;
             
             // Make the current buffer the data that we read in the beginning.
-            System.Array.Copy (about_to_overwrite, buffer, bytes_read);
+            System.Array.Copy (about_to_overwrite, 0, buffer, 0, bytes_read);
             
             // Again, we need this for the last write.  We don't want to write garbage
             // at the end of our file, so we need to set the buffer size to the amount
@@ -434,8 +428,6 @@ namespace TagLib
       [Obsolete("This method is obsolete; it has no real use.")]
       public void RemoveBlock () {}
       
-      public bool IsReadOnly {get {return read_only;}}
-      
       [Obsolete("This property is obsolete; Invalid files now throw exceptions.")]
       public bool IsValid {get {return true;}}
       
@@ -470,9 +462,6 @@ namespace TagLib
          {
             if (Mode == value || (Mode == AccessMode.Write && value == AccessMode.Read))
                return;
-            
-            if (value == AccessMode.Write && IsReadOnly)
-               throw new ReadOnlyException();
             
             if (file_stream != null)
                file_stream.Close ();
@@ -593,8 +582,6 @@ namespace TagLib
          public LocalFileAbstraction (string file)
          {
             name = file;
-            if (!IsReadable)
-               throw new System.Exception ("File \"" + file + "\" is not readable.");
          }
          
          public string Name {get {return name;}}
@@ -608,48 +595,6 @@ namespace TagLib
          {
             get {return System.IO.File.Open (Name, System.IO.FileMode.Open, System.IO.FileAccess.ReadWrite);}
          }
-         
-#if (WINDOWS)
-         public bool IsReadable
-         {
-            get
-            {
-               try
-               {
-                  System.IO.Stream s = ReadStream;
-                  s.Close ();
-               }
-               catch { return false;}
-               
-               return true;
-            }
-         }
-         
-         public bool IsWritable
-         {
-            get
-            {
-               try
-               {
-                  System.IO.Stream s = WriteStream;
-                  s.Close ();
-               }
-               catch { return false;}
-               
-               return true;
-            }
-         }
-#else
-         public bool IsReadable
-         {
-            get {return Syscall.access (Name, AccessModes.R_OK) == 0;}
-         }
-         
-         public bool IsWritable
-         {
-            get {return Syscall.access (Name, AccessModes.W_OK) == 0;}
-         }
-#endif
          
          public static IFileAbstraction CreateFile (string path)
          {
@@ -667,9 +612,6 @@ namespace TagLib
          
          System.IO.Stream ReadStream  {get;}
          System.IO.Stream WriteStream {get;}
-         
-         bool IsReadable {get;}
-         bool IsWritable {get;}
       }
    }
 }

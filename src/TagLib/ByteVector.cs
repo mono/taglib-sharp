@@ -671,7 +671,7 @@ namespace TagLib
                             firstChunk = new byte[read_size];
                         }
 
-                        Array.Copy(bytes, firstChunk, n);
+                        Array.Copy(bytes, 0, firstChunk, 0, n);
                     }
                     set_first_chunk = true;
                 }

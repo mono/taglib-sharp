@@ -96,7 +96,6 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/StringList.cs                                  \
    $(srcdir)/TagLib/SupportedMimeType.cs                           \
    $(srcdir)/TagLib/UnsupportedFormatException.cs                  \
-   $(srcdir)/TagLib/ReadOnlyException.cs                           \
    $(srcdir)/TagLib/Picture.cs                                     \
    $(srcdir)/TagLib/ListBase.cs                                    \
    $(srcdir)/TagLib/FileTypes.cs                                   \

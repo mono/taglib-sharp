@@ -52,7 +52,6 @@
     <Compile Include="src\TagLib\StringList.cs" />
     <Compile Include="src\TagLib\SupportedMimeType.cs" />
     <Compile Include="src\TagLib\UnsupportedFormatException.cs" />
-    <Compile Include="src\TagLib\ReadOnlyException.cs" />
 	<Compile Include="src\TagLib\WavPack\File.cs" />
     <Compile Include="src\TagLib\WavPack\Properties.cs" />
     <Compile Include="src\TagLib\Ogg\File.cs" />
@@ -106,6 +105,7 @@
     <Compile Include="src\TagLib\Id3v2\Frames\UnknownFrame.cs" />
     <Compile Include="src\TagLib\Id3v2\Frames\AttachedPictureFrame.cs" />
     <Compile Include="src\TagLib\Id3v2\Frames\CommentsFrame.cs" />
+    <Compile Include="src\TagLib\Id3v2\Frames\GeneralEncapsulatedObjectFrame.cs" />
     <Compile Include="src\TagLib\Id3v2\Frames\PrivateFrame.cs" />
     <Compile Include="src\TagLib\Id3v2\Frames\RelativeVolumeFrame.cs" />
     <Compile Include="src\TagLib\Id3v2\Frames\TextIdentificationFrame.cs" />
@@ -114,6 +114,7 @@
     <Compile Include="src\TagLib\Id3v1\StringHandler.cs" />
     <Compile Include="src\TagLib\Id3v1\Tag.cs" />
     <Compile Include="src\TagLib\Flac\File.cs" />
+    <Compile Include="src\TagLib\Flac\Picture.cs" />
     <Compile Include="src\TagLib\Flac\Properties.cs" />
     <Compile Include="src\TagLib\Ape\Tag.cs" />
     <Compile Include="src\TagLib\Ape\Footer.cs" />

@@ -187,6 +187,7 @@ namespace TagLib.Mpeg
          return null;
       }
       
+/*
       private Header FindLastFrameHeader (long end)
       {
          long position = end - 3;
@@ -209,6 +210,7 @@ namespace TagLib.Mpeg
          
          return null;
       }
+*/
       
       public override TagLib.Tag Tag {get {return tag;}}
       
