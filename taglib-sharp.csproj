@@ -52,7 +52,7 @@
     <Compile Include="src\TagLib\StringList.cs" />
     <Compile Include="src\TagLib\SupportedMimeType.cs" />
     <Compile Include="src\TagLib\UnsupportedFormatException.cs" />
-	<Compile Include="src\TagLib\WavPack\File.cs" />
+    <Compile Include="src\TagLib\WavPack\File.cs" />
     <Compile Include="src\TagLib\WavPack\Properties.cs" />
     <Compile Include="src\TagLib\Ogg\File.cs" />
     <Compile Include="src\TagLib\Ogg\Page.cs" />
@@ -132,6 +132,10 @@
     <Compile Include="src\TagLib\Asf\Guid.cs" />
     <Compile Include="src\TagLib\Asf\PaddingObject.cs" />
     <Compile Include="src\TagLib\Asf\Tag.cs" />
+    <Compile Include="src\TagLib\ListBase.cs" />
+    <Compile Include="src\TagLib\Picture.cs" />
+    <Compile Include="src\TagLib\CorruptFileException.cs" />
+    <Compile Include="src\TagLib\FileTypes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src" />

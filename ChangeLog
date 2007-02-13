@@ -1,5 +1,10 @@
 2007-02-12  Brian Nickel  <brian.nickel@gmail.com>
 
+	* src/TagLib/ByteVector.cs: Fix support for Latin1.
+	* taglib-sharp.csproj: Work on Windows.
+
+2007-02-12  Brian Nickel  <brian.nickel@gmail.com>
+
 	* src/TagLib/File.cs: Remove ReadOnly checking. This is to add compatability
 	with the .NET Compact Framework and to remove some ugly code. Libraries 
 	using TagLib# should check file writability for themselves if they want

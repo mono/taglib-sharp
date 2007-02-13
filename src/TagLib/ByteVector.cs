@@ -708,7 +708,15 @@ namespace TagLib
                     return System.Text.Encoding.Unicode;
             }
             
-            return System.Text.Encoding.ASCII;
+            try
+            {
+               // The right format but not ECMA.
+               return System.Text.Encoding.GetEncoding("latin1");
+            }
+            catch
+            {
+               return System.Text.Encoding.UTF8;
+            }
         }
       
         #endregion
