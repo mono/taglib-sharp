@@ -117,6 +117,12 @@ namespace TagLib.Id3v2
          field_list = new StringList ();
          text_encoding = StringType.UTF8;
          ParseFields (FieldData (data, offset));
+         
+         // Bad tags may have one or more nul characters at the end of a string,
+         // resulting in empty strings at the end of the FieldList. Strip them
+         // off.
+         while (field_list.Count != 0 && field_list [field_list.Count - 1] == "")
+            field_list.RemoveAt (field_list.Count - 1);
       }
    }
 

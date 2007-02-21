@@ -1,5 +1,16 @@
 2007-02-12  Brian Nickel  <brian.nickel@gmail.com>
 
+	* src/TagLib/File.cs: Added support for read sharing in ReadStream. This
+	should eliminate a problem in Windows where files couldn't be read while
+	they were playing. Solution by Ion Todirel.
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs: Strip all empty
+	strings from the end of the FieldList. This should fix strings that were
+	badly tagged, with either a nil character or the sum total of the ID3v1
+	string attached. May fix banshee bug #410116.
+	* tests/Makefile.am: Removed line blocking distcheck
+
+2007-02-12  Brian Nickel  <brian.nickel@gmail.com>
+
 	* src/TagLib/ByteVector.cs: Fix support for Latin1.
 	* taglib-sharp.csproj: Work on Windows.
 

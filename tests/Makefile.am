@@ -29,6 +29,5 @@ EXTRA_DIST = \
 	$(NUNIT_TESTER_CSFILES) \
 	$(ASSEMBLY_CS_FILES) \
 	$(srcdir)/samples/* \
-	$(srcdir)/samples/unsupported/* \
-	$(srcdir)/test-results/*
+	$(srcdir)/samples/unsupported/*
 

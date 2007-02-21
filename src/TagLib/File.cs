@@ -588,7 +588,7 @@ namespace TagLib
          
          public System.IO.Stream ReadStream
          {
-            get {return System.IO.File.Open (Name, System.IO.FileMode.Open, System.IO.FileAccess.Read);}
+            get {return System.IO.File.Open (Name, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read);}
          }
          
          public System.IO.Stream WriteStream
