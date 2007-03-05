@@ -121,7 +121,7 @@ namespace TagLib.Id3v2
          // Bad tags may have one or more nul characters at the end of a string,
          // resulting in empty strings at the end of the FieldList. Strip them
          // off.
-         while (field_list.Count != 0 && field_list [field_list.Count - 1] == "")
+         while (field_list.Count != 0 && field_list [field_list.Count - 1] == String.Empty)
             field_list.RemoveAt (field_list.Count - 1);
       }
    }
@@ -215,10 +215,10 @@ namespace TagLib.Id3v2
          int fields = base.FieldList.Count;
          
          if (fields == 0)
-            Description = "";
+            Description = String.Empty;
          
          if(fields <= 1)
-            SetText ("");
+            SetText (String.Empty);
       }
       
       

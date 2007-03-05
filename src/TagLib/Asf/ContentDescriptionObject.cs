@@ -19,6 +19,8 @@
  *   USA                                                                   *
  ***************************************************************************/
 
+using System;
+
 namespace TagLib.Asf
 {
    public class ContentDescriptionObject : Object
@@ -59,11 +61,11 @@ namespace TagLib.Asf
       
       public ContentDescriptionObject () : base (Asf.Guid.AsfContentDescriptionObject)
       {
-         title       = "";
-         author      = "";
-         copyright   = "";
-         description = "";
-         rating      = "";
+         title       = String.Empty;
+         author      = String.Empty;
+         copyright   = String.Empty;
+         description = String.Empty;
+         rating      = String.Empty;
       }
       
       public override ByteVector Render ()

@@ -60,7 +60,7 @@ namespace TagLib.Ogg
          if (replace)
             RemoveField (key.ToUpper ());
          
-         if (value != null && value.Trim () != "")
+         if (value != null && value.Trim () != String.Empty)
          {
             if (!field_list.ContainsKey (key.ToUpper ()))
                field_list.Add (key.ToUpper (), new StringList ());

@@ -245,7 +245,7 @@ namespace TagLib.Asf
       
       public void SetDescriptorString (string value, params string [] names)
       {
-         int i = (value != null && value.Trim () != "") ? 1 : 0;
+         int i = (value != null && value.Trim () != String.Empty) ? 1 : 0;
          
          if (i == 1)
             SetDescriptors (names [0], new ContentDescriptor (names [0], value));
@@ -324,7 +324,7 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       private string [] SplitAndClean (string s)
       {
-         if (s == null || s.Trim () == "")
+         if (s == null || s.Trim () == String.Empty)
             return new string [] {};
          
          StringList l = StringList.Split (s, ";");

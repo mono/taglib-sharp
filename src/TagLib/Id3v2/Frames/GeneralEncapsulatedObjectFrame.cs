@@ -62,10 +62,10 @@ namespace TagLib.Id3v2
       {
          string text = "[" + mime_type + "]";
          
-         if(file_name != null && file_name != "")
+         if(file_name != null && file_name != string.Empty)
             text += " " + file_name;
          
-         if(description != null && description != "")
+         if(description != null && description != string.Empty)
             text += " " + description;
          
          return text;

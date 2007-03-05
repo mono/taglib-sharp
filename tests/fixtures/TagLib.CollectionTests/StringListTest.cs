@@ -27,7 +27,7 @@ namespace TagLib.CollectionTests
         {
             StringList list = BuildList();
             list.Remove("DEF");
-            Assert.AreEqual("ABCGHI", list.ToString(""));
+            Assert.AreEqual("ABCGHI", list.ToString(String.Empty));
         }
         
         [Test]

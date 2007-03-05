@@ -27,7 +27,7 @@ namespace TagLib.CollectionTests
         {
             IntList list = BuildList();
             list.Remove(67);
-            Assert.AreEqual("5533", list.ToString(""));
+            Assert.AreEqual("5533", list.ToString(String.Empty));
         }
         
         [Test]

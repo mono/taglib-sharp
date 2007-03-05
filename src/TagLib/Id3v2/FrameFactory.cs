@@ -198,7 +198,7 @@ namespace TagLib.Id3v2
             s = s.Substring (closing + 1);
          }
          
-         if(s != "")
+         if(s != string.Empty)
             fields.Add (s);
             
          if (fields.IsEmpty)

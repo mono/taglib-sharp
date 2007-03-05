@@ -93,7 +93,7 @@ namespace TagLib.Ape
          if (replace)
             RemoveItem (key);
          
-         if (value != null && value != "")
+         if (value != null && value != String.Empty)
          {
             StringList l = new StringList ();
             

@@ -176,7 +176,7 @@ namespace TagLib.Mpeg4
       public void SetText (ByteVector type, string text)
       {
          // Remove empty data and return.
-         if (text == null || text == "")
+         if (text == null || text == string.Empty)
          {
             ilst_box.RemoveChildren (FixId (type));
             return;

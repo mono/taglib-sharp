@@ -120,8 +120,17 @@ namespace TagLib.Id3v2
 
          string [] split = data.ToString (text_encoding, 4).Split (new char [] {'\0'}, 2);
          
-         description = split [0];
-         text        = split [1];
+         if (split.Length == 1)
+         {
+            // Bad comment frame. Assume that it lacks a description.
+            description = String.Empty;
+            text        = split [0];
+         }
+         else
+         {
+            description = split [0];
+            text        = split [1];
+         }
       }
 
       protected override ByteVector RenderFields ()

@@ -118,7 +118,7 @@ public static class MonodocNodeConfig
                 continue;
             }
             
-            XmlNode insert_node = document.CreateNode(XmlNodeType.Element, "node", "");
+            XmlNode insert_node = document.CreateNode(XmlNodeType.Element, "node", String.Empty);
             
             XmlAttribute label_attr = document.CreateAttribute("label");
             label_attr.Value = label;

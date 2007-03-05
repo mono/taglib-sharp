@@ -40,7 +40,7 @@ namespace TagLib
    
    public abstract class File
    {
-      private static Dictionary<string, System.Type> file_types = new Dictionary<string, System.Type> ();
+      /*private static Dictionary<string, System.Type> file_types = new Dictionary<string, System.Type> ();*/
       
       public delegate IFileAbstraction FileAbstractionCreator (string path);
       public delegate File             FileTypeResolver       (string path, AudioProperties.ReadStyle style);

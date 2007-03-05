@@ -230,7 +230,7 @@ namespace TagLib.Id3v2
             Frame [] frames = GetFrames ("COMM");
             
             foreach (CommentsFrame f in frames)
-               if (f.Description == "" && f.Language == Language)
+               if (f.Description == String.Empty && f.Language == Language)
                   return f.ToString ();
             
             foreach (CommentsFrame f in frames)
@@ -238,7 +238,7 @@ namespace TagLib.Id3v2
                   return f.ToString ();
             
             foreach (CommentsFrame f in frames)
-               if (f.Description == "")
+               if (f.Description == String.Empty)
                   return f.ToString ();
             
             foreach (CommentsFrame f in frames)
@@ -248,7 +248,7 @@ namespace TagLib.Id3v2
          }
          set
          {
-            if (value == null || value == "")
+            if (value == null || value == string.Empty)
             {
                RemoveFrames ("COMM");
                return;
@@ -258,7 +258,7 @@ namespace TagLib.Id3v2
             Frame [] frames = GetFrames ("COMM");
             
             foreach (CommentsFrame f in frames)
-               if (f.Description == "" && f.Language == Language)
+               if (f.Description == String.Empty && f.Language == Language)
                {
                   f.SetText (value);
                   return;
@@ -272,7 +272,7 @@ namespace TagLib.Id3v2
                }
             
             foreach (CommentsFrame f in frames)
-               if (f.Description == "")
+               if (f.Description == String.Empty)
                {
                   f.SetText (value);
                   return;
@@ -585,7 +585,7 @@ namespace TagLib.Id3v2
       
       public void SetTextFrame (ByteVector id, string value)
       {
-         if (value == null || value == "")
+         if (value == null || value == string.Empty)
          {
             RemoveFrames (id);
             return;

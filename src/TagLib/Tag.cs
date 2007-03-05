@@ -68,12 +68,12 @@ namespace TagLib
       {
          get
          {
-            return ((Title == null || Title.Trim () == "") &&
+            return ((Title == null || Title.Trim () == String.Empty) &&
                     (AlbumArtists == null || AlbumArtists.Length == 0) &&
                     (Performers == null || Performers.Length == 0) &&
                     (Composers == null || Composers.Length == 0) &&
-                    (Album == null || Album.Trim () == "") &&
-                    (Comment == null || Comment.Trim () == "") &&
+                    (Album == null || Album.Trim () == String.Empty) &&
+                    (Comment == null || Comment.Trim () == String.Empty) &&
                     (Genres == null || Genres.Length == 0) &&
                     Year == 0 &&
                     Track == 0 &&
@@ -85,7 +85,7 @@ namespace TagLib
       
       public static void Duplicate (Tag source, Tag target, bool overwrite)
       {
-         if (overwrite || target.Title == null || target.Title.Trim () == "")
+         if (overwrite || target.Title == null || target.Title.Trim () == String.Empty)
             target.Title = source.Title;
          if (overwrite || target.AlbumArtists == null || target.AlbumArtists.Length == 0)
             target.AlbumArtists = source.AlbumArtists;
@@ -93,9 +93,9 @@ namespace TagLib
             target.Performers = source.Performers;
          if (overwrite || target.Composers == null || target.Composers.Length == 0)
             target.Composers = source.Composers;
-         if (overwrite || target.Album == null || target.Album.Trim () == "")
+         if (overwrite || target.Album == null || target.Album.Trim () == String.Empty)
             target.Album = source.Album;
-         if (overwrite || target.Comment == null || target.Comment.Trim () == "")
+         if (overwrite || target.Comment == null || target.Comment.Trim () == String.Empty)
             target.Comment = source.Comment;
          if (overwrite || target.Genres == null || target.Genres.Length == 0)
             target.Genres = source.Genres;

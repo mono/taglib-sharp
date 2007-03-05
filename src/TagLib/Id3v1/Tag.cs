@@ -63,7 +63,7 @@ namespace TagLib.Id3v1
          file = null;
          tag_offset = -1;
          
-         title = artist = album = year = comment = "";
+         title = artist = album = year = comment = String.Empty;
          
          track = 0;
          genre = 255;
@@ -102,7 +102,7 @@ namespace TagLib.Id3v1
       public override string Title
       {
          get {return title;}
-         set {title = value != null ? value.Trim () : "";}
+         set {title = value != null ? value.Trim () : String.Empty;}
       }
       
       public override string [] AlbumArtists
@@ -114,13 +114,13 @@ namespace TagLib.Id3v1
       public override string Album
       {
          get {return album;}
-         set {album = value != null ? value.Trim () : "";}
+         set {album = value != null ? value.Trim () : String.Empty;}
       }
       
       public override string Comment
       {
          get {return comment;}
-         set {comment = value != null ? value.Trim () : "";}
+         set {comment = value != null ? value.Trim () : String.Empty;}
       }
       
       public override string [] Genres
@@ -140,7 +140,7 @@ namespace TagLib.Id3v1
             try {return System.UInt32.Parse (year);}
             catch {return 0;}
          }
-         set {year = value > 0 ? value.ToString () : "";}
+         set {year = value > 0 ? value.ToString () : String.Empty;}
       }
       
       public override uint Track

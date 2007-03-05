@@ -33,12 +33,12 @@ public class ReadFromUri
                 TagLib.File file = TagLib.File.Create(uri);
                 
                 Console.WriteLine("Title:      " +  file.Tag.Title);
-                Console.WriteLine("Artists:    " + (file.Tag.AlbumArtists == null ? "" : System.String.Join ("\n            ", file.Tag.AlbumArtists)));
-                Console.WriteLine("Performers: " + (file.Tag.Performers   == null ? "" : System.String.Join ("\n            ", file.Tag.Performers)));
-                Console.WriteLine("Composers:  " + (file.Tag.Composers    == null ? "" : System.String.Join ("\n            ", file.Tag.Composers)));
+                Console.WriteLine("Artists:    " + (file.Tag.AlbumArtists == null ? String.Empty : System.String.Join ("\n            ", file.Tag.AlbumArtists)));
+                Console.WriteLine("Performers: " + (file.Tag.Performers   == null ? String.Empty : System.String.Join ("\n            ", file.Tag.Performers)));
+                Console.WriteLine("Composers:  " + (file.Tag.Composers    == null ? String.Empty : System.String.Join ("\n            ", file.Tag.Composers)));
                 Console.WriteLine("Album:      " +  file.Tag.Album);
                 Console.WriteLine("Comment:    " +  file.Tag.Comment);
-                Console.WriteLine("Genres:     " + (file.Tag.Genres       == null ? "" : System.String.Join ("\n            ", file.Tag.Genres)));
+                Console.WriteLine("Genres:     " + (file.Tag.Genres       == null ? String.Empty : System.String.Join ("\n            ", file.Tag.Genres)));
                 Console.WriteLine("Year:       " +  file.Tag.Year);
                 Console.WriteLine("Track:      " +  file.Tag.Track);
                 Console.WriteLine("TrackCount: " +  file.Tag.TrackCount);
@@ -61,9 +61,9 @@ public class ReadFromUri
                     Console.WriteLine("   Type:     " + picture.Type);
                 }
                 
-                Console.WriteLine ("");
+                Console.WriteLine (String.Empty);
                 Console.WriteLine ("---------------------------------------");
-                Console.WriteLine ("");
+                Console.WriteLine (String.Empty);
                 
                 songs_read ++;
             }

@@ -41,7 +41,7 @@ namespace TagLib
          string s = "0123456789abcdef";
          foreach (byte b in data)
             System.Console.Write (s.Substring (b / 16, 1) + s.Substring (b % 16, 1) + " ");
-         System.Console.WriteLine ("");
+         System.Console.WriteLine (String.Empty);
       }
       
       private static Dictionary <object, Dictionary <object, DebugTimeData>>
@@ -74,7 +74,7 @@ namespace TagLib
             Console.WriteLine ("    Ojbects: " + pair.Value.time);
             Console.WriteLine ("    Total:   " + pair.Value.occurances);
             Console.WriteLine ("    Average: " + new TimeSpan (pair.Value.time.Ticks / pair.Value.occurances));
-            Console.WriteLine ("");
+            Console.WriteLine (String.Empty);
          }
          debug_times.Remove (o1);
       }

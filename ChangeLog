@@ -1,3 +1,26 @@
+2007-03-04  Brian Nickel  <brian.nickel@gmail.com>
+
+	* src/TagLib/File.cs: We don't use file.file_types. Comment it out to avoid
+	the warning.
+	* src/TagLib/Tag.cs:
+	* src/TagLib/Id3v1/Tag.cs:
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Id3v2/FrameFactory.cs:
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs:
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs:
+	* src/TagLib/Debugger.cs:
+	* src/TagLib/Ape/Tag.cs:
+	* src/TagLib/Asf/Tag.cs:
+	* src/TagLib/Asf/ContentDescriptionObject.cs:
+	* src/TagLib/Mpeg4/AppleTag.cs:
+	* src/TagLib/Ogg/XiphComment.cs:
+	* docs/MonodocNodeConfig.cs:
+	* tests/fixtures/TagLib.CollectionTests/StringListTest.cs:
+	* tests/fixtures/TagLib.CollectionTests/IntListTest.cs:
+	* examples/ReadFromUri.cs: Use string.Empty instead of "".
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs: Support broken COMM frames that
+	don't contain a comment description string.
+
 2007-02-12  Brian Nickel  <brian.nickel@gmail.com>
 
 	* src/TagLib/File.cs: Added support for read sharing in ReadStream. This
