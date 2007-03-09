@@ -39,7 +39,7 @@ namespace TagLib.Id3v2
       private ArrayList      frame_list;
       
       private static ByteVector language = "eng";
-      
+      private static uint render_version = 4;
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
@@ -95,13 +95,15 @@ namespace TagLib.Id3v2
          }
       }
 
-      public ByteVector Render ()
+      public ByteVector Render (uint version)
       {
          // We need to render the "tag data" first so that we have to correct size to
          // render in the tag's header.  The "tag data" -- everything that is included
          // in ID3v2::Header::tagSize() -- includes the extended header, frames and
          // padding, but does not include the tag's header or footer.
-
+         
+         header.MajorVersion = version;
+         
          ByteVector tag_data = new ByteVector ();
 
          // TODO: Render the extended header.
@@ -111,7 +113,7 @@ namespace TagLib.Id3v2
 
          foreach (Frame frame in frame_list)
             if (!frame.Header.TagAlterPreservation)
-               tag_data.Add (frame.Render ());
+               tag_data.Add (frame.Render (version));
 
          // Compute the amount of padding, and append that to tagData.
 
@@ -139,6 +141,11 @@ namespace TagLib.Id3v2
          }
          
          return tag_data;
+      }
+      
+      public ByteVector Render ()
+      {
+         return Render (RenderVersion);
       }
       
       
@@ -495,6 +502,18 @@ namespace TagLib.Id3v2
       {
          get {return language;}
          set {language = (value == null || value.Count < 3) ? "XXX" : value.Mid (0,3);}
+      }
+      
+      public static uint RenderVersion
+      {
+         get {return render_version;}
+         set
+         {
+            if (value < 2 || value > 4)
+               throw new ArgumentException ("Unsupported version");
+            
+            render_version = value;
+         }
       }
       
       

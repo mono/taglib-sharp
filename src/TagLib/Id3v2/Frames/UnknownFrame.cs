@@ -36,10 +36,10 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public UnknownFrame (ByteVector data) : base (data)
+      public UnknownFrame (ByteVector data, uint version) : base (data, version)
       {
          field_data = null;
-         SetData (data, 0);
+         SetData (data, 0, version);
       }
       
       public override string ToString ()
@@ -63,20 +63,20 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
-      protected override void ParseFields (ByteVector data)
+      protected override void ParseFields (ByteVector data, uint version)
       {
          field_data = data;
       }
       
-      protected override ByteVector RenderFields ()
+      protected override ByteVector RenderFields (uint version)
       {
          return field_data;
       }
       
-      protected internal UnknownFrame (ByteVector data, int offset, FrameHeader h) : base (h)
+      protected internal UnknownFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
       {
          field_data = null;
-         ParseFields (FieldData (data, offset));
+         ParseFields (FieldData (data, offset, version), version);
       }
    }
 }

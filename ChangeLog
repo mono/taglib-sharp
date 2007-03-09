@@ -1,3 +1,23 @@
+2007-03-09  Brian Nickel  <brian.nickel@gmail.com>
+
+"I do not regret the things I've done, but those I did not do."
+
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Id3v2/FrameFactory.cs:
+	* src/TagLib/Id3v2/FrameHeader.cs:
+	* src/TagLib/Id3v2/Header.cs:
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:
+	* src/TagLib/Id3v2/Frames/UniqueFileIdentifierFrame.cs:
+	* src/TagLib/Id3v2/Frames/PrivateFrame.cs:
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs:
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs:
+	* src/TagLib/Id3v2/Frames/UnknownFrame.cs:
+	* src/TagLib/Id3v2/Frame.cs: Reworked reading/writing code to better support
+	writing Id3v2.2 and Id2v2.3. This is the first go at it, and there is room
+	for cleanup in the code, but it works, and it works and it works well.
+
 2007-03-08  Brian Nickel  <brian.nickel@gmail.com>
 	* src/TagLib/Mpc/File.cs: Inherit NonContainer.File
 	* src/TagLib/CombinedTag.cs: Add some useful features for NonContainer.*

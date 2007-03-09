@@ -39,7 +39,7 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public GeneralEncapsulatedObjectFrame () : base ("GEOB")
+      public GeneralEncapsulatedObjectFrame () : base ("GEOB", 4)
       {
          text_encoding = StringType.UTF8;
          mime_type   = null;
@@ -48,14 +48,14 @@ namespace TagLib.Id3v2
          data        = null;
       }
       
-      public GeneralEncapsulatedObjectFrame (ByteVector data) : base (data)
+      public GeneralEncapsulatedObjectFrame (ByteVector data, uint version) : base (data, version)
       {
          text_encoding = StringType.UTF8;
          mime_type   = null;
          file_name   = null;
          description = null;
          this.data   = null;
-         SetData (data, 0);
+         SetData (data, 0, version);
       }
       
       public override string ToString ()
@@ -117,7 +117,7 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
-      protected override void ParseFields (ByteVector data)
+      protected override void ParseFields (ByteVector data, uint version)
       {
          if (data.Count < 4)
          {
@@ -155,37 +155,38 @@ namespace TagLib.Id3v2
          this.data = data.Mid (field_start);
       }
 
-      protected override ByteVector RenderFields ()
+      protected override ByteVector RenderFields (uint version)
       {
+         StringType encoding = CorrectEncoding (text_encoding, version);
          ByteVector v = new ByteVector ();
          
-         v.Add ((byte) text_encoding);
+         v.Add ((byte) encoding);
          
          if (MimeType != null)
             v.Add (ByteVector.FromString (MimeType, StringType.Latin1));
          v.Add (TextDelimiter (StringType.Latin1));
          
          if (FileName != null)
-            v.Add (ByteVector.FromString (FileName, text_encoding));
-         v.Add (TextDelimiter (text_encoding));
+            v.Add (ByteVector.FromString (FileName, encoding));
+         v.Add (TextDelimiter (encoding));
          
          if (Description != null)
-            v.Add (ByteVector.FromString (Description, text_encoding));
-         v.Add (TextDelimiter (text_encoding));
+            v.Add (ByteVector.FromString (Description, encoding));
+         v.Add (TextDelimiter (encoding));
          
          v.Add (data);
          
          return v;
       }
 
-      protected internal GeneralEncapsulatedObjectFrame (ByteVector data, int offset, FrameHeader h) : base (h)
+      protected internal GeneralEncapsulatedObjectFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
       {
          text_encoding = StringType.UTF8;
          mime_type   = null;
          file_name   = null;
          description = null;
          this.data   = null;
-         ParseFields (FieldData (data, offset));
+         ParseFields (FieldData (data, offset, version), version);
       }
    }
 }

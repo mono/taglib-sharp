@@ -39,7 +39,7 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public CommentsFrame (StringType encoding) : base ("COMM")
+      public CommentsFrame (StringType encoding) : base ("COMM", 4)
       {
          text_encoding = encoding;
          language = null;
@@ -47,13 +47,13 @@ namespace TagLib.Id3v2
          text = null;
       }
 
-      public CommentsFrame (ByteVector data) : base (data)
+      public CommentsFrame (ByteVector data, uint version) : base (data, version)
       {
          text_encoding = StringType.UTF8;
          language = null;
          description = null;
          text = null;
-         SetData (data, 0);
+         SetData (data, 0, version);
       }
 
 
@@ -107,7 +107,7 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
-      protected override void ParseFields (ByteVector data)
+      protected override void ParseFields (ByteVector data, uint version)
       {
          if (data.Count < 5)
          {
@@ -133,26 +133,27 @@ namespace TagLib.Id3v2
          }
       }
 
-      protected override ByteVector RenderFields ()
+      protected override ByteVector RenderFields (uint version)
       {
+         StringType encoding = CorrectEncoding (TextEncoding, version);
          ByteVector v = new ByteVector ();
 
-         v.Add ((byte) TextEncoding);
+         v.Add ((byte) encoding);
          v.Add (Language);
-         v.Add (ByteVector.FromString (description, TextEncoding));
-         v.Add (TextDelimiter (TextEncoding));
-         v.Add (ByteVector.FromString (text, TextEncoding));
+         v.Add (ByteVector.FromString (description, encoding));
+         v.Add (TextDelimiter (encoding));
+         v.Add (ByteVector.FromString (text, encoding));
 
          return v;
       }
 
-      protected internal CommentsFrame (ByteVector data, int offset, FrameHeader h) : base (h)
+      protected internal CommentsFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
       {
          text_encoding = StringType.UTF8;
          language = null;
          description = null;
          text = null;
-         ParseFields (FieldData (data, offset));
+         ParseFields (FieldData (data, offset, version), version);
       }
    }
 }

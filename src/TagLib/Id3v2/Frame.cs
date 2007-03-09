@@ -35,18 +35,23 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public void SetData (ByteVector data, int offset)
+      public void SetData (ByteVector data, int offset, uint version)
       {
-         Parse (data, offset);
+         Parse (data, offset, version);
       }
       
       public virtual void SetText (string text) {}
       
-      public ByteVector Render ()
+      public ByteVector Render (uint version)
       {
-         ByteVector field_data = RenderFields ();
+         ByteVector field_data = RenderFields (version);
+         
+         // If we don't have any content, don't render anything.
+         if (field_data.Count == 0)
+            return new ByteVector ();
+         
          header.FrameSize = (uint) field_data.Count;
-         ByteVector header_data = header.Render ();
+         ByteVector header_data = header.Render (version);
          header_data.Add (field_data);
 
          return header_data;
@@ -69,9 +74,9 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
-      protected Frame (ByteVector data)
+      protected Frame (ByteVector data, uint version)
       {
-         header = new FrameHeader (data);
+         header = new FrameHeader (data, version);
       }
       
       protected Frame (FrameHeader header)
@@ -85,21 +90,26 @@ namespace TagLib.Id3v2
          set {header = value;}
       }
       
-      protected void Parse (ByteVector data, int offset)
+      protected void Parse (ByteVector data, int offset, uint version)
       {
          if (header != null)
-            header.SetData (data);
+            header.SetData (data, version);
          else
-            header = new FrameHeader (data);
+            header = new FrameHeader (data, version);
          
-         ParseFields (FieldData (data, offset));
+         ParseFields (FieldData (data, offset, version), version);
       }
       
-      protected virtual void ParseFields(ByteVector data) {}
-      protected virtual ByteVector RenderFields () {return new ByteVector ();}
-      protected ByteVector FieldData (ByteVector frame_data, int offset)
+      protected StringType CorrectEncoding (StringType type, uint version)
       {
-         uint header_size = FrameHeader.Size (header.Version);
+         return (version < 4 && type == StringType.UTF8) ? StringType.UTF16 : type;
+      }
+      
+      protected virtual void ParseFields(ByteVector data, uint version) {}
+      protected virtual ByteVector RenderFields (uint version) {return new ByteVector ();}
+      protected ByteVector FieldData (ByteVector frame_data, int offset, uint version)
+      {
+         uint header_size = FrameHeader.Size (version);
 
          uint frame_data_offset = (uint) (header_size + offset);
          uint frame_data_length = Size;

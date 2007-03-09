@@ -37,15 +37,15 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public UniqueFileIdentifierFrame (ByteVector data) : base (data)
+      public UniqueFileIdentifierFrame (ByteVector data, uint version) : base (data, version)
       {
          owner = null;
          identifier = null;
          
-         SetData (data, 0);
+         SetData (data, 0, version);
       }
 
-      public UniqueFileIdentifierFrame (string owner, ByteVector id) : base ("UFID")
+      public UniqueFileIdentifierFrame (string owner, ByteVector id) : base ("UFID", 4)
       {
          this.owner = owner;
          identifier = id;
@@ -71,7 +71,7 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
-      protected override void ParseFields (ByteVector data)
+      protected override void ParseFields (ByteVector data, uint version)
       {
          ByteVectorList fields = ByteVectorList.Split(data, (byte) 0);
 
@@ -82,22 +82,22 @@ namespace TagLib.Id3v2
          identifier = fields [1];
       }
       
-      protected override ByteVector RenderFields ()
+      protected override ByteVector RenderFields (uint version)
       {
          ByteVector data = new ByteVector ();
-
+         
          data.Add (ByteVector.FromString (owner, StringType.Latin1));
          data.Add (TextDelimiter (StringType.Latin1));
          data.Add (identifier);
-
+         
          return data;
       }
       
-      protected internal UniqueFileIdentifierFrame (ByteVector data, int offset, FrameHeader h) : base (h)
+      protected internal UniqueFileIdentifierFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
       {
          owner = null;
          identifier = null;
-         ParseFields (FieldData (data, offset));
+         ParseFields (FieldData (data, offset, version), version);
       }
    }
 }

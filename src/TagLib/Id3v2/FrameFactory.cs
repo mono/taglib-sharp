@@ -20,20 +20,20 @@
  *   USA                                                                   *
  ***************************************************************************/
 
-using System.Collections;
+using System.Collections.Generic;
  
 namespace TagLib.Id3v2
 {
    public class FrameFactory
    {
-      public delegate Frame FrameCreator (ByteVector data, int offset, FrameHeader header);
+      public delegate Frame FrameCreator (ByteVector data, int offset, FrameHeader header, uint version);
 
       //////////////////////////////////////////////////////////////////////////
       // private properties
       //////////////////////////////////////////////////////////////////////////
-      private static StringType default_encoding     = StringType.UTF8;
-      private static bool       use_default_encoding = false;
-      private static ArrayList  frame_creators = new ArrayList ();
+      private static StringType          default_encoding     = StringType.UTF8;
+      private static bool                use_default_encoding = false;
+      private static List<FrameCreator>  frame_creators       = new List<FrameCreator> ();
       
       //////////////////////////////////////////////////////////////////////////
       // public members
@@ -56,9 +56,12 @@ namespace TagLib.Id3v2
          }
          
          // Windows Media Player may create zero byte frames. Just send them
-         // off as unknown.
+         // off as unknown and delete them.
          if (header.FrameSize == 0)
-            return new UnknownFrame (data, offset, header);
+         {
+            header.TagAlterPreservation = true;
+            return new UnknownFrame (data, offset, header, version);
+         }
          
          // TagLib doesn't mess with encrypted frames, so just treat them
          // as unknown frames.
@@ -66,30 +69,30 @@ namespace TagLib.Id3v2
          if (header.Compression)
          {
             Debugger.Debug ("Compressed frames are currently not supported.");
-            return new UnknownFrame(data, offset, header);
+            return new UnknownFrame (data, offset, header, version);
          }
          
          if (header.Encryption)
          {
             Debugger.Debug ("Encrypted frames are currently not supported.");
-            return new UnknownFrame(data, offset, header);
+            return new UnknownFrame (data, offset, header, version);
          }
 
-         if(!UpdateFrame (header))
+         if (!UpdateFrame (header, version))
          {
             header.TagAlterPreservation = true;
-            return new UnknownFrame (data, offset, header);
+            return new UnknownFrame (data, offset, header, version);
          }
          
          foreach (FrameCreator creator in frame_creators)
          {
-            Frame frame = creator (data, offset, header);
+            Frame frame = creator (data, offset, header, version);
             if (frame != null)
                return frame;
          }
          
          
-         // UpdateFrame() might have updated the frame ID.
+         // UpdateFrame () might have updated the frame ID.
 
          frame_id = header.FrameId;
          
@@ -103,16 +106,15 @@ namespace TagLib.Id3v2
          if(frame_id.StartsWith ("T"))
          {
             TextIdentificationFrame f = frame_id != "TXXX"
-            ? new TextIdentificationFrame (data, offset, header)
-            : new UserTextIdentificationFrame (data, offset, header);
+            ? new TextIdentificationFrame (data, offset, header, version)
+            : new UserTextIdentificationFrame (data, offset, header, version);
             
             if(use_default_encoding)
                f.TextEncoding = default_encoding;
             
-            
             if (frame_id == "TCON" && version < 4)
                UpdateGenre (f);
-
+            
             return f;
          }
 
@@ -120,7 +122,7 @@ namespace TagLib.Id3v2
 
          if (frame_id == "COMM")
          {
-            CommentsFrame f = new CommentsFrame (data, offset, header);
+            CommentsFrame f = new CommentsFrame (data, offset, header, version);
             
             if(use_default_encoding)
                f.TextEncoding = default_encoding;
@@ -132,7 +134,7 @@ namespace TagLib.Id3v2
 
          if (frame_id == "APIC")
          {
-            AttachedPictureFrame f = new AttachedPictureFrame (data, offset, header);
+            AttachedPictureFrame f = new AttachedPictureFrame (data, offset, header, version);
             
             if(use_default_encoding)
                f.TextEncoding = default_encoding;
@@ -143,24 +145,24 @@ namespace TagLib.Id3v2
          // Relative Volume Adjustment (frames 4.11)
 
          if (frame_id == "RVA2")
-            return new RelativeVolumeFrame (data, offset, header);
+            return new RelativeVolumeFrame (data, offset, header, version);
 
          // Unique File Identifier (frames 4.1)
 
          if (frame_id == "UFID")
-            return new UniqueFileIdentifierFrame (data, offset, header);
+            return new UniqueFileIdentifierFrame (data, offset, header, version);
 
          // Private (frames 4.27)
 
          if (frame_id == "PRIV")
-            return new PrivateFrame (data, offset, header);
+            return new PrivateFrame (data, offset, header, version);
          
          // General Encapsulated Object (frames 4.15)
          
          if(frame_id == "GEOB")
-            return new GeneralEncapsulatedObjectFrame (data, offset, header);
+            return new GeneralEncapsulatedObjectFrame (data, offset, header, version);
          
-         return new UnknownFrame (data, offset, header);
+         return new UnknownFrame (data, offset, header, version);
       }
 
       public static StringType DefaultTextEncoding
@@ -213,11 +215,11 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       private FrameFactory () {}
       
-      private static bool UpdateFrame (FrameHeader header)
+      private static bool UpdateFrame (FrameHeader header, uint version)
       {
          ByteVector frame_id = header.FrameId;
 
-         switch (header.Version)
+         switch (version)
          {
             case 2: // ID3v2.2
             {

@@ -37,17 +37,17 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public TextIdentificationFrame (ByteVector type, StringType encoding) : base (type)
+      public TextIdentificationFrame (ByteVector type, StringType encoding) : base (type, 4)
       {
          field_list = new StringList ();
          text_encoding = encoding;
       }
 
-      public TextIdentificationFrame (ByteVector data) : base (data)
+      public TextIdentificationFrame (ByteVector data, uint version) : base (data, version)
       {
          field_list = new StringList ();
          text_encoding = StringType.UTF8;
-         SetData (data, 0);
+         SetData (data, 0, version);
       }
 
       public void SetText (StringList l)
@@ -86,37 +86,77 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
-      protected override void ParseFields (ByteVector data)
+      protected override void ParseFields (ByteVector data, uint version)
       {
          // read the string data type (the first byte of the field data)
          text_encoding = (StringType) data [0];
          field_list.Clear ();
-         field_list.Add (data.ToString (text_encoding, 1).Split (new char []{'\0'}));
+         
+         if (version > 3)
+            field_list.Add (data.ToString (text_encoding, 1).Split (new char []{'\0'}));
+         else
+         {
+            if (Header.FrameId == "TCOM" ||
+                Header.FrameId == "TEXT" ||
+                Header.FrameId == "TOLY" ||
+                Header.FrameId == "TOPE" ||
+                Header.FrameId == "TPE1" ||
+                Header.FrameId == "TPE2" ||
+                Header.FrameId == "TPE3" ||
+                Header.FrameId == "TPE4")
+               field_list.Add (data.ToString (text_encoding, 1).Split (new char []{'/'}));
+            else
+               field_list.Add (data.ToString (text_encoding, 1));
+         }
+         
       }
 
-      protected override ByteVector RenderFields ()
+      protected override ByteVector RenderFields (uint version)
       {
-         ByteVector v = new ByteVector ((byte) text_encoding);
-
-         for (int i = 0; i < field_list.Count; i++)
+         StringType encoding = CorrectEncoding (text_encoding, version);
+         ByteVector v = new ByteVector ((byte) encoding);
+         
+         if (version > 3)
          {
-            // Since the field list is null delimited, if this is not the
-            // first element in the list, append the appropriate delimiter
-            // for this encoding.
-            if (i !=0)
-               v.Add (TextDelimiter (text_encoding));
+            for (int i = 0; i < field_list.Count; i++)
+            {
+               // Since the field list is null delimited, if this is not the
+               // first element in the list, append the appropriate delimiter
+               // for this encoding.
+               if (i !=0)
+                  v.Add (TextDelimiter (encoding));
             
-            v.Add (ByteVector.FromString (field_list [i], text_encoding));
+               v.Add (ByteVector.FromString (field_list [i], encoding));
+            }
+         }
+         else
+         {
+            if (this.Header.FrameId == "TCON")
+            {
+               string data = "";
+               foreach (string s in field_list)
+                  try
+                  {
+                     data += "(" + int.Parse (s) + ")";
+                  }
+                  catch
+                  {
+                     data += s;
+                  }
+               v.Add (ByteVector.FromString (data, encoding));
+            }
+            else
+               v.Add (ByteVector.FromString (field_list.ToString ("/"), encoding));
          }
          
          return v;
       }
 
-      protected internal TextIdentificationFrame (ByteVector data, int offset, FrameHeader h) : base (h)
+      protected internal TextIdentificationFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
       {
          field_list = new StringList ();
          text_encoding = StringType.UTF8;
-         ParseFields (FieldData (data, offset));
+         ParseFields (FieldData (data, offset, version), version);
          
          // Bad tags may have one or more nul characters at the end of a string,
          // resulting in empty strings at the end of the FieldList. Strip them
@@ -141,7 +181,7 @@ namespace TagLib.Id3v2
          base.SetText (l);
       }
 
-      public UserTextIdentificationFrame (ByteVector data) : base (data)
+      public UserTextIdentificationFrame (ByteVector data, uint version) : base (data, version)
       {
          CheckFields ();
       }
@@ -225,7 +265,7 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
-      protected internal UserTextIdentificationFrame (ByteVector data, int offset, FrameHeader h) : base (data, offset, h)
+      protected internal UserTextIdentificationFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (data, offset, h, version)
       {
          CheckFields ();
       }

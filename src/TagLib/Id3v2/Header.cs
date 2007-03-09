@@ -83,10 +83,9 @@ namespace TagLib.Id3v2
          // add the file identifier -- "ID3"
          v.Add (FileIdentifier);
 
-         // add the version number -- we always render a 2.4.0 tag regardless of what
-         // the tag originally was.
-         v.Add ((byte)4);
-         v.Add ((byte)0);
+         // add the version number the tag originally was.
+         v.Add ((byte)MajorVersion);
+         v.Add ((byte)RevisionNumber);
          
          // render and add the flags
          byte flags = 0;
@@ -95,10 +94,10 @@ namespace TagLib.Id3v2
          if (ExperimentalIndicator) flags |= 32;
          if (FooterPresent)         flags |= 16;
          v.Add (flags);
-
+         
          // add the size
          v.Add (SynchData.FromUInt (TagSize));
-
+         
          return v;
       }
       
@@ -109,7 +108,24 @@ namespace TagLib.Id3v2
       public uint MajorVersion
       {
          get {return major_version;}
-         set {major_version = value;}
+         set
+         {
+            if (value < 2 || value > 4)
+               throw new ArgumentException ("Version unsupported");
+            
+            if (value < 3)
+            {
+               extended_header        = false;
+               experimental_indicator = false;
+            }
+            
+            if (value < 4)
+            {
+               footer_present         = false;
+            }
+            
+            major_version = value;
+         }
       }
       
       public uint RevisionNumber
@@ -127,19 +143,34 @@ namespace TagLib.Id3v2
       public bool ExtendedHeader
       {
          get {return extended_header;}
-         set {extended_header = value;}
+         set
+         {
+            if (value && major_version < 3)
+               throw new ArgumentException ("Feature only supported in version 2.3+");
+            extended_header = value;
+         }
       }
       
       public bool ExperimentalIndicator
       {
          get {return experimental_indicator;}
-         set {experimental_indicator = value;}
+         set
+         {
+            if (value && major_version < 3)
+               throw new ArgumentException ("Feature only supported in version 2.3+");
+            experimental_indicator = value;
+         }
       }
       
       public bool FooterPresent
       {
          get {return footer_present;}
-         set {footer_present = value;}
+         set
+         {
+            if (value && major_version < 4)
+               throw new ArgumentException ("Feature only supported in version 2.3+");
+            footer_present = value;
+         }
       }
       
       public uint TagSize
@@ -169,40 +200,38 @@ namespace TagLib.Id3v2
          if(data.Count < Size)
             return;
          
-         // do some sanity checking -- even in ID3v2.3.0 and less the tag size is a
-         // synch-safe integer, so all bytes must be less than 128.  If this is not
-         // true then this is an invalid tag.
-         
-         // note that we're doing things a little out of order here -- the size is
-         // later in the bytestream than the version
-         
+         // The first three bytes, data[0..2], are the File Identifier, "ID3". (structure 3.1 "file identifier")
          if (!data.StartsWith (FileIdentifier))
             throw new CorruptFileException ("The header block does not start with the correct File Identifier.");
          
-         ByteVector size_data = data.Mid (6, 4);
-
-         if (size_data.Count != 4)
-            throw new CorruptFileException ("The tag size data is not long enough.");
-         
-         foreach (byte b in size_data)
-            if (b >= 128)
-               throw new CorruptFileException ("One of the bytes in the header was greater than the allowed 128.");
-
-         // The first three bytes, data[0..2], are the File Identifier, "ID3". (structure 3.1 "file identifier")
-
          // Read the version number from the fourth and fifth bytes.
-         major_version = data [3];   // (structure 3.1 "major version")
+         major_version   = data [3]; // (structure 3.1 "major version")
          revision_number = data [4]; // (structure 3.1 "revision number")
 
          // Read the flags, the first four bits of the sixth byte.
          byte flags = data [5];
-
+         
+         // Reality check on flags.
+         if (major_version == 2 && (flags & 127) != 0)
+            throw new CorruptFileException ("Invalid flags set on version 2 tag.");
+         
+         if (major_version == 3 && (flags & 15) != 0)
+            throw new CorruptFileException ("Invalid flags set on version 3 tag.");
+         
+         if (major_version == 4 && (flags &  7) != 0)
+            throw new CorruptFileException ("Invalid flags set on version 4 tag.");
+         
          unsynchronisation      = ((flags >> 7) & 1) == 1; // (structure 3.1.a)
          extended_header        = ((flags >> 6) & 1) == 1; // (structure 3.1.b)
          experimental_indicator = ((flags >> 5) & 1) == 1; // (structure 3.1.c)
          footer_present         = ((flags >> 4) & 1) == 1; // (structure 3.1.d)
-
+         
          // Get the size from the remaining four bytes (read above)
+         ByteVector size_data = data.Mid (6, 4);
+         
+         foreach (byte b in size_data)
+            if (b >= 128)
+               throw new CorruptFileException ("One of the bytes in the header was greater than the allowed 128.");
 
          tag_size = SynchData.ToUInt (size_data); // (structure 3.1 "size")
       }

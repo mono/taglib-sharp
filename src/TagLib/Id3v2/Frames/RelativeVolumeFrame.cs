@@ -51,15 +51,15 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public RelativeVolumeFrame (ByteVector data) : base (data)
+      public RelativeVolumeFrame (ByteVector data, uint version) : base (data, version)
       {
          identification = null;
          channels = new Dictionary<ChannelType,ChannelData> ();
          
-         SetData (data, 0);
+         SetData (data, 0, version);
       }
 
-      public RelativeVolumeFrame (string identification) : base ("RVA2")
+      public RelativeVolumeFrame (string identification) : base ("RVA2", 4)
       {
          this.identification = identification;
          channels = new Dictionary<ChannelType,ChannelData> ();
@@ -146,7 +146,7 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
-      protected override void ParseFields (ByteVector data)
+      protected override void ParseFields (ByteVector data, uint version)
       {
          int pos = data.Find (TextDelimiter (StringType.Latin1));
          if (pos < 0)
@@ -173,9 +173,11 @@ namespace TagLib.Id3v2
          }
       }
       
-      protected override ByteVector RenderFields ()
+      protected override ByteVector RenderFields (uint version)
       {
          ByteVector data = new ByteVector ();
+         if (version < 4)
+            return data;
 
          data.Add (ByteVector.FromString (identification, StringType.Latin1));
          data.Add (TextDelimiter(StringType.Latin1));
@@ -190,12 +192,12 @@ namespace TagLib.Id3v2
          return data;
       }
       
-      protected internal RelativeVolumeFrame (ByteVector data, int offset, FrameHeader h) : base (h)
+      protected internal RelativeVolumeFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
       {
          identification = null;
          channels = new Dictionary<ChannelType,ChannelData> ();
          
-         ParseFields (FieldData (data, offset));
+         ParseFields (FieldData (data, offset, version), version);
       }
       
       protected ulong ParsePeakVolume (ByteVector data)

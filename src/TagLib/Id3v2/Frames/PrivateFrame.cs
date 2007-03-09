@@ -37,7 +37,7 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public PrivateFrame (string owner, ByteVector data) : base ("PRIV")
+      public PrivateFrame (string owner, ByteVector data) : base ("PRIV", 4)
       {
          this.owner = owner;
          this.data = data;
@@ -47,11 +47,11 @@ namespace TagLib.Id3v2
       {
       }
 
-      public PrivateFrame (ByteVector data) : base (data)
+      public PrivateFrame (ByteVector data, uint version) : base (data, version)
       {
          this.owner = null;
          this.data = null;
-         SetData (data, 0);
+         SetData (data, 0, version);
       }
 
       public override string ToString ()
@@ -86,7 +86,7 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
-      protected override void ParseFields (ByteVector data)
+      protected override void ParseFields (ByteVector data, uint version)
       {
          if (data.Count < 1)
          {
@@ -103,22 +103,25 @@ namespace TagLib.Id3v2
          }
       }
 
-      protected override ByteVector RenderFields ()
+      protected override ByteVector RenderFields (uint version)
       {
          ByteVector v = new ByteVector ();
-
-         v.Add (ByteVector.FromString (owner, StringType.Latin1));
-         v.Add (TextDelimiter (StringType.Latin1));
-         v.Add (data);
-
+         
+         if (version > 2)
+         {
+            v.Add (ByteVector.FromString (owner, StringType.Latin1));
+            v.Add (TextDelimiter (StringType.Latin1));
+            v.Add (data);
+         }
+         
          return v;
       }
 
-      protected internal PrivateFrame (ByteVector data, int offset, FrameHeader h) : base (h)
+      protected internal PrivateFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
       {
          this.owner = null;
          this.data = null;
-         ParseFields (FieldData (data, offset));
+         ParseFields (FieldData (data, offset, version), version);
       }
    }
 }

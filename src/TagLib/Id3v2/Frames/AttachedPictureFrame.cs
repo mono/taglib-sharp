@@ -42,7 +42,7 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public AttachedPictureFrame () : base ("APIC")
+      public AttachedPictureFrame () : base ("APIC", 4)
       {
          text_encoding = StringType.UTF8;
          mime_type = null;
@@ -51,7 +51,7 @@ namespace TagLib.Id3v2
          data = null;
       }
       
-      public AttachedPictureFrame (IPicture picture) : base("APIC")
+      public AttachedPictureFrame (IPicture picture) : base("APIC", 4)
       {
          text_encoding = StringType.UTF8;
          mime_type = picture.MimeType;
@@ -60,7 +60,7 @@ namespace TagLib.Id3v2
          data = picture.Data;
       }
 
-      public AttachedPictureFrame (ByteVector data) : base (data)
+      public AttachedPictureFrame (ByteVector data, uint version) : base (data, version)
       {
          text_encoding = StringType.UTF8;
          mime_type = null;
@@ -68,7 +68,7 @@ namespace TagLib.Id3v2
          description = null;
          this.data = null;
          
-         SetData (data, 0);
+         SetData (data, 0, version);
       }
       
       public override string ToString ()
@@ -138,7 +138,7 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
-      protected override void ParseFields (ByteVector data)
+      protected override void ParseFields (ByteVector data, uint version)
       {
          if (data.Count < 5)
          {
@@ -153,7 +153,7 @@ namespace TagLib.Id3v2
          
          int offset;
          
-         if (Header.Version > 2)
+         if (version > 2)
          {
             offset = data.Find (TextDelimiter (StringType.Latin1), pos);
 
@@ -189,22 +189,43 @@ namespace TagLib.Id3v2
          this.data = data.Mid (pos);
       }
       
-      protected override ByteVector RenderFields ()
+      protected override ByteVector RenderFields (uint version)
       {
+         StringType encoding = CorrectEncoding (TextEncoding, version);
          ByteVector data = new ByteVector ();
 
-         data.Add ((byte) TextEncoding);
-         data.Add (ByteVector.FromString (MimeType, TextEncoding));
-         data.Add (TextDelimiter (StringType.Latin1));
+         data.Add ((byte) encoding);
+         
+         if (version == 2)
+         {
+            switch (MimeType)
+            {
+            case "image/png":
+               data.Add ("PNG");
+               break;
+            case "image/jpeg":
+               data.Add ("JPG");
+               break;
+            default:
+               data.Add ("XXX");
+               break;
+            }
+         }
+         else
+         {
+            data.Add (ByteVector.FromString (MimeType, StringType.Latin1));
+            data.Add (TextDelimiter (StringType.Latin1));
+         }
+         
          data.Add ((byte) type);
-         data.Add (ByteVector.FromString (Description, TextEncoding));
-         data.Add (TextDelimiter (TextEncoding));
+         data.Add (ByteVector.FromString (Description, encoding));
+         data.Add (TextDelimiter (encoding));
          data.Add (this.data);
 
          return data;
       }
       
-      protected internal AttachedPictureFrame (ByteVector data, int offset, FrameHeader h) : base (h)
+      protected internal AttachedPictureFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
       {
          text_encoding = StringType.UTF8;
          mime_type = null;
@@ -212,7 +233,7 @@ namespace TagLib.Id3v2
          description = null;
          this.data = null;
          
-         ParseFields (FieldData (data, offset));
+         ParseFields (FieldData (data, offset, version), version);
       }
    }
 }
