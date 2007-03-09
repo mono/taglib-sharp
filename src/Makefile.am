@@ -30,6 +30,8 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Ogg/Vorbis/File.cs                             \
    $(srcdir)/TagLib/Ogg/PageHeader.cs                              \
    $(srcdir)/TagLib/Ogg/File.cs                                    \
+   $(srcdir)/TagLib/Flac/Block.cs                                  \
+   $(srcdir)/TagLib/Flac/BlockHeader.cs                            \
    $(srcdir)/TagLib/Flac/Properties.cs                             \
    $(srcdir)/TagLib/Flac/Picture.cs                                \
    $(srcdir)/TagLib/Flac/File.cs                                   \
@@ -37,6 +39,10 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Mpeg/XingHeader.cs                             \
    $(srcdir)/TagLib/Mpeg/File.cs                                   \
    $(srcdir)/TagLib/Mpeg/Header.cs                                 \
+   $(srcdir)/TagLib/NonContainer/EndTag.cs                         \
+   $(srcdir)/TagLib/NonContainer/File.cs                           \
+   $(srcdir)/TagLib/NonContainer/StartTag.cs                       \
+   $(srcdir)/TagLib/NonContainer/Tag.cs                            \
    $(srcdir)/TagLib/Id3v1/Tag.cs                                   \
    $(srcdir)/TagLib/Id3v1/GenreList.cs                             \
    $(srcdir)/TagLib/Id3v1/StringHandler.cs                         \

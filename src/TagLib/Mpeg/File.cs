@@ -33,131 +33,39 @@ namespace TagLib.Mpeg
    [SupportedMimeType("audio/x-mpeg-3")]
    [SupportedMimeType("audio/mpeg3")]
    [SupportedMimeType("audio/mp3")]
-   public class File : TagLib.File
+   public class File : TagLib.NonContainer.File
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
-      private Id3v2.Tag    id3v2_tag;
-      private Ape.Tag      ape_tag;
-      private Id3v1.Tag    id3v1_tag;
-      private CombinedTag  tag;
-      private Properties   properties;
+      private Header first_header = null;
       
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
-      public File (string file, Properties.ReadStyle properties_style) : base (file)
-      {
-         id3v2_tag  = null;
-         ape_tag    = null;
-         id3v1_tag  = null;
-         tag        = new CombinedTag ();
-         properties = null;
-         
-         try {Mode = AccessMode.Read;}
-         catch {return;}
-         
-         Read (properties_style);
-         
-         Mode = AccessMode.Closed;
-      }
+      public File (string file, AudioProperties.ReadStyle properties_style) : base (file, properties_style)
+      {}
       
       public File (string file) : this (file, Properties.ReadStyle.Average)
-      {
-      }
-
-      public override void Save ()
-      {
-         Mode = AccessMode.Write;
-         long tag_start, tag_end;
-         
-         // Update ID3v2 tag
-         FindId3v2 (out tag_start, out tag_end);
-         if (id3v2_tag == null)
-            RemoveBlock (tag_start, tag_end - tag_start);
-         else
-            Insert (id3v2_tag.Render (), tag_start, tag_end - tag_start);
-         
-         // Update ID3v1 tag
-         FindId3v1 (out tag_start, out tag_end);
-         if (id3v1_tag == null)
-            RemoveBlock (tag_start, tag_end - tag_start);
-         else
-            Insert (id3v1_tag.Render (), tag_start, tag_end - tag_start);
-         
-         // Update Ape tag
-         FindApe (id3v2_tag != null, out tag_start, out tag_end);
-         if (ape_tag == null)
-            RemoveBlock (tag_start, tag_end - tag_start);
-         else
-            Insert (ape_tag.Render (), tag_start, tag_end - tag_start);
-
-         Mode = AccessMode.Closed;
-      }
-
+      {}
+      
       public override TagLib.Tag GetTag (TagTypes type, bool create)
       {
+         Tag t = (Tag as TagLib.NonContainer.Tag).GetTag (type);
+         
+         if (t != null || !create)
+            return t;
+         
          switch (type)
          {
-            case TagTypes.Id3v1:
-            {
-               if (create && id3v1_tag == null)
-               {
-                  id3v1_tag = new Id3v1.Tag ();
-                  TagLib.Tag.Duplicate (tag, id3v1_tag, true);
-                  tag.SetTags (id3v2_tag, ape_tag, id3v1_tag);
-               }
-               
-               return id3v1_tag;
-            }
-            
-            case TagTypes.Id3v2:
-            {
-               if (create && id3v2_tag == null)
-               {
-                  id3v2_tag = new Id3v2.Tag ();
-                  TagLib.Tag.Duplicate (tag, id3v2_tag, true);
-                  tag.SetTags (id3v2_tag, ape_tag, id3v1_tag);
-               }
-               
-               return id3v2_tag;
-            }
-            
-            case TagTypes.Ape:
-            {
-               if (create && ape_tag == null)
-               {
-                  ape_tag = new Ape.Tag ();
-                  TagLib.Tag.Duplicate (tag, ape_tag, true);
-                  tag.SetTags (id3v2_tag, ape_tag, id3v1_tag);
-               }
-               
-               return ape_tag;
-            }
-            
-            default:
-               return null;
+         case TagTypes.Id3v1:
+            return EndTag.AddTag (type, Tag);
+         
+         case TagTypes.Id3v2:
+            return StartTag.AddTag (type, Tag);
+         
+         case TagTypes.Ape:
+            return EndTag.AddTag (type, Tag);
+         
+         default:
+            return null;
          }
       }
 
-      public void Remove (TagTypes types)
-      {
-         if ((types & TagTypes.Id3v1) != 0)
-            id3v1_tag = null;
-
-         if ((types & TagTypes.Id3v2) != 0)
-            id3v2_tag = null;
-
-         if ((types & TagTypes.Ape) != 0)
-            ape_tag = null;
-
-         tag.SetTags (id3v2_tag, ape_tag, id3v1_tag);
-      }
-      
-      
-      
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
@@ -187,137 +95,15 @@ namespace TagLib.Mpeg
          return null;
       }
       
-/*
-      private Header FindLastFrameHeader (long end)
+      protected override void ReadStart (long start, AudioProperties.ReadStyle style)
       {
-         long position = end - 3;
-         Seek (position);
-         ByteVector buffer = ReadBlock (3);
-         position -= BufferSize;
-         
-         while (position >= 0)
-         {
-            Seek (position);
-            buffer.Insert (0, ReadBlock ((int) BufferSize));
-            
-            for (int i = buffer.Count - 4; i >= 0; i--)
-               if (buffer [i] == 0xFF && SecondSynchByte (buffer [i + 1]))
-                  try {return new Header (buffer.Mid (i, 4), position + i);} catch {}
-            
-            position -= BufferSize;
-            buffer = buffer.Mid (0, 3);
-         }
-         
-         return null;
-      }
-*/
-      
-      public override TagLib.Tag Tag {get {return tag;}}
-      
-      public override AudioProperties AudioProperties {get {return properties;}}
-      
-      
-      //////////////////////////////////////////////////////////////////////////
-      // private methods
-      //////////////////////////////////////////////////////////////////////////
-      private void Read (Properties.ReadStyle properties_style)
-      {
-         long start, end;
-         Header first_header = null;
-         
-         // Look for an ID3v2 tag.
-         if (FindId3v2 (out start, out end))
-            id3v2_tag = new Id3v2.Tag (this, start);
-         
-         // If we're reading properties, grab the first one for good measure.
-         if (properties_style != Properties.ReadStyle.None)
-            first_header = FindFirstFrameHeader (start > 2048 ? 0 : end);
-         
-         // Look for an ID3v1 tag.
-         if (FindId3v1 (out start, out end))
-            id3v1_tag = new Id3v1.Tag (this, start);
-
-         // Look for an APE tag.
-         if (FindApe (id3v1_tag != null, out start, out end))
-            ape_tag = new Ape.Tag (this, start);
-         
-         // Set the tags and create Id3v2.
-         tag.SetTags (id3v2_tag, ape_tag, id3v1_tag);
-         GetTag (TagTypes.Id3v2, true);
-         
-         // Now read the properties.
-         if (properties_style != Properties.ReadStyle.None)
-            properties = new Properties (this, first_header, properties_style);
-      }
-
-      private bool FindId3v2 (out long start, out long end)
-      {
-         Seek (0);
-         start = end = 0;
-         
-         long offset = 0;
-         ByteVector buffer;
-         
-         for (buffer = ReadBlock ((int) (BufferSize + Id3v2.Header.Size - 1)); buffer.Count >= Id3v2.Header.Size; buffer.Add (ReadBlock ((int)BufferSize)))
-         {
-            int header_pos = buffer.Find (Id3v2.Header.FileIdentifier);
-            if (header_pos >= 0 && header_pos < BufferSize)
-            {
-               Id3v2.Header header = new Id3v2.Header (buffer.Mid (header_pos, (int)Id3v2.Header.Size));
-               if (header.TagSize != 0)
-               {
-                  start = offset + header_pos;
-                  end = start + header.CompleteTagSize;
-                  return true;
-               }
-            }
-            
-            int sync_position = -1;
-            while ((sync_position = buffer.Find ((byte) 0xFF, sync_position + 1)) >= 0 && sync_position < buffer.Count)
-               if (SecondSynchByte (buffer [sync_position + 1]))
-                  return false;
-            
-            buffer = buffer.Mid ((int)BufferSize);
-            offset += BufferSize;
-         }
-         
-         return false;
-      }
-
-      private bool FindApe (bool has_id3v1, out long start, out long end)
-      {
-         start = end = Length - (has_id3v1 ? 128 : 0);
-         
-         if (end >= 32)
-         {
-            Seek (end - 32);
-            ByteVector data = ReadBlock (32);
-            
-            if (data.StartsWith (Ape.Tag.FileIdentifier))
-            {
-               Ape.Footer footer = new Ape.Footer (data);
-               start = end - footer.CompleteTagSize;
-               return true;
-            }
-         }
-         return false;
+         if (first_header == null && style != AudioProperties.ReadStyle.None)
+            first_header = FindFirstFrameHeader (start);
       }
       
-      private bool FindId3v1 (out long start, out long end)
+      protected override AudioProperties ReadProperties (long start, long end, AudioProperties.ReadStyle style)
       {
-         start = end = Length;
-         
-         if (end >= 128)
-         {
-            Seek (end - 128);
-            start = Tell;
-            
-            if (ReadBlock (3) == Id3v1.Tag.FileIdentifier)
-               return true;
-         }
-         
-         start = end;
-         return false;
+         return new Properties (this, first_header, style);
       }
       
       private bool SecondSynchByte (byte b)

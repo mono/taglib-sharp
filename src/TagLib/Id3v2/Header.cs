@@ -176,22 +176,17 @@ namespace TagLib.Id3v2
          // note that we're doing things a little out of order here -- the size is
          // later in the bytestream than the version
          
+         if (!data.StartsWith (FileIdentifier))
+            throw new CorruptFileException ("The header block does not start with the correct File Identifier.");
+         
          ByteVector size_data = data.Mid (6, 4);
 
          if (size_data.Count != 4)
-         {
-            tag_size = 0;
-            Debugger.Debug ("ID3v2.Header.Parse () - The tag size as read was 0 bytes!");
-            return;
-         }
+            throw new CorruptFileException ("The tag size data is not long enough.");
          
          foreach (byte b in size_data)
             if (b >= 128)
-            {
-               tag_size = 0;
-               Debugger.Debug ("ID3v2.Header.Parse () - One of the size bytes in the id3v2 header was greater than the allowed 128.");
-               return;
-            }
+               throw new CorruptFileException ("One of the bytes in the header was greater than the allowed 128.");
 
          // The first three bytes, data[0..2], are the File Identifier, "ID3". (structure 3.1 "file identifier")
 

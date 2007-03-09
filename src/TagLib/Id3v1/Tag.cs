@@ -48,6 +48,7 @@ namespace TagLib.Id3v1
       // public static fields
       //////////////////////////////////////////////////////////////////////////
       public static readonly ByteVector FileIdentifier = "TAG";
+      public static readonly uint Size = 128;
       
       public static StringHandler DefaultStringHandler
       {
@@ -159,10 +160,10 @@ namespace TagLib.Id3v1
          file.Seek (tag_offset);
          
          // read the tag -- always 128 bytes
-         ByteVector data = file.ReadBlock (128);
+         ByteVector data = file.ReadBlock ((int)Size);
          
          // some initial sanity checking
-         if (data.Count != 128 || !data.StartsWith ("TAG"))
+         if (data.Count != Size || !data.StartsWith ("TAG"))
             throw new CorruptFileException  ("ID3v1 tag is not valid or could "
                                            + " not be read at the specified "
                                            + "offset.");

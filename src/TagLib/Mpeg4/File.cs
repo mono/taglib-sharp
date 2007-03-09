@@ -119,22 +119,5 @@ namespace TagLib.Mpeg4
          // Read the properties.
          properties = new Properties (mvhd_box, sample_entry, properties_style);
       }
-      
-      /*
-      private void ShowAllTags (Box box, string spa)
-      {
-         if (box.GetType () == typeof (AppleDataBox))
-            System.Console.WriteLine (spa + box.BoxType.Mid (box.BoxType [0] == 0xa9 ? 1 : 0).ToString () + " - " + box.ToString () + " - " + ((AppleDataBox)box).Text);
-         else if (box.GetType () == typeof (AppleAdditionalInfoBox))
-            System.Console.WriteLine (spa + box.BoxType.Mid (box.BoxType [0] == 0xa9 ? 1 : 0).ToString () + " - " + box.ToString () + " - " + ((AppleAdditionalInfoBox)box).Text);
-         else
-            System.Console.WriteLine (spa + box.BoxType.Mid (box.BoxType [0] == 0xa9 ? 1 : 0).ToString () + " - " + box.ToString ());
-         
-         foreach (Box child in box.Children)
-         {
-            ShowAllTags (child, spa + " ");
-         }
-      }
-      */
    }
 }

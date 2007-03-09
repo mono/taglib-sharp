@@ -13,7 +13,6 @@
       <Entry build="True" name="ReadFromUri" configuration="Release" />
     </Configuration>
   </Configurations>
-  <DeployTargets />
   <StartMode startupentry="UnitTests" single="True">
     <Execute type="None" entry="taglib-sharp" />
     <Execute type="None" entry="UnitTests" />

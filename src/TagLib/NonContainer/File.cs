@@ -1,0 +1,85 @@
+/***************************************************************************
+    copyright            : (C) 2005 by Brian Nickel
+    email                : brian.nickel@gmail.com
+    based on             : mpegfile.cpp from TagLib
+ ***************************************************************************/
+
+/***************************************************************************
+ *   This library is free software; you can redistribute it and/or modify  *
+ *   it  under the terms of the GNU Lesser General Public License version  *
+ *   2.1 as published by the Free Software Foundation.                     *
+ *                                                                         *
+ *   This library is distributed in the hope that it will be useful, but   *
+ *   WITHOUT ANY WARRANTY; without even the implied warranty of            *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU     *
+ *   Lesser General Public License for more details.                       *
+ *                                                                         *
+ *   You should have received a copy of the GNU Lesser General Public      *
+ *   License along with this library; if not, write to the Free Software   *
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  *
+ *   USA                                                                   *
+ ***************************************************************************/
+
+using System.Collections;
+using System;
+
+namespace TagLib.NonContainer
+{
+   public abstract class File : TagLib.File
+   {
+#region Properties
+      private TagLib.NonContainer.Tag tag;
+      private AudioProperties properties;
+#endregion
+      
+#region Constructors
+      public File (string file, AudioProperties.ReadStyle properties_style) : base (file)
+      {
+         Mode = AccessMode.Read;
+         tag = new Tag (this);
+         
+         // Read the tags and property data at the beginning of the file.
+         long start = tag.ReadStart ();
+         ReadStart (start, properties_style);
+         
+         // Read the tags and property data at the end of the file.
+         long end = tag.ReadEnd ();
+         ReadEnd (end, properties_style);
+         
+         // Read the audio properties.
+         properties = (properties_style != AudioProperties.ReadStyle.None) ?
+            ReadProperties (start, end, properties_style) : null;
+         
+         Mode = AccessMode.Closed;
+      }
+      
+      public File (string file) : this (file, AudioProperties.ReadStyle.Average)
+      {
+      }
+#endregion
+      
+      protected virtual void ReadStart (long start, AudioProperties.ReadStyle style) {}
+      protected virtual void ReadEnd   (long end,   AudioProperties.ReadStyle style) {}
+      protected abstract AudioProperties ReadProperties (long start, long end, AudioProperties.ReadStyle style);
+      
+      public override void Save ()
+      {
+         long start, end;
+         Mode = AccessMode.Write;
+         tag.Write (out start, out end);
+         Mode = AccessMode.Closed;
+      }
+      
+      public void RemoveTags (TagTypes types)
+      {
+         tag.RemoveTags (types);
+      }
+      
+      public override TagLib.Tag Tag {get {return tag;}}
+      
+      public override AudioProperties AudioProperties {get {return properties;}}
+      
+      protected StartTag StartTag {get {return tag.StartTag;}}
+      protected EndTag EndTag {get {return tag.EndTag;}}
+   }
+}

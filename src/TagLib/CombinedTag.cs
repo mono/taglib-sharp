@@ -20,6 +20,8 @@
  *   USA                                                                   *
  ***************************************************************************/
 
+using System.Collections.Generic;
+
 namespace TagLib
 {
    public class CombinedTag : Tag
@@ -27,22 +29,56 @@ namespace TagLib
       //////////////////////////////////////////////////////////////////////////
       // private properties
       //////////////////////////////////////////////////////////////////////////
-      private Tag [] tags;
+      private List<Tag> tags;
       
       
       //////////////////////////////////////////////////////////////////////////
       // public members
       //////////////////////////////////////////////////////////////////////////
-      public CombinedTag (params Tag [] tags) : base ()
+      protected CombinedTag () : base ()
       {
-         this.tags = tags;
+         this.tags = new List<Tag> ();
+      }
+      
+      public CombinedTag (params Tag [] tags) : this ()
+      {
+         SetTags (tags);
       }
 
       public void SetTags (params Tag [] tags)
       {
-         this.tags = tags;
+         this.tags.Clear ();
+         this.tags.AddRange (tags);
       }
-
+      
+      public virtual Tag [] Tags
+      {
+         get
+         {
+            return tags.ToArray ();
+         }
+      }
+      
+      protected void InsertTag (int index, Tag tag)
+      {
+         this.tags.Insert (index, tag);
+      }
+      
+      protected void AddTag (Tag tag)
+      {
+         this.tags.Add (tag);
+      }
+      
+      protected void RemoveTag (Tag tag)
+      {
+         this.tags.Remove (tag);
+      }
+      
+      protected void ClearTags ()
+      {
+         this.tags.Clear ();
+      }
+      
       public override string Title
       {
          get

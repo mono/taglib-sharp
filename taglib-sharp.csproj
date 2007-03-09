@@ -94,6 +94,10 @@
     <Compile Include="src\TagLib\Mpeg\XingHeader.cs" />
     <Compile Include="src\TagLib\Mpc\File.cs" />
     <Compile Include="src\TagLib\Mpc\Properties.cs" />
+    <Compile Include="src\TagLib\NonContainer\EndTag.cs" />
+    <Compile Include="src\TagLib\NonContainer\File.cs" />
+    <Compile Include="src\TagLib\NonContainer\StartTag.cs" />
+    <Compile Include="src\TagLib\NonContainer\Tag.cs" />
     <Compile Include="src\TagLib\Id3v2\ExtendedHeader.cs" />
     <Compile Include="src\TagLib\Id3v2\Footer.cs" />
     <Compile Include="src\TagLib\Id3v2\Frame.cs" />
@@ -113,6 +117,8 @@
     <Compile Include="src\TagLib\Id3v1\GenreList.cs" />
     <Compile Include="src\TagLib\Id3v1\StringHandler.cs" />
     <Compile Include="src\TagLib\Id3v1\Tag.cs" />
+    <Compile Include="src\TagLib\Flac\Block.cs" />
+    <Compile Include="src\TagLib\Flac\BlockHeader.cs" />
     <Compile Include="src\TagLib\Flac\File.cs" />
     <Compile Include="src\TagLib\Flac\Picture.cs" />
     <Compile Include="src\TagLib\Flac\Properties.cs" />

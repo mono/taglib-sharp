@@ -116,10 +116,12 @@ namespace TagLib.Ape
       //////////////////////////////////////////////////////////////////////////
       protected void Parse (ByteVector data)
       {
-         if(data.Count < Size)
+         if (data.Count < Size)
             throw new CorruptFileException ("Provided data is smaller than object size.");
 
          // The first eight bytes, data[0..7], are the File Identifier, "APETAGEX".
+         if (!data.StartsWith (FileIdentifier))
+            throw new CorruptFileException ("Provided data does not start with File Identifier");
 
          // Read the version number
          version = data.Mid (8, 4).ToUInt (false);
@@ -133,11 +135,9 @@ namespace TagLib.Ape
          // Read the flags
 
          uint flags = data.Mid (20, 4).ToUInt (false);
-         
-         header_present = (flags >> 31) == 1;
-         footer_present = (flags >> 30) != 1;
-         is_header = (flags >> 29) == 1;
-
+         header_present = ((flags >> 31) & 1) == 1;
+         footer_present = ((flags >> 30) & 1) != 1;
+         is_header = ((flags >> 29) & 1) == 1;
       }
 
       protected ByteVector Render (bool is_header)
@@ -145,7 +145,6 @@ namespace TagLib.Ape
          ByteVector v = new ByteVector ();
 
          // add the file identifier -- "APETAGEX"
-
          v.Add (FileIdentifier);
 
          // add the version number -- we always render a 2.000 tag regardless of what
@@ -168,7 +167,6 @@ namespace TagLib.Ape
          v.Add (ByteVector.FromUInt (flags, false));
 
          // add the reserved 64bit
-
          v.Add (ByteVector.FromLong (0));
 
          return v;

@@ -1,3 +1,34 @@
+2007-03-08  Brian Nickel  <brian.nickel@gmail.com>
+	* src/TagLib/Mpc/File.cs: Inherit NonContainer.File
+	* src/TagLib/CombinedTag.cs: Add some useful features for NonContainer.*
+	* src/TagLib/Id3v1/Tag.cs: Add Tag.Size instead of repeated hardcoding of
+	128.
+	* src/TagLib/Id3v2/Footer.cs:
+	* src/TagLib/Id3v2/Header.cs: Throw proper CorruptFileExceptions
+	* src/TagLib/Mpeg/File.cs: Inherit NonContainer.File
+	* src/TagLib/WavPack/File.cs: Inherit NonContainer.File
+	* src/TagLib/NonContainer:
+	* src/TagLib/NonContainer/Tag.cs:
+	* src/TagLib/NonContainer/File.cs:
+	* src/TagLib/NonContainer/EndTag.cs:
+	* src/TagLib/NonContainer/StartTag.cs: New generic abstracts for files 
+	that can start/end with an assortment of tags. (FLAC, WV, MPC, MP3)
+	* src/TagLib/Ape/Tag.cs: Read backwards if a footer is found and forwards if
+	a header is found.
+	* src/TagLib/Ape/Footer.cs: FooterPresent and IsHeader were read
+	 incorrectly. Also throw proper exceptions while reading.
+	* src/TagLib/Flac/File.cs: Inherit NonContainer.File
+	* src/TagLib/Flac/BlockHeader.cs:
+	* src/TagLib/Flac/Block.cs: Removed from Flac.File, made public.
+	* src/TagLib/Mpeg4/File.cs: Remove old commented code.
+	* src/Makefile.am:
+	* src/taglib-sharp.csproj:
+	* src/taglib-sharp.mdp:
+	* taglib-sharp.mds:
+	* tests/tests.mdp:
+	* examples/SetPictures.mdp:
+	* examples/ReadFromUri.mdp: Updates.
+
 2007-03-04  Brian Nickel  <brian.nickel@gmail.com>
 
 	* src/TagLib/File.cs: We don't use file.file_types. Comment it out to avoid

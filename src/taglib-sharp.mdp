@@ -13,12 +13,10 @@
       <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="True" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
-  <DeployTargets />
   <Contents>
     <File name="./TagLib/AudioProperties.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/ByteVector.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/ByteVectorList.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/CombinedTag.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Debugger.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/File.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/IntList.cs" subtype="Code" buildaction="Compile" />
@@ -111,6 +109,14 @@
     <File name="./AssemblyInfo-windows.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Flac/Picture.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/NonContainer" subtype="Directory" buildaction="Compile" />
+    <File name="./TagLib/CombinedTag.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/NonContainer/Tag.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/NonContainer/EndTag.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/NonContainer/StartTag.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/NonContainer/File.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Flac/Block.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Flac/BlockHeader.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

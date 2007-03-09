@@ -342,19 +342,22 @@ namespace TagLib.Ape
       protected void Read (File file)
       {
          if (file == null)
-            return;
-            
-         try {file.Mode = File.AccessMode.Read;}
-         catch {return;}
+            throw new ArgumentException ("File object is null.", "file");
          
+         file.Mode = File.AccessMode.Read;
          file.Seek (tag_offset);
          footer.SetData (file.ReadBlock ((int) Footer.Size));
-
+         
          if(footer.TagSize == 0 || footer.TagSize > (uint) file.Length)
-            return;
-
-         file.Seek (tag_offset + Footer.Size - footer.TagSize);
-         Parse (file.ReadBlock ((int) (footer.TagSize - Footer.Size)));
+            throw new CorruptFileException ("Tag size out of bounds.");
+      	
+      	// If we've read a header, we don't have to seek to read the content.
+      	// If we've read a footer, we need to move back to the start of the
+      	// tag.
+      	if (!footer.IsHeader)
+            file.Seek (tag_offset + Footer.Size - footer.TagSize);
+      	
+      	Parse (file.ReadBlock ((int) (footer.TagSize - Footer.Size)));
       }
 
       protected void Parse (ByteVector data)
