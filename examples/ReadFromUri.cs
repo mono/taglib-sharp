@@ -43,7 +43,8 @@ public class ReadFromUri
                 Console.WriteLine("Track:      " +  file.Tag.Track);
                 Console.WriteLine("TrackCount: " +  file.Tag.TrackCount);
                 Console.WriteLine("Disc:       " +  file.Tag.Disc);
-                Console.WriteLine("DiscCount:  " +  file.Tag.DiscCount + "\n");
+                Console.WriteLine("DiscCount:  " +  file.Tag.DiscCount);
+                Console.WriteLine("Lyrics:\n"    +  file.Tag.Lyrics + "\n");
                 
                 Console.WriteLine("Length:     " + file.AudioProperties.Duration);
                 Console.WriteLine("Bitrate:    " + file.AudioProperties.Bitrate);

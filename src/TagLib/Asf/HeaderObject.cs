@@ -70,7 +70,7 @@ namespace TagLib.Asf
          
          output.Insert (0, reserved);
          output.Insert (0, RenderDWord (child_count));
-         return output;
+         return Render (output);
       }
       
       public void AddObject (Object obj)

@@ -254,6 +254,12 @@ namespace TagLib.Asf
             RemoveDescriptors (names [i]);
       }
 		
+      public override string Lyrics
+      {
+         get {return GetDescriptorString ("WM/Lyrics");}
+         set {SetDescriptorString (value, "WM/Lyrics");}
+      }
+      
       public override IPicture [] Pictures
       {
          get

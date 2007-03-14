@@ -8,13 +8,6 @@ namespace TagLib.Mpeg4
       #endregion
       
       #region Constructors
-      /*protected FullBox (BoxHeader header, ByteVector data, int data_offset, Box handler) : base (header, data, data_offset, handler)
-      {
-         ByteVector header_data = data.Mid (base.DataOffset, 4);
-         version = header_data [0];
-         flags   = header_data.Mid (1, 3).ToUInt ();
-      }*/
-      
       protected FullBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
       {
          file.Seek (base.DataOffset);
@@ -29,7 +22,7 @@ namespace TagLib.Mpeg4
          this.flags = flags;
       }
       
-      protected FullBox (ByteVector type, byte version, uint flags) : base (new BoxHeader (type))
+      protected FullBox (ByteVector type, byte version, uint flags) : this (new BoxHeader (type), version, flags)
       {}
       #endregion
       
@@ -37,7 +30,6 @@ namespace TagLib.Mpeg4
       protected override ByteVector Render (ByteVector data)
       {
          ByteVector output = new ByteVector ((byte) version);
-         
          output.Add (ByteVector.FromUInt (flags).Mid (1,3));
          output.Add (data);
          

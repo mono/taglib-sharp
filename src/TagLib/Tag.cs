@@ -38,9 +38,10 @@ namespace TagLib
       public virtual uint      TrackCount      {get {return 0;}    set {}}
       public virtual uint      Disc            {get {return 0;}    set {}}
       public virtual uint      DiscCount       {get {return 0;}    set {}}
+      public virtual string    Lyrics          {get {return null;} set {}}
       
       [Obsolete("This property is obsolete; use the AlbumArtists property instead.")]
-      public virtual string [] Artists {get {return AlbumArtists;} set {AlbumArtists = value;}}
+      public string [] Artists {get {return AlbumArtists;} set {AlbumArtists = value;}}
       
       public virtual IPicture [] Pictures { get { return new Picture [] { }; } set { } }
       

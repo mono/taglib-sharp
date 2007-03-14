@@ -117,6 +117,18 @@ namespace TagLib.Id3v2
             
             return f;
          }
+         
+         // Unsynchronized Lyrics (frames 4.8)
+
+         if (frame_id == "USLT")
+         {
+            UnsynchronisedLyricsFrame f = new UnsynchronisedLyricsFrame (data, offset, header, version);
+            
+            if(use_default_encoding)
+               f.TextEncoding = default_encoding;
+            
+            return f;
+         }
 
          // Comments (frames 4.10)
 

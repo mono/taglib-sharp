@@ -37,7 +37,7 @@ namespace TagLib.Mpeg4
       public    virtual ByteVector BoxType      {get {return header.BoxType;}}
       public    virtual int        Size         {get {return (int)header.TotalBoxSize;}}
       protected         int        DataSize     {get {return (int)(header.DataSize + data_offset - DataOffset);}}
-      protected virtual long        DataOffset   {get {return data_offset;}}
+      protected virtual long       DataOffset   {get {return data_offset;}}
       protected         BoxHeader  Header       {get {return header;}}
       
       public virtual ByteVector Data  {get {return null;} set {}}
@@ -83,7 +83,7 @@ namespace TagLib.Mpeg4
          bool free_found = false;
          ByteVector output = new ByteVector ();
          
-         if (Children.Count != 0)
+         if (Children != null && Children.Count != 0)
             foreach (Box box in Children)
                if (box.GetType () == typeof (IsoFreeSpaceBox))
                   free_found = true;
@@ -113,6 +113,18 @@ namespace TagLib.Mpeg4
          output.Insert (0, data);
          output.Insert (0, header.Render ());
          return output;
+      }
+      
+      internal void DumpTree (string start)
+      {
+         if (BoxType == BoxTypes.Data)
+            System.Console.WriteLine (start + BoxType.ToString () + " " + (this as AppleDataBox).Text);
+         else
+            System.Console.WriteLine (start + BoxType.ToString ());
+         
+         if (Children != null)
+            foreach (Box child in Children)
+               child.DumpTree (start + "   ");
       }
    }
 }

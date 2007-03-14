@@ -1,4 +1,30 @@
 2007-03-13  Brian Nickel  <brian.nickel@gmail.com>
+	
+	Lyrics support! Fixed write support in MPEG-4 and ASF.
+	
+	* src/TagLib/Tag.cs:
+	* src/TagLib/CombinedTag.cs:
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Id3v2/FrameFactory.cs:
+	* src/TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs:
+	* src/TagLib/Ape/Tag.cs:
+	* src/TagLib/Asf/Tag.cs:
+	* src/TagLib/Mpeg4/Boxes/FullBox.cs:
+	* src/TagLib/Mpeg4/AppleTag.cs:
+	* src/TagLib/Mpeg4/BoxTypes.cs:
+	* src/TagLib/Mpeg4/Box.cs:
+	* src/TagLib/Ogg/XiphComment.cs: Lyrics support. Special thanks to Patrick
+	Laplante.
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
+	* src/TagLib/ByteVector.cs: Fix up UTF16 handling.
+	* src/TagLib/Asf/HeaderObject.cs: Fix writing. Wasn't writing header GUID!
+	* src/Makefile.am:
+	* src/taglib-sharp.mdp:
+	* taglib-sharp.csproj: Update project files.
+	* examples/BatchSet.cs:
+	* examples/ReadFromUri.cs: Support lyrics.
+
+2007-03-13  Brian Nickel  <brian.nickel@gmail.com>
 
 	Performance enhancement for MPEG-4 files. Stole an idea from Entagged#.
 	

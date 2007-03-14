@@ -396,6 +396,21 @@ namespace TagLib.Ogg
          }
       }
       
+      public override string Lyrics
+      {
+         get
+         {
+            StringList l = GetField ("LYRICS");
+            
+            return (l != null && l.Count != 0) ? l [0] : null;
+         }
+         set
+         {
+            AddField ("LYRICS", value);
+         }
+      }
+      
+
       
       //////////////////////////////////////////////////////////////////////////
       // protected methods

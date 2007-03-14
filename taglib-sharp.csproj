@@ -113,6 +113,7 @@
     <Compile Include="src\TagLib\Id3v2\Frames\RelativeVolumeFrame.cs" />
     <Compile Include="src\TagLib\Id3v2\Frames\TextIdentificationFrame.cs" />
     <Compile Include="src\TagLib\Id3v2\Frames\UniqueFileIdentifierFrame.cs" />
+    <Compile Include="src\TagLib\Id3v2\Frames\UnsynchronisedLyricsFrame.cs" />
     <Compile Include="src\TagLib\Id3v1\GenreList.cs" />
     <Compile Include="src\TagLib\Id3v1\StringHandler.cs" />
     <Compile Include="src\TagLib\Id3v1\Tag.cs" />

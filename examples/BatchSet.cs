@@ -71,10 +71,13 @@ public class BatchSet
         					file.Tag.Album = tags [key];
         					break;
         				case "artists":
-        					file.Tag.Artists = tags [key].Split (new char [] {';'});
+        					file.Tag.AlbumArtists = tags [key].Split (new char [] {';'});
         					break;
         				case "comment":
         					file.Tag.Comment = tags [key];
+        					break;
+        				case "lyrics":
+        					file.Tag.Lyrics = tags [key];
         					break;
         				case "composers":
         					file.Tag.Composers = tags [key].Split (new char [] {';'});

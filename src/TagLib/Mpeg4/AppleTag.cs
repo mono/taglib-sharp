@@ -465,6 +465,18 @@ namespace TagLib.Mpeg4
          }
       }
       
+      public override string Lyrics
+      {
+         get
+         {
+            AppleDataBox [] boxes = DataBoxes (BoxTypes.Lyr);
+            return boxes.Length == 0 ? null : boxes [0].Text;
+         }
+         set
+         {
+            SetText (BoxTypes.Lyr, value);
+         }
+      }
  
       public override IPicture [] Pictures
       {

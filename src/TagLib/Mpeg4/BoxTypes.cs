@@ -17,6 +17,7 @@ namespace TagLib.Mpeg4
 	   public static readonly ByteVector Gen  = FixId ("gen");
 	   public static readonly ByteVector Gnre = "gnre";
 	   public static readonly ByteVector Hdlr = "hdlr";
+	   public static readonly ByteVector Lyr  = FixId ("lyr");
 	   public static readonly ByteVector Mdia = "mdia";
 	   public static readonly ByteVector Meta = "meta";
 	   public static readonly ByteVector Mean = "mean";

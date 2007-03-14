@@ -451,7 +451,7 @@ namespace TagLib
             string s = StringTypeToEncoding(type, bom).GetString(Data, offset, Count - offset);
             
             if(s.Length != 0 && (s[0] == 0xfffe || s[0] == 0xfeff)) { // UTF16 BOM
-                return s.Substring(1);
+                return s.Substring (1);
             }
             
             return s;
@@ -467,6 +467,26 @@ namespace TagLib
             return ToString(StringType.UTF8);
         }
         
+        public string[] ToStrings (StringType type, int offset)
+        {
+            return ToStrings (type, offset, 0);
+        }
+
+        public string[] ToStrings (StringType type, int offset, int count)
+        {
+            string[] split = count <= 0 ? ToString (type, offset).Split ('\0') :
+                ToString (type, offset).Split (new char[] {'\0'}, count);
+            
+            for (int i = 0; i < split.Length; i++)
+            {
+                string s = split [i];
+                if (s.Length != 0 && (s[0] == 0xfffe || s[0] == 0xfeff))
+                { // UTF16 BOM
+                    split[i] = s.Substring (1);
+                }
+            }
+            return split;
+        }
         #endregion
         
         #region Operators
@@ -589,25 +609,20 @@ namespace TagLib
 
         public static ByteVector FromString(string s, StringType type, int length)
         {
-            if(s == null || s.Length == 0) {
-                return new ByteVector();
-            }
-
-            if(s.Length > length) {
-                s = s.Substring(0, length);
-            }
+            ByteVector data = new ByteVector ();
             
-            byte [] data = StringTypeToEncoding(type, null).GetBytes(s);
-
-            if(type != StringType.UTF16) {
-                return new ByteVector(data);
-            }
+            if (type == StringType.UTF16)
+                data.Add (new byte [] {0xff, 0xfe});
             
-            byte [] ordered_data = new byte[data.Length + 2];
-            ordered_data[0] = 0xff;
-            ordered_data[1] = 0xfe;
-            data.CopyTo(ordered_data, 2);
-            return new ByteVector(ordered_data);
+            if (s == null || s.Length == 0)
+                return data;
+            
+            if (s.Length > length)
+                s = s.Substring (0, length);
+            
+            data.Add (StringTypeToEncoding (type, null).GetBytes (s));
+            
+            return data;
         }
 
         public static ByteVector FromString(string s, StringType type)

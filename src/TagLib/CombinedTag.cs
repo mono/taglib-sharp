@@ -295,6 +295,24 @@ namespace TagLib
          }
       }
       
+      public override string Lyrics
+      {
+         get
+         {
+            string output = null;
+            foreach (Tag tag in tags)
+               if (tag != null && output == null)
+                  output = tag.Lyrics;
+            return output;
+         }
+         set
+         {
+            foreach (Tag tag in tags)
+               if (tag != null)
+                  tag.Lyrics = value;
+         }
+      }
+
       public override IPicture [] Pictures {
          get {
             foreach(Tag tag in tags) {

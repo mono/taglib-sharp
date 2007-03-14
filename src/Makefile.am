@@ -54,6 +54,7 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Id3v2/Frames/TextIdentificationFrame.cs        \
    $(srcdir)/TagLib/Id3v2/Frames/AttachedPictureFrame.cs           \
    $(srcdir)/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs \
+   $(srcdir)/TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs      \
    $(srcdir)/TagLib/Id3v2/FrameFactory.cs                          \
    $(srcdir)/TagLib/Id3v2/Frame.cs                                 \
    $(srcdir)/TagLib/Id3v2/Tag.cs                                   \

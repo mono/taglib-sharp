@@ -331,6 +331,19 @@ namespace TagLib.Ape
          }
       }
       
+      public override string Lyrics
+      {
+         get
+         {
+            Item item = GetItem ("LYRICS");
+            return item != null ? item.ToString () : null;
+         }
+         set
+         {
+            AddValue ("LYRICS", value, true);
+         }
+      }
+      
       public override bool IsEmpty {get {return items.Count == 0;}}
       
       public Footer Footer {get {return footer;}}

@@ -496,6 +496,78 @@ namespace TagLib.Id3v2
          }
       }
       
+      
+      public override string Lyrics
+      {
+         get
+         {
+            // SEE Comment property for explanation.
+            Frame [] frames = GetFrames ("USLT");
+            
+            foreach (UnsynchronisedLyricsFrame f in frames)
+               if (f.Description == String.Empty && f.Language == Language)
+                  return f.ToString ();
+            
+            foreach (UnsynchronisedLyricsFrame f in frames)
+               if (f.Language == Language)
+                  return f.ToString ();
+            
+            foreach (UnsynchronisedLyricsFrame f in frames)
+               if (f.Description == String.Empty)
+                  return f.ToString ();
+            
+            foreach (UnsynchronisedLyricsFrame f in frames)
+               return f.ToString ();
+            
+            return null;
+         }
+         set
+         {
+            if (value == null || value == string.Empty)
+            {
+               RemoveFrames ("USLT");
+               return;
+            }
+            
+            // See above.
+            Frame [] frames = GetFrames ("USLT");
+            
+            foreach (UnsynchronisedLyricsFrame f in frames)
+               if (f.Description == String.Empty && f.Language == Language)
+               {
+                  f.SetText (value);
+                  return;
+               }
+            
+            foreach (UnsynchronisedLyricsFrame f in frames)
+               if (f.Language == Language)
+               {
+                  f.SetText (value);
+                  return;
+               }
+            
+            foreach (UnsynchronisedLyricsFrame f in frames)
+               if (f.Description == String.Empty)
+               {
+                  f.SetText (value);
+                  return;
+               }
+            
+            foreach (UnsynchronisedLyricsFrame f in frames)
+            {
+               f.SetText (value);
+               return;
+            }
+            
+            // There were absolutely no lyrics frames. Let's add one in our
+            // language.
+            UnsynchronisedLyricsFrame frame = new UnsynchronisedLyricsFrame (FrameFactory.DefaultTextEncoding);
+            frame.Language = Language;
+            frame.SetText (value);
+            AddFrame (frame);
+         }
+      }
+      
       public override bool IsEmpty {get {return frame_list.Count == 0;}}
 
       public Header         Header         {get {return header;}}
