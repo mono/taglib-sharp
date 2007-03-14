@@ -1,5 +1,5 @@
 <Type Name="FrameFactory+FrameCreator" FullName="TagLib.Id3v2.FrameFactory+FrameCreator">
-  <TypeSignature Language="C#" Value="public delegate TagLib.Id3v2.Frame FrameFactory.FrameCreator(ByteVector data, FrameHeader header);" />
+  <TypeSignature Language="C#" Value="public delegate TagLib.Id3v2.Frame FrameFactory.FrameCreator(ByteVector data, int offset, FrameHeader header, uint version);" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.1.0.0</AssemblyVersion>
@@ -9,14 +9,18 @@
   </Base>
   <Parameters>
     <Parameter Name="data" Type="TagLib.ByteVector" />
+    <Parameter Name="offset" Type="System.Int32" />
     <Parameter Name="header" Type="TagLib.Id3v2.FrameHeader" />
+    <Parameter Name="version" Type="System.UInt32" />
   </Parameters>
   <ReturnValue>
     <ReturnType>TagLib.Id3v2.Frame</ReturnType>
   </ReturnValue>
   <Docs>
     <param name="data">A <see cref="T:TagLib.ByteVector" /> containing the (non-header) data stored in the frame.</param>
+    <param name="offset">To be added.</param>
     <param name="header">To be added.</param>
+    <param name="version">To be added.</param>
     <summary>This delegate allows third parties to handle frames outside of the standard scope of TagLib#. These functions can be added to the frame factory with <see cref="M:TagLib.Id3v2.FrameFactory.AddFrameCreator(TagLib.Id3v2.FrameFactory+FrameCreator)" />.</summary>
     <returns>A <see cref="TagLib.Id3v2.Frame" /> based on the arguments is the FrameCreator supports it, otherwise null.</returns>
     <remarks>

@@ -29,7 +29,7 @@
       <Parameters><Parameter Name="value" Type="System.UInt32" /></Parameters>
       <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
-  </Members>
+  <Member MemberName="ResynchByteVector"><MemberSignature Language="C#" Value="public static TagLib.ByteVector ResynchByteVector (TagLib.ByteVector data);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue><Parameters><Parameter Name="data" Type="TagLib.ByteVector" /></Parameters><Docs><param name="data">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="UnsynchByteVector"><MemberSignature Language="C#" Value="public static TagLib.ByteVector UnsynchByteVector (TagLib.ByteVector data);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue><Parameters><Parameter Name="data" Type="TagLib.ByteVector" /></Parameters><Docs><param name="data">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member></Members>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>

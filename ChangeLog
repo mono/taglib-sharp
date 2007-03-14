@@ -1,3 +1,7 @@
+2007-03-14  Brian Nickel  <brian.nickel@gmail.com>
+
+	* docs/en/*: Synced docs.
+
 2007-03-13  Brian Nickel  <brian.nickel@gmail.com>
 	
 	Lyrics support! Fixed write support in MPEG-4 and ASF.

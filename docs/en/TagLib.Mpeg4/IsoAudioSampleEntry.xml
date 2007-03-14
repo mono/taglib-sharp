@@ -9,12 +9,7 @@
   </Base>
   <Interfaces />
   <Members>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public IsoAudioSampleEntry (TagLib.Mpeg4.BoxHeader header, TagLib.Mpeg4.Box parent);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" /><Parameter Name="parent" Type="TagLib.Mpeg4.Box" /></Parameters>
-      <Docs><param name="header">To be added.</param><param name="parent">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member>
+    
     <Member MemberName="ChannelCount">
       <MemberSignature Language="C#" Value="public ushort ChannelCount { get; };" />
       <MemberType>Property</MemberType>
@@ -45,7 +40,7 @@
       <ReturnValue><ReturnType>System.UInt64</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
-  </Members>
+  <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public IsoAudioSampleEntry (TagLib.Mpeg4.BoxHeader header, TagLib.Mpeg4.File file, TagLib.Mpeg4.Box handler);" /><MemberType>Constructor</MemberType><Parameters><Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" /><Parameter Name="file" Type="TagLib.Mpeg4.File" /><Parameter Name="handler" Type="TagLib.Mpeg4.Box" /></Parameters><Docs><param name="header">To be added.</param><param name="file">To be added.</param><param name="handler">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="ChannelCount"><MemberSignature Language="C#" Value="public ushort ChannelCount { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="DataOffset"><MemberSignature Language="C#" Value="protected override long DataOffset { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="SampleRate"><MemberSignature Language="C#" Value="public uint SampleRate { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="SampleSize"><MemberSignature Language="C#" Value="public ushort SampleSize { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member></Members>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>

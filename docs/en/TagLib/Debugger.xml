@@ -29,7 +29,7 @@
       <Parameters><Parameter Name="data" Type="TagLib.ByteVector" /></Parameters>
       <Docs><param name="data">A <see cref="T:TagLib.ByteVector" /> whose contents are to be dumped into the standard output as hex.</param><summary>This method prints hex values for the bytes in a <see cref="T:TagLib.ByteVector" /> to the console output.</summary><remarks /></Docs>
     </Member>
-  </Members>
+  <Member MemberName="AddDebugTime"><MemberSignature Language="C#" Value="public static void AddDebugTime (object o1, object o2, System.DateTime start);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="o1" Type="System.Object" /><Parameter Name="o2" Type="System.Object" /><Parameter Name="start" Type="System.DateTime" /></Parameters><Docs><param name="o1">To be added.</param><param name="o2">To be added.</param><param name="start">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="DumpDebugTime"><MemberSignature Language="C#" Value="public static void DumpDebugTime (object o1);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="o1" Type="System.Object" /></Parameters><Docs><param name="o1">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member></Members>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>

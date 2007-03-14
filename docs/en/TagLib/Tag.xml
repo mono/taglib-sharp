@@ -29,7 +29,7 @@
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="Artists">
-      <MemberSignature Language="C#" Value="public virtual string[] Artists { set; get; };" />
+      <MemberSignature Language="C#" Value="public string[] Artists { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String[]</ReturnType></ReturnValue>
       <Docs><summary>Gets and sets the list of artists who created the song.</summary><value>A <see cref="T:System.String" />[] containing a list of the artists associated with the song.</value><remarks>This field should contain band names such as "The Who", "Cake", or "Black Sabbath". Performer names should be stored in <see cref="P:TagLib.Tag.Performers" />.</remarks></Docs>
@@ -154,7 +154,7 @@
       <ReturnValue><ReturnType>TagLib.IPicture[]</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
-  <Member MemberName="AlbumArtists"><MemberSignature Language="C#" Value="public virtual string[] AlbumArtists { set; get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String[]</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member></Members>
+  <Member MemberName="AlbumArtists"><MemberSignature Language="C#" Value="public virtual string[] AlbumArtists { set; get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String[]</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Lyrics"><MemberSignature Language="C#" Value="public virtual string Lyrics { set; get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member></Members>
   <Docs>
     <summary>
       <see cref="T:TagLib.Tag" /> provides access to the most common metadata contained within a music file. Subclasses provide access to their specific features.</summary>

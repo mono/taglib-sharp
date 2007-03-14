@@ -9,7 +9,7 @@
           <AttributeName>System.Reflection.AssemblyCompany("")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyCopyright("Copyright (c) 2006 Brian Nickel")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyCopyright("Copyright (c) 2006-2007 Brian Nickel")</AttributeName>
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyDescription("A library for reading and writing audio metatags.")</AttributeName>
@@ -50,7 +50,6 @@
       <Type Name="SupportedMimeType" />
       <Type Name="UnsupportedFormatException" />
       <Type Name="IPicture" />
-      <Type Name="ReadOnlyException" />
       <Type Name="Picture" />
       <Type Name="PictureType" />
       <Type Name="ListBase`1" DisplayName="ListBase&lt;T&gt;" />
@@ -83,6 +82,8 @@
       <Type Name="File" />
       <Type Name="Picture" />
       <Type Name="BlockType" />
+      <Type Name="Block" />
+      <Type Name="BlockHeader" />
     </Namespace>
     <Namespace Name="TagLib.Mpeg">
       <Type Name="Properties" />
@@ -117,11 +118,11 @@
       <Type Name="ChannelType" />
       <Type Name="FrameFactory+FrameCreator" />
       <Type Name="GeneralEncapsulatedObjectFrame" />
+      <Type Name="UnsynchronisedLyricsFrame" />
     </Namespace>
     <Namespace Name="TagLib.Mpeg4">
       <Type Name="Properties" />
       <Type Name="Box" />
-      <Type Name="IsoMediaInformationBox" />
       <Type Name="IsoFreeSpaceBox" />
       <Type Name="UnknownBox" />
       <Type Name="IsoMediaBox" />
@@ -148,6 +149,10 @@
       <Type Name="File" />
       <Type Name="IsoChunkOffsetBox" />
       <Type Name="IsoChunkLargeOffsetBox" />
+      <Type Name="BoxFactory" />
+      <Type Name="BoxList" />
+      <Type Name="BoxTypes" />
+      <Type Name="FileParser" />
     </Namespace>
     <Namespace Name="TagLib.WavPack">
       <Type Name="File" />
@@ -168,6 +173,12 @@
       <Type Name="PaddingObject" />
       <Type Name="ContentDescriptor" />
       <Type Name="DataType" />
+    </Namespace>
+    <Namespace Name="TagLib.NonContainer">
+      <Type Name="File" />
+      <Type Name="EndTag" />
+      <Type Name="StartTag" />
+      <Type Name="Tag" />
     </Namespace>
   </Types>
   <Title>taglib-sharp</Title>

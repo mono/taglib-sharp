@@ -1,11 +1,11 @@
 <Type Name="File" FullName="TagLib.Flac.File">
-  <TypeSignature Language="C#" Value="public class File : TagLib.File" />
+  <TypeSignature Language="C#" Value="public class File : TagLib.NonContainer.File" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>TagLib.File</BaseTypeName>
+    <BaseTypeName>TagLib.NonContainer.File</BaseTypeName>
   </Base>
   <Interfaces />
   <Members>

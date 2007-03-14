@@ -1,11 +1,11 @@
 <Type Name="File" FullName="TagLib.WavPack.File">
-  <TypeSignature Language="C#" Value="public class File : TagLib.File" />
+  <TypeSignature Language="C#" Value="public class File : TagLib.NonContainer.File" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>TagLib.File</BaseTypeName>
+    <BaseTypeName>TagLib.NonContainer.File</BaseTypeName>
   </Base>
   <Interfaces />
   <Members>
@@ -21,13 +21,7 @@
       <Parameters><Parameter Name="file" Type="System.String" /></Parameters>
       <Docs><param name="file">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
-    <Member MemberName="Remove">
-      <MemberSignature Language="C#" Value="public void Remove (TagLib.TagTypes types);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="types" Type="TagLib.TagTypes" /></Parameters>
-      <Docs><param name="types">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member>
+    
     <Member MemberName="Remove">
       <MemberSignature Language="C#" Value="public void Remove ();" />
       <MemberType>Method</MemberType>

@@ -21,7 +21,7 @@
       <Parameters><Parameter Name="file" Type="System.String" /><Parameter Name="properties_style" Type="TagLib.AudioProperties+ReadStyle" /></Parameters>
       <Docs><param name="file">To be added.</param><param name="properties_style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
-  <Member MemberName="Timer"><MemberSignature Language="C#" Value="public TagLib.LapTimer Timer;" /><MemberType>Field</MemberType><ReturnValue><ReturnType>TagLib.LapTimer</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member></Members>
+  </Members>
   <Docs>
     <summary>This class is a subclass of <see cref="T:TagLib.File" /> and provides read and write tag access for MPEG-4 audio files.</summary>
     <remarks>

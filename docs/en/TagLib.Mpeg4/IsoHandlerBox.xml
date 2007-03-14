@@ -9,12 +9,7 @@
   </Base>
   <Interfaces />
   <Members>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public IsoHandlerBox (TagLib.Mpeg4.BoxHeader header, TagLib.Mpeg4.Box parent);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" /><Parameter Name="parent" Type="TagLib.Mpeg4.Box" /></Parameters>
-      <Docs><param name="header">To be added.</param><param name="parent">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member>
+    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public IsoHandlerBox (TagLib.ByteVector handler_type, string name, TagLib.Mpeg4.Box parent);" />
       <MemberType>Constructor</MemberType>
@@ -45,7 +40,7 @@
       <ReturnValue><ReturnType>System.UInt64</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
-  </Members>
+  <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public IsoHandlerBox (TagLib.ByteVector handler_type, string name);" /><MemberType>Constructor</MemberType><Parameters><Parameter Name="handler_type" Type="TagLib.ByteVector" /><Parameter Name="name" Type="System.String" /></Parameters><Docs><param name="handler_type">To be added.</param><param name="name">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName=".ctor"><MemberSignature Language="C#" Value="public IsoHandlerBox (TagLib.Mpeg4.BoxHeader header, TagLib.Mpeg4.File file, TagLib.Mpeg4.Box handler);" /><MemberType>Constructor</MemberType><Parameters><Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" /><Parameter Name="file" Type="TagLib.Mpeg4.File" /><Parameter Name="handler" Type="TagLib.Mpeg4.Box" /></Parameters><Docs><param name="header">To be added.</param><param name="file">To be added.</param><param name="handler">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="HandlerType"><MemberSignature Language="C#" Value="public TagLib.ByteVector HandlerType { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Name"><MemberSignature Language="C#" Value="public string Name { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member></Members>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>
