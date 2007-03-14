@@ -2,44 +2,38 @@ namespace TagLib.Mpeg4
 {
    public abstract class FullBox : Box
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
+      #region Private Properties
       private byte version;
       private uint flags;
+      #endregion
       
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
-      public FullBox (BoxHeader header, Box parent) : base (header, parent)
+      #region Constructors
+      /*protected FullBox (BoxHeader header, ByteVector data, int data_offset, Box handler) : base (header, data, data_offset, handler)
       {
-         // First 4 bytes contain version and flag data.
-         ByteVector data = InternalData.Mid (0, 4);
-         version = data [0];
-         flags   = data.Mid (1, 3).ToUInt ();
+         ByteVector header_data = data.Mid (base.DataOffset, 4);
+         version = header_data [0];
+         flags   = header_data.Mid (1, 3).ToUInt ();
+      }*/
+      
+      protected FullBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
+      {
+         file.Seek (base.DataOffset);
+         ByteVector header_data = file.ReadBlock (4);
+         version = header_data [0];
+         flags   = header_data.Mid (1, 3).ToUInt ();
       }
       
-      // We can create our own box.
-      public FullBox (ByteVector type, uint flags, Box parent) : base (new BoxHeader (type), parent)
+      protected FullBox (BoxHeader header, byte version, uint flags) : base (header)
       {
-         version = 0;
+         this.version = version;
          this.flags = flags;
       }
       
-      public FullBox (ByteVector type, uint flags) : this (type, flags, null)
-      {
-      }
+      protected FullBox (ByteVector type, byte version, uint flags) : base (new BoxHeader (type))
+      {}
+      #endregion
       
-      public FullBox (ByteVector type, Box parent) : this (type, 0, parent)
-      {
-      }
-      
-      public FullBox (ByteVector type) : this (type, 0)
-      {
-      }
-      
-      // Render this box with the extra data at the beginning.
+      #region Protected Methods
       protected override ByteVector Render (ByteVector data)
       {
          ByteVector output = new ByteVector ((byte) version);
@@ -49,16 +43,12 @@ namespace TagLib.Mpeg4
          
          return base.Render (output);
       }
+      #endregion
       
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
+      #region Public Properties
       public uint Version {get {return version;} set {version = (byte)value;}}
       public uint Flags   {get {return flags;}   set {flags = value;}}
-      
-      // Offset for those foru bytes.
-      protected override long DataPosition     {get {return base.DataPosition + 4;}}
-      protected override ulong DataSize        {get {return base.DataSize - 4;}}
+      protected override long DataOffset     {get {return base.DataOffset + 4;}}
+      #endregion
    }
 }

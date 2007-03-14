@@ -2,34 +2,23 @@ namespace TagLib.Mpeg4
 {
    public class IsoHandlerBox : FullBox
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
       private ByteVector handler_type;
       private string name;
       
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
-      public IsoHandlerBox (BoxHeader header, Box parent) : base (header, parent)
+      public IsoHandlerBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
       {
-         long end = File.Find ((byte) 0, base.DataPosition + 20);
-         File.Seek (base.DataPosition + 4);
-         ByteVector data = File.ReadBlock ((int)(end - base.DataPosition - 4));
-
-         handler_type = data.Mid (0, 4);
-         name = data.Mid (16).ToString ();
+         file.Seek (DataOffset + 4);
+         ByteVector box_data = file.ReadBlock (DataSize - 4);
+         handler_type = box_data.Mid (0, 4);
+         name = box_data.Mid (16, box_data.Find ((byte) 0, 16) - 16).ToString ();
       }
       
-      // We can make our own handler.
-      public IsoHandlerBox (ByteVector handler_type, string name, Box parent) : base ("hdlr", 0, parent)
+      public IsoHandlerBox (ByteVector handler_type, string name) : base ("hdlr", 0, 0)
       {
          this.handler_type = handler_type.Mid (0,4);
          this.name = name;
       }
       
-      // Render everything.
       public override ByteVector Render ()
       {
          ByteVector output = new ByteVector (4);
@@ -40,19 +29,7 @@ namespace TagLib.Mpeg4
          return Render (output);
       }
       
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
       public ByteVector HandlerType {get {return handler_type;}}
-      
-      public string Name {get {return name;}}
-      
-      // This box has no readable data.
-      public override ByteVector Data
-      {
-         get {return null;}
-         set {}
-      }
+      public string     Name        {get {return name;}}
    }
 }

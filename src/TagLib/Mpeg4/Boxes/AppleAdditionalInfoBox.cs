@@ -2,30 +2,36 @@ namespace TagLib.Mpeg4
 {
    public class AppleAdditionalInfoBox : FullBox
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
+      #region Private Properties
       private string text;
+      private ByteVector data;
+      #endregion
       
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
-      public AppleAdditionalInfoBox (BoxHeader header, Box parent) : base (header, parent)
+      #region Constructors
+      /*public AppleAdditionalInfoBox (BoxHeader header, ByteVector data, int data_offset, Box handler) : base (header, data, data_offset, handler)
       {
-         // The box content is a text string.
+         Data = LoadData (data);
+         text = Data.ToString (StringType.Latin1);
+      }*/
+      public AppleAdditionalInfoBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
+      {
+         Data = LoadData (file);
          text = Data.ToString (StringType.Latin1);
       }
+      #endregion
       
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
+      #region Public Properties
       public string Text
       {
          // When we set the value, store it as a the data too.
          get {return text;}
          set {text = value; Data = ByteVector.FromString (text, StringType.Latin1);}
       }
+      
+      public override ByteVector Data
+      {
+         get {return data;} set {data = value;}
+      }
+      #endregion
    }
 }

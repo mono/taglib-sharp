@@ -1,3 +1,53 @@
+2007-03-13  Brian Nickel  <brian.nickel@gmail.com>
+
+	Performance enhancement for MPEG-4 files. Stole an idea from Entagged#.
+	
+	* src/TagLib/Mpeg4/FileParser.cs: ADDED
+	* src/TagLib/Mpeg4/BoxTypes.cs: ADDED
+	* src/TagLib/Mpeg4/BoxFactory.cs: ADDED
+	* src/TagLib/Mpeg4/BoxList.cs: ADDED
+	* src/TagLib/Mpeg4/Box.cs: ADDED
+	* src/TagLib/Mpeg4/Boxes/FullBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoMovieHeaderBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoSampleTableBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoChunkLargeOffsetBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoSampleEntry.cs:
+	* src/TagLib/Mpeg4/Boxes/AppleAdditionalInfoBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoFreeSpaceBox.cs:
+	* src/TagLib/Mpeg4/Boxes/AppleItemListBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoUserDataBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoHandlerBox.cs:
+	* src/TagLib/Mpeg4/Boxes/AppleElementaryStreamDescriptor.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoChunkOffsetBox.cs:
+	* src/TagLib/Mpeg4/Boxes/AppleDataBox.cs:
+	* src/TagLib/Mpeg4/Boxes/AppleAnnotationBox.cs:
+	* src/TagLib/Mpeg4/Boxes/UnknownBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoSampleDescriptionBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoMetaBox.cs:
+	* src/TagLib/Mpeg4/Properties.cs:
+	* src/TagLib/Mpeg4/AppleTag.cs:
+	* src/TagLib/Mpeg4/File.cs:
+	* src/TagLib/Mpeg4/BoxHeader.cs: Adapted to new parser.
+	* src/TagLib/Mpeg4/Boxes/IsoTrackBox.cs: DELETED
+	* src/TagLib/Mpeg4/Boxes/Box.cs: DELETED
+	* src/TagLib/Mpeg4/Boxes/FileBox.cs: DELETED
+	* src/TagLib/Mpeg4/Boxes/IsoMovieBox.cs: DELETED
+	* src/TagLib/Mpeg4/Boxes/IsoMediaBox.cs: DELETED
+	* src/TagLib/Mpeg4/Boxes/IsoMediaInformationBox.cs: DELETED
+	
+	* src/TagLib/File.cs: Make ReadBlock make a a little more sense.
+	* src/TagLib/Id3v2/Tag.cs: Support tag-wide unsynchronization.
+	* src/TagLib/Id3v2/SynchData.cs: Add support for unsynching a bytevector.
+	* src/TagLib/Id3v2/FrameHeader.cs: We don't actually support frame tags.
+	Don't pretend that we do.
+	* src/TagLib/Debugger.cs: Fix typo and crasher in code timer.
+	* src/TagLib/ByteVector.cs: Make Mid a little faster.
+	* src/TagLib/NonContainer/EndTag.cs:
+	* src/TagLib/NonContainer/StartTag.cs: End tags should be at least version 4
+	* src/Makefile.am:
+	* src/taglib-sharp.mdp:
+	* taglib-sharp.csproj: Update for new files.
+
 2007-03-09  Brian Nickel  <brian.nickel@gmail.com>
 	* configure.ac: Fixed version information.
 

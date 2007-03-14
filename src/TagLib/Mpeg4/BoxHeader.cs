@@ -1,177 +1,145 @@
+using System;
+
 namespace TagLib.Mpeg4
 {
    public class BoxHeader
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
-      private File       file;
-      private long       position;
-      
+      #region Private Properties
       private ByteVector box_type;
       private ByteVector extended_type;
-      private ulong      large_size;
-      private uint       size;
+      private long       box_size;
+      private uint       header_size;
+      private long       position;
+      #endregion
       
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
-      
-      // Create a new header and read its info from the file.
-      public BoxHeader (File file, long position)
+      #region Constructors
+      private BoxHeader ()
       {
-         this.file      = file;
-         this.position  = position;
-         box_type       = null;
-         extended_type  = null;
-         large_size     = 0;
-         size           = 0;
+         box_type      = null;
+         extended_type = null;
+         box_size      = 0;
+         header_size   = 0;
+         position      = -1;
+      }
+      
+      public BoxHeader (TagLib.File file, long position) : this ()
+      {
+         this.position = position;
+         file.Seek (position);
+         Parse (file.ReadBlock (32), 0);
+      }
+      
+      public BoxHeader (ByteVector data, int offset) : this ()
+      {
+         Parse (data, offset);
+      }
+      
+      public BoxHeader (ByteVector type) : this (type, null)
+      {}
+      
+      public BoxHeader (ByteVector type, ByteVector extended_type) : this ()
+      {
+         box_type = type;
+         if (type.Count != 4)
+            throw new ArgumentException ("Box type must be 4 bytes in length.", "type");
+         box_size = header_size = 8;
          
-         Read ();
+         if (type != "uuid")
+         {
+            if (extended_type != null)
+               throw new ArgumentException ("Extended type only permitted for 'uuid'.", "extended_type");
+         }
+         else
+         {
+            if (extended_type.Count != 16)
+               throw new ArgumentException ("Extended type must be 16 bytes in length.", "extended_type");
+            
+            this.extended_type = extended_type;
+            box_size = header_size = 24;
+         }
       }
+      #endregion
       
-      // Create a new header with the provided box type.
-      public BoxHeader (ByteVector type)
+      #region Public Methods
+      public long Overwrite (File file, long size_change)
       {
-         this.file      = null;
-         this.position  = -1;
-         box_type       = type;
-         extended_type  = null;
-         large_size     = 0;
-         size           = 0;
+         if (position < 0)
+            throw new Exception ("Cannot overwrite headers created from ByteVectors.");
+         
+         long old_header_size = HeaderSize;
+         DataSize += size_change;
+         file.Insert (Render (), position, old_header_size);
+         return size_change + HeaderSize - old_header_size;
       }
       
-      // Render the box header and try to keep the size the same.
       public ByteVector Render ()
       {
-         // The size is zero because the box header was created not read.
-         // Increase the sizes to account for this.
-         if (size == 0)
+         // Enlarge for size if necessary.
+         if ((header_size == 8 || header_size == 24) && box_size > uint.MaxValue)
          {
-            size = (uint) (extended_type != null ? 24 : 8);
-            large_size += size;
+            header_size += 8;
+            box_size += 8;
          }
-         
-         // Enlarge for large size if necessary. If large size is in use, the
-         // header will be 16 or 32 big as opposed to 8 or 24.
-         if ((size == 8 || size == 24) && large_size > System.UInt32.MaxValue)
-         {
-            size += 8;
-            large_size += 8;
-         }
-         
          
          // Add the box size and type to the output.
-         ByteVector output = ByteVector.FromUInt ((size == 8 || size == 24) ? (uint) large_size : 1);
+         ByteVector output = ByteVector.FromUInt ((header_size == 8 || header_size == 24) ? (uint) box_size : 1);
          output.Add (box_type);
          
          // If the box size is 16 or 32, we must have more a large header to
          // append.
-         if (size == 16 || size == 32)
-            output.Add (ByteVector.FromLong ((long) large_size));
+         if (header_size == 16 || header_size == 32)
+            output.Add (ByteVector.FromLong (box_size));
          
          // The only reason for such a big size is an extended type. Extend!!!
-         if (size >= 24)
-            output.Add ((extended_type != null) ? extended_type.Mid (0, 16) : new ByteVector (16));
+         if (header_size >= 24)
+            output.Add (extended_type);
          
          return output;
       }
+      #endregion
       
-      // Get header information from the file.
-      private void Read ()
+      #region Private Methods
+      private void Parse (ByteVector data, int offset)
       {
-         // How much can we actually read?
-         long space_available = file.Length - position;
+         if (data.Count < 8 + offset)
+            throw new CorruptFileException ("Not enough data in box header.");
          
-         // The size has to be at least 8.
-         size = 8;
-         
-         // If we can't read that much, return.
-         if (space_available < size)
-            return;
-         
-         // Get into position.
-         file.Seek (position);
-         
-         ByteVector data = file.ReadBlock (8);
-         
-         // Read the size and type of the block.
-         large_size = data.Mid (0, 4).ToUInt ();
-         box_type = data.Mid (4, 4);
-         
-         // If the size is zero, the block includes the rest of the file.
-         if (large_size == 0)
-            large_size = (ulong) space_available;
-
-         
-         int extra_data_size = (large_size == 1 ? 8 : 0) + (box_type == "uuid" ? 16 : 0);
-
-         if (extra_data_size == 0)
-            return;
-         
-         size += (uint) extra_data_size;
-
-         // If we don't have room, we're lost. Abort.
-         if (space_available < size)
-         {
-            large_size = 0;
-            return;
-         }
-
-         data = file.ReadBlock (extra_data_size);
-         int offset = 0;
+         header_size = 8;
+         box_size = data.Mid (offset, 4).ToUInt ();
+         box_type = data.Mid (offset + 4, 4);
          
          // If the size is 1, that just tells us we have a massive ULONG size
          // waiting for us in the next 8 bytes.
-         if (large_size == 1)
+         if (box_size == 1)
          {
-            // This file is huge. 4GB+ I don't think we can even read it.
-            large_size = (ulong) data.Mid (0, 8).ToLong ();
+            if (data.Count < 8 + offset)
+               throw new CorruptFileException ("Not enough data in box header.");
+            
+            header_size += 8;
+            box_size = data.Mid (offset, 8).ToLong ();
             offset += 8;
          }
          
          // UUID has a special header with 16 extra bytes.
-         if (box_type == "uuid")
+         if (box_type == BoxTypes.Uuid)
          {
-            // Load the extended type.
+            if (data.Count < 16 + offset)
+               throw new CorruptFileException ("Not enough data in box header.");
+            
+            header_size += 16;
             extended_type = data.Mid (offset, 16);
          }
       }
+      #endregion
       
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
-      
-      // The file the data is loaded from.
-      public File File               {get {return file;}}
-      
-      // If data was read, then the size is non-zero. If the size is non-zero,
-      // the header is valid. p-> q -> r.
-      public bool  IsValid           {get {return large_size != 0;}}
-      
-      // the box's type.
+      #region Public Properties
       public ByteVector BoxType      {get {return box_type;}}
-      
-      // The extended type (for UUID only)
       public ByteVector ExtendedType {get {return extended_type;}}
-
-      // The total size of the box.
-      public ulong BoxSize           {get {return large_size;}}
-      
-      // The size of the header.
-      public uint  HeaderSize        {get {return size;}}
-      
-      // The size of the data.
-      public ulong DataSize          {get {return large_size - size;} set {large_size = value + size;}}
-      
-      // The position of the box.
-      public long Position           {get {return position;}}
-      
-      // The position of the data.
-      public long DataPosition       {get {return position + size;}}
-      
-      // the position of the next box.
-      public long NextBoxPosition    {get {return (long) (position + (long) large_size);}}
-      
+      public long       HeaderSize   {get {return header_size;}}
+      public long       DataSize     {get {return box_size - header_size;} set {box_size = value + header_size;}}
+      public long       DataOffset   {get {return header_size;}}
+      public long       TotalBoxSize {get {return box_size;}}
+      public long       Position     {get {return position;}}
+      #endregion
    }
 }

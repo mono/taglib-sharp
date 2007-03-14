@@ -128,18 +128,28 @@ namespace TagLib.Id3v2
          case 3:
             data.Add (ConvertId (frame_id, version));
             data.Add (ByteVector.FromUInt (frame_size));
+            data.Add ((byte) 0);
+            data.Add ((byte) 0);
             
-            data.Add ((byte) ((flags [0] << 1) & 0xE0));
+            // TODO: MAKE IT SO WE CAN ACTUALLY RENDER THIS STUFF.
+            /*
+            data.Add ((byte)  ((flags [0] << 1) & 0xE0));
             data.Add ((byte) (((flags [1] << 4) & 0x80) |
                               ((flags [1] << 4) & 0x40) |
                               ((flags [1] >> 1) & 0x20)));
-            
+             */
             return data;
             
          case 4:
             data.Add (frame_id.Mid (0, 4));
             data.Add (SynchData.FromUInt (frame_size));
+            data.Add ((byte) 0);
+            data.Add ((byte) 0);
+            
+            // TODO: MAKE IT SO WE CAN ACTUALLY RENDER THIS STUFF.
+            /*
             data.Add (flags);
+             */
             return data;
             
          default:

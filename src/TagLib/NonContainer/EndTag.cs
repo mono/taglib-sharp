@@ -33,7 +33,7 @@ namespace TagLib.NonContainer
             if (t is TagLib.Ape.Tag)
                data.Add ((t as TagLib.Ape.Tag).Render ());
             else if (t is TagLib.Id3v2.Tag)
-               data.Add ((t as TagLib.Id3v2.Tag).Render ());
+               data.Add ((t as TagLib.Id3v2.Tag).Render (true));
          }
          
          return data;

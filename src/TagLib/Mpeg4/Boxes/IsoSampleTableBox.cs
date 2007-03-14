@@ -2,25 +2,13 @@ namespace TagLib.Mpeg4
 {
    public class IsoSampleTableBox : Box
    {
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
-      public IsoSampleTableBox (BoxHeader header, Box parent) : base (header, parent)
+      private BoxList children;
+      
+      public IsoSampleTableBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
       {
+         children = LoadChildren (file);
       }
       
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
-      
-      // This box has children, and no readable data.
-      public override bool  HasChildren       {get {return true;}}
-      
-      public override ByteVector Data
-      {
-         get {return null;}
-         set {}
-      }
+      public override BoxList Children {get {return children;}}
    }
 }

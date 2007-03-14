@@ -59,11 +59,11 @@ namespace TagLib.Mpeg4
          get
          {
             // If we don't have an stream descriptor, we don't know what's what.
-            if (sample_entry == null || sample_entry.FindChild ("esds") == null)
+            if (sample_entry == null || sample_entry.Children.GetRecursively ("esds") == null)
                return 0;
             
             // Return from the elementary stream descriptor.
-            return (int) ((AppleElementaryStreamDescriptor) sample_entry.FindChild ("esds")).AverageBitrate;
+            return (int) ((AppleElementaryStreamDescriptor) sample_entry.Children.GetRecursively ("esds")).AverageBitrate;
          }
       }
       

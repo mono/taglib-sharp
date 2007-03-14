@@ -110,11 +110,14 @@ namespace TagLib.Id3v2
          header.ExtendedHeader = false;
 
          // Loop through the frames rendering them and adding them to the tagData.
-
          foreach (Frame frame in frame_list)
             if (!frame.Header.TagAlterPreservation)
                tag_data.Add (frame.Render (version));
-
+         
+         // Add unsyncronization bytes if necessary.
+         if (header.Unsynchronisation)
+            tag_data = SynchData.UnsynchByteVector (tag_data);
+         
          // Compute the amount of padding, and append that to tagData.
 
          uint padding_size = 0;
@@ -143,9 +146,14 @@ namespace TagLib.Id3v2
          return tag_data;
       }
       
-      public ByteVector Render ()
+      public ByteVector Render (bool end_tag)
       {
-         return Render (RenderVersion);
+         // End tags need a header.
+         if (end_tag)
+            header.FooterPresent = true;
+         
+         // Make sure footers are rendered properly.
+         return Render ((end_tag && RenderVersion < 4) ? 4 : RenderVersion);
       }
       
       
@@ -542,11 +550,13 @@ namespace TagLib.Id3v2
       
       protected void Parse (ByteVector data)
       {
+         if (header.Unsynchronisation)
+            data = SynchData.ResynchByteVector (data);
+         
          int frame_data_position = 0;
          int frame_data_length = data.Count;
 
          // check for extended header
-
          if (header.ExtendedHeader)
          {
             if (ExtendedHeader == null)

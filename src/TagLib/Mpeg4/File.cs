@@ -1,3 +1,5 @@
+using System;
+
 namespace TagLib.Mpeg4
 {
    [SupportedMimeType("taglib/m4a", "m4a")]
@@ -42,7 +44,7 @@ namespace TagLib.Mpeg4
       // Save. This work is done in the AppleTag.
       public override void Save () 
       {
-        tag.Save();
+         tag.Save (this);
       }
       
       // Get the Apple Tag.
@@ -51,7 +53,7 @@ namespace TagLib.Mpeg4
          if (type == TagTypes.Apple)
          {
             if (tag == null && create)
-               tag = new AppleTag (this);
+               tag = new AppleTag (null);
             
             return tag;
          }
@@ -62,59 +64,25 @@ namespace TagLib.Mpeg4
       // Read the file.
       private void Read (AudioProperties.ReadStyle properties_style)
       {
-         // Create a dummie outer box, as perscribed by the specs.
-         FileBox file_box = new FileBox (this);
-      
-         // Find the movie box and item list. If the movie box doen't exist, an
-         // exception will be thrown on the next call, but if there is no movie 
-         // box, the file can't possibly be valid.
-         IsoMovieBox moov_box = file_box.FindChildDeep ("moov") as IsoMovieBox;
-         if(moov_box == null) {
-            throw new CorruptFileException();
-         }
+         FileParser parser = new FileParser (this);
          
-         AppleItemListBox ilst_box = moov_box.FindChildDeep ("ilst") as AppleItemListBox;
-         // If we have a ItemListBox, deparent it.
-         if (ilst_box != null)
-            ilst_box.RemoveFromParent ();
+         if (properties_style == Properties.ReadStyle.None)
+            parser.ParseTag ();
+         else
+            parser.ParseTagAndProperties ();
          
-         // Create the tag.
-         tag = new AppleTag (ilst_box, this);
+         tag = new AppleTag (parser.UserDataBox);
          
          // If we're not reading properties, we're done.
-         if(properties_style == Properties.ReadStyle.None)
+         if (properties_style == Properties.ReadStyle.None)
             return;
          
          // Get the movie header box.
-         IsoMovieHeaderBox   mvhd_box = moov_box.FindChildDeep ("mvhd") as IsoMovieHeaderBox;
-         IsoAudioSampleEntry sample_entry = null;
+         IsoMovieHeaderBox mvhd_box = parser.MovieHeaderBox;
+         if(mvhd_box == null)
+            throw new CorruptFileException ("mvhd box not found.");
          
-         if(mvhd_box == null) {
-            throw new CorruptFileException();
-         }
-         
-         // Find a TrackBox with a sound Handler.
-         foreach (Box box in moov_box.Children)
-            if (box.BoxType == "trak")
-            {
-               // If the handler isn't sound, it could be metadata or video or
-               // any number of other things.
-               IsoHandlerBox hdlr_box = (IsoHandlerBox) box.FindChildDeep ("hdlr");
-               if (hdlr_box == null || hdlr_box.HandlerType != "soun")
-                  continue;
-               
-               // This track SHOULD contain at least one sample entry.
-               sample_entry = (IsoAudioSampleEntry) box.FindChildDeep (typeof (IsoAudioSampleEntry));
-               break;
-            }
-         
-         // If we have a MovieHeaderBox, deparent it.
-         if (mvhd_box != null)
-            mvhd_box.RemoveFromParent ();
-         
-         // If we have a SampleEntry, deparent it.
-         if (sample_entry != null)
-            sample_entry.RemoveFromParent ();
+         IsoAudioSampleEntry sample_entry = parser.AudioSampleEntry;
          
          // Read the properties.
          properties = new Properties (mvhd_box, sample_entry, properties_style);

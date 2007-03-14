@@ -89,12 +89,11 @@ namespace TagLib
          
          Mode = AccessMode.Read;
          
-         if (length > buffer_size && (long) length > Length)
-            length = (int) Length;
+         if (length > buffer_size && (long) length > (Length - Tell))
+            length = (int) (Length - Tell);
          
          byte [] buffer = new byte [length];
          int count = file_stream.Read (buffer, 0, length);
-         
          return new ByteVector (buffer, count);
       }
 
@@ -297,8 +296,7 @@ namespace TagLib
 
       public void Insert (ByteVector data, long start, long replace)
       {
-         try {Mode = AccessMode.Write;}
-         catch {return;}
+         Mode = AccessMode.Write;
          
          if (data.Count == replace)
          {
@@ -601,7 +599,6 @@ namespace TagLib
             return new LocalFileAbstraction (path);
          }
       }
-      
       
       //////////////////////////////////////////////////////////////////////////
       // IFileAbstraction interface

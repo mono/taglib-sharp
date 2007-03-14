@@ -176,17 +176,17 @@ namespace TagLib
 
         public ByteVector Mid(int index, int length)
         {
+            if (length <= 0)
+                return new ByteVector ();
+            
             if(length == Int32.MaxValue || index + length > Count) {
                 length = Count - index;
             }
-
-            ByteVector vector = new ByteVector(length);
             
-            for(int i = 0; i < length; i ++) {
-                vector[i] = this[i + index];
-            }
-            
-            return vector;
+            byte [] data = new byte [length];
+           
+            this.data.CopyTo (index, data, 0, length);
+            return data;
         }
 
         public ByteVector Mid(int index)

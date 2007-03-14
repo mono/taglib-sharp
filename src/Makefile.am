@@ -62,12 +62,17 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Id3v2/SynchData.cs                             \
    $(srcdir)/TagLib/Id3v2/Header.cs                                \
    $(srcdir)/TagLib/Id3v2/Footer.cs                                \
+   $(srcdir)/TagLib/Mpeg4/AppleTag.cs                              \
+   $(srcdir)/TagLib/Mpeg4/Box.cs                                   \
+   $(srcdir)/TagLib/Mpeg4/BoxFactory.cs                            \
+   $(srcdir)/TagLib/Mpeg4/BoxHeader.cs                             \
+   $(srcdir)/TagLib/Mpeg4/BoxList.cs                               \
+   $(srcdir)/TagLib/Mpeg4/BoxTypes.cs                              \
+   $(srcdir)/TagLib/Mpeg4/File.cs                                  \
+   $(srcdir)/TagLib/Mpeg4/FileParser.cs                            \
    $(srcdir)/TagLib/Mpeg4/Properties.cs                            \
-   $(srcdir)/TagLib/Mpeg4/Boxes/Box.cs                             \
-   $(srcdir)/TagLib/Mpeg4/Boxes/IsoMediaInformationBox.cs          \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoFreeSpaceBox.cs                 \
    $(srcdir)/TagLib/Mpeg4/Boxes/UnknownBox.cs                      \
-   $(srcdir)/TagLib/Mpeg4/Boxes/IsoMediaBox.cs                     \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoUserDataBox.cs                  \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoChunkOffsetBox.cs               \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoChunkLargeOffsetBox.cs          \
@@ -76,19 +81,13 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoSampleTableBox.cs               \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoSampleEntry.cs                  \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoMetaBox.cs                      \
-   $(srcdir)/TagLib/Mpeg4/Boxes/IsoMovieBox.cs                     \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoSampleDescriptionBox.cs         \
    $(srcdir)/TagLib/Mpeg4/Boxes/AppleAdditionalInfoBox.cs          \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoHandlerBox.cs                   \
-   $(srcdir)/TagLib/Mpeg4/Boxes/IsoTrackBox.cs                     \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoMovieHeaderBox.cs               \
    $(srcdir)/TagLib/Mpeg4/Boxes/FullBox.cs                         \
-   $(srcdir)/TagLib/Mpeg4/Boxes/FileBox.cs                         \
    $(srcdir)/TagLib/Mpeg4/Boxes/AppleElementaryStreamDescriptor.cs \
    $(srcdir)/TagLib/Mpeg4/Boxes/AppleDataBox.cs                    \
-   $(srcdir)/TagLib/Mpeg4/AppleTag.cs                              \
-   $(srcdir)/TagLib/Mpeg4/BoxHeader.cs                             \
-   $(srcdir)/TagLib/Mpeg4/File.cs                                  \
    $(srcdir)/TagLib/WavPack/File.cs                                \
    $(srcdir)/TagLib/WavPack/Properties.cs                          \
    $(srcdir)/TagLib/IntList.cs                                     \

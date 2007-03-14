@@ -69,6 +69,11 @@
     <File name="./TagLib/Mpeg/XingHeader.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/AppleTag.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/BoxHeader.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/BoxFactory.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/BoxList.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/Box.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/FileParser.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg4/BoxTypes.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/File.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Properties.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/AppleAdditionalInfoBox.cs" subtype="Code" buildaction="Compile" />
@@ -76,22 +81,16 @@
     <File name="./TagLib/Mpeg4/Boxes/AppleDataBox.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/AppleElementaryStreamDescriptor.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/AppleItemListBox.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/Mpeg4/Boxes/Box.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/Mpeg4/Boxes/FileBox.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/FullBox.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/IsoChunkLargeOffsetBox.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/IsoChunkOffsetBox.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/IsoFreeSpaceBox.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/IsoHandlerBox.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/Mpeg4/Boxes/IsoMediaBox.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/Mpeg4/Boxes/IsoMediaInformationBox.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/IsoMetaBox.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/Mpeg4/Boxes/IsoMovieBox.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/IsoMovieHeaderBox.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/IsoSampleDescriptionBox.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/IsoSampleEntry.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/IsoSampleTableBox.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/Mpeg4/Boxes/IsoTrackBox.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/IsoUserDataBox.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/UnknownBox.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Ogg/File.cs" subtype="Code" buildaction="Compile" />

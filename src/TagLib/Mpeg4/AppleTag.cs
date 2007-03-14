@@ -9,23 +9,33 @@ namespace TagLib.Mpeg4
       //////////////////////////////////////////////////////////////////////////
       // private properties
       //////////////////////////////////////////////////////////////////////////
+      private IsoUserDataBox udta_box;
       private AppleItemListBox ilst_box;
-      private File file;
-      
       
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public AppleTag (AppleItemListBox box, File file) : base ()
+      public AppleTag (IsoUserDataBox box) : base ()
       {
-         // Hold onto the ilst_box and file. If the box doesn't exist, create
-         // one.
-         ilst_box = (box == null) ? new AppleItemListBox () : box;
-         this.file = file;
-      }
-      
-      public AppleTag (File file) : this (null, file)
-      {
+         udta_box = box;
+         
+         if (udta_box == null)
+            udta_box = new IsoUserDataBox ();
+         
+         IsoMetaBox meta_box = udta_box.Children.Get (BoxTypes.Meta) as IsoMetaBox;
+         if (meta_box == null)
+         {
+            meta_box = new IsoMetaBox ("mdir", null);
+            udta_box.Children.Add (meta_box);
+         }
+         
+         ilst_box = meta_box.Children.Get (BoxTypes.Ilst) as AppleItemListBox;
+         
+         if (ilst_box == null)
+         {
+            ilst_box = new AppleItemListBox ();
+            meta_box.Children.Add (ilst_box);
+         }
       }
       
       public IEnumerator GetEnumerator()
@@ -69,8 +79,8 @@ namespace TagLib.Mpeg4
                // Get the mean and name boxes, make sure they're legit, and make
                // sure that they match what we want. Then loop through and add
                // all the data box children to our output.
-               AppleAdditionalInfoBox mean_box = (AppleAdditionalInfoBox) box.FindChild ("meta");
-               AppleAdditionalInfoBox name_box = (AppleAdditionalInfoBox) box.FindChild ("name");
+               AppleAdditionalInfoBox mean_box = (AppleAdditionalInfoBox) box.Children.Get (BoxTypes.Mean);
+               AppleAdditionalInfoBox name_box = (AppleAdditionalInfoBox) box.Children.Get (BoxTypes.Name);
                if (mean_box != null && name_box != null && mean_box.Text == mean && name_box.Text == name)
                   foreach (Box data_box in box.Children)
                      if (data_box.GetType () == typeof (AppleDataBox))
@@ -86,8 +96,10 @@ namespace TagLib.Mpeg4
       {
          StringList l = new StringList ();
          foreach (AppleDataBox box in DataBoxes (type))
+         {
             if (box.Text != null)
                l.Add (box.Text);
+         }
          return l.ToArray ();
       }
       
@@ -107,14 +119,11 @@ namespace TagLib.Mpeg4
                if (first)
                {
                   // clear its children and add our data boxes.
-                  box.ClearChildren ();
+                  box.Children.Clear ();
                   foreach (AppleDataBox b in boxes)
-                     box.AddChild (b);
+                     box.Children.Add (b);
                   first = false;
                }
-               // Otherwise, it is dead to us.
-               else
-                  box.RemoveFromParent ();
             }
          
          // If we didn't find the box..
@@ -122,7 +131,7 @@ namespace TagLib.Mpeg4
          {
             // Add the box and try again.
             Box box = new AppleAnnotationBox (type);
-            ilst_box.AddChild (box);
+            ilst_box.Children.Add (box);
             SetData (type, boxes);
          }
       }
@@ -157,7 +166,7 @@ namespace TagLib.Mpeg4
          // Remove empty data and return.
          if (text == null)
          {
-            ilst_box.RemoveChildren (FixId (type));
+            ilst_box.Children.RemoveByType (FixId (type));
             return;
          }
          
@@ -178,7 +187,7 @@ namespace TagLib.Mpeg4
          // Remove empty data and return.
          if (text == null || text == string.Empty)
          {
-            ilst_box.RemoveChildren (FixId (type));
+            ilst_box.Children.RemoveByType (FixId (type));
             return;
          }
          
@@ -188,146 +197,69 @@ namespace TagLib.Mpeg4
       // Clear all data associated with a box type.
       public void ClearData (ByteVector type)
       {
-         ilst_box.RemoveChildren (FixId (type));
+         ilst_box.Children.RemoveByType (FixId (type));
       }
 
       // Save the file.
-      public void Save ()
+      public void Save (File file)
       {
-         if (ilst_box == null) {
+         if (udta_box == null)
             throw new NullReferenceException();
-         }
          
          // Try to get into write mode.
          file.Mode = File.AccessMode.Write;
          
-         // Make a file box.
-         FileBox file_box = new FileBox (file);
+         FileParser parser = new FileParser (file);
+         parser.ParseBoxHeaders ();
          
-         // Get the MovieBox.
-         IsoMovieBox moov_box = (IsoMovieBox) file_box.FindChildDeep ("moov");
+         long size_change = 0;
+         long write_position = 0;
          
-         // If we have a movie box...
-         if (moov_box != null)
+         ByteVector tag_data = udta_box.Render ();
+         
+         // If we don't have a "udta" box to overwrite...
+         if (parser.UdtaTree.Length == 0 || parser.UdtaTree [parser.UdtaTree.Length - 1].BoxType != BoxTypes.Udta)
          {
-            // Set up how much, where, and what to replace, and who to tell
-            // about it.
-            ulong      original_size = 0;
-            long       position      = -1;
-            ByteVector data          = null;
-            Box        parent        = null;
+            // Stick the box at the end of the moov box.
+            BoxHeader moov_header = parser.MoovTree [parser.MoovTree.Length - 1];
+            size_change = tag_data.Count;
+            write_position = 0;
+            file.Insert (tag_data, moov_header.Position + moov_header.TotalBoxSize, 0);
             
-            // Get the old ItemList (the one we're replacing.
-            AppleItemListBox old_ilst_box = (AppleItemListBox) moov_box.FindChildDeep ("ilst");
-            
-            // If it exists.
-            if (old_ilst_box != null)
-            {
-               // We stick ourself in the meta box and slate to overwrite it.
-               parent = old_ilst_box.Parent;
-               original_size = parent.BoxSize;
-               position = parent.NextBoxPosition - (long) original_size;
-               
-               parent.ReplaceChild (old_ilst_box, ilst_box);
-               data = parent.Render ();
-               
-               parent = parent.Parent;
-            }
-            else
-            {
-               // There is not old ItemList. See if we can get a MetaBox.
-               IsoMetaBox meta_box = (IsoMetaBox) moov_box.FindChildDeep ("meta");
-               
-               //If we can...
-               if (meta_box != null)
-               {
-                  // Stick the child in here and slate to overwrite...
-                  meta_box.AddChild (ilst_box);
-                  
-                  original_size = meta_box.BoxSize;
-                  position      = meta_box.NextBoxPosition - (long) original_size;
-                  data          = meta_box.Render ();
-                  parent        = meta_box.Parent;
-               }
-               else
-               {
-                  // There's no MetaBox. Create one and add the ItemList.
-                  meta_box = new IsoMetaBox ("hdlr", null);
-                  meta_box.AddChild (ilst_box);
-                  
-                  // See if we can get a UserDataBox.
-                  IsoUserDataBox udta_box = (IsoUserDataBox) moov_box.FindChildDeep ("udta");
-                  
-                  // If we can...
-                  if (udta_box != null)
-                  {
-                     // We'll stick the MetaBox at the end and overwrite it.
-                     original_size = 0;
-                     position = udta_box.NextBoxPosition;
-                     data = meta_box.Render ();
-                     parent = udta_box;
-                  }
-                  else
-                  {
-                     // If not even the UserDataBox exists, create it and add
-                     // our MetaBox.
-                     udta_box = new IsoUserDataBox ();
-                     udta_box.AddChild (meta_box);
-                     
-                     // Since UserDataBox is a child of MovieBox, we'll just
-                     // insert it at the end.
-                     original_size = 0;
-                     position = moov_box.NextBoxPosition;
-                     data = udta_box.Render ();
-                     parent = moov_box;
-                  }
-               }
-            }
-            
-            // If we have data and somewhere to put it..
-            if (data != null && position >= 0)
-            {
-               // Figure out the size difference.
-               long size_difference = (long) data.Count - (long) original_size;
-               
-               // Insert the new data.
-               file.Insert (data, position, (long) (original_size));
-               
-               // If there is a size difference, resize all parent headers.
-               if (size_difference != 0)
-               {
-                  while (parent != null)
-                  {
-                     parent.OverwriteHeader (size_difference);
-                     parent = parent.Parent;
-                  }
-                  
-                  // ALSO, VERY IMPORTANTLY, YOU MUST UPDATE EVERY 'stco'.
-                  
-                  foreach (Box box in moov_box.Children)
-                     if (box.BoxType == "trak")
-                     {
-                     	IsoChunkLargeOffsetBox co64_box = (IsoChunkLargeOffsetBox) box.FindChildDeep ("co64");
-                        if (co64_box != null)
-                           co64_box.UpdateOffset (size_difference, position);
-                        
-                     	IsoChunkOffsetBox stco_box = (IsoChunkOffsetBox) box.FindChildDeep ("stco");
-                        if (stco_box != null)
-                           stco_box.UpdateOffset ((int) size_difference, position);
-                     }
-               }
-               
-               // Be nice and close the stream.
-               file.Mode = File.AccessMode.Closed;
-               return;
-            }
+            // Overwrite the parent box sizes.
+            for (int i = parser.MoovTree.Length - 1; i >= 0; i --)
+               size_change = parser.MoovTree [i].Overwrite (file, size_change);
          }
          else
-            throw new ApplicationException("stream does not have MOOV tag");
+         {
+            // Overwrite the old box.
+            BoxHeader udta_header = parser.UdtaTree [parser.UdtaTree.Length - 1];
+            size_change = tag_data.Count - udta_header.TotalBoxSize;
+            write_position = udta_header.Position;
+            file.Insert (tag_data, udta_header.Position, udta_header.TotalBoxSize);
+            
+            // Overwrite the parent box sizes.
+            for (int i = parser.UdtaTree.Length - 2; i >= 0; i --)
+               size_change = parser.UdtaTree [i].Overwrite (file, size_change);
+         }
          
-         // We're at the end. Close the stream and admit defeat.
+         // If we've had a size change, we may need to adjust chunk offsets.
+         if (size_change != 0)
+         {
+            // We may have moved the offset boxes, so we need to reread.
+            parser.ParseChunkOffsets ();
+            
+            foreach (Box box in parser.ChunkOffsetBoxes)
+            {
+               if (box is IsoChunkLargeOffsetBox)
+                  (box as IsoChunkLargeOffsetBox).Overwrite (file, size_change, write_position);
+               
+               if (box is IsoChunkOffsetBox)
+                  (box as IsoChunkOffsetBox).Overwrite (file, size_change, write_position);
+            }
+         }
+         
          file.Mode = File.AccessMode.Closed;
-         throw new ApplicationException("Could not complete AppleTag save");
       }
       
       //////////////////////////////////////////////////////////////////////////
@@ -337,10 +269,10 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            string [] text = GetText (FixId ("nam"));
+            string [] text = GetText (BoxTypes.Nam);
             return text.Length == 0 ? null : text [0];
          }
-         set {SetText (FixId ("nam"), value);}
+         set {SetText (BoxTypes.Nam, value);}
       }
       
       public override string [] AlbumArtists
@@ -362,47 +294,47 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            AppleDataBox [] boxes = DataBoxes ("cpil");
+            AppleDataBox [] boxes = DataBoxes (BoxTypes.Cpil);
             return boxes.Length != 0 && boxes [0].Data.ToUInt () != 0;
          }
          set
          {
-            SetData ("cpil", ByteVector.FromUInt ((uint)(value ? 1 : 0)), (uint)AppleDataBox.FlagTypes.ForTempo);
+            SetData (BoxTypes.Cpil, ByteVector.FromUInt ((uint)(value ? 1 : 0)), (uint)AppleDataBox.FlagTypes.ForTempo);
          }
       }
       
       public override string [] Performers
       {
-         get {return GetText (FixId ("ART"));}
-         set {SetText (FixId ("ART"), value);}
+         get {return GetText (BoxTypes.Art);}
+         set {SetText (BoxTypes.Art, value);}
       }
       
       public override string [] Composers
       {
-         get {return GetText (FixId ("wrt"));}
-         set {SetText (FixId ("wrt"), value);}
+         get {return GetText (BoxTypes.Wrt);}
+         set {SetText (BoxTypes.Wrt, value);}
       }
       
       public override string Album
       {
          get
          {
-            string [] text = GetText (FixId ("alb"));
+            string [] text = GetText (BoxTypes.Alb);
             return text.Length == 0 ? null : text [0];
          }
-         set {SetText (FixId ("alb"), value);}
+         set {SetText (BoxTypes.Alb, value);}
       }
       
       public override string Comment
       {
          get
          {
-            AppleDataBox [] boxes = DataBoxes (FixId ("cmt"));
+            AppleDataBox [] boxes = DataBoxes (BoxTypes.Cmt);
             return boxes.Length == 0 ? null : boxes [0].Text;
          }
          set
          {
-            SetText (FixId ("cmt"), value);
+            SetText (BoxTypes.Cmt, value);
          }
       }
       
@@ -412,8 +344,8 @@ namespace TagLib.Mpeg4
          {
             StringList l = new StringList ();
             ByteVectorList names = new ByteVectorList ();
-            names.Add (FixId ("gen"));
-            names.Add (FixId ("gnre"));
+            names.Add (BoxTypes.Gen);
+            names.Add (BoxTypes.Gnre);
             foreach (AppleDataBox box in DataBoxes (names))
                if (box.Text != null)
                   l.Add (box.Text);
@@ -428,8 +360,8 @@ namespace TagLib.Mpeg4
          }
          set
          {
-            ClearData (FixId ("gnre"));
-            SetText (FixId ("gen"), value);
+            ClearData (BoxTypes.Gnre);
+            SetText (BoxTypes.Gen, value);
          }
       }
       
@@ -437,7 +369,7 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            AppleDataBox [] boxes = DataBoxes (FixId ("day"));
+            AppleDataBox [] boxes = DataBoxes (BoxTypes.Day);
             try
             {
                return boxes.Length == 0 || boxes [0].Text == null ? 0 : System.UInt32.Parse (boxes [0].Text.Substring (0, boxes [0].Text.Length < 4 ? boxes [0].Text.Length : 4));
@@ -446,7 +378,7 @@ namespace TagLib.Mpeg4
          }
          set
          {
-            SetText (FixId ("day"), value.ToString ());
+            SetText (BoxTypes.Day, value.ToString ());
          }
       }
       
@@ -454,7 +386,7 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            AppleDataBox [] boxes = DataBoxes (FixId ("trkn"));
+            AppleDataBox [] boxes = DataBoxes (BoxTypes.Trkn);
             if (boxes.Length != 0 && boxes [0].Flags == (int) AppleDataBox.FlagTypes.ContainsData && boxes [0].Data.Count >=4)
                return (uint) boxes [0].Data.Mid (2, 2).ToShort ();
             return 0;
@@ -466,7 +398,7 @@ namespace TagLib.Mpeg4
             v.Add (ByteVector.FromShort ((short) TrackCount));
             v.Add (ByteVector.FromShort (0));
             
-            SetData (FixId ("trkn"), v, (int) AppleDataBox.FlagTypes.ContainsData);
+            SetData (BoxTypes.Trkn, v, (int) AppleDataBox.FlagTypes.ContainsData);
          }
       }
       
@@ -474,7 +406,7 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            AppleDataBox [] boxes = DataBoxes (FixId ("trkn"));
+            AppleDataBox [] boxes = DataBoxes (BoxTypes.Trkn);
             if (boxes.Length != 0 && boxes [0].Flags == (int) AppleDataBox.FlagTypes.ContainsData && boxes [0].Data.Count >=6)
                return (uint) boxes [0].Data.Mid (4, 2).ToShort ();
             return 0;
@@ -487,7 +419,7 @@ namespace TagLib.Mpeg4
             v += ByteVector.FromShort ((short) value);
             v += ByteVector.FromShort (0);
             
-            SetData (FixId ("trkn"), v, (int) AppleDataBox.FlagTypes.ContainsData);
+            SetData (BoxTypes.Trkn, v, (int) AppleDataBox.FlagTypes.ContainsData);
          }
       }
       
@@ -495,7 +427,7 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            AppleDataBox [] boxes = DataBoxes (FixId ("disk"));
+            AppleDataBox [] boxes = DataBoxes (BoxTypes.Disk);
             if (boxes.Length != 0 && boxes [0].Flags == (int) AppleDataBox.FlagTypes.ContainsData && boxes [0].Data.Count >=4)
                return (uint) boxes [0].Data.Mid (2, 2).ToShort ();
             return 0;
@@ -508,7 +440,7 @@ namespace TagLib.Mpeg4
             v += ByteVector.FromShort ((short) DiscCount);
             v += ByteVector.FromShort (0);
             
-            SetData (FixId ("disk"), v, (int) AppleDataBox.FlagTypes.ContainsData);
+            SetData (BoxTypes.Disk, v, (int) AppleDataBox.FlagTypes.ContainsData);
          }
       }
       
@@ -516,7 +448,7 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            AppleDataBox [] boxes = DataBoxes (FixId ("disk"));
+            AppleDataBox [] boxes = DataBoxes (BoxTypes.Disk);
             if (boxes.Length != 0 && boxes [0].Flags == (int) AppleDataBox.FlagTypes.ContainsData && boxes [0].Data.Count >=6)
                return (uint) boxes [0].Data.Mid (4, 2).ToShort ();
             return 0;
@@ -529,7 +461,7 @@ namespace TagLib.Mpeg4
             v += ByteVector.FromShort ((short) value);
             v += ByteVector.FromShort (0);
             
-            SetData (FixId ("disk"), v, (int) AppleDataBox.FlagTypes.ContainsData);
+            SetData (BoxTypes.Disk, v, (int) AppleDataBox.FlagTypes.ContainsData);
          }
       }
       
@@ -540,7 +472,7 @@ namespace TagLib.Mpeg4
          {
          	List<Picture> l = new List<Picture> ();
          	
-         	foreach (AppleDataBox box in  DataBoxes(FixId("covr")))
+         	foreach (AppleDataBox box in  DataBoxes(BoxTypes.Covr))
          	{
          		string type = null;
          		string desc = null;
@@ -572,7 +504,7 @@ namespace TagLib.Mpeg4
          {
          	if (value == null || value.Length == 0)
          	{
-         		ClearData ("covr");
+         		ClearData (BoxTypes.Covr);
          		return;
          	}
          	
@@ -589,7 +521,7 @@ namespace TagLib.Mpeg4
             	boxes [i] = new AppleDataBox (value [i].Data, type);
          	}
          	
-            SetData("covr", boxes);
+            SetData(BoxTypes.Covr, boxes);
          }
       }
       

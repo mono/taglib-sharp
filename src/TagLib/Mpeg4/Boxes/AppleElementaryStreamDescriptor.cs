@@ -2,9 +2,7 @@ namespace TagLib.Mpeg4
 {
    public class AppleElementaryStreamDescriptor : FullBox
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
+      #region Private Properties
       private short es_id;
       private byte stream_priority;
       private byte object_type_id;
@@ -13,88 +11,68 @@ namespace TagLib.Mpeg4
       private uint max_bitrate;
       private uint average_bitrate;
       private ByteVector decoder_config;
+      #endregion
       
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
-      public AppleElementaryStreamDescriptor (BoxHeader header, Box parent) : base (header, parent)
+      #region Constructors
+      public AppleElementaryStreamDescriptor (BoxHeader header, File file, Box handler) : base (header, file, handler)
       {
+         int offset = 0;
+         ByteVector box_data = LoadData (file);
          decoder_config = new ByteVector ();
          
-         uint length;
-         
-         // This box contains a ton of information.
-         int offset = 0;
-         
          // Elementary Stream Descriptor Tag
-         if (Data [offset ++] == 3)
+         if (box_data [offset ++] == 3)
          {
             // We have a descriptor tag. Check that it's at least 20 long.
-            if ((length = ReadLength (offset)) < 20)
-            {
-               Debugger.Debug ("TagLib.Mpeg4.AppleElementaryStreamDescriptor () - Could not read data. Too small.");
-               return;
-            }
+            if (ReadLength (box_data, offset) < 20)
+               throw new CorruptFileException ("Could not read data. Too small.");
+            
             offset += 4;
-            
-            es_id = Data.Mid (offset, 2).ToShort ();
+            es_id = box_data.Mid (offset, 2).ToShort ();
             offset += 2;
-            
-            stream_priority = Data [offset ++];
+            stream_priority = box_data [offset ++];
          }
          else
          {
             // The tag wasn't found, so the next two byte are the ID, and
             // after that, business as usual.
-            es_id = Data.Mid (offset, 2).ToShort ();
+            es_id = box_data.Mid (offset, 2).ToShort ();
             offset += 2;
          }
          
          // Verify that the next data is the Decoder Configuration Descriptor
          // Tag and escape if it won't work out.
-         if (Data [offset ++] != 4)
-         {
-            Debugger.Debug ("TagLib.Mpeg4.AppleElementaryStreamDescriptor () - Could not identify decoder configuration descriptor.");
-            return;
-         }
+         if (box_data [offset ++] != 4)
+            throw new CorruptFileException ("Could not identify decoder configuration descriptor.");
 
          // Check that it's at least 15 long.
-         if ((length = ReadLength (offset)) < 15)
-         {
-            Debugger.Debug ("TagLib.Mpeg4.AppleElementaryStreamDescriptor () - Could not read data. Too small.");
-            return;
-         }
+         if (ReadLength (box_data, offset) < 15)
+            throw new CorruptFileException ("Could not read data. Too small.");
          offset += 4;
          
          // Read a lot of good info.
-         object_type_id  = Data [offset ++];
-         stream_type     = Data [offset ++];
-         buffer_size_db  = Data.Mid (offset, 3).ToUInt ();
+         object_type_id  = box_data [offset ++];
+         stream_type     = box_data [offset ++];
+         buffer_size_db  = box_data.Mid (offset, 3).ToUInt ();
          offset += 3;
-         max_bitrate     = Data.Mid (offset, 4).ToUInt ();
+         max_bitrate     = box_data.Mid (offset, 4).ToUInt ();
          offset += 4;
-         average_bitrate = Data.Mid (offset, 4).ToUInt ();
+         average_bitrate = box_data.Mid (offset, 4).ToUInt ();
          offset += 4;
          
          // Verify that the next data is the Decoder Specific Descriptor
          // Tag and escape if it won't work out.
-         if (Data [offset ++] != 5)
-         {
-            Debugger.Debug ("TagLib.Mpeg4.AppleElementaryStreamDescriptor () - Could not identify decoder specific descriptor.");
-            return;
-         }
+         if (box_data [offset ++] != 5)
+            throw new CorruptFileException ("Could not identify decoder specific descriptor.");
          
          // The rest of the info is decoder specific.
-         length = ReadLength (offset); 
+         uint length = ReadLength (box_data, offset); 
          offset += 4;
-         decoder_config = Data.Mid (offset, (int) length);
+         decoder_config = box_data.Mid (offset, (int) length);
       }
+      #endregion
       
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
+      #region Public Properties
       public short      StreamId       {get {return es_id;}}
       public byte       StreamPriority {get {return stream_priority;}}
       public byte       ObjectTypeId   {get {return object_type_id;}}
@@ -103,15 +81,10 @@ namespace TagLib.Mpeg4
       public uint       MaximumBitrate {get {return max_bitrate / 1000;}}
       public uint       AverageBitrate {get {return average_bitrate / 1000;}}
       public ByteVector DecoderConfig  {get {return decoder_config;}}
+      #endregion
       
-      
-      //////////////////////////////////////////////////////////////////////////
-      // private methods
-      //////////////////////////////////////////////////////////////////////////
-      
-      // The Stream Descriptor has a very special way of storing length. This
-      // function reads the length from a ByteVector and returns it.
-      private uint ReadLength (int offset)
+      #region Private Methods
+      private uint ReadLength (ByteVector data, int offset)
       {
          byte b;
          int  end    = offset + 4;
@@ -119,11 +92,12 @@ namespace TagLib.Mpeg4
          
          do
          {
-            b = Data [offset ++];
+            b = data [offset ++];
             length = (uint) (length << 7) | (uint) (b & 0x7f);
          } while ((b & 0x80) != 0 && offset <= end);
          
          return length;
       }
+      #endregion
    }
 }

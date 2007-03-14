@@ -1,13 +1,14 @@
 namespace TagLib.Mpeg4
 {
-   // This class is just used for clarity in saying, YES, this box IS unknown.
    public class UnknownBox : Box
    {
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
-      public UnknownBox (BoxHeader header, Box parent) : base (header, parent)
+      private ByteVector data;
+      
+      public UnknownBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
       {
+         this.data = LoadData (file);
       }
+      
+      public override ByteVector Data {get {return data;} set {data = value;}}
    }
 }

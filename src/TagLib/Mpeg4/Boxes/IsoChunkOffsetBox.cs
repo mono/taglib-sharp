@@ -2,26 +2,32 @@ namespace TagLib.Mpeg4
 {
    public class IsoChunkOffsetBox : FullBox
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
+      #region Private Properties
       private uint [] offsets;
+      #endregion
       
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
-      public IsoChunkOffsetBox (BoxHeader header, Box parent) : base (header, parent)
+      #region Constructors
+      public IsoChunkOffsetBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
       {
-         File.Seek (base.DataPosition);
-         offsets = new uint [(int) File.ReadBlock (4).ToUInt ()];
+         ByteVector box_data = LoadData (file);
          
-         ByteVector data = File.ReadBlock (4 * offsets.Length);
+         offsets = new uint [(int) box_data.Mid (0, 4).ToUInt ()];
+         
          for (int i = 0; i < offsets.Length; i ++)
-	         offsets [i] = data.Mid (i * 4, 4).ToUInt ();
+           offsets [i] = box_data.Mid (4 + i * 4, 4).ToUInt ();
+      }
+      #endregion
+      
+      #region Public Methods
+      public void Overwrite (File file, long size_difference, long after)
+      {
+         if (Header.Position < 0)
+            throw new System.Exception ("Cannot overwrite headers created from ByteVectors.");
+         
+         file.Insert (Render (size_difference, after), Header.Position, Size);
       }
       
-      private ByteVector UpdateOffsetInternal (int size_difference, long after)
+      public ByteVector Render (long size_difference, long after)
       {
       	ByteVector output = ByteVector.FromUInt ((uint) offsets.Length);
          for (int i = 0; i < offsets.Length; i ++)
@@ -31,29 +37,17 @@ namespace TagLib.Mpeg4
             output.Add (ByteVector.FromUInt (offsets [i]));
          }
          
-         return output;
-      }
-      
-      public ByteVector Render (int size_difference, long after)
-      {
-         return Render (UpdateOffsetInternal (size_difference, after));
+         return Render (output);
       }
       
       public override ByteVector Render ()
       {
          return Render (0, 0);
       }
+      #endregion
       
-      public void UpdateOffset (int size_difference, long after)
-      {
-         ByteVector new_data = UpdateOffsetInternal (size_difference, after);
-         File.Insert (new_data, DataPosition, new_data.Count);
-      }
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
-      public          uint [] Offsets {get {return offsets;}}
-      public override ByteVector Data         {get {return null;} set {}}
+      #region Public Properties
+      public uint [] Offsets {get {return offsets;}}
+      #endregion
    }
 }

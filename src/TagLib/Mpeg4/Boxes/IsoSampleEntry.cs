@@ -2,61 +2,51 @@ namespace TagLib.Mpeg4
 {
    public class IsoSampleEntry : Box
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
+      #region Private Properties
       private ushort data_reference_index;
+      #endregion
       
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
-      public IsoSampleEntry (BoxHeader header, Box parent) : base (header, parent)
+      #region Constructors
+      public IsoSampleEntry (BoxHeader header, File file, Box handler) : base (header, file, handler)
       {
-         data_reference_index   = (ushort) InternalData.Mid (6, 2).ToShort ();
+         file.Seek (base.DataOffset + 6);
+         data_reference_index   = (ushort) file.ReadBlock (2).ToShort ();
       }
+      #endregion
       
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
+      #region Public Properties
       public             ushort DataReferenceIndex {get {return data_reference_index;}}
-      protected override long   DataPosition       {get {return base.DataPosition + 8;}}
-      protected override ulong  DataSize           {get {return base.DataSize - 8;}}
+      protected override long   DataOffset         {get {return base.DataOffset + 8;}}
+      #endregion
    }
    
-   // Audio Sequences
    public class IsoAudioSampleEntry : IsoSampleEntry
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
+      #region IsoAudioSampleEntry Private Properties
       private ushort channel_count;
       private ushort sample_size;
       private uint   sample_rate;
+      private BoxList children;
+      #endregion
       
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
-      public IsoAudioSampleEntry (BoxHeader header, Box parent) : base (header, parent)
+      #region IsoAudioSampleEntry Constructors
+      public IsoAudioSampleEntry (BoxHeader header, File file, Box handler) : base (header, file, handler)
       {
-         channel_count = (ushort) InternalData.Mid (16, 2).ToShort (); //  8 - 10
-         sample_size   = (ushort) InternalData.Mid (18, 2).ToShort (); // 10 - 12
-         sample_rate   = (uint)   InternalData.Mid (24, 4).ToUInt  (); // 16 - 20
+         file.Seek (base.DataOffset + 8);
+         channel_count = (ushort) file.ReadBlock (2).ToShort ();
+         sample_size   = (ushort) file.ReadBlock (2).ToShort ();
+         file.Seek (base.DataOffset + 16);
+         sample_rate   = (uint)   file.ReadBlock (4).ToUInt  ();
+         children = LoadChildren (file);
       }
+      #endregion
       
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
-      public             ushort ChannelCount {get {return channel_count;}}
-      public             ushort SampleSize   {get {return sample_size;}}
-      public             uint   SampleRate   {get {return sample_rate >> 16;}}
-      
-      public    override bool   HasChildren  {get {return true;}}
-      
-      protected override long   DataPosition {get {return base.DataPosition + 20;}}
-      protected override ulong  DataSize     {get {return base.DataSize - 20;}}
+      #region IsoAudioSampleEntry Public Properties
+      public             ushort  ChannelCount {get {return channel_count;}}
+      public             ushort  SampleSize   {get {return sample_size;}}
+      public             uint    SampleRate   {get {return sample_rate >> 16;}}
+      protected override long    DataOffset   {get {return base.DataOffset + 20;}}
+      public    override BoxList Children     {get {return children;}}
+      #endregion
    }
 }

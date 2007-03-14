@@ -47,5 +47,21 @@ namespace TagLib.Id3v2
 
          return v;
       }
+      
+      public static ByteVector UnsynchByteVector (ByteVector data)
+      {
+         for (int i = data.Count - 2; i >= 0; i --)
+            if (data [i] == 0xFF && (data [i+1] == 0 || (data [i+1] & 0xE0) != 0))
+               data.Insert (i+1, 0);
+         return data;
+      }
+      
+      public static ByteVector ResynchByteVector (ByteVector data)
+      {
+         for (int i = data.Count - 2; i >= 0; i --)
+            if (data [i] == 0xFF && data [i+1] == 0)
+               data.RemoveAt (i+1);
+         return data;
+      }
    }
 }
