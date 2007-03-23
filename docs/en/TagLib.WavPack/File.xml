@@ -22,13 +22,7 @@
       <Docs><param name="file">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     
-    <Member MemberName="Remove">
-      <MemberSignature Language="C#" Value="public void Remove ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters />
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member>
+    
   </Members>
   <Docs>
     <summary>To be added.</summary>

@@ -1,3 +1,13 @@
+2007-03-22  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs: Remove null termination
+	in ID3v2.3 and below.
+	* src/TagLib/WavPack/File.cs: 
+	* src/TagLib/Mpc/File.cs: 
+	* src/TagLib/Mpeg/File.cs: Include sane default tags.
+	* docs/en/*: Synched docs.
+
+
 2007-03-14  Brian Nickel  <brian.nickel@gmail.com>
 
 	* docs/en/*: Synced docs.

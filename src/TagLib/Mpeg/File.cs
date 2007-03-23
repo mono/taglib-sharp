@@ -101,6 +101,13 @@ namespace TagLib.Mpeg
             first_header = FindFirstFrameHeader (start);
       }
       
+      protected override void ReadEnd (long end, AudioProperties.ReadStyle style)
+      {
+         // Make sure we have ID3v1 and ID3v2 tags.
+         GetTag (TagTypes.Id3v1, true);
+         GetTag (TagTypes.Id3v2, true);
+      }
+      
       protected override AudioProperties ReadProperties (long start, long end, AudioProperties.ReadStyle style)
       {
          return new Properties (this, first_header, style);

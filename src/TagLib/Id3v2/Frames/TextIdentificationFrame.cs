@@ -96,6 +96,20 @@ namespace TagLib.Id3v2
             field_list.Add (data.ToString (text_encoding, 1).Split (new char []{'\0'}));
          else
          {
+            string value = data.ToString (text_encoding, 1);
+
+            if (value.Length == 0 || value [0] == '\0')
+               return;
+            
+            // Do a fast removal of end bytes.
+            if (value.Length > 1 && value [value.Length - 1] == '\0')
+               for (int i = value.Length - 1; i >= 0; i --)
+                  if (value [i] != '\0')
+                  {
+                     value = value.Substring (0, i + 1);
+                     break;
+                  }
+            
             if (Header.FrameId == "TCOM" ||
                 Header.FrameId == "TEXT" ||
                 Header.FrameId == "TOLY" ||
@@ -104,9 +118,9 @@ namespace TagLib.Id3v2
                 Header.FrameId == "TPE2" ||
                 Header.FrameId == "TPE3" ||
                 Header.FrameId == "TPE4")
-               field_list.Add (data.ToString (text_encoding, 1).Split (new char []{'/'}));
+               field_list.Add (value.Split (new char []{'/'}));
             else
-               field_list.Add (data.ToString (text_encoding, 1));
+               field_list.Add (value);
          }
          
       }

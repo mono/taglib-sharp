@@ -25,7 +25,7 @@
       <MemberSignature Language="C#" Value="public File (string file, TagLib.AudioProperties.ReadStyle properties_style);" />
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="file" Type="System.String" /><Parameter Name="properties_style" Type="TagLib.AudioProperties+ReadStyle" /></Parameters>
-      <Docs><param name="file">To be added.</param><param name="properties_style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Docs><param name="file">A <see cref="T:System.String" /> containing the path of the file to read.</param><param name="properties_style">To be added.</param><summary>To be added.</summary><remarks></remarks></Docs>
     </Member>
   </Members>
   <Docs>

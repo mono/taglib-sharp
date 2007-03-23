@@ -1,5 +1,5 @@
 <Type Name="UnsupportedFormatException" FullName="TagLib.UnsupportedFormatException">
-  <TypeSignature Language="C#" Value="public class UnsupportedFormatException : System.ApplicationException" />
+  <TypeSignature Language="C#" Value="public class UnsupportedFormatException : ApplicationException" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.1.0.0</AssemblyVersion>

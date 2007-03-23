@@ -24,13 +24,12 @@
   <Copyright>Copyright (c) 2006 Brian Nickel</Copyright>
   <Types>
     <Namespace Name="TagLib.Ape">
-      <Type Name="Tag" />
       <Type Name="Item" />
       <Type Name="Footer" />
       <Type Name="ItemType" />
+      <Type Name="Tag" />
     </Namespace>
     <Namespace Name="TagLib">
-      <Type Name="Tag" />
       <Type Name="AudioProperties" />
       <Type Name="AudioProperties+ReadStyle" />
       <Type Name="File" />
@@ -55,51 +54,49 @@
       <Type Name="ListBase`1" DisplayName="ListBase&lt;T&gt;" />
       <Type Name="FileTypes" />
       <Type Name="CorruptFileException" />
-      <Type Name="File+LocalFileAbstraction" />
-      <Type Name="LapTimer" />
+      <Type Name="Tag" />
     </Namespace>
     <Namespace Name="TagLib.Mpc">
-      <Type Name="Properties" />
       <Type Name="File" />
+      <Type Name="Properties" />
     </Namespace>
     <Namespace Name="TagLib.Ogg.Flac">
       <Type Name="File" />
     </Namespace>
     <Namespace Name="TagLib.Ogg">
-      <Type Name="File" />
       <Type Name="Page" />
       <Type Name="Page+ContainsPacketFlags" />
       <Type Name="Page+PaginationStrategy" />
       <Type Name="XiphComment" />
       <Type Name="PageHeader" />
-    </Namespace>
-    <Namespace Name="TagLib.Ogg.Vorbis">
-      <Type Name="Properties" />
       <Type Name="File" />
     </Namespace>
-    <Namespace Name="TagLib.Flac">
+    <Namespace Name="TagLib.Ogg.Vorbis">
+      <Type Name="File" />
       <Type Name="Properties" />
+    </Namespace>
+    <Namespace Name="TagLib.Flac">
       <Type Name="File" />
       <Type Name="Picture" />
       <Type Name="BlockType" />
       <Type Name="Block" />
       <Type Name="BlockHeader" />
+      <Type Name="Properties" />
     </Namespace>
     <Namespace Name="TagLib.Mpeg">
-      <Type Name="Properties" />
       <Type Name="XingHeader" />
       <Type Name="File" />
       <Type Name="Header" />
       <Type Name="Version" />
       <Type Name="ChannelMode" />
+      <Type Name="Properties" />
     </Namespace>
     <Namespace Name="TagLib.Id3v1">
-      <Type Name="Tag" />
       <Type Name="GenreList" />
       <Type Name="StringHandler" />
+      <Type Name="Tag" />
     </Namespace>
     <Namespace Name="TagLib.Id3v2">
-      <Type Name="PrivateFrame" />
       <Type Name="Frame" />
       <Type Name="RelativeVolumeFrame" />
       <Type Name="UniqueFileIdentifierFrame" />
@@ -119,13 +116,12 @@
       <Type Name="FrameFactory+FrameCreator" />
       <Type Name="GeneralEncapsulatedObjectFrame" />
       <Type Name="UnsynchronisedLyricsFrame" />
+      <Type Name="PrivateFrame" />
     </Namespace>
     <Namespace Name="TagLib.Mpeg4">
-      <Type Name="Properties" />
       <Type Name="Box" />
       <Type Name="IsoFreeSpaceBox" />
       <Type Name="UnknownBox" />
-      <Type Name="IsoMediaBox" />
       <Type Name="IsoUserDataBox" />
       <Type Name="AppleItemListBox" />
       <Type Name="AppleAnnotationBox" />
@@ -134,13 +130,10 @@
       <Type Name="IsoAudioSampleEntry" />
       <Type Name="IsoMetaBox" />
       <Type Name="FullBox" />
-      <Type Name="IsoMovieBox" />
       <Type Name="IsoSampleDescriptionBox" />
       <Type Name="AppleAdditionalInfoBox" />
       <Type Name="IsoHandlerBox" />
-      <Type Name="IsoTrackBox" />
       <Type Name="IsoMovieHeaderBox" />
-      <Type Name="FileBox" />
       <Type Name="AppleElementaryStreamDescriptor" />
       <Type Name="AppleDataBox" />
       <Type Name="AppleDataBox+FlagTypes" />
@@ -153,13 +146,13 @@
       <Type Name="BoxList" />
       <Type Name="BoxTypes" />
       <Type Name="FileParser" />
-    </Namespace>
-    <Namespace Name="TagLib.WavPack">
-      <Type Name="File" />
       <Type Name="Properties" />
     </Namespace>
+    <Namespace Name="TagLib.WavPack">
+      <Type Name="Properties" />
+      <Type Name="File" />
+    </Namespace>
     <Namespace Name="TagLib.Asf">
-      <Type Name="Guid" />
       <Type Name="Properties" />
       <Type Name="StreamPropertiesObject" />
       <Type Name="Object" />
@@ -173,12 +166,13 @@
       <Type Name="PaddingObject" />
       <Type Name="ContentDescriptor" />
       <Type Name="DataType" />
+      <Type Name="Guid" />
     </Namespace>
     <Namespace Name="TagLib.NonContainer">
-      <Type Name="File" />
       <Type Name="EndTag" />
       <Type Name="StartTag" />
       <Type Name="Tag" />
+      <Type Name="File" />
     </Namespace>
   </Types>
   <Title>taglib-sharp</Title>
