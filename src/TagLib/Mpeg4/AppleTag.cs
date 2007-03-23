@@ -369,12 +369,12 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            AppleDataBox [] boxes = DataBoxes (BoxTypes.Day);
-            try
-            {
-               return boxes.Length == 0 || boxes [0].Text == null ? 0 : System.UInt32.Parse (boxes [0].Text.Substring (0, boxes [0].Text.Length < 4 ? boxes [0].Text.Length : 4));
-            }
-            catch {return 0;}
+            uint value;
+            foreach (AppleDataBox box in DataBoxes (BoxTypes.Day))
+               if (box.Text != null && uint.TryParse (box.Text.Length > 4 ? box.Text.Substring (0, 4) : box.Text, out value))
+                  return value;
+            
+            return 0;
          }
          set
          {

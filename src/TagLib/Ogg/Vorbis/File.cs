@@ -52,11 +52,8 @@ namespace TagLib.Ogg.Vorbis
          comment = null;
          properties = null;
          
-         try {Mode = AccessMode.Read;}
-         catch {return;}
-         
+         Mode = AccessMode.Read;
          Read (properties_style);
-         
          Mode = AccessMode.Closed;
       }
       

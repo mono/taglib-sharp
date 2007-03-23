@@ -136,18 +136,18 @@ namespace TagLib.Asf
       {
          get
          {
-            string value = GetDescriptorString ("WM/Year");
-            if (value != null)
-               try
-               {
-                  return System.UInt32.Parse (value.Substring (0, 4));
-               }
-               catch {}
+            string text = GetDescriptorString ("WM/Year");
+            uint value;
+            
+            if (text != null && uint.TryParse (text.Length > 4 ? text.Substring (0, 4) : text, out value))
+               return value;
             
             return 0;
          }
          set
          {
+            if (value == 0)
+               RemoveDescriptors ("WM/Year");
             SetDescriptorString (value.ToString (), "WM/Year");
          }
       }
@@ -164,6 +164,8 @@ namespace TagLib.Asf
          }
          set
          {
+            if (value == 0)
+               RemoveDescriptors ("WM/TrackNumber");
             SetDescriptors ("WM/TrackNumber", new ContentDescriptor ("WM/TrackNumber", value));
          }
       }
@@ -181,6 +183,8 @@ namespace TagLib.Asf
          }
          set
          {
+            if (value == 0)
+               RemoveDescriptors ("TrackTotal");
             SetDescriptors ("TrackTotal", new ContentDescriptor ("TrackTotal", value));
          }
       }
@@ -189,20 +193,18 @@ namespace TagLib.Asf
       {
          get
          {
-            string value = GetDescriptorString ("WM/PartOfSet");
-            if (value != null)
-               try
-               {
-                  return UInt32.Parse (value.Split (new char [] {'/'}) [0]);
-               }
-               catch {}
+            string text = GetDescriptorString ("WM/PartOfSet");
+            string[] texts;
+            uint value;
             
-            return 0;
+            return (text != null && (texts = text.Split ('/')).Length > 0 && uint.TryParse (texts [0], out value)) ? value : 0;
          }
          set
          {
             uint count = DiscCount;
-            if (count != 0)
+            if (value == 0 && count == 0)
+               RemoveDescriptors ("WM/PartOfSet");
+            else if (count != 0)
                SetDescriptorString (value.ToString () + "/" + count.ToString (), "WM/PartOfSet");
             else
                SetDescriptorString (value.ToString (), "WM/PartOfSet");
@@ -213,19 +215,21 @@ namespace TagLib.Asf
       {
          get
          {
-            string value = GetDescriptorString ("WM/PartOfSet");
-            if (value != null && value.IndexOf ('/') != -1)
-	            try
-   	         {
-      	         return UInt32.Parse (value.Split (new char [] {'/'}) [1]);
-         	   }
-            	catch {}
+            string text = GetDescriptorString ("WM/PartOfSet");
+            string[] texts;
+            uint value;
             
-            return 0;
+            return (text != null && (texts = text.Split ('/')).Length > 1 && uint.TryParse (texts [1], out value)) ? value : 0;
          }
          set
          {
-               SetDescriptorString (Disc.ToString () + "/" + value.ToString (), "WM/PartOfSet");
+            uint disc = Disc;
+            if (value == 0 && disc == 0)
+               RemoveDescriptors ("WM/PartOfSet");
+            else if (value != 0)
+               SetDescriptorString (disc.ToString () + "/" + value.ToString (), "WM/PartOfSet");
+            else
+               SetDescriptorString (disc.ToString (), "WM/PartOfSet");
          }
       }
       

@@ -1,3 +1,21 @@
+2007-03-23  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/File.cs: Don't catch exceptions on mode change.
+	* src/TagLib/Id3v1/Tag.cs: Use TryParse rather than try{Parse}.
+	* src/TagLib/Id3v2/Tag.cs: Remove "0" values rather than storing "0". Use
+	TryParse rather than try{Parse}.
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs: Use TryParse rather 
+	than try{Parse}.
+	* src/TagLib/Ape/Tag.cs: Remove "0" values rather than storing "0". Use
+	TryParse rather than try{Parse}.
+	* src/TagLib/Asf/Tag.cs: Remove "0" values rather than storing "0". Use
+	TryParse rather than try{Parse}.
+	* src/TagLib/Asf/ContentDescriptor.cs: Use TryParse rather than try{Parse}.
+	* src/TagLib/Mpeg4/AppleTag.cs: Use TryParse rather than try{Parse}.
+	* src/TagLib/Ogg/XiphComment.cs: Remove "0" values rather than storing "0". 
+	Use TryParse rather than try{Parse}.
+	* src/TagLib/Ogg/Vorbis/File.cs: Don't catch exceptions on mode change.
+
 2007-03-22  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs: Remove null termination
@@ -6,7 +24,6 @@
 	* src/TagLib/Mpc/File.cs: 
 	* src/TagLib/Mpeg/File.cs: Include sane default tags.
 	* docs/en/*: Synched docs.
-
 
 2007-03-14  Brian Nickel  <brian.nickel@gmail.com>
 

@@ -87,6 +87,16 @@ namespace TagLib.Ape
       {
          return items.ContainsKey (key.ToUpper ()) ? items [key.ToUpper ()] : null;
       }
+      
+      public void AddNumberValue (string key, uint number, uint count, bool replace)
+      {
+         if (number == 0 && count == 0)
+            AddValue (key, null, replace);
+         else if (count != 0)
+            AddValue (key, number.ToString () + "/" + count.ToString (), replace);
+         else
+            AddValue (key, number.ToString (), replace);
+      }
 
       public void AddValue (string key, string value, bool replace)
       {
@@ -232,18 +242,21 @@ namespace TagLib.Ape
       {
          get
          {
-            try
-            {
-               if (GetItem ("YEAR") != null)
-                  return UInt32.Parse (GetItem ("YEAR").ToString ().Substring (0, 4));
-            }
-            catch {}
+            Item item = GetItem ("YEAR");
+            if (item == null)
+               return 0;
+            
+            string text = item.ToString ();
+            uint value;
+            
+            if (uint.TryParse (text.Length > 4 ? text.Substring (0, 4) : text, out value))
+               return value;
             
             return 0;
          }
          set
          {
-            AddValue ("YEAR", value.ToString (), true);
+            AddNumberValue ("YEAR", value, 0, true);
          }
       }
       
@@ -251,22 +264,18 @@ namespace TagLib.Ape
       {
          get
          {
-            try
-            {
-               if (GetItem ("TRACK") != null)
-                  return UInt32.Parse (GetItem ("TRACK").ToString ().Split (new char [] {'/'}) [0]);
-            }
-            catch {}
+            Item item = GetItem ("TRACK");
+            string [] values;
+            uint value;
+            
+            if (item != null && (values = item.ToString ().Split ('/')).Length > 0 && uint.TryParse (values [0], out value))
+               return value;
             
             return 0;
          }
          set
          {
-            uint count = TrackCount;
-            if (count != 0)
-               AddValue ("TRACK", value + "/" + count, true);
-            else
-               AddValue ("TRACK", value.ToString (), true);
+            AddNumberValue ("TRACK", value, TrackCount, true);
          }
       }
       
@@ -274,18 +283,18 @@ namespace TagLib.Ape
       {
          get
          {
-            try
-            {
-               if (GetItem ("TRACK") != null)
-                  return UInt32.Parse (GetItem ("TRACK").ToString ().Split (new char [] {'/'}) [1]);
-            }
-            catch {}
+            Item item = GetItem ("TRACK");
+            string [] values;
+            uint value;
+            
+            if (item != null && (values = item.ToString ().Split ('/')).Length > 1 && uint.TryParse (values [1], out value))
+               return value;
             
             return 0;
          }
          set
          {
-            AddValue ("TRACK", Track + "/" + value, true);
+            AddNumberValue ("TRACK", Track, value, true);
          }
       }
       
@@ -293,22 +302,18 @@ namespace TagLib.Ape
       {
          get
          {
-            try
-            {
-               if (GetItem ("DISC") != null)
-                  return UInt32.Parse (GetItem ("DISC").ToString ().Split (new char [] {'/'}) [0]);
-            }
-            catch {}
+            Item item = GetItem ("DISC");
+            string [] values;
+            uint value;
+            
+            if (item != null && (values = item.ToString ().Split ('/')).Length > 0 && uint.TryParse (values [0], out value))
+               return value;
             
             return 0;
          }
          set
          {
-            uint count = DiscCount;
-            if (count != 0)
-               AddValue ("DISC", value + "/" + count, true);
-            else
-               AddValue ("DISC", value.ToString (), true);
+            AddNumberValue ("DISC", value, DiscCount, true);
          }
       }
       
@@ -316,18 +321,18 @@ namespace TagLib.Ape
       {
          get
          {
-            try
-            {
-               if (GetItem ("DISC") != null)
-                  return UInt32.Parse (GetItem ("DISC").ToString ().Split (new char [] {'/'}) [1]);
-            }
-            catch {}
+            Item item = GetItem ("DISC");
+            string [] values;
+            uint value;
+            
+            if (item != null && (values = item.ToString ().Split ('/')).Length > 1 && uint.TryParse (values [1], out value))
+               return value;
             
             return 0;
          }
          set
          {
-            AddValue ("DISC", Disc + "/" + value, true);
+            AddNumberValue ("DISC", Disc, value, true);
          }
       }
       

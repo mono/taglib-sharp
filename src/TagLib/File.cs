@@ -105,8 +105,7 @@ namespace TagLib
 
       public long Find (ByteVector pattern, long from_offset, ByteVector before)
       {
-         try {Mode = AccessMode.Read;}
-         catch {return -1;}
+         Mode = AccessMode.Read;
          
          if (pattern.Count > buffer_size)
             return -1;
@@ -218,8 +217,7 @@ namespace TagLib
       
       long RFind (ByteVector pattern, long from_offset, ByteVector before)
       {
-         try {Mode = AccessMode.Read;}
-         catch {return -1;}
+         Mode = AccessMode.Read;
          
          if (pattern.Count > buffer_size)
             return -1;
@@ -561,9 +559,7 @@ namespace TagLib
       
       protected void Truncate (long length)
       {
-         try {Mode = AccessMode.Write;}
-         catch {return;}
-         
+         Mode = AccessMode.Write;
          file_stream.SetLength (length);
       }
       

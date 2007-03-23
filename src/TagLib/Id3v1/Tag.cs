@@ -138,8 +138,8 @@ namespace TagLib.Id3v1
       {
          get
          {
-            try {return System.UInt32.Parse (year);}
-            catch {return 0;}
+            uint value;
+            return uint.TryParse (year, out value) ? value : 0;
          }
          set {year = value > 0 ? value.ToString () : String.Empty;}
       }

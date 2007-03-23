@@ -55,6 +55,14 @@ namespace TagLib.Ogg
          return (field_list.ContainsKey (key.ToUpper ())) ? field_list [key.ToUpper ()] : null;
       }
       
+      public void AddNumberField (string key, uint number, bool replace)
+      {
+         if (number == 0)
+            AddField (key, null, replace);
+         else
+            AddField (key, number.ToString (), replace);
+      }
+
       public void AddField (string key, string value, bool replace)
       {
          if (replace)
@@ -305,16 +313,13 @@ namespace TagLib.Ogg
       {
          get
          {
-            try
-            {
-               StringList l = GetField ("DATE");
-               return (l != null && l.Count != 0) ? UInt32.Parse (l [0].Substring (0, 4)) : 0;
-            }
-            catch {return 0;}
+            StringList l = GetField ("DATE");
+            uint value;
+            return (l != null && l.Count != 0 && uint.TryParse (l[0].Length > 4 ? l[0].Substring (0, 4) : l[0], out value)) ? value : 0;
          }
          set
          {
-            AddField ("DATE", value.ToString ());
+            AddNumberField ("DATE", value, true);
          }
       }
       
@@ -322,17 +327,19 @@ namespace TagLib.Ogg
       {
          get
          {
-            try
-            {
-               StringList l = GetField ("TRACKNUMBER");
-               return (l != null && l.Count != 0) ? UInt32.Parse (l [0].Split (new char [] {'/'}) [0]) : 0;
-            }
-            catch {return 0;}
+            StringList l = GetField ("TRACKNUMBER");
+            string [] values;
+            uint value;
+            
+            if (l != null && l.Count != 0 && (values = l[0].Split ('/')).Length > 0 && uint.TryParse (values [0], out value))
+               return value;
+            
+            return 0;
          }
          set
          {
-            TrackCount = TrackCount;
-            AddField ("TRACKNUMBER", value.ToString ());
+            AddNumberField ("TRACKTOTAL", value == 0 ? 0 : TrackCount, true);
+            AddNumberField ("TRACKNUMBER", value, true);
          }
       }
       
@@ -340,20 +347,21 @@ namespace TagLib.Ogg
       {
          get
          {
-            try
-            {
-               StringList l = GetField ("TRACKTOTAL");
-               if (l != null && l.Count != 0)
-                  return UInt32.Parse (l [0]);
-               
-               l = GetField ("TRACKNUMBER");
-               return (l != null && l.Count != 0) ? UInt32.Parse (l [0].Split (new char [] {'/'}) [1]) : 0;
-            }
-            catch {return 0;}
+            StringList l;
+            string [] values;
+            uint value;
+            
+            if ((l = GetField ("TRACKTOTAL")) != null && l.Count != 0 && uint.TryParse (l[0], out value))
+               return value;
+            
+            if ((l = GetField ("TRACKNUMBER")) != null && l.Count != 0 && (values = l[0].Split ('/')).Length > 1 && uint.TryParse (values [1], out value))
+               return value;
+            
+            return 0;
          }
          set
          {
-            AddField ("TRACKTOTAL", value.ToString ());
+            AddNumberField ("TRACKTOTAL", Track == 0 ? 0 : value, true);
          }
       }
       
@@ -361,17 +369,19 @@ namespace TagLib.Ogg
       {
          get
          {
-            try
-            {
-               StringList l = GetField ("DISCNUMBER");
-               return (l != null && l.Count != 0) ? UInt32.Parse (l [0].Split (new char [] {'/'}) [0]) : 0;
-            }
-            catch {return 0;}
+            StringList l = GetField ("DISCNUMBER");
+            string [] values;
+            uint value;
+            
+            if (l != null && l.Count != 0 && (values = l[0].Split ('/')).Length > 0 && uint.TryParse (values [0], out value))
+               return value;
+            
+            return 0;
          }
          set
          {
-            DiscCount = DiscCount;
-            AddField ("DISCNUMBER", value.ToString ());
+            AddNumberField ("DISCTOTAL", value == 0 ? 0 : DiscCount, true);
+            AddNumberField ("DISCNUMBER", value, true);
          }
       }
       
@@ -379,20 +389,21 @@ namespace TagLib.Ogg
       {
          get
          {
-            try
-            {
-               StringList l = GetField ("DISCTOTAL");
-               if (l != null && l.Count != 0)
-                  return UInt32.Parse (l [0]);
-               
-               l = GetField ("DISCNUMBER");
-               return (l != null && l.Count != 0) ? UInt32.Parse (l [0].Split (new char [] {'/'}) [1]) : 0;
-            }
-            catch {return 0;}
+            StringList l;
+            string [] values;
+            uint value;
+            
+            if ((l = GetField ("DISCTOTAL")) != null && l.Count != 0 && uint.TryParse (l[0], out value))
+               return value;
+            
+            if ((l = GetField ("DISCNUMBER")) != null && l.Count != 0 && (values = l[0].Split ('/')).Length > 1 && uint.TryParse (values [1], out value))
+               return value;
+            
+            return 0;
          }
          set
          {
-            AddField ("DISCTOTAL", value.ToString ());
+            AddNumberField ("DISCTOTAL", Disc == 0 ? 0 : value, true);
          }
       }
       

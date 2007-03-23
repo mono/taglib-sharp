@@ -322,43 +322,28 @@ namespace TagLib.Id3v2
 
                foreach (string s in fields)
                {
+                  byte value;
+                  
                   if (s == null)
                      continue;
                   
-                  bool is_number = true;
-                  foreach (char c in s)
-                     if (c < '0' || c > '9')
-                        is_number = false;
-
-                  if(is_number)
+                  // The string may just be a genre number.
+                  if (byte.TryParse (s, out value))
                   {
-                     try
-                     {
-                        l.Add (Id3v1.GenreList.Genre (Byte.Parse (s)));
-                        continue;
-                     }
-                     catch {}
+                     l.Add (Id3v1.GenreList.Genre (value));
+                     continue;
                   }
                   
+                  // Check for ID3v2.3 style (#)
                   int closing = s.IndexOf (')');
-                  if (closing > 0 && s.Substring (0, 1) == "(")
+                  if (closing > 0 && s[0] == '(' && byte.TryParse (s.Substring (1, closing - 1), out value))
                   {
-                     if(closing == s.Length - 1)
-                     {
-                        try
-                        {
-                           l.Add (Id3v1.GenreList.Genre (Byte.Parse (s.Substring (1, closing - 1))));
-                        }
-                        catch
-                        {
-                           l.Add (s);
-                        }
-                     }
-                     else
-                        l.Add (s.Substring (closing + 1));
+                     l.Add (Id3v1.GenreList.Genre (value));
+                     continue;
                   }
-                  else
-                     l.Add (s);
+                  
+                  // We don't have a number, add the string.
+                  l.Add (s);
                }
             }
             
@@ -380,19 +365,19 @@ namespace TagLib.Id3v2
       {
          get
          {
+            uint value;
             foreach (TextIdentificationFrame f in GetFrames ("TDRC"))
             {
-               try
-               {
-                  return UInt32.Parse (f.ToString ().Substring (0, 4));
-               }
-               catch {}
+               string text = f.ToString ();
+               if (text.Length > 3 && uint.TryParse (text.Substring (0, 4), out value))
+                  return value;
             }
+            
             return 0;
          }
          set
          {
-            SetTextFrame ("TDRC", value.ToString ());
+            SetNumberFrame ("TDRC", value, 0);
          }
       }
       
@@ -400,19 +385,17 @@ namespace TagLib.Id3v2
       {
          get
          {
-            try
-            {
-               return UInt32.Parse (GetFrames ("TRCK") [0].ToString ().Split (new char [] {'/'}) [0]);
-            }
-            catch {return 0;}
+            string [] values;
+            uint value;
+            foreach (TextIdentificationFrame f in GetFrames ("TRCK"))
+               if ((values = f.ToString ().Split ('/')).Length > 0 && uint.TryParse (values [0], out value))
+                  return value;
+            
+            return 0;
          }
          set
          {
-            uint count = TrackCount;
-            if (count != 0)
-               SetTextFrame ("TRCK", value + "/" + count);
-            else
-               SetTextFrame ("TRCK", value.ToString ());
+            SetNumberFrame ("TRCK", value, TrackCount);
          }
       }
       
@@ -420,15 +403,17 @@ namespace TagLib.Id3v2
       {
          get
          {
-            try
-            {
-               return UInt32.Parse (GetFrames ("TRCK") [0].ToString ().Split (new char [] {'/'}) [1]);
-            }
-            catch {return 0;}
+            string [] values;
+            uint value;
+            foreach (TextIdentificationFrame f in GetFrames ("TRCK"))
+               if ((values = f.ToString ().Split ('/')).Length > 1 && uint.TryParse (values [1], out value))
+                  return value;
+            
+            return 0;
          }
          set
          {
-            SetTextFrame ("TRCK", Track + "/" + value);
+            SetNumberFrame ("TRCK", Track, value);
          }
       }
       
@@ -436,19 +421,17 @@ namespace TagLib.Id3v2
       {
          get
          {
-            try
-            {
-               return UInt32.Parse (GetFrames ("TPOS") [0].ToString ().Split (new char [] {'/'}) [0]);
-            }
-            catch {return 0;}
+            string [] values;
+            uint value;
+            foreach (TextIdentificationFrame f in GetFrames ("TPOS"))
+               if ((values = f.ToString ().Split ('/')).Length > 0 && uint.TryParse (values [0], out value))
+                  return value;
+            
+            return 0;
          }
          set
          {
-            uint count = DiscCount;
-            if (count != 0)
-               SetTextFrame ("TPOS", value + "/" + count);
-            else
-               SetTextFrame ("TPOS", value.ToString ());
+            SetNumberFrame ("TPOS", value, DiscCount);
          }
       }
       
@@ -456,15 +439,17 @@ namespace TagLib.Id3v2
       {
          get
          {
-            try
-            {
-               return UInt32.Parse (GetFrames ("TPOS") [0].ToString ().Split (new char [] {'/'}) [1]);
-            }
-            catch {return 0;}
+            string [] values;
+            uint value;
+            foreach (TextIdentificationFrame f in GetFrames ("TPOS"))
+               if ((values = f.ToString ().Split ('/')).Length > 1 && uint.TryParse (values [1], out value))
+                  return value;
+            
+            return 0;
          }
          set
          {
-            SetTextFrame ("TPOS", Disc + "/" + value);
+            SetNumberFrame ("TPOS", Disc, value);
          }
       }
       
@@ -604,9 +589,8 @@ namespace TagLib.Id3v2
       {
          if (file == null)
             return;
-            
-         try {file.Mode = File.AccessMode.Read;}
-         catch {return;}
+         
+         file.Mode = File.AccessMode.Read;
          
          file.Seek (tag_offset);
          header.SetData (file.ReadBlock ((int) Header.Size));
@@ -724,6 +708,16 @@ namespace TagLib.Id3v2
             AddFrame (f);
             f.SetText (value);
          }
+      }
+      
+      public void SetNumberFrame (ByteVector id, uint number, uint count)
+      {
+         if (number == 0 && count == 0)
+            this.RemoveFrames (id);
+         else if (count != 0)
+            SetTextFrame (id, number.ToString () + "/" + count.ToString ());
+         else
+            SetTextFrame (id, number.ToString ());
       }
    }
 }

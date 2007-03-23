@@ -147,16 +147,10 @@ namespace TagLib.Id3v2
          {
             if (this.Header.FrameId == "TCON")
             {
+               byte id;
                string data = "";
                foreach (string s in field_list)
-                  try
-                  {
-                     data += "(" + int.Parse (s) + ")";
-                  }
-                  catch
-                  {
-                     data += s;
-                  }
+                  data += byte.TryParse (s, out id) ? ("(" + id + ")") : s;
                v.Add (ByteVector.FromString (data, encoding));
             }
             else

@@ -112,36 +112,27 @@ namespace TagLib.Asf
 
       public uint ToDWord ()
       {
-         if (type == DataType.Unicode && sValue != null)
-            try
-            {
-               return System.UInt32.Parse (sValue);
-            }
-            catch {}
+         uint value;
+         if (type == DataType.Unicode && sValue != null && uint.TryParse (sValue, out value))
+            return value;
          
          return (uint) lValue;
       }
 
       public long ToQWord ()
       {
-         if (type == DataType.Unicode && sValue != null)
-            try
-            {
-               return System.Int64.Parse (sValue);
-            }
-            catch {}
+         long value;
+         if (type == DataType.Unicode && sValue != null && long.TryParse (sValue, out value))
+            return value;
          
          return (long) lValue;
       }
 
       public short ToWord ()
       {
-         if (type == DataType.Unicode && sValue != null)
-            try
-            {
-               return System.Int16.Parse (sValue);
-            }
-            catch {}
+         short value;
+         if (type == DataType.Unicode && sValue != null && short.TryParse (sValue, out value))
+            return value;
          
          return (short) lValue;
       }
