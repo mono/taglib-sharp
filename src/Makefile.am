@@ -23,11 +23,15 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Asf/ContentDescriptor.cs                       \
    $(srcdir)/TagLib/Mpc/Properties.cs                              \
    $(srcdir)/TagLib/Mpc/File.cs                                    \
-   $(srcdir)/TagLib/Ogg/Flac/File.cs                               \
+   $(srcdir)/TagLib/Ogg/GroupedComment.cs                                    \
+   $(srcdir)/TagLib/Ogg/Bitstream.cs                                    \
+   $(srcdir)/TagLib/Ogg/Paginator.cs                                    \
+   $(srcdir)/TagLib/Ogg/Codec.cs                                    \
+   $(srcdir)/TagLib/Ogg/Codecs/Vorbis.cs                                    \
+   $(srcdir)/TagLib/Ogg/Codecs/Theora.cs                                    \
+   $(srcdir)/TagLib/Ogg/Properties.cs                                    \
    $(srcdir)/TagLib/Ogg/Page.cs                                    \
    $(srcdir)/TagLib/Ogg/XiphComment.cs                             \
-   $(srcdir)/TagLib/Ogg/Vorbis/Properties.cs                       \
-   $(srcdir)/TagLib/Ogg/Vorbis/File.cs                             \
    $(srcdir)/TagLib/Ogg/PageHeader.cs                              \
    $(srcdir)/TagLib/Ogg/File.cs                                    \
    $(srcdir)/TagLib/Flac/Block.cs                                  \
@@ -97,7 +101,7 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/ByteVector.cs                                  \
    $(srcdir)/TagLib/CombinedTag.cs                                 \
    $(srcdir)/TagLib/Debugger.cs                                    \
-   $(srcdir)/TagLib/AudioProperties.cs                             \
+   $(srcdir)/TagLib/Properties.cs                                  \
    $(srcdir)/TagLib/File.cs                                        \
    $(srcdir)/TagLib/StringList.cs                                  \
    $(srcdir)/TagLib/SupportedMimeType.cs                           \

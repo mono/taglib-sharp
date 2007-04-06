@@ -29,11 +29,11 @@ namespace TagLib.NonContainer
    {
 #region Properties
       private TagLib.NonContainer.Tag tag;
-      private AudioProperties properties;
+      private Properties properties;
 #endregion
       
 #region Constructors
-      public File (string file, AudioProperties.ReadStyle properties_style) : base (file)
+      public File (string file, ReadStyle properties_style) : base (file)
       {
          Mode = AccessMode.Read;
          tag = new Tag (this);
@@ -47,20 +47,20 @@ namespace TagLib.NonContainer
          ReadEnd (end, properties_style);
          
          // Read the audio properties.
-         properties = (properties_style != AudioProperties.ReadStyle.None) ?
+         properties = (properties_style != ReadStyle.None) ?
             ReadProperties (start, end, properties_style) : null;
          
          Mode = AccessMode.Closed;
       }
       
-      public File (string file) : this (file, AudioProperties.ReadStyle.Average)
+      public File (string file) : this (file, ReadStyle.Average)
       {
       }
 #endregion
       
-      protected virtual void ReadStart (long start, AudioProperties.ReadStyle style) {}
-      protected virtual void ReadEnd   (long end,   AudioProperties.ReadStyle style) {}
-      protected abstract AudioProperties ReadProperties (long start, long end, AudioProperties.ReadStyle style);
+      protected virtual void ReadStart (long start, ReadStyle style) {}
+      protected virtual void ReadEnd   (long end,   ReadStyle style) {}
+      protected abstract TagLib.Properties ReadProperties (long start, long end, ReadStyle style);
       
       public override void Save ()
       {
@@ -70,14 +70,14 @@ namespace TagLib.NonContainer
          Mode = AccessMode.Closed;
       }
       
-      public void RemoveTags (TagTypes types)
+      public override void RemoveTags (TagTypes types)
       {
          tag.RemoveTags (types);
       }
       
       public override TagLib.Tag Tag {get {return tag;}}
       
-      public override AudioProperties AudioProperties {get {return properties;}}
+      public override TagLib.Properties Properties {get {return properties;}}
       
       protected StartTag StartTag {get {return tag.StartTag;}}
       protected EndTag EndTag {get {return tag.EndTag;}}

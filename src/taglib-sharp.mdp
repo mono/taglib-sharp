@@ -14,7 +14,7 @@
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="./TagLib/AudioProperties.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Properties.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/ByteVector.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/ByteVectorList.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Debugger.cs" subtype="Code" buildaction="Compile" />
@@ -98,9 +98,6 @@
     <File name="./TagLib/Ogg/Page.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Ogg/PageHeader.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Ogg/XiphComment.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/Ogg/Flac/File.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/Ogg/Vorbis/File.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/Ogg/Vorbis/Properties.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/WavPack/File.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/WavPack/Properties.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/ListBase.cs" subtype="Code" buildaction="Compile" />
@@ -117,6 +114,14 @@
     <File name="./TagLib/NonContainer/File.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Flac/Block.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Flac/BlockHeader.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Ogg/Codecs" subtype="Directory" buildaction="Compile" />
+    <File name="./TagLib/Ogg/Codecs/Vorbis.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Ogg/Bitstream.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Ogg/Codec.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Ogg/Properties.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Ogg/Codecs/Theora.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Ogg/GroupedComment.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Ogg/Paginator.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

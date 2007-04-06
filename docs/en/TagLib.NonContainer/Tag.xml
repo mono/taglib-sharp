@@ -1,0 +1,77 @@
+<Type Name="Tag" FullName="TagLib.NonContainer.Tag">
+  <TypeSignature Language="C#" Value="public class Tag : TagLib.CombinedTag" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>TagLib.CombinedTag</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Tag (TagLib.NonContainer.File file);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="file" Type="TagLib.NonContainer.File" /></Parameters>
+      <Docs><param name="file">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="EndTag">
+      <MemberSignature Language="C#" Value="public TagLib.NonContainer.EndTag EndTag { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>TagLib.NonContainer.EndTag</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="GetTag">
+      <MemberSignature Language="C#" Value="public TagLib.Tag GetTag (TagLib.TagTypes type);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.Tag</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="type" Type="TagLib.TagTypes" /></Parameters>
+      <Docs><param name="type">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Read">
+      <MemberSignature Language="C#" Value="public void Read (out long start, out long end);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="start" Type="System.Int64&amp;" RefType="out" /><Parameter Name="end" Type="System.Int64&amp;" RefType="out" /></Parameters>
+      <Docs><param name="start">To be added.</param><param name="end">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="ReadEnd">
+      <MemberSignature Language="C#" Value="public long ReadEnd ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="ReadStart">
+      <MemberSignature Language="C#" Value="public long ReadStart ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="RemoveTags">
+      <MemberSignature Language="C#" Value="public void RemoveTags (TagLib.TagTypes types);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="types" Type="TagLib.TagTypes" /></Parameters>
+      <Docs><param name="types">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="StartTag">
+      <MemberSignature Language="C#" Value="public TagLib.NonContainer.StartTag StartTag { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>TagLib.NonContainer.StartTag</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Write">
+      <MemberSignature Language="C#" Value="public void Write (out long start, out long end);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="start" Type="System.Int64&amp;" RefType="out" /><Parameter Name="end" Type="System.Int64&amp;" RefType="out" /></Parameters>
+      <Docs><param name="start">To be added.</param><param name="end">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

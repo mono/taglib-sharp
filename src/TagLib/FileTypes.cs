@@ -39,9 +39,7 @@ namespace TagLib
             typeof(TagLib.Mpeg4.File),
             typeof(TagLib.Mpeg.File),
             typeof(TagLib.Ogg.File),
-            typeof(TagLib.WavPack.File),
-            typeof(TagLib.Ogg.Flac.File),
-            typeof(TagLib.Ogg.Vorbis.File)
+            typeof(TagLib.WavPack.File)
         };
 
         static FileTypes()

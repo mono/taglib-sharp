@@ -141,10 +141,7 @@ namespace TagLib.Id3v2
       protected override void ParseFields (ByteVector data, uint version)
       {
          if (data.Count < 5)
-         {
-            Debugger.Debug ("A picture frame must contain at least 5 bytes.");
-            return;
-         }
+            throw new CorruptFileException ("A picture frame must contain at least 5 bytes.");
 
          int pos = 0;
 

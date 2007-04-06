@@ -69,7 +69,7 @@
       <ReturnValue><ReturnType>TagLib.Asf.ExtendedContentDescriptionObject</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
-  </Members>
+  <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public Tag ();" /><MemberType>Constructor</MemberType><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Clear"><MemberSignature Language="C#" Value="public void Clear ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member></Members>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>

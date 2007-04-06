@@ -43,7 +43,7 @@ namespace TagLib
       /*private static Dictionary<string, System.Type> file_types = new Dictionary<string, System.Type> ();*/
       
       public delegate IFileAbstraction FileAbstractionCreator (string path);
-      public delegate File             FileTypeResolver       (string path, AudioProperties.ReadStyle style);
+      public delegate File             FileTypeResolver       (string path, ReadStyle style);
          
       public enum AccessMode
       {
@@ -78,7 +78,7 @@ namespace TagLib
       
       public abstract Tag Tag {get;}
       
-      public abstract AudioProperties AudioProperties {get;}
+      public abstract Properties Properties {get;}
       
       public abstract void Save ();
       
@@ -472,6 +472,7 @@ namespace TagLib
          }
       }
       
+      public abstract void RemoveTags (TagTypes types);
       public abstract Tag GetTag (TagTypes type, bool create);
       
       public Tag GetTag (TagTypes type)
@@ -481,15 +482,15 @@ namespace TagLib
             
       public static File Create(string path)
       {
-         return Create(path, null, AudioProperties.ReadStyle.Average);
+         return Create(path, null, ReadStyle.Average);
       }
                   
-      public static File Create(string path, AudioProperties.ReadStyle style) 
+      public static File Create(string path, ReadStyle style) 
       {
          return Create(path, null, style);
       }
       
-      public static File Create(string path, string mimetype, AudioProperties.ReadStyle style)
+      public static File Create(string path, string mimetype, ReadStyle style)
       {
          foreach (FileTypeResolver resolver in file_type_resolvers)
          {

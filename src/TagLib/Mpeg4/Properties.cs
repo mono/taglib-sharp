@@ -24,7 +24,7 @@ using System;
 
 namespace TagLib.Mpeg4
 {
-   public class Properties : AudioProperties
+   public class Properties : TagLib.Properties
    {
       //////////////////////////////////////////////////////////////////////////
       // private properties
@@ -54,7 +54,7 @@ namespace TagLib.Mpeg4
          }
       }
       
-      public override int Bitrate
+      public override int AudioBitrate
       {
          get
          {
@@ -67,7 +67,7 @@ namespace TagLib.Mpeg4
          }
       }
       
-      public override int SampleRate
+      public override int AudioSampleRate
       {
          get
          {
@@ -76,7 +76,7 @@ namespace TagLib.Mpeg4
          }
       }
       
-      public override int Channels
+      public override int AudioChannels
       {
          get
          {
@@ -84,6 +84,7 @@ namespace TagLib.Mpeg4
             return sample_entry == null ? 0 : (int) sample_entry.ChannelCount;
          }
       }
+      public override MediaTypes MediaTypes  {get {return MediaTypes.Audio;}}
       
       // All additional special info from the Movie Header.
       public DateTime CreationTime     {get {return mvhd_box == null ? new System.DateTime (1904, 1, 1, 0, 0, 0) : mvhd_box.CreationTime;}}

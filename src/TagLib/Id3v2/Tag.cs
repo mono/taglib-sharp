@@ -641,16 +641,10 @@ namespace TagLib.Id3v2
          
          while (frame_data_position < frame_data_length - FrameHeader.Size (header.MajorVersion))
          {
-
             // If the next data is position is 0, assume that we've hit the padding
             // portion of the frame data.
             if(data [frame_data_position] == 0)
-            {
-               if (header.FooterPresent)
-                  Debugger.Debug ("Padding *and* a footer found.  This is not allowed by the spec.");
-
                return;
-            }
 
             Frame frame = FrameFactory.CreateFrame (data, frame_data_position, header.MajorVersion);
 

@@ -10,7 +10,7 @@ public class ReadFromUri
             Console.Error.WriteLine("USAGE: mono ReadFromUri.exe PATH [...]");
             return;
         }
-      
+        
         Gnome.Vfs.Vfs.Initialize();
         
         TagLib.File.SetFileAbstractionCreator(new TagLib.File.FileAbstractionCreator(
@@ -46,10 +46,23 @@ public class ReadFromUri
                 Console.WriteLine("DiscCount:  " +  file.Tag.DiscCount);
                 Console.WriteLine("Lyrics:\n"    +  file.Tag.Lyrics + "\n");
                 
-                Console.WriteLine("Length:     " + file.AudioProperties.Duration);
-                Console.WriteLine("Bitrate:    " + file.AudioProperties.Bitrate);
-                Console.WriteLine("SampleRate: " + file.AudioProperties.SampleRate);
-                Console.WriteLine("Channels:   " + file.AudioProperties.Channels + "\n");
+                if ((file.Properties.MediaTypes & TagLib.MediaTypes.Audio) != TagLib.MediaTypes.Unknown)
+                {
+                    Console.WriteLine("Audio Properties");
+                    Console.WriteLine("Bitrate:    " + file.Properties.AudioBitrate);
+                    Console.WriteLine("SampleRate: " + file.Properties.AudioSampleRate);
+                    Console.WriteLine("Channels:   " + file.Properties.AudioChannels + "\n");
+                }
+                
+                if ((file.Properties.MediaTypes & TagLib.MediaTypes.Video) != TagLib.MediaTypes.Unknown)
+                {
+                    Console.WriteLine("Video Properties");
+                    Console.WriteLine("Width:      " + file.Properties.VideoWidth);
+                    Console.WriteLine("Height:     " + file.Properties.VideoHeight + "\n");
+                }
+                
+                if (file.Properties.MediaTypes != TagLib.MediaTypes.Unknown)
+                    Console.WriteLine("Length:     " + file.Properties.Duration + "\n");
                 
                 IPicture [] pictures = file.Tag.Pictures;
                 

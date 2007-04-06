@@ -1,3 +1,54 @@
+2007-04-06  Brian Nickel <brian.nickel@gmail.com>
+
+MAJOR API CHANGES! COMPLETE NEW OGG BACKEND! VIDEO SUPPORT IN OGG AND ASF!
+
+	* src/TagLib/Mpc/Properties.cs:
+	* src/TagLib/Mpc/File.cs:  Support new "Properties".
+	* src/TagLib/File.cs:  Support new "Properties".
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Id3v2/FrameFactory.cs:
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:
+	* src/TagLib/Id3v2/Frames/PrivateFrame.cs: 
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs: Better error
+	handling.
+	* src/TagLib/Mpeg/Properties.cs: Support new "Properties".
+	* src/TagLib/Mpeg/XingHeader.cs: Mark IsValid as obsolete.
+	* src/TagLib/Mpeg/File.cs:
+	* src/TagLib/WavPack/Properties.cs:
+	* src/TagLib/WavPack/File.cs: Support new "Properties".
+	* src/TagLib/NonContainer/File.cs: Support new "Properties".
+	* src/TagLib/NonContainer/EndTag.cs:
+	* src/TagLib/NonContainer/StartTag.cs: Better error handling.
+	* src/TagLib/Properties.cs: Abolish overly specific "AudioProperties"
+	* src/TagLib/Ape/Item.cs: Replace Debugger with Exception
+	* src/TagLib/Flac/Properties.cs:
+	* src/TagLib/Flac/File.cs: Support new "Properties".
+	* src/TagLib/FileTypes.cs: Remove dead file types.
+	* src/TagLib/Asf/Tag.cs: Allow tag clearing.
+	* src/TagLib/Asf/Properties.cs:
+	* src/TagLib/Asf/File.cs: Support new "Properties". Support video.
+	* src/TagLib/Asf/Guid.cs: Fix typo in GUID plain text.
+	* src/TagLib/Mpeg4/Properties.cs:
+	* src/TagLib/Mpeg4/AppleTag.cs:
+	* src/TagLib/Mpeg4/File.cs: Move saving out of the AppleTag. Will allow
+	future implimentation of ID3v2 boxes.
+	* src/TagLib/Ogg/XiphComment.cs:
+	* src/TagLib/Ogg/Page.cs:
+	* src/TagLib/Ogg/Codecs/Theora.cs:
+	* src/TagLib/Ogg/Codecs/Vorbis.cs:
+	* src/TagLib/Ogg/Properties.cs:
+	* src/TagLib/Ogg/Codec.cs:
+	* src/TagLib/Ogg/File.cs:
+	* src/TagLib/Ogg/Paginator.cs:
+	* src/TagLib/Ogg/PageHeader.cs:
+	* src/TagLib/Ogg/GroupedComment.cs:
+	* src/TagLib/Ogg/Bitstream.cs: Recoded for multistream files.
+	* src/Makefile.am:
+	* src/taglib-sharp.mdp: Updated for new files.
+	* docs/en/*: Updated docs to new API.
+	* examples/ReadFromUri.cs: Added video support.
+
+
 2007-03-23  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/File.cs: Don't catch exceptions on mode change.

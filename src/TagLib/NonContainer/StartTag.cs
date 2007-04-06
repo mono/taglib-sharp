@@ -76,8 +76,7 @@ namespace TagLib.NonContainer
                break;
             }
          }
-         catch
-         {}
+         catch (CorruptFileException) {}
          
          return tag;
       }
@@ -89,29 +88,23 @@ namespace TagLib.NonContainer
          file.Seek (start);
          ByteVector data = file.ReadBlock (read_size);
          
-         if (data.StartsWith (TagLib.Ape.Footer.FileIdentifier))
+         try
          {
-            try
+            if (data.StartsWith (TagLib.Ape.Footer.FileIdentifier))
             {
                TagLib.Ape.Footer footer = new TagLib.Ape.Footer (data);
                end = start + footer.CompleteTagSize;
                return TagTypes.Ape;
             }
-            catch
-            {}
-         }
-         
-         if (data.StartsWith (TagLib.Id3v2.Header.FileIdentifier))
-         {
-            try
+            
+            if (data.StartsWith (TagLib.Id3v2.Header.FileIdentifier))
             {
                TagLib.Id3v2.Header header = new TagLib.Id3v2.Header (data);
                end = start + header.CompleteTagSize;
                return TagTypes.Id3v2;
             }
-            catch
-            {}
          }
+         catch (CorruptFileException) {}
          
          return TagTypes.NoTags;
       }

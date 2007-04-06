@@ -1,6 +1,0 @@
-<Namespace Name="TagLib.Ogg.Vorbis">
-  <Docs>
-    <summary>The TagLib.Ogg.Vorbis namespace contains classes for reading and writing tag information for Ogg Vorbis files. These files are most common on Linux systems as Ogg and Vorbis are both open media formats.</summary>
-    <remarks>As of the current version of TagLib#, support is only included for metadata stored in the Xiph's Vorbis Comments format.</remarks>
-  </Docs>
-</Namespace>

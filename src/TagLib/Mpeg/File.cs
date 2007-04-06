@@ -37,10 +37,10 @@ namespace TagLib.Mpeg
    {
       private Header first_header = null;
       
-      public File (string file, AudioProperties.ReadStyle properties_style) : base (file, properties_style)
+      public File (string file, ReadStyle properties_style) : base (file, properties_style)
       {}
       
-      public File (string file) : this (file, Properties.ReadStyle.Average)
+      public File (string file) : this (file, ReadStyle.Average)
       {}
       
       public override TagLib.Tag GetTag (TagTypes type, bool create)
@@ -95,20 +95,20 @@ namespace TagLib.Mpeg
          return null;
       }
       
-      protected override void ReadStart (long start, AudioProperties.ReadStyle style)
+      protected override void ReadStart (long start, ReadStyle style)
       {
-         if (first_header == null && style != AudioProperties.ReadStyle.None)
+         if (first_header == null && style != ReadStyle.None)
             first_header = FindFirstFrameHeader (start);
       }
       
-      protected override void ReadEnd (long end, AudioProperties.ReadStyle style)
+      protected override void ReadEnd (long end, ReadStyle style)
       {
          // Make sure we have ID3v1 and ID3v2 tags.
          GetTag (TagTypes.Id3v1, true);
          GetTag (TagTypes.Id3v2, true);
       }
       
-      protected override AudioProperties ReadProperties (long start, long end, AudioProperties.ReadStyle style)
+      protected override TagLib.Properties ReadProperties (long start, long end, ReadStyle style)
       {
          return new Properties (this, first_header, style);
       }

@@ -26,316 +26,156 @@ using System;
 
 namespace TagLib.Ogg
 {
-   public abstract class File : TagLib.File
+   [SupportedMimeType("taglib/ogg", "ogg")]
+   [SupportedMimeType("application/ogg")]
+   [SupportedMimeType("application/x-ogg")]
+   [SupportedMimeType("audio/vorbis")]
+   [SupportedMimeType("audio/x-vorbis")]
+   [SupportedMimeType("audio/x-vorbis+ogg")]
+   [SupportedMimeType("audio/ogg")]
+   [SupportedMimeType("audio/x-ogg")]
+   public class File : TagLib.File
    {
       //////////////////////////////////////////////////////////////////////////
       // private properties
       //////////////////////////////////////////////////////////////////////////
-      private uint       stream_serial_number;
-      private List<Page>  pages;
-      private PageHeader first_page_header;
-      private PageHeader last_page_header;
-      private List<IntList>  packet_to_page_map;
-      private Dictionary<uint, ByteVector> dirty_packets;
-      private IntList    dirty_pages;
-
-      // The current page for the reader -- used by nextPage()
-      private Page current_page;
-      //! The current page for the packet parser -- used by packet()
-      private Page current_packet_page;
-      //! The packets for the currentPacketPage -- used by packet()
-      private ByteVectorList current_packets;
+      private GroupedComment tag;
+      private Properties properties;
       
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
-      public ByteVector GetPacket (uint i)
+      public File (string file, ReadStyle properties_style) : base (file)
       {
-         // Check to see if we're called setPacket() for this packet since the last
-         // save:
-
-         if (dirty_packets.ContainsKey (i))
-            return dirty_packets [i];
-
-         // If we haven't indexed the page where the packet we're interested in starts,
-         // begin reading pages until we have.
-
-         while (packet_to_page_map.Count <= i)
-            if (!NextPage ())
-               throw new CorruptFileException ("Could not find the requested packet.");
-         
-         // Start reading at the first page that contains part (or all) of this packet.
-         // If the last read stopped at the packet that we're interested in, don't
-         // reread its packet list.  (This should make sequential packet reads fast.)
-         
-         int page_index = (packet_to_page_map [(int)i]) [0];
-         if (current_packet_page != pages [page_index])
-         {
-            current_packet_page = pages [page_index];
-            current_packets = current_packet_page.Packets;
-         }
-
-         // If the packet is completely contained in the first page that it's in, then
-         // just return it now.
-
-         if ((current_packet_page.ContainsPacket ((int)i) & Page.ContainsPacketFlags.CompletePacket) != 0)
-            return current_packets [(int)(i - current_packet_page.FirstPacketIndex)];
-
-         // If the packet is *not* completely contained in the first page that it's a
-         // part of then that packet trails off the end of the page.  Continue appending
-         // the pages' packet data until we hit a page that either does not end with the
-         // packet that we're fetching or where the last packet is complete.
-
-         ByteVector packet = current_packets [current_packets.Count - 1];
-         while ((current_packet_page.ContainsPacket ((int) i) & Page.ContainsPacketFlags.EndsWithPacket) != 0
-                && !current_packet_page.Header.LastPacketCompleted)
-         {
-            page_index ++;
-            if (page_index == pages.Count && !NextPage ())
-               throw new CorruptFileException ("Could not find the requested packet.");
-            
-            current_packet_page = pages [page_index];
-            current_packets = current_packet_page.Packets;
-            packet.Add (current_packets [0]);
-         }
-
-         return packet;
+         Mode = AccessMode.Read;
+         tag = new GroupedComment ();
+         properties = null;
+         Read (properties_style);
+         Mode = AccessMode.Closed;
       }
       
-      public void SetPacket (uint i, ByteVector p)
+      private void Read (ReadStyle properties_style)
       {
-         while (packet_to_page_map.Count <= i)
-            if (!NextPage ())
-            {
-               Debugger.Debug ("Ogg.File.SetPacket() -- Could not set the requested packet.");
-               return;
-            }
-
-         foreach (int page in packet_to_page_map [(int) i])
-            dirty_pages.SortedInsert (page, true);
+         long end;
+         Dictionary<uint, Bitstream> streams = ReadStreams (null, out end);
          
-         if (dirty_packets.ContainsKey (i))
-            dirty_packets [i] = p;
-         else
-            dirty_packets.Add (i, p);
+         foreach (uint id in streams.Keys)
+            tag.AddComment (id, streams [id].Codec.CommentData);
+         
+         if (properties_style == ReadStyle.None)
+            return;
+         
+         PageHeader last_header = LastPageHeader;
+         properties = new Properties (streams, last_header, properties_style);
+      }
+      
+      public override Tag Tag {get {return tag;}}
+      
+      public override TagLib.Properties Properties {get {return properties;}}
+      public override TagLib.Tag GetTag (TagLib.TagTypes type, bool create)
+      {
+         if (type == TagLib.TagTypes.Xiph)
+            return tag.Comments [0];
+         return null;
+      }
+      public override void RemoveTags (TagLib.TagTypes types)
+      {
+         if ((types & TagLib.TagTypes.Xiph) != TagLib.TagTypes.NoTags)
+            tag.Clear ();
       }
       
       public override void Save ()
       {
-         Mode = AccessMode.Write;
+         Mode = AccessMode.Read;
          
-         IntList page_group = new IntList ();
-
-         foreach (int page in dirty_pages)
-            if (!page_group.IsEmpty && page_group [page_group.Count - 1] + 1 != page)
+         long end;
+         List<Page> pages = new List<Page> ();
+         Dictionary<uint, Bitstream> streams = ReadStreams (pages, out end);
+         Dictionary<uint, Paginator> paginators = new Dictionary<uint, Paginator> ();
+         List<List<Page>> new_pages = new List<List<Page>> ();
+         
+         foreach (Page page in pages)
+         {
+            uint id = page.Header.StreamSerialNumber;
+            if (!paginators.ContainsKey (id))
+               paginators.Add (id, new Paginator (streams [id].Codec));
+            
+            paginators [id].AddPage (page);
+         }
+         
+         foreach (uint id in paginators.Keys)
+         {
+            paginators [id].SetComment (tag.GetComment (id));
+            new_pages.Add (new List<Page> (paginators [id].Paginate ()));
+         }
+         
+         ByteVector output = new ByteVector ();
+         bool empty;
+         do
+         {
+            empty = true;
+            foreach (List<Page> stream_pages in new_pages)
             {
-               WritePageGroup (page_group);
-               page_group.Clear ();
+               if (stream_pages.Count == 0)
+                  continue;
+               
+               output.Add (stream_pages [0].Render ());
+               stream_pages.RemoveAt (0);
+               
+               if (stream_pages.Count != 0)
+                  empty = false;
             }
-            else
-               page_group.Add (page);
+         } while (!empty);
          
-         WritePageGroup (page_group);
-         dirty_pages.Clear ();
-         dirty_packets.Clear ();
+         Insert (output, 0, end);
          
          Mode = AccessMode.Closed;
       }
       
+      private Dictionary<uint, Bitstream> ReadStreams (List<Page> pages, out long end)
+      {
+         Dictionary<uint, Bitstream> streams = new Dictionary<uint, Bitstream> ();
+         List<Bitstream> active_streams = new List<Bitstream> ();
+         
+         long position = 0;
+         
+         do
+         {
+            Bitstream stream = null;
+            Page page = new Page (this, position);
+            
+            if (page.Header.FirstPageOfStream)
+            {
+               stream = new Bitstream (page);
+               streams.Add (page.Header.StreamSerialNumber, stream);
+               active_streams.Add (stream);
+            }
+            
+            if (stream == null)
+               stream = streams [page.Header.StreamSerialNumber];
+            
+            if (active_streams.Contains (stream) && stream.ReadPage (page))
+               active_streams.Remove (stream);
+            
+            if (pages != null)
+               pages.Add (page);
+            
+            position += page.Size;
+         }
+         while (active_streams.Count > 0);
+         
+         end = position;
+         
+         return streams;
+      }
       
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
-      public PageHeader FirstPageHeader
+      private PageHeader LastPageHeader
       {
          get
          {
-            if (first_page_header == null)
-            {
-               long first_page_header_offset = Find ("OggS");
+            long last_page_header_offset = RFind ("OggS");
 
-               if (first_page_header_offset < 0)
-                  return null;
+            if(last_page_header_offset < 0)
+               throw new CorruptFileException ("Could not find last header.");
 
-               first_page_header = new PageHeader (this, first_page_header_offset);
-            }
-            
-            return first_page_header.IsValid ? first_page_header : null;
-         }
-      }
-      
-      public PageHeader LastPageHeader
-      {
-         get
-         {
-            if (last_page_header == null)
-            {
-               long last_page_header_offset = RFind ("OggS");
-
-               if(last_page_header_offset < 0)
-                  return null;
-
-               last_page_header = new PageHeader (this, last_page_header_offset);
-            }
-            return last_page_header.IsValid ? last_page_header : null;
-         }
-      }
-
-
-
-      
-      
-      //////////////////////////////////////////////////////////////////////////
-      // protected methods
-      //////////////////////////////////////////////////////////////////////////
-      protected File (string file) : base (file)
-      {
-         ClearPageData ();
-      }
-      
-      protected void ClearPageData ()
-      {
-         stream_serial_number = 0;
-         pages                = new List<Page> ();
-         first_page_header    = null;
-         last_page_header     = null;
-         packet_to_page_map   = new List<IntList> ();
-         dirty_packets        = new Dictionary<uint, ByteVector> ();
-         dirty_pages          = new IntList ();
-
-         current_page         = null;
-         current_packet_page  = null;
-         current_packets      = null;
-      }
-      
-      
-      //////////////////////////////////////////////////////////////////////////
-      // private methods
-      //////////////////////////////////////////////////////////////////////////
-      private bool NextPage ()
-      {
-         long next_page_offset;
-         int current_packet;
-
-         if (pages.Count == 0)
-         {
-            current_packet = 0;
-            next_page_offset = Find ("OggS");
-            if (next_page_offset < 0)
-            return false;
-         }
-         else
-         {
-            if (current_page.Header.LastPageOfStream)
-               return false;
-
-            if (current_page.Header.LastPacketCompleted)
-               current_packet = (int)(current_page.FirstPacketIndex + current_page.PacketCount);
-            else
-               current_packet = (int)(current_page.FirstPacketIndex + current_page.PacketCount - 1);
-
-            next_page_offset = current_page.FileOffset + current_page.Size;
-         }
-
-         // Read the next page and add it to the page list.
-
-         current_page = new Page (this, next_page_offset);
-
-         if(!current_page.Header.IsValid)
-         {
-            current_page = null;
-            return false;
-         }
-
-         current_page.FirstPacketIndex = current_packet;
-
-         if (pages.Count == 0)
-            stream_serial_number = current_page.Header.StreamSerialNumber;
-
-         pages.Add (current_page);
-
-         // Loop through the packets in the page that we just read appending the
-         // current page number to the packet to page map for each packet.
-
-         for (int i = 0; i < current_page.PacketCount; i++)
-         {
-            current_packet = current_page.FirstPacketIndex + i;
-            if (packet_to_page_map.Count <= current_packet)
-               packet_to_page_map.Add (new IntList ());
-            (packet_to_page_map [current_packet]).Add (pages.Count - 1);
-         }
-
-         return true;
-
-      }
-      
-      private void WritePageGroup (IntList page_group)
-      {
-         if(page_group.IsEmpty)
-            return;
-         
-         ByteVectorList packets = new ByteVectorList ();
-
-         // If the first page of the group isn't dirty, append its partial content here.
-
-         if(!dirty_pages.Contains (this.pages [page_group [0]].FirstPacketIndex))
-            packets.Add (this.pages [page_group [0]].Packets [0]);
-
-         int previous_packet = -1;
-         int original_size = 0;
-
-         for (int i = 0; i < page_group.Count; i ++)
-         {
-            int page = page_group [i];
-            
-            uint first_packet = (uint) this.pages [page].FirstPacketIndex;
-            uint last_packet  = first_packet + this.pages [page].PacketCount - 1;
-
-            for (uint j = first_packet; j <= last_packet; j ++)
-            {
-
-               if (i == page_group.Count - 1 && j == last_packet && !dirty_pages.Contains ((int)j))
-                  packets.Add (this.pages [page].Packets [this.pages [page].Packets.Count - 1]);
-               else if((int)j != previous_packet)
-               {
-                  previous_packet = (int) j;
-                  packets.Add (GetPacket (j));
-               }
-            }
-            original_size += this.pages [page].Size;
-         }
-
-         bool continued = this.pages [page_group [0]].Header.FirstPacketContinued;
-         bool completed = this.pages [page_group [page_group.Count - 1]].Header.LastPacketCompleted;
-
-         // TODO: This pagination method isn't accurate for what's being done here.
-         // This should account for real possibilities like non-aligned packets and such.
-
-         Page [] pages = Page.Paginate (packets, Page.PaginationStrategy.SinglePagePerGroup,
-                                        stream_serial_number, page_group [0],
-                                        continued, completed);
-
-         ByteVector data = new ByteVector ();
-         
-         foreach (Page p in pages)
-            data.Add (p.Render ());
-
-         // The insertion algorithms could also be improve to queue and prioritize data
-         // on the way out.  Currently it requires rewriting the file for every page
-         // group rather than just once; however, for tagging applications there will
-         // generally only be one page group, so it's not worth the time for the
-         // optimization at the moment.
-
-         Insert (data, this.pages [page_group [0]].FileOffset, original_size);
-
-         // Update the page index to include the pages we just created and to delete the
-         // old pages.
-
-         foreach (Page p in pages)
-         {
-            int index = p.Header.PageSequenceNumber;
-            this.pages [index] = p;
+            return new PageHeader (this, last_page_header_offset);
          }
       }
    }

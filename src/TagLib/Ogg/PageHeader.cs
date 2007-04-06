@@ -20,7 +20,6 @@
  *   USA                                                                   *
  ***************************************************************************/
 
-using System.Collections;
 using System;
 
 namespace TagLib.Ogg
@@ -30,10 +29,8 @@ namespace TagLib.Ogg
       //////////////////////////////////////////////////////////////////////////
       // private properties
       //////////////////////////////////////////////////////////////////////////
-      private bool is_valid;
-      private ArrayList packet_sizes;
+      private IntList packet_sizes;
       private bool first_packet_continued;
-      private bool last_packet_completed;
       private bool first_page_of_stream;
       private bool last_page_of_stream;
       private long absolute_granular_position;
@@ -46,26 +43,33 @@ namespace TagLib.Ogg
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public PageHeader (File file, long page_offset)
+      
+      protected PageHeader ()
       {
-         is_valid                   = false;
-         packet_sizes               = new ArrayList ();
+         packet_sizes               = new IntList ();
          first_packet_continued     = false;
-         last_packet_completed      = false;
          first_page_of_stream       = false;
          last_page_of_stream        = false;
          absolute_granular_position = 0;
          stream_serial_number       = 0;
-         page_sequence_number       = -1;
+         page_sequence_number       = 0;
          size                       = 0;
          data_size                  = 0;
-
-         if (file != null && page_offset >= 0)
-            Read (file, page_offset);
       }
       
-      public PageHeader () : this (null, -1)
+      public PageHeader (uint stream_serial_number, int page_number, 
+                         bool first_packet_continued, bool contains_last_packet) : this ()
       {
+         this.first_page_of_stream = page_number == 0 && !first_packet_continued;
+         this.stream_serial_number = stream_serial_number;
+         this.page_sequence_number = page_number;
+         this.first_packet_continued = first_packet_continued;
+         this.last_page_of_stream = contains_last_packet;
+      }
+      
+      public PageHeader (File file, long page_offset) : this ()
+      {
+         Read (file, page_offset);
       }
       
       public ByteVector Render ()
@@ -112,62 +116,21 @@ namespace TagLib.Ogg
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
-      public bool IsValid
-      {
-         get {return is_valid;}
-      }
-
       public int [] PacketSizes
       {
-         get {return (int []) packet_sizes.ToArray (typeof (int));}
-         set {packet_sizes = new ArrayList (value);}
+         get {return packet_sizes.ToArray ();}
+         set {packet_sizes.Clear (); packet_sizes.Add (value);}
       }
             
-      public bool FirstPacketContinued
-      {
-         get {return first_packet_continued;}
-         set {first_packet_continued = value;}
-      }
-            
-      public bool LastPacketCompleted
-      {
-         get {return last_packet_completed;}
-         set {last_packet_completed = value;}
-      }
-            
-      public bool FirstPageOfStream
-      {
-         get {return first_page_of_stream;}
-         set {first_page_of_stream = value;}
-      }
-
-      public bool LastPageOfStream
-      {
-         get {return last_page_of_stream;}
-         set {last_page_of_stream = value;}
-      }
-
-      public long AbsoluteGranularPosition
-      {
-         get {return absolute_granular_position;}
-         set {absolute_granular_position = value;}
-      }
-
-      public int PageSequenceNumber
-      {
-         get {return page_sequence_number;}
-         set {page_sequence_number = value;}
-      }
-
-      public uint StreamSerialNumber
-      {
-         get {return stream_serial_number;}
-         set {stream_serial_number = value;}
-      }
-
-      public int Size     {get {return size;}}
-      public int DataSize {get {return data_size;}}
-      
+      public bool FirstPacketContinued     {get {return first_packet_continued;}}
+      public bool LastPacketCompleted      {get {return (packet_sizes [packet_sizes.Count - 1] % 255) != 0;}}
+      public bool FirstPageOfStream        {get {return first_page_of_stream;}}
+      public bool LastPageOfStream         {get {return last_page_of_stream;}}
+      public long AbsoluteGranularPosition {get {return absolute_granular_position;}}
+      public int  PageSequenceNumber       {get {return page_sequence_number;}}
+      public uint StreamSerialNumber       {get {return stream_serial_number;}}
+      public int  Size                     {get {return size;}}
+      public int  DataSize                 {get {return data_size;}}
       
       //////////////////////////////////////////////////////////////////////////
       // private methods
@@ -185,10 +148,7 @@ namespace TagLib.Ogg
          // we asked for and that the page begins with "OggS".
 
          if (data.Count != 27 || !data.StartsWith ("OggS"))
-         {
-            Debugger.Debug ("Ogg.PageHeader.Read() -- error reading page header");
-            return;
-         }
+            throw new CorruptFileException ("Error reading page header");
 
          byte flags = data [5];
 
@@ -211,7 +171,7 @@ namespace TagLib.Ogg
          // Another sanity check.
 
          if(page_segment_count < 1 || page_segments.Count != page_segment_count)
-            return;
+            throw new CorruptFileException ("Incorrect number of page segments");
 
          // The base size of an Ogg page 27 bytes plus the number of lacing values.
 
@@ -232,14 +192,7 @@ namespace TagLib.Ogg
          }
          
          if (packet_size > 0)
-         {
             packet_sizes.Add (packet_size);
-            last_packet_completed = false;
-         }
-         else
-            last_packet_completed = true;
-
-         is_valid = true;
       }
       
       
@@ -267,7 +220,7 @@ namespace TagLib.Ogg
                for (int j = 0; j < quot; j++)
                data.Add ((byte) 255);
 
-               if (i < sizes.Length - 1 || last_packet_completed)
+               if (i < sizes.Length - 1 || LastPacketCompleted)
                data.Add ((byte) rem);
             }
 

@@ -10,19 +10,20 @@ namespace TagLib.Mpeg4
       // private properties
       //////////////////////////////////////////////////////////////////////////
       private IsoUserDataBox udta_box;
+      private IsoMetaBox meta_box;
       private AppleItemListBox ilst_box;
       
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public AppleTag (IsoUserDataBox box) : base ()
+      public AppleTag (ref IsoUserDataBox box) : base ()
       {
+         if (box == null)
+            box = new IsoUserDataBox ();
+         
          udta_box = box;
          
-         if (udta_box == null)
-            udta_box = new IsoUserDataBox ();
-         
-         IsoMetaBox meta_box = udta_box.Children.Get (BoxTypes.Meta) as IsoMetaBox;
+         meta_box = udta_box.Children.Get (BoxTypes.Meta) as IsoMetaBox;
          if (meta_box == null)
          {
             meta_box = new IsoMetaBox ("mdir", null);
@@ -199,67 +200,10 @@ namespace TagLib.Mpeg4
       {
          ilst_box.Children.RemoveByType (FixId (type));
       }
-
-      // Save the file.
-      public void Save (File file)
+      
+      public void DetachIlst ()
       {
-         if (udta_box == null)
-            throw new NullReferenceException();
-         
-         // Try to get into write mode.
-         file.Mode = File.AccessMode.Write;
-         
-         FileParser parser = new FileParser (file);
-         parser.ParseBoxHeaders ();
-         
-         long size_change = 0;
-         long write_position = 0;
-         
-         ByteVector tag_data = udta_box.Render ();
-         
-         // If we don't have a "udta" box to overwrite...
-         if (parser.UdtaTree.Length == 0 || parser.UdtaTree [parser.UdtaTree.Length - 1].BoxType != BoxTypes.Udta)
-         {
-            // Stick the box at the end of the moov box.
-            BoxHeader moov_header = parser.MoovTree [parser.MoovTree.Length - 1];
-            size_change = tag_data.Count;
-            write_position = 0;
-            file.Insert (tag_data, moov_header.Position + moov_header.TotalBoxSize, 0);
-            
-            // Overwrite the parent box sizes.
-            for (int i = parser.MoovTree.Length - 1; i >= 0; i --)
-               size_change = parser.MoovTree [i].Overwrite (file, size_change);
-         }
-         else
-         {
-            // Overwrite the old box.
-            BoxHeader udta_header = parser.UdtaTree [parser.UdtaTree.Length - 1];
-            size_change = tag_data.Count - udta_header.TotalBoxSize;
-            write_position = udta_header.Position;
-            file.Insert (tag_data, udta_header.Position, udta_header.TotalBoxSize);
-            
-            // Overwrite the parent box sizes.
-            for (int i = parser.UdtaTree.Length - 2; i >= 0; i --)
-               size_change = parser.UdtaTree [i].Overwrite (file, size_change);
-         }
-         
-         // If we've had a size change, we may need to adjust chunk offsets.
-         if (size_change != 0)
-         {
-            // We may have moved the offset boxes, so we need to reread.
-            parser.ParseChunkOffsets ();
-            
-            foreach (Box box in parser.ChunkOffsetBoxes)
-            {
-               if (box is IsoChunkLargeOffsetBox)
-                  (box as IsoChunkLargeOffsetBox).Overwrite (file, size_change, write_position);
-               
-               if (box is IsoChunkOffsetBox)
-                  (box as IsoChunkOffsetBox).Overwrite (file, size_change, write_position);
-            }
-         }
-         
-         file.Mode = File.AccessMode.Closed;
+         meta_box.Children.Remove (ilst_box);
       }
       
       //////////////////////////////////////////////////////////////////////////

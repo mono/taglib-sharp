@@ -121,7 +121,7 @@
       <Parameters><Parameter Name="a" Type="TagLib.Asf.Guid" /><Parameter Name="b" Type="TagLib.Asf.Guid" /></Parameters>
       <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
-  </Members>
+  <Member MemberName="AsfVideoMedia"><MemberSignature Language="C#" Value="public static TagLib.Asf.Guid AsfVideoMedia;" /><MemberType>Field</MemberType><ReturnValue><ReturnType>TagLib.Asf.Guid</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member></Members>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>

@@ -25,7 +25,7 @@ using System;
 
 namespace TagLib.Flac
 {
-   public class Properties : AudioProperties
+   public class Properties : TagLib.Properties
    {
       //////////////////////////////////////////////////////////////////////////
       // private properties
@@ -59,13 +59,12 @@ namespace TagLib.Flac
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
-      [Obsolete("This property is obsolete; use the Duration property instead.")]
-      public override int      Length      {get {return (int) duration.TotalSeconds;}}
-      public override TimeSpan Duration    {get {return duration;}}
-      public override int      Bitrate     {get {return bitrate;}}
-      public override int      SampleRate  {get {return sample_rate;}}
-      public override int      Channels    {get {return channels;}}
-      public          int      SampleWidth {get {return sample_width;}}
+      public override TimeSpan   Duration    {get {return duration;}}
+      public override int        AudioBitrate     {get {return bitrate;}}
+      public override int        AudioSampleRate  {get {return sample_rate;}}
+      public override int        AudioChannels    {get {return channels;}}
+      public override MediaTypes MediaTypes  {get {return MediaTypes.Audio;}}
+      public          int        SampleWidth {get {return sample_width;}}
       
       
       //////////////////////////////////////////////////////////////////////////
@@ -75,10 +74,7 @@ namespace TagLib.Flac
       private void Read (ByteVector data, long stream_length, ReadStyle style)
       {
          if (data.Count < 18)
-         {
-            Debugger.Debug ("FLAC.Properties.Read() - FLAC properties must contain at least 18 bytes.");
-            return;
-         }
+            throw new CorruptFileException ("Not enough data in FLAC header.");
 
          int pos = 0;
 

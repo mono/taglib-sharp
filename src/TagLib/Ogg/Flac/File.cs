@@ -32,7 +32,7 @@ namespace TagLib.Ogg.Flac
       //////////////////////////////////////////////////////////////////////////
       private Ogg.XiphComment comment;
       
-      private AudioProperties properties;
+      private Properties properties;
       private ByteVector      stream_info_data;
       private ByteVector      xiph_comment_data;
       private long            stream_start;
@@ -46,7 +46,7 @@ namespace TagLib.Ogg.Flac
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public File (string file, AudioProperties.ReadStyle properties_style) : base (file)
+      public File (string file, ReadStyle properties_style) : base (file)
       {
          comment           = null;
          properties        = null;
@@ -63,7 +63,7 @@ namespace TagLib.Ogg.Flac
          Mode = AccessMode.Closed;
       }
       
-      public File (string file) : this (file, AudioProperties.ReadStyle.Average)
+      public File (string file) : this (file, ReadStyle.Average)
       {
       }
 
@@ -101,7 +101,7 @@ namespace TagLib.Ogg.Flac
       //////////////////////////////////////////////////////////////////////////
       public override TagLib.Tag Tag {get {return comment;}}
       
-      public override AudioProperties AudioProperties {get {return properties;}}
+      public override TagLib.Properties Properties {get {return properties;}}
 
       public long StreamLength {get {Scan (); return stream_length;}}
       
@@ -109,13 +109,13 @@ namespace TagLib.Ogg.Flac
       //////////////////////////////////////////////////////////////////////////
       // private methods
       //////////////////////////////////////////////////////////////////////////
-      private void Read (AudioProperties.ReadStyle properties_style)
+      private void Read (ReadStyle properties_style)
       {
          // Look for FLAC metadata, including vorbis comments
          Scan ();
          comment = new Ogg.XiphComment (has_xiph_comment ? XiphCommentData : null);
 
-         if (properties_style != AudioProperties.ReadStyle.None)
+         if (properties_style != ReadStyle.None)
             properties = new TagLib.Flac.Properties(StreamInfoData, StreamLength, properties_style);
       }
 
@@ -191,8 +191,6 @@ namespace TagLib.Ogg.Flac
                has_xiph_comment = true;
                comment_packet = ipacket;
             }
-            else if (block_type > 5)
-               Debugger.Debug ("Ogg.Flac.File.Scan() -- Unknown metadata block");
          }
 
          // End of metadata, now comes the datastream

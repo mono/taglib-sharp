@@ -30,8 +30,6 @@
       <Type Name="Tag" />
     </Namespace>
     <Namespace Name="TagLib">
-      <Type Name="AudioProperties" />
-      <Type Name="AudioProperties+ReadStyle" />
       <Type Name="File" />
       <Type Name="File+AccessMode" />
       <Type Name="IntList" />
@@ -55,25 +53,29 @@
       <Type Name="FileTypes" />
       <Type Name="CorruptFileException" />
       <Type Name="Tag" />
+      <Type Name="Properties" />
+      <Type Name="ReadStyle" />
+      <Type Name="MediaTypes" />
     </Namespace>
     <Namespace Name="TagLib.Mpc">
       <Type Name="File" />
       <Type Name="Properties" />
     </Namespace>
     <Namespace Name="TagLib.Ogg.Flac">
-      <Type Name="File" />
     </Namespace>
     <Namespace Name="TagLib.Ogg">
       <Type Name="Page" />
-      <Type Name="Page+ContainsPacketFlags" />
-      <Type Name="Page+PaginationStrategy" />
       <Type Name="XiphComment" />
       <Type Name="PageHeader" />
       <Type Name="File" />
+      <Type Name="GroupedComment" />
+      <Type Name="Bitstream" />
+      <Type Name="Paginator" />
+      <Type Name="Codec" />
+      <Type Name="Codec+CodecProvider" />
+      <Type Name="Properties" />
     </Namespace>
     <Namespace Name="TagLib.Ogg.Vorbis">
-      <Type Name="File" />
-      <Type Name="Properties" />
     </Namespace>
     <Namespace Name="TagLib.Flac">
       <Type Name="File" />
@@ -149,8 +151,8 @@
       <Type Name="Properties" />
     </Namespace>
     <Namespace Name="TagLib.WavPack">
-      <Type Name="Properties" />
       <Type Name="File" />
+      <Type Name="Properties" />
     </Namespace>
     <Namespace Name="TagLib.Asf">
       <Type Name="Properties" />
@@ -173,6 +175,10 @@
       <Type Name="StartTag" />
       <Type Name="Tag" />
       <Type Name="File" />
+    </Namespace>
+    <Namespace Name="TagLib.Ogg.Codecs">
+      <Type Name="Vorbis" />
+      <Type Name="Theora" />
     </Namespace>
   </Types>
   <Title>taglib-sharp</Title>

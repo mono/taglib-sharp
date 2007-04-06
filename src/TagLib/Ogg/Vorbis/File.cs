@@ -39,7 +39,7 @@ namespace TagLib.Ogg.Vorbis
       // private properties
       //////////////////////////////////////////////////////////////////////////
       private Ogg.XiphComment comment;
-      private Properties      properties;
+      private AudioProperties properties;
       
       private static byte [] vorbis_comment_header_id = {0x03, (byte)'v', (byte)'o', (byte)'r', (byte)'b', (byte)'i', (byte)'s'};
       
@@ -47,7 +47,7 @@ namespace TagLib.Ogg.Vorbis
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public File (string file, Properties.ReadStyle properties_style) : base (file)
+      public File (string file, ReadStyle properties_style) : base (file)
       {
          comment = null;
          properties = null;
@@ -57,7 +57,7 @@ namespace TagLib.Ogg.Vorbis
          Mode = AccessMode.Closed;
       }
       
-      public File (string file) : this (file, Properties.ReadStyle.Average)
+      public File (string file) : this (file, ReadStyle.Average)
       {
       }
       
@@ -89,19 +89,25 @@ namespace TagLib.Ogg.Vorbis
          return null;
       }
       
+      public override void RemoveTags (TagTypes types)
+      {
+         if ((types & TagTypes.Xiph) == TagTypes.Xiph)
+            comment = new Ogg.XiphComment ();
+      }
       
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
       public override Tag Tag {get {return GetTag (TagTypes.Xiph, true);}}
       
-      public override AudioProperties AudioProperties {get {return properties;}}      
+      public override TagLib.Properties Properties {get {return properties;}}      
       
       //////////////////////////////////////////////////////////////////////////
       // private methods
       //////////////////////////////////////////////////////////////////////////
-      private void Read (Properties.ReadStyle properties_style)
+      private void Read (ReadStyle properties_style)
       {
+         
          ByteVector comment_header_data = GetPacket (1);
 
          if (comment_header_data.Mid (0, 7) != vorbis_comment_header_id)
@@ -109,8 +115,8 @@ namespace TagLib.Ogg.Vorbis
 
          comment = new Ogg.XiphComment (comment_header_data.Mid (7));
 
-         if(properties_style != Properties.ReadStyle.None)
-            properties = new Properties (this, properties_style);
+         if(properties_style != ReadStyle.None)
+            properties = new AudioProperties (this, properties_style);
       }
    }
 }

@@ -50,6 +50,11 @@ namespace TagLib.Ogg
          Parse (data);
       }
       
+      public void Clear ()
+      {
+         field_list.Clear ();
+      }
+      
       public StringList GetField (string key)
       {
          return (field_list.ContainsKey (key.ToUpper ())) ? field_list [key.ToUpper ()] : null;
@@ -123,7 +128,7 @@ namespace TagLib.Ogg
          ByteVector data = new ByteVector ();
 
          // Add the vendor ID length and the vendor ID.  It's important to use the
-         // lenght of the data(String::UTF8) rather than the lenght of the the string
+         // lengtt of the data(String::UTF8) rather than the lenght of the the string
          // since this is UTF8 text and there may be more characters in the data than
          // in the UTF16 string.
 

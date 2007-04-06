@@ -25,7 +25,7 @@ using System;
 
 namespace TagLib.WavPack
 {
-   public class Properties : TagLib.AudioProperties
+   public class Properties : TagLib.Properties
    {
       //////////////////////////////////////////////////////////////////////////
       // private properties
@@ -66,9 +66,10 @@ namespace TagLib.WavPack
       public static readonly uint HeaderSize = 32;
       
       public override TimeSpan Duration      {get {return duration;}}
-      public override int      Bitrate       {get {return bitrate;}}
-      public override int      SampleRate    {get {return sample_rate;}}
-      public override int      Channels      {get {return channels;}}
+      public override int      AudioBitrate       {get {return bitrate;}}
+      public override int      AudioSampleRate    {get {return sample_rate;}}
+      public override int      AudioChannels      {get {return channels;}}
+      public override MediaTypes MediaTypes  {get {return MediaTypes.Audio;}}
       public          int      Version       {get {return version;}}
       public          int      BitsPerSample {get {return bits_per_sample;}}
       

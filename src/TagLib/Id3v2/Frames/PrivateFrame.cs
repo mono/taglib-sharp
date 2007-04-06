@@ -89,10 +89,7 @@ namespace TagLib.Id3v2
       protected override void ParseFields (ByteVector data, uint version)
       {
          if (data.Count < 1)
-         {
-            Debugger.Debug ("A private frame must contain at least 1 byte.");
-            return;
-         }
+            throw new CorruptFileException ("A private frame must contain at least 1 byte.");
          
          ByteVectorList l = ByteVectorList.Split (data, TextDelimiter (StringType.Latin1), 1, 2);
          

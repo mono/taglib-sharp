@@ -1,0 +1,30 @@
+<Type Name="Theora" FullName="TagLib.Ogg.Codecs.Theora">
+  <TypeSignature Language="C#" Value="public class Theora : TagLib.Ogg.Codec" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>TagLib.Ogg.Codec</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Theora ();" />
+      <MemberType>Constructor</MemberType>
+      <Parameters />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="FromPacket">
+      <MemberSignature Language="C#" Value="public static TagLib.Ogg.Codec FromPacket (TagLib.ByteVector packet);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.Ogg.Codec</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="packet" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="packet">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

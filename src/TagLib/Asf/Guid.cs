@@ -69,7 +69,7 @@ namespace TagLib.Asf
       public static Guid AsfExtendedContentDescriptionObject = new Guid (0xD2D0A440, 0xE307, 0x11D2, 0x97F0, 0x00A0C95EA850);
       public static Guid AsfPaddingObject                    = new Guid (0x1806D474, 0xCADF, 0x4509, 0xA4BA, 0x9AABCB96AAE8);
       public static Guid AsfAudioMedia                       = new Guid (0xF8699E40, 0x5B4D, 0x11CF, 0xA8FD, 0x00805F5C442B);
-      
+      public static Guid AsfVideoMedia                       = new Guid (0xBC19EFC0, 0x5B4D, 0x11CF, 0xA8FD, 0x00805F5C442B);
       
       //////////////////////////////////////////////////////////////////////////
       // operators
@@ -122,6 +122,7 @@ namespace TagLib.Asf
             return s.Substring (s.Length - length);
          
          StringBuilder b = new StringBuilder (length);
+         b.Append (s);
          while (b.Length < length)
             b.Insert (0, '0');
          

@@ -36,11 +36,13 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public Tag (HeaderObject header) : base ()
+      public Tag () : base ()
       {
-         description     = new ContentDescriptionObject ();
-         ext_description = new ExtendedContentDescriptionObject ();
-         
+         Clear ();
+      }
+      
+      public Tag (HeaderObject header) : this ()
+      {
          foreach (Object child in header.Children)
          {
             if (child is ContentDescriptionObject)
@@ -49,6 +51,12 @@ namespace TagLib.Asf
             if (child is ExtendedContentDescriptionObject)
                ext_description = (ExtendedContentDescriptionObject) child;
          }
+      }
+      
+      public void Clear ()
+      {
+         description     = new ContentDescriptionObject ();
+         ext_description = new ExtendedContentDescriptionObject ();
       }
       
       public void RemoveDescriptors (string name)

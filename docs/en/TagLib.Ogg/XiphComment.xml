@@ -114,7 +114,7 @@
       <Parameters />
       <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
-  </Members>
+  <Member MemberName="AddNumberField"><MemberSignature Language="C#" Value="public void AddNumberField (string key, uint number, bool replace);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="key" Type="System.String" /><Parameter Name="number" Type="System.UInt32" /><Parameter Name="replace" Type="System.Boolean" /></Parameters><Docs><param name="key">To be added.</param><param name="number">To be added.</param><param name="replace">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Clear"><MemberSignature Language="C#" Value="public void Clear ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member></Members>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>

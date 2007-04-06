@@ -1,0 +1,40 @@
+<Type Name="ReadStyle" FullName="TagLib.ReadStyle">
+  <TypeSignature Language="C#" Value="public enum ReadStyle" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Members>
+    <Member MemberName="Accurate">
+      <MemberSignature Language="C#" Value="Accurate" />
+      <MemberType>Field</MemberType>
+      <ReturnValue><ReturnType>TagLib.ReadStyle</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    </Member>
+    <Member MemberName="Average">
+      <MemberSignature Language="C#" Value="Average" />
+      <MemberType>Field</MemberType>
+      <ReturnValue><ReturnType>TagLib.ReadStyle</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    </Member>
+    <Member MemberName="Fast">
+      <MemberSignature Language="C#" Value="Fast" />
+      <MemberType>Field</MemberType>
+      <ReturnValue><ReturnType>TagLib.ReadStyle</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    </Member>
+    <Member MemberName="None">
+      <MemberSignature Language="C#" Value="None" />
+      <MemberType>Field</MemberType>
+      <ReturnValue><ReturnType>TagLib.ReadStyle</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

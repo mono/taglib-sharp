@@ -40,11 +40,11 @@ namespace TagLib.Flac
 #endregion Properties
       
 #region Constructors
-      public File (string file, Properties.ReadStyle properties_style) : base (file, properties_style)
+      public File (string file, ReadStyle properties_style) : base (file, properties_style)
       {
       }
       
-      public File (string file) : this (file, Properties.ReadStyle.Average)
+      public File (string file) : this (file, ReadStyle.Average)
       {
       }
 #endregion Constructors
@@ -142,7 +142,7 @@ namespace TagLib.Flac
       
       public override TagLib.Tag Tag {get {return tag;}}
       
-      protected override void ReadStart (long start, AudioProperties.ReadStyle style)
+      protected override void ReadStart (long start, ReadStyle style)
       {
          List<Block> blocks = ReadBlocks (start, BlockMode.Whitelist,
             BlockType.StreamInfo, BlockType.VorbisComment, BlockType.Picture);
@@ -168,7 +168,7 @@ namespace TagLib.Flac
          
          picture_tag = new PictureTag (pictures.ToArray ());
          
-         if (style != AudioProperties.ReadStyle.None)
+         if (style != ReadStyle.None)
          {
             // The stream exists from the end of the last block to the end of the file.
             stream_start = blocks [blocks.Count - 1].NextBlockPosition;
@@ -176,7 +176,7 @@ namespace TagLib.Flac
          }
       }
       
-      protected override void ReadEnd (long end, AudioProperties.ReadStyle style)
+      protected override void ReadEnd (long end, ReadStyle style)
       {
          tag = new CombinedTag (picture_tag, comment, base.Tag);
          
@@ -184,7 +184,7 @@ namespace TagLib.Flac
          GetTag (TagTypes.Xiph, true);
       }
       
-      protected override AudioProperties ReadProperties (long start, long end, AudioProperties.ReadStyle style)
+      protected override TagLib.Properties ReadProperties (long start, long end, ReadStyle style)
       {
          return new Properties (header_block, end - stream_start, style);
       }

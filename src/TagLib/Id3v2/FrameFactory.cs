@@ -63,21 +63,14 @@ namespace TagLib.Id3v2
             return new UnknownFrame (data, offset, header, version);
          }
          
-         // TagLib doesn't mess with encrypted frames, so just treat them
-         // as unknown frames.
-
+         // TODO: Support Compression.
          if (header.Compression)
-         {
-            Debugger.Debug ("Compressed frames are currently not supported.");
             return new UnknownFrame (data, offset, header, version);
-         }
          
+         // TODO: Support Encryption.
          if (header.Encryption)
-         {
-            Debugger.Debug ("Encrypted frames are currently not supported.");
             return new UnknownFrame (data, offset, header, version);
-         }
-
+         
          if (!UpdateFrame (header, version))
          {
             header.TagAlterPreservation = true;
@@ -235,18 +228,14 @@ namespace TagLib.Id3v2
          {
             case 2: // ID3v2.2
             {
+               // Discard obsolete tags.
                if(frame_id == "CRM" ||
                   frame_id == "EQU" ||
                   frame_id == "LNK" ||
                   frame_id == "RVA" ||
                   frame_id == "TIM" ||
                   frame_id == "TSI")
-               {
-                  Debugger.Debug ("ID3v2.4 no longer supports the frame type "
-                  + frame_id.ToString () + ".  It will be discarded from the tag.");
-                  
                   return false;
-               }
 
                // ID3v2.2 only used 3 bytes for the frame ID, so we need to convert all of
                // the frames to their 4 byte ID3v2.4 equivalent.
@@ -314,18 +303,14 @@ namespace TagLib.Id3v2
 
             case 3: // ID3v2.3
             {
+               // Discard obsolete tags.
                if(frame_id == "EQUA" ||
                   frame_id == "RVAD" ||
                   frame_id == "TIME" ||
                   frame_id == "TRDA" ||
                   frame_id == "TSIZ" ||
                   frame_id == "TDAT")
-               {
-                  Debugger.Debug ("ID3v2.4 no longer supports the frame type "
-                  + frame_id.ToString () + ".  It will be discarded from the tag.");
-                  
                   return false;
-               }
 
                ConvertFrame ("TORY", "TDOR", header);
                ConvertFrame ("TYER", "TDRC", header);

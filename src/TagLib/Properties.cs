@@ -24,23 +24,33 @@ using System;
 
 namespace TagLib
 {
-   public class AudioProperties
+   public enum ReadStyle
    {
-      public enum ReadStyle
-      {
-         None,
-         Fast,
-         Average,
-         Accurate
-      }
-      
+      None,
+      Fast,
+      Average,
+      Accurate
+   }
+   
+   public enum MediaTypes
+   {
+      Unknown = 0,
+      Audio   = 1,
+      Video   = 2
+   }
+   
+   public class Properties
+   {
       [Obsolete("This property is obsolete; use the Duration property instead.")]
-      public virtual int      Length     {get {return (int) Duration.TotalSeconds;}}
-      public virtual TimeSpan Duration   {get {return TimeSpan.Zero;}}
-      public virtual int      Bitrate    {get {return 0;}}
-      public virtual int      SampleRate {get {return 0;}}
-      public virtual int      Channels   {get {return 0;}}
-
-      protected AudioProperties (ReadStyle style) {}
+      public virtual int        Length          {get {return (int) Duration.TotalSeconds;}}
+      public virtual TimeSpan   Duration        {get {return TimeSpan.Zero;}}
+      public virtual int        AudioBitrate    {get {return 0;}}
+      public virtual int        AudioSampleRate {get {return 0;}}
+      public virtual int        AudioChannels   {get {return 0;}}
+      public virtual int        VideoWidth      {get {return 0;}}
+      public virtual int        VideoHeight     {get {return 0;}}
+      public virtual MediaTypes MediaTypes      {get {return MediaTypes.Unknown;}}
+      
+      protected Properties (ReadStyle style) {}
    }
 }

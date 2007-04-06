@@ -120,10 +120,7 @@ namespace TagLib.Id3v2
       protected override void ParseFields (ByteVector data, uint version)
       {
          if (data.Count < 4)
-         {
-            Debugger.Debug ("An object frame must contain at least 4 bytes.");
-            return;
-         }
+            throw new CorruptFileException ("An object frame must contain at least 4 bytes.");
          
          int field_start = 0;
          

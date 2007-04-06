@@ -26,6 +26,7 @@ using System;
 namespace TagLib.Asf
 {
    [SupportedMimeType("taglib/wma", "wma")]
+   [SupportedMimeType("taglib/wmv", "wmv")]
    [SupportedMimeType("taglib/asf", "asf")]
    [SupportedMimeType("audio/x-ms-wma")]
    [SupportedMimeType("video/x-ms-asf")]
@@ -41,7 +42,7 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public File (string file, Properties.ReadStyle properties_style) : base (file)
+      public File (string file, ReadStyle properties_style) : base (file)
       {
          asf_tag    = null;
          properties = null;
@@ -51,7 +52,7 @@ namespace TagLib.Asf
          Mode = AccessMode.Closed;
       }
 
-      public File (string file) : this (file, Properties.ReadStyle.Average)
+      public File (string file) : this (file, ReadStyle.Average)
       {
       }
       
@@ -74,6 +75,12 @@ namespace TagLib.Asf
             return asf_tag;
          
          return null;
+      }
+      
+      public override void RemoveTags (TagTypes types)
+      {
+         if ((types & TagTypes.Asf) == TagTypes.Asf)
+            asf_tag.Clear ();
       }
       
       public short ReadWord ()
@@ -144,19 +151,19 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       public override TagLib.Tag Tag {get {return asf_tag;}}
       
-      public override TagLib.AudioProperties AudioProperties {get {return properties;}}
+      public override TagLib.Properties Properties {get {return properties;}}
       
       
       //////////////////////////////////////////////////////////////////////////
       // private methods
       //////////////////////////////////////////////////////////////////////////
-      private void Read (Properties.ReadStyle properties_style)
+      private void Read (ReadStyle properties_style)
       {
          HeaderObject header = new HeaderObject (this, 0);
          
          asf_tag = new Asf.Tag (header);
          
-         if(properties_style != Properties.ReadStyle.None)
+         if(properties_style != ReadStyle.None)
             properties = new Properties (header, properties_style);
       }
    }

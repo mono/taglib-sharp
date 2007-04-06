@@ -98,10 +98,7 @@ namespace TagLib.Ape
          // 11 bytes is the minimum size for an APE item
 
          if(data.Count < 11)
-         {
-            Debugger.Debug ("APE.Item.Parse() -- no data in item");
-            return;
-         }
+            throw new CorruptFileException ("Not enough data for APE Item");
 
          uint value_length  = data.Mid (0, 4).ToUInt (false);
          uint flags        = data.Mid (4, 4).ToUInt (false);

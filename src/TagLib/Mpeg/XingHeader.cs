@@ -32,7 +32,6 @@ namespace TagLib.Mpeg
       //////////////////////////////////////////////////////////////////////////
       private uint frames;
       private uint size;
-      private bool valid;
 
       //////////////////////////////////////////////////////////////////////////
       // public methods
@@ -41,14 +40,14 @@ namespace TagLib.Mpeg
       {
          frames = 0;
          size = 0;
-         valid = false;
          Parse (data);
       }
 
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
-      public bool IsValid {get {return valid;}}
+      [Obsolete("This property is obsolete; Invalid files now throw exceptions.")]
+      public bool IsValid {get {return true;}}
       public uint TotalFrames {get {return frames;}}
       public uint TotalSize {get {return size;}}
 
@@ -79,7 +78,6 @@ namespace TagLib.Mpeg
       private void Parse (ByteVector data)
       {
          // Check to see if a valid Xing header is available.
-
          if (!data.StartsWith ("Xing"))
             throw new CorruptFileException ("Not a valid Xing header");
 

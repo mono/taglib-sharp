@@ -1,6 +1,0 @@
-<Namespace Name="TagLib.Ogg.Flac">
-  <Docs>
-    <summary>The TagLib.Ogg.Flac namespace contains classes for reading and writing tag information for Ogg FLAC files. These files are rare as FLAC will traditionally appear as plain FLAC files.</summary>
-    <remarks>As of the current version of TagLib#, support is only included for metadata stored in the Xiph's Vorbis Comments format.</remarks>
-  </Docs>
-</Namespace>

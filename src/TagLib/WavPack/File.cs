@@ -31,10 +31,10 @@ namespace TagLib.WavPack
    {
       private ByteVector header_block = null;
       
-      public File (string file, AudioProperties.ReadStyle properties_style) : base (file, properties_style)
+      public File (string file, ReadStyle properties_style) : base (file, properties_style)
       {}
 
-      public File (string file) : this (file, Properties.ReadStyle.Average)
+      public File (string file) : this (file, ReadStyle.Average)
       {}
       
       public override TagLib.Tag GetTag (TagTypes type, bool create)
@@ -60,22 +60,22 @@ namespace TagLib.WavPack
          }
       }
       
-      protected override void ReadStart (long start, AudioProperties.ReadStyle style)
+      protected override void ReadStart (long start, ReadStyle style)
       {
-         if (header_block == null && style != AudioProperties.ReadStyle.None)
+         if (header_block == null && style != ReadStyle.None)
          {
             Seek (start);
-            header_block = ReadBlock ((int) Properties.HeaderSize);
+            header_block = ReadBlock ((int) WavPack.Properties.HeaderSize);
          }
       }
       
-      protected override void ReadEnd (long end, AudioProperties.ReadStyle style)
+      protected override void ReadEnd (long end, ReadStyle style)
       {
          // Make sure we have an APE tag.
          GetTag (TagTypes.Ape, true);
       }
       
-      protected override AudioProperties ReadProperties (long start, long end, AudioProperties.ReadStyle style)
+      protected override TagLib.Properties ReadProperties (long start, long end, ReadStyle style)
       {
          return new Properties (header_block, end - start);
       }
