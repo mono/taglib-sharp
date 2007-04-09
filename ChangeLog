@@ -1,3 +1,9 @@
+2007-04-09  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/AssemblyInfo-windows.cs:
+	* configure.ac:
+	* taglib-sharp.csproj: Apply version bump. Now 1.9.*
+
 2007-04-06  Brian Nickel <brian.nickel@gmail.com>
 
 MAJOR API CHANGES! COMPLETE NEW OGG BACKEND! VIDEO SUPPORT IN OGG AND ASF!

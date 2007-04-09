@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="src\AssemblyInfo-windows.cs" />
     <Compile Include="src\TagLib\Tag.cs" />
-    <Compile Include="src\TagLib\AudioProperties.cs" />
     <Compile Include="src\TagLib\ByteVector.cs" />
     <Compile Include="src\TagLib\ByteVectorList.cs" />
     <Compile Include="src\TagLib\CombinedTag.cs" />
@@ -58,9 +57,6 @@
     <Compile Include="src\TagLib\Ogg\Page.cs" />
     <Compile Include="src\TagLib\Ogg\PageHeader.cs" />
     <Compile Include="src\TagLib\Ogg\XiphComment.cs" />
-    <Compile Include="src\TagLib\Ogg\Flac\File.cs" />
-    <Compile Include="src\TagLib\Ogg\Vorbis\File.cs" />
-    <Compile Include="src\TagLib\Ogg\Vorbis\Properties.cs" />
     <Compile Include="src\TagLib\Mpeg4\AppleTag.cs" />
     <Compile Include="src\TagLib\Mpeg4\BoxHeader.cs" />
     <Compile Include="src\TagLib\Mpeg4\BoxFactory.cs" />
@@ -142,6 +138,14 @@
     <Compile Include="src\TagLib\Picture.cs" />
     <Compile Include="src\TagLib\CorruptFileException.cs" />
     <Compile Include="src\TagLib\FileTypes.cs" />
+    <Compile Include="src\TagLib\Properties.cs" />
+    <Compile Include="src\TagLib\Ogg\Codecs\Vorbis.cs" />
+    <Compile Include="src\TagLib\Ogg\Bitstream.cs" />
+    <Compile Include="src\TagLib\Ogg\Codec.cs" />
+    <Compile Include="src\TagLib\Ogg\GroupedComment.cs" />
+    <Compile Include="src\TagLib\Ogg\Paginator.cs" />
+    <Compile Include="src\TagLib\Ogg\Properties.cs" />
+    <Compile Include="src\TagLib\Ogg\Codecs\Theora.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src" />
@@ -153,8 +157,6 @@
     <Folder Include="src\TagLib\Id3v2" />
     <Folder Include="src\TagLib\Mpc" />
     <Folder Include="src\TagLib\Ogg" />
-    <Folder Include="src\TagLib\Ogg\Flac" />
-    <Folder Include="src\TagLib\Ogg\Vorbis" />
     <Folder Include="src\TagLib\Mpeg4" />
     <Folder Include="src\TagLib\Mpeg4\Boxes" />
     <Folder Include="src\TagLib\Mpeg" />
