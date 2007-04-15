@@ -18,8 +18,8 @@ namespace TagLib.FormatTests
         [Test]
         public void ReadAudioProperties()
         {
-            Assert.AreEqual(44100, file.AudioProperties.SampleRate);
-            Assert.AreEqual(1, file.AudioProperties.Duration.Seconds);
+            Assert.AreEqual(44100, file.Properties.AudioSampleRate);
+            Assert.AreEqual(1, file.Properties.Duration.Seconds);
         }
         
         [Test]

@@ -20,7 +20,7 @@
  ***************************************************************************/
 
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace TagLib.Asf
 {
@@ -64,7 +64,7 @@ namespace TagLib.Asf
          ext_description.RemoveDescriptors (name);
       }
       
-      public ContentDescriptor [] GetDescriptors (string name)
+      public IEnumerable<ContentDescriptor> GetDescriptors (string name)
       {
          return ext_description.GetDescriptors (name);
       }
@@ -276,7 +276,7 @@ namespace TagLib.Asf
       {
          get
          {
-         	ArrayList l = new ArrayList ();
+         	List<IPicture> l = new List<IPicture> ();
          	
             foreach (ContentDescriptor descriptor in GetDescriptors ("WM/Picture"))
          	{
@@ -309,7 +309,7 @@ namespace TagLib.Asf
             	l.Add (p);
             }
             
-            return (Picture []) l.ToArray (typeof (Picture));
+            return l.ToArray ();
          }
          
          set

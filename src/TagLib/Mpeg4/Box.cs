@@ -37,7 +37,7 @@ namespace TagLib.Mpeg4
       public    virtual ByteVector BoxType      {get {return header.BoxType;}}
       public    virtual int        Size         {get {return (int)header.TotalBoxSize;}}
       protected         int        DataSize     {get {return (int)(header.DataSize + data_offset - DataOffset);}}
-      protected virtual long       DataOffset   {get {return data_offset;}}
+      protected virtual long      DataOffset   {get {return data_offset;}}
       protected         BoxHeader  Header       {get {return header;}}
       
       public virtual ByteVector Data  {get {return null;} set {}}

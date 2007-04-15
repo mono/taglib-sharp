@@ -102,6 +102,8 @@ namespace TagLib.Id3v2
       
       protected StringType CorrectEncoding (StringType type, uint version)
       {
+         if (Tag.ForceDefaultEncoding)
+            type = Tag.DefaultEncoding;
          return (version < 4 && type == StringType.UTF8) ? StringType.UTF16 : type;
       }
       

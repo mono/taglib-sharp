@@ -147,6 +147,7 @@ namespace TagLib.Mpeg4
          
          udta_box = parser.UserDataBox;
          apple_tag = new AppleTag (ref udta_box);
+         tag.SetTags (apple_tag);
          
          // If we're not reading properties, we're done.
          if (properties_style == ReadStyle.None)

@@ -51,6 +51,18 @@ namespace TagLib.Id3v2
          identifier = id;
       }
       
+      public static UniqueFileIdentifierFrame Get (Tag tag, string owner, bool create)
+      {
+         foreach (UniqueFileIdentifierFrame f in tag.GetFrames ("UFID"))
+            if (f != null && f.Owner == owner)
+               return f;
+         
+         if (!create) return null;
+         
+         UniqueFileIdentifierFrame frame = new UniqueFileIdentifierFrame (owner, null);
+         tag.AddFrame (frame);
+         return frame;
+      }
       
       //////////////////////////////////////////////////////////////////////////
       // public properties

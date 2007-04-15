@@ -19,7 +19,7 @@
  *   USA                                                                   *
  ***************************************************************************/
 
-using System.Collections;
+using System.Collections.Generic;
 using System;
 
 namespace TagLib.Asf
@@ -30,7 +30,7 @@ namespace TagLib.Asf
       // private properties
       //////////////////////////////////////////////////////////////////////////
       private ByteVector reserved;
-      private ArrayList children;
+      private List<Object> children;
       
       //////////////////////////////////////////////////////////////////////////
       // public methods
@@ -40,7 +40,7 @@ namespace TagLib.Asf
          if (!Guid.Equals (Asf.Guid.AsfHeaderObject))
             throw new CorruptFileException ("Object GUID incorrect.");
          
-         children = new ArrayList ();
+         children = new List<Object> ();
          
          uint child_count = file.ReadDWord ();
          
@@ -96,6 +96,6 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       public byte [] Reserved {get {return reserved.Data;}}
       
-      public Object [] Children {get {return (Object []) children.ToArray (typeof (Object));}}
+      public Object [] Children {get {return children.ToArray ();}}
    }
 }

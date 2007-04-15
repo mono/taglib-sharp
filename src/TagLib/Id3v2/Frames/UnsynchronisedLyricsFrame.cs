@@ -19,15 +19,20 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public UnsynchronisedLyricsFrame(StringType encoding)
-            : base("USLT", 4)
+      public UnsynchronisedLyricsFrame (string description, ByteVector language, StringType encoding) : base ("USLT", 4)
       {
          text_encoding = encoding;
-         language = null;
-         description = null;
+         this.language = language;
+         this.description = description;
          text = null;
       }
+      
+      public UnsynchronisedLyricsFrame (string description, ByteVector language) : this (description, language, TagLib.Id3v2.Tag.DefaultEncoding)
+      {}
 
+      public UnsynchronisedLyricsFrame (string description) : this (description, null)
+      {}
+      
       public UnsynchronisedLyricsFrame(ByteVector data, uint version)
             : base(data, version)
       {
@@ -49,14 +54,64 @@ namespace TagLib.Id3v2
          this.text = text;
       }
       
-      public static UnsynchronisedLyricsFrame Find (Tag tag, string description)
+      public static UnsynchronisedLyricsFrame Get (Tag tag, string description, ByteVector language, bool create)
       {
-         foreach (UnsynchronisedLyricsFrame f in tag.GetFrames ("USLT"))
-            if (f != null && f.Description == description)
-               return f;
-         return null;
+         foreach (Frame f in tag.GetFrames ("USLT"))
+         {
+            UnsynchronisedLyricsFrame cf = f as UnsynchronisedLyricsFrame;
+            
+            if (cf != null && cf.Description == description && (language == null || language == cf.Language))
+               return cf;
+         }
+         
+         if (!create)
+            return null;
+         
+         UnsynchronisedLyricsFrame frame = new UnsynchronisedLyricsFrame (description, language);
+         tag.AddFrame (frame);
+         return frame;
       }
       
+      public static UnsynchronisedLyricsFrame GetPreferred (Tag tag, string description, ByteVector language, bool create)
+      {
+         // This is weird, so bear with me. The best thing we can have is 
+         // something straightforward and in our own language. If it has a 
+         // description, then it is probably used for something other than
+         // an actual comment. If that doesn't work, we'd still rather have 
+         // something in our language than something in another. After that
+         // all we have left are things in other languages, so we'd rather 
+         // have one with actual content, so we try to get one with no 
+         // description first.
+         
+         int best_value = -1;
+         UnsynchronisedLyricsFrame best_frame = null;
+         
+         foreach (Frame f in tag.GetFrames ("USLT"))
+         {
+            UnsynchronisedLyricsFrame cf = f as UnsynchronisedLyricsFrame;
+            if (cf == null) continue;
+            
+            bool same_name = cf.Description == description;
+            bool same_lang = cf.Language == language;
+            
+            if (same_name && same_lang) return cf;
+            
+            int value = same_lang ? 2 : same_name ? 1 : 0;
+            
+            if (value <= best_value)
+               continue;
+            
+            best_value = value;
+            best_frame = cf;
+         }
+         
+         if (best_frame == null && create)
+         {
+            best_frame = new UnsynchronisedLyricsFrame (description, language);
+            tag.AddFrame (best_frame);
+         }
+         return best_frame;
+      }
       
       //////////////////////////////////////////////////////////////////////////
       // public properties

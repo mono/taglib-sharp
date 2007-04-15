@@ -19,7 +19,7 @@
  *   USA                                                                   *
  ***************************************************************************/
 
-using System.Collections;
+using System.Collections.Generic;
 
 namespace TagLib.Asf
 {
@@ -28,7 +28,7 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       // private properties
       //////////////////////////////////////////////////////////////////////////
-      private ArrayList descriptors;
+      private List<ContentDescriptor> descriptors;
       
       
       //////////////////////////////////////////////////////////////////////////
@@ -42,7 +42,7 @@ namespace TagLib.Asf
          if (OriginalSize < 26)
             throw new CorruptFileException ("Object size too small.");
          
-         descriptors = new ArrayList ();
+         descriptors = new List<ContentDescriptor> ();
          
          short count = file.ReadWord ();
          
@@ -55,7 +55,7 @@ namespace TagLib.Asf
       
       public ExtendedContentDescriptionObject () : base (Asf.Guid.AsfExtendedContentDescriptionObject)
       {
-         descriptors = new ArrayList ();
+         descriptors = new List<ContentDescriptor> ();
       }
       
       public override ByteVector Render ()
@@ -79,15 +79,11 @@ namespace TagLib.Asf
                descriptors.RemoveAt (i);
       }
       
-      public ContentDescriptor [] GetDescriptors (string name)
+      public IEnumerable<ContentDescriptor> GetDescriptors (string name)
       {
-         ArrayList l = new ArrayList ();
-         
          foreach (ContentDescriptor desc in descriptors)
             if (desc.Name == name)
-               l.Add (desc);
-         
-         return (ContentDescriptor []) l.ToArray (typeof (ContentDescriptor));
+               yield return desc;
       }
 
       public void AddDescriptor (ContentDescriptor descriptor)

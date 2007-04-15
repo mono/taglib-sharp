@@ -71,12 +71,18 @@ namespace TagLib.Id3v2
          return text;
       }
       
-      public static GeneralEncapsulatedObjectFrame Find (Tag tag, string description)
+      public static GeneralEncapsulatedObjectFrame Get (Tag tag, string description, bool create)
       {
          foreach (GeneralEncapsulatedObjectFrame f in tag.GetFrames ("GEOB"))
             if (f != null && f.Description == description)
                return f;
-         return null;
+         
+         if (!create) return null;
+         
+         GeneralEncapsulatedObjectFrame frame = new GeneralEncapsulatedObjectFrame ();
+         frame.Description = description;
+         tag.AddFrame (frame);
+         return frame;
       }
       
       

@@ -180,10 +180,10 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public UserTextIdentificationFrame (StringType encoding) : base ("TXXX", encoding)
+      public UserTextIdentificationFrame (string description, StringType encoding) : base ("TXXX", encoding)
       {
          StringList l = new StringList ();
-         l.Add ((string)null);
+         l.Add (description);
          l.Add ((string)null);
          
          base.SetText (l);
@@ -215,14 +215,29 @@ namespace TagLib.Id3v2
          base.SetText (l);
       }
       
-      public static UserTextIdentificationFrame Find (Tag tag, string description)
+      public static UserTextIdentificationFrame Get (Tag tag, string description, StringType type, bool create)
       {
          foreach (UserTextIdentificationFrame f in tag.GetFrames ("TXXX"))
             if (f != null && f.Description == description)
                return f;
-         return null;
+         
+         if (!create)
+            return null;
+         
+         UserTextIdentificationFrame frame = new UserTextIdentificationFrame (description, type);
+         tag.AddFrame (frame);
+         return frame;
+      }
+
+      public static UserTextIdentificationFrame Get (Tag tag, string description, bool create)
+      {
+         return Get (tag, description, TagLib.Id3v2.Tag.DefaultEncoding, create);
       }
       
+      public static UserTextIdentificationFrame Get (Tag tag, string description)
+      {
+         return Get (tag, description, false);
+      }
       
       //////////////////////////////////////////////////////////////////////////
       // public properties

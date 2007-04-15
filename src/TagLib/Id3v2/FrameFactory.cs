@@ -31,8 +31,6 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // private properties
       //////////////////////////////////////////////////////////////////////////
-      private static StringType          default_encoding     = StringType.UTF8;
-      private static bool                use_default_encoding = false;
       private static List<FrameCreator>  frame_creators       = new List<FrameCreator> ();
       
       //////////////////////////////////////////////////////////////////////////
@@ -102,9 +100,6 @@ namespace TagLib.Id3v2
             ? new TextIdentificationFrame (data, offset, header, version)
             : new UserTextIdentificationFrame (data, offset, header, version);
             
-            if(use_default_encoding)
-               f.TextEncoding = default_encoding;
-            
             if (frame_id == "TCON" && version < 4)
                UpdateGenre (f);
             
@@ -114,38 +109,17 @@ namespace TagLib.Id3v2
          // Unsynchronized Lyrics (frames 4.8)
 
          if (frame_id == "USLT")
-         {
-            UnsynchronisedLyricsFrame f = new UnsynchronisedLyricsFrame (data, offset, header, version);
-            
-            if(use_default_encoding)
-               f.TextEncoding = default_encoding;
-            
-            return f;
-         }
+            return new UnsynchronisedLyricsFrame (data, offset, header, version);
 
          // Comments (frames 4.10)
 
          if (frame_id == "COMM")
-         {
-            CommentsFrame f = new CommentsFrame (data, offset, header, version);
-            
-            if(use_default_encoding)
-               f.TextEncoding = default_encoding;
-            
-            return f;
-         }
+            return new CommentsFrame (data, offset, header, version);
 
          // Attached Picture (frames 4.14)
 
          if (frame_id == "APIC")
-         {
-            AttachedPictureFrame f = new AttachedPictureFrame (data, offset, header, version);
-            
-            if(use_default_encoding)
-               f.TextEncoding = default_encoding;
-            
-            return f;
-         }
+            return new AttachedPictureFrame (data, offset, header, version);
 
          // Relative Volume Adjustment (frames 4.11)
 
@@ -170,19 +144,6 @@ namespace TagLib.Id3v2
          return new UnknownFrame (data, offset, header, version);
       }
 
-      public static StringType DefaultTextEncoding
-      {
-         get
-         {
-            return default_encoding;
-         }
-         set
-         {
-            use_default_encoding = true;
-            default_encoding = value;
-         }
-      }
-      
       public static void AddFrameCreator (FrameCreator creator)
       {
          if (creator != null)

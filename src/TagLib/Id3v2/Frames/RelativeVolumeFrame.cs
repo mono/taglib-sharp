@@ -126,12 +126,17 @@ namespace TagLib.Id3v2
          SetPeakVolumeIndex ((ulong) (adjustment * 512.0), type);
       }
       
-      public static RelativeVolumeFrame Find (Tag tag, string identification)
+      public static RelativeVolumeFrame Get (Tag tag, string identification, bool create)
       {
          foreach (RelativeVolumeFrame f in tag.GetFrames ("RVA2"))
             if (f != null && f.Identification == identification)
                return f;
-         return null;
+         
+         if (!create) return null;
+         
+         RelativeVolumeFrame frame = new RelativeVolumeFrame (identification);
+         tag.AddFrame (frame);
+         return frame;
       }
       
       

@@ -77,28 +77,47 @@ namespace TagLib.Id3v2
          return description != null ? s : description + " " + s;
       }
       
-      public static AttachedPictureFrame Find (Tag tag, string description)
+      public static AttachedPictureFrame Get (Tag tag, string description, bool create)
       {
          foreach (AttachedPictureFrame f in tag.GetFrames ("APIC"))
             if (f != null && f.Description == description)
                return f;
-         return null;
+         
+         if (!create) return null;
+         
+         AttachedPictureFrame frame = new AttachedPictureFrame ();
+         frame.Description = description;
+         tag.AddFrame (frame);
+         return frame;
       }
       
-      public static AttachedPictureFrame Find (Tag tag, PictureType type)
+      public static AttachedPictureFrame Get (Tag tag, PictureType type, bool create)
       {
          foreach (AttachedPictureFrame f in tag.GetFrames ("APIC"))
             if (f != null && f.Type == type)
                return f;
-         return null;
+         
+         if (!create) return null;
+         
+         AttachedPictureFrame frame = new AttachedPictureFrame ();
+         frame.Type = type;
+         tag.AddFrame (frame);
+         return frame;
       }
       
-      public static AttachedPictureFrame Find (Tag tag, string description, PictureType type)
+      public static AttachedPictureFrame Get (Tag tag, string description, PictureType type, bool create)
       {
          foreach (AttachedPictureFrame f in tag.GetFrames ("APIC"))
             if (f != null && f.Description == description && f.Type == type)
                return f;
-         return null;
+         
+         if (!create) return null;
+         
+         AttachedPictureFrame frame = new AttachedPictureFrame ();
+         frame.Description = description;
+         frame.Type = type;
+         tag.AddFrame (frame);
+         return frame;
       }
       
       

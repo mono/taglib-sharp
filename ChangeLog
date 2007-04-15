@@ -1,3 +1,41 @@
+2007-04-15  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Id3v2/FrameFactory.cs: Removed DefaultEncoding stuff from
+	FrameFactory and put it in Tag. Additionally, instead of enforcing the
+	default encoding at read time, it is enforced at render time. It has
+	also been changed so the tags save in the same version they were read in
+	by default. This should avoid the greatest number of problems without
+	the need for developer intervention.
+	* src/TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:
+	* src/TagLib/Id3v2/Frames/UniqueFileIdentifierFrame.cs:
+	* src/TagLib/Id3v2/Frames/PrivateFrame.cs:
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs:
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs: Replace Find with
+	Get (Tag tag, ..., bool create). This new method will find a specified
+	frame if it exists, and can create it and append it if it doesn't.
+	* src/TagLib/Id3v2/Frame.cs: Enforce ForceDefaultEncoding.
+	* src/TagLib/Asf/Tag.cs:
+	* src/TagLib/Asf/File.cs:
+	* src/TagLib/Asf/HeaderObject.cs:
+	* src/TagLib/Asf/ExtendedContentDescriptionObject.cs: All generic.
+	* src/TagLib/Mpeg4/File.cs:
+	* src/TagLib/Mpeg4/Box.cs: AppleTag wasn't getting attached to .Tag
+	* tests/tests.mdp: Removed ApeFormatTest as it was unsupported.
+	* tests/fixtures/TagLib.FormatTests/FlacFormatTest.cs:
+	* tests/fixtures/TagLib.FormatTests/Id3V1FormatTest.cs:
+	* tests/fixtures/TagLib.FormatTests/Id3V2FormatTest.cs:
+	* tests/fixtures/TagLib.FormatTests/AsfFormatTest.cs:
+	* tests/fixtures/TagLib.FormatTests/Id3BothFormatTest.cs:
+	* tests/fixtures/TagLib.FormatTests/OggFormatTest.cs:
+	* tests/fixtures/TagLib.FormatTests/MpcFormatTest.cs:
+	* tests/fixtures/TagLib.FormatTests/M4aFormatTest.cs: Updated for new
+	API.
+	* configure.ac: Version bump.
+
 2007-04-09  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/AssemblyInfo-windows.cs:

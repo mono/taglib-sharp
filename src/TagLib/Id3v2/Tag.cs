@@ -20,7 +20,7 @@
  *   USA                                                                   *
  ***************************************************************************/
 
-using System.Collections;
+using System.Collections.Generic;
 using System;
 
 namespace TagLib.Id3v2
@@ -36,10 +36,14 @@ namespace TagLib.Id3v2
       private ExtendedHeader extended_header;
       private Footer         footer;
 
-      private ArrayList      frame_list;
+      private List<Frame>    frame_list;
       
       private static ByteVector language = "eng";
-      private static uint render_version = 4;
+      private static uint default_version = 4;
+      private static bool force_default_version = false;
+      private static StringType default_string_type = StringType.UTF8;
+      private static bool force_default_string_type = false;
+      
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
@@ -49,7 +53,7 @@ namespace TagLib.Id3v2
          header          = new Header ();
          extended_header = null;
          footer          = null;
-         frame_list      = new ArrayList ();
+         frame_list      = new List<Frame> ();
       }
       
       public Tag (File file, long tag_offset) : this ()
@@ -59,32 +63,41 @@ namespace TagLib.Id3v2
          Read (file);
       }
 
-      public Frame [] GetFrames ()
+      public IEnumerable<Frame> GetFrames ()
       {
-         return (Frame []) frame_list.ToArray (typeof (Frame));
+         return frame_list;
       }
 
-      public Frame [] GetFrames (ByteVector id)
+      public IEnumerable<Frame> GetFrames (ByteVector id)
       {
-         ArrayList l = new ArrayList ();
          foreach (Frame f in frame_list)
             if (f.FrameId == id)
-               l.Add (f);
-         
-         return (Frame []) l.ToArray (typeof (Frame));
+               yield return f;
       }
-
+      
       public void AddFrame (Frame frame)
       {
         frame_list.Add (frame);
       }
-
+      
+      public void ReplaceFrame (Frame old_frame, Frame new_frame)
+      {
+         if (old_frame == new_frame)
+            return;
+         
+         int i = frame_list.IndexOf (old_frame);
+         if (i >= 0)
+            frame_list [i] = new_frame;
+         else
+            frame_list.Add (new_frame);
+      }
+      
       public void RemoveFrame (Frame frame)
       {
          if (frame_list.Contains (frame))
             frame_list.Remove (frame);
       }
-
+      
       public void RemoveFrames (ByteVector id)
       {
          for (int i = frame_list.Count - 1; i >= 0; i --)
@@ -94,7 +107,7 @@ namespace TagLib.Id3v2
                RemoveFrame (f);
          }
       }
-
+      
       public ByteVector Render (uint version)
       {
          // We need to render the "tag data" first so that we have to correct size to
@@ -153,7 +166,7 @@ namespace TagLib.Id3v2
             header.FooterPresent = true;
          
          // Make sure footers are rendered properly.
-         return Render ((end_tag && RenderVersion < 4) ? 4 : RenderVersion);
+         return Render ((end_tag && Version < 4) ? 4 : Version);
       }
       
       
@@ -234,77 +247,13 @@ namespace TagLib.Id3v2
       {
          get
          {
-            // This is weird, so bear with me. The best thing we can have is 
-            // something straightforward and in our own language. If it has a 
-            // description, then it is probably used for something other than
-            // an actual comment. If that doesn't work, we'd still rather have 
-            // something in our language than something in another. After that
-            // all we have left are things in other languages, so we'd rather 
-            // have one with actual content, so we try to get one with no 
-            // description first.
-            Frame [] frames = GetFrames ("COMM");
-            
-            foreach (CommentsFrame f in frames)
-               if (f.Description == String.Empty && f.Language == Language)
-                  return f.ToString ();
-            
-            foreach (CommentsFrame f in frames)
-               if (f.Language == Language)
-                  return f.ToString ();
-            
-            foreach (CommentsFrame f in frames)
-               if (f.Description == String.Empty)
-                  return f.ToString ();
-            
-            foreach (CommentsFrame f in frames)
-               return f.ToString ();
-            
-            return null;
+            CommentsFrame f = CommentsFrame.GetPreferred (this, String.Empty, Language, false);
+            return f != null ? f.ToString () : null;
          }
          set
          {
-            if (value == null || value == string.Empty)
-            {
-               RemoveFrames ("COMM");
-               return;
-            }
-            
-            // See above.
-            Frame [] frames = GetFrames ("COMM");
-            
-            foreach (CommentsFrame f in frames)
-               if (f.Description == String.Empty && f.Language == Language)
-               {
-                  f.SetText (value);
-                  return;
-               }
-            
-            foreach (CommentsFrame f in frames)
-               if (f.Language == Language)
-               {
-                  f.SetText (value);
-                  return;
-               }
-            
-            foreach (CommentsFrame f in frames)
-               if (f.Description == String.Empty)
-               {
-                  f.SetText (value);
-                  return;
-               }
-            
-            foreach (CommentsFrame f in frames)
-            {
-               f.SetText (value);
-               return;
-            }
-            
-            // There were absolutely no comment frames. Let's add one in our
-            // language.
-            CommentsFrame frame = new CommentsFrame (FrameFactory.DefaultTextEncoding);
-            frame.Language = Language;
-            frame.SetText (value);
-            AddFrame (frame);
+            CommentsFrame f = CommentsFrame.GetPreferred (this, String.Empty, Language, true);
+            f.SetText (value);
          }
       }
       
@@ -312,15 +261,11 @@ namespace TagLib.Id3v2
       {
          get
          {
-            ArrayList l = new ArrayList ();
-            
-            Frame [] frames = GetFrames ("TCON");
-            TextIdentificationFrame frame;
-            if (frames.Length != 0 && (frame = (TextIdentificationFrame) frames [0]) != null)
+            foreach (TextIdentificationFrame frame in GetFrames ("TCON"))
             {
-               StringList fields = frame.FieldList;
+               StringList l = new StringList ();
 
-               foreach (string s in fields)
+               foreach (string s in frame.FieldList)
                {
                   byte value;
                   
@@ -345,9 +290,11 @@ namespace TagLib.Id3v2
                   // We don't have a number, add the string.
                   l.Add (s);
                }
+               
+               return l.ToArray ();
             }
             
-            return (string []) l.ToArray (typeof (string));
+            return new string [0];
          }
          set
          {
@@ -455,17 +402,11 @@ namespace TagLib.Id3v2
       
       public override IPicture [] Pictures {
          get { 
-            Frame [] raw_frames = GetFrames("APIC");
-            if(raw_frames == null || raw_frames.Length == 0) {
-               return base.Pictures;
-            }
+            List<AttachedPictureFrame> frames = new List<AttachedPictureFrame> ();
+            foreach (Frame f in GetFrames("APIC"))
+               frames.Add (f as AttachedPictureFrame);
             
-            AttachedPictureFrame [] frames = new AttachedPictureFrame[raw_frames.Length];
-            for(int i = 0; i < frames.Length; i++) {
-                frames[i] = (AttachedPictureFrame)raw_frames[i];
-            }
-            
-            return frames;
+            return frames.Count > 0 ? frames.ToArray () : base.Pictures;
          }
          
          set {
@@ -486,70 +427,13 @@ namespace TagLib.Id3v2
       {
          get
          {
-            // SEE Comment property for explanation.
-            Frame [] frames = GetFrames ("USLT");
-            
-            foreach (UnsynchronisedLyricsFrame f in frames)
-               if (f.Description == String.Empty && f.Language == Language)
-                  return f.ToString ();
-            
-            foreach (UnsynchronisedLyricsFrame f in frames)
-               if (f.Language == Language)
-                  return f.ToString ();
-            
-            foreach (UnsynchronisedLyricsFrame f in frames)
-               if (f.Description == String.Empty)
-                  return f.ToString ();
-            
-            foreach (UnsynchronisedLyricsFrame f in frames)
-               return f.ToString ();
-            
-            return null;
+            UnsynchronisedLyricsFrame f = UnsynchronisedLyricsFrame.GetPreferred (this, String.Empty, Language, false);
+            return f != null ? f.ToString () : null;
          }
          set
          {
-            if (value == null || value == string.Empty)
-            {
-               RemoveFrames ("USLT");
-               return;
-            }
-            
-            // See above.
-            Frame [] frames = GetFrames ("USLT");
-            
-            foreach (UnsynchronisedLyricsFrame f in frames)
-               if (f.Description == String.Empty && f.Language == Language)
-               {
-                  f.SetText (value);
-                  return;
-               }
-            
-            foreach (UnsynchronisedLyricsFrame f in frames)
-               if (f.Language == Language)
-               {
-                  f.SetText (value);
-                  return;
-               }
-            
-            foreach (UnsynchronisedLyricsFrame f in frames)
-               if (f.Description == String.Empty)
-               {
-                  f.SetText (value);
-                  return;
-               }
-            
-            foreach (UnsynchronisedLyricsFrame f in frames)
-            {
-               f.SetText (value);
-               return;
-            }
-            
-            // There were absolutely no lyrics frames. Let's add one in our
-            // language.
-            UnsynchronisedLyricsFrame frame = new UnsynchronisedLyricsFrame (FrameFactory.DefaultTextEncoding);
-            frame.Language = Language;
-            frame.SetText (value);
-            AddFrame (frame);
+            UnsynchronisedLyricsFrame f = UnsynchronisedLyricsFrame.GetPreferred (this, String.Empty, Language, true);
+            f.SetText (value);
          }
       }
       
@@ -569,18 +453,44 @@ namespace TagLib.Id3v2
          set {language = (value == null || value.Count < 3) ? "XXX" : value.Mid (0,3);}
       }
       
-      public static uint RenderVersion
+      public uint Version
       {
-         get {return render_version;}
+         get {return ForceDefaultVersion ? DefaultVersion : header.MajorVersion;}
+         set
+         {
+            header.MajorVersion = value;
+         }
+      }
+      
+      public static uint DefaultVersion
+      {
+         get {return default_version;}
          set
          {
             if (value < 2 || value > 4)
                throw new ArgumentException ("Unsupported version");
             
-            render_version = value;
+            default_version = value;
          }
       }
       
+      public static bool ForceDefaultVersion
+      {
+         get {return force_default_version;}
+         set {force_default_version = value;}
+      }
+
+      public static StringType DefaultEncoding
+      {
+         get {return default_string_type;}
+         set {default_string_type = value;}
+      }
+      
+      public static bool ForceDefaultEncoding
+      {
+         get {return force_default_string_type;}
+         set {force_default_string_type = value;}
+      }
       
       //////////////////////////////////////////////////////////////////////////
       // protected methods
@@ -681,24 +591,21 @@ namespace TagLib.Id3v2
             return;
          }
          
-         Frame [] frames = GetFrames (id);
-         if (frames.Length != 0)
+         bool no_frames = true;
+         foreach (TextIdentificationFrame frame in GetFrames (id))
          {
-            bool first = true;
-            foreach (TextIdentificationFrame frame in frames)
-            {
-               // There should only be one of each text frame, per the specification.
-               if (first)
-                  frame.SetText (value);
-               else
-                  RemoveFrame (frame);
-               
-               first = false;
-            }
+            // There should only be one of each text frame, per the specification.
+            if (no_frames)
+               frame.SetText (value);
+            else
+               RemoveFrame (frame);
+            
+            no_frames = false;
          }
-         else
+         
+         if (no_frames)
          {
-            TextIdentificationFrame f = new TextIdentificationFrame (id, FrameFactory.DefaultTextEncoding);
+            TextIdentificationFrame f = new TextIdentificationFrame (id, Tag.DefaultEncoding);
             AddFrame (f);
             f.SetText (value);
          }

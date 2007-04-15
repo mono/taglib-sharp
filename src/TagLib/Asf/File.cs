@@ -20,7 +20,7 @@
  *   USA                                                                   *
  ***************************************************************************/
 
-using System.Collections;
+using System.Collections.Generic;
 using System;
 
 namespace TagLib.Asf
@@ -117,7 +117,7 @@ namespace TagLib.Asf
       
       public Object [] ReadObjects (uint count, long position)
       {
-         ArrayList l = new ArrayList ();
+         List<Object> l = new List<Object> ();
          for (int i = 0; i < (int) count; i ++)
          {
             Seek (position);
@@ -142,7 +142,7 @@ namespace TagLib.Asf
             position += obj.OriginalSize;
          }
          
-         return (Object []) l.ToArray (typeof (Object));
+         return l.ToArray ();
       }
       
       

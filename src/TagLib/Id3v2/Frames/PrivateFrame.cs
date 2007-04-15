@@ -59,14 +59,18 @@ namespace TagLib.Id3v2
          return owner;
       }
       
-      public static PrivateFrame Find (Tag tag, string owner)
+      public static PrivateFrame Get (Tag tag, string owner, bool create)
       {
          foreach (PrivateFrame f in tag.GetFrames ("PRIV"))
             if (f != null && f.Owner == owner)
                return f;
-         return null;
+         
+         if (!create) return null;
+         
+         PrivateFrame frame = new PrivateFrame (owner);
+         tag.AddFrame (frame);
+         return frame;
       }
-      
       
       //////////////////////////////////////////////////////////////////////////
       // public properties
