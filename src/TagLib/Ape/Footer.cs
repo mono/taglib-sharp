@@ -1,7 +1,7 @@
 /***************************************************************************
     copyright            : (C) 2005 by Brian Nickel
     email                : brian.nickel@gmail.com
-    based on             : id3v2frame.cpp from TagLib
+    based on             : apefooter.cpp from TagLib
  ***************************************************************************/
 
 /***************************************************************************
@@ -27,9 +27,8 @@ namespace TagLib.Ape
 {
    public class Footer
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
+#region Private Properties
+      
       private uint version;
       private bool footer_present;
       private bool header_present;
@@ -38,18 +37,21 @@ namespace TagLib.Ape
       private uint tag_size;
       private static uint size = 32;
       
-      //////////////////////////////////////////////////////////////////////////
-      // static members
-      //////////////////////////////////////////////////////////////////////////
-      public static uint Size {get {return size;}}
+#endregion
       
+      
+#region Static Properties
+      
+      public static uint Size {get {return size;}}
       public static readonly ByteVector FileIdentifier = "APETAGEX";
       
+#endregion
       
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
+      
+#region Constructors
+      
       public Footer ()
+      // Creates a new, empty footer.
       {
          version = 0;
          footer_present = true;
@@ -59,34 +61,45 @@ namespace TagLib.Ape
          tag_size = 0;
       }
       
-      public Footer(ByteVector data) : this ()
+      public Footer (ByteVector data) : this ()
+      // Creates a new footer from given data.
       {
          Parse (data);
       }
       
-      public void SetData (ByteVector data)
+      public Footer (File file, long offset) : this ()
+      // Creates a new footer by reading a file.
       {
-         Parse (data);
+         file.Seek (offset);
+         Parse (file.ReadBlock (Size));
       }
+      
+#endregion
+      
+      
+#region Public Methods
       
       public ByteVector RenderFooter ()
+      // Renders the footer.
       {
          return Render (false);
       }
       
       public ByteVector RenderHeader ()
+      // Renders the header, if present, otherwise returns an empty ByteVector.
       {
          return HeaderPresent ? Render (true) : new ByteVector ();
       }
       
+#endregion
       
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
+      
+#region Public Properties
+      
       public uint Version       {get {return version;}}
       public bool FooterPresent {get {return footer_present;}}
       public bool IsHeader      {get {return is_header;}}
-
+      
       public bool HeaderPresent
       {
          get {return header_present;}
@@ -110,11 +123,13 @@ namespace TagLib.Ape
          get {return TagSize + (HeaderPresent ? Size : 0);}
       }
       
+#endregion
       
-      //////////////////////////////////////////////////////////////////////////
-      // protected methods
-      //////////////////////////////////////////////////////////////////////////
+      
+#region Protected Methods
+      
       protected void Parse (ByteVector data)
+      // Parses raw header data from a ByteVector.
       {
          if (data.Count < Size)
             throw new CorruptFileException ("Provided data is smaller than object size.");
@@ -139,8 +154,9 @@ namespace TagLib.Ape
          footer_present = ((flags >> 30) & 1) != 1;
          is_header = ((flags >> 29) & 1) == 1;
       }
-
+      
       protected ByteVector Render (bool is_header)
+      // Renders either a header or a footer.
       {
          ByteVector v = new ByteVector ();
 
@@ -171,5 +187,7 @@ namespace TagLib.Ape
 
          return v;
       }
+      
+#endregion
    }
 }

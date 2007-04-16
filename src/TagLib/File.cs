@@ -84,6 +84,9 @@ namespace TagLib
       
       public ByteVector ReadBlock (int length)
       {
+         if (length < 0)
+            throw new ArgumentException ("Length must be non-negative", "length");
+         
          if (length == 0)
             return new ByteVector ();
          
@@ -96,7 +99,12 @@ namespace TagLib
          int count = file_stream.Read (buffer, 0, length);
          return new ByteVector (buffer, count);
       }
-
+                           
+      public ByteVector ReadBlock (uint length)
+      {
+         return ReadBlock ((int) length);
+      }
+      
       public void WriteBlock (ByteVector data)
       {
          Mode = AccessMode.Write;
@@ -418,15 +426,6 @@ namespace TagLib
          Truncate (write_position);
       }
       
-      [Obsolete("This method is obsolete; it has no real use.")]
-      public void RemoveBlock (long start) {}
-      
-      [Obsolete("This method is obsolete; it has no real use.")]
-      public void RemoveBlock () {}
-      
-      [Obsolete("This property is obsolete; Invalid files now throw exceptions.")]
-      public bool IsValid {get {return true;}}
-      
       public void Seek (long offset, System.IO.SeekOrigin p)
       {
          if (Mode != AccessMode.Closed)
@@ -551,13 +550,6 @@ namespace TagLib
       //////////////////////////////////////////////////////////////////////////
       // protected members
       //////////////////////////////////////////////////////////////////////////
-      [Obsolete("This property is obsolete; invalid files now throw exceptions.")]
-      protected void SetValid (bool valid)
-      {
-         if (valid == false)
-            throw new CorruptFileException ();
-      }
-      
       protected void Truncate (long length)
       {
          Mode = AccessMode.Write;

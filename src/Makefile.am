@@ -85,6 +85,8 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Mpeg4/Boxes/AppleAnnotationBox.cs              \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoSampleTableBox.cs               \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoSampleEntry.cs                  \
+   $(srcdir)/TagLib/Mpeg4/Boxes/IsoAudioSampleEntry.cs             \
+   $(srcdir)/TagLib/Mpeg4/Boxes/IsoVisualSampleEntry.cs            \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoMetaBox.cs                      \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoSampleDescriptionBox.cs         \
    $(srcdir)/TagLib/Mpeg4/Boxes/AppleAdditionalInfoBox.cs          \

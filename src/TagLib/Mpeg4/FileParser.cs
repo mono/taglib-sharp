@@ -48,6 +48,21 @@ namespace TagLib.Mpeg4
             return null;
          }
       }
+      public IsoVisualSampleEntry VisualSampleEntry
+      {
+         get
+         {
+            foreach (IsoSampleDescriptionBox box in stsd_boxes)
+            {
+               foreach (Box sample_entry in box.Children)
+               {
+                  if (sample_entry is IsoVisualSampleEntry)
+                     return sample_entry as IsoVisualSampleEntry;
+               }
+            }
+            return null;
+         }
+      }
       public BoxHeader [] MoovTree {get {return moov_tree;}}
       public BoxHeader [] UdtaTree {get {return udta_tree;}}
       public Box [] ChunkOffsetBoxes {get {return stco_boxes.ToArray ();}}

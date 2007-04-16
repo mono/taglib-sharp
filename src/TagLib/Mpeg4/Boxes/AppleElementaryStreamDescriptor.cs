@@ -24,10 +24,9 @@ namespace TagLib.Mpeg4
          if (box_data [offset ++] == 3)
          {
             // We have a descriptor tag. Check that it's at least 20 long.
-            if (ReadLength (box_data, offset) < 20)
+            if (ReadLength (box_data, ref offset) < 20)
                throw new CorruptFileException ("Could not read data. Too small.");
             
-            offset += 4;
             es_id = box_data.Mid (offset, 2).ToShort ();
             offset += 2;
             stream_priority = box_data [offset ++];
@@ -46,9 +45,8 @@ namespace TagLib.Mpeg4
             throw new CorruptFileException ("Could not identify decoder configuration descriptor.");
 
          // Check that it's at least 15 long.
-         if (ReadLength (box_data, offset) < 15)
+         if (ReadLength (box_data, ref offset) < 15)
             throw new CorruptFileException ("Could not read data. Too small.");
-         offset += 4;
          
          // Read a lot of good info.
          object_type_id  = box_data [offset ++];
@@ -66,8 +64,7 @@ namespace TagLib.Mpeg4
             throw new CorruptFileException ("Could not identify decoder specific descriptor.");
          
          // The rest of the info is decoder specific.
-         uint length = ReadLength (box_data, offset); 
-         offset += 4;
+         uint length = ReadLength (box_data, ref offset); 
          decoder_config = box_data.Mid (offset, (int) length);
       }
       #endregion
@@ -84,7 +81,7 @@ namespace TagLib.Mpeg4
       #endregion
       
       #region Private Methods
-      private uint ReadLength (ByteVector data, int offset)
+      private uint ReadLength (ByteVector data, ref int offset)
       {
          byte b;
          int  end    = offset + 4;

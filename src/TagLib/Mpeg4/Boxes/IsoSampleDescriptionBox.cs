@@ -17,9 +17,9 @@ namespace TagLib.Mpeg4
       #endregion
       
       #region Public Properties
-      public uint EntryCount {get {return entry_count;}}
-      public override BoxList Children {get {return children;}}
-      protected override long DataOffset     {get {return base.DataOffset + 4;}}
+      public             uint    EntryCount {get {return entry_count;}}
+      public    override BoxList Children   {get {return children;}}
+      protected override long    DataOffset {get {return base.DataOffset + 4;}}
       #endregion
    }
 }

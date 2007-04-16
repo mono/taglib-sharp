@@ -1,5 +1,31 @@
 2007-04-15  Brian Nickel <brian.nickel@gmail.com>
 
+Added support for MPEG-4 video!
+
+	* src/TagLib/Tag.cs:
+	* src/TagLib/File.cs:
+	* src/TagLib/Mpeg/XingHeader.cs:
+	* src/TagLib/Properties.cs: Removed obsolete properties and methods.
+	* src/TagLib/Ape/Tag.cs:
+	* src/TagLib/Ape/Footer.cs:
+	* src/TagLib/Ape/Item.cs: Cleaned up formatting a bit.
+	* src/TagLib/Mpeg4/Boxes/IsoSampleEntry.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoAudioSampleEntry.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoVisualSampleEntry.cs:
+	* src/TagLib/Mpeg4/Boxes/AppleElementaryStreamDescriptor.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoSampleDescriptionBox.cs:
+	* src/TagLib/Mpeg4/Properties.cs:
+	* src/TagLib/Mpeg4/FileParser.cs:
+	* src/TagLib/Mpeg4/File.cs:
+	* src/TagLib/Mpeg4/BoxFactory.cs: Added visual support.
+	* src/Makefile.am
+	* src/taglib-sharp.mdp
+	* taglib-sharp.csproj: Added new files.
+	* tests/fixtures/TagLib.FormatTests/AsfFormatTest.cs: The test did not
+	represent the field interpretation.
+
+2007-04-15  Brian Nickel <brian.nickel@gmail.com>
+
 	* src/TagLib/Id3v2/Tag.cs:
 	* src/TagLib/Id3v2/FrameFactory.cs: Removed DefaultEncoding stuff from
 	FrameFactory and put it in Tag. Additionally, instead of enforcing the

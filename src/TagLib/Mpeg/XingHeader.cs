@@ -46,8 +46,6 @@ namespace TagLib.Mpeg
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
-      [Obsolete("This property is obsolete; Invalid files now throw exceptions.")]
-      public bool IsValid {get {return true;}}
       public uint TotalFrames {get {return frames;}}
       public uint TotalSize {get {return size;}}
 

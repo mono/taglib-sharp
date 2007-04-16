@@ -41,8 +41,6 @@ namespace TagLib
    
    public class Properties
    {
-      [Obsolete("This property is obsolete; use the Duration property instead.")]
-      public virtual int        Length          {get {return (int) Duration.TotalSeconds;}}
       public virtual TimeSpan   Duration        {get {return TimeSpan.Zero;}}
       public virtual int        AudioBitrate    {get {return 0;}}
       public virtual int        AudioSampleRate {get {return 0;}}

@@ -80,6 +80,8 @@
     <Compile Include="src\TagLib\Mpeg4\Boxes\IsoMovieHeaderBox.cs" />
     <Compile Include="src\TagLib\Mpeg4\Boxes\IsoSampleDescriptionBox.cs" />
     <Compile Include="src\TagLib\Mpeg4\Boxes\IsoSampleEntry.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\IsoAudioSampleEntry.cs" />
+    <Compile Include="src\TagLib\Mpeg4\Boxes\IsoVisualSampleEntry.cs" />
     <Compile Include="src\TagLib\Mpeg4\Boxes\IsoSampleTableBox.cs" />
     <Compile Include="src\TagLib\Mpeg4\Boxes\IsoUserDataBox.cs" />
     <Compile Include="src\TagLib\Mpeg4\Boxes\UnknownBox.cs" />

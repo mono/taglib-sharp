@@ -12,6 +12,8 @@ namespace TagLib.Mpeg4
          {
             if (handler != null && (handler as IsoHandlerBox).HandlerType == "soun")
                return new IsoAudioSampleEntry (header, file, handler);
+            else if (handler != null && (handler as IsoHandlerBox).HandlerType == "vide")
+               return new IsoVisualSampleEntry (header, file, handler);
             else
                return new IsoSampleEntry (header, file, handler);
          }

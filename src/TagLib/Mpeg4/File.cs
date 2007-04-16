@@ -3,10 +3,13 @@ using System;
 namespace TagLib.Mpeg4
 {
    [SupportedMimeType("taglib/m4a", "m4a")]
+   [SupportedMimeType("taglib/m4v", "m4v")]
    [SupportedMimeType("taglib/m4p", "m4p")]
    [SupportedMimeType("taglib/mp4", "mp4")]
    [SupportedMimeType("audio/mp4")]
    [SupportedMimeType("audio/x-m4a")]
+   [SupportedMimeType("video/mp4")]
+   [SupportedMimeType("video/x-m4v")]
    public class File : TagLib.File
    {
       //////////////////////////////////////////////////////////////////////////
@@ -158,10 +161,11 @@ namespace TagLib.Mpeg4
          if(mvhd_box == null)
             throw new CorruptFileException ("mvhd box not found.");
          
-         IsoAudioSampleEntry sample_entry = parser.AudioSampleEntry;
+         IsoAudioSampleEntry  audio_sample_entry  = parser.AudioSampleEntry;
+         IsoVisualSampleEntry visual_sample_entry = parser.VisualSampleEntry;
          
          // Read the properties.
-         properties = new Properties (mvhd_box, sample_entry, properties_style);
+         properties = new Properties (mvhd_box, audio_sample_entry, visual_sample_entry, properties_style);
       }
    }
 }

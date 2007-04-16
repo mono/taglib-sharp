@@ -30,15 +30,17 @@ namespace TagLib.Mpeg4
       // private properties
       //////////////////////////////////////////////////////////////////////////
       private IsoMovieHeaderBox   mvhd_box;
-      private IsoAudioSampleEntry sample_entry;
+      private IsoAudioSampleEntry audio_sample_entry;
+      private IsoVisualSampleEntry visual_sample_entry;
       
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public Properties (IsoMovieHeaderBox mvhd_box, IsoAudioSampleEntry sample_entry, ReadStyle style) : base (style)
+      public Properties (IsoMovieHeaderBox mvhd_box, IsoAudioSampleEntry audio_sample_entry, IsoVisualSampleEntry visual_sample_entry, ReadStyle style) : base (style)
       {
          this.mvhd_box = mvhd_box;
-         this.sample_entry = sample_entry;
+         this.audio_sample_entry = audio_sample_entry;
+         this.visual_sample_entry = visual_sample_entry;
       }
       
       
@@ -59,11 +61,11 @@ namespace TagLib.Mpeg4
          get
          {
             // If we don't have an stream descriptor, we don't know what's what.
-            if (sample_entry == null || sample_entry.Children.GetRecursively ("esds") == null)
+            if (audio_sample_entry == null || audio_sample_entry.Children.GetRecursively ("esds") == null)
                return 0;
             
             // Return from the elementary stream descriptor.
-            return (int) ((AppleElementaryStreamDescriptor) sample_entry.Children.GetRecursively ("esds")).AverageBitrate;
+            return (int) (audio_sample_entry.Children.GetRecursively ("esds") as AppleElementaryStreamDescriptor).AverageBitrate;
          }
       }
       
@@ -71,8 +73,7 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            // The sample entry has this info.
-            return sample_entry == null ? 0 : (int) sample_entry.SampleRate;
+            return audio_sample_entry == null ? 0 : (int) audio_sample_entry.SampleRate;
          }
       }
       
@@ -80,11 +81,36 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            // The sample entry has this info.
-            return sample_entry == null ? 0 : (int) sample_entry.ChannelCount;
+            return audio_sample_entry == null ? 0 : (int) audio_sample_entry.ChannelCount;
          }
       }
-      public override MediaTypes MediaTypes  {get {return MediaTypes.Audio;}}
+      public override int VideoWidth
+      {
+         get
+         {
+            return visual_sample_entry == null ? 0 : (int) visual_sample_entry.Width;
+         }
+      }
+      public override int VideoHeight
+      {
+         get
+         {
+            return visual_sample_entry == null ? 0 : (int) visual_sample_entry.Height;
+         }
+      }
+
+      public override MediaTypes MediaTypes
+      {
+         get
+         {
+            MediaTypes types = MediaTypes.Unknown;
+            if (audio_sample_entry != null)
+               types |= MediaTypes.Audio;
+            if (visual_sample_entry != null)
+               types |= MediaTypes.Video;
+            return types;
+         }
+      }
       
       // All additional special info from the Movie Header.
       public DateTime CreationTime     {get {return mvhd_box == null ? new System.DateTime (1904, 1, 1, 0, 0, 0) : mvhd_box.CreationTime;}}

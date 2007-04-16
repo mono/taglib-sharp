@@ -1,7 +1,7 @@
 /***************************************************************************
     copyright            : (C) 2005 by Brian Nickel
     email                : brian.nickel@gmail.com
-    based on             : id3v2frame.cpp from TagLib
+    based on             : apeitem.cpp from TagLib
  ***************************************************************************/
 
 /***************************************************************************
@@ -25,6 +25,8 @@ using System;
 
 namespace TagLib.Ape
 {
+#region Enumerators
+   
    public enum ItemType
    {
       Text = 0,   // Item contains text information coded in UTF-8
@@ -32,57 +34,60 @@ namespace TagLib.Ape
       Locator = 2 // Item is a locator of external stored information
    }
    
+#endregion
+   
+   
+#region Classes
+   
    public class Item
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
+#region Private Properties
+      
       private ItemType type;
       private string key;
       private ByteVector value;
       private StringList text;
       private bool read_only;
       
+#endregion
       
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
+      
+#region Constructors
+      
       public Item ()
+      // Creates a new empty item.
       {
-         type = ItemType.Text;
-         key = null;
-         value = null;
-         text = new StringList ();
+         type      = ItemType.Text;
+         key       = null;
+         value    = null;
+         text      = new StringList ();
          read_only = false;
       }
       
       public Item (string key, string value) : this ()
+      // Creates a new item with a given name and string.
       {
          this.key = key;
          this.text.Add (value);
       }
       
       public Item (string key, StringList value) : this ()
+      // Creates a new item with a given name and strings.
       {
          this.key = key;
          text.Add (value);
       }
       
       public Item (string key, ByteVector value) : this ()
+      // Creates a new item with a given name and data.
       {
          this.key = key;
          this.type = ItemType.Binary;
          this.value = value;
       }
       
-      public Item (Item item) : this ()
-      {
-         type = item.Type;
-         key = item.Key;
-         value = item.Value;
-         text = new StringList (item.ToStringArray ());
-         read_only = false;
-      }
+#endregion
+      
       public override string ToString ()
       {
          return text.ToString ();
@@ -176,10 +181,7 @@ namespace TagLib.Ape
                return value.IsEmpty;
          }
       }
-      
-      
-      //////////////////////////////////////////////////////////////////////////
-      // protected methods
-      //////////////////////////////////////////////////////////////////////////
    }
+   
+#endregion
 }

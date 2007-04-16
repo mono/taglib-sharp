@@ -1,7 +1,7 @@
 /***************************************************************************
     copyright            : (C) 2005 by Brian Nickel
     email                : brian.nickel@gmail.com
-    based on             : id3v2frame.cpp from TagLib
+    based on             : apetag.cpp from TagLib
  ***************************************************************************/
 
 /***************************************************************************
@@ -31,7 +31,6 @@ namespace TagLib.Ape
       //////////////////////////////////////////////////////////////////////////
       // private properties
       //////////////////////////////////////////////////////////////////////////
-      private long      tag_offset;
       private Footer    footer;
       private Dictionary<string,Item> items;
       
@@ -47,15 +46,13 @@ namespace TagLib.Ape
       //////////////////////////////////////////////////////////////////////////
       public Tag () : base ()
       {
-         tag_offset = -1;
          footer = new Footer ();
          items = new Dictionary<string,Item> ();
       }
       
-      public Tag (File file, long tag_offset) : this ()
+      public Tag (File file, long offset) : this ()
       {
-         this.tag_offset = tag_offset;
-         Read (file);
+         Read (file, offset);
       }
       
       public ByteVector Render ()
@@ -357,25 +354,24 @@ namespace TagLib.Ape
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
-      protected void Read (File file)
+      protected void Read (File file, long offset)
       {
          if (file == null)
             throw new ArgumentException ("File object is null.", "file");
          
          file.Mode = File.AccessMode.Read;
-         file.Seek (tag_offset);
-         footer.SetData (file.ReadBlock ((int) Footer.Size));
+         footer = new Footer (file, offset);
          
-         if(footer.TagSize == 0 || footer.TagSize > (uint) file.Length)
+         if(footer.TagSize == 0 || footer.TagSize > file.Length)
             throw new CorruptFileException ("Tag size out of bounds.");
       	
       	// If we've read a header, we don't have to seek to read the content.
       	// If we've read a footer, we need to move back to the start of the
       	// tag.
       	if (!footer.IsHeader)
-            file.Seek (tag_offset + Footer.Size - footer.TagSize);
+            file.Seek (offset + Footer.Size - footer.TagSize);
       	
-      	Parse (file.ReadBlock ((int) (footer.TagSize - Footer.Size)));
+      	Parse (file.ReadBlock (footer.TagSize - Footer.Size));
       }
 
       protected void Parse (ByteVector data)
