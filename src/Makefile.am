@@ -42,7 +42,9 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Mpeg/Properties.cs                             \
    $(srcdir)/TagLib/Mpeg/XingHeader.cs                             \
    $(srcdir)/TagLib/Mpeg/File.cs                                   \
-   $(srcdir)/TagLib/Mpeg/Header.cs                                 \
+   $(srcdir)/TagLib/Mpeg/AudioFile.cs                              \
+   $(srcdir)/TagLib/Mpeg/AudioHeader.cs                            \
+   $(srcdir)/TagLib/Mpeg/VideoHeader.cs                            \
    $(srcdir)/TagLib/NonContainer/EndTag.cs                         \
    $(srcdir)/TagLib/NonContainer/File.cs                           \
    $(srcdir)/TagLib/NonContainer/StartTag.cs                       \

@@ -40,7 +40,7 @@ namespace TagLib.Mpeg
       SingleChannel = 3  // Mono
    };
 
-   public class Header
+   public class AudioHeader
    {
       //////////////////////////////////////////////////////////////////////////
       // private properties
@@ -56,12 +56,13 @@ namespace TagLib.Mpeg
       private bool        is_original;
       private int         frame_length;
       private long        position;
+      private XingHeader  xing_header;
       
       
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public Header (ByteVector data, long offset)
+      private AudioHeader (long offset)
       {
           version            = Version.Version1;
           layer              = 0;
@@ -74,25 +75,51 @@ namespace TagLib.Mpeg
           is_original        = false;
           frame_length       = 0;
           position           = offset;
-          
-          Parse (data);
+          xing_header        = null;
       }
       
-      public Header (Header header)
+      private AudioHeader (TagLib.File file, ByteVector data, long offset) : this (offset)
       {
-          version            = header.Version;
-          layer              = header.Layer;
-          protection_enabled = header.ProtectionEnabled;
-          bitrate            = header.Bitrate;
-          sample_rate        = header.SampleRate;
-          is_padded          = header.IsPadded;
-          channel_mode       = header.ChannelMode;
-          is_copyrighted     = header.IsCopyrighted;
-          is_original        = header.IsOriginal;
-          frame_length       = header.FrameLength;
-          position           = -1;
+         Parse (file, data);
       }
       
+      public AudioHeader (TagLib.File file, long offset) : this (offset)
+      {
+         file.Seek (offset);
+         Parse (file, file.ReadBlock (4));
+      }
+      
+      public static AudioHeader Find (TagLib.File file, long position, int length)
+      {
+         long end = position + length;
+         
+         file.Seek (position);
+         ByteVector buffer = file.ReadBlock (3);
+         
+         if (buffer.Count < 3)
+            return null;
+         
+         do
+         {
+            file.Seek (position + 3);
+            buffer = buffer.Mid (buffer.Count - 3);
+            buffer.Add (file.ReadBlock ((int) File.BufferSize));
+            
+            for (int i = 0; i < buffer.Count - 3 && (length < 0 || position + i < end); i++)
+               if (buffer [i] == 0xFF && SecondSynchByte (buffer [i + 1]))
+                  try {return new AudioHeader (file, buffer.Mid (i, 4), position + i);} catch {}
+            
+            position += File.BufferSize;
+         }
+         while (buffer.Count > 3 && (length < 0 || position < end));
+         
+         return null;
+      }
+      
+      public static AudioHeader Find (TagLib.File file, long position)
+      {
+         return Find (file, position, -1);
+      }
       
       //////////////////////////////////////////////////////////////////////////
       // public properties
@@ -108,22 +135,23 @@ namespace TagLib.Mpeg
       public bool        IsOriginal        {get {return is_original;}}
       public int         FrameLength       {get {return frame_length;}}
       public long        Position          {get {return position;}}
+      public XingHeader  XingHeader        {get {return xing_header;}}
       
       
       //////////////////////////////////////////////////////////////////////////
       // private methods
       //////////////////////////////////////////////////////////////////////////
-      private void Parse (ByteVector data)
+      private void Parse (TagLib.File file, ByteVector data)
       {
          if(data.Count < 4 || data [0] != 0xff)
-            throw new CorruptFileException ("First byte did not mactch MPEG synch.");
+            throw new CorruptFileException ("First byte did not match MPEG synch.");
 
          uint flags = data.ToUInt();
 
          // Check for the second byte's part of the MPEG synch
 
          if ((flags & 0xFFE00000) != 0xFFE00000)
-            throw new CorruptFileException ("Second byte did not mactch MPEG synch.");
+            throw new CorruptFileException ("Second byte did not match MPEG synch.");
 
          // Set the MPEG version
          switch ((flags >> 19) & 0x03)
@@ -204,6 +232,21 @@ namespace TagLib.Mpeg
             frame_length = (144000 * bitrate) / sample_rate + (IsPadded ? 1 : 0);
          else if (layer == 3)
             frame_length = (((144000 * bitrate) / sample_rate) / (version == Version.Version1 ? 1 : 2)) + (IsPadded ? 1 : 0);
+         
+         
+         try
+         {
+            // Check for a Xing header that will help us in gathering
+            // information about a VBR stream.
+            file.Seek (Position + XingHeader.XingHeaderOffset (Version, ChannelMode));
+            xing_header = new XingHeader (file.ReadBlock (16));
+         }
+         catch {}
+      }
+      
+      private static bool SecondSynchByte (byte b)
+      {
+         return b >= 0xE0;
       }
    }
 }

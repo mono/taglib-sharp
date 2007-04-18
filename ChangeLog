@@ -1,3 +1,23 @@
+2007-04-17  Brian Nickel <brian.nickel@gmail.com>
+
+Added support for MPEG-1/2 video files! Major API changes in TagLib.Mpeg
+namespace.
+
+	* src/TagLib/File.cs: Make BufferSize public.
+	* src/TagLib/Id3v2/Tag.cs: Accidentally accounted for footer twice.
+	* src/TagLib/Mpeg/Properties.cs: Support video, refractor code.
+	* src/TagLib/Mpeg/File.cs: Support complete MPEG-1/2 file.
+	* src/TagLib/Mpeg/VideoHeader.cs: Parses the content of a mpeg box.
+	* src/TagLib/Mpeg/AudioFile.cs: Renamed from File.cs as it is simply an
+	implementation of the audio stream rather than a complete file.
+	* src/TagLib/Mpeg/AudioHeader.cs: Renamed from Header.cs
+	* src/TagLib/NonContainer/EndTag.cs: Fix rendering of Id3v1 tags. Fix
+	prioritizing of tags.
+	* src/TagLib/FileTypes.cs: New file type Mpeg.AudioFile
+	* src/Makefile.am:
+	* src/taglib-sharp.mdp:
+	* taglib-sharp.csproj: New files.
+
 2007-04-15  Brian Nickel <brian.nickel@gmail.com>
 
 Added support for MPEG-4 video!

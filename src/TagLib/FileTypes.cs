@@ -38,6 +38,7 @@ namespace TagLib
             typeof(TagLib.Mpc.File),
             typeof(TagLib.Mpeg4.File),
             typeof(TagLib.Mpeg.File),
+            typeof(TagLib.Mpeg.AudioFile),
             typeof(TagLib.Ogg.File),
             typeof(TagLib.WavPack.File)
         };

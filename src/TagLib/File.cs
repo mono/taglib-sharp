@@ -556,7 +556,7 @@ namespace TagLib
          file_stream.SetLength (length);
       }
       
-      protected static uint BufferSize {get {return buffer_size;}}
+      public static uint BufferSize {get {return buffer_size;}}
       
       
       //////////////////////////////////////////////////////////////////////////

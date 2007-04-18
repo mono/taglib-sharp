@@ -27,114 +27,92 @@ namespace TagLib.Mpeg
 {
    public class Properties : TagLib.Properties
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
-      private File        file;
-      private TimeSpan    duration;
-      private int         bitrate;
-      private int         sample_rate;
-      private int         channels;
-      private Version     version;
-      private int         layer;
-      private ChannelMode channel_mode;
-      private bool        is_copyrighted;
-      private bool        is_original;
-  
+      private Version version;
+      private VideoHeader video_header;
+      private AudioHeader audio_header;
+      private TimeSpan duration;
+      private long length;
       
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
-      public Properties (File file, Header first_header, ReadStyle style) : base (style)
+      public Properties (Version version, VideoHeader video_header, AudioHeader audio_header, double duration, long length, ReadStyle style) : base (style)
       {
-         this.file      = file;
-         duration       = TimeSpan.Zero;
-         bitrate        = 0;
-         sample_rate    = 0;
-         channels       = 0;
-         version        = Version.Version1;
-         layer          = 0;
-         channel_mode   = ChannelMode.Stereo;
-         is_copyrighted = false;
-         is_original    = false;
-         
-         Read (first_header);
+         this.version = version;
+         this.video_header = video_header;
+         this.audio_header = audio_header;
+         this.duration = TimeSpan.FromSeconds (duration);
+         this.length = length;
       }
       
-      public Properties (File file, Header first_header) : this (file, first_header, ReadStyle.Average) {}
-      
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
-      
-      public override TimeSpan    Duration      {get {return duration;}}
-      public override int         AudioBitrate       {get {return bitrate;}}
-      public override int         AudioSampleRate    {get {return sample_rate;}}
-      public override int         AudioChannels      {get {return channels;}}
-      public override MediaTypes MediaTypes  {get {return MediaTypes.Audio;}}
-      public          Version     Version       {get {return version;}}
-      public          int         Layer         {get {return layer;}}
-      public          ChannelMode ChannelMode   {get {return channel_mode;}}
-      public          bool        IsCopyrighted {get {return is_copyrighted;}}
-      public          bool        IsOriginal    {get {return is_original;}}
-
-
-      //////////////////////////////////////////////////////////////////////////
-      // private methods
-      //////////////////////////////////////////////////////////////////////////
-
-      private void Read (Header first_header)
+      public override TimeSpan Duration
       {
-         // If the header doesn't exist, the file is bad.
-         if (first_header == null)
-            throw new CorruptFileException ("First MPEG header could not be found.");
-         
-         try
+         get
          {
-            // Check for a Xing header that will help us in gathering
-            // information about a VBR stream.
-            long xing_header_position = first_header.Position +
-               XingHeader.XingHeaderOffset (first_header.Version, first_header.ChannelMode);
-         
-            file.Seek (xing_header_position);
-            XingHeader xing_header = new XingHeader (file.ReadBlock (16));
-
-            // Read the length and the bitrate from the Xing header.
-
-            int [,] block_size = new int [3,4] {
-               { 0, 384, 1152, 1152 }, // Version 1
-               { 0, 384, 1152, 576 },  // Version 2
-               { 0, 384, 1152, 576 }   // Version 2.5
-            };
-            
-            double time_per_frame = (double) block_size [(int) first_header.Version, first_header.Layer] / (double) first_header.SampleRate;
-            duration = new TimeSpan((int)(time_per_frame * xing_header.TotalFrames) * TimeSpan.TicksPerSecond);
-            bitrate = (int) (duration > TimeSpan.Zero ? ((xing_header.TotalSize * 8L) / duration.TotalSeconds) / 1000 : 0);
-         }
-         catch
-         {
-            // Since there was no valid Xing header found, we hope that we're
-            // in a constant bitrate file.
-
-            // TODO: Make this more robust with audio property detection for VBR
-            // without a Xing header.
-
-            if (first_header.FrameLength > 0 && first_header.Bitrate > 0)
+            if (duration <= TimeSpan.Zero && audio_header != null)
             {
-               int frames = (int) ((file.Length - first_header.Position) / first_header.FrameLength + 1);
-               duration = TimeSpan.FromSeconds ((double) (first_header.FrameLength * frames) / (double) (first_header.Bitrate * 125) + 0.5);
-               bitrate = first_header.Bitrate;
+               if (audio_header.XingHeader != null)
+               {
+                  // Read the length and the bitrate from the Xing header.
+      
+                  int [,] block_size = new int [3,4] {
+                     { 0, 384, 1152, 1152 }, // Version 1
+                     { 0, 384, 1152, 576 },  // Version 2
+                     { 0, 384, 1152, 576 }   // Version 2.5
+                  };
+                  
+                  double time_per_frame = (double) block_size [(int) audio_header.Version, audio_header.Layer] / (double) audio_header.SampleRate;
+                  duration = TimeSpan.FromSeconds (time_per_frame * audio_header.XingHeader.TotalFrames);
+               }
+               else if (audio_header.FrameLength > 0 && audio_header.Bitrate > 0)
+               {
+                  // Since there was no valid Xing header found, we hope that we're
+                  // in a constant bitrate file.
+                  int frames = (int) ((length - audio_header.Position) / audio_header.FrameLength + 1);
+                  duration = TimeSpan.FromSeconds ((double) (audio_header.FrameLength * frames) / (double) (audio_header.Bitrate * 125) + 0.5);
+               }
             }
+            
+            return duration;
          }
-         
-         sample_rate    = first_header.SampleRate;
-         channels       = first_header.ChannelMode == ChannelMode.SingleChannel ? 1 : 2;
-         version        = first_header.Version;
-         layer          = first_header.Layer;
-         channel_mode   = first_header.ChannelMode;
-         is_copyrighted = first_header.IsCopyrighted;
-         is_original    = first_header.IsOriginal;
+      }
+      
+      public override int AudioBitrate
+      {
+         get
+         {
+            if (audio_header == null)
+               return 0;
+            
+            if (audio_header.XingHeader != null)
+               return (int) (Duration > TimeSpan.Zero ? ((audio_header.XingHeader.TotalSize * 8L) / Duration.TotalSeconds) / 1000 : 0);
+            
+            
+            return audio_header.Bitrate;
+         }
+      }
+      public override int         AudioSampleRate    {get {return audio_header == null ? 0 : audio_header.SampleRate;}}
+      public override int         AudioChannels      {get {return audio_header == null ? 0 : (audio_header.ChannelMode == ChannelMode.SingleChannel ? 1 : 2);}}
+      public          int         AudioLayer         {get {return audio_header == null ? 0 : audio_header.Layer;}}
+      public          ChannelMode AudioChannelMode   {get {return audio_header == null ? 0 : audio_header.ChannelMode;}}
+      public          bool        AudioIsCopyrighted {get {return audio_header == null ? false : audio_header.IsCopyrighted;}}
+      public          bool        AudioIsOriginal    {get {return audio_header == null ? false : audio_header.IsOriginal;}}
+      
+      public override int         VideoWidth         {get {return video_header == null ? 0 : video_header.Width;}}
+      public override int         VideoHeight        {get {return video_header == null ? 0 : video_header.Height;}}
+      public          int         VideoBitrate       {get {return video_header == null ? 0 : video_header.Bitrate;}}
+      public          double      VideoFrameRate     {get {return video_header == null ? 0 : video_header.FrameRate;}}
+      
+      public          Version     Version            {get {return version;}}
+      public override MediaTypes  MediaTypes
+      {
+         get
+         {
+            MediaTypes types = MediaTypes.Unknown;
+            if (audio_header != null)
+               types |= MediaTypes.Audio;
+            if (video_header != null)
+               types |= MediaTypes.Video;
+            
+            return types;
+         }
       }
    }
 }

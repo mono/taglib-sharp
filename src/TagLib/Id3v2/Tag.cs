@@ -537,13 +537,6 @@ namespace TagLib.Id3v2
             }
          }
 
-         // check for footer -- we don't actually need to parse it, as it *must*
-         // contain the same data as the header, but we do need to account for its
-         // size.
-
-         if(header.FooterPresent && Footer.Size <= frame_data_length)
-            frame_data_length -= (int) Footer.Size;
-
          // parse frames
 
          // Make sure that there is at least enough room in the remaining frame data for

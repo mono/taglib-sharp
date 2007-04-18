@@ -65,7 +65,7 @@
     <File name="./TagLib/Mpc/File.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpc/Properties.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg/File.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/Mpeg/Header.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg/AudioHeader.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg/Properties.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg/XingHeader.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/AppleTag.cs" subtype="Code" buildaction="Compile" />
@@ -124,6 +124,8 @@
     <File name="./TagLib/Ogg/Paginator.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/IsoAudioSampleEntry.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/IsoVisualSampleEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg/AudioFile.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg/VideoHeader.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

@@ -85,9 +85,11 @@
     <Compile Include="src\TagLib\Mpeg4\Boxes\IsoSampleTableBox.cs" />
     <Compile Include="src\TagLib\Mpeg4\Boxes\IsoUserDataBox.cs" />
     <Compile Include="src\TagLib\Mpeg4\Boxes\UnknownBox.cs" />
+    <Compile Include="src\TagLib\Mpeg\AudioFile.cs" />
+    <Compile Include="src\TagLib\Mpeg\AudioHeader.cs" />
     <Compile Include="src\TagLib\Mpeg\File.cs" />
-    <Compile Include="src\TagLib\Mpeg\Header.cs" />
     <Compile Include="src\TagLib\Mpeg\Properties.cs" />
+    <Compile Include="src\TagLib\Mpeg\VideoHeader.cs" />
     <Compile Include="src\TagLib\Mpeg\XingHeader.cs" />
     <Compile Include="src\TagLib\Mpc\File.cs" />
     <Compile Include="src\TagLib\Mpc\Properties.cs" />

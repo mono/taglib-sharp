@@ -19,7 +19,7 @@ namespace TagLib.NonContainer
          
          while ((tag = ReadTag (ref start)) != null)
          {
-            AddTag (tag);
+            InsertTag (0, tag);
          }
          
          return start;
@@ -34,6 +34,8 @@ namespace TagLib.NonContainer
                data.Add ((t as TagLib.Ape.Tag).Render ());
             else if (t is TagLib.Id3v2.Tag)
                data.Add ((t as TagLib.Id3v2.Tag).Render (true));
+            else if (t is TagLib.Id3v1.Tag)
+               data.Add ((t as TagLib.Id3v1.Tag).Render ());
          }
          
          return data;
@@ -151,7 +153,11 @@ namespace TagLib.NonContainer
          {
             if (copy != null)
                Tag.Duplicate (copy, tag, true);
-            AddTag (tag);
+            
+            if (type == TagTypes.Id3v1)
+               AddTag (tag);
+            else
+               InsertTag (0, tag);
          }
          
          return tag;
