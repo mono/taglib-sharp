@@ -30,9 +30,6 @@ namespace TagLib.Id3v1
       //////////////////////////////////////////////////////////////////////////
       // private properties
       //////////////////////////////////////////////////////////////////////////
-      File file;
-      long tag_offset;
-      
       private string title;
       private string artist;
       private string album;
@@ -61,21 +58,43 @@ namespace TagLib.Id3v1
       //////////////////////////////////////////////////////////////////////////
       public Tag ()
       {
-         file = null;
-         tag_offset = -1;
-         
          title = artist = album = year = comment = String.Empty;
-         
          track = 0;
          genre = 255;
       }
 
       public Tag (File file, long tag_offset)
       {
-         this.file = file;
-         this.tag_offset = tag_offset;
+         file.Seek (tag_offset);
+         
+         // read the tag -- always 128 bytes
+         ByteVector data = file.ReadBlock (Size);
+         
+         // some initial sanity checking
+         if (data.Count != Size || !data.StartsWith (FileIdentifier))
+            throw new CorruptFileException
+               ("ID3v1 tag is not valid or could not be read at the specified offset.");
+         
+         title  = string_handler.Parse (data.Mid ( 3, 30));
+         artist = string_handler.Parse (data.Mid (33, 30));
+         album  = string_handler.Parse (data.Mid (63, 30));
+         year   = string_handler.Parse (data.Mid (93,  4));
 
-         Read ();
+         // Check for ID3v1.1 -- Note that ID3v1 *does not* support "track zero"
+         // -- this is not a bug in TagLib.  Since a zeroed byte is what we 
+         // would expect to indicate the end of a C-String, specifically the 
+         // comment string, a value of zero must be assumed to be just that.
+
+         if (data [125] == 0 && data [126] != 0)
+         {
+            // ID3v1.1 detected
+            comment = string_handler.Parse (data.Mid (97, 28));
+            track = data [126];
+         }
+         else
+            comment = string_handler.Parse (data.Mid (97, 30));
+
+         genre = data [127];
       }
       
       public ByteVector Render ()
@@ -128,10 +147,10 @@ namespace TagLib.Id3v1
       {
          get
          {
-            string genre_name = GenreList.Genre (genre);
+            string genre_name = TagLib.Genres.IndexToAudio (genre);
             return (genre_name != null) ? new string [] {genre_name} : new string [] {};
          }
-         set {genre = (value != null && value.Length > 0) ? GenreList.GenreIndex (value [0].Trim ()) : (byte) 255;}
+         set {genre = (value != null && value.Length > 0) ? TagLib.Genres.AudioToIndex (value [0].Trim ()) : (byte) 255;}
       }
       
       public  override uint Year
@@ -148,58 +167,6 @@ namespace TagLib.Id3v1
       {
          get {return track;}
          set {track = (byte) (value < 256 ? value : 0);}
-      }
-      
-      
-      //////////////////////////////////////////////////////////////////////////
-      // protected methods
-      //////////////////////////////////////////////////////////////////////////
-
-      protected void Read ()
-      {
-         file.Seek (tag_offset);
-         
-         // read the tag -- always 128 bytes
-         ByteVector data = file.ReadBlock ((int)Size);
-         
-         // some initial sanity checking
-         if (data.Count != Size || !data.StartsWith ("TAG"))
-            throw new CorruptFileException  ("ID3v1 tag is not valid or could "
-                                           + " not be read at the specified "
-                                           + "offset.");
-         
-         int offset = 3;
-
-         title = string_handler.Parse (data.Mid (offset, 30));
-         offset += 30;
-
-         artist = string_handler.Parse (data.Mid (offset, 30));
-         offset += 30;
-
-         album = string_handler.Parse (data.Mid (offset, 30));
-         offset += 30;
-
-         year = string_handler.Parse (data.Mid (offset, 4));
-         offset += 4;
-
-         // Check for ID3v1.1 -- Note that ID3v1 *does not* support "track zero" -- this
-         // is not a bug in TagLib.  Since a zeroed byte is what we would expect to
-         // indicate the end of a C-String, specifically the comment string, a value of
-         // zero must be assumed to be just that.
-
-         if (data [offset + 28] == 0 && data[offset + 29] != 0)
-         {
-            // ID3v1.1 detected
-
-            comment = string_handler.Parse (data.Mid (offset, 28));
-            track = data [offset + 29];
-         }
-         else
-            comment = string_handler.Parse (data.Mid (offset, 30));
-
-         offset += 30;
-
-         genre = data [offset];
       }
    }
 }

@@ -50,7 +50,6 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/NonContainer/StartTag.cs                       \
    $(srcdir)/TagLib/NonContainer/Tag.cs                            \
    $(srcdir)/TagLib/Id3v1/Tag.cs                                   \
-   $(srcdir)/TagLib/Id3v1/GenreList.cs                             \
    $(srcdir)/TagLib/Id3v1/StringHandler.cs                         \
    $(srcdir)/TagLib/Id3v2/Frames/PrivateFrame.cs                   \
    $(srcdir)/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs            \
@@ -97,6 +96,13 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Mpeg4/Boxes/FullBox.cs                         \
    $(srcdir)/TagLib/Mpeg4/Boxes/AppleElementaryStreamDescriptor.cs \
    $(srcdir)/TagLib/Mpeg4/Boxes/AppleDataBox.cs                    \
+   $(srcdir)/TagLib/Riff/AviProperties.cs                          \
+   $(srcdir)/TagLib/Riff/DivXTag.cs                                \
+   $(srcdir)/TagLib/Riff/File.cs                                   \
+   $(srcdir)/TagLib/Riff/InfoTag.cs                                \
+   $(srcdir)/TagLib/Riff/List.cs                                   \
+   $(srcdir)/TagLib/Riff/ListTag.cs                                \
+   $(srcdir)/TagLib/Riff/MovieIdTag.cs                             \
    $(srcdir)/TagLib/WavPack/File.cs                                \
    $(srcdir)/TagLib/WavPack/Properties.cs                          \
    $(srcdir)/TagLib/IntList.cs                                     \
@@ -105,6 +111,7 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/ByteVector.cs                                  \
    $(srcdir)/TagLib/CombinedTag.cs                                 \
    $(srcdir)/TagLib/Debugger.cs                                    \
+   $(srcdir)/TagLib/Genres.cs                                      \
    $(srcdir)/TagLib/Properties.cs                                  \
    $(srcdir)/TagLib/File.cs                                        \
    $(srcdir)/TagLib/StringList.cs                                  \

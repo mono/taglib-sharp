@@ -45,34 +45,27 @@ namespace TagLib.Mpeg4
       }
       
       // Get all the data boxes with the provided types.
-      public AppleDataBox [] DataBoxes (ByteVectorList list)
+      public IEnumerable<AppleDataBox> DataBoxes (IEnumerable<ByteVector> list)
       {
-         List<AppleDataBox> l = new List<AppleDataBox> ();
-         
          // Check each box to see if the match any of the provided types.
          // If a match is found, loop through the children and add any data box.
          foreach (Box box in ilst_box.Children)
             foreach (ByteVector v in list)
                if (FixId (v) == box.BoxType)
                   foreach (Box data_box in box.Children)
-                     if (data_box.GetType () == typeof (AppleDataBox))
-                        l.Add ((AppleDataBox)data_box);
-         
-         // Return the results as an array.
-         return (AppleDataBox []) l.ToArray ();
+                     if (data_box is AppleDataBox)
+                        yield return data_box as AppleDataBox;
       }
       
       // Get all the data boxes with a given type.
-      public AppleDataBox [] DataBoxes (ByteVector v)
+      public IEnumerable<AppleDataBox> DataBoxes (params ByteVector [] vects)
       {
-         return DataBoxes (new ByteVectorList (FixId (v)));
+         return DataBoxes (vects as IEnumerable<ByteVector>);
       }
       
       // Find all the data boxes with a given mean and name.
-      public AppleDataBox [] DataBoxes (string mean, string name)
+      public IEnumerable<AppleDataBox> DataBoxes (string mean, string name)
       {
-         List<AppleDataBox> l = new List<AppleDataBox> ();
-         
          // These children will have a box type of "----"
          foreach (Box box in ilst_box.Children)
             if (box.BoxType == "----")
@@ -84,12 +77,9 @@ namespace TagLib.Mpeg4
                AppleAdditionalInfoBox name_box = (AppleAdditionalInfoBox) box.Children.Get (BoxTypes.Name);
                if (mean_box != null && name_box != null && mean_box.Text == mean && name_box.Text == name)
                   foreach (Box data_box in box.Children)
-                     if (data_box.GetType () == typeof (AppleDataBox))
-                        l.Add ((AppleDataBox)data_box);
+                     if (data_box is AppleDataBox)
+                        yield return data_box as AppleDataBox;
             }
-         
-         // Return the results as an array.
-         return (AppleDataBox []) l.ToArray ();
       }
       
       // Get all the text data boxes from a given box type.
@@ -238,8 +228,10 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            AppleDataBox [] boxes = DataBoxes (BoxTypes.Cpil);
-            return boxes.Length != 0 && boxes [0].Data.ToUInt () != 0;
+            foreach (AppleDataBox box in DataBoxes (BoxTypes.Cpil))
+               return box.Data.ToUInt () != 0;
+            
+            return false;
          }
          set
          {
@@ -273,8 +265,9 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            AppleDataBox [] boxes = DataBoxes (BoxTypes.Cmt);
-            return boxes.Length == 0 ? null : boxes [0].Text;
+            foreach (AppleDataBox box in DataBoxes (BoxTypes.Cmt))
+               return box.Text;
+            return null;
          }
          set
          {
@@ -296,7 +289,7 @@ namespace TagLib.Mpeg4
                else if (box.Flags == (int) AppleDataBox.FlagTypes.ContainsData)
                {
                   // iTunes stores genre's in the GNRE box as (ID3# + 1).
-                  string genre = Id3v1.GenreList.Genre ((byte) (box.Data.ToShort (true) - 1));
+                  string genre = TagLib.Genres.IndexToAudio ((byte) (box.Data.ToShort (true) - 1));
                   if (genre != null)
                      l.Add (genre);
                }
@@ -330,9 +323,10 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            AppleDataBox [] boxes = DataBoxes (BoxTypes.Trkn);
-            if (boxes.Length != 0 && boxes [0].Flags == (int) AppleDataBox.FlagTypes.ContainsData && boxes [0].Data.Count >=4)
-               return (uint) boxes [0].Data.Mid (2, 2).ToShort ();
+            foreach (AppleDataBox box in DataBoxes (BoxTypes.Trkn))
+               if (box.Flags == (int) AppleDataBox.FlagTypes.ContainsData && box.Data.Count >=4)
+                  return (uint) box.Data.Mid (2, 2).ToShort ();
+            
             return 0;
          }
          set
@@ -350,9 +344,10 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            AppleDataBox [] boxes = DataBoxes (BoxTypes.Trkn);
-            if (boxes.Length != 0 && boxes [0].Flags == (int) AppleDataBox.FlagTypes.ContainsData && boxes [0].Data.Count >=6)
-               return (uint) boxes [0].Data.Mid (4, 2).ToShort ();
+            foreach (AppleDataBox box in DataBoxes (BoxTypes.Trkn))
+               if (box.Flags == (int) AppleDataBox.FlagTypes.ContainsData && box.Data.Count >=6)
+                  return (uint) box.Data.Mid (4, 2).ToShort ();
+            
             return 0;
          }
          set
@@ -371,9 +366,10 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            AppleDataBox [] boxes = DataBoxes (BoxTypes.Disk);
-            if (boxes.Length != 0 && boxes [0].Flags == (int) AppleDataBox.FlagTypes.ContainsData && boxes [0].Data.Count >=4)
-               return (uint) boxes [0].Data.Mid (2, 2).ToShort ();
+            foreach (AppleDataBox box in DataBoxes (BoxTypes.Disk))
+               if (box.Flags == (int) AppleDataBox.FlagTypes.ContainsData && box.Data.Count >=4)
+                  return (uint) box.Data.Mid (2, 2).ToShort ();
+            
             return 0;
          }
          set
@@ -392,9 +388,10 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            AppleDataBox [] boxes = DataBoxes (BoxTypes.Disk);
-            if (boxes.Length != 0 && boxes [0].Flags == (int) AppleDataBox.FlagTypes.ContainsData && boxes [0].Data.Count >=6)
-               return (uint) boxes [0].Data.Mid (4, 2).ToShort ();
+            foreach (AppleDataBox box in DataBoxes (BoxTypes.Disk))
+               if (box.Flags == (int) AppleDataBox.FlagTypes.ContainsData && box.Data.Count >=6)
+                  return (uint) box.Data.Mid (4, 2).ToShort ();
+            
             return 0;
          }
          set
@@ -413,8 +410,9 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            AppleDataBox [] boxes = DataBoxes (BoxTypes.Lyr);
-            return boxes.Length == 0 ? null : boxes [0].Text;
+            foreach (AppleDataBox box in DataBoxes (BoxTypes.Lyr))
+               return box.Text;
+            return null;
          }
          set
          {

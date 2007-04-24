@@ -114,7 +114,6 @@
     <Compile Include="src\TagLib\Id3v2\Frames\TextIdentificationFrame.cs" />
     <Compile Include="src\TagLib\Id3v2\Frames\UniqueFileIdentifierFrame.cs" />
     <Compile Include="src\TagLib\Id3v2\Frames\UnsynchronisedLyricsFrame.cs" />
-    <Compile Include="src\TagLib\Id3v1\GenreList.cs" />
     <Compile Include="src\TagLib\Id3v1\StringHandler.cs" />
     <Compile Include="src\TagLib\Id3v1\Tag.cs" />
     <Compile Include="src\TagLib\Flac\Block.cs" />
@@ -150,6 +149,14 @@
     <Compile Include="src\TagLib\Ogg\Paginator.cs" />
     <Compile Include="src\TagLib\Ogg\Properties.cs" />
     <Compile Include="src\TagLib\Ogg\Codecs\Theora.cs" />
+    <Compile Include="src\TagLib\Riff\File.cs" />
+    <Compile Include="src\TagLib\Riff\DivXTag.cs" />
+    <Compile Include="src\TagLib\Riff\ListTag.cs" />
+    <Compile Include="src\TagLib\Riff\InfoTag.cs" />
+    <Compile Include="src\TagLib\Genres.cs" />
+    <Compile Include="src\TagLib\Riff\MovieIdTag.cs" />
+    <Compile Include="src\TagLib\Riff\List.cs" />
+    <Compile Include="src\TagLib\Riff\AviProperties.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src" />
@@ -159,8 +166,10 @@
     <Folder Include="src\TagLib\Flac" />
     <Folder Include="src\TagLib\Id3v1" />
     <Folder Include="src\TagLib\Id3v2" />
+    <Folder Include="src\TagLib\Riff" />
     <Folder Include="src\TagLib\Mpc" />
     <Folder Include="src\TagLib\Ogg" />
+    <Folder Include="src\TagLib\OggCodecs" />
     <Folder Include="src\TagLib\Mpeg4" />
     <Folder Include="src\TagLib\Mpeg4\Boxes" />
     <Folder Include="src\TagLib\Mpeg" />

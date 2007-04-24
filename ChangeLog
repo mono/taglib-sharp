@@ -1,3 +1,32 @@
+2007-04-23  Brian Nickel <brian.nickel@gmail.com>
+
+Added support for AVI video files! Revamped the GenreList for video genres.
+
+	* src/TagLib/File.cs: New tag types.
+	* src/TagLib/Id3v1/Tag.cs: Clean up.
+	* src/TagLib/Riff/List.cs:
+	* src/TagLib/Riff/AviProperties.cs:
+	* src/TagLib/Riff/File.cs:
+	* src/TagLib/Riff/DivXTag.cs:
+	* src/TagLib/Riff/ListTag.cs:
+	* src/TagLib/Riff/InfoTag.cs:
+	* src/TagLib/Riff/MovieIdTag.cs: AVI support!
+	* src/TagLib/Genres.cs: Refactored GenreList.
+	* src/TagLib/Id3v2/Tag.cs: Clean up rendering.
+	* src/TagLib/Id3v2/Frames/UnknownFrame.cs: Expand support.
+	* src/TagLib/NonContainer/EndTag.cs:
+	* src/TagLib/NonContainer/StartTag.cs: Id3v2 changes.
+	* src/TagLib/FileTypes.cs: Added Riff type.
+	* src/TagLib/Asf/File.cs:
+	* src/TagLib/Asf/Tag.cs:
+	* src/TagLib/Asf/ExtendedContentDescriptionObject.cs: IEnumerable.
+	* src/TagLib/Mpeg4/FileParser.cs:
+	* src/TagLib/Mpeg4/AppleTag.cs: Use BoxList and IEnumerable.
+	* src/TagLib/Ogg/File.cs: AccessMode should be Write, not read.
+	* src/taglib-sharp.mdp:
+	* src/Makefile.am:
+	* taglib-sharp.csproj: New files.
+
 2007-04-17  Brian Nickel <brian.nickel@gmail.com>
 
 Added support for MPEG-1/2 video files! Major API changes in TagLib.Mpeg

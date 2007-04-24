@@ -115,9 +115,8 @@ namespace TagLib.Asf
          return (i >= 0) ? output.Substring (0, i) : output;
       }
       
-      public Object [] ReadObjects (uint count, long position)
+      public IEnumerable<Object> ReadObjects (uint count, long position)
       {
-         List<Object> l = new List<Object> ();
          for (int i = 0; i < (int) count; i ++)
          {
             Seek (position);
@@ -138,11 +137,9 @@ namespace TagLib.Asf
             else
                obj = new UnknownObject (this, position);
             
-            l.Add (obj);
             position += obj.OriginalSize;
+            yield return obj;
          }
-         
-         return l.ToArray ();
       }
       
       

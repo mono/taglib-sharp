@@ -1,5 +1,5 @@
 /***************************************************************************
-    copyright            : (C) 2005 by Brian Nickel
+    copyright            : (C) 2005-2007 by Brian Nickel
     email                : brian.nickel@gmail.com
     based on             : id3v1genres.cpp from TagLib
  ***************************************************************************/
@@ -23,11 +23,11 @@
 using System.Collections;
 using System;
 
-namespace TagLib.Id3v1
+namespace TagLib
 {
-   public class GenreList
+   public static class Genres
    {
-      public static readonly string [] Genres = {
+      public static readonly string [] Audio = {
          "Blues",
          "Classic Rock",
          "Country",
@@ -178,21 +178,98 @@ namespace TagLib.Id3v1
          "Synthpop"
       };
       
-      public static string Genre (byte i)
+      public static readonly string [] Video = new string []
       {
-        if(i >= 0 && i < Genres.Length)
-          return Genres [i];
-        return null;
-      }
+         "Action",
+         "Action/Adventure",
+         "Adult",
+         "Adventure",
+         "Catastrophe",
+         "Child's",
+         "Claymation",
+         "Comedy",
+         "Concert",
+         "Documentary",
+         "Drama",
+         "Eastern",
+         "Entertaining",
+         "Erotic",
+         "Extremal Sport",
+         "Fantasy",
+         "Fashion",
+         "Historical",
+         "Horror",
+         "Horror/Mystic",
+         "Humor",
+         "Indian",
+         "Informercial",
+         "Melodrama",
+         "Military & War",
+         "Music Video",
+         "Musical",
+         "Mystery",
+         "Nature",
+         "Political Satire",
+         "Popular Science",
+         "Psychological Thriller",
+         "Religion",
+         "Science Fiction",
+         "Scifi Action",
+         "Slapstick",
+         "Splatter",
+         "Sports",
+         "Thriller",
+         "Western"
+      };
       
-      public static byte GenreIndex (string name)
+      public static byte AudioToIndex (string name)
       {
-         for (byte i = 0; i < Genres.Length; i ++)
-            if (name == Genres [i])
+         for (byte i = 0; i < Audio.Length; i ++)
+            if (name == Audio [i])
                return i;
-        return 255;
+         return 255;
       }
       
-      private GenreList () {}
+      public static string IndexToAudio (byte index)
+      {
+         return (index < Audio.Length) ? Audio [index] : null;
+      }
+      
+      public static string IndexToAudio (string text)
+      {
+         return IndexToAudio (StringToByte (text));
+      }
+      
+      public static byte VideoToIndex (string name)
+      {
+         for (byte i = 0; i < Video.Length; i ++)
+            if (name == Video [i])
+               return i;
+         return 255;
+      }
+      
+      public static string IndexToVideo (byte index)
+      {
+         return (index < Video.Length) ? Video [index] : null;
+      }
+      
+      public static string IndexToVideo (string text)
+      {
+         return IndexToVideo (StringToByte (text));
+      }
+      
+      private static byte StringToByte (string text)
+      {
+         byte value;
+         int last_pos;
+         if (text != null && text.Length > 2 && text [0] == '(' && (last_pos = text.IndexOf (')')) != -1 && 
+             byte.TryParse (text.Substring (1, last_pos - 1), out value))
+            return value;
+         
+         if (text != null && byte.TryParse (text, out value))
+            return value;
+         
+         return 255;
+      }
    }
 }

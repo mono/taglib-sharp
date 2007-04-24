@@ -65,7 +65,7 @@ namespace TagLib.Mpeg4
       }
       public BoxHeader [] MoovTree {get {return moov_tree;}}
       public BoxHeader [] UdtaTree {get {return udta_tree;}}
-      public Box [] ChunkOffsetBoxes {get {return stco_boxes.ToArray ();}}
+      public BoxList ChunkOffsetBoxes {get {return stco_boxes;}}
       
       private List<BoxHeader> AddParent (List<BoxHeader> parents, BoxHeader current)
       {

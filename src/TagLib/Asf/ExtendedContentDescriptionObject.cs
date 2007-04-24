@@ -79,11 +79,12 @@ namespace TagLib.Asf
                descriptors.RemoveAt (i);
       }
       
-      public IEnumerable<ContentDescriptor> GetDescriptors (string name)
+      public IEnumerable<ContentDescriptor> GetDescriptors (params string [] names)
       {
          foreach (ContentDescriptor desc in descriptors)
-            if (desc.Name == name)
-               yield return desc;
+            foreach (string name in names)
+               if (desc.Name == name)
+                  yield return desc;
       }
 
       public void AddDescriptor (ContentDescriptor descriptor)

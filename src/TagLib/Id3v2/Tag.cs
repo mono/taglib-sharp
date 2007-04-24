@@ -108,14 +108,14 @@ namespace TagLib.Id3v2
          }
       }
       
-      public ByteVector Render (uint version)
+      public ByteVector Render ()
       {
          // We need to render the "tag data" first so that we have to correct size to
          // render in the tag's header.  The "tag data" -- everything that is included
          // in ID3v2::Header::tagSize() -- includes the extended header, frames and
          // padding, but does not include the tag's header or footer.
          
-         header.MajorVersion = version;
+         header.MajorVersion = header.FooterPresent ? 4 : Version;
          
          ByteVector tag_data = new ByteVector ();
 
@@ -125,7 +125,7 @@ namespace TagLib.Id3v2
          // Loop through the frames rendering them and adding them to the tagData.
          foreach (Frame frame in frame_list)
             if (!frame.Header.TagAlterPreservation)
-               tag_data.Add (frame.Render (version));
+               tag_data.Add (frame.Render (header.MajorVersion));
          
          // Add unsyncronization bytes if necessary.
          if (header.Unsynchronisation)
@@ -157,16 +157,6 @@ namespace TagLib.Id3v2
          }
          
          return tag_data;
-      }
-      
-      public ByteVector Render (bool end_tag)
-      {
-         // End tags need a header.
-         if (end_tag)
-            header.FooterPresent = true;
-         
-         // Make sure footers are rendered properly.
-         return Render ((end_tag && Version < 4) ? 4 : Version);
       }
       
       
@@ -265,30 +255,18 @@ namespace TagLib.Id3v2
             {
                StringList l = new StringList ();
 
-               foreach (string s in frame.FieldList)
+               foreach (string genre in frame.FieldList)
                {
-                  byte value;
-                  
-                  if (s == null)
+                  if (genre == null)
                      continue;
                   
                   // The string may just be a genre number.
-                  if (byte.TryParse (s, out value))
-                  {
-                     l.Add (Id3v1.GenreList.Genre (value));
-                     continue;
-                  }
+                  string genre_from_index = TagLib.Genres.IndexToAudio (genre);
                   
-                  // Check for ID3v2.3 style (#)
-                  int closing = s.IndexOf (')');
-                  if (closing > 0 && s[0] == '(' && byte.TryParse (s.Substring (1, closing - 1), out value))
-                  {
-                     l.Add (Id3v1.GenreList.Genre (value));
-                     continue;
-                  }
-                  
-                  // We don't have a number, add the string.
-                  l.Add (s);
+                  if (genre_from_index != null)
+                     l.Add (genre_from_index);
+                  else
+                     l.Add (genre);
                }
                
                return l.ToArray ();
@@ -300,7 +278,7 @@ namespace TagLib.Id3v2
          {
             for (int i = 0; i < value.Length; i ++)
             {
-               int index = Id3v1.GenreList.GenreIndex (value [i]);
+               int index = TagLib.Genres.AudioToIndex (value [i]);
                if (index != 255)
                   value [i] = index.ToString ();
             }

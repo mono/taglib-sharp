@@ -83,7 +83,7 @@ namespace TagLib.Ogg
       
       public override void Save ()
       {
-         Mode = AccessMode.Read;
+         Mode = AccessMode.Write;
          
          long end;
          List<Page> pages = new List<Page> ();

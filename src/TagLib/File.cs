@@ -28,14 +28,17 @@ namespace TagLib
 {
    public enum TagTypes
    {
-      NoTags  = 0x0000,
-      Xiph    = 0x0001,
-      Id3v1   = 0x0002,
-      Id3v2   = 0x0004,
-      Ape     = 0x0008,
-      Apple   = 0x0010,
-      Asf     = 0x0020,
-      AllTags = 0xFFFF
+      NoTags   = 0x0000,
+      Xiph     = 0x0001,
+      Id3v1    = 0x0002,
+      Id3v2    = 0x0004,
+      Ape      = 0x0008,
+      Apple    = 0x0010,
+      Asf      = 0x0020,
+      RiffInfo = 0x0040,
+      MovieId  = 0x0080,
+      DivX     = 0x0100,
+      AllTags  = 0xFFFF
    }
    
    public abstract class File
@@ -391,11 +394,6 @@ namespace TagLib
       public void Insert (ByteVector data, long start)
       {
          Insert (data, start, 0);
-      }
-      
-      public void Insert (ByteVector data)
-      {
-         Insert (data, 0);
       }
       
       public void RemoveBlock (long start, long length)

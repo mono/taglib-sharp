@@ -33,7 +33,7 @@ namespace TagLib.NonContainer
             if (t is TagLib.Ape.Tag)
                data.Add ((t as TagLib.Ape.Tag).Render ());
             else if (t is TagLib.Id3v2.Tag)
-               data.Add ((t as TagLib.Id3v2.Tag).Render (true));
+               data.Add ((t as TagLib.Id3v2.Tag).Render ());
             else if (t is TagLib.Id3v1.Tag)
                data.Add ((t as TagLib.Id3v1.Tag).Render ());
          }
@@ -145,7 +145,11 @@ namespace TagLib.NonContainer
          if (type == TagTypes.Id3v1)
             tag = new TagLib.Id3v1.Tag ();
          else if (type == TagTypes.Id3v2)
-            tag = new TagLib.Id3v2.Tag ();
+         {
+            Id3v2.Tag tag32 = new Id3v2.Tag ();
+            tag32.Header.FooterPresent = true;
+            tag = tag32;
+         }
          else if (type == TagTypes.Ape)
             tag = new TagLib.Ape.Tag ();
          

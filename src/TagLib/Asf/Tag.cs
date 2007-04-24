@@ -64,9 +64,9 @@ namespace TagLib.Asf
          ext_description.RemoveDescriptors (name);
       }
       
-      public IEnumerable<ContentDescriptor> GetDescriptors (string name)
+      public IEnumerable<ContentDescriptor> GetDescriptors (params string [] names)
       {
-         return ext_description.GetDescriptors (name);
+         return ext_description.GetDescriptors (names);
       }
 
       public void SetDescriptors (string name, params ContentDescriptor [] descriptors)
@@ -131,8 +131,24 @@ namespace TagLib.Asf
       {
          get
          {
-            string value = GetDescriptorString ("WM/Genre", "Genre");
-            return (value != null) ? SplitAndClean (value) : new string [] {};
+            string value = GetDescriptorString ("WM/Genre", "WM/GenreID", "Genre");
+            System.Console.WriteLine (value);
+            if (value == null || value.Trim () == String.Empty)
+               return new string [] {};
+            
+            StringList l = StringList.Split (value, ";");
+            for (int i = 0; i < l.Count; i ++)
+            {
+               string genre = l [i].Trim ();
+               
+               byte genre_id;
+               int closing = genre.IndexOf (')');
+               if (closing > 0 && genre[0] == '(' && byte.TryParse (genre.Substring (1, closing - 1), out genre_id))
+                  genre = TagLib.Genres.IndexToAudio (genre_id);
+               
+               l [i] = genre;
+            }
+            return l.ToArray ();
          }
          set
          {
@@ -246,12 +262,10 @@ namespace TagLib.Asf
 
       public string GetDescriptorString (params string [] names)
       {
-         foreach (string name in names)
-         {
-            foreach (ContentDescriptor desc in GetDescriptors (name))
-               if (desc != null && desc.Type == DataType.Unicode && desc.ToString () != null)
-                  return desc.ToString ();
-         }
+         foreach (ContentDescriptor desc in GetDescriptors (names))
+            if (desc != null && desc.Type == DataType.Unicode && desc.ToString () != null)
+               return desc.ToString ();
+         
          return null;
       }
       
