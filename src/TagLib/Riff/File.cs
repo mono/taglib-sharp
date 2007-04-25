@@ -5,7 +5,12 @@ using System;
 namespace TagLib.Riff
 {
    [SupportedMimeType("taglib/avi", "avi")]
+   [SupportedMimeType("video/avi")]
+   [SupportedMimeType("video/msvideo")]
    [SupportedMimeType("video/x-msvideo")]
+   [SupportedMimeType("image/avi")]
+   [SupportedMimeType("application/x-troff-msvideo")]
+   [SupportedMimeType("audio/avi")]
    public class File : TagLib.File
    {
       //////////////////////////////////////////////////////////////////////////
@@ -22,10 +27,11 @@ namespace TagLib.Riff
       
       public File (string file, ReadStyle properties_style) : base (file)
       {
+         uint riff_size;
          long tag_start, tag_end;
          
          Mode = AccessMode.Read;
-         Read (true, properties_style, out tag_start, out tag_end);
+         Read (true, properties_style, out riff_size, out tag_start, out tag_end);
          Mode = AccessMode.Closed;
          
          GetTag (TagTypes.Id3v2, true);
@@ -34,16 +40,19 @@ namespace TagLib.Riff
          GetTag (TagTypes.DivX, true);
       }
       
-      private void Read (bool read_tags, ReadStyle style, out long tag_start, out long tag_end)
+      private void Read (bool read_tags, ReadStyle style, out uint riff_size, out long tag_start, out long tag_end)
       {
          Seek (0);
          if (ReadBlock (4) != FileIdentifier)
             throw new CorruptFileException ("File does not begin with RIFF identifier");
          
-         ReadBlock (4);
+         riff_size = ReadBlock (4).ToUInt (false);
          ByteVector stream_format = ReadBlock (4);
          tag_start = -1;
          tag_end   = -1;
+         
+         if (stream_format != "AVI ")
+            throw new UnsupportedFormatException ("Unsupported RIFF type.");
          
          long position = 12;
          long length = Length;
@@ -54,6 +63,7 @@ namespace TagLib.Riff
             Seek (position);
             string fourcc = ReadBlock (4).ToString ();
             uint   size = ReadBlock (4).ToUInt (false);
+            
             switch (fourcc)
             {
             case "LIST":
@@ -187,6 +197,8 @@ namespace TagLib.Riff
             ByteVector tag_data = id32_tag.Render ();
             if (tag_data.Count > 10)
             {
+               if (tag_data.Count % 2 == 1)
+                  tag_data.Add (0);
                data.Add ("ID32");
                data.Add (ByteVector.FromUInt ((uint) tag_data.Count, false));
                data.Add (tag_data);
@@ -207,24 +219,26 @@ namespace TagLib.Riff
             data.Add (tag_data);
          }
          
+         uint riff_size;
          long tag_start, tag_end;
-         Read (false, ReadStyle.None, out tag_start, out tag_end);
+         Read (false, ReadStyle.None, out riff_size, out tag_start, out tag_end);
          
-         if (tag_start >= 12 && tag_end > tag_start)
-         {
-            int length = (int)(tag_end - tag_start);
-            int difference = length - data.Count - 8;
-            if (difference < 0)
-               difference = 1024;
-            
-            data.Add ("JUNK");
-            data.Add (ByteVector.FromUInt ((uint)difference, false));
-            data.Add (new ByteVector (difference));
-            
-            Insert (data, tag_start, length);
-         }
-         else
-            Insert (data, Length);
+         if (tag_start < 12 || tag_end < tag_start)
+            tag_start = tag_end = Length;
+         
+         int length = (int)(tag_end - tag_start);
+         int padding_size = length - data.Count - 8;
+         if (padding_size < 0)
+            padding_size = 1024;
+         
+         data.Add ("JUNK");
+         data.Add (ByteVector.FromUInt ((uint)padding_size, false));
+         data.Add (new ByteVector (padding_size));
+         
+         Insert (data, tag_start, length);
+         
+         if (data.Count - length != 0 && tag_start <= riff_size)
+            Insert (ByteVector.FromUInt ((uint)(riff_size + data.Count - length), false), 4, 4);
          
          Mode = AccessMode.Closed;
       }

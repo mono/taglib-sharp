@@ -1,6 +1,6 @@
 <Overview>
   <Assemblies>
-    <Assembly Name="taglib-sharp" Version="1.1.0.0">
+    <Assembly Name="taglib-sharp" Version="1.9.0.0">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -56,6 +56,9 @@
       <Type Name="Properties" />
       <Type Name="ReadStyle" />
       <Type Name="MediaTypes" />
+      <Type Name="Genres" />
+      <Type Name="SupportedMimeType+&lt;&gt;c__CompilerGenerated6+&lt;&gt;c__CompilerGenerated19" DisplayName="&lt;&gt;c__CompilerGenerated6+&lt;&gt;c__CompilerGenerated19" />
+      <Type Name="SupportedMimeType+&lt;&gt;c__CompilerGenerated7+&lt;&gt;c__CompilerGenerated20" DisplayName="&lt;&gt;c__CompilerGenerated7+&lt;&gt;c__CompilerGenerated20" />
     </Namespace>
     <Namespace Name="TagLib.Mpc">
       <Type Name="File" />
@@ -88,13 +91,15 @@
     <Namespace Name="TagLib.Mpeg">
       <Type Name="XingHeader" />
       <Type Name="File" />
-      <Type Name="Header" />
       <Type Name="Version" />
       <Type Name="ChannelMode" />
       <Type Name="Properties" />
+      <Type Name="AudioFile" />
+      <Type Name="AudioHeader" />
+      <Type Name="VideoHeader" />
+      <Type Name="Marker" />
     </Namespace>
     <Namespace Name="TagLib.Id3v1">
-      <Type Name="GenreList" />
       <Type Name="StringHandler" />
       <Type Name="Tag" />
     </Namespace>
@@ -119,6 +124,7 @@
       <Type Name="GeneralEncapsulatedObjectFrame" />
       <Type Name="UnsynchronisedLyricsFrame" />
       <Type Name="PrivateFrame" />
+      <Type Name="Tag+&lt;&gt;c__CompilerGenerated3+&lt;&gt;c__CompilerGenerated12" DisplayName="&lt;&gt;c__CompilerGenerated3+&lt;&gt;c__CompilerGenerated12" />
     </Namespace>
     <Namespace Name="TagLib.Mpeg4">
       <Type Name="Box" />
@@ -149,6 +155,13 @@
       <Type Name="BoxTypes" />
       <Type Name="FileParser" />
       <Type Name="Properties" />
+      <Type Name="IsoVisualSampleEntry" />
+      <Type Name="AppleTag+&lt;&gt;c__CompilerGenerated4+&lt;&gt;c__CompilerGenerated13" DisplayName="&lt;&gt;c__CompilerGenerated4+&lt;&gt;c__CompilerGenerated13" />
+      <Type Name="AppleTag+&lt;&gt;c__CompilerGenerated4+&lt;&gt;c__CompilerGenerated14" DisplayName="&lt;&gt;c__CompilerGenerated4+&lt;&gt;c__CompilerGenerated14" />
+      <Type Name="AppleTag+&lt;&gt;c__CompilerGenerated4+&lt;&gt;c__CompilerGenerated15" DisplayName="&lt;&gt;c__CompilerGenerated4+&lt;&gt;c__CompilerGenerated15" />
+      <Type Name="AppleTag+&lt;&gt;c__CompilerGenerated5+&lt;&gt;c__CompilerGenerated16" DisplayName="&lt;&gt;c__CompilerGenerated5+&lt;&gt;c__CompilerGenerated16" />
+      <Type Name="AppleTag+&lt;&gt;c__CompilerGenerated5+&lt;&gt;c__CompilerGenerated17" DisplayName="&lt;&gt;c__CompilerGenerated5+&lt;&gt;c__CompilerGenerated17" />
+      <Type Name="AppleTag+&lt;&gt;c__CompilerGenerated5+&lt;&gt;c__CompilerGenerated18" DisplayName="&lt;&gt;c__CompilerGenerated5+&lt;&gt;c__CompilerGenerated18" />
     </Namespace>
     <Namespace Name="TagLib.WavPack">
       <Type Name="File" />
@@ -169,6 +182,10 @@
       <Type Name="ContentDescriptor" />
       <Type Name="DataType" />
       <Type Name="Guid" />
+      <Type Name="ExtendedContentDescriptionObject+&lt;&gt;c__CompilerGenerated1+&lt;&gt;c__CompilerGenerated8" DisplayName="&lt;&gt;c__CompilerGenerated1+&lt;&gt;c__CompilerGenerated8" />
+      <Type Name="ExtendedContentDescriptionObject+&lt;&gt;c__CompilerGenerated1+&lt;&gt;c__CompilerGenerated9" DisplayName="&lt;&gt;c__CompilerGenerated1+&lt;&gt;c__CompilerGenerated9" />
+      <Type Name="File+&lt;&gt;c__CompilerGenerated2+&lt;&gt;c__CompilerGenerated10" DisplayName="&lt;&gt;c__CompilerGenerated2+&lt;&gt;c__CompilerGenerated10" />
+      <Type Name="File+&lt;&gt;c__CompilerGenerated2+&lt;&gt;c__CompilerGenerated11" DisplayName="&lt;&gt;c__CompilerGenerated2+&lt;&gt;c__CompilerGenerated11" />
     </Namespace>
     <Namespace Name="TagLib.NonContainer">
       <Type Name="EndTag" />
@@ -179,6 +196,17 @@
     <Namespace Name="TagLib.Ogg.Codecs">
       <Type Name="Vorbis" />
       <Type Name="Theora" />
+    </Namespace>
+    <Namespace Name="TagLib.Riff">
+      <Type Name="AviProperties" />
+      <Type Name="AviHeader" />
+      <Type Name="AviStreamHeader" />
+      <Type Name="DivXTag" />
+      <Type Name="File" />
+      <Type Name="InfoTag" />
+      <Type Name="ListTag" />
+      <Type Name="List" />
+      <Type Name="MovieIdTag" />
     </Namespace>
   </Types>
   <Title>taglib-sharp</Title>

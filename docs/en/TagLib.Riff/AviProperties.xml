@@ -1,0 +1,29 @@
+<Type Name="AviProperties" FullName="TagLib.Riff.AviProperties">
+  <TypeSignature Language="C#" Value="public class AviProperties : TagLib.Properties" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>TagLib.Properties</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public AviProperties (TagLib.ByteVector data, TagLib.ReadStyle style);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="data" Type="TagLib.ByteVector" /><Parameter Name="style" Type="TagLib.ReadStyle" /></Parameters>
+      <Docs><param name="data">To be added.</param><param name="style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public AviProperties (TagLib.File file, long position, int length, TagLib.ReadStyle style);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="file" Type="TagLib.File" /><Parameter Name="position" Type="System.Int64" /><Parameter Name="length" Type="System.Int32" /><Parameter Name="style" Type="TagLib.ReadStyle" /></Parameters>
+      <Docs><param name="file">To be added.</param><param name="position">To be added.</param><param name="length">To be added.</param><param name="style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

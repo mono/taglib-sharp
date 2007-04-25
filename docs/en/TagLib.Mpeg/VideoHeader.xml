@@ -1,0 +1,47 @@
+<Type Name="VideoHeader" FullName="TagLib.Mpeg.VideoHeader">
+  <TypeSignature Language="C#" Value="public class VideoHeader" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public VideoHeader (TagLib.File file, long offset);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="file" Type="TagLib.File" /><Parameter Name="offset" Type="System.Int64" /></Parameters>
+      <Docs><param name="file">To be added.</param><param name="offset">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Width">
+      <MemberSignature Language="C#" Value="public int Width { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Height">
+      <MemberSignature Language="C#" Value="public int Height { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="FrameRate">
+      <MemberSignature Language="C#" Value="public double FrameRate { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Double</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Bitrate">
+      <MemberSignature Language="C#" Value="public int Bitrate { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

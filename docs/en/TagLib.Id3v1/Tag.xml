@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class Tag : TagLib.Tag" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.Tag</BaseTypeName>
@@ -34,13 +34,7 @@
       <Parameters />
       <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
-    <Member MemberName="Read">
-      <MemberSignature Language="C#" Value="protected void Read ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters />
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member>
+    
     
     <Member MemberName="DefaultStringHandler">
       <MemberSignature Language="C#" Value="public static TagLib.Id3v1.StringHandler DefaultStringHandler { set; };" />
@@ -48,7 +42,7 @@
       <ReturnValue><ReturnType>TagLib.Id3v1.StringHandler</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
-  <Member MemberName="DefaultStringHandler"><MemberSignature Language="C#" Value="public static TagLib.Id3v1.StringHandler DefaultStringHandler { set; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.Id3v1.StringHandler</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Size"><MemberSignature Language="C#" Value="public static readonly uint Size = 128;" /><MemberType>Field</MemberType><ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue><MemberValue>128</MemberValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member></Members>
+  <Member MemberName="DefaultStringHandler"><MemberSignature Language="C#" Value="public static TagLib.Id3v1.StringHandler DefaultStringHandler { set; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.Id3v1.StringHandler</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Size"><MemberSignature Language="C#" Value="public static readonly uint Size = 128;" /><MemberType>Field</MemberType><ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue><MemberValue>128</MemberValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Size"><MemberSignature Language="C#" Value="public static readonly uint Size = 128;" /><MemberType>Field</MemberType><ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue><MemberValue>128</MemberValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="DefaultStringHandler"><MemberSignature Language="C#" Value="public static TagLib.Id3v1.StringHandler DefaultStringHandler { set; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.Id3v1.StringHandler</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member></Members>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>

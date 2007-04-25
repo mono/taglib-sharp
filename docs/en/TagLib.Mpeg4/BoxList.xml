@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class BoxList : TagLib.ListBase&lt;TagLib.Mpeg4.Box&gt;" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.ListBase&lt;TagLib.Mpeg4.Box&gt;</BaseTypeName>

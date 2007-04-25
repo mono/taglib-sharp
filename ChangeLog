@@ -1,3 +1,13 @@
+2007-04-25  Brian Nickel <brian.nickel@gmail.com>
+
+taglib-sharp-1.9.99991 (2.0 beta 1)
+
+	* src/TagLib/Riff/List.cs:
+	* src/TagLib/Riff/File.cs: RIFF abhors odd byte counts.
+	* src/TagLib/Asf/Tag.cs: Removed random extra Console.WriteLine.
+	* docs/en/*/*.xml: Synced
+	* configure.ac: Version bump
+
 2007-04-23  Brian Nickel <brian.nickel@gmail.com>
 
 Added support for AVI video files! Revamped the GenreList for video genres.

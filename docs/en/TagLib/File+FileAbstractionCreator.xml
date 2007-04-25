@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public delegate TagLib.File.IFileAbstraction File.FileAbstractionCreator(string path);" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Delegate</BaseTypeName>

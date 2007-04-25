@@ -47,6 +47,9 @@ namespace TagLib.Riff
             ByteVector id = data.Mid (offset, 4);
             int length = (int) data.Mid (offset + 4, 4).ToUInt (false);
             
+            if (length % 2 == 1)
+               length ++;
+            
             if (!ContainsKey (id))
                Add (id, data.Mid (offset + 8, length));
             

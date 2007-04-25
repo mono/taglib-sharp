@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class GeneralEncapsulatedObjectFrame : TagLib.Id3v2.Frame" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.Id3v2.Frame</BaseTypeName>
@@ -33,13 +33,7 @@
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
-    <Member MemberName="Find">
-      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.GeneralEncapsulatedObjectFrame Find (TagLib.Id3v2.Tag tag, string description);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.Id3v2.GeneralEncapsulatedObjectFrame</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="tag" Type="TagLib.Id3v2.Tag" /><Parameter Name="description" Type="System.String" /></Parameters>
-      <Docs><param name="tag">To be added.</param><param name="description">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member>
+    
     <Member MemberName="MimeType">
       <MemberSignature Language="C#" Value="public string MimeType { set; get; };" />
       <MemberType>Property</MemberType>
@@ -58,7 +52,7 @@
       <ReturnValue><ReturnType>TagLib.StringType</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
-  </Members>
+  <Member MemberName="Get"><MemberSignature Language="C#" Value="public static TagLib.Id3v2.GeneralEncapsulatedObjectFrame Get (TagLib.Id3v2.Tag tag, string description, bool create);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>TagLib.Id3v2.GeneralEncapsulatedObjectFrame</ReturnType></ReturnValue><Parameters><Parameter Name="tag" Type="TagLib.Id3v2.Tag" /><Parameter Name="description" Type="System.String" /><Parameter Name="create" Type="System.Boolean" /></Parameters><Docs><param name="tag">To be added.</param><param name="description">To be added.</param><param name="create">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="TextEncoding"><MemberSignature Language="C#" Value="public TagLib.StringType TextEncoding { set; get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.StringType</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="MimeType"><MemberSignature Language="C#" Value="public string MimeType { set; get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Object"><MemberSignature Language="C#" Value="public TagLib.ByteVector Object { set; get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member></Members>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>

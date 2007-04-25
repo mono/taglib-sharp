@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class Properties" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -39,13 +39,7 @@
       <ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
-    <Member MemberName="Length">
-      <MemberSignature Language="C#" Value="public virtual int Length { get; };" />
-      <MemberType>Property</MemberType>
-      <Attributes><Attribute><AttributeName>System.Obsolete("This property is obsolete; use the Duration property instead.")</AttributeName></Attribute></Attributes>
-      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member>
+    
     <Member MemberName="MediaTypes">
       <MemberSignature Language="C#" Value="public virtual TagLib.MediaTypes MediaTypes { get; };" />
       <MemberType>Property</MemberType>
@@ -64,7 +58,7 @@
       <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
-  </Members>
+  <Member MemberName="VideoWidth"><MemberSignature Language="C#" Value="public virtual int VideoWidth { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="VideoHeight"><MemberSignature Language="C#" Value="public virtual int VideoHeight { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="MediaTypes"><MemberSignature Language="C#" Value="public virtual TagLib.MediaTypes MediaTypes { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.MediaTypes</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member></Members>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>

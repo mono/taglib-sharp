@@ -1,8 +1,8 @@
 <Type Name="File+FileTypeResolver" FullName="TagLib.File+FileTypeResolver">
-  <TypeSignature Language="C#" Value="public delegate TagLib.File File.FileTypeResolver(string path, ReadStyle style);" />
+  <TypeSignature Language="C#" Value="public delegate TagLib.File File.FileTypeResolver(string path, TagLib.ReadStyle style);" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Delegate</BaseTypeName>

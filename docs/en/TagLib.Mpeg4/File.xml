@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class File : TagLib.File" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.File</BaseTypeName>
@@ -27,6 +27,12 @@
   </Docs>
   <Attributes>
     <Attribute>
+      <AttributeName>TagLib.SupportedMimeType("video/x-m4v")</AttributeName>
+    </Attribute>
+    <Attribute>
+      <AttributeName>TagLib.SupportedMimeType("video/mp4")</AttributeName>
+    </Attribute>
+    <Attribute>
       <AttributeName>TagLib.SupportedMimeType("audio/x-m4a")</AttributeName>
     </Attribute>
     <Attribute>
@@ -37,6 +43,9 @@
     </Attribute>
     <Attribute>
       <AttributeName>TagLib.SupportedMimeType("taglib/m4p", "m4p")</AttributeName>
+    </Attribute>
+    <Attribute>
+      <AttributeName>TagLib.SupportedMimeType("taglib/m4v", "m4v")</AttributeName>
     </Attribute>
     <Attribute>
       <AttributeName>TagLib.SupportedMimeType("taglib/m4a", "m4a")</AttributeName>

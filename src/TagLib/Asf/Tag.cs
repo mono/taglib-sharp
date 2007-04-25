@@ -132,7 +132,6 @@ namespace TagLib.Asf
          get
          {
             string value = GetDescriptorString ("WM/Genre", "WM/GenreID", "Genre");
-            System.Console.WriteLine (value);
             if (value == null || value.Trim () == String.Empty)
                return new string [] {};
             

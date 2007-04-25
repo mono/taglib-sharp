@@ -1,8 +1,8 @@
 <Type Name="Codec+CodecProvider" FullName="TagLib.Ogg.Codec+CodecProvider">
-  <TypeSignature Language="C#" Value="public delegate TagLib.Ogg.Codec Codec.CodecProvider(ByteVector packet);" />
+  <TypeSignature Language="C#" Value="public delegate TagLib.Ogg.Codec Codec.CodecProvider(TagLib.ByteVector packet);" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Delegate</BaseTypeName>

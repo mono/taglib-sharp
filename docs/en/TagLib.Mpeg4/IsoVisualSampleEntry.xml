@@ -1,0 +1,41 @@
+<Type Name="IsoVisualSampleEntry" FullName="TagLib.Mpeg4.IsoVisualSampleEntry">
+  <TypeSignature Language="C#" Value="public class IsoVisualSampleEntry : TagLib.Mpeg4.IsoSampleEntry" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>TagLib.Mpeg4.IsoSampleEntry</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public IsoVisualSampleEntry (TagLib.Mpeg4.BoxHeader header, TagLib.Mpeg4.File file, TagLib.Mpeg4.Box handler);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" /><Parameter Name="file" Type="TagLib.Mpeg4.File" /><Parameter Name="handler" Type="TagLib.Mpeg4.Box" /></Parameters>
+      <Docs><param name="header">To be added.</param><param name="file">To be added.</param><param name="handler">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Height">
+      <MemberSignature Language="C#" Value="public ushort Height { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Width">
+      <MemberSignature Language="C#" Value="public ushort Width { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="DataOffset">
+      <MemberSignature Language="C#" Value="protected override long DataOffset { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

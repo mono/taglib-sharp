@@ -1,0 +1,120 @@
+<Type Name="List" FullName="TagLib.Riff.List">
+  <TypeSignature Language="C#" Value="public class List : System.Collections.Generic.Dictionary&lt;TagLib.ByteVector,TagLib.ByteVector&gt;" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Collections.Generic.Dictionary&lt;TagLib.ByteVector,TagLib.ByteVector&gt;</BaseTypeName>
+    
+  <BaseTypeArguments><BaseTypeArgument TypeParamName="TKey">TagLib.ByteVector</BaseTypeArgument><BaseTypeArgument TypeParamName="TValue">TagLib.ByteVector</BaseTypeArgument></BaseTypeArguments></Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public List ();" />
+      <MemberType>Constructor</MemberType>
+      <Parameters />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public List (TagLib.ByteVector data);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="data" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="data">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public List (TagLib.File file, long position, int length);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="file" Type="TagLib.File" /><Parameter Name="position" Type="System.Int64" /><Parameter Name="length" Type="System.Int32" /></Parameters>
+      <Docs><param name="file">To be added.</param><param name="position">To be added.</param><param name="length">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Render">
+      <MemberSignature Language="C#" Value="public TagLib.ByteVector Render ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="RenderEnclosed">
+      <MemberSignature Language="C#" Value="public TagLib.ByteVector RenderEnclosed (TagLib.ByteVector id);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="id" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="id">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="GetValue">
+      <MemberSignature Language="C#" Value="public TagLib.ByteVector GetValue (TagLib.ByteVector id);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="id" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="id">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="GetValueAsString">
+      <MemberSignature Language="C#" Value="public string GetValueAsString (TagLib.ByteVector id);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="id" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="id">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="GetValueAsUInt">
+      <MemberSignature Language="C#" Value="public uint GetValueAsUInt (TagLib.ByteVector id);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="id" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="id">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="GetValueAsStringList">
+      <MemberSignature Language="C#" Value="public TagLib.StringList GetValueAsStringList (TagLib.ByteVector id);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.StringList</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="id" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="id">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="SetValue">
+      <MemberSignature Language="C#" Value="public void SetValue (TagLib.ByteVector id, TagLib.ByteVector value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="id" Type="TagLib.ByteVector" /><Parameter Name="value" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="id">To be added.</param><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="SetValue">
+      <MemberSignature Language="C#" Value="public void SetValue (TagLib.ByteVector id, string value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="id" Type="TagLib.ByteVector" /><Parameter Name="value" Type="System.String" /></Parameters>
+      <Docs><param name="id">To be added.</param><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="SetValue">
+      <MemberSignature Language="C#" Value="public void SetValue (TagLib.ByteVector id, uint value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="id" Type="TagLib.ByteVector" /><Parameter Name="value" Type="System.UInt32" /></Parameters>
+      <Docs><param name="id">To be added.</param><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="SetValue">
+      <MemberSignature Language="C#" Value="public void SetValue (TagLib.ByteVector id, TagLib.StringList value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="id" Type="TagLib.ByteVector" /><Parameter Name="value" Type="TagLib.StringList" /></Parameters>
+      <Docs><param name="id">To be added.</param><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="SetValue">
+      <MemberSignature Language="C#" Value="public void SetValue (TagLib.ByteVector id, string[] value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="id" Type="TagLib.ByteVector" /><Parameter Name="value" Type="System.String[]" /></Parameters>
+      <Docs><param name="id">To be added.</param><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="RemoveValue">
+      <MemberSignature Language="C#" Value="public void RemoveValue (TagLib.ByteVector id);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="id" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="id">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>
