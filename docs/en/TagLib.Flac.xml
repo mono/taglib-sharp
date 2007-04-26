@@ -1,6 +1,0 @@
-<Namespace Name="TagLib.Flac">
-  <Docs>
-    <summary>The TagLib.Flac namespace contains classes for reading and writing tag information for FLAC files. These files are common for people trying to backup their music collection as they retain 100% of the original CD data in about half the space.</summary>
-    <remarks>As of the current version of TagLib#, support is only included for metadata stored in the Vorbis Comments, ID3v2, and ID3v1 formats.</remarks>
-  </Docs>
-</Namespace>

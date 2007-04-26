@@ -1,6 +1,0 @@
-<Namespace Name="TagLib.Mpeg">
-  <Docs>
-    <summary>The TagLib.Mpeg namespace contains classes for reading and writing tag information for MPEG Layer 3 files. These files are some of the most commonly used music files on computers based on the age and simplicity of the format as well as its common use during the advent of peer-to-peer file sharing.</summary>
-    <remarks>As of the current version of TagLib#, support is only included for metadata stored in the APE, ID3v2, and ID3v1 formats.</remarks>
-  </Docs>
-</Namespace>

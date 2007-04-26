@@ -1,6 +1,0 @@
-<Namespace Name="TagLib.Mpc">
-  <Docs>
-    <summary>The TagLib.Mpc namespace contains classes for reading and writing tag information for Musepack files. These files are most commonly used by music enthusiasts on account of the format's near-transparency at higher bitrates.</summary>
-    <remarks>As of the current version of TagLib#, support is only included for metadata stored in the APE and ID3v1 formats.</remarks>
-  </Docs>
-</Namespace>
