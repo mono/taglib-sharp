@@ -1,0 +1,22 @@
+<Type Name="Codec+CodecProvider" FullName="TagLib.Ogg.Codec+CodecProvider">
+  <TypeSignature Language="C#" Value="public delegate TagLib.Ogg.Codec Codec.CodecProvider(TagLib.ByteVector packet);" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="packet" Type="TagLib.ByteVector" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>TagLib.Ogg.Codec</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="packet">To be added.</param>
+    <summary>To be added.</summary>
+    <returns>To be added.</returns>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

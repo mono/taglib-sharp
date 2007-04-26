@@ -1,0 +1,24 @@
+<Type Name="File+FileTypeResolver" FullName="TagLib.File+FileTypeResolver">
+  <TypeSignature Language="C#" Value="public delegate TagLib.File File.FileTypeResolver(string path, TagLib.ReadStyle style);" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="path" Type="System.String" />
+    <Parameter Name="style" Type="TagLib.ReadStyle" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>TagLib.File</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="path">To be added.</param>
+    <param name="style">To be added.</param>
+    <summary>To be added.</summary>
+    <returns>To be added.</returns>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

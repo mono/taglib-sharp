@@ -1,0 +1,82 @@
+<Type Name="IsoChunkLargeOffsetBox" FullName="TagLib.Mpeg4.IsoChunkLargeOffsetBox">
+  <TypeSignature Language="C#" Value="public class IsoChunkLargeOffsetBox : TagLib.Mpeg4.FullBox" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>TagLib.Mpeg4.FullBox</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public IsoChunkLargeOffsetBox (TagLib.Mpeg4.BoxHeader header, TagLib.Mpeg4.File file, TagLib.Mpeg4.Box handler);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" />
+        <Parameter Name="file" Type="TagLib.Mpeg4.File" />
+        <Parameter Name="handler" Type="TagLib.Mpeg4.Box" />
+      </Parameters>
+      <Docs>
+        <param name="header">To be added.</param>
+        <param name="file">To be added.</param>
+        <param name="handler">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Overwrite">
+      <MemberSignature Language="C#" Value="public void Overwrite (TagLib.Mpeg4.File file, long size_difference, long after);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="file" Type="TagLib.Mpeg4.File" />
+        <Parameter Name="size_difference" Type="System.Int64" />
+        <Parameter Name="after" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <param name="size_difference">To be added.</param>
+        <param name="after">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Render">
+      <MemberSignature Language="C#" Value="public TagLib.ByteVector Render (long size_difference, long after);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="size_difference" Type="System.Int64" />
+        <Parameter Name="after" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="size_difference">To be added.</param>
+        <param name="after">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Offsets">
+      <MemberSignature Language="C#" Value="public ulong[] Offsets { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.UInt64[]</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

@@ -1,0 +1,630 @@
+<Type Name="ByteVector" FullName="TagLib.ByteVector">
+  <TypeSignature Language="C#" Value="public class ByteVector : System.Collections.Generic.IList&lt;byte&gt;, System.IComparable&lt;TagLib.ByteVector&gt;" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.Collections.Generic.IList&lt;System.Byte&gt;</InterfaceName>
+    </Interface>
+    <Interface>
+      <InterfaceName>System.IComparable&lt;TagLib.ByteVector&gt;</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Reflection.DefaultMember("Item")</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ByteVector ();" />
+      <MemberType>Constructor</MemberType>
+      <Parameters />
+      <Docs><summary>
+          <para>
+            Constructs and initializes a new instance of the <see cref="T:TagLib.ByteVector" /> class that is empty.
+          </para>
+        </summary><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ByteVector (int size, byte value);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="size" Type="System.Int32" /><Parameter Name="value" Type="System.Byte" /></Parameters>
+      <Docs><param name="size">A <see cref="T:System.Int32" /> that specifies the number of bytes to be stored in the new instance.</param><param name="value">A <see cref="T:System.Byte" /> that specifies the value to be stored in the new instance</param><summary>
+          <para>
+            Constructs and initializes a new instance of the <see cref="T:TagLib.ByteVector" /> class of specified size containing bytes of specified value.
+          </para>
+        </summary><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ByteVector (int size);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="size" Type="System.Int32" /></Parameters>
+      <Docs><param name="size">A <see cref="T:System.Int32" /> that specifies the number of bytes to be stored in the new instance.</param><summary>
+          <para>
+            Constructs and initializes a new instance of the <see cref="T:TagLib.ByteVector" /> class of specified size containing bytes with a zeroed value.
+          </para>
+        </summary><remarks>
+          <para>
+            Each element of the new instance will have a value of 0x00. <see cref="T:TagLib.ByteVector" />(<see cref="T:System.Int32" />, <see cref="T:System.Byte" />) to fill a new instance with a specified value.
+          </para>
+        </remarks></Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ByteVector (TagLib.ByteVector vector);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="vector" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="vector">A <see cref="T:TagLib.ByteVector" /> containing the bytes to be stored in the new instance.</param><summary>
+          <para>
+            Constructs and initializes a new instance of the <see cref="T:TagLib.ByteVector" /> class by copying the values from another instance.
+          </para>
+        </summary><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ByteVector (byte value);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="value" Type="System.Byte" /></Parameters>
+      <Docs><param name="value">A <see cref="T:System.Byte" /> to be stored in the new instance.</param><summary>
+          <para>
+            Constructs and initializes a new instance of the <see cref="T:TagLib.ByteVector" /> class containing a single element of a specified value.
+          </para>
+        </summary><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ByteVector (byte[] data, int length);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="data" Type="System.Byte[]" /><Parameter Name="length" Type="System.Int32" /></Parameters>
+      <Docs><param name="data">A <see cref="T:System.Byte" />[] containing the bytes to be copied to the new instance.</param><param name="length">A <see cref="T:System.Int32" /> that specified the number of bytes to be copied to the new instance.</param><summary>
+          <para>
+            Constructs and initializes a new instance of the <see cref="T:TagLib.ByteVector" /> class copying a specified number of elements from the beginning of a specified <see cref="T:System.Byte" />[].
+          </para>
+        </summary><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ByteVector (byte[] data);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="data" Type="System.Byte[]" /></Parameters>
+      <Docs><param name="data">A <see cref="T:System.Byte" />[] containing the bytes to be copied to the new instance.</param><summary>
+          <para>
+            Constructs and initializes a new instance of the <see cref="T:TagLib.ByteVector" /> class copying the elements from a specified <see cref="T:System.Byte" />[].
+          </para>
+        </summary><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName="SetData">
+      <MemberSignature Language="C#" Value="public void SetData (byte[] value, int length);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Byte[]" /><Parameter Name="length" Type="System.Int32" /></Parameters>
+      <Docs><param name="value">A <see cref="T:System.Byte" />[] containing the bytes to be copied.</param><param name="length">A <see cref="T:System.Int32" /> that specifies the number of bytes to be copied.</param><summary>
+          <para>
+            Removes the contents of the current instance and replaces them with a specified number of elements from the beginning of a specified <see cref="T:System.Byte" />[].
+          </para>
+        </summary><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName="SetData">
+      <MemberSignature Language="C#" Value="public void SetData (byte[] value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Byte[]" /></Parameters>
+      <Docs><param name="value">A <see cref="T:System.Byte" />[] containing the bytes to be copied.</param><summary>
+          <para>
+            Removes the contents of the current instance and replaces them with the elements of a specified <see cref="T:System.Byte" />[].
+          </para>
+        </summary><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName="Mid">
+      <MemberSignature Language="C#" Value="public TagLib.ByteVector Mid (int index, int length);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="index" Type="System.Int32" /><Parameter Name="length" Type="System.Int32" /></Parameters>
+      <Docs><param name="index">A <see cref="T:System.Int32" /> that specifies the index at which to start copying elements from the current instance.</param><param name="length">A <see cref="T:System.Int32" /> that specifies the number of elements to copy from the current instance.</param><summary>
+          <para>
+            Creates a new instance of the <see cref="T:TagLib.ByteVector" /> class that contains a specified range of elements from the current instance.
+          </para>
+        </summary><returns>A <see cref="T:TagLib.ByteVector" /> containing the specified number of elements starting at the specified index. If the specified length is greater than the number of available elements, the number of available elements will be stored. If the specified length is less than or equal to zero, an empty instance will be returned.</returns><remarks></remarks><exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="index" /> &lt; 0
+        </exception><exception cref="T:System.ArgumentException">
+          <paramref name="index" /> &gt; <see cref="P:TagLib.ByteVector.Count" />
+        </exception></Docs>
+    </Member>
+    <Member MemberName="Mid">
+      <MemberSignature Language="C#" Value="public TagLib.ByteVector Mid (int index);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="index" Type="System.Int32" /></Parameters>
+      <Docs><param name="index">A <see cref="T:System.Int32" /> that specifies the index at which to start copying elements from the current instance.</param><summary>
+          <para>
+            Creates a new instance of the <see cref="T:TagLib.ByteVector" /> class that contains all the elements from the current instance starting at a specified index.
+          </para>
+        </summary><returns>A <see cref="T:TagLib.ByteVector" /> containing the all of elements starting at the specified index.</returns><remarks></remarks><exception cref="T:System.ArgumentOutOfRangeException">
+          <paramref name="index" /> &lt; 0
+        </exception><exception cref="T:System.ArgumentException">
+          <paramref name="index" /> &gt; <see cref="P:TagLib.ByteVector.Count" />
+        </exception></Docs>
+    </Member>
+    <Member MemberName="Find">
+      <MemberSignature Language="C#" Value="public int Find (TagLib.ByteVector pattern, int offset, int byte_align);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="pattern" Type="TagLib.ByteVector" /><Parameter Name="offset" Type="System.Int32" /><Parameter Name="byte_align" Type="System.Int32" /></Parameters>
+      <Docs><param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the pattern to be found in the current instance.</param><param name="offset">A <see cref="T:System.Int32" /> specifying the index at which to begin the search.</param><param name="byte_align">A <see cref="T:System.Int32" /> specifying the byte alignment on which to scan.</param><summary>Searches the current instance for a <see cref="T:TagLib.ByteVector" /> pattern, starting at a specified offset, with a specified byte alignment.</summary><returns>A <see cref="System.Int32" /> containing either the index at which the value was found or -1 if it was not found. The value will be divisible by <paramref name="byte_align" />.</returns><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName="Find">
+      <MemberSignature Language="C#" Value="public int Find (TagLib.ByteVector pattern, int offset);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="pattern" Type="TagLib.ByteVector" /><Parameter Name="offset" Type="System.Int32" /></Parameters>
+      <Docs><param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the pattern to be found in the current instance.</param><param name="offset">A <see cref="T:System.Int32" /> specifying the index at which to begin the search.</param><summary>Searches the current instance for a <see cref="T:TagLib.ByteVector" /> pattern, starting at a specified offset.</summary><returns>A <see cref="System.Int32" /> containing either the index at which the value was found or -1 if it was not found.</returns><remarks>This search operates with a byte alignment of 1. That is, the pattern can start at any index starting at <paramref name="offset" />.</remarks></Docs>
+    </Member>
+    <Member MemberName="Find">
+      <MemberSignature Language="C#" Value="public int Find (TagLib.ByteVector pattern);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="pattern" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the pattern to be found in the current instance.</param><summary>Searches the current instance for a <see cref="T:TagLib.ByteVector" /> pattern, starting at the beginning.</summary><returns>A <see cref="System.Int32" /> containing either the index at which the value was found or -1 if it was not found.</returns><remarks>This search operates with a byte alignment of 1. That is, the pattern can start at any index starting at <paramref name="offset" />.</remarks></Docs>
+    </Member>
+    <Member MemberName="RFind">
+      <MemberSignature Language="C#" Value="public int RFind (TagLib.ByteVector pattern, int offset, int byte_align);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="pattern" Type="TagLib.ByteVector" /><Parameter Name="offset" Type="System.Int32" /><Parameter Name="byte_align" Type="System.Int32" /></Parameters>
+      <Docs><param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the pattern to be found in the current instance.</param><param name="offset">A <see cref="T:System.Int32" /> specifying the index at which to begin the search.</param><param name="byte_align">A <see cref="T:System.Int32" /> specifying the byte alignment on which to scan.</param><summary>Searches backwards through the current instance for a <see cref="T:TagLib.ByteVector" /> pattern, starting at a specified offset, with a specified byte alignment.</summary><returns>A <see cref="System.Int32" /> containing either the index at which the value was found or -1 if it was not found. The value will be divisible by <paramref name="byte_align" />.</returns><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName="RFind">
+      <MemberSignature Language="C#" Value="public int RFind (TagLib.ByteVector pattern, int offset);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="pattern" Type="TagLib.ByteVector" /><Parameter Name="offset" Type="System.Int32" /></Parameters>
+      <Docs><param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the pattern to be found in the current instance.</param><param name="offset">A <see cref="T:System.Int32" /> specifying the index at which to begin the search.</param><summary>Searches backwards through the current instance for a <see cref="T:TagLib.ByteVector" /> pattern, starting at a specified offset.</summary><returns>A <see cref="System.Int32" /> containing either the index at which the value was found or -1 if it was not found.</returns><remarks>This search operates with a byte alignment of 1. That is, the pattern can start at any index starting at <paramref name="offset" />.</remarks></Docs>
+    </Member>
+    <Member MemberName="RFind">
+      <MemberSignature Language="C#" Value="public int RFind (TagLib.ByteVector pattern);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="pattern" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the pattern to be found in the current instance.</param><summary>Searches backwards through the current instance for a <see cref="T:TagLib.ByteVector" /> pattern, starting at the beginning.</summary><returns>A <see cref="System.Int32" /> containing either the index at which the value was found or -1 if it was not found.</returns><remarks>This search operates with a byte alignment of 1. That is, the pattern can start at any index starting at <paramref name="offset" />.</remarks></Docs>
+    </Member>
+    <Member MemberName="ContainsAt">
+      <MemberSignature Language="C#" Value="public bool ContainsAt (TagLib.ByteVector pattern, int offset, int pattern_offset, int pattern_length);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="pattern" Type="TagLib.ByteVector" /><Parameter Name="offset" Type="System.Int32" /><Parameter Name="pattern_offset" Type="System.Int32" /><Parameter Name="pattern_length" Type="System.Int32" /></Parameters>
+      <Docs><param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the pattern to be found in the current instance.</param><param name="offset">A <see cref="T:System.Int32" /> specifying the location within the current instance at which to check.</param><param name="pattern_offset">A <see cref="T:System.Int32" /> specifying the location within the pattern at which to start matching.</param><param name="pattern_length">A <see cref="T:System.Int32" /> specifying the location within the pattern at which to stop matching.</param><summary>Checks the current instance to determine whether it contains a specified portion of another <see cref="T:TagLib.ByteVector" /> at a specified offset.</summary><returns><see langword="true" /> if the portion of the pattern if found at the specified offset, otherwise <see langword="false" />.</returns><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName="ContainsAt">
+      <MemberSignature Language="C#" Value="public bool ContainsAt (TagLib.ByteVector pattern, int offset, int pattern_offset);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="pattern" Type="TagLib.ByteVector" /><Parameter Name="offset" Type="System.Int32" /><Parameter Name="pattern_offset" Type="System.Int32" /></Parameters>
+      <Docs><param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the pattern to be found in the current instance.</param><param name="offset">A <see cref="T:System.Int32" /> specifying the location within the current instance at which to check.</param><param name="pattern_offset">A <see cref="T:System.Int32" /> specifying the location within the pattern at which to start matching.</param><summary>Checks the current instance to determine whether it contains a specified portion of another <see cref="T:TagLib.ByteVector" /> at a specified offset.</summary><returns><see langword="true" /> if the portion of the pattern if found at the specified offset, otherwise <see langword="false" />.</returns><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName="ContainsAt">
+      <MemberSignature Language="C#" Value="public bool ContainsAt (TagLib.ByteVector pattern, int offset);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="pattern" Type="TagLib.ByteVector" /><Parameter Name="offset" Type="System.Int32" /></Parameters>
+      <Docs><param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the pattern to be found in the current instance.</param><param name="offset">A <see cref="T:System.Int32" /> specifying the location within the current instance at which to check.</param><summary>Checks the current instance to determine whether it contains a <see cref="T:TagLib.ByteVector" /> pattern at a specified offset.</summary><returns><see langword="true" /> if the pattern if found at the specified offset, otherwise <see langword="false" />.</returns><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName="StartsWith">
+      <MemberSignature Language="C#" Value="public bool StartsWith (TagLib.ByteVector pattern);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="pattern" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the pattern to be found in the current instance.</param><summary>Checks whether the current instance starts with a specified pattern.</summary><returns><see langword="true" /> if the current instance starts with the pattern, otherwise <see langword="false" />.</returns><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName="EndsWith">
+      <MemberSignature Language="C#" Value="public bool EndsWith (TagLib.ByteVector pattern);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="pattern" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the pattern to be found in the current instance.</param><summary>Checks whether the current instance ends with a specified pattern.</summary><returns><see langword="true" /> if the current instance ends with the pattern, otherwise <see langword="false" />.</returns><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName="EndsWithPartialMatch">
+      <MemberSignature Language="C#" Value="public int EndsWithPartialMatch (TagLib.ByteVector pattern);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="pattern" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="pattern">To be added.</param><summary>Checks whether the current instance ends with either all of part of a specified pattern.</summary><returns>Returns the index at which the partial pattern was found, otherwise -1.</returns><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName="Add">
+      <MemberSignature Language="C#" Value="public void Add (TagLib.ByteVector vector);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="vector" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="vector">A <see cref="T:TagLib.ByteVector" /> whose elements are be appended to the current instance.</param><summary>Adds the elements from another <see cref="T:TagLib.ByteVector" /> at the end of the current instance.</summary><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName="Add">
+      <MemberSignature Language="C#" Value="public void Add (byte[] vector);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="vector" Type="System.Byte[]" /></Parameters>
+      <Docs><param name="vector">A <see cref="T:System.Byte" />[] whose elements are be appended to the current instance.</param><summary>Adds the elements from a <see cref="T:System.Byte" />[] at the end of the current instance.</summary><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName="Insert">
+      <MemberSignature Language="C#" Value="public void Insert (int index, TagLib.ByteVector vector);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="index" Type="System.Int32" /><Parameter Name="vector" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="index">A <see cref="System.Int32" /> specifying the index at which to insert elements.</param><param name="vector">A <see cref="T:TagLib.ByteVector" /> whose elements are be inserted into the current instance.</param><summary>Inserts the elements from a <see cref="T:TagLib.ByteVector" /> into the current instance at a specified index.</summary><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName="Insert">
+      <MemberSignature Language="C#" Value="public void Insert (int index, byte[] vector);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="index" Type="System.Int32" /><Parameter Name="vector" Type="System.Byte[]" /></Parameters>
+      <Docs><param name="index">A <see cref="System.Int32" /> specifying the index at which to insert elements.</param><param name="vector">A <see cref="T:System.Byte" />[] whose elements are be inserted into the current instance.</param><summary>Inserts the elements from a <see cref="T:TagLib.ByteVector" /> into the current instance at a specified index.</summary><remarks></remarks></Docs>
+    </Member>
+    <Member MemberName="Resize">
+      <MemberSignature Language="C#" Value="public TagLib.ByteVector Resize (int size, byte padding);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="size" Type="System.Int32" /><Parameter Name="padding" Type="System.Byte" /></Parameters>
+      <Docs><param name="size">To be added.</param><param name="padding">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Resize">
+      <MemberSignature Language="C#" Value="public TagLib.ByteVector Resize (int size);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="size" Type="System.Int32" /></Parameters>
+      <Docs><param name="size">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="ToUInt">
+      <MemberSignature Language="C#" Value="public uint ToUInt (bool msbFirst);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="msbFirst" Type="System.Boolean" /></Parameters>
+      <Docs><param name="msbFirst">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="ToUInt">
+      <MemberSignature Language="C#" Value="public uint ToUInt ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="ToShort">
+      <MemberSignature Language="C#" Value="public short ToShort (bool msbFirst);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="msbFirst" Type="System.Boolean" /></Parameters>
+      <Docs><param name="msbFirst">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="ToShort">
+      <MemberSignature Language="C#" Value="public short ToShort ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="ToLong">
+      <MemberSignature Language="C#" Value="public long ToLong (bool msbFirst);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="msbFirst" Type="System.Boolean" /></Parameters>
+      <Docs><param name="msbFirst">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="ToLong">
+      <MemberSignature Language="C#" Value="public long ToLong ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="ToString">
+      <MemberSignature Language="C#" Value="public string ToString (TagLib.StringType type, int offset);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="type" Type="TagLib.StringType" /><Parameter Name="offset" Type="System.Int32" /></Parameters>
+      <Docs><param name="type">To be added.</param><param name="offset">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="ToString">
+      <MemberSignature Language="C#" Value="public string ToString (TagLib.StringType type);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="type" Type="TagLib.StringType" /></Parameters>
+      <Docs><param name="type">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="ToStrings">
+      <MemberSignature Language="C#" Value="public string[] ToStrings (TagLib.StringType type, int offset);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.String[]</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="type" Type="TagLib.StringType" /><Parameter Name="offset" Type="System.Int32" /></Parameters>
+      <Docs><param name="type">To be added.</param><param name="offset">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="ToStrings">
+      <MemberSignature Language="C#" Value="public string[] ToStrings (TagLib.StringType type, int offset, int count);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.String[]</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="type" Type="TagLib.StringType" /><Parameter Name="offset" Type="System.Int32" /><Parameter Name="count" Type="System.Int32" /></Parameters>
+      <Docs><param name="type">To be added.</param><param name="offset">To be added.</param><param name="count">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="FromUInt">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FromUInt (uint value, bool msbFirst);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.UInt32" /><Parameter Name="msbFirst" Type="System.Boolean" /></Parameters>
+      <Docs><param name="value">To be added.</param><param name="msbFirst">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="FromUInt">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FromUInt (uint value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.UInt32" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="FromShort">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FromShort (short value, bool msbFirst);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Int16" /><Parameter Name="msbFirst" Type="System.Boolean" /></Parameters>
+      <Docs><param name="value">To be added.</param><param name="msbFirst">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="FromShort">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FromShort (short value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Int16" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="FromLong">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FromLong (long value, bool msbFirst);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Int64" /><Parameter Name="msbFirst" Type="System.Boolean" /></Parameters>
+      <Docs><param name="value">To be added.</param><param name="msbFirst">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="FromLong">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FromLong (long value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Int64" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="FromString">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FromString (string s, TagLib.StringType type, int length);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="s" Type="System.String" /><Parameter Name="type" Type="TagLib.StringType" /><Parameter Name="length" Type="System.Int32" /></Parameters>
+      <Docs><param name="s">To be added.</param><param name="type">To be added.</param><param name="length">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="FromString">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FromString (string s, TagLib.StringType type);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="s" Type="System.String" /><Parameter Name="type" Type="TagLib.StringType" /></Parameters>
+      <Docs><param name="s">To be added.</param><param name="type">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="FromString">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FromString (string s, int length);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="s" Type="System.String" /><Parameter Name="length" Type="System.Int32" /></Parameters>
+      <Docs><param name="s">To be added.</param><param name="length">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="FromString">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FromString (string s);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="s" Type="System.String" /></Parameters>
+      <Docs><param name="s">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="FromUri">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FromUri (string uri);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="uri" Type="System.String" /></Parameters>
+      <Docs><param name="uri">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="FromStream">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FromStream (System.IO.Stream stream);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="stream" Type="System.IO.Stream" /></Parameters>
+      <Docs><param name="stream">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="CompareTo">
+      <MemberSignature Language="C#" Value="public int CompareTo (TagLib.ByteVector vector);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="vector" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="vector">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="GetEnumerator">
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerator&lt;byte&gt; GetEnumerator ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Collections.Generic.IEnumerator&lt;System.Byte&gt;</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Clear">
+      <MemberSignature Language="C#" Value="public void Clear ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Add">
+      <MemberSignature Language="C#" Value="public void Add (byte value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Byte" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Remove">
+      <MemberSignature Language="C#" Value="public bool Remove (byte value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Byte" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="CopyTo">
+      <MemberSignature Language="C#" Value="public void CopyTo (byte[] array, int index);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="array" Type="System.Byte[]" /><Parameter Name="index" Type="System.Int32" /></Parameters>
+      <Docs><param name="array">To be added.</param><param name="index">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public bool Contains (byte value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Byte" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="RemoveAt">
+      <MemberSignature Language="C#" Value="public void RemoveAt (int index);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="index" Type="System.Int32" /></Parameters>
+      <Docs><param name="index">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Insert">
+      <MemberSignature Language="C#" Value="public void Insert (int index, byte value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="index" Type="System.Int32" /><Parameter Name="value" Type="System.Byte" /></Parameters>
+      <Docs><param name="index">To be added.</param><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="IndexOf">
+      <MemberSignature Language="C#" Value="public int IndexOf (byte value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Byte" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="op_Equality">
+      <MemberSignature Language="C#" Value="public static bool op_Equality (TagLib.ByteVector a, TagLib.ByteVector b);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="TagLib.ByteVector" /><Parameter Name="b" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="op_Inequality">
+      <MemberSignature Language="C#" Value="public static bool op_Inequality (TagLib.ByteVector a, TagLib.ByteVector b);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="TagLib.ByteVector" /><Parameter Name="b" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="op_LessThan">
+      <MemberSignature Language="C#" Value="public static bool op_LessThan (TagLib.ByteVector a, TagLib.ByteVector b);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="TagLib.ByteVector" /><Parameter Name="b" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="op_LessThanOrEqual">
+      <MemberSignature Language="C#" Value="public static bool op_LessThanOrEqual (TagLib.ByteVector a, TagLib.ByteVector b);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="TagLib.ByteVector" /><Parameter Name="b" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="op_GreaterThan">
+      <MemberSignature Language="C#" Value="public static bool op_GreaterThan (TagLib.ByteVector a, TagLib.ByteVector b);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="TagLib.ByteVector" /><Parameter Name="b" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="op_GreaterThanOrEqual">
+      <MemberSignature Language="C#" Value="public static bool op_GreaterThanOrEqual (TagLib.ByteVector a, TagLib.ByteVector b);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="TagLib.ByteVector" /><Parameter Name="b" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="op_Addition">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector op_Addition (TagLib.ByteVector a, TagLib.ByteVector b);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="TagLib.ByteVector" /><Parameter Name="b" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="op_Implicit">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector op_Implicit (byte c);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="c" Type="System.Byte" /></Parameters>
+      <Docs><param name="c">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="op_Implicit">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector op_Implicit (byte[] b);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="b" Type="System.Byte[]" /></Parameters>
+      <Docs><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="op_Implicit">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector op_Implicit (string s);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="s" Type="System.String" /></Parameters>
+      <Docs><param name="s">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Data">
+      <MemberSignature Language="C#" Value="public byte[] Data { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Byte[]</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="IsEmpty">
+      <MemberSignature Language="C#" Value="public bool IsEmpty { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="CheckSum">
+      <MemberSignature Language="C#" Value="public uint CheckSum { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Count">
+      <MemberSignature Language="C#" Value="public int Count { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="IsSynchronized">
+      <MemberSignature Language="C#" Value="public bool IsSynchronized { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="SyncRoot">
+      <MemberSignature Language="C#" Value="public object SyncRoot { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Object</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="IsReadOnly">
+      <MemberSignature Language="C#" Value="public bool IsReadOnly { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="IsFixedSize">
+      <MemberSignature Language="C#" Value="public bool IsFixedSize { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Item">
+      <MemberSignature Language="C#" Value="public byte this[int index] { set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Byte</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="index" Type="System.Int32" /></Parameters>
+      <Docs><param name="index">To be added.</param><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

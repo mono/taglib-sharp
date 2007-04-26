@@ -1,0 +1,51 @@
+<Type Name="File" FullName="TagLib.WavPack.File">
+  <TypeSignature Language="C#" Value="public class File : TagLib.NonContainer.File" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>TagLib.NonContainer.File</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName>TagLib.SupportedMimeType("audio/x-wavpack")</AttributeName>
+    </Attribute>
+    <Attribute>
+      <AttributeName>TagLib.SupportedMimeType("taglib/wv", "wv")</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public File (string file, TagLib.ReadStyle properties_style);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="file" Type="System.String" />
+        <Parameter Name="properties_style" Type="TagLib.ReadStyle" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <param name="properties_style">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public File (string file);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="file" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

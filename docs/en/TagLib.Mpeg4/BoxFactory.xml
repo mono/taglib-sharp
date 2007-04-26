@@ -1,0 +1,61 @@
+<Type Name="BoxFactory" FullName="TagLib.Mpeg4.BoxFactory">
+  <TypeSignature Language="C#" Value="public abstract sealed class BoxFactory" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName="CreateBox">
+      <MemberSignature Language="C#" Value="public static TagLib.Mpeg4.Box CreateBox (TagLib.Mpeg4.BoxHeader header, TagLib.Mpeg4.File file, TagLib.Mpeg4.BoxHeader parent, TagLib.Mpeg4.Box handler);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg4.Box</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" />
+        <Parameter Name="file" Type="TagLib.Mpeg4.File" />
+        <Parameter Name="parent" Type="TagLib.Mpeg4.BoxHeader" />
+        <Parameter Name="handler" Type="TagLib.Mpeg4.Box" />
+      </Parameters>
+      <Docs>
+        <param name="header">To be added.</param>
+        <param name="file">To be added.</param>
+        <param name="parent">To be added.</param>
+        <param name="handler">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateBox">
+      <MemberSignature Language="C#" Value="public static TagLib.Mpeg4.Box CreateBox (TagLib.Mpeg4.File file, long position, TagLib.Mpeg4.BoxHeader parent, TagLib.Mpeg4.Box handler);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg4.Box</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="file" Type="TagLib.Mpeg4.File" />
+        <Parameter Name="position" Type="System.Int64" />
+        <Parameter Name="parent" Type="TagLib.Mpeg4.BoxHeader" />
+        <Parameter Name="handler" Type="TagLib.Mpeg4.Box" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <param name="position">To be added.</param>
+        <param name="parent">To be added.</param>
+        <param name="handler">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

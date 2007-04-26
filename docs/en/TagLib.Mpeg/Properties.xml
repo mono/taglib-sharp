@@ -1,0 +1,123 @@
+<Type Name="Properties" FullName="TagLib.Mpeg.Properties">
+  <TypeSignature Language="C#" Value="public class Properties : TagLib.Properties" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>TagLib.Properties</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Properties (TagLib.Mpeg.Version version, TagLib.Mpeg.VideoHeader video_header, TagLib.Mpeg.AudioHeader audio_header, double duration, long length, TagLib.ReadStyle style);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="version" Type="TagLib.Mpeg.Version" />
+        <Parameter Name="video_header" Type="TagLib.Mpeg.VideoHeader" />
+        <Parameter Name="audio_header" Type="TagLib.Mpeg.AudioHeader" />
+        <Parameter Name="duration" Type="System.Double" />
+        <Parameter Name="length" Type="System.Int64" />
+        <Parameter Name="style" Type="TagLib.ReadStyle" />
+      </Parameters>
+      <Docs>
+        <param name="version">To be added.</param>
+        <param name="video_header">To be added.</param>
+        <param name="audio_header">To be added.</param>
+        <param name="duration">To be added.</param>
+        <param name="length">To be added.</param>
+        <param name="style">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AudioLayer">
+      <MemberSignature Language="C#" Value="public int AudioLayer { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AudioChannelMode">
+      <MemberSignature Language="C#" Value="public TagLib.Mpeg.ChannelMode AudioChannelMode { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg.ChannelMode</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AudioIsCopyrighted">
+      <MemberSignature Language="C#" Value="public bool AudioIsCopyrighted { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AudioIsOriginal">
+      <MemberSignature Language="C#" Value="public bool AudioIsOriginal { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="VideoBitrate">
+      <MemberSignature Language="C#" Value="public int VideoBitrate { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="VideoFrameRate">
+      <MemberSignature Language="C#" Value="public double VideoFrameRate { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Double</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Version">
+      <MemberSignature Language="C#" Value="public TagLib.Mpeg.Version Version { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg.Version</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>
