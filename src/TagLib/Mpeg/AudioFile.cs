@@ -81,7 +81,8 @@ namespace TagLib.Mpeg
       
       protected override TagLib.Properties ReadProperties (long start, long end, ReadStyle style)
       {
-         return new Properties (first_header.Version, null, first_header, 0, end - start, style);
+         first_header.SetStreamLength (end - start);
+         return new Properties (TimeSpan.Zero, first_header);
       }
    }
 }

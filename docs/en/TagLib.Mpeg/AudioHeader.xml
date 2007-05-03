@@ -1,5 +1,5 @@
 <Type Name="AudioHeader" FullName="TagLib.Mpeg.AudioHeader">
-  <TypeSignature Language="C#" Value="public class AudioHeader" />
+  <TypeSignature Language="C#" Value="public class AudioHeader : TagLib.IAudioCodec" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
@@ -7,205 +7,85 @@
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
-  <Interfaces />
+  <Interfaces>
+    <Interface>
+      <InterfaceName>TagLib.IAudioCodec</InterfaceName>
+    </Interface>
+  </Interfaces>
   <Members>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public AudioHeader (TagLib.File file, long offset);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="file" Type="TagLib.File" />
-        <Parameter Name="offset" Type="System.Int64" />
-      </Parameters>
-      <Docs>
-        <param name="file">To be added.</param>
-        <param name="offset">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="file" Type="TagLib.File" /><Parameter Name="offset" Type="System.Int64" /></Parameters>
+      <Docs><param name="file">To be added.</param><param name="offset">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="Find">
       <MemberSignature Language="C#" Value="public static TagLib.Mpeg.AudioHeader Find (TagLib.File file, long position, int length);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg.AudioHeader</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="file" Type="TagLib.File" />
-        <Parameter Name="position" Type="System.Int64" />
-        <Parameter Name="length" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Mpeg.AudioHeader</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="file" Type="TagLib.File" /><Parameter Name="position" Type="System.Int64" /><Parameter Name="length" Type="System.Int32" /></Parameters>
+      <Docs><param name="file">To be added.</param><param name="position">To be added.</param><param name="length">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="Find">
       <MemberSignature Language="C#" Value="public static TagLib.Mpeg.AudioHeader Find (TagLib.File file, long position);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg.AudioHeader</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="file" Type="TagLib.File" />
-        <Parameter Name="position" Type="System.Int64" />
-      </Parameters>
-      <Docs>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Mpeg.AudioHeader</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="file" Type="TagLib.File" /><Parameter Name="position" Type="System.Int64" /></Parameters>
+      <Docs><param name="file">To be added.</param><param name="position">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="Version">
       <MemberSignature Language="C#" Value="public TagLib.Mpeg.Version Version { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg.Version</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Mpeg.Version</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
-    <Member MemberName="Layer">
-      <MemberSignature Language="C#" Value="public int Layer { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ProtectionEnabled">
-      <MemberSignature Language="C#" Value="public bool ProtectionEnabled { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Bitrate">
-      <MemberSignature Language="C#" Value="public int Bitrate { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="SampleRate">
-      <MemberSignature Language="C#" Value="public int SampleRate { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
+    
+    
+    
+    
     <Member MemberName="IsPadded">
       <MemberSignature Language="C#" Value="public bool IsPadded { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="ChannelMode">
       <MemberSignature Language="C#" Value="public TagLib.Mpeg.ChannelMode ChannelMode { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg.ChannelMode</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Mpeg.ChannelMode</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="IsCopyrighted">
       <MemberSignature Language="C#" Value="public bool IsCopyrighted { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="IsOriginal">
       <MemberSignature Language="C#" Value="public bool IsOriginal { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="FrameLength">
       <MemberSignature Language="C#" Value="public int FrameLength { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="Position">
       <MemberSignature Language="C#" Value="public long Position { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int64</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="XingHeader">
       <MemberSignature Language="C#" Value="public TagLib.Mpeg.XingHeader XingHeader { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg.XingHeader</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Mpeg.XingHeader</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
-  </Members>
+  <Member MemberName="stream_length"><MemberSignature Language="C#" Value="public long stream_length;" /><MemberType>Field</MemberType><ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="SetStreamLength"><MemberSignature Language="C#" Value="public void SetStreamLength (long stream_length);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="stream_length" Type="System.Int64" /></Parameters><Docs><param name="stream_length">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="AudioLayer"><MemberSignature Language="C#" Value="public int AudioLayer { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="AudioBitrate"><MemberSignature Language="C#" Value="public int AudioBitrate { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="AudioSampleRate"><MemberSignature Language="C#" Value="public int AudioSampleRate { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="FrameLength"><MemberSignature Language="C#" Value="public int FrameLength { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Duration"><MemberSignature Language="C#" Value="public TimeSpan Duration { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Description"><MemberSignature Language="C#" Value="public string Description { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsProtected"><MemberSignature Language="C#" Value="public bool IsProtected { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsPadded"><MemberSignature Language="C#" Value="public bool IsPadded { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsCopyrighted"><MemberSignature Language="C#" Value="public bool IsCopyrighted { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsOriginal"><MemberSignature Language="C#" Value="public bool IsOriginal { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="AudioChannels"><MemberSignature Language="C#" Value="public int AudioChannels { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Position"><MemberSignature Language="C#" Value="public long Position { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="ChannelMode"><MemberSignature Language="C#" Value="public TagLib.Mpeg.ChannelMode ChannelMode { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.Mpeg.ChannelMode</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="MediaTypes"><MemberSignature Language="C#" Value="public TagLib.MediaTypes MediaTypes { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.MediaTypes</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="XingHeader"><MemberSignature Language="C#" Value="public TagLib.Mpeg.XingHeader XingHeader { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.Mpeg.XingHeader</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="stream_length"><MemberSignature Language="C#" Value="public long stream_length;" /><MemberType>Field</MemberType><ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="SetStreamLength"><MemberSignature Language="C#" Value="public void SetStreamLength (long stream_length);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="stream_length" Type="System.Int64" /></Parameters><Docs><param name="stream_length">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="AudioLayer"><MemberSignature Language="C#" Value="public int AudioLayer { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="AudioBitrate"><MemberSignature Language="C#" Value="public int AudioBitrate { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="AudioSampleRate"><MemberSignature Language="C#" Value="public int AudioSampleRate { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="FrameLength"><MemberSignature Language="C#" Value="public int FrameLength { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Duration"><MemberSignature Language="C#" Value="public TimeSpan Duration { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Description"><MemberSignature Language="C#" Value="public string Description { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsProtected"><MemberSignature Language="C#" Value="public bool IsProtected { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsPadded"><MemberSignature Language="C#" Value="public bool IsPadded { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsCopyrighted"><MemberSignature Language="C#" Value="public bool IsCopyrighted { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsOriginal"><MemberSignature Language="C#" Value="public bool IsOriginal { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="AudioChannels"><MemberSignature Language="C#" Value="public int AudioChannels { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Position"><MemberSignature Language="C#" Value="public long Position { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="ChannelMode"><MemberSignature Language="C#" Value="public TagLib.Mpeg.ChannelMode ChannelMode { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.Mpeg.ChannelMode</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="MediaTypes"><MemberSignature Language="C#" Value="public TagLib.MediaTypes MediaTypes { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.MediaTypes</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="XingHeader"><MemberSignature Language="C#" Value="public TagLib.Mpeg.XingHeader XingHeader { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.Mpeg.XingHeader</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="stream_length"><MemberSignature Language="C#" Value="public long stream_length;" /><MemberType>Field</MemberType><ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="SetStreamLength"><MemberSignature Language="C#" Value="public void SetStreamLength (long stream_length);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="stream_length" Type="System.Int64" /></Parameters><Docs><param name="stream_length">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="AudioLayer"><MemberSignature Language="C#" Value="public int AudioLayer { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="AudioBitrate"><MemberSignature Language="C#" Value="public int AudioBitrate { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="AudioSampleRate"><MemberSignature Language="C#" Value="public int AudioSampleRate { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="FrameLength"><MemberSignature Language="C#" Value="public int FrameLength { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Duration"><MemberSignature Language="C#" Value="public TimeSpan Duration { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Description"><MemberSignature Language="C#" Value="public string Description { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsProtected"><MemberSignature Language="C#" Value="public bool IsProtected { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsPadded"><MemberSignature Language="C#" Value="public bool IsPadded { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsCopyrighted"><MemberSignature Language="C#" Value="public bool IsCopyrighted { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsOriginal"><MemberSignature Language="C#" Value="public bool IsOriginal { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="AudioChannels"><MemberSignature Language="C#" Value="public int AudioChannels { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Position"><MemberSignature Language="C#" Value="public long Position { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="ChannelMode"><MemberSignature Language="C#" Value="public TagLib.Mpeg.ChannelMode ChannelMode { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.Mpeg.ChannelMode</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="MediaTypes"><MemberSignature Language="C#" Value="public TagLib.MediaTypes MediaTypes { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.MediaTypes</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="XingHeader"><MemberSignature Language="C#" Value="public TagLib.Mpeg.XingHeader XingHeader { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.Mpeg.XingHeader</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="stream_length"><MemberSignature Language="C#" Value="public long stream_length;" /><MemberType>Field</MemberType><ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="SetStreamLength"><MemberSignature Language="C#" Value="public void SetStreamLength (long stream_length);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="stream_length" Type="System.Int64" /></Parameters><Docs><param name="stream_length">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="AudioLayer"><MemberSignature Language="C#" Value="public int AudioLayer { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="AudioBitrate"><MemberSignature Language="C#" Value="public int AudioBitrate { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="AudioSampleRate"><MemberSignature Language="C#" Value="public int AudioSampleRate { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="FrameLength"><MemberSignature Language="C#" Value="public int FrameLength { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Duration"><MemberSignature Language="C#" Value="public TimeSpan Duration { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Description"><MemberSignature Language="C#" Value="public string Description { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsProtected"><MemberSignature Language="C#" Value="public bool IsProtected { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsPadded"><MemberSignature Language="C#" Value="public bool IsPadded { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsCopyrighted"><MemberSignature Language="C#" Value="public bool IsCopyrighted { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsOriginal"><MemberSignature Language="C#" Value="public bool IsOriginal { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="AudioChannels"><MemberSignature Language="C#" Value="public int AudioChannels { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Position"><MemberSignature Language="C#" Value="public long Position { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="ChannelMode"><MemberSignature Language="C#" Value="public TagLib.Mpeg.ChannelMode ChannelMode { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.Mpeg.ChannelMode</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="MediaTypes"><MemberSignature Language="C#" Value="public TagLib.MediaTypes MediaTypes { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.MediaTypes</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="XingHeader"><MemberSignature Language="C#" Value="public TagLib.Mpeg.XingHeader XingHeader { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.Mpeg.XingHeader</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member></Members>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>

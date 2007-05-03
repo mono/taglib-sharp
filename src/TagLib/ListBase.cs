@@ -70,6 +70,13 @@ namespace TagLib
             }
         }
       
+        public void Add(IEnumerable<T> list)
+        {
+            if(list != null) {
+                data.AddRange(list);
+            }
+        }
+      
         public void Add(T [] list)
         {
             if(list != null) {

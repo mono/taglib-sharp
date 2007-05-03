@@ -134,10 +134,8 @@ namespace TagLib.Mpeg
          if (style == ReadStyle.None)
             return;
          
-         if (GetMarker (start) == Marker.SystemSyncPacket)
-            ReadSystemFile (start);
-         else
-            throw new CorruptFileException ("Could not find file sync.");
+         FindMarker (ref start, Marker.SystemSyncPacket);
+         ReadSystemFile (start);
       }
       
       protected override void ReadEnd (long end, ReadStyle style)
@@ -156,8 +154,8 @@ namespace TagLib.Mpeg
       
       protected override TagLib.Properties ReadProperties (long start, long end, ReadStyle style)
       {
-         double duration = start_time == null ? 0 : (end_time - (double) start_time);
-         return new Properties (version, video_header, audio_header, duration, end - start, style);
+         TimeSpan duration = TimeSpan.FromSeconds (start_time == null ? 0d : (end_time - (double) start_time));
+         return new Properties (duration, video_header, audio_header);
       }
       
       protected void ReadSystemFile (long position)

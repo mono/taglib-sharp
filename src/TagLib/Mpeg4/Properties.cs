@@ -47,57 +47,7 @@ namespace TagLib.Mpeg4
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
-      public override TimeSpan Duration
-      {
-         get
-         {
-            // The length is the number of ticks divided by ticks per second.
-            return mvhd_box == null ? TimeSpan.Zero : TimeSpan.FromSeconds ((double) mvhd_box.Duration / (double) mvhd_box.TimeScale);
-         }
-      }
       
-      public override int AudioBitrate
-      {
-         get
-         {
-            // If we don't have an stream descriptor, we don't know what's what.
-            if (audio_sample_entry == null || audio_sample_entry.Children.GetRecursively ("esds") == null)
-               return 0;
-            
-            // Return from the elementary stream descriptor.
-            return (int) (audio_sample_entry.Children.GetRecursively ("esds") as AppleElementaryStreamDescriptor).AverageBitrate;
-         }
-      }
-      
-      public override int AudioSampleRate
-      {
-         get
-         {
-            return audio_sample_entry == null ? 0 : (int) audio_sample_entry.SampleRate;
-         }
-      }
-      
-      public override int AudioChannels
-      {
-         get
-         {
-            return audio_sample_entry == null ? 0 : (int) audio_sample_entry.ChannelCount;
-         }
-      }
-      public override int VideoWidth
-      {
-         get
-         {
-            return visual_sample_entry == null ? 0 : (int) visual_sample_entry.Width;
-         }
-      }
-      public override int VideoHeight
-      {
-         get
-         {
-            return visual_sample_entry == null ? 0 : (int) visual_sample_entry.Height;
-         }
-      }
 
       public override MediaTypes MediaTypes
       {
@@ -113,8 +63,6 @@ namespace TagLib.Mpeg4
       }
       
       // All additional special info from the Movie Header.
-      public DateTime CreationTime     {get {return mvhd_box == null ? new System.DateTime (1904, 1, 1, 0, 0, 0) : mvhd_box.CreationTime;}}
-      public DateTime ModificationTime {get {return mvhd_box == null ? new System.DateTime (1904, 1, 1, 0, 0, 0) : mvhd_box.ModificationTime;}}
       public double   Rate             {get {return mvhd_box == null ? 1.0 : mvhd_box.Rate;}}
       public double   Volume           {get {return mvhd_box == null ? 1.0 : mvhd_box.Volume;}}
    }

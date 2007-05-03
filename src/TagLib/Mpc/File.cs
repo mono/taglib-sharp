@@ -66,7 +66,7 @@ namespace TagLib.Mpc
          if (header_block == null && style != ReadStyle.None)
          {
             Seek (start);
-            header_block = ReadBlock ((int) Mpc.Properties.HeaderSize);
+            header_block = ReadBlock ((int) Mpc.StreamHeader.Size);
          }
       }
       
@@ -78,7 +78,8 @@ namespace TagLib.Mpc
       
       protected override TagLib.Properties ReadProperties (long start, long end, ReadStyle style)
       {
-         return new Properties (header_block, end - start);
+         StreamHeader header = new StreamHeader (header_block, end - start);
+         return new Properties (TimeSpan.Zero, header);
       }
    }
 }

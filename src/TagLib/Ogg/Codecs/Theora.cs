@@ -2,7 +2,7 @@ using System;
 
 namespace TagLib.Ogg.Codecs
 {
-   public class Theora : Codec
+   public class Theora : Codec, IVideoCodec
    {
       private static ByteVector id = "theora";
       
@@ -38,10 +38,11 @@ namespace TagLib.Ogg.Codecs
          return comment_data != null;
       }
       
-      public override int        VideoWidth  {get {return header.width;}}
-      public override int        VideoHeight {get {return header.height;}}
+      public int        VideoWidth  {get {return header.width;}}
+      public int        VideoHeight {get {return header.height;}}
       public override MediaTypes MediaTypes  {get {return MediaTypes.Video;}}
       public override ByteVector CommentData {get {return comment_data;}}
+      public override string Description  {get {return "Vorbis Version " + header.major_version + "." + header.minor_version + " Video";}}
       public override TimeSpan GetDuration (long last_granular_position, long first_granular_position)
       {
          return TimeSpan.FromSeconds (header.GranuleTime (last_granular_position) - header.GranuleTime (first_granular_position));

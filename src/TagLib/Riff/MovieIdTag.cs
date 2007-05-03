@@ -40,25 +40,39 @@ namespace TagLib.Riff
 
       public override string Title
       {
-         get {return GetValueAsString ("TITL");}
+         get
+         {
+            foreach (string s in GetValuesAsStringList ("TITL"))
+               if (s != null)
+                  return s;
+            
+            return null;
+         }
          set {SetValue ("TITL", value);}
       }
       
       public override string [] AlbumArtists
       {
-         get {return GetValueAsStringList ("IART").ToArray ();}
+         get {return GetValuesAsStringList ("IART").ToArray ();}
          set {SetValue ("IART", value);}
       }
       
       public override string Comment
       {
-         get {return GetValueAsString ("COMM");}
+         get
+         {
+            foreach (string s in GetValuesAsStringList ("COMM"))
+               if (s != null)
+                  return s;
+            
+            return null;
+         }
          set {SetValue ("COMM", value);}
       }
       
       public override string [] Genres
       {
-         get {return GetValueAsStringList ("GENT").ToArray ();}
+         get {return GetValuesAsStringList ("GENT").ToArray ();}
          set {SetValue ("GENR", value);}
       }
       

@@ -55,15 +55,21 @@ namespace TagLib.Ogg
       {
          long end;
          Dictionary<uint, Bitstream> streams = ReadStreams (null, out end);
+         List<ICodec> codecs = new List<ICodec> ();
          
          foreach (uint id in streams.Keys)
+         {
             tag.AddComment (id, streams [id].Codec.CommentData);
+            codecs.Add (streams [id].Codec);
+         }
          
          if (properties_style == ReadStyle.None)
             return;
          
          PageHeader last_header = LastPageHeader;
-         properties = new Properties (streams, last_header, properties_style);
+         
+         TimeSpan duration = streams [last_header.StreamSerialNumber].GetDuration (last_header.AbsoluteGranularPosition);
+         properties = new Properties (duration, codecs);
       }
       
       public override Tag Tag {get {return tag;}}

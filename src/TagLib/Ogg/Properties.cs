@@ -60,13 +60,12 @@ namespace TagLib.Ogg
             }
          }
          
-         this.duration = streams [last_header.StreamSerialNumber].GetDuration (last_header.AbsoluteGranularPosition);
       }
 
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
-      public override TimeSpan Duration       {get {return duration;}}
+      public override TimeSpan   Duration        {get {return duration;}}
       public override int        AudioBitrate    {get {return bitrate;}}
       public override int        AudioSampleRate {get {return sample_rate;}}
       public override int        AudioChannels   {get {return channels;}}

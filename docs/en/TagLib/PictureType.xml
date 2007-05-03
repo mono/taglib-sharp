@@ -11,212 +11,128 @@
     <Member MemberName="Media">
       <MemberSignature Language="C#" Value="Media" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="FileIcon">
       <MemberSignature Language="C#" Value="FileIcon" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="PublisherLogo">
       <MemberSignature Language="C#" Value="PublisherLogo" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="BandLogo">
       <MemberSignature Language="C#" Value="BandLogo" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="BackCover">
       <MemberSignature Language="C#" Value="BackCover" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="LeadArtist">
       <MemberSignature Language="C#" Value="LeadArtist" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="LeafletPage">
       <MemberSignature Language="C#" Value="LeafletPage" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="Illustration">
       <MemberSignature Language="C#" Value="Illustration" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="ColouredFish">
       <MemberSignature Language="C#" Value="ColouredFish" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="OtherFileIcon">
       <MemberSignature Language="C#" Value="OtherFileIcon" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="DuringPerformance">
       <MemberSignature Language="C#" Value="DuringPerformance" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="MovieScreenCapture">
       <MemberSignature Language="C#" Value="MovieScreenCapture" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="Lyricist">
       <MemberSignature Language="C#" Value="Lyricist" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="Composer">
       <MemberSignature Language="C#" Value="Composer" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="FrontCover">
       <MemberSignature Language="C#" Value="FrontCover" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="Conductor">
       <MemberSignature Language="C#" Value="Conductor" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="Artist">
       <MemberSignature Language="C#" Value="Artist" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="Other">
       <MemberSignature Language="C#" Value="Other" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="DuringRecording">
       <MemberSignature Language="C#" Value="DuringRecording" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="Band">
       <MemberSignature Language="C#" Value="Band" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="RecordingLocation">
       <MemberSignature Language="C#" Value="RecordingLocation" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.PictureType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
   </Members>
   <Docs>

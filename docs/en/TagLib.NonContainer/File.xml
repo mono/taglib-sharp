@@ -12,106 +12,47 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public File (string file, TagLib.ReadStyle properties_style);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="file" Type="System.String" />
-        <Parameter Name="properties_style" Type="TagLib.ReadStyle" />
-      </Parameters>
-      <Docs>
-        <param name="file">To be added.</param>
-        <param name="properties_style">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="file" Type="System.String" /><Parameter Name="properties_style" Type="TagLib.ReadStyle" /></Parameters>
+      <Docs><param name="file">To be added.</param><param name="properties_style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public File (string file);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="file" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="file">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="file" Type="System.String" /></Parameters>
+      <Docs><param name="file">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="ReadStart">
       <MemberSignature Language="C#" Value="protected virtual void ReadStart (long start, TagLib.ReadStyle style);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="start" Type="System.Int64" />
-        <Parameter Name="style" Type="TagLib.ReadStyle" />
-      </Parameters>
-      <Docs>
-        <param name="start">To be added.</param>
-        <param name="style">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="start" Type="System.Int64" /><Parameter Name="style" Type="TagLib.ReadStyle" /></Parameters>
+      <Docs><param name="start">To be added.</param><param name="style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="ReadEnd">
       <MemberSignature Language="C#" Value="protected virtual void ReadEnd (long end, TagLib.ReadStyle style);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="end" Type="System.Int64" />
-        <Parameter Name="style" Type="TagLib.ReadStyle" />
-      </Parameters>
-      <Docs>
-        <param name="end">To be added.</param>
-        <param name="style">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="end" Type="System.Int64" /><Parameter Name="style" Type="TagLib.ReadStyle" /></Parameters>
+      <Docs><param name="end">To be added.</param><param name="style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="ReadProperties">
       <MemberSignature Language="C#" Value="protected abstract TagLib.Properties ReadProperties (long start, long end, TagLib.ReadStyle style);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Properties</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="start" Type="System.Int64" />
-        <Parameter Name="end" Type="System.Int64" />
-        <Parameter Name="style" Type="TagLib.ReadStyle" />
-      </Parameters>
-      <Docs>
-        <param name="start">To be added.</param>
-        <param name="end">To be added.</param>
-        <param name="style">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Properties</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="start" Type="System.Int64" /><Parameter Name="end" Type="System.Int64" /><Parameter Name="style" Type="TagLib.ReadStyle" /></Parameters>
+      <Docs><param name="start">To be added.</param><param name="end">To be added.</param><param name="style">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="StartTag">
       <MemberSignature Language="C#" Value="protected TagLib.NonContainer.StartTag StartTag { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.NonContainer.StartTag</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.NonContainer.StartTag</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="EndTag">
       <MemberSignature Language="C#" Value="protected TagLib.NonContainer.EndTag EndTag { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.NonContainer.EndTag</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.NonContainer.EndTag</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
   <Docs>

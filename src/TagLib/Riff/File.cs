@@ -72,7 +72,10 @@ namespace TagLib.Riff
                {
                case "hdrl":
                   if (stream_format == "AVI " && style != ReadStyle.None && properties == null)
-                     properties = new AviProperties (this, position + 12, (int) (size - 4), style);
+                  {
+                     AviHeaderList header_list = new AviHeaderList (this, position + 12, (int) (size - 4));
+                     properties = header_list.ToProperties ();
+                  }
                   break;
                case "INFO":
                {

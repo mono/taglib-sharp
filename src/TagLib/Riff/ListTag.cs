@@ -58,24 +58,19 @@ namespace TagLib.Riff
          return fields.Render ();
       }
       
-      public ByteVector GetValue (ByteVector id)
+      public ByteVectorList GetValues (ByteVector id)
       {
-         return fields.GetValue (id);
+         return fields.GetValues (id);
       }
       
-      public string GetValueAsString (ByteVector id)
+      public StringList GetValuesAsStringList (ByteVector id)
       {
-         return fields.GetValueAsString (id);
+         return fields.GetValuesAsStringList (id);
       }
       
       public uint GetValueAsUInt (ByteVector id)
       {
          return fields.GetValueAsUInt (id);
-      }
-      
-      public StringList GetValueAsStringList (ByteVector id)
-      {
-         return fields.GetValueAsStringList (id);
       }
       
       public void SetValue (ByteVector id, ByteVector value)

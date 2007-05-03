@@ -20,14 +20,13 @@
  ***************************************************************************/
 
 using System;
+using System.Text;
 
 namespace TagLib.Asf
 {
    public class StreamPropertiesObject : Object
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
+#region Private Properties
       private Guid stream_type;
       private Guid error_correction_type;
       private long time_offset;
@@ -35,11 +34,9 @@ namespace TagLib.Asf
       private uint reserved;
       private ByteVector type_specific_data;
       private ByteVector error_correction_data;
-
+#endregion
       
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
+#region Constructors
       public StreamPropertiesObject (Asf.File file, long position) : base (file, position)
       {
          if (!Guid.Equals (Asf.Guid.AsfStreamPropertiesObject))
@@ -58,7 +55,9 @@ namespace TagLib.Asf
          type_specific_data                = file.ReadBlock (type_specific_data_length);
          error_correction_data             = file.ReadBlock (error_correction_data_length);
       }
+#endregion
       
+#region Public Methods
       public override ByteVector Render ()
       {
          ByteVector output = stream_type.Render ();
@@ -74,15 +73,58 @@ namespace TagLib.Asf
          return Render (output);
       }
       
+      public ICodec GetCodec ()
+      {
+         if (stream_type.Equals (Guid.AsfAudioMedia))
+            return new AudioStreamProperties (TypeSpecificData);
+         
+         if (stream_type.Equals (Guid.AsfVideoMedia))
+            return new VideoStreamProperties (TypeSpecificData);
+         
+         return null;
+      }
+#endregion
       
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
+#region Public Properties
       public Guid       StreamType {get {return stream_type;}}
       public Guid       ErrorCorrectionType {get {return error_correction_type;}}
       public TimeSpan   TimeOffset {get {return new TimeSpan (time_offset);}}
       public short      Flags {get {return flags;}}
       public ByteVector TypeSpecificData {get {return type_specific_data;}}
       public ByteVector ErrorCorrectionData {get {return error_correction_data;}}
+#endregion
+   }
+   
+   public class AudioStreamProperties : IAudioCodec
+   {
+      private Riff.WaveFormatEx wave_format_ex;
+      
+      public AudioStreamProperties (ByteVector type_specific_data)
+      {
+         wave_format_ex = new Riff.WaveFormatEx (type_specific_data, 0);
+      }
+      
+      public int AudioSampleRate {get {return (int) wave_format_ex.SamplesPerSecond;}}
+      public int AudioChannels {get {return wave_format_ex.Channels;}}
+      public int AudioBitrate {get {return (int) Math.Round (wave_format_ex.AverageBytesPerSecond * 8d / 1000d);}}
+      public string Description {get {return wave_format_ex.Description;}}
+      public MediaTypes MediaTypes {get {return MediaTypes.Audio;}}
+      public TimeSpan Duration {get {return TimeSpan.Zero;}}
+   }
+   
+   public class VideoStreamProperties : IVideoCodec
+   {
+      TagLib.Riff.BitmapInfoHeader header;
+      
+      public VideoStreamProperties (ByteVector data)
+      {
+         header = new TagLib.Riff.BitmapInfoHeader (data, 11);
+      }
+      
+      public int VideoWidth  {get {return (int) header.Width;}}
+      public int VideoHeight {get {return (int) header.Height;}}
+      public string Description {get {return header.Description;}}
+      public MediaTypes MediaTypes {get {return MediaTypes.Video;}}
+      public TimeSpan Duration {get {return TimeSpan.Zero;}}
    }
 }

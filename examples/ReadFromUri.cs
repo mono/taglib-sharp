@@ -23,6 +23,7 @@ public class ReadFromUri
             {
                 string uri = path;
                 Console.WriteLine (uri);
+                TagLib.File file = null;
                 
                 try {
                     System.IO.FileInfo file_info = new System.IO.FileInfo(uri);
@@ -30,7 +31,18 @@ public class ReadFromUri
                 } catch {
                 }
                 
-                TagLib.File file = TagLib.File.Create(uri);
+                try
+                {
+                    file = TagLib.File.Create(uri);
+                }
+                catch (TagLib.UnsupportedFormatException)
+                {
+                    Console.WriteLine ("UNSUPPORTED FILE: " + uri);
+                    Console.WriteLine (String.Empty);
+                    Console.WriteLine ("---------------------------------------");
+                    Console.WriteLine (String.Empty);
+                    continue;
+                }
                 
                 Console.WriteLine("Title:      " +  file.Tag.Title);
                 Console.WriteLine("Artists:    " + (file.Tag.AlbumArtists == null ? String.Empty : System.String.Join ("\n            ", file.Tag.AlbumArtists)));
@@ -46,19 +58,25 @@ public class ReadFromUri
                 Console.WriteLine("DiscCount:  " +  file.Tag.DiscCount);
                 Console.WriteLine("Lyrics:\n"    +  file.Tag.Lyrics + "\n");
                 
-                if ((file.Properties.MediaTypes & TagLib.MediaTypes.Audio) != TagLib.MediaTypes.Unknown)
+                foreach (TagLib.ICodec codec in file.Properties.Codecs)
                 {
-                    Console.WriteLine("Audio Properties");
-                    Console.WriteLine("Bitrate:    " + file.Properties.AudioBitrate);
-                    Console.WriteLine("SampleRate: " + file.Properties.AudioSampleRate);
-                    Console.WriteLine("Channels:   " + file.Properties.AudioChannels + "\n");
-                }
+                    TagLib.IAudioCodec acodec = codec as TagLib.IAudioCodec;
+                    TagLib.IVideoCodec vcodec = codec as TagLib.IVideoCodec;
                 
-                if ((file.Properties.MediaTypes & TagLib.MediaTypes.Video) != TagLib.MediaTypes.Unknown)
-                {
-                    Console.WriteLine("Video Properties");
-                    Console.WriteLine("Width:      " + file.Properties.VideoWidth);
-                    Console.WriteLine("Height:     " + file.Properties.VideoHeight + "\n");
+                    if (acodec != null && (acodec.MediaTypes & TagLib.MediaTypes.Audio) != TagLib.MediaTypes.Unknown)
+                    {
+                        Console.WriteLine("Audio Properties : " + acodec.Description);
+                        Console.WriteLine("Bitrate:    " + acodec.AudioBitrate);
+                        Console.WriteLine("SampleRate: " + acodec.AudioSampleRate);
+                        Console.WriteLine("Channels:   " + acodec.AudioChannels + "\n");
+                    }
+                
+                    if (vcodec != null && (vcodec.MediaTypes & TagLib.MediaTypes.Video) != TagLib.MediaTypes.Unknown)
+                    {
+                        Console.WriteLine("Video Properties : " + vcodec.Description);
+                        Console.WriteLine("Width:      " + vcodec.VideoWidth);
+                        Console.WriteLine("Height:     " + vcodec.VideoHeight + "\n");
+                    }
                 }
                 
                 if (file.Properties.MediaTypes != TagLib.MediaTypes.Unknown)

@@ -23,7 +23,7 @@ using System;
 using System.Collections.Generic;
 namespace TagLib.Riff
 {
-   public class List : Dictionary <ByteVector,ByteVector>
+   public class List : Dictionary <ByteVector,ByteVectorList>
    {
       public List () : base ()
       {}
@@ -47,13 +47,15 @@ namespace TagLib.Riff
             ByteVector id = data.Mid (offset, 4);
             int length = (int) data.Mid (offset + 4, 4).ToUInt (false);
             
-            if (length % 2 == 1)
-               length ++;
-            
             if (!ContainsKey (id))
-               Add (id, data.Mid (offset + 8, length));
+               Add (id, new ByteVectorList ());
+            
+            this [id].Add (data.Mid (offset + 8, length));
             
             offset += 8 + length;
+            
+            if (length % 2 == 1)
+               length ++;
          }
       }
       
@@ -62,16 +64,18 @@ namespace TagLib.Riff
          ByteVector data = new ByteVector ();
          
          foreach (ByteVector id in Keys)
-         {
-            ByteVector value = this [id];
+            foreach (ByteVector value in this [id])
+            {
+               if (value.Count == 0)
+                  continue;
             
-            if (value.Count == 0)
-               continue;
-            
-            data.Add (id);
-            data.Add (ByteVector.FromUInt ((uint) value.Count, false));
-            data.Add (value);
-         }
+               data.Add (id);
+               data.Add (ByteVector.FromUInt ((uint) value.Count, false));
+               data.Add (value);
+               
+               if (data.Count % 2 == 1)
+                  data.Add (0);
+           }
          
          return data;
       }
@@ -90,65 +94,56 @@ namespace TagLib.Riff
          return data;
       }
       
-      public ByteVector GetValue (ByteVector id)
+      public ByteVectorList GetValues (ByteVector id)
       {
-         ByteVector value;
-         return TryGetValue (id, out value) ? value : null;
+         ByteVectorList value;
+         return TryGetValue (id, out value) ? value : new ByteVectorList ();
       }
       
-      public string GetValueAsString (ByteVector id)
+      public StringList GetValuesAsStringList (ByteVector id)
       {
-         ByteVector data = GetValue (id);
-         if (data == null)
-            return null;
+         StringList list = new StringList ();
          
-         int str_length = data.Count;
-         while (data [str_length - 1] == 0)
-            str_length --;
-         return data.Mid (0, str_length).ToString (StringType.UTF8);
+         foreach (ByteVector data in GetValues (id))
+         {
+            if (data == null)
+               continue;
+         
+            int str_length = data.Count;
+            while (str_length > 0 && data [str_length - 1] == 0)
+               str_length --;
+            
+            list.Add (data.Mid (0, str_length).ToString (StringType.UTF8));
+         }
+         
+         return list;
       }
       
       public uint GetValueAsUInt (ByteVector id)
       {
-         uint value;
-         string str = GetValueAsString (id);
-         return (str != null && uint.TryParse (str, out value)) ? value : 0;
-      }
-      
-      public StringList GetValueAsStringList (ByteVector id)
-      {
-         string str = GetValueAsString (id);
-         return (str != null) ? StringList.Split (str, ";") : new StringList ();
-      }
-      
-      public void SetValue (ByteVector id, ByteVector value)
-      {
-         if (value == null || value.Count == 0)
-            RemoveValue (id);
-         else if (ContainsKey (id))
-            this [id] = value;
-         else
-            Add (id, value);
-      }
-      
-      public void SetValue (ByteVector id, string value)
-      {
-         if (string.IsNullOrEmpty (value))
+         foreach (string str in GetValuesAsStringList (id))
          {
-            RemoveValue (id);
-            return;
+            uint value;
+            if (str != null && uint.TryParse (str, out value))
+               return value;
          }
          
-         ByteVector data = ByteVector.FromString (value, StringType.UTF8);
-         
-         // Nil terminate.
-         data.Add (0);
-         
-         // Keep the number of bytes even.
-         if (data.Count % 2 == 1)
-            data.Add (0);
-         
-         SetValue (id, data);
+         return 0;
+      }
+      
+      public void SetValue (ByteVector id, IEnumerable<ByteVector> values)
+      {
+         if (values == null)
+            RemoveValue (id);
+         else if (ContainsKey (id))
+            this [id] = new ByteVectorList (values);
+         else
+            Add (id, new ByteVectorList (values));
+      }
+      
+      public void SetValue (ByteVector id, params ByteVector [] values)
+      {
+         SetValue (id, values as IEnumerable<ByteVector>);
       }
       
       public void SetValue (ByteVector id, uint value)
@@ -159,20 +154,31 @@ namespace TagLib.Riff
             SetValue (id, value.ToString ());
       }
       
-      public void SetValue (ByteVector id, StringList value)
+      public void SetValue (ByteVector id, IEnumerable<string> values)
       {
-         if (value == null || value.Count == 0)
+         if (values == null)
+         {
             RemoveValue (id);
-         else
-            SetValue (id, string.Join (";", value.ToArray ()));
+            return;
+         }
+         
+         ByteVectorList l = new ByteVectorList ();
+         foreach (string value in values)
+         {
+            if (string.IsNullOrEmpty (value))
+               continue;
+            
+            ByteVector data = ByteVector.FromString (value, StringType.UTF8);
+            data.Add (0);
+            l.Add (data);
+         }
+         
+         SetValue (id, l);
       }
       
-      public void SetValue (ByteVector id, string [] value)
+      public void SetValue (ByteVector id, params string [] values)
       {
-         if (value == null || value.Length == 0)
-            RemoveValue (id);
-         else
-            SetValue (id, string.Join (";", value));
+         SetValue (id, values as IEnumerable<string>);
       }
       
       public void RemoveValue (ByteVector id)

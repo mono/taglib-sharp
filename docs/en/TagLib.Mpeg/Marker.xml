@@ -11,82 +11,50 @@
     <Member MemberName="VideoSyncPacket">
       <MemberSignature Language="C#" Value="VideoSyncPacket" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg.Marker</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Mpeg.Marker</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="SystemPacket">
       <MemberSignature Language="C#" Value="SystemPacket" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg.Marker</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Mpeg.Marker</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="Corrupt">
       <MemberSignature Language="C#" Value="Corrupt" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg.Marker</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Mpeg.Marker</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="PaddingPacket">
       <MemberSignature Language="C#" Value="PaddingPacket" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg.Marker</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Mpeg.Marker</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="AudioPacket">
       <MemberSignature Language="C#" Value="AudioPacket" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg.Marker</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Mpeg.Marker</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="VideoPacket">
       <MemberSignature Language="C#" Value="VideoPacket" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg.Marker</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Mpeg.Marker</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="SystemSyncPacket">
       <MemberSignature Language="C#" Value="SystemSyncPacket" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg.Marker</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Mpeg.Marker</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="EndOfStream">
       <MemberSignature Language="C#" Value="EndOfStream" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg.Marker</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Mpeg.Marker</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
   </Members>
   <Docs>

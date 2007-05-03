@@ -51,6 +51,9 @@
       <Type Name="StringType" />
       <Type Name="TagTypes" />
       <Type Name="PictureType" />
+      <Type Name="ICodec" />
+      <Type Name="IAudioCodec" />
+      <Type Name="IVideoCodec" />
     </Namespace>
     <Namespace Name="TagLib.Ape">
       <Type Name="Footer" />
@@ -68,19 +71,20 @@
       <Type Name="Guid" />
       <Type Name="HeaderObject" />
       <Type Name="PaddingObject" />
-      <Type Name="Properties" />
       <Type Name="StreamPropertiesObject" />
       <Type Name="Tag" />
       <Type Name="UnknownObject" />
       <Type Name="DataType" />
+      <Type Name="AudioStreamProperties" />
+      <Type Name="VideoStreamProperties" />
     </Namespace>
     <Namespace Name="TagLib.Flac">
       <Type Name="File" />
-      <Type Name="Properties" />
       <Type Name="Picture" />
       <Type Name="Block" />
       <Type Name="BlockHeader" />
       <Type Name="BlockType" />
+      <Type Name="StreamHeader" />
     </Namespace>
     <Namespace Name="TagLib.NonContainer">
       <Type Name="File" />
@@ -116,12 +120,11 @@
     </Namespace>
     <Namespace Name="TagLib.Mpc">
       <Type Name="File" />
-      <Type Name="Properties" />
+      <Type Name="StreamHeader" />
     </Namespace>
     <Namespace Name="TagLib.Mpeg">
       <Type Name="File" />
       <Type Name="AudioHeader" />
-      <Type Name="Properties" />
       <Type Name="XingHeader" />
       <Type Name="AudioFile" />
       <Type Name="VideoHeader" />
@@ -141,7 +144,6 @@
       <Type Name="FileParser" />
       <Type Name="BoxTypes" />
       <Type Name="File" />
-      <Type Name="Properties" />
       <Type Name="AppleAdditionalInfoBox" />
       <Type Name="AppleAnnotationBox" />
       <Type Name="AppleElementaryStreamDescriptor" />
@@ -168,13 +170,12 @@
       <Type Name="Codec" />
       <Type Name="Codec+CodecProvider" />
       <Type Name="Bitstream" />
-      <Type Name="Properties" />
       <Type Name="GroupedComment" />
       <Type Name="Paginator" />
     </Namespace>
     <Namespace Name="TagLib.WavPack">
       <Type Name="File" />
-      <Type Name="Properties" />
+      <Type Name="StreamHeader" />
     </Namespace>
     <Namespace Name="TagLib.Ogg.Codecs">
       <Type Name="Vorbis" />
@@ -187,9 +188,14 @@
       <Type Name="InfoTag" />
       <Type Name="MovieIdTag" />
       <Type Name="List" />
-      <Type Name="AviProperties" />
       <Type Name="AviHeader" />
       <Type Name="AviStreamHeader" />
+      <Type Name="AviHeaderList" />
+      <Type Name="AviStream" />
+      <Type Name="AviAudioStream" />
+      <Type Name="AviVideoStream" />
+      <Type Name="WaveFormatEx" />
+      <Type Name="BitmapInfoHeader" />
     </Namespace>
   </Types>
   <Title>taglib-sharp</Title>

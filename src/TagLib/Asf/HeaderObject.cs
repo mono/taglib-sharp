@@ -90,12 +90,28 @@ namespace TagLib.Asf
          children.Add (obj);
       }
       
-      
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
       public byte [] Reserved {get {return reserved.Data;}}
       
       public Object [] Children {get {return children.ToArray ();}}
+      
+      public Properties GetProperties ()
+      {
+         TimeSpan duration = TimeSpan.Zero;
+         List<ICodec> codecs = new List<ICodec> ();
+         
+         foreach (Object obj in Children)
+         {
+            if (obj is FilePropertiesObject)
+               duration = (obj as FilePropertiesObject).PlayDuration;
+            
+            if (obj is StreamPropertiesObject)
+               codecs.Add ((obj as StreamPropertiesObject).GetCodec ());
+         }
+         
+         return new Properties (duration, codecs);
+      }
    }
 }

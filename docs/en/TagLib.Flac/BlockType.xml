@@ -11,72 +11,44 @@
     <Member MemberName="SeekTable">
       <MemberSignature Language="C#" Value="SeekTable" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Flac.BlockType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Flac.BlockType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="CueSheet">
       <MemberSignature Language="C#" Value="CueSheet" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Flac.BlockType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Flac.BlockType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="Application">
       <MemberSignature Language="C#" Value="Application" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Flac.BlockType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Flac.BlockType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="Padding">
       <MemberSignature Language="C#" Value="Padding" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Flac.BlockType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Flac.BlockType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="Picture">
       <MemberSignature Language="C#" Value="Picture" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Flac.BlockType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Flac.BlockType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="StreamInfo">
       <MemberSignature Language="C#" Value="StreamInfo" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Flac.BlockType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Flac.BlockType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
     <Member MemberName="VorbisComment">
       <MemberSignature Language="C#" Value="VorbisComment" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Flac.BlockType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>TagLib.Flac.BlockType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
   </Members>
   <Docs>

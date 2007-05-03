@@ -290,22 +290,22 @@ namespace TagLib
         }
       
         public bool ContainsAt(ByteVector pattern, int offset, 
-            int patternOffset, int patternLength)
+            int pattern_offset, int pattern_length)
         {
-            if(pattern.Count < patternLength) {
-                patternLength = pattern.Count;
+            if(pattern.Count < pattern_length) {
+                pattern_length = pattern.Count;
             }
 
             // do some sanity checking -- all of these things are 
             // needed for the search to be valid
-            if(patternLength > Count || offset >= Count || 
-                patternOffset >= pattern.Count || patternLength == 0) {
+            if(pattern_length > Count || offset >= Count || 
+                pattern_offset >= pattern.Count || pattern_length == 0) {
                 return false;
             }
             
             // loop through looking for a mismatch
-            for(int i = 0; i < patternLength - patternOffset; i++) {
-                if(this[i + offset] != pattern[i + patternOffset]) {
+            for(int i = 0; i < pattern_length - pattern_offset; i++) {
+                if(this[i + offset] != pattern[i + pattern_offset]) {
                     return false;
                 }
             }
@@ -447,7 +447,7 @@ namespace TagLib
 
         public string ToString(StringType type, int offset)
         {
-            ByteVector bom = type == StringType.UTF16 ? Mid(offset, 2) : null;
+            ByteVector bom = type == StringType.UTF16 && data.Count > 1 ? Mid(offset, 2) : null;
             string s = StringTypeToEncoding(type, bom).GetString(Data, offset, Count - offset);
             
             if(s.Length != 0 && (s[0] == 0xfffe || s[0] == 0xfeff)) { // UTF16 BOM
@@ -469,23 +469,50 @@ namespace TagLib
         
         public string[] ToStrings (StringType type, int offset)
         {
-            return ToStrings (type, offset, 0);
+            return ToStrings (type, offset, int.MaxValue);
         }
 
         public string[] ToStrings (StringType type, int offset, int count)
         {
-            string[] split = count <= 0 ? ToString (type, offset).Split ('\0') :
-                ToString (type, offset).Split (new char[] {'\0'}, count);
+            int chunk = 0;
+            int pos = offset;
             
-            for (int i = 0; i < split.Length; i++)
+            StringList l = new StringList ();
+            ByteVector separator = TagLib.Id3v2.Frame.TextDelimiter (type);
+            int align = separator.Count;
+            
+            while (chunk < count && pos < Count)
             {
-                string s = split [i];
-                if (s.Length != 0 && (s[0] == 0xfffe || s[0] == 0xfeff))
-                { // UTF16 BOM
-                    split[i] = s.Substring (1);
-                }
+               int start = pos;
+               
+               if (chunk + 1 == count)
+                  pos = offset + count;
+               else
+               {
+                  pos = Find (separator, start, align);
+                  
+                  if (pos < 0)
+                     pos = Count;
+               }
+               
+               int length = pos - start;
+               
+               if (length == 0)
+                  l.Add (string.Empty);
+               else
+               {
+                  string s = Mid (start, length).ToString (type);
+                  if (s.Length != 0 && (s[0] == 0xfffe || s[0] == 0xfeff))
+                  { // UTF16 BOM
+                      s = s.Substring (1);
+                  }
+               
+                  l.Add (s);
+               }
+               
+               pos += 2;
             }
-            return split;
+            return l.ToArray ();
         }
         #endregion
         

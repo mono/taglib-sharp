@@ -9,7 +9,6 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Ape/Item.cs                                    \
    $(srcdir)/TagLib/Ape/Footer.cs                                  \
    $(srcdir)/TagLib/Asf/Guid.cs                                    \
-   $(srcdir)/TagLib/Asf/Properties.cs                              \
    $(srcdir)/TagLib/Asf/StreamPropertiesObject.cs                  \
    $(srcdir)/TagLib/Asf/UnknownObject.cs                           \
    $(srcdir)/TagLib/Asf/Tag.cs                                     \
@@ -21,7 +20,7 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Asf/FilePropertiesObject.cs                    \
    $(srcdir)/TagLib/Asf/PaddingObject.cs                           \
    $(srcdir)/TagLib/Asf/ContentDescriptor.cs                       \
-   $(srcdir)/TagLib/Mpc/Properties.cs                              \
+   $(srcdir)/TagLib/Mpc/StreamHeader.cs                              \
    $(srcdir)/TagLib/Mpc/File.cs                                    \
    $(srcdir)/TagLib/Ogg/GroupedComment.cs                                    \
    $(srcdir)/TagLib/Ogg/Bitstream.cs                                    \
@@ -29,17 +28,15 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Ogg/Codec.cs                                    \
    $(srcdir)/TagLib/Ogg/Codecs/Vorbis.cs                                    \
    $(srcdir)/TagLib/Ogg/Codecs/Theora.cs                                    \
-   $(srcdir)/TagLib/Ogg/Properties.cs                                    \
    $(srcdir)/TagLib/Ogg/Page.cs                                    \
    $(srcdir)/TagLib/Ogg/XiphComment.cs                             \
    $(srcdir)/TagLib/Ogg/PageHeader.cs                              \
    $(srcdir)/TagLib/Ogg/File.cs                                    \
    $(srcdir)/TagLib/Flac/Block.cs                                  \
    $(srcdir)/TagLib/Flac/BlockHeader.cs                            \
-   $(srcdir)/TagLib/Flac/Properties.cs                             \
+   $(srcdir)/TagLib/Flac/StreamHeader.cs                             \
    $(srcdir)/TagLib/Flac/Picture.cs                                \
    $(srcdir)/TagLib/Flac/File.cs                                   \
-   $(srcdir)/TagLib/Mpeg/Properties.cs                             \
    $(srcdir)/TagLib/Mpeg/XingHeader.cs                             \
    $(srcdir)/TagLib/Mpeg/File.cs                                   \
    $(srcdir)/TagLib/Mpeg/AudioFile.cs                              \
@@ -76,7 +73,6 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Mpeg4/BoxTypes.cs                              \
    $(srcdir)/TagLib/Mpeg4/File.cs                                  \
    $(srcdir)/TagLib/Mpeg4/FileParser.cs                            \
-   $(srcdir)/TagLib/Mpeg4/Properties.cs                            \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoFreeSpaceBox.cs                 \
    $(srcdir)/TagLib/Mpeg4/Boxes/UnknownBox.cs                      \
    $(srcdir)/TagLib/Mpeg4/Boxes/IsoUserDataBox.cs                  \
@@ -96,7 +92,10 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Mpeg4/Boxes/FullBox.cs                         \
    $(srcdir)/TagLib/Mpeg4/Boxes/AppleElementaryStreamDescriptor.cs \
    $(srcdir)/TagLib/Mpeg4/Boxes/AppleDataBox.cs                    \
-   $(srcdir)/TagLib/Riff/AviProperties.cs                          \
+   $(srcdir)/TagLib/Riff/AviHeaderList.cs                          \
+   $(srcdir)/TagLib/Riff/AviStream.cs                          \
+   $(srcdir)/TagLib/Riff/WaveFormatEx.cs                          \
+   $(srcdir)/TagLib/Riff/BitmapInfoHeader.cs                          \
    $(srcdir)/TagLib/Riff/DivXTag.cs                                \
    $(srcdir)/TagLib/Riff/File.cs                                   \
    $(srcdir)/TagLib/Riff/InfoTag.cs                                \
@@ -104,7 +103,8 @@ TAGLIB_CSFILES =                                                   \
    $(srcdir)/TagLib/Riff/ListTag.cs                                \
    $(srcdir)/TagLib/Riff/MovieIdTag.cs                             \
    $(srcdir)/TagLib/WavPack/File.cs                                \
-   $(srcdir)/TagLib/WavPack/Properties.cs                          \
+   $(srcdir)/TagLib/WavPack/StreamHeader.cs                          \
+   $(srcdir)/TagLib/ICodec.cs                                     \
    $(srcdir)/TagLib/IntList.cs                                     \
    $(srcdir)/TagLib/Tag.cs                                         \
    $(srcdir)/TagLib/ByteVectorList.cs                              \

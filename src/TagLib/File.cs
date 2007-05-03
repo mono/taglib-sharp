@@ -26,6 +26,14 @@ using System;
 
 namespace TagLib
 {
+   public enum ReadStyle
+   {
+      None,
+      Fast,
+      Average,
+      Accurate
+   }
+   
    public enum TagTypes
    {
       NoTags   = 0x0000,

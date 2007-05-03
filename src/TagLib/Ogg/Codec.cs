@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TagLib.Ogg
 {
-   public abstract class Codec
+   public abstract class Codec : ICodec
    {
       public delegate Codec CodecProvider (ByteVector packet);
       
@@ -33,14 +33,10 @@ namespace TagLib.Ogg
          providers.Add (provider);
       }
       
-      public virtual  int        AudioBitrate    {get {return 0;}}
-      public virtual  int        AudioSampleRate {get {return 0;}}
-      public virtual  int        AudioChannels   {get {return 0;}}
-      public virtual  int        VideoWidth      {get {return 0;}}
-      public virtual  int        VideoHeight     {get {return 0;}}
-      
+      public abstract string     Description     {get;}
       public abstract MediaTypes MediaTypes      {get;}
       public abstract ByteVector CommentData     {get;}
+      public          TimeSpan   Duration        {get {return TimeSpan.Zero;}}
       
       public abstract bool ReadPacket (ByteVector packet, int index);
       public abstract TimeSpan   GetDuration (long last_granular_position, long first_granular_position);

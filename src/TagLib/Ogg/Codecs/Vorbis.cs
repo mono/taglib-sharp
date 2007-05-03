@@ -2,7 +2,7 @@ using System;
 
 namespace TagLib.Ogg.Codecs
 {
-   public class Vorbis : Codec
+   public class Vorbis : Codec, IAudioCodec
    {
       private static ByteVector id = "vorbis";
       
@@ -38,11 +38,13 @@ namespace TagLib.Ogg.Codecs
          return comment_data != null;
       }
       
-      public override int        AudioBitrate    {get {return (int) ((float)header.bitrate_nominal / 1000f + 0.5);}}
-      public override int        AudioSampleRate {get {return header.sample_rate;}}
-      public override int        AudioChannels   {get {return header.channels;}}
+      public int        AudioBitrate    {get {return (int) ((float)header.bitrate_nominal / 1000f + 0.5);}}
+      public int        AudioSampleRate {get {return header.sample_rate;}}
+      public int        AudioChannels   {get {return header.channels;}}
       public override MediaTypes MediaTypes      {get {return MediaTypes.Audio;}}
       public override ByteVector CommentData     {get {return comment_data;}}
+      public override string Description  {get {return "Vorbis Version " + header.vorbis_version + " Audio";}}
+
       public override TimeSpan GetDuration (long last_granular_position, long first_granular_position)
       {
          return TimeSpan.FromSeconds ((double) (last_granular_position - first_granular_position) / (double) header.sample_rate);

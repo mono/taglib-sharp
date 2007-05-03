@@ -52,7 +52,7 @@
     <Compile Include="src\TagLib\SupportedMimeType.cs" />
     <Compile Include="src\TagLib\UnsupportedFormatException.cs" />
     <Compile Include="src\TagLib\WavPack\File.cs" />
-    <Compile Include="src\TagLib\WavPack\Properties.cs" />
+    <Compile Include="src\TagLib\WavPack\StreamHeader.cs" />
     <Compile Include="src\TagLib\Ogg\File.cs" />
     <Compile Include="src\TagLib\Ogg\Page.cs" />
     <Compile Include="src\TagLib\Ogg\PageHeader.cs" />
@@ -65,7 +65,6 @@
     <Compile Include="src\TagLib\Mpeg4\FileParser.cs" />
     <Compile Include="src\TagLib\Mpeg4\BoxTypes.cs" />
     <Compile Include="src\TagLib\Mpeg4\File.cs" />
-    <Compile Include="src\TagLib\Mpeg4\Properties.cs" />
     <Compile Include="src\TagLib\Mpeg4\Boxes\AppleAdditionalInfoBox.cs" />
     <Compile Include="src\TagLib\Mpeg4\Boxes\AppleAnnotationBox.cs" />
     <Compile Include="src\TagLib\Mpeg4\Boxes\AppleDataBox.cs" />
@@ -88,11 +87,10 @@
     <Compile Include="src\TagLib\Mpeg\AudioFile.cs" />
     <Compile Include="src\TagLib\Mpeg\AudioHeader.cs" />
     <Compile Include="src\TagLib\Mpeg\File.cs" />
-    <Compile Include="src\TagLib\Mpeg\Properties.cs" />
     <Compile Include="src\TagLib\Mpeg\VideoHeader.cs" />
     <Compile Include="src\TagLib\Mpeg\XingHeader.cs" />
     <Compile Include="src\TagLib\Mpc\File.cs" />
-    <Compile Include="src\TagLib\Mpc\Properties.cs" />
+    <Compile Include="src\TagLib\Mpc\StreamHeader.cs" />
     <Compile Include="src\TagLib\NonContainer\EndTag.cs" />
     <Compile Include="src\TagLib\NonContainer\File.cs" />
     <Compile Include="src\TagLib\NonContainer\StartTag.cs" />
@@ -120,14 +118,13 @@
     <Compile Include="src\TagLib\Flac\BlockHeader.cs" />
     <Compile Include="src\TagLib\Flac\File.cs" />
     <Compile Include="src\TagLib\Flac\Picture.cs" />
-    <Compile Include="src\TagLib\Flac\Properties.cs" />
+    <Compile Include="src\TagLib\Flac\StreamHeader.cs" />
     <Compile Include="src\TagLib\Ape\Tag.cs" />
     <Compile Include="src\TagLib\Ape\Footer.cs" />
     <Compile Include="src\TagLib\Ape\Item.cs" />
     <Compile Include="src\TagLib\Asf\ContentDescriptionObject.cs" />
     <Compile Include="src\TagLib\Asf\File.cs" />
     <Compile Include="src\TagLib\Asf\HeaderObject.cs" />
-    <Compile Include="src\TagLib\Asf\Properties.cs" />
     <Compile Include="src\TagLib\Asf\UnknownObject.cs" />
     <Compile Include="src\TagLib\Asf\ContentDescriptor.cs" />
     <Compile Include="src\TagLib\Asf\FilePropertiesObject.cs" />
@@ -147,7 +144,6 @@
     <Compile Include="src\TagLib\Ogg\Codec.cs" />
     <Compile Include="src\TagLib\Ogg\GroupedComment.cs" />
     <Compile Include="src\TagLib\Ogg\Paginator.cs" />
-    <Compile Include="src\TagLib\Ogg\Properties.cs" />
     <Compile Include="src\TagLib\Ogg\Codecs\Theora.cs" />
     <Compile Include="src\TagLib\Riff\File.cs" />
     <Compile Include="src\TagLib\Riff\DivXTag.cs" />
@@ -156,7 +152,11 @@
     <Compile Include="src\TagLib\Genres.cs" />
     <Compile Include="src\TagLib\Riff\MovieIdTag.cs" />
     <Compile Include="src\TagLib\Riff\List.cs" />
-    <Compile Include="src\TagLib\Riff\AviProperties.cs" />
+    <Compile Include="src\TagLib\Riff\AviHeaderList.cs" />
+    <Compile Include="src\TagLib\Riff\AviStream.cs" />
+    <Compile Include="src\TagLib\Riff\WaveFormatEx.cs" />
+    <Compile Include="src\TagLib\Riff\BitmapInfoHeader.cs" />
+    <Compile Include="src\TagLib\ICodec.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src" />

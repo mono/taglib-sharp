@@ -165,7 +165,7 @@ namespace TagLib.Mpeg4
          IsoVisualSampleEntry visual_sample_entry = parser.VisualSampleEntry;
          
          // Read the properties.
-         properties = new Properties (mvhd_box, audio_sample_entry, visual_sample_entry, properties_style);
+         properties = new Properties (mvhd_box.Duration, audio_sample_entry, visual_sample_entry);
       }
    }
 }

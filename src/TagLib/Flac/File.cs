@@ -47,7 +47,7 @@ namespace TagLib.Flac
       public File (string file) : this (file, ReadStyle.Average)
       {
       }
-#endregion Constructors
+#endregion
       
       public override void Save ()
       {
@@ -186,7 +186,8 @@ namespace TagLib.Flac
       
       protected override TagLib.Properties ReadProperties (long start, long end, ReadStyle style)
       {
-         return new Properties (header_block, end - stream_start, style);
+         StreamHeader header = new StreamHeader (header_block, end - stream_start);
+         return new Properties (TimeSpan.Zero, header);
       }
       
 

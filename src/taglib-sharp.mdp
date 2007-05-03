@@ -37,12 +37,11 @@
     <File name="./TagLib/Asf/HeaderObject.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Asf/Object.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Asf/PaddingObject.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/Asf/Properties.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Asf/StreamPropertiesObject.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Asf/Tag.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Asf/UnknownObject.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Flac/File.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/Flac/Properties.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Flac/StreamHeader.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Id3v1/StringHandler.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Id3v1/Tag.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Id3v2/Frames/AttachedPictureFrame.cs" subtype="Code" buildaction="Compile" />
@@ -62,10 +61,9 @@
     <File name="./TagLib/Id3v2/SynchData.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Id3v2/Tag.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpc/File.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/Mpc/Properties.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpc/StreamHeader.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg/File.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg/AudioHeader.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/Mpeg/Properties.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg/XingHeader.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/AppleTag.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/BoxHeader.cs" subtype="Code" buildaction="Compile" />
@@ -75,7 +73,6 @@
     <File name="./TagLib/Mpeg4/FileParser.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/BoxTypes.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/File.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/Mpeg4/Properties.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/AppleAdditionalInfoBox.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/AppleAnnotationBox.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/Boxes/AppleDataBox.cs" subtype="Code" buildaction="Compile" />
@@ -98,7 +95,7 @@
     <File name="./TagLib/Ogg/PageHeader.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Ogg/XiphComment.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/WavPack/File.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/WavPack/Properties.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/WavPack/StreamHeader.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/ListBase.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/CorruptFileException.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/FileTypes.cs" subtype="Code" buildaction="Compile" />
@@ -117,7 +114,6 @@
     <File name="./TagLib/Ogg/Codecs/Vorbis.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Ogg/Bitstream.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Ogg/Codec.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/Ogg/Properties.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Ogg/Codecs/Theora.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Ogg/GroupedComment.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Ogg/Paginator.cs" subtype="Code" buildaction="Compile" />
@@ -133,7 +129,11 @@
     <File name="./TagLib/Genres.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Riff/MovieIdTag.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Riff/List.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TagLib/Riff/AviProperties.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Riff/AviHeaderList.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/ICodec.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Riff/AviStream.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Riff/WaveFormatEx.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Riff/BitmapInfoHeader.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

@@ -21,34 +21,135 @@
  ***************************************************************************/
 
 using System;
+using System.Collections.Generic;
 
 namespace TagLib
 {
-   public enum ReadStyle
+   public class Properties : IAudioCodec, IVideoCodec
    {
-      None,
-      Fast,
-      Average,
-      Accurate
-   }
-   
-   public enum MediaTypes
-   {
-      Unknown = 0,
-      Audio   = 1,
-      Video   = 2
-   }
-   
-   public class Properties
-   {
-      public virtual TimeSpan   Duration        {get {return TimeSpan.Zero;}}
-      public virtual int        AudioBitrate    {get {return 0;}}
-      public virtual int        AudioSampleRate {get {return 0;}}
-      public virtual int        AudioChannels   {get {return 0;}}
-      public virtual int        VideoWidth      {get {return 0;}}
-      public virtual int        VideoHeight     {get {return 0;}}
-      public virtual MediaTypes MediaTypes      {get {return MediaTypes.Unknown;}}
+      private List<ICodec> codecs = new List<ICodec> ();
+      private TimeSpan duration = TimeSpan.Zero;
       
-      protected Properties (ReadStyle style) {}
+      public TimeSpan Duration
+      {
+         get
+         {
+            TimeSpan duration = this.duration;
+            
+            if (duration != TimeSpan.Zero)
+               return duration;
+            
+            foreach (ICodec codec in codecs)
+               if (codec.Duration > duration)
+                  duration = codec.Duration;
+            
+            return duration;
+         }
+      }
+      
+      public int AudioBitrate
+      {
+         get
+         {
+            foreach (ICodec codec in codecs)
+               if (codec is IAudioCodec && (codec.MediaTypes | MediaTypes.Audio) == MediaTypes.Audio && (codec as IAudioCodec).AudioBitrate != 0)
+                  return (codec as IAudioCodec).AudioBitrate;
+            
+            return 0;
+         }
+      }
+      
+      public int AudioSampleRate
+      {
+         get
+         {
+            foreach (ICodec codec in codecs)
+               if (codec is IAudioCodec && (codec.MediaTypes | MediaTypes.Audio) == MediaTypes.Audio && (codec as IAudioCodec).AudioSampleRate != 0)
+                  return (codec as IAudioCodec).AudioSampleRate;
+            
+            return 0;
+         }
+      }
+      
+      public int AudioChannels
+      {
+         get
+         {
+            foreach (ICodec codec in codecs)
+               if (codec is IAudioCodec && (codec.MediaTypes | MediaTypes.Audio) == MediaTypes.Audio && (codec as IAudioCodec).AudioChannels != 0)
+                  return (codec as IAudioCodec).AudioChannels;
+            
+            return 0;
+         }
+      }
+      
+      public int VideoWidth
+      {
+         get
+         {
+            foreach (ICodec codec in codecs)
+               if (codec is IVideoCodec && (codec.MediaTypes | MediaTypes.Video) == MediaTypes.Video && (codec as IVideoCodec).VideoWidth != 0)
+                  return (codec as IVideoCodec).VideoWidth;
+            
+            return 0;
+         }
+      }
+      
+      public int VideoHeight
+      {
+         get
+         {
+            foreach (ICodec codec in codecs)
+               if (codec is IVideoCodec && (codec.MediaTypes | MediaTypes.Video) == MediaTypes.Video && (codec as IVideoCodec).VideoHeight != 0)
+                  return (codec as IVideoCodec).VideoHeight;
+            
+            return 0;
+         }
+      }
+      
+      public MediaTypes MediaTypes
+      {
+         get
+         {
+            MediaTypes types = MediaTypes.Unknown;
+            
+            foreach (ICodec codec in codecs)
+               if (codec != null)
+                  types |= codec.MediaTypes;
+            
+            return types;
+         }
+      }
+      
+      public string Description
+      {
+         get
+         {
+            StringList l = new StringList ();
+            foreach (ICodec codec in codecs)
+               if (codec != null)
+                  l.Add (codec.Description);
+            
+            return string.Join ("; ", l.ToArray ());
+         }
+      }
+      
+      public IEnumerable<ICodec> Codecs {get {return codecs;}}
+      
+      public Properties ()
+      {
+      }
+      
+      public Properties (TimeSpan duration, params ICodec[] codecs)
+      {
+         this.duration = duration;
+         this.codecs.AddRange (codecs);
+      }
+      
+      public Properties (TimeSpan duration, IEnumerable<ICodec> codecs)
+      {
+         this.duration = duration;
+         this.codecs.AddRange (codecs);
+      }
    }
 }

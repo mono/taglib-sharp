@@ -1,3 +1,56 @@
+2007-05-03  Brian Nickel <brian.nickel@gmail.com>
+
+Revamped TagLib.Properties by making it non-overridable and having it read
+ICodec, IAudioCodec, and IVideoCodec items. This provides support for reading
+information strictly from an audio or video stream property, decreasing the
+abstraction.
+
+	* src/TagLib/Mpc/File.cs:
+	* src/TagLib/Mpc/StreamHeader.cs:
+	* src/TagLib/File.cs:
+	* src/TagLib/ByteVectorList.cs:
+	* src/TagLib/Riff/List.cs:
+	* src/TagLib/Riff/AviStream.cs:
+	* src/TagLib/Riff/File.cs:
+	* src/TagLib/Riff/BitmapInfoHeader.cs:
+	* src/TagLib/Riff/AviHeaderList.cs:
+	* src/TagLib/Riff/ListTag.cs:
+	* src/TagLib/Riff/InfoTag.cs:
+	* src/TagLib/Riff/MovieIdTag.cs:
+	* src/TagLib/Riff/WaveFormatEx.cs:
+	* src/TagLib/Mpeg/File.cs:
+	* src/TagLib/Mpeg/VideoHeader.cs:
+	* src/TagLib/Mpeg/AudioFile.cs:
+	* src/TagLib/Mpeg/AudioHeader.cs:
+	* src/TagLib/ICodec.cs:
+	* src/TagLib/WavPack/File.cs:
+	* src/TagLib/WavPack/StreamHeader.cs:
+	* src/TagLib/Properties.cs:
+	* src/TagLib/Flac/File.cs:
+	* src/TagLib/Flac/StreamHeader.cs:
+	* src/TagLib/Asf/File.cs:
+	* src/TagLib/Asf/HeaderObject.cs:
+	* src/TagLib/Asf/StreamPropertiesObject.cs:
+	* src/TagLib/ListBase.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoMovieHeaderBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoAudioSampleEntry.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoVisualSampleEntry.cs:
+	* src/TagLib/Mpeg4/File.cs:
+	* src/TagLib/Ogg/Codecs/Theora.cs:
+	* src/TagLib/Ogg/Codecs/Vorbis.cs:
+	* src/TagLib/Ogg/Codec.cs:
+	* src/TagLib/Ogg/File.cs:
+	* examples/ReadFromUri.cs: Add support for new ICodec derivatives.
+	* src/TagLib/ByteVector.cs: Fix reading of UTF16 in certain cases.
+	* src/taglib-sharp.mdp:
+	* src/Makefile.am:
+	* taglib-sharp.csproj: New files.
+	* docs/en/*/*.xml: Updated docs.
+
+2007-04-26  Brian Nickel <brian.nickel@gmail.com>
+
+	* docs/en/*/*.xml: Updated docs. Removed bad files.
+	
 2007-04-25  Brian Nickel <brian.nickel@gmail.com>
 
 taglib-sharp-1.9.99991 (2.0 beta 1)

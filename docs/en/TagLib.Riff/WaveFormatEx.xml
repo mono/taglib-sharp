@@ -1,0 +1,77 @@
+<Type Name="WaveFormatEx" FullName="TagLib.Riff.WaveFormatEx">
+  <TypeSignature Language="C#" Value="public struct WaveFormatEx" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.ValueType</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public WaveFormatEx (TagLib.ByteVector data);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="data" Type="TagLib.ByteVector" /></Parameters>
+      <Docs><param name="data">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public WaveFormatEx (TagLib.ByteVector data, int offset);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="data" Type="TagLib.ByteVector" /><Parameter Name="offset" Type="System.Int32" /></Parameters>
+      <Docs><param name="data">To be added.</param><param name="offset">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="FormatTag">
+      <MemberSignature Language="C#" Value="public short FormatTag { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Channels">
+      <MemberSignature Language="C#" Value="public short Channels { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="SamplesPerSecond">
+      <MemberSignature Language="C#" Value="public uint SamplesPerSecond { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="AverageBytesPerSecond">
+      <MemberSignature Language="C#" Value="public uint AverageBytesPerSecond { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="BlockAlign">
+      <MemberSignature Language="C#" Value="public short BlockAlign { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="BitsPerSample">
+      <MemberSignature Language="C#" Value="public short BitsPerSample { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="ExtraSize">
+      <MemberSignature Language="C#" Value="public short ExtraSize { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Description">
+      <MemberSignature Language="C#" Value="public string Description { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

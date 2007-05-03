@@ -1,0 +1,42 @@
+<Type Name="AviHeaderList" FullName="TagLib.Riff.AviHeaderList">
+  <TypeSignature Language="C#" Value="public class AviHeaderList : TagLib.Riff.List" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>TagLib.Riff.List</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public AviHeaderList (TagLib.File file, long position, int length);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="file" Type="TagLib.File" /><Parameter Name="position" Type="System.Int64" /><Parameter Name="length" Type="System.Int32" /></Parameters>
+      <Docs><param name="file">To be added.</param><param name="position">To be added.</param><param name="length">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="ToProperties">
+      <MemberSignature Language="C#" Value="public TagLib.Properties ToProperties ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>TagLib.Properties</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Header">
+      <MemberSignature Language="C#" Value="public TagLib.Riff.AviHeader Header { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>TagLib.Riff.AviHeader</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+    <Member MemberName="Streams">
+      <MemberSignature Language="C#" Value="public TagLib.Riff.AviStream[] Streams { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>TagLib.Riff.AviStream[]</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

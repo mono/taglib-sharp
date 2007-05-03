@@ -33,9 +33,14 @@ namespace TagLib
         {
         }
 
-        public ByteVectorList(ByteVector vector) 
+        public ByteVectorList(IEnumerable<ByteVector> vectors)
         {
-            Add(vector);
+            Add (vectors);
+        }
+
+        public ByteVectorList(params ByteVector[] vectors)
+        {
+            Add (vectors);
         }
 
         public override void SortedInsert(ByteVector vector, bool unique)

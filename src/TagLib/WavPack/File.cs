@@ -65,7 +65,7 @@ namespace TagLib.WavPack
          if (header_block == null && style != ReadStyle.None)
          {
             Seek (start);
-            header_block = ReadBlock ((int) WavPack.Properties.HeaderSize);
+            header_block = ReadBlock ((int) WavPack.StreamHeader.Size);
          }
       }
       
@@ -77,7 +77,8 @@ namespace TagLib.WavPack
       
       protected override TagLib.Properties ReadProperties (long start, long end, ReadStyle style)
       {
-         return new Properties (header_block, end - start);
+         StreamHeader header = new StreamHeader (header_block, end - start);
+         return new Properties (TimeSpan.Zero, header);
       }
    }
 }

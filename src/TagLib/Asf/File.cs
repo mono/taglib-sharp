@@ -161,7 +161,7 @@ namespace TagLib.Asf
          asf_tag = new Asf.Tag (header);
          
          if(properties_style != ReadStyle.None)
-            properties = new Properties (header, properties_style);
+            properties = header.GetProperties ();
       }
    }
 }
