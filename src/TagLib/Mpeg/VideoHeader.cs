@@ -27,8 +27,8 @@ namespace TagLib.Mpeg
          file.Seek (offset);
          ByteVector data = file.ReadBlock (7);
          
-         width = data.Mid (0, 2).ToShort () >> 4;
-         height = data.Mid (1, 2).ToShort () & 0x0FFF;
+         width = data.Mid (0, 2).ToUShort () >> 4;
+         height = data.Mid (1, 2).ToUShort () & 0x0FFF;
          
          frame_rate_index = data [3] & 0x0F;
          

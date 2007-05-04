@@ -2,34 +2,34 @@ namespace TagLib.Riff
 {
    public struct WaveFormatEx
    {
-      short format_tag;
-      short channels;
-      uint  samples_per_second;
-      uint  average_bytes_per_second;
-      short block_align;
-      short bits_per_sample;
-      short extra_size;
+      ushort format_tag;
+      ushort channels;
+      uint   samples_per_second;
+      uint   average_bytes_per_second;
+      ushort block_align;
+      ushort bits_per_sample;
+      ushort extra_size;
       
       public WaveFormatEx (ByteVector data) : this (data, 0) {}
       
       public WaveFormatEx (ByteVector data, int offset)
       {
-         format_tag               = data.Mid (offset +  0, 2).ToShort (false);
-         channels                 = data.Mid (offset +  2, 2).ToShort (false);
+         format_tag               = data.Mid (offset +  0, 2).ToUShort (false);
+         channels                 = data.Mid (offset +  2, 2).ToUShort (false);
          samples_per_second       = data.Mid (offset +  4, 4).ToUInt (false);
          average_bytes_per_second = data.Mid (offset +  8, 4).ToUInt (false);
-         block_align              = data.Mid (offset + 12, 2).ToShort (false);
-         bits_per_sample          = data.Mid (offset + 14, 2).ToShort (false);
-         extra_size               = data.Mid (offset + 16, 2).ToShort (false);
+         block_align              = data.Mid (offset + 12, 2).ToUShort (false);
+         bits_per_sample          = data.Mid (offset + 14, 2).ToUShort (false);
+         extra_size               = data.Mid (offset + 16, 2).ToUShort (false);
       }
       
-      public short FormatTag             {get {return format_tag;}}
-      public short Channels              {get {return channels;}}
-      public uint  SamplesPerSecond      {get {return samples_per_second;}}
-      public uint  AverageBytesPerSecond {get {return average_bytes_per_second;}}
-      public short BlockAlign            {get {return block_align;}}
-      public short BitsPerSample         {get {return bits_per_sample;}}
-      public short ExtraSize             {get {return extra_size;}}
+      public ushort FormatTag             {get {return format_tag;}}
+      public ushort Channels              {get {return channels;}}
+      public uint   SamplesPerSecond      {get {return samples_per_second;}}
+      public uint   AverageBytesPerSecond {get {return average_bytes_per_second;}}
+      public ushort BlockAlign            {get {return block_align;}}
+      public ushort BitsPerSample         {get {return bits_per_sample;}}
+      public ushort ExtraSize             {get {return extra_size;}}
       
       public string Description
       {

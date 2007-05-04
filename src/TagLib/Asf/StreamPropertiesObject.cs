@@ -29,8 +29,8 @@ namespace TagLib.Asf
 #region Private Properties
       private Guid stream_type;
       private Guid error_correction_type;
-      private long time_offset;
-      private short flags;
+      private ulong time_offset;
+      private ushort flags;
       private uint reserved;
       private ByteVector type_specific_data;
       private ByteVector error_correction_data;
@@ -88,8 +88,8 @@ namespace TagLib.Asf
 #region Public Properties
       public Guid       StreamType {get {return stream_type;}}
       public Guid       ErrorCorrectionType {get {return error_correction_type;}}
-      public TimeSpan   TimeOffset {get {return new TimeSpan (time_offset);}}
-      public short      Flags {get {return flags;}}
+      public TimeSpan   TimeOffset {get {return new TimeSpan ((long)time_offset);}}
+      public ushort     Flags {get {return flags;}}
       public ByteVector TypeSpecificData {get {return type_specific_data;}}
       public ByteVector ErrorCorrectionData {get {return error_correction_data;}}
 #endregion

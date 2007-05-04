@@ -166,8 +166,10 @@ namespace TagLib.Id3v2
          {
             ChannelType type = (ChannelType) data [pos];
             pos += 1;
-
-            SetVolumeAdjustmentIndex (data.Mid (pos, 2).ToShort (), type);
+            
+            unchecked {
+               SetVolumeAdjustmentIndex ((short) data.Mid (pos, 2).ToUShort (), type);
+            }
             pos += 2;
 
             int bytes = BitsToBytes (data [pos]);
@@ -190,7 +192,9 @@ namespace TagLib.Id3v2
          foreach (ChannelData channel in channels.Values)
          {
             data.Add ((byte) channel.ChannelType);
-            data.Add (ByteVector.FromShort (channel.VolumeAdjustment));
+            unchecked {
+               data.Add (ByteVector.FromUShort ((ushort)channel.VolumeAdjustment));
+            }
             data.Add (RenderPeakVolume (channel.PeakVolume));
          }
          

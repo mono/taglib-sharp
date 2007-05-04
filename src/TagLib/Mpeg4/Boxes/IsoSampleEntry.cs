@@ -14,7 +14,7 @@ namespace TagLib.Mpeg4
       public IsoSampleEntry (BoxHeader header, File file, Box handler) : base (header, file, handler)
       {
          file.Seek (base.DataOffset + 6);
-         data_reference_index   = (ushort) file.ReadBlock (2).ToShort ();
+         data_reference_index   = file.ReadBlock (2).ToUShort ();
       }
       
 #endregion

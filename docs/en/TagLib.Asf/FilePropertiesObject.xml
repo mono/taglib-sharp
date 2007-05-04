@@ -22,9 +22,9 @@
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="FileSize">
-      <MemberSignature Language="C#" Value="public long FileSize { get; };" />
+      <MemberSignature Language="C#" Value="public ulong FileSize { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
+      <ReturnValue><ReturnType>System.UInt64</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="CreationDate">
@@ -34,9 +34,9 @@
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="DataPacketsCount">
-      <MemberSignature Language="C#" Value="public long DataPacketsCount { get; };" />
+      <MemberSignature Language="C#" Value="public ulong DataPacketsCount { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
+      <ReturnValue><ReturnType>System.UInt64</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="PlayDuration">
@@ -52,9 +52,9 @@
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="Preroll">
-      <MemberSignature Language="C#" Value="public long Preroll { get; };" />
+      <MemberSignature Language="C#" Value="public ulong Preroll { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
+      <ReturnValue><ReturnType>System.UInt64</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="Flags">

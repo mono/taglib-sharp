@@ -3,7 +3,7 @@ namespace TagLib.Mpeg4
    public class AppleElementaryStreamDescriptor : FullBox
    {
       #region Private Properties
-      private short es_id;
+      private ushort es_id;
       private byte stream_priority;
       private byte object_type_id;
       private byte stream_type;
@@ -27,7 +27,7 @@ namespace TagLib.Mpeg4
             if (ReadLength (box_data, ref offset) < 20)
                throw new CorruptFileException ("Could not read data. Too small.");
             
-            es_id = box_data.Mid (offset, 2).ToShort ();
+            es_id = box_data.Mid (offset, 2).ToUShort ();
             offset += 2;
             stream_priority = box_data [offset ++];
          }
@@ -35,7 +35,7 @@ namespace TagLib.Mpeg4
          {
             // The tag wasn't found, so the next two byte are the ID, and
             // after that, business as usual.
-            es_id = box_data.Mid (offset, 2).ToShort ();
+            es_id = box_data.Mid (offset, 2).ToUShort ();
             offset += 2;
          }
          
@@ -70,7 +70,7 @@ namespace TagLib.Mpeg4
       #endregion
       
       #region Public Properties
-      public short      StreamId       {get {return es_id;}}
+      public ushort     StreamId       {get {return es_id;}}
       public byte       StreamPriority {get {return stream_priority;}}
       public byte       ObjectTypeId   {get {return object_type_id;}}
       public byte       StreamType     {get {return stream_type;}}

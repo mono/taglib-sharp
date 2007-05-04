@@ -134,7 +134,7 @@ namespace TagLib.Ogg.Codecs
             // Target bitrate.
             pos += 3;
             
-            short last_bits = data.Mid (pos, 2).ToShort ();
+            ushort last_bits = data.Mid (pos, 2).ToUShort ();
             keyframe_granule_shift = (last_bits >> 5) & 0x1F;
          }
          

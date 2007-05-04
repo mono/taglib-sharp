@@ -174,7 +174,7 @@ namespace TagLib.Mpeg
             case Marker.SystemPacket:
             case Marker.PaddingPacket:
                Seek (position + 4);
-               position += ReadBlock (2).ToShort () + 6;
+               position += ReadBlock (2).ToUShort () + 6;
                break;
             case Marker.VideoPacket:
                ReadVideoPacket (ref position);
@@ -194,7 +194,7 @@ namespace TagLib.Mpeg
       void ReadAudioPacket (ref long position)
       {
          Seek (position + 4);
-         int length = ReadBlock (2).ToShort ();
+         int length = ReadBlock (2).ToUShort ();
          if (audio_header == null)
             audio_header = AudioHeader.Find (this, position + 15, length - 9);
          position += length;
@@ -203,7 +203,7 @@ namespace TagLib.Mpeg
       void ReadVideoPacket (ref long position)
       {
          Seek (position + 4);
-         int length = ReadBlock (2).ToShort ();
+         int length = ReadBlock (2).ToUShort ();
          
          long offset = position + 6;
          while (video_header == null && offset < position + length)

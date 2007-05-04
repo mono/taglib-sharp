@@ -7,7 +7,7 @@ namespace TagLib.Mpeg4
       #region Private Properties
       private ByteVector box_type;
       private ByteVector extended_type;
-      private long       box_size;
+      private ulong      box_size;
       private uint       header_size;
       private long       position;
       #endregion
@@ -88,7 +88,7 @@ namespace TagLib.Mpeg4
          // If the box size is 16 or 32, we must have more a large header to
          // append.
          if (header_size == 16 || header_size == 32)
-            output.Add (ByteVector.FromLong (box_size));
+            output.Add (ByteVector.FromULong (box_size));
          
          // The only reason for such a big size is an extended type. Extend!!!
          if (header_size >= 24)
@@ -116,7 +116,7 @@ namespace TagLib.Mpeg4
                throw new CorruptFileException ("Not enough data in box header.");
             
             header_size += 8;
-            box_size = data.Mid (offset, 8).ToLong ();
+            box_size = data.Mid (offset, 8).ToULong ();
             offset += 8;
          }
          
@@ -136,9 +136,9 @@ namespace TagLib.Mpeg4
       public ByteVector BoxType      {get {return box_type;}}
       public ByteVector ExtendedType {get {return extended_type;}}
       public long       HeaderSize   {get {return header_size;}}
-      public long       DataSize     {get {return box_size - header_size;} set {box_size = value + header_size;}}
+      public long       DataSize     {get {return (long)(box_size - header_size);} set {box_size = (ulong)value + header_size;}}
       public long       DataOffset   {get {return header_size;}}
-      public long       TotalBoxSize {get {return box_size;}}
+      public long       TotalBoxSize {get {return (long)box_size;}}
       public long       Position     {get {return position;}}
       #endregion
    }

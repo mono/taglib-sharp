@@ -40,15 +40,15 @@
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="Planes">
-      <MemberSignature Language="C#" Value="public short Planes { get; };" />
+      <MemberSignature Language="C#" Value="public ushort Planes { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="BitCount">
-      <MemberSignature Language="C#" Value="public short BitCount { get; };" />
+      <MemberSignature Language="C#" Value="public ushort BitCount { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="CompressionId">

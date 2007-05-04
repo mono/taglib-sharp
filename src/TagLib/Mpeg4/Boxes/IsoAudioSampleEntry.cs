@@ -16,10 +16,10 @@ namespace TagLib.Mpeg4
       public IsoAudioSampleEntry (BoxHeader header, File file, Box handler) : base (header, file, handler)
       {
          file.Seek (base.DataOffset + 8);
-         channel_count = (ushort) file.ReadBlock (2).ToShort ();
-         sample_size   = (ushort) file.ReadBlock (2).ToShort ();
+         channel_count = file.ReadBlock (2).ToUShort ();
+         sample_size   = file.ReadBlock (2).ToUShort ();
          file.Seek (base.DataOffset + 16);
-         sample_rate   = (uint)   file.ReadBlock (4).ToUInt  ();
+         sample_rate   = file.ReadBlock (4).ToUInt  ();
          children = LoadChildren (file);
       }
 #endregion

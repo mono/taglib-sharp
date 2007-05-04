@@ -289,7 +289,7 @@ namespace TagLib.Mpeg4
                else if (box.Flags == (int) AppleDataBox.FlagTypes.ContainsData)
                {
                   // iTunes stores genre's in the GNRE box as (ID3# + 1).
-                  string genre = TagLib.Genres.IndexToAudio ((byte) (box.Data.ToShort (true) - 1));
+                  string genre = TagLib.Genres.IndexToAudio ((byte) (box.Data.ToUShort (true) - 1));
                   if (genre != null)
                      l.Add (genre);
                }
@@ -325,16 +325,16 @@ namespace TagLib.Mpeg4
          {
             foreach (AppleDataBox box in DataBoxes (BoxTypes.Trkn))
                if (box.Flags == (int) AppleDataBox.FlagTypes.ContainsData && box.Data.Count >=4)
-                  return (uint) box.Data.Mid (2, 2).ToShort ();
+                  return box.Data.Mid (2, 2).ToUShort ();
             
             return 0;
          }
          set
          {
-            ByteVector v = ByteVector.FromShort (0);
-            v.Add (ByteVector.FromShort ((short) value));
-            v.Add (ByteVector.FromShort ((short) TrackCount));
-            v.Add (ByteVector.FromShort (0));
+            ByteVector v = ByteVector.FromUShort (0);
+            v.Add (ByteVector.FromUShort ((ushort) value));
+            v.Add (ByteVector.FromUShort ((ushort) TrackCount));
+            v.Add (ByteVector.FromUShort (0));
             
             SetData (BoxTypes.Trkn, v, (int) AppleDataBox.FlagTypes.ContainsData);
          }
@@ -346,17 +346,17 @@ namespace TagLib.Mpeg4
          {
             foreach (AppleDataBox box in DataBoxes (BoxTypes.Trkn))
                if (box.Flags == (int) AppleDataBox.FlagTypes.ContainsData && box.Data.Count >=6)
-                  return (uint) box.Data.Mid (4, 2).ToShort ();
+                  return box.Data.Mid (4, 2).ToUShort ();
             
             return 0;
          }
          set
          {
             ByteVector v = new ByteVector ();
-            v += ByteVector.FromShort (0);
-            v += ByteVector.FromShort ((short) Track);
-            v += ByteVector.FromShort ((short) value);
-            v += ByteVector.FromShort (0);
+            v += ByteVector.FromUShort (0);
+            v += ByteVector.FromUShort ((ushort) Track);
+            v += ByteVector.FromUShort ((ushort) value);
+            v += ByteVector.FromUShort (0);
             
             SetData (BoxTypes.Trkn, v, (int) AppleDataBox.FlagTypes.ContainsData);
          }
@@ -368,17 +368,17 @@ namespace TagLib.Mpeg4
          {
             foreach (AppleDataBox box in DataBoxes (BoxTypes.Disk))
                if (box.Flags == (int) AppleDataBox.FlagTypes.ContainsData && box.Data.Count >=4)
-                  return (uint) box.Data.Mid (2, 2).ToShort ();
+                  return box.Data.Mid (2, 2).ToUShort ();
             
             return 0;
          }
          set
          {
             ByteVector v = new ByteVector ();
-            v += ByteVector.FromShort (0);
-            v += ByteVector.FromShort ((short) value);
-            v += ByteVector.FromShort ((short) DiscCount);
-            v += ByteVector.FromShort (0);
+            v += ByteVector.FromUShort (0);
+            v += ByteVector.FromUShort ((ushort) value);
+            v += ByteVector.FromUShort ((ushort) DiscCount);
+            v += ByteVector.FromUShort (0);
             
             SetData (BoxTypes.Disk, v, (int) AppleDataBox.FlagTypes.ContainsData);
          }
@@ -390,17 +390,17 @@ namespace TagLib.Mpeg4
          {
             foreach (AppleDataBox box in DataBoxes (BoxTypes.Disk))
                if (box.Flags == (int) AppleDataBox.FlagTypes.ContainsData && box.Data.Count >=6)
-                  return (uint) box.Data.Mid (4, 2).ToShort ();
+                  return box.Data.Mid (4, 2).ToUShort ();
             
             return 0;
          }
          set
          {
             ByteVector v = new ByteVector ();
-            v += ByteVector.FromShort (0);
-            v += ByteVector.FromShort ((short) Disc);
-            v += ByteVector.FromShort ((short) value);
-            v += ByteVector.FromShort (0);
+            v += ByteVector.FromUShort (0);
+            v += ByteVector.FromUShort ((ushort) Disc);
+            v += ByteVector.FromUShort ((ushort) value);
+            v += ByteVector.FromUShort (0);
             
             SetData (BoxTypes.Disk, v, (int) AppleDataBox.FlagTypes.ContainsData);
          }

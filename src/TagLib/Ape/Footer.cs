@@ -183,7 +183,7 @@ namespace TagLib.Ape
          v.Add (ByteVector.FromUInt (flags, false));
 
          // add the reserved 64bit
-         v.Add (ByteVector.FromLong (0));
+         v.Add (ByteVector.FromULong (0));
 
          return v;
       }

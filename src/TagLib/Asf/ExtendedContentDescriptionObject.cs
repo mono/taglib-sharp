@@ -44,9 +44,9 @@ namespace TagLib.Asf
          
          descriptors = new List<ContentDescriptor> ();
          
-         short count = file.ReadWord ();
+         ushort count = file.ReadWord ();
          
-         for (short i = 0; i < count; i ++)
+         for (ushort i = 0; i < count; i ++)
          {
             ContentDescriptor desc = new ContentDescriptor (file);
             AddDescriptor (desc);
@@ -61,7 +61,7 @@ namespace TagLib.Asf
       public override ByteVector Render ()
       {
          ByteVector output = new ByteVector ();
-         short count = 0;
+         ushort count = 0;
          
          foreach (ContentDescriptor desc in descriptors)
          {

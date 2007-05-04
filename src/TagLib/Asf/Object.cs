@@ -27,7 +27,7 @@ namespace TagLib.Asf
       // private properties
       //////////////////////////////////////////////////////////////////////////
       private Guid id;
-      private long size;
+      private ulong size;
       
       
       //////////////////////////////////////////////////////////////////////////
@@ -51,7 +51,7 @@ namespace TagLib.Asf
       public static ByteVector RenderUnicode (string str)
       {
          ByteVector v = ByteVector.FromString (str, StringType.UTF16LE);
-         v.Add (ByteVector.FromShort (0));
+         v.Add (ByteVector.FromUShort (0));
          return v;
       }
       
@@ -60,14 +60,14 @@ namespace TagLib.Asf
          return ByteVector.FromUInt (value, false);
       }
       
-      public static ByteVector RenderQWord (long value)
+      public static ByteVector RenderQWord (ulong value)
       {
-         return ByteVector.FromLong (value, false);
+         return ByteVector.FromULong (value, false);
       }
       
-      public static ByteVector RenderWord (short value)
+      public static ByteVector RenderWord (ushort value)
       {
-         return ByteVector.FromShort (value, false);
+         return ByteVector.FromUShort (value, false);
       }
       
       
@@ -76,7 +76,7 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       public Guid Guid {get {return id;}}
       
-      public long OriginalSize {get {return size;}}
+      public ulong OriginalSize {get {return size;}}
       
       
       //////////////////////////////////////////////////////////////////////////
@@ -84,7 +84,7 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       protected ByteVector Render (ByteVector data)
       {
-         long length = (data != null ? data.Count : 0) + 24;
+         ulong length = (ulong)((data != null ? data.Count : 0) + 24);
          ByteVector v = Guid.Render ();
          v.Add (RenderQWord (length));
          v.Add (data);

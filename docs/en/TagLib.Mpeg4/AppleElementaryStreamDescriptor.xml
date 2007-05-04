@@ -16,9 +16,9 @@
       <Docs><param name="header">To be added.</param><param name="file">To be added.</param><param name="handler">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="StreamId">
-      <MemberSignature Language="C#" Value="public short StreamId { get; };" />
+      <MemberSignature Language="C#" Value="public ushort StreamId { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="StreamPriority">

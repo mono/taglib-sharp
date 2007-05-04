@@ -1,3 +1,37 @@
+2007-05-04  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Riff/AviStream.cs:
+	* src/TagLib/Riff/BitmapInfoHeader.cs:
+	* src/TagLib/Riff/WaveFormatEx.cs:
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
+	* src/TagLib/Mpeg/File.cs:
+	* src/TagLib/Mpeg/VideoHeader.cs:
+	* src/TagLib/ByteVector.cs:
+	* src/TagLib/WavPack/StreamHeader.cs:
+	* src/TagLib/Ape/Footer.cs:
+	* src/TagLib/Asf/PaddingObject.cs:
+	* src/TagLib/Asf/File.cs:
+	* src/TagLib/Asf/HeaderObject.cs:
+	* src/TagLib/Asf/StreamPropertiesObject.cs:
+	* src/TagLib/Asf/FilePropertiesObject.cs:
+	* src/TagLib/Asf/ContentDescriptionObject.cs:
+	* src/TagLib/Asf/ExtendedContentDescriptionObject.cs:
+	* src/TagLib/Asf/Object.cs:
+	* src/TagLib/Asf/Guid.cs:
+	* src/TagLib/Asf/ContentDescriptor.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoMovieHeaderBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoSampleEntry.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoChunkLargeOffsetBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoAudioSampleEntry.cs:
+	* src/TagLib/Mpeg4/Boxes/AppleElementaryStreamDescriptor.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoVisualSampleEntry.cs:
+	* src/TagLib/Mpeg4/AppleTag.cs:
+	* src/TagLib/Mpeg4/BoxHeader.cs:
+	* src/TagLib/Mpeg4/Box.cs:
+	* src/TagLib/Ogg/Codecs/Theora.cs:
+	* src/TagLib/Ogg/PageHeader.cs: Goodbye, short and long, hello ushort
+	and ulong. This should avoid those pesky OverflowExceptions.
+
 2007-05-03  Brian Nickel <brian.nickel@gmail.com>
 
 Revamped TagLib.Properties by making it non-overridable and having it read

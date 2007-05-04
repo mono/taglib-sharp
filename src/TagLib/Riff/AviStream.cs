@@ -106,10 +106,10 @@ namespace TagLib.Riff
       uint suggested_buffer_size;
       uint quality;
       uint sample_size;
-      short left;
-      short top;
-      short right;
-      short bottom;
+      ushort left;
+      ushort top;
+      ushort right;
+      ushort bottom;
 
       public AviStreamHeader (ByteVector data) : this (data, 0) {}
       
@@ -127,10 +127,10 @@ namespace TagLib.Riff
          suggested_buffer_size = data.Mid (offset + 36, 4).ToUInt (false);
          quality               = data.Mid (offset + 40, 4).ToUInt (false);
          sample_size           = data.Mid (offset + 44, 4).ToUInt (false);
-         left                  = data.Mid (offset + 48, 2).ToShort (false);
-         top                   = data.Mid (offset + 50, 2).ToShort (false);
-         right                 = data.Mid (offset + 52, 2).ToShort (false);
-         bottom                = data.Mid (offset + 54, 2).ToShort (false);
+         left                  = data.Mid (offset + 48, 2).ToUShort (false);
+         top                   = data.Mid (offset + 50, 2).ToUShort (false);
+         right                 = data.Mid (offset + 52, 2).ToUShort (false);
+         bottom                = data.Mid (offset + 54, 2).ToUShort (false);
       }
       
       public ByteVector Type {get {return type;}}
@@ -145,9 +145,9 @@ namespace TagLib.Riff
       public uint SuggestedBufferSize {get {return suggested_buffer_size;}}
       public uint Quality {get {return quality;}}
       public uint SampleSize {get {return sample_size;}}
-      public short Left {get {return left;}}
-      public short Top {get {return top;}}
-      public short Right {get {return right;}}
-      public short Bottom {get {return bottom;}}
+      public ushort Left {get {return left;}}
+      public ushort Top {get {return top;}}
+      public ushort Right {get {return right;}}
+      public ushort Bottom {get {return bottom;}}
    }
 }

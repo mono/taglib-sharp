@@ -59,7 +59,7 @@ namespace TagLib.Asf
                child_count ++;
             }
          
-         int size_diff = (int) (output.Count + 30 - OriginalSize);
+         long size_diff = (long) output.Count + 30 - (long) OriginalSize;
          
          if (size_diff != 0)
          {

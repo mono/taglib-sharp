@@ -417,32 +417,32 @@ namespace TagLib
             return ToUInt(true);
         }
 
-        public short ToShort(bool msbFirst)
+        public ushort ToUShort(bool msbFirst)
         {
-            short sum = 0;
+            ushort sum = 0;
             for(int i = 0, last = Count > 2 ? 1 : Count - 1; i <= last; i++) {
-                sum |= (short)(this[i] << ((msbFirst ? last - i : i) * 8));
+                sum |= (ushort)(this[i] << ((msbFirst ? last - i : i) * 8));
             }
             return sum;
         }
 
-        public short ToShort()
+        public ushort ToUShort()
         {
-            return ToShort(true);
+            return ToUShort(true);
         }
 
-        public long ToLong(bool msbFirst)
+        public ulong ToULong(bool msbFirst)
         {
-            long sum = 0;
+            ulong sum = 0;
             for(int i = 0, last = Count > 8 ? 7 : Count - 1; i <= last; i++) {
-                sum |= (long)this [i] << ((msbFirst ? last - i : i) * 8);
+                sum |= (ulong)this [i] << ((msbFirst ? last - i : i) * 8);
             }
             return sum;
         }
 
-        public long ToLong()
+        public ulong ToULong()
         {
-            return ToLong(true);
+            return ToULong(true);
         }
 
         public string ToString(StringType type, int offset)
@@ -606,7 +606,7 @@ namespace TagLib
             return FromUInt(value, true);
         }
 
-        public static ByteVector FromShort(short value, bool msbFirst)
+        public static ByteVector FromUShort(ushort value, bool msbFirst)
         {
             ByteVector vector = new ByteVector();
             for(int i = 0; i < 2; i++) {
@@ -615,12 +615,12 @@ namespace TagLib
             return vector;
         }
 
-        public static ByteVector FromShort(short value)
+        public static ByteVector FromUShort(ushort value)
         {
-            return FromShort(value, true);
+            return FromUShort(value, true);
         }
 
-        public static ByteVector FromLong(long value, bool msbFirst)
+        public static ByteVector FromULong(ulong value, bool msbFirst)
         {
             ByteVector vector = new ByteVector();
             for(int i = 0; i < 8; i++) {
@@ -629,9 +629,9 @@ namespace TagLib
             return vector;
         }
 
-        public static ByteVector FromLong(long value)
+        public static ByteVector FromULong(ulong value)
         {
-            return FromLong(value, true);
+            return FromULong(value, true);
         }
 
         public static ByteVector FromString(string s, StringType type, int length)

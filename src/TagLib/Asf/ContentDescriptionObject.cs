@@ -46,11 +46,11 @@ namespace TagLib.Asf
          if (OriginalSize < 34)
             throw new CorruptFileException ("Object size too small.");
          
-         short title_length       = file.ReadWord ();
-         short author_length      = file.ReadWord ();
-         short copyright_length   = file.ReadWord ();
-         short description_length = file.ReadWord ();
-         short rating_length      = file.ReadWord ();
+         ushort title_length       = file.ReadWord ();
+         ushort author_length      = file.ReadWord ();
+         ushort copyright_length   = file.ReadWord ();
+         ushort description_length = file.ReadWord ();
+         ushort rating_length      = file.ReadWord ();
          
          title       = file.ReadUnicode (title_length);
          author      = file.ReadUnicode (author_length);
@@ -76,11 +76,11 @@ namespace TagLib.Asf
          ByteVector description_bytes = RenderUnicode (description);
          ByteVector rating_bytes      = RenderUnicode (rating);
          
-         ByteVector output = RenderWord ((short) title_bytes.Count);
-         output.Add (RenderWord ((short) author_bytes.Count));
-         output.Add (RenderWord ((short) copyright_bytes.Count));
-         output.Add (RenderWord ((short) description_bytes.Count));
-         output.Add (RenderWord ((short) rating_bytes.Count));
+         ByteVector output = RenderWord ((ushort) title_bytes.Count);
+         output.Add (RenderWord ((ushort) author_bytes.Count));
+         output.Add (RenderWord ((ushort) copyright_bytes.Count));
+         output.Add (RenderWord ((ushort) description_bytes.Count));
+         output.Add (RenderWord ((ushort) rating_bytes.Count));
          output.Add (title_bytes);
          output.Add (author_bytes);
          output.Add (copyright_bytes);

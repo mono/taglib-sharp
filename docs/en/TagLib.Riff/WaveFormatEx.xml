@@ -22,15 +22,15 @@
       <Docs><param name="data">To be added.</param><param name="offset">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="FormatTag">
-      <MemberSignature Language="C#" Value="public short FormatTag { get; };" />
+      <MemberSignature Language="C#" Value="public ushort FormatTag { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="Channels">
-      <MemberSignature Language="C#" Value="public short Channels { get; };" />
+      <MemberSignature Language="C#" Value="public ushort Channels { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="SamplesPerSecond">
@@ -46,21 +46,21 @@
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="BlockAlign">
-      <MemberSignature Language="C#" Value="public short BlockAlign { get; };" />
+      <MemberSignature Language="C#" Value="public ushort BlockAlign { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="BitsPerSample">
-      <MemberSignature Language="C#" Value="public short BitsPerSample { get; };" />
+      <MemberSignature Language="C#" Value="public ushort BitsPerSample { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="ExtraSize">
-      <MemberSignature Language="C#" Value="public short ExtraSize { get; };" />
+      <MemberSignature Language="C#" Value="public ushort ExtraSize { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int16</ReturnType></ReturnValue>
+      <ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
     <Member MemberName="Description">

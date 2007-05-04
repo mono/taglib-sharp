@@ -14,7 +14,7 @@ namespace TagLib.Mpeg4
          offsets = new ulong [(int) box_data.Mid (0, 4).ToUInt ()];
          
          for (int i = 0; i < offsets.Length; i ++)
-           offsets [i] = (ulong) box_data.Mid (4 + i * 8, 8).ToLong ();
+           offsets [i] = box_data.Mid (4 + i * 8, 8).ToULong ();
       }
       #endregion
       
@@ -34,7 +34,7 @@ namespace TagLib.Mpeg4
          {
             if (offsets [i] >= (ulong) after)
                offsets [i] = (ulong) ((long)offsets [i] + size_difference);
-            output.Add (ByteVector.FromLong ((long) offsets [i]));
+            output.Add (ByteVector.FromULong (offsets [i]));
          }
          
          return Render (output);

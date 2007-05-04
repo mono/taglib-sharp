@@ -64,7 +64,7 @@ namespace TagLib.Asf
          header.AddUniqueObject (asf_tag.ContentDescriptionObject);
          header.AddUniqueObject (asf_tag.ExtendedContentDescriptionObject);
          
-         Insert (header.Render (), 0, header.OriginalSize);
+         Insert (header.Render (), 0, (long) header.OriginalSize);
          
          Mode = AccessMode.Closed;
       }
@@ -83,10 +83,10 @@ namespace TagLib.Asf
             asf_tag.Clear ();
       }
       
-      public short ReadWord ()
+      public ushort ReadWord ()
       {
          ByteVector v = ReadBlock (2);
-         return v.ToShort (false);
+         return v.ToUShort (false);
       }
       
       public uint ReadDWord ()
@@ -95,10 +95,10 @@ namespace TagLib.Asf
          return v.ToUInt (false);
       }
       
-      public long ReadQWord ()
+      public ulong ReadQWord ()
       {
          ByteVector v = ReadBlock (8);
-         return v.ToLong (false);
+         return v.ToULong (false);
       }
       
       public Guid ReadGuid ()
@@ -137,7 +137,7 @@ namespace TagLib.Asf
             else
                obj = new UnknownObject (this, position);
             
-            position += obj.OriginalSize;
+            position += (long) obj.OriginalSize;
             yield return obj;
          }
       }

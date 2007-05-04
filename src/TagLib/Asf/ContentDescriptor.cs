@@ -43,7 +43,7 @@ namespace TagLib.Asf
       private string     name;
       private string     sValue;
       private ByteVector bvValue;
-      private long       lValue;
+      private ulong      lValue;
       
       
       //////////////////////////////////////////////////////////////////////////
@@ -70,14 +70,14 @@ namespace TagLib.Asf
          this.lValue = value;
       }
 
-      public ContentDescriptor (string name, long value) : this ()
+      public ContentDescriptor (string name, ulong value) : this ()
       {
          this.name   = name;
          this.type   = DataType.QWord;
          this.lValue = value;
       }
 
-      public ContentDescriptor (string name, short value) : this ()
+      public ContentDescriptor (string name, ushort value) : this ()
       {
          this.name   = name;
          this.type   = DataType.Word;
@@ -88,7 +88,7 @@ namespace TagLib.Asf
       {
          this.name   = name;
          this.type   = DataType.Bool;
-         this.lValue = value ? 1 : 0;
+         this.lValue = (ulong)(value ? 1 : 0);
       }
 
       public string Name {get {return name;}}
@@ -142,20 +142,20 @@ namespace TagLib.Asf
 
          ByteVector v = Object.RenderUnicode (name);
          
-         ByteVector data = Object.RenderWord ((short) v.Count);
+         ByteVector data = Object.RenderWord ((ushort) v.Count);
          data.Add (v);
-         data.Add (Object.RenderWord ((short) type));
+         data.Add (Object.RenderWord ((ushort) type));
          
          switch (type)
          {
             case DataType.Unicode:
                v = Object.RenderUnicode (sValue);
-               data.Add (Object.RenderWord ((short) v.Count));
+               data.Add (Object.RenderWord ((ushort) v.Count));
                data.Add (v);
             break;
             
             case DataType.Bytes:
-               data.Add (Object.RenderWord ((short) bvValue.Count));
+               data.Add (Object.RenderWord ((ushort) bvValue.Count));
                data.Add (bvValue);
             break;
             
@@ -176,7 +176,7 @@ namespace TagLib.Asf
             
             case DataType.Word:
                data.Add (Object.RenderWord (2));
-               data.Add (Object.RenderWord ((short) lValue));
+               data.Add (Object.RenderWord ((ushort) lValue));
             break;
             
             default:  

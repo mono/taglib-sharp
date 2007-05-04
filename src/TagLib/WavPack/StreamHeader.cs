@@ -41,7 +41,7 @@ namespace TagLib.WavPack
       
 #region Private properties
       private long stream_length;
-      private short version;
+      private ushort version;
       private uint flags;
       private uint samples;
 #endregion
@@ -53,7 +53,7 @@ namespace TagLib.WavPack
             throw new CorruptFileException ();
          
          this.stream_length = stream_length;
-         version = data.Mid (8, 2).ToShort (false);
+         version = data.Mid (8, 2).ToUShort (false);
          flags   = data.Mid (24, 4).ToUInt (false);
          samples = data.Mid (12, 4).ToUInt (false);
       }

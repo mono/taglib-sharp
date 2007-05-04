@@ -15,7 +15,7 @@ namespace TagLib.Mpeg4
       protected Box (BoxHeader header, File file, Box handler)
       {
          this.header      = header;
-         this.data_offset = header.Position + header.DataOffset;
+         this.data_offset = header.Position + (long)header.DataOffset;
          this.handler     = handler;
       }
       

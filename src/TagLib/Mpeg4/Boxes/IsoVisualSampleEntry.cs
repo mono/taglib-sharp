@@ -5,8 +5,8 @@ namespace TagLib.Mpeg4
    public class IsoVisualSampleEntry : IsoSampleEntry, IVideoCodec
    {
 #region Private Properties
-      private short width;
-      private short height;
+      private ushort width;
+      private ushort height;
       // private BoxList children;
 #endregion
       
@@ -16,8 +16,8 @@ namespace TagLib.Mpeg4
       public IsoVisualSampleEntry (BoxHeader header, File file, Box handler) : base (header, file, handler)
       {
          file.Seek (base.DataOffset + 16);
-         width  = file.ReadBlock (2).ToShort ();
-         height = file.ReadBlock (2).ToShort ();
+         width  = file.ReadBlock (2).ToUShort ();
+         height = file.ReadBlock (2).ToUShort ();
          // TODO: What are the children anyway?
          // children = LoadChildren (file);
       }

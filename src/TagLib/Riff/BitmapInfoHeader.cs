@@ -5,8 +5,8 @@ namespace TagLib.Riff
       uint size; 
       uint width; 
       uint height; 
-      short planes; 
-      short bit_count; 
+      ushort planes; 
+      ushort bit_count; 
       ByteVector compression_id; 
       uint size_of_image; 
       uint x_pixels_per_meter; 
@@ -21,8 +21,8 @@ namespace TagLib.Riff
          size               = data.Mid (offset +  0, 4).ToUInt (false);
          width              = data.Mid (offset +  4, 4).ToUInt (false);
          height             = data.Mid (offset +  8, 4).ToUInt (false);
-         planes             = data.Mid (offset + 12, 2).ToShort (false);
-         bit_count          = data.Mid (offset + 14, 2).ToShort (false);
+         planes             = data.Mid (offset + 12, 2).ToUShort (false);
+         bit_count          = data.Mid (offset + 14, 2).ToUShort (false);
          compression_id     = data.Mid (offset + 16, 4);
          size_of_image      = data.Mid (offset + 20, 4).ToUInt (false);
          x_pixels_per_meter = data.Mid (offset + 24, 4).ToUInt (false);
@@ -34,8 +34,8 @@ namespace TagLib.Riff
       public uint       HeaderSize      {get {return size;}}
       public uint       Width           {get {return width;}}
       public uint       Height          {get {return height;}}
-      public short      Planes          {get {return planes;}}
-      public short      BitCount        {get {return bit_count;}}
+      public ushort     Planes          {get {return planes;}}
+      public ushort     BitCount        {get {return bit_count;}}
       public ByteVector CompressionId   {get {return compression_id;}}
       public uint       ImageSize       {get {return size_of_image;}}
       public uint       XPixelsPerMeter {get {return x_pixels_per_meter;}}

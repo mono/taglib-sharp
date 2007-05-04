@@ -91,7 +91,7 @@ namespace TagLib.Ogg
          data.Add (flags);
 
          // absolute granular position
-         data.Add (ByteVector.FromLong (absolute_granular_position, false));
+         data.Add (ByteVector.FromULong ((ulong)absolute_granular_position, false));
 
          // stream serial number
          data.Add (ByteVector.FromUInt (stream_serial_number, false));
@@ -156,7 +156,7 @@ namespace TagLib.Ogg
          first_page_of_stream   = ((flags >> 1) & 1) != 0;
          last_page_of_stream    = ((flags >> 2) & 1) != 0;
 
-         absolute_granular_position = data.Mid( 6, 8).ToLong (false);
+         absolute_granular_position = (long) data.Mid( 6, 8).ToULong (false);
          stream_serial_number       = data.Mid(14, 4).ToUInt (false);
          page_sequence_number       = (int) data.Mid(18, 4).ToUInt (false);
 

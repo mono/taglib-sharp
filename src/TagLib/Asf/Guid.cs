@@ -28,37 +28,37 @@ namespace TagLib.Asf
 {
    public struct Guid
    {
-      public uint  part1;
-      public short part2;
-      public short part3;
-      public short part4;
-      public long  part5;
+      public uint   part1;
+      public ushort part2;
+      public ushort part3;
+      public ushort part4;
+      public ulong  part5;
       
       public Guid (ByteVector raw)
       {
-         this.part1 = raw.Mid (0, 4).ToUInt  (false);
-         this.part2 = raw.Mid (4, 2).ToShort (false);
-         this.part3 = raw.Mid (6, 2).ToShort (false);
-         this.part4 = raw.Mid (8, 2).ToShort (true);
-         this.part5 = raw.Mid (10, 6).ToLong (true);
+         this.part1 = raw.Mid ( 0, 4).ToUInt  (false);
+         this.part2 = raw.Mid ( 4, 2).ToUShort (false);
+         this.part3 = raw.Mid ( 6, 2).ToUShort (false);
+         this.part4 = raw.Mid ( 8, 2).ToUShort (true);
+         this.part5 = raw.Mid (10, 6).ToULong (true);
       }
       
-      public Guid (uint part1, uint part2, uint part3, uint part4, long part5)
+      public Guid (uint part1, ushort part2, ushort part3, ushort part4, ulong part5)
       {
          this.part1 = part1;
-         this.part2 = (short) part2;
-         this.part3 = (short) part3;
-         this.part4 = (short) part4;
+         this.part2 = part2;
+         this.part3 = part3;
+         this.part4 = part4;
          this.part5 = part5;
       }
       
       public ByteVector Render ()
       {
          ByteVector v = ByteVector.FromUInt  (part1, false).Mid (0, 4);
-         v.Add (ByteVector.FromShort (part2, false).Mid (0, 2));
-         v.Add (ByteVector.FromShort (part3, false).Mid (0, 2));
-         v.Add (ByteVector.FromShort (part4, true).Mid (0, 2));
-         v.Add (ByteVector.FromLong  (part5, true).Mid (2, 6));
+         v.Add (ByteVector.FromUShort (part2, false).Mid (0, 2));
+         v.Add (ByteVector.FromUShort (part3, false).Mid (0, 2));
+         v.Add (ByteVector.FromUShort (part4, true).Mid (0, 2));
+         v.Add (ByteVector.FromULong  (part5, true).Mid (2, 6));
          return v;
       }
       
@@ -115,7 +115,7 @@ namespace TagLib.Asf
          return b.ToString ();
       }
       
-      private string RenderNumber (long value, int length)
+      private string RenderNumber (ulong value, int length)
       {
          string s = value.ToString ("x");
          if (s.Length > length)
