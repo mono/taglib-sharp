@@ -1,6 +1,6 @@
 namespace TagLib.Riff
 {
-   public struct WaveFormatEx
+   public struct WaveFormatEx : IAudioCodec
    {
       ushort format_tag;
       ushort channels;
@@ -30,6 +30,13 @@ namespace TagLib.Riff
       public ushort BlockAlign            {get {return block_align;}}
       public ushort BitsPerSample         {get {return bits_per_sample;}}
       public ushort ExtraSize             {get {return extra_size;}}
+      
+      
+      public int AudioSampleRate {get {return (int) SamplesPerSecond;}}
+      public int AudioChannels {get {return Channels;}}
+      public int AudioBitrate {get {return (int) System.Math.Round (AverageBytesPerSecond * 8d / 1000d);}}
+      public MediaTypes MediaTypes {get {return MediaTypes.Audio;}}
+      public System.TimeSpan Duration {get {return System.TimeSpan.Zero;}}
       
       public string Description
       {

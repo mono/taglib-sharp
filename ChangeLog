@@ -1,4 +1,16 @@
-2007-05-04  Brian Nickel <brian.nickel@gmail.com>
+2007-05-07  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Riff/File.cs: Add support for WAVE files. Better improve
+	"Read ()" to handle other extensions. (Still pretty ugly.)
+	* src/TagLib/Riff/AviStream.cs:
+	* src/TagLib/Riff/BitmapInfoHeader.cs:
+	* src/TagLib/Riff/AviHeaderList.cs:
+	* src/TagLib/Riff/WaveFormatEx.cs:
+	* src/TagLib/Asf/StreamPropertiesObject.cs: De-stupidify. Make
+	WaveFormatEx and BitmapInfoHeader inheric I*Codec and remove excess
+	formats.
+
+2007-05-07  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
 	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:

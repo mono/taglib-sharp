@@ -3,13 +3,15 @@ using System.Text;
 
 namespace TagLib.Riff
 {
-	public abstract class AviStream : ICodec
+	public abstract class AviStream
 	{
       private AviStreamHeader header;
-      
+	   private ICodec codec;
+	   
       public AviStream (AviStreamHeader header)
       {
          this.header = header;
+         codec = null;
       }
       
       public virtual void ParseItem (ByteVector id, ByteVector data, int start, int length)
@@ -46,15 +48,12 @@ namespace TagLib.Riff
          return stream;
       }
       
-      public abstract string Description {get;}
-      public abstract MediaTypes MediaTypes {get;}
-      public TimeSpan Duration {get {return TimeSpan.Zero;}}
+      protected void SetCodec (ICodec codec) {this.codec = codec;}
+      public ICodec Codec {get {return codec;}}
 	}
    
-   public class AviAudioStream : AviStream, IAudioCodec
+   public class AviAudioStream : AviStream
    {
-      private WaveFormatEx wave_format_ex;
-      
       public AviAudioStream (AviStreamHeader stream_header) : base (stream_header)
       {
       }
@@ -62,20 +61,12 @@ namespace TagLib.Riff
       public override void ParseItem (ByteVector id, ByteVector data, int start, int length)
       {
          if (id == "strf")
-            wave_format_ex = new WaveFormatEx (data, start);
+            SetCodec (new WaveFormatEx (data, start));
       }
-      
-      public int AudioSampleRate {get {return (int) wave_format_ex.SamplesPerSecond;}}
-      public int AudioChannels {get {return wave_format_ex.Channels;}}
-      public int AudioBitrate {get {return (int) Math.Round (wave_format_ex.AverageBytesPerSecond * 8d / 1000d);}}
-      public override string Description {get {return wave_format_ex.Description;}}
-      public override MediaTypes MediaTypes {get {return MediaTypes.Audio;}}
    }
    
-   public class AviVideoStream : AviStream, IVideoCodec
+   public class AviVideoStream : AviStream
    {
-      BitmapInfoHeader header;
-      
       public AviVideoStream (AviStreamHeader stream_header) : base (stream_header)
       {
       }
@@ -83,13 +74,8 @@ namespace TagLib.Riff
       public override void ParseItem (ByteVector id, ByteVector data, int start, int length)
       {
          if (id == "strf")
-            header = new BitmapInfoHeader (data, start);
+            SetCodec (new BitmapInfoHeader (data, start));
       }
-      
-      public int VideoWidth  {get {return (int) header.Width;}}
-      public int VideoHeight {get {return (int) header.Height;}}
-      public override string Description {get {return header.Description;}}
-      public override MediaTypes MediaTypes {get {return MediaTypes.Video;}}
    }
    
    public struct AviStreamHeader

@@ -5,12 +5,16 @@ using System;
 namespace TagLib.Riff
 {
    [SupportedMimeType("taglib/avi", "avi")]
+   [SupportedMimeType("taglib/wav", "wav")]
    [SupportedMimeType("video/avi")]
    [SupportedMimeType("video/msvideo")]
    [SupportedMimeType("video/x-msvideo")]
    [SupportedMimeType("image/avi")]
    [SupportedMimeType("application/x-troff-msvideo")]
    [SupportedMimeType("audio/avi")]
+   [SupportedMimeType("audio/wav")]
+   [SupportedMimeType("audio/wave")]
+   [SupportedMimeType("audio/x-wav")]
    public class File : TagLib.File
    {
       //////////////////////////////////////////////////////////////////////////
@@ -51,14 +55,15 @@ namespace TagLib.Riff
          tag_start = -1;
          tag_end   = -1;
          
-         if (stream_format != "AVI ")
-            throw new UnsupportedFormatException ("Unsupported RIFF type.");
-         
          long position = 12;
          long length = Length;
+         
+         TimeSpan duration = TimeSpan.Zero;
+         ICodec[] codecs = new ICodec [0];
+         
          do
          {
-            bool   tag_found = false;
+            bool tag_found = false;
             
             Seek (position);
             string fourcc = ReadBlock (4).ToString ();
@@ -66,15 +71,27 @@ namespace TagLib.Riff
             
             switch (fourcc)
             {
+            case "fmt ":
+               if (stream_format == "WAVE" && style != ReadStyle.None)
+               {
+                  Seek (position + 8);
+                  codecs = new ICodec [] {new WaveFormatEx (ReadBlock (18))};
+               }
+               break;
+            case "data":
+               if (stream_format == "WAVE" && style != ReadStyle.None && codecs.Length == 1 && codecs [0] is WaveFormatEx)
+                  duration += TimeSpan.FromSeconds ((double) size / (double) ((WaveFormatEx) codecs [0]).AverageBytesPerSecond);
+               break;
             case "LIST":
             {
                switch (ReadBlock (4).ToString ())
                {
                case "hdrl":
-                  if (stream_format == "AVI " && style != ReadStyle.None && properties == null)
+                  if (stream_format == "AVI " && style != ReadStyle.None)
                   {
                      AviHeaderList header_list = new AviHeaderList (this, position + 12, (int) (size - 4));
-                     properties = header_list.ToProperties ();
+                     duration = header_list.Header.Duration;
+                     codecs = header_list.Codecs;
                   }
                   break;
                case "INFO":
@@ -122,6 +139,14 @@ namespace TagLib.Riff
             position += 8 + size;
          }
          while (position + 8 < length);
+         
+         if (style != ReadStyle.None)
+         {
+            if (codecs.Length == 0)
+               throw new UnsupportedFormatException ("Unsupported RIFF type.");
+            
+            properties = new Properties (duration, codecs);
+         }
          
          if (read_tags)
             tag.SetTags (id32_tag, info_tag, mid_tag, divx_tag);

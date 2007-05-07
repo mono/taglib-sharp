@@ -76,10 +76,10 @@ namespace TagLib.Asf
       public ICodec GetCodec ()
       {
          if (stream_type.Equals (Guid.AsfAudioMedia))
-            return new AudioStreamProperties (TypeSpecificData);
+            return new Riff.WaveFormatEx (type_specific_data, 0);
          
          if (stream_type.Equals (Guid.AsfVideoMedia))
-            return new VideoStreamProperties (TypeSpecificData);
+            return new TagLib.Riff.BitmapInfoHeader (type_specific_data, 11);
          
          return null;
       }
@@ -93,38 +93,5 @@ namespace TagLib.Asf
       public ByteVector TypeSpecificData {get {return type_specific_data;}}
       public ByteVector ErrorCorrectionData {get {return error_correction_data;}}
 #endregion
-   }
-   
-   public class AudioStreamProperties : IAudioCodec
-   {
-      private Riff.WaveFormatEx wave_format_ex;
-      
-      public AudioStreamProperties (ByteVector type_specific_data)
-      {
-         wave_format_ex = new Riff.WaveFormatEx (type_specific_data, 0);
-      }
-      
-      public int AudioSampleRate {get {return (int) wave_format_ex.SamplesPerSecond;}}
-      public int AudioChannels {get {return wave_format_ex.Channels;}}
-      public int AudioBitrate {get {return (int) Math.Round (wave_format_ex.AverageBytesPerSecond * 8d / 1000d);}}
-      public string Description {get {return wave_format_ex.Description;}}
-      public MediaTypes MediaTypes {get {return MediaTypes.Audio;}}
-      public TimeSpan Duration {get {return TimeSpan.Zero;}}
-   }
-   
-   public class VideoStreamProperties : IVideoCodec
-   {
-      TagLib.Riff.BitmapInfoHeader header;
-      
-      public VideoStreamProperties (ByteVector data)
-      {
-         header = new TagLib.Riff.BitmapInfoHeader (data, 11);
-      }
-      
-      public int VideoWidth  {get {return (int) header.Width;}}
-      public int VideoHeight {get {return (int) header.Height;}}
-      public string Description {get {return header.Description;}}
-      public MediaTypes MediaTypes {get {return MediaTypes.Video;}}
-      public TimeSpan Duration {get {return TimeSpan.Zero;}}
    }
 }

@@ -1,6 +1,6 @@
 namespace TagLib.Riff
 {
-   public struct BitmapInfoHeader
+   public struct BitmapInfoHeader : IVideoCodec
    {
       uint size; 
       uint width; 
@@ -42,6 +42,12 @@ namespace TagLib.Riff
       public uint       YPixelsPerMeter {get {return y_pixels_per_meter;}}
       public uint       ColorsUsed      {get {return colors_used;}}
       public uint       ColorsImportant {get {return colors_important;}}
+      
+      public int VideoWidth  {get {return (int)Width;}}
+      public int VideoHeight {get {return (int)Height;}}
+      public MediaTypes MediaTypes {get {return MediaTypes.Video;}}
+      public System.TimeSpan Duration {get {return System.TimeSpan.Zero;}}
+      
       public string Description
       {
          get

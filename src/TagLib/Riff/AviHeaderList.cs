@@ -6,7 +6,7 @@ namespace TagLib.Riff
    public class AviHeaderList : List
    {
       AviHeader header;
-      List<AviStream> streams = new List<AviStream> ();
+      List<ICodec> codecs = new List<ICodec> ();
       
       public AviHeaderList (TagLib.File file, long position, int length) : base (file, position, length)
       {
@@ -22,17 +22,12 @@ namespace TagLib.Riff
          foreach (ByteVector list_data in this ["LIST"])
          {
             if (list_data.StartsWith ("strl"))
-               streams.Add (AviStream.ParseStreamList (list_data));
+               codecs.Add (AviStream.ParseStreamList (list_data).Codec);
          }
       }
       
       public AviHeader Header {get {return header;}}
-      public AviStream [] Streams {get {return streams.ToArray ();}}
-      
-      public Properties ToProperties ()
-      {
-         return new Properties (Header.Duration, Streams);
-      }
+      public ICodec [] Codecs {get {return codecs.ToArray ();}}
    }
    
    public struct AviHeader
