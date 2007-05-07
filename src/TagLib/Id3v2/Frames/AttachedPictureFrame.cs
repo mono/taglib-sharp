@@ -79,9 +79,9 @@ namespace TagLib.Id3v2
       
       public static AttachedPictureFrame Get (Tag tag, string description, bool create)
       {
-         foreach (AttachedPictureFrame f in tag.GetFrames ("APIC"))
-            if (f != null && f.Description == description)
-               return f;
+         foreach (Frame f in tag.GetFrames ("APIC"))
+            if (f is AttachedPictureFrame && (f as AttachedPictureFrame).Description == description)
+               return f as AttachedPictureFrame;
          
          if (!create) return null;
          

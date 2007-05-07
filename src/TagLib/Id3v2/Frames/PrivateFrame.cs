@@ -61,9 +61,9 @@ namespace TagLib.Id3v2
       
       public static PrivateFrame Get (Tag tag, string owner, bool create)
       {
-         foreach (PrivateFrame f in tag.GetFrames ("PRIV"))
-            if (f != null && f.Owner == owner)
-               return f;
+         foreach (Frame f in tag.GetFrames ("PRIV"))
+            if (f is PrivateFrame && (f as PrivateFrame).Owner == owner)
+               return f as PrivateFrame;
          
          if (!create) return null;
          

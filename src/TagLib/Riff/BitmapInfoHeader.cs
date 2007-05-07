@@ -204,29 +204,6 @@ MVC1 	Nokia Mobile Phones 	Nokia MVC video codec. 	06-Jan-99
 MVC2 	Nokia Mobile Phones 	Nokia MVC video codec. 	06-Jan-99
 MVC9 	Nokia Mobile Phones 	Nokia MVC video codec. 	06-Jan-99
 NTN1 	Nogatech Ltd. 	Nogatech video compression 1. 	06-Jan-98
-NVDS 	NVIDIA Corporation 	Not specified. 	17-Sep-01
-NVHS 	NVIDIA Corporation 	Not specified. 	02-Apr-01
-NVHU 	NVIDIA Corporation 	Not specified. 	02-Apr-01
-NVS0 	NVIDIA Corporation 	Not specified. 	29-Apr-99
-NVS1 	NVIDIA Corporation 	Not specified. 	29-Apr-99
-NVS2 	NVIDIA Corporation 	Not specified. 	29-Apr-99
-NVS3 	NVIDIA Corporation 	Not specified. 	29-Apr-99
-NVS4 	NVIDIA Corporation 	Not specified. 	29-Apr-99
-NVS5 	NVIDIA Corporation 	Not specified. 	29-Apr-99
-NVS6 	NVIDIA Corporation 	Not specified. 	29-Apr-99
-NVS7 	NVIDIA Corporation 	Not specified. 	29-Apr-99
-NVS8 	NVIDIA Corporation 	Not specified. 	29-Apr-99
-NVS9 	NVIDIA Corporation 	Not specified. 	29-Apr-99
-NVT0 	NVIDIA Corporation 	Not specified. 	29-Apr-99
-NVT1 	NVIDIA Corporation 	Not specified. 	23-Mar-99
-NVT2 	NVIDIA Corporation 	Not specified. 	23-Mar-99
-NVT3 	NVIDIA Corporation 	Not specified. 	23-Mar-99
-NVT4 	NVIDIA Corporation 	Not specified. 	23-Mar-99
-NVT5 	NVIDIA Corporation 	Not specified. 	23-Mar-99
-NVT6 	NVIDIA Corporation 	Not specified. 	23-Mar-99
-NVT7 	NVIDIA Corporation 	Not specified. 	23-Mar-99
-NVT8 	NVIDIA Corporation 	Not specified. 	23-Mar-99
-NVT9 	NVIDIA Corporation 	Not specified. 	23-Mar-99
 NY12 	Nogatech Ltd. 	Nogatech YUV 12 format. 	28-Jun-99
 NYUV 	Nogatech Ltd. 	Nogatech YUV 422 format. 	28-Jun-99
 pcl2 	Pinnacle Systems, Inc. 	Pinnacle RL video codec. 	08-Dec-98
@@ -263,14 +240,6 @@ V261 	Lucent Technologies 	Lucent VX3000S video codec. 	17-Feb-99
 V422 	VITEC Multimedia 	24-bit YUV 4:2:2 format (CCIR 601). For this format, 2 consecutive pixels are represented by a 32-bit (4-byte) Y1UY2V color value. 	13-Dec-93
 V655 	VITEC Multimedia 	16-bit YUV 4:2:2 format. 	13-Dec-93
 VCR1 	ATI Technologies Inc. 	ATI VCR 1.0. 	23-Oct-97
-VCR2 	ATI Technologies Inc. 	Not specified. 	23-Oct-97
-VCR3 	ATI Technologies Inc. 	Not specified. 	23-Oct-97
-VCR4 	ATI Technologies Inc. 	Not specified. 	23-Oct-97
-VCR5 	ATI Technologies Inc. 	Not specified. 	23-Oct-97
-VCR6 	ATI Technologies Inc. 	Not specified. 	23-Oct-97
-VCR7 	ATI Technologies Inc. 	Not specified. 	23-Oct-97
-VCR8 	ATI Technologies Inc. 	Not specified. 	23-Oct-97
-VCR9 	ATI Technologies Inc. 	Not specified. 	23-Oct-97
 VCWV 	VideoCon 	VideoCon wavelet. 	06-Jun-00
 VDCT 	VITEC Multimedia 	Video Maker Pro DIB. 	Not specified.
 VIDS 	VITEC Multimedia 	YUV 4:2:2 CCIR 601 for v422. 	Not specified.
@@ -283,15 +252,6 @@ VQC1 	ViewQuest Technologies Inc. 	0x31435156. 	13-Nov-98
 VQC2 	ViewQuest Technologies Inc. 	0x32435156. 	13-Nov-98
 VQJP 	ViewQuest Technologies Inc. 	VQ630 dual-mode digital camera. 	28-Nov-00
 VQS4 	ViewQuest Technologies Inc. 	VQ110 digital video camera. 	28-Nov-00
-VTC1 	NVIDIA Corporation 	Not specified. 	12-Oct-00
-VTC2 	NVIDIA Corporation 	Not specified. 	12-Oct-00
-VTC3 	NVIDIA Corporation 	Not specified. 	12-Oct-00
-VTC4 	NVIDIA Corporation 	Not specified. 	12-Oct-00
-VTC5 	NVIDIA Corporation 	Not specified. 	12-Oct-00
-VTC6 	NVIDIA Corporation 	Not specified. 	12-Oct-00
-VTC7 	NVIDIA Corporation 	Not specified. 	12-Oct-00
-VTC8 	NVIDIA Corporation 	Not specified. 	12-Oct-00
-VTC9 	NVIDIA Corporation 	Not specified. 	12-Oct-00
 VX1K 	Lucent Technologies 	Lucent  VX1000S video codec. 	17-Feb-99
 VX2K 	Lucent Technologies 	Lucent VX2000S video codec. 	17-Feb-99
 VXSP 	Lucent Technologies 	Lucent VX1000SP video codec. 	17-Feb-99
@@ -311,32 +271,21 @@ WZCD 	CORE Co. Ltd. 	iScan. 	20-Jun-00
 WZDC 	CORE Co. Ltd. 	iSnap. 	20-Jun-00
 XJPG 	Xirlink, Inc. 	Xirlink JPEG-like compressor. 	14-Feb-01
 XLV0 	NetXL, Inc. 	XL video decoder. 	18-Sep-97
-XWV0 	Wavelet Holdings plc 	Not specified. 	26-Jul-00
-XWV1 	Wavelet Holdings plc 	Not specified. 	26-Jul-00
-XWV2 	Wavelet Holdings plc 	Not specified. 	26-Jul-00
-XWV3 	Wavelet Holdings plc 	Not specified. 	26-Jul-00
-XWV4 	Wavelet Holdings plc 	Not specified. 	26-Jul-00
-XWV5 	Wavelet Holdings plc 	Not specified. 	26-Jul-00
-XWV6 	Wavelet Holdings plc 	Not specified. 	26-Jul-00
-XWV7 	Wavelet Holdings plc 	Not specified. 	26-Jul-00
-XWV8 	Wavelet Holdings plc 	Not specified. 	26-Jul-00
-XWV9 	Wavelet Holdings plc 	Not specified. 	26-Jul-00
 */
             case "XVID": return "XviD Video";
-/*
-YC12 	Intel Corporation 	Intel YUV12 codec. 	12-Jun-96
-YCCK 	B.U.G., Inc. 	Uncompressed YCbCr video with key data. 	10-Nov-00
-YU92 	Intel Corporation 	YUV format. 	Not specified.
-YUV8 	Winnov, Inc. 	MM_WINNOV_CAVIAR_YUV8. 	05-Sep-93
-YUV9 	Intel Corporation 	YUV9. 	01-Aug-93
-YUYP 	Evans & Sutherland 	YCbCr 4:2:2 extended precision, 10 bits per component (Y0U0Y1V0). 	15-Nov-00
-YUYV 	Canopus, Co., Ltd. 	Canopus YUYV compressor. 	08-Jun-93
-ZPEG 	Metheus Corporation 	Video Zipper. 	24-Aug-93
-ZPG1 	VoDeo Solutions, Inc. 	Not specified. 	13-Apr-02
-ZPG2 	VoDeo Solutions, Inc. 	Not specified. 	15-Apr-02
-ZPG3 	VoDeo Solutions, Inc. 	Not specified. 	15-Apr-02
-ZPG4 	VoDeo Solutions, Inc. 	Not specified. 	15-Apr-02
-*/
+            case "YC12": return "Intel YUV12 Video";
+            case "YCCK": return "Uncompressed YCbCr Video with key data";
+            case "YU92": return "Intel YUV Video";
+            case "YUV8": return "Winnov Caviar YUV8 Video";
+            case "YUV9": return "Intel YUV Video";
+            case "YUYP": return "Evans & Sutherland YCbCr 4:2:2 extended precision, 10 bits per component Video";
+            case "YUYV": return "Canopus YUYV Compressor Video";
+            case "ZPEG": return "Metheus Corporation Video Zipper";
+            case "ZPG1":
+            case "ZPG2":
+            case "ZPG3":
+            case "ZPG4":
+               return "VoDeo Solutions Video";
             default: return "Unknown Image (" + CompressionId.ToString () + ")";
             }
          }

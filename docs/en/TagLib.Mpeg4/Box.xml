@@ -1,5 +1,5 @@
 <Type Name="Box" FullName="TagLib.Mpeg4.Box">
-  <TypeSignature Language="C#" Value="public class Box : System.IComparable&lt;TagLib.Mpeg4.Box&gt;" />
+  <TypeSignature Language="C#" Value="public class Box : IComparable&lt;TagLib.Mpeg4.Box&gt;" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>

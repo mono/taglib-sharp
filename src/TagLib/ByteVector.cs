@@ -510,7 +510,7 @@ namespace TagLib
                   l.Add (s);
                }
                
-               pos += 2;
+               pos += align;
             }
             return l.ToArray ();
         }

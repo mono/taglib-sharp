@@ -1,5 +1,18 @@
 2007-05-04  Brian Nickel <brian.nickel@gmail.com>
 
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:
+	* src/TagLib/Id3v2/Frames/UniqueFileIdentifierFrame.cs:
+	* src/TagLib/Id3v2/Frames/PrivateFrame.cs:
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs:
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs: Added better type
+	checking in "Get"
+	* src/TagLib/ByteVector.cs: Fixed ToStrings align problem from previous
+	revision.
+	* docs/en/*/*.xml: Updated.
+
+2007-05-04  Brian Nickel <brian.nickel@gmail.com>
+
 	* src/TagLib/Riff/AviStream.cs:
 	* src/TagLib/Riff/BitmapInfoHeader.cs:
 	* src/TagLib/Riff/WaveFormatEx.cs:

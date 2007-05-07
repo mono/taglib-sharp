@@ -1,5 +1,5 @@
 <Type Name="FrameFactory+FrameCreator" FullName="TagLib.Id3v2.FrameFactory+FrameCreator">
-  <TypeSignature Language="C#" Value="public delegate TagLib.Id3v2.Frame FrameFactory.FrameCreator(TagLib.ByteVector data, int offset, TagLib.Id3v2.FrameHeader header, uint version);" />
+  <TypeSignature Language="C#" Value="public delegate TagLib.Id3v2.Frame FrameFactory.FrameCreator(ByteVector data, int offset, FrameHeader header, uint version);" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>

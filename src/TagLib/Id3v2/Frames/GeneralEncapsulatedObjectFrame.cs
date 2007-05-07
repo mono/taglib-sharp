@@ -73,9 +73,9 @@ namespace TagLib.Id3v2
       
       public static GeneralEncapsulatedObjectFrame Get (Tag tag, string description, bool create)
       {
-         foreach (GeneralEncapsulatedObjectFrame f in tag.GetFrames ("GEOB"))
-            if (f != null && f.Description == description)
-               return f;
+         foreach (Frame f in tag.GetFrames ("GEOB"))
+            if (f is GeneralEncapsulatedObjectFrame && (f as GeneralEncapsulatedObjectFrame).Description == description)
+               return f as GeneralEncapsulatedObjectFrame;
          
          if (!create) return null;
          

@@ -128,9 +128,9 @@ namespace TagLib.Id3v2
       
       public static RelativeVolumeFrame Get (Tag tag, string identification, bool create)
       {
-         foreach (RelativeVolumeFrame f in tag.GetFrames ("RVA2"))
-            if (f != null && f.Identification == identification)
-               return f;
+         foreach (Frame f in tag.GetFrames ("RVA2"))
+            if (f is RelativeVolumeFrame && (f as RelativeVolumeFrame).Identification == identification)
+               return f as RelativeVolumeFrame;
          
          if (!create) return null;
          

@@ -53,9 +53,9 @@ namespace TagLib.Id3v2
       
       public static UniqueFileIdentifierFrame Get (Tag tag, string owner, bool create)
       {
-         foreach (UniqueFileIdentifierFrame f in tag.GetFrames ("UFID"))
-            if (f != null && f.Owner == owner)
-               return f;
+         foreach (Frame f in tag.GetFrames ("UFID"))
+            if (f is UniqueFileIdentifierFrame && (f as UniqueFileIdentifierFrame).Owner == owner)
+               return f as UniqueFileIdentifierFrame;
          
          if (!create) return null;
          

@@ -1,5 +1,5 @@
 <Type Name="ByteVector" FullName="TagLib.ByteVector">
-  <TypeSignature Language="C#" Value="public class ByteVector : System.Collections.Generic.IList&lt;byte&gt;, System.IComparable&lt;TagLib.ByteVector&gt;" />
+  <TypeSignature Language="C#" Value="public class ByteVector : IComparable&lt;TagLib.ByteVector&gt;, System.Collections.Generic.IList&lt;byte&gt;" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>

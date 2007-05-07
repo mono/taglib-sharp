@@ -68,6 +68,30 @@ namespace TagLib.Id3v2
       }
       
       
+      public static TextIdentificationFrame Get (Tag tag, ByteVector type, StringType encoding, bool create)
+      {
+         foreach (Frame f in tag.GetFrames (type))
+            if (f is TextIdentificationFrame)
+               return f as TextIdentificationFrame;
+         
+         if (!create)
+            return null;
+         
+         TextIdentificationFrame frame = new TextIdentificationFrame (type, encoding);
+         tag.AddFrame (frame);
+         return frame;
+      }
+      
+      public static TextIdentificationFrame Get (Tag tag, ByteVector type, bool create)
+      {
+         return Get (tag, type, Tag.DefaultEncoding, create);
+      }
+      
+      public static TextIdentificationFrame Get (Tag tag, ByteVector type)
+      {
+         return Get (tag, type, false);
+      }
+      
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
@@ -92,8 +116,8 @@ namespace TagLib.Id3v2
          text_encoding = (StringType) data [0];
          field_list.Clear ();
          
-         if (version > 3)
-            field_list.Add (data.ToString (text_encoding, 1).Split (new char []{'\0'}));
+         if (version > 3 || FrameId == "TXXX")
+            field_list.Add (data.ToStrings (text_encoding, 1));
          else
          {
             string value = data.ToString (text_encoding, 1);
@@ -217,9 +241,9 @@ namespace TagLib.Id3v2
       
       public static UserTextIdentificationFrame Get (Tag tag, string description, StringType type, bool create)
       {
-         foreach (UserTextIdentificationFrame f in tag.GetFrames ("TXXX"))
-            if (f != null && f.Description == description)
-               return f;
+         foreach (Frame f in tag.GetFrames ("TXXX"))
+            if (f is UserTextIdentificationFrame && (f as UserTextIdentificationFrame).Description == description)
+               return f as UserTextIdentificationFrame;
          
          if (!create)
             return null;
