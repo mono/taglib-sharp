@@ -1,3 +1,13 @@
+2007-05-07  Aaron Bockover  <abockover@novell.com>
+
+	* src/TagLib/TagLib.sources: Added a separate file to define what sources
+	to build so that applications bundling TagLib don't have to worry about
+	keeping the list in sync - they can just include the file in their build
+
+	* src/Makefile.am: Include TagLib/TagLib.sources
+
+	* docs/Makefile.am: Added an empty/stub file to fix the build for no
+
 2007-05-07  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Riff/File.cs: Add support for WAVE files. Better improve
