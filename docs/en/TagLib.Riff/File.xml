@@ -10,6 +10,15 @@
   <Interfaces />
   <Attributes>
     <Attribute>
+      <AttributeName>TagLib.SupportedMimeType("audio/x-wav")</AttributeName>
+    </Attribute>
+    <Attribute>
+      <AttributeName>TagLib.SupportedMimeType("audio/wave")</AttributeName>
+    </Attribute>
+    <Attribute>
+      <AttributeName>TagLib.SupportedMimeType("audio/wav")</AttributeName>
+    </Attribute>
+    <Attribute>
       <AttributeName>TagLib.SupportedMimeType("audio/avi")</AttributeName>
     </Attribute>
     <Attribute>
@@ -26,6 +35,9 @@
     </Attribute>
     <Attribute>
       <AttributeName>TagLib.SupportedMimeType("video/avi")</AttributeName>
+    </Attribute>
+    <Attribute>
+      <AttributeName>TagLib.SupportedMimeType("taglib/wav", "wav")</AttributeName>
     </Attribute>
     <Attribute>
       <AttributeName>TagLib.SupportedMimeType("taglib/avi", "avi")</AttributeName>

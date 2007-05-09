@@ -1,3 +1,13 @@
+2007-05-09  Brian Nickel <brian.nickel@gmail.com>
+
+	+-------------+
+	| VERSON BUMP |
+	|  1.9.99992  |
+	+-------------+
+
+	* src/TagLib/Id3v2/Tag.cs: Use new TextIdentificationFrame.Get
+	* configure.ac: Version bump.
+
 2007-05-07  Aaron Bockover  <abockover@novell.com>
 
 	* src/TagLib/TagLib.sources: Added a separate file to define what sources

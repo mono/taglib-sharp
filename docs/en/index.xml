@@ -75,8 +75,6 @@
       <Type Name="Tag" />
       <Type Name="UnknownObject" />
       <Type Name="DataType" />
-      <Type Name="AudioStreamProperties" />
-      <Type Name="VideoStreamProperties" />
     </Namespace>
     <Namespace Name="TagLib.Flac">
       <Type Name="File" />
