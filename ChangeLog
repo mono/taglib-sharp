@@ -1,3 +1,13 @@
+2007-05-10  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Mpeg/Properties.cs:
+	* src/TagLib/Asf/Properties.cs:
+	* src/TagLib/Ogg/Properties.cs:
+	* src/TagLib/Ogg/Vorbis/File.cs:
+	* src/TagLib/Ogg/Flac/File.cs:
+	* src/TagLib/Mpeg4/Properties.cs: Deleted. I thought MonoDevelop did
+	this automatically. My bad.
+
 2007-05-09  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Mpeg/AudioFile.cs: Throw a proper CorruptFileException if
