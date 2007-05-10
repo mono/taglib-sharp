@@ -24,6 +24,7 @@ using System;
 
 namespace TagLib
 {
+   [Flags]
    public enum MediaTypes
    {
       Unknown = 0,

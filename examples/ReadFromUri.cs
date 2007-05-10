@@ -58,6 +58,8 @@ public class ReadFromUri
                 Console.WriteLine("DiscCount:  " +  file.Tag.DiscCount);
                 Console.WriteLine("Lyrics:\n"    +  file.Tag.Lyrics + "\n");
                 
+                Console.WriteLine("Media Types: " + file.Properties.MediaTypes + "\n");
+                
                 foreach (TagLib.ICodec codec in file.Properties.Codecs)
                 {
                     TagLib.IAudioCodec acodec = codec as TagLib.IAudioCodec;
@@ -114,17 +116,10 @@ public class ReadFromUri
 public class VfsFileAbstraction : TagLib.File.IFileAbstraction
 {
     private string name;
-    private FilePermissions permissions;
 
     public VfsFileAbstraction(string file)
     {
         name = file;
-        permissions = (new FileInfo(name, FileInfoOptions.FollowLinks | 
-            FileInfoOptions.GetAccessRights)).Permissions;
-
-        if(!IsReadable) {
-            throw new System.IO.IOException("File \"" + name + "\" is not readable.");
-        }
     }
 
     public string Name {
@@ -137,14 +132,6 @@ public class VfsFileAbstraction : TagLib.File.IFileAbstraction
 
     public System.IO.Stream WriteStream {
         get { return new VfsStream(Name, System.IO.FileMode.Open); }
-    }
-
-    public bool IsReadable {
-        get { return (permissions | FilePermissions.AccessReadable) != 0; }
-    }
-
-    public bool IsWritable {
-        get { return (permissions | FilePermissions.AccessWritable) != 0; }
     }
 
     public static TagLib.File.IFileAbstraction CreateFile(string path)

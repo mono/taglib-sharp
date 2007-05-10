@@ -1,5 +1,19 @@
 2007-05-09  Brian Nickel <brian.nickel@gmail.com>
 
+	* src/TagLib/Mpeg/AudioFile.cs: Throw a proper CorruptFileException if
+	AudioHeader isn't found.
+	* src/TagLib/File.cs:
+	* src/TagLib/ICodec.cs: Use FlagsAttribute for sexy output.
+	* docs/taglib-sharp-docs.source:
+	* docs/Makefile.am:
+	* docs/MonodocNodeConfig.cs: Doc stuff mysteriously vanished from SVN
+	a while back. Returning.
+	* examples/ReadFromUri.cs: Cleaned up a bit.
+	* examples/ReadFromUri.boo: First boo example. Would have an IronPython
+	one, but I'm having some issues with inheritance.
+
+2007-05-09  Brian Nickel <brian.nickel@gmail.com>
+
 	+-------------+
 	| VERSON BUMP |
 	|  1.9.99992  |

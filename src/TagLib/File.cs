@@ -34,6 +34,7 @@ namespace TagLib
       Accurate
    }
    
+   [Flags]
    public enum TagTypes
    {
       NoTags   = 0x0000,
