@@ -1,3 +1,20 @@
+2007-05-14  Brian Nickel <brian.nickel@gmail.com>
+
+Feature Request: http://forum.taglib-sharp.com/viewtopic.php?f=4&t=12
+
+	* src/TagLib/File.cs: Support pushing and poping file abstractors.
+	* src/TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
+	* src/TagLib/Id3v2/Tag.cs: Be a little bit smarter when storing lyrics
+	and comments. GetPreferred shouldn't be used for storing, because we
+	want to store in exactly what we want, not a best guess.
+	* src/TagLib/Id3v2/FrameFactory.cs:
+	* src/TagLib/Id3v2/Frames/SynchronizedLyricsFrame.cs: Support
+	synchronized lyrics.
+	* src/TagLib/TagLib.sources:
+	* src/taglib-sharp.mdp:
+	* taglib-sharp.csproj: Added file.
+
 2007-05-10  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Mpeg/Properties.cs:

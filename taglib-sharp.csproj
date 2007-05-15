@@ -112,6 +112,7 @@
     <Compile Include="src\TagLib\Id3v2\Frames\TextIdentificationFrame.cs" />
     <Compile Include="src\TagLib\Id3v2\Frames\UniqueFileIdentifierFrame.cs" />
     <Compile Include="src\TagLib\Id3v2\Frames\UnsynchronisedLyricsFrame.cs" />
+    <Compile Include="src\TagLib\Id3v2\Frames\SynchronisedLyricsFrame.cs" />
     <Compile Include="src\TagLib\Id3v1\StringHandler.cs" />
     <Compile Include="src\TagLib\Id3v1\Tag.cs" />
     <Compile Include="src\TagLib\Flac\Block.cs" />

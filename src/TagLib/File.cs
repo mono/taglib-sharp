@@ -70,7 +70,7 @@ namespace TagLib
       private static uint buffer_size = 1024;
       
       private static List<FileTypeResolver> file_type_resolvers = new List<FileTypeResolver> ();
-      private static FileAbstractionCreator file_abstraction_creator = new FileAbstractionCreator (LocalFileAbstraction.CreateFile);
+      private static List<FileAbstractionCreator> file_abstraction_creator_list = new List<FileAbstractionCreator> ();
       
       //////////////////////////////////////////////////////////////////////////
       // public members
@@ -79,7 +79,7 @@ namespace TagLib
       public File (string file)
       {
          file_stream = null;
-         file_abstraction = file_abstraction_creator (file);
+         file_abstraction = GetFileAbstractionCreator () (file);
       }
       
       public string Name {get {return file_abstraction.Name;}}
@@ -543,15 +543,38 @@ namespace TagLib
             file_type_resolvers.Insert (0, resolver);
       }
       
+      [Obsolete("Use PushFileAbstractionCreator")]
       public static void SetFileAbstractionCreator (FileAbstractionCreator creator)
       {
          if (creator != null)
-            file_abstraction_creator = creator;
+         {
+            if (file_abstraction_creator_list.Count > 0)
+               file_abstraction_creator_list [0] = creator;
+            else
+               file_abstraction_creator_list.Add (creator);
+         }
       }
-            
-      internal static FileAbstractionCreator GetFileAbstractionCreator()
+      
+      public static void PushFileAbstractionCreator (FileAbstractionCreator creator)
       {
-         return file_abstraction_creator; 
+         if (creator != null)
+            file_abstraction_creator_list.Insert (0, creator);
+      }
+      
+      public static FileAbstractionCreator PopFileAbstractionCreator ()
+      {
+         if (file_abstraction_creator_list.Count == 0)
+            return null;
+         
+         FileAbstractionCreator creator = file_abstraction_creator_list [0];
+         file_abstraction_creator_list.RemoveAt (0);
+         return creator;
+      }
+      
+      public static FileAbstractionCreator GetFileAbstractionCreator ()
+      {
+         return file_abstraction_creator_list.Count > 0 ?
+            file_abstraction_creator_list [0] : LocalFileAbstraction.CreateFile;
       }
       
       //////////////////////////////////////////////////////////////////////////

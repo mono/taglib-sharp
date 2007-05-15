@@ -111,6 +111,11 @@ namespace TagLib.Id3v2
          if (frame_id == "USLT")
             return new UnsynchronisedLyricsFrame (data, offset, header, version);
 
+         // Synchronized Lyrics (frames 4.9)
+
+         if (frame_id == "SYLT")
+            return new SynchronisedLyricsFrame (data, offset, header, version);
+
          // Comments (frames 4.10)
 
          if (frame_id == "COMM")

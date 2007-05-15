@@ -20,12 +20,13 @@
  *   USA                                                                   *
  ***************************************************************************/
 
+using System.Collections;
 using System.Collections.Generic;
 using System;
 
 namespace TagLib.Id3v2
 {
-   public class Tag : TagLib.Tag
+   public class Tag : TagLib.Tag, IEnumerable
    {
       //////////////////////////////////////////////////////////////////////////
       // private properties
@@ -63,6 +64,11 @@ namespace TagLib.Id3v2
          Read (file);
       }
 
+      public IEnumerator GetEnumerator()
+      {
+         return frame_list.GetEnumerator();
+      }
+      
       public IEnumerable<Frame> GetFrames ()
       {
          return frame_list;
@@ -232,12 +238,12 @@ namespace TagLib.Id3v2
       {
          get
          {
-            CommentsFrame f = CommentsFrame.GetPreferred (this, String.Empty, Language, false);
+            CommentsFrame f = CommentsFrame.GetPreferred (this, String.Empty, Language);
             return f != null ? f.ToString () : null;
          }
          set
          {
-            CommentsFrame f = CommentsFrame.GetPreferred (this, String.Empty, Language, true);
+            CommentsFrame f = CommentsFrame.Get (this, String.Empty, Language, true);
             f.SetText (value);
          }
       }
@@ -423,12 +429,12 @@ namespace TagLib.Id3v2
       {
          get
          {
-            UnsynchronisedLyricsFrame f = UnsynchronisedLyricsFrame.GetPreferred (this, String.Empty, Language, false);
+            UnsynchronisedLyricsFrame f = UnsynchronisedLyricsFrame.GetPreferred (this, String.Empty, Language);
             return f != null ? f.ToString () : null;
          }
          set
          {
-            UnsynchronisedLyricsFrame f = UnsynchronisedLyricsFrame.GetPreferred (this, String.Empty, Language, true);
+            UnsynchronisedLyricsFrame f = UnsynchronisedLyricsFrame.Get (this, String.Empty, Language, true);
             f.SetText (value);
          }
       }

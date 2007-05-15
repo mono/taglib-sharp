@@ -91,7 +91,7 @@ namespace TagLib.Id3v2
          return frame;
       }
       
-      public static CommentsFrame GetPreferred (Tag tag, string description, ByteVector language, bool create)
+      public static CommentsFrame GetPreferred (Tag tag, string description, ByteVector language)
       {
          // This is weird, so bear with me. The best thing we can have is 
          // something straightforward and in our own language. If it has a 
@@ -123,11 +123,6 @@ namespace TagLib.Id3v2
             best_frame = cf;
          }
          
-         if (best_frame == null && create)
-         {
-            best_frame = new CommentsFrame (description, language);
-            tag.AddFrame (best_frame);
-         }
          return best_frame;
       }
       
