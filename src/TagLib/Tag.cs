@@ -39,15 +39,19 @@ namespace TagLib
       public virtual uint      Disc            {get {return 0;}    set {}}
       public virtual uint      DiscCount       {get {return 0;}    set {}}
       public virtual string    Lyrics          {get {return null;} set {}}
+      public virtual string    Grouping        {get {return null;} set {}}
+      public virtual uint      BPM             {get {return 0;}    set {}}
+      public virtual string    Conductor       {get {return null;} set {}}
+      public virtual string    Copyright       {get {return null;} set {}}
       
       public virtual IPicture [] Pictures { get { return new Picture [] { }; } set { } }
       
-      public string FirstArtist    { get { return FirstInGroup(AlbumArtists);    } }
-      public string FirstPerformer { get { return FirstInGroup(Performers); } }
-      public string FirstComposer  { get { return FirstInGroup(Composers);  } }
-      public string FirstGenre     { get { return FirstInGroup(Genres);     } }
+      public string FirstArtist    { get { return FirstInGroup(AlbumArtists);} }
+      public string FirstPerformer { get { return FirstInGroup(Performers);  } }
+      public string FirstComposer  { get { return FirstInGroup(Composers);   } }
+      public string FirstGenre     { get { return FirstInGroup(Genres);      } }
       
-      public string JoinedArtists    { get { return JoinGroup(AlbumArtists);     } }
+      public string JoinedArtists    { get { return JoinGroup(AlbumArtists);} }
       public string JoinedPerformers { get { return JoinGroup(Performers);  } } 
       public string JoinedComposers  { get { return JoinGroup(Composers);   } }
       public string JoinedGenres     { get { return JoinGroup(Genres);      } }
@@ -67,13 +71,17 @@ namespace TagLib
          get
          {
             return ((Title == null || Title.Trim () == String.Empty) &&
+                    (Grouping == null || Grouping.Trim () == String.Empty) &&
                     (AlbumArtists == null || AlbumArtists.Length == 0) &&
                     (Performers == null || Performers.Length == 0) &&
                     (Composers == null || Composers.Length == 0) &&
+                    (Conductor == null || Conductor.Trim () == String.Empty) &&
+                    (Copyright == null || Copyright.Trim () == String.Empty) &&
                     (Album == null || Album.Trim () == String.Empty) &&
                     (Comment == null || Comment.Trim () == String.Empty) &&
                     (Genres == null || Genres.Length == 0) &&
                     Year == 0 &&
+                    BPM == 0 &&
                     Track == 0 &&
                     TrackCount == 0 &&
                     Disc == 0 &&
@@ -107,6 +115,14 @@ namespace TagLib
             target.Disc = source.Disc;
          if (overwrite || target.DiscCount == 0)
             target.DiscCount = source.DiscCount;
+         if (overwrite || target.BPM == 0)
+            target.BPM = source.BPM;
+         if (overwrite || target.Grouping == null || target.Grouping.Trim() == String.Empty)
+            target.Grouping = source.Grouping;
+         if (overwrite || target.Conductor == null || target.Conductor.Trim() == String.Empty)
+            target.Conductor = source.Conductor;
+         if (overwrite || target.Copyright == null || target.Copyright.Trim() == String.Empty)
+            target.Conductor = source.Copyright;
       }
    }
 }

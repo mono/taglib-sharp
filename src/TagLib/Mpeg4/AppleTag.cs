@@ -211,17 +211,8 @@ namespace TagLib.Mpeg4
       
       public override string [] AlbumArtists
       {
-         get {return IsCompilation ? new string [] {"Various Artists"} : Performers;}
-         set
-         {
-            if (value.Length == 1 && value [0].ToLower () == "various artists")
-               IsCompilation = true;
-            else
-            {
-               IsCompilation = false;
-               Performers = value;
-            }
-         }
+         get { return GetText(BoxTypes.Aart); }
+         set { SetText(BoxTypes.Aart, value); }
       }
       
       public bool IsCompilation
@@ -419,7 +410,66 @@ namespace TagLib.Mpeg4
             SetText (BoxTypes.Lyr, value);
          }
       }
- 
+      
+      public override uint BPM
+      {
+         get
+         {
+            foreach (AppleDataBox box in DataBoxes (BoxTypes.Tmpo))
+               if (box.Flags == (uint)AppleDataBox.FlagTypes.ForTempo)
+                  return box.Data.ToUInt ();
+            
+            return 0;
+         }
+         set
+         {
+            SetData (BoxTypes.Tmpo, ByteVector.FromUInt (value), (uint)AppleDataBox.FlagTypes.ForTempo);
+         }
+      }
+      
+      public override string Grouping
+      {
+         get
+         {
+            foreach (AppleDataBox box in DataBoxes(BoxTypes.Grp))
+               return box.Text;
+            
+            return null;
+         }
+         set
+         {
+            SetText(BoxTypes.Grp, value);
+         }
+      }
+      
+      public override string Conductor
+      {
+         get
+         {
+            foreach (AppleDataBox box in DataBoxes(BoxTypes.Cond))
+               return box.Text;
+            return null;
+         }
+         set
+         {
+            SetText(BoxTypes.Cond, value);
+         }
+      }
+      
+      public override string Copyright
+      {
+         get
+         {
+            foreach (AppleDataBox box in DataBoxes(BoxTypes.Cprt))
+               return box.Text;
+            return null;
+         }
+         set
+         {
+            SetText(BoxTypes.Cprt, value);
+         }
+      }
+      
       public override IPicture [] Pictures
       {
          get

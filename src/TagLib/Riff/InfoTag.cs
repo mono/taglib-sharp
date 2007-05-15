@@ -105,5 +105,18 @@ namespace TagLib.Riff
          get {return GetValueAsUInt ("IFRM");}
          set {SetValue ("IFRM", value);}
       }
+      
+      public override string Copyright
+      {
+         get
+         {
+            foreach (string s in GetValuesAsStringList ("ICOP"))
+               if (s != null)
+                  return s;
+            
+            return null;
+         }
+         set {SetValue ("ICOP", value);}
+      }
    }
 }

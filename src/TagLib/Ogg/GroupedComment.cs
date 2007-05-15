@@ -279,6 +279,70 @@ namespace TagLib.Ogg
          }
       }
 
+      public override string Grouping
+      {
+         get
+         {
+            string output = null;
+            foreach (XiphComment tag in tags)
+               if (tag != null && output == null)
+                  output = tag.Grouping;
+            return output;
+         }
+         set
+         {
+            tags [0].Grouping = value;
+         }
+      }
+      
+      public override uint BPM
+      {
+         get
+         {
+            uint output = 0;
+            foreach (XiphComment tag in tags)
+               if (tag != null && output == 0)
+                  output = tag.BPM;
+            return output;
+         }
+         set
+         {
+            tags [0].BPM = value;
+         }
+      }
+      
+      public override string Conductor
+      {
+         get
+         {
+            string output = null;
+            foreach (XiphComment tag in tags)
+               if (tag != null && output == null)
+                  output = tag.Conductor;
+            return output;
+         }
+         set
+         {
+            tags [0].Conductor = value;
+         }
+      }
+      
+      public override string Copyright
+      {
+         get
+         {
+            string output = null;
+            foreach (XiphComment tag in tags)
+               if (tag != null && output == null)
+                  output = tag.Copyright;
+            return output;
+         }
+         set
+         {
+            tags [0].Copyright = value;
+         }
+      }
+      
       public override IPicture [] Pictures {
          get {
             foreach(XiphComment tag in tags) {

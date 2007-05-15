@@ -424,7 +424,6 @@ namespace TagLib.Id3v2
          }
       }
       
-      
       public override string Lyrics
       {
          get
@@ -436,6 +435,65 @@ namespace TagLib.Id3v2
          {
             UnsynchronisedLyricsFrame f = UnsynchronisedLyricsFrame.Get (this, String.Empty, Language, true);
             f.SetText (value);
+         }
+      }
+      
+      public override uint BPM
+      {
+         get
+         {
+            uint value;
+            foreach (TextIdentificationFrame f in GetFrames("TBPM"))
+                if(uint.TryParse(f.ToString(), out value))
+                    return value;
+           
+            return 0;
+         }
+         set
+         {
+            SetNumberFrame ("TBPM", BPM, 0);
+         }
+      }
+      
+      public override string Grouping
+      {
+         get
+         {
+            foreach (TextIdentificationFrame f in GetFrames ("TIT1"))
+               return f.ToString ();
+            return null;
+         }
+         set
+         {
+            SetTextFrame ("TIT1", value);
+         }
+      }
+      
+      public override string Conductor
+      {
+         get
+         {
+            foreach (TextIdentificationFrame f in GetFrames ("TPE3"))
+               return f.ToString ();
+            return null;
+         }
+         set
+         {
+             SetTextFrame("TPE3", value);
+         }
+      }
+      
+      public override string Copyright
+      {
+         get
+         {
+            foreach (TextIdentificationFrame f in GetFrames ("TCOP"))
+               return f.ToString ();
+            return null;
+         }
+         set
+         {
+             SetTextFrame("TCOP", value);
          }
       }
       

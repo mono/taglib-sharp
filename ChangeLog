@@ -1,3 +1,17 @@
+2007-05-15  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Tag.cs:
+	* src/TagLib/CombinedTag.cs:
+	* src/TagLib/Riff/InfoTag.cs:
+	* src/TagLib/Id3v2/Tag.cs
+	* src/TagLib/Ape/Tag.cs:
+	* src/TagLib/Asf/Tag.cs:
+	* src/TagLib/Mpeg4/AppleTag.cs:
+	* src/TagLib/Mpeg4/BoxTypes.cs:
+	* src/TagLib/Ogg/XiphComment.cs:
+	* src/TagLib/Ogg/GroupedComment.cs: Added support for Copyright, BPM,
+	Composer, and Grouping.
+
 2007-05-14  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Id3v2/Frames/SynchronizedLyricsFrame.cs: Include TextType

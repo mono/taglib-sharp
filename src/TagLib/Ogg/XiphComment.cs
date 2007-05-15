@@ -426,7 +426,49 @@ namespace TagLib.Ogg
          }
       }
       
-
+      public override string Copyright
+      {
+         get
+         {
+            StringList l = GetField ("COPYRIGHT");
+           
+            return (l != null && l.Count != 0) ? l [0] : null;
+         }
+         set {AddField ("COPYRIGHT", value);}
+      }
+      
+      public override string Conductor
+      {
+         get
+         {
+            StringList l = GetField ("CONDUCTOR");
+           
+            return (l != null && l.Count != 0) ? l [0] : null;
+         }
+         set {AddField ("CONDUCTOR", value);}
+      }
+      
+      public override string Grouping
+      {
+         get
+         {
+            StringList l = GetField ("GROUPING");
+           
+            return (l != null && l.Count != 0) ? l [0] : null;
+         }
+         set {AddField ("GROUPING", value);}
+      }
+      
+      public override uint BPM
+      {
+         get
+         {
+            StringList l = GetField ("TEMPO");
+            uint value;
+            return (l != null && l.Count != 0 && uint.TryParse (l[0], out value)) ? value : 0;
+         }
+         set {AddNumberField ("TEMPO", value, true);}
+      }
       
       //////////////////////////////////////////////////////////////////////////
       // protected methods

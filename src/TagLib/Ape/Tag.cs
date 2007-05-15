@@ -346,6 +346,63 @@ namespace TagLib.Ape
          }
       }
       
+      public override string Copyright
+      {
+         get
+         {
+            Item item = GetItem ("COPYRIGHT");
+            return item != null ? item.ToString () : null;
+         }
+         set
+         {
+            AddValue ("COPYRIGHT", value, true);
+         }
+      }
+      
+      public override string Conductor
+      {
+         get
+         {
+            Item item = GetItem ("CONDUCTOR");
+            return item != null ? item.ToString () : null;
+         }
+         set
+         {
+            AddValue ("CONDUCTOR", value, true);
+         }
+      }
+      
+      public override string Grouping
+      {
+         get
+         {
+            Item item = GetItem ("GROUPING");
+            return item != null ? item.ToString () : null;
+         }
+         set
+         {
+            AddValue ("GROUPING", value, true);
+         }
+      }
+      
+      public override uint BPM
+      {
+         get
+         {
+            Item item = GetItem ("TEMPO");
+            uint value;
+            
+            if ((item = GetItem ("TEMPO")) != null && uint.TryParse (item.ToString (), out value))
+               return value;
+            
+            return 0;
+         }
+         set
+         {
+            AddNumberValue ("TEMPO", value, 0, true);
+         }
+      }
+      
       public override bool IsEmpty {get {return items.Count == 0;}}
       
       public Footer Footer {get {return footer;}}

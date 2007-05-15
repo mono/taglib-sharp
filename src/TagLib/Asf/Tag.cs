@@ -171,7 +171,8 @@ namespace TagLib.Asf
          {
             if (value == 0)
                RemoveDescriptors ("WM/Year");
-            SetDescriptorString (value.ToString (), "WM/Year");
+            else
+               SetDescriptorString (value.ToString (), "WM/Year");
          }
       }
       
@@ -189,7 +190,8 @@ namespace TagLib.Asf
          {
             if (value == 0)
                RemoveDescriptors ("WM/TrackNumber");
-            SetDescriptors ("WM/TrackNumber", new ContentDescriptor ("WM/TrackNumber", value));
+            else
+               SetDescriptors ("WM/TrackNumber", new ContentDescriptor ("WM/TrackNumber", value));
          }
       }
       
@@ -208,7 +210,8 @@ namespace TagLib.Asf
          {
             if (value == 0)
                RemoveDescriptors ("TrackTotal");
-            SetDescriptors ("TrackTotal", new ContentDescriptor ("TrackTotal", value));
+            else
+               SetDescriptors ("TrackTotal", new ContentDescriptor ("TrackTotal", value));
          }
       }
       
@@ -285,6 +288,43 @@ namespace TagLib.Asf
          set {SetDescriptorString (value, "WM/Lyrics");}
       }
       
+      public override string Copyright
+      {
+         get {return GetDescriptorString ("Copyright");}
+         set {SetDescriptorString (value, "Copyright");}
+      }
+      
+      public override string Grouping
+      {
+         get {return GetDescriptorString ("WM/ContentGroupDescription");}
+         set {SetDescriptorString (value, "WM/ContentGroupDescription");}
+      }
+      
+      public override string Conductor
+      {
+         get {return GetDescriptorString ("WM/Conductor");}
+         set {SetDescriptorString (value, "WM/Conductor");}
+      }
+      
+      public override uint BPM
+      {
+         get
+         {
+            foreach (ContentDescriptor desc in GetDescriptors ("WM/BeatsPerMinute"))
+               if (desc.ToDWord () != 0)
+                  return desc.ToDWord ();
+           
+            return 0;
+         }
+         set
+         {
+            if (value == 0)
+               RemoveDescriptors ("WM/BeatsPerMinute");
+            else
+               SetDescriptors ("WM/BeatsPerMinute", new ContentDescriptor ("WM/BeatsPerMinute", value));
+         }
+      }
+    
       public override IPicture [] Pictures
       {
          get

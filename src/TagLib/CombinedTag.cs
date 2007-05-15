@@ -312,7 +312,79 @@ namespace TagLib
                   tag.Lyrics = value;
          }
       }
-
+      
+      public override string Grouping
+      {
+         get
+         {
+            string output = null;
+            foreach (Tag tag in tags)
+               if (tag != null && output == null)
+                  output = tag.Grouping;
+            return output;
+         }
+         set
+         {
+            foreach (Tag tag in tags)
+               if (tag != null)
+                  tag.Grouping = value;
+         }
+      }
+      
+      public override uint BPM
+      {
+         get
+         {
+            uint output = 0;
+            foreach (Tag tag in tags)
+               if (tag != null && output == 0)
+                  output = tag.BPM;
+            return output;
+         }
+         set
+         {
+            foreach (Tag tag in tags)
+               if (tag != null)
+                  tag.BPM = value;
+         }
+      }
+      
+      public override string Copyright
+      {
+         get
+         {
+            string output = null;
+            foreach (Tag tag in tags)
+               if (tag != null && output == null)
+                  output = tag.Copyright;
+            return output;
+         }
+         set
+         {
+            foreach (Tag tag in tags)
+               if (tag != null)
+                  tag.Copyright = value;
+         }
+      }
+      
+      public override string Conductor
+      {
+         get
+         {
+            string output = null;
+            foreach (Tag tag in tags)
+               if (tag != null && output == null)
+                  output = tag.Conductor;
+            return output;
+         }
+         set
+         {
+            foreach (Tag tag in tags)
+               if (tag != null)
+                  tag.Conductor = value;
+         }
+      }
+      
       public override IPicture [] Pictures {
          get {
             foreach(Tag tag in tags) {
