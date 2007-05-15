@@ -40,7 +40,7 @@ namespace TagLib
       public virtual uint      DiscCount       {get {return 0;}    set {}}
       public virtual string    Lyrics          {get {return null;} set {}}
       public virtual string    Grouping        {get {return null;} set {}}
-      public virtual uint      BPM             {get {return 0;}    set {}}
+      public virtual uint      BeatsPerMinute  {get {return 0;}    set {}}
       public virtual string    Conductor       {get {return null;} set {}}
       public virtual string    Copyright       {get {return null;} set {}}
       
@@ -81,7 +81,7 @@ namespace TagLib
                     (Comment == null || Comment.Trim () == String.Empty) &&
                     (Genres == null || Genres.Length == 0) &&
                     Year == 0 &&
-                    BPM == 0 &&
+                    BeatsPerMinute == 0 &&
                     Track == 0 &&
                     TrackCount == 0 &&
                     Disc == 0 &&
@@ -115,8 +115,8 @@ namespace TagLib
             target.Disc = source.Disc;
          if (overwrite || target.DiscCount == 0)
             target.DiscCount = source.DiscCount;
-         if (overwrite || target.BPM == 0)
-            target.BPM = source.BPM;
+         if (overwrite || target.BeatsPerMinute == 0)
+            target.BeatsPerMinute = source.BeatsPerMinute;
          if (overwrite || target.Grouping == null || target.Grouping.Trim() == String.Empty)
             target.Grouping = source.Grouping;
          if (overwrite || target.Conductor == null || target.Conductor.Trim() == String.Empty)

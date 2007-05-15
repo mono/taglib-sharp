@@ -411,7 +411,7 @@ namespace TagLib.Mpeg4
          }
       }
       
-      public override uint BPM
+      public override uint BeatsPerMinute
       {
          get
          {

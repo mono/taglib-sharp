@@ -438,7 +438,7 @@ namespace TagLib.Id3v2
          }
       }
       
-      public override uint BPM
+      public override uint BeatsPerMinute
       {
          get
          {
@@ -451,7 +451,7 @@ namespace TagLib.Id3v2
          }
          set
          {
-            SetNumberFrame ("TBPM", BPM, 0);
+            SetNumberFrame ("TBPM", value, 0);
          }
       }
       

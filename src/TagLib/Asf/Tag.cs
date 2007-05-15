@@ -306,7 +306,7 @@ namespace TagLib.Asf
          set {SetDescriptorString (value, "WM/Conductor");}
       }
       
-      public override uint BPM
+      public override uint BeatsPerMinute
       {
          get
          {

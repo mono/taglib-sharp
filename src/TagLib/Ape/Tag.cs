@@ -385,7 +385,7 @@ namespace TagLib.Ape
          }
       }
       
-      public override uint BPM
+      public override uint BeatsPerMinute
       {
          get
          {

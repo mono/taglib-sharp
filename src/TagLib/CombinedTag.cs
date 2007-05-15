@@ -331,21 +331,21 @@ namespace TagLib
          }
       }
       
-      public override uint BPM
+      public override uint BeatsPerMinute
       {
          get
          {
             uint output = 0;
             foreach (Tag tag in tags)
                if (tag != null && output == 0)
-                  output = tag.BPM;
+                  output = tag.BeatsPerMinute;
             return output;
          }
          set
          {
             foreach (Tag tag in tags)
                if (tag != null)
-                  tag.BPM = value;
+                  tag.BeatsPerMinute = value;
          }
       }
       

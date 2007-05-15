@@ -1,5 +1,18 @@
 2007-05-15  Brian Nickel <brian.nickel@gmail.com>
 
+	* src/TagLib/Id3v2/Tag.cs: Fix BPM storage.
+	* src/TagLib/Tag.cs:
+	* src/TagLib/CombinedTag.cs:
+	* src/TagLib/Riff/InfoTag.cs:
+	* src/TagLib/Ape/Tag.cs:
+	* src/TagLib/Asf/Tag.cs:
+	* src/TagLib/Mpeg4/AppleTag.cs:
+	* src/TagLib/Ogg/XiphComment.cs:
+	* src/TagLib/Ogg/GroupedComment.cs: Rename BPM to BeatsPerMinute.
+	* examples/ReadFromUri.cs: Push/Pop abstractor. Add new tags to output.
+
+2007-05-15  Brian Nickel <brian.nickel@gmail.com>
+
 	* src/TagLib/Tag.cs:
 	* src/TagLib/CombinedTag.cs:
 	* src/TagLib/Riff/InfoTag.cs:

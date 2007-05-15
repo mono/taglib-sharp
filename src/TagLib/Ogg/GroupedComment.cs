@@ -295,19 +295,19 @@ namespace TagLib.Ogg
          }
       }
       
-      public override uint BPM
+      public override uint BeatsPerMinute
       {
          get
          {
             uint output = 0;
             foreach (XiphComment tag in tags)
                if (tag != null && output == 0)
-                  output = tag.BPM;
+                  output = tag.BeatsPerMinute;
             return output;
          }
          set
          {
-            tags [0].BPM = value;
+            tags [0].BeatsPerMinute = value;
          }
       }
       

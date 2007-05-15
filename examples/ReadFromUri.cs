@@ -13,8 +13,7 @@ public class ReadFromUri
         
         Gnome.Vfs.Vfs.Initialize();
         
-        TagLib.File.SetFileAbstractionCreator(new TagLib.File.FileAbstractionCreator(
-            VfsFileAbstraction.CreateFile));
+        TagLib.File.PushFileAbstractionCreator(VfsFileAbstraction.CreateFile);
         
         DateTime start = DateTime.Now;
         int songs_read = 0;
@@ -44,13 +43,17 @@ public class ReadFromUri
                     continue;
                 }
                 
+                Console.WriteLine("Grouping:   " +  file.Tag.Grouping);
                 Console.WriteLine("Title:      " +  file.Tag.Title);
                 Console.WriteLine("Artists:    " + (file.Tag.AlbumArtists == null ? String.Empty : System.String.Join ("\n            ", file.Tag.AlbumArtists)));
                 Console.WriteLine("Performers: " + (file.Tag.Performers   == null ? String.Empty : System.String.Join ("\n            ", file.Tag.Performers)));
                 Console.WriteLine("Composers:  " + (file.Tag.Composers    == null ? String.Empty : System.String.Join ("\n            ", file.Tag.Composers)));
+                Console.WriteLine("Conductor:  " +  file.Tag.Conductor);
                 Console.WriteLine("Album:      " +  file.Tag.Album);
                 Console.WriteLine("Comment:    " +  file.Tag.Comment);
+                Console.WriteLine("Copyright:  " +  file.Tag.Copyright);
                 Console.WriteLine("Genres:     " + (file.Tag.Genres       == null ? String.Empty : System.String.Join ("\n            ", file.Tag.Genres)));
+                Console.WriteLine("BPM:        " +  file.Tag.BeatsPerMinute);
                 Console.WriteLine("Year:       " +  file.Tag.Year);
                 Console.WriteLine("Track:      " +  file.Tag.Track);
                 Console.WriteLine("TrackCount: " +  file.Tag.TrackCount);
@@ -102,7 +105,8 @@ public class ReadFromUri
                 songs_read ++;
             }
         } finally {
-            Gnome.Vfs.Vfs.Shutdown();
+           Gnome.Vfs.Vfs.Shutdown();
+           TagLib.File.PopFileAbstractionCreator();
         }
         
         DateTime end = DateTime.Now;
