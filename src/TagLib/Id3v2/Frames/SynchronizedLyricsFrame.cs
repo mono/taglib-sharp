@@ -12,7 +12,7 @@ namespace TagLib.Id3v2
       AbsoluteMilliseconds = 0x02
    }
    
-   public enum LyricsType
+   public enum TextType
    {
       Other             = 0x00,
       Lyrics            = 0x01,
@@ -32,48 +32,25 @@ namespace TagLib.Id3v2
       ByteVector      language         = null;
       string          description      = null;
       TimestampFormat timestamp_format = TimestampFormat.Unknown;
-      LyricsType      lyrics_type      = LyricsType.Other;
+      TextType        lyrics_type      = TextType.Other;
       SynchedText []  text             = new SynchedText [0];
       #endregion
       
       #region Constructors
-      public SynchronisedLyricsFrame (string description, ByteVector language, StringType encoding) : base ("SYLT", 4)
+      public SynchronisedLyricsFrame (string description, ByteVector language, TextType type, StringType encoding) : base ("SYLT", 4)
       {
          this.text_encoding = encoding;
          this.language      = language;
          this.description   = description;
+         this.lyrics_type   = type;
       }
       
-      public SynchronisedLyricsFrame (string description, ByteVector language) : this (description, language, TagLib.Id3v2.Tag.DefaultEncoding)
+      public SynchronisedLyricsFrame (string description, ByteVector language, TextType type) : this (description, language, type, TagLib.Id3v2.Tag.DefaultEncoding)
       {}
 
-      public SynchronisedLyricsFrame (string description) : this (description, null)
-      {}
-      
       public SynchronisedLyricsFrame (ByteVector data, uint version) : base(data, version)
       {
          SetData (data, 0, version);
-      }
-      
-      public static SynchronisedLyricsFrame Get (Tag tag, string description, ByteVector language, bool create)
-      {
-         foreach (Frame f in tag)
-         {
-            if (!(f is SynchronisedLyricsFrame))
-               continue;
-            
-            SynchronisedLyricsFrame lyr = f as SynchronisedLyricsFrame;
-            
-            if (lyr.Description == description && (language == null || language == lyr.Language))
-               return lyr;
-         }
-         
-         if (!create)
-            return null;
-         
-         SynchronisedLyricsFrame frame = new SynchronisedLyricsFrame (description, language);
-         tag.AddFrame (frame);
-         return frame;
       }
       #endregion
       
@@ -102,7 +79,7 @@ namespace TagLib.Id3v2
          set {timestamp_format = value;}
       }
       
-      public LyricsType Type
+      public TextType Type
       {
          get {return lyrics_type;}
          set {lyrics_type = value;}
@@ -115,8 +92,29 @@ namespace TagLib.Id3v2
       }
       #endregion
       
+      #region Public Static Methods
+      public static SynchronisedLyricsFrame Get (Tag tag, string description, ByteVector language, TextType type, bool create)
+      {
+         foreach (Frame f in tag)
+         {
+            if (!(f is SynchronisedLyricsFrame))
+               continue;
+            
+            SynchronisedLyricsFrame lyr = f as SynchronisedLyricsFrame;
+            
+            if (lyr.Description == description && (language == null || language == lyr.Language) && type == lyr.Type)
+               return lyr;
+         }
+         
+         if (!create)
+            return null;
+         
+         SynchronisedLyricsFrame frame = new SynchronisedLyricsFrame (description, language, type);
+         tag.AddFrame (frame);
+         return frame;
+      }
       
-      public static SynchronisedLyricsFrame GetPreferred (Tag tag, string description, ByteVector language)
+      public static SynchronisedLyricsFrame GetPreferred (Tag tag, string description, ByteVector language, TextType type)
       {
          // This is weird, so bear with me. The best thing we can have is 
          // something straightforward and in our own language. If it has a 
@@ -137,12 +135,12 @@ namespace TagLib.Id3v2
             
             SynchronisedLyricsFrame cf = f as SynchronisedLyricsFrame;
             
-            bool same_name = cf.Description == description;
-            bool same_lang = cf.Language == language;
+            int value = 0;
+            if (cf.Description == description) value += 4;
+            if (cf.Language == language)       value += 2;
+            if (cf.Type == type)               value += 1;
             
-            if (same_name && same_lang) return cf;
-            
-            int value = same_lang ? 2 : same_name ? 1 : 0;
+            if (value == 7) return cf;
             
             if (value <= best_value)
                continue;
@@ -153,8 +151,9 @@ namespace TagLib.Id3v2
          
          return best_frame;
       }
+      #endregion
       
-      
+      #region Protected Methods
       protected override void ParseFields (ByteVector data, uint version)
       {
          if (data.Count < 6)
@@ -163,7 +162,7 @@ namespace TagLib.Id3v2
          text_encoding = (StringType) data [0];
          language = data.Mid (1, 3);
          timestamp_format = (TimestampFormat) data [4];
-         lyrics_type = (LyricsType) data [5];
+         lyrics_type = (TextType) data [5];
          
          ByteVector delim = TextDelimiter (text_encoding);
          int delim_index = data.Find (delim, 6);
@@ -224,6 +223,7 @@ namespace TagLib.Id3v2
       {
          ParseFields (FieldData (data, offset, version), version);
       }
+      #endregion
    }
    
    public struct SynchedText

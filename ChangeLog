@@ -1,5 +1,10 @@
 2007-05-14  Brian Nickel <brian.nickel@gmail.com>
 
+	* src/TagLib/Id3v2/Frames/SynchronizedLyricsFrame.cs: Include TextType
+	in Get, GetPreferred, and constructors.
+
+2007-05-14  Brian Nickel <brian.nickel@gmail.com>
+
 Feature Request: http://forum.taglib-sharp.com/viewtopic.php?f=4&t=12
 
 	* src/TagLib/File.cs: Support pushing and poping file abstractors.
