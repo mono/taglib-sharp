@@ -38,12 +38,20 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public File (string file, TagLib.ReadStyle properties_style);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="file" Type="System.String" /><Parameter Name="properties_style" Type="TagLib.ReadStyle" /></Parameters>
-      <Docs><param name="file">A <see cref="T:System.String" /> containing the path to the file to be processed.</param><param name="properties_style">A <see cref="T:TagLib.ReadStyle" /> describing how to read the file.</param><summary>
+      <Parameters>
+        <Parameter Name="file" Type="System.String" />
+        <Parameter Name="properties_style" Type="TagLib.ReadStyle" />
+      </Parameters>
+      <Docs>
+        <param name="file">A <see cref="T:System.String" /> containing the path to the file to be processed.</param>
+        <param name="properties_style">A <see cref="T:TagLib.ReadStyle" /> describing how to read the file.</param>
+        <summary>
           <para>
             Constructs and initializes a new instance of the <see cref="T:TagLib.Ogg.File" /> class by loading a file with a specific <see cref="T:TagLib.ReadStyle" />.
           </para>
-        </summary><remarks>Files should be created using <see cref="T:TagLib.File.Create(System.String,TagLib.ReadStyle)" /> or one of its variants rather than through format specific constructors.</remarks></Docs>
+        </summary>
+        <remarks>Files should be created using <see cref="T:TagLib.File.Create(System.String,TagLib.ReadStyle)" /> or one of its variants rather than through format specific constructors.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>

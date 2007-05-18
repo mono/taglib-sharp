@@ -12,82 +12,222 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public AviStreamHeader (TagLib.ByteVector data, int offset);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="data" Type="TagLib.ByteVector" /><Parameter Name="offset" Type="System.Int32" /></Parameters>
-      <Docs><param name="data">To be added.</param><param name="offset">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+        <Parameter Name="offset" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="data">To be added.</param>
+        <param name="offset">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Type">
       <MemberSignature Language="C#" Value="public TagLib.ByteVector Type { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Handler">
       <MemberSignature Language="C#" Value="public TagLib.ByteVector Handler { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Flags">
       <MemberSignature Language="C#" Value="public uint Flags { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Priority">
       <MemberSignature Language="C#" Value="public uint Priority { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="InitialFrames">
       <MemberSignature Language="C#" Value="public uint InitialFrames { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Scale">
       <MemberSignature Language="C#" Value="public uint Scale { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Rate">
       <MemberSignature Language="C#" Value="public uint Rate { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Start">
       <MemberSignature Language="C#" Value="public uint Start { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Length">
       <MemberSignature Language="C#" Value="public uint Length { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="SuggestedBufferSize">
       <MemberSignature Language="C#" Value="public uint SuggestedBufferSize { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Quality">
       <MemberSignature Language="C#" Value="public uint Quality { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="SampleSize">
       <MemberSignature Language="C#" Value="public uint SampleSize { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
-  <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public AviStreamHeader (TagLib.ByteVector data);" /><MemberType>Constructor</MemberType><Parameters><Parameter Name="data" Type="TagLib.ByteVector" /></Parameters><Docs><param name="data">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Left"><MemberSignature Language="C#" Value="public ushort Left { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Top"><MemberSignature Language="C#" Value="public ushort Top { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Right"><MemberSignature Language="C#" Value="public ushort Right { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Bottom"><MemberSignature Language="C#" Value="public ushort Bottom { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member></Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public AviStreamHeader (TagLib.ByteVector data);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="data">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Left">
+      <MemberSignature Language="C#" Value="public ushort Left { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.UInt16</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Top">
+      <MemberSignature Language="C#" Value="public ushort Top { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.UInt16</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Right">
+      <MemberSignature Language="C#" Value="public ushort Right { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.UInt16</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Bottom">
+      <MemberSignature Language="C#" Value="public ushort Bottom { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.UInt16</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>

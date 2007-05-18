@@ -11,24 +11,41 @@
     <Member MemberName="Unknown">
       <MemberSignature Language="C#" Value="Unknown" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.MediaTypes</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.MediaTypes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Media types are unknown.</summary>
+      </Docs>
     </Member>
     <Member MemberName="Video">
       <MemberSignature Language="C#" Value="Video" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.MediaTypes</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.MediaTypes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Media types include video.</summary>
+      </Docs>
     </Member>
     <Member MemberName="Audio">
       <MemberSignature Language="C#" Value="Audio" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.MediaTypes</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.MediaTypes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Media types include audio.</summary>
+      </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Media types for <see cref="F:TagLib.ICodec.MediaTypes" /> and <see cref="F:TagLib.Properties" />.</summary>
+    <remarks>The types are flags which can be bitwise combined.</remarks>
   </Docs>
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Flags</AttributeName>
+    </Attribute>
+  </Attributes>
 </Type>

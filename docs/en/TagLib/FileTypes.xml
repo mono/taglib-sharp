@@ -12,12 +12,18 @@
     <Member MemberName="AvailableTypes">
       <MemberSignature Language="C#" Value="public static System.Collections.Generic.IDictionary&lt;string,Type&gt; AvailableTypes { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Collections.Generic.IDictionary&lt;System.String,System.Type&gt;</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IDictionary&lt;System.String,System.Type&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Stores registered mime-types and their respective classes.</summary>
     <remarks>To be added.</remarks>
   </Docs>
 </Type>

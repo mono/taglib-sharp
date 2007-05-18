@@ -12,14 +12,23 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public UnsupportedFormatException (string message);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="message" Type="System.String" /></Parameters>
-      <Docs><param name="message">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="message" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="message">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public UnsupportedFormatException ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>

@@ -31,13 +31,11 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // private properties
       //////////////////////////////////////////////////////////////////////////
-      private long           tag_offset;
-      
-      private Header         header;
-      private ExtendedHeader extended_header;
-      private Footer         footer;
+      private Header         header = new Header ();
+      private ExtendedHeader extended_header = null;
+      private Footer         footer = null;
 
-      private List<Frame>    frame_list;
+      private List<Frame>    frame_list = new List<Frame> ();
       
       private static ByteVector language = "eng";
       private static uint default_version = 4;
@@ -49,19 +47,11 @@ namespace TagLib.Id3v2
       // public methods
       //////////////////////////////////////////////////////////////////////////
       public Tag () : base ()
-      {
-         tag_offset      = -1;
-         header          = new Header ();
-         extended_header = null;
-         footer          = null;
-         frame_list      = new List<Frame> ();
-      }
+      {}
       
-      public Tag (File file, long tag_offset) : this ()
+      public Tag (File file, long tag_offset) : base ()
       {
-         this.tag_offset = tag_offset;
-         
-         Read (file);
+         Read (file, tag_offset);
       }
 
       public IEnumerator GetEnumerator()
@@ -555,7 +545,7 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
-      protected void Read (TagLib.File file)
+      protected void Read (TagLib.File file, long tag_offset)
       {
          if (file == null)
             return;
@@ -563,7 +553,7 @@ namespace TagLib.Id3v2
          file.Mode = File.AccessMode.Read;
          
          file.Seek (tag_offset);
-         header.SetData (file.ReadBlock ((int) Header.Size));
+         header = new Header (file.ReadBlock ((int) Header.Size));
          
          // if the tag size is 0, then this is an invalid tag (tags must contain
          // at least one frame)
@@ -585,10 +575,7 @@ namespace TagLib.Id3v2
          // check for extended header
          if (header.ExtendedHeader)
          {
-            if (ExtendedHeader == null)
-               extended_header = new ExtendedHeader ();
-            
-            ExtendedHeader.SetData (data);
+            extended_header = new ExtendedHeader (data);
             
             if(ExtendedHeader.Size <= data.Count)
             {
@@ -608,20 +595,19 @@ namespace TagLib.Id3v2
             // portion of the frame data.
             if(data [frame_data_position] == 0)
                return;
+            
+            try
+            {
+               Frame frame = FrameFactory.CreateFrame (data, ref frame_data_position, header.MajorVersion);
 
-            Frame frame = FrameFactory.CreateFrame (data, frame_data_position, header.MajorVersion);
+               if(frame == null)
+                  return;
 
-            if(frame == null)
-               return;
-
-            // Checks to make sure that frame parsed correctly.
-            if(frame.Size < 0)
-               return;
-
-            frame_data_position += (int) (frame.Size + FrameHeader.Size (header.MajorVersion));            
-            // Only add frames with content so we don't send out just we got in.
-            if (frame.Size > 0)
-               AddFrame (frame);
+               // Only add frames that contain data.
+               if (frame.Size > 0)
+                  AddFrame (frame);
+            }
+            catch (UnsupportedFormatException) {}
          }
       }
       

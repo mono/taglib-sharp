@@ -115,6 +115,10 @@
       <Type Name="Tag" />
       <Type Name="GeneralEncapsulatedObjectFrame" />
       <Type Name="ChannelType" />
+      <Type Name="SynchronisedLyricsFrame" />
+      <Type Name="SynchedText" />
+      <Type Name="TimestampFormat" />
+      <Type Name="TextType" />
     </Namespace>
     <Namespace Name="TagLib.Mpc">
       <Type Name="File" />

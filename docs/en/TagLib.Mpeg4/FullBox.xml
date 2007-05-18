@@ -12,38 +12,86 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="protected FullBox (TagLib.Mpeg4.BoxHeader header, TagLib.Mpeg4.File file, TagLib.Mpeg4.Box handler);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" /><Parameter Name="file" Type="TagLib.Mpeg4.File" /><Parameter Name="handler" Type="TagLib.Mpeg4.Box" /></Parameters>
-      <Docs><param name="header">To be added.</param><param name="file">To be added.</param><param name="handler">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" />
+        <Parameter Name="file" Type="TagLib.Mpeg4.File" />
+        <Parameter Name="handler" Type="TagLib.Mpeg4.Box" />
+      </Parameters>
+      <Docs>
+        <param name="header">To be added.</param>
+        <param name="file">To be added.</param>
+        <param name="handler">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="protected FullBox (TagLib.Mpeg4.BoxHeader header, byte version, uint flags);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" /><Parameter Name="version" Type="System.Byte" /><Parameter Name="flags" Type="System.UInt32" /></Parameters>
-      <Docs><param name="header">To be added.</param><param name="version">To be added.</param><param name="flags">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" />
+        <Parameter Name="version" Type="System.Byte" />
+        <Parameter Name="flags" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="header">To be added.</param>
+        <param name="version">To be added.</param>
+        <param name="flags">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="protected FullBox (TagLib.ByteVector type, byte version, uint flags);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="type" Type="TagLib.ByteVector" /><Parameter Name="version" Type="System.Byte" /><Parameter Name="flags" Type="System.UInt32" /></Parameters>
-      <Docs><param name="type">To be added.</param><param name="version">To be added.</param><param name="flags">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.ByteVector" />
+        <Parameter Name="version" Type="System.Byte" />
+        <Parameter Name="flags" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <param name="version">To be added.</param>
+        <param name="flags">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Version">
       <MemberSignature Language="C#" Value="public uint Version { set; get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Flags">
       <MemberSignature Language="C#" Value="public uint Flags { set; get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="DataOffset">
       <MemberSignature Language="C#" Value="protected override long DataOffset { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>

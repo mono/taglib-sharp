@@ -13,11 +13,15 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public AviVideoStream (TagLib.Riff.AviStreamHeader stream_header);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="stream_header" Type="TagLib.Riff.AviStreamHeader" /></Parameters>
-      <Docs><param name="stream_header">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="stream_header" Type="TagLib.Riff.AviStreamHeader" />
+      </Parameters>
+      <Docs>
+        <param name="stream_header">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
-    
-    
   </Members>
   <Docs>
     <summary>To be added.</summary>

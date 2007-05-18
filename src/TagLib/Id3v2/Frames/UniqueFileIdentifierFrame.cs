@@ -27,21 +27,16 @@ namespace TagLib.Id3v2
 {
    public class UniqueFileIdentifierFrame : Frame
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
-      private string owner;
-      private ByteVector identifier;
+      #region Private Properties
+      private string owner = null;
+      private ByteVector identifier = null;
+      #endregion
       
       
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
+      
+      #region Constructors
       public UniqueFileIdentifierFrame (ByteVector data, uint version) : base (data, version)
       {
-         owner = null;
-         identifier = null;
-         
          SetData (data, 0, version);
       }
 
@@ -51,6 +46,31 @@ namespace TagLib.Id3v2
          identifier = id;
       }
       
+      protected internal UniqueFileIdentifierFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
+      {
+         ParseFields (FieldData (data, offset, version), version);
+      }
+      #endregion
+      
+      
+      
+      #region Public Properties
+      public string Owner
+      {
+         get {return owner;}
+         set {owner = value;}
+      }
+
+      public ByteVector Identifier
+      {
+         get {return identifier;}
+         set {identifier = value;}
+      }
+      #endregion
+      
+      
+      
+      #region Public Static Methods
       public static UniqueFileIdentifierFrame Get (Tag tag, string owner, bool create)
       {
          foreach (Frame f in tag.GetFrames ("UFID"))
@@ -63,26 +83,11 @@ namespace TagLib.Id3v2
          tag.AddFrame (frame);
          return frame;
       }
+      #endregion
       
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
-      public string Owner
-      {
-         get {return owner;}
-         set {owner = value;}
-      }
-
-      public ByteVector Identifier
-      {
-         get {return identifier;}
-         set {identifier = value;}
-      }
-
-
-      //////////////////////////////////////////////////////////////////////////
-      // protected methods
-      //////////////////////////////////////////////////////////////////////////
+      
+      
+      #region Protected Methods
       protected override void ParseFields (ByteVector data, uint version)
       {
          ByteVectorList fields = ByteVectorList.Split(data, (byte) 0);
@@ -104,12 +109,6 @@ namespace TagLib.Id3v2
          
          return data;
       }
-      
-      protected internal UniqueFileIdentifierFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
-      {
-         owner = null;
-         identifier = null;
-         ParseFields (FieldData (data, offset, version), version);
-      }
+      #endregion
    }
 }

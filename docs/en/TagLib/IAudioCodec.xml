@@ -13,24 +13,42 @@
     <Member MemberName="AudioBitrate">
       <MemberSignature Language="C#" Value="public int AudioBitrate { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="AudioSampleRate">
       <MemberSignature Language="C#" Value="public int AudioSampleRate { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="AudioChannels">
       <MemberSignature Language="C#" Value="public int AudioChannels { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Interface providing information relevant to an audio codec.</summary>
+    <remarks>When dealing with a <see cref="T:TagLib.ICodec" />, if <see cref="F:TagLib.ICodec.MediaTypes" /> contains <see cref="F:TagLib.MediaTypes.Audio" />, it is safe to assume that the object also inherits <see cref="T:TagLib.IAudioCodec" /> and can be recast without issue.</remarks>
   </Docs>
 </Type>

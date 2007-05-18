@@ -36,6 +36,8 @@ namespace TagLib.Id3v2
       SynchedText []  text             = new SynchedText [0];
       #endregion
       
+      
+      
       #region Constructors
       public SynchronisedLyricsFrame (string description, ByteVector language, TextType type, StringType encoding) : base ("SYLT", 4)
       {
@@ -53,6 +55,8 @@ namespace TagLib.Id3v2
          SetData (data, 0, version);
       }
       #endregion
+      
+      
       
       #region Public Properties
       public StringType TextEncoding
@@ -91,6 +95,8 @@ namespace TagLib.Id3v2
          set {text = value == null ? new SynchedText [0] : value;}
       }
       #endregion
+      
+      
       
       #region Public Static Methods
       public static SynchronisedLyricsFrame Get (Tag tag, string description, ByteVector language, TextType type, bool create)
@@ -152,6 +158,8 @@ namespace TagLib.Id3v2
          return best_frame;
       }
       #endregion
+      
+      
       
       #region Protected Methods
       protected override void ParseFields (ByteVector data, uint version)
@@ -225,6 +233,8 @@ namespace TagLib.Id3v2
       }
       #endregion
    }
+   
+   
    
    public struct SynchedText
    {

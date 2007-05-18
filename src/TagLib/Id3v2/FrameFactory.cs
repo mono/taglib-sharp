@@ -36,13 +36,15 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // public members
       //////////////////////////////////////////////////////////////////////////
-      public static Frame CreateFrame (ByteVector data, int offset, uint version)
+      public static Frame CreateFrame (ByteVector data, ref int offset, uint version)
       {
-         FrameHeader header = new FrameHeader (data.Mid (offset, (int) FrameHeader.Size (version)), version);
+         int position = offset;
+         
+         FrameHeader header = new FrameHeader (data.Mid (position, (int) FrameHeader.Size (version)), version);
          ByteVector frame_id = header.FrameId;
+         
          // A quick sanity check -- make sure that the frame_id is 4 uppercase
          // Latin1 characters.  Also make sure that there is data in the frame.
-         
          if(frame_id == null || frame_id.Count != (version < 3 ? 3 : 4) || header.FrameSize < 0)
             return null;
          
@@ -53,31 +55,33 @@ namespace TagLib.Id3v2
                return null;
          }
          
+         offset += (int) (header.FrameSize + FrameHeader.Size (version));
+         
          // Windows Media Player may create zero byte frames. Just send them
          // off as unknown and delete them.
          if (header.FrameSize == 0)
          {
             header.TagAlterPreservation = true;
-            return new UnknownFrame (data, offset, header, version);
+            return new UnknownFrame (data, position, header, version);
          }
          
          // TODO: Support Compression.
          if (header.Compression)
-            return new UnknownFrame (data, offset, header, version);
+            throw new UnsupportedFormatException ();
          
          // TODO: Support Encryption.
          if (header.Encryption)
-            return new UnknownFrame (data, offset, header, version);
+            throw new UnsupportedFormatException ();
          
          if (!UpdateFrame (header, version))
          {
             header.TagAlterPreservation = true;
-            return new UnknownFrame (data, offset, header, version);
+            return new UnknownFrame (data, position, header, version);
          }
          
          foreach (FrameCreator creator in frame_creators)
          {
-            Frame frame = creator (data, offset, header, version);
+            Frame frame = creator (data, position, header, version);
             if (frame != null)
                return frame;
          }
@@ -97,8 +101,8 @@ namespace TagLib.Id3v2
          if(frame_id.StartsWith ("T"))
          {
             TextIdentificationFrame f = frame_id != "TXXX"
-            ? new TextIdentificationFrame (data, offset, header, version)
-            : new UserTextIdentificationFrame (data, offset, header, version);
+            ? new TextIdentificationFrame (data, position, header, version)
+            : new UserTextIdentificationFrame (data, position, header, version);
             
             if (frame_id == "TCON" && version < 4)
                UpdateGenre (f);
@@ -109,44 +113,44 @@ namespace TagLib.Id3v2
          // Unsynchronized Lyrics (frames 4.8)
 
          if (frame_id == "USLT")
-            return new UnsynchronisedLyricsFrame (data, offset, header, version);
+            return new UnsynchronisedLyricsFrame (data, position, header, version);
 
          // Synchronized Lyrics (frames 4.9)
 
          if (frame_id == "SYLT")
-            return new SynchronisedLyricsFrame (data, offset, header, version);
+            return new SynchronisedLyricsFrame (data, position, header, version);
 
          // Comments (frames 4.10)
 
          if (frame_id == "COMM")
-            return new CommentsFrame (data, offset, header, version);
+            return new CommentsFrame (data, position, header, version);
 
          // Attached Picture (frames 4.14)
 
          if (frame_id == "APIC")
-            return new AttachedPictureFrame (data, offset, header, version);
+            return new AttachedPictureFrame (data, position, header, version);
 
          // Relative Volume Adjustment (frames 4.11)
 
          if (frame_id == "RVA2")
-            return new RelativeVolumeFrame (data, offset, header, version);
+            return new RelativeVolumeFrame (data, position, header, version);
 
          // Unique File Identifier (frames 4.1)
 
          if (frame_id == "UFID")
-            return new UniqueFileIdentifierFrame (data, offset, header, version);
+            return new UniqueFileIdentifierFrame (data, position, header, version);
 
          // Private (frames 4.27)
 
          if (frame_id == "PRIV")
-            return new PrivateFrame (data, offset, header, version);
+            return new PrivateFrame (data, position, header, version);
          
          // General Encapsulated Object (frames 4.15)
          
          if(frame_id == "GEOB")
-            return new GeneralEncapsulatedObjectFrame (data, offset, header, version);
+            return new GeneralEncapsulatedObjectFrame (data, position, header, version);
          
-         return new UnknownFrame (data, offset, header, version);
+         return new UnknownFrame (data, position, header, version);
       }
 
       public static void AddFrameCreator (FrameCreator creator)

@@ -1,5 +1,5 @@
 <Type Name="Tag" FullName="TagLib.Id3v2.Tag">
-  <TypeSignature Language="C#" Value="public class Tag : TagLib.Tag" />
+  <TypeSignature Language="C#" Value="public class Tag : TagLib.Tag, System.Collections.IEnumerable" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
@@ -7,157 +7,344 @@
   <Base>
     <BaseTypeName>TagLib.Tag</BaseTypeName>
   </Base>
-  <Interfaces />
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.Collections.IEnumerable</InterfaceName>
+    </Interface>
+  </Interfaces>
   <Members>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Tag ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Tag (TagLib.File file, long tag_offset);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="file" Type="TagLib.File" /><Parameter Name="tag_offset" Type="System.Int64" /></Parameters>
-      <Docs><param name="file">To be added.</param><param name="tag_offset">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="file" Type="TagLib.File" />
+        <Parameter Name="tag_offset" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <param name="tag_offset">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="GetFrames">
       <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;TagLib.Id3v2.Frame&gt; GetFrames ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Collections.Generic.IEnumerable&lt;TagLib.Id3v2.Frame&gt;</ReturnType></ReturnValue>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IEnumerable&lt;TagLib.Id3v2.Frame&gt;</ReturnType>
+      </ReturnValue>
       <Parameters />
-      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="GetFrames">
       <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;TagLib.Id3v2.Frame&gt; GetFrames (TagLib.ByteVector id);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Collections.Generic.IEnumerable&lt;TagLib.Id3v2.Frame&gt;</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="id" Type="TagLib.ByteVector" /></Parameters>
-      <Docs><param name="id">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IEnumerable&lt;TagLib.Id3v2.Frame&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="id" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="id">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="AddFrame">
       <MemberSignature Language="C#" Value="public void AddFrame (TagLib.Id3v2.Frame frame);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="frame" Type="TagLib.Id3v2.Frame" /></Parameters>
-      <Docs><param name="frame">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="frame" Type="TagLib.Id3v2.Frame" />
+      </Parameters>
+      <Docs>
+        <param name="frame">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="ReplaceFrame">
       <MemberSignature Language="C#" Value="public void ReplaceFrame (TagLib.Id3v2.Frame old_frame, TagLib.Id3v2.Frame new_frame);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="old_frame" Type="TagLib.Id3v2.Frame" /><Parameter Name="new_frame" Type="TagLib.Id3v2.Frame" /></Parameters>
-      <Docs><param name="old_frame">To be added.</param><param name="new_frame">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="old_frame" Type="TagLib.Id3v2.Frame" />
+        <Parameter Name="new_frame" Type="TagLib.Id3v2.Frame" />
+      </Parameters>
+      <Docs>
+        <param name="old_frame">To be added.</param>
+        <param name="new_frame">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="RemoveFrame">
       <MemberSignature Language="C#" Value="public void RemoveFrame (TagLib.Id3v2.Frame frame);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="frame" Type="TagLib.Id3v2.Frame" /></Parameters>
-      <Docs><param name="frame">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="frame" Type="TagLib.Id3v2.Frame" />
+      </Parameters>
+      <Docs>
+        <param name="frame">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="RemoveFrames">
       <MemberSignature Language="C#" Value="public void RemoveFrames (TagLib.ByteVector id);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="id" Type="TagLib.ByteVector" /></Parameters>
-      <Docs><param name="id">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="id" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="id">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Render">
       <MemberSignature Language="C#" Value="public TagLib.ByteVector Render ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
       <Parameters />
-      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member>
-    <Member MemberName="Read">
-      <MemberSignature Language="C#" Value="protected void Read (TagLib.File file);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="file" Type="TagLib.File" /></Parameters>
-      <Docs><param name="file">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Parse">
       <MemberSignature Language="C#" Value="protected void Parse (TagLib.ByteVector data);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="data" Type="TagLib.ByteVector" /></Parameters>
-      <Docs><param name="data">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="data">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="SetTextFrame">
       <MemberSignature Language="C#" Value="public void SetTextFrame (TagLib.ByteVector id, string value);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="id" Type="TagLib.ByteVector" /><Parameter Name="value" Type="System.String" /></Parameters>
-      <Docs><param name="id">To be added.</param><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="id" Type="TagLib.ByteVector" />
+        <Parameter Name="value" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="id">To be added.</param>
+        <param name="value">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="SetTextFrame">
       <MemberSignature Language="C#" Value="public void SetTextFrame (TagLib.ByteVector id, TagLib.StringList value);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="id" Type="TagLib.ByteVector" /><Parameter Name="value" Type="TagLib.StringList" /></Parameters>
-      <Docs><param name="id">To be added.</param><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="id" Type="TagLib.ByteVector" />
+        <Parameter Name="value" Type="TagLib.StringList" />
+      </Parameters>
+      <Docs>
+        <param name="id">To be added.</param>
+        <param name="value">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="SetNumberFrame">
       <MemberSignature Language="C#" Value="public void SetNumberFrame (TagLib.ByteVector id, uint number, uint count);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="id" Type="TagLib.ByteVector" /><Parameter Name="number" Type="System.UInt32" /><Parameter Name="count" Type="System.UInt32" /></Parameters>
-      <Docs><param name="id">To be added.</param><param name="number">To be added.</param><param name="count">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="id" Type="TagLib.ByteVector" />
+        <Parameter Name="number" Type="System.UInt32" />
+        <Parameter Name="count" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="id">To be added.</param>
+        <param name="number">To be added.</param>
+        <param name="count">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Header">
       <MemberSignature Language="C#" Value="public TagLib.Id3v2.Header Header { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.Id3v2.Header</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.Header</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="ExtendedHeader">
       <MemberSignature Language="C#" Value="public TagLib.Id3v2.ExtendedHeader ExtendedHeader { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.Id3v2.ExtendedHeader</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.ExtendedHeader</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Footer">
       <MemberSignature Language="C#" Value="public TagLib.Id3v2.Footer Footer { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.Id3v2.Footer</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.Footer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Language">
       <MemberSignature Language="C#" Value="public static TagLib.ByteVector Language { set; get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Version">
       <MemberSignature Language="C#" Value="public uint Version { set; get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="DefaultVersion">
       <MemberSignature Language="C#" Value="public static uint DefaultVersion { set; get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="ForceDefaultVersion">
       <MemberSignature Language="C#" Value="public static bool ForceDefaultVersion { set; get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="DefaultEncoding">
       <MemberSignature Language="C#" Value="public static TagLib.StringType DefaultEncoding { set; get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.StringType</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.StringType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="ForceDefaultEncoding">
       <MemberSignature Language="C#" Value="public static bool ForceDefaultEncoding { set; get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetEnumerator">
+      <MemberSignature Language="C#" Value="public System.Collections.IEnumerator GetEnumerator ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Collections.IEnumerator</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Read">
+      <MemberSignature Language="C#" Value="protected void Read (TagLib.File file, long tag_offset);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="file" Type="TagLib.File" />
+        <Parameter Name="tag_offset" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <param name="tag_offset">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>

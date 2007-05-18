@@ -101,7 +101,7 @@ namespace TagLib.Asf
             string value = GetDescriptorString ("WM/AlbumArtist", "AlbumArtist");
             return (value != null) ? SplitAndClean (value) : Performers;
          }
-         set {SetDescriptorString (String.Join ("; ", value), "WM/AlbumArtist", "AlbumArtist");}
+         set {SetDescriptorStrings (value, "WM/AlbumArtist", "AlbumArtist");}
       }
       
       public override string [] Performers
@@ -112,8 +112,8 @@ namespace TagLib.Asf
       
       public override string [] Composers
       {
-         get {return SplitAndClean (GetDescriptorString ("WM/Composer", "Composer"));}
-         set {SetDescriptorString (String.Join ("; ", value), "WM/Composer", "Composer");}
+         get {return GetDescriptorStrings ("WM/Composer", "Composer");}
+         set {SetDescriptorStrings (value, "WM/Composer", "Composer");}
       }
       
       public override string Album
@@ -258,29 +258,6 @@ namespace TagLib.Asf
                SetDescriptorString (disc.ToString (), "WM/PartOfSet");
          }
       }
-      
-      public ContentDescriptionObject         ContentDescriptionObject         {get {return description;}}
-      public ExtendedContentDescriptionObject ExtendedContentDescriptionObject {get {return ext_description;}}
-
-      public string GetDescriptorString (params string [] names)
-      {
-         foreach (ContentDescriptor desc in GetDescriptors (names))
-            if (desc != null && desc.Type == DataType.Unicode && desc.ToString () != null)
-               return desc.ToString ();
-         
-         return null;
-      }
-      
-      public void SetDescriptorString (string value, params string [] names)
-      {
-         int i = (value != null && value.Trim () != String.Empty) ? 1 : 0;
-         
-         if (i == 1)
-            SetDescriptors (names [0], new ContentDescriptor (names [0], value));
-         
-         for (; i < names.Length; i ++)
-            RemoveDescriptors (names [i]);
-      }
 		
       public override string Lyrics
       {
@@ -389,6 +366,39 @@ namespace TagLib.Asf
          }
       }
       
+      
+      public ContentDescriptionObject         ContentDescriptionObject         {get {return description;}}
+      public ExtendedContentDescriptionObject ExtendedContentDescriptionObject {get {return ext_description;}}
+
+      public string GetDescriptorString (params string [] names)
+      {
+         foreach (ContentDescriptor desc in GetDescriptors (names))
+            if (desc != null && desc.Type == DataType.Unicode && desc.ToString () != null)
+               return desc.ToString ();
+         
+         return null;
+      }
+      
+      public string [] GetDescriptorStrings (params string [] names)
+      {
+         return SplitAndClean (GetDescriptorString (names));
+      }
+      
+      public void SetDescriptorString (string value, params string [] names)
+      {
+         int i = (value != null && value.Trim () != String.Empty) ? 1 : 0;
+         
+         if (i == 1)
+            SetDescriptors (names [0], new ContentDescriptor (names [0], value));
+         
+         for (; i < names.Length; i ++)
+            RemoveDescriptors (names [i]);
+      }
+		
+      public void SetDescriptorStrings (string [] value, params string [] names)
+      {
+         SetDescriptorString (String.Join ("; ", value), names);
+      }
       
       //////////////////////////////////////////////////////////////////////////
       // private methods

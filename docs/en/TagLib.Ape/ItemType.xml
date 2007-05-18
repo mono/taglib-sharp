@@ -11,20 +11,32 @@
     <Member MemberName="Binary">
       <MemberSignature Language="C#" Value="Binary" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.Ape.ItemType</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Ape.ItemType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
     <Member MemberName="Text">
       <MemberSignature Language="C#" Value="Text" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.Ape.ItemType</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Ape.ItemType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
     <Member MemberName="Locator">
       <MemberSignature Language="C#" Value="Locator" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.Ape.ItemType</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Ape.ItemType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
   </Members>
   <Docs>

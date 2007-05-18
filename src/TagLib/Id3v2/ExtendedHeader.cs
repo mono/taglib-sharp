@@ -34,13 +34,13 @@ namespace TagLib.Id3v2
          size = 0;
       }
       
-      public uint Size {get {return size;}}
-      
-      public void SetData (ByteVector data)
+      public ExtendedHeader (ByteVector data)
       {
          Parse (data);
       }
-
+      
+      public uint Size {get {return size;}}
+      
       protected void Parse (ByteVector data)
       {
          size = SynchData.ToUInt (data.Mid (0, 4));

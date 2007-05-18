@@ -31,14 +31,14 @@ namespace TagLib.Id3v2
       // private properties
       //////////////////////////////////////////////////////////////////////////
       private uint major_version;
-      private uint revision_number;
+      private uint revision_number = 0;
 
-      private bool unsynchronisation;
-      private bool extended_header;
-      private bool experimental_indicator;
-      private bool footer_present;
+      private bool unsynchronisation      = false;
+      private bool extended_header        = false;
+      private bool experimental_indicator = false;
+      private bool footer_present         = false;
 
-      private uint tag_size;
+      private uint tag_size = 0;
 
       private static uint size = 10;
       
@@ -57,21 +57,10 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       public Header ()
       {
-         major_version          = 4;
-         revision_number        = 0;
-         unsynchronisation      = false;
-         extended_header        = false;
-         experimental_indicator = false;
-         footer_present         = false;
-         tag_size               = 0;
+         major_version = Tag.DefaultVersion;
       }
       
       public Header (ByteVector data) : this ()
-      {
-         Parse (data);
-      }
-      
-      public void SetData (ByteVector data)
       {
          Parse (data);
       }

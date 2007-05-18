@@ -1,3 +1,31 @@
+2007-05-18  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/File.cs: Reprivatize file_stream.
+	* src/TagLib/Id3v2/Footer.cs: Remove SetData.
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Id3v2/FrameFactory.cs: Don't load compressed or encrypted
+	frames rather than corrupting them.
+	* src/TagLib/Id3v2/FrameHeader.cs: Handle flags properly.
+	* src/TagLib/Id3v2/Header.cs: Remove SetData.
+	* src/TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
+	* src/TagLib/Id3v2/Frames/SynchronizedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:
+	* src/TagLib/Id3v2/Frames/UniqueFileIdentifierFrame.cs:
+	* src/TagLib/Id3v2/Frames/PrivateFrame.cs:
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs:
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs:
+	* src/TagLib/Id3v2/Frames/UnknownFrame.cs: Tidy up source.
+	* src/TagLib/Id3v2/ExtendedHeader.cs: Replace SetData with constructor.
+	* src/TagLib/Id3v2/Frame.cs: Improve support for frame flags.
+	* src/TagLib/ByteVector.cs: Privitize SetData.
+	* src/TagLib/Asf/Tag.cs: Provide easy access to multi-string
+	descriptors.
+	* src/TagLib/Mpeg4/AppleTag.cs: If AlbumArtists is empty, use
+	Performers. (The aART data box is pretty new and underused.)
+	* docs/en/*: Updated docs. Stripped duplicates. Filled some out.
+
 2007-05-15  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Id3v2/Tag.cs: Fix BPM storage.

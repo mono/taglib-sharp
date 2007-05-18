@@ -13,21 +13,42 @@
       <MemberSignature Language="C#" Value="public StringHandler ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Parse">
       <MemberSignature Language="C#" Value="public virtual string Parse (TagLib.ByteVector data);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="data" Type="TagLib.ByteVector" /></Parameters>
-      <Docs><param name="data">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="data">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Render">
       <MemberSignature Language="C#" Value="public virtual TagLib.ByteVector Render (string s);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="s" Type="System.String" /></Parameters>
-      <Docs><param name="s">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="s" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="s">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>

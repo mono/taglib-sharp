@@ -64,7 +64,7 @@ namespace TagLib
          Closed
       }
       
-      protected System.IO.Stream file_stream;
+      private System.IO.Stream file_stream;
       private IFileAbstraction file_abstraction;
       private string mime_type;
       private static uint buffer_size = 1024;
@@ -104,7 +104,7 @@ namespace TagLib
          
          Mode = AccessMode.Read;
          
-         if (length > buffer_size && (long) length > (Length - Tell))
+         if (Tell + length > Length)
             length = (int) (Length - Tell);
          
          byte [] buffer = new byte [length];

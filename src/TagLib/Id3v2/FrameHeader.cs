@@ -27,18 +27,17 @@ namespace TagLib.Id3v2
 {
    public class FrameHeader
    {
-#region Properties
-      private ByteVector frame_id;
-      private uint frame_size;
-      private byte[] flags;
-#endregion
+      #region Properties
+      private ByteVector frame_id = null;
+      private uint frame_size = 0;
+      private ushort flags = 0;
+      #endregion
       
-#region Constructors
+      
+      
+      #region Constructors
       public FrameHeader (ByteVector data, uint version)
       {
-         frame_id   = null;
-         frame_size = 0;
-         flags      = new byte [] {0,0};
          SetData (data, version);
       }
       
@@ -47,8 +46,10 @@ namespace TagLib.Id3v2
       }
       #endregion
       
+      
+      
       #region Public Methods
-      public void SetData (ByteVector data, uint version)
+      private void SetData (ByteVector data, uint version)
       {
          switch (version)
          {
@@ -63,8 +64,7 @@ namespace TagLib.Id3v2
             // to the steps to parse the frame size and flags.
             frame_size = (data.Count < 6) ? 0 : data.Mid (3, 3).ToUInt ();
             
-            flags [0] = 0;
-            flags [1] = 0;
+            flags = 0;
             
             return;
             
@@ -83,10 +83,9 @@ namespace TagLib.Id3v2
                return;
             
             // Store the flags internally as version 2.4.
-            flags [0] = (byte)((data [8] >> 1) & 0x70);
-            flags [1] = (byte)(((data [9] >> 4) & 0x08) |
-                               ((data [9] >> 4) & 0x04) |
-                               ((data [9] << 1) & 0x40));
+            flags = (ushort) (((data [8] << 7) & 0x7000) |
+                              ((data [9] >> 4) & 0x000C) |
+                              ((data [9] << 1) & 0x0040));
             
             return;
             
@@ -104,8 +103,7 @@ namespace TagLib.Id3v2
             if (data.Count < 10)
                return;
             
-            flags [0] = data [8];
-            flags [1] = data [9];
+            flags = data.Mid (8, 2).ToUShort ();
             
             return;
             
@@ -126,30 +124,21 @@ namespace TagLib.Id3v2
             return data;
             
          case 3:
+            ushort new_flags = (ushort) (((flags << 1) & 0xE000) |
+                                         ((flags << 4) & 0x00C0) |
+                                         ((flags >> 1) & 0x0020));
+            
             data.Add (ConvertId (frame_id, version));
             data.Add (ByteVector.FromUInt (frame_size));
-            data.Add ((byte) 0);
-            data.Add ((byte) 0);
+            data.Add (ByteVector.FromUShort (new_flags));
             
-            // TODO: MAKE IT SO WE CAN ACTUALLY RENDER THIS STUFF.
-            /*
-            data.Add ((byte)  ((flags [0] << 1) & 0xE0));
-            data.Add ((byte) (((flags [1] << 4) & 0x80) |
-                              ((flags [1] << 4) & 0x40) |
-                              ((flags [1] >> 1) & 0x20)));
-             */
             return data;
             
          case 4:
             data.Add (frame_id.Mid (0, 4));
             data.Add (SynchData.FromUInt (frame_size));
-            data.Add ((byte) 0);
-            data.Add ((byte) 0);
+            data.Add (ByteVector.FromUShort (flags));
             
-            // TODO: MAKE IT SO WE CAN ACTUALLY RENDER THIS STUFF.
-            /*
-            data.Add (flags);
-             */
             return data;
             
          default:
@@ -266,45 +255,53 @@ namespace TagLib.Id3v2
       
       public bool TagAlterPreservation
       {
-         get {return ((flags [0] >> 6) & 1) == 1;}
-         set
-         {
-            if (value)
-               flags [0] |= 0x40;
-            else
-               flags [0] &= 0xBF;
-         }
+         get {return (flags & 0x4000) == 0x4000;}
+         set {if (value) flags |= 0x4000; else flags &= 0xBFFF;}
       }
       
       public bool FileAlterPreservation
       {
-         get {return ((flags [0] >> 5) & 1) == 1;}
-         set
-         {
-            if (value)
-               flags [0] |= 0x20;
-            else
-               flags [0] &= 0xDF;
-         }
+         get {return (flags & 0x2000) == 0x2000;}
+         set {if (value) flags |= 0x2000; else flags &= 0xDFFF;}
       }
       
       public bool ReadOnly
       {
-         get {return ((flags [0] >> 4) & 1) == 1;}
-         set
-         {
-            if (value)
-               flags [0] |= 0x10;
-            else
-               flags [0] &= 0xEF;
-         }
+         get {return (flags & 0x1000) == 0x1000;}
+         set {if (value) flags |= 0x1000; else flags &= 0xEFFF;}
       }
       
-      public bool GroupingIdentity    {get {return ((flags [1] >> 6) & 1) == 1;}}
-      public bool Compression         {get {return ((flags [1] >> 3) & 1) == 1;}}
-      public bool Encryption          {get {return ((flags [1] >> 2) & 1) == 1;}}
-      public bool Unsycronisation     {get {return ((flags [1] >> 1) & 1) == 1;}}
-      public bool DataLengthIndicator {get {return ((flags [1]     ) & 1) == 1;}}
+      public bool GroupingIdentity
+      {
+         get {return (flags & 0x0040) == 0x0040;}
+         set {if (value) flags |= 0x0040; else flags &= 0xFFBF;}
+      }
+      
+      public bool Compression
+      {
+         get {return (flags & 0x0008) == 0x0008;}
+         set {if (value) throw new UnsupportedFormatException ("Compression not supported.");}
+         /*set {if (value) flags |= 0x0008; else flags &= 0xFFF7;}*/
+      }
+      
+      public bool Encryption
+      {
+         get {return (flags & 0x0004) == 0x0004;}
+         set {if (value) throw new UnsupportedFormatException ("Encryption not supported.");}
+         /*set {if (value) flags |= 0x0004; else flags &= 0xFFFB;}*/
+      }
+      
+      public bool Unsychronisation
+      {
+         get {return (flags & 0x0002) == 0x0002;}
+         set {if (value) flags |= 0x0002; else flags &= 0xFFFD;}
+      }
+      
+      public bool DataLengthIndicator
+      {
+         get {return (flags & 0x0001) == 0x0001;}
+         set {if (value) flags |= 0x0001; else flags &= 0xFFFE;}
+      }
       #endregion
    }
 }

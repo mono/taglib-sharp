@@ -41,33 +41,36 @@ namespace TagLib.Id3v2
    
    public class RelativeVolumeFrame : Frame
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
-      private string identification;
-      private Dictionary<ChannelType,ChannelData> channels;
+      #region Private Properties
+      private string identification = null;
+      private Dictionary<ChannelType,ChannelData> channels = new Dictionary<ChannelType,ChannelData> ();
+      #endregion
       
       
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
+      
+      #region Constructors
       public RelativeVolumeFrame (ByteVector data, uint version) : base (data, version)
       {
-         identification = null;
-         channels = new Dictionary<ChannelType,ChannelData> ();
-         
          SetData (data, 0, version);
       }
-
+      
       public RelativeVolumeFrame (string identification) : base ("RVA2", 4)
       {
          this.identification = identification;
-         channels = new Dictionary<ChannelType,ChannelData> ();
       }
-
-      public override string ToString ()
+      
+      protected internal RelativeVolumeFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
       {
-         return identification;
+         ParseFields (FieldData (data, offset, version), version);
+      }
+      #endregion
+      
+      
+      
+      #region Public Properties
+      public string Identification
+      {
+         get {return identification;}
       }
       
       public ChannelType [] Channels
@@ -78,6 +81,15 @@ namespace TagLib.Id3v2
             channels.Keys.CopyTo (output, channels.Count);
             return output;
          }
+      }
+      #endregion
+      
+      
+      
+      #region Public Methods
+      public override string ToString ()
+      {
+         return identification;
       }
       
       public short VolumeAdjustmentIndex (ChannelType type)
@@ -125,7 +137,11 @@ namespace TagLib.Id3v2
       {
          SetPeakVolumeIndex ((ulong) (adjustment * 512.0), type);
       }
+      #endregion
       
+      
+      
+      #region Public Static Methods
       public static RelativeVolumeFrame Get (Tag tag, string identification, bool create)
       {
          foreach (Frame f in tag.GetFrames ("RVA2"))
@@ -138,19 +154,11 @@ namespace TagLib.Id3v2
          tag.AddFrame (frame);
          return frame;
       }
+      #endregion
       
       
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
-      public string Identification
-      {
-         get {return identification;}
-      }
-
-      //////////////////////////////////////////////////////////////////////////
-      // protected methods
-      //////////////////////////////////////////////////////////////////////////
+      
+      #region Protected Properties
       protected override void ParseFields (ByteVector data, uint version)
       {
          int pos = data.Find (TextDelimiter (StringType.Latin1));
@@ -201,14 +209,6 @@ namespace TagLib.Id3v2
          return data;
       }
       
-      protected internal RelativeVolumeFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
-      {
-         identification = null;
-         channels = new Dictionary<ChannelType,ChannelData> ();
-         
-         ParseFields (FieldData (data, offset, version), version);
-      }
-      
       protected ulong ParsePeakVolume (ByteVector data)
       {
          if (data.Count == 0)
@@ -251,19 +251,18 @@ namespace TagLib.Id3v2
          }
          return v;
       }
+      #endregion
       
       
-      //////////////////////////////////////////////////////////////////////////
-      // private methods
-      //////////////////////////////////////////////////////////////////////////
+      
+      #region Private Static Methods
       private static int BitsToBytes (int i)
       {
          return i % 8 == 0 ? i / 8 : (i - i % 8) / 8 + 1;
       }
+      #endregion
       
-      //////////////////////////////////////////////////////////////////////////
-      // ChannelData class
-      //////////////////////////////////////////////////////////////////////////
+      #region Classes
       private class ChannelData
       {
          public ChannelType ChannelType;
@@ -275,6 +274,7 @@ namespace TagLib.Id3v2
             VolumeAdjustment = 0;
             PeakVolume = 0;
          }
-      };
+      }
+      #endregion
    }
 }

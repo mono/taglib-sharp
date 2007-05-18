@@ -47,14 +47,27 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public File (string file, TagLib.ReadStyle properties_style);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="file" Type="System.String" /><Parameter Name="properties_style" Type="TagLib.ReadStyle" /></Parameters>
-      <Docs><param name="file">To be added.</param><param name="properties_style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="file" Type="System.String" />
+        <Parameter Name="properties_style" Type="TagLib.ReadStyle" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <param name="properties_style">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="FileIdentifier">
       <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector FileIdentifier;" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>

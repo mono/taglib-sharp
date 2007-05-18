@@ -27,29 +27,54 @@ namespace TagLib.Id3v2
 {
    public class TextIdentificationFrame : Frame
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
-      StringType text_encoding;
-      StringList field_list;
+      #region Private Properties
+      private StringType encoding   = StringType.UTF8;
+      private StringList field_list = new StringList ();
+      #endregion
       
       
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
+      
+      #region Constructors
       public TextIdentificationFrame (ByteVector type, StringType encoding) : base (type, 4)
       {
-         field_list = new StringList ();
-         text_encoding = encoding;
+         this.encoding = encoding;
       }
 
       public TextIdentificationFrame (ByteVector data, uint version) : base (data, version)
       {
-         field_list = new StringList ();
-         text_encoding = StringType.UTF8;
          SetData (data, 0, version);
       }
 
+      protected internal TextIdentificationFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
+      {
+         ParseFields (FieldData (data, offset, version), version);
+         
+         // Bad tags may have one or more nul characters at the end of a string,
+         // resulting in empty strings at the end of the FieldList. Strip them
+         // off.
+         while (field_list.Count != 0 && field_list [field_list.Count - 1] == String.Empty)
+            field_list.RemoveAt (field_list.Count - 1);
+      }
+      #endregion
+      
+      
+      
+      #region Public Properties
+      public StringList FieldList
+      {
+        get {return new StringList (field_list);}
+      }
+      
+      public StringType TextEncoding
+      {
+         get {return encoding;}
+         set {encoding = value;}
+      }
+      #endregion
+      
+      
+      
+      #region Public Methods
       public void SetText (StringList l)
       {
          field_list.Clear ();
@@ -66,8 +91,11 @@ namespace TagLib.Id3v2
       {
          return field_list.ToString ();
       }
+      #endregion
       
       
+      
+      #region Public Static Methods
       public static TextIdentificationFrame Get (Tag tag, ByteVector type, StringType encoding, bool create)
       {
          foreach (Frame f in tag.GetFrames (type))
@@ -91,36 +119,22 @@ namespace TagLib.Id3v2
       {
          return Get (tag, type, false);
       }
+      #endregion
       
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
-      public StringList FieldList
-      {
-        get {return new StringList (field_list);}
-      }
       
-      public StringType TextEncoding
-      {
-         get {return text_encoding;}
-         set {text_encoding = value;}
-      }
-
-
-      //////////////////////////////////////////////////////////////////////////
-      // protected methods
-      //////////////////////////////////////////////////////////////////////////
+      
+      #region Protected Methods
       protected override void ParseFields (ByteVector data, uint version)
       {
          // read the string data type (the first byte of the field data)
-         text_encoding = (StringType) data [0];
+         encoding = (StringType) data [0];
          field_list.Clear ();
          
          if (version > 3 || FrameId == "TXXX")
-            field_list.Add (data.ToStrings (text_encoding, 1));
+            field_list.Add (data.ToStrings (encoding, 1));
          else
          {
-            string value = data.ToString (text_encoding, 1);
+            string value = data.ToString (encoding, 1);
 
             if (value.Length == 0 || value [0] == '\0')
                return;
@@ -151,7 +165,7 @@ namespace TagLib.Id3v2
 
       protected override ByteVector RenderFields (uint version)
       {
-         StringType encoding = CorrectEncoding (text_encoding, version);
+         StringType encoding = CorrectEncoding (TextEncoding, version);
          ByteVector v = new ByteVector ((byte) encoding);
          
          if (version > 3)
@@ -183,27 +197,14 @@ namespace TagLib.Id3v2
          
          return v;
       }
-
-      protected internal TextIdentificationFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
-      {
-         field_list = new StringList ();
-         text_encoding = StringType.UTF8;
-         ParseFields (FieldData (data, offset, version), version);
-         
-         // Bad tags may have one or more nul characters at the end of a string,
-         // resulting in empty strings at the end of the FieldList. Strip them
-         // off.
-         while (field_list.Count != 0 && field_list [field_list.Count - 1] == String.Empty)
-            field_list.RemoveAt (field_list.Count - 1);
-      }
+      #endregion
    }
-
-
+   
+   
+   
    public class UserTextIdentificationFrame : TextIdentificationFrame
    {
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
+      #region Constructors
       public UserTextIdentificationFrame (string description, StringType encoding) : base ("TXXX", encoding)
       {
          StringList l = new StringList ();
@@ -212,60 +213,21 @@ namespace TagLib.Id3v2
          
          base.SetText (l);
       }
-
+      
       public UserTextIdentificationFrame (ByteVector data, uint version) : base (data, version)
       {
          CheckFields ();
       }
-
-      public override string ToString ()
-      {
-         return "[" + Description + "] " + FieldList.ToString ();
-      }
-
-      public override void SetText (string text)
-      {
-         StringList l = new StringList (Description);
-         l.Add (text);
-         
-         base.SetText (l);
-      }
-
-      new public void SetText (StringList fields)
-      {
-         StringList l = new StringList (Description);
-         l.Add (fields);
-         
-         base.SetText (l);
-      }
       
-      public static UserTextIdentificationFrame Get (Tag tag, string description, StringType type, bool create)
+      protected internal UserTextIdentificationFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (data, offset, h, version)
       {
-         foreach (Frame f in tag.GetFrames ("TXXX"))
-            if (f is UserTextIdentificationFrame && (f as UserTextIdentificationFrame).Description == description)
-               return f as UserTextIdentificationFrame;
-         
-         if (!create)
-            return null;
-         
-         UserTextIdentificationFrame frame = new UserTextIdentificationFrame (description, type);
-         tag.AddFrame (frame);
-         return frame;
+         CheckFields ();
       }
-
-      public static UserTextIdentificationFrame Get (Tag tag, string description, bool create)
-      {
-         return Get (tag, description, TagLib.Id3v2.Tag.DefaultEncoding, create);
-      }
+      #endregion
       
-      public static UserTextIdentificationFrame Get (Tag tag, string description)
-      {
-         return Get (tag, description, false);
-      }
       
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
+      
+      #region Public Properties
       public string Description
       {
          get {return !base.FieldList.IsEmpty ? base.FieldList [0] : null;}
@@ -292,11 +254,64 @@ namespace TagLib.Id3v2
             return l;
          }
       }
+      #endregion
       
       
-      //////////////////////////////////////////////////////////////////////////
-      // private methods
-      //////////////////////////////////////////////////////////////////////////
+      
+      #region Public Methods
+      public override string ToString ()
+      {
+         return "[" + Description + "] " + FieldList.ToString ();
+      }
+
+      public override void SetText (string text)
+      {
+         StringList l = new StringList (Description);
+         l.Add (text);
+         
+         base.SetText (l);
+      }
+
+      new public void SetText (StringList fields)
+      {
+         StringList l = new StringList (Description);
+         l.Add (fields);
+         
+         base.SetText (l);
+      }
+      #endregion
+      
+      
+      
+      #region Public Static Methods
+      public static UserTextIdentificationFrame Get (Tag tag, string description, StringType type, bool create)
+      {
+         foreach (Frame f in tag.GetFrames ("TXXX"))
+            if (f is UserTextIdentificationFrame && (f as UserTextIdentificationFrame).Description == description)
+               return f as UserTextIdentificationFrame;
+         
+         if (!create)
+            return null;
+         
+         UserTextIdentificationFrame frame = new UserTextIdentificationFrame (description, type);
+         tag.AddFrame (frame);
+         return frame;
+      }
+
+      public static UserTextIdentificationFrame Get (Tag tag, string description, bool create)
+      {
+         return Get (tag, description, TagLib.Id3v2.Tag.DefaultEncoding, create);
+      }
+      
+      public static UserTextIdentificationFrame Get (Tag tag, string description)
+      {
+         return Get (tag, description, false);
+      }
+      #endregion
+      
+      
+      
+      #region Private Properties
       private void CheckFields ()
       {
          int fields = base.FieldList.Count;
@@ -307,14 +322,6 @@ namespace TagLib.Id3v2
          if(fields <= 1)
             SetText (String.Empty);
       }
-      
-      
-      //////////////////////////////////////////////////////////////////////////
-      // protected methods
-      //////////////////////////////////////////////////////////////////////////
-      protected internal UserTextIdentificationFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (data, offset, h, version)
-      {
-         CheckFields ();
-      }
+      #endregion
    }
 }

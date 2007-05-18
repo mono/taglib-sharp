@@ -1,4 +1,4 @@
-DOC_UPDATER = @MONODOCER@ -delete
+DOC_UPDATER = @MONODOCER@ -delete -pretty
 DOC_ASSEMBLER = @MDASSEMBLER@ --out taglib-sharp-docs --ecma
 
 ASSEMBLIES = \

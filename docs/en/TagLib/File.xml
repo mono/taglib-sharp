@@ -12,223 +12,561 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public File (string file);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="file" Type="System.String" /></Parameters>
-      <Docs><param name="file">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member>
-    <Member MemberName="file_stream">
-      <MemberSignature Language="C#" Value="protected System.IO.Stream file_stream;" />
-      <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>System.IO.Stream</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="file" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="file">A file name relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.File" /> for a specified file name.</summary>
+        <remarks />
+      </Docs>
     </Member>
     <Member MemberName="Save">
       <MemberSignature Language="C#" Value="public abstract void Save ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
       <Parameters />
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="ReadBlock">
       <MemberSignature Language="C#" Value="public TagLib.ByteVector ReadBlock (int length);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="length" Type="System.Int32" /></Parameters>
-      <Docs><param name="length">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="length" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="length">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="ReadBlock">
       <MemberSignature Language="C#" Value="public TagLib.ByteVector ReadBlock (uint length);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="length" Type="System.UInt32" /></Parameters>
-      <Docs><param name="length">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="length" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="length">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="WriteBlock">
       <MemberSignature Language="C#" Value="public void WriteBlock (TagLib.ByteVector data);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="data" Type="TagLib.ByteVector" /></Parameters>
-      <Docs><param name="data">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing the data to write.</param>
+        <summary>Writes a block of data at the current seek position.</summary>
+        <remarks>This will overwrite any existing data at the seek position and append new data to the file if writing past the current end.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Find">
       <MemberSignature Language="C#" Value="public long Find (TagLib.ByteVector pattern, long from_offset, TagLib.ByteVector before);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="pattern" Type="TagLib.ByteVector" /><Parameter Name="from_offset" Type="System.Int64" /><Parameter Name="before" Type="TagLib.ByteVector" /></Parameters>
-      <Docs><param name="pattern">To be added.</param><param name="from_offset">To be added.</param><param name="before">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="pattern" Type="TagLib.ByteVector" />
+        <Parameter Name="from_offset" Type="System.Int64" />
+        <Parameter Name="before" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="pattern">To be added.</param>
+        <param name="from_offset">To be added.</param>
+        <param name="before">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Find">
       <MemberSignature Language="C#" Value="public long Find (TagLib.ByteVector pattern, long from_offset);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="pattern" Type="TagLib.ByteVector" /><Parameter Name="from_offset" Type="System.Int64" /></Parameters>
-      <Docs><param name="pattern">To be added.</param><param name="from_offset">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="pattern" Type="TagLib.ByteVector" />
+        <Parameter Name="from_offset" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="pattern">To be added.</param>
+        <param name="from_offset">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Find">
       <MemberSignature Language="C#" Value="public long Find (TagLib.ByteVector pattern);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="pattern" Type="TagLib.ByteVector" /></Parameters>
-      <Docs><param name="pattern">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="pattern" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="pattern">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="RFind">
       <MemberSignature Language="C#" Value="public long RFind (TagLib.ByteVector pattern, long from_offset);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="pattern" Type="TagLib.ByteVector" /><Parameter Name="from_offset" Type="System.Int64" /></Parameters>
-      <Docs><param name="pattern">To be added.</param><param name="from_offset">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="pattern" Type="TagLib.ByteVector" />
+        <Parameter Name="from_offset" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="pattern">To be added.</param>
+        <param name="from_offset">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="RFind">
       <MemberSignature Language="C#" Value="public long RFind (TagLib.ByteVector pattern);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="pattern" Type="TagLib.ByteVector" /></Parameters>
-      <Docs><param name="pattern">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="pattern" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="pattern">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Insert">
       <MemberSignature Language="C#" Value="public void Insert (TagLib.ByteVector data, long start, long replace);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="data" Type="TagLib.ByteVector" /><Parameter Name="start" Type="System.Int64" /><Parameter Name="replace" Type="System.Int64" /></Parameters>
-      <Docs><param name="data">To be added.</param><param name="start">To be added.</param><param name="replace">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+        <Parameter Name="start" Type="System.Int64" />
+        <Parameter Name="replace" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="data">To be added.</param>
+        <param name="start">To be added.</param>
+        <param name="replace">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Insert">
       <MemberSignature Language="C#" Value="public void Insert (TagLib.ByteVector data, long start);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="data" Type="TagLib.ByteVector" /><Parameter Name="start" Type="System.Int64" /></Parameters>
-      <Docs><param name="data">To be added.</param><param name="start">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+        <Parameter Name="start" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="data">To be added.</param>
+        <param name="start">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="RemoveBlock">
       <MemberSignature Language="C#" Value="public void RemoveBlock (long start, long length);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="start" Type="System.Int64" /><Parameter Name="length" Type="System.Int64" /></Parameters>
-      <Docs><param name="start">To be added.</param><param name="length">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="start" Type="System.Int64" />
+        <Parameter Name="length" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="start">To be added.</param>
+        <param name="length">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Seek">
       <MemberSignature Language="C#" Value="public void Seek (long offset, System.IO.SeekOrigin p);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="offset" Type="System.Int64" /><Parameter Name="p" Type="System.IO.SeekOrigin" /></Parameters>
-      <Docs><param name="offset">To be added.</param><param name="p">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="offset" Type="System.Int64" />
+        <Parameter Name="p" Type="System.IO.SeekOrigin" />
+      </Parameters>
+      <Docs>
+        <param name="offset">To be added.</param>
+        <param name="p">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Seek">
       <MemberSignature Language="C#" Value="public void Seek (long offset);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="offset" Type="System.Int64" /></Parameters>
-      <Docs><param name="offset">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="offset" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="offset">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="RemoveTags">
       <MemberSignature Language="C#" Value="public abstract void RemoveTags (TagLib.TagTypes types);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="types" Type="TagLib.TagTypes" /></Parameters>
-      <Docs><param name="types">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="types" Type="TagLib.TagTypes" />
+      </Parameters>
+      <Docs>
+        <param name="types">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="GetTag">
       <MemberSignature Language="C#" Value="public abstract TagLib.Tag GetTag (TagLib.TagTypes type, bool create);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.Tag</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="type" Type="TagLib.TagTypes" /><Parameter Name="create" Type="System.Boolean" /></Parameters>
-      <Docs><param name="type">To be added.</param><param name="create">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Tag</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.TagTypes" />
+        <Parameter Name="create" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <param name="create">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>A <see cref="T:TagLib.Tag" /> if one was found or created, otherwise <see langword="null" />.</returns>
+        <remarks>GetTag can be used for accessing various non-abstracted features of tags.
+<example><code lang="C#">string [] GetMoods (TagLib.File file)
+{
+   get
+   {
+      TagLib.Id3v2.Tag id3 = file.GetTag (TagLib.TagTypes.Id3v2);
+      if (id3 != null)
+      {
+         TextIdentificationFrame f = TextIdentificationFrame.Get (this, "TMOO");
+         if (f != null) return f.FieldList.ToArray ();
+      }
+      
+      TagLib.Asf.Tag asf = file.GetTag (TagLib.TagTypes.Asf);
+      if (asf != null)
+      {
+         string [] value = asf.GetDescriptorStrings ("WM/Mood", "Mood");
+         if (value.Length &gt; 0) return value;
+      }
+      
+      TagLib.Ape.Tag ape = file.GetTag (TagLib.TagTypes.Ape);
+      if (ape != null)
+      {
+         Item item = ape.GetItem ("MOOD");
+         if (item != null) return item.ToStringArray ();
+      }
+      
+      // Whatever tag types you want...
+      
+      return new string [] {};
+   }
+}</code></example></remarks>
+      </Docs>
     </Member>
     <Member MemberName="GetTag">
       <MemberSignature Language="C#" Value="public TagLib.Tag GetTag (TagLib.TagTypes type);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.Tag</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="type" Type="TagLib.TagTypes" /></Parameters>
-      <Docs><param name="type">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Tag</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.TagTypes" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Create">
       <MemberSignature Language="C#" Value="public static TagLib.File Create (string path);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.File</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="path" Type="System.String" /></Parameters>
-      <Docs><param name="path">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.File</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="path" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="path">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Create">
       <MemberSignature Language="C#" Value="public static TagLib.File Create (string path, TagLib.ReadStyle style);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.File</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="path" Type="System.String" /><Parameter Name="style" Type="TagLib.ReadStyle" /></Parameters>
-      <Docs><param name="path">To be added.</param><param name="style">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.File</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="path" Type="System.String" />
+        <Parameter Name="style" Type="TagLib.ReadStyle" />
+      </Parameters>
+      <Docs>
+        <param name="path">To be added.</param>
+        <param name="style">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Create">
       <MemberSignature Language="C#" Value="public static TagLib.File Create (string path, string mimetype, TagLib.ReadStyle style);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.File</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="path" Type="System.String" /><Parameter Name="mimetype" Type="System.String" /><Parameter Name="style" Type="TagLib.ReadStyle" /></Parameters>
-      <Docs><param name="path">To be added.</param><param name="mimetype">To be added.</param><param name="style">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.File</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="path" Type="System.String" />
+        <Parameter Name="mimetype" Type="System.String" />
+        <Parameter Name="style" Type="TagLib.ReadStyle" />
+      </Parameters>
+      <Docs>
+        <param name="path">To be added.</param>
+        <param name="mimetype">To be added.</param>
+        <param name="style">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="AddFileTypeResolver">
       <MemberSignature Language="C#" Value="public static void AddFileTypeResolver (TagLib.File.FileTypeResolver resolver);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="resolver" Type="TagLib.File+FileTypeResolver" /></Parameters>
-      <Docs><param name="resolver">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="resolver" Type="TagLib.File+FileTypeResolver" />
+      </Parameters>
+      <Docs>
+        <param name="resolver">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="SetFileAbstractionCreator">
       <MemberSignature Language="C#" Value="public static void SetFileAbstractionCreator (TagLib.File.FileAbstractionCreator creator);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="creator" Type="TagLib.File+FileAbstractionCreator" /></Parameters>
-      <Docs><param name="creator">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="creator" Type="TagLib.File+FileAbstractionCreator" />
+      </Parameters>
+      <Docs>
+        <param name="creator">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Truncate">
       <MemberSignature Language="C#" Value="protected void Truncate (long length);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="length" Type="System.Int64" /></Parameters>
-      <Docs><param name="length">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="length" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="length">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Name">
       <MemberSignature Language="C#" Value="public string Name { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="MimeType">
       <MemberSignature Language="C#" Value="public string MimeType { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Tag">
       <MemberSignature Language="C#" Value="public abstract TagLib.Tag Tag { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.Tag</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Tag</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a generic representation of all of the tags contained within the current instance.</summary>
+        <value>A <see cref="T:TagLib.Tag" /> representing all the tags in the current instance. This will typically be a combination of tags such setting the value for this <see cref="T:TagLib.Tag" /> will set the value for each <see cref="T:TagLib.Tag" /> in the current instance.</value>
+        <remarks>To access or add a specific type of tag, <see cref="M:TagLib.File.GetTag(TagLib.TagTypes,bool)" /> should be used.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Properties">
       <MemberSignature Language="C#" Value="public abstract TagLib.Properties Properties { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.Properties</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Properties</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Tell">
       <MemberSignature Language="C#" Value="public long Tell { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the file seek position in the current instance.</summary>
+        <value>A <see cref="T:System.Int64" /> indicating the current position of the read/write pointer in number of bytes from the beginning of the file, or 0 if the file is not open for reading or writing.</value>
+        <remarks />
+      </Docs>
     </Member>
     <Member MemberName="Length">
       <MemberSignature Language="C#" Value="public long Length { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Mode">
       <MemberSignature Language="C#" Value="public TagLib.File.AccessMode Mode { set; get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.File+AccessMode</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.File+AccessMode</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="BufferSize">
       <MemberSignature Language="C#" Value="public static uint BufferSize { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetFileAbstractionCreator">
+      <MemberSignature Language="C#" Value="public static TagLib.File.FileAbstractionCreator GetFileAbstractionCreator ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.File+FileAbstractionCreator</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PopFileAbstractionCreator">
+      <MemberSignature Language="C#" Value="public static TagLib.File.FileAbstractionCreator PopFileAbstractionCreator ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.File+FileAbstractionCreator</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PushFileAbstractionCreator">
+      <MemberSignature Language="C#" Value="public static void PushFileAbstractionCreator (TagLib.File.FileAbstractionCreator creator);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="creator" Type="TagLib.File+FileAbstractionCreator" />
+      </Parameters>
+      <Docs>
+        <param name="creator">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>

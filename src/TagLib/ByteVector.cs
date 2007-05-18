@@ -155,24 +155,6 @@ namespace TagLib
         
         #region Methods
 
-        public void SetData(byte [] value, int length)
-        {
-            if(length >= value.Length) {
-                SetData(value);
-            } else {
-                byte [] array = new byte[length];
-                for(int i = 0; i < length; i++) {
-                    array[i] = value[i];
-                }
-                SetData(array);
-            }
-        }
-
-        public void SetData(byte [] value)
-        {
-            Clear();
-            Add(value);
-        }
 
         public ByteVector Mid(int index, int length)
         {
@@ -513,6 +495,25 @@ namespace TagLib
                pos += align;
             }
             return l.ToArray ();
+        }
+        
+        private void SetData(byte [] value, int length)
+        {
+            if(length >= value.Length) {
+                SetData(value);
+            } else {
+                byte [] array = new byte[length];
+                for(int i = 0; i < length; i++) {
+                    array[i] = value[i];
+                }
+                SetData(array);
+            }
+        }
+
+        private void SetData(byte [] value)
+        {
+            Clear();
+            Add(value);
         }
         #endregion
         

@@ -9,24 +9,44 @@
     <Member MemberName="Duration">
       <MemberSignature Language="C#" Value="public TimeSpan Duration { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.TimeSpan</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the duration of the media represented by the codec, if applicable.</summary>
+        <value>A <see cref="T:System.TimeSpan" /> describing the length of the stream using the codec. If the codec does not contain information on the duration, <see cref="F:System.TimeSpan.Zero" /> is returned.</value>
+        <remarks />
+      </Docs>
     </Member>
     <Member MemberName="MediaTypes">
       <MemberSignature Language="C#" Value="public TagLib.MediaTypes MediaTypes { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.MediaTypes</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.MediaTypes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the media types contained within the current instance.</summary>
+        <value>A <see cref="T:TagLib.MediaTypes" /> containing flags describing what media types are detailed in the current instance.</value>
+        <remarks>
+          <para>Containing a specific media type implies that the current instance also inherits the relevant codec. ie. <see cref="F:TagLib.MediaTypes.Audio" /> implies that the current instance inherits <see cref="T:TagLib.IAudioCodec" />. This relation is one directional, though as an instance inheriting <see cref="T:TagLib.IAudioCodec" /> might not contain relevant audio information.</para>
+        </remarks>
+      </Docs>
     </Member>
     <Member MemberName="Description">
       <MemberSignature Language="C#" Value="public string Description { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a plain text description of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> describing the codec.</value>
+        <remarks>This string provides a user readable explanation of the codec and is useful in the display of file information to the user.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Interface providing the most basic information about a media codec.</summary>
     <remarks>To be added.</remarks>
   </Docs>
 </Type>

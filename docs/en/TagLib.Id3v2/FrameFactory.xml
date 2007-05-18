@@ -9,26 +9,55 @@
   </Base>
   <Interfaces />
   <Members>
-    <Member MemberName="CreateFrame">
-      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.Frame CreateFrame (TagLib.ByteVector data, int offset, uint version);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.Id3v2.Frame</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="data" Type="TagLib.ByteVector" /><Parameter Name="offset" Type="System.Int32" /><Parameter Name="version" Type="System.UInt32" /></Parameters>
-      <Docs><param name="data">To be added.</param><param name="offset">To be added.</param><param name="version">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member>
     <Member MemberName="AddFrameCreator">
       <MemberSignature Language="C#" Value="public static void AddFrameCreator (TagLib.Id3v2.FrameFactory.FrameCreator creator);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="creator" Type="TagLib.Id3v2.FrameFactory+FrameCreator" /></Parameters>
-      <Docs><param name="creator">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="creator" Type="TagLib.Id3v2.FrameFactory+FrameCreator" />
+      </Parameters>
+      <Docs>
+        <param name="creator">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="UpdateGenre">
       <MemberSignature Language="C#" Value="public static void UpdateGenre (TagLib.Id3v2.TextIdentificationFrame frame);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="frame" Type="TagLib.Id3v2.TextIdentificationFrame" /></Parameters>
-      <Docs><param name="frame">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="frame" Type="TagLib.Id3v2.TextIdentificationFrame" />
+      </Parameters>
+      <Docs>
+        <param name="frame">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateFrame">
+      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.Frame CreateFrame (TagLib.ByteVector data, ref int offset, uint version);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.Frame</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+        <Parameter Name="offset" Type="System.Int32&amp;" RefType="ref" />
+        <Parameter Name="version" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="data">To be added.</param>
+        <param name="offset">To be added.</param>
+        <param name="version">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>

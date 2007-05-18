@@ -12,64 +12,166 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public UnsynchronisedLyricsFrame (string description, TagLib.ByteVector language, TagLib.StringType encoding);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="description" Type="System.String" /><Parameter Name="language" Type="TagLib.ByteVector" /><Parameter Name="encoding" Type="TagLib.StringType" /></Parameters>
-      <Docs><param name="description">To be added.</param><param name="language">To be added.</param><param name="encoding">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="description" Type="System.String" />
+        <Parameter Name="language" Type="TagLib.ByteVector" />
+        <Parameter Name="encoding" Type="TagLib.StringType" />
+      </Parameters>
+      <Docs>
+        <param name="description">To be added.</param>
+        <param name="language">To be added.</param>
+        <param name="encoding">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public UnsynchronisedLyricsFrame (string description, TagLib.ByteVector language);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="description" Type="System.String" /><Parameter Name="language" Type="TagLib.ByteVector" /></Parameters>
-      <Docs><param name="description">To be added.</param><param name="language">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="description" Type="System.String" />
+        <Parameter Name="language" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="description">To be added.</param>
+        <param name="language">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public UnsynchronisedLyricsFrame (string description);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="description" Type="System.String" /></Parameters>
-      <Docs><param name="description">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="description" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="description">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public UnsynchronisedLyricsFrame (TagLib.ByteVector data, uint version);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="data" Type="TagLib.ByteVector" /><Parameter Name="version" Type="System.UInt32" /></Parameters>
-      <Docs><param name="data">To be added.</param><param name="version">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+        <Parameter Name="version" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="data">To be added.</param>
+        <param name="version">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Get">
       <MemberSignature Language="C#" Value="public static TagLib.Id3v2.UnsynchronisedLyricsFrame Get (TagLib.Id3v2.Tag tag, string description, TagLib.ByteVector language, bool create);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.Id3v2.UnsynchronisedLyricsFrame</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="tag" Type="TagLib.Id3v2.Tag" /><Parameter Name="description" Type="System.String" /><Parameter Name="language" Type="TagLib.ByteVector" /><Parameter Name="create" Type="System.Boolean" /></Parameters>
-      <Docs><param name="tag">To be added.</param><param name="description">To be added.</param><param name="language">To be added.</param><param name="create">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member>
-    <Member MemberName="GetPreferred">
-      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.UnsynchronisedLyricsFrame GetPreferred (TagLib.Id3v2.Tag tag, string description, TagLib.ByteVector language, bool create);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.Id3v2.UnsynchronisedLyricsFrame</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="tag" Type="TagLib.Id3v2.Tag" /><Parameter Name="description" Type="System.String" /><Parameter Name="language" Type="TagLib.ByteVector" /><Parameter Name="create" Type="System.Boolean" /></Parameters>
-      <Docs><param name="tag">To be added.</param><param name="description">To be added.</param><param name="language">To be added.</param><param name="create">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.UnsynchronisedLyricsFrame</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="tag" Type="TagLib.Id3v2.Tag" />
+        <Parameter Name="description" Type="System.String" />
+        <Parameter Name="language" Type="TagLib.ByteVector" />
+        <Parameter Name="create" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="tag">To be added.</param>
+        <param name="description">To be added.</param>
+        <param name="language">To be added.</param>
+        <param name="create">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="TextEncoding">
       <MemberSignature Language="C#" Value="public TagLib.StringType TextEncoding { set; get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.StringType</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.StringType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Language">
       <MemberSignature Language="C#" Value="public TagLib.ByteVector Language { set; get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Description">
       <MemberSignature Language="C#" Value="public string Description { set; get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Text">
       <MemberSignature Language="C#" Value="public string Text { set; get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetPreferred">
+      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.UnsynchronisedLyricsFrame GetPreferred (TagLib.Id3v2.Tag tag, string description, TagLib.ByteVector language);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.UnsynchronisedLyricsFrame</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="tag" Type="TagLib.Id3v2.Tag" />
+        <Parameter Name="description" Type="System.String" />
+        <Parameter Name="language" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="tag">To be added.</param>
+        <param name="description">To be added.</param>
+        <param name="language">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected UnsynchronisedLyricsFrame (TagLib.ByteVector data, int offset, TagLib.Id3v2.FrameHeader h, uint version);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+        <Parameter Name="offset" Type="System.Int32" />
+        <Parameter Name="h" Type="TagLib.Id3v2.FrameHeader" />
+        <Parameter Name="version" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="data">To be added.</param>
+        <param name="offset">To be added.</param>
+        <param name="h">To be added.</param>
+        <param name="version">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>

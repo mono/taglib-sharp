@@ -16,14 +16,102 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public VideoHeader (TagLib.File file, long offset);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="file" Type="TagLib.File" /><Parameter Name="offset" Type="System.Int64" /></Parameters>
-      <Docs><param name="file">To be added.</param><param name="offset">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="file" Type="TagLib.File" />
+        <Parameter Name="offset" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <param name="offset">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
-    
-    
-    
-    
-  <Member MemberName="VideoWidth"><MemberSignature Language="C#" Value="public int VideoWidth { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="VideoHeight"><MemberSignature Language="C#" Value="public int VideoHeight { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="VideoFrameRate"><MemberSignature Language="C#" Value="public double VideoFrameRate { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Double</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="VideoBitrate"><MemberSignature Language="C#" Value="public int VideoBitrate { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Description"><MemberSignature Language="C#" Value="public string Description { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="MediaTypes"><MemberSignature Language="C#" Value="public TagLib.MediaTypes MediaTypes { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.MediaTypes</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Duration"><MemberSignature Language="C#" Value="public TimeSpan Duration { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="VideoWidth"><MemberSignature Language="C#" Value="public int VideoWidth { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="VideoHeight"><MemberSignature Language="C#" Value="public int VideoHeight { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="VideoFrameRate"><MemberSignature Language="C#" Value="public double VideoFrameRate { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Double</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="VideoBitrate"><MemberSignature Language="C#" Value="public int VideoBitrate { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Description"><MemberSignature Language="C#" Value="public string Description { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="MediaTypes"><MemberSignature Language="C#" Value="public TagLib.MediaTypes MediaTypes { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.MediaTypes</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Duration"><MemberSignature Language="C#" Value="public TimeSpan Duration { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="VideoWidth"><MemberSignature Language="C#" Value="public int VideoWidth { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="VideoHeight"><MemberSignature Language="C#" Value="public int VideoHeight { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="VideoFrameRate"><MemberSignature Language="C#" Value="public double VideoFrameRate { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Double</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="VideoBitrate"><MemberSignature Language="C#" Value="public int VideoBitrate { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Description"><MemberSignature Language="C#" Value="public string Description { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="MediaTypes"><MemberSignature Language="C#" Value="public TagLib.MediaTypes MediaTypes { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.MediaTypes</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Duration"><MemberSignature Language="C#" Value="public TimeSpan Duration { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="VideoWidth"><MemberSignature Language="C#" Value="public int VideoWidth { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="VideoHeight"><MemberSignature Language="C#" Value="public int VideoHeight { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="VideoFrameRate"><MemberSignature Language="C#" Value="public double VideoFrameRate { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Double</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="VideoBitrate"><MemberSignature Language="C#" Value="public int VideoBitrate { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Description"><MemberSignature Language="C#" Value="public string Description { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="MediaTypes"><MemberSignature Language="C#" Value="public TagLib.MediaTypes MediaTypes { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>TagLib.MediaTypes</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Duration"><MemberSignature Language="C#" Value="public TimeSpan Duration { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member></Members>
+    <Member MemberName="VideoWidth">
+      <MemberSignature Language="C#" Value="public int VideoWidth { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="VideoHeight">
+      <MemberSignature Language="C#" Value="public int VideoHeight { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="VideoFrameRate">
+      <MemberSignature Language="C#" Value="public double VideoFrameRate { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Double</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="VideoBitrate">
+      <MemberSignature Language="C#" Value="public int VideoBitrate { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Description">
+      <MemberSignature Language="C#" Value="public string Description { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MediaTypes">
+      <MemberSignature Language="C#" Value="public TagLib.MediaTypes MediaTypes { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.MediaTypes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Duration">
+      <MemberSignature Language="C#" Value="public TimeSpan Duration { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.TimeSpan</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>

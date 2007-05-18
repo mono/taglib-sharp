@@ -12,14 +12,28 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public UnknownObject (TagLib.Asf.File file, long position);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="file" Type="TagLib.Asf.File" /><Parameter Name="position" Type="System.Int64" /></Parameters>
-      <Docs><param name="file">To be added.</param><param name="position">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="file" Type="TagLib.Asf.File" />
+        <Parameter Name="position" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <param name="position">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Data">
       <MemberSignature Language="C#" Value="public TagLib.ByteVector Data { set; get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>

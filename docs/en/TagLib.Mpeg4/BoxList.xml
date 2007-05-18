@@ -6,57 +6,114 @@
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.ListBase&lt;TagLib.Mpeg4.Box&gt;</BaseTypeName>
-    
-  <BaseTypeArguments><BaseTypeArgument TypeParamName="T">TagLib.Mpeg4.Box</BaseTypeArgument></BaseTypeArguments></Base>
+    <BaseTypeArguments>
+      <BaseTypeArgument TypeParamName="T">TagLib.Mpeg4.Box</BaseTypeArgument>
+    </BaseTypeArguments>
+  </Base>
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public BoxList ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Get">
       <MemberSignature Language="C#" Value="public TagLib.Mpeg4.Box Get (TagLib.ByteVector type);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.Mpeg4.Box</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="type" Type="TagLib.ByteVector" /></Parameters>
-      <Docs><param name="type">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg4.Box</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Get">
       <MemberSignature Language="C#" Value="public TagLib.Mpeg4.Box Get (Type type);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.Mpeg4.Box</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="type" Type="System.Type" /></Parameters>
-      <Docs><param name="type">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg4.Box</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="System.Type" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="GetRecursively">
       <MemberSignature Language="C#" Value="public TagLib.Mpeg4.Box GetRecursively (TagLib.ByteVector type);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.Mpeg4.Box</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="type" Type="TagLib.ByteVector" /></Parameters>
-      <Docs><param name="type">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg4.Box</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="GetRecursively">
       <MemberSignature Language="C#" Value="public TagLib.Mpeg4.Box GetRecursively (Type type);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.Mpeg4.Box</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="type" Type="System.Type" /></Parameters>
-      <Docs><param name="type">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg4.Box</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="System.Type" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="RemoveByType">
       <MemberSignature Language="C#" Value="public void RemoveByType (TagLib.ByteVector type);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="type" Type="TagLib.ByteVector" /></Parameters>
-      <Docs><param name="type">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="RemoveByType">
       <MemberSignature Language="C#" Value="public void RemoveByType (Type type);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="type" Type="System.Type" /></Parameters>
-      <Docs><param name="type">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="System.Type" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>

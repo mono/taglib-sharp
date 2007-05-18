@@ -11,32 +11,52 @@
     <Member MemberName="ContainsJpegData">
       <MemberSignature Language="C#" Value="ContainsJpegData" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.Mpeg4.AppleDataBox+FlagTypes</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg4.AppleDataBox+FlagTypes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
     <Member MemberName="ContainsText">
       <MemberSignature Language="C#" Value="ContainsText" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.Mpeg4.AppleDataBox+FlagTypes</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg4.AppleDataBox+FlagTypes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
     <Member MemberName="ContainsPngData">
       <MemberSignature Language="C#" Value="ContainsPngData" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.Mpeg4.AppleDataBox+FlagTypes</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg4.AppleDataBox+FlagTypes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
     <Member MemberName="ContainsData">
       <MemberSignature Language="C#" Value="ContainsData" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.Mpeg4.AppleDataBox+FlagTypes</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg4.AppleDataBox+FlagTypes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
     <Member MemberName="ForTempo">
       <MemberSignature Language="C#" Value="ForTempo" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.Mpeg4.AppleDataBox+FlagTypes</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg4.AppleDataBox+FlagTypes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
   </Members>
   <Docs>

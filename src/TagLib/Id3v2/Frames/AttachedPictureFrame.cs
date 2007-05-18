@@ -29,38 +29,34 @@ namespace TagLib.Id3v2
 {   
    public class AttachedPictureFrame : Frame, IPicture
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
-      private StringType  text_encoding;
-      private string      mime_type;
-      private PictureType type;
-      private string      description;
-      private ByteVector  data;
+      #region Private Properties
+      private StringType  text_encoding = StringType.UTF8;
+      private string      mime_type     = null;
+      private PictureType type          = PictureType.Other;
+      private string      description   = null;
+      private ByteVector  data          = null;
+      #endregion
       
       
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
+      
+      #region Constructors
       public AttachedPictureFrame () : base ("APIC", 4)
-      {
-         text_encoding = StringType.UTF8;
-         mime_type = null;
-         type = PictureType.Other;
-         description = null;
-         data = null;
-      }
+      {}
       
       public AttachedPictureFrame (IPicture picture) : base("APIC", 4)
       {
-         text_encoding = StringType.UTF8;
-         mime_type = picture.MimeType;
-         type = picture.Type;
+         mime_type   = picture.MimeType;
+         type        = picture.Type;
          description = picture.Description;
-         data = picture.Data;
+         data        = picture.Data;
       }
 
       public AttachedPictureFrame (ByteVector data, uint version) : base (data, version)
+      {
+         SetData (data, 0, version);
+      }
+      
+      protected internal AttachedPictureFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
       {
          text_encoding = StringType.UTF8;
          mime_type = null;
@@ -68,15 +64,57 @@ namespace TagLib.Id3v2
          description = null;
          this.data = null;
          
-         SetData (data, 0, version);
+         ParseFields (FieldData (data, offset, version), version);
+      }
+      #endregion
+      
+      
+      
+      #region Public Properties
+      public StringType TextEncoding
+      {
+         get {return text_encoding;}
+         set {text_encoding = value;}
       }
       
+      public string MimeType
+      {
+         get {return mime_type;}
+         set {mime_type = value;}
+      }
+      
+      public PictureType Type
+      {
+         get {return type;}
+         set {type = value;}
+      }
+      
+      public string Description
+      {
+         get {return description;}
+         set {description = value;}
+      }
+      
+      public ByteVector Data
+      {
+         get {return data;}
+         set {data = value;}
+      }
+      #endregion
+      
+      
+      
+      #region Public Methods
       public override string ToString ()
       {
          string s = "[" + mime_type + "]";
          return description != null ? s : description + " " + s;
       }
+      #endregion
       
+      
+      
+      #region Public Static Methods
       public static AttachedPictureFrame Get (Tag tag, string description, bool create)
       {
          foreach (Frame f in tag.GetFrames ("APIC"))
@@ -119,44 +157,11 @@ namespace TagLib.Id3v2
          tag.AddFrame (frame);
          return frame;
       }
+      #endregion
       
       
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
-      public StringType TextEncoding
-      {
-         get {return text_encoding;}
-         set {text_encoding = value;}
-      }
       
-      public string MimeType
-      {
-         get {return mime_type;}
-         set {mime_type = value;}
-      }
-      
-      public PictureType Type
-      {
-         get {return type;}
-         set {type = value;}
-      }
-      
-      public string Description
-      {
-         get {return description;}
-         set {description = value;}
-      }
-      
-      public ByteVector Data
-      {
-         get {return data;}
-         set {data = value;}
-      }
-      
-      //////////////////////////////////////////////////////////////////////////
-      // protected methods
-      //////////////////////////////////////////////////////////////////////////
+      #region Protected Methods
       protected override void ParseFields (ByteVector data, uint version)
       {
          if (data.Count < 5)
@@ -240,16 +245,6 @@ namespace TagLib.Id3v2
 
          return data;
       }
-      
-      protected internal AttachedPictureFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
-      {
-         text_encoding = StringType.UTF8;
-         mime_type = null;
-         type = PictureType.Other;
-         description = null;
-         this.data = null;
-         
-         ParseFields (FieldData (data, offset, version), version);
-      }
+      #endregion
    }
 }

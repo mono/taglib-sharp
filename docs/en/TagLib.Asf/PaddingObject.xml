@@ -12,20 +12,40 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public PaddingObject (TagLib.Asf.File file, long position);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="file" Type="TagLib.Asf.File" /><Parameter Name="position" Type="System.Int64" /></Parameters>
-      <Docs><param name="file">To be added.</param><param name="position">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="file" Type="TagLib.Asf.File" />
+        <Parameter Name="position" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <param name="position">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public PaddingObject (uint size);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="size" Type="System.UInt32" /></Parameters>
-      <Docs><param name="size">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="size" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="size">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Size">
       <MemberSignature Language="C#" Value="public ulong Size { set; get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.UInt64</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.UInt64</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>

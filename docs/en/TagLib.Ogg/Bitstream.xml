@@ -12,28 +12,58 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Bitstream (TagLib.Ogg.Page page);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="page" Type="TagLib.Ogg.Page" /></Parameters>
-      <Docs><param name="page">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="page" Type="TagLib.Ogg.Page" />
+      </Parameters>
+      <Docs>
+        <param name="page">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="ReadPage">
       <MemberSignature Language="C#" Value="public bool ReadPage (TagLib.Ogg.Page page);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="page" Type="TagLib.Ogg.Page" /></Parameters>
-      <Docs><param name="page">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="page" Type="TagLib.Ogg.Page" />
+      </Parameters>
+      <Docs>
+        <param name="page">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="GetDuration">
       <MemberSignature Language="C#" Value="public TimeSpan GetDuration (long last_absolute_granular_position);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="last_absolute_granular_position" Type="System.Int64" /></Parameters>
-      <Docs><param name="last_absolute_granular_position">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.TimeSpan</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="last_absolute_granular_position" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="last_absolute_granular_position">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Codec">
       <MemberSignature Language="C#" Value="public TagLib.Ogg.Codec Codec { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.Ogg.Codec</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Ogg.Codec</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>

@@ -11,26 +11,42 @@
     <Member MemberName="Fast">
       <MemberSignature Language="C#" Value="Fast" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.ReadStyle</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ReadStyle</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
     <Member MemberName="Accurate">
       <MemberSignature Language="C#" Value="Accurate" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.ReadStyle</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ReadStyle</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
     <Member MemberName="Average">
       <MemberSignature Language="C#" Value="Average" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.ReadStyle</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ReadStyle</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
     <Member MemberName="None">
       <MemberSignature Language="C#" Value="None" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.ReadStyle</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ReadStyle</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
   </Members>
   <Docs>

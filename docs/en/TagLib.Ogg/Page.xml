@@ -12,45 +12,91 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="protected Page (TagLib.Ogg.PageHeader header);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="header" Type="TagLib.Ogg.PageHeader" /></Parameters>
-      <Docs><param name="header">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="header" Type="TagLib.Ogg.PageHeader" />
+      </Parameters>
+      <Docs>
+        <param name="header">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Page (TagLib.Ogg.File file, long page_offset);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="file" Type="TagLib.Ogg.File" /><Parameter Name="page_offset" Type="System.Int64" /></Parameters>
-      <Docs><param name="file">To be added.</param><param name="page_offset">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="file" Type="TagLib.Ogg.File" />
+        <Parameter Name="page_offset" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <param name="page_offset">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Page (TagLib.ByteVectorList packets, TagLib.Ogg.PageHeader header);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="packets" Type="TagLib.ByteVectorList" /><Parameter Name="header" Type="TagLib.Ogg.PageHeader" /></Parameters>
-      <Docs><param name="packets">To be added.</param><param name="header">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="packets" Type="TagLib.ByteVectorList" />
+        <Parameter Name="header" Type="TagLib.Ogg.PageHeader" />
+      </Parameters>
+      <Docs>
+        <param name="packets">To be added.</param>
+        <param name="header">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Render">
       <MemberSignature Language="C#" Value="public TagLib.ByteVector Render ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
       <Parameters />
-      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Header">
       <MemberSignature Language="C#" Value="public TagLib.Ogg.PageHeader Header { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.Ogg.PageHeader</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Ogg.PageHeader</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Packets">
       <MemberSignature Language="C#" Value="public TagLib.ByteVectorList Packets { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVectorList</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVectorList</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Size">
       <MemberSignature Language="C#" Value="public int Size { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>

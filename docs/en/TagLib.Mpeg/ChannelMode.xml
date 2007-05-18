@@ -11,26 +11,42 @@
     <Member MemberName="DualChannel">
       <MemberSignature Language="C#" Value="DualChannel" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.Mpeg.ChannelMode</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg.ChannelMode</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
     <Member MemberName="SingleChannel">
       <MemberSignature Language="C#" Value="SingleChannel" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.Mpeg.ChannelMode</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg.ChannelMode</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
     <Member MemberName="JointStereo">
       <MemberSignature Language="C#" Value="JointStereo" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.Mpeg.ChannelMode</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg.ChannelMode</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
     <Member MemberName="Stereo">
       <MemberSignature Language="C#" Value="Stereo" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>TagLib.Mpeg.ChannelMode</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg.ChannelMode</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
   </Members>
   <Docs>

@@ -1,6 +1,6 @@
 <Namespace Name="TagLib.NonContainer">
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>The TagLib.NonContainer namespace provides classes for dealing with files that do not have a standardized tagging mechanism and may have any number of tags at their beginning or end.</summary>
+    <remarks>The FLAC file format is included in this because despite having a standard tagging mechanism, ID3 and APE tags are not uncommonly attached to the file.</remarks>
   </Docs>
 </Namespace>

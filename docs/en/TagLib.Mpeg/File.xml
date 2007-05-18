@@ -32,49 +32,111 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public File (string file, TagLib.ReadStyle properties_style);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="file" Type="System.String" /><Parameter Name="properties_style" Type="TagLib.ReadStyle" /></Parameters>
-      <Docs><param name="file">To be added.</param><param name="properties_style">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="file" Type="System.String" />
+        <Parameter Name="properties_style" Type="TagLib.ReadStyle" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <param name="properties_style">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public File (string file);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="file" Type="System.String" /></Parameters>
-      <Docs><param name="file">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="file" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="GetMarker">
       <MemberSignature Language="C#" Value="protected TagLib.Mpeg.Marker GetMarker (long position);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.Mpeg.Marker</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="position" Type="System.Int64" /></Parameters>
-      <Docs><param name="position">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg.Marker</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="position" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="position">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="FindMarker">
       <MemberSignature Language="C#" Value="protected TagLib.Mpeg.Marker FindMarker (ref long position);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.Mpeg.Marker</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="position" Type="System.Int64&amp;" RefType="ref" /></Parameters>
-      <Docs><param name="position">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg.Marker</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="position" Type="System.Int64&amp;" RefType="ref" />
+      </Parameters>
+      <Docs>
+        <param name="position">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="FindMarker">
       <MemberSignature Language="C#" Value="protected TagLib.Mpeg.Marker FindMarker (ref long position, TagLib.Mpeg.Marker marker);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.Mpeg.Marker</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="position" Type="System.Int64&amp;" RefType="ref" /><Parameter Name="marker" Type="TagLib.Mpeg.Marker" /></Parameters>
-      <Docs><param name="position">To be added.</param><param name="marker">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg.Marker</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="position" Type="System.Int64&amp;" RefType="ref" />
+        <Parameter Name="marker" Type="TagLib.Mpeg.Marker" />
+      </Parameters>
+      <Docs>
+        <param name="position">To be added.</param>
+        <param name="marker">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="RFindMarker">
       <MemberSignature Language="C#" Value="protected TagLib.Mpeg.Marker RFindMarker (ref long position, TagLib.Mpeg.Marker marker);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.Mpeg.Marker</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="position" Type="System.Int64&amp;" RefType="ref" /><Parameter Name="marker" Type="TagLib.Mpeg.Marker" /></Parameters>
-      <Docs><param name="position">To be added.</param><param name="marker">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg.Marker</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="position" Type="System.Int64&amp;" RefType="ref" />
+        <Parameter Name="marker" Type="TagLib.Mpeg.Marker" />
+      </Parameters>
+      <Docs>
+        <param name="position">To be added.</param>
+        <param name="marker">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="ReadSystemFile">
       <MemberSignature Language="C#" Value="protected void ReadSystemFile (long position);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="position" Type="System.Int64" /></Parameters>
-      <Docs><param name="position">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="position" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="position">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>

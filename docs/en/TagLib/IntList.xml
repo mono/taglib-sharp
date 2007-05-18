@@ -6,33 +6,56 @@
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.ListBase&lt;System.Int32&gt;</BaseTypeName>
-    
-  <BaseTypeArguments><BaseTypeArgument TypeParamName="T">System.Int32</BaseTypeArgument></BaseTypeArguments></Base>
+    <BaseTypeArguments>
+      <BaseTypeArgument TypeParamName="T">System.Int32</BaseTypeArgument>
+    </BaseTypeArguments>
+  </Base>
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public IntList ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public IntList (int value);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="value" Type="System.Int32" /></Parameters>
-      <Docs><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="value" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="value">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public IntList (TagLib.IntList list);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="list" Type="TagLib.IntList" /></Parameters>
-      <Docs><param name="list">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="list" Type="TagLib.IntList" />
+      </Parameters>
+      <Docs>
+        <param name="list">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public IntList (int[] array);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="array" Type="System.Int32[]" /></Parameters>
-      <Docs><param name="array">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="array" Type="System.Int32[]" />
+      </Parameters>
+      <Docs>
+        <param name="array">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>

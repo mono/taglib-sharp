@@ -6,53 +6,141 @@
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.ListBase&lt;TagLib.ByteVector&gt;</BaseTypeName>
-    
-  <BaseTypeArguments><BaseTypeArgument TypeParamName="T">TagLib.ByteVector</BaseTypeArgument></BaseTypeArguments></Base>
+    <BaseTypeArguments>
+      <BaseTypeArgument TypeParamName="T">TagLib.ByteVector</BaseTypeArgument>
+    </BaseTypeArguments>
+  </Base>
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public ByteVectorList ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
-    
     <Member MemberName="ToByteVector">
       <MemberSignature Language="C#" Value="public TagLib.ByteVector ToByteVector (TagLib.ByteVector separator);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="separator" Type="TagLib.ByteVector" /></Parameters>
-      <Docs><param name="separator">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="separator" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="separator">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="ToByteVector">
       <MemberSignature Language="C#" Value="public TagLib.ByteVector ToByteVector ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
       <Parameters />
-      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Split">
       <MemberSignature Language="C#" Value="public static TagLib.ByteVectorList Split (TagLib.ByteVector vector, TagLib.ByteVector pattern, int byteAlign, int max);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVectorList</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="vector" Type="TagLib.ByteVector" /><Parameter Name="pattern" Type="TagLib.ByteVector" /><Parameter Name="byteAlign" Type="System.Int32" /><Parameter Name="max" Type="System.Int32" /></Parameters>
-      <Docs><param name="vector">To be added.</param><param name="pattern">To be added.</param><param name="byteAlign">To be added.</param><param name="max">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVectorList</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="vector" Type="TagLib.ByteVector" />
+        <Parameter Name="pattern" Type="TagLib.ByteVector" />
+        <Parameter Name="byteAlign" Type="System.Int32" />
+        <Parameter Name="max" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="vector">To be added.</param>
+        <param name="pattern">To be added.</param>
+        <param name="byteAlign">To be added.</param>
+        <param name="max">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Split">
       <MemberSignature Language="C#" Value="public static TagLib.ByteVectorList Split (TagLib.ByteVector vector, TagLib.ByteVector pattern, int byteAlign);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVectorList</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="vector" Type="TagLib.ByteVector" /><Parameter Name="pattern" Type="TagLib.ByteVector" /><Parameter Name="byteAlign" Type="System.Int32" /></Parameters>
-      <Docs><param name="vector">To be added.</param><param name="pattern">To be added.</param><param name="byteAlign">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVectorList</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="vector" Type="TagLib.ByteVector" />
+        <Parameter Name="pattern" Type="TagLib.ByteVector" />
+        <Parameter Name="byteAlign" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="vector">To be added.</param>
+        <param name="pattern">To be added.</param>
+        <param name="byteAlign">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Split">
       <MemberSignature Language="C#" Value="public static TagLib.ByteVectorList Split (TagLib.ByteVector vector, TagLib.ByteVector pattern);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVectorList</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="vector" Type="TagLib.ByteVector" /><Parameter Name="pattern" Type="TagLib.ByteVector" /></Parameters>
-      <Docs><param name="vector">To be added.</param><param name="pattern">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVectorList</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="vector" Type="TagLib.ByteVector" />
+        <Parameter Name="pattern" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="vector">To be added.</param>
+        <param name="pattern">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
-  <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public ByteVectorList (System.Collections.Generic.IEnumerable&lt;TagLib.ByteVector&gt; vectors);" /><MemberType>Constructor</MemberType><Parameters><Parameter Name="vectors" Type="System.Collections.Generic.IEnumerable&lt;TagLib.ByteVector&gt;" /></Parameters><Docs><param name="vectors">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName=".ctor"><MemberSignature Language="C#" Value="public ByteVectorList (TagLib.ByteVector[] vectors);" /><MemberType>Constructor</MemberType><Parameters><Parameter Name="vectors" Type="TagLib.ByteVector[]"><Attributes><Attribute><AttributeName>System.ParamArray</AttributeName></Attribute></Attributes></Parameter></Parameters><Docs><param name="vectors">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="ToByteVector"><MemberSignature Language="C#" Value="public TagLib.ByteVector ToByteVector (TagLib.ByteVector separator);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue><Parameters><Parameter Name="separator" Type="TagLib.ByteVector" /></Parameters><Docs><param name="separator">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="ToByteVector"><MemberSignature Language="C#" Value="public TagLib.ByteVector ToByteVector ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="Split"><MemberSignature Language="C#" Value="public static TagLib.ByteVectorList Split (TagLib.ByteVector vector, TagLib.ByteVector pattern, int byteAlign, int max);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>TagLib.ByteVectorList</ReturnType></ReturnValue><Parameters><Parameter Name="vector" Type="TagLib.ByteVector" /><Parameter Name="pattern" Type="TagLib.ByteVector" /><Parameter Name="byteAlign" Type="System.Int32" /><Parameter Name="max" Type="System.Int32" /></Parameters><Docs><param name="vector">To be added.</param><param name="pattern">To be added.</param><param name="byteAlign">To be added.</param><param name="max">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="Split"><MemberSignature Language="C#" Value="public static TagLib.ByteVectorList Split (TagLib.ByteVector vector, TagLib.ByteVector pattern, int byteAlign);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>TagLib.ByteVectorList</ReturnType></ReturnValue><Parameters><Parameter Name="vector" Type="TagLib.ByteVector" /><Parameter Name="pattern" Type="TagLib.ByteVector" /><Parameter Name="byteAlign" Type="System.Int32" /></Parameters><Docs><param name="vector">To be added.</param><param name="pattern">To be added.</param><param name="byteAlign">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="Split"><MemberSignature Language="C#" Value="public static TagLib.ByteVectorList Split (TagLib.ByteVector vector, TagLib.ByteVector pattern);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>TagLib.ByteVectorList</ReturnType></ReturnValue><Parameters><Parameter Name="vector" Type="TagLib.ByteVector" /><Parameter Name="pattern" Type="TagLib.ByteVector" /></Parameters><Docs><param name="vector">To be added.</param><param name="pattern">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member></Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ByteVectorList (System.Collections.Generic.IEnumerable&lt;TagLib.ByteVector&gt; vectors);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="vectors" Type="System.Collections.Generic.IEnumerable&lt;TagLib.ByteVector&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="vectors">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ByteVectorList (TagLib.ByteVector[] vectors);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="vectors" Type="TagLib.ByteVector[]">
+          <Attributes>
+            <Attribute>
+              <AttributeName>System.ParamArray</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="vectors">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>

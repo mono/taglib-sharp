@@ -12,49 +12,98 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public StartTag (TagLib.File file);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="file" Type="TagLib.File" /></Parameters>
-      <Docs><param name="file">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="file" Type="TagLib.File" />
+      </Parameters>
+      <Docs>
+        <param name="file">A <see cref="T:TagLib.File" /> to be read from and written to. </param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.NonContainer.StartTag" /> for a specified file.</summary>
+        <remarks />
+      </Docs>
     </Member>
     <Member MemberName="Read">
       <MemberSignature Language="C#" Value="public long Read ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
       <Parameters />
-      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <Docs>
+        <summary>Populates the current instance with tags read from the end of the file.</summary>
+        <returns>A <see cref="T:System.Long" /> containing the number of bytes at the beginning of the file devoted to tagging.</returns>
+        <remarks />
+      </Docs>
     </Member>
     <Member MemberName="Render">
       <MemberSignature Language="C#" Value="public TagLib.ByteVector Render ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.ByteVector</ReturnType></ReturnValue>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
       <Parameters />
-      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <Docs>
+        <summary>Renders the block of tags contained in the current instance.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered form of the current instance.</returns>
+        <remarks />
+      </Docs>
     </Member>
     <Member MemberName="Write">
       <MemberSignature Language="C#" Value="public long Write ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
       <Parameters />
-      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <Docs>
+        <summary>Writes the tags stored in the current instance to the end of the file, overwriting those already there.</summary>
+        <returns>A <see cref="T:System.Int64" /> containing the total number of bytes witten.</returns>
+        <remarks />
+      </Docs>
     </Member>
     <Member MemberName="RemoveTags">
       <MemberSignature Language="C#" Value="public void RemoveTags (TagLib.TagTypes types);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="types" Type="TagLib.TagTypes" /></Parameters>
-      <Docs><param name="types">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="types" Type="TagLib.TagTypes" />
+      </Parameters>
+      <Docs>
+        <param name="types">A <see cref="T:TagLib.TagTypes" /> specifying which tag types are to be removed. Multiply <see cref="T:TagLib.TagTypes" /> can be bitwise combined.</param>
+        <summary>Removes tags of specified types from the current instance.</summary>
+        <remarks />
+      </Docs>
     </Member>
     <Member MemberName="AddTag">
       <MemberSignature Language="C#" Value="public TagLib.Tag AddTag (TagLib.TagTypes type, TagLib.Tag copy);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>TagLib.Tag</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="type" Type="TagLib.TagTypes" /><Parameter Name="copy" Type="TagLib.Tag" /></Parameters>
-      <Docs><param name="type">To be added.</param><param name="copy">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Tag</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.TagTypes" />
+        <Parameter Name="copy" Type="TagLib.Tag" />
+      </Parameters>
+      <Docs>
+        <param name="type">A <see cref="T:TagLib.TagTypes" /> specifying the type of tag to create.</param>
+        <param name="copy">A <see cref="T:System.Boolean" /> specifying whether or not to copy existing values into the tag.</param>
+        <summary>Adds a new tag of a specified type to the current instance, optionally copying the values from the current instance.</summary>
+        <returns>Returns the new <see cref="T:TagLib.Tag" /> if created. Otherwise <see langword="null" />.</returns>
+        <remarks>The tag may not be placed at the end of the list, but at the place deemed most appropriate.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="TotalSize">
       <MemberSignature Language="C#" Value="public long TotalSize { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the total number of bytes devoted to tagging at the end of the file.</summary>
+        <value>A <see cref="T:System.Int64" /> representing the number for tagging bytes at the beginning of the file.</value>
+        <remarks>The file must be open for reading for this property to work.</remarks>
+      </Docs>
     </Member>
   </Members>
   <Docs>

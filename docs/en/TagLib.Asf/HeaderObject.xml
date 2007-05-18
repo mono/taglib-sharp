@@ -12,36 +12,85 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public HeaderObject (TagLib.Asf.File file, long position);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="file" Type="TagLib.Asf.File" /><Parameter Name="position" Type="System.Int64" /></Parameters>
-      <Docs><param name="file">To be added.</param><param name="position">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="file" Type="TagLib.Asf.File" />
+        <Parameter Name="position" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <param name="position">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="AddObject">
       <MemberSignature Language="C#" Value="public void AddObject (TagLib.Asf.Object obj);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="obj" Type="TagLib.Asf.Object" /></Parameters>
-      <Docs><param name="obj">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="obj" Type="TagLib.Asf.Object" />
+      </Parameters>
+      <Docs>
+        <param name="obj">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="AddUniqueObject">
       <MemberSignature Language="C#" Value="public void AddUniqueObject (TagLib.Asf.Object obj);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="obj" Type="TagLib.Asf.Object" /></Parameters>
-      <Docs><param name="obj">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="obj" Type="TagLib.Asf.Object" />
+      </Parameters>
+      <Docs>
+        <param name="obj">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Reserved">
       <MemberSignature Language="C#" Value="public byte[] Reserved { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Byte[]</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Byte[]</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
     <Member MemberName="Children">
       <MemberSignature Language="C#" Value="public TagLib.Asf.Object[] Children { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>TagLib.Asf.Object[]</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>TagLib.Asf.Object[]</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
-  <Member MemberName="GetProperties"><MemberSignature Language="C#" Value="public TagLib.Properties GetProperties ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>TagLib.Properties</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member></Members>
+    <Member MemberName="GetProperties">
+      <MemberSignature Language="C#" Value="public TagLib.Properties GetProperties ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Properties</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>

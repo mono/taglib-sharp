@@ -27,20 +27,18 @@ namespace TagLib.Id3v2
 {
    public class PrivateFrame : Frame
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
-      string owner;
-      ByteVector data;
+      #region Private Properties
+      private string     owner = null;
+      private ByteVector data  = null;
+      #endregion
       
       
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
+      
+      #region Constructors
       public PrivateFrame (string owner, ByteVector data) : base ("PRIV", 4)
       {
          this.owner = owner;
-         this.data = data;
+         this.data  = data;
       }
       
       public PrivateFrame (string owner) : this (owner, null)
@@ -49,16 +47,42 @@ namespace TagLib.Id3v2
 
       public PrivateFrame (ByteVector data, uint version) : base (data, version)
       {
-         this.owner = null;
-         this.data = null;
          SetData (data, 0, version);
       }
 
+      protected internal PrivateFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
+      {
+         ParseFields (FieldData (data, offset, version), version);
+      }
+      #endregion
+      
+      
+      
+      #region Public Properties
+      public string Owner
+      {
+         get {return owner;}
+      }
+      
+      public ByteVector PrivateData
+      {
+         get {return data;}
+         set {data = value;}
+      }
+      #endregion
+      
+      
+      
+      #region Public Methods
       public override string ToString ()
       {
          return owner;
       }
+      #endregion
       
+      
+      
+      #region Public Static Methods
       public static PrivateFrame Get (Tag tag, string owner, bool create)
       {
          foreach (Frame f in tag.GetFrames ("PRIV"))
@@ -71,25 +95,11 @@ namespace TagLib.Id3v2
          tag.AddFrame (frame);
          return frame;
       }
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
-      public string Owner
-      {
-         get {return owner;}
-      }
-      
-      public ByteVector PrivateData
-      {
-         get {return data;}
-         set {data = value;}
-      }
+      #endregion
       
       
-      //////////////////////////////////////////////////////////////////////////
-      // protected methods
-      //////////////////////////////////////////////////////////////////////////
+      
+      #region Protected Methods
       protected override void ParseFields (ByteVector data, uint version)
       {
          if (data.Count < 1)
@@ -117,12 +127,6 @@ namespace TagLib.Id3v2
          
          return v;
       }
-
-      protected internal PrivateFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
-      {
-         this.owner = null;
-         this.data = null;
-         ParseFields (FieldData (data, offset, version), version);
-      }
+      #endregion
    }
 }

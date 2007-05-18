@@ -1,7 +1,7 @@
 /***************************************************************************
     copyright            : (C) 2005 by Brian Nickel
     email                : brian.nickel@gmail.com
-    based on             : id3v2frame.cpp from TagLib
+    based on             : id3v2commentsframe.cpp from TagLib
  ***************************************************************************/
 
 /***************************************************************************
@@ -27,24 +27,21 @@ namespace TagLib.Id3v2
 {
    public class CommentsFrame : Frame
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
-      StringType text_encoding;
-      ByteVector language;
-      string description;
-      string text;
+      #region Private Properties
+      private StringType encoding    = StringType.UTF8;
+      private ByteVector language    = null;
+      private string     description = null;
+      private string     text        = null;
+      #endregion
       
       
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
+      
+      #region Constructors
       public CommentsFrame (string description, ByteVector language, StringType encoding) : base ("COMM", 4)
       {
-         text_encoding = encoding;
-         this.language = language;
+         this.encoding    = encoding;
+         this.language    = language;
          this.description = description;
-         text = null;
       }
       
       public CommentsFrame (string description, ByteVector language) : this (description, language, TagLib.Id3v2.Tag.DefaultEncoding)
@@ -55,14 +52,46 @@ namespace TagLib.Id3v2
 
       public CommentsFrame (ByteVector data, uint version) : base (data, version)
       {
-         text_encoding = StringType.UTF8;
-         language = null;
-         description = null;
-         text = null;
          SetData (data, 0, version);
       }
 
+      protected internal CommentsFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
+      {
+         ParseFields (FieldData (data, offset, version), version);
+      }
+      #endregion
+      
+      
+      
+      #region Public Properties
+      public StringType TextEncoding
+      {
+         get {return encoding;}
+         set {encoding = value;}
+      }
 
+      public ByteVector Language
+      {
+         get {return language != null ? language : "XXX";}
+         set {language = value != null ? value.Mid (0, 3) : "XXX";}
+      }
+      
+      public string Description
+      {
+         get {return description != null ? description : string.Empty;}
+         set {description = value;}
+      }
+      
+      public string Text
+      {
+         get {return text;}
+         set {text = value;}
+      }
+      #endregion
+      
+      
+      
+      #region Public Methods
       public override string ToString ()
       {
          return text;
@@ -72,7 +101,11 @@ namespace TagLib.Id3v2
       {
          this.text = text;
       }
+      #endregion
       
+      
+      
+      #region Public Static Methods
       public static CommentsFrame Get (Tag tag, string description, ByteVector language, bool create)
       {
          foreach (Frame f in tag.GetFrames ("COMM"))
@@ -125,47 +158,20 @@ namespace TagLib.Id3v2
          
          return best_frame;
       }
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
-      public StringType TextEncoding
-      {
-         get {return text_encoding;}
-         set {text_encoding = value;}
-      }
-
-      public ByteVector Language
-      {
-         get {return language != null ? language : "XXX";}
-         set {language = value != null ? value.Mid (0, 3) : "XXX";}
-      }
-      
-      public string Description
-      {
-         get {return description != null ? description : string.Empty;}
-         set {description = value;}
-      }
-      
-      public string Text
-      {
-         get {return text;}
-         set {text = value;}
-      }
+      #endregion
       
       
-      //////////////////////////////////////////////////////////////////////////
-      // protected methods
-      //////////////////////////////////////////////////////////////////////////
+      
+      #region Protected Methods
       protected override void ParseFields (ByteVector data, uint version)
       {
          if (data.Count < 4)
             throw new CorruptFileException ("Not enough bytes in field.");
          
-         text_encoding = (StringType) data [0];
+         encoding = (StringType) data [0];
          language = data.Mid (1, 3);
-
-         string [] split = data.ToStrings (text_encoding, 4, 2);
+         
+         string [] split = data.ToStrings (encoding, 4, 2);
          
          if (split.Length == 1)
          {
@@ -193,14 +199,6 @@ namespace TagLib.Id3v2
 
          return v;
       }
-
-      protected internal CommentsFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
-      {
-         text_encoding = StringType.UTF8;
-         language = null;
-         description = null;
-         text = null;
-         ParseFields (FieldData (data, offset, version), version);
-      }
+      #endregion
    }
 }

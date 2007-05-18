@@ -27,68 +27,34 @@ namespace TagLib.Id3v2
 {
    public class GeneralEncapsulatedObjectFrame : Frame
    {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
-      StringType text_encoding;
-      string     mime_type;
-      string     file_name;
-      string     description;
-      ByteVector data;
+      #region Private Properties
+      StringType text_encoding = StringType.UTF8;
+      string     mime_type     = null;
+      string     file_name     = null;
+      string     description   = null;
+      ByteVector data          = null;
+      #endregion
       
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
+      
+      
+      #region Constructors
       public GeneralEncapsulatedObjectFrame () : base ("GEOB", 4)
-      {
-         text_encoding = StringType.UTF8;
-         mime_type   = null;
-         file_name   = null;
-         description = null;
-         data        = null;
-      }
+      {}
       
       public GeneralEncapsulatedObjectFrame (ByteVector data, uint version) : base (data, version)
       {
-         text_encoding = StringType.UTF8;
-         mime_type   = null;
-         file_name   = null;
-         description = null;
-         this.data   = null;
          SetData (data, 0, version);
       }
       
-      public override string ToString ()
+      protected internal GeneralEncapsulatedObjectFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
       {
-         string text = "[" + mime_type + "]";
-         
-         if(file_name != null && file_name != string.Empty)
-            text += " " + file_name;
-         
-         if(description != null && description != string.Empty)
-            text += " " + description;
-         
-         return text;
+         ParseFields (FieldData (data, offset, version), version);
       }
-      
-      public static GeneralEncapsulatedObjectFrame Get (Tag tag, string description, bool create)
-      {
-         foreach (Frame f in tag.GetFrames ("GEOB"))
-            if (f is GeneralEncapsulatedObjectFrame && (f as GeneralEncapsulatedObjectFrame).Description == description)
-               return f as GeneralEncapsulatedObjectFrame;
-         
-         if (!create) return null;
-         
-         GeneralEncapsulatedObjectFrame frame = new GeneralEncapsulatedObjectFrame ();
-         frame.Description = description;
-         tag.AddFrame (frame);
-         return frame;
-      }
+      #endregion
       
       
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
+      
+      #region Public Properties
       public StringType TextEncoding
       {
          get {return text_encoding;}
@@ -118,11 +84,46 @@ namespace TagLib.Id3v2
          get {return data;}
          set {data = value;}
       }
+      #endregion
       
       
-      //////////////////////////////////////////////////////////////////////////
-      // protected methods
-      //////////////////////////////////////////////////////////////////////////
+      
+      #region Public Methods
+      public override string ToString ()
+      {
+         string text = "[" + mime_type + "]";
+         
+         if(file_name != null && file_name != string.Empty)
+            text += " " + file_name;
+         
+         if(description != null && description != string.Empty)
+            text += " " + description;
+         
+         return text;
+      }
+      #endregion
+      
+      
+      
+      #region Public Static Methods
+      public static GeneralEncapsulatedObjectFrame Get (Tag tag, string description, bool create)
+      {
+         foreach (Frame f in tag.GetFrames ("GEOB"))
+            if (f is GeneralEncapsulatedObjectFrame && (f as GeneralEncapsulatedObjectFrame).Description == description)
+               return f as GeneralEncapsulatedObjectFrame;
+         
+         if (!create) return null;
+         
+         GeneralEncapsulatedObjectFrame frame = new GeneralEncapsulatedObjectFrame ();
+         frame.Description = description;
+         tag.AddFrame (frame);
+         return frame;
+      }
+      #endregion
+      
+      
+      
+      #region Protected Methods
       protected override void ParseFields (ByteVector data, uint version)
       {
          if (data.Count < 4)
@@ -181,15 +182,6 @@ namespace TagLib.Id3v2
          
          return v;
       }
-
-      protected internal GeneralEncapsulatedObjectFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
-      {
-         text_encoding = StringType.UTF8;
-         mime_type   = null;
-         file_name   = null;
-         description = null;
-         this.data   = null;
-         ParseFields (FieldData (data, offset, version), version);
-      }
+      #endregion
    }
 }
