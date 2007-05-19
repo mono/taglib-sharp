@@ -212,7 +212,7 @@ namespace TagLib
                     --iPattern;
                 }
 
-                if(-1 == iPattern && (iBuffer + 1) % byte_align == 0)
+                if(-1 == iPattern && (iBuffer + 1 - offset) % byte_align == 0)
                     return iBuffer + 1;
             }
 
@@ -245,19 +245,19 @@ namespace TagLib
                         return i;
                 return -1;
             }
-
+            
             int [] first_occurrence = new int [256];
-
+            
             for (int i = 0; i < 256; ++i)
                 first_occurrence [i] = pattern.Count;
-
+            
             for (int i = pattern.Count - 1; i > 0; --i)
                 first_occurrence [pattern [i]] = i;
             
             for (int i = Count - offset - pattern.Count; i >= 0; i -= first_occurrence [this [i]])
-                if (ContainsAt (pattern, i))
+                if (ContainsAt (pattern, i) && (offset - i) % byte_align == 0)
                     return i;
-
+            
             return -1;
         }
         
@@ -456,13 +456,15 @@ namespace TagLib
 
         public string[] ToStrings (StringType type, int offset, int count)
         {
+           System.Console.WriteLine (ToString (type));
+           
             int chunk = 0;
             int pos = offset;
             
             StringList l = new StringList ();
             ByteVector separator = TagLib.Id3v2.Frame.TextDelimiter (type);
             int align = separator.Count;
-            
+            System.Console.WriteLine (offset);
             while (chunk < count && pos < Count)
             {
                int start = pos;
@@ -476,6 +478,8 @@ namespace TagLib
                   if (pos < 0)
                      pos = Count;
                }
+               
+               System.Console.WriteLine (pos);
                
                int length = pos - start;
                
@@ -735,14 +739,21 @@ namespace TagLib
         #endregion
       
         #region Utilities
-      
+        
+        private static System.Text.Encoding last_utf16_encoding = System.Text.Encoding.Unicode;
         private static System.Text.Encoding StringTypeToEncoding(StringType type, ByteVector bom)
         {
             switch(type) {
                 case StringType.UTF16:
-                    return (bom == null || (bom [0] == 0xFF && bom [1] == 0xFE)) 
-                        ? System.Text.Encoding.Unicode 
-                        : System.Text.Encoding.BigEndianUnicode;
+                    // If we have a BOM, return the appropriate encoding.
+                    // Otherwise, assume we're reading from a string that
+                    // was already identified. In that case, the encoding will
+                    // be stored as last_utf16_encoding;
+                    if (bom == null || (bom [0] == 0xFF && bom [1] == 0xFE))
+                        return (last_utf16_encoding = System.Text.Encoding.Unicode);
+                    if (bom == null || (bom [1] == 0xFF && bom [0] == 0xFE))
+                        return (last_utf16_encoding = System.Text.Encoding.BigEndianUnicode);
+                    return last_utf16_encoding;
                 case StringType.UTF16BE:
                     return System.Text.Encoding.BigEndianUnicode;
                 case StringType.UTF8:

@@ -130,8 +130,10 @@ namespace TagLib.NonContainer
          if (type == TagTypes.Id3v2)
             tag = new TagLib.Id3v2.Tag ();
          else if (type == TagTypes.Ape)
+         {
             tag = new TagLib.Ape.Tag ();
-         
+            (tag as Ape.Tag).Footer.HeaderPresent = true;
+         }
          if (tag != null)
          {
             if (copy != null)

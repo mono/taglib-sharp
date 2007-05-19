@@ -12,8 +12,8 @@ all: MonodocNodeConfig.exe
 MonodocNodeConfig.exe: MonodocNodeConfig.cs
 	mcs -out:$@ -r:System.Xml $<
 
-docdir = $(DESTDIR)$(DOCDIR)
-doc_DATA = \
+monodocdir = $(DESTDIR)$(DOCDIR)
+monodoc_DATA = \
 	taglib-sharp-docs.zip \
 	taglib-sharp-docs.tree \
 	taglib-sharp-docs.source

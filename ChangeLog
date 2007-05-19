@@ -1,5 +1,39 @@
 2007-05-18  Brian Nickel <brian.nickel@gmail.com>
 
+	+-------------+
+	| VERSON BUMP |
+	|  1.9.99993  |
+	+-------------+
+
+	* src/TagLib/TagLib.sources: Fixed typo.
+	* src/TagLib/ByteVector.cs: Fix for reading nil-separated UTF-16
+	strings. Now StringTypeToEncoding assumes the previously used UTF-16 
+	endianness if a BOM is not found. Additionally, Find and RFind now base
+	byte align on distance from the original offset, not offset from start.
+	* src/TagLib/WavPack/File.cs:
+	* src/TagLib/WavPack/StreamHeader.cs: Reformat code.
+	* src/TagLib/NonContainer/StartTag.cs: Make sure APE tags have headers
+	when placed at the front of a file.
+	* src/TagLib/Ape/Tag.cs:
+	* src/TagLib/Ape/Footer.cs:
+	* src/TagLib/Ape/Item.cs: API changes to improve clarity and
+	functionality.
+	* docs/en/TagLib.Riff/WaveFormatEx.xml:
+	* docs/en/TagLib.WavPack/StreamHeader.xml:
+	* docs/en/TagLib.WavPack/File.xml:
+	* docs/en/TagLib.Ape.xml:
+	* docs/en/TagLib.Ape/ItemType.xml:
+	* docs/en/TagLib.Ape/Tag.xml:
+	* docs/en/TagLib.Ape/Footer.xml:
+	* docs/en/TagLib.Ape/Item.xml:
+	* docs/en/TagLib.Ogg.Codecs/Vorbis.xml: Some solid documentation.
+	TagLib.Ape and TagLib.WavPack namespaces are 100% documented.
+	* docs/Makefile.am: docdir is a bad name, using monodocdir.
+	* configure.ac: Version bump.
+	* taglib-sharp.csproj: Fixed typos.
+
+2007-05-18  Brian Nickel <brian.nickel@gmail.com>
+
 	* src/TagLib/File.cs: Reprivatize file_stream.
 	* src/TagLib/Id3v2/Footer.cs: Remove SetData.
 	* src/TagLib/Id3v2/Tag.cs:

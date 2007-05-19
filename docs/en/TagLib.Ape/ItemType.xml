@@ -15,7 +15,7 @@
         <ReturnType>TagLib.Ape.ItemType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Item contains raw binary data.</summary>
       </Docs>
     </Member>
     <Member MemberName="Text">
@@ -25,7 +25,7 @@
         <ReturnType>TagLib.Ape.ItemType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Item contains a UTF-8 encoded collection of strings.</summary>
       </Docs>
     </Member>
     <Member MemberName="Locator">
@@ -35,12 +35,12 @@
         <ReturnType>TagLib.Ape.ItemType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Item contains a UTF-8 encoded location, either a file path or a URI.</summary>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Flag specifying the data type contained in an APE Version 2 Item.</summary>
+    <remarks />
   </Docs>
 </Type>

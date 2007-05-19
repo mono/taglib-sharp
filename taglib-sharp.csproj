@@ -112,7 +112,7 @@
     <Compile Include="src\TagLib\Id3v2\Frames\TextIdentificationFrame.cs" />
     <Compile Include="src\TagLib\Id3v2\Frames\UniqueFileIdentifierFrame.cs" />
     <Compile Include="src\TagLib\Id3v2\Frames\UnsynchronisedLyricsFrame.cs" />
-    <Compile Include="src\TagLib\Id3v2\Frames\SynchronisedLyricsFrame.cs" />
+    <Compile Include="src\TagLib\Id3v2\Frames\SynchronizedLyricsFrame.cs" />
     <Compile Include="src\TagLib\Id3v1\StringHandler.cs" />
     <Compile Include="src\TagLib\Id3v1\Tag.cs" />
     <Compile Include="src\TagLib\Flac\Block.cs" />
@@ -170,7 +170,7 @@
     <Folder Include="src\TagLib\Riff" />
     <Folder Include="src\TagLib\Mpc" />
     <Folder Include="src\TagLib\Ogg" />
-    <Folder Include="src\TagLib\OggCodecs" />
+    <Folder Include="src\TagLib\Ogg\Codecs" />
     <Folder Include="src\TagLib\Mpeg4" />
     <Folder Include="src\TagLib\Mpeg4\Boxes" />
     <Folder Include="src\TagLib\Mpeg" />

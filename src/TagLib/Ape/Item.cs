@@ -25,8 +25,6 @@ using System;
 
 namespace TagLib.Ape
 {
-#region Enumerators
-   
    public enum ItemType
    {
       Text = 0,   // Item contains text information coded in UTF-8
@@ -34,60 +32,80 @@ namespace TagLib.Ape
       Locator = 2 // Item is a locator of external stored information
    }
    
-#endregion
    
-   
-#region Classes
    
    public class Item
    {
-#region Private Properties
-      
-      private ItemType type;
-      private string key;
-      private ByteVector value;
-      private StringList text;
-      private bool read_only;
-      
-#endregion
+      #region Private Properties
+      private ItemType   type      = ItemType.Text;
+      private string     key       = null;
+      private ByteVector value     = null;
+      private StringList text      = new StringList ();
+      private bool       read_only = false;
+      #endregion
       
       
-#region Constructors
       
-      public Item ()
-      // Creates a new empty item.
+      #region Constructors
+      public Item (ByteVector data, int offset)
       {
-         type      = ItemType.Text;
-         key       = null;
-         value    = null;
-         text      = new StringList ();
-         read_only = false;
+         Parse (data, offset);
       }
       
-      public Item (string key, string value) : this ()
-      // Creates a new item with a given name and string.
+      public Item (string key, string value)
       {
          this.key = key;
          this.text.Add (value);
       }
       
-      public Item (string key, StringList value) : this ()
-      // Creates a new item with a given name and strings.
+      public Item (string key, StringList value)
       {
          this.key = key;
          text.Add (value);
       }
       
-      public Item (string key, ByteVector value) : this ()
-      // Creates a new item with a given name and data.
+      public Item (string key, ByteVector value)
       {
          this.key = key;
          this.type = ItemType.Binary;
          this.value = value;
       }
+      #endregion
       
-#endregion
       
+      
+      #region Public Properties
+      public string Key {get {return key;}}
+      public ByteVector Value {get {return (type == ItemType.Binary) ? value : null;}}
+      public int Size {get {return 8 + key.Length + 1 + value.Count;}}
+      
+      public ItemType Type
+      {
+         get {return type;}
+         set {type = value;}
+      }
+      
+      public bool ReadOnly
+      {
+         get {return read_only;}
+         set {read_only = value;}
+      }
+      
+      public bool IsEmpty
+      {
+         get
+         {
+            if (type != ItemType.Binary)
+               return text.IsEmpty;
+            else
+               return value.IsEmpty;
+         }
+      }
+      #endregion
+      
+      
+      
+      #region Public Methods
       public override string ToString ()
       {
          return text.ToString ();
@@ -95,34 +113,9 @@ namespace TagLib.Ape
       
       public string [] ToStringArray ()
       {
-         return text.ToArray ();
+         return (type != ItemType.Binary) ? text.ToArray () : new string [0];
       }
       
-      public void Parse (ByteVector data)
-      {
-         // 11 bytes is the minimum size for an APE item
-
-         if(data.Count < 11)
-            throw new CorruptFileException ("Not enough data for APE Item");
-
-         uint value_length  = data.Mid (0, 4).ToUInt (false);
-         uint flags        = data.Mid (4, 4).ToUInt (false);
-         
-         int pos = data.Find (new ByteVector (1), 8);
-         
-         key   = data.Mid (8, pos - 8).ToString (StringType.UTF8);
-         value = data.Mid (pos + 1, (int) value_length);
-
-         ReadOnly = (flags & 1) == 1;
-         Type = (ItemType) ((flags >> 1) & 3);
-
-         if(Type != ItemType.Binary)
-         {
-            text.Clear ();
-            text = new StringList (ByteVectorList.Split(value, (byte) 0), StringType.UTF8);
-         }
-      }
-
       public ByteVector Render ()
       {
          ByteVector data = new ByteVector ();
@@ -151,37 +144,34 @@ namespace TagLib.Ape
 
          return data;
       }
+      #endregion
+      
+      
+      
+      #region Protected Methods
+      protected void Parse (ByteVector data, int offset)
+      {
+         // 11 bytes is the minimum size for an APE item
+         if(data.Count < offset + 11)
+            throw new CorruptFileException ("Not enough data for APE Item");
+         
+         uint value_length  = data.Mid (offset, 4).ToUInt (false);
+         uint flags         = data.Mid (offset + 4, 4).ToUInt (false);
+         
+         int pos = data.Find (new ByteVector (1), offset + 8);
+         
+         key   = data.Mid (offset + 8, pos - offset - 8).ToString (StringType.UTF8);
+         value = data.Mid (pos + 1, (int) value_length);
 
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
-      public string Key {get {return key;}}
-      public ByteVector Value {get {return value;}}
-      public int Size {get {return 8 + key.Length + 1 + value.Count;}}
-      
-      public ItemType Type
-      {
-         get {return type;}
-         set {type = value;}
-      }
-      
-      public bool ReadOnly
-      {
-         get {return read_only;}
-         set {read_only = value;}
-      }
-      
-      public bool IsEmpty
-      {
-         get
+         ReadOnly = (flags & 1) == 1;
+         Type = (ItemType) ((flags >> 1) & 3);
+
+         if(Type != ItemType.Binary)
          {
-            if (type != ItemType.Binary)
-               return text.IsEmpty;
-            else
-               return value.IsEmpty;
+            text.Clear ();
+            text = new StringList (ByteVectorList.Split(value, (byte) 0), StringType.UTF8);
          }
       }
+      #endregion
    }
-   
-#endregion
 }

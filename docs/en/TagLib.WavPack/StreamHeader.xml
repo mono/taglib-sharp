@@ -21,10 +21,10 @@
         <Parameter Name="stream_length" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="stream_length">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing header bytes for WavPack stream header.</param>
+        <param name="stream_length">A <see cref="System.Int64" /> representing the length of the audio data in bytes.</param>
+        <summary>Constructs and initialized the current instance of <see cref="T:TagLib.WavPack.StreamHeader" /> based on the stream header data and the stream length.</summary>
+        <remarks><paramref name="stream_length" /> is required for determining the bitrate.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Size">
@@ -35,8 +35,8 @@
       </ReturnValue>
       <MemberValue>32</MemberValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gets the size of a WavPack stream header.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Duration">
@@ -58,9 +58,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the audio bitrate of the current instance.</summary>
+        <value>A <see cref="T:System.Int32" /> representing the audio bitrate.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AudioSampleRate">
@@ -70,9 +70,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the audio sample rate of the current instance.</summary>
+        <value>A <see cref="T:System.Int32" /> representing the audio sample rate.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AudioChannels">
@@ -82,9 +82,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the number of audio channels in the current instance.</summary>
+        <value>A <see cref="T:System.Int32" /> representing the number of audio channels.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="MediaTypes">
@@ -118,9 +118,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the current number of bits per sample.</summary>
+        <value>A <see cref="T:System.Int32" /> representing the number of bits per sample.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Description">
@@ -131,13 +131,13 @@
       </ReturnValue>
       <Docs>
         <summary>Gets a plain text description of the current instance.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <value>A <see cref="T:System.String" /> describing the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access audio properties for WavPack files, and provides <see cref="T:TagLib.IAudioCodec" /> support for the format.</summary>
+    <remarks />
   </Docs>
 </Type>

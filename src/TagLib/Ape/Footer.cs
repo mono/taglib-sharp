@@ -27,75 +27,43 @@ namespace TagLib.Ape
 {
    public class Footer
    {
-#region Private Properties
-      
-      private uint version;
-      private bool footer_present;
-      private bool header_present;
-      private bool is_header;
-      private uint item_count;
-      private uint tag_size;
-      private static uint size = 32;
-      
-#endregion
+      #region Private Properties
+      private uint version = 0;
+      private bool footer_present = true;
+      private bool header_present = false;
+      private bool is_header = false;
+      private uint item_count = 0;
+      private uint tag_size = 0;
+      #endregion
       
       
-#region Static Properties
       
-      public static uint Size {get {return size;}}
+      #region Public Static Properties
+      public static readonly uint Size = 32;
       public static readonly ByteVector FileIdentifier = "APETAGEX";
+      #endregion
       
-#endregion
       
       
-#region Constructors
-      
+      #region Constructors
       public Footer ()
-      // Creates a new, empty footer.
-      {
-         version = 0;
-         footer_present = true;
-         header_present = false;
-         is_header = false;
-         item_count = 0;
-         tag_size = 0;
-      }
+      {}
       
       public Footer (ByteVector data) : this ()
-      // Creates a new footer from given data.
       {
          Parse (data);
       }
       
       public Footer (File file, long offset) : this ()
-      // Creates a new footer by reading a file.
       {
          file.Seek (offset);
          Parse (file.ReadBlock (Size));
       }
-      
-#endregion
-      
-      
-#region Public Methods
-      
-      public ByteVector RenderFooter ()
-      // Renders the footer.
-      {
-         return Render (false);
-      }
-      
-      public ByteVector RenderHeader ()
-      // Renders the header, if present, otherwise returns an empty ByteVector.
-      {
-         return HeaderPresent ? Render (true) : new ByteVector ();
-      }
-      
-#endregion
+      #endregion
       
       
-#region Public Properties
       
+      #region Public Properties
       public uint Version       {get {return version;}}
       public bool FooterPresent {get {return footer_present;}}
       public bool IsHeader      {get {return is_header;}}
@@ -122,12 +90,27 @@ namespace TagLib.Ape
       {
          get {return TagSize + (HeaderPresent ? Size : 0);}
       }
+      #endregion
       
-#endregion
       
       
-#region Protected Methods
+      #region Public Methods
+      public ByteVector RenderFooter ()
+      // Renders the footer.
+      {
+         return Render (false);
+      }
       
+      public ByteVector RenderHeader ()
+      // Renders the header, if present, otherwise returns an empty ByteVector.
+      {
+         return HeaderPresent ? Render (true) : new ByteVector ();
+      }
+      #endregion
+      
+      
+      
+      #region Protected Methods
       protected void Parse (ByteVector data)
       // Parses raw header data from a ByteVector.
       {
@@ -187,7 +170,6 @@ namespace TagLib.Ape
 
          return v;
       }
-      
-#endregion
+      #endregion
    }
 }

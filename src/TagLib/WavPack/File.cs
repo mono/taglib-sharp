@@ -29,14 +29,23 @@ namespace TagLib.WavPack
    [SupportedMimeType("audio/x-wavpack")]
    public class File : TagLib.NonContainer.File
    {
+      #region Private Properties
       private ByteVector header_block = null;
+      #endregion
       
+      
+      
+      #region Constructors
       public File (string file, ReadStyle properties_style) : base (file, properties_style)
       {}
 
       public File (string file) : this (file, ReadStyle.Average)
       {}
+      #endregion
       
+      
+      
+      #region Public Methods
       public override TagLib.Tag GetTag (TagTypes type, bool create)
       {
          Tag t = (Tag as TagLib.NonContainer.Tag).GetTag (type);
@@ -59,7 +68,11 @@ namespace TagLib.WavPack
             return null;
          }
       }
+      #endregion
       
+      
+      
+      #region Protected Methods
       protected override void ReadStart (long start, ReadStyle style)
       {
          if (header_block == null && style != ReadStyle.None)
@@ -80,5 +93,6 @@ namespace TagLib.WavPack
          StreamHeader header = new StreamHeader (header_block, end - start);
          return new Properties (TimeSpan.Zero, header);
       }
+      #endregion
    }
 }

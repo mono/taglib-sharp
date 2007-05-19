@@ -14,8 +14,12 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ape.Tag" /> with no content.</summary>
+        <remarks>
+          <para>
+To access or create an <see cref="T:TagLib.Ape.Tag" /> in an existing <see cref="T:TagLib.File" />, use <see cref="M:TagLib.File.GetTag(TagLib.TagTypes,bool)" />.
+</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -26,10 +30,15 @@
         <Parameter Name="offset" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="offset">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.File" /> containing a tag to read.</param>
+        <param name="offset">A <see cref="T:System.Int64" /> specifying where to read from the file. It must be the position of either an APE header or footer.
+</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ape.Tag" /> by reading from a <see cref="T:TagLib.File" /> at a specified position.</summary>
+        <remarks>
+          <para>
+To access or create an <see cref="T:TagLib.Ape.Tag" /> in an existing <see cref="T:TagLib.File" />, use <see cref="M:TagLib.File.GetTag(TagLib.TagTypes,bool)" />.
+</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="FileIdentifier">
@@ -39,8 +48,8 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gets the identifier used for recognizing an APE tag.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -51,9 +60,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Creates a <see cref="T:TagLib.ByteVector" /> containing an APE tag representation of the current instance.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing an APE tag representation of the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RemoveItem">
@@ -66,9 +75,9 @@
         <Parameter Name="key" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="key">A <see cref="T:System.String" /> representing an APE item key.</param>
+        <summary>Removes a specified item from the current instance, if it exists.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetItem">
@@ -81,14 +90,14 @@
         <Parameter Name="key" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="key">A <see cref="T:System.String" /> representing an APE item key.</param>
+        <summary>Gets a specified APE item from the current instance.</summary>
+        <returns>Either a <see cref="T:TagLib.Ape.Item" /> if one is found with a matching key, otherwise <see langword="null" />.</returns>
+        <remarks />
       </Docs>
     </Member>
-    <Member MemberName="AddNumberValue">
-      <MemberSignature Language="C#" Value="public void AddNumberValue (string key, uint number, uint count, bool replace);" />
+    <Member MemberName="SetValue">
+      <MemberSignature Language="C#" Value="public void SetValue (string key, uint number, uint count);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -97,34 +106,15 @@
         <Parameter Name="key" Type="System.String" />
         <Parameter Name="number" Type="System.UInt32" />
         <Parameter Name="count" Type="System.UInt32" />
-        <Parameter Name="replace" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <param name="number">To be added.</param>
-        <param name="count">To be added.</param>
-        <param name="replace">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="AddValue">
-      <MemberSignature Language="C#" Value="public void AddValue (string key, string value, bool replace);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="key" Type="System.String" />
-        <Parameter Name="value" Type="System.String" />
-        <Parameter Name="replace" Type="System.Boolean" />
-      </Parameters>
-      <Docs>
-        <param name="key">To be added.</param>
-        <param name="value">To be added.</param>
-        <param name="replace">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="key">A <see cref="T:System.String" /> representing an APE item key.</param>
+        <param name="number">A <see cref="T:System.UInt32" />.</param>
+        <param name="count">A <see cref="T:System.UInt32" /> representing a total which <paramref name="number" /> is a part of, or zero if <paramref name="number" /> is not part of a set.</param>
+        <summary>Sets a numeric value in an ape item.</summary>
+        <remarks>If both <paramref name="number" /> and <paramref name="count" /> are equal to zero, the value will be cleared. If <paramref name="count" /> is zero, <paramref name="number" /> by itself will be stored.
+
+Otherwise, the values will be stored as "<paramref name="number" />/<paramref name="count" />".</remarks>
       </Docs>
     </Member>
     <Member MemberName="AddValue">
@@ -138,63 +128,10 @@
         <Parameter Name="value" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="AddValues">
-      <MemberSignature Language="C#" Value="public void AddValues (string key, string[] values, bool replace);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="key" Type="System.String" />
-        <Parameter Name="values" Type="System.String[]" />
-        <Parameter Name="replace" Type="System.Boolean" />
-      </Parameters>
-      <Docs>
-        <param name="key">To be added.</param>
-        <param name="values">To be added.</param>
-        <param name="replace">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="AddValues">
-      <MemberSignature Language="C#" Value="public void AddValues (string key, string[] values);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="key" Type="System.String" />
-        <Parameter Name="values" Type="System.String[]" />
-      </Parameters>
-      <Docs>
-        <param name="key">To be added.</param>
-        <param name="values">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="SetItem">
-      <MemberSignature Language="C#" Value="public void SetItem (string key, TagLib.Ape.Item item);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="key" Type="System.String" />
-        <Parameter Name="item" Type="TagLib.Ape.Item" />
-      </Parameters>
-      <Docs>
-        <param name="key">To be added.</param>
-        <param name="item">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="key">A <see cref="T:System.String" /> representing an APE item key.</param>
+        <param name="value">A <see cref="T:System.String" /> to be appended to the current item value.</param>
+        <summary>Adds a string value to an ape item.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Read">
@@ -208,10 +145,10 @@
         <Parameter Name="offset" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="offset">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.File" /> containing a tag to read.</param>
+        <param name="offset">A <see cref="T:System.Int64" /> specifying where to read from the file. It must be the position of either an APE header or footer.</param>
+        <summary>Populates the current instance by reading a tag from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Parse">
@@ -224,9 +161,9 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing APE items.</param>
+        <summary>Parses a <see cref="T:TagLib.ByteVector" /> to populate the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Footer">
@@ -236,14 +173,101 @@
         <ReturnType>TagLib.Ape.Footer</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Get the APE footer for the current instance.</summary>
+        <value>A <see cref="T:TagLib.Ape.Footer" /> containing information for the current instance.</value>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="AddValue">
+      <MemberSignature Language="C#" Value="public void AddValue (string key, string[] value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="key" Type="System.String" />
+        <Parameter Name="value" Type="System.String[]" />
+      </Parameters>
+      <Docs>
+        <param name="key">A <see cref="T:System.String" /> representing an APE item key.</param>
+        <param name="value">A <see cref="T:System.String" /> array containing values to be appended to the current item value.</param>
+        <summary>Adds a collection of string values to an ape item.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="AddValue">
+      <MemberSignature Language="C#" Value="public void AddValue (string key, uint number, uint count);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="key" Type="System.String" />
+        <Parameter Name="number" Type="System.UInt32" />
+        <Parameter Name="count" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="key">A <see cref="T:System.String" /> representing an APE item key.</param>
+        <param name="number">A <see cref="T:System.UInt32" />.</param>
+        <param name="count">A <see cref="T:System.UInt32" /> representing a total which <paramref name="number" /> is a part of, or zero if <paramref name="number" /> is not part of a set.</param>
+        <summary>Adds a numeric value to an ape item.</summary>
+        <remarks>If both <paramref name="number" /> and <paramref name="count" /> are equal to zero, the value will not be added. If <paramref name="count" /> is zero, <paramref name="number" /> by itself will be added.
+
+Otherwise, the values will be added as "<paramref name="number" />/<paramref name="count" />".</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetItem">
+      <MemberSignature Language="C#" Value="public void SetItem (TagLib.Ape.Item item);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="item" Type="TagLib.Ape.Item" />
+      </Parameters>
+      <Docs>
+        <param name="item">A <see cref="T:TagLib.Ape.Item" /> to be included in the current instance.</param>
+        <summary>Stores an <see cref="T:TagLib.Ape.Item" /> in the current instance, replacing the current item with the same key if one exists.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="SetValue">
+      <MemberSignature Language="C#" Value="public void SetValue (string key, string value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="key" Type="System.String" />
+        <Parameter Name="value" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="key">A <see cref="T:System.String" /> representing an APE item key.</param>
+        <param name="value">A <see cref="T:System.String" /> to store.</param>
+        <summary>Sets a string value in an ape item.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="SetValue">
+      <MemberSignature Language="C#" Value="public void SetValue (string key, string[] value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="key" Type="System.String" />
+        <Parameter Name="value" Type="System.String[]" />
+      </Parameters>
+      <Docs>
+        <param name="key">A <see cref="T:System.String" /> representing an APE item key.</param>
+        <param name="value">A <see cref="T:System.String" /> array containing values to store.</param>
+        <summary>Sets a collection of string values in an ape item.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access and manipulate tags stored in the APE tagging format.</summary>
+    <remarks />
   </Docs>
 </Type>

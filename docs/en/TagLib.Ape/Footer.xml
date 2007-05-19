@@ -14,8 +14,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ape.Footer" /> with the default values.</summary>
+        <remarks>This is used when creating an empty tag.</remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -25,9 +25,9 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing a header or footer to read.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ape.Footer" /> by reading one from a <see cref="T:TagLib.ByteVector" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -38,10 +38,10 @@
         <Parameter Name="offset" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="offset">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.File" /> containing a header or footer to read.</param>
+        <param name="offset">A <see cref="T:System.Int64" /> specifying where to read from the file. It must be the position of either an APE header or footer.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ape.Footer" /> by reading one from given position in a <see cref="T:TagLib.File" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="FileIdentifier">
@@ -51,8 +51,8 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gets the identifier used for recognizing an APE tag.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RenderFooter">
@@ -63,9 +63,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Renders the current instance as a footer.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing an APE Version 2 footer.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RenderHeader">
@@ -76,9 +76,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Renders the current instance as an APE Version 2 header if <see cref="P:TagLib.Ape.Footer.HeaderPresent" /> is <see langword="true" />.</summary>
+        <returns>Returns a <see cref="T:TagLib.ByteVector" /> containing an APE Version 2 header if <see cref="P:TagLib.Ape.Footer.HeaderPresent" /> is <see langword="true" />. Otherwise an empty <see cref="T:TagLib.ByteVector" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Parse">
@@ -91,9 +91,9 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an APE header or footer.</param>
+        <summary>Sets values in the current instance by reading a header or footer block from a <see cref="T:TagLib.ByteVector" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -106,22 +106,10 @@
         <Parameter Name="is_header" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="is_header">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Size">
-      <MemberSignature Language="C#" Value="public static uint Size { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.UInt32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <param name="is_header">A <see cref="T:System.Boolean" /> specifying whether to render a header or a footer.</param>
+        <summary>Renders the current instance to a new <see cref="T:TagLib.ByteVector" />, either as a header or a footer, as specified.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing an APE Version 2 header or footer.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Version">
@@ -131,9 +119,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the APE version.</summary>
+        <value>A <see cref="T:System.UInt32" /> representing the APE version.</value>
+        <remarks>The version will always be 2 for newly created tags and the all tags will be rendered in that format.</remarks>
       </Docs>
     </Member>
     <Member MemberName="FooterPresent">
@@ -143,9 +131,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether or not a footer is present in the tag.</summary>
+        <value>A <see cref="T:System.Boolean" /> representing whether or not a footer is present in the tag. This should always be true.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IsHeader">
@@ -155,9 +143,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether or not the current instance is actually a header.</summary>
+        <value>A <see cref="T:System.Boolean" /> representing whether or not a the current instance is a header.</value>
+        <remarks>The <see cref="T:TagLib.Ape.Footer" /> class is used for representing both headers and footers, which differ only in one bit.</remarks>
       </Docs>
     </Member>
     <Member MemberName="HeaderPresent">
@@ -167,9 +155,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets whether or not a footer is present in the tag.</summary>
+        <value>A <see cref="T:System.Boolean" /> representing whether or not a header is present in the tag.</value>
+        <remarks>Headers are mandatory for APE tags stored at the beginning of a file.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ItemCount">
@@ -179,9 +167,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the number of items stored in the APE tag.</summary>
+        <value>A <see cref="T:System.UInt32" /> representing the number of items stored in the tag.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="TagSize">
@@ -191,9 +179,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the tag size, including the footer and items, but excluding the header size should one exist.</summary>
+        <value>A <see cref="T:System.UInt32" /> representing the size of the tag, excluding the header size should one exist.</value>
+        <remarks>The header size is excluded to maintain compatability with APE Version 1.</remarks>
       </Docs>
     </Member>
     <Member MemberName="CompleteTagSize">
@@ -203,14 +191,26 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the complete tag size, including the header size.</summary>
+        <value>A <see cref="T:System.UInt32" /> representing the size of the tag.</value>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Size">
+      <MemberSignature Language="C#" Value="public static readonly uint Size = 32;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <MemberValue>32</MemberValue>
+      <Docs>
+        <summary>Gets the size of an APE footer.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access and manipulate header and footer blocks used in the APE tagging format.</summary>
+    <remarks>APE headers and footers are very similar and for the sake of simplicity are both represented by this class. The name "Footer" is used as all APE tags are guaranteed to have a footer but not always a header, on account of the original APE 1.0 specification.</remarks>
   </Docs>
 </Type>

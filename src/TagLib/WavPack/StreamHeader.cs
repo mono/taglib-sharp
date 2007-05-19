@@ -27,7 +27,7 @@ namespace TagLib.WavPack
 {
    public class StreamHeader : IAudioCodec
    {
-#region Constants
+      #region Constants
       private static readonly uint [] sample_rates = {6000, 8000, 9600, 11025, 12000,
          16000, 22050, 24000, 32000, 44100, 48000, 64000, 88200, 96000, 192000};
       
@@ -37,16 +37,26 @@ namespace TagLib.WavPack
       private static readonly long SHIFT_MASK  = (0x1fL << SHIFT_LSB);
       private static readonly int  SRATE_LSB   = 23;
       private static readonly long SRATE_MASK  = (0xfL << SRATE_LSB);
-#endregion
+      #endregion
       
-#region Private properties
+      
+      
+      #region Private Properties
       private long stream_length;
       private ushort version;
       private uint flags;
       private uint samples;
-#endregion
+      #endregion
       
-#region Constructors
+      
+      
+      #region Public Static Properties
+      public static readonly uint Size = 32;
+      #endregion
+      
+      
+      
+      #region Constructors
       public StreamHeader (ByteVector data, long stream_length)
       {
          if (!data.StartsWith ("wvpk"))
@@ -57,11 +67,11 @@ namespace TagLib.WavPack
          flags   = data.Mid (24, 4).ToUInt (false);
          samples = data.Mid (12, 4).ToUInt (false);
       }
-#endregion
-
-#region Public Properties
-      public static readonly uint Size = 32;
+      #endregion
       
+      
+      
+      #region Public Properties
       public TimeSpan Duration
       {
          get
@@ -69,6 +79,7 @@ namespace TagLib.WavPack
             return AudioSampleRate > 0 ? TimeSpan.FromSeconds ((double) samples / (double) AudioSampleRate + 0.5) : TimeSpan.Zero;
          }
       }
+      
       public int AudioBitrate
       {
          get
@@ -76,6 +87,7 @@ namespace TagLib.WavPack
             return (int) (Duration > TimeSpan.Zero ? ((stream_length * 8L) / Duration.TotalSeconds) / 1000 : 0);
          }
       }
+      
       public int AudioSampleRate
       {
          get
@@ -83,9 +95,13 @@ namespace TagLib.WavPack
             return (int) (sample_rates [(flags & SRATE_MASK) >> SRATE_LSB]);
          }
       }
-      public int      AudioChannels      {get {return ((flags & MONO_FLAG) != 0) ? 1 : 2;}}
-      public MediaTypes MediaTypes  {get {return MediaTypes.Audio;}}
-      public          int      Version       {get {return version;}}
+      
+      public int        AudioChannels {get {return ((flags & MONO_FLAG) != 0) ? 1 : 2;}}
+      
+      public MediaTypes MediaTypes    {get {return MediaTypes.Audio;}}
+      
+      public int        Version       {get {return version;}}
+      
       public int BitsPerSample
       {
          get
@@ -95,6 +111,6 @@ namespace TagLib.WavPack
       }
       
       public string Description {get {return "WavPack Version " + Version + " Audio";}}
-#endregion
+      #endregion
    }
 }

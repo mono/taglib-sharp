@@ -1,6 +1,6 @@
 <Namespace Name="TagLib.Ape">
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary><para>The TagLib.Ape namespace contains all classes relevant to the reading APE tags.</para></summary>
+    <remarks><para>See http://wiki.hydrogenaudio.org/index.php?title=APEv2 for the complete specification.</para></remarks>
   </Docs>
 </Namespace>
