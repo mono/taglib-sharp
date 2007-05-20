@@ -19,11 +19,7 @@
       <Docs>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an Id3v2 frame header.</param>
         <param name="version">A <see cref="T:System.UInt32" /> specifying the Id3v2 version the header was created with.</param>
-        <summary>
-          <para>
-            Constructs and initializes a new instance of the <see cref="T:TagLib.Id3v2.Frame" /> with raw header data of a specified version.
-          </para>
-        </summary>
+        <summary>Constructs and initializes a new instance of the <see cref="T:TagLib.Id3v2.Frame" /> with raw header data of a specified version.</summary>
         <remarks>
           <para>This constructor is useful for creating new frames of specific type. Like with other <see cref="T:TagLib.Id3v2.FrameHeader" />, simply providing the four byte identifier will create a header without specific details.</para>
           <example>

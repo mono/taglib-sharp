@@ -75,7 +75,7 @@ namespace TagLib.Mpeg
 #region Private Properties
       private uint        flags;
       private long        position;
-      public  long        stream_length = 0;
+      private long        stream_length = 0;
       private XingHeader  xing_header = null;
 #endregion
       

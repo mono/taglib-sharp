@@ -73,12 +73,12 @@ namespace TagLib.Riff
          return fields.GetValueAsUInt (id);
       }
       
-      public void SetValue (ByteVector id, ByteVector value)
+      public void SetValue (ByteVector id, params ByteVector [] value)
       {
          fields.SetValue (id, value);
       }
       
-      public void SetValue (ByteVector id, string value)
+      public void SetValue (ByteVector id, ByteVectorList value)
       {
          fields.SetValue (id, value);
       }
@@ -93,7 +93,7 @@ namespace TagLib.Riff
          fields.SetValue (id, value);
       }
       
-      public void SetValue (ByteVector id, string [] value)
+      public void SetValue (ByteVector id, params string [] value)
       {
          fields.SetValue (id, value);
       }

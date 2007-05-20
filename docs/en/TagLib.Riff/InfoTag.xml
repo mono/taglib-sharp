@@ -14,8 +14,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.InfoTag" /> with not contents.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -25,9 +25,9 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing the internal contents of the list (excluding the enclosing block).</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.InfoTag" /> by reading the list contents from a <see cref="T:TagLib.ByteVector" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -39,16 +39,16 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.File" /> to read the list members from.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying the position of the list contents in the file (not the list header).</param>
+        <param name="length">A <see cref="T:System.Int32" /> specifying the length of the list contents.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.InfoTag" /> by reading the list contents from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access and manipulate tags stored in the INFO list container.</summary>
+    <remarks />
   </Docs>
 </Type>

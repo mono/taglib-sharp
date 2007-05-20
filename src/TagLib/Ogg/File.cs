@@ -51,6 +51,9 @@ namespace TagLib.Ogg
          Mode = AccessMode.Closed;
       }
       
+      public File (string file) : this (file, ReadStyle.Average)
+      {}
+      
       private void Read (ReadStyle properties_style)
       {
          long end;

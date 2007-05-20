@@ -9,7 +9,7 @@ namespace TagLib.Ogg.Codecs
       private HeaderPacket header;
       private ByteVector comment_data;
       
-      public Vorbis ()
+      private Vorbis ()
       {
          comment_data = null;
       }
@@ -38,12 +38,12 @@ namespace TagLib.Ogg.Codecs
          return comment_data != null;
       }
       
-      public int        AudioBitrate    {get {return (int) ((float)header.bitrate_nominal / 1000f + 0.5);}}
-      public int        AudioSampleRate {get {return header.sample_rate;}}
-      public int        AudioChannels   {get {return header.channels;}}
+      public          int        AudioBitrate    {get {return (int) ((float)header.bitrate_nominal / 1000f + 0.5);}}
+      public          int        AudioSampleRate {get {return (int) header.sample_rate;}}
+      public          int        AudioChannels   {get {return (int) header.channels;}}
       public override MediaTypes MediaTypes      {get {return MediaTypes.Audio;}}
       public override ByteVector CommentData     {get {return comment_data;}}
-      public override string Description  {get {return "Vorbis Version " + header.vorbis_version + " Audio";}}
+      public override string     Description     {get {return "Vorbis Version " + header.vorbis_version + " Audio";}}
 
       public override TimeSpan GetDuration (long last_granular_position, long first_granular_position)
       {
@@ -75,32 +75,32 @@ namespace TagLib.Ogg.Codecs
       
       private struct HeaderPacket
       {
-         public int sample_rate;
-         public int channels;
-         public int vorbis_version;
-         public int bitrate_maximum;
-         public int bitrate_nominal;
-         public int bitrate_minimum;
+         public uint sample_rate;
+         public uint channels;
+         public uint vorbis_version;
+         public uint bitrate_maximum;
+         public uint bitrate_nominal;
+         public uint bitrate_minimum;
          
          public HeaderPacket (ByteVector data)
          {
             int pos = 7;
-            vorbis_version  = (int) data.Mid(pos, 4).ToUInt (false);
+            vorbis_version  = data.Mid(pos, 4).ToUInt (false);
             
             pos += 4;
             channels        = data [pos];
             
             pos += 1;
-            sample_rate     = (int) data.Mid(pos, 4).ToUInt (false);
+            sample_rate     = data.Mid(pos, 4).ToUInt (false);
             
             pos += 4;
-            bitrate_maximum = (int) data.Mid(pos, 4).ToUInt (false);
+            bitrate_maximum = data.Mid(pos, 4).ToUInt (false);
             
             pos += 4;
-            bitrate_nominal = (int) data.Mid(pos, 4).ToUInt (false);
+            bitrate_nominal = data.Mid(pos, 4).ToUInt (false);
             
             pos += 4;
-            bitrate_minimum = (int) data.Mid(pos, 4).ToUInt (false);
+            bitrate_minimum = data.Mid(pos, 4).ToUInt (false);
          }
       }
    }

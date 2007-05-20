@@ -59,10 +59,10 @@
         <Parameter Name="version" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="version">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
+        <param name="version">A <see cref="T:System.UInt32" /> specifying the ID3v2 version <paramref name="data" /> is encoded in.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v2.CommentsFrame" /> by reading from an ID3v2 frame.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Get">
@@ -78,13 +78,13 @@
         <Parameter Name="create" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <param name="description">To be added.</param>
-        <param name="language">To be added.</param>
-        <param name="create">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="tag">A <see cref="T:TagLib.Id3v2.Tag" /> to search.</param>
+        <param name="description">A <see cref="T:System.String" /> specifying a description to search for.</param>
+        <param name="language">A <see cref="T:TagLib.ByteVector" /> specifying a language to search for.</param>
+        <param name="create">A <see cref="T:System.Boolean" /> specifying whether or not to create a new instance if one is not found.</param>
+        <summary>Searches for a <see cref="T:TagLib.Id3v2.CommentsFrame" /> with a specified description and language, optionally creating one if none is found.</summary>
+        <returns>A <see cref="T:TagLib.Id3v2.CommentsFrame" /> containing with the given description and language, or <see langword="null" /> if not found and not creating.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="TextEncoding">
@@ -94,9 +94,9 @@
         <ReturnType>TagLib.StringType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the text encoding to use when rendering the current instance.</summary>
+        <value>A <see cref="T:TagLib.StringType" /> specifying the text encoding to use when rendering.</value>
+        <remarks>This value is overridden if <see cref="P:TagLib.Id3v2.Tag.ForceDefaultEncoding" /> is <see langword="true" /> or if the save version does not support it.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Language">
@@ -118,9 +118,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets a description of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> describing the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Text">
@@ -130,9 +130,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the text of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the text of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetPreferred">
@@ -165,12 +165,12 @@
         <Parameter Name="version" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="offset">To be added.</param>
-        <param name="h">To be added.</param>
-        <param name="version">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
+        <param name="offset">A <see cref="T:System.Int32" /> specifying the index at which the frame begins.</param>
+        <param name="h">The <see cref="T:TagLib.Id3v2.FrameHeader" /> for the frame.</param>
+        <param name="version">A <see cref="T:System.UInt32" /> specifying the ID3v2 version <paramref name="data" /> is encoded in.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Id3v2.CommentsFrame" /> by reading frame data of a specified version.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>

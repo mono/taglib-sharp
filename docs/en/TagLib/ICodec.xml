@@ -25,7 +25,7 @@
         <ReturnType>TagLib.MediaTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the media types contained within the current instance.</summary>
+        <summary>Gets the media types contained in the current instance.</summary>
         <value>A <see cref="T:TagLib.MediaTypes" /> containing flags describing what media types are detailed in the current instance.</value>
         <remarks>
           <para>Containing a specific media type implies that the current instance also inherits the relevant codec. ie. <see cref="F:TagLib.MediaTypes.Audio" /> implies that the current instance inherits <see cref="T:TagLib.IAudioCodec" />. This relation is one directional, though as an instance inheriting <see cref="T:TagLib.IAudioCodec" /> might not contain relevant audio information.</para>
@@ -40,13 +40,13 @@
       </ReturnValue>
       <Docs>
         <summary>Gets a plain text description of the current instance.</summary>
-        <value>A <see cref="T:System.String" /> describing the codec.</value>
+        <value>A <see cref="T:System.String" /> describing the current instance.</value>
         <remarks>This string provides a user readable explanation of the codec and is useful in the display of file information to the user.</remarks>
       </Docs>
     </Member>
   </Members>
   <Docs>
     <summary>Interface providing the most basic information about a media codec.</summary>
-    <remarks>To be added.</remarks>
+    <remarks />
   </Docs>
 </Type>

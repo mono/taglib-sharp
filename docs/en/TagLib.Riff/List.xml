@@ -18,8 +18,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.List" /> with not contents.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -29,9 +29,9 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing the internal contents of the list (excluding the enclosing block).</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.List" /> by reading the list contents from a <see cref="T:TagLib.ByteVector" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -43,11 +43,11 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.File" /> to read the list members from.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying the position of the list contents in the file (not the list header).</param>
+        <param name="length">A <see cref="T:System.Int32" /> specifying the length of the list contents.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.List" /> by reading the list contents from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -58,9 +58,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets a rendered version of the list, unenclosed by the parent block.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing an unenclosed RIFF list.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RenderEnclosed">
@@ -73,10 +73,10 @@
         <Parameter Name="id" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing the enclosing block's FourCC identifier.</param>
+        <summary>Gets a rendered version of the list, enclosed by a specified parent block.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing a completely enclosed RIFF list.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetValueAsUInt">
@@ -89,10 +89,10 @@
         <Parameter Name="id" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
+        <summary>Gets the first value of a specified item that represents an integer value.</summary>
+        <returns>A <see cref="T:System.UInt32" /> containing the item's value as a number.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetValue">
@@ -106,10 +106,10 @@
         <Parameter Name="value" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
+        <param name="value">A <see cref="T:System.UInt32" /> containing a value to store.</param>
+        <summary>Sets the value of an item to a specified number.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetValue">
@@ -129,10 +129,10 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <param name="values">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
+        <param name="values">A <see cref="T:System.String" /> array containing values to store.</param>
+        <summary>Sets the value of an item to a specified string collection.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RemoveValue">
@@ -145,9 +145,9 @@
         <Parameter Name="id" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
+        <summary>Removes all values for a specified item from the list.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetValues">
@@ -160,10 +160,10 @@
         <Parameter Name="id" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
+        <summary>Gets all the values for a specified item.</summary>
+        <returns>A <see cref="T:TagLib.ByteVectorList" /> containing the item values.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetValuesAsStringList">
@@ -176,9 +176,9 @@
         <Parameter Name="id" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
+        <summary>Gets all the values for a specified item as strings.</summary>
+        <returns>A <see cref="T:TagLib.StringList" /> containing the item values as strings.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -193,10 +193,10 @@
         <Parameter Name="values" Type="System.Collections.Generic.IEnumerable&lt;TagLib.ByteVector&gt;" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <param name="values">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
+        <param name="values">A <see cref="T:System.Collections.Generic.IEnumerable&lt;TagLib.ByteVector&gt;" /> containing values to store.</param>
+        <summary>Sets the value of an item to a specified <see cref="T:TagLib.ByteVector" /> collection.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetValue">
@@ -216,10 +216,10 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <param name="values">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
+        <param name="values">A <see cref="T:TagLib.ByteVector" /> array containing values to store.</param>
+        <summary>Sets the value of an item to a specified <see cref="T:TagLib.ByteVector" /> collection.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetValue">
@@ -233,15 +233,15 @@
         <Parameter Name="values" Type="System.Collections.Generic.IEnumerable&lt;System.String&gt;" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <param name="values">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
+        <param name="values">A <see cref="T:System.Collections.Generic.IEnumerable&lt;System.String&gt;" /> containing values to store.</param>
+        <summary>Sets the value of an item to a specified string collection.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access and manipulate data stored in the RIFF lists.</summary>
+    <remarks />
   </Docs>
 </Type>

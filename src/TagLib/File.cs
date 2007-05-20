@@ -76,7 +76,7 @@ namespace TagLib
       // public members
       //////////////////////////////////////////////////////////////////////////
       
-      public File (string file)
+      protected File (string file)
       {
          file_stream = null;
          file_abstraction = GetFileAbstractionCreator () (file);
@@ -433,10 +433,10 @@ namespace TagLib
          Truncate (write_position);
       }
       
-      public void Seek (long offset, System.IO.SeekOrigin p)
+      public void Seek (long offset, System.IO.SeekOrigin origin)
       {
          if (Mode != AccessMode.Closed)
-            file_stream.Seek (offset, p);
+            file_stream.Seek (offset, origin);
       }
       
       public void Seek (long offset)

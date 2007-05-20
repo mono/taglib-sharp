@@ -456,15 +456,12 @@ namespace TagLib
 
         public string[] ToStrings (StringType type, int offset, int count)
         {
-           System.Console.WriteLine (ToString (type));
-           
             int chunk = 0;
             int pos = offset;
             
             StringList l = new StringList ();
             ByteVector separator = TagLib.Id3v2.Frame.TextDelimiter (type);
             int align = separator.Count;
-            System.Console.WriteLine (offset);
             while (chunk < count && pos < Count)
             {
                int start = pos;
@@ -478,8 +475,6 @@ namespace TagLib
                   if (pos < 0)
                      pos = Count;
                }
-               
-               System.Console.WriteLine (pos);
                
                int length = pos - start;
                

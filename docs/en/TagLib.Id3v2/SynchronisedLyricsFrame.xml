@@ -51,10 +51,10 @@
         <Parameter Name="version" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="version">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
+        <param name="version">A <see cref="T:System.UInt32" /> specifying the ID3v2 version <paramref name="data" /> is encoded in.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v2.SynchronizedLyricsFrame" /> by reading from an ID3v2 frame.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Description">
@@ -158,9 +158,9 @@
         <ReturnType>TagLib.StringType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the text encoding to use when rendering the current instance.</summary>
+        <value>A <see cref="T:TagLib.StringType" /> specifying the text encoding to use when rendering.</value>
+        <remarks>This value is overridden if <see cref="P:TagLib.Id3v2.Tag.ForceDefaultEncoding" /> is <see langword="true" /> or if the save version does not support it.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Type">
@@ -185,12 +185,12 @@
         <Parameter Name="version" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="offset">To be added.</param>
-        <param name="h">To be added.</param>
-        <param name="version">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
+        <param name="offset">A <see cref="T:System.Int32" /> specifying the index at which the frame begins.</param>
+        <param name="h">The <see cref="T:TagLib.Id3v2.FrameHeader" /> for the frame.</param>
+        <param name="version">A <see cref="T:System.UInt32" /> specifying the ID3v2 version <paramref name="data" /> is encoded in.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Id3v2.SynchronizedLyricsFrame" /> by reading frame data of a specified version.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>

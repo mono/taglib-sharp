@@ -10,7 +10,7 @@
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public File (string file);" />
+      <MemberSignature Language="C#" Value="protected File (string file);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="file" Type="System.String" />
@@ -29,8 +29,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Saves the changes in the current instance to the file it represents.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ReadBlock">
@@ -43,10 +43,10 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="length">A <see cref="T:System.Int32"/> specifying the number of bytes to read.</param>
+        <summary>Reads a specified number of bytes from the current instance at the current seek point.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> representing the bytes read.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ReadBlock">
@@ -59,10 +59,10 @@
         <Parameter Name="length" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="length">A <see cref="T:System.Int32"/> specifying the number of bytes to read.</param>
+        <summary>Reads a specified number of bytes from the current instance at the current seek point.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> representing the bytes read.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="WriteBlock">
@@ -92,12 +92,12 @@
         <Parameter Name="before" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="pattern">To be added.</param>
-        <param name="from_offset">To be added.</param>
-        <param name="before">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector"/> containing data to be found in the file.</param>
+        <param name="from_offset">A <see cref="T:System.Int64" /> specifying at which point to start searching.</param>
+        <param name="before">A <see cref="T:TagLib.ByteVector" /> containing data which must not occur before <paramref name="pattern" />.</param>
+        <summary>Searches for a byte pattern in a file after a given offset, checking that it does not occur before another pattern.</summary>
+        <returns>A <see cref="T:System.Int64" /> specifying at which index the pattern was found. If the pattern is not found or <paramref name="before" /> is found first, -1 is returned.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Find">
@@ -111,11 +111,11 @@
         <Parameter Name="from_offset" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="pattern">To be added.</param>
-        <param name="from_offset">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector"/> containing data to be found in the file.</param>
+        <param name="from_offset">A <see cref="T:System.Int64" /> specifying at which point to start searching.</param>
+        <summary>Searches for a byte pattern in a file after a given offset.</summary>
+        <returns>A <see cref="T:System.Int64" /> specifying at which index the pattern was found. If the pattern is not found, -1 is returned.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Find">
@@ -128,10 +128,10 @@
         <Parameter Name="pattern" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="pattern">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector"/> containing data to be found in the file.</param>
+        <summary>Searches for a byte pattern in a file starting at the beginning of the file.</summary>
+        <returns>A <see cref="T:System.Int64" /> specifying at which index the pattern was found. If the pattern is not found, -1 is returned.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RFind">
@@ -145,11 +145,11 @@
         <Parameter Name="from_offset" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="pattern">To be added.</param>
-        <param name="from_offset">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector"/> containing data to be found in the file.</param>
+        <param name="from_offset">A <see cref="T:System.Int64" /> specifying at which point to start searching.</param>
+        <summary>Searches backward for a byte pattern in a file before a given offset.</summary>
+        <returns>A <see cref="T:System.Int64" /> specifying at which index the pattern was found. If the pattern is not found, -1 is returned.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RFind">
@@ -162,10 +162,10 @@
         <Parameter Name="pattern" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="pattern">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector"/> containing data to be found in the file.</param>
+        <summary>Searches backward for a byte pattern in a file starting at the end of the file.</summary>
+        <returns>A <see cref="T:System.Int64" /> specifying at which index the pattern was found. If the pattern is not found, -1 is returned.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Insert">
@@ -180,11 +180,11 @@
         <Parameter Name="replace" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="start">To be added.</param>
-        <param name="replace">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> to insert into the file.</param>
+        <param name="start">A <see cref="T:System.Int64" /> specifying at which point to insert the data.</param>
+        <param name="replace">A <see cref="T:System.Int64" /> specifying the number of bytes to replace. Typically this is the original size of the data block so that a new block will replace the old one.</param>
+        <summary>Inserts a block of data into the file at a specified point, replacing another block of data.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Insert">
@@ -198,10 +198,10 @@
         <Parameter Name="start" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="start">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> to insert into the file.</param>
+        <param name="start">A <see cref="T:System.Int64" /> specifying at which point to insert the data.</param>
+        <summary>Inserts a block of data into the file at a specified point.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RemoveBlock">
@@ -215,14 +215,14 @@
         <Parameter Name="length" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="start">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="start">A <see cref="T:System.Int64" /> specifying at which point to remove data.</param>
+        <param name="length">A <see cref="T:System.Int64" /> specifying the number of bytes to remove.</param>
+        <summary>Removes a block of data from the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Seek">
-      <MemberSignature Language="C#" Value="public void Seek (long offset, System.IO.SeekOrigin p);" />
+      <MemberSignature Language="C#" Value="public void Seek (long offset, System.IO.SeekOrigin origin);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -232,10 +232,10 @@
         <Parameter Name="p" Type="System.IO.SeekOrigin" />
       </Parameters>
       <Docs>
-        <param name="offset">To be added.</param>
-        <param name="p">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="offset">A <see cref="T:System.Int64" /> specifying the offset to shift to.</param>
+        <param name="origin">A <see cref="T:System.IO.SeekOrigin" /> specifying an origin to seek from.</param>
+        <summary>Seeks the read/write pointer in the current instance to a new location relative to an origin.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Seek">
@@ -248,9 +248,9 @@
         <Parameter Name="offset" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="offset">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="offset">A <see cref="T:System.Int64" /> specifying the offset to shift to.</param>
+        <summary>Seeks the read/write pointer in the current instance to a new location in the file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RemoveTags">
@@ -263,9 +263,9 @@
         <Parameter Name="types" Type="TagLib.TagTypes" />
       </Parameters>
       <Docs>
-        <param name="types">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="types">A <see cref="T:TagLib.TagTypes" /> containing bitwise combined tag types to be removed from the file.</param>
+        <summary>Removes a variety of tags from the current file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetTag">
@@ -279,9 +279,9 @@
         <Parameter Name="create" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <param name="create">To be added.</param>
-        <summary>To be added.</summary>
+        <param name="type">A <see cref="T:TagLib.TagTypes" /> specifying what type of tag to get/create.</param>
+        <param name="create">A <see cref="System.Boolean" /> specifying whether or not to create a tag if one does not exist.</param>
+        <summary>Gets a tag of a specified type from a file, optionally creating the tag if it doesn't exist and the file supports it.</summary>
         <returns>A <see cref="T:TagLib.Tag" /> if one was found or created, otherwise <see langword="null" />.</returns>
         <remarks>GetTag can be used for accessing various non-abstracted features of tags.
 <example><code lang="C#">string [] GetMoods (TagLib.File file)
@@ -326,10 +326,10 @@
         <Parameter Name="type" Type="TagLib.TagTypes" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="type">A <see cref="T:TagLib.TagTypes" /> specifying what type of tag to get.</param>
+        <summary>Gets a tag of a specified type from a file.</summary>
+        <returns>A <see cref="T:TagLib.Tag" /> if one was found, otherwise <see langword="null" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Create">
@@ -342,10 +342,10 @@
         <Parameter Name="path" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="path">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="path">A <see cref="T:System.String" /> containing path relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+        <summary>Creates a new instance of a <see cref="T:TagLib.File" /> child class based on the file extention.</summary>
+        <returns>A new <see cref="T:TagLib.File" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Create">
@@ -359,11 +359,11 @@
         <Parameter Name="style" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
-        <param name="path">To be added.</param>
-        <param name="style">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="path">A <see cref="T:System.String" /> containing path relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+        <param name="style">A <see cref="T:TagLib.ReadStyle" /> specifying how to read media properties from the file.</param>
+        <summary>Creates a new instance of a <see cref="T:TagLib.File" /> child class based on the file extention.</summary>
+        <returns>A new <see cref="T:TagLib.File" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Create">
@@ -378,12 +378,12 @@
         <Parameter Name="style" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
-        <param name="path">To be added.</param>
-        <param name="mimetype">To be added.</param>
-        <param name="style">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="path">A <see cref="T:System.String" /> containing path relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+        <param name="mimetype">A <see cref="T:System.String" /> containing the mime-type to use when reading the file.</param>
+        <param name="style">A <see cref="T:TagLib.ReadStyle" /> specifying how to read media properties from the file.</param>
+        <summary>Creates a new instance of a <see cref="T:TagLib.File" /> child class for a specified mime-type.</summary>
+        <returns>A new <see cref="T:TagLib.File" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AddFileTypeResolver">
@@ -396,14 +396,19 @@
         <Parameter Name="resolver" Type="TagLib.File+FileTypeResolver" />
       </Parameters>
       <Docs>
-        <param name="resolver">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="resolver">A <see cref="T:TagLib.File+FileTypeResolver" /> to add to the file type recognition actions.</param>
+        <summary>Adds a <see cref="T:TagLib.File+FileTypeResolver" /> to the <see cref="T:TagLib.File" /> class. The one added last gets run first.</summary>
+        <remarks>A <see cref="T:TagLib.File+FileTypeResolver" /> adds support for recognizing a file type outside of the standard mime-type methods.</remarks>
       </Docs>
     </Member>
     <Member MemberName="SetFileAbstractionCreator">
       <MemberSignature Language="C#" Value="public static void SetFileAbstractionCreator (TagLib.File.FileAbstractionCreator creator);" />
       <MemberType>Method</MemberType>
+      <Attributes>
+        <Attribute>
+          <AttributeName>Obsolete("Use PushFileAbstractionCreator")</AttributeName>
+        </Attribute>
+      </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
@@ -411,9 +416,9 @@
         <Parameter Name="creator" Type="TagLib.File+FileAbstractionCreator" />
       </Parameters>
       <Docs>
-        <param name="creator">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="creator">A <see cref="T:TagLib.File+FileAbstractionCreator" /> to be used in the creation of new <see cref="T:TagLib.File" /> instances.</param>
+        <summary>Sets the active <see cref="T:TagLib.File+FileAbstractionCreator" />.</summary>
+        <remarks>This method is obsolete. Please use <see cref="M:TagLib.File.PushFileAbstractionCreator(TagLib.File+FileAbstractionCreator)" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Truncate">
@@ -426,9 +431,9 @@
         <Parameter Name="length" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="length">A <see cref="T:System.Int64" /> specifying the length in bytes to resize the file to.</param>
+        <summary>Resizes the file to a specified size.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Name">
@@ -438,9 +443,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the name of the current instance, as used by the file abstraction creator.</summary>
+        <value>A <see cref="T:System.String" /> containing the name of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="MimeType">
@@ -450,9 +455,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the mime type of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> representing the mime type of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Tag">
@@ -474,9 +479,9 @@
         <ReturnType>TagLib.Properties</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the media properties of the current instance.</summary>
+        <value>A <see cref="T:TagLib.Properties" /> containing media properties of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Tell">
@@ -498,9 +503,9 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the length of the file represented by the current instance.</summary>
+        <value>A <see cref="T:System.Int64" /> representing the size of the file.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Mode">
@@ -510,9 +515,9 @@
         <ReturnType>TagLib.File+AccessMode</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the current access mode for the current instance.</summary>
+        <value>A <see cref="T:TagLib.File+AccessMode" /> describing the features of the current instance's stream.</value>
+        <remarks>Changing will cause the current stream to be closed, except when a change is made from <see cref="F:TagLib.File+AccessMode.Write" /> to <see cref="F:TagLib.File+AccessMode.Read" /> which has no effect.</remarks>
       </Docs>
     </Member>
     <Member MemberName="BufferSize">
@@ -522,9 +527,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the buffer size used in file read actions.</summary>
+        <value>A <see cref="T:System.UInt32" /> representing the number of bytes stored in the buffer.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetFileAbstractionCreator">
@@ -535,9 +540,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets the file abstraction creator currently in use by the <see cref="T:TagLib.File" /> class.</summary>
+        <returns>The <see cref="TagLib.File+FileAbstractionCreator" /> used for creating new instances of <see cref="T:TagLib.File" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="PopFileAbstractionCreator">
@@ -548,9 +553,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Pops a <see cref="T:TagLib.File+FileAbstractionCreator" /> off of the stack of creators, making another one active.</summary>
+        <returns>The <see cref="T:TagLib.File+FileAbstractionCreator" /> which was used in creating new <see cref="T:TagLib.File" /> instances.</returns>
+        <remarks>This is used for unregistering a <see cref="T:TagLib.File+FileAbstractionCreator" /> with the <see cref="T:TagLib.File" /> class. To register a creator, use <see cref="M:TagLib.File.PopFileAbstractionCreator(TagLib.File+FileAbstractionCreator)" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="PushFileAbstractionCreator">
@@ -563,14 +568,14 @@
         <Parameter Name="creator" Type="TagLib.File+FileAbstractionCreator" />
       </Parameters>
       <Docs>
-        <param name="creator">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="creator">A <see cref="T:TagLib.File+FileAbstractionCreator" /> to be used in the creation of new <see cref="T:TagLib.File" /> instances.</param>
+        <summary>Pushes a <see cref="T:TagLib.File+FileAbstractionCreator" /> onto the stack of creators, making it the active one.</summary>
+        <remarks>This is used for registering a <see cref="T:TagLib.File+FileAbstractionCreator" /> with the <see cref="T:TagLib.File" /> class. To unregister a creator, use <see cref="M:TagLib.File.PopFileAbstractionCreator()" />.</remarks>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This abstract class is used to access tagging and properties for files.</summary>
+    <remarks/>
   </Docs>
 </Type>

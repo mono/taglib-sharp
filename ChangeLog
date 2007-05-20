@@ -1,3 +1,65 @@
+2007-05-20  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/ByteVector.cs:
+	* src/TagLib/Id3v2/Frames/SynchronizedLyricsFrame.cs: Remove accidental
+	System.Console.WriteLine lines.
+	* src/TagLib/File.cs: Make constructor protected.
+	* src/TagLib/Ogg/File.cs:
+	* src/TagLib/Riff/File.cs: Add File(string) constructor.
+	* src/TagLib/Riff/BitmapInfoHeader.cs:
+	* src/TagLib/Riff/ListTag.cs:
+	* src/TagLib/Riff/WaveFormatEx.cs: Tidy up.
+	* src/TagLib/Id3v2/Frame.cs: Parse was redundant.
+	* src/TagLib/Mpeg/AudioHeader.cs: Make stream_length private.
+	* src/TagLib/Ogg/Codecs/Theora.cs:
+	* src/TagLib/Ogg/Codecs/Vorbis.cs: Make constructors private.
+	* docs/en/TagLib.Mpc/StreamHeader.xml:
+	* docs/en/TagLib.Mpc/File.xml:
+	* docs/en/TagLib.Riff.xml:
+	* docs/en/TagLib.Riff/BitmapInfoHeader.xml:
+	* docs/en/TagLib.Riff/InfoTag.xml:
+	* docs/en/TagLib.Riff/ListTag.xml:
+	* docs/en/TagLib.Riff/AviHeader.xml:
+	* docs/en/TagLib.Riff/MovieIdTag.xml:
+	* docs/en/TagLib.Riff/WaveFormatEx.xml:
+	* docs/en/TagLib.Riff/List.xml:
+	* docs/en/TagLib.Riff/File.xml:
+	* docs/en/TagLib.Id3v2/UniqueFileIdentifierFrame.xml:
+	* docs/en/TagLib.Id3v2/AttachedPictureFrame.xml:
+	* docs/en/TagLib.Id3v2/PrivateFrame.xml:
+	* docs/en/TagLib.Id3v2/Frame.xml:
+	* docs/en/TagLib.Id3v2/CommentsFrame.xml:
+	* docs/en/TagLib.Id3v2/UserTextIdentificationFrame.xml:
+	* docs/en/TagLib.Id3v2/GeneralEncapsulatedObjectFrame.xml:
+	* docs/en/TagLib.Id3v2/SynchronisedLyricsFrame.xml:
+	* docs/en/TagLib.Id3v2/TextIdentificationFrame.xml:
+	* docs/en/TagLib.Id3v2/UnknownFrame.xml:
+	* docs/en/TagLib.Id3v2/UnsynchronisedLyricsFrame.xml:
+	* docs/en/TagLib.Id3v2/RelativeVolumeFrame.xml:
+	* docs/en/TagLib.Mpeg/AudioFile.xml:
+	* docs/en/TagLib.Mpeg/AudioHeader.xml:
+	* docs/en/TagLib.Mpeg/VideoHeader.xml:
+	* docs/en/TagLib.Mpeg/File.xml:
+	* docs/en/TagLib.WavPack/StreamHeader.xml:
+	* docs/en/TagLib.WavPack/File.xml:
+	* docs/en/TagLib.NonContainer/File.xml:
+	* docs/en/TagLib/ICodec.xml:
+	* docs/en/TagLib/Properties.xml:
+	* docs/en/TagLib/IAudioCodec.xml:
+	* docs/en/TagLib/IVideoCodec.xml:
+	* docs/en/TagLib/File.xml:
+	* docs/en/TagLib.Flac/StreamHeader.xml:
+	* docs/en/TagLib.Flac/File.xml:
+	* docs/en/TagLib.Asf/File.xml:
+	* docs/en/TagLib.Ogg.Codecs/Theora.xml:
+	* docs/en/TagLib.Ogg.Codecs/Vorbis.xml:
+	* docs/en/TagLib.Ogg/Codec.xml:
+	* docs/en/TagLib.Ogg/File.xml:
+	* docs/en/TagLib.Mpeg4/IsoAudioSampleEntry.xml:
+	* docs/en/TagLib.Mpeg4/IsoVisualSampleEntry.xml:
+	* docs/en/TagLib.Mpeg4/IsoMovieHeaderBox.xml:
+	* docs/en/TagLib.Mpeg4/File.xml: Filled out some docs, baby.
+
 2007-05-18  Brian Nickel <brian.nickel@gmail.com>
 
 	+-------------+

@@ -175,19 +175,14 @@ namespace TagLib.Id3v2
       
       protected void SetData (ByteVector data, int offset, uint version)
       {
-         Parse (data, offset, version);
+         header = new FrameHeader (data, version);
+         ParseFields (FieldData (data, offset, version), version);
       }
 
       protected internal FrameHeader Header
       {
          get {return header;}
          set {header = value;}
-      }
-      
-      protected void Parse (ByteVector data, int offset, uint version)
-      {
-         header = new FrameHeader (data, version);
-         ParseFields (FieldData (data, offset, version), version);
       }
       
       protected virtual void ParseFields(ByteVector data, uint version) {}

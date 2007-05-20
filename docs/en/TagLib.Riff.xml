@@ -1,6 +1,6 @@
 <Namespace Name="TagLib.Riff">
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>The TagLib.Riff namespace contains all classes relevant to the reading of Microsoft RIFF files. These files include namely the WAV and AVI file formats.</summary>
+    <remarks />
   </Docs>
 </Namespace>

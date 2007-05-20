@@ -34,10 +34,10 @@
         <Parameter Name="properties_style" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="properties_style">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A file name relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+        <param name="properties_style">A <see cref="T:TagLib.ReadStyle" /> specifying how to read media properties from the file.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Asf.File" /> for a given filename and read style.</summary>
+        <remarks>Files should be created using <see cref="T:TagLib.File.Create(System.String,TagLib.ReadStyle)" /> rather than through format specific constructors.</remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -47,9 +47,9 @@
         <Parameter Name="file" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A file name relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Asf.File" /> for a given filename.</summary>
+        <remarks>Files should be created using <see cref="T:TagLib.File.Create(System.String)" /> rather than through format specific constructors.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ReadDWord">
@@ -60,9 +60,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Reads a DWORD from the file stream in current instance.</summary>
+        <returns>A <see cref="T:System.UInt32" /> representing the DWORD read from the file.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ReadGuid">
@@ -73,9 +73,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Reads a GUID from the file stream in current instance.</summary>
+        <returns>A <see cref="T:TagLib.Asf.Guid" /> representing the GUID read from the file.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ReadUnicode">
@@ -88,10 +88,10 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="length">A <see cref="T:System.Int32" /> specifying the number of bytes to read.</param>
+        <summary>Reads a Unicode string of a given length from the file stream in current instance.</summary>
+        <returns>A <see cref="T:System.String" /> representing the Unicode string read from the file.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ReadObjects">
@@ -105,11 +105,11 @@
         <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="count">To be added.</param>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="count">A <see cref="T:System.UInt32" /> specifying the number of objects to read.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying at what position to start reading.</param>
+        <summary>Reads a collection of <see cref="T:TagLib.Asf.Object" /> objects from the current instance.</summary>
+        <returns>A <see cref="T:System.Collections.Generic.IEnumerable&lt;TagLib.Asf.Object&gt;" /> containing the objects read from the file.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ReadWord">
@@ -120,9 +120,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Reads a WORD from the file stream in current instance.</summary>
+        <returns>A <see cref="T:System.UInt16" /> representing the WORD read from the file.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ReadQWord">
@@ -133,14 +133,14 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Reads a QWORD from the file stream in current instance.</summary>
+        <returns>A <see cref="T:System.UInt64" /> representing the QWORD read from the file.</returns>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access tagging and properties for ASF files.</summary>
+    <remarks />
   </Docs>
 </Type>

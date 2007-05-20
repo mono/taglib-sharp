@@ -43,6 +43,9 @@ namespace TagLib.Riff
          GetTag (TagTypes.MovieId, true);
          GetTag (TagTypes.DivX, true);
       }
+
+      public File (string file) : this (file, ReadStyle.Average)
+      {}
       
       private void Read (bool read_tags, ReadStyle style, out uint riff_size, out long tag_start, out long tag_end)
       {

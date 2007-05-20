@@ -47,7 +47,7 @@
       </ReturnValue>
       <Docs>
         <summary>Gets the duration of the current instance.</summary>
-        <value>A <see cref="T:System.TimeSpan" /> containing the duration of the audio.</value>
+        <value>A <see cref="T:System.TimeSpan" /> containing the length of the stream represented by the current instance.</value>
         <remarks />
       </Docs>
     </Member>

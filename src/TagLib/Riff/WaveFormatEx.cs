@@ -6,9 +6,7 @@ namespace TagLib.Riff
       ushort channels;
       uint   samples_per_second;
       uint   average_bytes_per_second;
-      ushort block_align;
       ushort bits_per_sample;
-      ushort extra_size;
       
       public WaveFormatEx (ByteVector data) : this (data, 0) {}
       
@@ -18,23 +16,17 @@ namespace TagLib.Riff
          channels                 = data.Mid (offset +  2, 2).ToUShort (false);
          samples_per_second       = data.Mid (offset +  4, 4).ToUInt (false);
          average_bytes_per_second = data.Mid (offset +  8, 4).ToUInt (false);
-         block_align              = data.Mid (offset + 12, 2).ToUShort (false);
          bits_per_sample          = data.Mid (offset + 14, 2).ToUShort (false);
-         extra_size               = data.Mid (offset + 16, 2).ToUShort (false);
       }
       
       public ushort FormatTag             {get {return format_tag;}}
-      public ushort Channels              {get {return channels;}}
-      public uint   SamplesPerSecond      {get {return samples_per_second;}}
       public uint   AverageBytesPerSecond {get {return average_bytes_per_second;}}
-      public ushort BlockAlign            {get {return block_align;}}
       public ushort BitsPerSample         {get {return bits_per_sample;}}
-      public ushort ExtraSize             {get {return extra_size;}}
       
       
-      public int AudioSampleRate {get {return (int) SamplesPerSecond;}}
-      public int AudioChannels {get {return Channels;}}
-      public int AudioBitrate {get {return (int) System.Math.Round (AverageBytesPerSecond * 8d / 1000d);}}
+      public int AudioSampleRate {get {return (int) samples_per_second;}}
+      public int AudioChannels {get {return channels;}}
+      public int AudioBitrate {get {return (int) System.Math.Round (average_bytes_per_second * 8d / 1000d);}}
       public MediaTypes MediaTypes {get {return MediaTypes.Audio;}}
       public System.TimeSpan Duration {get {return System.TimeSpan.Zero;}}
       

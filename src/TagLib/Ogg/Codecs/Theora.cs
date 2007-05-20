@@ -9,7 +9,7 @@ namespace TagLib.Ogg.Codecs
       private HeaderPacket header;
       private ByteVector comment_data;
       
-      public Theora ()
+      private Theora ()
       {
          comment_data = null;
       }

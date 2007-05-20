@@ -20,9 +20,9 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing the data structure to be read.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.WaveFormatEx" /> by reading the data structure from the beginning of a <see cref="T:TagLib.ByteVector" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -33,10 +33,10 @@
         <Parameter Name="offset" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="offset">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing the data structure to be read.</param>
+        <param name="offset">A <see cref="T:System.Int32" /> specifying the index in the data at which the structure is stored.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.WaveFormatEx" /> by reading the data structure from a specific point in a <see cref="T:TagLib.ByteVector" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="FormatTag">
@@ -46,33 +46,9 @@
         <ReturnType>System.UInt16</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Channels">
-      <MemberSignature Language="C#" Value="public ushort Channels { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.UInt16</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="SamplesPerSecond">
-      <MemberSignature Language="C#" Value="public uint SamplesPerSecond { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.UInt32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the audio format tag for the current instance. A format tag is a unique identifier for a specific audio codec.</summary>
+        <value>A <see cref="T:System.UInt16" /> representing the format tag.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AverageBytesPerSecond">
@@ -82,21 +58,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="BlockAlign">
-      <MemberSignature Language="C#" Value="public ushort BlockAlign { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.UInt16</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the average number of bytes per second in the current instance.</summary>
+        <value>A <see cref="T:System.Int32" /> representing the average number of bytes per second.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="BitsPerSample">
@@ -106,21 +70,9 @@
         <ReturnType>System.UInt16</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ExtraSize">
-      <MemberSignature Language="C#" Value="public ushort ExtraSize { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.UInt16</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the number of bits per second in the current instance.</summary>
+        <value>A <see cref="T:System.Int32" /> representing the numbers of bits per sample.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Description">
@@ -130,9 +82,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets a plain text description of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> describing the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AudioBitrate">
@@ -142,9 +94,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the audio bitrate of the current instance.</summary>
+        <value>A <see cref="T:System.Int32" /> representing the audio bitrate.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AudioChannels">
@@ -154,9 +106,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the number of audio channels in the current instance.</summary>
+        <value>A <see cref="T:System.Int32" /> representing the number of audio channels.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AudioSampleRate">
@@ -167,8 +119,8 @@
       </ReturnValue>
       <Docs>
         <summary>Gets the audio sample rate of the current instance.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <value>A <see cref="T:System.Int32" /> representing the audio sample rate.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Duration">
@@ -178,9 +130,9 @@
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the duration of the current instance.</summary>
+        <value>Always <see cref="F:System.TimeSpan.Zero" />.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="MediaTypes">
@@ -190,14 +142,14 @@
         <ReturnType>TagLib.MediaTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the media types contained in the current instance.</summary>
+        <value>Always <see cref="F:TagLib.MediaTypes.Audio" />.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access a Microsoft WaveFormatEx structure, and provides <see cref="T:TagLib.IAudioCodec" /> support for it.</summary>
+    <remarks />
   </Docs>
 </Type>

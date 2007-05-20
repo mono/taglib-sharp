@@ -48,9 +48,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the width of the video.</summary>
+        <value>A <see cref="System.Int32" /> representing the width of the video.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="VideoHeight">
@@ -60,9 +60,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the height of the video.</summary>
+        <value>A <see cref="T:System.Int32" /> representing the height of the video.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Description">
@@ -72,9 +72,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets a plain text description of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> describing the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="MediaTypes">
@@ -84,9 +84,9 @@
         <ReturnType>TagLib.MediaTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the media types contained in the current instance.</summary>
+        <value>Always <see cref="F:TagLib.MediaTypes.Video" />.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Duration">
@@ -96,14 +96,14 @@
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the duration of the current instance.</summary>
+        <value>Always <see cref="F:System.TimeSpan.Zero" />.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access an MPEG-4 VisualSampleEntry, and provides <see cref="T:TagLib.IAudioCodec" /> support for it.</summary>
+    <remarks />
   </Docs>
 </Type>

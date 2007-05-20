@@ -220,7 +220,6 @@ namespace TagLib.Id3v2
             v.Add (ByteVector.FromString (t.Text, encoding));
             v.Add (delim);
             v.Add (ByteVector.FromUInt (t.Time));
-            System.Console.WriteLine (t.Text);
          }
          
          return v;

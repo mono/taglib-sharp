@@ -21,10 +21,10 @@
         <Parameter Name="stream_length" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="stream_length">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing header bytes for FLAC stream header.</param>
+        <param name="stream_length">A <see cref="System.Int64" /> representing the length of the audio data in bytes.</param>
+        <summary>Constructs and initialized the current instance of <see cref="T:TagLib.Flac.StreamHeader" /> based on the stream header data and the stream length.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Duration">
@@ -34,9 +34,9 @@
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the duration of the current instance.</summary>
+        <value>A <see cref="T:System.TimeSpan" /> containing the length of the stream represented by the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AudioBitrate">
@@ -82,9 +82,9 @@
         <ReturnType>TagLib.MediaTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the media types contained in the current instance.</summary>
+        <value>Always <see cref="F:TagLib.MediaTypes.Audio" />.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SampleWidth">
@@ -106,14 +106,14 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets a plain text description of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> describing the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access a FLAC stream header structure, and provides <see cref="T:TagLib.IAudioCodec" /> support for it.</summary>
+    <remarks />
   </Docs>
 </Type>

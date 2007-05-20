@@ -43,20 +43,27 @@
         <Parameter Name="properties_style" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
-        <param name="file">A <see cref="T:System.String" /> containing the path to the file to be processed.</param>
-        <param name="properties_style">A <see cref="T:TagLib.ReadStyle" /> describing how to read the file.</param>
-        <summary>
-          <para>
-            Constructs and initializes a new instance of the <see cref="T:TagLib.Ogg.File" /> class by loading a file with a specific <see cref="T:TagLib.ReadStyle" />.
-          </para>
-        </summary>
-        <remarks>Files should be created using <see cref="T:TagLib.File.Create(System.String,TagLib.ReadStyle)" /> or one of its variants rather than through format specific constructors.</remarks>
+        <param name="file">A file name relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+        <param name="properties_style">A <see cref="T:TagLib.ReadStyle" /> specifying how to read media properties from the file.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ogg.File" /> for a given filename and read style.</summary>
+        <remarks>Files should be created using <see cref="T:TagLib.File.Create(System.String,TagLib.ReadStyle)" /> rather than through format specific constructors.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public File (string file);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="file" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="file">A file name relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ogg.File" /> for a given filename.</summary>
+        <remarks>Files should be created using <see cref="T:TagLib.File.Create(System.String)" /> rather than through format specific constructors.</remarks>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>Provides read and write support for Ogg files.</summary>
-    <remarks>
-    </remarks>
+    <summary>This class is used to access tagging and properties for OGG files.</summary>
+    <remarks />
   </Docs>
 </Type>

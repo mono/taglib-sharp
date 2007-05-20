@@ -24,8 +24,8 @@
       </ReturnValue>
       <Docs>
         <summary>Gets the duration of the media.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <value>A <see cref="T:System.TimeSpan" /> representing the duration of the media represented by the current instance.</value>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="AudioBitrate">
@@ -35,9 +35,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the bitrate of the audio.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the audio bitrate of the current instance.</summary>
+        <value>A <see cref="T:System.Int32" /> representing the audio bitrate.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AudioSampleRate">
@@ -47,9 +47,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the sample rate of the audio.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the audio sample rate of the current instance.</summary>
+        <value>A <see cref="T:System.Int32" /> representing the audio sample rate.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AudioChannels">
@@ -59,9 +59,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the number of audio channels.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the number of audio channels in the current instance.</summary>
+        <value>A <see cref="T:System.Int32" /> representing the number of audio channels.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="VideoWidth">
@@ -72,7 +72,7 @@
       </ReturnValue>
       <Docs>
         <summary>Gets the width of the video.</summary>
-        <value>A <see cref="System.UInt32" /> containing the width of the video.</value>
+        <value>A <see cref="System.Int32" /> representing the width of the video.</value>
         <remarks />
       </Docs>
     </Member>
@@ -84,8 +84,8 @@
       </ReturnValue>
       <Docs>
         <summary>Gets the height of the video.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <value>A <see cref="T:System.Int32" /> representing the height of the video.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="MediaTypes">
@@ -95,9 +95,9 @@
         <ReturnType>TagLib.MediaTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the media types contained in the file.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the media types contained in the current instance.</summary>
+        <value>A <see cref="T:TagLib.MediaTypes" /> containing a the bitwise combined values of all the <see cref="T:TagLib.ICodec" /> objects contained in the current instance.</value>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -140,7 +140,7 @@
         <param name="duration">A <see cref="T:System.TimeSpan" /> describing the duration of the media.</param>
         <param name="codecs">A collection of <see cref="T:TagLib.ICodec" /> objects describing the various media in the file.</param>
         <summary>Constructs and initializes an instance of <see cref="T:TagLib.Properties" /> with a specified duration and codecs.</summary>
-        <remarks>If the duration is equal to <see cref="F:System.TimeSpan.Zero" />, the first non-zero codec duration will be used.</remarks>
+        <remarks>If the duration is equal to <see cref="F:System.TimeSpan.Zero" />, the greatest codec duration will be used.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Description">
@@ -151,8 +151,8 @@
       </ReturnValue>
       <Docs>
         <summary>Gets a description of all the codecs contained in the current instance.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <value>A <see cref="T:System.String" /> describing codecs contained in the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Codecs">
@@ -163,13 +163,13 @@
       </ReturnValue>
       <Docs>
         <summary>Gets the codecs contained in the current instance.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <value>A <see cref="T:System.Collections.Generic.IEnumerable&lt;TagLib.ICodec&gt;" /> containing the codecs represented in the current instance.</value>
+        <remarks></remarks>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access a generic properties of audio and video files.</summary>
+    <remarks></remarks>
   </Docs>
 </Type>

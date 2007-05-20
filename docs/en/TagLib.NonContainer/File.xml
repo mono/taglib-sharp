@@ -17,10 +17,10 @@
         <Parameter Name="properties_style" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="properties_style">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A file name relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+        <param name="properties_style">A <see cref="T:TagLib.ReadStyle" /> specifying how to read media properties from the file.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.NonContainer.File" /> for a given filename and read style.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -30,9 +30,9 @@
         <Parameter Name="file" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A file name relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.File" /> for a given filename.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ReadStart">
@@ -115,7 +115,7 @@
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This abstract class is used to access tagging and properties for files which contain an indeterminite number and type of tags at their beginning or end.</summary>
+    <remarks />
   </Docs>
 </Type>

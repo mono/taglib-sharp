@@ -32,8 +32,6 @@ namespace TagLib.Riff
       }
       
       public uint       HeaderSize      {get {return size;}}
-      public uint       Width           {get {return width;}}
-      public uint       Height          {get {return height;}}
       public ushort     Planes          {get {return planes;}}
       public ushort     BitCount        {get {return bit_count;}}
       public ByteVector CompressionId   {get {return compression_id;}}
@@ -41,10 +39,10 @@ namespace TagLib.Riff
       public uint       XPixelsPerMeter {get {return x_pixels_per_meter;}}
       public uint       YPixelsPerMeter {get {return y_pixels_per_meter;}}
       public uint       ColorsUsed      {get {return colors_used;}}
-      public uint       ColorsImportant {get {return colors_important;}}
+      public uint       ImportantColors {get {return colors_important;}}
       
-      public int VideoWidth  {get {return (int)Width;}}
-      public int VideoHeight {get {return (int)Height;}}
+      public int VideoWidth  {get {return (int)width;}}
+      public int VideoHeight {get {return (int)height;}}
       public MediaTypes MediaTypes {get {return MediaTypes.Video;}}
       public System.TimeSpan Duration {get {return System.TimeSpan.Zero;}}
       
