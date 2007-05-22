@@ -68,13 +68,8 @@ namespace TagLib.Mpeg
 
       protected override void ReadStart (long start, ReadStyle style)
       {
-         if (first_header == null && style != ReadStyle.None)
-         {
-            first_header = AudioHeader.Find (this, start);
-            if (first_header == null)
-               throw new CorruptFileException ("MPEG audio header not found.");
-         }
-         
+         if (style != ReadStyle.None && !AudioHeader.Find (ref first_header, this, start))
+            throw new CorruptFileException ("MPEG audio header not found.");
       }
       
       protected override void ReadEnd (long end, ReadStyle style)

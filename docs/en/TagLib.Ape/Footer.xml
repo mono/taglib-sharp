@@ -1,23 +1,14 @@
 <Type Name="Footer" FullName="TagLib.Ape.Footer">
-  <TypeSignature Language="C#" Value="public class Footer" />
+  <TypeSignature Language="C#" Value="public struct Footer" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>System.Object</BaseTypeName>
+    <BaseTypeName>System.ValueType</BaseTypeName>
   </Base>
   <Interfaces />
   <Members>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Footer ();" />
-      <MemberType>Constructor</MemberType>
-      <Parameters />
-      <Docs>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ape.Footer" /> with the default values.</summary>
-        <remarks>This is used when creating an empty tag.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Footer (TagLib.ByteVector data);" />
       <MemberType>Constructor</MemberType>
@@ -27,20 +18,6 @@
       <Docs>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing a header or footer to read.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ape.Footer" /> by reading one from a <see cref="T:TagLib.ByteVector" />.</summary>
-        <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Footer (TagLib.File file, long offset);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="file" Type="TagLib.File" />
-        <Parameter Name="offset" Type="System.Int64" />
-      </Parameters>
-      <Docs>
-        <param name="file">A <see cref="T:TagLib.File" /> containing a header or footer to read.</param>
-        <param name="offset">A <see cref="T:System.Int64" /> specifying where to read from the file. It must be the position of either an APE header or footer.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ape.Footer" /> by reading one from given position in a <see cref="T:TagLib.File" />.</summary>
         <remarks />
       </Docs>
     </Member>
@@ -81,37 +58,6 @@
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="Parse">
-      <MemberSignature Language="C#" Value="protected void Parse (TagLib.ByteVector data);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="data" Type="TagLib.ByteVector" />
-      </Parameters>
-      <Docs>
-        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an APE header or footer.</param>
-        <summary>Sets values in the current instance by reading a header or footer block from a <see cref="T:TagLib.ByteVector" />.</summary>
-        <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName="Render">
-      <MemberSignature Language="C#" Value="protected TagLib.ByteVector Render (bool is_header);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="is_header" Type="System.Boolean" />
-      </Parameters>
-      <Docs>
-        <param name="is_header">A <see cref="T:System.Boolean" /> specifying whether to render a header or a footer.</param>
-        <summary>Renders the current instance to a new <see cref="T:TagLib.ByteVector" />, either as a header or a footer, as specified.</summary>
-        <returns>A <see cref="T:TagLib.ByteVector" /> containing an APE Version 2 header or footer.</returns>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName="Version">
       <MemberSignature Language="C#" Value="public uint Version { get; };" />
       <MemberType>Property</MemberType>
@@ -122,42 +68,6 @@
         <summary>Gets the APE version.</summary>
         <value>A <see cref="T:System.UInt32" /> representing the APE version.</value>
         <remarks>The version will always be 2 for newly created tags and the all tags will be rendered in that format.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="FooterPresent">
-      <MemberSignature Language="C#" Value="public bool FooterPresent { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Gets whether or not a footer is present in the tag.</summary>
-        <value>A <see cref="T:System.Boolean" /> representing whether or not a footer is present in the tag. This should always be true.</value>
-        <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName="IsHeader">
-      <MemberSignature Language="C#" Value="public bool IsHeader { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Gets whether or not the current instance is actually a header.</summary>
-        <value>A <see cref="T:System.Boolean" /> representing whether or not a the current instance is a header.</value>
-        <remarks>The <see cref="T:TagLib.Ape.Footer" /> class is used for representing both headers and footers, which differ only in one bit.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="HeaderPresent">
-      <MemberSignature Language="C#" Value="public bool HeaderPresent { set; get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Gets and sets whether or not a footer is present in the tag.</summary>
-        <value>A <see cref="T:System.Boolean" /> representing whether or not a header is present in the tag.</value>
-        <remarks>Headers are mandatory for APE tags stored at the beginning of a file.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ItemCount">
@@ -206,6 +116,18 @@
       <Docs>
         <summary>Gets the size of an APE footer.</summary>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Flags">
+      <MemberSignature Language="C#" Value="public TagLib.Ape.FooterFlags Flags { set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Ape.FooterFlags</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

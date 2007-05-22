@@ -1,5 +1,5 @@
 <Type Name="Tag" FullName="TagLib.Tag">
-  <TypeSignature Language="C#" Value="public class Tag" />
+  <TypeSignature Language="C#" Value="public abstract class Tag" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
@@ -10,12 +10,12 @@
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Tag ();" />
+      <MemberSignature Language="C#" Value="protected Tag ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Tag" /> with the default values.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Duplicate">
@@ -30,11 +30,11 @@
         <Parameter Name="overwrite" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="source">To be added.</param>
-        <param name="target">To be added.</param>
-        <param name="overwrite">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="source">A <see cref="T:TagLib.Tag" /> whose values to copy.</param>
+        <param name="target">A <see cref="T:TagLib.Tag" /> to copy values to.</param>
+        <param name="overwrite">A <see cref="T:System.Boolean" /> specifying whether or not to override existing values if they are non-zero.</param>
+        <summary>Copies values from one tag to another.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Title">
@@ -44,9 +44,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the title of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the title of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AlbumArtists">
@@ -56,9 +56,9 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the album artists of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> array containing the album artists of the current instance.</value>
+        <remarks>This is used for the artist who created an album or the main artist of an album. It should be the same for each track in an album.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Performers">
@@ -68,9 +68,9 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the performers of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> array containing the performers of the current instance.</value>
+        <remarks>The artists appearing in a given track. If the album artist appears in the track, their name should appear here also. Likewise, the main artist should appear first with "featuring" artists appearing afterwords.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Composers">
@@ -80,9 +80,9 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the composers of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> array containing the composers of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Album">
@@ -92,9 +92,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the album of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the album of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Comment">
@@ -104,9 +104,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the comment on the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the comment on the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Genres">
@@ -116,9 +116,9 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the genres of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> array containing the genres of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Year">
@@ -128,9 +128,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the year the current instance was created.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the year the current instance was created.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Track">
@@ -140,9 +140,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the track number the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the track number the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="TrackCount">
@@ -152,9 +152,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the number of tracks in the album the current instance is a part of.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the number of tracks in the album the current instance is a part of.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Disc">
@@ -164,9 +164,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the disc number the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the disc number the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="DiscCount">
@@ -176,9 +176,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the number of discs in the album set the current instance is a part of.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the number of discs in the album set the current instance is a part of.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Lyrics">
@@ -188,9 +188,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the lyrics of the audio in the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the lyrics of the audio in the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Pictures">
@@ -200,9 +200,9 @@
         <ReturnType>TagLib.IPicture[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the picture collection of the current instance.</summary>
+        <value>A <see cref="T:TagLib.IPicture" /> array containing the picture collection of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="FirstArtist">
@@ -212,9 +212,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the first album artist of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing a first value in the list of album artists of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="FirstPerformer">
@@ -224,9 +224,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the first performer of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing a first value in the list of performers of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="FirstComposer">
@@ -236,9 +236,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the first composer of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing a first value in the list of composers of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="FirstGenre">
@@ -248,9 +248,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the first genre of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing a first value in the list of genres of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="JoinedArtists">
@@ -260,9 +260,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the album artists of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing a comma separated list containing the album artists of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="JoinedPerformers">
@@ -272,9 +272,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the performers of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing a comma separated list containing the performers of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="JoinedComposers">
@@ -284,9 +284,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the composers of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing a comma separated list containing the composers of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="JoinedGenres">
@@ -296,9 +296,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the genres of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing a comma separated list containing the genres of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IsEmpty">
@@ -308,9 +308,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether or not the current instance contains values.</summary>
+        <value>A <see cref="T:System.Boolean" /> stating whether or not the current instance contains values.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="BeatsPerMinute">
@@ -320,9 +320,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the beats per minute of the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the beats per minute of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Conductor">
@@ -332,9 +332,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the conductor of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the conductor of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Copyright">
@@ -344,9 +344,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the copyright information of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the copyright information of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Grouping">
@@ -356,14 +356,14 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the content grouping of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the content grouping of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>An abstract class for accessing standard tag features.</summary>
+    <remarks />
   </Docs>
 </Type>

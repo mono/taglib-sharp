@@ -15,7 +15,7 @@
         <ReturnType>TagLib.Flac.BlockType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The block contains a seak table.</summary>
       </Docs>
     </Member>
     <Member MemberName="CueSheet">
@@ -25,7 +25,7 @@
         <ReturnType>TagLib.Flac.BlockType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The block contains a cue sheet.</summary>
       </Docs>
     </Member>
     <Member MemberName="Application">
@@ -35,7 +35,7 @@
         <ReturnType>TagLib.Flac.BlockType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The block contains application data.</summary>
       </Docs>
     </Member>
     <Member MemberName="Padding">
@@ -45,7 +45,7 @@
         <ReturnType>TagLib.Flac.BlockType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The block contains padding data.</summary>
       </Docs>
     </Member>
     <Member MemberName="Picture">
@@ -55,7 +55,7 @@
         <ReturnType>TagLib.Flac.BlockType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The block contains picture data.</summary>
       </Docs>
     </Member>
     <Member MemberName="StreamInfo">
@@ -65,7 +65,7 @@
         <ReturnType>TagLib.Flac.BlockType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The block contains stream info.</summary>
       </Docs>
     </Member>
     <Member MemberName="VorbisComment">
@@ -75,12 +75,12 @@
         <ReturnType>TagLib.Flac.BlockType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The block contains a Vorbis comment.</summary>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Describes the content of a <see cref="T:TagLib.Flac.Block" />.</summary>
+    <remarks />
   </Docs>
 </Type>

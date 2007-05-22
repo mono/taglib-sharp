@@ -11,6 +11,21 @@ namespace TagLib.NonContainer
          this.file = file;
       }
       
+      public TagTypes TagTypes
+      {
+         get
+         {
+            TagTypes types = TagTypes.NoTags;
+            foreach (TagLib.Tag t in Tags)
+            {
+               if (t is TagLib.Id3v1.Tag) types |= TagTypes.Id3v1;
+               if (t is TagLib.Id3v2.Tag) types |= TagTypes.Id3v2;
+               if (t is TagLib.Ape.Tag)   types |= TagTypes.Ape;
+            }
+            return types;
+         }
+      }
+      
       public long Read ()
       {
          TagLib.Tag tag;
@@ -132,7 +147,7 @@ namespace TagLib.NonContainer
          else if (type == TagTypes.Ape)
          {
             tag = new TagLib.Ape.Tag ();
-            (tag as Ape.Tag).Footer.HeaderPresent = true;
+            (tag as Ape.Tag).HeaderPresent = true;
          }
          if (tag != null)
          {

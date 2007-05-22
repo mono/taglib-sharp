@@ -33,9 +33,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets a <see cref="T:System.Collections.IEnumerator" /> for the current instance.</summary>
+        <returns>Returns a <see cref="T:System.Collections.IEnumerator" /> for the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="DataBoxes">

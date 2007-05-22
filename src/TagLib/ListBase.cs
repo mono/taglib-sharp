@@ -36,17 +36,12 @@ namespace TagLib
         {
         }
 
-        public ListBase(T s)
-        {
-            Add(s);
-        }
-        
         public ListBase(ListBase<T> s)
         {
             Add(s);
         }
         
-        public ListBase(T [] s)
+        public ListBase(params T [] s)
         {
             Add(s);
         }

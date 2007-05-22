@@ -15,7 +15,7 @@
         <ReturnType>TagLib.Asf.DataType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Value is boolean.</summary>
       </Docs>
     </Member>
     <Member MemberName="Unicode">
@@ -25,7 +25,7 @@
         <ReturnType>TagLib.Asf.DataType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Value is a unicode string.</summary>
       </Docs>
     </Member>
     <Member MemberName="Bytes">
@@ -35,7 +35,7 @@
         <ReturnType>TagLib.Asf.DataType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Value is a byte array.</summary>
       </Docs>
     </Member>
     <Member MemberName="DWord">
@@ -45,7 +45,7 @@
         <ReturnType>TagLib.Asf.DataType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Value is a DWORD.</summary>
       </Docs>
     </Member>
     <Member MemberName="Word">
@@ -55,7 +55,7 @@
         <ReturnType>TagLib.Asf.DataType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Value is a WORD.</summary>
       </Docs>
     </Member>
     <Member MemberName="QWord">
@@ -65,12 +65,12 @@
         <ReturnType>TagLib.Asf.DataType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Value is a QWORD.</summary>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Specifies the type of data contained in a <see cref="T:TagLib.Asf.ContentDescriptor" />.</summary>
+    <remarks />
   </Docs>
 </Type>

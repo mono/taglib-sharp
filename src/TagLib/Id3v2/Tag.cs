@@ -33,12 +33,11 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       private Header         header = new Header ();
       private ExtendedHeader extended_header = null;
-      private Footer         footer = null;
 
       private List<Frame>    frame_list = new List<Frame> ();
       
-      private static ByteVector language = "eng";
-      private static uint default_version = 4;
+      private static string language = "XXX";
+      private static byte default_version = 4;
       private static bool force_default_version = false;
       private static StringType default_string_type = StringType.UTF8;
       private static bool force_default_string_type = false;
@@ -111,28 +110,32 @@ namespace TagLib.Id3v2
          // in ID3v2::Header::tagSize() -- includes the extended header, frames and
          // padding, but does not include the tag's header or footer.
          
-         header.MajorVersion = header.FooterPresent ? 4 : Version;
+         header.MajorVersion = (header.Flags & HeaderFlags.FooterPresent) != 0 ? (byte)4 : Version;
          
          ByteVector tag_data = new ByteVector ();
 
          // TODO: Render the extended header.
-         header.ExtendedHeader = false;
+         header.Flags &= ~HeaderFlags.ExtendedHeader;
 
          // Loop through the frames rendering them and adding them to the tagData.
          foreach (Frame frame in frame_list)
-            if (!frame.Header.TagAlterPreservation)
-               tag_data.Add (frame.Render (header.MajorVersion));
+            if ((frame.Flags & FrameFlags.TagAlterPreservation) == 0)
+               try
+               {
+                  tag_data.Add (frame.Render (header.MajorVersion));
+               }
+               catch (NotImplementedException) {};
          
          // Add unsyncronization bytes if necessary.
-         if (header.Unsynchronisation)
-            tag_data = SynchData.UnsynchByteVector (tag_data);
+         if ((header.Flags & HeaderFlags.Unsynchronisation) != 0)
+            SynchData.UnsynchByteVector (tag_data);
          
          // Compute the amount of padding, and append that to tagData.
 
          uint padding_size = 0;
          uint original_size = header.TagSize;
 
-         if (!header.FooterPresent)
+         if ((header.Flags & HeaderFlags.FooterPresent) == 0)
          {
             if (tag_data.Count < original_size)
                padding_size = (uint) (original_size - tag_data.Count);
@@ -146,11 +149,8 @@ namespace TagLib.Id3v2
          header.TagSize = (uint) tag_data.Count;
          
          tag_data.Insert (0, header.Render ());
-         if (header.FooterPresent)
-         {
-            footer = new Footer (header);
-            tag_data.Add (footer.Render ());
-         }
+         if ((header.Flags & HeaderFlags.FooterPresent) != 0)
+            tag_data.Add (new Footer (header).Render ());
          
          return tag_data;
       }
@@ -488,22 +488,17 @@ namespace TagLib.Id3v2
       }
       
       public override bool IsEmpty {get {return frame_list.Count == 0;}}
-
-      public Header         Header         {get {return header;}}
-      public ExtendedHeader ExtendedHeader {get {return extended_header;}}
-      public Footer         Footer         {get {return footer;}}
-      
       
       //////////////////////////////////////////////////////////////////////////
       // public static properties
       //////////////////////////////////////////////////////////////////////////
-      public static ByteVector Language
+      public static string Language
       {
          get {return language;}
-         set {language = (value == null || value.Count < 3) ? "XXX" : value.Mid (0,3);}
+         set {language = (value == null || value.Length < 3) ? "XXX" : value.Substring (0,3);}
       }
       
-      public uint Version
+      public byte Version
       {
          get {return ForceDefaultVersion ? DefaultVersion : header.MajorVersion;}
          set
@@ -512,7 +507,7 @@ namespace TagLib.Id3v2
          }
       }
       
-      public static uint DefaultVersion
+      public static byte DefaultVersion
       {
          get {return default_version;}
          set
@@ -542,6 +537,8 @@ namespace TagLib.Id3v2
          set {force_default_string_type = value;}
       }
       
+      public HeaderFlags Flags {get {return header.Flags;} set {header.Flags = value;}}
+      
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
@@ -566,21 +563,21 @@ namespace TagLib.Id3v2
       
       protected void Parse (ByteVector data)
       {
-         if (header.Unsynchronisation)
-            data = SynchData.ResynchByteVector (data);
+         if ((header.Flags & HeaderFlags.Unsynchronisation) != 0)
+            SynchData.ResynchByteVector (data);
          
          int frame_data_position = 0;
          int frame_data_length = data.Count;
 
          // check for extended header
-         if (header.ExtendedHeader)
+         if ((header.Flags & HeaderFlags.ExtendedHeader) != 0)
          {
             extended_header = new ExtendedHeader (data);
             
-            if(ExtendedHeader.Size <= data.Count)
+            if (extended_header.Size <= data.Count)
             {
-               frame_data_position += (int) ExtendedHeader.Size;
-               frame_data_length -= (int) ExtendedHeader.Size;
+               frame_data_position += (int) extended_header.Size;
+               frame_data_length -= (int) extended_header.Size;
             }
          }
 
@@ -607,7 +604,7 @@ namespace TagLib.Id3v2
                if (frame.Size > 0)
                   AddFrame (frame);
             }
-            catch (UnsupportedFormatException) {}
+            catch (NotImplementedException) {}
          }
       }
       

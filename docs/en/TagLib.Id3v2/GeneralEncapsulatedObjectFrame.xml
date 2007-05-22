@@ -14,21 +14,7 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public GeneralEncapsulatedObjectFrame (TagLib.ByteVector data, uint version);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="data" Type="TagLib.ByteVector" />
-        <Parameter Name="version" Type="System.UInt32" />
-      </Parameters>
-      <Docs>
-        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
-        <param name="version">A <see cref="T:System.UInt32" /> specifying the ID3v2 version <paramref name="data" /> is encoded in.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v2.GeneralEncapsulatedObjectFrame" /> by reading from an ID3v2 frame.</summary>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v2.GeneralEncapsulatedObjectFrame" />.</summary>
         <remarks />
       </Docs>
     </Member>
@@ -44,12 +30,12 @@
         <Parameter Name="create" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <param name="description">To be added.</param>
-        <param name="create">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="tag">A <see cref="T:TagLib.Id3v2.Tag" /> to search.</param>
+        <param name="description">A <see cref="T:System.String" /> specifying a description to search for.</param>
+        <param name="create">A <see cref="T:System.Boolean" /> specifying whether or not to create a new instance if one is not found.</param>
+        <summary>Searches for a <see cref="T:TagLib.Id3v2.GeneralEncapsulatedObjectFrame" /> with a specified description, optionally creating one if none is found.</summary>
+        <returns>A <see cref="T:TagLib.Id3v2.GeneralEncapsulatedObjectFrame" /> containing with the given description, or <see langword="null" /> if not found and not creating.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="TextEncoding">
@@ -71,9 +57,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the mime-type of the data of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the mime-type of <see cref="P:TagLib.Id3v2.GeneralEncapsulatedObjectFrame.Object" />.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="FileName">
@@ -83,9 +69,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the original file name of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the original file name of the object.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Description">
@@ -95,9 +81,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets a description of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> describing the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Object">
@@ -107,32 +93,46 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the object data for the current instance.</summary>
+        <value>A <see cref="T:TagLib.ByteVector" /> containing object data.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected GeneralEncapsulatedObjectFrame (TagLib.ByteVector data, int offset, TagLib.Id3v2.FrameHeader h, uint version);" />
+      <MemberSignature Language="C#" Value="public GeneralEncapsulatedObjectFrame (TagLib.ByteVector data, byte version);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+        <Parameter Name="version" Type="System.Byte" />
+      </Parameters>
+      <Docs>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
+        <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.GeneralEncapulatedObjectFrame" /> from a raw ID3v2 frame.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected GeneralEncapsulatedObjectFrame (TagLib.ByteVector data, int offset, TagLib.Id3v2.FrameHeader h, byte version);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="data" Type="TagLib.ByteVector" />
         <Parameter Name="offset" Type="System.Int32" />
         <Parameter Name="h" Type="TagLib.Id3v2.FrameHeader" />
-        <Parameter Name="version" Type="System.UInt32" />
+        <Parameter Name="version" Type="System.Byte" />
       </Parameters>
       <Docs>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
-        <param name="offset">A <see cref="T:System.Int32" /> specifying the index at which the frame begins.</param>
-        <param name="h">The <see cref="T:TagLib.Id3v2.FrameHeader" /> for the frame.</param>
-        <param name="version">A <see cref="T:System.UInt32" /> specifying the ID3v2 version <paramref name="data" /> is encoded in.</param>
-        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Id3v2.GeneralEncapsulatedObjectFrame" /> by reading frame data of a specified version.</summary>
+        <param name="offset">A <see cref="T:System.Int32" /> specifying at what index in <paramref name="data" /> the frame begins.</param>
+        <param name="h">A <see cref="T:TagLib.Id3v2.FrameHeader" /> containing the header to use with the new instance.</param>
+        <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.GeneralEncapulatedObjectFrame" /> from a raw ID3v2 frame.</summary>
         <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used for accessing and modifying ID3v2 General Encapsulated Object (GEOB) frames.</summary>
+    <remarks>This frame is used for storing another file in the ID3v2 tag.</remarks>
   </Docs>
 </Type>

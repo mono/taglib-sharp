@@ -31,19 +31,14 @@ namespace TagLib
         {
         }
 
-        public IntList(int value)
+        public IntList(IntList values)
         {
-            Add(value);
+            Add (values);
         }
         
-        public IntList(IntList list)
+        public IntList(params int [] values)
         {
-            Add(list);
-        }
-        
-        public IntList(int [] array)
-        {
-            Add(array);
+            Add (values);
         }
     }
 }

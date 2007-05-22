@@ -19,6 +19,8 @@ namespace TagLib.NonContainer
       public StartTag StartTag {get {return start_tag;}}
       public EndTag EndTag {get {return end_tag;}}
       
+      public TagTypes TagTypes {get {return start_tag.TagTypes | end_tag.TagTypes;}}
+      
       public override TagLib.Tag [] Tags
       {
          get

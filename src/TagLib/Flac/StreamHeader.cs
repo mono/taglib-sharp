@@ -25,43 +25,36 @@ using System;
 
 namespace TagLib.Flac
 {
-   public class StreamHeader : IAudioCodec
+   public struct StreamHeader : IAudioCodec
    {
-#region Private Properties
-      private uint     flags         = 0;
-      private int      sample_rate   = 0;
-      private int      sample_width  = 0;
-      private int      channels      = 0;
-      private uint     low_length    = 0;
-      private long     stream_length = 0;
-#endregion
+      #region Private Properties
+      private uint flags;
+      private uint low_length;
+      private long stream_length;
+      #endregion
       
-#region Constructors
+      
+      
+      #region Constructors
       public StreamHeader (ByteVector data, long stream_length)
       {
          if (data.Count < 18)
             throw new CorruptFileException ("Not enough data in FLAC header.");
          
          this.stream_length = stream_length;
-         flags = data.Mid (10, 4).ToUInt (true);
-         sample_rate = (int) (flags >> 12);
-         channels = (int) (((flags >> 9) & 7) + 1);
-         sample_width = (int) (((flags >> 4) & 31) + 1);
+         this.flags = data.Mid (10, 4).ToUInt (true);
          low_length = data.Mid (14, 4).ToUInt (true);
-         
-         // Real bitrate:
       }
-#endregion
+      #endregion
 
-#region IAudioCodec Properties
+      #region Public Properties
       public TimeSpan Duration
       {
          get
          {
-            if (sample_rate > 0 && stream_length > 0)
-               return TimeSpan.FromSeconds ((double) low_length / (double) sample_rate + (double) HighLength);
-            else
-               return TimeSpan.Zero;
+            return (AudioSampleRate > 0 && stream_length > 0) ?
+               TimeSpan.FromSeconds ((double) low_length / (double) AudioSampleRate + (double) HighLength) :
+               TimeSpan.Zero;
          }
       }
       
@@ -72,10 +65,11 @@ namespace TagLib.Flac
             return  (int) (Duration > TimeSpan.Zero ? ((stream_length * 8L) / Duration.TotalSeconds) / 1000 : 0);
          }
       }
-      public int        AudioSampleRate  {get {return sample_rate;}}
-      public int        AudioChannels    {get {return channels;}}
+      
+      public int        AudioSampleRate  {get {return (int) (flags >> 12);}}
+      public int        AudioChannels    {get {return (int) (((flags >> 9) & 7) + 1);}}
       public MediaTypes MediaTypes       {get {return MediaTypes.Audio;}}
-      public int        SampleWidth      {get {return sample_width;}}
+      public int        SampleWidth      {get {return (int) (((flags >> 4) & 31) + 1);}}
       public string     Description      {get {return "Flac Audio";}}
       
       private uint HighLength
@@ -84,9 +78,9 @@ namespace TagLib.Flac
          {
             // The last 4 bits are the most significant 4 bits for the 36 bit
             // stream length in samples. (Audio files measured in days)
-            return (uint)(sample_rate > 0 ? (((flags & 0xf) << 28) / sample_rate) << 4 : 0);
+            return (uint) (AudioSampleRate > 0 ? (((flags & 0xf) << 28) / AudioSampleRate) << 4 : 0);
          }
       }
-#endregion
+      #endregion
    }
 }

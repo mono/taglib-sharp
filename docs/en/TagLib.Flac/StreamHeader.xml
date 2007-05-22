@@ -1,11 +1,11 @@
 <Type Name="StreamHeader" FullName="TagLib.Flac.StreamHeader">
-  <TypeSignature Language="C#" Value="public class StreamHeader : TagLib.IAudioCodec" />
+  <TypeSignature Language="C#" Value="public struct StreamHeader : TagLib.IAudioCodec" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>System.Object</BaseTypeName>
+    <BaseTypeName>System.ValueType</BaseTypeName>
   </Base>
   <Interfaces>
     <Interface>

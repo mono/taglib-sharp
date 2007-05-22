@@ -1,0 +1,46 @@
+<Type Name="TimestampFormat" FullName="TagLib.Id3v2.TimestampFormat">
+  <TypeSignature Language="C#" Value="public enum TimestampFormat" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Members>
+    <Member MemberName="AbsoluteMilliseconds">
+      <MemberSignature Language="C#" Value="AbsoluteMilliseconds" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.TimestampFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="AbsoluteMpegFrames">
+      <MemberSignature Language="C#" Value="AbsoluteMpegFrames" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.TimestampFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Unknown">
+      <MemberSignature Language="C#" Value="Unknown" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.TimestampFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

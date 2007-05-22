@@ -17,10 +17,10 @@
         <Parameter Name="value" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="name">A <see cref="T:System.String" /> containing the name of the new instance.</param>
+        <param name="value">A <see cref="T:System.String" /> containing the value of the new instance.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Asf.ContentDescriptor" /> by assigning the name and value.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -31,10 +31,10 @@
         <Parameter Name="value" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="name">A <see cref="T:System.String" /> containing the name of the new instance.</param>
+        <param name="value">A <see cref="T:TagLib.ByteVector" /> containing the value of the new instance.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Asf.ContentDescriptor" /> by assigning the name and value.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -45,10 +45,10 @@
         <Parameter Name="value" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="name">A <see cref="T:System.String" /> containing the name of the new instance.</param>
+        <param name="value">A <see cref="T:System.UInt32" /> containing the value of the new instance.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Asf.ContentDescriptor" /> by assigning the name and value.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -59,10 +59,10 @@
         <Parameter Name="value" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="name">A <see cref="T:System.String" /> containing the name of the new instance.</param>
+        <param name="value">A <see cref="T:System.Boolean" /> containing the value of the new instance.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Asf.ContentDescriptor" /> by assigning the name and value.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -70,8 +70,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Asf.ContentDescriptor" /> with no contents.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ToByteVector">
@@ -82,9 +82,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets the <see cref="T:TagLib.ByteVector" /> value stored in the current instance.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> stored in the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ToBool">
@@ -95,9 +95,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets the <see cref="T:System.Boolean" /> value stored in the current instance.</summary>
+        <returns>A <see cref="T:System.Boolean" /> stored in the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ToDWord">
@@ -108,35 +108,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ToQWord">
-      <MemberSignature Language="C#" Value="public long ToQWord ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int64</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ToWord">
-      <MemberSignature Language="C#" Value="public short ToWord ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int16</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets the <see cref="T:System.UInt32" /> value stored in the current instance.</summary>
+        <returns>A <see cref="T:System.UInt32" /> stored in the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -147,9 +121,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Renders the current instance as an ASF content descriptor.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered version of the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Parse">
@@ -162,10 +136,11 @@
         <Parameter Name="file" Type="TagLib.Asf.File" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.Asf.File" /> to read from.</param>
+        <summary>Parses a content descriptor at the current position in a given file.</summary>
+        <returns>
+          <see langref="true" /> if the descriptor was parsed successfully. Otherwise <see langref="false" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Name">
@@ -175,9 +150,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the name of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the name of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Type">
@@ -187,9 +162,9 @@
         <ReturnType>TagLib.Asf.DataType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the data type of the current instance.</summary>
+        <value>A <see cref="T:TagLib.Asf.DataType" /> containing the data type of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -200,10 +175,10 @@
         <Parameter Name="value" Type="System.UInt64" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="name">A <see cref="T:System.String" /> containing the name of the new instance.</param>
+        <param name="value">A <see cref="T:System.UInt64" /> containing the value of the new instance.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Asf.ContentDescriptor" /> by assigning the name and value.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -214,10 +189,10 @@
         <Parameter Name="value" Type="System.UInt16" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="name">A <see cref="T:System.String" /> containing the name of the new instance.</param>
+        <param name="value">A <see cref="T:System.UInt16" /> containing the value of the new instance.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Asf.ContentDescriptor" /> by assigning the name and value.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -227,14 +202,40 @@
         <Parameter Name="file" Type="TagLib.Asf.File" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.Asf.File" /> to read from.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Asf.ContentDescriptor" /> by reading it from the current position in a specified file.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="ToQWord">
+      <MemberSignature Language="C#" Value="public ulong ToQWord ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.UInt64</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Gets the <see cref="T:System.UInt64" /> value stored in the current instance.</summary>
+        <returns>A <see cref="T:System.UInt64" /> stored in the current instance.</returns>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="ToWord">
+      <MemberSignature Language="C#" Value="public ushort ToWord ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.UInt16</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Gets the <see cref="T:System.UInt16" /> value stored in the current instance.</summary>
+        <returns>A <see cref="T:System.UInt16" /> stored in the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is for reading, writing, and manipulating ASF content descriptions.</summary>
+    <remarks />
   </Docs>
 </Type>

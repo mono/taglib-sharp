@@ -35,7 +35,7 @@ namespace TagLib
         private static Type [] static_file_types = new Type [] {
             typeof(TagLib.Asf.File),
             typeof(TagLib.Flac.File),
-            typeof(TagLib.Mpc.File),
+            typeof(TagLib.MusePack.File),
             typeof(TagLib.Mpeg4.File),
             typeof(TagLib.Mpeg.File),
             typeof(TagLib.Mpeg.AudioFile),
@@ -58,16 +58,22 @@ namespace TagLib
             file_types = new Dictionary<string, Type>();
             
             foreach(Type type in static_file_types) {
+               Register (type);
+            }
+        }
+        
+        public static void Register (Type type)
+        {
                 Attribute [] attrs = Attribute.GetCustomAttributes(type, typeof(SupportedMimeType));
                 if(attrs == null || attrs.Length == 0) {
-                    continue;
+                    return;
                 }
 
                 foreach(SupportedMimeType attr in attrs) {
                     file_types.Add(attr.MimeType, type);
                 } 
-            }
         }
+        
 
         public static IDictionary<string, Type> AvailableTypes {
             get { return file_types; }

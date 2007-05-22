@@ -29,70 +29,147 @@ namespace TagLib
    public enum ReadStyle
    {
       None,
-      Fast,
+      /*Fast,*/
       Average,
-      Accurate
+      /*Accurate*/
    }
    
    [Flags]
-   public enum TagTypes
+   public enum TagTypes : uint
    {
-      NoTags   = 0x0000,
-      Xiph     = 0x0001,
-      Id3v1    = 0x0002,
-      Id3v2    = 0x0004,
-      Ape      = 0x0008,
-      Apple    = 0x0010,
-      Asf      = 0x0020,
-      RiffInfo = 0x0040,
-      MovieId  = 0x0080,
-      DivX     = 0x0100,
-      AllTags  = 0xFFFF
+      NoTags   = 0x00000000,
+      Xiph     = 0x00000001,
+      Id3v1    = 0x00000002,
+      Id3v2    = 0x00000004,
+      Ape      = 0x00000008,
+      Apple    = 0x00000010,
+      Asf      = 0x00000020,
+      RiffInfo = 0x00000040,
+      MovieId  = 0x00000080,
+      DivX     = 0x00000100,
+      AllTags  = 0xFFFFFFFF
    }
    
    public abstract class File
    {
-      /*private static Dictionary<string, System.Type> file_types = new Dictionary<string, System.Type> ();*/
-      
-      public delegate IFileAbstraction FileAbstractionCreator (string path);
-      public delegate File             FileTypeResolver       (string path, ReadStyle style);
-         
+      #region Enums
       public enum AccessMode
       {
          Read,
          Write,
          Closed
       }
+      #endregion
       
+      
+      
+      #region Delegates
+      public delegate IFileAbstraction FileAbstractionCreator (string path);
+      public delegate File             FileTypeResolver       (string path, ReadStyle style);
+      #endregion
+      
+      
+      
+      #region Private Properties
       private System.IO.Stream file_stream;
       private IFileAbstraction file_abstraction;
       private string mime_type;
+      private TagTypes tags = TagTypes.NoTags;
+      private TagTypes tags_on_disk = TagTypes.NoTags;
+      
       private static uint buffer_size = 1024;
       
       private static List<FileTypeResolver> file_type_resolvers = new List<FileTypeResolver> ();
       private static List<FileAbstractionCreator> file_abstraction_creator_list = new List<FileAbstractionCreator> ();
+      #endregion
       
-      //////////////////////////////////////////////////////////////////////////
-      // public members
-      //////////////////////////////////////////////////////////////////////////
       
+      
+      #region Public Static Properties
+      public static uint BufferSize {get {return buffer_size;}}
+      #endregion
+      
+      
+
+      #region Constructors
       protected File (string file)
       {
          file_stream = null;
          file_abstraction = GetFileAbstractionCreator () (file);
       }
+      #endregion
+      
+      
+      
+      #region Public Properties
+      public abstract Tag Tag {get;}
+      public abstract Properties Properties {get;}
+      
+      public virtual TagTypes TagTypesOnDisk
+      {
+         get {return tags_on_disk;}
+         protected set {tags_on_disk = value;}
+      }
+      
+      public virtual TagTypes TagTypes
+      {
+         get {return tags;}
+         protected set {tags = value;}
+      }
       
       public string Name {get {return file_abstraction.Name;}}
-      public string MimeType { 
+      
+      public string MimeType
+      {
          get { return mime_type; }
          internal set { mime_type = value; }
       }
       
-      public abstract Tag Tag {get;}
+      public long Tell
+      {
+         get {return (Mode == AccessMode.Closed) ? 0 : file_stream.Position;}
+      }
       
-      public abstract Properties Properties {get;}
+      public long Length
+      {
+         get {return (Mode == AccessMode.Closed) ? 0 : file_stream.Length;}
+      }
       
+      public AccessMode Mode
+      {
+         get
+         {
+            return (file_stream == null) ? AccessMode.Closed : (file_stream.CanWrite) ? AccessMode.Write : AccessMode.Read;
+         }
+         set
+         {
+            if (Mode == value || (Mode == AccessMode.Write && value == AccessMode.Read))
+               return;
+            
+            if (file_stream != null)
+               file_abstraction.CloseStream (file_stream);
+            file_stream = null;
+            
+            if (value == AccessMode.Read)
+               file_stream = file_abstraction.ReadStream;
+            else if (value == AccessMode.Write)
+               file_stream = file_abstraction.WriteStream;
+            
+            Mode = value;
+         }
+      }
+      #endregion
+      
+      
+      #region Public Methods
       public abstract void Save ();
+      public abstract void RemoveTags (TagTypes types);
+      public abstract Tag GetTag (TagTypes type, bool create);
+      
+      public Tag GetTag (TagTypes type)
+      {
+         return GetTag (type, false);
+      }
       
       public ByteVector ReadBlock (int length)
       {
@@ -443,49 +520,11 @@ namespace TagLib
       {
          Seek (offset, System.IO.SeekOrigin.Begin);
       }
+      #endregion
       
-      public long Tell
-      {
-         get {return (Mode == AccessMode.Closed) ? 0 : file_stream.Position;}
-      }
       
-      public long Length
-      {
-         get {return (Mode == AccessMode.Closed) ? 0 : file_stream.Length;}
-      }
       
-      public AccessMode Mode
-      {
-         get
-         {
-            return (file_stream == null) ? AccessMode.Closed : (file_stream.CanWrite) ? AccessMode.Write : AccessMode.Read;
-         }
-         set
-         {
-            if (Mode == value || (Mode == AccessMode.Write && value == AccessMode.Read))
-               return;
-            
-            if (file_stream != null)
-               file_stream.Close ();
-            file_stream = null;
-            
-            if (value == AccessMode.Read)
-               file_stream = file_abstraction.ReadStream;
-            else if (value == AccessMode.Write)
-               file_stream = file_abstraction.WriteStream;
-            
-            Mode = value;
-         }
-      }
-      
-      public abstract void RemoveTags (TagTypes types);
-      public abstract Tag GetTag (TagTypes type, bool create);
-      
-      public Tag GetTag (TagTypes type)
-      {
-         return GetTag (type, false);
-      }
-            
+      #region Public Static Methods
       public static File Create(string path)
       {
          return Create(path, null, ReadStyle.Average);
@@ -573,25 +612,26 @@ namespace TagLib
       
       public static FileAbstractionCreator GetFileAbstractionCreator ()
       {
-         return file_abstraction_creator_list.Count > 0 ?
-            file_abstraction_creator_list [0] : LocalFileAbstraction.CreateFile;
+         if (file_abstraction_creator_list.Count > 0)
+            return file_abstraction_creator_list [0];
+         
+         return LocalFileAbstraction.CreateFile;
       }
+      #endregion
       
-      //////////////////////////////////////////////////////////////////////////
-      // protected members
-      //////////////////////////////////////////////////////////////////////////
+      
+      
+      #region Protected Methods
       protected void Truncate (long length)
       {
          Mode = AccessMode.Write;
          file_stream.SetLength (length);
       }
+      #endregion
       
-      public static uint BufferSize {get {return buffer_size;}}
       
       
-      //////////////////////////////////////////////////////////////////////////
-      // LocalFileAbstraction class
-      //////////////////////////////////////////////////////////////////////////
+      #region Classes
       private class LocalFileAbstraction : IFileAbstraction
       {
          private string name;
@@ -613,21 +653,30 @@ namespace TagLib
             get {return System.IO.File.Open (Name, System.IO.FileMode.Open, System.IO.FileAccess.ReadWrite);}
          }
          
+         public void CloseStream (System.IO.Stream stream)
+         {
+            stream.Close ();
+         }
+         
          public static IFileAbstraction CreateFile (string path)
          {
             return new LocalFileAbstraction (path);
          }
       }
+      #endregion
       
-      //////////////////////////////////////////////////////////////////////////
-      // IFileAbstraction interface
-      //////////////////////////////////////////////////////////////////////////
+      
+      
+      #region Interfaces
       public interface IFileAbstraction
       {
          string Name {get;}
          
          System.IO.Stream ReadStream  {get;}
          System.IO.Stream WriteStream {get;}
+         
+         void CloseStream (System.IO.Stream stream);
       }
+      #endregion
    }
 }

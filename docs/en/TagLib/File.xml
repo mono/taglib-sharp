@@ -43,7 +43,7 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="length">A <see cref="T:System.Int32"/> specifying the number of bytes to read.</param>
+        <param name="length">A <see cref="T:System.Int32" /> specifying the number of bytes to read.</param>
         <summary>Reads a specified number of bytes from the current instance at the current seek point.</summary>
         <returns>A <see cref="T:TagLib.ByteVector" /> representing the bytes read.</returns>
         <remarks />
@@ -59,7 +59,7 @@
         <Parameter Name="length" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="length">A <see cref="T:System.Int32"/> specifying the number of bytes to read.</param>
+        <param name="length">A <see cref="T:System.Int32" /> specifying the number of bytes to read.</param>
         <summary>Reads a specified number of bytes from the current instance at the current seek point.</summary>
         <returns>A <see cref="T:TagLib.ByteVector" /> representing the bytes read.</returns>
         <remarks />
@@ -92,7 +92,7 @@
         <Parameter Name="before" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="pattern">A <see cref="T:TagLib.ByteVector"/> containing data to be found in the file.</param>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing data to be found in the file.</param>
         <param name="from_offset">A <see cref="T:System.Int64" /> specifying at which point to start searching.</param>
         <param name="before">A <see cref="T:TagLib.ByteVector" /> containing data which must not occur before <paramref name="pattern" />.</param>
         <summary>Searches for a byte pattern in a file after a given offset, checking that it does not occur before another pattern.</summary>
@@ -111,7 +111,7 @@
         <Parameter Name="from_offset" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="pattern">A <see cref="T:TagLib.ByteVector"/> containing data to be found in the file.</param>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing data to be found in the file.</param>
         <param name="from_offset">A <see cref="T:System.Int64" /> specifying at which point to start searching.</param>
         <summary>Searches for a byte pattern in a file after a given offset.</summary>
         <returns>A <see cref="T:System.Int64" /> specifying at which index the pattern was found. If the pattern is not found, -1 is returned.</returns>
@@ -128,7 +128,7 @@
         <Parameter Name="pattern" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="pattern">A <see cref="T:TagLib.ByteVector"/> containing data to be found in the file.</param>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing data to be found in the file.</param>
         <summary>Searches for a byte pattern in a file starting at the beginning of the file.</summary>
         <returns>A <see cref="T:System.Int64" /> specifying at which index the pattern was found. If the pattern is not found, -1 is returned.</returns>
         <remarks />
@@ -145,7 +145,7 @@
         <Parameter Name="from_offset" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="pattern">A <see cref="T:TagLib.ByteVector"/> containing data to be found in the file.</param>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing data to be found in the file.</param>
         <param name="from_offset">A <see cref="T:System.Int64" /> specifying at which point to start searching.</param>
         <summary>Searches backward for a byte pattern in a file before a given offset.</summary>
         <returns>A <see cref="T:System.Int64" /> specifying at which index the pattern was found. If the pattern is not found, -1 is returned.</returns>
@@ -162,7 +162,7 @@
         <Parameter Name="pattern" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="pattern">A <see cref="T:TagLib.ByteVector"/> containing data to be found in the file.</param>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing data to be found in the file.</param>
         <summary>Searches backward for a byte pattern in a file starting at the end of the file.</summary>
         <returns>A <see cref="T:System.Int64" /> specifying at which index the pattern was found. If the pattern is not found, -1 is returned.</returns>
         <remarks />
@@ -229,7 +229,7 @@
       </ReturnValue>
       <Parameters>
         <Parameter Name="offset" Type="System.Int64" />
-        <Parameter Name="p" Type="System.IO.SeekOrigin" />
+        <Parameter Name="origin" Type="System.IO.SeekOrigin" />
       </Parameters>
       <Docs>
         <param name="offset">A <see cref="T:System.Int64" /> specifying the offset to shift to.</param>
@@ -404,11 +404,6 @@
     <Member MemberName="SetFileAbstractionCreator">
       <MemberSignature Language="C#" Value="public static void SetFileAbstractionCreator (TagLib.File.FileAbstractionCreator creator);" />
       <MemberType>Method</MemberType>
-      <Attributes>
-        <Attribute>
-          <AttributeName>Obsolete("Use PushFileAbstractionCreator")</AttributeName>
-        </Attribute>
-      </Attributes>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
@@ -573,9 +568,33 @@
         <remarks>This is used for registering a <see cref="T:TagLib.File+FileAbstractionCreator" /> with the <see cref="T:TagLib.File" /> class. To unregister a creator, use <see cref="M:TagLib.File.PopFileAbstractionCreator()" />.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="TagTypes">
+      <MemberSignature Language="C#" Value="public virtual TagLib.TagTypes TagTypes { protected set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.TagTypes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TagTypesOnDisk">
+      <MemberSignature Language="C#" Value="public virtual TagLib.TagTypes TagTypesOnDisk { protected set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.TagTypes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
   </Members>
   <Docs>
     <summary>This abstract class is used to access tagging and properties for files.</summary>
-    <remarks/>
+    <remarks />
   </Docs>
 </Type>

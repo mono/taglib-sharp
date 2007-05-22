@@ -51,20 +51,14 @@ namespace TagLib.Id3v2
          data        = picture.Data;
       }
 
-      public AttachedPictureFrame (ByteVector data, uint version) : base (data, version)
+      public AttachedPictureFrame (ByteVector data, byte version) : base (data, version)
       {
-         SetData (data, 0, version);
+         SetData (data, 0, version, true);
       }
       
-      protected internal AttachedPictureFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
+      protected internal AttachedPictureFrame (ByteVector data, int offset, FrameHeader h, byte version) : base (h)
       {
-         text_encoding = StringType.UTF8;
-         mime_type = null;
-         type = PictureType.Other;
-         description = null;
-         this.data = null;
-         
-         ParseFields (FieldData (data, offset, version), version);
+         SetData (data, offset, version, false);
       }
       #endregion
       
@@ -162,7 +156,7 @@ namespace TagLib.Id3v2
       
       
       #region Protected Methods
-      protected override void ParseFields (ByteVector data, uint version)
+      protected override void ParseFields (ByteVector data, byte version)
       {
          if (data.Count < 5)
             throw new CorruptFileException ("A picture frame must contain at least 5 bytes.");
@@ -210,7 +204,7 @@ namespace TagLib.Id3v2
          this.data = data.Mid (pos);
       }
       
-      protected override ByteVector RenderFields (uint version)
+      protected override ByteVector RenderFields (byte version)
       {
          StringType encoding = CorrectEncoding (TextEncoding, version);
          ByteVector data = new ByteVector ();

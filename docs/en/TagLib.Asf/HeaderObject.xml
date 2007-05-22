@@ -17,10 +17,10 @@
         <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.Asf.File" /> to read the object data from.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying where in the file the object begins.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Asf.HeaderObject" /> by reading the contents from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AddObject">
@@ -33,9 +33,9 @@
         <Parameter Name="obj" Type="TagLib.Asf.Object" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="obj">An <see cref="T:TagLib.Asf.Object" /> to add to the current instance.</param>
+        <summary>Adds a <see cref="T:TagLib.Asf.Object" /> to the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AddUniqueObject">
@@ -48,9 +48,9 @@
         <Parameter Name="obj" Type="TagLib.Asf.Object" />
       </Parameters>
       <Docs>
-        <param name="obj">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="obj">An <see cref="T:TagLib.Asf.Object" /> with a unique GUID to add to the current instance.</param>
+        <summary>Adds a <see cref="T:TagLib.Asf.Object" /> with a unique GUID to the current instance. If another matching object is found in the current instance, it replace it.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Reserved">
@@ -60,9 +60,9 @@
         <ReturnType>System.Byte[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the reserved bytes of the current instance.</summary>
+        <value>A <see cref="T:System.Byte" /> array containing the reserved bytes of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Children">
@@ -72,9 +72,9 @@
         <ReturnType>TagLib.Asf.Object[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the child objects of the current instance.</summary>
+        <value>A <see cref="T:TagLib.Asf.Object" /> array containing children of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetProperties">
@@ -85,14 +85,38 @@
       </ReturnValue>
       <Parameters />
       <Docs>
+        <summary>Gets the media properties contained in the current instance.</summary>
+        <returns>A <see cref="T:TagLib.Properties" /> containing the media properties contained in the current instance.</returns>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="HasContentDescriptors">
+      <MemberSignature Language="C#" Value="public bool HasContentDescriptors { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
         <summary>To be added.</summary>
-        <returns>To be added.</returns>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RemoveContentDescriptors">
+      <MemberSignature Language="C#" Value="public void RemoveContentDescriptors ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is for reading, writing, and manipulating ASF header objects.</summary>
+    <remarks />
   </Docs>
 </Type>

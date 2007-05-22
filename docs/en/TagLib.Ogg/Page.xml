@@ -87,10 +87,10 @@
       </Docs>
     </Member>
     <Member MemberName="Size">
-      <MemberSignature Language="C#" Value="public int Size { get; };" />
+      <MemberSignature Language="C#" Value="public uint Size { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
+        <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>

@@ -17,10 +17,10 @@
         <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.Asf.File" /> to read the object data from.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying where in the file the object begins.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Asf.UnknownObject" /> by reading the contents from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Data">
@@ -30,14 +30,14 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the raw data contained in the current object.</summary>
+        <value>A <see cref="T:TagLib.ByteVector" /> containing raw object data.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is for reading, writing, and manipulating unknown ASF objects.</summary>
+    <remarks />
   </Docs>
 </Type>

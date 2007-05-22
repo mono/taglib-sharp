@@ -1,11 +1,11 @@
 <Type Name="XingHeader" FullName="TagLib.Mpeg.XingHeader">
-  <TypeSignature Language="C#" Value="public class XingHeader" />
+  <TypeSignature Language="C#" Value="public struct XingHeader" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>System.Object</BaseTypeName>
+    <BaseTypeName>System.ValueType</BaseTypeName>
   </Base>
   <Interfaces />
   <Members>

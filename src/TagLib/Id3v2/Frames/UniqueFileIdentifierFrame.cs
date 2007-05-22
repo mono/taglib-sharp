@@ -35,9 +35,9 @@ namespace TagLib.Id3v2
       
       
       #region Constructors
-      public UniqueFileIdentifierFrame (ByteVector data, uint version) : base (data, version)
+      public UniqueFileIdentifierFrame (ByteVector data, byte version) : base (data, version)
       {
-         SetData (data, 0, version);
+         SetData (data, 0, version, true);
       }
 
       public UniqueFileIdentifierFrame (string owner, ByteVector id) : base ("UFID", 4)
@@ -46,9 +46,9 @@ namespace TagLib.Id3v2
          identifier = id;
       }
       
-      protected internal UniqueFileIdentifierFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
+      protected internal UniqueFileIdentifierFrame (ByteVector data, int offset, FrameHeader h, byte version) : base (h)
       {
-         ParseFields (FieldData (data, offset, version), version);
+         SetData (data, offset, version, false);
       }
       #endregion
       
@@ -58,7 +58,6 @@ namespace TagLib.Id3v2
       public string Owner
       {
          get {return owner;}
-         set {owner = value;}
       }
 
       public ByteVector Identifier
@@ -88,7 +87,7 @@ namespace TagLib.Id3v2
       
       
       #region Protected Methods
-      protected override void ParseFields (ByteVector data, uint version)
+      protected override void ParseFields (ByteVector data, byte version)
       {
          ByteVectorList fields = ByteVectorList.Split(data, (byte) 0);
 
@@ -99,7 +98,7 @@ namespace TagLib.Id3v2
          identifier = fields [1];
       }
       
-      protected override ByteVector RenderFields (uint version)
+      protected override ByteVector RenderFields (byte version)
       {
          ByteVector data = new ByteVector ();
          

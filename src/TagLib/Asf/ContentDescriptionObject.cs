@@ -40,7 +40,7 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       public ContentDescriptionObject (Asf.File file, long position) : base (file, position)
       {
-         if (!Guid.Equals (Asf.Guid.AsfContentDescriptionObject))
+         if (Guid != Asf.Guid.AsfContentDescriptionObject)
             throw new CorruptFileException ("Object GUID incorrect.");
          
          if (OriginalSize < 34)

@@ -13,9 +13,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the mime-type of the data in the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the mime-type of the data in the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Type">
@@ -25,9 +25,9 @@
         <ReturnType>TagLib.PictureType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>A <see cref="T:TagLib.PictureType" /> describing the content of the picture.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the picture type for the current instance.</summary>
+        <value>A <see cref="T:TagLib.PictureType" /> describing the image content.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Description">
@@ -37,9 +37,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets a description of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> describing the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Data">
@@ -49,14 +49,14 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the image data for the current instance.</summary>
+        <value>A <see cref="T:TagLib.ByteVector" /> containing image data.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This interface provides generic access to pictures for various tag types.</summary>
+    <remarks />
   </Docs>
 </Type>

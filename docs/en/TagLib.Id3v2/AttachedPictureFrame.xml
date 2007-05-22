@@ -34,20 +34,6 @@
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public AttachedPictureFrame (TagLib.ByteVector data, uint version);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="data" Type="TagLib.ByteVector" />
-        <Parameter Name="version" Type="System.UInt32" />
-      </Parameters>
-      <Docs>
-        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
-        <param name="version">A <see cref="T:System.UInt32" /> specifying the ID3v2 version <paramref name="data" /> is encoded in.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v2.AttachedPictureFrame" /> by reading from an ID3v2 frame.</summary>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName="Get">
       <MemberSignature Language="C#" Value="public static TagLib.Id3v2.AttachedPictureFrame Get (TagLib.Id3v2.Tag tag, string description, bool create);" />
       <MemberType>Method</MemberType>
@@ -171,26 +157,40 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected AttachedPictureFrame (TagLib.ByteVector data, int offset, TagLib.Id3v2.FrameHeader h, uint version);" />
+      <MemberSignature Language="C#" Value="public AttachedPictureFrame (TagLib.ByteVector data, byte version);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+        <Parameter Name="version" Type="System.Byte" />
+      </Parameters>
+      <Docs>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
+        <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.AttachedPictureFrame" /> from a raw ID3v2 frame.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected AttachedPictureFrame (TagLib.ByteVector data, int offset, TagLib.Id3v2.FrameHeader h, byte version);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="data" Type="TagLib.ByteVector" />
         <Parameter Name="offset" Type="System.Int32" />
         <Parameter Name="h" Type="TagLib.Id3v2.FrameHeader" />
-        <Parameter Name="version" Type="System.UInt32" />
+        <Parameter Name="version" Type="System.Byte" />
       </Parameters>
       <Docs>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
-        <param name="offset">A <see cref="T:System.Int32" /> specifying the index at which the frame begins.</param>
-        <param name="h">The <see cref="T:TagLib.Id3v2.FrameHeader" /> for the frame.</param>
-        <param name="version">A <see cref="T:System.UInt32" /> specifying the ID3v2 version <paramref name="data" /> is encoded in.</param>
-        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Id3v2.AttachedPictureFrame" /> by reading frame data of a specified version.</summary>
+        <param name="offset">A <see cref="T:System.Int32" /> specifying at what index in <paramref name="data" /> the frame begins.</param>
+        <param name="h">A <see cref="T:TagLib.Id3v2.FrameHeader" /> containing the header to use with the new instance.</param>
+        <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.AttachedPictureFrame" /> from a raw ID3v2 frame.</summary>
         <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used for accessing and modifying ID3v2 Attached Picture (APIC) frames.</summary>
+    <remarks />
   </Docs>
 </Type>

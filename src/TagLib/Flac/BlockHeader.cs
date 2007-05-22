@@ -35,7 +35,7 @@ namespace TagLib.Flac
       Picture
    }
    
-   public class BlockHeader
+   public struct BlockHeader
    {
       private BlockType block_type;
       private bool      is_last_block;

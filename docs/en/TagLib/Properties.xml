@@ -25,7 +25,8 @@
       <Docs>
         <summary>Gets the duration of the media.</summary>
         <value>A <see cref="T:System.TimeSpan" /> representing the duration of the media represented by the current instance.</value>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="AudioBitrate">
@@ -97,7 +98,8 @@
       <Docs>
         <summary>Gets the media types contained in the current instance.</summary>
         <value>A <see cref="T:TagLib.MediaTypes" /> containing a the bitwise combined values of all the <see cref="T:TagLib.ICodec" /> objects contained in the current instance.</value>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -164,12 +166,14 @@
       <Docs>
         <summary>Gets the codecs contained in the current instance.</summary>
         <value>A <see cref="T:System.Collections.Generic.IEnumerable&lt;TagLib.ICodec&gt;" /> containing the codecs represented in the current instance.</value>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
   </Members>
   <Docs>
     <summary>This class is used to access a generic properties of audio and video files.</summary>
-    <remarks></remarks>
+    <remarks>
+    </remarks>
   </Docs>
 </Type>

@@ -1,0 +1,106 @@
+<Type Name="SynchedTextType" FullName="TagLib.Id3v2.SynchedTextType">
+  <TypeSignature Language="C#" Value="public enum SynchedTextType" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Members>
+    <Member MemberName="Chord">
+      <MemberSignature Language="C#" Value="Chord" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.SynchedTextType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Events">
+      <MemberSignature Language="C#" Value="Events" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.SynchedTextType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ImageUrls">
+      <MemberSignature Language="C#" Value="ImageUrls" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.SynchedTextType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Lyrics">
+      <MemberSignature Language="C#" Value="Lyrics" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.SynchedTextType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Movement">
+      <MemberSignature Language="C#" Value="Movement" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.SynchedTextType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Other">
+      <MemberSignature Language="C#" Value="Other" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.SynchedTextType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="TextTranscription">
+      <MemberSignature Language="C#" Value="TextTranscription" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.SynchedTextType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Trivia">
+      <MemberSignature Language="C#" Value="Trivia" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.SynchedTextType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="WebpageUrls">
+      <MemberSignature Language="C#" Value="WebpageUrls" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.SynchedTextType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

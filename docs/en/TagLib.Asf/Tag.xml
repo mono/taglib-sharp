@@ -14,8 +14,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Asf.Tag" /> with no contents.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -25,9 +25,9 @@
         <Parameter Name="header" Type="TagLib.Asf.HeaderObject" />
       </Parameters>
       <Docs>
-        <param name="header">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="header">A <see cref="T:TagLib.Asf.HeaderObject" /> to get tagging information from.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Asf.Tag" /> using tagging information from a <see cref="T:TagLib.Asf.HeaderObject" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Clear">
@@ -38,8 +38,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Removes all tagging information from the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RemoveDescriptors">
@@ -52,9 +52,9 @@
         <Parameter Name="name" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="name">A <see cref="T:System.String" /> containing a descriptor name.</param>
+        <summary>Removes all <see cref="T:TagLib.Asf.ContentDescriptor" />s from the current instance that have a specific name.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetDescriptors">
@@ -73,10 +73,10 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="names">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="names">A <see cref="T:System.String" /> array containing a collection of descriptor names.</param>
+        <summary>Gets all <see cref="T:TagLib.Asf.ContentDescriptor" />s in the current instance that match any of a collection of names.</summary>
+        <returns>A <see cref="T:System.Collections.Generic.IEnumerable&lt;TagLib.Asf.ContentDescriptor&gt;" /> containing matching descriptors.</returns>
+        <remarks>Multiple names are accepted because some descriptors have multiple name possibilities. For example, to access mood, <c>object.GetDescriptors ("WM/Mood", "Mood")</c> would be appropriate. Also, order does not matter and <c>object.GetDescriptors ("Mood", "WM/Mood")</c> will yield the same results.</remarks>
       </Docs>
     </Member>
     <Member MemberName="SetDescriptors">
@@ -96,10 +96,10 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <param name="descriptors">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="name">A <see cref="T:System.String" /> containing a descriptor name.</param>
+        <param name="descriptors">A <see cref="T:TagLib.Asf.ContentDescriptor" /> to array to be added to the current instance.</param>
+        <summary>Stores a collection of <see cref="T:TagLib.Asf.ContentDescriptor" />s in the current instance, replacing any original values.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AddDescriptor">
@@ -112,9 +112,9 @@
         <Parameter Name="descriptor" Type="TagLib.Asf.ContentDescriptor" />
       </Parameters>
       <Docs>
-        <param name="descriptor">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="descriptor">A <see cref="T:TagLib.Asf.ContentDescriptor" /> to add to the current instance.</param>
+        <summary>Adds a <see cref="T:TagLib.Asf.ContentDescriptor" /> to the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetDescriptorString">
@@ -133,10 +133,10 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="names">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="names">A <see cref="T:System.String" /> array containing a collection of descriptor names.</param>
+        <summary>Gets the text value of the first <see cref="T:TagLib.Asf.ContentDescriptor" /> in the current instance that matchs any of a collection of names.</summary>
+        <returns>A <see cref="T:System.String" /> containing the text of the first matching descriptor.</returns>
+        <remarks>Multiple names are accepted because some descriptors have multiple name possibilities. For example, to access mood, <c>object.GetDescriptorString ("WM/Mood", "Mood")</c> would be appropriate. Also, order does not matter and <c>object.GetDescriptorString ("Mood", "WM/Mood")</c> will yield the same results.</remarks>
       </Docs>
     </Member>
     <Member MemberName="SetDescriptorString">
@@ -156,10 +156,10 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="names">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="value">A <see cref="T:System.String" /> containing a value to store.</param>
+        <param name="names">A <see cref="T:System.String" /> array containing a collection of descriptor names.</param>
+        <summary>Stores a string value in a descriptor with the first name and removes all descriptors with other names.</summary>
+        <remarks>As some descriptors have multiple name possibilities, it is important to remove the contents in other names when when storing a value a specific name.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ContentDescriptionObject">
@@ -169,9 +169,9 @@
         <ReturnType>TagLib.Asf.ContentDescriptionObject</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the <see cref="T:TagLib.Asf.ContentDescriptionObject" /> used by the current instance.</summary>
+        <value>A <see cref="T:TagLib.Asf.ContentDescriptionObject" /> used by the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ExtendedContentDescriptionObject">
@@ -181,9 +181,9 @@
         <ReturnType>TagLib.Asf.ExtendedContentDescriptionObject</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the <see cref="T:TagLib.Asf.ExtendedContentDescriptionObject" /> used by the current instance.</summary>
+        <value>A <see cref="T:TagLib.Asf.ExtendedContentDescriptionObject" /> used by the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetDescriptorStrings">
@@ -202,10 +202,10 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="names">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="names">A <see cref="T:System.String" /> array containing a collection of descriptor names.</param>
+        <summary>Gets the split text value of the first <see cref="T:TagLib.Asf.ContentDescriptor" /> in the current instance that matchs any of a collection of names.</summary>
+        <returns>A <see cref="T:System.String" /> array containing the split text of the first matching descriptor.</returns>
+        <remarks>Multiple names are accepted because some descriptors have multiple name possibilities. For example, to access mood, <c>object.GetDescriptorString ("WM/Mood", "Mood")</c> would be appropriate. Also, order does not matter and <c>object.GetDescriptorString ("Mood", "WM/Mood")</c> will yield the same results.</remarks>
       </Docs>
     </Member>
     <Member MemberName="SetDescriptorStrings">
@@ -225,15 +225,15 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="names">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="value">A <see cref="T:System.String" /> array containing a values to store.</param>
+        <param name="names">A <see cref="T:System.String" /> array containing a collection of descriptor names.</param>
+        <summary>Stores a joined string value in a descriptor with the first name and removes all descriptors with other names.</summary>
+        <remarks>As some descriptors have multiple name possibilities, it is important to remove the contents in other names when when storing a value a specific name.</remarks>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access and manipulate tags stored in ASF content descriptor objects and extended content descriptor objects.</summary>
+    <remarks />
   </Docs>
 </Type>

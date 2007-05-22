@@ -29,8 +29,6 @@
       <Type Name="ByteVector" />
       <Type Name="ByteVectorList" />
       <Type Name="ListBase`1" DisplayName="ListBase&lt;T&gt;" />
-      <Type Name="Debugger" />
-      <Type Name="Debugger+DebugMessageSentHandler" />
       <Type Name="File" />
       <Type Name="File+IFileAbstraction" />
       <Type Name="File+FileAbstractionCreator" />
@@ -60,6 +58,7 @@
       <Type Name="Item" />
       <Type Name="Tag" />
       <Type Name="ItemType" />
+      <Type Name="FooterFlags" />
     </Namespace>
     <Namespace Name="TagLib.Asf">
       <Type Name="ContentDescriptionObject" />
@@ -118,11 +117,12 @@
       <Type Name="SynchronisedLyricsFrame" />
       <Type Name="SynchedText" />
       <Type Name="TimestampFormat" />
-      <Type Name="TextType" />
+      <Type Name="FrameFlags" />
+      <Type Name="HeaderFlags" />
+      <Type Name="SynchedTextType" />
+      <Type Name="PlayCountFrame" />
     </Namespace>
     <Namespace Name="TagLib.Mpc">
-      <Type Name="File" />
-      <Type Name="StreamHeader" />
     </Namespace>
     <Namespace Name="TagLib.Mpeg">
       <Type Name="File" />
@@ -174,6 +174,7 @@
       <Type Name="Bitstream" />
       <Type Name="GroupedComment" />
       <Type Name="Paginator" />
+      <Type Name="PageFlags" />
     </Namespace>
     <Namespace Name="TagLib.WavPack">
       <Type Name="File" />
@@ -198,6 +199,10 @@
       <Type Name="AviVideoStream" />
       <Type Name="WaveFormatEx" />
       <Type Name="BitmapInfoHeader" />
+    </Namespace>
+    <Namespace Name="TagLib.MusePack">
+      <Type Name="File" />
+      <Type Name="StreamHeader" />
     </Namespace>
   </Types>
   <Title>taglib-sharp</Title>

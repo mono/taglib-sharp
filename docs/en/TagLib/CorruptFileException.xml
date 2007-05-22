@@ -16,9 +16,9 @@
         <Parameter Name="message" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="message">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="message">A <see cref="T:System.String" /> containing an error message for the exception.</param>
+        <summary>Creates an instance of <see cref="T:TagLib.CorruptFileException" /> with the message set to the specified string value.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -26,13 +26,13 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Creates an instance of <see cref="T:TagLib.CorruptFileException" /> with the default values for its properties.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Exception thrown when a malformed file or format is encountered.</summary>
+    <remarks>This error is typically thrown when an error seriously inhibits the reading or processing of a file.</remarks>
   </Docs>
 </Type>

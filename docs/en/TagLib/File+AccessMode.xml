@@ -15,7 +15,7 @@
         <ReturnType>TagLib.File+AccessMode</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The file is closed.</summary>
       </Docs>
     </Member>
     <Member MemberName="Read">
@@ -25,7 +25,7 @@
         <ReturnType>TagLib.File+AccessMode</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The file is readable.</summary>
       </Docs>
     </Member>
     <Member MemberName="Write">
@@ -35,12 +35,12 @@
         <ReturnType>TagLib.File+AccessMode</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The file is readable and writable.</summary>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Specifies the types of operations that can be performed on a <see cref="T:TagLib.File" />.</summary>
+    <remarks />
   </Docs>
 </Type>

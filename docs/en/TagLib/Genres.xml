@@ -16,8 +16,8 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gets the standard audio genres as used by most common audio tagging formats.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Video">
@@ -27,8 +27,8 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gets the video genres as used the DivX tagging format.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AudioToIndex">
@@ -41,10 +41,10 @@
         <Parameter Name="name" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="name">A <see cref="T:System.String" /> containing a standard audio genre.</param>
+        <summary>Gets the ID3v1-style index for the audio genre string.</summary>
+        <returns>A <see cref="T:System.Byte" /> containing the audio index. If the string is not matched, 255 is returned.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IndexToAudio">
@@ -57,10 +57,10 @@
         <Parameter Name="index" Type="System.Byte" />
       </Parameters>
       <Docs>
-        <param name="index">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="index">A <see cref="T:System.Byte" /> containing an ID3v1-style genre index.</param>
+        <summary>Gets an audio genre from an ID3v1-style genre index.</summary>
+        <returns>A <see cref="T:System.String" /> containing a standard audio genre. If the index is out of range, <see langref="null" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IndexToAudio">
@@ -73,10 +73,10 @@
         <Parameter Name="text" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="text">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="text">A <see cref="T:System.String" /> containing an ID3v1-style genre index.</param>
+        <summary>Gets an audio genre from an ID3v1-style genre index.</summary>
+        <returns>A <see cref="T:System.String" /> containing a standard audio genre. If the index is out of range, <see langref="null" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="VideoToIndex">
@@ -89,10 +89,10 @@
         <Parameter Name="name" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="name">A <see cref="T:System.String" /> containing a standard video genre.</param>
+        <summary>Gets the DivX-style index for the video genre string.</summary>
+        <returns>A <see cref="T:System.Byte" /> containing the video index. If the string is not matched, 255 is returned.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IndexToVideo">
@@ -105,10 +105,10 @@
         <Parameter Name="index" Type="System.Byte" />
       </Parameters>
       <Docs>
-        <param name="index">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="index">A <see cref="T:System.Byte" /> containing an DivX-style genre index.</param>
+        <summary>Gets an video genre from an DivX-style genre index.</summary>
+        <returns>A <see cref="T:System.String" /> containing a standard video genre. If the index is out of range, <see langref="null" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IndexToVideo">
@@ -121,15 +121,15 @@
         <Parameter Name="text" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="text">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="text">A <see cref="T:System.String" /> containing an DivX-style genre index.</param>
+        <summary>Gets an video genre from an DivX-style genre index.</summary>
+        <returns>A <see cref="T:System.String" /> containing a standard video genre. If the index is out of range, <see langref="null" />.</returns>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This static class provides methods for accessing standard audio and video genres.</summary>
+    <remarks />
   </Docs>
 </Type>

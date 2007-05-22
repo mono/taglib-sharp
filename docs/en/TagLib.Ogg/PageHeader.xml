@@ -1,41 +1,14 @@
 <Type Name="PageHeader" FullName="TagLib.Ogg.PageHeader">
-  <TypeSignature Language="C#" Value="public class PageHeader" />
+  <TypeSignature Language="C#" Value="public struct PageHeader" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>System.Object</BaseTypeName>
+    <BaseTypeName>System.ValueType</BaseTypeName>
   </Base>
   <Interfaces />
   <Members>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected PageHeader ();" />
-      <MemberType>Constructor</MemberType>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public PageHeader (uint stream_serial_number, int page_number, bool first_packet_continued, bool contains_last_packet);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="stream_serial_number" Type="System.UInt32" />
-        <Parameter Name="page_number" Type="System.Int32" />
-        <Parameter Name="first_packet_continued" Type="System.Boolean" />
-        <Parameter Name="contains_last_packet" Type="System.Boolean" />
-      </Parameters>
-      <Docs>
-        <param name="stream_serial_number">To be added.</param>
-        <param name="page_number">To be added.</param>
-        <param name="first_packet_continued">To be added.</param>
-        <param name="contains_last_packet">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public PageHeader (TagLib.Ogg.File file, long page_offset);" />
       <MemberType>Constructor</MemberType>
@@ -75,54 +48,6 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="FirstPacketContinued">
-      <MemberSignature Language="C#" Value="public bool FirstPacketContinued { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="LastPacketCompleted">
-      <MemberSignature Language="C#" Value="public bool LastPacketCompleted { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="FirstPageOfStream">
-      <MemberSignature Language="C#" Value="public bool FirstPageOfStream { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="LastPageOfStream">
-      <MemberSignature Language="C#" Value="public bool LastPageOfStream { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName="AbsoluteGranularPosition">
       <MemberSignature Language="C#" Value="public long AbsoluteGranularPosition { get; };" />
       <MemberType>Property</MemberType>
@@ -136,10 +61,10 @@
       </Docs>
     </Member>
     <Member MemberName="PageSequenceNumber">
-      <MemberSignature Language="C#" Value="public int PageSequenceNumber { get; };" />
+      <MemberSignature Language="C#" Value="public uint PageSequenceNumber { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
+        <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -160,10 +85,10 @@
       </Docs>
     </Member>
     <Member MemberName="Size">
-      <MemberSignature Language="C#" Value="public int Size { get; };" />
+      <MemberSignature Language="C#" Value="public uint Size { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
+        <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -172,10 +97,38 @@
       </Docs>
     </Member>
     <Member MemberName="DataSize">
-      <MemberSignature Language="C#" Value="public int DataSize { get; };" />
+      <MemberSignature Language="C#" Value="public uint DataSize { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public PageHeader (uint stream_serial_number, uint page_number, TagLib.Ogg.PageFlags flags);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="stream_serial_number" Type="System.UInt32" />
+        <Parameter Name="page_number" Type="System.UInt32" />
+        <Parameter Name="flags" Type="TagLib.Ogg.PageFlags" />
+      </Parameters>
+      <Docs>
+        <param name="stream_serial_number">To be added.</param>
+        <param name="page_number">To be added.</param>
+        <param name="flags">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Flags">
+      <MemberSignature Language="C#" Value="public TagLib.Ogg.PageFlags Flags { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Ogg.PageFlags</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>

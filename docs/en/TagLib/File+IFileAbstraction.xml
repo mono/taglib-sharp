@@ -43,6 +43,21 @@
         <remarks>The stream will be closed external to the interface and should be created when the attribute is invoked.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="CloseStream">
+      <MemberSignature Language="C#" Value="public void CloseStream (System.IO.Stream stream);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="stream" Type="System.IO.Stream" />
+      </Parameters>
+      <Docs>
+        <param name="stream">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
   </Members>
   <Docs>
     <summary>Interface providing abstracted access to a file.</summary>

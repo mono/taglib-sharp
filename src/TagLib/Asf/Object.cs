@@ -26,21 +26,21 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       // private properties
       //////////////////////////////////////////////////////////////////////////
-      private Guid id;
+      private System.Guid id;
       private ulong size;
       
       
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public Object (Asf.File file, long position)
+      protected Object (Asf.File file, long position)
       {
          file.Seek (position);
          id = file.ReadGuid ();
          size = file.ReadQWord ();
       }
       
-      public Object (Guid guid)
+      protected Object (System.Guid guid)
       {
          id = guid;
          size = 0;
@@ -74,7 +74,7 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
-      public Guid Guid {get {return id;}}
+      public System.Guid Guid {get {return id;}}
       
       public ulong OriginalSize {get {return size;}}
       
@@ -85,7 +85,7 @@ namespace TagLib.Asf
       protected ByteVector Render (ByteVector data)
       {
          ulong length = (ulong)((data != null ? data.Count : 0) + 24);
-         ByteVector v = Guid.Render ();
+         ByteVector v = id.ToByteArray ();
          v.Add (RenderQWord (length));
          v.Add (data);
          return v;

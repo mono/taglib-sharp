@@ -78,7 +78,7 @@
       </ReturnValue>
       <Docs>
         <summary>Gets the identifier used to recognize RIFF files.</summary>
-        <remarks>A <see cref="T:TagLib.ByteVector"/> representing the file identifier.</remarks>
+        <remarks>A <see cref="T:TagLib.ByteVector" /> representing the file identifier.</remarks>
       </Docs>
     </Member>
   </Members>

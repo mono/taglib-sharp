@@ -49,11 +49,20 @@ namespace TagLib.Ogg
          properties = null;
          Read (properties_style);
          Mode = AccessMode.Closed;
+         TagTypesOnDisk = TagTypes;
       }
       
       public File (string file) : this (file, ReadStyle.Average)
       {}
       
+      public override TagTypes TagTypes
+      {
+         get
+         {
+            return tag.IsEmpty ? TagTypes.NoTags : TagTypes.Xiph;
+         }
+      }
+
       private void Read (ReadStyle properties_style)
       {
          long end;
@@ -136,6 +145,7 @@ namespace TagLib.Ogg
          Insert (output, 0, end);
          
          Mode = AccessMode.Closed;
+         TagTypesOnDisk = TagTypes;
       }
       
       private Dictionary<uint, Bitstream> ReadStreams (List<Page> pages, out long end)
@@ -150,7 +160,7 @@ namespace TagLib.Ogg
             Bitstream stream = null;
             Page page = new Page (this, position);
             
-            if (page.Header.FirstPageOfStream)
+            if ((page.Header.Flags & PageFlags.FirstPageOfStream) != 0)
             {
                stream = new Bitstream (page);
                streams.Add (page.Header.StreamSerialNumber, stream);

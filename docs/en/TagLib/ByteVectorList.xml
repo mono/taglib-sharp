@@ -17,8 +17,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.ByteVectorList" /> with no contents.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ToByteVector">
@@ -31,23 +31,10 @@
         <Parameter Name="separator" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="separator">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ToByteVector">
-      <MemberSignature Language="C#" Value="public TagLib.ByteVector ToByteVector ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="separator">A <see cref="T:TagLib.ByteVector" /> to join the elements of the current instance with.</param>
+        <summary>Converts the current instance to a <see cref="T:TagLib.ByteVector" /> by joining the elements with a separator.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the joined contents of the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Split">
@@ -63,13 +50,13 @@
         <Parameter Name="max" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="vector">To be added.</param>
-        <param name="pattern">To be added.</param>
-        <param name="byteAlign">To be added.</param>
-        <param name="max">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="vector">A <see cref="T:TagLib.ByteVector" /> to split.</param>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector" /> to use to split the <see cref="T:TagLib.ByteVector" />.</param>
+        <param name="byteAlign">A <see cref="T:System.Int32" /> specifying the byte alignment to use when splitting the <see cref="T:TagLib.ByteVector" />.</param>
+        <param name="max">A <see cref="T:System.Int32" /> specifying a limit to the number of elements to create. Once the limit has been reached, the last string will be filled by the remainder of the data.</param>
+        <summary>Splits a <see cref="T:TagLib.ByteVector" /> into multiple instances, by finding a pattern.</summary>
+        <returns>A new instance of <see cref="T:TagLib.ByteVectorList" /> containing the newly split values.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Split">
@@ -84,12 +71,12 @@
         <Parameter Name="byteAlign" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="vector">To be added.</param>
-        <param name="pattern">To be added.</param>
-        <param name="byteAlign">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="vector">A <see cref="T:TagLib.ByteVector" /> to split.</param>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector" /> to use to split the <see cref="T:TagLib.ByteVector" />.</param>
+        <param name="byteAlign">A <see cref="T:System.Int32" /> specifying the byte alignment to use when splitting the <see cref="T:TagLib.ByteVector" />.</param>
+        <summary>Splits a <see cref="T:TagLib.ByteVector" /> into multiple instances, by finding a pattern.</summary>
+        <returns>A new instance of <see cref="T:TagLib.ByteVectorList" /> containing the newly split values.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Split">
@@ -103,11 +90,11 @@
         <Parameter Name="pattern" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="vector">To be added.</param>
-        <param name="pattern">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="vector">A <see cref="T:TagLib.ByteVector" /> to split.</param>
+        <param name="pattern">A <see cref="T:TagLib.ByteVector" /> to use to split the <see cref="T:TagLib.ByteVector" />.</param>
+        <summary>Splits a <see cref="T:TagLib.ByteVector" /> into multiple instances, by finding a pattern.</summary>
+        <returns>A new instance of <see cref="T:TagLib.ByteVectorList" /> containing the newly split values.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -117,9 +104,9 @@
         <Parameter Name="vectors" Type="System.Collections.Generic.IEnumerable&lt;TagLib.ByteVector&gt;" />
       </Parameters>
       <Docs>
-        <param name="vectors">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="vectors">A <see cref="T:System.Collections.Generic.IEnumerable&lt;TagLib.ByteVector&gt;" /> whose contents are to be added to the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.ByteVectorList" />, filling it with a collection of elements.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -135,14 +122,14 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="vectors">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="vectors">A <see cref="T:TagLib.ByteVector" /> array whose contents are to be added to the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.ByteVectorList" />, filling it with a collection of elements.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class represents and performs operations on variable length list of <see cref="T:TagLib.ByteVector" /> elements.</summary>
+    <remarks />
   </Docs>
 </Type>

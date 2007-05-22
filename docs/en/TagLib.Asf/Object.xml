@@ -10,29 +10,17 @@
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Object (TagLib.Asf.File file, long position);" />
+      <MemberSignature Language="C#" Value="protected Object (TagLib.Asf.File file, long position);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="file" Type="TagLib.Asf.File" />
         <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Object (TagLib.Asf.Guid guid);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="guid" Type="TagLib.Asf.Guid" />
-      </Parameters>
-      <Docs>
-        <param name="guid">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.Asf.File" /> to read the object data from.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying where in the file the object begins.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Asf.Object" /> by reading the contents from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -43,9 +31,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Renders the current instance as an ASF object.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered ASF object.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RenderUnicode">
@@ -58,10 +46,10 @@
         <Parameter Name="str" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="str">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="str">A <see cref="T:System.String" /> to render.</param>
+        <summary>Renders a <see cref="T:System.String" /> as a Unicode.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered value.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RenderDWord">
@@ -74,10 +62,10 @@
         <Parameter Name="value" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">A <see cref="T:System.UInt32" /> to render.</param>
+        <summary>Renders a <see cref="T:System.UInt32" /> as a DWORD.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered value.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -90,22 +78,22 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing the internal contents of the object.</param>
+        <summary>Renders the current instance as an ASF object.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered ASF object.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Guid">
-      <MemberSignature Language="C#" Value="public TagLib.Asf.Guid Guid { get; };" />
+      <MemberSignature Language="C#" Value="public Guid Guid { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.Asf.Guid</ReturnType>
+        <ReturnType>System.Guid</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the GUID of the current instance.</summary>
+        <value>The <see cref="T:System.Guid" /> of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="OriginalSize">
@@ -115,9 +103,9 @@
         <ReturnType>System.UInt64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the original size of the current instance.</summary>
+        <value>A <see cref="T:System.UInt64" /> containing the original size of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RenderQWord">
@@ -130,10 +118,10 @@
         <Parameter Name="value" Type="System.UInt64" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">A <see cref="T:System.UInt64" /> to render.</param>
+        <summary>Renders a <see cref="T:System.UInt64" /> as a QWORD.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered value.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RenderWord">
@@ -146,15 +134,27 @@
         <Parameter Name="value" Type="System.UInt16" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">A <see cref="T:System.UInt16" /> to render.</param>
+        <summary>Renders a <see cref="T:System.UInt16" /> as a WORD.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered value.</returns>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected Object (Guid guid);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="guid" Type="System.Guid" />
+      </Parameters>
+      <Docs>
+        <param name="guid">A <see cref="T:System.Guid" /> specifying the nature of the new instance.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Asf.Object" /> with a specified GUID.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This abstract class is for reading, writing, and manipulating ASF objects.</summary>
+    <remarks />
   </Docs>
 </Type>

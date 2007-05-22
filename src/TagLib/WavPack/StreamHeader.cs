@@ -25,7 +25,7 @@ using System;
 
 namespace TagLib.WavPack
 {
-   public class StreamHeader : IAudioCodec
+   public struct StreamHeader : IAudioCodec
    {
       #region Constants
       private static readonly uint [] sample_rates = {6000, 8000, 9600, 11025, 12000,

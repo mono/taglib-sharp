@@ -1,5 +1,5 @@
 <Type Name="FrameFactory" FullName="TagLib.Id3v2.FrameFactory">
-  <TypeSignature Language="C#" Value="public class FrameFactory" />
+  <TypeSignature Language="C#" Value="public static class FrameFactory" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
@@ -24,23 +24,8 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="UpdateGenre">
-      <MemberSignature Language="C#" Value="public static void UpdateGenre (TagLib.Id3v2.TextIdentificationFrame frame);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="frame" Type="TagLib.Id3v2.TextIdentificationFrame" />
-      </Parameters>
-      <Docs>
-        <param name="frame">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName="CreateFrame">
-      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.Frame CreateFrame (TagLib.ByteVector data, ref int offset, uint version);" />
+      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.Frame CreateFrame (TagLib.ByteVector data, ref int offset, byte version);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.Id3v2.Frame</ReturnType>
@@ -48,7 +33,7 @@
       <Parameters>
         <Parameter Name="data" Type="TagLib.ByteVector" />
         <Parameter Name="offset" Type="System.Int32&amp;" RefType="ref" />
-        <Parameter Name="version" Type="System.UInt32" />
+        <Parameter Name="version" Type="System.Byte" />
       </Parameters>
       <Docs>
         <param name="data">To be added.</param>

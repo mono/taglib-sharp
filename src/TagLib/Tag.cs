@@ -24,7 +24,7 @@ using System;
 
 namespace TagLib
 {
-   public class Tag
+   public abstract class Tag
    {
       public virtual string    Title           {get {return null;} set {}}
       public virtual string [] AlbumArtists    {get {return new string [] {};} set {}}

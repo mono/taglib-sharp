@@ -43,6 +43,10 @@ public class ReadFromUri
                     continue;
                 }
                 
+                Console.WriteLine("Tags on disk:   " +  file.TagTypesOnDisk);
+                Console.WriteLine("Tags in object: " +  file.TagTypes);
+                Console.WriteLine (String.Empty);
+               
                 Console.WriteLine("Grouping:   " +  file.Tag.Grouping);
                 Console.WriteLine("Title:      " +  file.Tag.Title);
                 Console.WriteLine("Artists:    " + (file.Tag.AlbumArtists == null ? String.Empty : System.String.Join ("\n            ", file.Tag.AlbumArtists)));
@@ -137,7 +141,12 @@ public class VfsFileAbstraction : TagLib.File.IFileAbstraction
     public System.IO.Stream WriteStream {
         get { return new VfsStream(Name, System.IO.FileMode.Open); }
     }
-
+    
+    public void CloseStream (System.IO.Stream stream)
+    {
+       stream.Close ();
+    }
+    
     public static TagLib.File.IFileAbstraction CreateFile(string path)
     {
         return new VfsFileAbstraction(path);

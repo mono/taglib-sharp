@@ -17,22 +17,22 @@
         <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.Asf.File" /> to read the object data from.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying where in the file the object begins.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Asf.FilePropertiesObject" /> by reading the contents from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="FileId">
-      <MemberSignature Language="C#" Value="public TagLib.Asf.Guid FileId { get; };" />
+      <MemberSignature Language="C#" Value="public Guid FileId { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.Asf.Guid</ReturnType>
+        <ReturnType>System.Guid</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the GUID for the file containing the current instance.</summary>
+        <value>A <see cref="T:System.Guid" /> for the file containing the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="FileSize">
@@ -42,9 +42,9 @@
         <ReturnType>System.UInt64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the size of file containing the current instance.</summary>
+        <value>A <see cref="T:System.UInt64" /> containing the size of the file containing the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="CreationDate">
@@ -54,9 +54,9 @@
         <ReturnType>System.DateTime</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the creation date of file containing the current instance.</summary>
+        <value>A <see cref="T:System.DateTime" /> containing the creation date of the file containing the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="DataPacketsCount">
@@ -66,9 +66,9 @@
         <ReturnType>System.UInt64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the data packet count of file containing the current instance.</summary>
+        <value>A <see cref="T:System.UInt64" /> containing the data packet count of the file containing the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="PlayDuration">
@@ -78,9 +78,9 @@
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the play duration of file containing the current instance.</summary>
+        <value>A <see cref="T:System.TimeSpan" /> containing the play duration of the file containing the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SendDuration">
@@ -90,9 +90,9 @@
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the send duration of file containing the current instance.</summary>
+        <value>A <see cref="T:System.TimeSpan" /> containing the send duration of the file containing the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Preroll">
@@ -102,9 +102,9 @@
         <ReturnType>System.UInt64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the pre-roll of file containing the current instance.</summary>
+        <value>A <see cref="T:System.UInt64" /> containing the pre-roll of the file containing the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Flags">
@@ -114,9 +114,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the flags for the current instance.</summary>
+        <value>A <see cref="T:System.UInt64" /> containing the flags for the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="MinimumDataPacketSize">
@@ -126,9 +126,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the minimum data packet size for file containing the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the minimum data packet size for file containing current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="MaximumDataPacketSize">
@@ -138,9 +138,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the maximum data packet size for file containing the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the maximum data packet size for file containing current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="MaximumBitrate">
@@ -150,14 +150,14 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the maximum bitrate for file containing the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the maximum bitrate for file containing current instance.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is for reading ASF stream properties objects.</summary>
+    <remarks />
   </Docs>
 </Type>

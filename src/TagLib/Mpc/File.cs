@@ -23,7 +23,7 @@
 using System.Collections;
 using System;
 
-namespace TagLib.Mpc
+namespace TagLib.MusePack
 {
    [SupportedMimeType("taglib/mpc", "mpc")]
    [SupportedMimeType("taglib/mp+", "mp+")]
@@ -66,7 +66,7 @@ namespace TagLib.Mpc
          if (header_block == null && style != ReadStyle.None)
          {
             Seek (start);
-            header_block = ReadBlock ((int) Mpc.StreamHeader.Size);
+            header_block = ReadBlock ((int) StreamHeader.Size);
          }
       }
       

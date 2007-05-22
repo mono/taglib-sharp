@@ -1,23 +1,14 @@
 <Type Name="Header" FullName="TagLib.Id3v2.Header">
-  <TypeSignature Language="C#" Value="public class Header" />
+  <TypeSignature Language="C#" Value="public struct Header" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>System.Object</BaseTypeName>
+    <BaseTypeName>System.ValueType</BaseTypeName>
   </Base>
   <Interfaces />
   <Members>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Header ();" />
-      <MemberType>Constructor</MemberType>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Header (TagLib.ByteVector data);" />
       <MemberType>Constructor</MemberType>
@@ -25,9 +16,9 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 header.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v2.Header" /> by reading values from an ID3v2 header.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="FileIdentifier">
@@ -37,8 +28,8 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>A <see cref="T:TagLib.ByteVector" /> containing the identifier used for recognizing a footer.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -49,108 +40,33 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Parse">
-      <MemberSignature Language="C#" Value="protected void Parse (TagLib.ByteVector data);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="data" Type="TagLib.ByteVector" />
-      </Parameters>
-      <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Size">
-      <MemberSignature Language="C#" Value="public static uint Size { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.UInt32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Renders the current instance.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered version of the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="MajorVersion">
-      <MemberSignature Language="C#" Value="public uint MajorVersion { set; get; };" />
+      <MemberSignature Language="C#" Value="public byte MajorVersion { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.UInt32</ReturnType>
+        <ReturnType>System.Byte</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the major version of the current instance.</summary>
+        <value>A <see cref="T:System.Byte" /> containing the major version of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RevisionNumber">
-      <MemberSignature Language="C#" Value="public uint RevisionNumber { set; get; };" />
+      <MemberSignature Language="C#" Value="public byte RevisionNumber { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.UInt32</ReturnType>
+        <ReturnType>System.Byte</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Unsynchronisation">
-      <MemberSignature Language="C#" Value="public bool Unsynchronisation { set; get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ExtendedHeader">
-      <MemberSignature Language="C#" Value="public bool ExtendedHeader { set; get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ExperimentalIndicator">
-      <MemberSignature Language="C#" Value="public bool ExperimentalIndicator { set; get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="FooterPresent">
-      <MemberSignature Language="C#" Value="public bool FooterPresent { set; get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the revision number of the current instance.</summary>
+        <value>A <see cref="T:System.Byte" /> containing the revision number of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="TagSize">
@@ -160,9 +76,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the size of the tag, excluding the headers, of the current instance.</summary>
+        <value>A <See cref="T:System.UInt32" /> containing the size of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="CompleteTagSize">
@@ -172,14 +88,38 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the complete tag size, including the headers, of the current instance.</summary>
+        <value>A <See cref="T:System.UInt32" /> containing the complete tag size of the current instance.</value>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Flags">
+      <MemberSignature Language="C#" Value="public TagLib.Id3v2.HeaderFlags Flags { set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.HeaderFlags</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets and sets the flags of the current instance.</summary>
+        <value>A <see cref="T:TagLib.Id3v2.HeaderFlags" /> containing the flags of the current instance.</value>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Size">
+      <MemberSignature Language="C#" Value="public static readonly uint Size = 10;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <MemberValue>10</MemberValue>
+      <Docs>
+        <summary>Gets the size of an ID3v2 tag footer.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This structure is used for working with ID3v2 tag headers.</summary>
+    <remarks />
   </Docs>
 </Type>

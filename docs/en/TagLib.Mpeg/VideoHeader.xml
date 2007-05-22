@@ -1,11 +1,11 @@
 <Type Name="VideoHeader" FullName="TagLib.Mpeg.VideoHeader">
-  <TypeSignature Language="C#" Value="public class VideoHeader : TagLib.IVideoCodec" />
+  <TypeSignature Language="C#" Value="public struct VideoHeader : TagLib.IVideoCodec" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>System.Object</BaseTypeName>
+    <BaseTypeName>System.ValueType</BaseTypeName>
   </Base>
   <Interfaces>
     <Interface>

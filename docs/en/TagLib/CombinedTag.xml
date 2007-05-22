@@ -14,8 +14,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.CombinedTag" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -31,9 +31,9 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="tags">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="tags">A <see cref="T:TagLib.Tag" /> array containing tags to be combined.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.CombinedTag" /> containing a specified collection of tags.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetTags">
@@ -52,9 +52,9 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="tags">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="tags">A <see cref="T:TagLib.Tag" /> array containing tags to be combined.</param>
+        <summary>Sets the tags to combine in the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="InsertTag">
@@ -68,10 +68,10 @@
         <Parameter Name="tag" Type="TagLib.Tag" />
       </Parameters>
       <Docs>
-        <param name="index">To be added.</param>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="index">A <see cref="T:System.Int32" /> specifying the index at which to insert the tag.</param>
+        <param name="tag">A <see cref="T:TagLib.Tag" /> to insert into the list of combined tags.</param>
+        <summary>Inserts a <see cref="T:TagLib.Tag" /> into the list of combined tag.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AddTag">
@@ -84,9 +84,9 @@
         <Parameter Name="tag" Type="TagLib.Tag" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="tag">A <see cref="T:TagLib.Tag" /> to add at the end of the list of combined tags.</param>
+        <summary>Adds a <see cref="T:TagLib.Tag" /> to the list of combined tag.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RemoveTag">
@@ -99,9 +99,9 @@
         <Parameter Name="tag" Type="TagLib.Tag" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="tag">A <see cref="T:TagLib.Tag" /> to remove from the list of combined tags.</param>
+        <summary>Removes a <see cref="T:TagLib.Tag" /> from the list of combined tag.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ClearTags">
@@ -112,8 +112,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Clears the list of combined tags.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Tags">
@@ -123,14 +123,14 @@
         <ReturnType>TagLib.Tag[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the list of tags combined in the current instance.</summary>
+        <value>A <see cref="T:TagLib.Tag" /> array containing the list of tags combined in the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class combines a collection of tags so that a single operation is performed on each tag.</summary>
+    <remarks>Storage operations, are performed on each tag. Read operations are performed by looping through each entry until a non-zero value is found.</remarks>
   </Docs>
 </Type>

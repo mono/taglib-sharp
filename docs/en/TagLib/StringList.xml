@@ -17,44 +17,38 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.StringList" /> with no contents.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public StringList (string str);" />
+      <MemberSignature Language="C#" Value="public StringList (TagLib.StringList values);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
-        <Parameter Name="str" Type="System.String" />
+        <Parameter Name="values" Type="TagLib.StringList" />
       </Parameters>
       <Docs>
-        <param name="str">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="values">A <see cref="T:TagLib.StringList" /> containing values to store in the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.StringList" /> with the contents of a string collection.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public StringList (TagLib.StringList list);" />
+      <MemberSignature Language="C#" Value="public StringList (string[] values);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
-        <Parameter Name="list" Type="TagLib.StringList" />
+        <Parameter Name="values" Type="System.String[]">
+          <Attributes>
+            <Attribute>
+              <AttributeName>System.ParamArray</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
-        <param name="list">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public StringList (string[] array);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="array" Type="System.String[]" />
-      </Parameters>
-      <Docs>
-        <param name="array">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="values">A <see cref="T:System.String" /> array containing values to store in the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.StringList" /> with the contents of a string collection.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -65,10 +59,10 @@
         <Parameter Name="type" Type="TagLib.StringType" />
       </Parameters>
       <Docs>
-        <param name="vectorList">To be added.</param>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="vectorList">A <see cref="T:TagLib.ByteVectorList" /> containing data to convert to string.</param>
+        <param name="type">A <see cref="T:TagLib.StringType" /> specifying the encoding of the data to convert.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.StringList" />, populating it with strings converted from <see cref="T:TagLib.ByteVector" />s.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -78,9 +72,9 @@
         <Parameter Name="vectorList" Type="TagLib.ByteVectorList" />
       </Parameters>
       <Docs>
-        <param name="vectorList">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="vectorList">A <see cref="T:TagLib.ByteVectorList" /> containing data to convert to string.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.StringList" />, populating it with strings converted from <see cref="T:TagLib.ByteVector" />s encoded in UTF-8.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Split">
@@ -94,16 +88,16 @@
         <Parameter Name="pattern" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="str">To be added.</param>
-        <param name="pattern">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="str">A <see cref="T:System.String" /> to split.</param>
+        <param name="pattern">A <see cref="T:System.String" /> the string will be split by.</param>
+        <summary>Splits a string into a new <see cref="T:TagLib.StringList" />.</summary>
+        <returns>A new <see cref="T:TagLib.StringList" /> containing the split strings.</returns>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class provides methods for storing and manipulating a variable length list of <see cref="T:System.String" /> values.</summary>
+    <remarks />
   </Docs>
 </Type>

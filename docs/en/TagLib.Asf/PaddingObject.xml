@@ -17,10 +17,10 @@
         <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.Asf.File" /> to read the object data from.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying where in the file the object begins.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Asf.PaddingObject" /> by reading the contents from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -30,9 +30,9 @@
         <Parameter Name="size" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="size">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="size">A <see cref="T:System.UInt32" /> containing the desired size of the new instance.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Asf.PaddingObject" /> with a given size.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Size">
@@ -42,14 +42,14 @@
         <ReturnType>System.UInt64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the size of the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the size of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is for reading, writing, and manipulating ASF padding objects.</summary>
+    <remarks />
   </Docs>
 </Type>

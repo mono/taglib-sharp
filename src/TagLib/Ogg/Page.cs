@@ -86,6 +86,6 @@ namespace TagLib.Ogg
       
       public ByteVectorList Packets {get {return packets;}}
       
-      public int Size {get {return header.Size + header.DataSize;}}
+      public uint Size {get {return header.Size + header.DataSize;}}
    }
 }

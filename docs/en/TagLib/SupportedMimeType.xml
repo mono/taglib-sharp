@@ -21,9 +21,11 @@
         <Parameter Name="mime_type" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="mime_type">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="mime_type">A <see cref="T:System.String" /> containing a mime-type.</param>
+        <summary>
+          <para>Constructs and initializes a new instance of the <see cref="T:System.SupportedMimeType" /> class with a specified mime-type.</para>
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -34,10 +36,12 @@
         <Parameter Name="extension" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="mime_type">To be added.</param>
-        <param name="extension">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="mime_type">A <see cref="T:System.String" /> containing a mime-type.</param>
+        <param name="extension">A <see cref="T:System.String" /> containing a file extension.</param>
+        <summary>
+          <para>Constructs and initializes a new instance of the <see cref="T:System.SupportedMimeType" /> class with a specified mime-type and file extension.</para>
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="MimeType">
@@ -47,9 +51,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the mime-type of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing a mime-type.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Extension">
@@ -59,9 +63,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the file extension of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing a file extension.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AllMimeTypes">
@@ -71,9 +75,9 @@
         <ReturnType>System.Collections.Generic.IEnumerable&lt;System.String&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets all the registered mime-types.</summary>
+        <value>A <see cref="T:System.Collections.Generic.IEnumerable&lt;System.String&gt;" /> containing all the registered mime-types.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AllExtensions">
@@ -83,14 +87,16 @@
         <ReturnType>System.Collections.Generic.IEnumerable&lt;System.String&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets all the registered file extensions.</summary>
+        <value>A <see cref="T:System.Collections.Generic.IEnumerable&lt;System.String&gt;" /> containing all the registered file extensions.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>
+      <para>Indicates that the target of the current attribute is used for reading files of a given mime-type.</para>
+    </summary>
+    <remarks>When a subclass of <see cref="T:TagLib.File" /> is registered with <see cref="M:TagLib.FileTypes.Register(System.Type)" />, its <see cref="T:TagLib.SupportedMimeType" /> attributes are read and registered so it can be chosen when <see cref="M:TagLib.File.Create(System.String,TagLib.ReadStyle)" /> is called.</remarks>
   </Docs>
 </Type>

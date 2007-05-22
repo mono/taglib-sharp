@@ -24,7 +24,7 @@ using System.Collections.Generic;
 
 namespace TagLib
 {
-   public  class Debugger
+   internal class Debugger
    {
       public delegate void DebugMessageSentHandler (string message);
       

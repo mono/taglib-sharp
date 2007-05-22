@@ -14,9 +14,9 @@
     <ReturnType>TagLib.File+IFileAbstraction</ReturnType>
   </ReturnValue>
   <Docs>
-    <param name="path">To be added.</param>
-    <summary>To be added.</summary>
-    <returns>To be added.</returns>
-    <remarks>To be added.</remarks>
+    <param name="path">A file path relevant to the returned <see cref="T:TagLib.File+IFileAbstraction" />.</param>
+    <summary>Creates a new instance of the a <see cref="T:TagLib.File+IFileAbstraction" /> for a given path.</summary>
+    <returns>A new <see cref="T:TagLib.File+IFileAbstraction" /> for a given file path.</returns>
+    <remarks>A <see cref="T:TagLib.File+IFileAbstraction" /> is used for creating streams from non-standard file systems, for example, Gnome VFS.</remarks>
   </Docs>
 </Type>

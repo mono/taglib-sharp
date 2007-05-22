@@ -9,7 +9,7 @@ namespace TagLib.Id3v2
     {
       #region Private Properties
       private StringType encoding      = StringType.UTF8;
-      private ByteVector language      = null;
+      private string     language      = null;
       private string     description   = null;
       private string     text          = null;
       #endregion
@@ -17,27 +17,27 @@ namespace TagLib.Id3v2
       
       
       #region Constructors
-      public UnsynchronisedLyricsFrame (string description, ByteVector language, StringType encoding) : base ("USLT", 4)
+      public UnsynchronisedLyricsFrame (string description, string language, StringType encoding) : base ("USLT", 4)
       {
          this.encoding    = encoding;
          this.language    = language;
          this.description = description;
       }
       
-      public UnsynchronisedLyricsFrame (string description, ByteVector language) : this (description, language, TagLib.Id3v2.Tag.DefaultEncoding)
+      public UnsynchronisedLyricsFrame (string description, string language) : this (description, language, TagLib.Id3v2.Tag.DefaultEncoding)
       {}
 
       public UnsynchronisedLyricsFrame (string description) : this (description, null)
       {}
       
-      public UnsynchronisedLyricsFrame(ByteVector data, uint version) : base(data, version)
+      public UnsynchronisedLyricsFrame(ByteVector data, byte version) : base(data, version)
       {
-         SetData (data, 0, version);
+         SetData (data, 0, version, true);
       }
       
-      protected internal UnsynchronisedLyricsFrame(ByteVector data, int offset, FrameHeader h, uint version) : base(h)
+      protected internal UnsynchronisedLyricsFrame(ByteVector data, int offset, FrameHeader h, byte version) : base(h)
       {
-         ParseFields (FieldData (data, offset, version), version);
+         SetData (data, offset, version, false);
       }
       #endregion
       
@@ -50,10 +50,10 @@ namespace TagLib.Id3v2
          set {encoding = value;}
       }
 
-      public ByteVector Language
+      public string Language
       {
-         get {return language != null ? language : "XXX";}
-         set {language = value != null ? value.Mid (0, 3) : "XXX";}
+         get {return (language != null && language.Length > 2) ? language.Substring (0, 3) : "XXX";}
+         set {language = value;}
       }
       
       public string Description
@@ -77,7 +77,7 @@ namespace TagLib.Id3v2
          return text;
       }
       
-      public override void SetText (string text)
+      public void SetText (string text)
       {
          this.text = text;
       }
@@ -86,7 +86,7 @@ namespace TagLib.Id3v2
       
       
       #region Public Static Methods
-      public static UnsynchronisedLyricsFrame Get (Tag tag, string description, ByteVector language, bool create)
+      public static UnsynchronisedLyricsFrame Get (Tag tag, string description, string language, bool create)
       {
          foreach (Frame f in tag.GetFrames ("USLT"))
          {
@@ -104,7 +104,7 @@ namespace TagLib.Id3v2
          return frame;
       }
       
-      public static UnsynchronisedLyricsFrame GetPreferred (Tag tag, string description, ByteVector language)
+      public static UnsynchronisedLyricsFrame GetPreferred (Tag tag, string description, string language)
       {
          // This is weird, so bear with me. The best thing we can have is 
          // something straightforward and in our own language. If it has a 
@@ -145,13 +145,13 @@ namespace TagLib.Id3v2
       
       
       #region Protected Methods
-      protected override void ParseFields (ByteVector data, uint version)
+      protected override void ParseFields (ByteVector data, byte version)
       {
          if (data.Count < 4)
             throw new CorruptFileException ("Not enough bytes in field.");
          
          encoding = (StringType) data [0];
-         language = data.Mid (1, 3);
+         language = data.Mid (1, 3).ToString (StringType.Latin1);
 
          string [] split = data.ToStrings (encoding, 4, 2);
          
@@ -168,13 +168,13 @@ namespace TagLib.Id3v2
          }
       }
       
-      protected override ByteVector RenderFields(uint version)
+      protected override ByteVector RenderFields(byte version)
       {
          StringType encoding = CorrectEncoding(TextEncoding, version);
          ByteVector v = new ByteVector();
 
          v.Add((byte)encoding);
-         v.Add(Language);
+         v.Add(ByteVector.FromString (Language, StringType.Latin1));
          v.Add(ByteVector.FromString (description, encoding));
          v.Add(TextDelimiter(encoding));
          v.Add(ByteVector.FromString (text, encoding));

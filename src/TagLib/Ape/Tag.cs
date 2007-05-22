@@ -29,7 +29,7 @@ namespace TagLib.Ape
    public class Tag : TagLib.Tag
    {
       #region Private Properties
-      private Footer    footer = new Footer ();
+      private Footer footer = new Footer ();
       private Dictionary<string,Item> items = new Dictionary<string,Item> ();
       #endregion
       
@@ -312,9 +312,19 @@ namespace TagLib.Ape
          }
       }
       
-      public override bool IsEmpty {get {return items.Count == 0;}}
+      public bool HeaderPresent
+      {
+         get {return (footer.Flags & FooterFlags.HeaderPresent) != 0;}
+         set
+         {
+            if (value)
+               footer.Flags |= FooterFlags.HeaderPresent;
+            else
+               footer.Flags &= ~FooterFlags.HeaderPresent;
+         }
+      }
       
-      public Footer Footer {get {return footer;}}
+      public override bool IsEmpty {get {return items.Count == 0;}}
       #endregion
       
       
@@ -399,9 +409,9 @@ namespace TagLib.Ape
             item_count ++;
          }
          
-         footer.ItemCount     = item_count;
-         footer.TagSize       = (uint) (data.Count + Footer.Size);
-         footer.HeaderPresent = true;
+         footer.ItemCount = item_count;
+         footer.TagSize   = (uint) (data.Count + Footer.Size);
+         HeaderPresent    = true;
 
          data.Insert (0, footer.RenderHeader ());
          data.Add (footer.RenderFooter ());
@@ -418,7 +428,8 @@ namespace TagLib.Ape
             throw new ArgumentException ("File object is null.", "file");
          
          file.Mode = File.AccessMode.Read;
-         footer = new Footer (file, offset);
+         file.Seek (offset);
+         footer = new Footer (file.ReadBlock (Footer.Size));
          
          if(footer.TagSize == 0 || footer.TagSize > file.Length)
             throw new CorruptFileException ("Tag size out of bounds.");
@@ -426,7 +437,7 @@ namespace TagLib.Ape
       	// If we've read a header, we don't have to seek to read the content.
       	// If we've read a footer, we need to move back to the start of the
       	// tag.
-      	if (!footer.IsHeader)
+      	if ((footer.Flags & FooterFlags.IsHeader) == 0)
             file.Seek (offset + Footer.Size - footer.TagSize);
       	
       	Parse (file.ReadBlock (footer.TagSize - Footer.Size));

@@ -42,6 +42,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/NonContainer/Tag.cs \
 	$(srcdir)/TagLib/Id3v1/Tag.cs \
 	$(srcdir)/TagLib/Id3v1/StringHandler.cs \
+	$(srcdir)/TagLib/Id3v2/Frames/PlayCountFrame.cs \
 	$(srcdir)/TagLib/Id3v2/Frames/PrivateFrame.cs \
 	$(srcdir)/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs \
 	$(srcdir)/TagLib/Id3v2/Frames/UniqueFileIdentifierFrame.cs \

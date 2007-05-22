@@ -109,6 +109,7 @@ namespace TagLib.Flac
          // Update the tags at the end of the file.
          EndTag.Write ();
          Mode = AccessMode.Closed;
+         TagTypesOnDisk = TagTypes;
       }
       
       public override TagLib.Tag GetTag (TagTypes type, bool create)
@@ -140,6 +141,16 @@ namespace TagLib.Flac
          }
       }
       
+      public override TagTypes TagTypes
+      {
+         get{
+            TagTypes types = base.TagTypes;
+            if (comment != null && !comment.IsEmpty)
+               types |= TagTypes.Xiph;
+            return types;
+         }
+      }
+
       public override TagLib.Tag Tag {get {return tag;}}
       
       protected override void ReadStart (long start, ReadStyle style)
@@ -152,6 +163,8 @@ namespace TagLib.Flac
             if (block.Type == BlockType.VorbisComment && block.Data.Count > 0)
             {
                comment = new Ogg.XiphComment (block.Data);
+               if (!comment.IsEmpty)
+                  TagTypesOnDisk |= TagTypes.Xiph;
                break;
             }
          

@@ -49,9 +49,9 @@ namespace TagLib.Id3v2
       
       
       #region Constructors
-      public RelativeVolumeFrame (ByteVector data, uint version) : base (data, version)
+      public RelativeVolumeFrame (ByteVector data, byte version) : base (data, version)
       {
-         SetData (data, 0, version);
+         SetData (data, 0, version, true);
       }
       
       public RelativeVolumeFrame (string identification) : base ("RVA2", 4)
@@ -59,9 +59,9 @@ namespace TagLib.Id3v2
          this.identification = identification;
       }
       
-      protected internal RelativeVolumeFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
+      protected internal RelativeVolumeFrame (ByteVector data, int offset, FrameHeader h, byte version) : base (h)
       {
-         ParseFields (FieldData (data, offset, version), version);
+         SetData (data, offset, version, false);
       }
       #endregion
       
@@ -92,12 +92,12 @@ namespace TagLib.Id3v2
          return identification;
       }
       
-      public short VolumeAdjustmentIndex (ChannelType type)
+      public short GetVolumeAdjustmentIndex (ChannelType type)
       {
          return channels.ContainsKey (type) ? channels [type].VolumeAdjustment : (short) 0;
       }
 
-      public void SetVolumeAdjustmentIndex (short index, ChannelType type)
+      public void SetVolumeAdjustmentIndex (ChannelType type, short index)
       {
          if (!channels.ContainsKey (type))
             channels.Add (type, new ChannelData (type));
@@ -105,22 +105,22 @@ namespace TagLib.Id3v2
          channels [type].VolumeAdjustment = index;
       }
 
-      public float VolumeAdjustment (ChannelType type)
+      public float GetVolumeAdjustment (ChannelType type)
       {
-         return ((float) VolumeAdjustmentIndex (type)) / 512f;
+         return ((float) GetVolumeAdjustmentIndex (type)) / 512f;
       }
 
-      public void SetVolumeAdjustment (float adjustment, ChannelType type)
+      public void SetVolumeAdjustment (ChannelType type, float adjustment)
       {
-         SetVolumeAdjustmentIndex ((short) (adjustment * 512f), type);
+         SetVolumeAdjustmentIndex (type, (short) (adjustment * 512f));
       }
       
-      public ulong PeakVolumeIndex (ChannelType type)
+      public ulong GetPeakVolumeIndex (ChannelType type)
       {
          return channels.ContainsKey (type) ? channels [type].PeakVolume : 0;
       }
 
-      public void SetPeakVolumeIndex (ulong index, ChannelType type)
+      public void SetPeakVolumeIndex (ChannelType type, ulong index)
       {
          if (!channels.ContainsKey (type))
             channels.Add (type, new ChannelData (type));
@@ -128,14 +128,14 @@ namespace TagLib.Id3v2
          channels [type].PeakVolume = index;
       }
 
-      public double PeakVolume (ChannelType type)
+      public double GetPeakVolume (ChannelType type)
       {
-         return ((double) PeakVolumeIndex (type)) / 512.0;
+         return ((double) GetPeakVolumeIndex (type)) / 512.0;
       }
 
-      public void SetPeakVolume (double adjustment, ChannelType type)
+      public void SetPeakVolume (ChannelType type, double adjustment)
       {
-         SetPeakVolumeIndex ((ulong) (adjustment * 512.0), type);
+         SetPeakVolumeIndex (type, (ulong) (adjustment * 512.0));
       }
       #endregion
       
@@ -159,7 +159,7 @@ namespace TagLib.Id3v2
       
       
       #region Protected Properties
-      protected override void ParseFields (ByteVector data, uint version)
+      protected override void ParseFields (ByteVector data, byte version)
       {
          int pos = data.Find (TextDelimiter (StringType.Latin1));
          if (pos < 0)
@@ -176,24 +176,24 @@ namespace TagLib.Id3v2
             pos += 1;
             
             unchecked {
-               SetVolumeAdjustmentIndex ((short) data.Mid (pos, 2).ToUShort (), type);
+               SetVolumeAdjustmentIndex (type, (short) data.Mid (pos, 2).ToUShort ());
             }
             pos += 2;
 
             int bytes = BitsToBytes (data [pos]);
             pos += 1;
             
-            SetPeakVolumeIndex (ParsePeakVolume (data.Mid (pos, bytes)), type);
+            SetPeakVolumeIndex (type, data.Mid (pos, bytes).ToULong ());
             pos += bytes;
          }
       }
       
-      protected override ByteVector RenderFields (uint version)
+      protected override ByteVector RenderFields (byte version)
       {
-         ByteVector data = new ByteVector ();
          if (version < 4)
-            return data;
+            throw new NotImplementedException ();
 
+         ByteVector data = new ByteVector ();
          data.Add (ByteVector.FromString (identification, StringType.Latin1));
          data.Add (TextDelimiter(StringType.Latin1));
 
@@ -203,53 +203,19 @@ namespace TagLib.Id3v2
             unchecked {
                data.Add (ByteVector.FromUShort ((ushort)channel.VolumeAdjustment));
             }
-            data.Add (RenderPeakVolume (channel.PeakVolume));
+            
+            byte bits = 0;
+            for (byte i = 0; i < 64; i ++)
+               if ((channel.PeakVolume & (((ulong)1) << i)) != 0)
+                  bits = (byte)(i + 1);
+            
+            data.Add (bits);
+            
+            if (bits > 0)
+               data.Add (ByteVector.FromULong (channel.PeakVolume).Mid (8 - BitsToBytes (bits)));
          }
          
          return data;
-      }
-      
-      protected ulong ParsePeakVolume (ByteVector data)
-      {
-         if (data.Count == 0)
-            return 0;
-         
-         // If common, pound it out.
-         if (data.Count == 2)
-            return (ulong)(data [0] + data [1] * 0xFF);
-         
-         ulong peak = 0;
-         for (int i = data.Count - 1; i >= 0; i --)
-            peak = peak * 256 + data [i];
-         
-         return peak;
-      }
-      
-      protected ByteVector RenderPeakVolume (ulong peak)
-      {
-         ByteVector v = new ByteVector (1);
-         
-         if (peak == 0)
-            return v;
-         
-         ulong bigger = 1;
-         byte bits = 1;
-         while (bigger < peak)
-         {
-            bigger *= 2;
-            bits += 1;
-         }
-         
-         v [0] = bits;
-         
-         for (uint j = 0; j < BitsToBytes (bits); j ++)
-         {
-            byte o = (byte)(peak % 0xFF);
-            peak -= o;
-            peak /= 0xFF;
-            v.Add (o);
-         }
-         return v;
       }
       #endregion
       
@@ -261,6 +227,8 @@ namespace TagLib.Id3v2
          return i % 8 == 0 ? i / 8 : (i - i % 8) / 8 + 1;
       }
       #endregion
+      
+      
       
       #region Classes
       private class ChannelData

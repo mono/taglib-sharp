@@ -6,7 +6,7 @@ namespace TagLib.Ogg
 	public class Paginator
 	{
       private ByteVectorList packets;
-      private PageHeader first_page_header;
+      private PageHeader? first_page_header;
       private Codec codec;
       
 		public Paginator (Codec codec)
@@ -28,7 +28,7 @@ namespace TagLib.Ogg
             
          for (int i = 0; i < page_packets.Count; i ++)
          {
-            if (page.Header.FirstPacketContinued && i == 0)
+            if ((page.Header.Flags & PageFlags.FirstPacketContinued) == 0 && i == 0)
                packets [packets.Count - 1].Add (page_packets [0]);
             else
                packets.Add (page_packets [i]);
@@ -55,7 +55,7 @@ namespace TagLib.Ogg
             throw new NotImplementedException ("Repagination is not yet implemented.");
             
 
-         pages.Add (new Page (packets, first_page_header));
+         pages.Add (new Page (packets, (PageHeader) first_page_header));
          return pages.ToArray ();
       }
 	}

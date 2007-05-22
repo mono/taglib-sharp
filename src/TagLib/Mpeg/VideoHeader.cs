@@ -2,7 +2,7 @@ using System;
 
 namespace TagLib.Mpeg
 {
-	public class VideoHeader : IVideoCodec
+	public struct VideoHeader : IVideoCodec
 	{
 		int width;
       int height;

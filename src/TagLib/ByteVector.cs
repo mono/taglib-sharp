@@ -115,16 +115,12 @@ namespace TagLib
             Add(vector);
         }
       
-        public ByteVector(byte value) : this(1, value) 
-        {
-        }
-
         public ByteVector (byte [] data, int length)
         {
             SetData(data, length);
         }
 
-        public ByteVector(byte [] data)
+        public ByteVector (params byte [] data)
         {
             SetData(data);
         }

@@ -15,7 +15,7 @@
         <ReturnType>TagLib.StringType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The string is to be UTF-16 encoded.</summary>
       </Docs>
     </Member>
     <Member MemberName="Latin1">
@@ -25,7 +25,7 @@
         <ReturnType>TagLib.StringType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The string is to be Latin-1 encoded.</summary>
       </Docs>
     </Member>
     <Member MemberName="UTF8">
@@ -35,7 +35,7 @@
         <ReturnType>TagLib.StringType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The string is to be UTF-8 encoded.</summary>
       </Docs>
     </Member>
     <Member MemberName="UTF16BE">
@@ -45,7 +45,7 @@
         <ReturnType>TagLib.StringType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The string is to be UTF-16BE encoded.</summary>
       </Docs>
     </Member>
     <Member MemberName="UTF16LE">
@@ -55,12 +55,12 @@
         <ReturnType>TagLib.StringType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The string is to be UTF-16LE encoded.</summary>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Specifies the text encoding used when converting a string to a <see cref="T:TagLib.ByteVector" />.</summary>
+    <remarks />
   </Docs>
 </Type>

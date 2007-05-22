@@ -17,49 +17,43 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.IntList" /> with no contents.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public IntList (int value);" />
+      <MemberSignature Language="C#" Value="public IntList (TagLib.IntList values);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
-        <Parameter Name="value" Type="System.Int32" />
+        <Parameter Name="values" Type="TagLib.IntList" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="values">A <see cref="T:TagLib.IntList" /> containing values to add to the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.IntList" /> containing a collection of values.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public IntList (TagLib.IntList list);" />
+      <MemberSignature Language="C#" Value="public IntList (int[] values);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
-        <Parameter Name="list" Type="TagLib.IntList" />
+        <Parameter Name="values" Type="System.Int32[]">
+          <Attributes>
+            <Attribute>
+              <AttributeName>System.ParamArray</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
-        <param name="list">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public IntList (int[] array);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="array" Type="System.Int32[]" />
-      </Parameters>
-      <Docs>
-        <param name="array">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="values">A <see cref="T:System.Int32" /> array containing values to add to the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.IntList" /> containing a collection of values.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class provides methods for storing and manipulating a variable length list of <see cref="T:System.Int32" /> values.</summary>
+    <remarks />
   </Docs>
 </Type>

@@ -41,14 +41,14 @@ namespace TagLib.Id3v2
       public GeneralEncapsulatedObjectFrame () : base ("GEOB", 4)
       {}
       
-      public GeneralEncapsulatedObjectFrame (ByteVector data, uint version) : base (data, version)
+      public GeneralEncapsulatedObjectFrame (ByteVector data, byte version) : base (data, version)
       {
-         SetData (data, 0, version);
+         SetData (data, 0, version, true);
       }
       
-      protected internal GeneralEncapsulatedObjectFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
+      protected internal GeneralEncapsulatedObjectFrame (ByteVector data, int offset, FrameHeader h, byte version) : base (h)
       {
-         ParseFields (FieldData (data, offset, version), version);
+         SetData (data, offset, version, false);
       }
       #endregion
       
@@ -124,7 +124,7 @@ namespace TagLib.Id3v2
       
       
       #region Protected Methods
-      protected override void ParseFields (ByteVector data, uint version)
+      protected override void ParseFields (ByteVector data, byte version)
       {
          if (data.Count < 4)
             throw new CorruptFileException ("An object frame must contain at least 4 bytes.");
@@ -159,7 +159,7 @@ namespace TagLib.Id3v2
          this.data = data.Mid (field_start);
       }
 
-      protected override ByteVector RenderFields (uint version)
+      protected override ByteVector RenderFields (byte version)
       {
          StringType encoding = CorrectEncoding (text_encoding, version);
          ByteVector v = new ByteVector ();

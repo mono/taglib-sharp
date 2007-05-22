@@ -74,11 +74,6 @@ namespace TagLib
             return vector;
         }
 
-        public ByteVector ToByteVector()
-        {
-            return ToByteVector(" ");
-        }
-
         public static ByteVectorList Split(ByteVector vector, ByteVector pattern,
             int byteAlign, int max)
         {

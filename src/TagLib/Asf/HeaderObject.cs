@@ -90,6 +90,28 @@ namespace TagLib.Asf
          children.Add (obj);
       }
       
+      public bool HasContentDescriptors
+      {
+         get
+         {
+            foreach (Asf.Object child in children)
+               if (child.Guid == TagLib.Asf.Guid.AsfContentDescriptionObject ||
+                   child.Guid == TagLib.Asf.Guid.AsfExtendedContentDescriptionObject)
+                  return true;
+            
+            return false;
+         }
+      }
+      
+      public void RemoveContentDescriptors ()
+      {
+         for (int i = children.Count - 1; i >= 0; i --)
+            if (children [i].Guid == TagLib.Asf.Guid.AsfContentDescriptionObject ||
+                children [i].Guid == TagLib.Asf.Guid.AsfExtendedContentDescriptionObject)
+               children.RemoveAt (i);
+      }
+      
+      
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////

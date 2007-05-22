@@ -18,8 +18,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Picture" /> with default values.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="CreateFromUri">
@@ -32,10 +32,10 @@
         <Parameter Name="uri" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="uri">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="uri">A URI relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Picture" /> by populating it with the contents of a file.</summary>
+        <remarks />
+        <returns>A new <see cref="T:TagLib.Picture" /> containing the image data copied from the file.</returns>
       </Docs>
     </Member>
     <Member MemberName="MimeType">
@@ -45,8 +45,8 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets and sets the mime type for a picture.</summary>
-        <value>A <see cref="T:System.String" /> containing the mime type of the data contained in <see cref="F:TagLib.Picture.Data" />.</value>
+        <summary>Gets and sets the mime-type of the data in the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the mime-type of the data in the current instance.</value>
         <remarks>The mime type should start with "image/" and will most likely be "image/png" or "image/jpeg".</remarks>
       </Docs>
     </Member>
@@ -57,9 +57,9 @@
         <ReturnType>TagLib.PictureType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets and sets a flag describing the contents of the picture.</summary>
-        <value>A <see cref="T:TagLib.PictureType" /> describing the content of the picture.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the picture type for the current instance.</summary>
+        <value>A <see cref="T:TagLib.PictureType" /> describing the image content.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Description">
@@ -69,9 +69,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets a description of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> describing the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Data">
@@ -81,14 +81,14 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the image data for the current instance.</summary>
+        <value>A <see cref="T:TagLib.ByteVector" /> containing image data.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class impliments the <see cref="T:TagLib.IPicture" /> interface and provides support for reading images from a file.</summary>
+    <remarks />
   </Docs>
 </Type>

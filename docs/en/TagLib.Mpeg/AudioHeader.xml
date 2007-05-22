@@ -13,58 +13,6 @@
     </Interface>
   </Interfaces>
   <Members>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public AudioHeader (TagLib.File file, long offset);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="file" Type="TagLib.File" />
-        <Parameter Name="offset" Type="System.Int64" />
-      </Parameters>
-      <Docs>
-        <param name="file">To be added.</param>
-        <param name="offset">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Find">
-      <MemberSignature Language="C#" Value="public static TagLib.Mpeg.AudioHeader Find (TagLib.File file, long position, int length);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg.AudioHeader</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="file" Type="TagLib.File" />
-        <Parameter Name="position" Type="System.Int64" />
-        <Parameter Name="length" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Find">
-      <MemberSignature Language="C#" Value="public static TagLib.Mpeg.AudioHeader Find (TagLib.File file, long position);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg.AudioHeader</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="file" Type="TagLib.File" />
-        <Parameter Name="position" Type="System.Int64" />
-      </Parameters>
-      <Docs>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName="Version">
       <MemberSignature Language="C#" Value="public TagLib.Mpeg.Version Version { get; };" />
       <MemberType>Property</MemberType>
@@ -158,17 +106,6 @@
       <Docs>
         <summary>To be added.</summary>
         <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="stream_length">
-      <MemberSignature Language="C#" Value="public long stream_length;" />
-      <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int64</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -281,6 +218,48 @@
         <summary>Gets the media types contained in the current instance.</summary>
         <value>Always <see cref="F:TagLib.MediaTypes.Audio" />.</value>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Find">
+      <MemberSignature Language="C#" Value="public static bool Find (ref TagLib.Mpeg.AudioHeader header, TagLib.File file, long position);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="header" Type="TagLib.Mpeg.AudioHeader&amp;" RefType="ref" />
+        <Parameter Name="file" Type="TagLib.File" />
+        <Parameter Name="position" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="header">To be added.</param>
+        <param name="file">To be added.</param>
+        <param name="position">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Find">
+      <MemberSignature Language="C#" Value="public static bool Find (ref TagLib.Mpeg.AudioHeader header, TagLib.File file, long position, int length);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="header" Type="TagLib.Mpeg.AudioHeader&amp;" RefType="ref" />
+        <Parameter Name="file" Type="TagLib.File" />
+        <Parameter Name="position" Type="System.Int64" />
+        <Parameter Name="length" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="header">To be added.</param>
+        <param name="file">To be added.</param>
+        <param name="position">To be added.</param>
+        <param name="length">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

@@ -34,9 +34,9 @@ namespace TagLib.Id3v2
       
       
       #region Constructors
-      public UnknownFrame (ByteVector data, uint version) : base (data, version)
+      public UnknownFrame (ByteVector data, byte version) : base (data, version)
       {
-         SetData (data, 0, version);
+         SetData (data, 0, version, true);
       }
       
       public UnknownFrame (ByteVector type, ByteVector data) : base (type, 4)
@@ -47,9 +47,9 @@ namespace TagLib.Id3v2
       public UnknownFrame (ByteVector type) : this (type, null)
       {}
       
-      protected internal UnknownFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
+      protected internal UnknownFrame (ByteVector data, int offset, FrameHeader h, byte version) : base (h)
       {
-         ParseFields (FieldData (data, offset, version), version);
+         SetData (data, offset, version, false);
       }
       #endregion
       
@@ -75,12 +75,12 @@ namespace TagLib.Id3v2
       
       
       #region Protected Methods
-      protected override void ParseFields (ByteVector data, uint version)
+      protected override void ParseFields (ByteVector data, byte version)
       {
          field_data = data;
       }
       
-      protected override ByteVector RenderFields (uint version)
+      protected override ByteVector RenderFields (byte version)
       {
          return field_data != null ? field_data : new ByteVector ();
       }

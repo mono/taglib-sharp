@@ -10,80 +10,14 @@
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public CommentsFrame (string description, TagLib.ByteVector language, TagLib.StringType encoding);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="description" Type="System.String" />
-        <Parameter Name="language" Type="TagLib.ByteVector" />
-        <Parameter Name="encoding" Type="TagLib.StringType" />
-      </Parameters>
-      <Docs>
-        <param name="description">To be added.</param>
-        <param name="language">To be added.</param>
-        <param name="encoding">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public CommentsFrame (string description, TagLib.ByteVector language);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="description" Type="System.String" />
-        <Parameter Name="language" Type="TagLib.ByteVector" />
-      </Parameters>
-      <Docs>
-        <param name="description">To be added.</param>
-        <param name="language">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public CommentsFrame (string description);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="description" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="description">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public CommentsFrame (TagLib.ByteVector data, uint version);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="data" Type="TagLib.ByteVector" />
-        <Parameter Name="version" Type="System.UInt32" />
-      </Parameters>
-      <Docs>
-        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
-        <param name="version">A <see cref="T:System.UInt32" /> specifying the ID3v2 version <paramref name="data" /> is encoded in.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v2.CommentsFrame" /> by reading from an ID3v2 frame.</summary>
-        <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName="Get">
-      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.CommentsFrame Get (TagLib.Id3v2.Tag tag, string description, TagLib.ByteVector language, bool create);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Id3v2.CommentsFrame</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="tag" Type="TagLib.Id3v2.Tag" />
-        <Parameter Name="description" Type="System.String" />
-        <Parameter Name="language" Type="TagLib.ByteVector" />
-        <Parameter Name="create" Type="System.Boolean" />
-      </Parameters>
-      <Docs>
-        <param name="tag">A <see cref="T:TagLib.Id3v2.Tag" /> to search.</param>
-        <param name="description">A <see cref="T:System.String" /> specifying a description to search for.</param>
-        <param name="language">A <see cref="T:TagLib.ByteVector" /> specifying a language to search for.</param>
-        <param name="create">A <see cref="T:System.Boolean" /> specifying whether or not to create a new instance if one is not found.</param>
-        <summary>Searches for a <see cref="T:TagLib.Id3v2.CommentsFrame" /> with a specified description and language, optionally creating one if none is found.</summary>
-        <returns>A <see cref="T:TagLib.Id3v2.CommentsFrame" /> containing with the given description and language, or <see langword="null" /> if not found and not creating.</returns>
+        <param name="description">A <see cref="T:System.String" /> containing a description of the new instance.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Id3v2.CommentsFrame" /> with a specified description.</summary>
         <remarks />
       </Docs>
     </Member>
@@ -100,15 +34,15 @@
       </Docs>
     </Member>
     <Member MemberName="Language">
-      <MemberSignature Language="C#" Value="public TagLib.ByteVector Language { set; get; };" />
+      <MemberSignature Language="C#" Value="public string Language { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
+        <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the ISO-639-2 language code of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing an ISO-639-2 language code for the current instance.</value>
+        <remarks>If the language is unknown, "XXX" is the appropriate filler.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Description">
@@ -135,8 +69,38 @@
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="GetPreferred">
-      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.CommentsFrame GetPreferred (TagLib.Id3v2.Tag tag, string description, TagLib.ByteVector language);" />
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public CommentsFrame (string description, string language);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="description" Type="System.String" />
+        <Parameter Name="language" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="description">A <see cref="T:System.String" /> containing a description of the new instance.</param>
+        <param name="language">A <see cref="T:System.String" /> containing the ISO-639-2 language of the new instance.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Id3v2.CommentsFrame" /> with a specified description and language.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public CommentsFrame (string description, string language, TagLib.StringType encoding);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="description" Type="System.String" />
+        <Parameter Name="language" Type="System.String" />
+        <Parameter Name="encoding" Type="TagLib.StringType" />
+      </Parameters>
+      <Docs>
+        <param name="description">A <see cref="T:System.String" /> containing a description of the new instance.</param>
+        <param name="language">A <see cref="T:System.String" /> containing the ISO-639-2 language of the new instance.</param>
+        <param name="encoding">A <see cref="T:TagLib.StringType" /> specifying what text encoding to use when saving the new instance.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Id3v2.CommentsFrame" /> with a specified description, language, and text encoding.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Get">
+      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.CommentsFrame Get (TagLib.Id3v2.Tag tag, string description, string language, bool create);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.Id3v2.CommentsFrame</ReturnType>
@@ -144,38 +108,89 @@
       <Parameters>
         <Parameter Name="tag" Type="TagLib.Id3v2.Tag" />
         <Parameter Name="description" Type="System.String" />
-        <Parameter Name="language" Type="TagLib.ByteVector" />
+        <Parameter Name="language" Type="System.String" />
+        <Parameter Name="create" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <param name="description">To be added.</param>
-        <param name="language">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="tag">A <see cref="T:TagLib.Id3v2.Tag" /> to search.</param>
+        <param name="description">A <see cref="T:System.String" /> specifying a description to search for.</param>
+        <param name="language">A <see cref="T:System.String" /> specifying a language to search for.</param>
+        <param name="create">A <see cref="T:System.Boolean" /> specifying whether or not to create a new instance if one is not found.</param>
+        <summary>Searches for a <see cref="T:TagLib.Id3v2.CommentsFrame" /> with a specified description and language, optionally creating one if none is found.</summary>
+        <returns>A <see cref="T:TagLib.Id3v2.CommentsFrame" /> containing with the given description and language, or <see langword="null" /> if not found and not creating.</returns>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="GetPreferred">
+      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.CommentsFrame GetPreferred (TagLib.Id3v2.Tag tag, string description, string language);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.CommentsFrame</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="tag" Type="TagLib.Id3v2.Tag" />
+        <Parameter Name="description" Type="System.String" />
+        <Parameter Name="language" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="tag">A <see cref="T:TagLib.Id3v2.Tag" /> to search.</param>
+        <param name="description">A <see cref="T:System.String" /> specifying a description to search for.</param>
+        <param name="language">A <see cref="T:System.String" /> specifying a language to search for.</param>
+        <summary>Searches for the <see cref="T:TagLib.Id3v2.CommentsFrame" /> which most closely matches the specified description and language.</summary>
+        <returns>The <see cref="T:TagLib.Id3v2.CommentsFrame" /> which most closely matches the specified description and language, or <see langword="null" /> if none was found.</returns>
+        <remarks>If an exact match is found, it will be returned. After that, the first frame with a matching language. Then, the first frame with a matching description. Finally, the first frame found.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetText">
+      <MemberSignature Language="C#" Value="public void SetText (string text);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="text" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="text">A <see cref="T:System.String" /> containing text to store in the current instance.</param>
+        <summary>Sets the text for the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected CommentsFrame (TagLib.ByteVector data, int offset, TagLib.Id3v2.FrameHeader h, uint version);" />
+      <MemberSignature Language="C#" Value="public CommentsFrame (TagLib.ByteVector data, byte version);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+        <Parameter Name="version" Type="System.Byte" />
+      </Parameters>
+      <Docs>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
+        <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.CommentsFrame" /> from a raw ID3v2 frame.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected CommentsFrame (TagLib.ByteVector data, int offset, TagLib.Id3v2.FrameHeader h, byte version);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="data" Type="TagLib.ByteVector" />
         <Parameter Name="offset" Type="System.Int32" />
         <Parameter Name="h" Type="TagLib.Id3v2.FrameHeader" />
-        <Parameter Name="version" Type="System.UInt32" />
+        <Parameter Name="version" Type="System.Byte" />
       </Parameters>
       <Docs>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
-        <param name="offset">A <see cref="T:System.Int32" /> specifying the index at which the frame begins.</param>
-        <param name="h">The <see cref="T:TagLib.Id3v2.FrameHeader" /> for the frame.</param>
-        <param name="version">A <see cref="T:System.UInt32" /> specifying the ID3v2 version <paramref name="data" /> is encoded in.</param>
-        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Id3v2.CommentsFrame" /> by reading frame data of a specified version.</summary>
+        <param name="offset">A <see cref="T:System.Int32" /> specifying at what index in <paramref name="data" /> the frame begins.</param>
+        <param name="h">A <see cref="T:TagLib.Id3v2.FrameHeader" /> containing the header to use with the new instance.</param>
+        <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.CommentsFrame" /> from a raw ID3v2 frame.</summary>
         <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used for accessing and modifying ID3v2 Comment (COMM) frames.</summary>
+    <remarks />
   </Docs>
 </Type>

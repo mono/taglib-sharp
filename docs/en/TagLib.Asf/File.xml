@@ -65,19 +65,6 @@
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="ReadGuid">
-      <MemberSignature Language="C#" Value="public TagLib.Asf.Guid ReadGuid ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Asf.Guid</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>Reads a GUID from the file stream in current instance.</summary>
-        <returns>A <see cref="T:TagLib.Asf.Guid" /> representing the GUID read from the file.</returns>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName="ReadUnicode">
       <MemberSignature Language="C#" Value="public string ReadUnicode (int length);" />
       <MemberType>Method</MemberType>
@@ -135,6 +122,19 @@
       <Docs>
         <summary>Reads a QWORD from the file stream in current instance.</summary>
         <returns>A <see cref="T:System.UInt64" /> representing the QWORD read from the file.</returns>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="ReadGuid">
+      <MemberSignature Language="C#" Value="public Guid ReadGuid ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Guid</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Reads a GUID from the file stream in current instance.</summary>
+        <returns>A <see cref="T:System.Guid" /> read from the file.</returns>
         <remarks />
       </Docs>
     </Member>

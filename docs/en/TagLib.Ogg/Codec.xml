@@ -139,7 +139,8 @@
       <Docs>
         <summary>Gets a plain text description of the current instance.</summary>
         <value>A <see cref="T:System.String" /> describing the current instance.</value>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Duration">

@@ -27,10 +27,10 @@ namespace TagLib.NonContainer
 {
    public abstract class File : TagLib.File
    {
-#region Properties
+      #region Properties
       private TagLib.NonContainer.Tag tag;
       private Properties properties;
-#endregion
+      #endregion
       
 #region Constructors
       public File (string file, ReadStyle properties_style) : base (file)
@@ -40,10 +40,12 @@ namespace TagLib.NonContainer
          
          // Read the tags and property data at the beginning of the file.
          long start = tag.ReadStart ();
+         TagTypesOnDisk |= StartTag.TagTypes;
          ReadStart (start, properties_style);
          
          // Read the tags and property data at the end of the file.
          long end = tag.ReadEnd ();
+         TagTypesOnDisk |= EndTag.TagTypes;
          ReadEnd (end, properties_style);
          
          // Read the audio properties.
@@ -58,6 +60,12 @@ namespace TagLib.NonContainer
       }
 #endregion
       
+      public override TagTypes TagTypes
+      {
+         get {return tag.TagTypes;}
+      }
+      
+      
       protected virtual void ReadStart (long start, ReadStyle style) {}
       protected virtual void ReadEnd   (long end,   ReadStyle style) {}
       protected abstract TagLib.Properties ReadProperties (long start, long end, ReadStyle style);
@@ -68,6 +76,7 @@ namespace TagLib.NonContainer
          Mode = AccessMode.Write;
          tag.Write (out start, out end);
          Mode = AccessMode.Closed;
+         TagTypesOnDisk = TagTypes;
       }
       
       public override void RemoveTags (TagTypes types)

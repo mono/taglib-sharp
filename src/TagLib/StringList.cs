@@ -31,18 +31,14 @@ namespace TagLib
         {
         }
 
-        public StringList(string str)
+        public StringList(StringList values)
         {
-            Add(str);
+            Add (values);
         }
         
-        public StringList(StringList list)
+        public StringList(params string [] values)
         {
-            Add(list);
-        }
-        public StringList(string [] array)
-        {
-            Add(array);
+            Add (values);
         }
 
         public StringList(ByteVectorList vectorList, StringType type)

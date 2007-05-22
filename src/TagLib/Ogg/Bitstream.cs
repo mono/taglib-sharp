@@ -26,7 +26,7 @@ namespace TagLib.Ogg
          ByteVectorList packets = page.Packets;
          for (int i = 0; i < packets.Count; i ++)
          {
-            if (!page.Header.FirstPacketContinued && previous_packet != null)
+            if ((page.Header.Flags & PageFlags.FirstPacketContinued) == 0 && previous_packet != null)
             {
                if (ReadPacket (previous_packet))
                   return true;
@@ -38,16 +38,15 @@ namespace TagLib.Ogg
             
             // If we're at the first packet of the page, and we're continuing an
             // old packet, combine the old with the new.
-            if (i == 0 && page.Header.FirstPacketContinued && previous_packet != null)
+            if (i == 0 && (page.Header.Flags & PageFlags.FirstPacketContinued) == 0 && previous_packet != null)
             {
                previous_packet.Add (packet);
                packet = previous_packet;
             }
             previous_packet = null;
             
-            // If we're at the last packet of the page, and we're not completed,
-            // store the packet.
-            if (i == packets.Count - 1 && !page.Header.LastPacketCompleted)
+            // If we're at the last packet of the page, store it.
+            if (i == packets.Count - 1)
                previous_packet = new ByteVector (packet);
             
             // Otherwise, we need to process it.

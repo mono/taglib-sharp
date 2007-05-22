@@ -8,26 +8,6 @@
     <BaseTypeName>System.Enum</BaseTypeName>
   </Base>
   <Members>
-    <Member MemberName="Fast">
-      <MemberSignature Language="C#" Value="Fast" />
-      <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ReadStyle</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
-    </Member>
-    <Member MemberName="Accurate">
-      <MemberSignature Language="C#" Value="Accurate" />
-      <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ReadStyle</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
-    </Member>
     <Member MemberName="Average">
       <MemberSignature Language="C#" Value="Average" />
       <MemberType>Field</MemberType>
@@ -35,7 +15,7 @@
         <ReturnType>TagLib.ReadStyle</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The media properties to be read with average accuracy and intensity.</summary>
       </Docs>
     </Member>
     <Member MemberName="None">
@@ -45,12 +25,12 @@
         <ReturnType>TagLib.ReadStyle</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The media properties are not to be read.</summary>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Specifies the accuracy and intensity to use when reading media properties.</summary>
+    <remarks />
   </Docs>
 </Type>

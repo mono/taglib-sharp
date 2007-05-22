@@ -119,22 +119,22 @@ namespace TagLib.Asf
          return (uint) lValue;
       }
 
-      public long ToQWord ()
+      public ulong ToQWord ()
       {
-         long value;
-         if (type == DataType.Unicode && sValue != null && long.TryParse (sValue, out value))
+         ulong value;
+         if (type == DataType.Unicode && sValue != null && ulong.TryParse (sValue, out value))
             return value;
          
-         return (long) lValue;
+         return lValue;
       }
 
-      public short ToWord ()
+      public ushort ToWord ()
       {
-         short value;
-         if (type == DataType.Unicode && sValue != null && short.TryParse (sValue, out value))
+         ushort value;
+         if (type == DataType.Unicode && sValue != null && ushort.TryParse (sValue, out value))
             return value;
          
-         return (short) lValue;
+         return (ushort) lValue;
       }
 
       public ByteVector Render ()

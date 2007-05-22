@@ -38,6 +38,8 @@ namespace TagLib.Riff
          Read (true, properties_style, out riff_size, out tag_start, out tag_end);
          Mode = AccessMode.Closed;
          
+         TagTypesOnDisk = TagTypes;
+         
          GetTag (TagTypes.Id3v2, true);
          GetTag (TagTypes.RiffInfo, true);
          GetTag (TagTypes.MovieId, true);
@@ -46,6 +48,20 @@ namespace TagLib.Riff
 
       public File (string file) : this (file, ReadStyle.Average)
       {}
+      
+      public override TagTypes TagTypes
+      {
+         get
+         {
+            TagTypes types = TagTypes.NoTags;
+            if (id32_tag != null) types |= TagTypes.Id3v2;
+            if (mid_tag  != null) types |= TagTypes.MovieId;
+            if (divx_tag != null) types |= TagTypes.DivX;
+            if (info_tag != null) types |= TagTypes.RiffInfo;
+            return types;
+         }
+      }
+
       
       private void Read (bool read_tags, ReadStyle style, out uint riff_size, out long tag_start, out long tag_end)
       {
@@ -168,7 +184,8 @@ namespace TagLib.Riff
             if (id32_tag == null && create)
             {
                id32_tag = new Id3v2.Tag ();
-               id32_tag.Header.FooterPresent = true;
+               id32_tag.Version = 4;
+               id32_tag.Flags |= Id3v2.HeaderFlags.FooterPresent;
                TagLib.Tag.Duplicate (this.tag, id32_tag, true);
             }
             tag = id32_tag;
@@ -272,6 +289,8 @@ namespace TagLib.Riff
             Insert (ByteVector.FromUInt ((uint)(riff_size + data.Count - length), false), 4, 4);
          
          Mode = AccessMode.Closed;
+         
+         TagTypesOnDisk = TagTypes;
       }
    }
 }

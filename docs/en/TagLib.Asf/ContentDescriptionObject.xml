@@ -17,10 +17,10 @@
         <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.Asf.File" /> to read the object data from.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying where in the file the object begins.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Asf.ContentDescriptionObject" /> by reading the contents from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -28,8 +28,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Asf.ContentDescriptionObject" /> with no values.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Title">
@@ -39,9 +39,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the title of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the title of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Author">
@@ -51,9 +51,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the author of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the author of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Copyright">
@@ -63,9 +63,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the copyright of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the copyright of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Description">
@@ -75,9 +75,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the description of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the description of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Rating">
@@ -87,14 +87,14 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the rating of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the rating of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is for reading, writing, and manipulating ASF content description objects.</summary>
+    <remarks />
   </Docs>
 </Type>

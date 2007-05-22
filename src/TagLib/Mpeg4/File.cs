@@ -108,6 +108,7 @@ namespace TagLib.Mpeg4
          }
          
          Mode = File.AccessMode.Closed;
+         TagTypesOnDisk = TagTypes;
       }
       
       // Get the Apple Tag.
@@ -119,6 +120,7 @@ namespace TagLib.Mpeg4
             {
                apple_tag = new AppleTag (ref udta_box);
                tag.SetTags (apple_tag);
+               TagTypes |= TagTypes.Apple;
             }
             
             return apple_tag;
@@ -135,6 +137,7 @@ namespace TagLib.Mpeg4
          
          apple_tag.DetachIlst ();
          apple_tag = null;
+         TagTypes &= TagTypes.Apple;
          tag.SetTags ();
       }
       
@@ -149,8 +152,13 @@ namespace TagLib.Mpeg4
             parser.ParseTagAndProperties ();
          
          udta_box = parser.UserDataBox;
+         
+         if (udta_box != null && udta_box.Children.Get (BoxTypes.Meta) != null && udta_box.Children.Get (BoxTypes.Meta).Children.Get (BoxTypes.Ilst) != null)
+            TagTypesOnDisk |= TagTypes.Apple;
+         
          apple_tag = new AppleTag (ref udta_box);
          tag.SetTags (apple_tag);
+         TagTypes |= TagTypes.Apple;
          
          // If we're not reading properties, we're done.
          if (properties_style == ReadStyle.None)

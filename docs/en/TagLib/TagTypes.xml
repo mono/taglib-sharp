@@ -15,7 +15,7 @@
         <ReturnType>TagLib.TagTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>An ID3v1 tag.</summary>
       </Docs>
     </Member>
     <Member MemberName="Id3v2">
@@ -25,7 +25,7 @@
         <ReturnType>TagLib.TagTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>An ID3v2 tag.</summary>
       </Docs>
     </Member>
     <Member MemberName="Xiph">
@@ -35,7 +35,7 @@
         <ReturnType>TagLib.TagTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>A Xiph Vorbis Comment.</summary>
       </Docs>
     </Member>
     <Member MemberName="Apple">
@@ -45,7 +45,7 @@
         <ReturnType>TagLib.TagTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>An Apple ILST tag.</summary>
       </Docs>
     </Member>
     <Member MemberName="NoTags">
@@ -55,7 +55,7 @@
         <ReturnType>TagLib.TagTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>No tags.</summary>
       </Docs>
     </Member>
     <Member MemberName="Asf">
@@ -65,7 +65,7 @@
         <ReturnType>TagLib.TagTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>An ASF Content Descriptor tag.</summary>
       </Docs>
     </Member>
     <Member MemberName="AllTags">
@@ -75,7 +75,7 @@
         <ReturnType>TagLib.TagTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>All tag types.</summary>
       </Docs>
     </Member>
     <Member MemberName="DivX">
@@ -85,7 +85,7 @@
         <ReturnType>TagLib.TagTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>A RIFF DivX tag.</summary>
       </Docs>
     </Member>
     <Member MemberName="MovieId">
@@ -95,7 +95,7 @@
         <ReturnType>TagLib.TagTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>A RIFF MovieID list tag.</summary>
       </Docs>
     </Member>
     <Member MemberName="Ape">
@@ -105,7 +105,7 @@
         <ReturnType>TagLib.TagTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>An APE tag.</summary>
       </Docs>
     </Member>
     <Member MemberName="RiffInfo">
@@ -115,13 +115,13 @@
         <ReturnType>TagLib.TagTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>A RIFF INFO list tag.</summary>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Specifies the types of tag to perform operations on.</summary>
+    <remarks />
   </Docs>
   <Attributes>
     <Attribute>

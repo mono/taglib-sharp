@@ -25,15 +25,20 @@ using System;
 
 namespace TagLib.Ape
 {
-   public class Footer
+   public enum FooterFlags : uint
+   {
+      FooterAbsent  = 0x40000000,
+      IsHeader      = 0x20000000,
+      HeaderPresent = 0x80000000
+   }
+   
+   public struct Footer
    {
       #region Private Properties
-      private uint version = 0;
-      private bool footer_present = true;
-      private bool header_present = false;
-      private bool is_header = false;
-      private uint item_count = 0;
-      private uint tag_size = 0;
+      private uint version;
+      private uint flags;
+      private uint item_count;
+      private uint tag_size;
       #endregion
       
       
@@ -46,33 +51,26 @@ namespace TagLib.Ape
       
       
       #region Constructors
-      public Footer ()
-      {}
-      
-      public Footer (ByteVector data) : this ()
+      public Footer (ByteVector data)
       {
-         Parse (data);
-      }
-      
-      public Footer (File file, long offset) : this ()
-      {
-         file.Seek (offset);
-         Parse (file.ReadBlock (Size));
+         if (data.Count < Size)
+            throw new CorruptFileException ("Provided data is smaller than object size.");
+         
+         if (!data.StartsWith (FileIdentifier))
+            throw new CorruptFileException ("Provided data does not start with File Identifier");
+         
+         version    = data.Mid ( 8, 4).ToUInt (false);
+         tag_size   = data.Mid (12, 4).ToUInt (false);
+         item_count = data.Mid (16, 4).ToUInt (false);
+         flags      = data.Mid (20, 4).ToUInt (false);
       }
       #endregion
       
       
       
       #region Public Properties
-      public uint Version       {get {return version;}}
-      public bool FooterPresent {get {return footer_present;}}
-      public bool IsHeader      {get {return is_header;}}
-      
-      public bool HeaderPresent
-      {
-         get {return header_present;}
-         set {header_present = value;}
-      }
+      public uint Version       {get {return version == 0 ? 2000 : version;}}
+      public FooterFlags Flags {get {return (FooterFlags)flags;} set {flags = (uint)value;}}
       
       public uint ItemCount
       {
@@ -88,7 +86,7 @@ namespace TagLib.Ape
       
       public uint CompleteTagSize
       {
-         get {return TagSize + (HeaderPresent ? Size : 0);}
+         get {return TagSize + ((Flags & FooterFlags.HeaderPresent) != 0 ? Size : 0);}
       }
       #endregion
       
@@ -104,41 +102,14 @@ namespace TagLib.Ape
       public ByteVector RenderHeader ()
       // Renders the header, if present, otherwise returns an empty ByteVector.
       {
-         return HeaderPresent ? Render (true) : new ByteVector ();
+         return (Flags & FooterFlags.HeaderPresent) != 0 ? Render (true) : new ByteVector ();
       }
       #endregion
       
       
       
-      #region Protected Methods
-      protected void Parse (ByteVector data)
-      // Parses raw header data from a ByteVector.
-      {
-         if (data.Count < Size)
-            throw new CorruptFileException ("Provided data is smaller than object size.");
-
-         // The first eight bytes, data[0..7], are the File Identifier, "APETAGEX".
-         if (!data.StartsWith (FileIdentifier))
-            throw new CorruptFileException ("Provided data does not start with File Identifier");
-
-         // Read the version number
-         version = data.Mid (8, 4).ToUInt (false);
-
-         // Read the tag size
-         tag_size = data.Mid (12, 4).ToUInt (false);
-
-         // Read the item count
-         item_count = data.Mid (16, 4).ToUInt (false);
-
-         // Read the flags
-
-         uint flags = data.Mid (20, 4).ToUInt (false);
-         header_present = ((flags >> 31) & 1) == 1;
-         footer_present = ((flags >> 30) & 1) != 1;
-         is_header = ((flags >> 29) & 1) == 1;
-      }
-      
-      protected ByteVector Render (bool is_header)
+      #region Private Methods
+      private ByteVector Render (bool is_header)
       // Renders either a header or a footer.
       {
          ByteVector v = new ByteVector ();
@@ -159,7 +130,7 @@ namespace TagLib.Ape
          // render and add the flags
          uint flags = 0;
 
-         flags |= (uint)((HeaderPresent ? 1 : 0) << 31);
+         flags |= (uint)(((Flags & FooterFlags.HeaderPresent) != 0 ? 1 : 0) << 31);
          // footer is always present
          flags |= (uint)((is_header ? 1 : 0) << 29);
 

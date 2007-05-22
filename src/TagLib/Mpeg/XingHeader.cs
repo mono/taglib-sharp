@@ -25,7 +25,7 @@ using System;
 
 namespace TagLib.Mpeg
 {
-   public class XingHeader
+   public struct XingHeader
    {
       //////////////////////////////////////////////////////////////////////////
       // private properties
@@ -38,9 +38,21 @@ namespace TagLib.Mpeg
       //////////////////////////////////////////////////////////////////////////
       public XingHeader (ByteVector data)
       {
-         frames = 0;
-         size = 0;
-         Parse (data);
+         // Check to see if a valid Xing header is available.
+         if (!data.StartsWith ("Xing"))
+            throw new CorruptFileException ("Not a valid Xing header");
+
+         // If the XingHeader doesn't contain the number of frames and the total stream
+         // info it's invalid.
+
+         if ((data [7] & 0x01) == 0)
+            throw new Exception ("Xing header doesn't contain the total number of frames.");
+
+         if ((data[7] & 0x02) == 0)
+            throw new Exception ("Xing header doesn't contain the total stream size.");
+
+         frames = data.Mid (8, 4).ToUInt ();
+         size = data.Mid (12, 4).ToUInt ();
       }
 
       //////////////////////////////////////////////////////////////////////////
@@ -68,28 +80,6 @@ namespace TagLib.Mpeg
             else
                return 0x15;
          }
-      }
-      
-      //////////////////////////////////////////////////////////////////////////
-      // private methods
-      //////////////////////////////////////////////////////////////////////////
-      private void Parse (ByteVector data)
-      {
-         // Check to see if a valid Xing header is available.
-         if (!data.StartsWith ("Xing"))
-            throw new CorruptFileException ("Not a valid Xing header");
-
-         // If the XingHeader doesn't contain the number of frames and the total stream
-         // info it's invalid.
-
-         if ((data [7] & 0x01) == 0)
-            throw new Exception ("Xing header doesn't contain the total number of frames.");
-
-         if ((data[7] & 0x02) == 0)
-            throw new Exception ("Xing header doesn't contain the total stream size.");
-
-         frames = data.Mid (8, 4).ToUInt ();
-         size = data.Mid (12, 4).ToUInt ();
       }
    }
 }

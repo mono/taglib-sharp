@@ -220,7 +220,7 @@
     </Member>
   </Members>
   <Docs>
-    <summary>Fields describing the content of a picture.</summary>
+    <summary>Describes the content of a picture.</summary>
     <remarks />
   </Docs>
 </Type>

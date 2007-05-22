@@ -357,6 +357,18 @@ namespace TagLib.Ogg
          set {
             tags [0].Pictures = value;
          }
-      } 
+      }
+      
+      public override bool IsEmpty
+      {
+         get
+         {
+            foreach (XiphComment tag in tags)
+               if (!tag.IsEmpty)
+                  return false;
+            
+            return true;
+         }
+      }
    }
 }

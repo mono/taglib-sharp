@@ -15,10 +15,15 @@
     <ReturnType>TagLib.File</ReturnType>
   </ReturnValue>
   <Docs>
-    <param name="path">To be added.</param>
-    <param name="style">To be added.</param>
-    <summary>To be added.</summary>
-    <returns>To be added.</returns>
-    <remarks>To be added.</remarks>
+    <param name="path">A path relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+    <param name="style">A <see cref="T:TagLib.ReadStyle" /> specifying how to read media properties from the file.</param>
+    <summary>Intervenes in the <see cref="M:TagLib.File.Create(System.String,TagLib.ReadStyle)" /> method by resolving the file type before any standard resolution operations.</summary>
+    <returns>A new <see cref="T:TagLib.File" /> or null.</returns>
+    <remarks>
+      <para>A <see cref="T:TagLib.File+FileTypeResolver" /> is one way of altering the behavior of <see cref="M:TagLib.File.Create(System.String,TagLib.ReadStyle)" />.</para>
+      <para>When <see cref="M:TagLib.File.Create(System.String,TagLib.ReadStyle)" /> is called, the registered resolvers are invoked in the reverse order in which they were registered. The resolver may then perform any operations necessary, including other type-finding methods.</para>
+      <para>If the resolver returns a new <see cref="T:TagLib.File" />, it will instantly be returned, by <see cref="M:TagLib.File.Create(System.String,TagLib.ReadStyle)" />. If it returns <see langword="null" />, <see cref="M:TagLib.File.Create(System.String,TagLib.ReadStyle)" /> will continue to process. If the resolver throws an exception it will be uncaught.</para>
+      <para>To register a resolver, use <see cref="M:TagLib.File.AddFileTypeResolver(TagLib.File+FileTypeResolver)" />.</para>
+    </remarks>
   </Docs>
 </Type>

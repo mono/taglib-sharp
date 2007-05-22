@@ -75,25 +75,19 @@ namespace TagLib.Mpeg
 #region Private Properties
       private uint        flags;
       private long        position;
-      private long        stream_length = 0;
-      private XingHeader  xing_header = null;
+      private long        stream_length;
+      private XingHeader  xing_header;
 #endregion
       
 #region Constructors
-      private AudioHeader (TagLib.File file, ByteVector data, long offset)
+      private AudioHeader (ByteVector data, TagLib.File file, long offset)
       {
          position = offset;
-         
-         if (data == null)
-         {
-            file.Seek (offset);
-            data = file.ReadBlock (4);
-         }
          
          if (data.Count < 4)
             throw new CorruptFileException ("Insufficient header length.");
          
-         if (data [0] != 0xff)
+         if (data [0] != 0xFF)
             throw new CorruptFileException ("First byte did not match MPEG synch.");
          
          if (data [1] < 0xE0)
@@ -116,9 +110,6 @@ namespace TagLib.Mpeg
          }
          catch {}
       }
-      
-      public AudioHeader (TagLib.File file, long offset) : this (file, null, offset)
-      {}
 #endregion
 
 #region Public Properties
@@ -152,7 +143,7 @@ namespace TagLib.Mpeg
       {
          get
          {
-            if (XingHeader != null)
+            if (xing_header.TotalSize > 0)
                return (int) (Duration > TimeSpan.Zero ? ((XingHeader.TotalSize * 8L) / Duration.TotalSeconds) / 1000 : 0);
             
             int version_index = Version == Version.Version1 ? 0 : 1;
@@ -177,8 +168,8 @@ namespace TagLib.Mpeg
             // Calculate the frame length
             switch (AudioLayer)
             {
-            case 1: return (((12000 * AudioBitrate) / AudioSampleRate) + (IsPadded ? 1 : 0))*4;
-            case 2: return (144000 * AudioBitrate) / AudioSampleRate + (IsPadded ? 1 : 0);
+            case 1: return (((12000  * AudioBitrate) / AudioSampleRate) + (IsPadded ? 1 : 0))*4;
+            case 2: return   (144000 * AudioBitrate) / AudioSampleRate + (IsPadded ? 1 : 0);
             case 3: return (((144000 * AudioBitrate) / AudioSampleRate) / (Version == Version.Version1 ? 1 : 2)) + (IsPadded ? 1 : 0);
             default: return 0;
             }
@@ -189,7 +180,7 @@ namespace TagLib.Mpeg
       {
          get
          {
-            if (XingHeader != null)
+            if (xing_header.TotalFrames > 0)
             {
                // Read the length and the bitrate from the Xing header.
                double time_per_frame = (double) block_size [(int) Version, AudioLayer] / (double) AudioSampleRate;
@@ -246,7 +237,7 @@ namespace TagLib.Mpeg
 #endregion
       
 #region Public Static Methods
-      public static AudioHeader Find (TagLib.File file, long position, int length)
+      public static bool Find (ref AudioHeader header, TagLib.File file, long position, int length)
       {
          long end = position + length;
          
@@ -254,7 +245,7 @@ namespace TagLib.Mpeg
          ByteVector buffer = file.ReadBlock (3);
          
          if (buffer.Count < 3)
-            return null;
+            return false;
          
          do
          {
@@ -264,18 +255,22 @@ namespace TagLib.Mpeg
             
             for (int i = 0; i < buffer.Count - 3 && (length < 0 || position + i < end); i++)
                if (buffer [i] == 0xFF && buffer [i + 1] > 0xE0)
-                  try {return new AudioHeader (file, buffer.Mid (i, 4), position + i);} catch {}
+                  try
+                  {
+                     header = new AudioHeader (buffer.Mid (i, 4), file, position + i);
+                     return true;
+                  } catch {}
             
             position += File.BufferSize;
          }
          while (buffer.Count > 3 && (length < 0 || position < end));
          
-         return null;
+         return false;
       }
       
-      public static AudioHeader Find (TagLib.File file, long position)
+      public static bool Find (ref AudioHeader header, TagLib.File file, long position)
       {
-         return Find (file, position, -1);
+         return Find (ref header, file, position, -1);
       }
 #endregion
    }

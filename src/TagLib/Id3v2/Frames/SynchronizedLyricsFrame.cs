@@ -12,7 +12,7 @@ namespace TagLib.Id3v2
       AbsoluteMilliseconds = 0x02
    }
    
-   public enum TextType
+   public enum SynchedTextType
    {
       Other             = 0x00,
       Lyrics            = 0x01,
@@ -29,17 +29,17 @@ namespace TagLib.Id3v2
    {
       #region Private Properties
       StringType      text_encoding    = StringType.UTF8;
-      ByteVector      language         = null;
+      string          language         = null;
       string          description      = null;
       TimestampFormat timestamp_format = TimestampFormat.Unknown;
-      TextType        lyrics_type      = TextType.Other;
+      SynchedTextType lyrics_type      = SynchedTextType.Other;
       SynchedText []  text             = new SynchedText [0];
       #endregion
       
       
       
       #region Constructors
-      public SynchronisedLyricsFrame (string description, ByteVector language, TextType type, StringType encoding) : base ("SYLT", 4)
+      public SynchronisedLyricsFrame (string description, string language, SynchedTextType type, StringType encoding) : base ("SYLT", 4)
       {
          this.text_encoding = encoding;
          this.language      = language;
@@ -47,12 +47,17 @@ namespace TagLib.Id3v2
          this.lyrics_type   = type;
       }
       
-      public SynchronisedLyricsFrame (string description, ByteVector language, TextType type) : this (description, language, type, TagLib.Id3v2.Tag.DefaultEncoding)
+      public SynchronisedLyricsFrame (string description, string language, SynchedTextType type) : this (description, language, type, TagLib.Id3v2.Tag.DefaultEncoding)
       {}
 
-      public SynchronisedLyricsFrame (ByteVector data, uint version) : base(data, version)
+      public SynchronisedLyricsFrame (ByteVector data, byte version) : base(data, version)
       {
-         SetData (data, 0, version);
+         SetData (data, 0, version, true);
+      }
+
+      protected internal SynchronisedLyricsFrame(ByteVector data, int offset, FrameHeader h, byte version) : base(h)
+      {
+         SetData (data, offset, version, false);
       }
       #endregion
       
@@ -65,10 +70,10 @@ namespace TagLib.Id3v2
          set {text_encoding = value;}
       }
 
-      public ByteVector Language
+      public string Language
       {
-         get {return language != null ? language : "XXX";}
-         set {language = value != null ? value.Mid (0, 3) : "XXX";}
+         get {return (language != null && language.Length > 2) ? language.Substring (0, 3) : "XXX";}
+         set {language = value;}
       }
       
       public string Description
@@ -83,7 +88,7 @@ namespace TagLib.Id3v2
          set {timestamp_format = value;}
       }
       
-      public TextType Type
+      public SynchedTextType Type
       {
          get {return lyrics_type;}
          set {lyrics_type = value;}
@@ -99,7 +104,7 @@ namespace TagLib.Id3v2
       
       
       #region Public Static Methods
-      public static SynchronisedLyricsFrame Get (Tag tag, string description, ByteVector language, TextType type, bool create)
+      public static SynchronisedLyricsFrame Get (Tag tag, string description, string language, SynchedTextType type, bool create)
       {
          foreach (Frame f in tag)
          {
@@ -120,7 +125,7 @@ namespace TagLib.Id3v2
          return frame;
       }
       
-      public static SynchronisedLyricsFrame GetPreferred (Tag tag, string description, ByteVector language, TextType type)
+      public static SynchronisedLyricsFrame GetPreferred (Tag tag, string description, string language, SynchedTextType type)
       {
          // This is weird, so bear with me. The best thing we can have is 
          // something straightforward and in our own language. If it has a 
@@ -142,8 +147,8 @@ namespace TagLib.Id3v2
             SynchronisedLyricsFrame cf = f as SynchronisedLyricsFrame;
             
             int value = 0;
-            if (cf.Description == description) value += 4;
-            if (cf.Language == language)       value += 2;
+            if (cf.Language == language)       value += 4;
+            if (cf.Description == description) value += 2;
             if (cf.Type == type)               value += 1;
             
             if (value == 7) return cf;
@@ -162,15 +167,15 @@ namespace TagLib.Id3v2
       
       
       #region Protected Methods
-      protected override void ParseFields (ByteVector data, uint version)
+      protected override void ParseFields (ByteVector data, byte version)
       {
          if (data.Count < 6)
             throw new CorruptFileException ("Not enough bytes in field.");
          
          text_encoding = (StringType) data [0];
-         language = data.Mid (1, 3);
+         language = data.Mid (1, 3).ToString (StringType.Latin1);
          timestamp_format = (TimestampFormat) data [4];
-         lyrics_type = (TextType) data [5];
+         lyrics_type = (SynchedTextType) data [5];
          
          ByteVector delim = TextDelimiter (text_encoding);
          int delim_index = data.Find (delim, 6);
@@ -202,14 +207,14 @@ namespace TagLib.Id3v2
          this.text = l.ToArray ();
       }
 
-      protected override ByteVector RenderFields (uint version)
+      protected override ByteVector RenderFields (byte version)
       {
          StringType encoding = CorrectEncoding(TextEncoding, version);
          ByteVector delim = TextDelimiter (encoding);
          ByteVector v = new ByteVector ();
          
          v.Add ((byte)encoding);
-         v.Add (Language);
+         v.Add (ByteVector.FromString (Language, StringType.Latin1));
          v.Add ((byte)timestamp_format);
          v.Add ((byte)lyrics_type);
          v.Add (ByteVector.FromString (description, encoding));
@@ -219,16 +224,10 @@ namespace TagLib.Id3v2
          {
             v.Add (ByteVector.FromString (t.Text, encoding));
             v.Add (delim);
-            v.Add (ByteVector.FromUInt (t.Time));
+            v.Add (ByteVector.FromUInt ((uint)t.Time));
          }
          
          return v;
-      }
-
-      protected internal SynchronisedLyricsFrame(ByteVector data, int offset, FrameHeader h, uint version)
-         : base(h)
-      {
-         ParseFields (FieldData (data, offset, version), version);
       }
       #endregion
    }
@@ -237,16 +236,16 @@ namespace TagLib.Id3v2
    
    public struct SynchedText
    {
-      private uint time;
+      private long time;
       private string text;
       
-      public SynchedText (uint time, string text)
+      public SynchedText (long time, string text)
       {
          this.time = time;
          this.text = text;
       }
       
-      public uint   Time {get {return time;} set {time = value;}}
+      public long   Time {get {return time;} set {time = value;}}
       public string Text {get {return text;} set {text = value;}}
    }
 }

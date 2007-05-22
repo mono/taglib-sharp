@@ -51,13 +51,13 @@ namespace TagLib.Mpeg
       private Version version;
       private AudioHeader audio_header;
       private VideoHeader video_header;
-      private double? start_time;
+      private bool video_found = false;
+      private bool audio_found = false;
+      private double? start_time = null;
       private double end_time;
       
       public File (string file, ReadStyle properties_style) : base (file, properties_style)
       {
-         audio_header = null;
-         start_time = null;
       }
       
       public File (string file) : this (file, ReadStyle.Average)
@@ -162,7 +162,7 @@ namespace TagLib.Mpeg
       {
          int sanity_limit = 100;
          
-         for (int i = 0; i < sanity_limit && (start_time == null || audio_header == null || video_header == null); i ++)
+         for (int i = 0; i < sanity_limit && (start_time == null || !audio_found || !video_found); i ++)
          {
             Marker marker = FindMarker (ref position);
             
@@ -195,8 +195,8 @@ namespace TagLib.Mpeg
       {
          Seek (position + 4);
          int length = ReadBlock (2).ToUShort ();
-         if (audio_header == null)
-            audio_header = AudioHeader.Find (this, position + 15, length - 9);
+         if (!audio_found)
+            audio_found = AudioHeader.Find (ref audio_header, this, position + 15, length - 9);
          position += length;
       }
       
@@ -206,10 +206,13 @@ namespace TagLib.Mpeg
          int length = ReadBlock (2).ToUShort ();
          
          long offset = position + 6;
-         while (video_header == null && offset < position + length)
+         while (!video_found && offset < position + length)
             if (FindMarker (ref offset) == Marker.VideoSyncPacket)
+            {
                video_header = new VideoHeader (this, offset + 4);
-         
+               video_found = true;
+            }
+            
          position += length;
       }
       

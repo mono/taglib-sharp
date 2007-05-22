@@ -166,18 +166,6 @@ Otherwise, the values will be stored as "<paramref name="number" />/<paramref na
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="Footer">
-      <MemberSignature Language="C#" Value="public TagLib.Ape.Footer Footer { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Ape.Footer</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Get the APE footer for the current instance.</summary>
-        <value>A <see cref="T:TagLib.Ape.Footer" /> containing information for the current instance.</value>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName="AddValue">
       <MemberSignature Language="C#" Value="public void AddValue (string key, string[] value);" />
       <MemberType>Method</MemberType>
@@ -263,6 +251,18 @@ Otherwise, the values will be added as "<paramref name="number" />/<paramref nam
         <param name="value">A <see cref="T:System.String" /> array containing values to store.</param>
         <summary>Sets a collection of string values in an ape item.</summary>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="HeaderPresent">
+      <MemberSignature Language="C#" Value="public bool HeaderPresent { set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

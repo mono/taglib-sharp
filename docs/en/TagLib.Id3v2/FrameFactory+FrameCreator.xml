@@ -1,5 +1,5 @@
 <Type Name="FrameFactory+FrameCreator" FullName="TagLib.Id3v2.FrameFactory+FrameCreator">
-  <TypeSignature Language="C#" Value="public delegate TagLib.Id3v2.Frame FrameFactory.FrameCreator(ByteVector data, int offset, FrameHeader header, uint version);" />
+  <TypeSignature Language="C#" Value="public delegate TagLib.Id3v2.Frame FrameFactory.FrameCreator(ByteVector data, int offset, FrameHeader header, byte version);" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
@@ -11,7 +11,7 @@
     <Parameter Name="data" Type="TagLib.ByteVector" />
     <Parameter Name="offset" Type="System.Int32" />
     <Parameter Name="header" Type="TagLib.Id3v2.FrameHeader" />
-    <Parameter Name="version" Type="System.UInt32" />
+    <Parameter Name="version" Type="System.Byte" />
   </Parameters>
   <ReturnValue>
     <ReturnType>TagLib.Id3v2.Frame</ReturnType>

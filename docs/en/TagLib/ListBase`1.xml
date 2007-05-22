@@ -26,20 +26,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public ListBase (T s);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="s" Type="T" />
-      </Parameters>
-      <Docs>
-        <param name="s">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.ListBase&lt;T&gt;" /> with no contents.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -49,21 +37,27 @@
         <Parameter Name="s" Type="TagLib.ListBase&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="s">A <see cref="T:TagLib.ListBase&lt;T&gt;" /> to copy values from.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.ListBase&lt;T&gt;" /> by copying values from a T collection.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public ListBase (T[] s);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
-        <Parameter Name="s" Type="T[]" />
+        <Parameter Name="s" Type="T[]">
+          <Attributes>
+            <Attribute>
+              <AttributeName>System.ParamArray</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="s">A <see cref="T:T" /> array to copy values from.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.ListBase&lt;T&gt;" /> by copying values from a T collection.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="data">
@@ -73,8 +67,8 @@
         <ReturnType>System.Collections.Generic.List&lt;T&gt;</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gets the internal list of the current instance.</summary>
+        <remarks>A <see cref="T:System.Collections.Generic.List&lt;T&gt;" /> which is the internal list used by the current instance.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Add">
@@ -87,9 +81,9 @@
         <Parameter Name="list" Type="TagLib.ListBase&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <param name="list">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="list">A <see cref="T:TagLib.ListBase&lt;T&gt;" /> to copy values from.</param>
+        <summary>Adds elements of another instance to the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Add">
@@ -102,9 +96,9 @@
         <Parameter Name="list" Type="T[]" />
       </Parameters>
       <Docs>
-        <param name="list">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="list">A <see cref="T:T" /> array to copy values from.</param>
+        <summary>Adds elements of an array to the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SortedInsert">
@@ -118,10 +112,10 @@
         <Parameter Name="unique" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <param name="unique">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="s">A <see cref="T:T" /> to add to the current instance.</param>
+        <param name="unique">A <see cref="T:System.Boolean" /> specifying whether or the element should be inserted if an equal is found.</param>
+        <summary>Inserts an element into the current instance in sorted order, optionally not adding it if an equal is found.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SortedInsert">
@@ -134,9 +128,9 @@
         <Parameter Name="s" Type="T" />
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="s">A <see cref="T:T" /> to add to the current instance.</param>
+        <summary>Inserts an element into the current instance in sorted order.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ToArray">
@@ -147,9 +141,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Converts the current instance to an array.</summary>
+        <returns>A <see cref="T:T" /> array containing all the values from the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Add">
@@ -162,9 +156,9 @@
         <Parameter Name="value" Type="T" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="value">A <see cref="T:T" /> to add to the current instance.</param>
+        <summary>Adds a single value to the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Clear">
@@ -175,8 +169,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Removes all values from the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Contains">
@@ -189,10 +183,10 @@
         <Parameter Name="value" Type="T" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">A <see cref="T:T" /> to search for in the current instance.</param>
+        <summary>Checks whether or not the current instance contains a value.</summary>
+        <returns>A <see cref="T:System.Boolean" /> representing whether or not the current instance contains a value.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IndexOf">
@@ -205,10 +199,10 @@
         <Parameter Name="value" Type="T" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">A <see cref="T:T" /> to search for in the current instance.</param>
+        <summary>Finds the first matching value in the current instance and returns its index.</summary>
+        <returns>A <see cref="T:System.Int32" /> specifying the index at which the value was found, or -1 if not found.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Insert">
@@ -222,10 +216,10 @@
         <Parameter Name="value" Type="T" />
       </Parameters>
       <Docs>
-        <param name="index">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="index">A <see cref="T:System.Int32" /> specifying the index a which to insert the value.</param>
+        <param name="value">A <see cref="T:T" /> to insert into the current instance.</param>
+        <summary>Inserts a value into the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Remove">
@@ -238,10 +232,10 @@
         <Parameter Name="value" Type="T" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">A <see cref="T:T" /> to remove from the current instance.</param>
+        <summary>Removes the first instance of a value from the current instance.</summary>
+        <returns>A <see cref="T:System.Boolean" /> specifying whether or not the value was found and removed from the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RemoveAt">
@@ -254,9 +248,9 @@
         <Parameter Name="index" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="index">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="index">A <see cref="T:System.Int32" /> to remove from the current instance.</param>
+        <summary>Removes a value from the current instance at a specified index.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ToString">
@@ -269,10 +263,10 @@
         <Parameter Name="separator" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="separator">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="separator">A <see cref="T:System.String" /> to use to separate the values.</param>
+        <summary>Converts the current instance into a string, separating the values with a specified separator.</summary>
+        <returns>A <see cref="T:System.String" /> containing all the values in the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="CopyTo">
@@ -286,10 +280,10 @@
         <Parameter Name="index" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="array">To be added.</param>
-        <param name="index">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="array">An array to copy the values to.</param>
+        <param name="index">A <see cref="T:System.Int32" /> at which to start copying values from the current instance.</param>
+        <summary>Copies values from the current instance to an array.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetEnumerator">
@@ -300,9 +294,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets a <see cref="T:System.Collections.Generic.IEnumerator&lt;T&gt;" /> for the current instance.</summary>
+        <returns>Returns a <see cref="T:System.Collections.Generic.IEnumerator&lt;T&gt;" /> for the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IsEmpty">
@@ -312,9 +306,10 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Checks whether or not the current instance contains any values.</summary>
+        <value>
+          <see langword="true" /> if the current instance is empty, otherwise <see langword="false" />.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IsReadOnly">
@@ -324,9 +319,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether or not the current instance is read only.</summary>
+        <value>Always <see langref="false" />.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IsFixedSize">
@@ -336,9 +331,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether or not the current instance is fixed size.</summary>
+        <value>Always <see langref="false" />.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Count">
@@ -348,9 +343,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the number of elements in the current instance.</summary>
+        <value>A <see cref="T:System.Int32" /> containing the number of elements in the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IsSynchronized">
@@ -360,9 +355,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether or not the current instance is synchronized.</summary>
+        <value>Always <see langref="false" />.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SyncRoot">
@@ -372,9 +367,13 @@
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>
+          <para>Gets an object that can be used to synchronize access to the current instance.</para>
+        </summary>
+        <value>
+          <para>A <see cref="T:System.Object" /> that can be used to synchronize access to the current instance.</para>
+        </value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Item">
@@ -387,10 +386,10 @@
         <Parameter Name="index" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="index">To be added.</param>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <param name="index">A <see cref="T:System.Int32" /> specifying the index to read and write from.</param>
+        <summary>Gets or sets the element at the specified index of the current instance.</summary>
+        <value>The <see cref="T:T" /> at the specified index of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Add">
@@ -403,15 +402,15 @@
         <Parameter Name="list" Type="System.Collections.Generic.IEnumerable&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <param name="list">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="list">A <see cref="T:System.Collections.Generic.IEnumerable&lt;T&gt;" /> whose elements are be appended to the current instance.</param>
+        <summary>Adds the elements from another <see cref="T:System.Collections.Generic.IEnumerable&lt;T&gt;" /> at the end of the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <typeparam name="T">To be added.</typeparam>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <typeparam name="T">A type which implements <see cref="T:System.Collections.Generic.IComparable&lt;T&gt;" /></typeparam>
+    <summary>This class represents and performs operations on variable length lists.</summary>
+    <remarks />
   </Docs>
 </Type>

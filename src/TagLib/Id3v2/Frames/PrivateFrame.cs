@@ -45,14 +45,14 @@ namespace TagLib.Id3v2
       {
       }
 
-      public PrivateFrame (ByteVector data, uint version) : base (data, version)
+      public PrivateFrame (ByteVector data, byte version) : base (data, version)
       {
-         SetData (data, 0, version);
+         SetData (data, 0, version, true);
       }
 
-      protected internal PrivateFrame (ByteVector data, int offset, FrameHeader h, uint version) : base (h)
+      protected internal PrivateFrame (ByteVector data, int offset, FrameHeader h, byte version) : base (h)
       {
-         ParseFields (FieldData (data, offset, version), version);
+         SetData (data, offset, version, false);
       }
       #endregion
       
@@ -100,7 +100,7 @@ namespace TagLib.Id3v2
       
       
       #region Protected Methods
-      protected override void ParseFields (ByteVector data, uint version)
+      protected override void ParseFields (ByteVector data, byte version)
       {
          if (data.Count < 1)
             throw new CorruptFileException ("A private frame must contain at least 1 byte.");
@@ -114,7 +114,7 @@ namespace TagLib.Id3v2
          }
       }
 
-      protected override ByteVector RenderFields (uint version)
+      protected override ByteVector RenderFields (byte version)
       {
          ByteVector v = new ByteVector ();
          

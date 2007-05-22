@@ -18,8 +18,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v2.Tag" /> with no contents.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -30,10 +30,10 @@
         <Parameter Name="tag_offset" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="tag_offset">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.File" /> to read from.</param>
+        <param name="tag_offset">A <see cref="T:System.Int64" /> specifying at what position in the file the tag begins.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v2.Tag" /> with no contents.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetFrames">
@@ -44,9 +44,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets all the frames from the current instance.</summary>
+        <returns>A <see cref="T:System.Collections.Generic.IEnumerable&lt;TagLib.Id3v2.Frame&gt;" /> containing all frames contained within the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetFrames">
@@ -59,10 +59,10 @@
         <Parameter Name="id" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2.4 frame ID.</param>
+        <summary>Gets all the frames of a specified type from the current instance.</summary>
+        <returns>A <see cref="T:System.Collections.Generic.IEnumerable&lt;TagLib.Id3v2.Frame&gt;" /> containing all the frames of a specified type contained within the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AddFrame">
@@ -75,9 +75,9 @@
         <Parameter Name="frame" Type="TagLib.Id3v2.Frame" />
       </Parameters>
       <Docs>
-        <param name="frame">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="frame">A <see cref="T:TagLib.Id3v2.Frame" /> to add to the current instance.</param>
+        <summary>Adds a frame to the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ReplaceFrame">
@@ -91,10 +91,10 @@
         <Parameter Name="new_frame" Type="TagLib.Id3v2.Frame" />
       </Parameters>
       <Docs>
-        <param name="old_frame">To be added.</param>
-        <param name="new_frame">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="old_frame">A <see cref="T:TagLib.Id3v2.Frame" /> to remove from the current instance.</param>
+        <param name="new_frame">A <see cref="T:TagLib.Id3v2.Frame" /> to add to the current instance.</param>
+        <summary>Replaces one frame with another in the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RemoveFrame">
@@ -107,9 +107,9 @@
         <Parameter Name="frame" Type="TagLib.Id3v2.Frame" />
       </Parameters>
       <Docs>
-        <param name="frame">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="frame">A <see cref="T:TagLib.Id3v2.Frame" /> to remove from the current instance.</param>
+        <summary>Removes a frame from the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RemoveFrames">
@@ -122,9 +122,9 @@
         <Parameter Name="id" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> containing the ID of frames to remove from the current instance.</param>
+        <summary>Removes all frames of a given type from the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -135,9 +135,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Renders the current instance as an ID3v2 frame.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered tag.</returns>
+        <remarks>By default, tags will be rendered in the version they were loaded in, and new tags in <see cref="P:TagLib.Id3v2.Tag.DefaultVersion" />. If <see cref="T:TagLib.Id3v2.Tag.ForceDefaultVersion" /> is <see langword="true" />, all tags will be rendered in <see cref="P:TagLib.Id3v2.Tag.DefaultVersion" />, except for tags with footers, which must be in version 4.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Parse">
@@ -150,9 +150,9 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 tag.</param>
+        <summary>Populates the current instance by reading tag data.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetTextFrame">
@@ -208,47 +208,11 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Header">
-      <MemberSignature Language="C#" Value="public TagLib.Id3v2.Header Header { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Id3v2.Header</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ExtendedHeader">
-      <MemberSignature Language="C#" Value="public TagLib.Id3v2.ExtendedHeader ExtendedHeader { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Id3v2.ExtendedHeader</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Footer">
-      <MemberSignature Language="C#" Value="public TagLib.Id3v2.Footer Footer { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Id3v2.Footer</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName="Language">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Language { set; get; };" />
+      <MemberSignature Language="C#" Value="public static string Language { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
+        <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -257,10 +221,10 @@
       </Docs>
     </Member>
     <Member MemberName="Version">
-      <MemberSignature Language="C#" Value="public uint Version { set; get; };" />
+      <MemberSignature Language="C#" Value="public byte Version { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.UInt32</ReturnType>
+        <ReturnType>System.Byte</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -269,15 +233,15 @@
       </Docs>
     </Member>
     <Member MemberName="DefaultVersion">
-      <MemberSignature Language="C#" Value="public static uint DefaultVersion { set; get; };" />
+      <MemberSignature Language="C#" Value="public static byte DefaultVersion { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.UInt32</ReturnType>
+        <ReturnType>System.Byte</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the the default version to use when creating new tags.</summary>
+        <value>A <see cref="T:System.Byte" /> specifying an ID3v2 version.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ForceDefaultVersion">
@@ -287,9 +251,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets whether or not to force all tags to be rendered in the default version.</summary>
+        <value>A <see cref="T:System.Boolean" /> specifying whether or not to force all tags to be rendered in the default version.</value>
+        <remarks>When <see langword="true" />, all tags will be rendered in the default version, except tags with footers, which need to be rendered in the ID3v2.4 format.</remarks>
       </Docs>
     </Member>
     <Member MemberName="DefaultEncoding">
@@ -324,9 +288,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets a <see cref="T:System.Collections.IEnumerator" /> for the current instance.</summary>
+        <returns>Returns a <see cref="T:System.Collections.IEnumerator" /> for the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Read">
@@ -343,6 +307,18 @@
         <param name="file">To be added.</param>
         <param name="tag_offset">To be added.</param>
         <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Flags">
+      <MemberSignature Language="C#" Value="public TagLib.Id3v2.HeaderFlags Flags { set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Id3v2.HeaderFlags</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

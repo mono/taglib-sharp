@@ -1,3 +1,73 @@
+2007-05-22  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Tag.cs: Make abstract.
+	* src/TagLib/Mpc/File.cs: Make namespace "MusePack".
+	* src/TagLib/Mpc/StreamHeader.cs: Convert to struct.
+	* src/TagLib/File.cs: Store TagTypes as uint. Remove unused read styles.
+	Add File.TagTypes and File.TagTypesOnDisk. Add CloseStream to 
+	IFileAbstraction for SilverLight support.
+	* src/TagLib/Riff/File.cs: Add TagTypes.
+	* src/TagLib/ByteVectorList.cs: Remove ToByteVector()
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Id3v2/Footer.cs:
+	* src/TagLib/Id3v2/SynchData.cs:
+	* src/TagLib/Id3v2/FrameFactory.cs:
+	* src/TagLib/Id3v2/FrameHeader.cs:
+	* src/TagLib/Id3v2/Header.cs:
+	* src/TagLib/Id3v2/Frames/PlayCountFrame.cs:
+	* src/TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
+	* src/TagLib/Id3v2/Frames/SynchronizedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:
+	* src/TagLib/Id3v2/Frames/UniqueFileIdentifierFrame.cs:
+	* src/TagLib/Id3v2/Frames/PrivateFrame.cs:
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs:
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs:
+	* src/TagLib/Id3v2/Frames/UnknownFrame.cs:
+	* src/TagLib/Id3v2/Frame.cs: Significant refactoring. Use byte for 
+	version. Use enums for header and frame flags. Use string for language.
+	Unsupported frames and frame properties throw NotImplementedException.
+	Added PlayCountFrame.
+	* src/TagLib/Mpeg/XingHeader.cs: Make struct.
+	* src/TagLib/Mpeg/File.cs:
+	* src/TagLib/Mpeg/VideoHeader.cs: Make struct.
+	* src/TagLib/Mpeg/AudioFile.cs:
+	* src/TagLib/Mpeg/AudioHeader.cs: Make struct.
+	* src/TagLib/Debugger.cs: Make internal.
+	* src/TagLib/ByteVector.cs: Clean up constructors.
+	* src/TagLib/IntList.cs: Clean up constructors.
+	* src/TagLib/WavPack/StreamHeader.cs: Convert to struct.
+	* src/TagLib/NonContainer/Tag.cs: Add TagTypes.
+	* src/TagLib/NonContainer/File.cs: Add TagTypes.
+	* src/TagLib/NonContainer/EndTag.cs: Add TagTypes.
+	* src/TagLib/NonContainer/StartTag.cs: Add TagTypes.
+	* src/TagLib/Ape/Tag.cs: 
+	* src/TagLib/Ape/Footer.cs: Make struct. Use enum for flags.
+	* src/TagLib/Flac/File.cs:
+	* src/TagLib/Flac/BlockHeader.cs: Make struct.
+	* src/TagLib/Flac/StreamHeader.cs: Make struct.
+	* src/TagLib/StringList.cs: Clean up constructors.
+	* src/TagLib/FileTypes.cs: Add support for registering types.
+	* src/TagLib/Asf/File.cs: Add TagTypes.
+	* src/TagLib/Asf/HeaderObject.cs:
+	* src/TagLib/Asf/StreamPropertiesObject.cs:
+	* src/TagLib/Asf/FilePropertiesObject.cs:
+	* src/TagLib/Asf/ContentDescriptionObject.cs:
+	* src/TagLib/Asf/Object.cs:
+	* src/TagLib/Asf/Guid.cs: Use System.Guid.
+	* src/TagLib/Asf/ContentDescriptor.cs: Use unsigned types.
+	* src/TagLib/ListBase.cs: Clean up constructors.
+	* src/TagLib/Mpeg4/File.cs: Add TagTypes.
+	* src/TagLib/Ogg/GroupedComment.cs: Add IsEmpty.
+	* src/TagLib/Ogg/File.cs: Add TagTypes.
+	* src/TagLib/Ogg/Page.cs:
+	* src/TagLib/Ogg/Paginator.cs:
+	* src/TagLib/Ogg/Bitstream.cs:
+	* src/TagLib/Ogg/PageHeader.cs: Make PageHeader a struct and add 
+	PageFlags.
+	* docs/en/*: Thousands more docs filled out.
+
 2007-05-20  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/ByteVector.cs:

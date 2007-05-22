@@ -28,7 +28,7 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       // private properties
       //////////////////////////////////////////////////////////////////////////
-      private Guid file_id;
+      private System.Guid file_id;
       private ulong file_size;
       private ulong creation_date;
       private ulong data_packets_count;
@@ -67,7 +67,7 @@ namespace TagLib.Asf
       
       public override ByteVector Render ()
       {
-         ByteVector output = file_id.Render ();
+         ByteVector output = file_id.ToByteArray ();
          output.Add (RenderQWord (file_size));
          output.Add (RenderQWord (creation_date));
          output.Add (RenderQWord (data_packets_count));
@@ -86,7 +86,7 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
-      public Guid     FileId {get {return file_id;}}
+      public System.Guid     FileId {get {return file_id;}}
       public ulong    FileSize {get {return file_size;}}
       public DateTime CreationDate {get {return new DateTime ((long)creation_date);}}
       public ulong     DataPacketsCount {get {return data_packets_count;}}

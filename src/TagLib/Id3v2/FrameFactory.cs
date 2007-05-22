@@ -24,9 +24,9 @@ using System.Collections.Generic;
  
 namespace TagLib.Id3v2
 {
-   public class FrameFactory
+   public static class FrameFactory
    {
-      public delegate Frame FrameCreator (ByteVector data, int offset, FrameHeader header, uint version);
+      public delegate Frame FrameCreator (ByteVector data, int offset, FrameHeader header, byte version);
 
       //////////////////////////////////////////////////////////////////////////
       // private properties
@@ -36,48 +36,39 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // public members
       //////////////////////////////////////////////////////////////////////////
-      public static Frame CreateFrame (ByteVector data, ref int offset, uint version)
+      public static Frame CreateFrame (ByteVector data, ref int offset, byte version)
       {
          int position = offset;
          
          FrameHeader header = new FrameHeader (data.Mid (position, (int) FrameHeader.Size (version)), version);
-         ByteVector frame_id = header.FrameId;
          
-         // A quick sanity check -- make sure that the frame_id is 4 uppercase
-         // Latin1 characters.  Also make sure that there is data in the frame.
-         if(frame_id == null || frame_id.Count != (version < 3 ? 3 : 4) || header.FrameSize < 0)
-            return null;
+         offset += (int) (header.FrameSize + FrameHeader.Size (version));
          
-         foreach (byte b in frame_id)
+         if (header.FrameId == null)
+            throw new System.NotImplementedException ();
+         
+         foreach (byte b in header.FrameId)
          {
             char c = (char) b;
             if ((c < 'A' || c > 'Z') && (c < '1' || c > '9'))
                return null;
          }
          
-         offset += (int) (header.FrameSize + FrameHeader.Size (version));
-         
          // Windows Media Player may create zero byte frames. Just send them
          // off as unknown and delete them.
          if (header.FrameSize == 0)
          {
-            header.TagAlterPreservation = true;
+            header.Flags |= FrameFlags.TagAlterPreservation;
             return new UnknownFrame (data, position, header, version);
          }
          
          // TODO: Support Compression.
-         if (header.Compression)
-            throw new UnsupportedFormatException ();
+         if ((header.Flags & FrameFlags.Compression) != 0)
+            throw new System.NotImplementedException ();
          
          // TODO: Support Encryption.
-         if (header.Encryption)
-            throw new UnsupportedFormatException ();
-         
-         if (!UpdateFrame (header, version))
-         {
-            header.TagAlterPreservation = true;
-            return new UnknownFrame (data, position, header, version);
-         }
+         if ((header.Flags & FrameFlags.Encryption) != 0)
+            throw new System.NotImplementedException ();
          
          foreach (FrameCreator creator in frame_creators)
          {
@@ -86,69 +77,55 @@ namespace TagLib.Id3v2
                return frame;
          }
          
-         
-         // UpdateFrame () might have updated the frame ID.
-
-         frame_id = header.FrameId;
-         
          // This is where things get necissarily nasty.  Here we determine which
          // Frame subclass (or if none is found simply an Frame) based
          // on the frame ID.  Since there are a lot of possibilities, that means
          // a lot of if blocks.
          
          // Text Identification (frames 4.2)
-         
-         if(frame_id.StartsWith ("T"))
+         if(header.FrameId.StartsWith ("T"))
          {
-            TextIdentificationFrame f = frame_id != "TXXX"
+            TextIdentificationFrame f = header.FrameId != "TXXX"
             ? new TextIdentificationFrame (data, position, header, version)
             : new UserTextIdentificationFrame (data, position, header, version);
-            
-            if (frame_id == "TCON" && version < 4)
-               UpdateGenre (f);
-            
             return f;
          }
          
-         // Unsynchronized Lyrics (frames 4.8)
+         // Unique File Identifier (frames 4.1)
+         if (header.FrameId == "UFID")
+            return new UniqueFileIdentifierFrame (data, position, header, version);
 
-         if (frame_id == "USLT")
+         // Unsynchronized Lyrics (frames 4.8)
+         if (header.FrameId == "USLT")
             return new UnsynchronisedLyricsFrame (data, position, header, version);
 
          // Synchronized Lyrics (frames 4.9)
-
-         if (frame_id == "SYLT")
+         if (header.FrameId == "SYLT")
             return new SynchronisedLyricsFrame (data, position, header, version);
 
          // Comments (frames 4.10)
-
-         if (frame_id == "COMM")
+         if (header.FrameId == "COMM")
             return new CommentsFrame (data, position, header, version);
 
-         // Attached Picture (frames 4.14)
-
-         if (frame_id == "APIC")
-            return new AttachedPictureFrame (data, position, header, version);
-
          // Relative Volume Adjustment (frames 4.11)
-
-         if (frame_id == "RVA2")
+         if (header.FrameId == "RVA2")
             return new RelativeVolumeFrame (data, position, header, version);
 
-         // Unique File Identifier (frames 4.1)
+         // Attached Picture (frames 4.14)
+         if (header.FrameId == "APIC")
+            return new AttachedPictureFrame (data, position, header, version);
 
-         if (frame_id == "UFID")
-            return new UniqueFileIdentifierFrame (data, position, header, version);
-
-         // Private (frames 4.27)
-
-         if (frame_id == "PRIV")
-            return new PrivateFrame (data, position, header, version);
-         
          // General Encapsulated Object (frames 4.15)
-         
-         if(frame_id == "GEOB")
+         if(header.FrameId == "GEOB")
             return new GeneralEncapsulatedObjectFrame (data, position, header, version);
+         
+         // Play Count (frames 4.15)
+         if(header.FrameId == "PCNT")
+            return new PlayCountFrame (data, position, header, version);
+         
+         // Private (frames 4.27)
+         if (header.FrameId == "PRIV")
+            return new PrivateFrame (data, position, header, version);
          
          return new UnknownFrame (data, position, header, version);
       }
@@ -159,154 +136,5 @@ namespace TagLib.Id3v2
             frame_creators.Insert (0, creator);
       }
       
-      public static void UpdateGenre (TextIdentificationFrame frame)
-      {
-         StringList fields = new StringList ();
-         string s = frame.ToString ();
-         
-         while (s.Length > 1 && s [0] == '(')
-         {
-            int closing = s.IndexOf (')');
-            if (closing < 0)
-               break;
-            
-            fields.Add (s.Substring (1, closing - 1));
-            
-            s = s.Substring (closing + 1);
-         }
-         
-         if(s != string.Empty)
-            fields.Add (s);
-            
-         if (fields.IsEmpty)
-            fields.Add (s);
-         
-         frame.SetText (fields);
-      }
-      
-      
-      //////////////////////////////////////////////////////////////////////////
-      // private members
-      //////////////////////////////////////////////////////////////////////////
-      private FrameFactory () {}
-      
-      private static bool UpdateFrame (FrameHeader header, uint version)
-      {
-         ByteVector frame_id = header.FrameId;
-
-         switch (version)
-         {
-            case 2: // ID3v2.2
-            {
-               // Discard obsolete tags.
-               if(frame_id == "CRM" ||
-                  frame_id == "EQU" ||
-                  frame_id == "LNK" ||
-                  frame_id == "RVA" ||
-                  frame_id == "TIM" ||
-                  frame_id == "TSI")
-                  return false;
-
-               // ID3v2.2 only used 3 bytes for the frame ID, so we need to convert all of
-               // the frames to their 4 byte ID3v2.4 equivalent.
-
-               ConvertFrame ("BUF", "RBUF", header);
-               ConvertFrame ("CNT", "PCNT", header);
-               ConvertFrame ("COM", "COMM", header);
-               ConvertFrame ("CRA", "AENC", header);
-               ConvertFrame ("ETC", "ETCO", header);
-               ConvertFrame ("GEO", "GEOB", header);
-               ConvertFrame ("IPL", "TIPL", header);
-               ConvertFrame ("MCI", "MCDI", header);
-               ConvertFrame ("MLL", "MLLT", header);
-               ConvertFrame ("PIC", "APIC", header);
-               ConvertFrame ("POP", "POPM", header);
-               ConvertFrame ("REV", "RVRB", header);
-               ConvertFrame ("SLT", "SYLT", header);
-               ConvertFrame ("STC", "SYTC", header);
-               ConvertFrame ("TAL", "TALB", header);
-               ConvertFrame ("TBP", "TBPM", header);
-               ConvertFrame ("TCM", "TCOM", header);
-               ConvertFrame ("TCO", "TCON", header);
-               ConvertFrame ("TCR", "TCOP", header);
-               ConvertFrame ("TDA", "TDRC", header);
-               ConvertFrame ("TDY", "TDLY", header);
-               ConvertFrame ("TEN", "TENC", header);
-               ConvertFrame ("TFT", "TFLT", header);
-               ConvertFrame ("TKE", "TKEY", header);
-               ConvertFrame ("TLA", "TLAN", header);
-               ConvertFrame ("TLE", "TLEN", header);
-               ConvertFrame ("TMT", "TMED", header);
-               ConvertFrame ("TOA", "TOAL", header);
-               ConvertFrame ("TOF", "TOFN", header);
-               ConvertFrame ("TOL", "TOLY", header);
-               ConvertFrame ("TOR", "TDOR", header);
-               ConvertFrame ("TOT", "TOAL", header);
-               ConvertFrame ("TP1", "TPE1", header);
-               ConvertFrame ("TP2", "TPE2", header);
-               ConvertFrame ("TP3", "TPE3", header);
-               ConvertFrame ("TP4", "TPE4", header);
-               ConvertFrame ("TPA", "TPOS", header);
-               ConvertFrame ("TPB", "TPUB", header);
-               ConvertFrame ("TRC", "TSRC", header);
-               ConvertFrame ("TRD", "TDRC", header);
-               ConvertFrame ("TRK", "TRCK", header);
-               ConvertFrame ("TSS", "TSSE", header);
-               ConvertFrame ("TT1", "TIT1", header);
-               ConvertFrame ("TT2", "TIT2", header);
-               ConvertFrame ("TT3", "TIT3", header);
-               ConvertFrame ("TXT", "TOLY", header);
-               ConvertFrame ("TXX", "TXXX", header);
-               ConvertFrame ("TYE", "TDRC", header);
-               ConvertFrame ("UFI", "UFID", header);
-               ConvertFrame ("ULT", "USLT", header);
-               ConvertFrame ("WAF", "WOAF", header);
-               ConvertFrame ("WAR", "WOAR", header);
-               ConvertFrame ("WAS", "WOAS", header);
-               ConvertFrame ("WCM", "WCOM", header);
-               ConvertFrame ("WCP", "WCOP", header);
-               ConvertFrame ("WPB", "WPUB", header);
-               ConvertFrame ("WXX", "WXXX", header);
-
-            }
-            break;
-
-            case 3: // ID3v2.3
-            {
-               // Discard obsolete tags.
-               if(frame_id == "EQUA" ||
-                  frame_id == "RVAD" ||
-                  frame_id == "TIME" ||
-                  frame_id == "TRDA" ||
-                  frame_id == "TSIZ" ||
-                  frame_id == "TDAT")
-                  return false;
-
-               ConvertFrame ("TORY", "TDOR", header);
-               ConvertFrame ("TYER", "TDRC", header);
-
-            }
-            break;
-
-            default:
-            {
-               // This should catch a typo that existed in TagLib up to and including
-               // version 1.1 where TRDC was used for the year rather than TDRC.
-
-               ConvertFrame ("TRDC", "TDRC", header);
-            }
-            break;
-         }
-
-         return true;
-      }
-
-      private static void ConvertFrame (string from, string to, FrameHeader header)
-      {
-         if (header.FrameId != from)
-            return;
-         
-         header.FrameId = to;
-      }
    }
 }

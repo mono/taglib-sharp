@@ -10,161 +10,15 @@
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public RelativeVolumeFrame (TagLib.ByteVector data, uint version);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="data" Type="TagLib.ByteVector" />
-        <Parameter Name="version" Type="System.UInt32" />
-      </Parameters>
-      <Docs>
-        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
-        <param name="version">A <see cref="T:System.UInt32" /> specifying the ID3v2 version <paramref name="data" /> is encoded in.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v2.RelativeVolumeFrame" /> by reading from an ID3v2 frame.</summary>
-        <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public RelativeVolumeFrame (string identification);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="identification" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="identification">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="VolumeAdjustmentIndex">
-      <MemberSignature Language="C#" Value="public short VolumeAdjustmentIndex (TagLib.Id3v2.ChannelType type);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int16</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="type" Type="TagLib.Id3v2.ChannelType" />
-      </Parameters>
-      <Docs>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="SetVolumeAdjustmentIndex">
-      <MemberSignature Language="C#" Value="public void SetVolumeAdjustmentIndex (short index, TagLib.Id3v2.ChannelType type);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="index" Type="System.Int16" />
-        <Parameter Name="type" Type="TagLib.Id3v2.ChannelType" />
-      </Parameters>
-      <Docs>
-        <param name="index">To be added.</param>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="VolumeAdjustment">
-      <MemberSignature Language="C#" Value="public float VolumeAdjustment (TagLib.Id3v2.ChannelType type);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Single</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="type" Type="TagLib.Id3v2.ChannelType" />
-      </Parameters>
-      <Docs>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="SetVolumeAdjustment">
-      <MemberSignature Language="C#" Value="public void SetVolumeAdjustment (float adjustment, TagLib.Id3v2.ChannelType type);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="adjustment" Type="System.Single" />
-        <Parameter Name="type" Type="TagLib.Id3v2.ChannelType" />
-      </Parameters>
-      <Docs>
-        <param name="adjustment">To be added.</param>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="PeakVolumeIndex">
-      <MemberSignature Language="C#" Value="public ulong PeakVolumeIndex (TagLib.Id3v2.ChannelType type);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.UInt64</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="type" Type="TagLib.Id3v2.ChannelType" />
-      </Parameters>
-      <Docs>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="SetPeakVolumeIndex">
-      <MemberSignature Language="C#" Value="public void SetPeakVolumeIndex (ulong index, TagLib.Id3v2.ChannelType type);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="index" Type="System.UInt64" />
-        <Parameter Name="type" Type="TagLib.Id3v2.ChannelType" />
-      </Parameters>
-      <Docs>
-        <param name="index">To be added.</param>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="PeakVolume">
-      <MemberSignature Language="C#" Value="public double PeakVolume (TagLib.Id3v2.ChannelType type);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Double</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="type" Type="TagLib.Id3v2.ChannelType" />
-      </Parameters>
-      <Docs>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="SetPeakVolume">
-      <MemberSignature Language="C#" Value="public void SetPeakVolume (double adjustment, TagLib.Id3v2.ChannelType type);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="adjustment" Type="System.Double" />
-        <Parameter Name="type" Type="TagLib.Id3v2.ChannelType" />
-      </Parameters>
-      <Docs>
-        <param name="adjustment">To be added.</param>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="identification">A <see cref="T:System.String" /> specifying the identifier.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v2.RelativeVolumeFrame" /> with a specified identifier.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Get">
@@ -179,44 +33,12 @@
         <Parameter Name="create" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <param name="identification">To be added.</param>
-        <param name="create">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ParsePeakVolume">
-      <MemberSignature Language="C#" Value="protected ulong ParsePeakVolume (TagLib.ByteVector data);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.UInt64</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="data" Type="TagLib.ByteVector" />
-      </Parameters>
-      <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="RenderPeakVolume">
-      <MemberSignature Language="C#" Value="protected TagLib.ByteVector RenderPeakVolume (ulong peak);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="peak" Type="System.UInt64" />
-      </Parameters>
-      <Docs>
-        <param name="peak">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="tag">A <see cref="T:TagLib.Id3v2.Tag" /> to search.</param>
+        <param name="identification">A <see cref="T:System.String" /> specifying the identifier to search for.</param>
+        <param name="create">A <see cref="T:System.Boolean" /> specifying whether or not to create a new instance if one is not found.</param>
+        <summary>Searches for a <see cref="T:TagLib.Id3v2.RelativeVolumeFrame" /> with a specified identifier, optionally creating one if none is found.</summary>
+        <returns>A <see cref="T:TagLib.Id3v2.RelativeVolumeFrame" /> containing with the given identifier, or <see langword="null" /> if not found and not creating.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Channels">
@@ -226,9 +48,9 @@
         <ReturnType>TagLib.Id3v2.ChannelType[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the channel types defined in the current instance.</summary>
+        <value>A <see cref="T:TagLib.Id3v2.ChannelType" /> array listing the channel types defined in the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Identification">
@@ -238,32 +60,178 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the identification for the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing identification for the current instance.</value>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="GetPeakVolume">
+      <MemberSignature Language="C#" Value="public double GetPeakVolume (TagLib.Id3v2.ChannelType type);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Double</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.Id3v2.ChannelType" />
+      </Parameters>
+      <Docs>
+        <param name="type">A <see cref="T:TagLib.Id3v2.ChannelType" /> specifying which channel to work with.</param>
+        <summary>Gets the greatest volume for a given channel.</summary>
+        <returns>A <see cref="System.Double" /> containing the peak volume in dB.</returns>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="GetPeakVolumeIndex">
+      <MemberSignature Language="C#" Value="public ulong GetPeakVolumeIndex (TagLib.Id3v2.ChannelType type);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.UInt64</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.Id3v2.ChannelType" />
+      </Parameters>
+      <Docs>
+        <param name="type">A <see cref="T:TagLib.Id3v2.ChannelType" /> specifying which channel to work with.</param>
+        <summary>Gets the index for the greatest volume for a given channel.</summary>
+        <returns>A <see cref="System.UInt64" /> containing the peak volume in dB times 512.</returns>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="GetVolumeAdjustment">
+      <MemberSignature Language="C#" Value="public float GetVolumeAdjustment (TagLib.Id3v2.ChannelType type);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.Id3v2.ChannelType" />
+      </Parameters>
+      <Docs>
+        <param name="type">A <see cref="T:TagLib.Id3v2.ChannelType" /> specifying which channel to work with.</param>
+        <summary>Gets the relative volume adjustment suggested for the channel.</summary>
+        <returns>A <see cref="T:System.Single" /> containing the relative volume adjustment in dB.</returns>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="GetVolumeAdjustmentIndex">
+      <MemberSignature Language="C#" Value="public short GetVolumeAdjustmentIndex (TagLib.Id3v2.ChannelType type);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Int16</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.Id3v2.ChannelType" />
+      </Parameters>
+      <Docs>
+        <param name="type">A <see cref="T:TagLib.Id3v2.ChannelType" /> specifying which channel to work with.</param>
+        <summary>Gets the index for the relative volume adjustment suggested for the channel.</summary>
+        <returns>A <see cref="T:System.Int64" /> containing the relative volume adjustment in dB times 512.</returns>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="SetPeakVolume">
+      <MemberSignature Language="C#" Value="public void SetPeakVolume (TagLib.Id3v2.ChannelType type, double adjustment);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.Id3v2.ChannelType" />
+        <Parameter Name="adjustment" Type="System.Double" />
+      </Parameters>
+      <Docs>
+        <param name="type">A <see cref="T:TagLib.Id3v2.ChannelType" /> specifying which channel to work with.</param>
+        <param name="adjustment">A <see cref="System.Double" /> containing the peak volume in dB.</param>
+        <summary>Sets the greatest volume for a given channel.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="SetPeakVolumeIndex">
+      <MemberSignature Language="C#" Value="public void SetPeakVolumeIndex (TagLib.Id3v2.ChannelType type, ulong index);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.Id3v2.ChannelType" />
+        <Parameter Name="index" Type="System.UInt64" />
+      </Parameters>
+      <Docs>
+        <param name="type">A <see cref="T:TagLib.Id3v2.ChannelType" /> specifying which channel to work with.</param>
+        <param name="index">A <see cref="System.UInt64" /> containing the peak volume in dB times 512.</param>
+        <summary>Sets the index for the greatest volume for a given channel.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="SetVolumeAdjustment">
+      <MemberSignature Language="C#" Value="public void SetVolumeAdjustment (TagLib.Id3v2.ChannelType type, float adjustment);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.Id3v2.ChannelType" />
+        <Parameter Name="adjustment" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="type">A <see cref="T:TagLib.Id3v2.ChannelType" /> specifying which channel to work with.</param>
+        <param name="adjustment">A <see cref="T:System.Single" /> containing the relative volume adjustment in dB.</param>
+        <summary>Sets the volume adjustment for a specific channel.</summary>
+        <remarks>Value must be between -64dB and 64dB.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetVolumeAdjustmentIndex">
+      <MemberSignature Language="C#" Value="public void SetVolumeAdjustmentIndex (TagLib.Id3v2.ChannelType type, short index);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.Id3v2.ChannelType" />
+        <Parameter Name="index" Type="System.Int16" />
+      </Parameters>
+      <Docs>
+        <param name="type">A <see cref="T:TagLib.Id3v2.ChannelType" /> specifying which channel to work with.</param>
+        <param name="index">A <see cref="T:System.Int16" /> containing the relative volume adjustment in dB times 512.</param>
+        <summary>Sets the index for the volume adjustment for a specific channel.</summary>
+        <remarks>Value must be between -64dB and 64dB.</remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected RelativeVolumeFrame (TagLib.ByteVector data, int offset, TagLib.Id3v2.FrameHeader h, uint version);" />
+      <MemberSignature Language="C#" Value="public RelativeVolumeFrame (TagLib.ByteVector data, byte version);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+        <Parameter Name="version" Type="System.Byte" />
+      </Parameters>
+      <Docs>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
+        <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.RelativeVolumeFrame" /> from a raw ID3v2 frame.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected RelativeVolumeFrame (TagLib.ByteVector data, int offset, TagLib.Id3v2.FrameHeader h, byte version);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="data" Type="TagLib.ByteVector" />
         <Parameter Name="offset" Type="System.Int32" />
         <Parameter Name="h" Type="TagLib.Id3v2.FrameHeader" />
-        <Parameter Name="version" Type="System.UInt32" />
+        <Parameter Name="version" Type="System.Byte" />
       </Parameters>
       <Docs>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
-        <param name="offset">A <see cref="T:System.Int32" /> specifying the index at which the frame begins.</param>
-        <param name="h">The <see cref="T:TagLib.Id3v2.FrameHeader" /> for the frame.</param>
-        <param name="version">A <see cref="T:System.UInt32" /> specifying the ID3v2 version <paramref name="data" /> is encoded in.</param>
-        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Id3v2.RelativeVolumeFrame" /> by reading frame data of a specified version.</summary>
+        <param name="offset">A <see cref="T:System.Int32" /> specifying at what index in <paramref name="data" /> the frame begins.</param>
+        <param name="h">A <see cref="T:TagLib.Id3v2.FrameHeader" /> containing the header to use with the new instance.</param>
+        <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.RelativeVolumeFrame" /> from a raw ID3v2 frame.</summary>
         <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used for accessing and modifying ID3v2 Relative Volume Adjustment (RVA2) frames.</summary>
+    <remarks />
   </Docs>
 </Type>

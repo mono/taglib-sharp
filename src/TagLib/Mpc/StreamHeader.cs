@@ -23,16 +23,16 @@
 using System.Collections;
 using System;
 
-namespace TagLib.Mpc
+namespace TagLib.MusePack
 {
-   public class StreamHeader : IAudioCodec
+   public struct StreamHeader : IAudioCodec
    {
 #region Private properties
-      private int version = 0;
-      private long stream_length = 0;
-      private int sample_rate = 0;
-      private uint frames = 0;
-      private uint header_data = 0;
+      private int  version;
+      private long stream_length;
+      private int  sample_rate;
+      private uint frames;
+      private uint header_data;
       private static ushort [] sftable = {44100, 48000, 37800, 32000};
 #endregion
       
@@ -51,6 +51,7 @@ namespace TagLib.Mpc
             frames      = data.Mid (4, 4).ToUInt (false);
             uint flags  = data.Mid (8, 4).ToUInt (false);
             sample_rate = sftable [(int) (((flags >> 17) & 1) * 2 + ((flags >> 16) & 1))];
+            header_data = 0;
          }
          else
          {

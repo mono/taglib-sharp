@@ -1,11 +1,11 @@
 <Type Name="BlockHeader" FullName="TagLib.Flac.BlockHeader">
-  <TypeSignature Language="C#" Value="public class BlockHeader" />
+  <TypeSignature Language="C#" Value="public struct BlockHeader" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>System.Object</BaseTypeName>
+    <BaseTypeName>System.ValueType</BaseTypeName>
   </Base>
   <Interfaces />
   <Members>
@@ -16,9 +16,9 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing a FLAC block header.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Flac.BlockHeader" /> by reading the contents of a FLACK block header.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -29,10 +29,10 @@
         <Parameter Name="length" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="type">A <see cref="T:TagLib.Flac.BlockType" /> specifying the block type of the new instance.</param>
+        <param name="length">A <see cref="T:System.UInt32" /> specifying the block length of the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Flac.BlockHeader" /> with a specific type and length.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -45,10 +45,10 @@
         <Parameter Name="is_last_block" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="is_last_block">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="is_last_block">A <see cref="T:System.Boolean" /> specifying whether or not the block represented by the current instance is the last in the set.</param>
+        <summary>Renders the current instance as a FLAC block header.</summary>
+        <returns>A new <see cref="T:TagLib.ByteVector" /> containing the rendered version of the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Length">
@@ -58,9 +58,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the length of a block header.</summary>
+        <value>Always 4.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="BlockType">
@@ -70,9 +70,9 @@
         <ReturnType>TagLib.Flac.BlockType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the block type of the current instance.</summary>
+        <value>A <see cref="T:TagLib.Flac.BlockType" /> describing contents of the block represented by the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IsLastBlock">
@@ -82,9 +82,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether or not the block represented by the current instance.</summary>
+        <value>A <see cref="T:System.Boolean" /> containing whether or not the block represented by the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="BlockLength">
@@ -94,14 +94,14 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the length of the block represented by the current instance.</summary>
+        <value>A <see cref="T:TagLib.Flac.BlockType" /> containing the length of the block represented by the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access FLAC block headers.</summary>
+    <remarks />
   </Docs>
 </Type>
