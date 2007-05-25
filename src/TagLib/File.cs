@@ -28,26 +28,10 @@ namespace TagLib
 {
    public enum ReadStyle
    {
-      None,
-      /*Fast,*/
-      Average,
-      /*Accurate*/
-   }
-   
-   [Flags]
-   public enum TagTypes : uint
-   {
-      NoTags   = 0x00000000,
-      Xiph     = 0x00000001,
-      Id3v1    = 0x00000002,
-      Id3v2    = 0x00000004,
-      Ape      = 0x00000008,
-      Apple    = 0x00000010,
-      Asf      = 0x00000020,
-      RiffInfo = 0x00000040,
-      MovieId  = 0x00000080,
-      DivX     = 0x00000100,
-      AllTags  = 0xFFFFFFFF
+      None = 0,
+      /*Fast = 1,*/
+      Average = 2,
+      /*Accurate = 3*/
    }
    
    public abstract class File
@@ -74,7 +58,6 @@ namespace TagLib
       private System.IO.Stream file_stream;
       private IFileAbstraction file_abstraction;
       private string mime_type;
-      private TagTypes tags = TagTypes.NoTags;
       private TagTypes tags_on_disk = TagTypes.NoTags;
       
       private static uint buffer_size = 1024;
@@ -111,10 +94,9 @@ namespace TagLib
          protected set {tags_on_disk = value;}
       }
       
-      public virtual TagTypes TagTypes
+      public TagTypes TagTypes
       {
-         get {return tags;}
-         protected set {tags = value;}
+         get {return Tag != null ? Tag.TagTypes : TagTypes.NoTags;}
       }
       
       public string Name {get {return file_abstraction.Name;}}

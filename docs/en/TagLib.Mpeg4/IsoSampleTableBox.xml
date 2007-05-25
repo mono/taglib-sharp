@@ -18,16 +18,16 @@
         <Parameter Name="handler" Type="TagLib.Mpeg4.Box" />
       </Parameters>
       <Docs>
-        <param name="header">To be added.</param>
-        <param name="file">To be added.</param>
-        <param name="handler">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="header">A <see cref="T:TagLib.Mpeg4.BoxHeader" /> containing the header for the new instance.</param>
+        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to read from.</param>
+        <param name="handler">A <see cref="T:TagLib.Mpeg4.Box" /> containing the handler that applies to the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.IsoSampleTableBox" /> for a specified header by reading from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class provides access to ISO/IEC 14496-12 SampleTableBoxes.</summary>
+    <remarks />
   </Docs>
 </Type>

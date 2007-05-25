@@ -30,10 +30,13 @@ namespace TagLib.Mpeg4
       }
       #endregion
       
-      #region Public Methods
-      public override ByteVector Render ()
+      #region Protected Methods
+      protected override ByteVector Render (ByteVector data)
       {
-         return Render (new ByteVector (4));
+         ByteVector output = new ByteVector (4);
+         output.Add (data);
+         
+         return base.Render (output);
       }
       #endregion
       
@@ -50,7 +53,7 @@ namespace TagLib.Mpeg4
             Data = ByteVector.FromString (value, StringType.UTF8);
          }
       }
-      protected override long DataOffset {get {return base.DataOffset + 4;}}
+      protected override long DataPosition {get {return base.DataPosition + 4;}}
       public override ByteVector Data {get {return data;} set {data = value;}}
       #endregion
    }

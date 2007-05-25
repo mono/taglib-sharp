@@ -14,8 +14,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v1.StringHandler" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Parse">
@@ -28,10 +28,10 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> to convert into a string.</param>
+        <summary>Converts an ID3v1 data field into a string.</summary>
+        <returns>A <see cref="T:System.String" /> containing the text stored in the data.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -44,15 +44,15 @@
         <Parameter Name="s" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="s">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="s">A <see cref="T:System.String" /> to convert into byte data.</param>
+        <summary>Converts a string into an ID3v1 data field.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the data representing the text.</returns>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class provides support for reading and writing the text stored in an ID3v1 tag.</summary>
+    <remarks>If strings are stored in a non-standard encoding. A subclass can be made to read to correctly handle the string, storing an instance in <see cref="P:TagLib.Id3v1.Tag.DefaultStringHandler" />.</remarks>
   </Docs>
 </Type>

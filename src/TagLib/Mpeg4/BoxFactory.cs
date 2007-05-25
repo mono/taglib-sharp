@@ -5,10 +5,12 @@ namespace TagLib.Mpeg4
 	public static class BoxFactory
 	{
       // Create a box by reading the file and add it to "parent".
-      public static Box CreateBox (BoxHeader header, File file, BoxHeader parent, Box handler)
+      internal static Box CreateBox (File file, BoxHeader header, BoxHeader parent, Box handler, int index)
       {
          // The first few children of an "stsd" are sample entries.
-         if (parent != null && parent.BoxType == "stsd")
+         if (parent.BoxType == "stsd" &&
+             parent.Box is IsoSampleDescriptionBox &&
+             index < (parent.Box as IsoSampleDescriptionBox).EntryCount)
          {
             if (handler != null && (handler as IsoHandlerBox).HandlerType == "soun")
                return new IsoAudioSampleEntry (header, file, handler);
@@ -57,10 +59,30 @@ namespace TagLib.Mpeg4
          return new UnknownBox (header, file, handler);
       }
       
-      public static Box CreateBox (File file, long position, BoxHeader parent, Box handler)
+      internal static Box CreateBox (File file, long position, BoxHeader parent, Box handler, int index)
       {
          BoxHeader header = new BoxHeader (file, position);
-         return CreateBox (header, file, parent, handler);
+         return CreateBox (file, header, parent, handler, index);
+      }
+      
+      public static Box CreateBox (File file, long position, IsoHandlerBox handler)
+      {
+         return CreateBox (file, position, BoxHeader.Empty, handler, -1);
+      }
+      
+      public static Box CreateBox (File file, long position)
+      {
+         return CreateBox (file, position, null);
+      }
+      
+      public static Box CreateBox (File file, BoxHeader header, IsoHandlerBox handler)
+      {
+         return CreateBox (file, header, BoxHeader.Empty, handler, -1);
+      }
+      
+      public static Box CreateBox (File file, BoxHeader header)
+      {
+         return CreateBox (file, header, null);
       }
 	}
 }

@@ -43,9 +43,9 @@ namespace TagLib.Mpeg
    };
 #endregion
    
-   public class AudioHeader : IAudioCodec
+   public struct AudioHeader : IAudioCodec
    {
-#region Private Static Value Arrays
+      #region Private Static Value Arrays
       private static readonly int [,] sample_rates = new int [3,4] {
          { 44100, 48000, 32000, 0 }, // Version 1
          { 22050, 24000, 16000, 0 }, // Version 2
@@ -70,20 +70,30 @@ namespace TagLib.Mpeg
             { 0, 8,  16, 24, 32, 40, 48, 56,  64,  80,  96,  112, 128, 144, 160, -1 }  // layer 3
          }
       };
-#endregion
+      #endregion
       
-#region Private Properties
+      #region Private Properties
       private uint        flags;
       private long        position;
       private long        stream_length;
       private XingHeader  xing_header;
-#endregion
+      #endregion
       
-#region Constructors
+      public static readonly AudioHeader Unknown = new AudioHeader (0,0,0,XingHeader.Unknown);
+      
+      #region Constructors
+      private AudioHeader (uint flags, long position, long stream_length, XingHeader xing_header)
+      {
+         this.flags = flags;
+         this.position = position;
+         this.stream_length = stream_length;
+         this.xing_header = xing_header;
+      }
+      
       private AudioHeader (ByteVector data, TagLib.File file, long offset)
       {
          position = offset;
-         
+         stream_length = 0;
          if (data.Count < 4)
             throw new CorruptFileException ("Insufficient header length.");
          
@@ -108,7 +118,10 @@ namespace TagLib.Mpeg
             file.Seek (offset + XingHeader.XingHeaderOffset (Version, ChannelMode));
             xing_header = new XingHeader (file.ReadBlock (16));
          }
-         catch {}
+         catch
+         {
+            xing_header = XingHeader.Unknown;
+         }
       }
 #endregion
 
@@ -161,7 +174,7 @@ namespace TagLib.Mpeg
          }
       }
       
-      public int FrameLength
+      public int AudioFrameLength
       {
          get
          {
@@ -187,12 +200,12 @@ namespace TagLib.Mpeg
                return TimeSpan.FromSeconds (time_per_frame * XingHeader.TotalFrames);
             }
             
-            if (FrameLength > 0 && AudioBitrate > 0)
+            if (AudioFrameLength > 0 && AudioBitrate > 0)
             {
                // Since there was no valid Xing header found, we hope that we're
                // in a constant bitrate file.
-               int frames = (int) ((stream_length - Position) / FrameLength + 1);
-               return TimeSpan.FromSeconds ((double) (FrameLength * frames) / (double) (AudioBitrate * 125) + 0.5);
+               int frames = (int) ((stream_length - position) / AudioFrameLength + 1);
+               return TimeSpan.FromSeconds ((double) (AudioFrameLength * frames) / (double) (AudioBitrate * 125) + 0.5);
             }
             
             return TimeSpan.Zero;
@@ -223,7 +236,6 @@ namespace TagLib.Mpeg
       public bool        IsCopyrighted {get {return ((flags >> 3) & 1) == 1;}}
       public bool        IsOriginal    {get {return ((flags >> 2) & 1) == 1;}}
       public int         AudioChannels {get {return ChannelMode == ChannelMode.SingleChannel ? 1 : 2;}}
-      public long        Position      {get {return position;}}
       public ChannelMode ChannelMode   {get {return (ChannelMode) ((flags >> 14) & 0x03);}}
       public MediaTypes  MediaTypes    {get {return MediaTypes.Audio;}}
       public XingHeader  XingHeader    {get {return xing_header;}}
@@ -237,9 +249,11 @@ namespace TagLib.Mpeg
 #endregion
       
 #region Public Static Methods
-      public static bool Find (ref AudioHeader header, TagLib.File file, long position, int length)
+      public static bool Find (out AudioHeader header, TagLib.File file, long position, int length)
       {
          long end = position + length;
+         
+         header = AudioHeader.Unknown;
          
          file.Seek (position);
          ByteVector buffer = file.ReadBlock (3);
@@ -268,9 +282,9 @@ namespace TagLib.Mpeg
          return false;
       }
       
-      public static bool Find (ref AudioHeader header, TagLib.File file, long position)
+      public static bool Find (out AudioHeader header, TagLib.File file, long position)
       {
-         return Find (ref header, file, position, -1);
+         return Find (out header, file, position, -1);
       }
 #endregion
    }

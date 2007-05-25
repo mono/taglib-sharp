@@ -33,7 +33,7 @@ namespace TagLib.Flac
    {
 #region Properties
       private Ogg.XiphComment comment      = null;
-      private PictureTag      picture_tag  = null;
+      private Metadata        metadata_tag = null;
       private CombinedTag     tag          = null;
       private ByteVector      header_block = null;
       private long            stream_start = 0;
@@ -81,8 +81,8 @@ namespace TagLib.Flac
          
          new_blocks.Add (new Block (BlockType.VorbisComment, comment.Render (false)));
          
-         foreach (IPicture picture in picture_tag.Pictures)
-            new_blocks.Add (new Block (BlockType.Picture, Picture.Render (picture)));
+         foreach (IPicture picture in metadata_tag.Pictures)
+            new_blocks.Add (new Block (BlockType.Picture, new Picture (picture).Render ()));
          
          // Get the length of the blocks.
          long length = 0;
@@ -114,7 +114,7 @@ namespace TagLib.Flac
       
       public override TagLib.Tag GetTag (TagTypes type, bool create)
       {
-         Tag t = (type == TagTypes.Xiph) ? comment : (Tag as TagLib.NonContainer.Tag).GetTag (type);
+         Tag t = (type == TagTypes.Xiph) ? comment : (type == TagTypes.FlacMetadata) ? metadata_tag : (Tag as TagLib.NonContainer.Tag).GetTag (type);
          
          if (t != null || !create)
             return t;
@@ -133,7 +133,7 @@ namespace TagLib.Flac
          case TagTypes.Xiph:
             comment = new Ogg.XiphComment ();
             TagLib.Tag.Duplicate (tag, comment, true);
-            tag.SetTags (picture_tag, comment, base.Tag);
+            tag.SetTags (metadata_tag, comment, base.Tag);
             return comment;
          
          default:
@@ -141,17 +141,18 @@ namespace TagLib.Flac
          }
       }
       
-      public override TagTypes TagTypes
-      {
-         get{
-            TagTypes types = base.TagTypes;
-            if (comment != null && !comment.IsEmpty)
-               types |= TagTypes.Xiph;
-            return types;
-         }
-      }
-
       public override TagLib.Tag Tag {get {return tag;}}
+      
+      public override void RemoveTags (TagTypes types)
+      {
+         if ((types & TagTypes.Xiph) != 0)
+            comment.Clear ();
+         
+         if ((types & TagTypes.FlacMetadata) != 0)
+            metadata_tag.Clear ();
+         
+         base.RemoveTags (types);
+      }
       
       protected override void ReadStart (long start, ReadStyle style)
       {
@@ -163,8 +164,7 @@ namespace TagLib.Flac
             if (block.Type == BlockType.VorbisComment && block.Data.Count > 0)
             {
                comment = new Ogg.XiphComment (block.Data);
-               if (!comment.IsEmpty)
-                  TagTypesOnDisk |= TagTypes.Xiph;
+               TagTypesOnDisk |= TagTypes.Xiph;
                break;
             }
          
@@ -179,7 +179,9 @@ namespace TagLib.Flac
                } catch {}
             }
          
-         picture_tag = new PictureTag (pictures.ToArray ());
+         metadata_tag = new Metadata ();
+         TagTypesOnDisk |= TagTypes.FlacMetadata;
+         metadata_tag.Pictures = pictures.ToArray ();
          
          if (style != ReadStyle.None)
          {
@@ -191,7 +193,7 @@ namespace TagLib.Flac
       
       protected override void ReadEnd (long end, ReadStyle style)
       {
-         tag = new CombinedTag (picture_tag, comment, base.Tag);
+         tag = new CombinedTag (metadata_tag, comment, base.Tag);
          
          // Make sure we have a Vorbis Comment.
          GetTag (TagTypes.Xiph, true);
@@ -262,23 +264,25 @@ namespace TagLib.Flac
          
          return new Block (header, data, position);
       }
+   }
+   
+   public class Metadata : Tag
+   {
+      public override TagTypes TagTypes {get {return TagTypes.FlacMetadata;}}
+      private IPicture[] pictures = null;
       
-      //////////////////////////////////////////////////////////////////////////
-      // PictureTag class
-      //////////////////////////////////////////////////////////////////////////
-      private class PictureTag : Tag
+      public Metadata ()
+      {}
+      
+      public override IPicture[] Pictures
       {
-         private IPicture[] pictures;
-         public PictureTag (IPicture[] pictures)
-         {
-            this.pictures = pictures;
-         }
-         
-         public override IPicture[] Pictures
-         {
-            get {return pictures != null ? pictures : new IPicture [] {};}
-            set {pictures = value;}
-         }
+         get {return pictures != null ? pictures : new IPicture [] {};}
+         set {pictures = value;}
+      }
+      
+      public void Clear ()
+      {
+         pictures = null;
       }
    }
 }

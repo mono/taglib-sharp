@@ -65,10 +65,10 @@
         <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="position">A <see cref="T:System.Int64" /> specifying the seek position to look at.</param>
+        <summary>Gets the marker at a specified position in a file.</summary>
+        <returns>A <see cref="T:TagLib.Mpeg.Marker" /> specifying the type of marker found.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="FindMarker">
@@ -81,10 +81,11 @@
         <Parameter Name="position" Type="System.Int64&amp;" RefType="ref" />
       </Parameters>
       <Docs>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="position">A <see cref="T:System.Int64&amp;" /> specifying the seek position to start looking at.</param>
+        <summary>Finds the first marker after a specified position in the file.</summary>
+        <returns>A <see cref="T:TagLib.Mpeg.Marker" /> specifying the type of marker found.</returns>
+        <remarks>
+          <paramref name="position" /> will move to the position at which the header is found.</remarks>
       </Docs>
     </Member>
     <Member MemberName="FindMarker">
@@ -98,11 +99,12 @@
         <Parameter Name="marker" Type="TagLib.Mpeg.Marker" />
       </Parameters>
       <Docs>
-        <param name="position">To be added.</param>
-        <param name="marker">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="position">A <see cref="T:System.Int64&amp;" /> specifying the seek position to start looking at.</param>
+        <param name="marker">A <see cref="T:TagLib.Mpeg.Marker" /> to search for.</param>
+        <summary>Searches for a specific marker after a specifed position in the file.</summary>
+        <returns>A <see cref="T:TagLib.Mpeg.Marker" /> specifying the type of marker found.</returns>
+        <remarks>
+          <paramref name="position" /> will move to the position at which the header is found.</remarks>
       </Docs>
     </Member>
     <Member MemberName="RFindMarker">
@@ -116,11 +118,12 @@
         <Parameter Name="marker" Type="TagLib.Mpeg.Marker" />
       </Parameters>
       <Docs>
-        <param name="position">To be added.</param>
-        <param name="marker">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="position">A <see cref="T:System.Int64&amp;" /> specifying the seek position to start looking at.</param>
+        <param name="marker">A <see cref="T:TagLib.Mpeg.Marker" /> to search for.</param>
+        <summary>Searches for a specific marker before a specifed position in the file.</summary>
+        <returns>A <see cref="T:TagLib.Mpeg.Marker" /> specifying the type of marker found.</returns>
+        <remarks>
+          <paramref name="position" /> will move to the position at which the header is found.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ReadSystemFile">
@@ -133,9 +136,9 @@
         <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="position">A <see cref="T:System.Int64&amp;" /> specifying the seek position to reading.</param>
+        <summary>Reads the current instance as an MPEG system file.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>

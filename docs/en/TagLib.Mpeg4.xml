@@ -1,6 +1,6 @@
 <Namespace Name="TagLib.Mpeg4">
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>The TagLib.Mpeg4 namespace contains classes for handling the MPEG-4 file format.</summary>
+    <remarks>See http://standards.iso.org/ittf/PubliclyAvailableStandards/c041828_ISO_IEC_14496-12_2005(E).zip for the complete specification.</remarks>
   </Docs>
 </Namespace>

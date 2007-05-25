@@ -42,7 +42,7 @@ namespace TagLib.Ogg
       {
          field_list = new Dictionary<string, StringList> ();
          vendor_id = null;
-         comment_field = null;
+         comment_field = "DESCRIPTION";
       }
       
       public XiphComment (ByteVector data) : this ()
@@ -55,72 +55,49 @@ namespace TagLib.Ogg
          field_list.Clear ();
       }
       
-      public StringList GetField (string key)
+      public string [] GetField (string key)
       {
-         return (field_list.ContainsKey (key.ToUpper ())) ? field_list [key.ToUpper ()] : null;
+         return (field_list.ContainsKey (key.ToUpper ())) ? field_list [key.ToUpper ()].ToArray () : new string [0];
       }
       
-      public void AddNumberField (string key, uint number, bool replace)
+      public string GetFirstField (string key)
+      {
+         string [] values = GetField (key);
+         return (values.Length > 0) ? values [0] : null;
+      }
+      
+      public void SetField (string key, uint number)
       {
          if (number == 0)
-            AddField (key, null, replace);
+            RemoveField (key);
          else
-            AddField (key, number.ToString (), replace);
-      }
-
-      public void AddField (string key, string value, bool replace)
-      {
-         if (replace)
-            RemoveField (key.ToUpper ());
-         
-         if (value != null && value.Trim () != String.Empty)
-         {
-            if (!field_list.ContainsKey (key.ToUpper ()))
-               field_list.Add (key.ToUpper (), new StringList ());
-         
-            field_list [key.ToUpper ()].Add (value);
-         }
+            SetField (key, number.ToString ());
       }
       
-      public void AddField (string key, string value)
+      public void SetField (string key, params string [] values)
       {
-         AddField (key, value, true);
-      }
-      
-      public void AddFields (string key, string [] values, bool replace)
-      {
-         if (replace)
-            RemoveField (key.ToUpper ());
+         key = key.ToUpper ();
          
-         foreach (string s in values)
-            AddField (key, s, false);
-      }
-      
-      public void AddFields (string key, string [] values)
-      {
-         AddFields (key, values, true);
-      }
-      
-      public void RemoveField (string key, string value)
-      {
-         if (!field_list.ContainsKey (key.ToUpper ()))
-            return;
+         StringList results = new StringList ();
          
-         StringList l = field_list [key.ToUpper ()];
+         if (values != null)
+            foreach (string value in values)
+               if (value != null && value.Trim () != string.Empty)
+                  results.Add (value);
          
-         if (value == null)
-            l.Clear ();
+         if (results.Count == 0)
+            RemoveField (key);
+         else if (field_list.ContainsKey (key))
+            field_list [key] = results;
          else
-         {
-            int index;         
-            while ((index = l.IndexOf (value)) >=0)
-               l.RemoveAt (index);
-         }
+            field_list.Add (key, results);
       }
       
       public void RemoveField (string key)
       {
-         RemoveField (key, null);
+         StringList values;
+         if (field_list.TryGetValue (key.ToUpper (), out values))
+            values.Clear ();
       }
       
       public ByteVector Render (bool add_framing_bit)
@@ -170,11 +147,6 @@ namespace TagLib.Ogg
          return data;
       }
       
-      public ByteVector Render ()
-      {
-         return Render (true);
-      }
-      
       public IEnumerator GetEnumerator()
       {
          return field_list.Keys.GetEnumerator();
@@ -183,6 +155,8 @@ namespace TagLib.Ogg
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
+      public override TagTypes TagTypes {get {return TagTypes.Xiph;}}
+      
       public override bool IsEmpty
       {
          get
@@ -217,134 +191,82 @@ namespace TagLib.Ogg
 
       public override string Title
       {
-         get
-         {
-            StringList l = GetField ("TITLE");
-            return (l != null && l.Count != 0) ? l [0] : null;
-         }
-         set
-         {
-            AddField ("TITLE", value);
-         }
+         get {return GetFirstField ("TITLE");}
+         set {SetField ("TITLE", value);}
       }
       
       public override string [] AlbumArtists
       {
-         get
-         {
-            StringList l = GetField ("ARTIST");
-            return (l != null && l.Count != 0) ? l.ToArray () : new string [] {};
-         }
-         set
-         {
-            AddFields ("ARTIST", value);
-         }
+         get {return GetField ("ARTIST");}
+         set {SetField ("ARTIST", value);}
       }
       
       public override string [] Performers
       {
-         get
-         {
-            StringList l = GetField ("PERFORMER");
-            return (l != null && l.Count != 0) ? l.ToArray () : new string [] {};
-         }
-         set
-         {
-            AddFields ("PERFORMER", value);
-         }
+         get {return GetField ("PERFORMER");}
+         set {SetField ("PERFORMER", value);}
       }
       
       public override string [] Composers
       {
-         get
-         {
-            StringList l = GetField ("COMPOSER");
-            return (l != null && l.Count != 0) ? l.ToArray () : new string [] {};
-         }
-         set
-         {
-            AddFields ("COMPOSER", value);
-         }
+         get {return GetField ("COMPOSER");}
+         set {SetField ("COMPOSER", value);}
       }
 
       public override string Album
       {
-         get
-         {
-            StringList l = GetField ("ALBUM");
-            return (l != null && l.Count != 0) ? l [0] : null;
-         }
-         set
-         {
-            AddField ("ALBUM", value);
-         }
+         get {return GetFirstField ("ALBUM");}
+         set {SetField ("ALBUM", value);}
       }
 
       public override string Comment
       {
          get
          {
-            StringList l = GetField ("DESCRIPTION");
-            comment_field = "DESCRIPTION";
+            string value = GetFirstField (comment_field);
+            if (value != null || comment_field == "COMMENT")
+               return value;
             
-            if (l == null || l.Count == 0)
-            {
-               l = GetField ("COMMENT");
-               comment_field = "COMMENT";
-            }
-            
-            return (l != null && l.Count != 0) ? l [0] : null;
+            comment_field = "COMMENT";
+            return GetFirstField (comment_field);
          }
-         set
-         {
-            AddField (comment_field == null ? "DESCRIPTION" : comment_field, value);
-         }
+         set {SetField (comment_field, value);}
       }
       
       public override string [] Genres
       {
-         get
-         {
-            StringList l = GetField ("GENRE");
-            return (l != null && l.Count != 0) ? l.ToArray () : new string [] {};
-         }
-         set
-         {
-            AddFields ("GENRE", value);
-         }
+         get {return GetField ("GENRE");}
+         set {SetField ("GENRE", value);}
       }
       
       public override uint Year
       {
          get
          {
-            StringList l = GetField ("DATE");
+            string text = GetFirstField ("DATE");
             uint value;
-            return (l != null && l.Count != 0 && uint.TryParse (l[0].Length > 4 ? l[0].Substring (0, 4) : l[0], out value)) ? value : 0;
+            return (text != null && uint.TryParse (text.Length > 4 ? text.Substring (0, 4) : text, out value)) ? value : 0;
          }
-         set
-         {
-            AddNumberField ("DATE", value, true);
-         }
+         set {SetField ("DATE", value);}
       }
       
       public override uint Track
       {
          get
          {
-            StringList l = GetField ("TRACKNUMBER");
+            string text = GetFirstField ("TRACKNUMBER");
             string [] values;
             uint value;
             
-            if (l != null && l.Count != 0 && (values = l[0].Split ('/')).Length > 0 && uint.TryParse (values [0], out value))
+            if (text != null && (values = text.Split ('/')).Length > 0 && uint.TryParse (values [0], out value))
                return value;
             
             return 0;
          }
          set
          {
-            AddNumberField ("TRACKTOTAL", value == 0 ? 0 : TrackCount, true);
-            AddNumberField ("TRACKNUMBER", value, true);
+            SetField ("TRACKTOTAL", TrackCount);
+            SetField ("TRACKNUMBER", value);
          }
       }
       
@@ -352,41 +274,38 @@ namespace TagLib.Ogg
       {
          get
          {
-            StringList l;
+            string text;
             string [] values;
             uint value;
             
-            if ((l = GetField ("TRACKTOTAL")) != null && l.Count != 0 && uint.TryParse (l[0], out value))
+            if ((text = GetFirstField ("TRACKTOTAL")) != null && uint.TryParse (text, out value))
                return value;
             
-            if ((l = GetField ("TRACKNUMBER")) != null && l.Count != 0 && (values = l[0].Split ('/')).Length > 1 && uint.TryParse (values [1], out value))
+            if ((text = GetFirstField ("TRACKNUMBER")) != null && (values = text.Split ('/')).Length > 1 && uint.TryParse (values [1], out value))
                return value;
             
             return 0;
          }
-         set
-         {
-            AddNumberField ("TRACKTOTAL", Track == 0 ? 0 : value, true);
-         }
+         set {SetField ("TRACKTOTAL", value);}
       }
       
       public override uint Disc
       {
          get
          {
-            StringList l = GetField ("DISCNUMBER");
+            string text = GetFirstField ("DISCNUMBER");
             string [] values;
             uint value;
             
-            if (l != null && l.Count != 0 && (values = l[0].Split ('/')).Length > 0 && uint.TryParse (values [0], out value))
+            if (text != null && (values = text.Split ('/')).Length > 0 && uint.TryParse (values [0], out value))
                return value;
             
             return 0;
          }
          set
          {
-            AddNumberField ("DISCTOTAL", value == 0 ? 0 : DiscCount, true);
-            AddNumberField ("DISCNUMBER", value, true);
+            SetField ("DISCTOTAL", TrackCount);
+            SetField ("DISCNUMBER", value);
          }
       }
       
@@ -394,80 +313,54 @@ namespace TagLib.Ogg
       {
          get
          {
-            StringList l;
+            string text;
             string [] values;
             uint value;
             
-            if ((l = GetField ("DISCTOTAL")) != null && l.Count != 0 && uint.TryParse (l[0], out value))
+            if ((text = GetFirstField ("DISCTOTAL")) != null && uint.TryParse (text, out value))
                return value;
             
-            if ((l = GetField ("DISCNUMBER")) != null && l.Count != 0 && (values = l[0].Split ('/')).Length > 1 && uint.TryParse (values [1], out value))
+            if ((text = GetFirstField ("DISCNUMBER")) != null && (values = text.Split ('/')).Length > 1 && uint.TryParse (values [1], out value))
                return value;
             
             return 0;
          }
-         set
-         {
-            AddNumberField ("DISCTOTAL", Disc == 0 ? 0 : value, true);
-         }
+         set {SetField ("DISCTOTAL", value);}
       }
       
       public override string Lyrics
       {
-         get
-         {
-            StringList l = GetField ("LYRICS");
-            
-            return (l != null && l.Count != 0) ? l [0] : null;
-         }
-         set
-         {
-            AddField ("LYRICS", value);
-         }
+         get {return GetFirstField ("LYRICS");}
+         set {SetField ("LYRICS", value);}
       }
       
       public override string Copyright
       {
-         get
-         {
-            StringList l = GetField ("COPYRIGHT");
-           
-            return (l != null && l.Count != 0) ? l [0] : null;
-         }
-         set {AddField ("COPYRIGHT", value);}
+         get {return GetFirstField ("COPYRIGHT");}
+         set {SetField ("COPYRIGHT", value);}
       }
       
       public override string Conductor
       {
-         get
-         {
-            StringList l = GetField ("CONDUCTOR");
-           
-            return (l != null && l.Count != 0) ? l [0] : null;
-         }
-         set {AddField ("CONDUCTOR", value);}
+         get {return GetFirstField ("CONDUCTOR");}
+         set {SetField ("CONDUCTOR", value);}
       }
       
       public override string Grouping
       {
-         get
-         {
-            StringList l = GetField ("GROUPING");
-           
-            return (l != null && l.Count != 0) ? l [0] : null;
-         }
-         set {AddField ("GROUPING", value);}
+         get {return GetFirstField ("GROUPING");}
+         set {SetField ("GROUPING", value);}
       }
       
       public override uint BeatsPerMinute
       {
          get
          {
-            StringList l = GetField ("TEMPO");
+            string text = GetFirstField ("TEMPO");
             uint value;
-            return (l != null && l.Count != 0 && uint.TryParse (l[0], out value)) ? value : 0;
+            return (text != null && uint.TryParse (text, out value)) ? value : 0;
          }
-         set {AddNumberField ("TEMPO", value, true);}
+         set {SetField ("TEMPO", value);}
       }
       
       //////////////////////////////////////////////////////////////////////////
@@ -507,8 +400,11 @@ namespace TagLib.Ogg
 
             string key = comment.Substring (0, comment_separator_position);
             string value = comment.Substring (comment_separator_position + 1);
-
-            AddField (key, value, false);
+            
+            if (field_list.ContainsKey (key.ToUpper ()))
+               field_list [key.ToUpper ()].Add (value);
+            else
+               SetField (key, value);
          }
       }
    }

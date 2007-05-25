@@ -39,7 +39,7 @@ namespace TagLib.Ogg
       public          TimeSpan   Duration        {get {return TimeSpan.Zero;}}
       
       public abstract bool ReadPacket (ByteVector packet, int index);
-      public abstract TimeSpan   GetDuration (long last_granular_position, long first_granular_position);
+      public abstract TimeSpan   GetDuration (long first_granular_position, long last_granular_position);
       
       public abstract void SetCommentPacket (ByteVectorList packets, XiphComment comment);
    }

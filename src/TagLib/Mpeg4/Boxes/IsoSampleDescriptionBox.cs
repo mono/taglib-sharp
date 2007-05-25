@@ -10,16 +10,16 @@ namespace TagLib.Mpeg4
       #region Constructors
       public IsoSampleDescriptionBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
       {
-         file.Seek (DataOffset);
+         file.Seek (base.DataPosition);
          entry_count = file.ReadBlock (4).ToUInt ();
          children = LoadChildren (file);
       }
       #endregion
       
       #region Public Properties
-      public             uint    EntryCount {get {return entry_count;}}
-      public    override BoxList Children   {get {return children;}}
-      protected override long    DataOffset {get {return base.DataOffset + 4;}}
+      public             uint    EntryCount   {get {return entry_count;}}
+      public    override BoxList Children     {get {return children;}}
+      protected override long    DataPosition {get {return base.DataPosition + 4;}}
       #endregion
    }
 }

@@ -20,10 +20,11 @@
  ***************************************************************************/
 
 using System;
+using System.Collections.Generic;
 
 namespace TagLib.Mpeg4
 {
-   public class BoxList : ListBase<Box>
+   public class BoxList : List<Box>
    {
       public BoxList() 
       {}

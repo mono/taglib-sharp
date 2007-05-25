@@ -83,6 +83,8 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
+      public override TagTypes TagTypes {get {return TagTypes.Asf;}}
+      
       public override string Title
       {
          get {return description.Title;}

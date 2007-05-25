@@ -14,8 +14,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ogg.GroupedComment" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetComment">
@@ -28,10 +28,10 @@
         <Parameter Name="stream_serial_number" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="stream_serial_number">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="stream_serial_number">A <see cref="T:System.UInt32" /> containing a serial number for an OGG bitstream.</param>
+        <summary>Gets a comment for a specific bitstream.</summary>
+        <returns>A <see cref="T:TagLib.Ogg.XiphComment" /> for the bitstream.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AddComment">
@@ -45,10 +45,10 @@
         <Parameter Name="comment" Type="TagLib.Ogg.XiphComment" />
       </Parameters>
       <Docs>
-        <param name="stream_serial_number">To be added.</param>
-        <param name="comment">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="stream_serial_number">A <see cref="T:System.UInt32" /> containing a serial number for an OGG bitstream.</param>
+        <param name="comment">A <see cref="T:TagLib.Ogg.XiphComment" /> for a specified OGG bitstream.</param>
+        <summary>Adds a Vorbis Comment for a specified bitstream.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AddComment">
@@ -62,10 +62,10 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="stream_serial_number">To be added.</param>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="stream_serial_number">A <see cref="T:System.UInt32" /> containing a serial number for an OGG bitstream.</param>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing a Vorbis Comment for a specified OGG bitstream.</param>
+        <summary>Adds a Vorbis Comment for a specified bitstream.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Clear">
@@ -76,8 +76,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Clears the contents of every <see cref="T:TagLib.Ogg.XiphComment" /> stored in the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Comments">
@@ -87,14 +87,14 @@
         <ReturnType>TagLib.Ogg.XiphComment[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets every Vorbis Comment stored in the current instance, in the order they were added.</summary>
+        <value>A <see cref="T:TagLib.Ogg.XiphComment" /> array containing the Vorbis Comments stored in the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class provides support for reading and storing tagging information for multiple OGG bitstreams.</summary>
+    <remarks>When values are stored, they are stored in the Vorbis Comment of the first stream.</remarks>
   </Docs>
 </Type>

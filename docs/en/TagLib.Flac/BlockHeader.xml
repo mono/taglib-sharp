@@ -101,7 +101,7 @@
     </Member>
   </Members>
   <Docs>
-    <summary>This class is used to access FLAC block headers.</summary>
+    <summary>This struct is used to access FLAC block headers.</summary>
     <remarks />
   </Docs>
 </Type>

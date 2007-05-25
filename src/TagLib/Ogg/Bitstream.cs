@@ -23,8 +23,8 @@ namespace TagLib.Ogg
       
       public bool ReadPage (Page page)
       {
-         ByteVectorList packets = page.Packets;
-         for (int i = 0; i < packets.Count; i ++)
+         ByteVector[] packets = page.Packets;
+         for (int i = 0; i < packets.Length; i ++)
          {
             if ((page.Header.Flags & PageFlags.FirstPacketContinued) == 0 && previous_packet != null)
             {
@@ -46,7 +46,7 @@ namespace TagLib.Ogg
             previous_packet = null;
             
             // If we're at the last packet of the page, store it.
-            if (i == packets.Count - 1)
+            if (i == packets.Length - 1)
                previous_packet = new ByteVector (packet);
             
             // Otherwise, we need to process it.
@@ -61,7 +61,7 @@ namespace TagLib.Ogg
       
       public TimeSpan GetDuration (long last_absolute_granular_position)
       {
-         return codec.GetDuration (last_absolute_granular_position, first_absolute_granular_position);
+         return codec.GetDuration (first_absolute_granular_position, last_absolute_granular_position);
       }
       
       private bool ReadPacket (ByteVector packet)

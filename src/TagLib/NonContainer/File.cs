@@ -60,11 +60,6 @@ namespace TagLib.NonContainer
       }
 #endregion
       
-      public override TagTypes TagTypes
-      {
-         get {return tag.TagTypes;}
-      }
-      
       
       protected virtual void ReadStart (long start, ReadStyle style) {}
       protected virtual void ReadEnd   (long end,   ReadStyle style) {}

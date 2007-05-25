@@ -15,17 +15,17 @@ namespace TagLib.Mpeg4
 #region Constructors
       public IsoAudioSampleEntry (BoxHeader header, File file, Box handler) : base (header, file, handler)
       {
-         file.Seek (base.DataOffset + 8);
+         file.Seek (base.DataPosition + 8);
          channel_count = file.ReadBlock (2).ToUShort ();
          sample_size   = file.ReadBlock (2).ToUShort ();
-         file.Seek (base.DataOffset + 16);
+         file.Seek (base.DataPosition + 16);
          sample_rate   = file.ReadBlock (4).ToUInt  ();
          children = LoadChildren (file);
       }
 #endregion
       
 #region Public Properties
-      protected override long    DataOffset   {get {return base.DataOffset + 20;}}
+      protected override long    DataPosition {get {return base.DataPosition + 20;}}
       public    override BoxList Children     {get {return children;}}
 #endregion
       
@@ -48,7 +48,7 @@ namespace TagLib.Mpeg4
       public int AudioChannels   {get {return channel_count;}}
       public int AudioSampleRate {get {return (int)(sample_rate >> 16);}}
       public int AudioSampleSize {get {return sample_size;}}
-      public string Description {get {return "MPEG-4 Video (" + BoxType.ToString () + ")";}}
+      public string Description {get {return "MPEG-4 Audio (" + BoxType.ToString () + ")";}}
       public MediaTypes MediaTypes {get {return MediaTypes.Audio;}}
       public TimeSpan Duration {get {return TimeSpan.Zero;}}
 #endregion

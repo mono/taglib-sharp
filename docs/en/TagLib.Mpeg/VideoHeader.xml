@@ -21,10 +21,10 @@
         <Parameter Name="offset" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="offset">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.File" /> containing a video header to read.</param>
+        <param name="offset">A <see cref="T:System.Int64" /> specifying where to read from the file.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg.VideoHeader" /> by reading one from a specified file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="VideoWidth">
@@ -58,9 +58,9 @@
         <ReturnType>System.Double</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the frame rate of the video.</summary>
+        <value>A <see cref="System.Int32" /> representing the frame rate of the video.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="VideoBitrate">
@@ -70,9 +70,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the bitrate of the video.</summary>
+        <value>A <see cref="System.Int32" /> representing the bitrate of the video.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Description">

@@ -15,7 +15,7 @@
         <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The channel is the master volume.</summary>
       </Docs>
     </Member>
     <Member MemberName="FrontRight">
@@ -25,7 +25,7 @@
         <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The channel is the front right speaker.</summary>
       </Docs>
     </Member>
     <Member MemberName="FrontLeft">
@@ -35,7 +35,7 @@
         <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The channel is the front left speaker.</summary>
       </Docs>
     </Member>
     <Member MemberName="BackRight">
@@ -45,7 +45,7 @@
         <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The channel is the back right speaker.</summary>
       </Docs>
     </Member>
     <Member MemberName="BackLeft">
@@ -55,7 +55,7 @@
         <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The channel is the back left speaker.</summary>
       </Docs>
     </Member>
     <Member MemberName="Subwoofer">
@@ -65,7 +65,7 @@
         <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The channel is a subwolfer.</summary>
       </Docs>
     </Member>
     <Member MemberName="BackCentre">
@@ -75,7 +75,7 @@
         <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The channel is the back center speaker.</summary>
       </Docs>
     </Member>
     <Member MemberName="Other">
@@ -85,7 +85,7 @@
         <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The channel is unknown.</summary>
       </Docs>
     </Member>
     <Member MemberName="FrontCentre">
@@ -95,12 +95,12 @@
         <ReturnType>TagLib.Id3v2.ChannelType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The channel is the front center speaker.</summary>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Specifies the type of speaker being dealt with.</summary>
+    <remarks />
   </Docs>
 </Type>

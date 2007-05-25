@@ -16,9 +16,9 @@
         <Parameter Name="codec" Type="TagLib.Ogg.Codec" />
       </Parameters>
       <Docs>
-        <param name="codec">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="codec">A <see cref="T:TagLib.Ogg.Codec" /> to use with the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ogg.Codec" />, specifying what codec it it to use.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AddPage">
@@ -31,9 +31,9 @@
         <Parameter Name="page" Type="TagLib.Ogg.Page" />
       </Parameters>
       <Docs>
-        <param name="page">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="page">A <see cref="T:TagLib.Ogg.Page" /> whose packets are to be added to the current instance.</param>
+        <summary>Adds a page to the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetComment">
@@ -46,9 +46,9 @@
         <Parameter Name="comment" Type="TagLib.Ogg.XiphComment" />
       </Parameters>
       <Docs>
-        <param name="comment">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="comment">A <see cref="T:TagLib.Ogg.XiphComment" /> to store in the current instance.</param>
+        <summary>Stores a Vorbis Comment in the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Paginate">
@@ -59,14 +59,14 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Converts the current instance to a <see cref="T:TagLib.Ogg.Page" /> collection.</summary>
+        <returns>A <see cref="T:TagLib.Ogg.Page" /> array containing the pages created by the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to read page contents, store a Vorbis Comment, and then reconvert the packets into a page.</summary>
+    <remarks />
   </Docs>
 </Type>

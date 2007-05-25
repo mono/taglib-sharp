@@ -35,7 +35,7 @@ namespace TagLib.Mpeg
    [SupportedMimeType("audio/mp3")]
    public class AudioFile : TagLib.NonContainer.File
    {
-      private AudioHeader first_header = null;
+      private AudioHeader first_header;
       
       public AudioFile (string file, ReadStyle properties_style) : base (file, properties_style)
       {}
@@ -68,7 +68,7 @@ namespace TagLib.Mpeg
 
       protected override void ReadStart (long start, ReadStyle style)
       {
-         if (style != ReadStyle.None && !AudioHeader.Find (ref first_header, this, start))
+         if (style != ReadStyle.None && !AudioHeader.Find (out first_header, this, start))
             throw new CorruptFileException ("MPEG audio header not found.");
       }
       

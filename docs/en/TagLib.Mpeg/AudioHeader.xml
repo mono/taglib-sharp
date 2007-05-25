@@ -1,11 +1,11 @@
 <Type Name="AudioHeader" FullName="TagLib.Mpeg.AudioHeader">
-  <TypeSignature Language="C#" Value="public class AudioHeader : TagLib.IAudioCodec" />
+  <TypeSignature Language="C#" Value="public struct AudioHeader : TagLib.IAudioCodec" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>System.Object</BaseTypeName>
+    <BaseTypeName>System.ValueType</BaseTypeName>
   </Base>
   <Interfaces>
     <Interface>
@@ -20,9 +20,9 @@
         <ReturnType>TagLib.Mpeg.Version</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the MPEG version of the current instance.</summary>
+        <value>A <see cref="T:TagLib.Mpeg.Version" /> representing the MPEG version.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IsPadded">
@@ -32,9 +32,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether or not the current instance is padded.</summary>
+        <value>A <see cref="T:System.Boolean" /> specifying whether or not the current instance is padded.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ChannelMode">
@@ -44,9 +44,9 @@
         <ReturnType>TagLib.Mpeg.ChannelMode</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the channel mode of the current instance.</summary>
+        <value>A <see cref="T:TagLib.Mpeg.ChannelMode" /> representing the channel mode.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IsCopyrighted">
@@ -56,9 +56,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether or not the current instance is copyrighted.</summary>
+        <value>A <see cref="T:System.Boolean" /> specifying whether or not the current instance is copyrighted.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IsOriginal">
@@ -68,33 +68,21 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether or not the current instance is original.</summary>
+        <value>A <see cref="T:System.Boolean" /> specifying whether or not the current instance is original.</value>
+        <remarks />
       </Docs>
     </Member>
-    <Member MemberName="FrameLength">
-      <MemberSignature Language="C#" Value="public int FrameLength { get; };" />
+    <Member MemberName="AudioFrameLength">
+      <MemberSignature Language="C#" Value="public int AudioFrameLength { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Position">
-      <MemberSignature Language="C#" Value="public long Position { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int64</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the audio frame length of the current instance.</summary>
+        <value>A <see cref="T:System.Int32" /> representing the audio frame length.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="XingHeader">
@@ -104,9 +92,9 @@
         <ReturnType>TagLib.Mpeg.XingHeader</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the Xing Header for the current instance.</summary>
+        <value>A <see cref="T:TagLib.Mpeg.XingHeader" />.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetStreamLength">
@@ -119,9 +107,9 @@
         <Parameter Name="stream_length" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="stream_length">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="stream_length">A <see cref="T:System.Int64" /> containing the stream length.</param>
+        <summary>Sets the length of the stream.</summary>
+        <remarks>Stream length is required to evaluate several properties.</remarks>
       </Docs>
     </Member>
     <Member MemberName="AudioLayer">
@@ -131,9 +119,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the audio layer of the current instance.</summary>
+        <value>A <see cref="T:System.Int32" /> representing the audio layer.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AudioBitrate">
@@ -203,9 +191,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether or not the current instance is protected.</summary>
+        <value>A <see cref="T:System.Boolean" /> specifying whether or not the current instance is protected.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="MediaTypes">
@@ -221,45 +209,56 @@
       </Docs>
     </Member>
     <Member MemberName="Find">
-      <MemberSignature Language="C#" Value="public static bool Find (ref TagLib.Mpeg.AudioHeader header, TagLib.File file, long position);" />
+      <MemberSignature Language="C#" Value="public static bool Find (out TagLib.Mpeg.AudioHeader header, TagLib.File file, long position);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="header" Type="TagLib.Mpeg.AudioHeader&amp;" RefType="ref" />
+        <Parameter Name="header" Type="TagLib.Mpeg.AudioHeader&amp;" RefType="out" />
         <Parameter Name="file" Type="TagLib.File" />
         <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="header">To be added.</param>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="header">A <see cref="T:TagLib.Mpeg.AudioHeader" /> found in the file.</param>
+        <param name="file">A <see cref="T:TagLib.File" /> to search.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying the seek position at which to start searching.</param>
+        <summary>Searches for an audio header in a given file.</summary>
+        <returns>A <see cref="T:System.Boolean" /> stating whether or not the header was found.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Find">
-      <MemberSignature Language="C#" Value="public static bool Find (ref TagLib.Mpeg.AudioHeader header, TagLib.File file, long position, int length);" />
+      <MemberSignature Language="C#" Value="public static bool Find (out TagLib.Mpeg.AudioHeader header, TagLib.File file, long position, int length);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="header" Type="TagLib.Mpeg.AudioHeader&amp;" RefType="ref" />
+        <Parameter Name="header" Type="TagLib.Mpeg.AudioHeader&amp;" RefType="out" />
         <Parameter Name="file" Type="TagLib.File" />
         <Parameter Name="position" Type="System.Int64" />
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="header">To be added.</param>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="header">A <see cref="T:TagLib.Mpeg.AudioHeader" /> found in the file.</param>
+        <param name="file">A <see cref="T:TagLib.File" /> to search.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying the seek position at which to start searching.</param>
+        <param name="length">A <see cref="T:System.Int32" /> specifying the number of bytes to read before giving up.</param>
+        <summary>Searches for an audio header in a given file.</summary>
+        <returns>A <see cref="T:System.Boolean" /> stating whether or not the header was found.</returns>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Unknown">
+      <MemberSignature Language="C#" Value="public static readonly TagLib.Mpeg.AudioHeader Unknown;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg.AudioHeader</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets an unknown/unfound audio header.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>

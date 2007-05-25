@@ -122,11 +122,11 @@
         <Parameter Name="type" Type="TagLib.Id3v2.SynchedTextType" />
       </Parameters>
       <Docs>
-        <param name="description">To be added.</param>
-        <param name="language">To be added.</param>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="description">A <see cref="T:System.String" /> containing a description of the new instance.</param>
+        <param name="language">A <see cref="T:System.String" /> containing the ISO-639-2 language of the new instance.</param>
+        <param name="type">A <see cref="T:TagLib.Id3v2.SynchedTextType" /> specifying the type of text contained in the new instance.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Id3v2.SynchronisedLyricsFrame" /> with a specified description, language, and text type.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -139,12 +139,12 @@
         <Parameter Name="encoding" Type="TagLib.StringType" />
       </Parameters>
       <Docs>
-        <param name="description">To be added.</param>
-        <param name="language">To be added.</param>
-        <param name="type">To be added.</param>
-        <param name="encoding">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="description">A <see cref="T:System.String" /> containing a description of the new instance.</param>
+        <param name="language">A <see cref="T:System.String" /> containing the ISO-639-2 language of the new instance.</param>
+        <param name="type">A <see cref="T:TagLib.Id3v2.SynchedTextType" /> specifying the type of text contained in the new instance.</param>
+        <param name="encoding">A <see cref="T:TagLib.StringType" /> specifying what text encoding to use when saving the new instance.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Id3v2.SynchronisedLyricsFrame" /> with a specified description, language, text type, and text encoding.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Get">
@@ -161,14 +161,14 @@
         <Parameter Name="create" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <param name="description">To be added.</param>
-        <param name="language">To be added.</param>
-        <param name="type">To be added.</param>
-        <param name="create">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="tag">A <see cref="T:TagLib.Id3v2.Tag" /> to search.</param>
+        <param name="description">A <see cref="T:System.String" /> specifying a description to search for.</param>
+        <param name="language">A <see cref="T:System.String" /> specifying a language to search for.</param>
+        <param name="type">A <see cref="T:TagLib.Id3v2.SynchedTextType" /> specifying the type of text to search for.</param>
+        <param name="create">A <see cref="T:System.Boolean" /> specifying whether or not to create a new instance if one is not found.</param>
+        <summary>Searches for a <see cref="T:TagLib.Id3v2.SynchronisedLyricsFrame" /> with a specified description, language, and type, optionally creating one if none is found.</summary>
+        <returns>A <see cref="T:TagLib.Id3v2.SynchronisedLyricsFrame" /> containing with the given description, language, and type, or <see langword="null" /> if not found and not creating.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetPreferred">
@@ -184,13 +184,13 @@
         <Parameter Name="type" Type="TagLib.Id3v2.SynchedTextType" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <param name="description">To be added.</param>
-        <param name="language">To be added.</param>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="tag">A <see cref="T:TagLib.Id3v2.Tag" /> to search.</param>
+        <param name="description">A <see cref="T:System.String" /> specifying a description to search for.</param>
+        <param name="language">A <see cref="T:System.String" /> specifying a language to search for.</param>
+        <param name="type">A <see cref="T:TagLib.Id3v2.SynchedTextType" /> specifying the type of text to search for.</param>
+        <summary>Searches for the <see cref="T:TagLib.Id3v2.CommentsFrame" /> which most closely matches the specified description, language, and type.</summary>
+        <returns>The <see cref="T:TagLib.Id3v2.CommentsFrame" /> which most closely matches the specified description, language, and type, or <see langword="null" /> if none was found.</returns>
+        <remarks>If an exact match is found, it will be returned. After that, the first frame with a matching language. Then, the first frame with a matching description. The, the first frame with a matching text type, Finally, the first frame found.</remarks>
       </Docs>
     </Member>
   </Members>

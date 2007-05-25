@@ -14,8 +14,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v1.Tag" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -26,10 +26,10 @@
         <Parameter Name="tag_offset" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="tag_offset">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.File" /> containing a tag to read.</param>
+        <param name="tag_offset">A <see cref="T:System.Int64" /> specifying where to read from the file.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v1.Tag" /> by reading one from a specified file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="FileIdentifier">
@@ -39,8 +39,8 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gets the identifier used for recognizing an ID3v1 tag.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Size">
@@ -51,8 +51,8 @@
       </ReturnValue>
       <MemberValue>128</MemberValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gets the size of an ID3v1 tag.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -63,9 +63,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Renders the current instance as an ID3v1 tag.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered version.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="DefaultStringHandler">
@@ -75,14 +75,14 @@
         <ReturnType>TagLib.Id3v1.StringHandler</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Sets the string handler to use when reading and writing string fields.</summary>
+        <value>A <see cref="T:TagLib.Id3v1.StringHandler" /> to use.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access and manipulate tags stored in the ID3v1 tagging format.</summary>
+    <remarks />
   </Docs>
 </Type>

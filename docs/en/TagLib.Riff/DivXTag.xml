@@ -14,8 +14,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initialize a new instance of <see cref="T:TagLib.Riff.DivXTag" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -26,10 +26,10 @@
         <Parameter Name="offset" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="offset">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.Riff.File" /> to read from.</param>
+        <param name="offset">A <see cref="T:System.Int64" /> specifying at what seek position to read.</param>
+        <summary>Constructs and initialize a new instance of <see cref="T:TagLib.Riff.DivXTag" /> by reading if from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="FileIdentifier">
@@ -39,8 +39,8 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gets the file identifier used to recongize a DivX tag.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Size">
@@ -51,8 +51,8 @@
       </ReturnValue>
       <MemberValue>128</MemberValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gets the size of a DivX tag.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -63,14 +63,14 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Renders the current instance as a DivX tag.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing a rendered version of the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access and manipulate tags stored in the DivX tagging format.</summary>
+    <remarks>This class is analogous to the ID3v1 tagging format.</remarks>
   </Docs>
 </Type>

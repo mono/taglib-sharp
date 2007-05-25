@@ -361,6 +361,18 @@
         <remarks />
       </Docs>
     </Member>
+    <Member MemberName="TagTypes">
+      <MemberSignature Language="C#" Value="public abstract TagLib.TagTypes TagTypes { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.TagTypes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the tag types represented by the current instance.</summary>
+        <value>A <see cref="T:TagLib.TagTypes" /> containing the tag types represented.</value>
+        <remarks />
+      </Docs>
+    </Member>
   </Members>
   <Docs>
     <summary>An abstract class for accessing standard tag features.</summary>

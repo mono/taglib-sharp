@@ -17,7 +17,7 @@ namespace TagLib.Mpeg4
       #region Constructors
       public IsoMovieHeaderBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
       {
-         file.Seek (DataOffset);
+         file.Seek (DataPosition);
          int bytes_remaining = DataSize;
          ByteVector data;
          

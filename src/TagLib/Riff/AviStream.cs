@@ -48,8 +48,7 @@ namespace TagLib.Riff
          return stream;
       }
       
-      protected void SetCodec (ICodec codec) {this.codec = codec;}
-      public ICodec Codec {get {return codec;}}
+      public ICodec Codec {get {return codec;} protected set {this.codec = value;}}
 	}
    
    public class AviAudioStream : AviStream
@@ -61,7 +60,7 @@ namespace TagLib.Riff
       public override void ParseItem (ByteVector id, ByteVector data, int start, int length)
       {
          if (id == "strf")
-            SetCodec (new WaveFormatEx (data, start));
+            Codec = new WaveFormatEx (data, start);
       }
    }
    
@@ -74,7 +73,7 @@ namespace TagLib.Riff
       public override void ParseItem (ByteVector id, ByteVector data, int start, int length)
       {
          if (id == "strf")
-            SetCodec (new BitmapInfoHeader (data, start));
+            Codec = new BitmapInfoHeader (data, start);
       }
    }
    

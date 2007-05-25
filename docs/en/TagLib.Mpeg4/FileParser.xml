@@ -16,9 +16,9 @@
         <Parameter Name="file" Type="TagLib.Mpeg4.File" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to read from.</param>
+        <summary>Constructs and initializes a new instance of <See cref="T:TagLib.Mpeg4.FileParser" /> for a given file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ParseBoxHeaders">
@@ -29,8 +29,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Navigates the box trees and creates header paths for several fields without constructing any boxes.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ParseTag">
@@ -41,8 +41,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Finds and constructs the user data box.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ParseTagAndProperties">
@@ -53,8 +53,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Finds and constructs the user data box as well as boxes for reading media properties.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ParseChunkOffsets">
@@ -65,8 +65,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Finds and constructs the chunk offset boxes.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="MovieHeaderBox">
@@ -76,9 +76,9 @@
         <ReturnType>TagLib.Mpeg4.IsoMovieHeaderBox</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the movie header box read by the current instance.</summary>
+        <value>A <see cref="T:TagLib.Mpeg4.IsoMovieHeaderBox" /> for the current instance.</value>
+        <remarks>This value is retrieved by <see cref="M:TagLib.Mpeg4.FileParser.ParseTagAndProperties()" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="UserDataBox">
@@ -88,9 +88,9 @@
         <ReturnType>TagLib.Mpeg4.IsoUserDataBox</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the user data box read by the current instance.</summary>
+        <value>A <see cref="T:TagLib.Mpeg4.IsoUserDataBox" /> for the current instance.</value>
+        <remarks>This value is retrieved by <see cref="M:TagLib.Mpeg4.FileParser.ParseTag()" /> or <see cref="M:TagLib.Mpeg4.FileParser.ParseTagAndProperties()" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="AudioSampleEntry">
@@ -100,9 +100,9 @@
         <ReturnType>TagLib.Mpeg4.IsoAudioSampleEntry</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the audio sample entry read by the current instance.</summary>
+        <value>A <see cref="T:TagLib.Mpeg4.IsoAudioSampleEntry" /> for the current instance.</value>
+        <remarks>This value is retrieved by <see cref="M:TagLib.Mpeg4.FileParser.ParseTagAndProperties()" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="VisualSampleEntry">
@@ -112,9 +112,9 @@
         <ReturnType>TagLib.Mpeg4.IsoVisualSampleEntry</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the visual sample entry read by the current instance.</summary>
+        <value>A <see cref="T:TagLib.Mpeg4.IsoVisualSampleEntry" /> for the current instance.</value>
+        <remarks>This value is retrieved by <see cref="M:TagLib.Mpeg4.FileParser.ParseTagAndProperties()" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="MoovTree">
@@ -124,9 +124,9 @@
         <ReturnType>TagLib.Mpeg4.BoxHeader[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the MOOV box header and its parents' headers read by the current instance.</summary>
+        <value>A <see cref="T:TagLib.Mpeg4.BoxHeader" /> array containing the MOOV box header and its parents' headers.</value>
+        <remarks>This value is retrieved by <see cref="M:TagLib.Mpeg4.FileParser.ParseBoxHeaders()" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="UdtaTree">
@@ -136,9 +136,9 @@
         <ReturnType>TagLib.Mpeg4.BoxHeader[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the UDTA box header and its parents' headers read by the current instance.</summary>
+        <value>A <see cref="T:TagLib.Mpeg4.BoxHeader" /> array containing the UDTA box header and its parents' headers.</value>
+        <remarks>This value is retrieved by <see cref="M:TagLib.Mpeg4.FileParser.ParseBoxHeaders()" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ChunkOffsetBoxes">
@@ -148,14 +148,14 @@
         <ReturnType>TagLib.Mpeg4.BoxList</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets all the chunck offset boxes read by the current instance.</summary>
+        <value>A <see cref="T:TagLib.Mpeg4.BoxList" /> containing all the chunck offset boxes.</value>
+        <remarks>This value is retrieved by <see cref="M:TagLib.Mpeg4.FileParser.ParseChunkOffsets()" />.</remarks>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class performs read operations of various types for the MPEG-4 files.</summary>
+    <remarks />
   </Docs>
 </Type>

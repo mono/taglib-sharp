@@ -16,9 +16,9 @@
         <Parameter Name="page" Type="TagLib.Ogg.Page" />
       </Parameters>
       <Docs>
-        <param name="page">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="page">A <see cref="T:TagLib.Ogg.Page" /> to be read by the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ogg.Bitstream" /> by reading the first page of the stream.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ReadPage">
@@ -31,10 +31,11 @@
         <Parameter Name="page" Type="TagLib.Ogg.Page" />
       </Parameters>
       <Docs>
-        <param name="page">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="page">A <see cref="T:TagLib.Ogg.Page" /> to be read by the current instance.</param>
+        <summary>Reads and processes the contents of an OGG page.</summary>
+        <returns>
+          <see langword="true" /> if the stream information and Vorbis Comment have been read. Otherwise <see langref="false" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetDuration">
@@ -47,10 +48,10 @@
         <Parameter Name="last_absolute_granular_position" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="last_absolute_granular_position">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="last_absolute_granular_position">A <see cref="T:System.Int64" /> containing the last absolute granular position found in the stream.</param>
+        <summary>Gets the duration of the current instance by providing the last absolute granular position.</summary>
+        <returns>A <see cref="T:System.TimeSpan" /> containing the duration of the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Codec">
@@ -60,14 +61,14 @@
         <ReturnType>TagLib.Ogg.Codec</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the OGG Codec used for processing in the current instance.</summary>
+        <value>A <see cref="T:TagLib.Ogg.Codec" /> used for processing the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used for reading OGG bitstreams.</summary>
+    <remarks />
   </Docs>
 </Type>

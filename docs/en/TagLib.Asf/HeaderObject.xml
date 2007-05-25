@@ -97,9 +97,10 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether or not the current instance has content descriptors.</summary>
+        <value>
+          <see langword="true" /> if it does. Otherwise <see langword="false" />.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RemoveContentDescriptors">
@@ -110,8 +111,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Removes the content descriptors contained in the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>

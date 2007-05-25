@@ -138,7 +138,7 @@
     </Member>
   </Members>
   <Docs>
-    <summary>This class is used to access audio properties for WavPack files, and provides <see cref="T:TagLib.IAudioCodec" /> support for the format.</summary>
+    <summary>This struct is used to access audio properties for WavPack files, and provides <see cref="T:TagLib.IAudioCodec" /> support for the format.</summary>
     <remarks />
   </Docs>
 </Type>

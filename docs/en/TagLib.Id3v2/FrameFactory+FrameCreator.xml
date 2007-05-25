@@ -17,12 +17,12 @@
     <ReturnType>TagLib.Id3v2.Frame</ReturnType>
   </ReturnValue>
   <Docs>
-    <param name="data">To be added.</param>
-    <param name="offset">To be added.</param>
-    <param name="header">To be added.</param>
-    <param name="version">To be added.</param>
-    <summary>To be added.</summary>
-    <returns>To be added.</returns>
-    <remarks>To be added.</remarks>
+    <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
+    <param name="offset">A <see cref="T:System.Int32" /> specifying the offset in the data at which the frame begins.</param>
+    <param name="header">A <see cref="T:TagLib.Id3v2.FrameHeader" /> for the content.</param>
+    <param name="version">A <see cref="T:System.Byte" /> specifying the version of ID3v2 the data is stored in.</param>
+    <summary>Creates a frame from a specified block of data, or returns <see langword="null" /> if unsupported.</summary>
+    <returns>A <see cref="T:TagLib.Id3v2.Frame" /> if created. Otherwise <see langword="null" />.</returns>
+    <remarks />
   </Docs>
 </Type>

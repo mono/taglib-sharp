@@ -17,10 +17,10 @@
         <Parameter Name="offset" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="offset">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an AVI stream header structure.</param>
+        <param name="offset">A <see cref="T:System.Int32" /> specifying at what position in the data the structure begins.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.AviStreamHeader" /> by reading it from an AVI stream header structure.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Type">
@@ -30,9 +30,10 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the FourCC stream type for the current instance.</summary>
+        <value>
+          <c>"vids"</c> for video, <c>"auds"</c> for audio.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Handler">
@@ -42,9 +43,9 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the FourCC handler type for the current instance.</summary>
+        <value>A <see cref="T:TagLib.ByteVector" /> containing the FourCC handler type.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Flags">
@@ -54,9 +55,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the flags for the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the flags.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Priority">
@@ -66,9 +67,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the priority of the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the priority.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="InitialFrames">
@@ -78,9 +79,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the number of initial frames in the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the number of initial frames.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Scale">
@@ -90,9 +91,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the scale of the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the scale.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Rate">
@@ -102,9 +103,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the rate of the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the rate.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Start">
@@ -114,9 +115,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the start of the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the start value.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Length">
@@ -126,9 +127,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the length of the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the length.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SuggestedBufferSize">
@@ -138,9 +139,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the suggested buffer size for the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the suggested buffer size.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Quality">
@@ -150,9 +151,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the quality of the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the quality.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SampleSize">
@@ -162,9 +163,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the sample size of the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the sample size.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -174,9 +175,9 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an AVI stream header structure.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.AviStreamHeader" /> by reading it from an AVI stream header structure.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Left">
@@ -186,9 +187,9 @@
         <ReturnType>System.UInt16</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the left position of the current instance.</summary>
+        <value>A <see cref="T:System.UInt16" /> containing the left position.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Top">
@@ -198,9 +199,9 @@
         <ReturnType>System.UInt16</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the top position of the current instance.</summary>
+        <value>A <see cref="T:System.UInt16" /> containing the top position.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Right">
@@ -210,9 +211,9 @@
         <ReturnType>System.UInt16</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the right position of the current instance.</summary>
+        <value>A <see cref="T:System.UInt16" /> containing the right position.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Bottom">
@@ -222,14 +223,14 @@
         <ReturnType>System.UInt16</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the bottom position of the current instance.</summary>
+        <value>A <see cref="T:System.UInt16" /> containing the bottom position.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This structure is used to access AVI stream header structures.</summary>
+    <remarks />
   </Docs>
 </Type>

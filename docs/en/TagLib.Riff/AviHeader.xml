@@ -17,10 +17,10 @@
         <Parameter Name="offset" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="offset">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an AVI header structure.</param>
+        <param name="offset">A <see cref="T:System.Int32" /> specifying at what position in the data the structure begins.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.AviHeader" /> by reading it from an AVI header structure.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="MicrosecondsPerFrame">
@@ -30,9 +30,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the number of microseconds per frame in the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the number of microseconds per frame.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="MaxBytesPerSecond">
@@ -42,9 +42,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the maximum bytes per second in the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the maximum bytes per second.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Flags">
@@ -54,9 +54,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the flags in the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the flags.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="TotalFrames">
@@ -66,9 +66,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the total number of frames in the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the total number of frames.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="InitialFrames">
@@ -78,9 +78,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the number of initial frames in the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the number of initial frames.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Streams">
@@ -90,9 +90,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the number of streams in the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the number of streams.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SuggestedBufferSize">
@@ -102,9 +102,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the suggested buffer size for the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the suggested buffer size.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Width">
@@ -114,9 +114,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the width of the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the width.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Height">
@@ -126,9 +126,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the height of the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the height.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -138,9 +138,9 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an AVI header structure.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.AviHeader" /> by reading it from an AVI header structure.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Duration">
@@ -157,7 +157,7 @@
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This structure is used to access AVI header structures.</summary>
+    <remarks />
   </Docs>
 </Type>

@@ -17,9 +17,9 @@
         <Parameter Name="header" Type="TagLib.Riff.AviStreamHeader" />
       </Parameters>
       <Docs>
-        <param name="header">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="header">A <see cref="T:TagLib.Riff.AviStreamHeader" /> for the new instance.</param>
+        <summary>Constructs and initialises a new instance of <see cref="T:TagLib.Riff.AviStream" /> from a provided stream header.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ParseItem">
@@ -35,12 +35,12 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <param name="data">To be added.</param>
-        <param name="start">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> containing an item ID.</param>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing the list item.</param>
+        <param name="start">A <see cref="T:System.Int32" /> containing the position in the data at which the item begins.</param>
+        <param name="length">A <see cref="T:System.Int32" /> containing the length of the item.</param>
+        <summary>Parses a list item contained in the stream.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ParseStreamList">
@@ -53,10 +53,10 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing a stream list.</param>
+        <summary>Gets an AVI stream by parsing a stream list.</summary>
+        <returns>A <see cref="T:TagLib.Riff.AviStream" /> read from the stream list.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Header">
@@ -66,41 +66,26 @@
         <ReturnType>TagLib.Riff.AviStreamHeader</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the stream header used by the current instance.</summary>
+        <value>A <see cref="T:TagLib.Riff.AviStreamHeader" /> used by the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Codec">
-      <MemberSignature Language="C#" Value="public TagLib.ICodec Codec { get; };" />
+      <MemberSignature Language="C#" Value="public TagLib.ICodec Codec { protected set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ICodec</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="SetCodec">
-      <MemberSignature Language="C#" Value="protected void SetCodec (TagLib.ICodec codec);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="codec" Type="TagLib.ICodec" />
-      </Parameters>
-      <Docs>
-        <param name="codec">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the codec contained in the current instance.</summary>
+        <value>A <see cref="T:TagLib.ICodec" /> contained in the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class provides support for processing AVI streams.</summary>
+    <remarks />
   </Docs>
 </Type>

@@ -118,6 +118,16 @@
         <summary>A RIFF INFO list tag.</summary>
       </Docs>
     </Member>
+    <Member MemberName="FlacMetadata">
+      <MemberSignature Language="C#" Value="FlacMetadata" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.TagTypes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>FLAC Metadata.</summary>
+      </Docs>
+    </Member>
   </Members>
   <Docs>
     <summary>Specifies the types of tag to perform operations on.</summary>

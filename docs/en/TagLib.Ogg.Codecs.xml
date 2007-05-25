@@ -1,6 +1,6 @@
 <Namespace Name="TagLib.Ogg.Codecs">
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>The TagLib.Ogg.Codecs namespace contains standard codecs used in Xiph Ogg files.</summary>
+    <remarks />
   </Docs>
 </Namespace>

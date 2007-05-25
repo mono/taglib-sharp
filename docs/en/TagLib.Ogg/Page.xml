@@ -16,9 +16,9 @@
         <Parameter Name="header" Type="TagLib.Ogg.PageHeader" />
       </Parameters>
       <Docs>
-        <param name="header">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="header">A <see cref="T:TagLib.Ogg.PageHeader" /> containing properties of the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ogg.Page" /> with a specifed page header.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -29,10 +29,10 @@
         <Parameter Name="page_offset" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="page_offset">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.Ogg.File" /> to read from.</param>
+        <param name="page_offset">A <see cref="T:System.Int64" /> specifying at what seek position to start reading.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ogg.Page" /> by reading it from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -43,10 +43,10 @@
         <Parameter Name="header" Type="TagLib.Ogg.PageHeader" />
       </Parameters>
       <Docs>
-        <param name="packets">To be added.</param>
-        <param name="header">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="packets">A <see cref="T:TagLib.ByteVectorList" /> containing the packets of the new instance.</param>
+        <param name="header">A <see cref="T:TagLib.Ogg.PageHeader" /> containing properties of the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ogg.Page" /> with a specifed page header and packets.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -57,9 +57,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Renders the current instance as an OGG page.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered version of the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Header">
@@ -69,21 +69,21 @@
         <ReturnType>TagLib.Ogg.PageHeader</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the header contained in the current instance.</summary>
+        <value>A <see cref="T:TagLib.Ogg.PageHeader" /> containing the header used by the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Packets">
-      <MemberSignature Language="C#" Value="public TagLib.ByteVectorList Packets { get; };" />
+      <MemberSignature Language="C#" Value="public TagLib.ByteVector[] Packets { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.ByteVectorList</ReturnType>
+        <ReturnType>TagLib.ByteVector[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the packets contained in the current instance.</summary>
+        <value>A <see cref="T:TagLib.ByteVector" /> array containing the packets contained in the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Size">
@@ -93,14 +93,14 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the size of the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the size of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used for reading and creating OGG pages.</summary>
+    <remarks />
   </Docs>
 </Type>

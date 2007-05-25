@@ -71,6 +71,17 @@ namespace TagLib.Ogg
             tag.Clear ();
       }
       
+      public override TagTypes TagTypes
+      {
+         get
+         {
+            TagTypes types = TagTypes.NoTags;
+            foreach (XiphComment tag in tags)
+               types |= tag.TagTypes;
+            return types;
+         }
+      }
+      
       public override string Title
       {
          get

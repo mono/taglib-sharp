@@ -68,7 +68,7 @@ namespace TagLib.Mpeg4
       {
          // These children will have a box type of "----"
          foreach (Box box in ilst_box.Children)
-            if (box.BoxType == "----")
+            if (box.BoxType == BoxTypes.DASH)
             {
                // Get the mean and name boxes, make sure they're legit, and make
                // sure that they match what we want. Then loop through and add
@@ -199,6 +199,8 @@ namespace TagLib.Mpeg4
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
+      public override TagTypes TagTypes {get {return TagTypes.Apple;}}
+      
       public override string Title
       {
          get

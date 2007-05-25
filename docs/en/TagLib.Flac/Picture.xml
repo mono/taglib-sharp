@@ -20,25 +20,9 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Render">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Render (TagLib.IPicture picture);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="picture" Type="TagLib.IPicture" />
-      </Parameters>
-      <Docs>
-        <param name="picture">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing a FLAC picture structue.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Flac.Picture" /> from a FLAC picture structure.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Type">
@@ -48,9 +32,9 @@
         <ReturnType>TagLib.PictureType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the picture type for the current instance.</summary>
+        <value>A <see cref="T:TagLib.PictureType" /> describing the image content.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="MimeType">
@@ -60,9 +44,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the mime-type of the data in the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the mime-type of the data in the current instance.</value>
+        <remarks>The mime type should start with "image/" and will most likely be "image/png" or "image/jpeg".</remarks>
       </Docs>
     </Member>
     <Member MemberName="Description">
@@ -72,9 +56,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets a description of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> describing the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Width">
@@ -84,9 +68,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the width the current instance.</summary>
+        <value>A <see cref="T:TagLib.ByteVector" /> containing width.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Height">
@@ -96,9 +80,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the height the current instance.</summary>
+        <value>A <see cref="T:TagLib.ByteVector" /> containing height.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ColorDepth">
@@ -108,9 +92,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the color depth for the current instance.</summary>
+        <value>A <see cref="T:TagLib.ByteVector" /> containing color depth.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IndexedColors">
@@ -120,9 +104,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the number of indexed colors for the current instance.</summary>
+        <value>A <see cref="T:TagLib.ByteVector" /> containing number of indexed colors.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Data">
@@ -132,14 +116,39 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the image data for the current instance.</summary>
+        <value>A <see cref="T:TagLib.ByteVector" /> containing image data.</value>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Picture (TagLib.IPicture picture);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="picture" Type="TagLib.IPicture" />
+      </Parameters>
+      <Docs>
+        <param name="picture">A <see cref="T:TagLib.IPicture" /> with values to copy.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Flac.Picture" /> by copyings values from a <see cref="T:TagLib.IPicture" />.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Render">
+      <MemberSignature Language="C#" Value="public TagLib.ByteVector Render ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Renders the current instance as FLAC picture structure.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered version.</returns>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access and manipulate pictures stored in FLAC files.</summary>
+    <remarks />
   </Docs>
 </Type>

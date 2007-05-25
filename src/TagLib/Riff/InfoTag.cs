@@ -38,6 +38,8 @@ namespace TagLib.Riff
          return RenderEnclosed ("INFO");
       }
 
+      public override TagTypes TagTypes {get {return TagTypes.RiffInfo;}}
+      
       public override string Title
       {
          get

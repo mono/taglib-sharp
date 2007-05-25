@@ -84,7 +84,7 @@ namespace TagLib.Ogg
       //////////////////////////////////////////////////////////////////////////
       public PageHeader Header {get {return header;}}
       
-      public ByteVectorList Packets {get {return packets;}}
+      public ByteVector[] Packets {get {return packets.ToArray ();}}
       
       public uint Size {get {return header.Size + header.DataSize;}}
    }

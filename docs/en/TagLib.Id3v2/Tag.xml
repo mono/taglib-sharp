@@ -156,23 +156,6 @@
       </Docs>
     </Member>
     <Member MemberName="SetTextFrame">
-      <MemberSignature Language="C#" Value="public void SetTextFrame (TagLib.ByteVector id, string value);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="id" Type="TagLib.ByteVector" />
-        <Parameter Name="value" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="id">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="SetTextFrame">
       <MemberSignature Language="C#" Value="public void SetTextFrame (TagLib.ByteVector id, TagLib.StringList value);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
@@ -183,10 +166,10 @@
         <Parameter Name="value" Type="TagLib.StringList" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2.4 frame ID.</param>
+        <param name="value">A <see cref="T:TagLib.StringList" /> containing values to store.</param>
+        <summary>Stores a text value in and ID3v2 text frame with a given ID.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetNumberFrame">
@@ -201,11 +184,11 @@
         <Parameter Name="count" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <param name="number">To be added.</param>
-        <param name="count">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2.4 frame ID.</param>
+        <param name="number">A <see cref="T:System.UInt32" />.</param>
+        <param name="count">A <see cref="T:System.UInt32" /> representing a total which <paramref name="number" /> is a part of, or zero if <paramref name="number" /> is not part of a set.</param>
+        <summary>Sets a numeric value in an ID3v2 text frame with a given ID.</summary>
+        <remarks>If both <paramref name="number" /> and <paramref name="count" /> are equal to zero, the value will be cleared. If <paramref name="count" /> is zero, <paramref name="number" /> by itself will be stored. Otherwise, the values will be stored as "<paramref name="number" />/<paramref name="count" />".</remarks>
       </Docs>
     </Member>
     <Member MemberName="Language">
@@ -215,9 +198,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the ISO-639-2 language code to use when searching for and storing language specific values.</summary>
+        <value>A <see cref="T:System.String" /> containing an ISO-639-2 language code fto use when searching for and storing language specific values.</value>
+        <remarks>If the language is unknown, "XXX" is the appropriate filler.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Version">
@@ -227,9 +210,9 @@
         <ReturnType>System.Byte</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the ID3v2 version of the current instance.</summary>
+        <value>A <see cref="T:System.Byte" /> specifying an ID3v2 version.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="DefaultVersion">
@@ -263,9 +246,9 @@
         <ReturnType>TagLib.StringType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the text encoding to use when creating new frames.</summary>
+        <value>A <see cref="T:TagLib.StringType" /> specifying the text encoding to use when creating new frames.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ForceDefaultEncoding">
@@ -275,9 +258,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets whether or not to force all text to be rendered in the default encoding.</summary>
+        <value>A <see cref="T:System.Boolean" /> specifying whether or not to force all text to be rendered in the default encoding.</value>
+        <remarks>When <see langword="true" />, all text will be rendered in the default encoding.</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetEnumerator">
@@ -304,10 +287,10 @@
         <Parameter Name="tag_offset" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="tag_offset">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.File" /> containing a tag to read.</param>
+        <param name="tag_offset">A <see cref="T:System.Int64" /> specifying where to read from the file.</param>
+        <summary>Populates the current instance with data read from a specified file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Flags">
@@ -317,14 +300,37 @@
         <ReturnType>TagLib.Id3v2.HeaderFlags</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the flags applied to the current instance.</summary>
+        <value>A <see cref="T:TagLib.Id3v2.HeaderFlacs" /> containing the flags.</value>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="SetTextFrame">
+      <MemberSignature Language="C#" Value="public void SetTextFrame (TagLib.ByteVector id, string[] value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="id" Type="TagLib.ByteVector" />
+        <Parameter Name="value" Type="System.String[]">
+          <Attributes>
+            <Attribute>
+              <AttributeName>System.ParamArray</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2.4 frame ID.</param>
+        <param name="value">A <see cref="T:System.String" /> array containing values to store.</param>
+        <summary>Stores a text value in and ID3v2 text frame with a given ID.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access and manipulate tags stored in the ID3v2 tagging format.</summary>
+    <remarks />
   </Docs>
 </Type>

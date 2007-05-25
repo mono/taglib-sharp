@@ -83,44 +83,6 @@ namespace TagLib.Id3v2
          tag.AddFrame (frame);
          return frame;
       }
-      
-      public static SynchronisedLyricsFrame GetPreferred (Tag tag, string description, string language, SynchedTextType type)
-      {
-         // This is weird, so bear with me. The best thing we can have is 
-         // something straightforward and in our own language. If it has a 
-         // description, then it is probably used for something other than
-         // an actual comment. If that doesn't work, we'd still rather have 
-         // something in our language than something in another. After that
-         // all we have left are things in other languages, so we'd rather 
-         // have one with actual content, so we try to get one with no 
-         // description first.
-         
-         int best_value = -1;
-         SynchronisedLyricsFrame best_frame = null;
-         
-         foreach (Frame f in tag)
-         {
-            if (!(f is SynchronisedLyricsFrame))
-               continue;
-            
-            SynchronisedLyricsFrame cf = f as SynchronisedLyricsFrame;
-            
-            int value = 0;
-            if (cf.Language == language)       value += 4;
-            if (cf.Description == description) value += 2;
-            if (cf.Type == type)               value += 1;
-            
-            if (value == 7) return cf;
-            
-            if (value <= best_value)
-               continue;
-            
-            best_value = value;
-            best_frame = cf;
-         }
-         
-         return best_frame;
-      }
       #endregion
       
       

@@ -56,7 +56,7 @@
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used for processing the Xiph Theora codec and implements <see cref="T:TagLib.IVideoCodec" />.</summary>
+    <remarks />
   </Docs>
 </Type>

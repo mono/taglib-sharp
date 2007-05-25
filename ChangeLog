@@ -1,3 +1,68 @@
+2007-05-25  Brian Nickel <brian.nickel@gmail.com>
+
+There were changes to 153 files in the last three days. I can't vouch for
+everything that happened, as I may have blacked out for some portions, but tags
+now have an abstract Tag.TagTypes property, Everything that should be a struct
+is, there were a bunch of tiny cleanups, "private Flac.File+PictureTag" is now
+"public Flac.Metadata"... And as of 3:55 AM (Arizona Time), THERE IS NOT ONE 
+FREAKIN' INSTANCE OF "To be added." IN THE ENTIRE docs/en DIRECTORY. I really 
+must love you guys, 'cause that was really, really painful.
+
+	* src/TagLib/Tag.cs:
+	* src/TagLib/CombinedTag.cs:
+	* src/TagLib/File.cs:
+	* src/TagLib/Id3v1/Tag.cs:
+	* src/TagLib/Riff/AviStream.cs:
+	* src/TagLib/Riff/File.cs:
+	* src/TagLib/Riff/DivXTag.cs:
+	* src/TagLib/Riff/InfoTag.cs:
+	* src/TagLib/Riff/MovieIdTag.cs:
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Id3v2/Frames/PlayCountFrame.cs:
+	* src/TagLib/Id3v2/ExtendedHeader.cs:
+	* src/TagLib/Mpeg/XingHeader.cs:
+	* src/TagLib/Mpeg/File.cs:
+	* src/TagLib/Mpeg/AudioFile.cs:
+	* src/TagLib/Mpeg/AudioHeader.cs:
+	* src/TagLib/NonContainer/Tag.cs:
+	* src/TagLib/NonContainer/File.cs:
+	* src/TagLib/NonContainer/EndTag.cs:
+	* src/TagLib/NonContainer/StartTag.cs:
+	* src/TagLib/Ape/Tag.cs:
+	* src/TagLib/Flac/Picture.cs:
+	* src/TagLib/Flac/File.cs:
+	* src/TagLib/Flac/StreamHeader.cs:
+	* src/TagLib/Asf/Tag.cs:
+	* src/TagLib/Asf/File.cs:
+	* src/TagLib/Mpeg4/Boxes/FullBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoMovieHeaderBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoSampleEntry.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoChunkLargeOffsetBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoAudioSampleEntry.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoHandlerBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoVisualSampleEntry.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoChunkOffsetBox.cs:
+	* src/TagLib/Mpeg4/Boxes/AppleDataBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoSampleDescriptionBox.cs:
+	* src/TagLib/Mpeg4/FileParser.cs:
+	* src/TagLib/Mpeg4/AppleTag.cs:
+	* src/TagLib/Mpeg4/File.cs:
+	* src/TagLib/Mpeg4/BoxFactory.cs:
+	* src/TagLib/Mpeg4/BoxHeader.cs:
+	* src/TagLib/Mpeg4/BoxList.cs:
+	* src/TagLib/Mpeg4/Box.cs:
+	* src/TagLib/Ogg/XiphComment.cs:
+	* src/TagLib/Ogg/Page.cs:
+	* src/TagLib/Ogg/Codecs/Theora.cs:
+	* src/TagLib/Ogg/Codecs/Vorbis.cs:
+	* src/TagLib/Ogg/Codec.cs:
+	* src/TagLib/Ogg/File.cs:
+	* src/TagLib/Ogg/Paginator.cs:
+	* src/TagLib/Ogg/GroupedComment.cs:
+	* src/TagLib/Ogg/Bitstream.cs:
+	* src/taglib-sharp.mdp: 53 C# files changed.
+	* docs/en/*: 100 XML files filled in.
+
 2007-05-22  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Tag.cs: Make abstract.

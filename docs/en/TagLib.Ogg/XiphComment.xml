@@ -18,13 +18,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>
-          <para>
-            Constructs and initializes a new instance of the <see cref="T:TagLib.Ogg.XiphComment" /> class that is empty.
-          </para>
-        </summary>
-        <remarks>
-        </remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ogg.XiphComment" /> that is empty.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -34,9 +29,9 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing a Vorbis Comment.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ogg.XiphComment" /> by reading a Vorbis Comment.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Clear">
@@ -52,130 +47,6 @@
         </remarks>
       </Docs>
     </Member>
-    <Member MemberName="GetField">
-      <MemberSignature Language="C#" Value="public TagLib.StringList GetField (string key);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.StringList</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="key" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="key">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="AddNumberField">
-      <MemberSignature Language="C#" Value="public void AddNumberField (string key, uint number, bool replace);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="key" Type="System.String" />
-        <Parameter Name="number" Type="System.UInt32" />
-        <Parameter Name="replace" Type="System.Boolean" />
-      </Parameters>
-      <Docs>
-        <param name="key">To be added.</param>
-        <param name="number">To be added.</param>
-        <param name="replace">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="AddField">
-      <MemberSignature Language="C#" Value="public void AddField (string key, string value, bool replace);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="key" Type="System.String" />
-        <Parameter Name="value" Type="System.String" />
-        <Parameter Name="replace" Type="System.Boolean" />
-      </Parameters>
-      <Docs>
-        <param name="key">To be added.</param>
-        <param name="value">To be added.</param>
-        <param name="replace">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="AddField">
-      <MemberSignature Language="C#" Value="public void AddField (string key, string value);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="key" Type="System.String" />
-        <Parameter Name="value" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="key">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="AddFields">
-      <MemberSignature Language="C#" Value="public void AddFields (string key, string[] values, bool replace);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="key" Type="System.String" />
-        <Parameter Name="values" Type="System.String[]" />
-        <Parameter Name="replace" Type="System.Boolean" />
-      </Parameters>
-      <Docs>
-        <param name="key">To be added.</param>
-        <param name="values">To be added.</param>
-        <param name="replace">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="AddFields">
-      <MemberSignature Language="C#" Value="public void AddFields (string key, string[] values);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="key" Type="System.String" />
-        <Parameter Name="values" Type="System.String[]" />
-      </Parameters>
-      <Docs>
-        <param name="key">To be added.</param>
-        <param name="values">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="RemoveField">
-      <MemberSignature Language="C#" Value="public void RemoveField (string key, string value);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="key" Type="System.String" />
-        <Parameter Name="value" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="key">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName="RemoveField">
       <MemberSignature Language="C#" Value="public void RemoveField (string key);" />
       <MemberType>Method</MemberType>
@@ -186,9 +57,9 @@
         <Parameter Name="key" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="key">A <see cref="T:System.String" /> containing a case-insensitive key.</param>
+        <summary>Removes a field with a specified key from the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -201,23 +72,10 @@
         <Parameter Name="add_framing_bit" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="add_framing_bit">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Render">
-      <MemberSignature Language="C#" Value="public TagLib.ByteVector Render ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="add_framing_bit">A <see cref="T:System.Boolean" /> specifying whether or not to add a framing bit.</param>
+        <summary>Renders the current instance as a Vorbis Comment with an optional framing bit.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing a rendered version of the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetEnumerator">
@@ -243,9 +101,9 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing a Vorbis Comment.</param>
+        <summary>Populates the current instance by parsing a Vorbis Comment.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="FieldCount">
@@ -255,9 +113,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the total number of field values in the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the total number of field values in the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="VendorId">
@@ -267,14 +125,86 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the vendor identification for the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the vendor identification for the current instance.</value>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="GetField">
+      <MemberSignature Language="C#" Value="public string[] GetField (string key);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.String[]</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="key" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="key">A <see cref="T:System.String" /> containing a case-insensitive key.</param>
+        <summary>Gets a text field with a given key.</summary>
+        <returns>A <see cref="T:System.String" /> containing all the text in a specified field.</returns>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="GetFirstField">
+      <MemberSignature Language="C#" Value="public string GetFirstField (string key);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="key" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="key">A <see cref="T:System.String" /> containing a case-insensitive key.</param>
+        <summary>Gets the first text field with a given key.</summary>
+        <returns>A <see cref="T:System.String" /> containing the first text field, or <see langword="null" /> if none is found.</returns>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="SetField">
+      <MemberSignature Language="C#" Value="public void SetField (string key, string[] values);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="key" Type="System.String" />
+        <Parameter Name="values" Type="System.String[]">
+          <Attributes>
+            <Attribute>
+              <AttributeName>System.ParamArray</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="key">A <see cref="T:System.String" /> containing a case-insensitive key.</param>
+        <param name="values">A <see cref="T:System.String" /> array containing strings to store.</param>
+        <summary>Stores a collection of strings as a field.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="SetField">
+      <MemberSignature Language="C#" Value="public void SetField (string key, uint number);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="key" Type="System.String" />
+        <Parameter Name="number" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="key">A <see cref="T:System.String" /> containing a case-insensitive key.</param>
+        <param name="number">A <see cref="T:System.UInt32" /> containing a number to store.</param>
+        <summary>Stores a number as a field.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access and manipulate tags stored in the Xiph Vorbis Comment format.</summary>
+    <remarks />
   </Docs>
 </Type>

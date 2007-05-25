@@ -1,0 +1,61 @@
+<Type Name="PageFlags" FullName="TagLib.Ogg.PageFlags">
+  <TypeSignature Language="C#" Value="public enum PageFlags" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Flags</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Members>
+    <Member MemberName="FirstPacketContinued">
+      <MemberSignature Language="C#" Value="FirstPacketContinued" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Ogg.PageFlags</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The first packet in the page is a continuation of the last packet in the previous page.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="FirstPageOfStream">
+      <MemberSignature Language="C#" Value="FirstPageOfStream" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Ogg.PageFlags</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The page is the first page of the stream.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="LastPageOfStream">
+      <MemberSignature Language="C#" Value="LastPageOfStream" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Ogg.PageFlags</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The page is the last page of the stream.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="None">
+      <MemberSignature Language="C#" Value="None" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Ogg.PageFlags</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The page has no flags.</summary>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>Flags describing properties of an OGG page.</summary>
+    <remarks />
+  </Docs>
+</Type>

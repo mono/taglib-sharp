@@ -119,6 +119,8 @@ namespace TagLib.Id3v1
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
+      public override TagTypes TagTypes {get {return TagTypes.Id3v1;}}
+      
       public override string Title
       {
          get {return title;}

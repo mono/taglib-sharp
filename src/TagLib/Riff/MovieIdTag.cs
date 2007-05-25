@@ -38,6 +38,8 @@ namespace TagLib.Riff
          return RenderEnclosed ("MID ");
       }
 
+      public override TagTypes TagTypes {get {return TagTypes.MovieId;}}
+      
       public override string Title
       {
          get

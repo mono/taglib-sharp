@@ -125,9 +125,9 @@
         <ReturnType>TagLib.Ape.FooterFlags</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the flags for the current instance.</summary>
+        <value>A <see cref="T:TagLib.Ape.Footer" /> containing the flags.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>

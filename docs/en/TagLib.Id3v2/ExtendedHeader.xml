@@ -14,23 +14,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Parse">
-      <MemberSignature Language="C#" Value="protected void Parse (TagLib.ByteVector data);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="data" Type="TagLib.ByteVector" />
-      </Parameters>
-      <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v2.ExtendedHeader" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Size">
@@ -40,26 +25,45 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the size of the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the size.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public ExtendedHeader (TagLib.ByteVector data);" />
+      <MemberSignature Language="C#" Value="public ExtendedHeader (TagLib.ByteVector data, byte version);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="data" Type="TagLib.ByteVector" />
+        <Parameter Name="version" Type="System.Byte" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 extended header.</param>
+        <param name="version">A <see cref="T:System.Byte" /> specifying an ID3v2 version.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v2.ExtendedHeader" /> by reading specified data.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Parse">
+      <MemberSignature Language="C#" Value="protected void Parse (TagLib.ByteVector data, byte version);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="data" Type="TagLib.ByteVector" />
+        <Parameter Name="version" Type="System.Byte" />
+      </Parameters>
+      <Docs>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 extended header.</param>
+        <param name="version">A <see cref="T:System.Byte" /> specifying an ID3v2 version.</param>
+        <summary>Populates the current instance by reading an ID3v2 extended header.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class provides support for reading ID3v2 extended headers.</summary>
+    <remarks />
   </Docs>
 </Type>

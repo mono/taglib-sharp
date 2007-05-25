@@ -14,8 +14,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.PlayCountFrame" />.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -26,10 +26,10 @@
         <Parameter Name="version" Type="System.Byte" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="version">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
+        <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.PlayCountFrame" /> from a raw ID3v2 frame.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -42,12 +42,12 @@
         <Parameter Name="version" Type="System.Byte" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="offset">To be added.</param>
-        <param name="h">To be added.</param>
-        <param name="version">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
+        <param name="offset">A <see cref="T:System.Int32" /> specifying at what index in <paramref name="data" /> the frame begins.</param>
+        <param name="h">A <see cref="T:TagLib.Id3v2.FrameHeader" /> containing the header to use with the new instance.</param>
+        <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.PlayCountFrame" /> from a raw ID3v2 frame.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Get">
@@ -61,33 +61,11 @@
         <Parameter Name="create" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <param name="create">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="GetPreferred">
-      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.SynchronisedLyricsFrame GetPreferred (TagLib.Id3v2.Tag tag, string description, string language, TagLib.Id3v2.SynchedTextType type);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Id3v2.SynchronisedLyricsFrame</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="tag" Type="TagLib.Id3v2.Tag" />
-        <Parameter Name="description" Type="System.String" />
-        <Parameter Name="language" Type="System.String" />
-        <Parameter Name="type" Type="TagLib.Id3v2.SynchedTextType" />
-      </Parameters>
-      <Docs>
-        <param name="tag">To be added.</param>
-        <param name="description">To be added.</param>
-        <param name="language">To be added.</param>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="tag">A <see cref="T:TagLib.Id3v2.Tag" /> to search.</param>
+        <param name="create">A <see cref="T:System.Boolean" /> specifying whether or not to create a new instance if one is not found.</param>
+        <summary>Searches for a <see cref="T:TagLib.Id3v2.PlayCountFrame" />, optionally creating one if none is found.</summary>
+        <returns>A <see cref="T:TagLib.Id3v2.PlayCountFrame" />, or <see langword="null" /> if not found and not creating.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="PlayCount">
@@ -97,14 +75,14 @@
         <ReturnType>System.UInt64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the play count of the current instance.</summary>
+        <value>A <see cref="T:System.UInt64" /> containing the play count.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used for accessing and modifying ID3v2 Play Count (PCNT) frames.</summary>
+    <remarks />
   </Docs>
 </Type>

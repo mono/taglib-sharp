@@ -18,11 +18,11 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.File" /> to read from.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying the seek position at which to start reading.</param>
+        <param name="length">A <see cref="T:System.Int32" /> specifying the length of data to read.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Riff.AviHeaderList" /> by reading from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Header">
@@ -32,9 +32,9 @@
         <ReturnType>TagLib.Riff.AviHeader</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the header contained in the current instance.</summary>
+        <value>A <see cref="T:TagLib.Riff.AviHeader" />.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Codecs">
@@ -44,14 +44,14 @@
         <ReturnType>TagLib.ICodec[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the codecs contained in the current instance.</summary>
+        <value>A <see cref="T:TagLib.ICodec" /> array containing the codecs.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This structure is used to access AVI header lists.</summary>
+    <remarks />
   </Docs>
 </Type>

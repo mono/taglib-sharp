@@ -17,14 +17,14 @@
         <Parameter Name="stream_header" Type="TagLib.Riff.AviStreamHeader" />
       </Parameters>
       <Docs>
-        <param name="stream_header">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="stream_header">A <see cref="T:TagLib.Riff.AviStreamHeader" /> for the new instance.</param>
+        <summary>Constructs and initialises a new instance of <see cref="T:TagLib.Riff.AviVideoStream" /> from a provided stream header.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class provides support for processing AVI video streams.</summary>
+    <remarks />
   </Docs>
 </Type>

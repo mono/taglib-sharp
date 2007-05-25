@@ -55,14 +55,6 @@ namespace TagLib.Ogg
       public File (string file) : this (file, ReadStyle.Average)
       {}
       
-      public override TagTypes TagTypes
-      {
-         get
-         {
-            return tag.IsEmpty ? TagTypes.NoTags : TagTypes.Xiph;
-         }
-      }
-
       private void Read (ReadStyle properties_style)
       {
          long end;

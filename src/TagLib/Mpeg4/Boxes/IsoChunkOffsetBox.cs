@@ -29,20 +29,21 @@ namespace TagLib.Mpeg4
       
       public ByteVector Render (long size_difference, long after)
       {
-      	ByteVector output = ByteVector.FromUInt ((uint) offsets.Length);
          for (int i = 0; i < offsets.Length; i ++)
-         {
-            if (offsets [i] >= after)
+            if (offsets [i] >= (uint) after)
                offsets [i] = (uint) (offsets [i] + size_difference);
-            output.Add (ByteVector.FromUInt (offsets [i]));
-         }
          
-         return Render (output);
+         return Render ();
       }
       
-      public override ByteVector Render ()
-      {
-         return Render (0, 0);
+      public override ByteVector Data {
+         get
+         {
+         	ByteVector output = ByteVector.FromUInt ((uint) offsets.Length);
+            for (int i = 0; i < offsets.Length; i ++)
+               output.Add (ByteVector.FromUInt (offsets [i]));
+            return output;
+         }
       }
       #endregion
       

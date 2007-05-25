@@ -3,19 +3,19 @@ using System.Collections.Generic;
 
 namespace TagLib.Mpeg4
 {
-   public class Box : IComparable<Box>
+   public class Box
    {
       #region Private   Properties
       private BoxHeader header;
-      private Box handler;
-      private long data_offset;
+      private Box       handler;
+      private long      data_position;
       #endregion
       
       #region Constructors
       protected Box (BoxHeader header, File file, Box handler)
       {
          this.header      = header;
-         this.data_offset = header.Position + (long)header.DataOffset;
+         this.data_position = header.Position + (long)header.DataOffset;
          this.handler     = handler;
       }
       
@@ -29,15 +29,15 @@ namespace TagLib.Mpeg4
       #endregion
       
       // Render the complete box including children.
-      public virtual ByteVector Render ()
+      public ByteVector Render ()
       {
          return Render (new ByteVector ());
       }
       
       public    virtual ByteVector BoxType      {get {return header.BoxType;}}
       public    virtual int        Size         {get {return (int)header.TotalBoxSize;}}
-      protected         int        DataSize     {get {return (int)(header.DataSize + data_offset - DataOffset);}}
-      protected virtual long      DataOffset   {get {return data_offset;}}
+      protected         int        DataSize     {get {return (int)(header.DataSize + data_position - DataPosition);}}
+      protected virtual long       DataPosition {get {return data_position;}}
       protected         BoxHeader  Header       {get {return header;}}
       
       public virtual ByteVector Data  {get {return null;} set {}}
@@ -47,22 +47,24 @@ namespace TagLib.Mpeg4
       {
          BoxList children = new BoxList ();
          
-         long position = DataOffset;
+         long position = DataPosition;
          long end = position + DataSize;
          
+         header.Box = this;
          while (position < end)
          {
-            Box child = BoxFactory.CreateBox (file, position, header, handler);
+            Box child = BoxFactory.CreateBox (file, position, header, handler, children.Count);
             children.Add (child);
             position += child.Size;
          }
+         header.Box = null;
          
          return children;
       }
       
       protected ByteVector LoadData (File file)
       {
-         file.Seek (DataOffset);
+         file.Seek (DataPosition);
          return file.ReadBlock (DataSize);
       }
       
@@ -72,13 +74,8 @@ namespace TagLib.Mpeg4
          get {return handler as IsoHandlerBox;}
       }
       
-      public int CompareTo (Box box)
-      {
-         return (int)(DataSize - box.DataSize);
-      }
-      
       // Render a box with the "data" before its content.
-      protected virtual ByteVector Render (ByteVector data)
+      protected virtual ByteVector Render (ByteVector top_data)
       {
          bool free_found = false;
          ByteVector output = new ByteVector ();
@@ -107,10 +104,10 @@ namespace TagLib.Mpeg4
          }
          
          // Adjust the header's data size to match the content.
-         header.DataSize = data.Count + output.Count;
+         header.DataSize = top_data.Count + output.Count;
          
          // Render the full box.
-         output.Insert (0, data);
+         output.Insert (0, top_data);
          output.Insert (0, header.Render ());
          return output;
       }

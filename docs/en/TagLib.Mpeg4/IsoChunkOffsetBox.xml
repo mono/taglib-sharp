@@ -18,11 +18,11 @@
         <Parameter Name="handler" Type="TagLib.Mpeg4.Box" />
       </Parameters>
       <Docs>
-        <param name="header">To be added.</param>
-        <param name="file">To be added.</param>
-        <param name="handler">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="header">A <see cref="T:TagLib.Mpeg4.BoxHeader" /> containing the header for the new instance.</param>
+        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to read from.</param>
+        <param name="handler">A <see cref="T:TagLib.Mpeg4.Box" /> containing the handler that applies to the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.IsoChunkOffsetBox" /> for a specified header by reading from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Overwrite">
@@ -37,11 +37,11 @@
         <Parameter Name="after" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="size_difference">To be added.</param>
-        <param name="after">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to write to.</param>
+        <param name="size_difference">A <see cref="T:System.Int64" /> specifying the size change that occured.</param>
+        <param name="after">A <see cref="T:System.Int64" /> specifying the seek position after which changes should be applied.</param>
+        <summary>Overwrites the version of the current instance on the disk with new offset values due to file change.</summary>
+        <remarks>If an offset contains a position less than the value in <paramref name="after" /> no change will be made to it.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -55,11 +55,11 @@
         <Parameter Name="after" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="size_difference">To be added.</param>
-        <param name="after">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="size_difference">A <see cref="T:System.Int64" /> specifying the size change that occured.</param>
+        <param name="after">A <see cref="T:System.Int64" /> specifying the seek position after which changes should be applied.</param>
+        <summary>Renders the current instance as a ChunkOffsetBox applying a size change in the file.</summary>
+        <returns>A rendered version of the current instance.</returns>
+        <remarks>If an offset contains a position less than the value in <paramref name="after" /> no change will be made to it.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Offsets">
@@ -69,14 +69,14 @@
         <ReturnType>System.UInt32[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the offsets stored in the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> array containing offsets.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class provides access to ISO/IEC 14496-12 ChunkOffsetBoxes.</summary>
+    <remarks />
   </Docs>
 </Type>

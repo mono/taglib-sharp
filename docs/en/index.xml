@@ -20,8 +20,8 @@
       </Attributes>
     </Assembly>
   </Assemblies>
-  <Remarks>To be added.</Remarks>
-  <Copyright>To be added.</Copyright>
+  <Remarks>This package provides support for reading and writing the tagging information for a large number of tagging formats, as well as reading media properties for many standard audio and video formats.</Remarks>
+  <Copyright>Copyright (c) 2007 Brian Nickel</Copyright>
   <Types>
     <Namespace Name="TagLib">
       <Type Name="IPicture" />
@@ -82,6 +82,7 @@
       <Type Name="BlockHeader" />
       <Type Name="BlockType" />
       <Type Name="StreamHeader" />
+      <Type Name="Metadata" />
     </Namespace>
     <Namespace Name="TagLib.NonContainer">
       <Type Name="File" />
@@ -205,5 +206,5 @@
       <Type Name="StreamHeader" />
     </Namespace>
   </Types>
-  <Title>taglib-sharp</Title>
+  <Title>TagLib#</Title>
 </Overview>

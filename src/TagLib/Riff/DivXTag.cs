@@ -92,6 +92,7 @@ namespace TagLib.Riff
          return b.ToString ();
       }
       
+      public override TagTypes TagTypes {get {return TagTypes.DivX;}}
       
       public override string Title
       {

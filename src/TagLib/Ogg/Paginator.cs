@@ -21,12 +21,12 @@ namespace TagLib.Ogg
          if (first_page_header == null)
             first_page_header = page.Header;
          
-         if (page.Packets.Count == 0)
+         if (page.Packets.Length == 0)
             return;
             
-         ByteVectorList page_packets = page.Packets;
+         ByteVector[] page_packets = page.Packets;
             
-         for (int i = 0; i < page_packets.Count; i ++)
+         for (int i = 0; i < page_packets.Length; i ++)
          {
             if ((page.Header.Flags & PageFlags.FirstPacketContinued) == 0 && i == 0)
                packets [packets.Count - 1].Add (page_packets [0]);

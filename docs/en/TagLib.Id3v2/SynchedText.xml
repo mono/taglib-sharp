@@ -16,9 +16,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the text contained in the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the text.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Time">
@@ -28,9 +28,9 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the time value, in the timestamp format.</summary>
+        <value>A <see cref="T:System.Int64" /> containing the time.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -41,15 +41,15 @@
         <Parameter Name="text" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="time">To be added.</param>
-        <param name="text">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="time">A <see cref="T:System.Int64" /> containing the time in the timestamp format.</param>
+        <param name="text">A <see cref="T:System.String" /> containing the text.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v2.SynchedText" /> with a specified time and text.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This struct privides access to synchronized text contained in a <see cref="T:TagLib.Id3v2.SynchronizedLyricsFrame" />.</summary>
+    <remarks />
   </Docs>
 </Type>

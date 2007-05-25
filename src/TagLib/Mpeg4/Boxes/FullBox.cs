@@ -10,7 +10,7 @@ namespace TagLib.Mpeg4
       #region Constructors
       protected FullBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
       {
-         file.Seek (base.DataOffset);
+         file.Seek (base.DataPosition);
          ByteVector header_data = file.ReadBlock (4);
          version = header_data [0];
          flags   = header_data.Mid (1, 3).ToUInt ();
@@ -40,7 +40,7 @@ namespace TagLib.Mpeg4
       #region Public Properties
       public uint Version {get {return version;} set {version = (byte)value;}}
       public uint Flags   {get {return flags;}   set {flags = value;}}
-      protected override long DataOffset     {get {return base.DataOffset + 4;}}
+      protected override long DataPosition     {get {return base.DataPosition + 4;}}
       #endregion
    }
 }

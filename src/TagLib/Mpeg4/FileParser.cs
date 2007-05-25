@@ -103,10 +103,10 @@ namespace TagLib.Mpeg4
 		
 		public void ParseTag ()
 		{
-         ParseTag (first_header.TotalBoxSize, file.Length, null, null);
+         ParseTag (first_header.TotalBoxSize, file.Length, BoxHeader.Empty);
 		}
       
-      private void ParseTag (long start, long end, BoxHeader parent, Box handler)
+      private void ParseTag (long start, long end, BoxHeader parent)
       {
          long position = start;
          for (BoxHeader header = new BoxHeader (file, position); header.TotalBoxSize != 0 && position < end; position += header.TotalBoxSize)
@@ -114,18 +114,18 @@ namespace TagLib.Mpeg4
             header = new BoxHeader (file, position);
             
             if (header.BoxType == BoxTypes.Moov || header.BoxType == BoxTypes.Mdia || header.BoxType == BoxTypes.Minf || header.BoxType == BoxTypes.Stbl || header.BoxType == BoxTypes.Trak)
-               ParseTag (header.DataOffset + position, header.TotalBoxSize + position, header, handler);
+               ParseTag (header.DataOffset + position, header.TotalBoxSize + position, header);
             else if (udta_box == null && header.BoxType == BoxTypes.Udta)
-               udta_box = BoxFactory.CreateBox (header, file, parent, handler) as IsoUserDataBox;
+               udta_box = BoxFactory.CreateBox (file, header) as IsoUserDataBox;
 		   }
 		}
 		
 		public void ParseTagAndProperties ()
 		{
-         ParseTagAndProperties (first_header.TotalBoxSize, file.Length, null, null);
+         ParseTagAndProperties (first_header.TotalBoxSize, file.Length, BoxHeader.Empty, null);
 		}
       
-      private void ParseTagAndProperties (long start, long end, BoxHeader parent, Box handler)
+      private void ParseTagAndProperties (long start, long end, BoxHeader parent, IsoHandlerBox handler)
       {
          long position = start;
          for (BoxHeader header = new BoxHeader (file, position); header.TotalBoxSize != 0 && position < end; position += header.TotalBoxSize)
@@ -135,13 +135,13 @@ namespace TagLib.Mpeg4
             if (header.BoxType == BoxTypes.Moov || header.BoxType == BoxTypes.Mdia || header.BoxType == BoxTypes.Minf || header.BoxType == BoxTypes.Stbl || header.BoxType == BoxTypes.Trak)
                ParseTagAndProperties (header.DataOffset + position, header.TotalBoxSize + position, header, handler);
             else if (header.BoxType == BoxTypes.Stsd)
-               stsd_boxes.Add (BoxFactory.CreateBox (header, file, parent, handler));
+               stsd_boxes.Add (BoxFactory.CreateBox (file, header, handler));
             else if (header.BoxType == BoxTypes.Hdlr)
-               handler = BoxFactory.CreateBox (header, file, parent, handler) as IsoHandlerBox;
+               handler = BoxFactory.CreateBox (file, header, handler) as IsoHandlerBox;
             else if (mvhd_box == null && header.BoxType == BoxTypes.Mvhd)
-               mvhd_box = BoxFactory.CreateBox (header, file, parent, handler) as IsoMovieHeaderBox;
+               mvhd_box = BoxFactory.CreateBox (file, header, handler) as IsoMovieHeaderBox;
             else if (udta_box == null && header.BoxType == BoxTypes.Udta)
-               udta_box = BoxFactory.CreateBox (header, file, parent, handler) as IsoUserDataBox;
+               udta_box = BoxFactory.CreateBox (file, header, handler) as IsoUserDataBox;
 		   }
 		}
 		
@@ -162,7 +162,7 @@ namespace TagLib.Mpeg4
             else if (header.BoxType == BoxTypes.Moov || header.BoxType == BoxTypes.Mdia || header.BoxType == BoxTypes.Minf || header.BoxType == BoxTypes.Stbl || header.BoxType == BoxTypes.Trak)
                ParseChunkOffsets (header.DataOffset + position, header.TotalBoxSize + position);
             else if (header.BoxType == BoxTypes.Stco || header.BoxType == BoxTypes.Co64)
-               stco_boxes.Add (BoxFactory.CreateBox (header, file, null, null));
+               stco_boxes.Add (BoxFactory.CreateBox (file, header));
 		   }
 		}
 	}

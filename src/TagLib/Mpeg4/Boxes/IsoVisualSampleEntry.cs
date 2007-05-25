@@ -15,7 +15,7 @@ namespace TagLib.Mpeg4
       
       public IsoVisualSampleEntry (BoxHeader header, File file, Box handler) : base (header, file, handler)
       {
-         file.Seek (base.DataOffset + 16);
+         file.Seek (base.DataPosition + 16);
          width  = file.ReadBlock (2).ToUShort ();
          height = file.ReadBlock (2).ToUShort ();
          // TODO: What are the children anyway?
@@ -25,7 +25,7 @@ namespace TagLib.Mpeg4
       
       
 #region Public Properties
-      protected override long    DataOffset {get {return base.DataOffset + 62;}}
+      protected override long    DataPosition {get {return base.DataPosition + 62;}}
       // public    override BoxList Children   {get {return children;}}
 #endregion
       

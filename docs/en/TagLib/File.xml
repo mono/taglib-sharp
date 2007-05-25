@@ -569,15 +569,15 @@
       </Docs>
     </Member>
     <Member MemberName="TagTypes">
-      <MemberSignature Language="C#" Value="public virtual TagLib.TagTypes TagTypes { protected set; get; };" />
+      <MemberSignature Language="C#" Value="public TagLib.TagTypes TagTypes { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.TagTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the tag types present in the current instance.</summary>
+        <value>A <see cref="T:TagLib.TagTypes" /> containing a bitwise combined list of tags.</value>
+        <remarks>TagLib# automatically adds reasonable defaults to tags to make sure optimal tagging is possible. To see the tags in the physical file, use <see cref="P:TagLib.File.TagTypesOnDisk" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="TagTypesOnDisk">
@@ -587,9 +587,9 @@
         <ReturnType>TagLib.TagTypes</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the tag types present in phyical file represented by the current instance.</summary>
+        <value>A <see cref="T:TagLib.TagTypes" /> containing a bitwise combined list of tags.</value>
+        <remarks>TagLib# automatically adds reasonable defaults to tags to make sure optimal tagging is possible. To see the tags in the current instance, use <see cref="P:TagLib.File.TagTypes" />.</remarks>
       </Docs>
     </Member>
   </Members>

@@ -45,7 +45,7 @@ namespace TagLib.Ogg.Codecs
       public override ByteVector CommentData     {get {return comment_data;}}
       public override string     Description     {get {return "Vorbis Version " + header.vorbis_version + " Audio";}}
 
-      public override TimeSpan GetDuration (long last_granular_position, long first_granular_position)
+      public override TimeSpan GetDuration (long first_granular_position, long last_granular_position)
       {
          return TimeSpan.FromSeconds ((double) (last_granular_position - first_granular_position) / (double) header.sample_rate);
       }
@@ -54,7 +54,7 @@ namespace TagLib.Ogg.Codecs
       {
          ByteVector data = new ByteVector ((byte) 0x03);
          data.Add (id);
-         data.Add (comment.Render ());
+         data.Add (comment.Render (true));
          if (packets.Count > 1 && PacketType (packets [1]) == 0x03)
             packets [1] = data;
          else

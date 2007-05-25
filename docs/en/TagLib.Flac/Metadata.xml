@@ -1,0 +1,38 @@
+<Type Name="Metadata" FullName="TagLib.Flac.Metadata">
+  <TypeSignature Language="C#" Value="public class Metadata : TagLib.Tag" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>TagLib.Tag</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Metadata ();" />
+      <MemberType>Constructor</MemberType>
+      <Parameters />
+      <Docs>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Flac.Metadata" />.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Clear">
+      <MemberSignature Language="C#" Value="public void Clear ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Clears all the non-essential metadata contained in the current instance.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>This class is used to access and manipulate metadata stored in FLAC files.</summary>
+    <remarks>At the time of this writing, only picture data is supported.</remarks>
+  </Docs>
+</Type>

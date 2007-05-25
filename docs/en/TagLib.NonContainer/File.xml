@@ -46,10 +46,10 @@
         <Parameter Name="style" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
-        <param name="start">To be added.</param>
-        <param name="style">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="start">A <see cref="T:System.Int64" /> containing the seek position at which tagging ends at the beginning of the file.</param>
+        <param name="style">A <see cref="T:TagLib.ReadStyle" /> specifying how to read the current instance.</param>
+        <summary>Reads format specific information at the start of the file.</summary>
+        <remarks>This method is ALWAYS called by the constructor immediately after the tags at the beginning of the file are read. It should be used for reading content specific information and properties.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ReadEnd">
@@ -63,10 +63,10 @@
         <Parameter Name="style" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
-        <param name="end">To be added.</param>
-        <param name="style">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="end">A <see cref="T:System.Int64" /> containing the seek position at which tagging begins at the end of the file.</param>
+        <param name="style">A <see cref="T:TagLib.ReadStyle" /> specifying how to read the current instance.</param>
+        <summary>Reads format specific information at the end of the file.</summary>
+        <remarks>This method is ALWAYS called by the constructor immediately after the tags at the end of the file are read. It should be used for reading content specific information and properties.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ReadProperties">
@@ -81,12 +81,12 @@
         <Parameter Name="style" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
-        <param name="start">To be added.</param>
-        <param name="end">To be added.</param>
-        <param name="style">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="start">A <see cref="T:System.Int64" /> containing the seek position at which tagging ends at the beginning of the file.</param>
+        <param name="end">A <see cref="T:System.Int64" /> containing the seek position at which tagging begins at the end of the file.</param>
+        <param name="style">A <see cref="T:TagLib.ReadStyle" /> specifying how to read the current instance.</param>
+        <summary>Reads the media properties contained in the current instance.</summary>
+        <returns>A <see cref="T:TagLib.Properties" /> containing the media properties for the current instance.</returns>
+        <remarks>This is only called IF the read style used for the file IS NOT <see cref="F:TagLib.ReadStyle.None" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="StartTag">
@@ -96,9 +96,9 @@
         <ReturnType>TagLib.NonContainer.StartTag</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the tag collection at the start of the file represented by the current instance.</summary>
+        <value>A <see cref="T:TagLib.NonContainer.StartTag" /> containing the collection of that at the start of the file.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="EndTag">
@@ -108,9 +108,9 @@
         <ReturnType>TagLib.NonContainer.EndTag</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the tag collection at the end of the file represented by the current instance.</summary>
+        <value>A <see cref="T:TagLib.NonContainer.EndTag" /> containing the collection of that at the end of the file.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>

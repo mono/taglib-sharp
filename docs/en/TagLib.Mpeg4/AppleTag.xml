@@ -20,9 +20,9 @@
         <Parameter Name="box" Type="TagLib.Mpeg4.IsoUserDataBox&amp;" RefType="ref" />
       </Parameters>
       <Docs>
-        <param name="box">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="box">The <see cref="T:TagLib.Mpeg4.IsoUserDataBox" /> the tag is to be contained in.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.AppleTag" /> for a provided user data box.</summary>
+        <remarks>If <paramref name="box" /> is <see langword="null" /> or doesn't contain the proper combination of boxes, they will be created.</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetEnumerator">
@@ -48,10 +48,10 @@
         <Parameter Name="list" Type="System.Collections.Generic.IEnumerable&lt;TagLib.ByteVector&gt;" />
       </Parameters>
       <Docs>
-        <param name="list">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="list">A <see cref="T:System.Collections.Generic.IEnumerable&lt;TagLib.ByteVector&gt;" /> containing all the data box names to look for.</param>
+        <summary>Gets all the data boxes with specified names in the current instance.</summary>
+        <returns>A <see cref="System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.AppleDataBox&gt;" /> containing all the matching boxes.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="DataBoxes">
@@ -70,10 +70,10 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="vects">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="vects">A <see cref="T:TagLib.ByteVector" /> array containing all the data box names to look for.</param>
+        <summary>Gets all the data boxes with specified names in the current instance.</summary>
+        <returns>A <see cref="System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.AppleDataBox&gt;" /> containing all the matching boxes.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="DataBoxes">
@@ -87,11 +87,11 @@
         <Parameter Name="name" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="mean">To be added.</param>
-        <param name="name">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="mean">A <see cref="T:System.String" /> specifying a mean ID.</param>
+        <param name="name">A <see cref="T:System.String" /> specifying a name.</param>
+        <summary>Gets all the custom data boxes with specified mean and name ID's in the current instance.</summary>
+        <returns>A <see cref="System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.AppleDataBox&gt;" /> containing all the matching boxes.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetText">
@@ -104,10 +104,10 @@
         <Parameter Name="type" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="type">A <see cref="T:TagLib.ByteVector" /> containing a box type.</param>
+        <summary>Gets the text contained in a given box type.</summary>
+        <returns>A <see cref="T:System.String" /> containing the text.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetData">
@@ -121,10 +121,10 @@
         <Parameter Name="boxes" Type="TagLib.Mpeg4.AppleDataBox[]" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <param name="boxes">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="type">A <see cref="T:TagLib.ByteVector" /> containing a box type.</param>
+        <param name="boxes">A <see cref="T:TagLib.Mpeg4.AppleDataBox" /> array containing boxes to store with a given type.</param>
+        <summary>Stores a collection of boxes with a given type.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetData">
@@ -139,11 +139,11 @@
         <Parameter Name="flags" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <param name="data">To be added.</param>
-        <param name="flags">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="type">A <see cref="T:TagLib.ByteVector" /> containing a box type.</param>
+        <param name="data">A <see cref="T:TagLib.ByteVectorList" /> containing data to store.</param>
+        <param name="flags">A <see cref="T:System.UInt32" /> containing flags to apply to the boxes.</param>
+        <summary>Stores a collection of <see cref="T:TagLib.ByteVector" />s with a box type and flags.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetData">
@@ -158,11 +158,11 @@
         <Parameter Name="flags" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <param name="data">To be added.</param>
-        <param name="flags">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="type">A <see cref="T:TagLib.ByteVector" /> containing a box type.</param>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing data to store.</param>
+        <param name="flags">A <see cref="T:System.UInt32" /> containing flags to apply to the boxes.</param>
+        <summary>Stores a <see cref="T:TagLib.ByteVector" /> with a box type and flags.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetText">
@@ -176,10 +176,10 @@
         <Parameter Name="text" Type="System.String[]" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <param name="text">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="type">A <see cref="T:TagLib.ByteVector" /> containing a box type.</param>
+        <param name="text">A <see cref="T:System.String" /> array containing text to store.</param>
+        <summary>Sets the data for a specified box to a given string array.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetText">
@@ -193,10 +193,10 @@
         <Parameter Name="text" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <param name="text">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="type">A <see cref="T:TagLib.ByteVector" /> containing a box type.</param>
+        <param name="text">A <see cref="T:System.String" /> containing text to store.</param>
+        <summary>Sets the data for a specified box to a given string.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ClearData">
@@ -209,9 +209,9 @@
         <Parameter Name="type" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="type">A <see cref="T:TagLib.ByteVector" /> containing a box type.</param>
+        <summary>Clears the data for a specific box type.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="DetachIlst">
@@ -222,8 +222,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Detaches the tag's ILST from its parent box, preventing it from being saved.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IsCompilation">
@@ -233,14 +233,14 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether or not the current instance is a compilation.</summary>
+        <value>A <see cref="T:System.Boolean" /> specifying whether or not the current instance is a compilation.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to access and manipulate tags stored in the Apple "ilst" tagging format.</summary>
+    <remarks />
   </Docs>
 </Type>

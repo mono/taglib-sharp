@@ -79,6 +79,17 @@ namespace TagLib
          this.tags.Clear ();
       }
       
+      public override TagTypes TagTypes
+      {
+         get
+         {
+            TagTypes types = TagTypes.NoTags;
+            foreach (Tag tag in tags)
+               types |= tag.TagTypes;
+            return types;
+         }
+      }
+      
       public override string Title
       {
          get

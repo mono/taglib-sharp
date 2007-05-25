@@ -159,6 +159,8 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
+      public override TagTypes TagTypes {get {return TagTypes.Id3v2;}}
+      
       public override string Title
       {
          get
@@ -572,7 +574,7 @@ namespace TagLib.Id3v2
          // check for extended header
          if ((header.Flags & HeaderFlags.ExtendedHeader) != 0)
          {
-            extended_header = new ExtendedHeader (data);
+            extended_header = new ExtendedHeader (data, header.MajorVersion);
             
             if (extended_header.Size <= data.Count)
             {
@@ -608,17 +610,24 @@ namespace TagLib.Id3v2
          }
       }
       
-      public void SetTextFrame (ByteVector id, string value)
+      public void SetTextFrame (ByteVector id, params string [] value)
       {
-         if (value == null || value == string.Empty)
-            RemoveFrames (id);
-         else
-            SetTextFrame (id, new StringList (value));
+         SetTextFrame (id, new StringList (value));
       }
       
       public void SetTextFrame (ByteVector id, StringList value)
       {
-         if (value == null || value.Count == 0)
+         if (value == null)
+         {
+            RemoveFrames (id);
+            return;
+         }
+         
+         for (int i = value.Count - 1; i >= 0; i --)
+            if (value [i] == null || value [i].Trim () == string.Empty)
+               value.RemoveAt (i);
+         
+         if (value.Count == 0)
             RemoveFrames (id);
          else
             TextIdentificationFrame.Get (this, id, true).SetText (value);

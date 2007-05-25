@@ -120,7 +120,6 @@ namespace TagLib.Mpeg4
             {
                apple_tag = new AppleTag (ref udta_box);
                tag.SetTags (apple_tag);
-               TagTypes |= TagTypes.Apple;
             }
             
             return apple_tag;
@@ -137,7 +136,6 @@ namespace TagLib.Mpeg4
          
          apple_tag.DetachIlst ();
          apple_tag = null;
-         TagTypes &= TagTypes.Apple;
          tag.SetTags ();
       }
       
@@ -158,7 +156,6 @@ namespace TagLib.Mpeg4
          
          apple_tag = new AppleTag (ref udta_box);
          tag.SetTags (apple_tag);
-         TagTypes |= TagTypes.Apple;
          
          // If we're not reading properties, we're done.
          if (properties_style == ReadStyle.None)

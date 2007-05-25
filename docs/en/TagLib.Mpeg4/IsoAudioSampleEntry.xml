@@ -22,23 +22,23 @@
         <Parameter Name="handler" Type="TagLib.Mpeg4.Box" />
       </Parameters>
       <Docs>
-        <param name="header">To be added.</param>
-        <param name="file">To be added.</param>
-        <param name="handler">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="header">A <see cref="T:TagLib.Mpeg4.BoxHeader" /> containing the header for the new instance.</param>
+        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to read from.</param>
+        <param name="handler">A <see cref="T:TagLib.Mpeg4.Box" /> containing the handler that applies to the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.IsoAudioSampleEntry" /> for a specified header by reading from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
-    <Member MemberName="DataOffset">
-      <MemberSignature Language="C#" Value="protected override long DataOffset { get; };" />
+    <Member MemberName="DataPosition">
+      <MemberSignature Language="C#" Value="protected override long DataPosition { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the offset of the data after box specific information is accounted for.</summary>
+        <value>A <see cref="T:System.Int64" /> specifying the seek position at which the data starts.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AudioBitrate">
@@ -84,9 +84,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the audio sample size of the current instance.</summary>
+        <value>A <see cref="T:System.Int32" /> representing the audio sample size.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Description">

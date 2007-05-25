@@ -20,8 +20,8 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing the data structure to be read.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.WaveFormatEx" /> by reading the data structure from the beginning of a <see cref="T:TagLib.ByteVector" />.</summary>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing the Microsoft WavFormatEx structure to be read.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.WaveFormatEx" /> by reading the Microsoft WavFormatEx structure from the beginning of a <see cref="T:TagLib.ByteVector" />.</summary>
         <remarks />
       </Docs>
     </Member>
@@ -33,9 +33,9 @@
         <Parameter Name="offset" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing the data structure to be read.</param>
-        <param name="offset">A <see cref="T:System.Int32" /> specifying the index in the data at which the structure is stored.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.WaveFormatEx" /> by reading the data structure from a specific point in a <see cref="T:TagLib.ByteVector" />.</summary>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing the Microsoft WavFormatEx structure to be read.</param>
+        <param name="offset">A <see cref="T:System.Int32" /> specifying at what index the structure begins.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.WaveFormatEx" /> by reading the Microsoft WavFormatEx structure from a specific point in a <see cref="T:TagLib.ByteVector" />.</summary>
         <remarks />
       </Docs>
     </Member>

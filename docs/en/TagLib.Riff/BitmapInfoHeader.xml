@@ -20,9 +20,9 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing a Microsoft BitmapInfoHeader structure.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.BitmapInfoHeader" /> by reading from a Microsoft BitmapInfoHeader structure.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -33,10 +33,10 @@
         <Parameter Name="offset" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="offset">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing a Microsoft BitmapInfoHeader structure.</param>
+        <param name="offset">A <see cref="T:System.Int32" /> specifying at what index the structure begins.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.BitmapInfoHeader" /> by reading from a Microsoft BitmapInfoHeader structure.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="HeaderSize">
@@ -46,9 +46,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the header size of the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the header size.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Planes">
@@ -58,9 +58,9 @@
         <ReturnType>System.UInt16</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the number of planes in current instance.</summary>
+        <value>A <see cref="T:System.UInt16" /> containing the number of planes.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="BitCount">
@@ -70,9 +70,9 @@
         <ReturnType>System.UInt16</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the bit count of the current instance.</summary>
+        <value>A <see cref="T:System.UInt16" /> containing the bit count.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="CompressionId">
@@ -82,9 +82,9 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the FourCC compression ID used by the current instance.</summary>
+        <value>A <see cref="T:TagLib.ByteVector" /> containing the FourCC compression ID.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ImageSize">
@@ -94,9 +94,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the size of the image in the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the image size.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="XPixelsPerMeter">
@@ -106,9 +106,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the number of horizontal pixels per meter in the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the number of horizontal pixels per meter.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="YPixelsPerMeter">
@@ -118,9 +118,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the number of vertical pixels per meter in the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the number of vertical pixels per meter.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ColorsUsed">
@@ -130,9 +130,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the number of color used in the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the number of colors used.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Description">
@@ -202,9 +202,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the number of important colors in the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> contining the number of important colors.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>

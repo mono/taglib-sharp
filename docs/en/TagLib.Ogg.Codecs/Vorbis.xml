@@ -26,8 +26,7 @@
         <param name="packet">A <see cref="T:TagLib.ByteVector" /> containing an OGG packet from a BOS page.</param>
         <summary>Creates a new Vorbis codec reader from an OGG packet, if it matches.</summary>
         <returns>A new instance of the <see cref="T:TagLib.Ogg.Codec.Vorbis" /> if the codec is matched. Otherwise <see langword="null" />.</returns>
-        <remarks>
-        </remarks>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="AudioBitrate">
@@ -68,7 +67,7 @@
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used for processing the Xiph Vorbis codec and implements <see cref="T:TagLib.IAudioCodec" />.</summary>
+    <remarks />
   </Docs>
 </Type>

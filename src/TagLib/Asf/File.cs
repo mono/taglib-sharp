@@ -81,10 +81,7 @@ namespace TagLib.Asf
          if (type == TagTypes.Asf)
          {
             if (asf_tag == null)
-            {
-               TagTypes |= TagTypes.Asf;
                asf_tag = new Tag ();
-            }
             
             return asf_tag;
          }
@@ -95,10 +92,7 @@ namespace TagLib.Asf
       public override void RemoveTags (TagTypes types)
       {
          if ((types & TagTypes.Asf) == TagTypes.Asf)
-         {
             asf_tag = null;
-            TagTypes &= ~TagTypes.Asf;
-         }
       }
       
       public ushort ReadWord ()
@@ -176,8 +170,6 @@ namespace TagLib.Asf
             TagTypesOnDisk |= TagTypes.Asf;
          
          asf_tag = new Asf.Tag (header);
-         
-         TagTypes |= TagTypes.Asf;
          
          if(properties_style != ReadStyle.None)
             properties = header.GetProperties ();

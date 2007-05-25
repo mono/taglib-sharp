@@ -1,5 +1,5 @@
 <Type Name="Box" FullName="TagLib.Mpeg4.Box">
-  <TypeSignature Language="C#" Value="public class Box : IComparable&lt;TagLib.Mpeg4.Box&gt;" />
+  <TypeSignature Language="C#" Value="public class Box" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
@@ -8,9 +8,6 @@
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces>
-    <Interface>
-      <InterfaceName>System.IComparable&lt;TagLib.Mpeg4.Box&gt;</InterfaceName>
-    </Interface>
   </Interfaces>
   <Members>
     <Member MemberName=".ctor">
@@ -22,11 +19,11 @@
         <Parameter Name="handler" Type="TagLib.Mpeg4.Box" />
       </Parameters>
       <Docs>
-        <param name="header">To be added.</param>
-        <param name="file">To be added.</param>
-        <param name="handler">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="header">A <see cref="T:TagLib.Mpeg4.BoxHeader" /> containing the header for the new instance.</param>
+        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to read from.</param>
+        <param name="handler">A <see cref="T:TagLib.Mpeg4.Box" /> containing the handler that applies to the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.Box" /> for a specified header by reading from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -36,9 +33,9 @@
         <Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" />
       </Parameters>
       <Docs>
-        <param name="header">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="header">A <see cref="T:TagLib.Mpeg4.BoxHeader" /> containing the header for the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.Box" /> for a specified header.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -48,22 +45,22 @@
         <Parameter Name="type" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="type">A <see cref="T:TagLib.ByteVector" /> specifying the type of the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.Box" /> of a specified type.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
-      <MemberSignature Language="C#" Value="public virtual TagLib.ByteVector Render ();" />
+      <MemberSignature Language="C#" Value="public TagLib.ByteVector Render ();" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Renders the current instance as a box.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered version of the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="LoadChildren">
@@ -76,10 +73,10 @@
         <Parameter Name="file" Type="TagLib.Mpeg4.File" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to read from.</param>
+        <summary>Reads and returns the children the current instance.</summary>
+        <returns>A <see cref="T:TagLib.Mpeg4.BoxList" /> containing the children of the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="LoadData">
@@ -92,42 +89,38 @@
         <Parameter Name="file" Type="TagLib.Mpeg4.File" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="CompareTo">
-      <MemberSignature Language="C#" Value="public int CompareTo (TagLib.Mpeg4.Box box);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="box" Type="TagLib.Mpeg4.Box" />
-      </Parameters>
-      <Docs>
-        <param name="box">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to read from.</param>
+        <summary>Reads and returns the contents the current instance.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the contents of the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
-      <MemberSignature Language="C#" Value="protected virtual TagLib.ByteVector Render (TagLib.ByteVector data);" />
+      <MemberSignature Language="C#" Value="protected virtual TagLib.ByteVector Render (TagLib.ByteVector top_data);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="data" Type="TagLib.ByteVector" />
+        <Parameter Name="top_data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="top_data">A <see cref="T:TagLib.ByteVector" /> containing data to insert before the contents of the box.</param>
+        <summary>Renders the current instance as a box, inserting data above the normal rendered content.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered version of the current instance.</returns>
+        <remarks>
+          <para>This should be used to render items with data specified at the beginning. For example, IsoFullBox does the following:</para>
+          <example>
+            <code lang="C#">protected override ByteVector Render (ByteVector data)
+{
+   ByteVector output = new ByteVector ((byte) version);
+   output.Add (ByteVector.FromUInt (flags).Mid (1,3));
+   output.Add (data);
+   return base.Render (output);
+}</code>
+          </example>
+          <para>This inserts the version and flags at the top of the box without interfering with the ability of subclasses to add their own content.</para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="BoxType">
@@ -137,9 +130,9 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the type box represented by the current instance.</summary>
+        <value>A <see cref="T:TagLib.ByteVector" /> containing the box type.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Size">
@@ -149,9 +142,9 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the total size of the current instance on disk.</summary>
+        <value>A <see cref="T:System.Int32" /> containing the total size on disk.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="DataSize">
@@ -161,21 +154,21 @@
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the size of the data (or children) in the current instance.</summary>
+        <value>A <see cref="T:System.Int32" /> containing the size of the data.</value>
+        <remarks />
       </Docs>
     </Member>
-    <Member MemberName="DataOffset">
-      <MemberSignature Language="C#" Value="protected virtual long DataOffset { get; };" />
+    <Member MemberName="DataPosition">
+      <MemberSignature Language="C#" Value="protected virtual long DataPosition { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the offset of the data after box specific information is accounted for.</summary>
+        <value>A <see cref="T:System.Int64" /> specifying the seek position at which the data starts.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Header">
@@ -185,9 +178,9 @@
         <ReturnType>TagLib.Mpeg4.BoxHeader</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the header of the current instance.</summary>
+        <value>A <see cref="T:TagLib.Mpeg4.BoxHeader" /> containing the header.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Data">
@@ -197,9 +190,9 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the data contained in the current instance.</summary>
+        <value>A <see cref="T:TagLib.ByteVector" /> containing the data.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Children">
@@ -209,9 +202,9 @@
         <ReturnType>TagLib.Mpeg4.BoxList</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the children of the current instance.</summary>
+        <value>A <see cref="T:TagLib.Mpeg4.BoxList" /> containing the children, or <see langref="null" /> if the box does not support children.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Handler">
@@ -221,14 +214,14 @@
         <ReturnType>TagLib.Mpeg4.IsoHandlerBox</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the handler that applies to the current instance.</summary>
+        <value>A <see cref="T:TagLib.Mpeg4.IsoHandlerBox" /> that applied to the current instance of <see langword="null" /> if none exists.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This abstract class provides access to ISO/IEC 14496-12 Boxes.</summary>
+    <remarks />
   </Docs>
 </Type>

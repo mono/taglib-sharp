@@ -105,21 +105,9 @@
         <remarks>The file must be open for reading for this property to work.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="TagTypes">
-      <MemberSignature Language="C#" Value="public TagLib.TagTypes TagTypes { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.TagTypes</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used for accessing an indeterminite number of tags found at the end of a file.</summary>
+    <remarks />
   </Docs>
 </Type>

@@ -1,6 +1,6 @@
 <Namespace Name="TagLib.Asf">
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>The TagLib.Asf namespace contains classes for handling the Microsoft Advanced Systems Format file format.</summary>
+    <remarks>See http://www.microsoft.com/windows/windowsmedia/forpros/format/asfspec.aspx for the complete specification.</remarks>
   </Docs>
 </Namespace>

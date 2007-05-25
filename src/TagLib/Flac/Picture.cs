@@ -28,10 +28,10 @@ namespace TagLib.Flac
       private PictureType type;
       private string mime_type;
       private string description;
-      private int width;
-      private int height;
-      private int color_depth;
-      private int indexed_colors;
+      private int width = 0;
+      private int height = 0;
+      private int color_depth = 0;
+      private int indexed_colors = 0;
       private ByteVector data;
       
       public Picture (ByteVector data)
@@ -73,32 +73,43 @@ namespace TagLib.Flac
          this.data = data.Mid (pos, data_length);
       }
       
-      public static ByteVector Render (IPicture picture)
+      public Picture (IPicture picture)
+      {
+         this.type = picture.Type;
+         this.mime_type = picture.MimeType;
+         this.description = picture.Description;
+         this.data = picture.Data;
+         
+         if (picture is TagLib.Flac.Picture)
+         {
+            this.width          = (picture as TagLib.Flac.Picture).Width;
+            this.height         = (picture as TagLib.Flac.Picture).Height;
+            this.color_depth    = (picture as TagLib.Flac.Picture).ColorDepth;
+            this.indexed_colors = (picture as TagLib.Flac.Picture).IndexedColors;
+         }
+      }
+      
+      public ByteVector Render ()
       {
          ByteVector data = new ByteVector ();
          
-         data.Add (ByteVector.FromUInt ((uint) picture.Type));
+         data.Add (ByteVector.FromUInt ((uint) Type));
          
-         ByteVector mime_data = ByteVector.FromString (picture.MimeType, StringType.Latin1);
+         ByteVector mime_data = ByteVector.FromString (MimeType, StringType.Latin1);
          data.Add (ByteVector.FromUInt ((uint) mime_data.Count));
          data.Add (mime_data);
          
-         ByteVector decription_data = ByteVector.FromString (picture.Description, StringType.UTF8);
+         ByteVector decription_data = ByteVector.FromString (Description, StringType.UTF8);
          data.Add (ByteVector.FromUInt ((uint) decription_data.Count));
          data.Add (decription_data);
          
-         if (picture is Picture)
-         {
-            data.Add (ByteVector.FromUInt ((uint) (picture as Picture).Width));
-            data.Add (ByteVector.FromUInt ((uint) (picture as Picture).Height));
-            data.Add (ByteVector.FromUInt ((uint) (picture as Picture).ColorDepth));
-            data.Add (ByteVector.FromUInt ((uint) (picture as Picture).IndexedColors));
-         }
-         else
-            data.Add (new ByteVector (16));
+         data.Add (ByteVector.FromUInt ((uint) Width));
+         data.Add (ByteVector.FromUInt ((uint) Height));
+         data.Add (ByteVector.FromUInt ((uint) ColorDepth));
+         data.Add (ByteVector.FromUInt ((uint) IndexedColors));
          
-         data.Add (ByteVector.FromUInt ((uint) picture.Data.Count));
-         data.Add (picture.Data);
+         data.Add (ByteVector.FromUInt ((uint) Data.Count));
+         data.Add (Data);
          
          return data;
       }

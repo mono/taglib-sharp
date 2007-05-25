@@ -15,7 +15,7 @@
         <ReturnType>TagLib.Mpeg.ChannelMode</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The audio is dual channel.</summary>
       </Docs>
     </Member>
     <Member MemberName="SingleChannel">
@@ -25,7 +25,7 @@
         <ReturnType>TagLib.Mpeg.ChannelMode</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The audio is single channel.</summary>
       </Docs>
     </Member>
     <Member MemberName="JointStereo">
@@ -35,7 +35,7 @@
         <ReturnType>TagLib.Mpeg.ChannelMode</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The audio is joint stereo.</summary>
       </Docs>
     </Member>
     <Member MemberName="Stereo">
@@ -45,12 +45,12 @@
         <ReturnType>TagLib.Mpeg.ChannelMode</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The audio is stereo.</summary>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Specifies the MPEG audio channel mode.</summary>
+    <remarks />
   </Docs>
 </Type>

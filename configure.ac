@@ -33,7 +33,7 @@ if test x$MONO = x; then
 	AC_MSG_ERROR(You need mono)
 fi
 
-MCS_FLAGS="-codepage:utf8 -r:Mono.Posix -debug"
+MCS_FLAGS="-codepage:utf8 -debug"
 MONO_FLAGS=
 
 if test $USE_MAINTAINER_MODE = yes; then

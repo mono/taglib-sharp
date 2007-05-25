@@ -32,10 +32,17 @@ namespace TagLib.Mpeg
       //////////////////////////////////////////////////////////////////////////
       private uint frames;
       private uint size;
-
+      
+      public static readonly XingHeader Unknown = new XingHeader (0, 0);
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
+      private XingHeader (uint frame, uint size)
+      {
+         this.frames = frame;
+         this.size = size;
+      }
+      
       public XingHeader (ByteVector data)
       {
          // Check to see if a valid Xing header is available.

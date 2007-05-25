@@ -18,11 +18,11 @@
         <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="header">To be added.</param>
-        <param name="data">To be added.</param>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="header">A <see cref="T:TagLib.Flac.BlockHeader" /> for the new instance.</param>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing the block's contents.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying the seek position of the block in the file.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Flac.Block" /> with a specified header, contents, and file position.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -33,10 +33,10 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="type">A <see cref="T:TagLib.Flac.BlockType" /> specifying the type of the new instance.</param>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing the block's contents.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Flac.Block" /> with a specified type and contents.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -49,10 +49,10 @@
         <Parameter Name="is_last_block" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="is_last_block">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="is_last_block">A <see cref="T:System.Boolean" /> specifying whether or not the block is the last metadata block.</param>
+        <summary>Renders the current instance as a FLAC metadata block.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered version.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Type">
@@ -62,9 +62,9 @@
         <ReturnType>TagLib.Flac.BlockType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the type of the current instance.</summary>
+        <value>A <see cref="T:TagLib.Flac.BlockType" /> containing the type.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="IsLastBlock">
@@ -74,9 +74,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether or not the current instance is the last metadata block.</summary>
+        <value>A <see cref="T:System.Boolean" /> specifying whether or not the block is the last metadata block.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Length">
@@ -86,9 +86,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the length of the data in the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the length.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="TotalLength">
@@ -98,9 +98,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the length of the rendered version of the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the length.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Data">
@@ -110,9 +110,9 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the data contained in the current instance.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the data.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Position">
@@ -122,9 +122,9 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the position at which the current instance appears in the file.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the position.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="NextBlockPosition">
@@ -134,14 +134,14 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the position of the next block in the file.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the position.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used to read and create FLAC metadata blocks.</summary>
+    <remarks />
   </Docs>
 </Type>

@@ -49,20 +49,6 @@ namespace TagLib.Riff
       public File (string file) : this (file, ReadStyle.Average)
       {}
       
-      public override TagTypes TagTypes
-      {
-         get
-         {
-            TagTypes types = TagTypes.NoTags;
-            if (id32_tag != null) types |= TagTypes.Id3v2;
-            if (mid_tag  != null) types |= TagTypes.MovieId;
-            if (divx_tag != null) types |= TagTypes.DivX;
-            if (info_tag != null) types |= TagTypes.RiffInfo;
-            return types;
-         }
-      }
-
-      
       private void Read (bool read_tags, ReadStyle style, out uint riff_size, out long tag_start, out long tag_end)
       {
          Seek (0);

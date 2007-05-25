@@ -196,7 +196,7 @@ namespace TagLib.Mpeg
          Seek (position + 4);
          int length = ReadBlock (2).ToUShort ();
          if (!audio_found)
-            audio_found = AudioHeader.Find (ref audio_header, this, position + 15, length - 9);
+            audio_found = AudioHeader.Find (out audio_header, this, position + 15, length - 9);
          position += length;
       }
       

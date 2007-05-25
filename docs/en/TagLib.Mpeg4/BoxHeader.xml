@@ -1,11 +1,11 @@
 <Type Name="BoxHeader" FullName="TagLib.Mpeg4.BoxHeader">
-  <TypeSignature Language="C#" Value="public class BoxHeader" />
+  <TypeSignature Language="C#" Value="public struct BoxHeader" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>System.Object</BaseTypeName>
+    <BaseTypeName>System.ValueType</BaseTypeName>
   </Base>
   <Interfaces />
   <Members>
@@ -17,24 +17,10 @@
         <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public BoxHeader (TagLib.ByteVector data, int offset);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="data" Type="TagLib.ByteVector" />
-        <Parameter Name="offset" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="data">To be added.</param>
-        <param name="offset">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to read from.</param>
+        <param name="position">A <see cref="T:System.Int64" /> containing the seek position to read at.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.BoxHeader" /> by reading it from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -44,9 +30,9 @@
         <Parameter Name="type" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="type">A <see cref="T:TagLib.ByteVector" /> specifying the type of the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.BoxHeader" /> with a specified type.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -57,10 +43,10 @@
         <Parameter Name="extended_type" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <param name="extended_type">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="type">A <see cref="T:TagLib.ByteVector" /> specifying the type of the new instance.</param>
+        <param name="extended_type">A <see cref="T:TagLib.ByteVector" /> specifying the extended type of the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.BoxHeader" /> with a specified type and extended type.</summary>
+        <remarks>Boxed of type "uuid", and only those boxes, must have a 16 byte extended type.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Overwrite">
@@ -74,11 +60,11 @@
         <Parameter Name="size_change" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="size_change">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to write to.</param>
+        <param name="size_change">A <see cref="T:System.Int64" /> specifying the size change that occurred.</param>
+        <summary>Overwrites the header on disk with a specified size change.</summary>
+        <returns>A <see cref="T:System.Int64" /> containing the size change experienced by the parent box. This should be the same as <paramref name="size_change" /> unless the header switched from using a normal size to using a long size.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -89,9 +75,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Renders the current instance as a box header.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered version of the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="BoxType">
@@ -101,9 +87,9 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the type box represented by the current instance.</summary>
+        <value>A <see cref="T:TagLib.ByteVector" /> containing the box type.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ExtendedType">
@@ -113,9 +99,9 @@
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the extended type of the current instance.</summary>
+        <value>A <see cref="T:TagLib.ByteVector" /> containing the extended type.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="HeaderSize">
@@ -125,9 +111,9 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the size of the header.</summary>
+        <value>A <see cref="T:System.Int64" /> containing the header size.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="DataSize">
@@ -137,9 +123,9 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the size of the box data.</summary>
+        <value>A <see cref="T:System.Int64" /> containing the data size.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="DataOffset">
@@ -149,9 +135,9 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the offset of the box data.</summary>
+        <value>A <see cref="T:System.Int64" /> specifying the seek position at which the data starts.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="TotalBoxSize">
@@ -161,9 +147,9 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the total size of the box.</summary>
+        <value>A <see cref="T:System.Int64" /> containing the total box size.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Position">
@@ -173,14 +159,25 @@
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the seek position of the header on the disk.</summary>
+        <value>A <see cref="T:System.Int64" /> containing the seek position.</value>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Empty">
+      <MemberSignature Language="C#" Value="public static readonly TagLib.Mpeg4.BoxHeader Empty;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg4.BoxHeader</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets an empty box header.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This struct provides access to headers for ISO/IEC 14496-12 boxes.</summary>
+    <remarks />
   </Docs>
 </Type>

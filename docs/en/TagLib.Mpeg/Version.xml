@@ -15,7 +15,7 @@
         <ReturnType>TagLib.Mpeg.Version</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The file/stream is MPEG-2.5 encoded.</summary>
       </Docs>
     </Member>
     <Member MemberName="Version1">
@@ -25,7 +25,7 @@
         <ReturnType>TagLib.Mpeg.Version</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The file/stream is MPEG-1 encoded.</summary>
       </Docs>
     </Member>
     <Member MemberName="Version2">
@@ -35,7 +35,7 @@
         <ReturnType>TagLib.Mpeg.Version</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The file/stream is MPEG-2 encoded.</summary>
       </Docs>
     </Member>
     <Member MemberName="Unknown">
@@ -45,12 +45,12 @@
         <ReturnType>TagLib.Mpeg.Version</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The file/stream is encoded in an unknown MPEG version.</summary>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Specifies the version of an MPEG file or stream.</summary>
+    <remarks />
   </Docs>
 </Type>

@@ -14,9 +14,20 @@
     <ReturnType>TagLib.Ogg.Codec</ReturnType>
   </ReturnValue>
   <Docs>
-    <param name="packet">To be added.</param>
-    <summary>To be added.</summary>
-    <returns>To be added.</returns>
-    <remarks>To be added.</remarks>
+    <param name="packet">A <see cref="T:TagLib.ByteVector" /> to be used in type-finding.</param>
+    <summary>Checks a for a specific codec identifier, and returns the codec if found.</summary>
+    <returns>A <see cref="T:TagLib.Ogg.Codec" /> containing to be used when processing the bitstream which provided the packet, or <see langref="null" /> if unmatched.</returns>
+    <remarks>This function is used for recognizing new codecs along the following lines:
+<example><code lang="C#">public FooCodec MyCodecProvider (ByteVector packet)
+{
+   if ( 'packet identifies codec' )
+      return new FooCodec (packet);
+   else
+      return null;
+}
+
+//...
+
+TagLib.Ogg.Codec.AddCodecProvider (MyCodecProvider);</code></example></remarks>
   </Docs>
 </Type>

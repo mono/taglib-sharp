@@ -69,7 +69,7 @@ namespace TagLib.Flac
       public int        AudioSampleRate  {get {return (int) (flags >> 12);}}
       public int        AudioChannels    {get {return (int) (((flags >> 9) & 7) + 1);}}
       public MediaTypes MediaTypes       {get {return MediaTypes.Audio;}}
-      public int        SampleWidth      {get {return (int) (((flags >> 4) & 31) + 1);}}
+      public int        AudioSampleWidth {get {return (int) (((flags >> 4) & 31) + 1);}}
       public string     Description      {get {return "Flac Audio";}}
       
       private uint HighLength

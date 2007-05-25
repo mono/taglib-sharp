@@ -54,6 +54,8 @@ namespace TagLib.Ape
       
       
       #region Public Properties
+      public override TagTypes TagTypes {get {return TagTypes.Ape;}}
+
       public override string Title
       {
          get

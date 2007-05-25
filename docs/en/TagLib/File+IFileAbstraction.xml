@@ -53,9 +53,9 @@
         <Parameter Name="stream" Type="System.IO.Stream" />
       </Parameters>
       <Docs>
-        <param name="stream">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="stream">A <see cref="T:System.IO.Stream" /> originally created by the current instance.</param>
+        <summary>Closes a stream created by the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
@@ -111,6 +111,11 @@ public class VfsFileAbstraction : TagLib.File.IFileAbstraction
         get { return new VfsStream(Name, System.IO.FileMode.Open); }
     }
 
+    public void CloseStream (System.IO.Stream stream)
+    {
+        stream.Close ();
+    }
+    
     public static TagLib.File.IFileAbstraction CreateFile(string path)
     {
         return new VfsFileAbstraction(path);
@@ -139,7 +144,10 @@ class VfsFileAbstraction(TagLib.File.IFileAbstraction):
         WriteStream:
                 get:
                         return VfsStream(_name, FileMode.Open)
-                
+        
+        def CloseStream (stream as System.IO.Stream) as void:
+                stream.Close ()
+        
 def CreateFile(path):
        return VfsFileAbstraction(path)
 

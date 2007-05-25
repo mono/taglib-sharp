@@ -15,11 +15,7 @@
       <Parameters />
       <Docs>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ape.Tag" /> with no content.</summary>
-        <remarks>
-          <para>
-To access or create an <see cref="T:TagLib.Ape.Tag" /> in an existing <see cref="T:TagLib.File" />, use <see cref="M:TagLib.File.GetTag(TagLib.TagTypes,bool)" />.
-</para>
-        </remarks>
+        <remarks>To access or create an <see cref="T:TagLib.Ape.Tag" /> in an existing <see cref="T:TagLib.File" />, use <see cref="M:TagLib.File.GetTag(TagLib.TagTypes,bool)" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -31,8 +27,7 @@ To access or create an <see cref="T:TagLib.Ape.Tag" /> in an existing <see cref=
       </Parameters>
       <Docs>
         <param name="file">A <see cref="T:TagLib.File" /> containing a tag to read.</param>
-        <param name="offset">A <see cref="T:System.Int64" /> specifying where to read from the file. It must be the position of either an APE header or footer.
-</param>
+        <param name="offset">A <see cref="T:System.Int64" /> specifying where to read from the file. It must be the position of either an APE header or footer.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ape.Tag" /> by reading from a <see cref="T:TagLib.File" /> at a specified position.</summary>
         <remarks>
           <para>
@@ -112,9 +107,7 @@ To access or create an <see cref="T:TagLib.Ape.Tag" /> in an existing <see cref=
         <param name="number">A <see cref="T:System.UInt32" />.</param>
         <param name="count">A <see cref="T:System.UInt32" /> representing a total which <paramref name="number" /> is a part of, or zero if <paramref name="number" /> is not part of a set.</param>
         <summary>Sets a numeric value in an ape item.</summary>
-        <remarks>If both <paramref name="number" /> and <paramref name="count" /> are equal to zero, the value will be cleared. If <paramref name="count" /> is zero, <paramref name="number" /> by itself will be stored.
-
-Otherwise, the values will be stored as "<paramref name="number" />/<paramref name="count" />".</remarks>
+        <remarks>If both <paramref name="number" /> and <paramref name="count" /> are equal to zero, the value will be cleared. If <paramref name="count" /> is zero, <paramref name="number" /> by itself will be stored. Otherwise, the values will be stored as "<paramref name="number" />/<paramref name="count" />".</remarks>
       </Docs>
     </Member>
     <Member MemberName="AddValue">
@@ -260,9 +253,9 @@ Otherwise, the values will be added as "<paramref name="number" />/<paramref nam
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets whether or not the tag will be rendered with a header.</summary>
+        <value>A <see cref="T:System.Boolean" /> specifying whether or not a header will be rendered.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>

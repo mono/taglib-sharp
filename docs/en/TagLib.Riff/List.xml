@@ -179,7 +179,7 @@
         <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
         <summary>Gets all the values for a specified item as strings.</summary>
         <returns>A <see cref="T:TagLib.StringList" /> containing the item values as strings.</returns>
-        <remarks>To be added.</remarks>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetValue">

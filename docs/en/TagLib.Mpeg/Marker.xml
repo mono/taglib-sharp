@@ -15,7 +15,7 @@
         <ReturnType>TagLib.Mpeg.Marker</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The packet contains a video sync.</summary>
       </Docs>
     </Member>
     <Member MemberName="SystemPacket">
@@ -25,7 +25,7 @@
         <ReturnType>TagLib.Mpeg.Marker</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The packet is a system packet.</summary>
       </Docs>
     </Member>
     <Member MemberName="Corrupt">
@@ -35,7 +35,7 @@
         <ReturnType>TagLib.Mpeg.Marker</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The packet is corrupt.</summary>
       </Docs>
     </Member>
     <Member MemberName="PaddingPacket">
@@ -45,7 +45,7 @@
         <ReturnType>TagLib.Mpeg.Marker</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The packet contains padding.</summary>
       </Docs>
     </Member>
     <Member MemberName="AudioPacket">
@@ -55,7 +55,7 @@
         <ReturnType>TagLib.Mpeg.Marker</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The packet contains audio.</summary>
       </Docs>
     </Member>
     <Member MemberName="VideoPacket">
@@ -65,7 +65,7 @@
         <ReturnType>TagLib.Mpeg.Marker</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The packet contains video.</summary>
       </Docs>
     </Member>
     <Member MemberName="SystemSyncPacket">
@@ -75,7 +75,7 @@
         <ReturnType>TagLib.Mpeg.Marker</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The packet contains a system sync.</summary>
       </Docs>
     </Member>
     <Member MemberName="EndOfStream">
@@ -85,12 +85,12 @@
         <ReturnType>TagLib.Mpeg.Marker</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The packet marks the end of a stream.</summary>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Specified the type of marker found of contents of a packet.</summary>
+    <remarks />
   </Docs>
 </Type>
