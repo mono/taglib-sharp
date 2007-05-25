@@ -123,8 +123,6 @@
       <Type Name="SynchedTextType" />
       <Type Name="PlayCountFrame" />
     </Namespace>
-    <Namespace Name="TagLib.Mpc">
-    </Namespace>
     <Namespace Name="TagLib.Mpeg">
       <Type Name="File" />
       <Type Name="AudioHeader" />

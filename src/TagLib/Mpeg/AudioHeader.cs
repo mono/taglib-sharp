@@ -104,6 +104,7 @@ namespace TagLib.Mpeg
             throw new CorruptFileException ("Second byte did not match MPEG synch.");
 
          flags = data.ToUInt ();
+         xing_header = XingHeader.Unknown;
          
          if (AudioBitrate < 0)
             throw new CorruptFileException ("Header uses invalid bitrate index.");
@@ -120,7 +121,6 @@ namespace TagLib.Mpeg
          }
          catch
          {
-            xing_header = XingHeader.Unknown;
          }
       }
 #endregion

@@ -45,7 +45,6 @@
     <Compile Include="src\TagLib\ByteVector.cs" />
     <Compile Include="src\TagLib\ByteVectorList.cs" />
     <Compile Include="src\TagLib\CombinedTag.cs" />
-    <Compile Include="src\TagLib\Debugger.cs" />
     <Compile Include="src\TagLib\File.cs" />
     <Compile Include="src\TagLib\IntList.cs" />
     <Compile Include="src\TagLib\StringList.cs" />
@@ -158,6 +157,7 @@
     <Compile Include="src\TagLib\Riff\WaveFormatEx.cs" />
     <Compile Include="src\TagLib\Riff\BitmapInfoHeader.cs" />
     <Compile Include="src\TagLib\ICodec.cs" />
+    <Compile Include="src\TagLib\Id3v2\Frames\PlayCountFrame.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src" />

@@ -1,5 +1,28 @@
 2007-05-25  Brian Nickel <brian.nickel@gmail.com>
 
+	+-------------+
+	| VERSON BUMP |
+	|  1.9.99994  |
+	+-------------+
+
+	* src/TagLib/TagLib.sources: Remove debugger.
+	* src/TagLib/Mpeg/AudioHeader.cs: Compile on Windows.
+	* docs/en/TagLib.Riff/File.xml:
+	* docs/en/TagLib.Mpeg/AudioFile.xml:
+	* docs/en/TagLib.Mpeg/File.xml:
+	* docs/en/TagLib.WavPack/File.xml:
+	* docs/en/index.xml:
+	* docs/en/TagLib.Flac/File.xml:
+	* docs/en/TagLib.MusePack/File.xml:
+	* docs/en/TagLib.Asf/File.xml:
+	* docs/en/TagLib.Ogg/File.xml:
+	* docs/en/TagLib.Mpeg4/File.xml: Fixed tpos.
+	* docs/Makefile.am: Change target.
+	* configure.ac: Version bump.
+	* taglib-sharp.csproj: Add missing files.
+
+2007-05-25  Brian Nickel <brian.nickel@gmail.com>
+
 There were changes to 153 files in the last three days. I can't vouch for
 everything that happened, as I may have blacked out for some portions, but tags
 now have an abstract Tag.TagTypes property, Everything that should be a struct

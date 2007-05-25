@@ -106,7 +106,6 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/ByteVectorList.cs \
 	$(srcdir)/TagLib/ByteVector.cs \
 	$(srcdir)/TagLib/CombinedTag.cs \
-	$(srcdir)/TagLib/Debugger.cs \
 	$(srcdir)/TagLib/Genres.cs \
 	$(srcdir)/TagLib/Properties.cs \
 	$(srcdir)/TagLib/File.cs \

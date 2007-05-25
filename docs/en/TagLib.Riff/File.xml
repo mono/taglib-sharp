@@ -55,7 +55,7 @@
         <param name="file">A file name relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
         <param name="properties_style">A <see cref="T:TagLib.ReadStyle" /> specifying how to read media properties from the file.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.File" /> for a given filename and read style.</summary>
-        <remarks>Files should be created using <see cref="T:TagLib.File.Create(System.String,TagLib.ReadStyle)" /> rather than through format specific constructors.</remarks>
+        <remarks>Files should be created using <see cref="M:TagLib.File.Create(System.String,TagLib.ReadStyle)" /> rather than through format specific constructors.</remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -67,7 +67,7 @@
       <Docs>
         <param name="file">A file name relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.File" /> for a given filename.</summary>
-        <remarks>Files should be created using <see cref="T:TagLib.File.Create(System.String)" /> rather than through format specific constructors.</remarks>
+        <remarks>Files should be created using <see cref="M:TagLib.File.Create(System.String)" /> rather than through format specific constructors.</remarks>
       </Docs>
     </Member>
     <Member MemberName="FileIdentifier">

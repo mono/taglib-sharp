@@ -32,7 +32,7 @@ taglib-sharp-docs.zip taglib-sharp-docs.tree: $(srcdir)/en/*/*.xml $(srcdir)/en/
 	$(DOC_ASSEMBLER) $(srcdir)/en
 
 install-data-hook:
-	$(MONO) $(top_builddir)/docs/MonodocNodeConfig.exe --insert "TagLib Libraries" classlib-taglib-sharp $(DOCDIR)/../monodoc.xml
+	$(MONO) $(top_builddir)/docs/MonodocNodeConfig.exe --insert "TagLib#" classlib-taglib-sharp $(DOCDIR)/../monodoc.xml
 
 uninstall-hook:
 	$(MONO) $(top_builddir)/docs/MonodocNodeConfig.exe --remove classlib-taglib-sharp $(DOCDIR)/../monodoc.xml
