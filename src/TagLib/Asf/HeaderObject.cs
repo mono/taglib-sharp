@@ -115,25 +115,26 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
-      public byte [] Reserved {get {return reserved.Data;}}
+      public IEnumerable<Object> Children {get {return children;}}
       
-      public Object [] Children {get {return children.ToArray ();}}
-      
-      public Properties GetProperties ()
+      public Properties Properties
       {
-         TimeSpan duration = TimeSpan.Zero;
-         List<ICodec> codecs = new List<ICodec> ();
-         
-         foreach (Object obj in Children)
+         get
          {
-            if (obj is FilePropertiesObject)
-               duration = (obj as FilePropertiesObject).PlayDuration;
+            TimeSpan duration = TimeSpan.Zero;
+            List<ICodec> codecs = new List<ICodec> ();
             
-            if (obj is StreamPropertiesObject)
-               codecs.Add ((obj as StreamPropertiesObject).GetCodec ());
+            foreach (Object obj in Children)
+            {
+               if (obj is FilePropertiesObject)
+                  duration = (obj as FilePropertiesObject).PlayDuration;
+               
+               if (obj is StreamPropertiesObject)
+                  codecs.Add ((obj as StreamPropertiesObject).Codec);
+            }
+            
+            return new Properties (duration, codecs);
          }
-         
-         return new Properties (duration, codecs);
       }
    }
 }

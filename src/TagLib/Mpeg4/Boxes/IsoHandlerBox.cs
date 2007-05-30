@@ -5,17 +5,23 @@ namespace TagLib.Mpeg4
       private ByteVector handler_type;
       private string name;
       
-      public IsoHandlerBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
+      public IsoHandlerBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, file, handler)
       {
+         if (file == null)
+            throw new System.ArgumentNullException ("file");
+         
          file.Seek (DataPosition + 4);
          ByteVector box_data = file.ReadBlock (DataSize - 4);
          handler_type = box_data.Mid (0, 4);
          name = box_data.Mid (16, box_data.Find ((byte) 0, 16) - 16).ToString ();
       }
       
-      public IsoHandlerBox (ByteVector handler_type, string name) : base ("hdlr", 0, 0)
+      public IsoHandlerBox (ByteVector handlerType, string name) : base ("hdlr", 0, 0)
       {
-         this.handler_type = handler_type.Mid (0,4);
+         if (handlerType == null)
+            throw new System.ArgumentNullException ("handlerType");
+         
+         this.handler_type = handlerType.Mid (0,4);
          this.name = name;
       }
       

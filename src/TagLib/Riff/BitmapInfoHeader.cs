@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace TagLib.Riff
 {
    public struct BitmapInfoHeader : IVideoCodec
@@ -18,6 +20,15 @@ namespace TagLib.Riff
       
       public BitmapInfoHeader (ByteVector data, int offset)
       {
+         if (data == null)
+            throw new System.ArgumentNullException ("data");
+         
+         if (offset + 40 > data.Count)
+            throw new CorruptFileException ("Expected 40 bytes.");
+         
+         if (offset > int.MaxValue - 40)
+            throw new System.ArgumentOutOfRangeException ("offset");
+         
          size               = data.Mid (offset +  0, 4).ToUInt (false);
          width              = data.Mid (offset +  4, 4).ToUInt (false);
          height             = data.Mid (offset +  8, 4).ToUInt (false);
@@ -50,7 +61,7 @@ namespace TagLib.Riff
       {
          get
          {
-            switch (CompressionId.ToString ().ToUpper ())
+            switch (CompressionId.ToString ().ToUpper (CultureInfo.InvariantCulture))
             {
             case "AEMI": return "Array VideoONE MPEG1-I capture";
             case "ALPH": return "Ziracom Video";
@@ -294,5 +305,50 @@ XLV0 	NetXL, Inc. 	XL video decoder. 	18-Sep-97
             }
          }
       }
+      
+      
+      
+      #region IEquatable
+      public override int GetHashCode ()
+      {
+         unchecked
+         {            return (int) (size ^ width ^ height ^ planes ^ bit_count ^
+                                      compression_id.ToUInt () ^ size_of_image ^
+                                      x_pixels_per_meter ^ y_pixels_per_meter ^
+                                      colors_used ^ colors_important);
+         }
+      }
+      
+      public override bool Equals (object obj)
+      {
+         if (!(obj is BitmapInfoHeader))
+            return false;
+         
+         return Equals ((BitmapInfoHeader) obj);
+      }
+      
+      public bool Equals (BitmapInfoHeader other)
+      {
+         return size == other.size && width == other.width &&
+         height == other.height && planes == other.planes &&
+         bit_count == other.bit_count &&
+         compression_id == other.compression_id &&
+         size_of_image == other.size_of_image &&
+         x_pixels_per_meter == other.x_pixels_per_meter &&
+         y_pixels_per_meter == other.y_pixels_per_meter &&
+         colors_used == other.colors_used &&
+         colors_important == other.colors_important;
+      }
+      
+      public static bool operator == (BitmapInfoHeader first, BitmapInfoHeader second)
+      {
+         return first.Equals (second);
+      }
+      
+      public static bool operator != (BitmapInfoHeader first, BitmapInfoHeader second)
+      {
+         return !first.Equals (second);
+      }
+      #endregion
    }
 }

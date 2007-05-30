@@ -39,15 +39,19 @@ namespace TagLib.Flac
       private long            stream_start = 0;
 #endregion Properties
       
-#region Constructors
-      public File (string file, ReadStyle properties_style) : base (file, properties_style)
-      {
-      }
+      #region Constructors
+      public File (string path, ReadStyle propertiesStyle) : base (path, propertiesStyle)
+      {}
       
-      public File (string file) : this (file, ReadStyle.Average)
-      {
-      }
-#endregion
+      public File (string path) : base (path)
+      {}
+      
+      public File (File.IFileAbstraction abstraction, ReadStyle propertiesStyle) : base (abstraction, propertiesStyle)
+      {}
+      
+      public File (File.IFileAbstraction abstraction) : base (abstraction)
+      {}
+      #endregion
       
       public override void Save ()
       {
@@ -58,7 +62,7 @@ namespace TagLib.Flac
          
          // Get all the blocks, but don't read the data for ones we're filling
          // with stored data.
-         List<Block> old_blocks = ReadBlocks (start, BlockMode.Blacklist, BlockType.VorbisComment, BlockType.Picture);
+         List<Block> old_blocks = ReadBlocks (start, BlockMode.Blacklist, BlockType.XiphComment, BlockType.Picture);
          
          // Find the range currently holding the blocks.
          long metadata_start = old_blocks [0].Position;
@@ -73,13 +77,13 @@ namespace TagLib.Flac
          
          // Add blocks we don't deal with from the file.
          foreach (Block block in old_blocks)
-            if (block.Type != BlockType.StreamInfo    &&
-                block.Type != BlockType.VorbisComment &&
-                block.Type != BlockType.Picture       &&
+            if (block.Type != BlockType.StreamInfo  &&
+                block.Type != BlockType.XiphComment &&
+                block.Type != BlockType.Picture     &&
                 block.Type != BlockType.Padding)
                new_blocks.Add (block);
          
-         new_blocks.Add (new Block (BlockType.VorbisComment, comment.Render (false)));
+         new_blocks.Add (new Block (BlockType.XiphComment, comment.Render (false)));
          
          foreach (IPicture picture in metadata_tag.Pictures)
             new_blocks.Add (new Block (BlockType.Picture, new Picture (picture).Render ()));
@@ -154,14 +158,14 @@ namespace TagLib.Flac
          base.RemoveTags (types);
       }
       
-      protected override void ReadStart (long start, ReadStyle style)
+      protected override void ReadStart (long start, ReadStyle propertiesStyle)
       {
          List<Block> blocks = ReadBlocks (start, BlockMode.Whitelist,
-            BlockType.StreamInfo, BlockType.VorbisComment, BlockType.Picture);
+            BlockType.StreamInfo, BlockType.XiphComment, BlockType.Picture);
          
          // Find the first vorbis comment inside the blocks.
          foreach (Block block in blocks)
-            if (block.Type == BlockType.VorbisComment && block.Data.Count > 0)
+            if (block.Type == BlockType.XiphComment && block.Data.Count > 0)
             {
                comment = new Ogg.XiphComment (block.Data);
                TagTypesOnDisk |= TagTypes.Xiph;
@@ -173,17 +177,14 @@ namespace TagLib.Flac
          foreach (Block block in blocks)
             if (block.Type == BlockType.Picture && block.Data.Count > 0)
             {
-               try
-               {
-                  pictures.Add (new Picture (block.Data));
-               } catch {}
+               pictures.Add (new Picture (block.Data));
             }
          
          metadata_tag = new Metadata ();
          TagTypesOnDisk |= TagTypes.FlacMetadata;
          metadata_tag.Pictures = pictures.ToArray ();
          
-         if (style != ReadStyle.None)
+         if (propertiesStyle != ReadStyle.None)
          {
             // The stream exists from the end of the last block to the end of the file.
             stream_start = blocks [blocks.Count - 1].NextBlockPosition;
@@ -191,7 +192,7 @@ namespace TagLib.Flac
          }
       }
       
-      protected override void ReadEnd (long end, ReadStyle style)
+      protected override void ReadEnd (long end, ReadStyle propertiesStyle)
       {
          tag = new CombinedTag (metadata_tag, comment, base.Tag);
          
@@ -199,7 +200,7 @@ namespace TagLib.Flac
          GetTag (TagTypes.Xiph, true);
       }
       
-      protected override TagLib.Properties ReadProperties (long start, long end, ReadStyle style)
+      protected override TagLib.Properties ReadProperties (long start, long end, ReadStyle propertiesStyle)
       {
          StreamHeader header = new StreamHeader (header_block, end - stream_start);
          return new Properties (TimeSpan.Zero, header);

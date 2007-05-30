@@ -1,14 +1,16 @@
+using System.Collections.Generic;
+
 namespace TagLib.Mpeg4
 {
    public class IsoSampleDescriptionBox : FullBox
    {
       #region Private Properties
       private uint entry_count;
-      private BoxList children;
+      private IEnumerable<Box> children;
       #endregion
       
       #region Constructors
-      public IsoSampleDescriptionBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
+      public IsoSampleDescriptionBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, file, handler)
       {
          file.Seek (base.DataPosition);
          entry_count = file.ReadBlock (4).ToUInt ();
@@ -18,7 +20,7 @@ namespace TagLib.Mpeg4
       
       #region Public Properties
       public             uint    EntryCount   {get {return entry_count;}}
-      public    override BoxList Children     {get {return children;}}
+      public    override IEnumerable<Box> Children     {get {return children;}}
       protected override long    DataPosition {get {return base.DataPosition + 4;}}
       #endregion
    }

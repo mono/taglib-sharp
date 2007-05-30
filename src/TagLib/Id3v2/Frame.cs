@@ -157,16 +157,16 @@ namespace TagLib.Id3v2
       
       
       #region Protected Methods
-      protected StringType CorrectEncoding (StringType type, byte version)
+      protected static StringType CorrectEncoding (StringType type, byte version)
       {
          if (Tag.ForceDefaultEncoding)
             type = Tag.DefaultEncoding;
          return (version < 4 && type == StringType.UTF8) ? StringType.UTF16 : type;
       }
       
-      protected void SetData (ByteVector data, int offset, byte version, bool read_header)
+      protected void SetData (ByteVector data, int offset, byte version, bool readHeader)
       {
-         if (read_header)
+         if (readHeader)
             header = new FrameHeader (data, version);
          ParseFields (FieldData (data, offset, version), version);
       }
@@ -174,8 +174,11 @@ namespace TagLib.Id3v2
       protected abstract void ParseFields(ByteVector data, byte version);
       protected abstract ByteVector RenderFields (byte version);
       
-      protected ByteVector FieldData (ByteVector frame_data, int offset, byte version)
+      protected ByteVector FieldData (ByteVector frameData, int offset, byte version)
       {
+         if (frameData == null)
+            throw new ArgumentNullException ("frameData");
+         
          int data_offset              = offset + (int) FrameHeader.Size (version);
          int data_length              = (int) Size;
          /*int uncompressed_data_length;*/
@@ -189,17 +192,17 @@ namespace TagLib.Id3v2
          
          if ((Flags & FrameFlags.GroupingIdentity) != 0)
          {
-            group_id = frame_data [data_offset++];
+            group_id = frameData [data_offset++];
             data_length--;
          }
          
          if ((Flags & FrameFlags.Encryption) != 0)
          {
-            encryption_id = frame_data [data_offset++];
+            encryption_id = frameData [data_offset++];
             data_length--;
          }
          
-         ByteVector data = frame_data.Mid (data_offset, data_length);
+         ByteVector data = frameData.Mid (data_offset, data_length);
          
          if ((Flags & FrameFlags.Unsychronisation) != 0)
             SynchData.ResynchByteVector (data);

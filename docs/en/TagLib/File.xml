@@ -10,13 +10,13 @@
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected File (string file);" />
+      <MemberSignature Language="C#" Value="protected File (string path);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
-        <Parameter Name="file" Type="System.String" />
+        <Parameter Name="path" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="file">A file name relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+        <param name="path">A file name relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.File" /> for a specified file name.</summary>
         <remarks />
       </Docs>
@@ -81,19 +81,19 @@
       </Docs>
     </Member>
     <Member MemberName="Find">
-      <MemberSignature Language="C#" Value="public long Find (TagLib.ByteVector pattern, long from_offset, TagLib.ByteVector before);" />
+      <MemberSignature Language="C#" Value="public long Find (TagLib.ByteVector pattern, long startPosition, TagLib.ByteVector before);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="pattern" Type="TagLib.ByteVector" />
-        <Parameter Name="from_offset" Type="System.Int64" />
+        <Parameter Name="startPosition" Type="System.Int64" />
         <Parameter Name="before" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
         <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing data to be found in the file.</param>
-        <param name="from_offset">A <see cref="T:System.Int64" /> specifying at which point to start searching.</param>
+        <param name="startPosition">To be added.</param>
         <param name="before">A <see cref="T:TagLib.ByteVector" /> containing data which must not occur before <paramref name="pattern" />.</param>
         <summary>Searches for a byte pattern in a file after a given offset, checking that it does not occur before another pattern.</summary>
         <returns>A <see cref="T:System.Int64" /> specifying at which index the pattern was found. If the pattern is not found or <paramref name="before" /> is found first, -1 is returned.</returns>
@@ -101,18 +101,18 @@
       </Docs>
     </Member>
     <Member MemberName="Find">
-      <MemberSignature Language="C#" Value="public long Find (TagLib.ByteVector pattern, long from_offset);" />
+      <MemberSignature Language="C#" Value="public long Find (TagLib.ByteVector pattern, long startPosition);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="pattern" Type="TagLib.ByteVector" />
-        <Parameter Name="from_offset" Type="System.Int64" />
+        <Parameter Name="startPosition" Type="System.Int64" />
       </Parameters>
       <Docs>
         <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing data to be found in the file.</param>
-        <param name="from_offset">A <see cref="T:System.Int64" /> specifying at which point to start searching.</param>
+        <param name="startPosition">To be added.</param>
         <summary>Searches for a byte pattern in a file after a given offset.</summary>
         <returns>A <see cref="T:System.Int64" /> specifying at which index the pattern was found. If the pattern is not found, -1 is returned.</returns>
         <remarks />
@@ -135,18 +135,18 @@
       </Docs>
     </Member>
     <Member MemberName="RFind">
-      <MemberSignature Language="C#" Value="public long RFind (TagLib.ByteVector pattern, long from_offset);" />
+      <MemberSignature Language="C#" Value="public long RFind (TagLib.ByteVector pattern, long startPosition);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Int64</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="pattern" Type="TagLib.ByteVector" />
-        <Parameter Name="from_offset" Type="System.Int64" />
+        <Parameter Name="startPosition" Type="System.Int64" />
       </Parameters>
       <Docs>
         <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing data to be found in the file.</param>
-        <param name="from_offset">A <see cref="T:System.Int64" /> specifying at which point to start searching.</param>
+        <param name="startPosition">To be added.</param>
         <summary>Searches backward for a byte pattern in a file before a given offset.</summary>
         <returns>A <see cref="T:System.Int64" /> specifying at which index the pattern was found. If the pattern is not found, -1 is returned.</returns>
         <remarks />
@@ -349,25 +349,25 @@
       </Docs>
     </Member>
     <Member MemberName="Create">
-      <MemberSignature Language="C#" Value="public static TagLib.File Create (string path, TagLib.ReadStyle style);" />
+      <MemberSignature Language="C#" Value="public static TagLib.File Create (string path, TagLib.ReadStyle propertiesStyle);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.File</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="path" Type="System.String" />
-        <Parameter Name="style" Type="TagLib.ReadStyle" />
+        <Parameter Name="propertiesStyle" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
         <param name="path">A <see cref="T:System.String" /> containing path relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
-        <param name="style">A <see cref="T:TagLib.ReadStyle" /> specifying how to read media properties from the file.</param>
+        <param name="propertiesStyle">To be added.</param>
         <summary>Creates a new instance of a <see cref="T:TagLib.File" /> child class based on the file extention.</summary>
         <returns>A new <see cref="T:TagLib.File" />.</returns>
         <remarks />
       </Docs>
     </Member>
     <Member MemberName="Create">
-      <MemberSignature Language="C#" Value="public static TagLib.File Create (string path, string mimetype, TagLib.ReadStyle style);" />
+      <MemberSignature Language="C#" Value="public static TagLib.File Create (string path, string mimetype, TagLib.ReadStyle propertiesStyle);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.File</ReturnType>
@@ -375,12 +375,12 @@
       <Parameters>
         <Parameter Name="path" Type="System.String" />
         <Parameter Name="mimetype" Type="System.String" />
-        <Parameter Name="style" Type="TagLib.ReadStyle" />
+        <Parameter Name="propertiesStyle" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
         <param name="path">A <see cref="T:System.String" /> containing path relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
         <param name="mimetype">A <see cref="T:System.String" /> containing the mime-type to use when reading the file.</param>
-        <param name="style">A <see cref="T:TagLib.ReadStyle" /> specifying how to read media properties from the file.</param>
+        <param name="propertiesStyle">To be added.</param>
         <summary>Creates a new instance of a <see cref="T:TagLib.File" /> child class for a specified mime-type.</summary>
         <returns>A new <see cref="T:TagLib.File" />.</returns>
         <remarks />
@@ -399,21 +399,6 @@
         <param name="resolver">A <see cref="T:TagLib.File+FileTypeResolver" /> to add to the file type recognition actions.</param>
         <summary>Adds a <see cref="T:TagLib.File+FileTypeResolver" /> to the <see cref="T:TagLib.File" /> class. The one added last gets run first.</summary>
         <remarks>A <see cref="T:TagLib.File+FileTypeResolver" /> adds support for recognizing a file type outside of the standard mime-type methods.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="SetFileAbstractionCreator">
-      <MemberSignature Language="C#" Value="public static void SetFileAbstractionCreator (TagLib.File.FileAbstractionCreator creator);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="creator" Type="TagLib.File+FileAbstractionCreator" />
-      </Parameters>
-      <Docs>
-        <param name="creator">A <see cref="T:TagLib.File+FileAbstractionCreator" /> to be used in the creation of new <see cref="T:TagLib.File" /> instances.</param>
-        <summary>Sets the active <see cref="T:TagLib.File+FileAbstractionCreator" />.</summary>
-        <remarks>This method is obsolete. Please use <see cref="M:TagLib.File.PushFileAbstractionCreator(TagLib.File+FileAbstractionCreator)" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Truncate">
@@ -527,47 +512,6 @@
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="GetFileAbstractionCreator">
-      <MemberSignature Language="C#" Value="public static TagLib.File.FileAbstractionCreator GetFileAbstractionCreator ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.File+FileAbstractionCreator</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>Gets the file abstraction creator currently in use by the <see cref="T:TagLib.File" /> class.</summary>
-        <returns>The <see cref="TagLib.File+FileAbstractionCreator" /> used for creating new instances of <see cref="T:TagLib.File" />.</returns>
-        <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName="PopFileAbstractionCreator">
-      <MemberSignature Language="C#" Value="public static TagLib.File.FileAbstractionCreator PopFileAbstractionCreator ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.File+FileAbstractionCreator</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>Pops a <see cref="T:TagLib.File+FileAbstractionCreator" /> off of the stack of creators, making another one active.</summary>
-        <returns>The <see cref="T:TagLib.File+FileAbstractionCreator" /> which was used in creating new <see cref="T:TagLib.File" /> instances.</returns>
-        <remarks>This is used for unregistering a <see cref="T:TagLib.File+FileAbstractionCreator" /> with the <see cref="T:TagLib.File" /> class. To register a creator, use <see cref="M:TagLib.File.PopFileAbstractionCreator(TagLib.File+FileAbstractionCreator)" />.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="PushFileAbstractionCreator">
-      <MemberSignature Language="C#" Value="public static void PushFileAbstractionCreator (TagLib.File.FileAbstractionCreator creator);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="creator" Type="TagLib.File+FileAbstractionCreator" />
-      </Parameters>
-      <Docs>
-        <param name="creator">A <see cref="T:TagLib.File+FileAbstractionCreator" /> to be used in the creation of new <see cref="T:TagLib.File" /> instances.</param>
-        <summary>Pushes a <see cref="T:TagLib.File+FileAbstractionCreator" /> onto the stack of creators, making it the active one.</summary>
-        <remarks>This is used for registering a <see cref="T:TagLib.File+FileAbstractionCreator" /> with the <see cref="T:TagLib.File" /> class. To unregister a creator, use <see cref="M:TagLib.File.PopFileAbstractionCreator()" />.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName="TagTypes">
       <MemberSignature Language="C#" Value="public TagLib.TagTypes TagTypes { get; };" />
       <MemberType>Property</MemberType>
@@ -581,7 +525,7 @@
       </Docs>
     </Member>
     <Member MemberName="TagTypesOnDisk">
-      <MemberSignature Language="C#" Value="public virtual TagLib.TagTypes TagTypesOnDisk { protected set; get; };" />
+      <MemberSignature Language="C#" Value="public TagLib.TagTypes TagTypesOnDisk { protected set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.TagTypes</ReturnType>
@@ -590,6 +534,72 @@
         <summary>Gets the tag types present in phyical file represented by the current instance.</summary>
         <value>A <see cref="T:TagLib.TagTypes" /> containing a bitwise combined list of tags.</value>
         <remarks>TagLib# automatically adds reasonable defaults to tags to make sure optimal tagging is possible. To see the tags in the current instance, use <see cref="P:TagLib.File.TagTypes" />.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected File (TagLib.File.IFileAbstraction abstraction);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="abstraction" Type="TagLib.File+IFileAbstraction" />
+      </Parameters>
+      <Docs>
+        <param name="abstraction">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Create">
+      <MemberSignature Language="C#" Value="public static TagLib.File Create (TagLib.File.IFileAbstraction abstraction);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.File</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="abstraction" Type="TagLib.File+IFileAbstraction" />
+      </Parameters>
+      <Docs>
+        <param name="abstraction">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Create">
+      <MemberSignature Language="C#" Value="public static TagLib.File Create (TagLib.File.IFileAbstraction abstraction, string mimetype, TagLib.ReadStyle propertiesStyle);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.File</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="abstraction" Type="TagLib.File+IFileAbstraction" />
+        <Parameter Name="mimetype" Type="System.String" />
+        <Parameter Name="propertiesStyle" Type="TagLib.ReadStyle" />
+      </Parameters>
+      <Docs>
+        <param name="abstraction">To be added.</param>
+        <param name="mimetype">To be added.</param>
+        <param name="propertiesStyle">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Create">
+      <MemberSignature Language="C#" Value="public static TagLib.File Create (TagLib.File.IFileAbstraction abstraction, TagLib.ReadStyle propertiesStyle);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.File</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="abstraction" Type="TagLib.File+IFileAbstraction" />
+        <Parameter Name="propertiesStyle" Type="TagLib.ReadStyle" />
+      </Parameters>
+      <Docs>
+        <param name="abstraction">To be added.</param>
+        <param name="propertiesStyle">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

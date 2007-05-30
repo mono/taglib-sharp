@@ -21,22 +21,38 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Globalization;
+using System.Runtime.Serialization;
+
 namespace TagLib.Riff
 {
-   public class List : Dictionary <ByteVector,ByteVectorList>
+   [Serializable]
+   [ComVisible(false)]
+   public class List : Dictionary <ByteVector,ByteVectorCollection>
    {
       public List () : base ()
       {}
       
       public List (ByteVector data) : this ()
       {
+         if (data == null)
+            throw new System.ArgumentNullException ("data");
+         
          Parse (data);
       }
       
       public List (TagLib.File file, long position, int length) : this ()
       {
+         if (file == null)
+            throw new System.ArgumentNullException ("file");
+         
          file.Seek (position);
          Parse (file.ReadBlock (length));
+      }
+      
+      protected List (SerializationInfo info, StreamingContext context) : base (info, context)
+      {
       }
       
       private void Parse (ByteVector data)
@@ -48,7 +64,7 @@ namespace TagLib.Riff
             int length = (int) data.Mid (offset + 4, 4).ToUInt (false);
             
             if (!ContainsKey (id))
-               Add (id, new ByteVectorList ());
+               Add (id, new ByteVectorCollection ());
             
             this [id].Add (data.Mid (offset + 8, length));
             
@@ -82,6 +98,9 @@ namespace TagLib.Riff
       
       public ByteVector RenderEnclosed (ByteVector id)
       {
+         if (id == null)
+            throw new System.ArgumentNullException ("id");
+         
          ByteVector data = Render ();
          
          if (data.Count <= 8)
@@ -94,15 +113,21 @@ namespace TagLib.Riff
          return data;
       }
       
-      public ByteVectorList GetValues (ByteVector id)
+      public ByteVectorCollection GetValues (ByteVector id)
       {
-         ByteVectorList value;
-         return TryGetValue (id, out value) ? value : new ByteVectorList ();
+         if (id == null)
+            throw new ArgumentNullException ("id");
+         
+         ByteVectorCollection value;
+         return TryGetValue (id, out value) ? value : new ByteVectorCollection ();
       }
       
-      public StringList GetValuesAsStringList (ByteVector id)
+      public StringCollection GetValuesAsStringCollection (ByteVector id)
       {
-         StringList list = new StringList ();
+         if (id == null)
+            throw new ArgumentNullException ("id");
+         
+         StringCollection list = new StringCollection ();
          
          foreach (ByteVector data in GetValues (id))
          {
@@ -121,7 +146,10 @@ namespace TagLib.Riff
       
       public uint GetValueAsUInt (ByteVector id)
       {
-         foreach (string str in GetValuesAsStringList (id))
+         if (id == null)
+            throw new ArgumentNullException ("id");
+         
+         foreach (string str in GetValuesAsStringCollection (id))
          {
             uint value;
             if (str != null && uint.TryParse (str, out value))
@@ -133,36 +161,49 @@ namespace TagLib.Riff
       
       public void SetValue (ByteVector id, IEnumerable<ByteVector> values)
       {
+         if (id == null)
+            throw new ArgumentNullException ("id");
+         
          if (values == null)
             RemoveValue (id);
+         
          else if (ContainsKey (id))
-            this [id] = new ByteVectorList (values);
+            this [id] = new ByteVectorCollection (values);
          else
-            Add (id, new ByteVectorList (values));
+            Add (id, new ByteVectorCollection (values));
       }
       
       public void SetValue (ByteVector id, params ByteVector [] values)
       {
+         if (id == null)
+            throw new ArgumentNullException ("id");
+         
          SetValue (id, values as IEnumerable<ByteVector>);
       }
       
       public void SetValue (ByteVector id, uint value)
       {
+         if (id == null)
+            throw new ArgumentNullException ("id");
+         
          if (value == 0)
             RemoveValue (id);
          else
-            SetValue (id, value.ToString ());
+            SetValue (id, value.ToString (CultureInfo.InvariantCulture));
       }
       
       public void SetValue (ByteVector id, IEnumerable<string> values)
       {
+         if (id == null)
+            throw new ArgumentNullException ("id");
+         
          if (values == null)
          {
             RemoveValue (id);
             return;
          }
          
-         ByteVectorList l = new ByteVectorList ();
+         ByteVectorCollection l = new ByteVectorCollection ();
          foreach (string value in values)
          {
             if (string.IsNullOrEmpty (value))
@@ -178,12 +219,18 @@ namespace TagLib.Riff
       
       public void SetValue (ByteVector id, params string [] values)
       {
+         if (id == null)
+            throw new ArgumentNullException ("id");
+         
          SetValue (id, values as IEnumerable<string>);
       }
       
       public void RemoveValue (ByteVector id)
       {
-         if (ContainsKey (id))
+          if (id == null)
+            throw new ArgumentNullException ("id");
+         
+        if (ContainsKey (id))
             Remove (id);
       }
    }

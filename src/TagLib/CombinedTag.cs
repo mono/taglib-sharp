@@ -83,9 +83,10 @@ namespace TagLib
       {
          get
          {
-            TagTypes types = TagTypes.NoTags;
+            TagTypes types = TagTypes.None;
             foreach (Tag tag in tags)
-               types |= tag.TagTypes;
+               if (tag != null)
+                  types |= tag.TagTypes;
             return types;
          }
       }

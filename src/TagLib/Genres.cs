@@ -27,7 +27,7 @@ namespace TagLib
 {
    public static class Genres
    {
-      public static readonly string [] Audio = {
+      private static readonly string [] audio = {
          "Blues",
          "Classic Rock",
          "Country",
@@ -178,7 +178,7 @@ namespace TagLib
          "Synthpop"
       };
       
-      public static readonly string [] Video = new string []
+      private static readonly string [] video = new string []
       {
          "Action",
          "Action/Adventure",
@@ -222,17 +222,33 @@ namespace TagLib
          "Western"
       };
       
+      public static string [] Audio
+      {
+         get
+         {
+            return (string []) audio.Clone ();
+         }
+      }
+      
+      public static string [] Video
+      {
+         get
+         {
+            return (string []) video.Clone ();
+         }
+      }
+      
       public static byte AudioToIndex (string name)
       {
-         for (byte i = 0; i < Audio.Length; i ++)
-            if (name == Audio [i])
+         for (byte i = 0; i < audio.Length; i ++)
+            if (name == audio [i])
                return i;
          return 255;
       }
       
       public static string IndexToAudio (byte index)
       {
-         return (index < Audio.Length) ? Audio [index] : null;
+         return (index < audio.Length) ? audio [index] : null;
       }
       
       public static string IndexToAudio (string text)
@@ -242,15 +258,15 @@ namespace TagLib
       
       public static byte VideoToIndex (string name)
       {
-         for (byte i = 0; i < Video.Length; i ++)
-            if (name == Video [i])
+         for (byte i = 0; i < video.Length; i ++)
+            if (name == video [i])
                return i;
          return 255;
       }
       
       public static string IndexToVideo (byte index)
       {
-         return (index < Video.Length) ? Video [index] : null;
+         return (index < video.Length) ? video [index] : null;
       }
       
       public static string IndexToVideo (string text)

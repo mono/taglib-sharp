@@ -1,19 +1,21 @@
+using System.Collections.Generic;
+
 namespace TagLib.Mpeg4
 {
    public class IsoUserDataBox : Box
    {
-      private BoxList children;
+      private IEnumerable<Box> children;
       
-      public IsoUserDataBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
+      public IsoUserDataBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, handler)
       {
          children = LoadChildren (file);
       }
       
       public IsoUserDataBox () : base ("udta")
       {
-         children = new BoxList ();
+         children = new List<Box> ();
       }
       
-      public override BoxList Children {get {return children;}}
+      public override IEnumerable<Box> Children {get {return children;}}
    }
 }

@@ -27,17 +27,17 @@ namespace TagLib.Mpeg
 {
    public enum Marker
    {
-      Corrupt       = -1,
-      
+      Corrupt          = -1,
+      Zero             = 0,
       SystemSyncPacket = 0xBA,
       VideoSyncPacket  = 0xB3,
       
-      SystemPacket  = 0xBB,
-      PaddingPacket = 0xBE,
-      AudioPacket   = 0xC0,
-      VideoPacket   = 0xE0,
+      SystemPacket     = 0xBB,
+      PaddingPacket    = 0xBE,
+      AudioPacket      = 0xC0,
+      VideoPacket      = 0xE0,
       
-      EndOfStream   = 0xB9
+      EndOfStream      = 0xB9
    }
    
    [SupportedMimeType("taglib/mpg",  "mpg")]
@@ -56,12 +56,19 @@ namespace TagLib.Mpeg
       private double? start_time = null;
       private double end_time;
       
-      public File (string file, ReadStyle properties_style) : base (file, properties_style)
-      {
-      }
-      
-      public File (string file) : this (file, ReadStyle.Average)
+      #region Constructors
+      public File (string path, ReadStyle propertiesStyle) : base (path, propertiesStyle)
       {}
+      
+      public File (string path) : base (path)
+      {}
+      
+      public File (File.IFileAbstraction abstraction, ReadStyle propertiesStyle) : base (abstraction, propertiesStyle)
+      {}
+      
+      public File (File.IFileAbstraction abstraction) : base (abstraction)
+      {}
+      #endregion
       
       public override TagLib.Tag GetTag (TagTypes type, bool create)
       {
@@ -129,22 +136,22 @@ namespace TagLib.Mpeg
          return GetMarker (position);
       }
       
-      protected override void ReadStart (long start, ReadStyle style)
+      protected override void ReadStart (long start, ReadStyle propertiesStyle)
       {
-         if (style == ReadStyle.None)
+         if (propertiesStyle == ReadStyle.None)
             return;
          
          FindMarker (ref start, Marker.SystemSyncPacket);
          ReadSystemFile (start);
       }
       
-      protected override void ReadEnd (long end, ReadStyle style)
+      protected override void ReadEnd (long end, ReadStyle propertiesStyle)
       {
          // Make sure we have ID3v1 and ID3v2 tags.
          GetTag (TagTypes.Id3v1, true);
          GetTag (TagTypes.Id3v2, true);
          
-         if (style == ReadStyle.None || start_time == null)
+         if (propertiesStyle == ReadStyle.None || start_time == null)
             return;
          
          RFindMarker (ref end, Marker.SystemSyncPacket);
@@ -152,7 +159,7 @@ namespace TagLib.Mpeg
          end_time = ReadTimestamp (end + 4);
       }
       
-      protected override TagLib.Properties ReadProperties (long start, long end, ReadStyle style)
+      protected override TagLib.Properties ReadProperties (long start, long end, ReadStyle propertiesStyle)
       {
          TimeSpan duration = TimeSpan.FromSeconds (start_time == null ? 0d : (end_time - (double) start_time));
          return new Properties (duration, video_header, audio_header);

@@ -27,54 +27,73 @@ namespace TagLib.MusePack
 {
    public struct StreamHeader : IAudioCodec
    {
-#region Private properties
-      private int  version;
-      private long stream_length;
-      private int  sample_rate;
-      private uint frames;
-      private uint header_data;
+      #region Constants
       private static ushort [] sftable = {44100, 48000, 37800, 32000};
-#endregion
+      #endregion
       
-#region Constructors
-      public StreamHeader (ByteVector data, long stream_length)
+      
+      
+      #region Private properties
+      private int  _version;
+      private long _stream_length;
+      private int  _sample_rate;
+      private uint _frames;
+      private uint _header_data;
+      #endregion
+      
+      
+      
+      #region Public Static Properties
+      public const uint Size = 56;
+      public static ByteVector FileIdentifier {get {return "MP+";}}
+      #endregion
+      
+      
+      
+      #region Constructors
+      public StreamHeader (ByteVector data, long streamLength)
       {
-         if (!data.StartsWith ("MP+"))
-            throw new CorruptFileException ();
+         if (data == null)
+            throw new ArgumentNullException ("data");
          
-         this.stream_length = stream_length;
+         if (!data.StartsWith (FileIdentifier))
+            throw new CorruptFileException ("Data does not begin with identifier.");
          
-         version = data [3] & 15;
+         if (data.Count < Size)
+            throw new CorruptFileException ("Insufficient data in stream header");
          
-         if (version >= 7)
+         _stream_length = streamLength;
+         
+         _version = data [3] & 15;
+         
+         if (_version >= 7)
          {
-            frames      = data.Mid (4, 4).ToUInt (false);
-            uint flags  = data.Mid (8, 4).ToUInt (false);
-            sample_rate = sftable [(int) (((flags >> 17) & 1) * 2 + ((flags >> 16) & 1))];
-            header_data = 0;
+            _frames      = data.Mid (4, 4).ToUInt (false);
+            uint flags   = data.Mid (8, 4).ToUInt (false);
+            _sample_rate = sftable [(int) (((flags >> 17) & 1) * 2 + ((flags >> 16) & 1))];
+            _header_data = 0;
          }
          else
          {
-            header_data = data.Mid (0, 4).ToUInt (false);
-            version = (int) ((header_data >> 11) & 0x03ff);
-            sample_rate = 44100;
-            frames = data.Mid (4, version >= 5 ? 4 : 2).ToUInt (false);
+            _header_data = data.Mid (0, 4).ToUInt (false);
+            _version     = (int) ((_header_data >> 11) & 0x03ff);
+            _sample_rate = 44100;
+            _frames      = data.Mid (4, _version >= 5 ? 4 : 2).ToUInt (false);
          }
       }
-#endregion
+      #endregion
       
       
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
-      public static readonly uint Size = 8 * 7;
       
       public TimeSpan Duration
       {
          get
          {
-            if (sample_rate > 0 && stream_length > 0)
-               return TimeSpan.FromSeconds ((double) (frames * 1152 - 576) / (double) sample_rate + 0.5);
+            if (_sample_rate > 0 && _stream_length > 0)
+               return TimeSpan.FromSeconds ((double) (_frames * 1152 - 576) / (double) _sample_rate + 0.5);
             
             return TimeSpan.Zero;
          }
@@ -84,18 +103,18 @@ namespace TagLib.MusePack
       {
          get
          {
-            if (header_data != 0)
-               return (int) ((header_data >> 23) & 0x01ff);
+            if (_header_data != 0)
+               return (int) ((_header_data >> 23) & 0x01ff);
             
-            return (int) (Duration > TimeSpan.Zero ? ((stream_length * 8L) / Duration.TotalSeconds) / 1000 : 0);
+            return (int) (Duration > TimeSpan.Zero ? ((_stream_length * 8L) / Duration.TotalSeconds) / 1000 : 0);
          }
       }
       
-      public int AudioSampleRate {get {return sample_rate;}}
+      public int AudioSampleRate {get {return _sample_rate;}}
       
       public int        AudioChannels {get {return 2;}}
       public MediaTypes MediaTypes    {get {return MediaTypes.Audio;}}
-      public int        Version       {get {return version;}}
+      public int        Version       {get {return _version;}}
       public string     Description   {get {return "MusePack Version "  + Version + " Audio";}}
    }
 }

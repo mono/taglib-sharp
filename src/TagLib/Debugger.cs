@@ -24,11 +24,11 @@ using System.Collections.Generic;
 
 namespace TagLib
 {
-   internal class Debugger
+   public static class Debugger
    {
       public delegate void DebugMessageSentHandler (string message);
       
-      public static event DebugMessageSentHandler DebugMessageSent = null;
+      public static event DebugMessageSentHandler DebugMessageSent;
       
       public static void Debug (string message)
       {
@@ -81,8 +81,6 @@ namespace TagLib
          }
          debug_times.Remove (o1);
       }
-      
-      private Debugger () {}
       
       private struct DebugTimeData
       {

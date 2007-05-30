@@ -83,17 +83,19 @@ namespace TagLib.Id3v2
          // a lot of if blocks.
          
          // Text Identification (frames 4.2)
-         if(header.FrameId.StartsWith ("T"))
-         {
-            TextIdentificationFrame f = header.FrameId != "TXXX"
-            ? new TextIdentificationFrame (data, position, header, version)
-            : new UserTextIdentificationFrame (data, position, header, version);
-            return f;
-         }
-         
+         if (header.FrameId == "TXXX")
+            return new UserTextIdentificationFrame (data, position, header, version);
+      	 
+         if (header.FrameId [0] == (byte) 'T')
+            return new TextIdentificationFrame (data, position, header, version);
+      	 
          // Unique File Identifier (frames 4.1)
          if (header.FrameId == "UFID")
             return new UniqueFileIdentifierFrame (data, position, header, version);
+         
+         // Music CD Identifier (frames 4.5)
+         if (header.FrameId == "MCDI")
+            return new MusicCdIdentifier (data, position, header, version);
 
          // Unsynchronized Lyrics (frames 4.8)
          if (header.FrameId == "USLT")
@@ -122,6 +124,10 @@ namespace TagLib.Id3v2
          // Play Count (frames 4.15)
          if(header.FrameId == "PCNT")
             return new PlayCountFrame (data, position, header, version);
+         
+         // Terms of Use (frames 4.22)
+         if(header.FrameId == "USER")
+            return new TermsOfUseFrame (data, position, header, version);
          
          // Private (frames 4.27)
          if (header.FrameId == "PRIV")

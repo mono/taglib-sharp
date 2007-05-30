@@ -68,14 +68,14 @@
         <summary>The block contains stream info.</summary>
       </Docs>
     </Member>
-    <Member MemberName="VorbisComment">
-      <MemberSignature Language="C#" Value="VorbisComment" />
+    <Member MemberName="XiphComment">
+      <MemberSignature Language="C#" Value="XiphComment" />
       <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.Flac.BlockType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The block contains a Vorbis comment.</summary>
+        <summary>To be added.</summary>
       </Docs>
     </Member>
   </Members>

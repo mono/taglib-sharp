@@ -6,6 +6,9 @@
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
         </Attribute>
         <Attribute>
+          <AttributeName>System.CLSCompliant(false)</AttributeName>
+        </Attribute>
+        <Attribute>
           <AttributeName>System.Reflection.AssemblyCompany("")</AttributeName>
         </Attribute>
         <Attribute>
@@ -27,16 +30,13 @@
       <Type Name="IPicture" />
       <Type Name="Properties" />
       <Type Name="ByteVector" />
-      <Type Name="ByteVectorList" />
       <Type Name="ListBase`1" DisplayName="ListBase&lt;T&gt;" />
       <Type Name="File" />
       <Type Name="File+IFileAbstraction" />
-      <Type Name="File+FileAbstractionCreator" />
       <Type Name="File+FileTypeResolver" />
       <Type Name="File+AccessMode" />
       <Type Name="IntList" />
       <Type Name="Picture" />
-      <Type Name="StringList" />
       <Type Name="SupportedMimeType" />
       <Type Name="Tag" />
       <Type Name="UnsupportedFormatException" />
@@ -52,6 +52,11 @@
       <Type Name="ICodec" />
       <Type Name="IAudioCodec" />
       <Type Name="IVideoCodec" />
+      <Type Name="Debugger" />
+      <Type Name="StringCollection" />
+      <Type Name="Debugger+DebugMessageSentHandler" />
+      <Type Name="ByteVectorCollection" />
+      <Type Name="File+LocalFileAbstraction" />
     </Namespace>
     <Namespace Name="TagLib.Ape">
       <Type Name="Footer" />
@@ -122,6 +127,8 @@
       <Type Name="HeaderFlags" />
       <Type Name="SynchedTextType" />
       <Type Name="PlayCountFrame" />
+      <Type Name="TermsOfUseFrame" />
+      <Type Name="MusicCdIdentifier" />
     </Namespace>
     <Namespace Name="TagLib.Mpeg">
       <Type Name="File" />
@@ -138,10 +145,8 @@
       <Type Name="AppleDataBox" />
       <Type Name="FullBox" />
       <Type Name="Box" />
-      <Type Name="AppleDataBox+FlagTypes" />
       <Type Name="BoxHeader" />
       <Type Name="BoxFactory" />
-      <Type Name="BoxList" />
       <Type Name="FileParser" />
       <Type Name="BoxTypes" />
       <Type Name="File" />
@@ -162,6 +167,7 @@
       <Type Name="UnknownBox" />
       <Type Name="IsoAudioSampleEntry" />
       <Type Name="IsoVisualSampleEntry" />
+      <Type Name="AppleDataBox+FlagType" />
     </Namespace>
     <Namespace Name="TagLib.Ogg">
       <Type Name="File" />

@@ -1,19 +1,21 @@
+using System.Collections.Generic;
+
 namespace TagLib.Mpeg4
 {
    public class AppleItemListBox : Box
    {
-      private BoxList children;
+      private IEnumerable<Box> children;
       
-      public AppleItemListBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
+      public AppleItemListBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, handler)
       {
          children = LoadChildren (file);
       }
       
       public AppleItemListBox () : base ("ilst")
       {
-         children = new BoxList ();
+         children = new List<Box> ();
       }
       
-      public override BoxList Children {get {return children;}}
+      public override IEnumerable<Box> Children {get {return children;}}
    }
 }

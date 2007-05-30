@@ -22,18 +22,18 @@
       </Docs>
     </Member>
     <Member MemberName="XingHeaderOffset">
-      <MemberSignature Language="C#" Value="public static int XingHeaderOffset (TagLib.Mpeg.Version v, TagLib.Mpeg.ChannelMode c);" />
+      <MemberSignature Language="C#" Value="public static int XingHeaderOffset (TagLib.Mpeg.Version version, TagLib.Mpeg.ChannelMode channelMode);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="v" Type="TagLib.Mpeg.Version" />
-        <Parameter Name="c" Type="TagLib.Mpeg.ChannelMode" />
+        <Parameter Name="version" Type="TagLib.Mpeg.Version" />
+        <Parameter Name="channelMode" Type="TagLib.Mpeg.ChannelMode" />
       </Parameters>
       <Docs>
-        <param name="v">A <see cref="T:TagLib.Mpeg.Version" /> containing the version of the stream.</param>
-        <param name="c">A <see cref="T:TagLib.Mpeg.ChannelMode" /> containing the channel mode of the current packet.</param>
+        <param name="version">To be added.</param>
+        <param name="channelMode">To be added.</param>
         <summary>Gets the distance of the Xing header (if it exists) from the start of the audio stream.</summary>
         <returns>A <see cref="T:System.Int32" /> specifying the Xing header offset.</returns>
         <remarks />

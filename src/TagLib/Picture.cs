@@ -20,7 +20,7 @@
  ***************************************************************************/
 
 using System;
- 
+
 namespace TagLib
 {
     public enum PictureType
@@ -42,7 +42,7 @@ namespace TagLib
         DuringRecording    = 0x0E, // Picture of the artists during recording
         DuringPerformance  = 0x0F, // Picture of the artists during performance
         MovieScreenCapture = 0x10, // Picture from a movie or video related to the track
-        ColouredFish       = 0x11, // Picture of a large, coloured fish
+        ColoredFish        = 0x11, // Picture of a large, coloured fish
         Illustration       = 0x12, // Illustration related to the track
         BandLogo           = 0x13, // Logo of the band or performer
         PublisherLogo      = 0x14  // Logo of the publisher (record company)
@@ -63,25 +63,20 @@ namespace TagLib
         private string      description;
         private ByteVector  data;
        
-        public static Picture CreateFromUri(string uri)
+        public static Picture CreateFromPath (string path)
+        {
+           return CreateFromFile (new File.LocalFileAbstraction (path));
+        }
+        
+        public static Picture CreateFromFile (File.IFileAbstraction abstraction)
         {
             byte [] fc;
             string filename = null;
             string mimetype = "image/jpeg";
             string ext = "jpg";
             
-            try {
-                Uri uri_parse = new Uri(uri);
-                string path = uri_parse.LocalPath;
-                filename = System.IO.Path.GetFileName(path);
-                if(filename == String.Empty) {
-                    filename = null;
-                }
-            } catch {
-            }
-        
             Picture picture = new Picture();
-            picture.Data = ByteVector.FromUri(uri, out fc, true);
+            picture.Data = ByteVector.FromFile (abstraction, out fc, true);
             
             if(fc.Length >= 4 && (fc[1] == 'P' && fc[2] == 'N' && fc[3] == 'G')) {
                 mimetype = "image/png";

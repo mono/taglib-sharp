@@ -42,16 +42,21 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public File (string file, ReadStyle properties_style) : base (file)
+      public File (string path, ReadStyle propertiesStyle) : this (new File.LocalFileAbstraction (path), propertiesStyle)
+      {}
+      
+      public File (string path) : this (path, ReadStyle.Average)
+      {}
+      
+      public File (File.IFileAbstraction abstraction, ReadStyle propertiesStyle) : base (abstraction)
       {
          Mode = AccessMode.Read;
-         Read (properties_style);
+         Read (propertiesStyle);
          Mode = AccessMode.Closed;
       }
 
-      public File (string file) : this (file, ReadStyle.Average)
-      {
-      }
+      public File (File.IFileAbstraction abstraction) : this (abstraction, ReadStyle.Average)
+      {}
       
       public override void Save ()
       {
@@ -172,7 +177,7 @@ namespace TagLib.Asf
          asf_tag = new Asf.Tag (header);
          
          if(properties_style != ReadStyle.None)
-            properties = header.GetProperties ();
+            properties = header.Properties;
       }
    }
 }

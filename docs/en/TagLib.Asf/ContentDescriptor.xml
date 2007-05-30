@@ -65,15 +65,6 @@
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected ContentDescriptor ();" />
-      <MemberType>Constructor</MemberType>
-      <Parameters />
-      <Docs>
-        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Asf.ContentDescriptor" /> with no contents.</summary>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName="ToByteVector">
       <MemberSignature Language="C#" Value="public TagLib.ByteVector ToByteVector ();" />
       <MemberType>Method</MemberType>

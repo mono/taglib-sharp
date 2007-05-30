@@ -55,7 +55,7 @@ namespace TagLib.Id3v2
          SetData (data, 0, version, true);
       }
 
-      protected internal CommentsFrame (ByteVector data, int offset, FrameHeader h, byte version) : base (h)
+      protected internal CommentsFrame (ByteVector data, int offset, FrameHeader header, byte version) : base(header)
       {
          SetData (data, offset, version, false);
       }

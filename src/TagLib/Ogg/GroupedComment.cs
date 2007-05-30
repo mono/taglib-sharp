@@ -41,28 +41,28 @@ namespace TagLib.Ogg
          tags = new List<XiphComment> ();
       }
       
-      public XiphComment [] Comments
+      public IEnumerable<XiphComment> Comments
       {
          get
          {
-            return tags.ToArray ();
+            return tags;
          }
       }
       
-      public XiphComment GetComment (uint stream_serial_number)
+      public XiphComment GetComment (uint streamSerialNumber)
       {
-         return comment_hash [stream_serial_number];
+         return comment_hash [streamSerialNumber];
       }
       
-      public void AddComment (uint stream_serial_number, XiphComment comment)
+      public void AddComment (uint streamSerialNumber, XiphComment comment)
       {
-         comment_hash.Add (stream_serial_number, comment);
+         comment_hash.Add (streamSerialNumber, comment);
          tags.Add (comment);
       }
       
-      public void AddComment (uint stream_serial_number, ByteVector data)
+      public void AddComment (uint streamSerialNumber, ByteVector data)
       {
-         AddComment (stream_serial_number, new XiphComment (data));
+         AddComment (streamSerialNumber, new XiphComment (data));
       }
       
       public void Clear ()
@@ -75,9 +75,10 @@ namespace TagLib.Ogg
       {
          get
          {
-            TagTypes types = TagTypes.NoTags;
+            TagTypes types = TagTypes.None;
             foreach (XiphComment tag in tags)
-               types |= tag.TagTypes;
+               if (tag != null)
+                  types |= tag.TagTypes;
             return types;
          }
       }

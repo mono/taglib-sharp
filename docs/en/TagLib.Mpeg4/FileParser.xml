@@ -9,18 +9,6 @@
   </Base>
   <Interfaces />
   <Members>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public FileParser (TagLib.Mpeg4.File file);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="file" Type="TagLib.Mpeg4.File" />
-      </Parameters>
-      <Docs>
-        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to read from.</param>
-        <summary>Constructs and initializes a new instance of <See cref="T:TagLib.Mpeg4.FileParser" /> for a given file.</summary>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName="ParseBoxHeaders">
       <MemberSignature Language="C#" Value="public void ParseBoxHeaders ();" />
       <MemberType>Method</MemberType>
@@ -142,15 +130,27 @@
       </Docs>
     </Member>
     <Member MemberName="ChunkOffsetBoxes">
-      <MemberSignature Language="C#" Value="public TagLib.Mpeg4.BoxList ChunkOffsetBoxes { get; };" />
+      <MemberSignature Language="C#" Value="public TagLib.Mpeg4.Box[] ChunkOffsetBoxes { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.Mpeg4.BoxList</ReturnType>
+        <ReturnType>TagLib.Mpeg4.Box[]</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets all the chunck offset boxes read by the current instance.</summary>
         <value>A <see cref="T:TagLib.Mpeg4.BoxList" /> containing all the chunck offset boxes.</value>
         <remarks>This value is retrieved by <see cref="M:TagLib.Mpeg4.FileParser.ParseChunkOffsets()" />.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public FileParser (TagLib.File file);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="file" Type="TagLib.File" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

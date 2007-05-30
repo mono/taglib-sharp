@@ -11,8 +11,11 @@ namespace TagLib.Mpeg4
       
 #region Constructors
       
-      public IsoSampleEntry (BoxHeader header, File file, Box handler) : base (header, file, handler)
+      public IsoSampleEntry (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, handler)
       {
+         if (file == null)
+            throw new System.ArgumentNullException ("file");
+         
          file.Seek (base.DataPosition + 6);
          data_reference_index   = file.ReadBlock (2).ToUShort ();
       }

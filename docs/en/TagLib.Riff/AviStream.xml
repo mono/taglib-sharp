@@ -11,7 +11,7 @@
   </Interfaces>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public AviStream (TagLib.Riff.AviStreamHeader header);" />
+      <MemberSignature Language="C#" Value="protected AviStream (TagLib.Riff.AviStreamHeader header);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="header" Type="TagLib.Riff.AviStreamHeader" />

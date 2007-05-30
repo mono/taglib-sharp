@@ -53,6 +53,8 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs \
 	$(srcdir)/TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs \
 	$(srcdir)/TagLib/Id3v2/Frames/SynchronizedLyricsFrame.cs \
+	$(srcdir)/TagLib/Id3v2/Frames/MusicCdIdentifierFrame.cs \
+	$(srcdir)/TagLib/Id3v2/Frames/TermsOfUseFrame.cs \
 	$(srcdir)/TagLib/Id3v2/FrameFactory.cs \
 	$(srcdir)/TagLib/Id3v2/Frame.cs \
 	$(srcdir)/TagLib/Id3v2/Tag.cs \

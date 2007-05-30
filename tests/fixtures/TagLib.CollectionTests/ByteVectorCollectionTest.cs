@@ -5,11 +5,11 @@ using TagLib;
 namespace TagLib.CollectionTests
 {   
     [TestFixture]
-    public class ByteVectorListTest
+    public class ByteVectorCollectionTest
     {   
-        private static ByteVectorList BuildList()
+        private static ByteVectorCollection BuildList()
         {
-            ByteVectorList list = new ByteVectorList();
+            ByteVectorCollection list = new ByteVectorCollection();
             list.Add("ABC");
             list.Add("DEF");
             list.Add("GHI");
@@ -25,7 +25,7 @@ namespace TagLib.CollectionTests
         [Test]
         public void Remove()
         {
-            ByteVectorList list = BuildList();
+            ByteVectorCollection list = BuildList();
             list.Remove("DEF");
             Assert.AreEqual("ABCGHI", list.ToByteVector("").ToString());
         }
@@ -33,7 +33,7 @@ namespace TagLib.CollectionTests
         [Test]
         public void Insert()
         {
-            ByteVectorList list = BuildList();
+            ByteVectorCollection list = BuildList();
             list.Insert(1, "QUACK");
             Assert.AreEqual("ABC,QUACK,DEF,GHI", list.ToByteVector(",").ToString());
         }
@@ -41,7 +41,7 @@ namespace TagLib.CollectionTests
         [Test]
         public void Contains()
         {
-            ByteVectorList list = BuildList();
+            ByteVectorCollection list = BuildList();
             Assert.IsTrue(list.Contains("DEF"));
             Assert.IsFalse(list.Contains("CDEFG"));
             Assert.AreEqual(2, list.ToByteVector("").Find("CDEFG"));
@@ -50,7 +50,7 @@ namespace TagLib.CollectionTests
         /*[Test]
         public void SortedInsert()
         {
-            ByteVectorList list = BuildList();
+            ByteVectorCollection list = BuildList();
             list.SortedInsert("000");
             Console.WriteLine(list.ToByteVector(",").ToString());
         }*/

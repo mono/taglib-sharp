@@ -29,29 +29,35 @@ namespace TagLib.Ogg
    {
 #region Private Properties
       private PageHeader     header;
-      private ByteVectorList packets;
+      private ByteVectorCollection packets;
 #endregion
       
 #region Constructors
       protected Page (PageHeader header)
       {
          this.header = header;
-         packets = new ByteVectorList ();
+         packets = new ByteVectorCollection ();
       }
       
-      public Page (File file, long page_offset) : this (new PageHeader (file, page_offset))
+      public Page (File file, long position) : this (new PageHeader (file, position))
       {
-         file.Seek (page_offset + header.Size);
-               
+         if (file == null)
+            throw new ArgumentNullException ("file");
+         
+         file.Seek (position + header.Size);
+         
          foreach (int packet_size in header.PacketSizes)
             packets.Add (file.ReadBlock (packet_size));
       }
       
-      public Page (ByteVectorList packets, PageHeader header) : this (header)
+      public Page (ByteVectorCollection packets, PageHeader header) : this (header)
       {
+         if (packets == null)
+            throw new ArgumentNullException ("packets");
+         
          this.packets = packets;
 
-         IntList packet_sizes = new IntList ();
+         List<int> packet_sizes = new List<int> ();
 
          // Build a page from the list of packets.
          foreach (ByteVector v in packets)
@@ -72,7 +78,7 @@ namespace TagLib.Ogg
          // the entire page with the 4 bytes reserved for the checksum zeroed and then
          // inserted in bytes 22-25 of the page header.
 
-         ByteVector checksum = ByteVector.FromUInt (data.CheckSum, false);
+         ByteVector checksum = ByteVector.FromUInt (data.Checksum, false);
          for (int i = 0; i < 4; i++)
             data [i + 22] = checksum [i];
 

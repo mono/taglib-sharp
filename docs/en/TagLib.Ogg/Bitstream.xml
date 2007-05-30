@@ -39,16 +39,16 @@
       </Docs>
     </Member>
     <Member MemberName="GetDuration">
-      <MemberSignature Language="C#" Value="public TimeSpan GetDuration (long last_absolute_granular_position);" />
+      <MemberSignature Language="C#" Value="public TimeSpan GetDuration (long lastAbsoluteGranularPosition);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="last_absolute_granular_position" Type="System.Int64" />
+        <Parameter Name="lastAbsoluteGranularPosition" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="last_absolute_granular_position">A <see cref="T:System.Int64" /> containing the last absolute granular position found in the stream.</param>
+        <param name="lastAbsoluteGranularPosition">A <see cref="T:System.Int64" /> containing the last absolute granular position found in the stream.</param>
         <summary>Gets the duration of the current instance by providing the last absolute granular position.</summary>
         <returns>A <see cref="T:System.TimeSpan" /> containing the duration of the current instance.</returns>
         <remarks />

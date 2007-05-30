@@ -23,21 +23,6 @@
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="SetText">
-      <MemberSignature Language="C#" Value="public void SetText (TagLib.StringList fields);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="fields" Type="TagLib.StringList" />
-      </Parameters>
-      <Docs>
-        <param name="fields">A <see cref="T:TagLib.StringList" /> containing text to store in the current instance.</param>
-        <summary>Sets the text for the current instance.</summary>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName="Get">
       <MemberSignature Language="C#" Value="public static TagLib.Id3v2.UserTextIdentificationFrame Get (TagLib.Id3v2.Tag tag, string description, TagLib.StringType type, bool create);" />
       <MemberType>Method</MemberType>
@@ -91,10 +76,10 @@
       </Docs>
     </Member>
     <Member MemberName="FieldList">
-      <MemberSignature Language="C#" Value="public TagLib.StringList FieldList { get; };" />
+      <MemberSignature Language="C#" Value="public TagLib.StringCollection FieldList { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.StringList</ReturnType>
+        <ReturnType>TagLib.StringCollection</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets the text fields in the current instance.</summary>
@@ -152,21 +137,36 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected UserTextIdentificationFrame (TagLib.ByteVector data, int offset, TagLib.Id3v2.FrameHeader h, byte version);" />
+      <MemberSignature Language="C#" Value="protected UserTextIdentificationFrame (TagLib.ByteVector data, int offset, TagLib.Id3v2.FrameHeader header, byte version);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="data" Type="TagLib.ByteVector" />
         <Parameter Name="offset" Type="System.Int32" />
-        <Parameter Name="h" Type="TagLib.Id3v2.FrameHeader" />
+        <Parameter Name="header" Type="TagLib.Id3v2.FrameHeader" />
         <Parameter Name="version" Type="System.Byte" />
       </Parameters>
       <Docs>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
         <param name="offset">A <see cref="T:System.Int32" /> specifying at what index in <paramref name="data" /> the frame begins.</param>
-        <param name="h">A <see cref="T:TagLib.Id3v2.FrameHeader" /> containing the header to use with the new instance.</param>
+        <param name="header">To be added.</param>
         <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
         <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.UserTextIdentificationFrame" /> from a raw ID3v2 frame.</summary>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="SetText">
+      <MemberSignature Language="C#" Value="public void SetText (TagLib.StringCollection fields);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="fields" Type="TagLib.StringCollection" />
+      </Parameters>
+      <Docs>
+        <param name="fields">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

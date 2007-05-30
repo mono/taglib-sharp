@@ -22,53 +22,61 @@
  ***************************************************************************/
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace TagLib
 {
-    public class StringList : ListBase<string>
+    [ComVisible(false)]
+    public class StringCollection : ListBase<string>
     {
-        public StringList() 
+        public StringCollection () 
         {
         }
 
-        public StringList(StringList values)
+        public StringCollection(StringCollection values)
         {
             Add (values);
         }
         
-        public StringList(params string [] values)
+        public StringCollection(params string [] values)
         {
             Add (values);
         }
 
-        public StringList(ByteVectorList vectorList, StringType type)
+        public StringCollection(ByteVectorCollection vectorList, StringType type)
         {
             foreach(ByteVector vector in vectorList) {
                 Add(vector.ToString(type));
             }
         }
 
-        public StringList(ByteVectorList vectorList) : this(vectorList, StringType.UTF8) 
+        public StringCollection(ByteVectorCollection vectorList) : this(vectorList, StringType.UTF8) 
         {
         }
         
-        public static StringList Split(string str, string pattern)
+        public static StringCollection Split (string value, string pattern)
         {
-            StringList list = new StringList();
+           if (value == null)
+              throw new ArgumentNullException ("value");
+           
+           if (pattern == null)
+              throw new ArgumentNullException ("pattern");
+           
+           StringCollection list = new StringCollection ();
 
-            int previous_position = 0;
-            int position = str.IndexOf(pattern, 0);
-            int pattern_length = pattern.Length;
+           int previous_position = 0;
+           int position = value.IndexOf (pattern, 0);
+           int pattern_length = pattern.Length;
             
-            while(position != -1) {
-                list.Add(str.Substring(previous_position, position - previous_position));
-                previous_position = position + pattern_length;
-                position = str.IndexOf(pattern, previous_position);
-            }
+           while (position != -1) {
+              list.Add (value.Substring(previous_position, position - previous_position));
+              previous_position = position + pattern_length;
+              position = value.IndexOf (pattern, previous_position);
+           }
 
-            list.Add(str.Substring(previous_position));
+           list.Add (value.Substring (previous_position));
             
-            return list;
+           return list;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace TagLib.Mpeg4
          Data = LoadData (data);
          text = Data.ToString (StringType.Latin1);
       }*/
-      public AppleAdditionalInfoBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
+      public AppleAdditionalInfoBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, file, handler)
       {
          Data = LoadData (file);
          text = Data.ToString (StringType.Latin1);

@@ -23,15 +23,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace TagLib.Ogg
 {
-   public class XiphComment : TagLib.Tag, IEnumerable
+   public class XiphComment : TagLib.Tag, IEnumerable<string>
    {
       //////////////////////////////////////////////////////////////////////////
       // private properties
       //////////////////////////////////////////////////////////////////////////
-      private Dictionary<string, StringList> field_list;
+      private Dictionary<string, StringCollection> field_list;
       private string vendor_id;
       private string comment_field;
       
@@ -40,8 +41,7 @@ namespace TagLib.Ogg
       //////////////////////////////////////////////////////////////////////////
       public XiphComment () : base ()
       {
-         field_list = new Dictionary<string, StringList> ();
-         vendor_id = null;
+         field_list = new Dictionary<string, StringCollection> ();
          comment_field = "DESCRIPTION";
       }
       
@@ -57,7 +57,8 @@ namespace TagLib.Ogg
       
       public string [] GetField (string key)
       {
-         return (field_list.ContainsKey (key.ToUpper ())) ? field_list [key.ToUpper ()].ToArray () : new string [0];
+         key = key.ToUpper (CultureInfo.InvariantCulture);
+         return (field_list.ContainsKey (key)) ? field_list [key].ToArray () : new string [0];
       }
       
       public string GetFirstField (string key)
@@ -71,18 +72,18 @@ namespace TagLib.Ogg
          if (number == 0)
             RemoveField (key);
          else
-            SetField (key, number.ToString ());
+            SetField (key, number.ToString (CultureInfo.InvariantCulture));
       }
       
       public void SetField (string key, params string [] values)
       {
-         key = key.ToUpper ();
+         key = key.ToUpper (CultureInfo.InvariantCulture);
          
-         StringList results = new StringList ();
+         StringCollection results = new StringCollection ();
          
          if (values != null)
             foreach (string value in values)
-               if (value != null && value.Trim () != string.Empty)
+               if (value != null && value.Trim ().Length != 0)
                   results.Add (value);
          
          if (results.Count == 0)
@@ -95,17 +96,17 @@ namespace TagLib.Ogg
       
       public void RemoveField (string key)
       {
-         StringList values;
-         if (field_list.TryGetValue (key.ToUpper (), out values))
+         StringCollection values;
+         if (field_list.TryGetValue (key.ToUpper (CultureInfo.InvariantCulture), out values))
             values.Clear ();
       }
       
-      public ByteVector Render (bool add_framing_bit)
+      public ByteVector Render (bool addFramingBit)
       {
          ByteVector data = new ByteVector ();
 
          // Add the vendor ID length and the vendor ID.  It's important to use the
-         // lengtt of the data(String::UTF8) rather than the lenght of the the string
+         // length of the data(String::UTF8) rather than the lenght of the the string
          // since this is UTF8 text and there may be more characters in the data than
          // in the UTF16 string.
 
@@ -119,15 +120,15 @@ namespace TagLib.Ogg
          data.Add (ByteVector.FromUInt (FieldCount, false));
 
          // Iterate over the the field lists.  Our iterator returns a
-         // std::pair<String, StringList> where the first String is the field name and
-         // the StringList is the values associated with that field.
+         // std::pair<String, StringCollection> where the first String is the field name and
+         // the StringCollection is the values associated with that field.
 
-         foreach (KeyValuePair<string, StringList> de in field_list)
+         foreach (KeyValuePair<string, StringCollection> de in field_list)
          {
             // And now iterate over the values of the current list.
 
             string field_name = de.Key;
-            StringList values = de.Value;
+            StringCollection values = de.Value;
 
             foreach (string value in values)
             {
@@ -141,13 +142,18 @@ namespace TagLib.Ogg
          }
 
          // Append the "framing bit".
-         if (add_framing_bit)
+         if (addFramingBit)
             data.Add ((byte) 1);
 
          return data;
       }
       
-      public IEnumerator GetEnumerator()
+      public IEnumerator<string> GetEnumerator()
+      {
+         return field_list.Keys.GetEnumerator();
+      }
+      
+      IEnumerator IEnumerable.GetEnumerator()
       {
          return field_list.Keys.GetEnumerator();
       }
@@ -161,7 +167,7 @@ namespace TagLib.Ogg
       {
          get
          {
-            foreach (StringList l in field_list.Values)
+            foreach (StringCollection l in field_list.Values)
                if (!l.IsEmpty)
                   return false;
             
@@ -174,7 +180,7 @@ namespace TagLib.Ogg
          get
          {
             uint count = 0;
-            foreach (StringList l in field_list.Values)
+            foreach (StringCollection l in field_list.Values)
                count += (uint) l.Count;
             
             return count;
@@ -398,11 +404,11 @@ namespace TagLib.Ogg
 
             int comment_separator_position = comment.IndexOf ('=');
 
-            string key = comment.Substring (0, comment_separator_position);
+            string key = comment.Substring (0, comment_separator_position).ToUpper (CultureInfo.InvariantCulture);
             string value = comment.Substring (comment_separator_position + 1);
             
-            if (field_list.ContainsKey (key.ToUpper ()))
-               field_list [key.ToUpper ()].Add (value);
+            if (field_list.ContainsKey (key))
+               field_list [key].Add (value);
             else
                SetField (key, value);
          }

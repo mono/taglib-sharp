@@ -22,22 +22,6 @@
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="CreateFromUri">
-      <MemberSignature Language="C#" Value="public static TagLib.Picture CreateFromUri (string uri);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Picture</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="uri" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="uri">A URI relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Picture" /> by populating it with the contents of a file.</summary>
-        <remarks />
-        <returns>A new <see cref="T:TagLib.Picture" /> containing the image data copied from the file.</returns>
-      </Docs>
-    </Member>
     <Member MemberName="MimeType">
       <MemberSignature Language="C#" Value="public string MimeType { set; get; };" />
       <MemberType>Property</MemberType>
@@ -84,6 +68,38 @@
         <summary>Gets and sets the image data for the current instance.</summary>
         <value>A <see cref="T:TagLib.ByteVector" /> containing image data.</value>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="CreateFromFile">
+      <MemberSignature Language="C#" Value="public static TagLib.Picture CreateFromFile (TagLib.File.IFileAbstraction abstraction);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Picture</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="abstraction" Type="TagLib.File+IFileAbstraction" />
+      </Parameters>
+      <Docs>
+        <param name="abstraction">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateFromPath">
+      <MemberSignature Language="C#" Value="public static TagLib.Picture CreateFromPath (string path);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Picture</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="path" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="path">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

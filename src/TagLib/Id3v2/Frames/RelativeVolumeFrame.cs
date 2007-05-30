@@ -59,7 +59,7 @@ namespace TagLib.Id3v2
          this.identification = identification;
       }
       
-      protected internal RelativeVolumeFrame (ByteVector data, int offset, FrameHeader h, byte version) : base (h)
+      protected internal RelativeVolumeFrame (ByteVector data, int offset, FrameHeader header, byte version) : base(header)
       {
          SetData (data, offset, version, false);
       }
@@ -235,12 +235,11 @@ namespace TagLib.Id3v2
       {
          public ChannelType ChannelType;
          public short VolumeAdjustment;
-         public ulong PeakVolume;
+      	 public ulong PeakVolume;
+      	
          public ChannelData (ChannelType type)
          {
             ChannelType = type;
-            VolumeAdjustment = 0;
-            PeakVolume = 0;
          }
       }
       #endregion

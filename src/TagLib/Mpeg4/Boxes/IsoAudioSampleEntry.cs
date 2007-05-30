@@ -1,19 +1,21 @@
 using System;
+using System.Collections.Generic;
 
 namespace TagLib.Mpeg4
 {
    public class IsoAudioSampleEntry : IsoSampleEntry, IAudioCodec
    {
-#region Private Properties
+      #region Private Properties
       private ushort channel_count;
       private ushort sample_size;
       private uint   sample_rate;
-      private BoxList children;
-#endregion
+      private IEnumerable<Box> children;
+      #endregion
       
       
-#region Constructors
-      public IsoAudioSampleEntry (BoxHeader header, File file, Box handler) : base (header, file, handler)
+      
+      #region Constructors
+      public IsoAudioSampleEntry (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, file, handler)
       {
          file.Seek (base.DataPosition + 8);
          channel_count = file.ReadBlock (2).ToUShort ();
@@ -22,19 +24,23 @@ namespace TagLib.Mpeg4
          sample_rate   = file.ReadBlock (4).ToUInt  ();
          children = LoadChildren (file);
       }
-#endregion
+      #endregion
       
-#region Public Properties
+      
+      
+      #region Public Properties
       protected override long    DataPosition {get {return base.DataPosition + 20;}}
-      public    override BoxList Children     {get {return children;}}
-#endregion
+      public    override IEnumerable<Box> Children     {get {return children;}}
+      #endregion
       
-#region IAudioCodec Properties
+      
+      
+      #region IAudioCodec Properties
       public int AudioBitrate
       {
          get
          {
-            AppleElementaryStreamDescriptor esds = Children.GetRecursively ("esds") as AppleElementaryStreamDescriptor;
+            AppleElementaryStreamDescriptor esds = GetChildRecursively ("esds") as AppleElementaryStreamDescriptor;
             
             // If we don't have an stream descriptor, we don't know what's what.
             if (esds == null)
@@ -51,6 +57,6 @@ namespace TagLib.Mpeg4
       public string Description {get {return "MPEG-4 Audio (" + BoxType.ToString () + ")";}}
       public MediaTypes MediaTypes {get {return MediaTypes.Audio;}}
       public TimeSpan Duration {get {return TimeSpan.Zero;}}
-#endregion
+      #endregion
    }
 }

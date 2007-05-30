@@ -26,40 +26,40 @@ using System.Collections.Generic;
 namespace TagLib
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple=true)]
-    public class SupportedMimeType : Attribute 
+    public sealed class SupportedMimeType : Attribute 
     {
-        private static List<SupportedMimeType> mime_types = new List<SupportedMimeType>();
+        private static List<SupportedMimeType> _mimetypes = new List<SupportedMimeType>();
  
-        private string mime_type;
-        private string extension;
+        private string _mimetype;
+        private string _extension;
 
         static SupportedMimeType()
         {
             FileTypes.Init();
         }
 
-        public SupportedMimeType(string mime_type)
+        public SupportedMimeType(string mimetype)
         {
-            this.mime_type = mime_type;
-            mime_types.Add(this);
+            _mimetype = mimetype;
+            _mimetypes.Add(this);
         }
 
-        public SupportedMimeType(string mime_type, string extension) : this(mime_type) 
+        public SupportedMimeType(string mimetype, string extension) : this(mimetype) 
         {
-            this.extension = extension;
+            _extension = extension;
         }
     
         public string MimeType {
-            get { return mime_type; }
+            get { return _mimetype; }
         }
 
         public string Extension {
-            get { return extension; }
+            get { return _extension; }
         }
         
         public static IEnumerable<string> AllMimeTypes {
             get { 
-                foreach(SupportedMimeType type in mime_types) {
+                foreach(SupportedMimeType type in _mimetypes) {
                     yield return type.MimeType;
                 }
             }
@@ -67,7 +67,7 @@ namespace TagLib
 
         public static IEnumerable<string> AllExtensions {
             get {
-                foreach(SupportedMimeType type in mime_types) {
+                foreach(SupportedMimeType type in _mimetypes) {
                     if(type.Extension != null) {
                         yield return type.Extension;
                     }

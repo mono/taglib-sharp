@@ -7,7 +7,7 @@ namespace TagLib.Mpeg4
       #endregion
       
       #region Constructors
-      public IsoChunkOffsetBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
+      public IsoChunkOffsetBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, file, handler)
       {
          ByteVector box_data = LoadData (file);
          
@@ -19,19 +19,22 @@ namespace TagLib.Mpeg4
       #endregion
       
       #region Public Methods
-      public void Overwrite (File file, long size_difference, long after)
+      public void Overwrite (File file, long sizeDifference, long after)
       {
-         if (Header.Position < 0)
-            throw new System.Exception ("Cannot overwrite headers created from ByteVectors.");
+         if (file == null)
+            throw new System.ArgumentNullException ("file");
          
-         file.Insert (Render (size_difference, after), Header.Position, Size);
+         if (Header.Position < 0)
+            throw new System.InvalidOperationException ("Cannot overwrite headers created from ByteVectors.");
+         
+         file.Insert (Render (sizeDifference, after), Header.Position, Size);
       }
       
-      public ByteVector Render (long size_difference, long after)
+      public ByteVector Render (long sizeDifference, long after)
       {
          for (int i = 0; i < offsets.Length; i ++)
             if (offsets [i] >= (uint) after)
-               offsets [i] = (uint) (offsets [i] + size_difference);
+               offsets [i] = (uint) (offsets [i] + sizeDifference);
          
          return Render ();
       }

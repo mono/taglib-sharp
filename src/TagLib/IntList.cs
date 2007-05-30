@@ -18,27 +18,3 @@
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  *
  *   USA                                                                   *
  ***************************************************************************/
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
-namespace TagLib
-{
-    public class IntList : ListBase<int>
-    {
-        public IntList() 
-        {
-        }
-
-        public IntList(IntList values)
-        {
-            Add (values);
-        }
-        
-        public IntList(params int [] values)
-        {
-            Add (values);
-        }
-    }
-}

@@ -147,6 +147,58 @@
         <remarks />
       </Docs>
     </Member>
+    <Member MemberName="Equals">
+      <MemberSignature Language="C#" Value="public bool Equals (TagLib.Riff.WaveFormatEx other);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="other" Type="TagLib.Riff.WaveFormatEx" />
+      </Parameters>
+      <Docs>
+        <param name="other">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Equality">
+      <MemberSignature Language="C#" Value="public static bool op_Equality (TagLib.Riff.WaveFormatEx first, TagLib.Riff.WaveFormatEx second);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="first" Type="TagLib.Riff.WaveFormatEx" />
+        <Parameter Name="second" Type="TagLib.Riff.WaveFormatEx" />
+      </Parameters>
+      <Docs>
+        <param name="first">To be added.</param>
+        <param name="second">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Inequality">
+      <MemberSignature Language="C#" Value="public static bool op_Inequality (TagLib.Riff.WaveFormatEx first, TagLib.Riff.WaveFormatEx second);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="first" Type="TagLib.Riff.WaveFormatEx" />
+        <Parameter Name="second" Type="TagLib.Riff.WaveFormatEx" />
+      </Parameters>
+      <Docs>
+        <param name="first">To be added.</param>
+        <param name="second">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
   </Members>
   <Docs>
     <summary>This class is used to access a Microsoft WaveFormatEx structure, and provides <see cref="T:TagLib.IAudioCodec" /> support for it.</summary>

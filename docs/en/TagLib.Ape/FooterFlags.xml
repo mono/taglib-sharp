@@ -43,4 +43,9 @@
     <summary>Specified what flags are applied to an APE version 2 footer.</summary>
     <remarks />
   </Docs>
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Flags</AttributeName>
+    </Attribute>
+  </Attributes>
 </Type>

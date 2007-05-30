@@ -42,17 +42,22 @@ namespace TagLib.Ogg
       private GroupedComment tag;
       private Properties properties;
       
-      public File (string file, ReadStyle properties_style) : base (file)
+      public File (string path, ReadStyle propertiesStyle) : this (new File.LocalFileAbstraction (path), propertiesStyle)
+      {}
+      
+      public File (string path) : this (path, ReadStyle.Average)
+      {}
+      
+      public File (File.IFileAbstraction abstraction, ReadStyle propertiesStyle) : base (abstraction)
       {
          Mode = AccessMode.Read;
          tag = new GroupedComment ();
-         properties = null;
-         Read (properties_style);
+         Read (propertiesStyle);
          Mode = AccessMode.Closed;
          TagTypesOnDisk = TagTypes;
       }
       
-      public File (string file) : this (file, ReadStyle.Average)
+      public File (File.IFileAbstraction abstraction) : this (abstraction, ReadStyle.Average)
       {}
       
       private void Read (ReadStyle properties_style)
@@ -82,12 +87,14 @@ namespace TagLib.Ogg
       public override TagLib.Tag GetTag (TagLib.TagTypes type, bool create)
       {
          if (type == TagLib.TagTypes.Xiph)
-            return tag.Comments [0];
+            foreach (XiphComment comment in tag.Comments)
+               return comment;
+         
          return null;
       }
       public override void RemoveTags (TagLib.TagTypes types)
       {
-         if ((types & TagLib.TagTypes.Xiph) != TagLib.TagTypes.NoTags)
+         if ((types & TagLib.TagTypes.Xiph) != TagLib.TagTypes.None)
             tag.Clear ();
       }
       

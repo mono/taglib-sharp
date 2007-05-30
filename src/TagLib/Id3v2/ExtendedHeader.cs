@@ -31,7 +31,6 @@ namespace TagLib.Id3v2
       
       public ExtendedHeader ()
       {
-         size = 0;
       }
       
       public ExtendedHeader (ByteVector data, byte version)
@@ -43,6 +42,9 @@ namespace TagLib.Id3v2
       
       protected void Parse (ByteVector data, byte version)
       {
+         if (data == null)
+            throw new ArgumentNullException ("data");
+         
          size = SynchData.ToUInt (data.Mid (0, 4));
       }
    }

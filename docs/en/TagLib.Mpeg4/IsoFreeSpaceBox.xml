@@ -10,22 +10,6 @@
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public IsoFreeSpaceBox (TagLib.Mpeg4.BoxHeader header, TagLib.Mpeg4.File file, TagLib.Mpeg4.Box handler);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" />
-        <Parameter Name="file" Type="TagLib.Mpeg4.File" />
-        <Parameter Name="handler" Type="TagLib.Mpeg4.Box" />
-      </Parameters>
-      <Docs>
-        <param name="header">A <see cref="T:TagLib.Mpeg4.BoxHeader" /> containing the header for the new instance.</param>
-        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to read from.</param>
-        <param name="handler">A <see cref="T:TagLib.Mpeg4.Box" /> containing the handler that applies to the new instance.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.IsoFreeSpaceBox" /> for a specified header by reading from a file.</summary>
-        <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public IsoFreeSpaceBox (long padding);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
@@ -47,6 +31,22 @@
         <summary>Gets and sets the total size of the current instance, including the header.</summary>
         <value>A <see cref="T:System.Int64" /> containing the total size of the current instance.</value>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public IsoFreeSpaceBox (TagLib.Mpeg4.BoxHeader header, TagLib.File file, TagLib.Mpeg4.IsoHandlerBox handler);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" />
+        <Parameter Name="file" Type="TagLib.File" />
+        <Parameter Name="handler" Type="TagLib.Mpeg4.IsoHandlerBox" />
+      </Parameters>
+      <Docs>
+        <param name="header">To be added.</param>
+        <param name="file">To be added.</param>
+        <param name="handler">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

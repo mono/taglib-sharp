@@ -28,11 +28,11 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       // private properties
       //////////////////////////////////////////////////////////////////////////
-      private string title;
-      private string author;
-      private string copyright;
-      private string description;
-      private string rating;
+      private string _title       = string.Empty;
+      private string _author      = string.Empty;
+      private string _copyright   = string.Empty;
+      private string _description = string.Empty;
+      private string _rating      = string.Empty;
       
       
       //////////////////////////////////////////////////////////////////////////
@@ -40,6 +40,9 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       public ContentDescriptionObject (Asf.File file, long position) : base (file, position)
       {
+         if (file == null)
+            throw new ArgumentNullException ("file");
+         
          if (Guid != Asf.Guid.AsfContentDescriptionObject)
             throw new CorruptFileException ("Object GUID incorrect.");
          
@@ -52,29 +55,24 @@ namespace TagLib.Asf
          ushort description_length = file.ReadWord ();
          ushort rating_length      = file.ReadWord ();
          
-         title       = file.ReadUnicode (title_length);
-         author      = file.ReadUnicode (author_length);
-         copyright   = file.ReadUnicode (copyright_length);
-         description = file.ReadUnicode (description_length);
-         rating      = file.ReadUnicode (rating_length);
+         _title       = file.ReadUnicode (title_length);
+         _author      = file.ReadUnicode (author_length);
+         _copyright   = file.ReadUnicode (copyright_length);
+         _description = file.ReadUnicode (description_length);
+         _rating      = file.ReadUnicode (rating_length);
       }
       
       public ContentDescriptionObject () : base (Asf.Guid.AsfContentDescriptionObject)
       {
-         title       = String.Empty;
-         author      = String.Empty;
-         copyright   = String.Empty;
-         description = String.Empty;
-         rating      = String.Empty;
       }
       
       public override ByteVector Render ()
       {
-         ByteVector title_bytes       = RenderUnicode (title);
-         ByteVector author_bytes      = RenderUnicode (author);
-         ByteVector copyright_bytes   = RenderUnicode (copyright);
-         ByteVector description_bytes = RenderUnicode (description);
-         ByteVector rating_bytes      = RenderUnicode (rating);
+         ByteVector title_bytes       = RenderUnicode (_title);
+         ByteVector author_bytes      = RenderUnicode (_author);
+         ByteVector copyright_bytes   = RenderUnicode (_copyright);
+         ByteVector description_bytes = RenderUnicode (_description);
+         ByteVector rating_bytes      = RenderUnicode (_rating);
          
          ByteVector output = RenderWord ((ushort) title_bytes.Count);
          output.Add (RenderWord ((ushort) author_bytes.Count));
@@ -93,10 +91,10 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
-      public string Title       {get {return title;}       set {title = value;}}
-      public string Author      {get {return author;}      set {author = value;}}
-      public string Copyright   {get {return copyright;}   set {copyright = value;}}
-      public string Description {get {return description;} set {description = value;}}
-      public string Rating      {get {return rating;}      set {rating = value;}}
+      public string Title       {get {return _title;}       set {_title = value;}}
+      public string Author      {get {return _author;}      set {_author = value;}}
+      public string Copyright   {get {return _copyright;}   set {_copyright = value;}}
+      public string Description {get {return _description;} set {_description = value;}}
+      public string Rating      {get {return _rating;}      set {_rating = value;}}
    }
 }

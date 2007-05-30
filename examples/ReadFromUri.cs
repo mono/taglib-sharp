@@ -13,8 +13,6 @@ public class ReadFromUri
         
         Gnome.Vfs.Vfs.Initialize();
         
-        TagLib.File.PushFileAbstractionCreator(VfsFileAbstraction.CreateFile);
-        
         DateTime start = DateTime.Now;
         int songs_read = 0;
         try {
@@ -32,7 +30,7 @@ public class ReadFromUri
                 
                 try
                 {
-                    file = TagLib.File.Create(uri);
+                    file = TagLib.File.Create(new VfsFileAbstraction (uri));
                 }
                 catch (TagLib.UnsupportedFormatException)
                 {
@@ -110,7 +108,6 @@ public class ReadFromUri
             }
         } finally {
            Gnome.Vfs.Vfs.Shutdown();
-           TagLib.File.PopFileAbstractionCreator();
         }
         
         DateTime end = DateTime.Now;
@@ -145,10 +142,5 @@ public class VfsFileAbstraction : TagLib.File.IFileAbstraction
     public void CloseStream (System.IO.Stream stream)
     {
        stream.Close ();
-    }
-    
-    public static TagLib.File.IFileAbstraction CreateFile(string path)
-    {
-        return new VfsFileAbstraction(path);
     }
 }

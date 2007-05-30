@@ -14,15 +14,15 @@
   </Interfaces>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public StreamHeader (TagLib.ByteVector data, long stream_length);" />
+      <MemberSignature Language="C#" Value="public StreamHeader (TagLib.ByteVector data, long streamLength);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="data" Type="TagLib.ByteVector" />
-        <Parameter Name="stream_length" Type="System.Int64" />
+        <Parameter Name="streamLength" Type="System.Int64" />
       </Parameters>
       <Docs>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing header bytes for FLAC stream header.</param>
-        <param name="stream_length">A <see cref="System.Int64" /> representing the length of the audio data in bytes.</param>
+        <param name="streamLength">To be added.</param>
         <summary>Constructs and initialized the current instance of <see cref="T:TagLib.Flac.StreamHeader" /> based on the stream header data and the stream length.</summary>
         <remarks />
       </Docs>

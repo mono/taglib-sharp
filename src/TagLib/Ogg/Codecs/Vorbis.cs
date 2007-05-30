@@ -11,7 +11,6 @@ namespace TagLib.Ogg.Codecs
       
       private Vorbis ()
       {
-         comment_data = null;
       }
       
       public static Codec FromPacket (ByteVector packet)
@@ -45,13 +44,19 @@ namespace TagLib.Ogg.Codecs
       public override ByteVector CommentData     {get {return comment_data;}}
       public override string     Description     {get {return "Vorbis Version " + header.vorbis_version + " Audio";}}
 
-      public override TimeSpan GetDuration (long first_granular_position, long last_granular_position)
+      public override TimeSpan GetDuration (long firstGranularPosition, long lastGranularPosition)
       {
-         return TimeSpan.FromSeconds ((double) (last_granular_position - first_granular_position) / (double) header.sample_rate);
+         return TimeSpan.FromSeconds ((double) (lastGranularPosition - firstGranularPosition) / (double) header.sample_rate);
       }
       
-      public override void SetCommentPacket (ByteVectorList packets, XiphComment comment)
+      public override void SetCommentPacket (ByteVectorCollection packets, XiphComment comment)
       {
+         if (packets == null)
+            throw new ArgumentNullException ("packets");
+         
+         if (comment == null)
+            throw new ArgumentNullException ("comment");
+         
          ByteVector data = new ByteVector ((byte) 0x03);
          data.Add (id);
          data.Add (comment.Render (true));

@@ -35,16 +35,16 @@
       </Docs>
     </Member>
     <Member MemberName="Render">
-      <MemberSignature Language="C#" Value="public virtual TagLib.ByteVector Render (string s);" />
+      <MemberSignature Language="C#" Value="public virtual TagLib.ByteVector Render (string text);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="s" Type="System.String" />
+        <Parameter Name="text" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="s">A <see cref="T:System.String" /> to convert into byte data.</param>
+        <param name="text">A <see cref="T:System.String" /> to convert into byte data.</param>
         <summary>Converts a string into an ID3v1 data field.</summary>
         <returns>A <see cref="T:TagLib.ByteVector" /> containing the data representing the text.</returns>
         <remarks />

@@ -30,14 +30,29 @@ namespace TagLib.MusePack
    [SupportedMimeType("audio/x-musepack")]
    public class File : TagLib.NonContainer.File
    {
-      private ByteVector header_block = null;
+      #region Private Properties
+      private ByteVector _header_block = null;
+      #endregion
       
-      public File (string file, ReadStyle properties_style) : base (file, properties_style)
-      {}
-
-      public File (string file) : this (file, ReadStyle.Average)
+      
+      
+      #region Constructors
+      public File (string path, ReadStyle propertiesStyle) : base (path, propertiesStyle)
       {}
       
+      public File (string path) : base (path)
+      {}
+      
+      public File (File.IFileAbstraction abstraction, ReadStyle propertiesStyle) : base (abstraction, propertiesStyle)
+      {}
+      
+      public File (File.IFileAbstraction abstraction) : base (abstraction)
+      {}
+      #endregion
+      
+      
+      
+      #region Public Methods
       public override TagLib.Tag GetTag (TagTypes type, bool create)
       {
          Tag t = (Tag as TagLib.NonContainer.Tag).GetTag (type);
@@ -60,26 +75,31 @@ namespace TagLib.MusePack
             return null;
          }
       }
+      #endregion
       
-      protected override void ReadStart (long start, ReadStyle style)
+      
+      
+      #region Protected Methods
+      protected override void ReadStart (long start, ReadStyle propertiesStyle)
       {
-         if (header_block == null && style != ReadStyle.None)
+         if (_header_block == null && propertiesStyle != ReadStyle.None)
          {
             Seek (start);
-            header_block = ReadBlock ((int) StreamHeader.Size);
+            _header_block = ReadBlock ((int) StreamHeader.Size);
          }
       }
       
-      protected override void ReadEnd (long end, ReadStyle style)
+      protected override void ReadEnd (long end, ReadStyle propertiesStyle)
       {
          // Make sure we have an APE tag.
          GetTag (TagTypes.Ape, true);
       }
       
-      protected override TagLib.Properties ReadProperties (long start, long end, ReadStyle style)
+      protected override TagLib.Properties ReadProperties (long start, long end, ReadStyle propertiesStyle)
       {
-         StreamHeader header = new StreamHeader (header_block, end - start);
+         StreamHeader header = new StreamHeader (_header_block, end - start);
          return new Properties (TimeSpan.Zero, header);
       }
+      #endregion
    }
 }

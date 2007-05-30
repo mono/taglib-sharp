@@ -45,8 +45,8 @@ namespace TagLib.Id3v2
       
       
       #region Public Static Properties
-      public static readonly uint Size = 10;
-      public static readonly ByteVector FileIdentifier = "ID3";
+      public const uint Size = 10;
+      public static ByteVector FileIdentifier {get {return "ID3";}}
       #endregion
       
       

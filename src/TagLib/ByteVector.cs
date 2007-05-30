@@ -39,9 +39,9 @@ namespace TagLib
 
     public class ByteVector : IList<byte>, IComparable<ByteVector>
     {
-        private List<byte> data = new List<byte>();
+        private List<byte> _data = new List<byte>();
 
-        private static uint [] crc_table = new uint[256] {
+        private static uint [] _crc_table = new uint[256] {
             0x00000000, 0x04c11db7, 0x09823b6e, 0x0d4326d9, 0x130476dc, 0x17c56b6b,
             0x1a864db2, 0x1e475005, 0x2608edb8, 0x22c9f00f, 0x2f8ad6d6, 0x2b4bcb61,
             0x350c9b64, 0x31cd86d3, 0x3c8ea00a, 0x384fbdbd, 0x4c11db70, 0x48d0c6c7,
@@ -102,7 +102,7 @@ namespace TagLib
                     data[i] = value;
                 }
 
-                SetData(data);
+                Add (data);
             }
         }
 
@@ -112,36 +112,45 @@ namespace TagLib
 
         public ByteVector(ByteVector vector)
         {
-            Add(vector);
+            Add (vector);
         }
       
         public ByteVector (byte [] data, int length)
         {
-            SetData(data, length);
+           if (length > data.Length)
+              throw new ArgumentOutOfRangeException ("length", "length exceeds size of data.");
+           
+           if (length == data.Length)
+              SetData (data);
+           else
+           {
+              byte [] array = new byte[length];
+              System.Array.Copy (data, 0, array, 0, length);
+              Add (array);
+           }
         }
 
         public ByteVector (params byte [] data)
         {
             SetData(data);
         }
-        
         #endregion
         
         #region Properties
 
         public byte [] Data {
-            get { return data.ToArray(); }
+            get { return _data.ToArray(); }
         }
 
         public bool IsEmpty {
             get { return Count == 0; }
         }
 
-        public uint CheckSum {
+        public uint Checksum {
             get {
                 uint sum = 0;
                 foreach(byte b in this) {
-                    sum = (sum << 8) ^ crc_table[((sum >> 24) & 0xFF) ^ b];
+                    sum = (sum << 8) ^ _crc_table[((sum >> 24) & 0xFF) ^ b];
                 }
                 return sum;
             }
@@ -163,7 +172,7 @@ namespace TagLib
             
             byte [] data = new byte [length];
            
-            this.data.CopyTo (index, data, 0, length);
+            _data.CopyTo (index, data, 0, length);
             return data;
         }
 
@@ -172,8 +181,11 @@ namespace TagLib
             return Mid(index, Int32.MaxValue);
         }
         
-        public int Find (ByteVector pattern, int offset, int byte_align)
+        public int Find (ByteVector pattern, int offset, int byteAlign)
         {
+            if (pattern == null)
+               throw new ArgumentNullException ("pattern");
+         
             if (pattern.Count > Count || offset >= Count - 1)
                 return -1;
 
@@ -183,7 +195,7 @@ namespace TagLib
             if (pattern.Count == 1)
             {
                 byte p = pattern [0];
-                for (int i = offset; i < Count; i += byte_align)
+                for (int i = offset; i < Count; i += byteAlign)
                     if (this [i] == p)
                         return i;
                 return -1;
@@ -208,7 +220,7 @@ namespace TagLib
                     --iPattern;
                 }
 
-                if(-1 == iPattern && (iBuffer + 1 - offset) % byte_align == 0)
+                if(-1 == iPattern && (iBuffer + 1 - offset) % byteAlign == 0)
                     return iBuffer + 1;
             }
 
@@ -225,8 +237,11 @@ namespace TagLib
             return Find(pattern, 0, 1);
         }
       
-        public int RFind (ByteVector pattern, int offset, int byte_align)
+        public int RFind (ByteVector pattern, int offset, int byteAlign)
         {
+            if (pattern == null)
+                throw new ArgumentNullException ("pattern");
+            
             if (pattern.Count == 0 || pattern.Count > Count || Count - pattern.Count - offset < 0)
                 return -1;
 
@@ -236,7 +251,7 @@ namespace TagLib
             if (pattern.Count == 1)
             {
                 byte p = pattern [0];
-                for (int i = Count - offset - 1; i >= 0; i -= byte_align)
+                for (int i = Count - offset - 1; i >= 0; i -= byteAlign)
                     if (this [i] == p)
                         return i;
                 return -1;
@@ -251,7 +266,7 @@ namespace TagLib
                 first_occurrence [pattern [i]] = i;
             
             for (int i = Count - offset - pattern.Count; i >= 0; i -= first_occurrence [this [i]])
-                if (ContainsAt (pattern, i) && (offset - i) % byte_align == 0)
+                if (ContainsAt (pattern, i) && (offset - i) % byteAlign == 0)
                     return i;
             
             return -1;
@@ -268,22 +283,25 @@ namespace TagLib
         }
       
         public bool ContainsAt(ByteVector pattern, int offset, 
-            int pattern_offset, int pattern_length)
+            int patternOffset, int patternLength)
         {
-            if(pattern.Count < pattern_length) {
-                pattern_length = pattern.Count;
+            if (pattern == null)
+               throw new ArgumentNullException ("pattern");
+         
+            if(pattern.Count < patternLength) {
+                patternLength = pattern.Count;
             }
 
             // do some sanity checking -- all of these things are 
             // needed for the search to be valid
-            if(pattern_length > Count || offset >= Count || 
-                pattern_offset >= pattern.Count || pattern_length == 0) {
+            if(patternLength > Count || offset >= Count || 
+                patternOffset >= pattern.Count || patternLength == 0) {
                 return false;
             }
             
             // loop through looking for a mismatch
-            for(int i = 0; i < pattern_length - pattern_offset; i++) {
-                if(this[i + offset] != pattern[i + pattern_offset]) {
+            for(int i = 0; i < patternLength - patternOffset; i++) {
+                if(this[i + offset] != pattern[i + patternOffset]) {
                     return false;
                 }
             }
@@ -291,9 +309,9 @@ namespace TagLib
             return true;
         }
 
-        public bool ContainsAt(ByteVector pattern, int offset, int pattern_offset)
+        public bool ContainsAt(ByteVector pattern, int offset, int patternOffset)
         {
-            return ContainsAt(pattern, offset, pattern_offset, Int32.MaxValue);
+            return ContainsAt(pattern, offset, patternOffset, Int32.MaxValue);
         }
 
         public bool ContainsAt(ByteVector pattern, int offset)
@@ -308,11 +326,17 @@ namespace TagLib
       
         public bool EndsWith(ByteVector pattern)
         {
+            if (pattern == null)
+               throw new ArgumentNullException ("pattern");
+         
             return ContainsAt(pattern, Count - pattern.Count);
         }
 
         public int EndsWithPartialMatch(ByteVector pattern)
         {
+            if (pattern == null)
+               throw new ArgumentNullException ("pattern");
+         
             if(pattern.Count > Count) {
                 return -1;
             }
@@ -334,39 +358,39 @@ namespace TagLib
         public void Add(ByteVector vector)
         {
             if(vector != null) {
-                data.AddRange(vector);
+                _data.AddRange(vector);
             }
         }
 
         public void Add(byte [] vector)
         {
             if(vector != null) {
-                data.AddRange(vector);
+                _data.AddRange(vector);
             }
         }
         
         public void Insert (int index, ByteVector vector)
         {
             if(vector != null) {
-                data.InsertRange (index, vector);
+                _data.InsertRange (index, vector);
             }
         }
         
         public void Insert (int index, byte [] vector)
         {
             if(vector != null) {
-                data.InsertRange (index, vector);
+                _data.InsertRange (index, vector);
             }
         }
         
         public ByteVector Resize(int size, byte padding)
         {
             if(Count > size) {
-                data.RemoveRange(size, Count - size);
+                _data.RemoveRange(size, Count - size);
             }
             
             while(Count < size) {
-                Add(0);
+                Add(padding);
             }
             
             return this;
@@ -377,15 +401,19 @@ namespace TagLib
             return Resize(size, 0);
         }
         
+        public void RemoveRange (int index, int count)
+        {
+           _data.RemoveRange (index, count);
+        }
         #endregion
         
         #region Conversions
 
-        public uint ToUInt(bool msbFirst)
+        public uint ToUInt(bool mostSignificantByteFirst)
         {
             uint sum = 0;
             for(int i = 0, last = Count > 4 ? 3 : Count - 1; i <= last; i++) {
-                sum |= (uint)this[i] << ((msbFirst ? last - i : i) * 8);
+                sum |= (uint)this[i] << ((mostSignificantByteFirst ? last - i : i) * 8);
             }
             return sum;
         }
@@ -395,11 +423,11 @@ namespace TagLib
             return ToUInt(true);
         }
 
-        public ushort ToUShort(bool msbFirst)
+        public ushort ToUShort(bool mostSignificantByteFirst)
         {
             ushort sum = 0;
             for(int i = 0, last = Count > 2 ? 1 : Count - 1; i <= last; i++) {
-                sum |= (ushort)(this[i] << ((msbFirst ? last - i : i) * 8));
+                sum |= (ushort)(this[i] << ((mostSignificantByteFirst ? last - i : i) * 8));
             }
             return sum;
         }
@@ -409,11 +437,11 @@ namespace TagLib
             return ToUShort(true);
         }
 
-        public ulong ToULong(bool msbFirst)
+        public ulong ToULong(bool mostSignificantByteFirst)
         {
             ulong sum = 0;
             for(int i = 0, last = Count > 8 ? 7 : Count - 1; i <= last; i++) {
-                sum |= (ulong)this [i] << ((msbFirst ? last - i : i) * 8);
+                sum |= (ulong)this [i] << ((mostSignificantByteFirst ? last - i : i) * 8);
             }
             return sum;
         }
@@ -425,7 +453,7 @@ namespace TagLib
 
         public string ToString(StringType type, int offset)
         {
-            ByteVector bom = type == StringType.UTF16 && data.Count > 1 ? Mid(offset, 2) : null;
+            ByteVector bom = type == StringType.UTF16 && _data.Count > 1 ? Mid(offset, 2) : null;
             string s = StringTypeToEncoding(type, bom).GetString(Data, offset, Count - offset);
             
             if(s.Length != 0 && (s[0] == 0xfffe || s[0] == 0xfeff)) { // UTF16 BOM
@@ -455,7 +483,7 @@ namespace TagLib
             int chunk = 0;
             int pos = offset;
             
-            StringList l = new StringList ();
+            StringCollection l = new StringCollection ();
             ByteVector separator = TagLib.Id3v2.Frame.TextDelimiter (type);
             int align = separator.Count;
             while (chunk < count && pos < Count)
@@ -492,19 +520,6 @@ namespace TagLib
             return l.ToArray ();
         }
         
-        private void SetData(byte [] value, int length)
-        {
-            if(length >= value.Length) {
-                SetData(value);
-            } else {
-                byte [] array = new byte[length];
-                for(int i = 0; i < length; i++) {
-                    array[i] = value[i];
-                }
-                SetData(array);
-            }
-        }
-
         private void SetData(byte [] value)
         {
             Clear();
@@ -514,85 +529,97 @@ namespace TagLib
         
         #region Operators
       
-        public static bool operator==(ByteVector a, ByteVector b)
+        public static bool operator==(ByteVector first, ByteVector second)
         {
-            if((object) a == null && (object) b == null) {
+            if((object) first == null && (object) second == null) {
                 return true;
-            } else if((object) a == null || (object) b == null) {
+            } else if((object) first == null || (object) second == null) {
                 return false;
             }
             
-            return a.Count == b.Count && a.StartsWith(b);
+            return first.Equals (second);
         }
-              
-        public static bool operator!=(ByteVector a, ByteVector b)
+        
+        public static bool operator!=(ByteVector first, ByteVector second)
         {
-            return !(a == b);
+           return !(first == second);
         }
 
-        public static bool operator<(ByteVector a, ByteVector b)
+        public static bool operator<(ByteVector first, ByteVector second)
         {
-            for(int i = 0; i < a.Count && i < b.Count; i ++) {
-                if(a[i] < b[i]) {
-                    return true;
-                }
-            }
+            if (first == null)
+               throw new ArgumentNullException ("first");
             
-            return a.Count < b.Count;
+            if (second == null)
+               throw new ArgumentNullException ("second");
+           
+            return first.CompareTo (second) < 0;
         }
 
-        public static bool operator<=(ByteVector a, ByteVector b)
+        public static bool operator<=(ByteVector first, ByteVector second)
         {
-            return a < b || a == b;
+            if (first == null)
+               throw new ArgumentNullException ("first");
+            
+            if (second == null)
+               throw new ArgumentNullException ("second");
+           
+            return first.CompareTo (second) <= 0;
         }
 
-        public static bool operator>(ByteVector a, ByteVector b)
+        public static bool operator>(ByteVector first, ByteVector second)
         {
-            for(int i = 0; i < a.Count && i < b.Count; i ++) {
-                if(a[i] > b[i]) {
-                    return true;
-                }
-            }
-
-            return a.Count > b.Count;
+            if (first == null)
+               throw new ArgumentNullException ("first");
+            
+            if (second == null)
+               throw new ArgumentNullException ("second");
+           
+            return first.CompareTo (second) > 0;
         }
 
-        public static bool operator>=(ByteVector a, ByteVector b)
+        public static bool operator>=(ByteVector first, ByteVector second)
         {
-            return a > b || a == b;
+            if (first == null)
+               throw new ArgumentNullException ("first");
+            
+            if (second == null)
+               throw new ArgumentNullException ("second");
+           
+            return first.CompareTo (second) >= 0;
         }
 
-        public static ByteVector operator+(ByteVector a, ByteVector b)
+        public static ByteVector operator+(ByteVector first, ByteVector second)
         {
-            ByteVector sum = new ByteVector(a);
-            sum.Add(b);
+            ByteVector sum = new ByteVector(first);
+            sum.Add(second);
             return sum;
         }
 
-        public static implicit operator ByteVector(byte c)
+        public static implicit operator ByteVector(byte value)
         {
-            return new ByteVector(c);
+            return new ByteVector(value);
         }
 
-        public static implicit operator ByteVector(byte [] b)
+        public static implicit operator ByteVector(byte [] value)
         {
-            return new ByteVector(b);
+            return new ByteVector(value);
         }
 
-        public static implicit operator ByteVector(string s)
+        public static implicit operator ByteVector(string value)
         {
-            return ByteVector.FromString(s);
+            return ByteVector.FromString(value);
         }
         
         #endregion
 
         #region Static Conversions
 
-        public static ByteVector FromUInt(uint value, bool msbFirst)
+        public static ByteVector FromUInt(uint value, bool mostSignificantByteFirst)
         {
             ByteVector vector = new ByteVector();
             for(int i = 0; i < 4; i++) {
-                vector.Add((byte)(value >> ((msbFirst ? 3 - i : i) * 8) & 0xFF));
+                vector.Add((byte)(value >> ((mostSignificantByteFirst ? 3 - i : i) * 8) & 0xFF));
             }
             return vector;
         }
@@ -602,11 +629,11 @@ namespace TagLib
             return FromUInt(value, true);
         }
 
-        public static ByteVector FromUShort(ushort value, bool msbFirst)
+        public static ByteVector FromUShort(ushort value, bool mostSignificantByteFirst)
         {
             ByteVector vector = new ByteVector();
             for(int i = 0; i < 2; i++) {
-                vector.Add((byte)(value >> ((msbFirst ? 1 - i : i) * 8) & 0xFF));
+                vector.Add((byte)(value >> ((mostSignificantByteFirst ? 1 - i : i) * 8) & 0xFF));
             }
             return vector;
         }
@@ -616,11 +643,11 @@ namespace TagLib
             return FromUShort(value, true);
         }
 
-        public static ByteVector FromULong(ulong value, bool msbFirst)
+        public static ByteVector FromULong(ulong value, bool mostSignificantByteFirst)
         {
             ByteVector vector = new ByteVector();
             for(int i = 0; i < 8; i++) {
-                vector.Add((byte)(value >> ((msbFirst ? 7 - i : i) * 8) & 0xFF));
+                vector.Add((byte)(value >> ((mostSignificantByteFirst ? 7 - i : i) * 8) & 0xFF));
             }
             return vector;
         }
@@ -630,54 +657,62 @@ namespace TagLib
             return FromULong(value, true);
         }
 
-        public static ByteVector FromString(string s, StringType type, int length)
+        public static ByteVector FromString(string text, StringType type, int length)
         {
             ByteVector data = new ByteVector ();
             
             if (type == StringType.UTF16)
                 data.Add (new byte [] {0xff, 0xfe});
             
-            if (s == null || s.Length == 0)
+            if (text == null || text.Length == 0)
                 return data;
             
-            if (s.Length > length)
-                s = s.Substring (0, length);
+            if (text.Length > length)
+                text = text.Substring (0, length);
             
-            data.Add (StringTypeToEncoding (type, null).GetBytes (s));
+            data.Add (StringTypeToEncoding (type, null).GetBytes (text));
             
             return data;
         }
 
-        public static ByteVector FromString(string s, StringType type)
+        public static ByteVector FromString(string text, StringType type)
         {
-            return FromString(s, type, Int32.MaxValue);
+            return FromString(text, type, Int32.MaxValue);
         }
 
-        public static ByteVector FromString(string s, int length)
+        public static ByteVector FromString(string text, int length)
         {
-            return FromString(s, StringType.UTF8, length);
+            return FromString(text, StringType.UTF8, length);
         }
 
-        public static ByteVector FromString(string s)
+        public static ByteVector FromString(string text)
         {
-            return FromString (s, StringType.UTF8);
+            return FromString (text, StringType.UTF8);
         }
       
-        public static ByteVector FromUri(string uri)
+        public static ByteVector FromPath (string path)
         {
             byte [] tmp_out;
-            return FromUri(uri, out tmp_out, false);
+            return FromPath (path, out tmp_out, false);
+        }
+        
+        internal static ByteVector FromPath (string path, out byte [] firstChunk, bool copyFirstChunk)
+        {
+           return FromFile (new File.LocalFileAbstraction (path), out firstChunk, copyFirstChunk);
         }
 
-        internal static ByteVector FromUri(string uri, out byte [] firstChunk, 
-            bool copyFirstChunk)
+        public static ByteVector FromFile (File.LocalFileAbstraction abstraction)
         {
-            File.FileAbstractionCreator creator = File.GetFileAbstractionCreator();
-            File.IFileAbstraction abstraction = creator(uri);
-
-            using(System.IO.Stream stream = abstraction.ReadStream) {
-                return FromStream(stream, out firstChunk, copyFirstChunk);
-            }
+            byte [] tmp_out;
+            return FromFile (abstraction, out tmp_out, false);
+        }
+        
+        internal static ByteVector FromFile (File.IFileAbstraction abstraction, out byte [] firstChunk, bool copyFirstChunk)
+        {
+           System.IO.Stream stream = abstraction.ReadStream;
+           ByteVector output = FromStream (stream, out firstChunk, copyFirstChunk);
+           abstraction.CloseStream (stream);
+           return output;
         }
 
         public static ByteVector FromStream(System.IO.Stream stream)
@@ -758,7 +793,7 @@ namespace TagLib
                // The right format but not ECMA.
                return System.Text.Encoding.GetEncoding("latin1");
             }
-            catch
+            catch (ArgumentException)
             {
                return System.Text.Encoding.UTF8;
             }
@@ -768,30 +803,42 @@ namespace TagLib
       
         #region System.Object
       
-        public override bool Equals(object o)
-        {
-            ByteVector vector = (ByteVector)o;
-            return vector != null && vector == this;
-        }
-
+      public override bool Equals (object obj)
+      {
+         if (!(obj is ByteVector))
+            return false;
+         
+         return Equals ((ByteVector) obj);
+      }
+      
+      public bool Equals (ByteVector other)
+      {
+         return CompareTo (other) == 0;
+      }
+      
         public override int GetHashCode ()
         {
-            return Count;
+           unchecked
+           {
+              return (int) Checksum;
+           }
         }
         
         #endregion
         
         #region IComparable<T>
         
-        public int CompareTo(ByteVector vector)
+        public int CompareTo (ByteVector other)
         {
-            if(this == vector) {
-                return 0;
-            } else if(this < vector) {
-                return -1;
-            } else {
-                return 1;
-            }
+           if ((object) other == null)
+              throw new ArgumentNullException ("other");
+           
+           int diff = Count - other.Count;
+           
+           for(int i = 0; diff == 0 && i < Count; i ++)
+              diff = this [i] - other [i];
+           
+           return diff;
         }
         
         #endregion
@@ -800,12 +847,12 @@ namespace TagLib
 
         public IEnumerator<byte> GetEnumerator()
         {
-            return data.GetEnumerator();
+            return _data.GetEnumerator();
         }
         
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return data.GetEnumerator();
+            return _data.GetEnumerator();
         }
         
         #endregion
@@ -814,31 +861,31 @@ namespace TagLib
         
         public void Clear()
         {
-            data.Clear();
+            _data.Clear();
         }
 
-        public void Add(byte value)
+        public void Add(byte item)
         {
-            data.Add(value);
+            _data.Add(item);
         }
 
-        public bool Remove(byte value)
+        public bool Remove(byte item)
         {
-            return data.Remove(value);
+            return _data.Remove(item);
         }
         
-        public void CopyTo(byte [] array, int index)
+        public void CopyTo(byte [] array, int arrayIndex)
         {
-            data.CopyTo(array, index);
+            _data.CopyTo(array, arrayIndex);
         }
         
-        public bool Contains(byte value)
+        public bool Contains(byte item)
         {
-            return data.Contains(value);
+            return _data.Contains(item);
         }
 
         public int Count {
-            get { return data.Count; }
+            get { return _data.Count; }
         }
 
         public bool IsSynchronized {
@@ -855,17 +902,17 @@ namespace TagLib
         
         public void RemoveAt(int index)
         {
-            data.RemoveAt(index);
+            _data.RemoveAt(index);
         }
         
-        public void Insert(int index, byte value)
+        public void Insert(int index, byte item)
         {
-            data.Insert(index, value);
+            _data.Insert(index, item);
         }
         
-        public int IndexOf(byte value)
+        public int IndexOf(byte item)
         {
-            return data.IndexOf(value);
+            return _data.IndexOf(item);
         }
         
         public bool IsReadOnly {
@@ -877,8 +924,8 @@ namespace TagLib
         }
         
         public byte this[int index] {
-            get { return data[index]; }
-            set { data[index] = value; }
+            get { return _data[index]; }
+            set { _data[index] = value; }
         }
         
         #endregion

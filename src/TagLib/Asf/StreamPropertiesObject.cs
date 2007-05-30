@@ -39,11 +39,14 @@ namespace TagLib.Asf
 #region Constructors
       public StreamPropertiesObject (Asf.File file, long position) : base (file, position)
       {
+         if (file == null)
+            throw new ArgumentNullException ("file");
+         
          if (!Guid.Equals (Asf.Guid.AsfStreamPropertiesObject))
-            throw new System.Exception ("Object GUID incorrect.");
+            throw new CorruptFileException ("Object GUID incorrect.");
          
          if (OriginalSize < 78)
-            throw new System.Exception ("Object size too small.");
+            throw new CorruptFileException ("Object size too small.");
          
          stream_type                       = file.ReadGuid  ();
          error_correction_type             = file.ReadGuid  ();
@@ -73,15 +76,18 @@ namespace TagLib.Asf
          return Render (output);
       }
       
-      public ICodec GetCodec ()
+      public ICodec Codec
       {
-         if (stream_type == Asf.Guid.AsfAudioMedia)
-            return new Riff.WaveFormatEx (type_specific_data, 0);
-         
-         if (stream_type == Asf.Guid.AsfVideoMedia)
-            return new TagLib.Riff.BitmapInfoHeader (type_specific_data, 11);
-         
-         return null;
+         get
+         {
+            if (stream_type == Asf.Guid.AsfAudioMedia)
+               return new Riff.WaveFormatEx (type_specific_data, 0);
+            
+            if (stream_type == Asf.Guid.AsfVideoMedia)
+               return new TagLib.Riff.BitmapInfoHeader (type_specific_data, 11);
+            
+            return null;
+         }
       }
       #endregion
       

@@ -88,6 +88,16 @@
         <summary>The packet marks the end of a stream.</summary>
       </Docs>
     </Member>
+    <Member MemberName="Zero">
+      <MemberSignature Language="C#" Value="Zero" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg.Marker</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
   </Members>
   <Docs>
     <summary>Specified the type of marker found of contents of a packet.</summary>

@@ -29,3 +29,4 @@ using System.Runtime.CompilerServices;
 [assembly:AssemblyCompany ("")]
 [assembly:AssemblyDelaySign(false)]
 [assembly:AssemblyKeyFile("taglib-sharp.snk")]
+[assembly:System.CLSCompliant(false)]

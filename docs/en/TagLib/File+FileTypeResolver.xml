@@ -1,5 +1,5 @@
 <Type Name="File+FileTypeResolver" FullName="TagLib.File+FileTypeResolver">
-  <TypeSignature Language="C#" Value="public delegate TagLib.File File.FileTypeResolver(string path, ReadStyle style);" />
+  <TypeSignature Language="C#" Value="public delegate TagLib.File File.FileTypeResolver(File.IFileAbstraction abstraction, string mimetype, ReadStyle style);" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
@@ -8,14 +8,16 @@
     <BaseTypeName>System.Delegate</BaseTypeName>
   </Base>
   <Parameters>
-    <Parameter Name="path" Type="System.String" />
+    <Parameter Name="abstraction" Type="TagLib.File+IFileAbstraction" />
+    <Parameter Name="mimetype" Type="System.String" />
     <Parameter Name="style" Type="TagLib.ReadStyle" />
   </Parameters>
   <ReturnValue>
     <ReturnType>TagLib.File</ReturnType>
   </ReturnValue>
   <Docs>
-    <param name="path">A path relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+    <param name="abstraction">To be added.</param>
+    <param name="mimetype">To be added.</param>
     <param name="style">A <see cref="T:TagLib.ReadStyle" /> specifying how to read media properties from the file.</param>
     <summary>Intervenes in the <see cref="M:TagLib.File.Create(System.String,TagLib.ReadStyle)" /> method by resolving the file type before any standard resolution operations.</summary>
     <returns>A new <see cref="T:TagLib.File" /> or null.</returns>

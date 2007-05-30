@@ -29,7 +29,11 @@ namespace TagLib.Id3v2
    {
       #region Private Properties
       private StringType encoding   = StringType.UTF8;
-      private StringList field_list = new StringList ();
+      private StringCollection field_list = new StringCollection ();
+      
+      // Performance savings for simple processes.
+      private ByteVector  raw_data      = null;
+      private byte        raw_version   = 0;
       #endregion
       
       
@@ -45,29 +49,23 @@ namespace TagLib.Id3v2
          SetData (data, 0, version, true);
       }
 
-      protected internal TextIdentificationFrame (ByteVector data, int offset, FrameHeader h, byte version) : base (h)
+      protected internal TextIdentificationFrame (ByteVector data, int offset, FrameHeader header, byte version) : base(header)
       {
          SetData (data, offset, version, false);
-         
-         // Bad tags may have one or more nul characters at the end of a string,
-         // resulting in empty strings at the end of the FieldList. Strip them
-         // off.
-         while (field_list.Count != 0 && field_list [field_list.Count - 1] == String.Empty)
-            field_list.RemoveAt (field_list.Count - 1);
       }
       #endregion
       
       
       
       #region Public Properties
-      public StringList FieldList
+      public StringCollection FieldList
       {
-        get {return new StringList (field_list);}
+        get {ParseRawData (); return new StringCollection (field_list);}
       }
       
       public StringType TextEncoding
       {
-         get {return encoding;}
+         get {ParseRawData (); return encoding;}
          set {encoding = value;}
       }
       #endregion
@@ -75,20 +73,23 @@ namespace TagLib.Id3v2
       
       
       #region Public Methods
-      public void SetText (StringList fields)
+      public void SetText (StringCollection fields)
       {
+         raw_data = null;
          field_list.Clear ();
          field_list.Add (fields);
       }
 
       public void SetText (params string [] text)
       {
+         raw_data = null;
          field_list.Clear ();
          field_list.Add (text);
       }
 
       public override string ToString ()
       {
+         ParseRawData ();
          return field_list.ToString ();
       }
       #endregion
@@ -126,18 +127,30 @@ namespace TagLib.Id3v2
       #region Protected Methods
       protected override void ParseFields (ByteVector data, byte version)
       {
+         raw_data = data;
+         raw_version = version;
+      }
+      
+      protected void ParseRawData ()
+      {
+         if (raw_data == null)
+            return;
+         
+         ByteVector data = raw_data;
+         raw_data = null;
+         
          // read the string data type (the first byte of the field data)
          encoding = (StringType) data [0];
          field_list.Clear ();
          
-         if (version > 3 || FrameId == "TXXX")
+         if (raw_version > 3 || FrameId == "TXXX")
             field_list.Add (data.ToStrings (encoding, 1));
          else
          {
             string value = data.ToString (encoding, 1);
 
             if (value.Length == 0 || value [0] == '\0')
-               return;
+               goto done;
             
             // Do a fast removal of end bytes.
             if (value.Length > 1 && value [value.Length - 1] == '\0')
@@ -170,16 +183,26 @@ namespace TagLib.Id3v2
                   value = value.Substring (closing + 1);
                }
                
-               if (value != string.Empty)
+               if (value.Length > 0)
                   field_list.Add (value);
             }
             else
                field_list.Add (value);
          }
+         
+         done:
+         // Bad tags may have one or more nul characters at the end of a string,
+         // resulting in empty strings at the end of the FieldList. Strip them
+         // off.
+         while (field_list.Count != 0 && string.IsNullOrEmpty (field_list [field_list.Count - 1]))
+            field_list.RemoveAt (field_list.Count - 1);
       }
 
       protected override ByteVector RenderFields (byte version)
       {
+         if (raw_data != null && raw_version == version)
+            return raw_data;
+         
          StringType encoding = CorrectEncoding (TextEncoding, version);
          ByteVector v = new ByteVector ((byte) encoding);
          
@@ -222,7 +245,7 @@ namespace TagLib.Id3v2
       #region Constructors
       public UserTextIdentificationFrame (string description, StringType encoding) : base ("TXXX", encoding)
       {
-         StringList l = new StringList ();
+         StringCollection l = new StringCollection ();
          l.Add (description);
          l.Add ((string)null);
          
@@ -234,7 +257,7 @@ namespace TagLib.Id3v2
          CheckFields ();
       }
       
-      protected internal UserTextIdentificationFrame (ByteVector data, int offset, FrameHeader h, byte version) : base (data, offset, h, version)
+      protected internal UserTextIdentificationFrame (ByteVector data, int offset, FrameHeader header, byte version) : base (data, offset, header, version)
       {
          CheckFields ();
       }
@@ -248,7 +271,7 @@ namespace TagLib.Id3v2
          get {return !base.FieldList.IsEmpty ? base.FieldList [0] : null;}
          set
          {
-            StringList l = new StringList (base.FieldList);
+            StringCollection l = new StringCollection (base.FieldList);
 
             if (l.IsEmpty)
                l.Add (value);
@@ -259,11 +282,11 @@ namespace TagLib.Id3v2
          }
       }
 
-      new public StringList FieldList
+      new public StringCollection FieldList
       {
          get
          {
-            StringList l = new StringList (base.FieldList);
+            StringCollection l = new StringCollection (base.FieldList);
             if (!l.IsEmpty)
                l.RemoveAt (0);
             return l;
@@ -281,15 +304,15 @@ namespace TagLib.Id3v2
 
       new public void SetText (string [] text)
       {
-         StringList l = new StringList (Description);
+         StringCollection l = new StringCollection (Description);
          l.Add (text);
          
          base.SetText (l);
       }
 
-      new public void SetText (StringList fields)
+      new public void SetText (StringCollection fields)
       {
-         StringList l = new StringList (Description);
+         StringCollection l = new StringCollection (Description);
          l.Add (fields);
          
          base.SetText (l);

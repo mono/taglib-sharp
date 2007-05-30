@@ -14,7 +14,7 @@ namespace TagLib.Mpeg4
       #endregion
       
       #region Constructors
-      public AppleElementaryStreamDescriptor (BoxHeader header, File file, Box handler) : base (header, file, handler)
+      public AppleElementaryStreamDescriptor (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, file, handler)
       {
          int offset = 0;
          ByteVector box_data = LoadData (file);
@@ -74,14 +74,14 @@ namespace TagLib.Mpeg4
       public byte       StreamPriority {get {return stream_priority;}}
       public byte       ObjectTypeId   {get {return object_type_id;}}
       public byte       StreamType     {get {return stream_type;}}
-      public uint       BufferSizeDb   {get {return buffer_size_db;}}
+      public uint       BufferSizeDB   {get {return buffer_size_db;}}
       public uint       MaximumBitrate {get {return max_bitrate / 1000;}}
       public uint       AverageBitrate {get {return average_bitrate / 1000;}}
       public ByteVector DecoderConfig  {get {return decoder_config;}}
       #endregion
       
       #region Private Methods
-      private uint ReadLength (ByteVector data, ref int offset)
+      private static uint ReadLength (ByteVector data, ref int offset)
       {
          byte b;
          int  end    = offset + 4;

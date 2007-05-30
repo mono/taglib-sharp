@@ -23,10 +23,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Globalization;
 
 namespace TagLib.Id3v2
 {
-   public class Tag : TagLib.Tag, IEnumerable
+   public class Tag : TagLib.Tag, IEnumerable<Frame>
    {
       //////////////////////////////////////////////////////////////////////////
       // private properties
@@ -48,14 +49,19 @@ namespace TagLib.Id3v2
       public Tag () : base ()
       {}
       
-      public Tag (File file, long tag_offset) : base ()
+      public Tag (File file, long position) : base ()
       {
-         Read (file, tag_offset);
+         Read (file, position);
       }
 
-      public IEnumerator GetEnumerator()
+      public IEnumerator<Frame> GetEnumerator ()
       {
-         return frame_list.GetEnumerator();
+         return frame_list.GetEnumerator ();
+      }
+      
+      IEnumerator IEnumerable.GetEnumerator ()
+      {
+         return frame_list.GetEnumerator ();
       }
       
       public IEnumerable<Frame> GetFrames ()
@@ -75,16 +81,16 @@ namespace TagLib.Id3v2
         frame_list.Add (frame);
       }
       
-      public void ReplaceFrame (Frame old_frame, Frame new_frame)
+      public void ReplaceFrame (Frame oldFrame, Frame newFrame)
       {
-         if (old_frame == new_frame)
+         if (oldFrame == newFrame)
             return;
          
-         int i = frame_list.IndexOf (old_frame);
+         int i = frame_list.IndexOf (oldFrame);
          if (i >= 0)
-            frame_list [i] = new_frame;
+            frame_list [i] = newFrame;
          else
-            frame_list.Add (new_frame);
+            frame_list.Add (newFrame);
       }
       
       public void RemoveFrame (Frame frame)
@@ -183,7 +189,7 @@ namespace TagLib.Id3v2
          }
          set
          {
-            SetTextFrame ("TPE1", new StringList (value));
+            SetTextFrame ("TPE1", new StringCollection (value));
          }
       }
       
@@ -196,7 +202,7 @@ namespace TagLib.Id3v2
          }
          set
          {
-            SetTextFrame ("TPE2", new StringList (value));
+            SetTextFrame ("TPE2", new StringCollection (value));
          }
       }
       
@@ -209,7 +215,7 @@ namespace TagLib.Id3v2
          }
          set
          {
-            SetTextFrame ("TCOM", new StringList (value));
+            SetTextFrame ("TCOM", new StringCollection (value));
          }
       }
       
@@ -247,7 +253,7 @@ namespace TagLib.Id3v2
             TextIdentificationFrame f = TextIdentificationFrame.Get (this, "TCON");
             if (f != null)
             {
-               StringList l = new StringList ();
+               StringCollection l = new StringCollection ();
 
                foreach (string genre in f.FieldList)
                {
@@ -270,14 +276,15 @@ namespace TagLib.Id3v2
          }
          set
          {
-            for (int i = 0; i < value.Length; i ++)
-            {
-               int index = TagLib.Genres.AudioToIndex (value [i]);
-               if (index != 255)
-                  value [i] = index.ToString ();
-            }
+            if (value != null)
+               for (int i = 0; i < value.Length; i ++)
+               {
+                  int index = TagLib.Genres.AudioToIndex (value [i]);
+                  if (index != 255)
+                     value [i] = index.ToString (CultureInfo.InvariantCulture);
+               }
             
-            SetTextFrame ("TCON", new StringList (value));
+            SetTextFrame ("TCON", new StringCollection (value));
          }
       }
       
@@ -544,14 +551,14 @@ namespace TagLib.Id3v2
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
-      protected void Read (TagLib.File file, long tag_offset)
+      protected void Read (TagLib.File file, long position)
       {
          if (file == null)
             return;
          
          file.Mode = File.AccessMode.Read;
          
-         file.Seek (tag_offset);
+         file.Seek (position);
          header = new Header (file.ReadBlock ((int) Header.Size));
          
          // if the tag size is 0, then this is an invalid tag (tags must contain
@@ -565,6 +572,9 @@ namespace TagLib.Id3v2
       
       protected void Parse (ByteVector data)
       {
+         if (data == null)
+            throw new ArgumentNullException ("data");
+         
          if ((header.Flags & HeaderFlags.Unsynchronisation) != 0)
             SynchData.ResynchByteVector (data);
          
@@ -612,10 +622,10 @@ namespace TagLib.Id3v2
       
       public void SetTextFrame (ByteVector id, params string [] value)
       {
-         SetTextFrame (id, new StringList (value));
+         SetTextFrame (id, new StringCollection (value));
       }
       
-      public void SetTextFrame (ByteVector id, StringList value)
+      public void SetTextFrame (ByteVector id, StringCollection value)
       {
          if (value == null)
          {
@@ -624,7 +634,7 @@ namespace TagLib.Id3v2
          }
          
          for (int i = value.Count - 1; i >= 0; i --)
-            if (value [i] == null || value [i].Trim () == string.Empty)
+            if (value [i] == null || value [i].Trim ().Length == 0)
                value.RemoveAt (i);
          
          if (value.Count == 0)
@@ -638,9 +648,9 @@ namespace TagLib.Id3v2
          if (number == 0 && count == 0)
             RemoveFrames (id);
          else if (count != 0)
-            SetTextFrame (id, number.ToString () + "/" + count.ToString ());
+            SetTextFrame (id, number.ToString (CultureInfo.InvariantCulture) + "/" + count.ToString (CultureInfo.InvariantCulture));
          else
-            SetTextFrame (id, number.ToString ());
+            SetTextFrame (id, number.ToString (CultureInfo.InvariantCulture));
       }
    }
 }

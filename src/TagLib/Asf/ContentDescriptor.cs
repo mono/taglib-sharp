@@ -39,144 +39,143 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       // private properties
       //////////////////////////////////////////////////////////////////////////
-      private DataType   type;
-      private string     name;
-      private string     sValue;
-      private ByteVector bvValue;
-      private ulong      lValue;
-      
+      private DataType   _type   = DataType.Unicode;
+      private string     _name   = null;
+      private string     _sValue = null;
+      private ByteVector _bValue = null;
+      private ulong      _lValue = 0;
       
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public ContentDescriptor (string name, string value) : this ()
+      public ContentDescriptor (string name, string value)
       {
-         this.name   = name;
-         this.type   = DataType.Unicode;
-         this.sValue = value;
+         _name   = name;
+         _type   = DataType.Unicode;
+         _sValue = value;
       }
 
-      public ContentDescriptor (string name, ByteVector value) : this ()
+      public ContentDescriptor (string name, ByteVector value)
       {
-         this.name    = name;
-         this.type    = DataType.Bytes;
-         this.bvValue = new ByteVector (value);
+         _name   = name;
+         _type   = DataType.Bytes;
+         _bValue = new ByteVector (value);
       }
 
-      public ContentDescriptor (string name, uint value) : this ()
+      public ContentDescriptor (string name, uint value)
       {
-         this.name   = name;
-         this.type   = DataType.DWord;
-         this.lValue = value;
+         _name   = name;
+         _type   = DataType.DWord;
+         _lValue = value;
       }
 
-      public ContentDescriptor (string name, ulong value) : this ()
+      public ContentDescriptor (string name, ulong value)
       {
-         this.name   = name;
-         this.type   = DataType.QWord;
-         this.lValue = value;
+         _name   = name;
+         _type   = DataType.QWord;
+         _lValue = value;
       }
 
-      public ContentDescriptor (string name, ushort value) : this ()
+      public ContentDescriptor (string name, ushort value)
       {
-         this.name   = name;
-         this.type   = DataType.Word;
-         this.lValue = value;
+         _name   = name;
+         _type   = DataType.Word;
+         _lValue = value;
       }
 
-      public ContentDescriptor (string name, bool value) : this ()
+      public ContentDescriptor (string name, bool value)
       {
-         this.name   = name;
-         this.type   = DataType.Bool;
-         this.lValue = (ulong)(value ? 1 : 0);
+         _name   = name;
+         _type   = DataType.Bool;
+         _lValue = (ulong)(value ? 1 : 0);
       }
 
-      public string Name {get {return name;}}
+      public string Name {get {return _name;}}
 
-      public DataType Type {get {return type;}}
+      public DataType Type {get {return _type;}}
 
       public override string ToString ()
       {
-         return sValue;
+         return _sValue;
       }
 
       public ByteVector ToByteVector ()
       {
-         return bvValue;
+         return _bValue;
       }
 
       public bool ToBool ()
       {
-         return lValue != 0;
+         return _lValue != 0;
       }
 
       public uint ToDWord ()
       {
          uint value;
-         if (type == DataType.Unicode && sValue != null && uint.TryParse (sValue, out value))
+         if (_type == DataType.Unicode && _sValue != null && uint.TryParse (_sValue, out value))
             return value;
          
-         return (uint) lValue;
+         return (uint) _lValue;
       }
 
       public ulong ToQWord ()
       {
          ulong value;
-         if (type == DataType.Unicode && sValue != null && ulong.TryParse (sValue, out value))
+         if (_type == DataType.Unicode && _sValue != null && ulong.TryParse (_sValue, out value))
             return value;
          
-         return lValue;
+         return _lValue;
       }
 
       public ushort ToWord ()
       {
          ushort value;
-         if (type == DataType.Unicode && sValue != null && ushort.TryParse (sValue, out value))
+         if (_type == DataType.Unicode && _sValue != null && ushort.TryParse (_sValue, out value))
             return value;
          
-         return (ushort) lValue;
+         return (ushort) _lValue;
       }
 
       public ByteVector Render ()
       {
 
-         ByteVector v = Object.RenderUnicode (name);
+         ByteVector value = Object.RenderUnicode (_name);
          
-         ByteVector data = Object.RenderWord ((ushort) v.Count);
-         data.Add (v);
-         data.Add (Object.RenderWord ((ushort) type));
+         ByteVector data = Object.RenderWord ((ushort) value.Count);
+         data.Add (value);
+         data.Add (Object.RenderWord ((ushort) _type));
          
-         switch (type)
+         switch (_type)
          {
             case DataType.Unicode:
-               v = Object.RenderUnicode (sValue);
-               data.Add (Object.RenderWord ((ushort) v.Count));
-               data.Add (v);
+               value = Object.RenderUnicode (_sValue);
+               data.Add (Object.RenderWord ((ushort) value.Count));
+               data.Add (value);
             break;
             
             case DataType.Bytes:
-               data.Add (Object.RenderWord ((ushort) bvValue.Count));
-               data.Add (bvValue);
+               data.Add (Object.RenderWord ((ushort) _bValue.Count));
+               data.Add (_bValue);
             break;
             
             case DataType.Bool:
                data.Add (Object.RenderWord (4));
-               data.Add (Object.RenderDWord ((uint) lValue));
+               data.Add (Object.RenderDWord ((uint) _lValue));
             break;
             
             case DataType.DWord:
                data.Add (Object.RenderWord (4));
-               data.Add (Object.RenderDWord ((uint) lValue));
+               data.Add (Object.RenderDWord ((uint) _lValue));
             break;
             
             case DataType.QWord:
                data.Add (Object.RenderWord (8));
-               data.Add (Object.RenderQWord (lValue));
+               data.Add (Object.RenderQWord (_lValue));
             break;
             
             case DataType.Word:
                data.Add (Object.RenderWord (2));
-               data.Add (Object.RenderWord ((ushort) lValue));
+               data.Add (Object.RenderWord ((ushort) _lValue));
             break;
             
             default:  
@@ -184,57 +183,51 @@ namespace TagLib.Asf
          }
          
          return data;
-      }      
+      }
       
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
-      protected ContentDescriptor ()
-      {
-         type    = DataType.Unicode;
-         name    = null;
-         sValue  = null;
-         bvValue = null;
-         lValue  = 0;
-      }
-
-      protected internal ContentDescriptor (Asf.File file) : this ()
+      protected internal ContentDescriptor (Asf.File file)
       {
          Parse (file);
       }
 
       protected bool Parse (Asf.File file)
       {
-         int size = file.ReadWord ();
-         name = file.ReadUnicode (size);
+         if (file == null)
+            throw new ArgumentNullException ("file");
          
-         type = (DataType) file.ReadWord ();
+         int size = file.ReadWord ();
+         _name = file.ReadUnicode (size);
+         
+         _type = (DataType) file.ReadWord ();
          size = file.ReadWord ();
 
-         switch (type)
+         switch (_type)
          {
             case DataType.Word:
-               lValue = file.ReadWord ();
+               _lValue = file.ReadWord ();
             break;
             
             case DataType.Bool:
-               lValue = file.ReadDWord ();
+               _lValue = file.ReadDWord ();
             break;
             
             case DataType.DWord:
-               lValue = file.ReadDWord ();
+               _lValue = file.ReadDWord ();
             break;
             
             case DataType.QWord:  
-               lValue = file.ReadQWord ();
+               _lValue = file.ReadQWord ();
             break;
             
             case DataType.Unicode:  
-               sValue = file.ReadUnicode (size);
+               _sValue = file.ReadUnicode (size);
             break;
             
             case DataType.Bytes:  
-               bvValue = file.ReadBlock (size);
+               _bValue = file.ReadBlock (size);
             break;
             
             default:

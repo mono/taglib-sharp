@@ -37,16 +37,16 @@
       </Docs>
     </Member>
     <Member MemberName="RenderUnicode">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector RenderUnicode (string str);" />
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector RenderUnicode (string value);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="str" Type="System.String" />
+        <Parameter Name="value" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="str">A <see cref="T:System.String" /> to render.</param>
+        <param name="value">A <see cref="T:System.String" /> to render.</param>
         <summary>Renders a <see cref="T:System.String" /> as a Unicode.</summary>
         <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered value.</returns>
         <remarks />

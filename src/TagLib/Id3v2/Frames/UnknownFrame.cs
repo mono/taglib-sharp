@@ -47,7 +47,7 @@ namespace TagLib.Id3v2
       public UnknownFrame (ByteVector type) : this (type, null)
       {}
       
-      protected internal UnknownFrame (ByteVector data, int offset, FrameHeader h, byte version) : base (h)
+      protected internal UnknownFrame (ByteVector data, int offset, FrameHeader header, byte version) : base(header)
       {
          SetData (data, offset, version, false);
       }

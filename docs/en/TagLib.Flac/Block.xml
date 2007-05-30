@@ -40,16 +40,16 @@
       </Docs>
     </Member>
     <Member MemberName="Render">
-      <MemberSignature Language="C#" Value="public TagLib.ByteVector Render (bool is_last_block);" />
+      <MemberSignature Language="C#" Value="public TagLib.ByteVector Render (bool isLastBlock);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="is_last_block" Type="System.Boolean" />
+        <Parameter Name="isLastBlock" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="is_last_block">A <see cref="T:System.Boolean" /> specifying whether or not the block is the last metadata block.</param>
+        <param name="isLastBlock">A <see cref="T:System.Boolean" /> specifying whether or not the block is the last metadata block.</param>
         <summary>Renders the current instance as a FLAC metadata block.</summary>
         <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered version.</returns>
         <remarks />

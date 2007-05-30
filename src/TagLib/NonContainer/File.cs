@@ -33,7 +33,13 @@ namespace TagLib.NonContainer
       #endregion
       
 #region Constructors
-      public File (string file, ReadStyle properties_style) : base (file)
+      protected File (string path, ReadStyle propertiesStyle) : this (new File.LocalFileAbstraction (path), propertiesStyle)
+      {}
+      
+      protected File (string path) : this (path, ReadStyle.Average)
+      {}
+      
+      protected File (File.IFileAbstraction abstraction, ReadStyle propertiesStyle) : base (abstraction)
       {
          Mode = AccessMode.Read;
          tag = new Tag (this);
@@ -41,29 +47,28 @@ namespace TagLib.NonContainer
          // Read the tags and property data at the beginning of the file.
          long start = tag.ReadStart ();
          TagTypesOnDisk |= StartTag.TagTypes;
-         ReadStart (start, properties_style);
+         ReadStart (start, propertiesStyle);
          
          // Read the tags and property data at the end of the file.
          long end = tag.ReadEnd ();
          TagTypesOnDisk |= EndTag.TagTypes;
-         ReadEnd (end, properties_style);
+         ReadEnd (end, propertiesStyle);
          
          // Read the audio properties.
-         properties = (properties_style != ReadStyle.None) ?
-            ReadProperties (start, end, properties_style) : null;
+         properties = (propertiesStyle != ReadStyle.None) ?
+            ReadProperties (start, end, propertiesStyle) : null;
          
          Mode = AccessMode.Closed;
       }
       
-      public File (string file) : this (file, ReadStyle.Average)
-      {
-      }
+      protected File (File.IFileAbstraction abstraction) : this (abstraction, ReadStyle.Average)
+      {}
 #endregion
       
       
-      protected virtual void ReadStart (long start, ReadStyle style) {}
-      protected virtual void ReadEnd   (long end,   ReadStyle style) {}
-      protected abstract TagLib.Properties ReadProperties (long start, long end, ReadStyle style);
+      protected virtual void ReadStart (long start, ReadStyle propertiesStyle) {}
+      protected virtual void ReadEnd   (long end,   ReadStyle propertiesStyle) {}
+      protected abstract TagLib.Properties ReadProperties (long start, long end, ReadStyle propertiesStyle);
       
       public override void Save ()
       {

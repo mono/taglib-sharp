@@ -7,7 +7,7 @@ namespace TagLib.Mpeg4
       #endregion
       
       #region Constructors
-      public IsoFreeSpaceBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
+      public IsoFreeSpaceBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, handler)
       {
          padding = DataSize;
       }

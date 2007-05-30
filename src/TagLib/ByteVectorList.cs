@@ -24,43 +24,48 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace TagLib
 {
-   public class ByteVectorList : ListBase<ByteVector>
+   [ComVisible(false)]
+   public class ByteVectorCollection : ListBase<ByteVector>
    {
-        public ByteVectorList() 
+        public ByteVectorCollection() 
         {
         }
 
-        public ByteVectorList(IEnumerable<ByteVector> vectors)
+        public ByteVectorCollection(IEnumerable<ByteVector> list)
         {
-            Add (vectors);
+            Add (list);
         }
 
-        public ByteVectorList(params ByteVector[] vectors)
+        public ByteVectorCollection(params ByteVector[] list)
         {
-            Add (vectors);
+            Add (list);
         }
 
-        public override void SortedInsert(ByteVector vector, bool unique)
+        public override void SortedInsert(ByteVector item, bool unique)
         {
             int i = 0;
-            for(; i < data.Count; i++) {
-                if(vector == data[i] && unique) {
+            for(; i < Count; i++) {
+                if(item == this[i] && unique) {
                     return;
                 }
                 
-                if(vector >= data[i]) {
+                if(item >= this[i]) {
                     break;
                 }
             }
             
-            Insert(i + 1, vector);
+            Insert(i + 1, item);
         }
         
         public ByteVector ToByteVector(ByteVector separator)
         {
+            if (separator == null)
+                throw new ArgumentNullException ("separator");
+            
             ByteVector vector = new ByteVector();
 
             for(int i = 0; i < Count; i++) {
@@ -74,10 +79,16 @@ namespace TagLib
             return vector;
         }
 
-        public static ByteVectorList Split(ByteVector vector, ByteVector pattern,
+        public static ByteVectorCollection Split(ByteVector vector, ByteVector pattern,
             int byteAlign, int max)
         {
-            ByteVectorList list = new ByteVectorList();
+            if (vector == null)
+                throw new ArgumentNullException ("vector");
+            
+            if (pattern == null)
+                throw new ArgumentNullException ("pattern");
+            
+            ByteVectorCollection list = new ByteVectorCollection();
             int previous_offset = 0;
             
             for(int offset = vector.Find(pattern, 0, byteAlign);
@@ -94,12 +105,12 @@ namespace TagLib
             return list;
         }
 
-        public static ByteVectorList Split(ByteVector vector, ByteVector pattern, int byteAlign)
+        public static ByteVectorCollection Split(ByteVector vector, ByteVector pattern, int byteAlign)
         {
             return Split(vector, pattern, byteAlign, 0);
         }
 
-        public static ByteVectorList Split(ByteVector vector, ByteVector pattern)
+        public static ByteVectorCollection Split(ByteVector vector, ByteVector pattern)
         {
             return Split(vector, pattern, 1);
         }

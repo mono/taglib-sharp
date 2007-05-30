@@ -28,7 +28,7 @@ namespace TagLib
 {
     public class ListBase<T> : IList<T> where T : IComparable<T>
     {
-        protected List<T> data = new List<T>();
+        private List<T> data = new List<T>();
         
         #region Constructors
         
@@ -36,14 +36,14 @@ namespace TagLib
         {
         }
 
-        public ListBase(ListBase<T> s)
+        public ListBase(ListBase<T> list)
         {
-            Add(s);
+            Add(list);
         }
         
-        public ListBase(params T [] s)
+        public ListBase(params T [] list)
         {
-            Add(s);
+            Add(list);
         }
 
         #endregion
@@ -79,25 +79,25 @@ namespace TagLib
             }
         }
       
-        public virtual void SortedInsert(T s, bool unique)
+        public virtual void SortedInsert(T item, bool unique)
         {
             int i = 0;
             for(; i < data.Count; i++) {
-                if(s.CompareTo(data[i]) == 0 && unique) {
+                if(item.CompareTo(data[i]) == 0 && unique) {
                     return;
                 }
                 
-                if(s.CompareTo(data[i]) <= 0) {
+                if(item.CompareTo(data[i]) <= 0) {
                     break;
                 }
             }
             
-            Insert(i, s);
+            Insert(i, item);
         }
       
-        public void SortedInsert(T s)
+        public void SortedInsert(T item)
         {
-            SortedInsert(s, false);
+            SortedInsert(item, false);
         }
       
         public T [] ToArray()
@@ -122,9 +122,9 @@ namespace TagLib
             set { data[index] = value; }
         }
 
-        public void Add(T value)
+        public void Add(T item)
         {
-            data.Add(value);
+            data.Add(item);
         }
         
         public void Clear()
@@ -132,24 +132,24 @@ namespace TagLib
             data.Clear();
         }
         
-        public bool Contains(T value)
+        public bool Contains(T item)
         {
-            return data.Contains(value);
+            return data.Contains(item);
         }
         
-        public int IndexOf(T value)
+        public int IndexOf(T item)
         {
-            return data.IndexOf(value);
+            return data.IndexOf(item);
         }
         
-        public void Insert(int index, T value)
+        public void Insert(int index, T item)
         {
-            data.Insert(index, value);
+            data.Insert(index, item);
         }
         
-        public bool Remove(T value)
+        public bool Remove(T item)
         {
-            return data.Remove(value);
+            return data.Remove(item);
         }
         
         public void RemoveAt(int index)
@@ -193,9 +193,9 @@ namespace TagLib
             get { return this; }
         }
         
-        public void CopyTo(T [] array, int index)
+        public void CopyTo(T [] array, int arrayIndex)
         {
-            data.CopyTo(array, index);
+            data.CopyTo(array, arrayIndex);
         }
         
         #endregion

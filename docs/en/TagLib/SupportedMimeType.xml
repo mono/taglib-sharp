@@ -1,5 +1,5 @@
 <Type Name="SupportedMimeType" FullName="TagLib.SupportedMimeType">
-  <TypeSignature Language="C#" Value="public class SupportedMimeType : Attribute" />
+  <TypeSignature Language="C#" Value="public sealed class SupportedMimeType : Attribute" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
@@ -15,13 +15,13 @@
   </Attributes>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public SupportedMimeType (string mime_type);" />
+      <MemberSignature Language="C#" Value="public SupportedMimeType (string mimetype);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
-        <Parameter Name="mime_type" Type="System.String" />
+        <Parameter Name="mimetype" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="mime_type">A <see cref="T:System.String" /> containing a mime-type.</param>
+        <param name="mimetype">A <see cref="T:System.String" /> containing a mime-type.</param>
         <summary>
           <para>Constructs and initializes a new instance of the <see cref="T:System.SupportedMimeType" /> class with a specified mime-type.</para>
         </summary>
@@ -29,14 +29,14 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public SupportedMimeType (string mime_type, string extension);" />
+      <MemberSignature Language="C#" Value="public SupportedMimeType (string mimetype, string extension);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
-        <Parameter Name="mime_type" Type="System.String" />
+        <Parameter Name="mimetype" Type="System.String" />
         <Parameter Name="extension" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="mime_type">A <see cref="T:System.String" /> containing a mime-type.</param>
+        <param name="mimetype">To be added.</param>
         <param name="extension">A <see cref="T:System.String" /> containing a file extension.</param>
         <summary>
           <para>Constructs and initializes a new instance of the <see cref="T:System.SupportedMimeType" /> class with a specified mime-type and file extension.</para>

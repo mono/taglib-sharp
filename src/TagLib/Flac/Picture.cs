@@ -36,8 +36,11 @@ namespace TagLib.Flac
       
       public Picture (ByteVector data)
       {
+         if (data == null)
+            throw new ArgumentNullException ("data");
+         
          if (data.Count < 32)
-            throw new ArgumentException ("Data must be at least 32 bytes long", "data");
+            throw new CorruptFileException ("Data must be at least 32 bytes long");
          
          int pos = 0;
          type = (PictureType) data.Mid (pos, 4).ToUInt ();
@@ -75,17 +78,20 @@ namespace TagLib.Flac
       
       public Picture (IPicture picture)
       {
+         if (picture == null)
+            throw new ArgumentNullException ("picture");
          this.type = picture.Type;
          this.mime_type = picture.MimeType;
          this.description = picture.Description;
          this.data = picture.Data;
          
-         if (picture is TagLib.Flac.Picture)
+         TagLib.Flac.Picture flac_picture = picture as TagLib.Flac.Picture;
+         if (flac_picture != null)
          {
-            this.width          = (picture as TagLib.Flac.Picture).Width;
-            this.height         = (picture as TagLib.Flac.Picture).Height;
-            this.color_depth    = (picture as TagLib.Flac.Picture).ColorDepth;
-            this.indexed_colors = (picture as TagLib.Flac.Picture).IndexedColors;
+            this.width          = flac_picture.Width;
+            this.height         = flac_picture.Height;
+            this.color_depth    = flac_picture.ColorDepth;
+            this.indexed_colors = flac_picture.IndexedColors;
          }
       }
       

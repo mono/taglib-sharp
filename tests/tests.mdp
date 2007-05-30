@@ -26,10 +26,9 @@
     <File name="./fixtures/TagLib.FormatTests/MpcFormatTest.cs" subtype="Code" buildaction="Compile" />
     <File name="./fixtures/TagLib.FormatTests/OggFormatTest.cs" subtype="Code" buildaction="Compile" />
     <File name="./fixtures/TagLib.CollectionTests" subtype="Directory" buildaction="Compile" />
-    <File name="./fixtures/TagLib.CollectionTests/StringListTest.cs" subtype="Code" buildaction="Compile" />
-    <File name="./fixtures/TagLib.CollectionTests/IntListTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/TagLib.CollectionTests/StringCollectionTest.cs" subtype="Code" buildaction="Compile" />
     <File name="./fixtures/TagLib.CollectionTests/ByteVectorTest.cs" subtype="Code" buildaction="Compile" />
-    <File name="./fixtures/TagLib.CollectionTests/ByteVectorListTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./fixtures/TagLib.CollectionTests/ByteVectorCollectionTest.cs" subtype="Code" buildaction="Compile" />
     <File name="./fixtures/PerformanceTest.cs" subtype="Code" buildaction="Compile" />
     <File name="./fixtures/TagLib.FormatTests/IFormatTest.cs" subtype="Code" buildaction="Compile" />
   </Contents>

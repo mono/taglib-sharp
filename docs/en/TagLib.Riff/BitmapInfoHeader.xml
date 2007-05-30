@@ -207,6 +207,58 @@
         <remarks />
       </Docs>
     </Member>
+    <Member MemberName="Equals">
+      <MemberSignature Language="C#" Value="public bool Equals (TagLib.Riff.BitmapInfoHeader other);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="other" Type="TagLib.Riff.BitmapInfoHeader" />
+      </Parameters>
+      <Docs>
+        <param name="other">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Equality">
+      <MemberSignature Language="C#" Value="public static bool op_Equality (TagLib.Riff.BitmapInfoHeader first, TagLib.Riff.BitmapInfoHeader second);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="first" Type="TagLib.Riff.BitmapInfoHeader" />
+        <Parameter Name="second" Type="TagLib.Riff.BitmapInfoHeader" />
+      </Parameters>
+      <Docs>
+        <param name="first">To be added.</param>
+        <param name="second">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Inequality">
+      <MemberSignature Language="C#" Value="public static bool op_Inequality (TagLib.Riff.BitmapInfoHeader first, TagLib.Riff.BitmapInfoHeader second);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="first" Type="TagLib.Riff.BitmapInfoHeader" />
+        <Parameter Name="second" Type="TagLib.Riff.BitmapInfoHeader" />
+      </Parameters>
+      <Docs>
+        <param name="first">To be added.</param>
+        <param name="second">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
   </Members>
   <Docs>
     <summary>This class is used to access a Microsoft BitmapInfoHeader structure, and provides <see cref="T:TagLib.IVideoCodec" /> support for it.</summary>

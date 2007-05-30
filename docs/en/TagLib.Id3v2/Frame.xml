@@ -135,7 +135,7 @@
       </Docs>
     </Member>
     <Member MemberName="SetData">
-      <MemberSignature Language="C#" Value="protected void SetData (TagLib.ByteVector data, int offset, byte version, bool read_header);" />
+      <MemberSignature Language="C#" Value="protected void SetData (TagLib.ByteVector data, int offset, byte version, bool readHeader);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -144,19 +144,19 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
         <Parameter Name="offset" Type="System.Int32" />
         <Parameter Name="version" Type="System.Byte" />
-        <Parameter Name="read_header" Type="System.Boolean" />
+        <Parameter Name="readHeader" Type="System.Boolean" />
       </Parameters>
       <Docs>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
         <param name="offset">A <see cref="T:System.Int32" /> specifying at what index in <paramref name="data" /> the frame begins.</param>
         <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
-        <param name="read_header">A <see cref="T:System.Boolean" /> specifying whether or not the header should be read.</param>
+        <param name="readHeader">To be added.</param>
         <summary>Sets the data of the current instance from ID3v2 frame data.</summary>
         <remarks />
       </Docs>
     </Member>
     <Member MemberName="CorrectEncoding">
-      <MemberSignature Language="C#" Value="protected TagLib.StringType CorrectEncoding (TagLib.StringType type, byte version);" />
+      <MemberSignature Language="C#" Value="protected static TagLib.StringType CorrectEncoding (TagLib.StringType type, byte version);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.StringType</ReturnType>
@@ -174,18 +174,18 @@
       </Docs>
     </Member>
     <Member MemberName="FieldData">
-      <MemberSignature Language="C#" Value="protected TagLib.ByteVector FieldData (TagLib.ByteVector frame_data, int offset, byte version);" />
+      <MemberSignature Language="C#" Value="protected TagLib.ByteVector FieldData (TagLib.ByteVector frameData, int offset, byte version);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="frame_data" Type="TagLib.ByteVector" />
+        <Parameter Name="frameData" Type="TagLib.ByteVector" />
         <Parameter Name="offset" Type="System.Int32" />
         <Parameter Name="version" Type="System.Byte" />
       </Parameters>
       <Docs>
-        <param name="frame_data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
+        <param name="frameData">To be added.</param>
         <param name="offset">A <see cref="T:System.Int32" /> specifying at what index in <paramref name="data" /> the frame begins.</param>
         <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
         <summary>Parses and extrats the field data from the extra information included in the frame's body.</summary>

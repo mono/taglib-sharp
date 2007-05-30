@@ -9,28 +9,6 @@
   </Base>
   <Interfaces />
   <Members>
-    <Member MemberName="Audio">
-      <MemberSignature Language="C#" Value="public static readonly string[] Audio;" />
-      <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>System.String[]</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Gets the standard audio genres as used by most common audio tagging formats.</summary>
-        <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName="Video">
-      <MemberSignature Language="C#" Value="public static readonly string[] Video;" />
-      <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>System.String[]</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Gets the video genres as used the DivX tagging format.</summary>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName="AudioToIndex">
       <MemberSignature Language="C#" Value="public static byte AudioToIndex (string name);" />
       <MemberType>Method</MemberType>
@@ -125,6 +103,30 @@
         <summary>Gets an video genre from an DivX-style genre index.</summary>
         <returns>A <see cref="T:System.String" /> containing a standard video genre. If the index is out of range, <see langref="null" />.</returns>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Audio">
+      <MemberSignature Language="C#" Value="public static string[] Audio { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.String[]</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Video">
+      <MemberSignature Language="C#" Value="public static string[] Video { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.String[]</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

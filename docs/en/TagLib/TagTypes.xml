@@ -48,16 +48,6 @@
         <summary>An Apple ILST tag.</summary>
       </Docs>
     </Member>
-    <Member MemberName="NoTags">
-      <MemberSignature Language="C#" Value="NoTags" />
-      <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.TagTypes</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>No tags.</summary>
-      </Docs>
-    </Member>
     <Member MemberName="Asf">
       <MemberSignature Language="C#" Value="Asf" />
       <MemberType>Field</MemberType>
@@ -126,6 +116,16 @@
       </ReturnValue>
       <Docs>
         <summary>FLAC Metadata.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="None">
+      <MemberSignature Language="C#" Value="None" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.TagTypes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
       </Docs>
     </Member>
   </Members>

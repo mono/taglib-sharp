@@ -19,32 +19,21 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Tag (TagLib.File file, long tag_offset);" />
+      <MemberSignature Language="C#" Value="public Tag (TagLib.File file, long position);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="file" Type="TagLib.File" />
-        <Parameter Name="tag_offset" Type="System.Int64" />
+        <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
         <param name="file">A <see cref="T:TagLib.File" /> containing a tag to read.</param>
-        <param name="tag_offset">A <see cref="T:System.Int64" /> specifying where to read from the file.</param>
+        <param name="position">To be added.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v1.Tag" /> by reading one from a specified file.</summary>
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="FileIdentifier">
-      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector FileIdentifier;" />
-      <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Gets the identifier used for recognizing an ID3v1 tag.</summary>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName="Size">
-      <MemberSignature Language="C#" Value="public static readonly uint Size = 128;" />
+      <MemberSignature Language="C#" Value="public const uint Size = 128;" />
       <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>System.UInt32</ReturnType>
@@ -69,7 +58,7 @@
       </Docs>
     </Member>
     <Member MemberName="DefaultStringHandler">
-      <MemberSignature Language="C#" Value="public static TagLib.Id3v1.StringHandler DefaultStringHandler { set; };" />
+      <MemberSignature Language="C#" Value="public static TagLib.Id3v1.StringHandler DefaultStringHandler { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.Id3v1.StringHandler</ReturnType>
@@ -78,6 +67,18 @@
         <summary>Sets the string handler to use when reading and writing string fields.</summary>
         <value>A <see cref="T:TagLib.Id3v1.StringHandler" /> to use.</value>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="FileIdentifier">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FileIdentifier { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

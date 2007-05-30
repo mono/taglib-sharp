@@ -14,15 +14,15 @@
   </Interfaces>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public StreamHeader (TagLib.ByteVector data, long stream_length);" />
+      <MemberSignature Language="C#" Value="public StreamHeader (TagLib.ByteVector data, long streamLength);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="data" Type="TagLib.ByteVector" />
-        <Parameter Name="stream_length" Type="System.Int64" />
+        <Parameter Name="streamLength" Type="System.Int64" />
       </Parameters>
       <Docs>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing header bytes for MusePack stream header.</param>
-        <param name="stream_length">A <see cref="System.Int64" /> representing the length of the audio data in bytes.</param>
+        <param name="streamLength">To be added.</param>
         <summary>Constructs and initialized the current instance of <see cref="T:TagLib.MusePack.StreamHeader" /> based on the stream header data and the stream length.</summary>
         <remarks>
           <paramref name="stream_length" /> is required for determining the bitrate.</remarks>
@@ -101,7 +101,7 @@
       </Docs>
     </Member>
     <Member MemberName="Size">
-      <MemberSignature Language="C#" Value="public static readonly uint Size = 56;" />
+      <MemberSignature Language="C#" Value="public const uint Size = 56;" />
       <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>System.UInt32</ReturnType>
@@ -122,6 +122,18 @@
         <summary>Gets the WavPack version contained in the current instance.</summary>
         <value>A <see cref="T:System.Int32" /> describing the MusePack version.</value>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="FileIdentifier">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FileIdentifier { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

@@ -48,8 +48,7 @@ namespace TagLib
       
       
       #region Delegates
-      public delegate IFileAbstraction FileAbstractionCreator (string path);
-      public delegate File             FileTypeResolver       (string path, ReadStyle style);
+      public delegate File FileTypeResolver (IFileAbstraction abstraction, string mimetype, ReadStyle style);
       #endregion
       
       
@@ -58,12 +57,11 @@ namespace TagLib
       private System.IO.Stream file_stream;
       private IFileAbstraction file_abstraction;
       private string mime_type;
-      private TagTypes tags_on_disk = TagTypes.NoTags;
+      private TagTypes tags_on_disk = TagTypes.None;
       
       private static uint buffer_size = 1024;
       
       private static List<FileTypeResolver> file_type_resolvers = new List<FileTypeResolver> ();
-      private static List<FileAbstractionCreator> file_abstraction_creator_list = new List<FileAbstractionCreator> ();
       #endregion
       
       
@@ -75,10 +73,14 @@ namespace TagLib
       
 
       #region Constructors
-      protected File (string file)
+      
+      protected File (string path) : this (new LocalFileAbstraction (path))
       {
-         file_stream = null;
-         file_abstraction = GetFileAbstractionCreator () (file);
+      }
+      
+      protected File (IFileAbstraction abstraction)
+      {
+         file_abstraction = abstraction;
       }
       #endregion
       
@@ -88,7 +90,7 @@ namespace TagLib
       public abstract Tag Tag {get;}
       public abstract Properties Properties {get;}
       
-      public virtual TagTypes TagTypesOnDisk
+      public TagTypes TagTypesOnDisk
       {
          get {return tags_on_disk;}
          protected set {tags_on_disk = value;}
@@ -96,7 +98,7 @@ namespace TagLib
       
       public TagTypes TagTypes
       {
-         get {return Tag != null ? Tag.TagTypes : TagTypes.NoTags;}
+         get {return Tag != null ? Tag.TagTypes : TagTypes.None;}
       }
       
       public string Name {get {return file_abstraction.Name;}}
@@ -178,12 +180,18 @@ namespace TagLib
       
       public void WriteBlock (ByteVector data)
       {
+         if (data == null)
+            throw new ArgumentNullException ("data");
+         
          Mode = AccessMode.Write;
          file_stream.Write (data.Data, 0, data.Count);
       }
 
-      public long Find (ByteVector pattern, long from_offset, ByteVector before)
+      public long Find (ByteVector pattern, long startPosition, ByteVector before)
       {
+         if (pattern == null)
+            throw new ArgumentNullException ("pattern");
+         
          Mode = AccessMode.Read;
          
          if (pattern.Count > buffer_size)
@@ -191,7 +199,7 @@ namespace TagLib
          
          // The position in the file that the current buffer starts at.
 
-         long buffer_offset = from_offset;
+         long buffer_offset = startPosition;
          ByteVector buffer;
 
          // These variables are used to keep track of a partial match that happens at
@@ -207,7 +215,7 @@ namespace TagLib
 
          // Start the search at the offset.
 
-         file_stream.Position = from_offset;
+         file_stream.Position = startPosition;
          
          // This loop is the crux of the find method.  There are three cases that we
          // want to account for:
@@ -284,9 +292,9 @@ namespace TagLib
          return -1;
       }
       
-      public long Find (ByteVector pattern, long from_offset)
+      public long Find (ByteVector pattern, long startPosition)
       {
-         return Find (pattern, from_offset, null);
+         return Find (pattern, startPosition, null);
       }
       
       public long Find (ByteVector pattern)
@@ -294,7 +302,7 @@ namespace TagLib
          return Find (pattern, 0);
       }
       
-      long RFind (ByteVector pattern, long from_offset, ByteVector before)
+      long RFind (ByteVector pattern, long startPosition, ByteVector before)
       {
          Mode = AccessMode.Read;
          
@@ -321,10 +329,10 @@ namespace TagLib
          // Start the search at the offset.
 
          long buffer_offset;
-         if (from_offset == 0)
+         if (startPosition == 0)
             Seek (-1 * (int) buffer_size, System.IO.SeekOrigin.End);
          else
-            Seek (from_offset + -1 * (int) buffer_size, System.IO.SeekOrigin.Begin);
+            Seek (startPosition + -1 * (int) buffer_size, System.IO.SeekOrigin.Begin);
          
          buffer_offset = file_stream.Position;
          
@@ -361,9 +369,9 @@ namespace TagLib
          return -1;
       }
       
-      public long RFind (ByteVector pattern, long from_offset)
+      public long RFind (ByteVector pattern, long startPosition)
       {
-         return RFind (pattern, from_offset, null);
+         return RFind (pattern, startPosition, null);
       }
       
       public long RFind (ByteVector pattern)
@@ -373,6 +381,9 @@ namespace TagLib
 
       public void Insert (ByteVector data, long start, long replace)
       {
+         if (data == null)
+            throw new ArgumentNullException ("data");
+         
          Mode = AccessMode.Write;
          
          if (data.Count == replace)
@@ -511,46 +522,56 @@ namespace TagLib
       {
          return Create(path, null, ReadStyle.Average);
       }
-                  
-      public static File Create(string path, ReadStyle style) 
+      
+      public static File Create(IFileAbstraction abstraction)
       {
-         return Create(path, null, style);
+         return Create(abstraction, null, ReadStyle.Average);
       }
       
-      public static File Create(string path, string mimetype, ReadStyle style)
+      public static File Create(string path, ReadStyle propertiesStyle) 
       {
-         foreach (FileTypeResolver resolver in file_type_resolvers)
-         {
-            File file = resolver(path, style);
-            if(file != null)
-               return file;
-         }
-         
+         return Create(path, null, propertiesStyle);
+      }
+      
+      public static File Create(IFileAbstraction abstraction, ReadStyle propertiesStyle) 
+      {
+         return Create(abstraction, null, propertiesStyle);
+      }
+      
+      public static File Create(string path, string mimetype, ReadStyle propertiesStyle)
+      {
+         return Create(new LocalFileAbstraction (path), mimetype, propertiesStyle);
+      }
+      
+      public static File Create(IFileAbstraction abstraction, string mimetype, ReadStyle propertiesStyle)
+      {
          if(mimetype == null)
          {
             /* ext = System.IO.Path.GetExtension(path).Substring(1) */
             string ext = String.Empty;
         
-            try
-            {
-               int index = path.LastIndexOf(".") + 1;
-               if(index >= 1 && index < path.Length)
-                  ext = path.Substring(index, path.Length - index);
-            } catch {
-               /* Proper exception will be thrown later */
-            }
+            int index = abstraction.Name.LastIndexOf(".") + 1;
+            if(index >= 1 && index < abstraction.Name.Length)
+               ext = abstraction.Name.Substring(index, abstraction.Name.Length - index);
             
-            mimetype = "taglib/" + ext.ToLower();
+            mimetype = "taglib/" + ext.ToLower(System.Globalization.CultureInfo.InvariantCulture);
          }
  
+         foreach (FileTypeResolver resolver in file_type_resolvers)
+         {
+            File file = resolver(abstraction, mimetype, propertiesStyle);
+            if(file != null)
+               return file;
+         }
+         
          if(!FileTypes.AvailableTypes.ContainsKey(mimetype)) {
-            throw new UnsupportedFormatException(String.Format("{0} ({1})", path, mimetype));
+            throw new UnsupportedFormatException(String.Format(System.Globalization.CultureInfo.InvariantCulture, "{0} ({1})", abstraction.Name, mimetype));
          }
          
          Type file_type = FileTypes.AvailableTypes[mimetype];
                  
          try {
-            File file = (File)Activator.CreateInstance(file_type, new object [] { path, style });
+            File file = (File)Activator.CreateInstance(file_type, new object [] { abstraction, propertiesStyle });
             file.MimeType = mimetype;
             return file;
          } catch(System.Reflection.TargetInvocationException e) {
@@ -562,42 +583,6 @@ namespace TagLib
       {
          if (resolver != null)
             file_type_resolvers.Insert (0, resolver);
-      }
-      
-      [Obsolete("Use PushFileAbstractionCreator")]
-      public static void SetFileAbstractionCreator (FileAbstractionCreator creator)
-      {
-         if (creator != null)
-         {
-            if (file_abstraction_creator_list.Count > 0)
-               file_abstraction_creator_list [0] = creator;
-            else
-               file_abstraction_creator_list.Add (creator);
-         }
-      }
-      
-      public static void PushFileAbstractionCreator (FileAbstractionCreator creator)
-      {
-         if (creator != null)
-            file_abstraction_creator_list.Insert (0, creator);
-      }
-      
-      public static FileAbstractionCreator PopFileAbstractionCreator ()
-      {
-         if (file_abstraction_creator_list.Count == 0)
-            return null;
-         
-         FileAbstractionCreator creator = file_abstraction_creator_list [0];
-         file_abstraction_creator_list.RemoveAt (0);
-         return creator;
-      }
-      
-      public static FileAbstractionCreator GetFileAbstractionCreator ()
-      {
-         if (file_abstraction_creator_list.Count > 0)
-            return file_abstraction_creator_list [0];
-         
-         return LocalFileAbstraction.CreateFile;
       }
       #endregion
       
@@ -614,13 +599,16 @@ namespace TagLib
       
       
       #region Classes
-      private class LocalFileAbstraction : IFileAbstraction
+      public class LocalFileAbstraction : IFileAbstraction
       {
          private string name;
          
-         public LocalFileAbstraction (string file)
+         public LocalFileAbstraction (string path)
          {
-            name = file;
+            if (path == null)
+               throw new ArgumentNullException ("path");
+            
+            name = path;
          }
          
          public string Name {get {return name;}}
@@ -637,12 +625,10 @@ namespace TagLib
          
          public void CloseStream (System.IO.Stream stream)
          {
+            if (stream == null)
+               throw new ArgumentNullException ("stream");
+            
             stream.Close ();
-         }
-         
-         public static IFileAbstraction CreateFile (string path)
-         {
-            return new LocalFileAbstraction (path);
          }
       }
       #endregion

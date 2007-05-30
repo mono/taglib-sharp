@@ -20,23 +20,24 @@
  *   USA                                                                   *
  ***************************************************************************/
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System;
+using System.Globalization;
 
 namespace TagLib.Ape
 {
    public class Tag : TagLib.Tag
    {
       #region Private Properties
-      private Footer footer = new Footer ();
-      private Dictionary<string,Item> items = new Dictionary<string,Item> ();
+      private Footer _footer = new Footer ();
+      private Dictionary<string,Item> _items = new Dictionary<string,Item> ();
       #endregion
       
       
       
       #region Public Static Properties
-      public static readonly ByteVector FileIdentifier = Footer.FileIdentifier;
+      public static ByteVector FileIdentifier {get {return Footer.FileIdentifier;}}
       #endregion
       
       
@@ -45,9 +46,9 @@ namespace TagLib.Ape
       public Tag () : base ()
       {}
       
-      public Tag (File file, long offset) : this ()
+      public Tag (File file, long position) : this ()
       {
-         Read (file, offset);
+         Read (file, position);
       }
       #endregion
       
@@ -316,17 +317,17 @@ namespace TagLib.Ape
       
       public bool HeaderPresent
       {
-         get {return (footer.Flags & FooterFlags.HeaderPresent) != 0;}
+         get {return (_footer.Flags & FooterFlags.HeaderPresent) != 0;}
          set
          {
             if (value)
-               footer.Flags |= FooterFlags.HeaderPresent;
+               _footer.Flags |= FooterFlags.HeaderPresent;
             else
-               footer.Flags &= ~FooterFlags.HeaderPresent;
+               _footer.Flags &= ~FooterFlags.HeaderPresent;
          }
       }
       
-      public override bool IsEmpty {get {return items.Count == 0;}}
+      public override bool IsEmpty {get {return _items.Count == 0;}}
       #endregion
       
       
@@ -337,9 +338,9 @@ namespace TagLib.Ape
          if (number == 0 && count == 0)
             return;
          else if (count != 0)
-            AddValue (key, number.ToString () + "/" + count.ToString ());
+            AddValue (key, number.ToString (CultureInfo.InvariantCulture) + "/" + count.ToString (CultureInfo.InvariantCulture));
          else
-            AddValue (key, number.ToString ());
+            AddValue (key, number.ToString (CultureInfo.InvariantCulture));
       }
       
       public void SetValue (string key, uint number, uint count)
@@ -350,17 +351,17 @@ namespace TagLib.Ape
       
       public void AddValue (string key, string value)
       {
-         if (value != null && value != String.Empty)
-         {
-            StringList l = new StringList ();
-            Item old_item = GetItem (key);
-            if (old_item != null)
-               l.Add (old_item.ToStringArray ());
-            
-            l.Add (value);
-            
-            SetItem (new Item (key, l));
-         }
+         if (string.IsNullOrEmpty (value))
+            return;
+         
+         StringCollection l = new StringCollection ();
+         Item old_item = GetItem (key);
+         if (old_item != null)
+            l.Add (old_item.ToStringArray ());
+         
+         l.Add (value);
+         
+         SetItem (new Item (key, l));
       }
       
       public void SetValue (string key, string value)
@@ -384,20 +385,22 @@ namespace TagLib.Ape
       
       public Item GetItem (string key)
       {
-         return items.ContainsKey (key.ToUpper ()) ? items [key.ToUpper ()] : null;
+         key = key.ToUpper (CultureInfo.InvariantCulture);
+         return _items.ContainsKey (key) ? _items [key] : null;
       }
       
       public void SetItem (Item item)
       {
-         if (items.ContainsKey (item.Key.ToUpper ()))
-            items [item.Key.ToUpper ()] = item;
+         string key = item.Key.ToUpper (CultureInfo.InvariantCulture);
+         if (_items.ContainsKey (key))
+            _items [key] = item;
          else
-            items.Add (item.Key.ToUpper (), item);
+            _items.Add (key, item);
       }
       
       public void RemoveItem (string key)
       {
-         items.Remove (key.ToUpper ());
+         _items.Remove (key.ToUpper (CultureInfo.InvariantCulture));
       }
       
       public ByteVector Render ()
@@ -405,18 +408,18 @@ namespace TagLib.Ape
          ByteVector data = new ByteVector ();
          uint item_count = 0;
 
-         foreach (Item item in items.Values)
+         foreach (Item item in _items.Values)
          {
             data.Add (item.Render ());
             item_count ++;
          }
          
-         footer.ItemCount = item_count;
-         footer.TagSize   = (uint) (data.Count + Footer.Size);
+         _footer.ItemCount = item_count;
+         _footer.TagSize   = (uint) (data.Count + Footer.Size);
          HeaderPresent    = true;
 
-         data.Insert (0, footer.RenderHeader ());
-         data.Add (footer.RenderFooter ());
+         data.Insert (0, _footer.RenderHeader ());
+         data.Add (_footer.RenderFooter ());
          return data;
       }
       #endregion
@@ -424,33 +427,36 @@ namespace TagLib.Ape
       
       
       #region Protected Methods
-      protected void Read (File file, long offset)
+      protected void Read (File file, long position)
       {
          if (file == null)
             throw new ArgumentException ("File object is null.", "file");
          
          file.Mode = File.AccessMode.Read;
-         file.Seek (offset);
-         footer = new Footer (file.ReadBlock (Footer.Size));
+         file.Seek (position);
+         _footer = new Footer (file.ReadBlock (Footer.Size));
          
-         if(footer.TagSize == 0 || footer.TagSize > file.Length)
+         if(_footer.TagSize == 0 || _footer.TagSize > file.Length)
             throw new CorruptFileException ("Tag size out of bounds.");
       	
       	// If we've read a header, we don't have to seek to read the content.
       	// If we've read a footer, we need to move back to the start of the
       	// tag.
-      	if ((footer.Flags & FooterFlags.IsHeader) == 0)
-            file.Seek (offset + Footer.Size - footer.TagSize);
+      	if ((_footer.Flags & FooterFlags.IsHeader) == 0)
+            file.Seek (position + Footer.Size - _footer.TagSize);
       	
-      	Parse (file.ReadBlock (footer.TagSize - Footer.Size));
+      	Parse (file.ReadBlock (_footer.TagSize - Footer.Size));
       }
 
       protected void Parse (ByteVector data)
       {
+         if (data == null)
+            throw new ArgumentNullException ("data");
+         
          int pos = 0;
          
          // 11 bytes is the minimum size for an APE item
-         for (uint i = 0; i < footer.ItemCount && pos <= data.Count - 11; i++)
+         for (uint i = 0; i < _footer.ItemCount && pos <= data.Count - 11; i++)
          {
             Item item = new Item (data, pos);
             

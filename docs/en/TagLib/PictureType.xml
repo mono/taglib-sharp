@@ -88,16 +88,6 @@
         <summary>An illustration relevant to the track.</summary>
       </Docs>
     </Member>
-    <Member MemberName="ColouredFish">
-      <MemberSignature Language="C#" Value="ColouredFish" />
-      <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.PictureType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>A picture of a bright colored fish.</summary>
-      </Docs>
-    </Member>
     <Member MemberName="OtherFileIcon">
       <MemberSignature Language="C#" Value="OtherFileIcon" />
       <MemberType>Field</MemberType>
@@ -216,6 +206,16 @@
       </ReturnValue>
       <Docs>
         <summary>A picture of the recording location.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ColoredFish">
+      <MemberSignature Language="C#" Value="ColoredFish" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.PictureType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
       </Docs>
     </Member>
   </Members>

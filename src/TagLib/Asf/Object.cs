@@ -35,6 +35,9 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       protected Object (Asf.File file, long position)
       {
+         if (file == null)
+            throw new System.ArgumentNullException ("file");
+         
          file.Seek (position);
          id = file.ReadGuid ();
          size = file.ReadQWord ();
@@ -43,14 +46,13 @@ namespace TagLib.Asf
       protected Object (System.Guid guid)
       {
          id = guid;
-         size = 0;
       }
       
       public abstract ByteVector Render ();
       
-      public static ByteVector RenderUnicode (string str)
+      public static ByteVector RenderUnicode (string value)
       {
-         ByteVector v = ByteVector.FromString (str, StringType.UTF16LE);
+         ByteVector v = ByteVector.FromString (value, StringType.UTF16LE);
          v.Add (ByteVector.FromUShort (0));
          return v;
       }

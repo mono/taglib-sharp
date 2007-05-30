@@ -36,35 +36,17 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public BoxHeader (TagLib.ByteVector type, TagLib.ByteVector extended_type);" />
+      <MemberSignature Language="C#" Value="public BoxHeader (TagLib.ByteVector type, TagLib.ByteVector extendedType);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="type" Type="TagLib.ByteVector" />
-        <Parameter Name="extended_type" Type="TagLib.ByteVector" />
+        <Parameter Name="extendedType" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
         <param name="type">A <see cref="T:TagLib.ByteVector" /> specifying the type of the new instance.</param>
-        <param name="extended_type">A <see cref="T:TagLib.ByteVector" /> specifying the extended type of the new instance.</param>
+        <param name="extendedType">To be added.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.BoxHeader" /> with a specified type and extended type.</summary>
         <remarks>Boxed of type "uuid", and only those boxes, must have a 16 byte extended type.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Overwrite">
-      <MemberSignature Language="C#" Value="public long Overwrite (TagLib.Mpeg4.File file, long size_change);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int64</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="file" Type="TagLib.Mpeg4.File" />
-        <Parameter Name="size_change" Type="System.Int64" />
-      </Parameters>
-      <Docs>
-        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to write to.</param>
-        <param name="size_change">A <see cref="T:System.Int64" /> specifying the size change that occurred.</param>
-        <summary>Overwrites the header on disk with a specified size change.</summary>
-        <returns>A <see cref="T:System.Int64" /> containing the size change experienced by the parent box. This should be the same as <paramref name="size_change" /> unless the header switched from using a normal size to using a long size.</returns>
-        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -173,6 +155,24 @@
       <Docs>
         <summary>Gets an empty box header.</summary>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Overwrite">
+      <MemberSignature Language="C#" Value="public long Overwrite (TagLib.File file, long sizeChange);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="file" Type="TagLib.File" />
+        <Parameter Name="sizeChange" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <param name="sizeChange">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

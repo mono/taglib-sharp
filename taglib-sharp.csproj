@@ -158,6 +158,8 @@
     <Compile Include="src\TagLib\Riff\BitmapInfoHeader.cs" />
     <Compile Include="src\TagLib\ICodec.cs" />
     <Compile Include="src\TagLib\Id3v2\Frames\PlayCountFrame.cs" />
+    <Compile Include="src\TagLib\Id3v2\Frames\MusicCdIdentifierFrame.cs" />
+    <Compile Include="src\TagLib\Id3v2\Frames\TermsOfUseFrame.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src" />

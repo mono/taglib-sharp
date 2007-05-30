@@ -1,5 +1,5 @@
 <Type Name="StreamHeader" FullName="TagLib.WavPack.StreamHeader">
-  <TypeSignature Language="C#" Value="public struct StreamHeader : TagLib.IAudioCodec" />
+  <TypeSignature Language="C#" Value="public struct StreamHeader : IEquatable&lt;TagLib.WavPack.StreamHeader&gt;, TagLib.IAudioCodec" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
@@ -9,27 +9,30 @@
   </Base>
   <Interfaces>
     <Interface>
+      <InterfaceName>System.IEquatable&lt;TagLib.WavPack.StreamHeader&gt;</InterfaceName>
+    </Interface>
+    <Interface>
       <InterfaceName>TagLib.IAudioCodec</InterfaceName>
     </Interface>
   </Interfaces>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public StreamHeader (TagLib.ByteVector data, long stream_length);" />
+      <MemberSignature Language="C#" Value="public StreamHeader (TagLib.ByteVector data, long streamLength);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="data" Type="TagLib.ByteVector" />
-        <Parameter Name="stream_length" Type="System.Int64" />
+        <Parameter Name="streamLength" Type="System.Int64" />
       </Parameters>
       <Docs>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing header bytes for WavPack stream header.</param>
-        <param name="stream_length">A <see cref="System.Int64" /> representing the length of the audio data in bytes.</param>
+        <param name="streamLength">To be added.</param>
         <summary>Constructs and initialized the current instance of <see cref="T:TagLib.WavPack.StreamHeader" /> based on the stream header data and the stream length.</summary>
         <remarks>
           <paramref name="stream_length" /> is required for determining the bitrate.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Size">
-      <MemberSignature Language="C#" Value="public static readonly uint Size = 32;" />
+      <MemberSignature Language="C#" Value="public const uint Size = 32;" />
       <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>System.UInt32</ReturnType>
@@ -134,6 +137,70 @@
         <summary>Gets a plain text description of the current instance.</summary>
         <value>A <see cref="T:System.String" /> describing the current instance.</value>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Equals">
+      <MemberSignature Language="C#" Value="public bool Equals (TagLib.WavPack.StreamHeader other);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="other" Type="TagLib.WavPack.StreamHeader" />
+      </Parameters>
+      <Docs>
+        <param name="other">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Equality">
+      <MemberSignature Language="C#" Value="public static bool op_Equality (TagLib.WavPack.StreamHeader first, TagLib.WavPack.StreamHeader second);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="first" Type="TagLib.WavPack.StreamHeader" />
+        <Parameter Name="second" Type="TagLib.WavPack.StreamHeader" />
+      </Parameters>
+      <Docs>
+        <param name="first">To be added.</param>
+        <param name="second">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Inequality">
+      <MemberSignature Language="C#" Value="public static bool op_Inequality (TagLib.WavPack.StreamHeader first, TagLib.WavPack.StreamHeader second);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="first" Type="TagLib.WavPack.StreamHeader" />
+        <Parameter Name="second" Type="TagLib.WavPack.StreamHeader" />
+      </Parameters>
+      <Docs>
+        <param name="first">To be added.</param>
+        <param name="second">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FileIdentifier">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FileIdentifier { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

@@ -37,11 +37,19 @@ namespace TagLib.Mpeg
    {
       private AudioHeader first_header;
       
-      public AudioFile (string file, ReadStyle properties_style) : base (file, properties_style)
+      #region Constructors
+      public AudioFile (string path, ReadStyle propertiesStyle) : base (path, propertiesStyle)
       {}
       
-      public AudioFile (string file) : this (file, ReadStyle.Average)
+      public AudioFile (string path) : base (path)
       {}
+      
+      public AudioFile (File.IFileAbstraction abstraction, ReadStyle propertiesStyle) : base (abstraction, propertiesStyle)
+      {}
+      
+      public AudioFile (File.IFileAbstraction abstraction) : base (abstraction)
+      {}
+      #endregion
       
       public override TagLib.Tag GetTag (TagTypes type, bool create)
       {
@@ -66,20 +74,20 @@ namespace TagLib.Mpeg
          }
       }
 
-      protected override void ReadStart (long start, ReadStyle style)
+      protected override void ReadStart (long start, ReadStyle propertiesStyle)
       {
-         if (style != ReadStyle.None && !AudioHeader.Find (out first_header, this, start))
+         if (propertiesStyle != ReadStyle.None && !AudioHeader.Find (out first_header, this, start))
             throw new CorruptFileException ("MPEG audio header not found.");
       }
       
-      protected override void ReadEnd (long end, ReadStyle style)
+      protected override void ReadEnd (long end, ReadStyle propertiesStyle)
       {
          // Make sure we have ID3v1 and ID3v2 tags.
          GetTag (TagTypes.Id3v1, true);
          GetTag (TagTypes.Id3v2, true);
       }
       
-      protected override TagLib.Properties ReadProperties (long start, long end, ReadStyle style)
+      protected override TagLib.Properties ReadProperties (long start, long end, ReadStyle propertiesStyle)
       {
          first_header.SetStreamLength (end - start);
          return new Properties (TimeSpan.Zero, first_header);

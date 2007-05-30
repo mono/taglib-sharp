@@ -53,40 +53,15 @@
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="Reserved">
-      <MemberSignature Language="C#" Value="public byte[] Reserved { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Byte[]</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Gets the reserved bytes of the current instance.</summary>
-        <value>A <see cref="T:System.Byte" /> array containing the reserved bytes of the current instance.</value>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName="Children">
-      <MemberSignature Language="C#" Value="public TagLib.Asf.Object[] Children { get; };" />
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;TagLib.Asf.Object&gt; Children { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.Asf.Object[]</ReturnType>
+        <ReturnType>System.Collections.Generic.IEnumerable&lt;TagLib.Asf.Object&gt;</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets the child objects of the current instance.</summary>
         <value>A <see cref="T:TagLib.Asf.Object" /> array containing children of the current instance.</value>
-        <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName="GetProperties">
-      <MemberSignature Language="C#" Value="public TagLib.Properties GetProperties ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Properties</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>Gets the media properties contained in the current instance.</summary>
-        <returns>A <see cref="T:TagLib.Properties" /> containing the media properties contained in the current instance.</returns>
         <remarks />
       </Docs>
     </Member>
@@ -113,6 +88,18 @@
       <Docs>
         <summary>Removes the content descriptors contained in the current instance.</summary>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Properties">
+      <MemberSignature Language="C#" Value="public TagLib.Properties Properties { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Properties</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

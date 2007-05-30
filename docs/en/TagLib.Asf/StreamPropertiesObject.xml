@@ -95,17 +95,16 @@
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="GetCodec">
-      <MemberSignature Language="C#" Value="public TagLib.ICodec GetCodec ();" />
-      <MemberType>Method</MemberType>
+    <Member MemberName="Codec">
+      <MemberSignature Language="C#" Value="public TagLib.ICodec Codec { get; };" />
+      <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ICodec</ReturnType>
       </ReturnValue>
-      <Parameters />
       <Docs>
-        <summary>Gets the <see cref="T:TagLib.ICodec" /> associated with the current instance.</summary>
-        <returns>A <see cref="T:TagLib.ICodec" /> associated with the current instance.</returns>
-        <remarks />
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

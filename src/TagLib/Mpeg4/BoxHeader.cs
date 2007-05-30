@@ -19,6 +19,9 @@ namespace TagLib.Mpeg4
       #region Constructors
       public BoxHeader (TagLib.File file, long position)
       {
+         if (file == null)
+            throw new ArgumentNullException ("file");
+         
          this.box = null;
          this.from_disk = true;
          this.position = position;
@@ -61,7 +64,7 @@ namespace TagLib.Mpeg4
       public BoxHeader (ByteVector type) : this (type, null)
       {}
       
-      public BoxHeader (ByteVector type, ByteVector extended_type)
+      public BoxHeader (ByteVector type, ByteVector extendedType)
       {
          position = -1;
          box = null;
@@ -74,31 +77,37 @@ namespace TagLib.Mpeg4
          
          if (type != "uuid")
          {
-            if (extended_type != null)
-               throw new ArgumentException ("Extended type only permitted for 'uuid'.", "extended_type");
+            if (extendedType != null)
+               throw new ArgumentException ("Extended type only permitted for 'uuid'.", "extendedType");
          }
          else
          {
-            if (extended_type.Count != 16)
-               throw new ArgumentException ("Extended type must be 16 bytes in length.", "extended_type");
+            if (extendedType == null)
+               throw new ArgumentNullException ("extendedType");
+         
+            if (extendedType.Count != 16)
+               throw new ArgumentException ("Extended type must be 16 bytes in length.", "extendedType");
             
             box_size = header_size = 24;
          }
          
-         this.extended_type = extended_type;
+         this.extended_type = extendedType;
       }
       #endregion
       
       #region Public Methods
-      public long Overwrite (File file, long size_change)
+      public long Overwrite (TagLib.File file, long sizeChange)
       {
+         if (file == null)
+            throw new ArgumentNullException ("file");
+         
          if (!from_disk)
-            throw new Exception ("Cannot overwrite headers created from ByteVectors.");
+            throw new InvalidOperationException ("Cannot overwrite headers created from ByteVectors.");
          
          long old_header_size = HeaderSize;
-         DataSize += size_change;
+         DataSize += sizeChange;
          file.Insert (Render (), position, old_header_size);
-         return size_change + HeaderSize - old_header_size;
+         return sizeChange + HeaderSize - old_header_size;
       }
       
       public ByteVector Render ()

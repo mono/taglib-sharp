@@ -4,7 +4,7 @@ namespace TagLib.Mpeg4
    {
       #region Enums
       // This shows the type of data stored in the box.
-      public enum FlagTypes
+      public enum FlagType
       {
           ContainsText      = 0x01,
           ContainsData      = 0x00,
@@ -19,7 +19,7 @@ namespace TagLib.Mpeg4
       #endregion
       
       #region Constructors
-      public AppleDataBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
+      public AppleDataBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, file, handler)
       {
          Data = LoadData (file);
       }
@@ -31,10 +31,10 @@ namespace TagLib.Mpeg4
       #endregion
       
       #region Protected Methods
-      protected override ByteVector Render (ByteVector data)
+      protected override ByteVector Render (ByteVector topData)
       {
          ByteVector output = new ByteVector (4);
-         output.Add (data);
+         output.Add (topData);
          
          return base.Render (output);
       }
@@ -45,11 +45,11 @@ namespace TagLib.Mpeg4
       {
          get
          {
-            return ((Flags & (int) FlagTypes.ContainsText) != 0) ? Data.ToString (StringType.UTF8) : null;
+            return ((Flags & (int) FlagType.ContainsText) != 0) ? Data.ToString (StringType.UTF8) : null;
          }
          set
          {
-            Flags = (int) FlagTypes.ContainsText;
+            Flags = (int) FlagType.ContainsText;
             Data = ByteVector.FromString (value, StringType.UTF8);
          }
       }

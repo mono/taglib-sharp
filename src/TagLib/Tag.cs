@@ -27,7 +27,7 @@ namespace TagLib
    [Flags]
    public enum TagTypes : uint
    {
-      NoTags       = 0x00000000,
+      None         = 0x00000000,
       Xiph         = 0x00000001,
       Id3v1        = 0x00000002,
       Id3v2        = 0x00000004,
@@ -81,23 +81,23 @@ namespace TagLib
       
       private static string JoinGroup(string [] group)
       {
-         return new StringList(group).ToString(", ");
+         return new StringCollection(group).ToString(", ");
       }
 
       public virtual bool IsEmpty
       {
          get
          {
-            return ((Title == null || Title.Trim () == String.Empty) &&
-                    (Grouping == null || Grouping.Trim () == String.Empty) &&
-                    (AlbumArtists == null || AlbumArtists.Length == 0) &&
-                    (Performers == null || Performers.Length == 0) &&
-                    (Composers == null || Composers.Length == 0) &&
-                    (Conductor == null || Conductor.Trim () == String.Empty) &&
-                    (Copyright == null || Copyright.Trim () == String.Empty) &&
-                    (Album == null || Album.Trim () == String.Empty) &&
-                    (Comment == null || Comment.Trim () == String.Empty) &&
-                    (Genres == null || Genres.Length == 0) &&
+            return (IsNullOrLikeEmpty (Title) &&
+                    IsNullOrLikeEmpty (Grouping) &&
+                    IsNullOrLikeEmpty (AlbumArtists) &&
+                    IsNullOrLikeEmpty (Performers) &&
+                    IsNullOrLikeEmpty (Composers) &&
+                    IsNullOrLikeEmpty (Conductor) &&
+                    IsNullOrLikeEmpty (Copyright) &&
+                    IsNullOrLikeEmpty (Album) &&
+                    IsNullOrLikeEmpty (Comment) &&
+                    IsNullOrLikeEmpty (Genres) &&
                     Year == 0 &&
                     BeatsPerMinute == 0 &&
                     Track == 0 &&
@@ -109,19 +109,25 @@ namespace TagLib
       
       public static void Duplicate (Tag source, Tag target, bool overwrite)
       {
-         if (overwrite || target.Title == null || target.Title.Trim () == String.Empty)
+         if (source == null)
+            throw new ArgumentNullException ("source");
+         
+         if (target == null)
+            throw new ArgumentNullException ("target");
+         
+         if (overwrite || IsNullOrLikeEmpty (target.Title))
             target.Title = source.Title;
-         if (overwrite || target.AlbumArtists == null || target.AlbumArtists.Length == 0)
+         if (overwrite || IsNullOrLikeEmpty (target.AlbumArtists))
             target.AlbumArtists = source.AlbumArtists;
-         if (overwrite || target.Performers == null || target.Performers.Length == 0)
+         if (overwrite || IsNullOrLikeEmpty (target.Performers))
             target.Performers = source.Performers;
-         if (overwrite || target.Composers == null || target.Composers.Length == 0)
+         if (overwrite || IsNullOrLikeEmpty (target.Composers))
             target.Composers = source.Composers;
-         if (overwrite || target.Album == null || target.Album.Trim () == String.Empty)
+         if (overwrite || IsNullOrLikeEmpty (target.Album))
             target.Album = source.Album;
-         if (overwrite || target.Comment == null || target.Comment.Trim () == String.Empty)
+         if (overwrite || IsNullOrLikeEmpty (target.Comment))
             target.Comment = source.Comment;
-         if (overwrite || target.Genres == null || target.Genres.Length == 0)
+         if (overwrite || IsNullOrLikeEmpty (target.Genres))
             target.Genres = source.Genres;
          if (overwrite || target.Year == 0)
             target.Year = source.Year;
@@ -135,12 +141,29 @@ namespace TagLib
             target.DiscCount = source.DiscCount;
          if (overwrite || target.BeatsPerMinute == 0)
             target.BeatsPerMinute = source.BeatsPerMinute;
-         if (overwrite || target.Grouping == null || target.Grouping.Trim() == String.Empty)
+         if (overwrite || IsNullOrLikeEmpty (target.Grouping))
             target.Grouping = source.Grouping;
-         if (overwrite || target.Conductor == null || target.Conductor.Trim() == String.Empty)
+         if (overwrite || IsNullOrLikeEmpty (target.Conductor))
             target.Conductor = source.Conductor;
-         if (overwrite || target.Copyright == null || target.Copyright.Trim() == String.Empty)
+         if (overwrite || IsNullOrLikeEmpty (target.Copyright))
             target.Conductor = source.Copyright;
+      }
+      
+      private static bool IsNullOrLikeEmpty (string value)
+      {
+         return value == null || value.Trim ().Length == 0;
+      }
+      
+      private static bool IsNullOrLikeEmpty (string [] value)
+      {
+         if (value == null)
+            return true;
+         
+         foreach (string s in value)
+            if (!IsNullOrLikeEmpty (s))
+               return false;
+         
+         return true;
       }
    }
 }

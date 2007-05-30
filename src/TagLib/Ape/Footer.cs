@@ -25,27 +25,32 @@ using System;
 
 namespace TagLib.Ape
 {
+   #region Enums
+   [Flags]
    public enum FooterFlags : uint
    {
       FooterAbsent  = 0x40000000,
       IsHeader      = 0x20000000,
       HeaderPresent = 0x80000000
    }
+   #endregion
    
-   public struct Footer
+   
+   
+   public struct Footer : IEquatable<Footer>
    {
       #region Private Properties
-      private uint version;
-      private uint flags;
-      private uint item_count;
-      private uint tag_size;
+      private uint _version;
+      private uint _flags;
+      private uint _item_count;
+      private uint _tag_size;
       #endregion
       
       
       
       #region Public Static Properties
-      public static readonly uint Size = 32;
-      public static readonly ByteVector FileIdentifier = "APETAGEX";
+      public const uint Size = 32;
+      public static ByteVector FileIdentifier {get {return "APETAGEX";}}
       #endregion
       
       
@@ -53,35 +58,38 @@ namespace TagLib.Ape
       #region Constructors
       public Footer (ByteVector data)
       {
+         if (data == null)
+            throw new ArgumentNullException ("data");
+         
          if (data.Count < Size)
             throw new CorruptFileException ("Provided data is smaller than object size.");
          
          if (!data.StartsWith (FileIdentifier))
             throw new CorruptFileException ("Provided data does not start with File Identifier");
          
-         version    = data.Mid ( 8, 4).ToUInt (false);
-         tag_size   = data.Mid (12, 4).ToUInt (false);
-         item_count = data.Mid (16, 4).ToUInt (false);
-         flags      = data.Mid (20, 4).ToUInt (false);
+         _version    = data.Mid ( 8, 4).ToUInt (false);
+         _tag_size   = data.Mid (12, 4).ToUInt (false);
+         _item_count = data.Mid (16, 4).ToUInt (false);
+         _flags      = data.Mid (20, 4).ToUInt (false);
       }
       #endregion
       
       
       
       #region Public Properties
-      public uint Version       {get {return version == 0 ? 2000 : version;}}
-      public FooterFlags Flags {get {return (FooterFlags)flags;} set {flags = (uint)value;}}
+      public uint Version       {get {return _version == 0 ? 2000 : _version;}}
+      public FooterFlags Flags {get {return (FooterFlags)_flags;} set {_flags = (uint)value;}}
       
       public uint ItemCount
       {
-         get {return item_count;}
-         set {item_count = value;}
+         get {return _item_count;}
+         set {_item_count = value;}
       }
       
       public uint TagSize
       {
-         get {return tag_size;}
-         set {tag_size = value;}
+         get {return _tag_size;}
+         set {_tag_size = value;}
       }
       
       public uint CompleteTagSize
@@ -109,7 +117,7 @@ namespace TagLib.Ape
       
       
       #region Private Methods
-      private ByteVector Render (bool is_header)
+      private ByteVector Render (bool isHeader)
       // Renders either a header or a footer.
       {
          ByteVector v = new ByteVector ();
@@ -122,17 +130,17 @@ namespace TagLib.Ape
          v.Add (ByteVector.FromUInt (2000, false));
 
          // add the tag size
-         v.Add (ByteVector.FromUInt (tag_size, false));
+         v.Add (ByteVector.FromUInt (_tag_size, false));
 
          // add the item count
-         v.Add (ByteVector.FromUInt (item_count, false));
+         v.Add (ByteVector.FromUInt (_item_count, false));
 
          // render and add the flags
          uint flags = 0;
-
-         flags |= (uint)(((Flags & FooterFlags.HeaderPresent) != 0 ? 1 : 0) << 31);
+         
+         if ((Flags & FooterFlags.HeaderPresent) != 0) flags |= (uint) FooterFlags.HeaderPresent;
          // footer is always present
-         flags |= (uint)((is_header ? 1 : 0) << 29);
+         if (isHeader) flags |= (uint) FooterFlags.IsHeader;
 
          v.Add (ByteVector.FromUInt (flags, false));
 
@@ -140,6 +148,41 @@ namespace TagLib.Ape
          v.Add (ByteVector.FromULong (0));
 
          return v;
+      }
+      #endregion
+      
+      
+      
+      #region IEquatable
+      public override int GetHashCode ()
+      {
+         unchecked
+         {            return (int) (_flags ^ _tag_size ^ _item_count ^ _version);
+         }
+      }
+      
+      public override bool Equals (object obj)
+      {
+         if (!(obj is Footer))
+            return false;
+         
+         return Equals ((Footer) obj);
+      }
+      
+      public bool Equals (Footer other)
+      {
+         return _flags == other._flags && _tag_size == other._tag_size &&
+         _item_count == other._item_count && _version == other._version;
+      }
+      
+      public static bool operator == (Footer first, Footer second)
+      {
+         return first.Equals (second);
+      }
+      
+      public static bool operator != (Footer first, Footer second)
+      {
+         return !first.Equals (second);
       }
       #endregion
    }

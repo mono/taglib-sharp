@@ -22,6 +22,7 @@
 
 using System.Collections;
 using System;
+using System.Globalization;
 
 namespace TagLib.Id3v1
 {
@@ -44,11 +45,12 @@ namespace TagLib.Id3v1
       //////////////////////////////////////////////////////////////////////////
       // public static fields
       //////////////////////////////////////////////////////////////////////////
-      public static readonly ByteVector FileIdentifier = "TAG";
-      public static readonly uint Size = 128;
+      public static ByteVector FileIdentifier {get {return "TAG";}}
+      public const uint Size = 128;
       
       public static StringHandler DefaultStringHandler
       {
+         get {return string_handler;}
          set {string_handler = value;}
       }
       
@@ -59,13 +61,15 @@ namespace TagLib.Id3v1
       public Tag ()
       {
          title = artist = album = year = comment = String.Empty;
-         track = 0;
          genre = 255;
       }
 
-      public Tag (File file, long tag_offset)
+      public Tag (File file, long position)
       {
-         file.Seek (tag_offset);
+         if (file == null)
+            throw new ArgumentNullException ("file");
+         
+         file.Seek (position);
          
          // read the tag -- always 128 bytes
          ByteVector data = file.ReadBlock (Size);
@@ -130,7 +134,7 @@ namespace TagLib.Id3v1
       public override string [] AlbumArtists
       {
          get {return new string [] {artist};}
-         set {artist = (new StringList (value)).ToString (",").Trim ();}
+         set {artist = (new StringCollection (value)).ToString (",").Trim ();}
       }
       
       public override string Album
@@ -160,9 +164,9 @@ namespace TagLib.Id3v1
          get
          {
             uint value;
-            return uint.TryParse (year, out value) ? value : 0;
+            return uint.TryParse (year, NumberStyles.Integer, CultureInfo.InvariantCulture, out value) ? value : 0;
          }
-         set {year = value > 0 ? value.ToString () : String.Empty;}
+         set {year = value > 0 ? value.ToString (CultureInfo.InvariantCulture) : String.Empty;}
       }
       
       public override uint Track

@@ -23,24 +23,24 @@ namespace TagLib.Mpeg4
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public File (string file, ReadStyle properties_style) : base (file)
+      public File (string path, ReadStyle propertiesStyle) : this (new File.LocalFileAbstraction (path), propertiesStyle)
+      {}
+      
+      public File (string path) : this (path, ReadStyle.Average)
+      {}
+      
+      public File (File.IFileAbstraction abstraction, ReadStyle propertiesStyle) : base (abstraction)
       {
          // TODO: Support Id3v2 boxes!!!
          tag = new CombinedTag ();
          
-         // Nullify for safety.
-         apple_tag = null;
-         properties = null;
-         
          Mode = AccessMode.Read;
-         Read (properties_style);
+         Read (propertiesStyle);
          Mode = AccessMode.Closed;
       }
       
-      // Assume average speed.
-      public File (string file) : this (file, ReadStyle.Average)
-      {
-      }
+      public File (File.IFileAbstraction abstraction) : this (abstraction, ReadStyle.Average)
+      {}
       
       // Read the tag. If it doesn't exist, create.
       public override TagLib.Tag Tag {get {return tag;}}
@@ -52,7 +52,7 @@ namespace TagLib.Mpeg4
       public override void Save () 
       {
          if (udta_box == null)
-            throw new NullReferenceException();
+            udta_box = new IsoUserDataBox ();
          
          // Try to get into write mode.
          Mode = File.AccessMode.Write;
@@ -118,7 +118,7 @@ namespace TagLib.Mpeg4
          {
             if (apple_tag == null && create)
             {
-               apple_tag = new AppleTag (ref udta_box);
+               apple_tag = new AppleTag (udta_box);
                tag.SetTags (apple_tag);
             }
             
@@ -151,10 +151,13 @@ namespace TagLib.Mpeg4
          
          udta_box = parser.UserDataBox;
          
-         if (udta_box != null && udta_box.Children.Get (BoxTypes.Meta) != null && udta_box.Children.Get (BoxTypes.Meta).Children.Get (BoxTypes.Ilst) != null)
+         if (udta_box != null && udta_box.GetChild (BoxTypes.Meta) != null && udta_box.GetChild (BoxTypes.Meta).GetChild (BoxTypes.Ilst) != null)
             TagTypesOnDisk |= TagTypes.Apple;
          
-         apple_tag = new AppleTag (ref udta_box);
+         if (udta_box == null)
+            udta_box = new IsoUserDataBox ();
+
+         apple_tag = new AppleTag (udta_box);
          tag.SetTags (apple_tag);
          
          // If we're not reading properties, we're done.

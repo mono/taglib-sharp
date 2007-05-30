@@ -98,16 +98,16 @@
       </Docs>
     </Member>
     <Member MemberName="SetStreamLength">
-      <MemberSignature Language="C#" Value="public void SetStreamLength (long stream_length);" />
+      <MemberSignature Language="C#" Value="public void SetStreamLength (long streamLength);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="stream_length" Type="System.Int64" />
+        <Parameter Name="streamLength" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="stream_length">A <see cref="T:System.Int64" /> containing the stream length.</param>
+        <param name="streamLength">A <see cref="T:System.Int64" /> containing the stream length.</param>
         <summary>Sets the length of the stream.</summary>
         <remarks>Stream length is required to evaluate several properties.</remarks>
       </Docs>

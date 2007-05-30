@@ -25,47 +25,54 @@ using System;
 
 namespace TagLib.WavPack
 {
-   public struct StreamHeader : IAudioCodec
+   public struct StreamHeader : IAudioCodec, IEquatable<StreamHeader>
    {
       #region Constants
-      private static readonly uint [] sample_rates = {6000, 8000, 9600, 11025, 12000,
+      private static readonly uint [] sample_rates = new uint [] {6000, 8000, 9600, 11025, 12000,
          16000, 22050, 24000, 32000, 44100, 48000, 64000, 88200, 96000, 192000};
       
-      private static readonly int  BYTES_STORED = 3;
-      private static readonly int  MONO_FLAG    = 4;
-      private static readonly int  SHIFT_LSB   = 13;
-      private static readonly long SHIFT_MASK  = (0x1fL << SHIFT_LSB);
-      private static readonly int  SRATE_LSB   = 23;
-      private static readonly long SRATE_MASK  = (0xfL << SRATE_LSB);
+      private const int  BYTES_STORED = 3;
+      private const int  MONO_FLAG    = 4;
+      private const int  SHIFT_LSB   = 13;
+      private const long SHIFT_MASK  = (0x1fL << SHIFT_LSB);
+      private const int  SRATE_LSB   = 23;
+      private const long SRATE_MASK  = (0xfL << SRATE_LSB);
       #endregion
       
       
       
       #region Private Properties
-      private long stream_length;
-      private ushort version;
-      private uint flags;
-      private uint samples;
+      private long   _stream_length;
+      private ushort _version;
+      private uint   _flags;
+      private uint   _samples;
       #endregion
       
       
       
       #region Public Static Properties
-      public static readonly uint Size = 32;
+      public const uint Size = 32;
+      public static ByteVector FileIdentifier {get {return "wvpk";}}
       #endregion
       
       
       
       #region Constructors
-      public StreamHeader (ByteVector data, long stream_length)
+      public StreamHeader (ByteVector data, long streamLength)
       {
-         if (!data.StartsWith ("wvpk"))
-            throw new CorruptFileException ();
+         if (data == null)
+            throw new ArgumentNullException ("data");
          
-         this.stream_length = stream_length;
-         version = data.Mid (8, 2).ToUShort (false);
-         flags   = data.Mid (24, 4).ToUInt (false);
-         samples = data.Mid (12, 4).ToUInt (false);
+         if (!data.StartsWith (FileIdentifier))
+            throw new CorruptFileException ("Data does not begin with identifier.");
+         
+         if (data.Count < Size)
+            throw new CorruptFileException ("Insufficient data in stream header");
+         
+         _stream_length = streamLength;
+         _version = data.Mid ( 8, 2).ToUShort (false);
+         _flags   = data.Mid (24, 4).ToUInt (false);
+         _samples = data.Mid (12, 4).ToUInt (false);
       }
       #endregion
       
@@ -76,7 +83,7 @@ namespace TagLib.WavPack
       {
          get
          {
-            return AudioSampleRate > 0 ? TimeSpan.FromSeconds ((double) samples / (double) AudioSampleRate + 0.5) : TimeSpan.Zero;
+            return AudioSampleRate > 0 ? TimeSpan.FromSeconds ((double) _samples / (double) AudioSampleRate + 0.5) : TimeSpan.Zero;
          }
       }
       
@@ -84,7 +91,7 @@ namespace TagLib.WavPack
       {
          get
          {
-            return (int) (Duration > TimeSpan.Zero ? ((stream_length * 8L) / Duration.TotalSeconds) / 1000 : 0);
+            return (int) (Duration > TimeSpan.Zero ? ((_stream_length * 8L) / Duration.TotalSeconds) / 1000 : 0);
          }
       }
       
@@ -92,25 +99,60 @@ namespace TagLib.WavPack
       {
          get
          {
-            return (int) (sample_rates [(flags & SRATE_MASK) >> SRATE_LSB]);
+            return (int) (sample_rates [(_flags & SRATE_MASK) >> SRATE_LSB]);
          }
       }
       
-      public int        AudioChannels {get {return ((flags & MONO_FLAG) != 0) ? 1 : 2;}}
+      public int        AudioChannels {get {return ((_flags & MONO_FLAG) != 0) ? 1 : 2;}}
       
       public MediaTypes MediaTypes    {get {return MediaTypes.Audio;}}
       
-      public int        Version       {get {return version;}}
+      public int        Version       {get {return _version;}}
       
       public int BitsPerSample
       {
          get
          {
-            return (int) (((flags & BYTES_STORED) + 1) * 8 - ((flags & SHIFT_MASK) >> SHIFT_LSB));
+            return (int) (((_flags & BYTES_STORED) + 1) * 8 - ((_flags & SHIFT_MASK) >> SHIFT_LSB));
          }
       }
       
       public string Description {get {return "WavPack Version " + Version + " Audio";}}
+      #endregion
+      
+      
+      
+      #region IEquatable
+      public override int GetHashCode ()
+      {
+         unchecked
+         {
+            return (int) (_flags ^ _samples ^ _version);
+         }
+      }
+      
+      public override bool Equals (object obj)
+      {
+         if (!(obj is StreamHeader))
+            return false;
+         
+         return Equals ((StreamHeader) obj);
+      }
+      
+      public bool Equals (StreamHeader other)
+      {
+         return _flags == other._flags && _samples == other._samples && _version == other._version;
+      }
+      
+      public static bool operator == (StreamHeader first, StreamHeader second)
+      {
+         return first.Equals (second);
+      }
+      
+      public static bool operator != (StreamHeader first, StreamHeader second)
+      {
+         return !first.Equals (second);
+      }
       #endregion
    }
 }

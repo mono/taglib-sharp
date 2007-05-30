@@ -11,22 +11,6 @@
   </Interfaces>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected Box (TagLib.Mpeg4.BoxHeader header, TagLib.Mpeg4.File file, TagLib.Mpeg4.Box handler);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" />
-        <Parameter Name="file" Type="TagLib.Mpeg4.File" />
-        <Parameter Name="handler" Type="TagLib.Mpeg4.Box" />
-      </Parameters>
-      <Docs>
-        <param name="header">A <see cref="T:TagLib.Mpeg4.BoxHeader" /> containing the header for the new instance.</param>
-        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to read from.</param>
-        <param name="handler">A <see cref="T:TagLib.Mpeg4.Box" /> containing the handler that applies to the new instance.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.Box" /> for a specified header by reading from a file.</summary>
-        <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="protected Box (TagLib.Mpeg4.BoxHeader header);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
@@ -63,49 +47,17 @@
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="LoadChildren">
-      <MemberSignature Language="C#" Value="protected TagLib.Mpeg4.BoxList LoadChildren (TagLib.Mpeg4.File file);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg4.BoxList</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="file" Type="TagLib.Mpeg4.File" />
-      </Parameters>
-      <Docs>
-        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to read from.</param>
-        <summary>Reads and returns the children the current instance.</summary>
-        <returns>A <see cref="T:TagLib.Mpeg4.BoxList" /> containing the children of the current instance.</returns>
-        <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName="LoadData">
-      <MemberSignature Language="C#" Value="protected TagLib.ByteVector LoadData (TagLib.Mpeg4.File file);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="file" Type="TagLib.Mpeg4.File" />
-      </Parameters>
-      <Docs>
-        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to read from.</param>
-        <summary>Reads and returns the contents the current instance.</summary>
-        <returns>A <see cref="T:TagLib.ByteVector" /> containing the contents of the current instance.</returns>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName="Render">
-      <MemberSignature Language="C#" Value="protected virtual TagLib.ByteVector Render (TagLib.ByteVector top_data);" />
+      <MemberSignature Language="C#" Value="protected virtual TagLib.ByteVector Render (TagLib.ByteVector topData);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="top_data" Type="TagLib.ByteVector" />
+        <Parameter Name="topData" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="top_data">A <see cref="T:TagLib.ByteVector" /> containing data to insert before the contents of the box.</param>
+        <param name="topData">A <see cref="T:TagLib.ByteVector" /> containing data to insert before the contents of the box.</param>
         <summary>Renders the current instance as a box, inserting data above the normal rendered content.</summary>
         <returns>A <see cref="T:TagLib.ByteVector" /> containing the rendered version of the current instance.</returns>
         <remarks>
@@ -196,10 +148,10 @@
       </Docs>
     </Member>
     <Member MemberName="Children">
-      <MemberSignature Language="C#" Value="public virtual TagLib.Mpeg4.BoxList Children { get; };" />
+      <MemberSignature Language="C#" Value="public virtual System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.Box&gt; Children { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.Mpeg4.BoxList</ReturnType>
+        <ReturnType>System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.Box&gt;</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets the children of the current instance.</summary>
@@ -217,6 +169,188 @@
         <summary>Gets the handler that applies to the current instance.</summary>
         <value>A <see cref="T:TagLib.Mpeg4.IsoHandlerBox" /> that applied to the current instance of <see langword="null" /> if none exists.</value>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="AddChild">
+      <MemberSignature Language="C#" Value="public void AddChild (TagLib.Mpeg4.Box box);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="box" Type="TagLib.Mpeg4.Box" />
+      </Parameters>
+      <Docs>
+        <param name="box">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ClearChildren">
+      <MemberSignature Language="C#" Value="public void ClearChildren ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetChild">
+      <MemberSignature Language="C#" Value="public TagLib.Mpeg4.Box GetChild (Type type);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg4.Box</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="System.Type" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetChild">
+      <MemberSignature Language="C#" Value="public TagLib.Mpeg4.Box GetChild (TagLib.ByteVector type);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg4.Box</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetChildRecursively">
+      <MemberSignature Language="C#" Value="public TagLib.Mpeg4.Box GetChildRecursively (Type type);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg4.Box</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="System.Type" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetChildRecursively">
+      <MemberSignature Language="C#" Value="public TagLib.Mpeg4.Box GetChildRecursively (TagLib.ByteVector type);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Mpeg4.Box</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LoadChildren">
+      <MemberSignature Language="C#" Value="protected System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.Box&gt; LoadChildren (TagLib.File file);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.Box&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="file" Type="TagLib.File" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LoadData">
+      <MemberSignature Language="C#" Value="protected TagLib.ByteVector LoadData (TagLib.File file);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="file" Type="TagLib.File" />
+      </Parameters>
+      <Docs>
+        <param name="file">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RemoveChild">
+      <MemberSignature Language="C#" Value="public void RemoveChild (Type type);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="System.Type" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RemoveChild">
+      <MemberSignature Language="C#" Value="public void RemoveChild (TagLib.ByteVector type);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RemoveChild">
+      <MemberSignature Language="C#" Value="public void RemoveChild (TagLib.Mpeg4.Box box);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="box" Type="TagLib.Mpeg4.Box" />
+      </Parameters>
+      <Docs>
+        <param name="box">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected Box (TagLib.Mpeg4.BoxHeader header, TagLib.Mpeg4.IsoHandlerBox handler);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" />
+        <Parameter Name="handler" Type="TagLib.Mpeg4.IsoHandlerBox" />
+      </Parameters>
+      <Docs>
+        <param name="header">To be added.</param>
+        <param name="handler">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

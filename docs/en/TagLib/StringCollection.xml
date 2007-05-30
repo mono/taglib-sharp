@@ -1,0 +1,108 @@
+<Type Name="StringCollection" FullName="TagLib.StringCollection">
+  <TypeSignature Language="C#" Value="public class StringCollection : TagLib.ListBase&lt;string&gt;" />
+  <AssemblyInfo>
+    <AssemblyName>taglib-sharp</AssemblyName>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>TagLib.ListBase&lt;System.String&gt;</BaseTypeName>
+    <BaseTypeArguments>
+      <BaseTypeArgument TypeParamName="T">System.String</BaseTypeArgument>
+    </BaseTypeArguments>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Runtime.InteropServices.ComVisible(false)</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public StringCollection ();" />
+      <MemberType>Constructor</MemberType>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public StringCollection (string[] values);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="values" Type="System.String[]">
+          <Attributes>
+            <Attribute>
+              <AttributeName>System.ParamArray</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="values">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public StringCollection (TagLib.StringCollection values);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="values" Type="TagLib.StringCollection" />
+      </Parameters>
+      <Docs>
+        <param name="values">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Split">
+      <MemberSignature Language="C#" Value="public static TagLib.StringCollection Split (string value, string pattern);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.StringCollection</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.String" />
+        <Parameter Name="pattern" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="value">To be added.</param>
+        <param name="pattern">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public StringCollection (TagLib.ByteVectorCollection vectorList);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="vectorList" Type="TagLib.ByteVectorCollection" />
+      </Parameters>
+      <Docs>
+        <param name="vectorList">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public StringCollection (TagLib.ByteVectorCollection vectorList, TagLib.StringType type);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="vectorList" Type="TagLib.ByteVectorCollection" />
+        <Parameter Name="type" Type="TagLib.StringType" />
+      </Parameters>
+      <Docs>
+        <param name="vectorList">To be added.</param>
+        <param name="type">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

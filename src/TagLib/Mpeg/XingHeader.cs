@@ -45,6 +45,9 @@ namespace TagLib.Mpeg
       
       public XingHeader (ByteVector data)
       {
+         if (data == null)
+            throw new ArgumentNullException ("data");
+         
          // Check to see if a valid Xing header is available.
          if (!data.StartsWith ("Xing"))
             throw new CorruptFileException ("Not a valid Xing header");
@@ -53,10 +56,10 @@ namespace TagLib.Mpeg
          // info it's invalid.
 
          if ((data [7] & 0x01) == 0)
-            throw new Exception ("Xing header doesn't contain the total number of frames.");
+            throw new CorruptFileException ("Xing header doesn't contain the total number of frames.");
 
          if ((data[7] & 0x02) == 0)
-            throw new Exception ("Xing header doesn't contain the total stream size.");
+            throw new CorruptFileException ("Xing header doesn't contain the total stream size.");
 
          frames = data.Mid (8, 4).ToUInt ();
          size = data.Mid (12, 4).ToUInt ();
@@ -71,18 +74,18 @@ namespace TagLib.Mpeg
       //////////////////////////////////////////////////////////////////////////
       // public static methods
       //////////////////////////////////////////////////////////////////////////
-      public static int XingHeaderOffset (Version v, ChannelMode c)
+      public static int XingHeaderOffset (Version version, ChannelMode channelMode)
       {
-         if (v == Version.Version1)
+         if (version == Version.Version1)
          {
-            if (c == ChannelMode.SingleChannel)
+            if (channelMode == ChannelMode.SingleChannel)
                return 0x15;
             else
                return 0x24;
          }
          else
          {
-            if (c == ChannelMode.SingleChannel)
+            if (channelMode == ChannelMode.SingleChannel)
                return 0x0D;
             else
                return 0x15;

@@ -1,14 +1,14 @@
 <Type Name="List" FullName="TagLib.Riff.List">
-  <TypeSignature Language="C#" Value="public class List : System.Collections.Generic.Dictionary&lt;TagLib.ByteVector,TagLib.ByteVectorList&gt;" />
+  <TypeSignature Language="C#" Value="public class List : System.Collections.Generic.Dictionary&lt;TagLib.ByteVector,TagLib.ByteVectorCollection&gt;" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>System.Collections.Generic.Dictionary&lt;TagLib.ByteVector,TagLib.ByteVectorList&gt;</BaseTypeName>
+    <BaseTypeName>System.Collections.Generic.Dictionary&lt;TagLib.ByteVector,TagLib.ByteVectorCollection&gt;</BaseTypeName>
     <BaseTypeArguments>
       <BaseTypeArgument TypeParamName="TKey">TagLib.ByteVector</BaseTypeArgument>
-      <BaseTypeArgument TypeParamName="TValue">TagLib.ByteVectorList</BaseTypeArgument>
+      <BaseTypeArgument TypeParamName="TValue">TagLib.ByteVectorCollection</BaseTypeArgument>
     </BaseTypeArguments>
   </Base>
   <Interfaces />
@@ -150,38 +150,6 @@
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="GetValues">
-      <MemberSignature Language="C#" Value="public TagLib.ByteVectorList GetValues (TagLib.ByteVector id);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVectorList</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="id" Type="TagLib.ByteVector" />
-      </Parameters>
-      <Docs>
-        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
-        <summary>Gets all the values for a specified item.</summary>
-        <returns>A <see cref="T:TagLib.ByteVectorList" /> containing the item values.</returns>
-        <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName="GetValuesAsStringList">
-      <MemberSignature Language="C#" Value="public TagLib.StringList GetValuesAsStringList (TagLib.ByteVector id);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.StringList</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="id" Type="TagLib.ByteVector" />
-      </Parameters>
-      <Docs>
-        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
-        <summary>Gets all the values for a specified item as strings.</summary>
-        <returns>A <see cref="T:TagLib.StringList" /> containing the item values as strings.</returns>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName="SetValue">
       <MemberSignature Language="C#" Value="public void SetValue (TagLib.ByteVector id, System.Collections.Generic.IEnumerable&lt;TagLib.ByteVector&gt; values);" />
       <MemberType>Method</MemberType>
@@ -239,9 +207,60 @@
         <remarks />
       </Docs>
     </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected List (System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="info" Type="System.Runtime.Serialization.SerializationInfo" />
+        <Parameter Name="context" Type="System.Runtime.Serialization.StreamingContext" />
+      </Parameters>
+      <Docs>
+        <param name="info">To be added.</param>
+        <param name="context">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetValuesAsStringCollection">
+      <MemberSignature Language="C#" Value="public TagLib.StringCollection GetValuesAsStringCollection (TagLib.ByteVector id);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.StringCollection</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="id" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="id">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetValues">
+      <MemberSignature Language="C#" Value="public TagLib.ByteVectorCollection GetValues (TagLib.ByteVector id);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVectorCollection</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="id" Type="TagLib.ByteVector" />
+      </Parameters>
+      <Docs>
+        <param name="id">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
   </Members>
   <Docs>
     <summary>This class is used to access and manipulate data stored in the RIFF lists.</summary>
     <remarks />
   </Docs>
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Runtime.InteropServices.ComVisible(false)</AttributeName>
+    </Attribute>
+  </Attributes>
 </Type>

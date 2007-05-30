@@ -50,7 +50,7 @@ namespace TagLib.NonContainer
          get
          {
             long size = 0;
-            while (ReadTagInfo (size, out size) != TagTypes.NoTags)
+            while (ReadTagInfo (size, out size) != TagTypes.None)
                ;
             
             return size;
@@ -106,7 +106,7 @@ namespace TagLib.NonContainer
          }
          catch (CorruptFileException) {}
          
-         return TagTypes.NoTags;
+         return TagTypes.None;
       }
       
       public void RemoveTags (TagTypes types)

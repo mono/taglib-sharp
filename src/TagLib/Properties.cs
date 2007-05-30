@@ -111,7 +111,7 @@ namespace TagLib
       {
          get
          {
-            MediaTypes types = MediaTypes.Unknown;
+            MediaTypes types = MediaTypes.None;
             
             foreach (ICodec codec in codecs)
                if (codec != null)
@@ -125,7 +125,7 @@ namespace TagLib
       {
          get
          {
-            StringList l = new StringList ();
+            StringCollection l = new StringCollection ();
             foreach (ICodec codec in codecs)
                if (codec != null)
                   l.Add (codec.Description);

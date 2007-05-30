@@ -31,22 +31,22 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public ListBase (TagLib.ListBase&lt;T&gt; s);" />
+      <MemberSignature Language="C#" Value="public ListBase (TagLib.ListBase&lt;T&gt; list);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
-        <Parameter Name="s" Type="TagLib.ListBase&lt;T&gt;" />
+        <Parameter Name="list" Type="TagLib.ListBase&lt;T&gt;" />
       </Parameters>
       <Docs>
-        <param name="s">A <see cref="T:TagLib.ListBase&lt;T&gt;" /> to copy values from.</param>
+        <param name="list">A <see cref="T:TagLib.ListBase&lt;T&gt;" /> to copy values from.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.ListBase&lt;T&gt;" /> by copying values from a T collection.</summary>
         <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public ListBase (T[] s);" />
+      <MemberSignature Language="C#" Value="public ListBase (T[] list);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
-        <Parameter Name="s" Type="T[]">
+        <Parameter Name="list" Type="T[]">
           <Attributes>
             <Attribute>
               <AttributeName>System.ParamArray</AttributeName>
@@ -55,20 +55,9 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="s">A <see cref="T:T" /> array to copy values from.</param>
+        <param name="list">A <see cref="T:T" /> array to copy values from.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.ListBase&lt;T&gt;" /> by copying values from a T collection.</summary>
         <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName="data">
-      <MemberSignature Language="C#" Value="protected System.Collections.Generic.List&lt;T&gt; data;" />
-      <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Collections.Generic.List&lt;T&gt;</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Gets the internal list of the current instance.</summary>
-        <remarks>A <see cref="T:System.Collections.Generic.List&lt;T&gt;" /> which is the internal list used by the current instance.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Add">
@@ -102,33 +91,33 @@
       </Docs>
     </Member>
     <Member MemberName="SortedInsert">
-      <MemberSignature Language="C#" Value="public virtual void SortedInsert (T s, bool unique);" />
+      <MemberSignature Language="C#" Value="public virtual void SortedInsert (T item, bool unique);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="s" Type="T" />
+        <Parameter Name="item" Type="T" />
         <Parameter Name="unique" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="s">A <see cref="T:T" /> to add to the current instance.</param>
+        <param name="item">To be added.</param>
         <param name="unique">A <see cref="T:System.Boolean" /> specifying whether or the element should be inserted if an equal is found.</param>
         <summary>Inserts an element into the current instance in sorted order, optionally not adding it if an equal is found.</summary>
         <remarks />
       </Docs>
     </Member>
     <Member MemberName="SortedInsert">
-      <MemberSignature Language="C#" Value="public void SortedInsert (T s);" />
+      <MemberSignature Language="C#" Value="public void SortedInsert (T item);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="s" Type="T" />
+        <Parameter Name="item" Type="T" />
       </Parameters>
       <Docs>
-        <param name="s">A <see cref="T:T" /> to add to the current instance.</param>
+        <param name="item">A <see cref="T:T" /> to add to the current instance.</param>
         <summary>Inserts an element into the current instance in sorted order.</summary>
         <remarks />
       </Docs>
@@ -147,16 +136,16 @@
       </Docs>
     </Member>
     <Member MemberName="Add">
-      <MemberSignature Language="C#" Value="public void Add (T value);" />
+      <MemberSignature Language="C#" Value="public void Add (T item);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="value" Type="T" />
+        <Parameter Name="item" Type="T" />
       </Parameters>
       <Docs>
-        <param name="value">A <see cref="T:T" /> to add to the current instance.</param>
+        <param name="item">A <see cref="T:T" /> to add to the current instance.</param>
         <summary>Adds a single value to the current instance.</summary>
         <remarks />
       </Docs>
@@ -174,65 +163,65 @@
       </Docs>
     </Member>
     <Member MemberName="Contains">
-      <MemberSignature Language="C#" Value="public bool Contains (T value);" />
+      <MemberSignature Language="C#" Value="public bool Contains (T item);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="value" Type="T" />
+        <Parameter Name="item" Type="T" />
       </Parameters>
       <Docs>
-        <param name="value">A <see cref="T:T" /> to search for in the current instance.</param>
+        <param name="item">A <see cref="T:T" /> to search for in the current instance.</param>
         <summary>Checks whether or not the current instance contains a value.</summary>
         <returns>A <see cref="T:System.Boolean" /> representing whether or not the current instance contains a value.</returns>
         <remarks />
       </Docs>
     </Member>
     <Member MemberName="IndexOf">
-      <MemberSignature Language="C#" Value="public int IndexOf (T value);" />
+      <MemberSignature Language="C#" Value="public int IndexOf (T item);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="value" Type="T" />
+        <Parameter Name="item" Type="T" />
       </Parameters>
       <Docs>
-        <param name="value">A <see cref="T:T" /> to search for in the current instance.</param>
+        <param name="item">A <see cref="T:T" /> to search for in the current instance.</param>
         <summary>Finds the first matching value in the current instance and returns its index.</summary>
         <returns>A <see cref="T:System.Int32" /> specifying the index at which the value was found, or -1 if not found.</returns>
         <remarks />
       </Docs>
     </Member>
     <Member MemberName="Insert">
-      <MemberSignature Language="C#" Value="public void Insert (int index, T value);" />
+      <MemberSignature Language="C#" Value="public void Insert (int index, T item);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="index" Type="System.Int32" />
-        <Parameter Name="value" Type="T" />
+        <Parameter Name="item" Type="T" />
       </Parameters>
       <Docs>
         <param name="index">A <see cref="T:System.Int32" /> specifying the index a which to insert the value.</param>
-        <param name="value">A <see cref="T:T" /> to insert into the current instance.</param>
+        <param name="item">To be added.</param>
         <summary>Inserts a value into the current instance.</summary>
         <remarks />
       </Docs>
     </Member>
     <Member MemberName="Remove">
-      <MemberSignature Language="C#" Value="public bool Remove (T value);" />
+      <MemberSignature Language="C#" Value="public bool Remove (T item);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="value" Type="T" />
+        <Parameter Name="item" Type="T" />
       </Parameters>
       <Docs>
-        <param name="value">A <see cref="T:T" /> to remove from the current instance.</param>
+        <param name="item">A <see cref="T:T" /> to remove from the current instance.</param>
         <summary>Removes the first instance of a value from the current instance.</summary>
         <returns>A <see cref="T:System.Boolean" /> specifying whether or not the value was found and removed from the current instance.</returns>
         <remarks />
@@ -270,18 +259,18 @@
       </Docs>
     </Member>
     <Member MemberName="CopyTo">
-      <MemberSignature Language="C#" Value="public void CopyTo (T[] array, int index);" />
+      <MemberSignature Language="C#" Value="public void CopyTo (T[] array, int arrayIndex);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="array" Type="T[]" />
-        <Parameter Name="index" Type="System.Int32" />
+        <Parameter Name="arrayIndex" Type="System.Int32" />
       </Parameters>
       <Docs>
         <param name="array">An array to copy the values to.</param>
-        <param name="index">A <see cref="T:System.Int32" /> at which to start copying values from the current instance.</param>
+        <param name="arrayIndex">To be added.</param>
         <summary>Copies values from the current instance to an array.</summary>
         <remarks />
       </Docs>

@@ -46,7 +46,7 @@ namespace TagLib.Id3v2
          identifier = id;
       }
       
-      protected internal UniqueFileIdentifierFrame (ByteVector data, int offset, FrameHeader h, byte version) : base (h)
+      protected internal UniqueFileIdentifierFrame (ByteVector data, int offset, FrameHeader header, byte version) : base(header)
       {
          SetData (data, offset, version, false);
       }
@@ -89,7 +89,7 @@ namespace TagLib.Id3v2
       #region Protected Methods
       protected override void ParseFields (ByteVector data, byte version)
       {
-         ByteVectorList fields = ByteVectorList.Split(data, (byte) 0);
+         ByteVectorCollection fields = ByteVectorCollection.Split(data, (byte) 0);
 
          if (fields.Count != 2)
             return;

@@ -8,10 +8,9 @@ namespace TagLib.Riff
       private AviStreamHeader header;
 	   private ICodec codec;
 	   
-      public AviStream (AviStreamHeader header)
+      protected AviStream (AviStreamHeader header)
       {
          this.header = header;
-         codec = null;
       }
       
       public virtual void ParseItem (ByteVector id, ByteVector data, int start, int length)
@@ -22,6 +21,9 @@ namespace TagLib.Riff
       
       public static AviStream ParseStreamList (ByteVector data)
       {
+         if (data == null)
+            throw new ArgumentNullException ("data");
+         
          AviStream stream = null;
          int pos = 4;
          
@@ -100,6 +102,9 @@ namespace TagLib.Riff
       
       public AviStreamHeader (ByteVector data, int offset)
       {
+         if (data == null)
+            throw new System.ArgumentNullException ("data");
+         
          type                  = data.Mid (offset,      4);
          handler               = data.Mid (offset +  4, 4);
          flags                 = data.Mid (offset +  8, 4).ToUInt (false);

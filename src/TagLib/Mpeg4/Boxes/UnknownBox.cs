@@ -4,7 +4,7 @@ namespace TagLib.Mpeg4
    {
       private ByteVector data;
       
-      public UnknownBox (BoxHeader header, File file, Box handler) : base (header, file, handler)
+      public UnknownBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, handler)
       {
          this.data = LoadData (file);
       }

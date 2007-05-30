@@ -37,11 +37,11 @@ namespace TagLib.Ape
    public class Item
    {
       #region Private Properties
-      private ItemType   type      = ItemType.Text;
-      private string     key       = null;
-      private ByteVector value     = null;
-      private StringList text      = new StringList ();
-      private bool       read_only = false;
+      private ItemType         _type      = ItemType.Text;
+      private string           _key       = null;
+      private ByteVector       _value     = null;
+      private StringCollection _text      = new StringCollection ();
+      private bool             _read_only = false;
       #endregion
       
       
@@ -54,51 +54,46 @@ namespace TagLib.Ape
       
       public Item (string key, string value)
       {
-         this.key = key;
-         this.text.Add (value);
+         _key = key;
+         _text.Add (value);
       }
       
-      public Item (string key, StringList value)
+      public Item (string key, StringCollection value)
       {
-         this.key = key;
-         text.Add (value);
+         _key = key;
+         _text.Add (value);
       }
       
       public Item (string key, ByteVector value)
       {
-         this.key = key;
-         this.type = ItemType.Binary;
-         this.value = value;
+         _key   = key;
+         _type  = ItemType.Binary;
+         _value = value;
       }
       #endregion
       
       
       
       #region Public Properties
-      public string Key {get {return key;}}
-      public ByteVector Value {get {return (type == ItemType.Binary) ? value : null;}}
-      public int Size {get {return 8 + key.Length + 1 + value.Count;}}
-      
-      public ItemType Type
-      {
-         get {return type;}
-         set {type = value;}
-      }
+      public string     Key   {get {return _key;}}
+      public ByteVector Value {get {return (_type == ItemType.Binary) ? _value : null;}}
+      public int        Size  {get {return 8 + _key.Length + 1 + _value.Count;}}
+      public ItemType   Type  {get {return _type;} set {_type = value;}}
       
       public bool ReadOnly
       {
-         get {return read_only;}
-         set {read_only = value;}
+         get {return _read_only;}
+         set {_read_only = value;}
       }
       
       public bool IsEmpty
       {
          get
          {
-            if (type != ItemType.Binary)
-               return text.IsEmpty;
+            if (_type != ItemType.Binary)
+               return _text.IsEmpty;
             else
-               return value.IsEmpty;
+               return _value.IsEmpty;
          }
       }
       #endregion
@@ -108,12 +103,12 @@ namespace TagLib.Ape
       #region Public Methods
       public override string ToString ()
       {
-         return text.ToString ();
+         return _text.ToString ();
       }
       
       public string [] ToStringArray ()
       {
-         return (type != ItemType.Binary) ? text.ToArray () : new string [0];
+         return (_type != ItemType.Binary) ? _text.ToArray () : new string [0];
       }
       
       public ByteVector Render ()
@@ -124,23 +119,23 @@ namespace TagLib.Ape
          if (IsEmpty)
             return data;
 
-         if(type != ItemType.Binary)
+         if(_type != ItemType.Binary)
          {
-            value = new ByteVector ();
-            for (int i = 0; i < text.Count; i ++)
+            _value = new ByteVector ();
+            for (int i = 0; i < _text.Count; i ++)
             {
                if (i != 0)
-                  value.Add ((byte) 0);
+                  _value.Add ((byte) 0);
                
-               value.Add (ByteVector.FromString (text [i], StringType.UTF8));
+               _value.Add (ByteVector.FromString (_text [i], StringType.UTF8));
             }
          }
 
-         data.Add (ByteVector.FromUInt ((uint) value.Count, false));
+         data.Add (ByteVector.FromUInt ((uint) _value.Count, false));
          data.Add (ByteVector.FromUInt (flags, false));
-         data.Add (ByteVector.FromString (key, StringType.UTF8));
+         data.Add (ByteVector.FromString (_key, StringType.UTF8));
          data.Add ((byte) 0);
-         data.Add (value);
+         data.Add (_value);
 
          return data;
       }
@@ -151,25 +146,31 @@ namespace TagLib.Ape
       #region Protected Methods
       protected void Parse (ByteVector data, int offset)
       {
+         if (data == null)
+            throw new ArgumentNullException ("data");
+         
          // 11 bytes is the minimum size for an APE item
          if(data.Count < offset + 11)
             throw new CorruptFileException ("Not enough data for APE Item");
+         
+         if (offset > int.MaxValue - 11)
+            throw new ArgumentOutOfRangeException ("offset", "offset + 11 must be less that Int32.MaxValue");
          
          uint value_length  = data.Mid (offset, 4).ToUInt (false);
          uint flags         = data.Mid (offset + 4, 4).ToUInt (false);
          
          int pos = data.Find (new ByteVector (1), offset + 8);
          
-         key   = data.Mid (offset + 8, pos - offset - 8).ToString (StringType.UTF8);
-         value = data.Mid (pos + 1, (int) value_length);
+         _key   = data.Mid (offset + 8, pos - offset - 8).ToString (StringType.UTF8);
+         _value = data.Mid (pos + 1, (int) value_length);
 
          ReadOnly = (flags & 1) == 1;
          Type = (ItemType) ((flags >> 1) & 3);
 
          if(Type != ItemType.Binary)
          {
-            text.Clear ();
-            text = new StringList (ByteVectorList.Split(value, (byte) 0), StringType.UTF8);
+            _text.Clear ();
+            _text = new StringCollection (ByteVectorCollection.Split(_value, (byte) 0), StringType.UTF8);
          }
       }
       #endregion

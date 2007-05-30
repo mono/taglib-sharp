@@ -1,5 +1,5 @@
 <Type Name="AppleTag" FullName="TagLib.Mpeg4.AppleTag">
-  <TypeSignature Language="C#" Value="public class AppleTag : TagLib.Tag, System.Collections.IEnumerable" />
+  <TypeSignature Language="C#" Value="public class AppleTag : TagLib.Tag, System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.Box&gt;" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
@@ -9,35 +9,10 @@
   </Base>
   <Interfaces>
     <Interface>
-      <InterfaceName>System.Collections.IEnumerable</InterfaceName>
+      <InterfaceName>System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.Box&gt;</InterfaceName>
     </Interface>
   </Interfaces>
   <Members>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public AppleTag (ref TagLib.Mpeg4.IsoUserDataBox box);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="box" Type="TagLib.Mpeg4.IsoUserDataBox&amp;" RefType="ref" />
-      </Parameters>
-      <Docs>
-        <param name="box">The <see cref="T:TagLib.Mpeg4.IsoUserDataBox" /> the tag is to be contained in.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.AppleTag" /> for a provided user data box.</summary>
-        <remarks>If <paramref name="box" /> is <see langword="null" /> or doesn't contain the proper combination of boxes, they will be created.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="GetEnumerator">
-      <MemberSignature Language="C#" Value="public System.Collections.IEnumerator GetEnumerator ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Collections.IEnumerator</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>Gets a <see cref="T:System.Collections.IEnumerator" /> for the current instance.</summary>
-        <returns>Returns a <see cref="T:System.Collections.IEnumerator" /> for the current instance.</returns>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName="DataBoxes">
       <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.AppleDataBox&gt; DataBoxes (System.Collections.Generic.IEnumerable&lt;TagLib.ByteVector&gt; list);" />
       <MemberType>Method</MemberType>
@@ -124,25 +99,6 @@
         <param name="type">A <see cref="T:TagLib.ByteVector" /> containing a box type.</param>
         <param name="boxes">A <see cref="T:TagLib.Mpeg4.AppleDataBox" /> array containing boxes to store with a given type.</param>
         <summary>Stores a collection of boxes with a given type.</summary>
-        <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName="SetData">
-      <MemberSignature Language="C#" Value="public void SetData (TagLib.ByteVector type, TagLib.ByteVectorList data, uint flags);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="type" Type="TagLib.ByteVector" />
-        <Parameter Name="data" Type="TagLib.ByteVectorList" />
-        <Parameter Name="flags" Type="System.UInt32" />
-      </Parameters>
-      <Docs>
-        <param name="type">A <see cref="T:TagLib.ByteVector" /> containing a box type.</param>
-        <param name="data">A <see cref="T:TagLib.ByteVectorList" /> containing data to store.</param>
-        <param name="flags">A <see cref="T:System.UInt32" /> containing flags to apply to the boxes.</param>
-        <summary>Stores a collection of <see cref="T:TagLib.ByteVector" />s with a box type and flags.</summary>
         <remarks />
       </Docs>
     </Member>
@@ -236,6 +192,50 @@
         <summary>Gets whether or not the current instance is a compilation.</summary>
         <value>A <see cref="T:System.Boolean" /> specifying whether or not the current instance is a compilation.</value>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public AppleTag (TagLib.Mpeg4.IsoUserDataBox box);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="box" Type="TagLib.Mpeg4.IsoUserDataBox" />
+      </Parameters>
+      <Docs>
+        <param name="box">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetEnumerator">
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerator&lt;TagLib.Mpeg4.Box&gt; GetEnumerator ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IEnumerator&lt;TagLib.Mpeg4.Box&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetData">
+      <MemberSignature Language="C#" Value="public void SetData (TagLib.ByteVector type, TagLib.ByteVectorCollection data, uint flags);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="type" Type="TagLib.ByteVector" />
+        <Parameter Name="data" Type="TagLib.ByteVectorCollection" />
+        <Parameter Name="flags" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="type">To be added.</param>
+        <param name="data">To be added.</param>
+        <param name="flags">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

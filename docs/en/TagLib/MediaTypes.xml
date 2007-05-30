@@ -8,16 +8,6 @@
     <BaseTypeName>System.Enum</BaseTypeName>
   </Base>
   <Members>
-    <Member MemberName="Unknown">
-      <MemberSignature Language="C#" Value="Unknown" />
-      <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.MediaTypes</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Media types are unknown.</summary>
-      </Docs>
-    </Member>
     <Member MemberName="Video">
       <MemberSignature Language="C#" Value="Video" />
       <MemberType>Field</MemberType>
@@ -36,6 +26,16 @@
       </ReturnValue>
       <Docs>
         <summary>Media types include audio.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="None">
+      <MemberSignature Language="C#" Value="None" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.MediaTypes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
       </Docs>
     </Member>
   </Members>

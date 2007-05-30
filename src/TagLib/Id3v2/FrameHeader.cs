@@ -51,6 +51,9 @@ namespace TagLib.Id3v2
       #region Constructors
       public FrameHeader (ByteVector data, byte version)
       {
+         if (data == null)
+            throw new ArgumentNullException ("data");
+         
          flags = 0;
          frame_size = 0;
          
@@ -217,10 +220,10 @@ namespace TagLib.Id3v2
             for (int i = 0; i < 2; i ++)
             {
                if (to_version  && version3_frames [i,1] == id)
-                  return version2_frames [i,0];
+                  return version3_frames [i,0];
                
                if (!to_version && version3_frames [i,0] == id)
-                  return version2_frames [i,1];
+                  return version3_frames [i,1];
             }
          }
          

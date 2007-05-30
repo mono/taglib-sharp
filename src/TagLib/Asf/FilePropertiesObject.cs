@@ -46,6 +46,9 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       public FilePropertiesObject (Asf.File file, long position) : base (file, position)
       {
+         if (file == null)
+            throw new ArgumentNullException ("file");
+         
          if (!Guid.Equals (Asf.Guid.AsfFilePropertiesObject))
             throw new CorruptFileException ("Object GUID incorrect.");
          

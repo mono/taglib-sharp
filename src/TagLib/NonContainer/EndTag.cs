@@ -54,7 +54,7 @@ namespace TagLib.NonContainer
          get
          {
             long start = file.Length;
-            while (ReadTagInfo (ref start) != TagTypes.NoTags)
+            while (ReadTagInfo (ref start) != TagTypes.None)
                ;
             
             return file.Length - start;
@@ -121,7 +121,7 @@ namespace TagLib.NonContainer
          }
          catch (CorruptFileException) {}
          
-         return TagTypes.NoTags;
+         return TagTypes.None;
       }
       
       public void RemoveTags (TagTypes types)

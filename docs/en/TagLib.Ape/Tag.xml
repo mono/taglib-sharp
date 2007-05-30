@@ -19,32 +19,21 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Tag (TagLib.File file, long offset);" />
+      <MemberSignature Language="C#" Value="public Tag (TagLib.File file, long position);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="file" Type="TagLib.File" />
-        <Parameter Name="offset" Type="System.Int64" />
+        <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
         <param name="file">A <see cref="T:TagLib.File" /> containing a tag to read.</param>
-        <param name="offset">A <see cref="T:System.Int64" /> specifying where to read from the file. It must be the position of either an APE header or footer.</param>
+        <param name="position">To be added.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ape.Tag" /> by reading from a <see cref="T:TagLib.File" /> at a specified position.</summary>
         <remarks>
           <para>
 To access or create an <see cref="T:TagLib.Ape.Tag" /> in an existing <see cref="T:TagLib.File" />, use <see cref="M:TagLib.File.GetTag(TagLib.TagTypes,bool)" />.
 </para>
         </remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="FileIdentifier">
-      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector FileIdentifier;" />
-      <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Gets the identifier used for recognizing an APE tag.</summary>
-        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Render">
@@ -128,18 +117,18 @@ To access or create an <see cref="T:TagLib.Ape.Tag" /> in an existing <see cref=
       </Docs>
     </Member>
     <Member MemberName="Read">
-      <MemberSignature Language="C#" Value="protected void Read (TagLib.File file, long offset);" />
+      <MemberSignature Language="C#" Value="protected void Read (TagLib.File file, long position);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="file" Type="TagLib.File" />
-        <Parameter Name="offset" Type="System.Int64" />
+        <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
         <param name="file">A <see cref="T:TagLib.File" /> containing a tag to read.</param>
-        <param name="offset">A <see cref="T:System.Int64" /> specifying where to read from the file. It must be the position of either an APE header or footer.</param>
+        <param name="position">To be added.</param>
         <summary>Populates the current instance by reading a tag from a file.</summary>
         <remarks />
       </Docs>
@@ -256,6 +245,18 @@ Otherwise, the values will be added as "<paramref name="number" />/<paramref nam
         <summary>Gets and sets whether or not the tag will be rendered with a header.</summary>
         <value>A <see cref="T:System.Boolean" /> specifying whether or not a header will be rendered.</value>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="FileIdentifier">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FileIdentifier { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

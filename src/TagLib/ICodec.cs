@@ -27,9 +27,9 @@ namespace TagLib
    [Flags]
    public enum MediaTypes
    {
-      Unknown = 0,
-      Audio   = 1,
-      Video   = 2
+      None  = 0,
+      Audio = 1,
+      Video = 2
    }
    
    public interface ICodec

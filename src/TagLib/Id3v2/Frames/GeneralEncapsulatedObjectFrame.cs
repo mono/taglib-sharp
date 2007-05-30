@@ -46,7 +46,7 @@ namespace TagLib.Id3v2
          SetData (data, 0, version, true);
       }
       
-      protected internal GeneralEncapsulatedObjectFrame (ByteVector data, int offset, FrameHeader h, byte version) : base (h)
+      protected internal GeneralEncapsulatedObjectFrame (ByteVector data, int offset, FrameHeader header, byte version) : base(header)
       {
          SetData (data, offset, version, false);
       }
@@ -93,10 +93,10 @@ namespace TagLib.Id3v2
       {
          string text = "[" + mime_type + "]";
          
-         if(file_name != null && file_name != string.Empty)
+         if(!string.IsNullOrEmpty (file_name))
             text += " " + file_name;
          
-         if(description != null && description != string.Empty)
+         if(!string.IsNullOrEmpty (description))
             text += " " + description;
          
          return text;

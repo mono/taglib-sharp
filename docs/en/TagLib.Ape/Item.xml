@@ -24,20 +24,6 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Item (string key, TagLib.StringList value);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="key" Type="System.String" />
-        <Parameter Name="value" Type="TagLib.StringList" />
-      </Parameters>
-      <Docs>
-        <param name="key">A <see cref="T:System.String" /> representing an APE item key.</param>
-        <param name="value">A <see cref="T:TagLib.StringList" /> containing values to store.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ape.Item" /> with a specified key and collection of string values.</summary>
-        <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Item (string key, TagLib.ByteVector value);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
@@ -178,6 +164,20 @@
         <param name="offset">A <see cref="T:TagLib.Int32" /> specifying the offset in the data at which the item begins.</param>
         <summary>Sets the values in the current instance by reading an APE Item from a <see cref="T:TagLib.ByteVector" /> at a given offset.</summary>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Item (string key, TagLib.StringCollection value);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="key" Type="System.String" />
+        <Parameter Name="value" Type="TagLib.StringCollection" />
+      </Parameters>
+      <Docs>
+        <param name="key">To be added.</param>
+        <param name="value">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

@@ -19,50 +19,50 @@
       </Docs>
     </Member>
     <Member MemberName="GetComment">
-      <MemberSignature Language="C#" Value="public TagLib.Ogg.XiphComment GetComment (uint stream_serial_number);" />
+      <MemberSignature Language="C#" Value="public TagLib.Ogg.XiphComment GetComment (uint streamSerialNumber);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.Ogg.XiphComment</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="stream_serial_number" Type="System.UInt32" />
+        <Parameter Name="streamSerialNumber" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="stream_serial_number">A <see cref="T:System.UInt32" /> containing a serial number for an OGG bitstream.</param>
+        <param name="streamSerialNumber">A <see cref="T:System.UInt32" /> containing a serial number for an OGG bitstream.</param>
         <summary>Gets a comment for a specific bitstream.</summary>
         <returns>A <see cref="T:TagLib.Ogg.XiphComment" /> for the bitstream.</returns>
         <remarks />
       </Docs>
     </Member>
     <Member MemberName="AddComment">
-      <MemberSignature Language="C#" Value="public void AddComment (uint stream_serial_number, TagLib.Ogg.XiphComment comment);" />
+      <MemberSignature Language="C#" Value="public void AddComment (uint streamSerialNumber, TagLib.Ogg.XiphComment comment);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="stream_serial_number" Type="System.UInt32" />
+        <Parameter Name="streamSerialNumber" Type="System.UInt32" />
         <Parameter Name="comment" Type="TagLib.Ogg.XiphComment" />
       </Parameters>
       <Docs>
-        <param name="stream_serial_number">A <see cref="T:System.UInt32" /> containing a serial number for an OGG bitstream.</param>
+        <param name="streamSerialNumber">To be added.</param>
         <param name="comment">A <see cref="T:TagLib.Ogg.XiphComment" /> for a specified OGG bitstream.</param>
         <summary>Adds a Vorbis Comment for a specified bitstream.</summary>
         <remarks />
       </Docs>
     </Member>
     <Member MemberName="AddComment">
-      <MemberSignature Language="C#" Value="public void AddComment (uint stream_serial_number, TagLib.ByteVector data);" />
+      <MemberSignature Language="C#" Value="public void AddComment (uint streamSerialNumber, TagLib.ByteVector data);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="stream_serial_number" Type="System.UInt32" />
+        <Parameter Name="streamSerialNumber" Type="System.UInt32" />
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="stream_serial_number">A <see cref="T:System.UInt32" /> containing a serial number for an OGG bitstream.</param>
+        <param name="streamSerialNumber">To be added.</param>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing a Vorbis Comment for a specified OGG bitstream.</param>
         <summary>Adds a Vorbis Comment for a specified bitstream.</summary>
         <remarks />
@@ -81,10 +81,10 @@
       </Docs>
     </Member>
     <Member MemberName="Comments">
-      <MemberSignature Language="C#" Value="public TagLib.Ogg.XiphComment[] Comments { get; };" />
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;TagLib.Ogg.XiphComment&gt; Comments { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.Ogg.XiphComment[]</ReturnType>
+        <ReturnType>System.Collections.Generic.IEnumerable&lt;TagLib.Ogg.XiphComment&gt;</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets every Vorbis Comment stored in the current instance, in the order they were added.</summary>

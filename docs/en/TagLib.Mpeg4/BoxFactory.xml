@@ -10,79 +10,79 @@
   <Interfaces />
   <Members>
     <Member MemberName="CreateBox">
-      <MemberSignature Language="C#" Value="public static TagLib.Mpeg4.Box CreateBox (TagLib.Mpeg4.File file, long position);" />
+      <MemberSignature Language="C#" Value="public static TagLib.Mpeg4.Box CreateBox (TagLib.File file, long position);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.Mpeg4.Box</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="file" Type="TagLib.Mpeg4.File" />
+        <Parameter Name="file" Type="TagLib.File" />
         <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to read from.</param>
-        <param name="position">A <see cref="T:System.Int64" /> specifying at what seek position to start reading.</param>
-        <summary>Creates a new <see cref="T:TagLib.Mpeg4.Box" /> by reading it from a file.</summary>
-        <returns>A <see cref="T:TagLib.Mpeg4.Box" /> read from the file.</returns>
-        <remarks />
+        <param name="file">To be added.</param>
+        <param name="position">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateBox">
-      <MemberSignature Language="C#" Value="public static TagLib.Mpeg4.Box CreateBox (TagLib.Mpeg4.File file, long position, TagLib.Mpeg4.IsoHandlerBox handler);" />
+      <MemberSignature Language="C#" Value="public static TagLib.Mpeg4.Box CreateBox (TagLib.File file, long position, TagLib.Mpeg4.IsoHandlerBox handler);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.Mpeg4.Box</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="file" Type="TagLib.Mpeg4.File" />
+        <Parameter Name="file" Type="TagLib.File" />
         <Parameter Name="position" Type="System.Int64" />
         <Parameter Name="handler" Type="TagLib.Mpeg4.IsoHandlerBox" />
       </Parameters>
       <Docs>
-        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to read from.</param>
-        <param name="position">A <see cref="T:System.Int64" /> specifying at what seek position to start reading.</param>
-        <param name="handler">A <see cref="T:TagLib.Mpeg4.IsoHandlerBox" /> containing a handler that applied to the newly created box.</param>
-        <summary>Creates a new <see cref="T:TagLib.Mpeg4.Box" /> by reading it from a file.</summary>
-        <returns>A <see cref="T:TagLib.Mpeg4.Box" /> read from the file.</returns>
-        <remarks />
+        <param name="file">To be added.</param>
+        <param name="position">To be added.</param>
+        <param name="handler">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateBox">
-      <MemberSignature Language="C#" Value="public static TagLib.Mpeg4.Box CreateBox (TagLib.Mpeg4.File file, TagLib.Mpeg4.BoxHeader header);" />
+      <MemberSignature Language="C#" Value="public static TagLib.Mpeg4.Box CreateBox (TagLib.File file, TagLib.Mpeg4.BoxHeader header);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.Mpeg4.Box</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="file" Type="TagLib.Mpeg4.File" />
+        <Parameter Name="file" Type="TagLib.File" />
         <Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" />
       </Parameters>
       <Docs>
-        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to read from.</param>
-        <param name="header">A <see cref="T:TagLib.Mpeg4.BoxHeader" /> specifying at the box's type and at what seek position to start reading.</param>
-        <summary>Creates a new <see cref="T:TagLib.Mpeg4.Box" /> by reading it from a file.</summary>
-        <returns>A <see cref="T:TagLib.Mpeg4.Box" /> read from the file.</returns>
-        <remarks />
+        <param name="file">To be added.</param>
+        <param name="header">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="CreateBox">
-      <MemberSignature Language="C#" Value="public static TagLib.Mpeg4.Box CreateBox (TagLib.Mpeg4.File file, TagLib.Mpeg4.BoxHeader header, TagLib.Mpeg4.IsoHandlerBox handler);" />
+      <MemberSignature Language="C#" Value="public static TagLib.Mpeg4.Box CreateBox (TagLib.File file, TagLib.Mpeg4.BoxHeader header, TagLib.Mpeg4.IsoHandlerBox handler);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.Mpeg4.Box</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="file" Type="TagLib.Mpeg4.File" />
+        <Parameter Name="file" Type="TagLib.File" />
         <Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" />
         <Parameter Name="handler" Type="TagLib.Mpeg4.IsoHandlerBox" />
       </Parameters>
       <Docs>
-        <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to read from.</param>
-        <param name="header">A <see cref="T:TagLib.Mpeg4.BoxHeader" /> specifying at the box's type and at what seek position to start reading.</param>
-        <param name="handler">A <see cref="T:TagLib.Mpeg4.IsoHandlerBox" /> containing a handler that applied to the newly created box.</param>
-        <summary>Creates a new <see cref="T:TagLib.Mpeg4.Box" /> by reading it from a file.</summary>
-        <returns>A <see cref="T:TagLib.Mpeg4.Box" /> read from the file.</returns>
-        <remarks />
+        <param name="file">To be added.</param>
+        <param name="header">To be added.</param>
+        <param name="handler">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

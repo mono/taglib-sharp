@@ -23,6 +23,7 @@
 using System.Collections;
 using System;
 using System.Text;
+using System.Globalization;
 
 namespace TagLib.Riff
 {
@@ -35,8 +36,8 @@ namespace TagLib.Riff
       private string genre;
       private ByteVector extra_data;
       
-      public static readonly ByteVector FileIdentifier = "DIVXTAG";
-      public static readonly uint Size = 128;
+      public static ByteVector FileIdentifier {get {return "DIVXTAG";}}
+      public const uint Size = 128;
       
       public DivXTag ()
       {
@@ -44,9 +45,12 @@ namespace TagLib.Riff
          extra_data = new ByteVector (6);
       }
 
-      public DivXTag (File file, long offset)
+      public DivXTag (File file, long position)
       {
-         file.Seek (offset);
+         if (file == null)
+            throw new ArgumentNullException ("file");
+         
+         file.Seek (position);
          
          // read the tag -- always 128 bytes
          ByteVector data = file.ReadBlock (Size);
@@ -76,7 +80,7 @@ namespace TagLib.Riff
          return data;
       }
       
-      private string ResizeString (string str, int size)
+      private static string ResizeString (string str, int size)
       {
          if (str == null)
             str = string.Empty;
@@ -103,7 +107,7 @@ namespace TagLib.Riff
       public override string [] AlbumArtists
       {
          get {return new string [] {artist};}
-         set {artist = (new StringList (value)).ToString (",").Trim ();}
+         set {artist = (new StringCollection (value)).ToString (",").Trim ();}
       }
       
       public override string Comment
@@ -121,7 +125,7 @@ namespace TagLib.Riff
          }
          set
          {
-            genre = (value != null && value.Length > 0) ? TagLib.Genres.VideoToIndex (value [0].Trim ()).ToString () : string.Empty;
+            genre = (value != null && value.Length > 0) ? TagLib.Genres.VideoToIndex (value [0].Trim ()).ToString (CultureInfo.InvariantCulture) : string.Empty;
          }
       }
       
@@ -132,7 +136,7 @@ namespace TagLib.Riff
             uint value;
             return uint.TryParse (year, out value) ? value : 0;
          }
-         set {year = value > 0 ? value.ToString () : String.Empty;}
+         set {year = value > 0 ? value.ToString (CultureInfo.InvariantCulture) : String.Empty;}
       }
    }
 }

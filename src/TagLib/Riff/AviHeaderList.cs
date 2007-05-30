@@ -1,25 +1,31 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace TagLib.Riff
 {
-   public class AviHeaderList : List
+   public class AviHeaderList
    {
       AviHeader header;
       List<ICodec> codecs = new List<ICodec> ();
       
-      public AviHeaderList (TagLib.File file, long position, int length) : base (file, position, length)
+      public AviHeaderList (TagLib.File file, long position, int length)
       {
-         if (!ContainsKey ("avih"))
+         if (file == null)
+            throw new ArgumentNullException ("file");
+         
+         List list = new List (file, position, length);
+         
+         if (!list.ContainsKey ("avih"))
             throw new CorruptFileException ("Avi header not found.");
          
-         ByteVector header_data = this ["avih"][0];
+         ByteVector header_data = list ["avih"][0];
          if (header_data.Count != 0x38)
             throw new CorruptFileException ("Invalid header length.");
             
          header = new AviHeader (header_data);
          
-         foreach (ByteVector list_data in this ["LIST"])
+         foreach (ByteVector list_data in list ["LIST"])
          {
             if (list_data.StartsWith ("strl"))
                codecs.Add (AviStream.ParseStreamList (list_data).Codec);
@@ -46,6 +52,9 @@ namespace TagLib.Riff
       
       public AviHeader (ByteVector data, int offset)
       {
+         if (data == null)
+            throw new ArgumentNullException ("data");
+         
          microseconds_per_frame = data.Mid (offset,      4).ToUInt (false);
          max_bytes_per_second   = data.Mid (offset +  4, 4).ToUInt (false);
          flags                  = data.Mid (offset + 12, 4).ToUInt (false);

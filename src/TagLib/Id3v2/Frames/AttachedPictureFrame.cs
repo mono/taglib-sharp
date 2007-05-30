@@ -35,6 +35,10 @@ namespace TagLib.Id3v2
       private PictureType type          = PictureType.Other;
       private string      description   = null;
       private ByteVector  data          = null;
+      
+      // Performance savings for simple processes.
+      private ByteVector  raw_data      = null;
+      private byte        raw_version   = 0;
       #endregion
       
       
@@ -45,6 +49,9 @@ namespace TagLib.Id3v2
       
       public AttachedPictureFrame (IPicture picture) : base("APIC", 4)
       {
+         if (picture == null)
+            throw new ArgumentNullException ("picture");
+         
          mime_type   = picture.MimeType;
          type        = picture.Type;
          description = picture.Description;
@@ -56,7 +63,7 @@ namespace TagLib.Id3v2
          SetData (data, 0, version, true);
       }
       
-      protected internal AttachedPictureFrame (ByteVector data, int offset, FrameHeader h, byte version) : base (h)
+      protected internal AttachedPictureFrame (ByteVector data, int offset, FrameHeader header, byte version) : base(header)
       {
          SetData (data, offset, version, false);
       }
@@ -67,31 +74,31 @@ namespace TagLib.Id3v2
       #region Public Properties
       public StringType TextEncoding
       {
-         get {return text_encoding;}
+         get {ParseRawData (); return text_encoding;}
          set {text_encoding = value;}
       }
       
       public string MimeType
       {
-         get {return mime_type;}
+         get {ParseRawData (); return mime_type;}
          set {mime_type = value;}
       }
       
       public PictureType Type
       {
-         get {return type;}
+         get {ParseRawData (); return type;}
          set {type = value;}
       }
       
       public string Description
       {
-         get {return description;}
+         get {ParseRawData (); return description;}
          set {description = value;}
       }
       
       public ByteVector Data
       {
-         get {return data;}
+         get {ParseRawData (); return data;}
          set {data = value;}
       }
       #endregion
@@ -101,6 +108,7 @@ namespace TagLib.Id3v2
       #region Public Methods
       public override string ToString ()
       {
+         ParseRawData ();
          string s = "[" + mime_type + "]";
          return description != null ? s : description + " " + s;
       }
@@ -160,27 +168,36 @@ namespace TagLib.Id3v2
       {
          if (data.Count < 5)
             throw new CorruptFileException ("A picture frame must contain at least 5 bytes.");
-
+         
+         raw_data = data;
+         raw_version = version;
+      }
+      
+      protected void ParseRawData ()
+      {
+         if (raw_data == null)
+            return;
+         
          int pos = 0;
 
-         text_encoding = (StringType) data [pos++];
+         text_encoding = (StringType) raw_data [pos++];
          int byte_align = text_encoding == StringType.Latin1 || text_encoding == StringType.UTF8 ? 1 : 2;
          
          int offset;
          
-         if (version > 2)
+         if (raw_version > 2)
          {
-            offset = data.Find (TextDelimiter (StringType.Latin1), pos);
+            offset = raw_data.Find (TextDelimiter (StringType.Latin1), pos);
 
             if(offset < pos)
                return;
 
-            mime_type = data.Mid (pos, offset - pos).ToString (StringType.Latin1);
+            mime_type = raw_data.Mid (pos, offset - pos).ToString (StringType.Latin1);
             pos = offset + 1;
          }
          else
          {
-            ByteVector ext = data.Mid (pos, 3);
+            ByteVector ext = raw_data.Mid (pos, 3);
             if (ext == "JPG")
                mime_type = "image/jpeg";
             else if (ext == "PNG")
@@ -191,21 +208,26 @@ namespace TagLib.Id3v2
             pos += 3;
          }
          
-         type = (PictureType) data [pos++];
+         type = (PictureType) raw_data [pos++];
          
-         offset = data.Find (TextDelimiter (text_encoding), pos, byte_align);
+         offset = raw_data.Find (TextDelimiter (text_encoding), pos, byte_align);
 
          if(offset < pos)
             return;  
          
-         description = data.Mid (pos, offset - pos).ToString (text_encoding);
+         description = raw_data.Mid (pos, offset - pos).ToString (text_encoding);
          pos = offset + 1;
          
-         this.data = data.Mid (pos);
+         raw_data.RemoveRange (0, pos);
+         this.data = raw_data;
+         this.raw_data = null;
       }
       
       protected override ByteVector RenderFields (byte version)
       {
+         if (raw_data != null && raw_version == version)
+            return raw_data;
+         
          StringType encoding = CorrectEncoding (TextEncoding, version);
          ByteVector data = new ByteVector ();
 

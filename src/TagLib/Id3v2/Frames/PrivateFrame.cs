@@ -50,7 +50,7 @@ namespace TagLib.Id3v2
          SetData (data, 0, version, true);
       }
 
-      protected internal PrivateFrame (ByteVector data, int offset, FrameHeader h, byte version) : base (h)
+      protected internal PrivateFrame (ByteVector data, int offset, FrameHeader header, byte version) : base(header)
       {
          SetData (data, offset, version, false);
       }
@@ -105,7 +105,7 @@ namespace TagLib.Id3v2
          if (data.Count < 1)
             throw new CorruptFileException ("A private frame must contain at least 1 byte.");
          
-         ByteVectorList l = ByteVectorList.Split (data, TextDelimiter (StringType.Latin1), 1, 2);
+         ByteVectorCollection l = ByteVectorCollection.Split (data, TextDelimiter (StringType.Latin1), 1, 2);
          
          if (l.Count == 2)
          {

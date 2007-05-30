@@ -83,28 +83,26 @@ namespace TagLib.CollectionTests
         [Test]
         public void Long()
         {
-            Assert.AreEqual(Int64.MaxValue, ByteVector.FromLong(Int64.MaxValue).ToLong());
-            Assert.AreEqual(Int64.MinValue, ByteVector.FromLong(Int64.MinValue).ToLong());
-            Assert.AreEqual(0, ByteVector.FromLong(0).ToLong());
-            Assert.AreEqual(30292, ByteVector.FromLong(30292).ToLong());
-            Assert.AreEqual(-30292, ByteVector.FromLong(-30292).ToLong());
+            Assert.AreEqual(UInt64.MaxValue, ByteVector.FromULong(UInt64.MaxValue).ToULong());
+            Assert.AreEqual(UInt64.MinValue, ByteVector.FromULong(UInt64.MinValue).ToULong());
+            Assert.AreEqual(0, ByteVector.FromULong(0).ToULong());
+            Assert.AreEqual(30292, ByteVector.FromULong(30292).ToULong());
         }
         
         [Test]
         public void Short()
         {
-            Assert.AreEqual(Int16.MaxValue, ByteVector.FromShort(Int16.MaxValue).ToShort());
-            Assert.AreEqual(Int16.MinValue, ByteVector.FromShort(Int16.MinValue).ToShort());
-            Assert.AreEqual(0, ByteVector.FromShort(0).ToShort());
-            Assert.AreEqual(8009, ByteVector.FromShort(8009).ToShort());
-            Assert.AreEqual(-8009, ByteVector.FromShort(-8009).ToShort());
+            Assert.AreEqual(UInt16.MaxValue, ByteVector.FromUShort(UInt16.MaxValue).ToUShort());
+            Assert.AreEqual(UInt16.MinValue, ByteVector.FromUShort(UInt16.MinValue).ToUShort());
+            Assert.AreEqual(0, ByteVector.FromUShort(0).ToUShort());
+            Assert.AreEqual(8009, ByteVector.FromUShort(8009).ToUShort());
         }
         
         [Test]
         public void FromUri()
         {
-            ByteVector vector = ByteVector.FromUri("samples/vector.bin");
-            Assert.AreEqual(3282169185, vector.CheckSum);
+            ByteVector vector = ByteVector.FromPath("samples/vector.bin");
+            Assert.AreEqual(3282169185, vector.Checksum);
             Assert.AreEqual("1aaa46c484d70c7c80510a5f99e7805d", MD5Hash(vector.Data));
         }
         
@@ -114,14 +112,14 @@ namespace TagLib.CollectionTests
             using(new CodeTimer("Operator Add")) {
                 ByteVector vector = new ByteVector();
                 for(int i = 0; i < 10000; i++) {
-                    vector += ByteVector.FromLong((long)55);
+                    vector += ByteVector.FromULong((ulong)55);
                 }
             }
             
             using(new CodeTimer("Function Add")) {
                 ByteVector vector = new ByteVector();
                 for(int i = 0; i < 10000; i++) {
-                    vector.Add(ByteVector.FromLong((long)55));
+                    vector.Add(ByteVector.FromULong((ulong)55));
                 }
             }
         }

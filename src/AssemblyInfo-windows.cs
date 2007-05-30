@@ -18,13 +18,15 @@
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  *
  *   USA                                                                   *
  ***************************************************************************/
-
+ 
+using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 [assembly:AssemblyVersion("1.9.0.0")]
 [assembly:AssemblyTitle ("TagLib#")]
-[assembly:AssemblyDescription ("A library for reading and writing audio metatags.")]
+[assembly:AssemblyDescription ("A library for reading and writing metatags to audio and video files.")]
 [assembly:AssemblyCopyright ("Copyright (c) 2006-2007 Brian Nickel")]
 [assembly:AssemblyCompany ("")]
 [assembly:AssemblyDelaySign(false)]
+[assembly:CLSCompliant(false)]

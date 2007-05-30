@@ -28,10 +28,10 @@ namespace TagLib.Mpeg
 #region Enums
    public enum Version
    {
-      Unknown    = -1,
-      Version1   =  0, // MPEG Version 1
-      Version2   =  1, // MPEG Version 2
-      Version2_5 =  2  // MPEG Version 2.5
+      Unknown   = -1,
+      Version1  =  0, // MPEG Version 1
+      Version2  =  1, // MPEG Version 2
+      Version25 =  2  // MPEG Version 2.5
    }
 
    public enum ChannelMode
@@ -82,17 +82,17 @@ namespace TagLib.Mpeg
       public static readonly AudioHeader Unknown = new AudioHeader (0,0,0,XingHeader.Unknown);
       
       #region Constructors
-      private AudioHeader (uint flags, long position, long stream_length, XingHeader xing_header)
+      private AudioHeader (uint flags, long position, long streamLength, XingHeader xing_header)
       {
          this.flags = flags;
          this.position = position;
-         this.stream_length = stream_length;
+         this.stream_length = streamLength;
          this.xing_header = xing_header;
       }
       
-      private AudioHeader (ByteVector data, TagLib.File file, long offset)
+      private AudioHeader (ByteVector data, TagLib.File file, long position)
       {
-         position = offset;
+         this.position = position;
          stream_length = 0;
          if (data.Count < 4)
             throw new CorruptFileException ("Insufficient header length.");
@@ -116,10 +116,10 @@ namespace TagLib.Mpeg
          {
             // Check for a Xing header that will help us in gathering
             // information about a VBR stream.
-            file.Seek (offset + XingHeader.XingHeaderOffset (Version, ChannelMode));
+            file.Seek (position + XingHeader.XingHeaderOffset (Version, ChannelMode));
             xing_header = new XingHeader (file.ReadBlock (16));
          }
-         catch
+         catch (CorruptFileException)
          {
          }
       }
@@ -132,7 +132,7 @@ namespace TagLib.Mpeg
          {
             switch ((flags >> 19) & 0x03)
             {
-            case 0:  return Version.Version2_5;
+            case 0:  return Version.Version25;
             case 2:  return Version.Version2;
             default: return Version.Version1;
             }
@@ -220,9 +220,9 @@ namespace TagLib.Mpeg
             builder.Append ("MPEG Version ");
             switch (Version)
             {
-            case Version.Version1:   builder.Append ("1");   break;
-            case Version.Version2:   builder.Append ("2");   break;
-            case Version.Version2_5: builder.Append ("2.5"); break;
+            case Version.Version1:  builder.Append ("1");   break;
+            case Version.Version2:  builder.Append ("2");   break;
+            case Version.Version25: builder.Append ("2.5"); break;
             }
             builder.Append (" Audio, Layer ");
             builder.Append (AudioLayer);
@@ -242,15 +242,18 @@ namespace TagLib.Mpeg
 #endregion
       
 #region Public Methods
-      public void SetStreamLength (long stream_length)
+      public void SetStreamLength (long streamLength)
       {
-         this.stream_length = stream_length;
+         this.stream_length = streamLength;
       }
 #endregion
       
 #region Public Static Methods
       public static bool Find (out AudioHeader header, TagLib.File file, long position, int length)
       {
+         if (file == null)
+            throw new ArgumentNullException ("file");
+         
          long end = position + length;
          
          header = AudioHeader.Unknown;
@@ -273,7 +276,7 @@ namespace TagLib.Mpeg
                   {
                      header = new AudioHeader (buffer.Mid (i, 4), file, position + i);
                      return true;
-                  } catch {}
+                  } catch (CorruptFileException) {}
             
             position += File.BufferSize;
          }

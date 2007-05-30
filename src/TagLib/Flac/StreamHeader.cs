@@ -36,12 +36,15 @@ namespace TagLib.Flac
       
       
       #region Constructors
-      public StreamHeader (ByteVector data, long stream_length)
+      public StreamHeader (ByteVector data, long streamLength)
       {
+         if (data == null)
+            throw new ArgumentNullException ("data");
+         
          if (data.Count < 18)
             throw new CorruptFileException ("Not enough data in FLAC header.");
          
-         this.stream_length = stream_length;
+         this.stream_length = streamLength;
          this.flags = data.Mid (10, 4).ToUInt (true);
          low_length = data.Mid (14, 4).ToUInt (true);
       }

@@ -14,15 +14,15 @@
   </Interfaces>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public VideoHeader (TagLib.File file, long offset);" />
+      <MemberSignature Language="C#" Value="public VideoHeader (TagLib.File file, long position);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="file" Type="TagLib.File" />
-        <Parameter Name="offset" Type="System.Int64" />
+        <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
         <param name="file">A <see cref="T:TagLib.File" /> containing a video header to read.</param>
-        <param name="offset">A <see cref="T:System.Int64" /> specifying where to read from the file.</param>
+        <param name="position">To be added.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg.VideoHeader" /> by reading one from a specified file.</summary>
         <remarks />
       </Docs>

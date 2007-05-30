@@ -32,6 +32,9 @@ namespace TagLib.Flac
       
       public Block (BlockHeader header, ByteVector data, long position)
       {
+         if (data == null)
+            throw new ArgumentNullException ("data");
+         
          this.header   = header;
          this.data     = data;
          this.position = position;
@@ -39,14 +42,16 @@ namespace TagLib.Flac
       
       public Block (BlockType type, ByteVector data)
       {
+         if (data == null)
+            throw new ArgumentNullException ("data");
+         
          this.header   = new BlockHeader (type, (uint) data.Count);
          this.data     = data;
-         this.position = 0;
       }
       
-      public ByteVector Render (bool is_last_block)
+      public ByteVector Render (bool isLastBlock)
       {
-         ByteVector data = header.Render (is_last_block);
+         ByteVector data = header.Render (isLastBlock);
          data.Add (this.data);
          return data;
       }

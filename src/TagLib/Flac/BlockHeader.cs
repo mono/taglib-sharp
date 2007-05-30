@@ -30,7 +30,7 @@ namespace TagLib.Flac
       Padding,
       Application,
       SeekTable,
-      VorbisComment,
+      XiphComment,
       CueSheet,
       Picture
    }
@@ -43,6 +43,9 @@ namespace TagLib.Flac
       
       public BlockHeader (ByteVector data)
       {
+         if (data == null)
+            throw new ArgumentNullException ("data");
+         
          block_type    = (BlockType) (data[0] & 0x7f);
          is_last_block = (data[0] & 0x80) != 0;
          block_length  = data.Mid (1,3).ToUInt ();
@@ -55,10 +58,10 @@ namespace TagLib.Flac
          block_length  = length;
       }
       
-      public ByteVector Render (bool is_last_block)
+      public ByteVector Render (bool isLastBlock)
       {
          ByteVector data = ByteVector.FromUInt (block_length);
-         data [0] = (byte)(block_type + (is_last_block ? 0x80 : 0));
+         data [0] = (byte)(block_type + (isLastBlock ? 0x80 : 0));
          return data;
       }
       

@@ -36,29 +36,55 @@
   </Attributes>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public File (string file, TagLib.ReadStyle properties_style);" />
+      <MemberSignature Language="C#" Value="public File (string path, TagLib.ReadStyle propertiesStyle);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
-        <Parameter Name="file" Type="System.String" />
-        <Parameter Name="properties_style" Type="TagLib.ReadStyle" />
+        <Parameter Name="path" Type="System.String" />
+        <Parameter Name="propertiesStyle" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
-        <param name="file">A file name relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
-        <param name="properties_style">A <see cref="T:TagLib.ReadStyle" /> specifying how to read media properties from the file.</param>
+        <param name="path">To be added.</param>
+        <param name="propertiesStyle">To be added.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ogg.File" /> for a given filename and read style.</summary>
         <remarks>Files should be created using <see cref="M:TagLib.File.Create(System.String,TagLib.ReadStyle)" /> rather than through format specific constructors.</remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public File (string file);" />
+      <MemberSignature Language="C#" Value="public File (string path);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
-        <Parameter Name="file" Type="System.String" />
+        <Parameter Name="path" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="file">A file name relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+        <param name="path">A file name relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ogg.File" /> for a given filename.</summary>
         <remarks>Files should be created using <see cref="M:TagLib.File.Create(System.String)" /> rather than through format specific constructors.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public File (TagLib.File.IFileAbstraction abstraction);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="abstraction" Type="TagLib.File+IFileAbstraction" />
+      </Parameters>
+      <Docs>
+        <param name="abstraction">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public File (TagLib.File.IFileAbstraction abstraction, TagLib.ReadStyle propertiesStyle);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="abstraction" Type="TagLib.File+IFileAbstraction" />
+        <Parameter Name="propertiesStyle" Type="TagLib.ReadStyle" />
+      </Parameters>
+      <Docs>
+        <param name="abstraction">To be added.</param>
+        <param name="propertiesStyle">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

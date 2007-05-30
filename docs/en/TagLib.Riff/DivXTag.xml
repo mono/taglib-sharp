@@ -19,32 +19,21 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public DivXTag (TagLib.Riff.File file, long offset);" />
+      <MemberSignature Language="C#" Value="public DivXTag (TagLib.Riff.File file, long position);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="file" Type="TagLib.Riff.File" />
-        <Parameter Name="offset" Type="System.Int64" />
+        <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
         <param name="file">A <see cref="T:TagLib.Riff.File" /> to read from.</param>
-        <param name="offset">A <see cref="T:System.Int64" /> specifying at what seek position to read.</param>
+        <param name="position">To be added.</param>
         <summary>Constructs and initialize a new instance of <see cref="T:TagLib.Riff.DivXTag" /> by reading if from a file.</summary>
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="FileIdentifier">
-      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector FileIdentifier;" />
-      <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Gets the file identifier used to recongize a DivX tag.</summary>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName="Size">
-      <MemberSignature Language="C#" Value="public static readonly uint Size = 128;" />
+      <MemberSignature Language="C#" Value="public const uint Size = 128;" />
       <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>System.UInt32</ReturnType>
@@ -66,6 +55,18 @@
         <summary>Renders the current instance as a DivX tag.</summary>
         <returns>A <see cref="T:TagLib.ByteVector" /> containing a rendered version of the current instance.</returns>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="FileIdentifier">
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FileIdentifier { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

@@ -1,11 +1,11 @@
 <Type Name="AviHeaderList" FullName="TagLib.Riff.AviHeaderList">
-  <TypeSignature Language="C#" Value="public class AviHeaderList : TagLib.Riff.List" />
+  <TypeSignature Language="C#" Value="public class AviHeaderList" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>TagLib.Riff.List</BaseTypeName>
+    <BaseTypeName>System.Object</BaseTypeName>
   </Base>
   <Interfaces />
   <Members>

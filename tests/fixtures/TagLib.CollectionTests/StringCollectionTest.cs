@@ -5,11 +5,11 @@ using TagLib;
 namespace TagLib.CollectionTests
 {   
     [TestFixture]
-    public class StringListTest
+    public class StringCollectionTest
     {   
-        private static StringList BuildList()
+        private static StringCollection BuildList()
         {
-            StringList list = new StringList();
+            StringCollection list = new StringCollection();
             list.Add("ABC");
             list.Add("DEF");
             list.Add("GHI");
@@ -25,7 +25,7 @@ namespace TagLib.CollectionTests
         [Test]
         public void Remove()
         {
-            StringList list = BuildList();
+            StringCollection list = BuildList();
             list.Remove("DEF");
             Assert.AreEqual("ABCGHI", list.ToString(String.Empty));
         }
@@ -33,7 +33,7 @@ namespace TagLib.CollectionTests
         [Test]
         public void Insert()
         {
-            StringList list = BuildList();
+            StringCollection list = BuildList();
             list.Insert(1, "QUACK");
             Assert.AreEqual("ABC,QUACK,DEF,GHI", list.ToString(","));
         }
@@ -41,7 +41,7 @@ namespace TagLib.CollectionTests
         [Test]
         public void Contains()
         {
-            StringList list = BuildList();
+            StringCollection list = BuildList();
             Assert.IsTrue(list.Contains("DEF"));
             Assert.IsFalse(list.Contains("CDEFG"));
         }

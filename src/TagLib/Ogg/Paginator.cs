@@ -5,13 +5,13 @@ namespace TagLib.Ogg
 {
 	public class Paginator
 	{
-      private ByteVectorList packets;
+      private ByteVectorCollection packets;
       private PageHeader? first_page_header;
       private Codec codec;
       
 		public Paginator (Codec codec)
 		{
-         packets = new ByteVectorList ();
+         packets = new ByteVectorCollection ();
          first_page_header = null;
          this.codec = codec;
 		}

@@ -73,37 +73,20 @@
       </Docs>
     </Member>
     <Member MemberName="GetDuration">
-      <MemberSignature Language="C#" Value="public abstract TimeSpan GetDuration (long first_granular_position, long last_granular_position);" />
+      <MemberSignature Language="C#" Value="public abstract TimeSpan GetDuration (long firstGranularPosition, long lastGranularPosition);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.TimeSpan</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="first_granular_position" Type="System.Int64" />
-        <Parameter Name="last_granular_position" Type="System.Int64" />
+        <Parameter Name="firstGranularPosition" Type="System.Int64" />
+        <Parameter Name="lastGranularPosition" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="first_granular_position">A <see cref="T:System.Int64" /> containing the last granular position found in the stream.</param>
-        <param name="last_granular_position">A <see cref="T:System.Int64" /> containing the last granular position found in the stream.</param>
+        <param name="firstGranularPosition">To be added.</param>
+        <param name="lastGranularPosition">To be added.</param>
         <summary>Gets the duration of the stream represented by the current instance by providing the first and last granular position.</summary>
         <returns>A <see cref="T:System.TimeSpan" /> containing the duration of the current instance.</returns>
-        <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName="SetCommentPacket">
-      <MemberSignature Language="C#" Value="public abstract void SetCommentPacket (TagLib.ByteVectorList packets, TagLib.Ogg.XiphComment comment);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="packets" Type="TagLib.ByteVectorList" />
-        <Parameter Name="comment" Type="TagLib.Ogg.XiphComment" />
-      </Parameters>
-      <Docs>
-        <param name="packets">A <see cref="T:TagLib.ByteVectorList" /> containing a collection of OGG packets specific to the current instance.</param>
-        <param name="comment">A <See cref="T:TagLib.Ogg.XiphComment" /> whose data is to be stored in the packet list.</param>
-        <summary>Stores a Vorbis Comment in a list of OGG packets.</summary>
         <remarks />
       </Docs>
     </Member>
@@ -154,6 +137,23 @@
         <summary>Gets the duration of the current instance.</summary>
         <value>Always <see cref="F:System.TimeSpan.Zero" />.</value>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="SetCommentPacket">
+      <MemberSignature Language="C#" Value="public abstract void SetCommentPacket (TagLib.ByteVectorCollection packets, TagLib.Ogg.XiphComment comment);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="packets" Type="TagLib.ByteVectorCollection" />
+        <Parameter Name="comment" Type="TagLib.Ogg.XiphComment" />
+      </Parameters>
+      <Docs>
+        <param name="packets">To be added.</param>
+        <param name="comment">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

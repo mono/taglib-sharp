@@ -34,6 +34,9 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       public UnknownObject (Asf.File file, long position) : base (file, position)
       {
+         if (file == null)
+            throw new System.ArgumentNullException ("file");
+         
          data = file.ReadBlock ((int) (OriginalSize - 24));
       }
       
