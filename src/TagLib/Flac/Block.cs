@@ -26,18 +26,19 @@ namespace TagLib.Flac
 {
    public class Block
    {
-      private BlockHeader header;
-      private ByteVector  data;
-      private long        position;
+      private BlockHeader _header;
+      private ByteVector  _data;
       
-      public Block (BlockHeader header, ByteVector data, long position)
+      public Block (BlockHeader header, ByteVector data)
       {
          if (data == null)
             throw new ArgumentNullException ("data");
          
-         this.header   = header;
-         this.data     = data;
-         this.position = position;
+         if (header.BlockSize != data.Count)
+            throw new CorruptFileException ("Data count not equal to block size.");
+         
+         _header = header;
+         _data   = data;
       }
       
       public Block (BlockType type, ByteVector data)
@@ -45,23 +46,28 @@ namespace TagLib.Flac
          if (data == null)
             throw new ArgumentNullException ("data");
          
-         this.header   = new BlockHeader (type, (uint) data.Count);
-         this.data     = data;
+         _header = new BlockHeader (type, (uint) data.Count);
+         
+         if (_header.BlockSize != data.Count)
+            throw new CorruptFileException ("Data count not equal to block size.");
+         
+         _data   = data;
       }
       
       public ByteVector Render (bool isLastBlock)
       {
-         ByteVector data = header.Render (isLastBlock);
-         data.Add (this.data);
+         if (_data == null)
+            throw new InvalidOperationException ("Cannot render empty blocks.");
+         
+         ByteVector data = _header.Render (isLastBlock);
+         data.Add (_data);
          return data;
       }
       
-      public BlockType   Type              {get {return header.BlockType;}}
-      public bool        IsLastBlock       {get {return header.IsLastBlock;}}
-      public uint        Length            {get {return header.BlockLength;}}
-      public uint        TotalLength       {get {return Length + 4;}}
-      public ByteVector  Data              {get {return data;}}
-      public long        Position          {get {return position;}}
-      public long        NextBlockPosition {get {return Position + BlockHeader.Length + header.BlockLength;}}
+      public   BlockType   Type        {get {return _header.BlockType;}}
+      public   bool        IsLastBlock {get {return _header.IsLastBlock;}}
+      public   uint        Size        {get {return _header.BlockSize;}}
+      public   uint        TotalSize   {get {return Size + BlockHeader.Size;}}
+      public   ByteVector  Data        {get {return _data;}}
    }
 }

@@ -25,14 +25,14 @@ namespace TagLib.Flac
 {
    public class Picture : IPicture
    {
-      private PictureType type;
-      private string mime_type;
-      private string description;
-      private int width = 0;
-      private int height = 0;
-      private int color_depth = 0;
-      private int indexed_colors = 0;
-      private ByteVector data;
+      private PictureType _type;
+      private string      _mimetype;
+      private string      _description;
+      private int         _width = 0;
+      private int         _height = 0;
+      private int         _color_depth = 0;
+      private int         _indexed_colors = 0;
+      private ByteVector  _data;
       
       public Picture (ByteVector data)
       {
@@ -43,55 +43,56 @@ namespace TagLib.Flac
             throw new CorruptFileException ("Data must be at least 32 bytes long");
          
          int pos = 0;
-         type = (PictureType) data.Mid (pos, 4).ToUInt ();
+         _type = (PictureType) data.Mid (pos, 4).ToUInt ();
          pos += 4;
          
-         int mime_type_length = (int) data.Mid (pos, 4).ToUInt ();
+         int mimetype_length = (int) data.Mid (pos, 4).ToUInt ();
          pos += 4;
          
-         mime_type = data.Mid (pos, mime_type_length).ToString (StringType.Latin1);
-         pos += mime_type_length;
+         _mimetype = data.Mid (pos, mimetype_length).ToString (StringType.Latin1);
+         pos += mimetype_length;
          
          int description_length = (int) data.Mid (pos, 4).ToUInt ();
          pos += 4;
          
-         description = data.Mid (pos, description_length).ToString (StringType.UTF8);
+         _description = data.Mid (pos, description_length).ToString (StringType.UTF8);
          pos += description_length;
          
-         width = (int) data.Mid (pos, 4).ToUInt ();
+         _width = (int) data.Mid (pos, 4).ToUInt ();
          pos += 4;
          
-         height = (int) data.Mid (pos, 4).ToUInt ();
+         _height = (int) data.Mid (pos, 4).ToUInt ();
          pos += 4;
          
-         color_depth = (int) data.Mid (pos, 4).ToUInt ();
+         _color_depth = (int) data.Mid (pos, 4).ToUInt ();
          pos += 4;
          
-         indexed_colors = (int) data.Mid (pos, 4).ToUInt ();
+         _indexed_colors = (int) data.Mid (pos, 4).ToUInt ();
          pos += 4;
          
          int data_length = (int) data.Mid (pos, 4).ToUInt ();
          pos += 4;
          
-         this.data = data.Mid (pos, data_length);
+         _data = data.Mid (pos, data_length);
       }
       
       public Picture (IPicture picture)
       {
          if (picture == null)
             throw new ArgumentNullException ("picture");
-         this.type = picture.Type;
-         this.mime_type = picture.MimeType;
-         this.description = picture.Description;
-         this.data = picture.Data;
+         
+         _type        = picture.Type;
+         _mimetype    = picture.MimeType;
+         _description = picture.Description;
+         _data        = picture.Data;
          
          TagLib.Flac.Picture flac_picture = picture as TagLib.Flac.Picture;
          if (flac_picture != null)
          {
-            this.width          = flac_picture.Width;
-            this.height         = flac_picture.Height;
-            this.color_depth    = flac_picture.ColorDepth;
-            this.indexed_colors = flac_picture.IndexedColors;
+            _width          = flac_picture.Width;
+            _height         = flac_picture.Height;
+            _color_depth    = flac_picture.ColorDepth;
+            _indexed_colors = flac_picture.IndexedColors;
          }
       }
       
@@ -120,13 +121,13 @@ namespace TagLib.Flac
          return data;
       }
       
-      public PictureType Type          {get {return type;}           set {type = value;}}
-      public string      MimeType      {get {return mime_type;}      set {mime_type = value;}}
-      public string      Description   {get {return description;}    set {description = value;}}
-      public int         Width         {get {return width;}          set {width = value;}}
-      public int         Height        {get {return height;}         set {height = value;}}
-      public int         ColorDepth    {get {return color_depth;}    set {color_depth = value;}}
-      public int         IndexedColors {get {return indexed_colors;} set {indexed_colors = value;}}
-      public ByteVector  Data          {get {return data;}           set {data = value;}}
+      public PictureType Type          {get {return _type;}           set {_type = value;}}
+      public string      MimeType      {get {return _mimetype;}       set {_mimetype = value;}}
+      public string      Description   {get {return _description;}    set {_description = value;}}
+      public int         Width         {get {return _width;}          set {_width = value;}}
+      public int         Height        {get {return _height;}         set {_height = value;}}
+      public int         ColorDepth    {get {return _color_depth;}    set {_color_depth = value;}}
+      public int         IndexedColors {get {return _indexed_colors;} set {_indexed_colors = value;}}
+      public ByteVector  Data          {get {return _data;}           set {_data = value;}}
    }
 }

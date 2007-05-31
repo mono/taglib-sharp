@@ -37,38 +37,40 @@ namespace TagLib.Flac
    
    public struct BlockHeader
    {
-      private BlockType block_type;
-      private bool      is_last_block;
-      private uint      block_length;
+      private BlockType _block_type;
+      private bool      _is_last_block;
+      private uint      _block_size;
       
       public BlockHeader (ByteVector data)
       {
          if (data == null)
             throw new ArgumentNullException ("data");
          
-         block_type    = (BlockType) (data[0] & 0x7f);
-         is_last_block = (data[0] & 0x80) != 0;
-         block_length  = data.Mid (1,3).ToUInt ();
+         if (data.Count < Size)
+            throw new CorruptFileException ("Not enough data in Flac header.");
+         _block_type    = (BlockType) (data[0] & 0x7f);
+         _is_last_block = (data[0] & 0x80) != 0;
+         _block_size    = data.Mid (1,3).ToUInt ();
       }
       
-      public BlockHeader (BlockType type, uint length)
+      public BlockHeader (BlockType type, uint blockSize)
       {
-         block_type    = type;
-         is_last_block = false;
-         block_length  = length;
+         _block_type    = type;
+         _is_last_block = false;
+         _block_size    = blockSize;
       }
       
       public ByteVector Render (bool isLastBlock)
       {
-         ByteVector data = ByteVector.FromUInt (block_length);
-         data [0] = (byte)(block_type + (isLastBlock ? 0x80 : 0));
+         ByteVector data = ByteVector.FromUInt (_block_size);
+         data [0] = (byte)(_block_type + (isLastBlock ? 0x80 : 0));
          return data;
       }
       
-      public static uint Length    {get {return 4;}}
+      public const uint Size = 4;
       
-      public BlockType BlockType   {get {return block_type;}}
-      public bool      IsLastBlock {get {return is_last_block;}}
-      public uint      BlockLength {get {return block_length;}}
+      public BlockType BlockType   {get {return _block_type;}}
+      public bool      IsLastBlock {get {return _is_last_block;}}
+      public uint      BlockSize   {get {return _block_size;}}
    }
 }

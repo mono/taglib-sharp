@@ -1,45 +1,45 @@
 namespace TagLib.Mpeg4
 {
-   public static class BoxTypes
-   {
-      public static ByteVector Aart {get {return "aART";}}
-      public static ByteVector Alb  {get {return AppleTag.FixId ("alb");}}
-      public static ByteVector Art  {get {return AppleTag.FixId ("ART");}}
-      public static ByteVector Cmt  {get {return AppleTag.FixId ("cmt");}}
-      public static ByteVector Cond {get {return "cond";}}
-      public static ByteVector Covr {get {return "covr";}}
-      public static ByteVector Co64 {get {return "co64";}}
-      public static ByteVector Cpil {get {return "cpil";}}
-      public static ByteVector Cprt {get {return "cprt";}}
-      public static ByteVector Data {get {return "data";}}
-      public static ByteVector Day  {get {return AppleTag.FixId ("day");}}
-      public static ByteVector Disk {get {return "disk";}}
-      public static ByteVector Esds {get {return "esds";}}
-      public static ByteVector Ilst {get {return "ilst";}}
-      public static ByteVector Free {get {return "free";}}
-      public static ByteVector Gen  {get {return AppleTag.FixId ("gen");}}
-      public static ByteVector Gnre {get {return "gnre";}}
-      public static ByteVector Grp  {get {return AppleTag.FixId("grp");}}
-      public static ByteVector Hdlr {get {return "hdlr";}}
-      public static ByteVector Lyr  {get {return AppleTag.FixId ("lyr");}}
-      public static ByteVector Mdia {get {return "mdia";}}
-      public static ByteVector Meta {get {return "meta";}}
-      public static ByteVector Mean {get {return "mean";}}
-      public static ByteVector Minf {get {return "minf";}}
-      public static ByteVector Moov {get {return "moov";}}
-      public static ByteVector Mvhd {get {return "mvhd";}}
-      public static ByteVector Nam  {get {return AppleTag.FixId ("nam");}}
-      public static ByteVector Name {get {return "name";}}
-      public static ByteVector Skip {get {return "skip";}}
-      public static ByteVector Stbl {get {return "stbl";}}
-      public static ByteVector Stco {get {return "stco";}}
-      public static ByteVector Stsd {get {return "stsd";}}
-      public static ByteVector Tmpo {get {return "tmpo";}}
-      public static ByteVector Trak {get {return "trak";}}
-      public static ByteVector Trkn {get {return "trkn";}}
-      public static ByteVector Udta {get {return "udta";}}
-      public static ByteVector Uuid {get {return "uuid";}}
-      public static ByteVector Wrt  {get {return AppleTag.FixId ("wrt");}}
-      public static ByteVector DASH {get {return "----";}}
-   }
+	public static class BoxTypes
+	{
+      public static readonly ByteVector Aart = "aART";
+	   public static readonly ByteVector Alb  = AppleTag.FixId ("alb");
+	   public static readonly ByteVector Art  = AppleTag.FixId ("ART");
+	   public static readonly ByteVector Cmt  = AppleTag.FixId ("cmt");
+	   public static readonly ByteVector Cond = "cond";
+	   public static readonly ByteVector Covr = "covr";
+	   public static readonly ByteVector Co64 = "co64";
+	   public static readonly ByteVector Cpil = "cpil";
+	   public static readonly ByteVector Cprt = "cprt";
+	   public static readonly ByteVector Data = "data";
+	   public static readonly ByteVector Day  = AppleTag.FixId ("day");
+	   public static readonly ByteVector Disk = "disk";
+	   public static readonly ByteVector Esds = "esds";
+	   public static readonly ByteVector Ilst = "ilst";
+	   public static readonly ByteVector Free = "free";
+	   public static readonly ByteVector Gen  = AppleTag.FixId ("gen");
+	   public static readonly ByteVector Gnre = "gnre";
+	   public static readonly ByteVector Grp  = AppleTag.FixId("grp");
+	   public static readonly ByteVector Hdlr = "hdlr";
+	   public static readonly ByteVector Lyr  = AppleTag.FixId ("lyr");
+	   public static readonly ByteVector Mdia = "mdia";
+	   public static readonly ByteVector Meta = "meta";
+	   public static readonly ByteVector Mean = "mean";
+	   public static readonly ByteVector Minf = "minf";
+	   public static readonly ByteVector Moov = "moov";
+	   public static readonly ByteVector Mvhd = "mvhd";
+	   public static readonly ByteVector Nam  = AppleTag.FixId ("nam");
+	   public static readonly ByteVector Name = "name";
+	   public static readonly ByteVector Skip = "skip";
+	   public static readonly ByteVector Stbl = "stbl";
+	   public static readonly ByteVector Stco = "stco";
+	   public static readonly ByteVector Stsd = "stsd";
+	   public static readonly ByteVector Tmpo = "tmpo";
+	   public static readonly ByteVector Trak = "trak";
+	   public static readonly ByteVector Trkn = "trkn";
+	   public static readonly ByteVector Udta = "udta";
+	   public static readonly ByteVector Uuid = "uuid";
+	   public static readonly ByteVector Wrt  = AppleTag.FixId ("wrt");
+	   public static readonly ByteVector DASH = "----";
+	}
 }

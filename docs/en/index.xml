@@ -15,7 +15,7 @@
           <AttributeName>System.Reflection.AssemblyCopyright("Copyright (c) 2006-2007 Brian Nickel")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyDescription("A library for reading and writing audio metatags.")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyDescription("A library for reading and writing metatags to audio and video files.")</AttributeName>
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyTitle("TagLib#")</AttributeName>
@@ -35,7 +35,6 @@
       <Type Name="File+IFileAbstraction" />
       <Type Name="File+FileTypeResolver" />
       <Type Name="File+AccessMode" />
-      <Type Name="IntList" />
       <Type Name="Picture" />
       <Type Name="SupportedMimeType" />
       <Type Name="Tag" />

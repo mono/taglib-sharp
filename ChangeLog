@@ -1,5 +1,23 @@
 2007-05-30  Brian Nickel <brian.nickel@gmail.com>
 
+        Redid a lot of the internals of FLAC to make them cleaner. Reverted the
+        change to TagLib.Mpeg4.BoxTypes. The change was safer but slowed things
+        down by 1.7329ms. Perhaps the addition of a superclass,
+        ImmutableByteVector, would help.
+        
+	* src/TagLib/Flac/Picture.cs
+	* src/TagLib/Flac/File.cs
+	* src/TagLib/Flac/BlockHeader.cs
+	* src/TagLib/Flac/Block.cs
+	* src/TagLib/Mpeg4/BoxTypes.cs
+	* docs/en/index.xml
+	* docs/en/TagLib.Flac/Metadata.xml
+	* docs/en/TagLib.Flac/BlockHeader.xml
+	* docs/en/TagLib.Flac/Block.xml
+	* docs/en/TagLib.Mpeg4/BoxTypes.xml:
+
+2007-05-30  Brian Nickel <brian.nickel@gmail.com>
+
 	Major API changes. The API has been changed a bunch to accommodate
 	Microsoft naming rules, globalization rules, etc. Hundreds of issues
 	brought to light by FxCop. Nothing like throwing a hundred

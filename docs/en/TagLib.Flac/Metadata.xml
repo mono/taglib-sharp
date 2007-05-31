@@ -1,23 +1,14 @@
 <Type Name="Metadata" FullName="TagLib.Flac.Metadata">
-  <TypeSignature Language="C#" Value="public class Metadata : TagLib.Tag" />
+  <TypeSignature Language="C#" Value="public class Metadata : TagLib.CombinedTag" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>1.9.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>TagLib.Tag</BaseTypeName>
+    <BaseTypeName>TagLib.CombinedTag</BaseTypeName>
   </Base>
   <Interfaces />
   <Members>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Metadata ();" />
-      <MemberType>Constructor</MemberType>
-      <Parameters />
-      <Docs>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Flac.Metadata" />.</summary>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName="Clear">
       <MemberSignature Language="C#" Value="public void Clear ();" />
       <MemberType>Method</MemberType>
@@ -28,6 +19,48 @@
       <Docs>
         <summary>Clears all the non-essential metadata contained in the current instance.</summary>
         <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Metadata (System.Collections.Generic.List&lt;TagLib.Flac.Block&gt; blocks);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="blocks" Type="System.Collections.Generic.List&lt;TagLib.Flac.Block&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="blocks">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetComment">
+      <MemberSignature Language="C#" Value="public TagLib.Ogg.XiphComment GetComment (bool create, TagLib.Tag copy);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.Ogg.XiphComment</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="create" Type="System.Boolean" />
+        <Parameter Name="copy" Type="TagLib.Tag" />
+      </Parameters>
+      <Docs>
+        <param name="create">To be added.</param>
+        <param name="copy">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RemoveComment">
+      <MemberSignature Language="C#" Value="public void RemoveComment ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

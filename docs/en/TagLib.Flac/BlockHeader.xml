@@ -22,15 +22,15 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public BlockHeader (TagLib.Flac.BlockType type, uint length);" />
+      <MemberSignature Language="C#" Value="public BlockHeader (TagLib.Flac.BlockType type, uint blockSize);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="type" Type="TagLib.Flac.BlockType" />
-        <Parameter Name="length" Type="System.UInt32" />
+        <Parameter Name="blockSize" Type="System.UInt32" />
       </Parameters>
       <Docs>
         <param name="type">A <see cref="T:TagLib.Flac.BlockType" /> specifying the block type of the new instance.</param>
-        <param name="length">A <see cref="T:System.UInt32" /> specifying the block length of the new instance.</param>
+        <param name="blockSize">To be added.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Flac.BlockHeader" /> with a specific type and length.</summary>
         <remarks />
       </Docs>
@@ -48,18 +48,6 @@
         <param name="isLastBlock">A <see cref="T:System.Boolean" /> specifying whether or not the block represented by the current instance is the last in the set.</param>
         <summary>Renders the current instance as a FLAC block header.</summary>
         <returns>A new <see cref="T:TagLib.ByteVector" /> containing the rendered version of the current instance.</returns>
-        <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName="Length">
-      <MemberSignature Language="C#" Value="public static uint Length { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.UInt32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Gets the length of a block header.</summary>
-        <value>Always 4.</value>
         <remarks />
       </Docs>
     </Member>
@@ -87,16 +75,28 @@
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="BlockLength">
-      <MemberSignature Language="C#" Value="public uint BlockLength { get; };" />
+    <Member MemberName="BlockSize">
+      <MemberSignature Language="C#" Value="public uint BlockSize { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>Gets the length of the block represented by the current instance.</summary>
-        <value>A <see cref="T:TagLib.Flac.BlockType" /> containing the length of the block represented by the current instance.</value>
-        <remarks />
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Size">
+      <MemberSignature Language="C#" Value="public const uint Size = 4;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <MemberValue>4</MemberValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
       </Docs>
     </Member>
   </Members>

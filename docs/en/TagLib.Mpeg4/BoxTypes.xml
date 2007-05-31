@@ -9,472 +9,461 @@
   </Base>
   <Interfaces />
   <Members>
-    <Member MemberName="Aart">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Aart { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName="Alb">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Alb { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Alb;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Album (iTunes)</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Art">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Art { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Art;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Artist (iTunes)</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Cmt">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Cmt { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Cmt;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Co64">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Co64 { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Cond">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Cond { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Comment (iTunes)</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Covr">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Covr { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Covr;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Cover (iTunes)</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Co64">
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Co64;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>ChunkLargeOffsetBox</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Cpil">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Cpil { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Cpil;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Cprt">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Cprt { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="DASH">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector DASH { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Compilation (iTunes)</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Data">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Data { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Data;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>
+          <see cref="T:TagLib.Mpeg4.AppleDataBox" />
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Day">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Day { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Day;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Date (iTunes)</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Disk">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Disk { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Disk;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Disc number and count (iTunes)</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Esds">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Esds { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Esds;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Free">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Free { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Gen">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Gen { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Gnre">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Gnre { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Grp">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Grp { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Hdlr">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Hdlr { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>
+          <see cref="T:TagLib.Mpeg4.AppleElementaryStreamDescriptor" />
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Ilst">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Ilst { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Ilst;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>
+          <see cref="T:TagLib.Mpeg4.AppleElementaryStreamDescriptor" />
+        </summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Free">
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Free;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <see cref="T:TagLib.Mpeg4.IsoFreeSpaceBox" />
+        </summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Gen">
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Gen;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Genre (iTunes)</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Gnre">
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Gnre;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Genre Index (iTunes)</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Hdlr">
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Hdlr;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <see cref="T:TagLib.Mpeg4.IsoHandlerBox" />
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Lyr">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Lyr { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Lyr;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Lyrics (iTunes)</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Mdia">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Mdia { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Mdia;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Mean">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Mean { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Unspecified.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Meta">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Meta { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Meta;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>
+          <see cref="T:TagLib.Mpeg4.IsoMetaBox" />
+        </summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Mean">
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Mean;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+          <see cref="T:TagLib.Mpeg4.AppleAdditionalInfoBox" />
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Minf">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Minf { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Minf;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Unspecified.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Moov">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Moov { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Moov;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Unspecified.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Mvhd">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Mvhd { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Mvhd;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>
+          <see cref="T:TagLib.Mpeg4.IsoMovieHeaderBox" />
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Nam">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Nam { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Nam;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Name (iTunes)</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Name">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Name { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Name;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>
+          <see cref="T:TagLib.Mpeg4.AppleAdditionalInfoBox" />
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Skip">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Skip { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Skip;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>
+          <see cref="T:TagLib.Mpeg4.IsoFreeSpaceBox" />
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Stbl">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Stbl { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Stbl;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>
+          <see cref="T:TagLib.Mpeg4.IsoSampleTableBox" />
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Stco">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Stco { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Stco;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>
+          <see cref="T:TagLib.Mpeg4.IsoChunkOffsetBox" />
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Stsd">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Stsd { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Stsd;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Tmpo">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Tmpo { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>
+          <see cref="T:TagLib.Mpeg4.IsoSampleDescriptionBox" />
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Trak">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Trak { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Trak;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Unspecified.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Trkn">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Trkn { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Trkn;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Track number and count (iTunes)</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Udta">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Udta { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Udta;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>
+          <see cref="T:TagLib.Mpeg4.IsoUserDataBox" />
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Uuid">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Uuid { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Uuid;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Unspecified.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Wrt">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector Wrt { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Wrt;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Composer (iTunes)</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="DASH">
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector DASH;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Custom data boxes.</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Aart">
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Aart;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Album artist (iTunes)</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Cond">
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Cond;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Conductor (iTunes)</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Cprt">
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Cprt;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Copyright (iTunes)</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Grp">
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Grp;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Grouping (iTunes)</summary>
+        <remarks />
+      </Docs>
+    </Member>
+    <Member MemberName="Tmpo">
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ByteVector Tmpo;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Tempo (iTunes)</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
