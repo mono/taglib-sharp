@@ -540,12 +540,18 @@ namespace TagLib.Mpeg4
       //////////////////////////////////////////////////////////////////////////
       // private methods
       //////////////////////////////////////////////////////////////////////////
-      internal static ByteVector FixId (ByteVector v)
+      internal static ReadOnlyByteVector FixId (ByteVector v)
       {
-         // IF we have a three byte type (like "wrt"), add the extra byte.
-         if (v.Count == 3)
-            v.Insert (0, 0xa9);
-         return v;
+      	if (v.Count == 4)
+         {
+            if (v is ReadOnlyByteVector)
+               return v as ReadOnlyByteVector;
+      		return new ReadOnlyByteVector (v);
+      	}
+      	if (v.Count == 3)
+            return new ReadOnlyByteVector (0xa9, v [0], v [1], v [2]);
+         
+         return null;
       }
    }
 }

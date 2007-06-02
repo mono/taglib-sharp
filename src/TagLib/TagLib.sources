@@ -103,10 +103,10 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/WavPack/File.cs \
 	$(srcdir)/TagLib/WavPack/StreamHeader.cs \
 	$(srcdir)/TagLib/ICodec.cs \
-	$(srcdir)/TagLib/IntList.cs \
 	$(srcdir)/TagLib/Tag.cs \
-	$(srcdir)/TagLib/ByteVectorList.cs \
+	$(srcdir)/TagLib/ReadOnlyByteVector.cs \
 	$(srcdir)/TagLib/ByteVector.cs \
+	$(srcdir)/TagLib/ByteVectorList.cs \
 	$(srcdir)/TagLib/CombinedTag.cs \
 	$(srcdir)/TagLib/Genres.cs \
 	$(srcdir)/TagLib/Properties.cs \

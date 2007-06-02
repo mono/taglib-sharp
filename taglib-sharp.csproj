@@ -43,6 +43,7 @@
     <Compile Include="src\AssemblyInfo-windows.cs" />
     <Compile Include="src\TagLib\Tag.cs" />
     <Compile Include="src\TagLib\ByteVector.cs" />
+    <Compile Include="src\TagLib\ReadOnlyByteVector.cs" />
     <Compile Include="src\TagLib\ByteVectorList.cs" />
     <Compile Include="src\TagLib\CombinedTag.cs" />
     <Compile Include="src\TagLib\File.cs" />

@@ -1137,7 +1137,7 @@
       </Docs>
     </Member>
     <Member MemberName="IsReadOnly">
-      <MemberSignature Language="C#" Value="public bool IsReadOnly { get; };" />
+      <MemberSignature Language="C#" Value="public virtual bool IsReadOnly { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -1149,7 +1149,7 @@
       </Docs>
     </Member>
     <Member MemberName="IsFixedSize">
-      <MemberSignature Language="C#" Value="public bool IsFixedSize { get; };" />
+      <MemberSignature Language="C#" Value="public virtual bool IsFixedSize { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>

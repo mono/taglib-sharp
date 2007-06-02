@@ -15,7 +15,7 @@
           <AttributeName>System.Reflection.AssemblyCopyright("Copyright (c) 2006-2007 Brian Nickel")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyDescription("A library for reading and writing metatags to audio and video files.")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyDescription("A library for reading and writing audio metatags.")</AttributeName>
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyTitle("TagLib#")</AttributeName>
@@ -51,11 +51,10 @@
       <Type Name="ICodec" />
       <Type Name="IAudioCodec" />
       <Type Name="IVideoCodec" />
-      <Type Name="Debugger" />
       <Type Name="StringCollection" />
-      <Type Name="Debugger+DebugMessageSentHandler" />
       <Type Name="ByteVectorCollection" />
       <Type Name="File+LocalFileAbstraction" />
+      <Type Name="ReadOnlyByteVector" />
     </Namespace>
     <Namespace Name="TagLib.Ape">
       <Type Name="Footer" />

@@ -1,3 +1,23 @@
+2007-06-01  Brian Nickel <brian.nickel@gmail.com>
+
+	+-------------+
+	| VERSON BUMP |
+	|  1.9.99995  |
+	+-------------+
+
+	* examples/SetPictures.cs: Fix for API changes.
+	* src/TagLib/ByteVector.cs:
+	* src/TagLib/Mpeg4/AppleTag.cs:
+	* src/TagLib/Mpeg4/BoxTypes.cs:
+	* src/TagLib/TagLib.sources:
+	* src/TagLib/ReadOnlyByteVector.cs:
+	* src/taglib-sharp.mdp:
+	* docs/en/TagLib/ReadOnlyByteVector.xml:
+	* docs/en/TagLib/ByteVector.xml:
+	* docs/en/index.xml:
+	* docs/en/TagLib.Mpeg4/BoxTypes.xml:
+	* taglib-sharp.csproj: Add immutable ReadOnlyByteVector.
+
 2007-05-30  Brian Nickel <brian.nickel@gmail.com>
 
         Redid a lot of the internals of FLAC to make them cleaner. Reverted the

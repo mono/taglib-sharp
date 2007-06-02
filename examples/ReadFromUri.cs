@@ -70,7 +70,7 @@ public class ReadFromUri
                     TagLib.IAudioCodec acodec = codec as TagLib.IAudioCodec;
                     TagLib.IVideoCodec vcodec = codec as TagLib.IVideoCodec;
                 
-                    if (acodec != null && (acodec.MediaTypes & TagLib.MediaTypes.Audio) != TagLib.MediaTypes.Unknown)
+                    if (acodec != null && (acodec.MediaTypes & TagLib.MediaTypes.Audio) != TagLib.MediaTypes.None)
                     {
                         Console.WriteLine("Audio Properties : " + acodec.Description);
                         Console.WriteLine("Bitrate:    " + acodec.AudioBitrate);
@@ -78,7 +78,7 @@ public class ReadFromUri
                         Console.WriteLine("Channels:   " + acodec.AudioChannels + "\n");
                     }
                 
-                    if (vcodec != null && (vcodec.MediaTypes & TagLib.MediaTypes.Video) != TagLib.MediaTypes.Unknown)
+                    if (vcodec != null && (vcodec.MediaTypes & TagLib.MediaTypes.Video) != TagLib.MediaTypes.None)
                     {
                         Console.WriteLine("Video Properties : " + vcodec.Description);
                         Console.WriteLine("Width:      " + vcodec.VideoWidth);
@@ -86,7 +86,7 @@ public class ReadFromUri
                     }
                 }
                 
-                if (file.Properties.MediaTypes != TagLib.MediaTypes.Unknown)
+                if (file.Properties.MediaTypes != TagLib.MediaTypes.None)
                     Console.WriteLine("Length:     " + file.Properties.Duration + "\n");
                 
                 IPicture [] pictures = file.Tag.Pictures;
