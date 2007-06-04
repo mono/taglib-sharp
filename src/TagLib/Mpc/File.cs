@@ -27,6 +27,7 @@ namespace TagLib.MusePack
 {
    [SupportedMimeType("taglib/mpc", "mpc")]
    [SupportedMimeType("taglib/mp+", "mp+")]
+   [SupportedMimeType("taglib/mpp", "mpp")]
    [SupportedMimeType("audio/x-musepack")]
    public class File : TagLib.NonContainer.File
    {

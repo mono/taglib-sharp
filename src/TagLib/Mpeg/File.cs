@@ -261,11 +261,11 @@ namespace TagLib.Mpeg
             data = ReadBlock (5);
             high = (double) ((data [0] >> 3) & 0x01);
             
-            low = (uint) ((((data [0] >> 1) & 0x03) << 30)
-                        |   (data [1] << 22)
-                        |  ((data [2] >> 1) << 15)
-                        |   (data [3] << 7)
-                        |   (data [4] << 1));
+            low = ((uint)((data [0] >> 1) & 0x03) << 30)
+                |  (uint) (data [1] << 22)
+                |  (uint)((data [2] >> 1) << 15)
+                |  (uint) (data [3] << 7)
+                |  (uint) (data [4] << 1);
          }
          else
          {
@@ -273,13 +273,13 @@ namespace TagLib.Mpeg
             
             high = (double) ((data [0] & 0x20) >> 5);
 
-            low = (uint) ((((data [0] & 0x18) >> 3) << 30)
-                        |  ((data [0] & 0x03) << 28)
-                        |   (data [1] << 20)
-                        |  ((data [2] & 0xF8) << 12)
-                        |  ((data [2] & 0x03) << 13)
-                        |   (data [3] << 5)
-                        |   (data [4] >> 3));
+            low = ((uint) ((data [0] & 0x18) >> 3) << 30)
+                |  (uint) ((data [0] & 0x03) << 28)
+                |  (uint)  (data [1] << 20)
+                |  (uint) ((data [2] & 0xF8) << 12)
+                |  (uint) ((data [2] & 0x03) << 13)
+                |  (uint)  (data [3] << 5)
+                |  (uint)  (data [4] >> 3);
          }
          
          return (((high * 0x10000) * 0x10000) + low) / 90000.0;

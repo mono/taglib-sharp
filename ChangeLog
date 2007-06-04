@@ -1,3 +1,8 @@
+2007-06-04  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Mpeg/File.cs: Prevent overflow.
+	* src/TagLib/Mpc/File.cs: Add support for "mpp" extention.
+
 2007-06-01  Brian Nickel <brian.nickel@gmail.com>
 
 	+-------------+
