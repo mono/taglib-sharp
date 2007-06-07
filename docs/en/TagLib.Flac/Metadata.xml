@@ -9,18 +9,6 @@
   </Base>
   <Interfaces />
   <Members>
-    <Member MemberName="Clear">
-      <MemberSignature Language="C#" Value="public void Clear ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>Clears all the non-essential metadata contained in the current instance.</summary>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Metadata (System.Collections.Generic.List&lt;TagLib.Flac.Block&gt; blocks);" />
       <MemberType>Constructor</MemberType>

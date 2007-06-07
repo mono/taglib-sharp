@@ -415,6 +415,22 @@ namespace TagLib
                }
             }
          }
-      } 
+      }
+      
+      public override bool IsEmpty {
+         get {
+            foreach (Tag tag in tags)
+               if (tag.IsEmpty)
+                  return true;
+            
+            return false;
+         }
+      }
+      
+      public override void Clear ()
+      {
+         foreach (Tag tag in tags)
+            tag.Clear ();
+      }
    }
 }

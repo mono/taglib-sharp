@@ -12,7 +12,6 @@ namespace TagLib.Mpeg4
       #region Constructors
       public IsoSampleDescriptionBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, file, handler)
       {
-         file.Seek (base.DataPosition);
          entry_count = file.ReadBlock (4).ToUInt ();
          children = LoadChildren (file);
       }

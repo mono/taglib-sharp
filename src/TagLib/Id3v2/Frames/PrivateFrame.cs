@@ -35,7 +35,7 @@ namespace TagLib.Id3v2
       
       
       #region Constructors
-      public PrivateFrame (string owner, ByteVector data) : base ("PRIV", 4)
+      public PrivateFrame (string owner, ByteVector data) : base (FrameType.PRIV, 4)
       {
          this.owner = owner;
          this.data  = data;
@@ -85,7 +85,7 @@ namespace TagLib.Id3v2
       #region Public Static Methods
       public static PrivateFrame Get (Tag tag, string owner, bool create)
       {
-         foreach (Frame f in tag.GetFrames ("PRIV"))
+         foreach (Frame f in tag.GetFrames (FrameType.PRIV))
             if (f is PrivateFrame && (f as PrivateFrame).Owner == owner)
                return f as PrivateFrame;
          

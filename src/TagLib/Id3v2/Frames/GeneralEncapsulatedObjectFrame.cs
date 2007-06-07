@@ -38,7 +38,7 @@ namespace TagLib.Id3v2
       
       
       #region Constructors
-      public GeneralEncapsulatedObjectFrame () : base ("GEOB", 4)
+      public GeneralEncapsulatedObjectFrame () : base (FrameType.GEOB, 4)
       {}
       
       public GeneralEncapsulatedObjectFrame (ByteVector data, byte version) : base (data, version)
@@ -108,7 +108,7 @@ namespace TagLib.Id3v2
       #region Public Static Methods
       public static GeneralEncapsulatedObjectFrame Get (Tag tag, string description, bool create)
       {
-         foreach (Frame f in tag.GetFrames ("GEOB"))
+         foreach (Frame f in tag.GetFrames (FrameType.GEOB))
             if (f is GeneralEncapsulatedObjectFrame && (f as GeneralEncapsulatedObjectFrame).Description == description)
                return f as GeneralEncapsulatedObjectFrame;
          

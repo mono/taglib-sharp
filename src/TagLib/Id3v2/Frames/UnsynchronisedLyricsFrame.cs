@@ -17,7 +17,7 @@ namespace TagLib.Id3v2
       
       
       #region Constructors
-      public UnsynchronisedLyricsFrame (string description, string language, StringType encoding) : base ("USLT", 4)
+      public UnsynchronisedLyricsFrame (string description, string language, StringType encoding) : base (FrameType.USLT, 4)
       {
          this.encoding    = encoding;
          this.language    = language;
@@ -88,7 +88,7 @@ namespace TagLib.Id3v2
       #region Public Static Methods
       public static UnsynchronisedLyricsFrame Get (Tag tag, string description, string language, bool create)
       {
-         foreach (Frame f in tag.GetFrames ("USLT"))
+         foreach (Frame f in tag.GetFrames (FrameType.USLT))
          {
             UnsynchronisedLyricsFrame cf = f as UnsynchronisedLyricsFrame;
             
@@ -118,7 +118,7 @@ namespace TagLib.Id3v2
          int best_value = -1;
          UnsynchronisedLyricsFrame best_frame = null;
          
-         foreach (Frame f in tag.GetFrames ("USLT"))
+         foreach (Frame f in tag.GetFrames (FrameType.USLT))
          {
             UnsynchronisedLyricsFrame cf = f as UnsynchronisedLyricsFrame;
             if (cf == null) continue;

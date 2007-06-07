@@ -45,7 +45,7 @@ namespace TagLib.Id3v1
       //////////////////////////////////////////////////////////////////////////
       // public static fields
       //////////////////////////////////////////////////////////////////////////
-      public static ByteVector FileIdentifier {get {return "TAG";}}
+      public static readonly ReadOnlyByteVector FileIdentifier = "TAG";
       public const uint Size = 128;
       
       public static StringHandler DefaultStringHandler
@@ -60,8 +60,7 @@ namespace TagLib.Id3v1
       //////////////////////////////////////////////////////////////////////////
       public Tag ()
       {
-         title = artist = album = year = comment = String.Empty;
-         genre = 255;
+         Clear ();
       }
 
       public Tag (File file, long position)
@@ -72,7 +71,7 @@ namespace TagLib.Id3v1
          file.Seek (position);
          
          // read the tag -- always 128 bytes
-         ByteVector data = file.ReadBlock (Size);
+         ByteVector data = file.ReadBlock ((int)Size);
          
          // some initial sanity checking
          if (data.Count != Size || !data.StartsWith (FileIdentifier))
@@ -159,7 +158,7 @@ namespace TagLib.Id3v1
          set {genre = (value != null && value.Length > 0) ? TagLib.Genres.AudioToIndex (value [0].Trim ()) : (byte) 255;}
       }
       
-      public  override uint Year
+      public override uint Year
       {
          get
          {
@@ -174,5 +173,13 @@ namespace TagLib.Id3v1
          get {return track;}
          set {track = (byte) (value < 256 ? value : 0);}
       }
+      
+      public override void Clear ()
+      {
+         title = artist = album = year = comment = String.Empty;
+         genre = 255;
+      }
+
+public override bool IsEmpty {get {return true;}}
    }
 }

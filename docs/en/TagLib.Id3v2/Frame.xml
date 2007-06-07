@@ -43,10 +43,10 @@
       </Docs>
     </Member>
     <Member MemberName="FrameId">
-      <MemberSignature Language="C#" Value="public TagLib.ByteVector FrameId { get; };" />
+      <MemberSignature Language="C#" Value="public TagLib.ReadOnlyByteVector FrameId { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
+        <ReturnType>TagLib.ReadOnlyByteVector</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets the four bytes containing the frame's ID.</summary>

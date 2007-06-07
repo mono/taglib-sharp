@@ -25,7 +25,7 @@
       <Docs>
         <param name="list">A <see cref="T:System.Collections.Generic.IEnumerable&lt;TagLib.ByteVector&gt;" /> containing all the data box names to look for.</param>
         <summary>Gets all the data boxes with specified names in the current instance.</summary>
-        <returns>A <see cref="System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.AppleDataBox&gt;" /> containing all the matching boxes.</returns>
+        <returns>A <see cref="T:System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.AppleDataBox&gt;" /> containing all the matching boxes.</returns>
         <remarks />
       </Docs>
     </Member>
@@ -47,7 +47,7 @@
       <Docs>
         <param name="vects">A <see cref="T:TagLib.ByteVector" /> array containing all the data box names to look for.</param>
         <summary>Gets all the data boxes with specified names in the current instance.</summary>
-        <returns>A <see cref="System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.AppleDataBox&gt;" /> containing all the matching boxes.</returns>
+        <returns>A <see cref="T:System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.AppleDataBox&gt;" /> containing all the matching boxes.</returns>
         <remarks />
       </Docs>
     </Member>
@@ -65,7 +65,7 @@
         <param name="mean">A <see cref="T:System.String" /> specifying a mean ID.</param>
         <param name="name">A <see cref="T:System.String" /> specifying a name.</param>
         <summary>Gets all the custom data boxes with specified mean and name ID's in the current instance.</summary>
-        <returns>A <see cref="System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.AppleDataBox&gt;" /> containing all the matching boxes.</returns>
+        <returns>A <see cref="T:System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.AppleDataBox&gt;" /> containing all the matching boxes.</returns>
         <remarks />
       </Docs>
     </Member>

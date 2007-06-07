@@ -20,7 +20,6 @@ namespace TagLib.Mpeg4
          if (file == null)
             throw new ArgumentNullException ("file");
          
-         file.Seek (DataPosition);
          int bytes_remaining = DataSize;
          ByteVector data;
          

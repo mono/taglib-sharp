@@ -1,3 +1,93 @@
+2007-06-07  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/CombinedTag.cs: Add Tag.Clear, Tag.IsEmpty
+	* src/TagLib/Id3v1/Tag.cs: Add Tag.Clear, Tag.IsEmpty
+	* src/TagLib/Riff/File.cs: Use ReadOnlyByteVector.
+	* src/TagLib/Riff/DivXTag.cs: Add Tag.Clear, Tag.IsEmpty
+	* src/TagLib/Riff/ListTag.cs: Add Tag.Clear, Tag.IsEmpty
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Id3v2/Footer.cs:
+	* src/TagLib/Id3v2/FrameTypes.cs:
+	* src/TagLib/Id3v2/FrameFactory.cs:
+	* src/TagLib/Id3v2/FrameHeader.cs:
+	* src/TagLib/Id3v2/Header.cs:
+	* src/TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
+	* src/TagLib/Id3v2/Frames/SynchronizedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:
+	* src/TagLib/Id3v2/Frames/UniqueFileIdentifierFrame.cs:
+	* src/TagLib/Id3v2/Frames/PrivateFrame.cs:
+	* src/TagLib/Id3v2/Frames/MusicCdIdentifierFrame.cs:
+	* src/TagLib/Id3v2/Frames/TermsOfUseFrame.cs:
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs:
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs:
+	* src/TagLib/Id3v2/Frames/PlayCountFrame.cs:
+	* src/TagLib/Id3v2/Frame.cs: Use TagLib.Id3v2.FrameType instead of hard-
+	coding. Cuts out a lot of read time.
+	* src/TagLib/Flac/File.cs: Use ReadOnlyByteVector.
+	* src/TagLib/Flac/Block.cs: BlockSize instead of Size.
+	* src/TagLib/Ape/Tag.cs: Add Tag.Clear, Tag.IsEmpty
+	* src/TagLib/Ape/Footer.cs: Use ReadOnlyByteVector.
+	* src/TagLib/Ape/Item.cs: Use ReadOnlyByteVector.
+	* src/TagLib/Mpeg4/Boxes/AppleAdditionalInfoBox.cs:Don't parse text
+	before its needed.
+	* src/TagLib/Mpeg4/Boxes/IsoMovieHeaderBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoChunkLargeOffsetBox.cs:
+	* src/TagLib/Mpeg4/Boxes/AppleElementaryStreamDescriptor.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoChunkOffsetBox.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoSampleDescriptionBox.cs: Don't do extra seeks.
+	* src/TagLib/Mpeg4/FileParser.cs: Use do/while instead of for. Was doing
+	extra reading.
+	* src/TagLib/Mpeg4/AppleTag.cs: Add Tag.Clear, Tag.IsEmpty
+	* src/TagLib/Mpeg4/BoxTypes.cs: Make internal.
+	* src/TagLib/Mpeg4/File.cs:
+	* src/TagLib/Mpeg4/BoxFactory.cs:
+	* src/TagLib/Mpeg4/BoxHeader.cs:
+	* src/TagLib/Mpeg4/Box.cs: Rename "BoxTypes" to "BoxType"
+	* src/TagLib/Mpc/StreamHeader.cs: Use ReadOnlyByteVector
+	* src/TagLib/Tag.cs: Add Tag.Clear
+	* src/TagLib/File.cs: Do away with ReadBlock(uint)
+	* src/TagLib/WavPack/StreamHeader.cs: Use ReadOnlyByteVector.
+	* src/TagLib/Asf/Tag.cs: Add Tag.Clear, Tag.IsEmpty
+	* src/TagLib/Asf/ContentDescriptionObject.cs: Add IsEmpty
+	* src/TagLib/Asf/ExtendedContentDescriptionObject.cs: Add IsEmpty
+	* src/TagLib/Ogg/XiphComment.cs: Add Tag.Clear
+	* src/TagLib/Ogg/PageHeader.cs: Use ReadBlock(int)
+	* src/TagLib/Ogg/GroupedComment.cs: Add Tag.Clear
+	* docs/en/TagLib.Riff/DivXTag.xml
+	* docs/en/TagLib.Riff/File.xml
+	* docs/en/TagLib.Id3v1/Tag.xml
+	* docs/en/TagLib.Id3v2/Header.xml
+	* docs/en/TagLib.Id3v2/Frame.xml
+	* docs/en/TagLib.Id3v2/Footer.xml
+	* docs/en/TagLib.Id3v2/FrameHeader.xml
+	* docs/en/TagLib.Mpeg/AudioFile.xml
+	* docs/en/TagLib.Mpeg/File.xml
+	* docs/en/TagLib.WavPack/StreamHeader.xml
+	* docs/en/TagLib.WavPack/File.xml
+	* docs/en/TagLib/Tag.xml
+	* docs/en/TagLib/File.xml
+	* docs/en/index.xml
+	* docs/en/TagLib.Flac/Metadata.xml
+	* docs/en/TagLib.Flac/Block.xml
+	* docs/en/TagLib.Flac/File.xml
+	* docs/en/TagLib.Ape/Tag.xml
+	* docs/en/TagLib.Ape/Footer.xml
+	* docs/en/TagLib.MusePack/StreamHeader.xml
+	* docs/en/TagLib.MusePack/File.xml
+	* docs/en/TagLib.Asf/ContentDescriptionObject.xml
+	* docs/en/TagLib.Asf/ExtendedContentDescriptionObject.xml
+	* docs/en/TagLib.Asf/Tag.xml
+	* docs/en/TagLib.Asf/File.xml
+	* docs/en/TagLib.Ogg/GroupedComment.xml
+	* docs/en/TagLib.Ogg/XiphComment.xml
+	* docs/en/TagLib.Ogg/File.xml
+	* docs/en/TagLib.Mpeg4/Box.xml
+	* docs/en/TagLib.Mpeg4/AppleTag.xml
+	* docs/en/TagLib.Mpeg4/BoxTypes.xml
+	* docs/en/TagLib.Mpeg4/File.xml: Synched docs.
+
 2007-06-04  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Mpeg/File.cs: Prevent overflow.

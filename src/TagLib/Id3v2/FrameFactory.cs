@@ -83,54 +83,54 @@ namespace TagLib.Id3v2
          // a lot of if blocks.
          
          // Text Identification (frames 4.2)
-         if (header.FrameId == "TXXX")
+         if (header.FrameId == FrameType.TXXX)
             return new UserTextIdentificationFrame (data, position, header, version);
       	 
          if (header.FrameId [0] == (byte) 'T')
             return new TextIdentificationFrame (data, position, header, version);
       	 
          // Unique File Identifier (frames 4.1)
-         if (header.FrameId == "UFID")
+         if (header.FrameId == FrameType.UFID)
             return new UniqueFileIdentifierFrame (data, position, header, version);
          
          // Music CD Identifier (frames 4.5)
-         if (header.FrameId == "MCDI")
+         if (header.FrameId == FrameType.MCDI)
             return new MusicCdIdentifier (data, position, header, version);
 
          // Unsynchronized Lyrics (frames 4.8)
-         if (header.FrameId == "USLT")
+         if (header.FrameId == FrameType.USLT)
             return new UnsynchronisedLyricsFrame (data, position, header, version);
 
          // Synchronized Lyrics (frames 4.9)
-         if (header.FrameId == "SYLT")
+         if (header.FrameId == FrameType.SYLT)
             return new SynchronisedLyricsFrame (data, position, header, version);
 
          // Comments (frames 4.10)
-         if (header.FrameId == "COMM")
+         if (header.FrameId == FrameType.COMM)
             return new CommentsFrame (data, position, header, version);
 
          // Relative Volume Adjustment (frames 4.11)
-         if (header.FrameId == "RVA2")
+         if (header.FrameId == FrameType.RVA2)
             return new RelativeVolumeFrame (data, position, header, version);
 
          // Attached Picture (frames 4.14)
-         if (header.FrameId == "APIC")
+         if (header.FrameId == FrameType.APIC)
             return new AttachedPictureFrame (data, position, header, version);
 
          // General Encapsulated Object (frames 4.15)
-         if(header.FrameId == "GEOB")
+         if(header.FrameId == FrameType.GEOB)
             return new GeneralEncapsulatedObjectFrame (data, position, header, version);
          
          // Play Count (frames 4.15)
-         if(header.FrameId == "PCNT")
+         if(header.FrameId == FrameType.PCNT)
             return new PlayCountFrame (data, position, header, version);
          
          // Terms of Use (frames 4.22)
-         if(header.FrameId == "USER")
+         if(header.FrameId == FrameType.USER)
             return new TermsOfUseFrame (data, position, header, version);
          
          // Private (frames 4.27)
-         if (header.FrameId == "PRIV")
+         if (header.FrameId == FrameType.PRIV)
             return new PrivateFrame (data, position, header, version);
          
          return new UnknownFrame (data, position, header, version);

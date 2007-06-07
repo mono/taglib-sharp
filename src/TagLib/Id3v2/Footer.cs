@@ -37,7 +37,7 @@ namespace TagLib.Id3v2
       
       #region Public Static Properties
       public const uint Size = 10;
-      public static ByteVector FileIdentifier {get {return "3DI";}}
+      public static readonly ReadOnlyByteVector FileIdentifier = "3DI";
       #endregion
       
       

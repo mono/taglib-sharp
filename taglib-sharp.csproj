@@ -47,7 +47,6 @@
     <Compile Include="src\TagLib\ByteVectorList.cs" />
     <Compile Include="src\TagLib\CombinedTag.cs" />
     <Compile Include="src\TagLib\File.cs" />
-    <Compile Include="src\TagLib\IntList.cs" />
     <Compile Include="src\TagLib\StringList.cs" />
     <Compile Include="src\TagLib\SupportedMimeType.cs" />
     <Compile Include="src\TagLib\UnsupportedFormatException.cs" />
@@ -60,7 +59,6 @@
     <Compile Include="src\TagLib\Mpeg4\AppleTag.cs" />
     <Compile Include="src\TagLib\Mpeg4\BoxHeader.cs" />
     <Compile Include="src\TagLib\Mpeg4\BoxFactory.cs" />
-    <Compile Include="src\TagLib\Mpeg4\BoxList.cs" />
     <Compile Include="src\TagLib\Mpeg4\Box.cs" />
     <Compile Include="src\TagLib\Mpeg4\FileParser.cs" />
     <Compile Include="src\TagLib\Mpeg4\BoxTypes.cs" />
@@ -98,6 +96,7 @@
     <Compile Include="src\TagLib\Id3v2\ExtendedHeader.cs" />
     <Compile Include="src\TagLib\Id3v2\Footer.cs" />
     <Compile Include="src\TagLib\Id3v2\Frame.cs" />
+    <Compile Include="src\TagLib\Id3v2\FrameTypes.cs" />
     <Compile Include="src\TagLib\Id3v2\FrameFactory.cs" />
     <Compile Include="src\TagLib\Id3v2\FrameHeader.cs" />
     <Compile Include="src\TagLib\Id3v2\Header.cs" />

@@ -213,7 +213,7 @@ namespace TagLib.Flac
          BlockHeader header;
          do
          {
-            header = new BlockHeader (ReadBlock (BlockHeader.Size));
+            header = new BlockHeader (ReadBlock ((int)BlockHeader.Size));
             
             bool found = false;
             foreach (BlockType type in types)
@@ -287,7 +287,7 @@ namespace TagLib.Flac
             RemoveTag (c);
       }
       
-      public void Clear ()
+      public override void Clear ()
       {
          pictures.Clear ();
       }

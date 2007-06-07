@@ -104,8 +104,12 @@ namespace TagLib.Asf
          this.descriptors.InsertRange (i, descriptors);
       }
       
-      //////////////////////////////////////////////////////////////////////////
-      // private methods
-      //////////////////////////////////////////////////////////////////////////
+      public bool IsEmpty
+      {
+         get
+         {
+            return descriptors.Count == 0;
+         }
+      }
    }
 }

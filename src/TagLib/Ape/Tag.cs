@@ -37,7 +37,7 @@ namespace TagLib.Ape
       
       
       #region Public Static Properties
-      public static ByteVector FileIdentifier {get {return Footer.FileIdentifier;}}
+      public static readonly ReadOnlyByteVector FileIdentifier = Footer.FileIdentifier;
       #endregion
       
       
@@ -422,6 +422,11 @@ namespace TagLib.Ape
          data.Add (_footer.RenderFooter ());
          return data;
       }
+      
+      public override void Clear ()
+      {
+         _items.Clear ();
+      }
       #endregion
       
       
@@ -434,7 +439,7 @@ namespace TagLib.Ape
          
          file.Mode = File.AccessMode.Read;
          file.Seek (position);
-         _footer = new Footer (file.ReadBlock (Footer.Size));
+         _footer = new Footer (file.ReadBlock ((int)Footer.Size));
          
          if(_footer.TagSize == 0 || _footer.TagSize > file.Length)
             throw new CorruptFileException ("Tag size out of bounds.");
@@ -445,7 +450,7 @@ namespace TagLib.Ape
       	if ((_footer.Flags & FooterFlags.IsHeader) == 0)
             file.Seek (position + Footer.Size - _footer.TagSize);
       	
-      	Parse (file.ReadBlock (_footer.TagSize - Footer.Size));
+      	Parse (file.ReadBlock ((int)(_footer.TagSize - Footer.Size)));
       }
 
       protected void Parse (ByteVector data)

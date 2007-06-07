@@ -373,6 +373,18 @@
         <remarks />
       </Docs>
     </Member>
+    <Member MemberName="Clear">
+      <MemberSignature Language="C#" Value="public abstract void Clear ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
   </Members>
   <Docs>
     <summary>An abstract class for accessing standard tag features.</summary>

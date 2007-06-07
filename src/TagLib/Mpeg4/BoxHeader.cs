@@ -50,7 +50,7 @@ namespace TagLib.Mpeg4
          }
          
          // UUID has a special header with 16 extra bytes.
-         if (box_type == BoxTypes.Uuid)
+         if (box_type == Mpeg4.BoxType.Uuid)
          {
             if (data.Count < 16 + offset)
                throw new CorruptFileException ("Not enough data in box header.");

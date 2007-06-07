@@ -2,19 +2,19 @@ using System;
 
 namespace TagLib.Mpeg4
 {
-	public static class BoxFactory
-	{
+   public static class BoxFactory
+   {
       // Create a box by reading the file and add it to "parent".
-      internal static Box CreateBox (TagLib.File file, BoxHeader header, BoxHeader parent, IsoHandlerBox handler, int index)
+      private static Box CreateBox (TagLib.File file, BoxHeader header, BoxHeader parent, IsoHandlerBox handler, int index)
       {
          // The first few children of an "stsd" are sample entries.
-         if (parent.BoxType == "stsd" &&
+         if (parent.BoxType == BoxType.Stsd &&
              parent.Box is IsoSampleDescriptionBox &&
              index < (parent.Box as IsoSampleDescriptionBox).EntryCount)
          {
-            if (handler != null && handler.HandlerType == "soun")
+            if (handler != null && handler.HandlerType == BoxType.Soun)
                return new IsoAudioSampleEntry (header, file, handler);
-            else if (handler != null && handler.HandlerType == "vide")
+            else if (handler != null && handler.HandlerType == BoxType.Vide)
                return new IsoVisualSampleEntry (header, file, handler);
             else
                return new IsoSampleEntry (header, file, handler);
@@ -23,36 +23,36 @@ namespace TagLib.Mpeg4
          // Standard items...
          ByteVector type = header.BoxType;
          
-         if (type == BoxTypes.Mvhd)
+         if (type == BoxType.Mvhd)
             return new IsoMovieHeaderBox (header, file, handler);
-         else if (type == BoxTypes.Stbl)
+         else if (type == BoxType.Stbl)
             return new IsoSampleTableBox (header, file, handler);
-         else if (type == BoxTypes.Stsd)
+         else if (type == BoxType.Stsd)
             return new IsoSampleDescriptionBox (header, file, handler);
-         else if (type == BoxTypes.Stco)
+         else if (type == BoxType.Stco)
             return new IsoChunkOffsetBox (header, file, handler);
-         else if (type == BoxTypes.Co64)
+         else if (type == BoxType.Co64)
             return new IsoChunkLargeOffsetBox (header, file, handler);
-         else if (type == BoxTypes.Hdlr)
+         else if (type == BoxType.Hdlr)
             return new IsoHandlerBox (header, file, handler);
-         else if (type == BoxTypes.Udta)
+         else if (type == BoxType.Udta)
             return new IsoUserDataBox (header, file, handler);
-         else if (type == BoxTypes.Meta)
+         else if (type == BoxType.Meta)
             return new IsoMetaBox (header, file, handler);
-         else if (type == BoxTypes.Ilst)
+         else if (type == BoxType.Ilst)
             return new AppleItemListBox (header, file, handler);
-         else if (type == BoxTypes.Data)
+         else if (type == BoxType.Data)
             return new AppleDataBox (header, file, handler);
-         else if (type == BoxTypes.Esds)
+         else if (type == BoxType.Esds)
             return new AppleElementaryStreamDescriptor (header, file, handler);
-         else if (type == BoxTypes.Free || type == BoxTypes.Skip)
+         else if (type == BoxType.Free || type == BoxType.Skip)
             return new IsoFreeSpaceBox (header, file, handler);
-         else if (type == BoxTypes.Mean || type == BoxTypes.Name)
+         else if (type == BoxType.Mean || type == BoxType.Name)
             return new AppleAdditionalInfoBox (header, file, handler);
          
          // If we still don't have a tag, and we're inside an ItemListBox, load
          // lthe box as an AnnotationBox (Apple tag item).
-         if (parent.BoxType == BoxTypes.Ilst)
+         if (parent.BoxType == BoxType.Ilst)
             return new AppleAnnotationBox (header, file, handler);
          
          // Nothing good. Go generic.

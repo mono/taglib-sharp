@@ -37,7 +37,7 @@ namespace TagLib.Id3v2
       
       
       #region Constructors
-      public CommentsFrame (string description, string language, StringType encoding) : base ("COMM", 4)
+      public CommentsFrame (string description, string language, StringType encoding) : base (FrameType.COMM, 4)
       {
          this.encoding    = encoding;
          this.language    = language;
@@ -108,7 +108,7 @@ namespace TagLib.Id3v2
       #region Public Static Methods
       public static CommentsFrame Get (Tag tag, string description, string language, bool create)
       {
-         foreach (Frame f in tag.GetFrames ("COMM"))
+         foreach (Frame f in tag.GetFrames (FrameType.COMM))
          {
             CommentsFrame cf = f as CommentsFrame;
             
@@ -137,7 +137,7 @@ namespace TagLib.Id3v2
          int best_value = -1;
          CommentsFrame best_frame = null;
          
-         foreach (Frame f in tag.GetFrames ("COMM"))
+         foreach (Frame f in tag.GetFrames (FrameType.COMM))
          {
             CommentsFrame cf = f as CommentsFrame;
             if (cf == null) continue;

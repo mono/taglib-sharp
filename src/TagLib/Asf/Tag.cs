@@ -57,7 +57,7 @@ namespace TagLib.Asf
          }
       }
       
-      public void Clear ()
+      public override void Clear ()
       {
          description     = new ContentDescriptionObject ();
          ext_description = new ExtendedContentDescriptionObject ();
@@ -369,6 +369,14 @@ namespace TagLib.Asf
          	}
          	
             SetDescriptors ("WM/Picture", descriptors);
+         }
+      }
+      
+      public override bool IsEmpty
+      {
+         get
+         {
+            return description.IsEmpty && ext_description.IsEmpty;
          }
       }
       

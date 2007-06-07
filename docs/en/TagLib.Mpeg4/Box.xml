@@ -231,22 +231,6 @@
       </Docs>
     </Member>
     <Member MemberName="GetChildRecursively">
-      <MemberSignature Language="C#" Value="public TagLib.Mpeg4.Box GetChildRecursively (Type type);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg4.Box</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="type" Type="System.Type" />
-      </Parameters>
-      <Docs>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="GetChildRecursively">
       <MemberSignature Language="C#" Value="public TagLib.Mpeg4.Box GetChildRecursively (TagLib.ByteVector type);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
@@ -295,21 +279,6 @@
       </Docs>
     </Member>
     <Member MemberName="RemoveChild">
-      <MemberSignature Language="C#" Value="public void RemoveChild (Type type);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="type" Type="System.Type" />
-      </Parameters>
-      <Docs>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="RemoveChild">
       <MemberSignature Language="C#" Value="public void RemoveChild (TagLib.ByteVector type);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
@@ -350,6 +319,18 @@
         <param name="header">To be added.</param>
         <param name="handler">To be added.</param>
         <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HasChildren">
+      <MemberSignature Language="C#" Value="public bool HasChildren { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

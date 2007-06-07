@@ -50,7 +50,7 @@ namespace TagLib.Ogg
          Parse (data);
       }
       
-      public void Clear ()
+      public override void Clear ()
       {
          field_list.Clear ();
       }

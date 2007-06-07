@@ -34,19 +34,6 @@
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="Clear">
-      <MemberSignature Language="C#" Value="public void Clear ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>Clears all values within the tag.</summary>
-        <remarks>
-        </remarks>
-      </Docs>
-    </Member>
     <Member MemberName="RemoveField">
       <MemberSignature Language="C#" Value="public void RemoveField (string key);" />
       <MemberType>Method</MemberType>

@@ -54,7 +54,7 @@ namespace TagLib.Id3v2
          SetData (data, 0, version, true);
       }
       
-      public RelativeVolumeFrame (string identification) : base ("RVA2", 4)
+      public RelativeVolumeFrame (string identification) : base (FrameType.RVA2, 4)
       {
          this.identification = identification;
       }
@@ -144,7 +144,7 @@ namespace TagLib.Id3v2
       #region Public Static Methods
       public static RelativeVolumeFrame Get (Tag tag, string identification, bool create)
       {
-         foreach (Frame f in tag.GetFrames ("RVA2"))
+         foreach (Frame f in tag.GetFrames (FrameType.RVA2))
             if (f is RelativeVolumeFrame && (f as RelativeVolumeFrame).Identification == identification)
                return f as RelativeVolumeFrame;
          

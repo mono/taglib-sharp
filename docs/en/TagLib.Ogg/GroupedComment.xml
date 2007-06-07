@@ -68,18 +68,6 @@
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="Clear">
-      <MemberSignature Language="C#" Value="public void Clear ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>Clears the contents of every <see cref="T:TagLib.Ogg.XiphComment" /> stored in the current instance.</summary>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName="Comments">
       <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;TagLib.Ogg.XiphComment&gt; Comments { get; };" />
       <MemberType>Property</MemberType>

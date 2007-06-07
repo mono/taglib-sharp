@@ -3,7 +3,6 @@ namespace TagLib.Mpeg4
    public class AppleAdditionalInfoBox : FullBox
    {
       #region Private Properties
-      private string text;
       private ByteVector data;
       #endregion
       
@@ -15,8 +14,7 @@ namespace TagLib.Mpeg4
       }*/
       public AppleAdditionalInfoBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, file, handler)
       {
-         Data = LoadData (file);
-         text = Data.ToString (StringType.Latin1);
+         Data = file.ReadBlock (DataSize);
       }
       #endregion
       
@@ -24,8 +22,8 @@ namespace TagLib.Mpeg4
       public string Text
       {
          // When we set the value, store it as a the data too.
-         get {return text;}
-         set {text = value; Data = ByteVector.FromString (text, StringType.Latin1);}
+         get {return Data.ToString (StringType.Latin1);}
+         set {Data = ByteVector.FromString (value, StringType.Latin1);}
       }
       
       public override ByteVector Data

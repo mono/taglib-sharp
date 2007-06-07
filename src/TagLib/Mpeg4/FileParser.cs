@@ -82,82 +82,95 @@ namespace TagLib.Mpeg4
          {
             header = new BoxHeader (file, position);
             
-            if (moov_tree == null && header.BoxType == BoxTypes.Moov)
+            if (moov_tree == null && header.BoxType == BoxType.Moov)
             {
                List<BoxHeader> new_parents = AddParent (parents, header);
                moov_tree = new_parents.ToArray ();
                ParseBoxHeaders (header.DataOffset + position, header.TotalBoxSize + position, new_parents);
             }
-            else if (header.BoxType == BoxTypes.Mdia || header.BoxType == BoxTypes.Minf || header.BoxType == BoxTypes.Stbl || header.BoxType == BoxTypes.Trak)
+            else if (header.BoxType == BoxType.Mdia || header.BoxType == BoxType.Minf || header.BoxType == BoxType.Stbl || header.BoxType == BoxType.Trak)
                ParseBoxHeaders (header.DataOffset + position, header.TotalBoxSize + position, AddParent (parents, header));
-            else if (udta_box == null && header.BoxType == BoxTypes.Udta)
+            else if (udta_box == null && header.BoxType == BoxType.Udta)
               udta_tree = AddParent (parents, header).ToArray ();
-		   }
-		}
+         }
+      }
 		
-		public void ParseTag ()
-		{
+      public void ParseTag ()
+      {
          ParseTag (first_header.TotalBoxSize, file.Length);
-		}
+      }
       
       private void ParseTag (long start, long end)
       {
          long position = start;
-         for (BoxHeader header = new BoxHeader (file, position); header.TotalBoxSize != 0 && position < end; position += header.TotalBoxSize)
+         BoxHeader header;
+         do
          {
             header = new BoxHeader (file, position);
             
-            if (header.BoxType == BoxTypes.Moov || header.BoxType == BoxTypes.Mdia || header.BoxType == BoxTypes.Minf || header.BoxType == BoxTypes.Stbl || header.BoxType == BoxTypes.Trak)
+            if (header.BoxType == BoxType.Moov || header.BoxType == BoxType.Mdia || header.BoxType == BoxType.Minf || header.BoxType == BoxType.Stbl || header.BoxType == BoxType.Trak)
                ParseTag (header.DataOffset + position, header.TotalBoxSize + position);
-            else if (udta_box == null && header.BoxType == BoxTypes.Udta)
+            else if (udta_box == null && header.BoxType == BoxType.Udta)
                udta_box = BoxFactory.CreateBox (file, header) as IsoUserDataBox;
-		   }
-		}
+            
+            position += header.TotalBoxSize;
+         }
+         while (header.TotalBoxSize != 0 && position < end);
+      }
 		
-		public void ParseTagAndProperties ()
-		{
+      public void ParseTagAndProperties ()
+      {
          ParseTagAndProperties (first_header.TotalBoxSize, file.Length, null);
-		}
+      }
       
       private void ParseTagAndProperties (long start, long end, IsoHandlerBox handler)
       {
          long position = start;
-         for (BoxHeader header = new BoxHeader (file, position); header.TotalBoxSize != 0 && position < end; position += header.TotalBoxSize)
+         BoxHeader header;
+         do
          {
             header = new BoxHeader (file, position);
+            ByteVector type = header.BoxType;
             
-            if (header.BoxType == BoxTypes.Moov || header.BoxType == BoxTypes.Mdia || header.BoxType == BoxTypes.Minf || header.BoxType == BoxTypes.Stbl || header.BoxType == BoxTypes.Trak)
+            if (type == BoxType.Moov || type == BoxType.Mdia || type == BoxType.Minf || type == BoxType.Stbl || type == BoxType.Trak)
                ParseTagAndProperties (header.DataOffset + position, header.TotalBoxSize + position, handler);
-            else if (header.BoxType == BoxTypes.Stsd)
+            else if (type == BoxType.Stsd)
                stsd_boxes.Add (BoxFactory.CreateBox (file, header, handler));
-            else if (header.BoxType == BoxTypes.Hdlr)
+            else if (type == BoxType.Hdlr)
                handler = BoxFactory.CreateBox (file, header, handler) as IsoHandlerBox;
-            else if (mvhd_box == null && header.BoxType == BoxTypes.Mvhd)
+            else if (mvhd_box == null && type == BoxType.Mvhd)
                mvhd_box = BoxFactory.CreateBox (file, header, handler) as IsoMovieHeaderBox;
-            else if (udta_box == null && header.BoxType == BoxTypes.Udta)
+            else if (udta_box == null && type == BoxType.Udta)
                udta_box = BoxFactory.CreateBox (file, header, handler) as IsoUserDataBox;
-		   }
-		}
+            
+            position += header.TotalBoxSize;
+         }
+         while (header.TotalBoxSize != 0 && position < end);
+      }
 		
-		public void ParseChunkOffsets ()
-		{
+      public void ParseChunkOffsets ()
+      {
          ParseChunkOffsets (first_header.TotalBoxSize, file.Length);
-		}
+      }
       
-		private void ParseChunkOffsets (long start, long end)
+      private void ParseChunkOffsets (long start, long end)
       {
          long position = start;
-         for (BoxHeader header = new BoxHeader (file, position); header.TotalBoxSize != 0 && position < end; position += header.TotalBoxSize)
+         BoxHeader header;
+         do
          {
             header = new BoxHeader (file, position);
             
-            if (header.BoxType == BoxTypes.Moov)
+            if (header.BoxType == BoxType.Moov)
                ParseChunkOffsets (header.DataOffset + position, header.TotalBoxSize + position);
-            else if (header.BoxType == BoxTypes.Moov || header.BoxType == BoxTypes.Mdia || header.BoxType == BoxTypes.Minf || header.BoxType == BoxTypes.Stbl || header.BoxType == BoxTypes.Trak)
+            else if (header.BoxType == BoxType.Moov || header.BoxType == BoxType.Mdia || header.BoxType == BoxType.Minf || header.BoxType == BoxType.Stbl || header.BoxType == BoxType.Trak)
                ParseChunkOffsets (header.DataOffset + position, header.TotalBoxSize + position);
-            else if (header.BoxType == BoxTypes.Stco || header.BoxType == BoxTypes.Co64)
+            else if (header.BoxType == BoxType.Stco || header.BoxType == BoxType.Co64)
                stco_boxes.Add (BoxFactory.CreateBox (file, header));
-		   }
-		}
-	}
+            
+            position += header.TotalBoxSize;
+         }
+         while (header.TotalBoxSize != 0 && position < end);
+      }
+   }
 }

@@ -24,7 +24,7 @@ using System;
 
 namespace TagLib.Id3v2
 {
-   [Flags()]
+   [Flags]
    public enum HeaderFlags : byte
    {
       Unsynchronisation     = 0x80,
@@ -46,7 +46,7 @@ namespace TagLib.Id3v2
       
       #region Public Static Properties
       public const uint Size = 10;
-      public static ByteVector FileIdentifier {get {return "ID3";}}
+      public static readonly ReadOnlyByteVector FileIdentifier = "ID3";
       #endregion
       
       

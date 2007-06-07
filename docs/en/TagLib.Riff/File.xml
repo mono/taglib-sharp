@@ -52,9 +52,9 @@
         <Parameter Name="propertiesStyle" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
-        <param name="path">To be added.</param>
-        <param name="propertiesStyle">To be added.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.File" /> for a given filename and read style.</summary>
+        <param name="path">A <see cref="T:System.String" /> specifying the path of the file in the default file system.</param>
+        <param name="propertiesStyle">A <see cref="T:TagLib.ReadStyle" /> specifying the detail at which to read the properties.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Flac.File" /> for a given filename and read style.</summary>
         <remarks>Files should be created using <see cref="M:TagLib.File.Create(System.String,TagLib.ReadStyle)" /> rather than through format specific constructors.</remarks>
       </Docs>
     </Member>
@@ -65,21 +65,9 @@
         <Parameter Name="path" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="path">A file name relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.File" /> for a given filename.</summary>
+        <param name="path">A <see cref="T:System.String" /> specifying the path of the file in the default file system.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Flac.File" /> for a given filename.</summary>
         <remarks>Files should be created using <see cref="M:TagLib.File.Create(System.String)" /> rather than through format specific constructors.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="FileIdentifier">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FileIdentifier { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -89,9 +77,9 @@
         <Parameter Name="abstraction" Type="TagLib.File+IFileAbstraction" />
       </Parameters>
       <Docs>
-        <param name="abstraction">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="abstraction">A <see cref="T:TagLib.File+IFileAbstraction" /> providing a file abstraction to use to access the contents.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Flac.File" /> for a given file abstraction.</summary>
+        <remarks>Files should be created using <see cref="M:TagLib.File.Create(TagLib.File.IFileAbstraction)" /> rather than through format specific constructors.</remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -102,8 +90,19 @@
         <Parameter Name="propertiesStyle" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
-        <param name="abstraction">To be added.</param>
-        <param name="propertiesStyle">To be added.</param>
+        <param name="abstraction">A <see cref="T:TagLib.File+IFileAbstraction" /> providing a file abstraction to use to access the contents.</param>
+        <param name="propertiesStyle">A <see cref="T:TagLib.ReadStyle" /> specifying the detail at which to read the properties.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Flac.File" /> for a given file abstraction and read style.</summary>
+        <remarks>Files should be created using <see cref="M:TagLib.File.Create(TagLib.File.IFileAbstraction,TagLib.ReadStyle)" /> rather than through format specific constructors.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FileIdentifier">
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ReadOnlyByteVector FileIdentifier;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ReadOnlyByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>

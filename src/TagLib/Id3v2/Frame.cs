@@ -50,7 +50,7 @@ namespace TagLib.Id3v2
       
       
       #region Public Properties
-      public ByteVector FrameId {get {return header.FrameId;}}
+      public ReadOnlyByteVector FrameId {get {return header.FrameId;}}
       public uint       Size    {get {return header.FrameSize;}}
       public FrameFlags Flags
       {

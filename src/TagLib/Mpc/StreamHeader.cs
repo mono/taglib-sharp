@@ -45,7 +45,7 @@ namespace TagLib.MusePack
       
       #region Public Static Properties
       public const uint Size = 56;
-      public static ByteVector FileIdentifier {get {return "MP+";}}
+      public static readonly ReadOnlyByteVector FileIdentifier = "MP+";
       #endregion
       
       

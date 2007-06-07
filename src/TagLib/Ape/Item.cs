@@ -37,11 +37,11 @@ namespace TagLib.Ape
    public class Item
    {
       #region Private Properties
-      private ItemType         _type      = ItemType.Text;
-      private string           _key       = null;
-      private ByteVector       _value     = null;
-      private StringCollection _text      = new StringCollection ();
-      private bool             _read_only = false;
+      private ItemType           _type      = ItemType.Text;
+      private string             _key       = null;
+      private ReadOnlyByteVector _value     = null;
+      private StringCollection   _text      = new StringCollection ();
+      private bool               _read_only = false;
       #endregion
       
       
@@ -68,7 +68,7 @@ namespace TagLib.Ape
       {
          _key   = key;
          _type  = ItemType.Binary;
-         _value = value;
+         _value = value is ReadOnlyByteVector ? value as ReadOnlyByteVector : new ReadOnlyByteVector (value);
       }
       #endregion
       
@@ -118,18 +118,20 @@ namespace TagLib.Ape
 
          if (IsEmpty)
             return data;
-
+      	
          if(_type != ItemType.Binary)
          {
-            _value = new ByteVector ();
+            ByteVector value = new ByteVector ();
             for (int i = 0; i < _text.Count; i ++)
             {
                if (i != 0)
-                  _value.Add ((byte) 0);
+                  value.Add ((byte) 0);
                
-               _value.Add (ByteVector.FromString (_text [i], StringType.UTF8));
+               value.Add (ByteVector.FromString (_text [i], StringType.UTF8));
             }
+            _value = new ReadOnlyByteVector (value);
          }
+         
 
          data.Add (ByteVector.FromUInt ((uint) _value.Count, false));
          data.Add (ByteVector.FromUInt (flags, false));
@@ -162,7 +164,7 @@ namespace TagLib.Ape
          int pos = data.Find (new ByteVector (1), offset + 8);
          
          _key   = data.Mid (offset + 8, pos - offset - 8).ToString (StringType.UTF8);
-         _value = data.Mid (pos + 1, (int) value_length);
+         _value = new ReadOnlyByteVector (data.Mid (pos + 1, (int) value_length));
 
          ReadOnly = (flags & 1) == 1;
          Type = (ItemType) ((flags >> 1) & 3);

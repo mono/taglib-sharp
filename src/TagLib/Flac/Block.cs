@@ -66,8 +66,8 @@ namespace TagLib.Flac
       
       public   BlockType   Type        {get {return _header.BlockType;}}
       public   bool        IsLastBlock {get {return _header.IsLastBlock;}}
-      public   uint        Size        {get {return _header.BlockSize;}}
-      public   uint        TotalSize   {get {return Size + BlockHeader.Size;}}
+      public   uint        DataSize    {get {return _header.BlockSize;}}
+      public   uint        TotalSize   {get {return DataSize + BlockHeader.Size;}}
       public   ByteVector  Data        {get {return _data;}}
    }
 }

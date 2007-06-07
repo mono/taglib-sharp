@@ -30,18 +30,6 @@
         <remarks />
       </Docs>
     </Member>
-    <Member MemberName="Clear">
-      <MemberSignature Language="C#" Value="public void Clear ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>Removes all tagging information from the current instance.</summary>
-        <remarks />
-      </Docs>
-    </Member>
     <Member MemberName="RemoveDescriptors">
       <MemberSignature Language="C#" Value="public void RemoveDescriptors (string name);" />
       <MemberType>Method</MemberType>

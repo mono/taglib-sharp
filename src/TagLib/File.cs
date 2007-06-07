@@ -173,11 +173,6 @@ namespace TagLib
          return new ByteVector (buffer, count);
       }
                            
-      public ByteVector ReadBlock (uint length)
-      {
-         return ReadBlock ((int) length);
-      }
-      
       public void WriteBlock (ByteVector data)
       {
          if (data == null)

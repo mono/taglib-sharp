@@ -36,13 +36,12 @@ namespace TagLib.Riff
       private string genre;
       private ByteVector extra_data;
       
-      public static ByteVector FileIdentifier {get {return "DIVXTAG";}}
+      public static readonly ReadOnlyByteVector FileIdentifier = "DIVXTAG";
       public const uint Size = 128;
       
       public DivXTag ()
       {
-         artist = genre = year = comment = String.Empty;
-         extra_data = new ByteVector (6);
+         Clear ();
       }
 
       public DivXTag (File file, long position)
@@ -53,7 +52,7 @@ namespace TagLib.Riff
          file.Seek (position);
          
          // read the tag -- always 128 bytes
-         ByteVector data = file.ReadBlock (Size);
+         ByteVector data = file.ReadBlock ((int)Size);
          
          // some initial sanity checking
          if (data.Count != Size || !data.EndsWith (FileIdentifier))
@@ -137,6 +136,12 @@ namespace TagLib.Riff
             return uint.TryParse (year, out value) ? value : 0;
          }
          set {year = value > 0 ? value.ToString (CultureInfo.InvariantCulture) : String.Empty;}
+      }
+      
+      public override void Clear ()
+      {
+         artist = genre = year = comment = String.Empty;
+         extra_data = new ByteVector (6);
       }
    }
 }

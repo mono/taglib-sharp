@@ -171,12 +171,12 @@ namespace TagLib.Id3v2
       {
          get
          {
-            TextIdentificationFrame f = TextIdentificationFrame.Get (this, "TIT2");
+            TextIdentificationFrame f = TextIdentificationFrame.Get (this, FrameType.TIT2);
             return f == null ? null : f.ToString ();
          }
          set
          {
-            SetTextFrame ("TIT2", value);
+            SetTextFrame (FrameType.TIT2, value);
          }
       }
       
@@ -184,12 +184,12 @@ namespace TagLib.Id3v2
       {
          get
          {
-            TextIdentificationFrame f = TextIdentificationFrame.Get (this, "TPE1");
+            TextIdentificationFrame f = TextIdentificationFrame.Get (this, FrameType.TPE1);
             return f == null ? new string [] {} : f.FieldList.ToArray ();
          }
          set
          {
-            SetTextFrame ("TPE1", new StringCollection (value));
+            SetTextFrame (FrameType.TPE1, new StringCollection (value));
          }
       }
       
@@ -197,12 +197,12 @@ namespace TagLib.Id3v2
       {
          get
          {
-            TextIdentificationFrame f = TextIdentificationFrame.Get (this, "TPE2");
+            TextIdentificationFrame f = TextIdentificationFrame.Get (this, FrameType.TPE2);
             return f == null ? new string [] {} : f.FieldList.ToArray ();
          }
          set
          {
-            SetTextFrame ("TPE2", new StringCollection (value));
+            SetTextFrame (FrameType.TPE2, new StringCollection (value));
          }
       }
       
@@ -210,12 +210,12 @@ namespace TagLib.Id3v2
       {
          get
          {
-            TextIdentificationFrame f = TextIdentificationFrame.Get (this, "TCOM");
+            TextIdentificationFrame f = TextIdentificationFrame.Get (this, FrameType.TCOM);
             return f == null ? new string [] {} : f.FieldList.ToArray ();
          }
          set
          {
-            SetTextFrame ("TCOM", new StringCollection (value));
+            SetTextFrame (FrameType.TCOM, new StringCollection (value));
          }
       }
       
@@ -223,12 +223,12 @@ namespace TagLib.Id3v2
       {
          get
          {
-            TextIdentificationFrame f = TextIdentificationFrame.Get (this, "TALB");
+            TextIdentificationFrame f = TextIdentificationFrame.Get (this, FrameType.TALB);
             return f == null ? null : f.ToString ();
          }
          set
          {
-            SetTextFrame ("TALB", value);
+            SetTextFrame (FrameType.TALB, value);
          }
       }
       
@@ -250,7 +250,7 @@ namespace TagLib.Id3v2
       {
          get
          {
-            TextIdentificationFrame f = TextIdentificationFrame.Get (this, "TCON");
+            TextIdentificationFrame f = TextIdentificationFrame.Get (this, FrameType.TCON);
             if (f != null)
             {
                StringCollection l = new StringCollection ();
@@ -284,7 +284,7 @@ namespace TagLib.Id3v2
                      value [i] = index.ToString (CultureInfo.InvariantCulture);
                }
             
-            SetTextFrame ("TCON", new StringCollection (value));
+            SetTextFrame (FrameType.TCON, new StringCollection (value));
          }
       }
       
@@ -292,7 +292,7 @@ namespace TagLib.Id3v2
       {
          get
          {
-            TextIdentificationFrame f = TextIdentificationFrame.Get (this, "TDRC");
+            TextIdentificationFrame f = TextIdentificationFrame.Get (this, FrameType.TDRC);
             if (f == null)
                return 0;
             
@@ -305,7 +305,7 @@ namespace TagLib.Id3v2
          }
          set
          {
-            SetNumberFrame ("TDRC", value, 0);
+            SetNumberFrame (FrameType.TDRC, value, 0);
          }
       }
       
@@ -313,7 +313,7 @@ namespace TagLib.Id3v2
       {
          get
          {
-            TextIdentificationFrame f = TextIdentificationFrame.Get (this, "TRCK");
+            TextIdentificationFrame f = TextIdentificationFrame.Get (this, FrameType.TRCK);
             if (f == null)
                return 0;
             
@@ -327,7 +327,7 @@ namespace TagLib.Id3v2
          }
          set
          {
-            SetNumberFrame ("TRCK", value, TrackCount);
+            SetNumberFrame (FrameType.TRCK, value, TrackCount);
          }
       }
       
@@ -335,7 +335,7 @@ namespace TagLib.Id3v2
       {
          get
          {
-            TextIdentificationFrame f = TextIdentificationFrame.Get (this, "TRCK");
+            TextIdentificationFrame f = TextIdentificationFrame.Get (this, FrameType.TRCK);
             if (f == null)
                return 0;
             
@@ -349,7 +349,7 @@ namespace TagLib.Id3v2
          }
          set
          {
-            SetNumberFrame ("TRCK", Track, value);
+            SetNumberFrame (FrameType.TRCK, Track, value);
          }
       }
       
@@ -357,7 +357,7 @@ namespace TagLib.Id3v2
       {
          get
          {
-            TextIdentificationFrame f = TextIdentificationFrame.Get (this, "TPOS");
+            TextIdentificationFrame f = TextIdentificationFrame.Get (this, FrameType.TPOS);
             if (f == null)
                return 0;
             
@@ -371,7 +371,7 @@ namespace TagLib.Id3v2
          }
          set
          {
-            SetNumberFrame ("TPOS", value, DiscCount);
+            SetNumberFrame (FrameType.TPOS, value, DiscCount);
          }
       }
       
@@ -379,7 +379,7 @@ namespace TagLib.Id3v2
       {
          get
          {
-            TextIdentificationFrame f = TextIdentificationFrame.Get (this, "TPOS");
+            TextIdentificationFrame f = TextIdentificationFrame.Get (this, FrameType.TPOS);
             if (f == null)
                return 0;
             
@@ -393,14 +393,14 @@ namespace TagLib.Id3v2
          }
          set
          {
-            SetNumberFrame ("TPOS", Disc, value);
+            SetNumberFrame (FrameType.TPOS, Disc, value);
          }
       }
       
       public override IPicture [] Pictures {
          get { 
             List<AttachedPictureFrame> frames = new List<AttachedPictureFrame> ();
-            foreach (Frame f in GetFrames("APIC"))
+            foreach (Frame f in GetFrames(FrameType.APIC))
                if (f is AttachedPictureFrame)
                   frames.Add (f as AttachedPictureFrame);
             
@@ -412,7 +412,7 @@ namespace TagLib.Id3v2
                return;
             }
             
-            RemoveFrames("APIC");
+            RemoveFrames(FrameType.APIC);
             
             foreach(IPicture picture in value) {
                if (picture is AttachedPictureFrame)
@@ -442,7 +442,7 @@ namespace TagLib.Id3v2
          get
          {
             uint value;
-            foreach (TextIdentificationFrame f in GetFrames("TBPM"))
+            foreach (TextIdentificationFrame f in GetFrames(FrameType.TBPM))
                 if(uint.TryParse(f.ToString(), out value))
                     return value;
            
@@ -450,7 +450,7 @@ namespace TagLib.Id3v2
          }
          set
          {
-            SetNumberFrame ("TBPM", value, 0);
+            SetNumberFrame (FrameType.TBPM, value, 0);
          }
       }
       
@@ -458,13 +458,13 @@ namespace TagLib.Id3v2
       {
          get
          {
-            foreach (TextIdentificationFrame f in GetFrames ("TIT1"))
+            foreach (TextIdentificationFrame f in GetFrames (FrameType.TIT1))
                return f.ToString ();
             return null;
          }
          set
          {
-            SetTextFrame ("TIT1", value);
+            SetTextFrame (FrameType.TIT1, value);
          }
       }
       
@@ -472,13 +472,13 @@ namespace TagLib.Id3v2
       {
          get
          {
-            foreach (TextIdentificationFrame f in GetFrames ("TPE3"))
+            foreach (TextIdentificationFrame f in GetFrames (FrameType.TPE3))
                return f.ToString ();
             return null;
          }
          set
          {
-             SetTextFrame("TPE3", value);
+             SetTextFrame(FrameType.TPE3, value);
          }
       }
       
@@ -486,13 +486,13 @@ namespace TagLib.Id3v2
       {
          get
          {
-            foreach (TextIdentificationFrame f in GetFrames ("TCOP"))
+            foreach (TextIdentificationFrame f in GetFrames (FrameType.TCOP))
                return f.ToString ();
             return null;
          }
          set
          {
-             SetTextFrame("TCOP", value);
+             SetTextFrame(FrameType.TCOP, value);
          }
       }
       
@@ -648,9 +648,16 @@ namespace TagLib.Id3v2
          if (number == 0 && count == 0)
             RemoveFrames (id);
          else if (count != 0)
-            SetTextFrame (id, number.ToString (CultureInfo.InvariantCulture) + "/" + count.ToString (CultureInfo.InvariantCulture));
+         {
+            SetTextFrame (id, string.Format (CultureInfo.InvariantCulture, "{0}/{1}", number, count));
+         }
          else
             SetTextFrame (id, number.ToString (CultureInfo.InvariantCulture));
+      }
+      
+      public override void Clear ()
+      {
+         frame_list.Clear ();
       }
    }
 }

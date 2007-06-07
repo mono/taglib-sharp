@@ -44,10 +44,10 @@ namespace TagLib.Id3v2
       
       
       #region Constructors
-      public AttachedPictureFrame () : base ("APIC", 4)
+      public AttachedPictureFrame () : base (FrameType.APIC, 4)
       {}
       
-      public AttachedPictureFrame (IPicture picture) : base("APIC", 4)
+      public AttachedPictureFrame (IPicture picture) : base(FrameType.APIC, 4)
       {
          if (picture == null)
             throw new ArgumentNullException ("picture");
@@ -119,7 +119,7 @@ namespace TagLib.Id3v2
       #region Public Static Methods
       public static AttachedPictureFrame Get (Tag tag, string description, bool create)
       {
-         foreach (Frame f in tag.GetFrames ("APIC"))
+         foreach (Frame f in tag.GetFrames (FrameType.APIC))
             if (f is AttachedPictureFrame && (f as AttachedPictureFrame).Description == description)
                return f as AttachedPictureFrame;
          
@@ -133,7 +133,7 @@ namespace TagLib.Id3v2
       
       public static AttachedPictureFrame Get (Tag tag, PictureType type, bool create)
       {
-         foreach (AttachedPictureFrame f in tag.GetFrames ("APIC"))
+         foreach (AttachedPictureFrame f in tag.GetFrames (FrameType.APIC))
             if (f != null && f.Type == type)
                return f;
          
@@ -147,7 +147,7 @@ namespace TagLib.Id3v2
       
       public static AttachedPictureFrame Get (Tag tag, string description, PictureType type, bool create)
       {
-         foreach (AttachedPictureFrame f in tag.GetFrames ("APIC"))
+         foreach (AttachedPictureFrame f in tag.GetFrames (FrameType.APIC))
             if (f != null && f.Description == description && f.Type == type)
                return f;
          

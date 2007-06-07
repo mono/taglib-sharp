@@ -27,7 +27,7 @@ namespace TagLib.Riff
       private Id3v2.Tag   id32_tag   = null;
       private Properties  properties = null;
       
-      public static ByteVector FileIdentifier {get {return "RIFF";}}
+      public static readonly ReadOnlyByteVector FileIdentifier = "RIFF";
       
       public File (string path, ReadStyle propertiesStyle) : this (new File.LocalFileAbstraction (path), propertiesStyle)
       {}

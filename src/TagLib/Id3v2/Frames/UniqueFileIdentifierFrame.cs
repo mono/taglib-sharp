@@ -40,7 +40,7 @@ namespace TagLib.Id3v2
          SetData (data, 0, version, true);
       }
 
-      public UniqueFileIdentifierFrame (string owner, ByteVector id) : base ("UFID", 4)
+      public UniqueFileIdentifierFrame (string owner, ByteVector id) : base (FrameType.UFID, 4)
       {
          this.owner = owner;
          identifier = id;
@@ -72,7 +72,7 @@ namespace TagLib.Id3v2
       #region Public Static Methods
       public static UniqueFileIdentifierFrame Get (Tag tag, string owner, bool create)
       {
-         foreach (Frame f in tag.GetFrames ("UFID"))
+         foreach (Frame f in tag.GetFrames (FrameType.UFID))
             if (f is UniqueFileIdentifierFrame && (f as UniqueFileIdentifierFrame).Owner == owner)
                return f as UniqueFileIdentifierFrame;
          

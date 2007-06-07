@@ -84,7 +84,7 @@ namespace TagLib.Ogg
          // Byte number 27 is the number of page segments, which is the only variable
          // length portion of the page header.  After reading the number of page
          // segments we'll then read in the coresponding data for this count.
-         uint page_segment_count = data [26];
+         int page_segment_count = data [26];
          ByteVector page_segments = file.ReadBlock (page_segment_count);
          
          // Another sanity check.
@@ -92,7 +92,7 @@ namespace TagLib.Ogg
             throw new CorruptFileException ("Incorrect number of page segments");
 
          // The base size of an Ogg page 27 bytes plus the number of lacing values.
-         _size = 27 + page_segment_count;
+         _size = (uint)(27 + page_segment_count);
          _packet_sizes = new List<int> ();
          
          int packet_size = 0;

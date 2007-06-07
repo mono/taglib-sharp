@@ -143,7 +143,7 @@ namespace TagLib.Id3v2
          encoding = (StringType) data [0];
          field_list.Clear ();
          
-         if (raw_version > 3 || FrameId == "TXXX")
+         if (raw_version > 3 || FrameId == FrameType.TXXX)
             field_list.Add (data.ToStrings (encoding, 1));
          else
          {
@@ -161,16 +161,16 @@ namespace TagLib.Id3v2
                      break;
                   }
             
-            if (FrameId == "TCOM" ||
-                FrameId == "TEXT" ||
-                FrameId == "TOLY" ||
-                FrameId == "TOPE" ||
-                FrameId == "TPE1" ||
-                FrameId == "TPE2" ||
-                FrameId == "TPE3" ||
-                FrameId == "TPE4")
+            if (FrameId == FrameType.TCOM ||
+                FrameId == FrameType.TEXT ||
+                FrameId == FrameType.TOLY ||
+                FrameId == FrameType.TOPE ||
+                FrameId == FrameType.TPE1 ||
+                FrameId == FrameType.TPE2 ||
+                FrameId == FrameType.TPE3 ||
+                FrameId == FrameType.TPE4)
                 field_list.Add (value.Split (new char []{'/'}));
-            else if (FrameId == "TCON")
+            else if (FrameId == FrameType.TCON)
             {
                while (value.Length > 1 && value [0] == '(')
                {
@@ -221,10 +221,10 @@ namespace TagLib.Id3v2
          }
          else
          {
-            if (FrameId == "TCON")
+            if (FrameId == FrameType.TCON)
             {
                byte id;
-               string data = "";
+               string data = string.Empty;
                foreach (string s in field_list)
                   data += byte.TryParse (s, out id) ? ("(" + id + ")") : s;
                v.Add (ByteVector.FromString (data, encoding));
@@ -243,7 +243,7 @@ namespace TagLib.Id3v2
    public class UserTextIdentificationFrame : TextIdentificationFrame
    {
       #region Constructors
-      public UserTextIdentificationFrame (string description, StringType encoding) : base ("TXXX", encoding)
+      public UserTextIdentificationFrame (string description, StringType encoding) : base (FrameType.TXXX, encoding)
       {
          StringCollection l = new StringCollection ();
          l.Add (description);
@@ -324,7 +324,7 @@ namespace TagLib.Id3v2
       #region Public Static Methods
       public static UserTextIdentificationFrame Get (Tag tag, string description, StringType type, bool create)
       {
-         foreach (Frame f in tag.GetFrames ("TXXX"))
+         foreach (Frame f in tag.GetFrames (FrameType.TXXX))
             if (f is UserTextIdentificationFrame && (f as UserTextIdentificationFrame).Description == description)
                return f as UserTextIdentificationFrame;
          

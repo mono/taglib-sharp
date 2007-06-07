@@ -17,7 +17,7 @@ namespace TagLib.Id3v2
          SetData (data, 0, version, true);
       }
       
-      public MusicCdIdentifier () : base ("MCDI", 4)
+      public MusicCdIdentifier () : base (FrameType.MCDI, 4)
       {
       }
       

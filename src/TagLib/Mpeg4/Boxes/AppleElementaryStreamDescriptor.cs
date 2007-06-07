@@ -17,7 +17,7 @@ namespace TagLib.Mpeg4
       public AppleElementaryStreamDescriptor (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, file, handler)
       {
          int offset = 0;
-         ByteVector box_data = LoadData (file);
+         ByteVector box_data = file.ReadBlock (DataSize);
          decoder_config = new ByteVector ();
          
          // Elementary Stream Descriptor Tag

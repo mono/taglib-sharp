@@ -108,5 +108,16 @@ namespace TagLib.Riff
       {
          fields.RemoveValue (id);
       }
+      
+      public override void Clear ()
+      {
+         fields.Clear ();
+      }
+      
+      public override bool IsEmpty {
+         get {
+            return fields.Count == 0;
+         }
+      }
    }
 }

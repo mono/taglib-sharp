@@ -9,7 +9,7 @@ namespace TagLib.Mpeg4
       #region Constructors
       public IsoChunkOffsetBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, file, handler)
       {
-         ByteVector box_data = LoadData (file);
+         ByteVector box_data = file.ReadBlock (DataSize);
          
          offsets = new uint [(int) box_data.Mid (0, 4).ToUInt ()];
          

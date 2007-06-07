@@ -50,7 +50,7 @@ namespace TagLib.Ape
       
       #region Public Static Properties
       public const uint Size = 32;
-      public static ByteVector FileIdentifier {get {return "APETAGEX";}}
+      public static readonly ReadOnlyByteVector FileIdentifier = "APETAGEX";
       #endregion
       
       

@@ -107,6 +107,8 @@ namespace TagLib
          }
       }
       
+      public abstract void Clear ();
+      
       public static void Duplicate (Tag source, Tag target, bool overwrite)
       {
          if (source == null)

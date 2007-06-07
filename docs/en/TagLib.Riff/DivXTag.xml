@@ -58,14 +58,13 @@
       </Docs>
     </Member>
     <Member MemberName="FileIdentifier">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FileIdentifier { get; };" />
-      <MemberType>Property</MemberType>
+      <MemberSignature Language="C#" Value="public static readonly TagLib.ReadOnlyByteVector FileIdentifier;" />
+      <MemberType>Field</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
+        <ReturnType>TagLib.ReadOnlyByteVector</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
-        <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

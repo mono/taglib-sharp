@@ -66,7 +66,7 @@ namespace TagLib.Mpeg4
          ByteVector tag_data = udta_box.Render ();
          
          // If we don't have a "udta" box to overwrite...
-         if (parser.UdtaTree.Length == 0 || parser.UdtaTree [parser.UdtaTree.Length - 1].BoxType != BoxTypes.Udta)
+         if (parser.UdtaTree.Length == 0 || parser.UdtaTree [parser.UdtaTree.Length - 1].BoxType != BoxType.Udta)
          {
             // Stick the box at the end of the moov box.
             BoxHeader moov_header = parser.MoovTree [parser.MoovTree.Length - 1];
@@ -151,7 +151,7 @@ namespace TagLib.Mpeg4
          
          udta_box = parser.UserDataBox;
          
-         if (udta_box != null && udta_box.GetChild (BoxTypes.Meta) != null && udta_box.GetChild (BoxTypes.Meta).GetChild (BoxTypes.Ilst) != null)
+         if (udta_box != null && udta_box.GetChild (BoxType.Meta) != null && udta_box.GetChild (BoxType.Meta).GetChild (BoxType.Ilst) != null)
             TagTypesOnDisk |= TagTypes.Apple;
          
          if (udta_box == null)

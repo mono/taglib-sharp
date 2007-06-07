@@ -96,5 +96,17 @@ namespace TagLib.Asf
       public string Copyright   {get {return _copyright;}   set {_copyright = value;}}
       public string Description {get {return _description;} set {_description = value;}}
       public string Rating      {get {return _rating;}      set {_rating = value;}}
+      
+      public bool IsEmpty
+      {
+         get
+         {
+            return string.IsNullOrEmpty (_title)
+                && string.IsNullOrEmpty (_author)
+                && string.IsNullOrEmpty (_copyright)
+                && string.IsNullOrEmpty (_description)
+                && string.IsNullOrEmpty (_rating);
+         }
+      }
    }
 }

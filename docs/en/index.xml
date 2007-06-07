@@ -15,7 +15,7 @@
           <AttributeName>System.Reflection.AssemblyCopyright("Copyright (c) 2006-2007 Brian Nickel")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyDescription("A library for reading and writing audio metatags.")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyDescription("A library for reading and writing metatags to audio and video files.")</AttributeName>
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyTitle("TagLib#")</AttributeName>
@@ -146,7 +146,6 @@
       <Type Name="BoxHeader" />
       <Type Name="BoxFactory" />
       <Type Name="FileParser" />
-      <Type Name="BoxTypes" />
       <Type Name="File" />
       <Type Name="AppleAdditionalInfoBox" />
       <Type Name="AppleAnnotationBox" />

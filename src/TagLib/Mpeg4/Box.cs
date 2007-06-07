@@ -15,7 +15,7 @@ namespace TagLib.Mpeg4
       protected Box (BoxHeader header, IsoHandlerBox handler)
       {
          this.header        = header;
-         this.data_position = header.Position + (long)header.DataOffset;
+         this.data_position = header.Position + header.DataOffset;
          this.handler       = handler;
       }
       
@@ -96,7 +96,7 @@ namespace TagLib.Mpeg4
             output.Add (Data);
          
          // If there was a free, don't take it away, and let meta be a special case.
-         if (free_found || BoxType == BoxTypes.Meta)
+         if (free_found || BoxType == Mpeg4.BoxType.Meta)
          {
             long size_difference =  header.DataSize - output.Count;
             
@@ -120,7 +120,7 @@ namespace TagLib.Mpeg4
       
       /*internal void DumpTree (string start)
       {
-         if (BoxType == BoxTypes.Data)
+         if (BoxType == BoxType.Data)
             System.Console.WriteLine (start + BoxType.ToString () + " " + (this as AppleDataBox).Text);
          else
             System.Console.WriteLine (start + BoxType.ToString ());
@@ -169,7 +169,7 @@ namespace TagLib.Mpeg4
          return null;
       }
       
-      public Box GetChildRecursively (System.Type type)
+/*      public Box GetChildRecursively (System.Type type)
       {
          if (Children == null)
             return null;
@@ -186,7 +186,7 @@ namespace TagLib.Mpeg4
          }
          
          return null;
-      }
+      }*/
       
       public void RemoveChild (ByteVector type)
       {
@@ -196,13 +196,13 @@ namespace TagLib.Mpeg4
                   (Children as ICollection<Box>).Remove (b);
       }
       
-      public void RemoveChild (System.Type type)
+/*      public void RemoveChild (System.Type type)
       {
          if (Children != null && Children is ICollection<Box>)
             foreach (Box b in Children)
                if (b.GetType () == type)
                   (Children as ICollection<Box>).Remove (b);
-      }
+      }*/
       
       public void RemoveChild (Box box)
       {
@@ -220,6 +220,13 @@ namespace TagLib.Mpeg4
       {
          if (Children != null && Children is ICollection<Box>)
             (Children as ICollection<Box>).Clear ();
+      }
+      
+      public bool HasChildren {
+         get {
+            return Children != null && Children is ICollection<Box>
+               && (Children as ICollection<Box>).Count != 0;
+         }
       }
    }
 }

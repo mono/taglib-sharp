@@ -14,13 +14,13 @@ namespace TagLib.Id3v2
       
       
       #region Constructors
-      public TermsOfUseFrame (string language, StringType encoding) : base ("USER", 4)
+      public TermsOfUseFrame (string language, StringType encoding) : base (FrameType.USER, 4)
       {
          this.encoding    = encoding;
          this.language    = language;
       }
       
-      public TermsOfUseFrame (string language) : base ("USER", 4)
+      public TermsOfUseFrame (string language) : base (FrameType.USER, 4)
       {
          this.language    = language;
       }
@@ -77,7 +77,7 @@ namespace TagLib.Id3v2
       #region Public Static Methods
       public static TermsOfUseFrame Get (Tag tag, string language, bool create)
       {
-         foreach (Frame f in tag.GetFrames ("USER"))
+         foreach (Frame f in tag.GetFrames (FrameType.USER))
          {
             TermsOfUseFrame cf = f as TermsOfUseFrame;
             
@@ -96,7 +96,7 @@ namespace TagLib.Id3v2
       public static TermsOfUseFrame GetPreferred (Tag tag, string language)
       {
          TermsOfUseFrame best = null;
-         foreach (Frame f in tag.GetFrames ("USER"))
+         foreach (Frame f in tag.GetFrames (FrameType.USER))
          {
             TermsOfUseFrame cf = f as TermsOfUseFrame;
             if (cf == null) continue;

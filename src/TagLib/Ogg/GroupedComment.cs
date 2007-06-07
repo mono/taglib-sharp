@@ -65,7 +65,7 @@ namespace TagLib.Ogg
          AddComment (streamSerialNumber, new XiphComment (data));
       }
       
-      public void Clear ()
+      public override void Clear ()
       {
          foreach (XiphComment tag in tags)
             tag.Clear ();

@@ -52,7 +52,7 @@ namespace TagLib.WavPack
       
       #region Public Static Properties
       public const uint Size = 32;
-      public static ByteVector FileIdentifier {get {return "wvpk";}}
+      public static readonly ReadOnlyByteVector FileIdentifier = "wvpk";
       #endregion
       
       

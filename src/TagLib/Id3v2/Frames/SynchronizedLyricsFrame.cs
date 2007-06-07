@@ -39,7 +39,7 @@ namespace TagLib.Id3v2
       
       
       #region Constructors
-      public SynchronisedLyricsFrame (string description, string language, SynchedTextType type, StringType encoding) : base ("SYLT", 4)
+      public SynchronisedLyricsFrame (string description, string language, SynchedTextType type, StringType encoding) : base (FrameType.SYLT, 4)
       {
          this.text_encoding = encoding;
          this.language      = language;

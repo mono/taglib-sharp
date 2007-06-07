@@ -57,6 +57,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Id3v2/Frames/TermsOfUseFrame.cs \
 	$(srcdir)/TagLib/Id3v2/FrameFactory.cs \
 	$(srcdir)/TagLib/Id3v2/Frame.cs \
+	$(srcdir)/TagLib/Id3v2/FrameTypes.cs \
 	$(srcdir)/TagLib/Id3v2/Tag.cs \
 	$(srcdir)/TagLib/Id3v2/FrameHeader.cs \
 	$(srcdir)/TagLib/Id3v2/ExtendedHeader.cs \
@@ -67,7 +68,6 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Mpeg4/Box.cs \
 	$(srcdir)/TagLib/Mpeg4/BoxFactory.cs \
 	$(srcdir)/TagLib/Mpeg4/BoxHeader.cs \
-	$(srcdir)/TagLib/Mpeg4/BoxList.cs \
 	$(srcdir)/TagLib/Mpeg4/BoxTypes.cs \
 	$(srcdir)/TagLib/Mpeg4/File.cs \
 	$(srcdir)/TagLib/Mpeg4/FileParser.cs \

@@ -23,7 +23,7 @@ namespace TagLib.Id3v2
          SetData (data, 0, version, true);
       }
       
-      public PlayCountFrame () : base ("PCNT", 4)
+      public PlayCountFrame () : base (FrameType.PCNT, 4)
       {}
       
       protected internal PlayCountFrame (ByteVector data, int offset, FrameHeader header, byte version) : base(header)

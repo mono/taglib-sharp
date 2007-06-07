@@ -25,7 +25,7 @@ using System;
 
 namespace TagLib.Id3v2
 {
-   [Flags()]
+   [Flags]
    public enum FrameFlags : ushort
    {
       TagAlterPreservation  = 0x4000,
@@ -41,7 +41,7 @@ namespace TagLib.Id3v2
    public struct FrameHeader
    {
       #region Properties
-      private ByteVector frame_id;
+      private ReadOnlyByteVector frame_id;
       private uint frame_size;
       private FrameFlags flags;
       #endregion
@@ -99,7 +99,7 @@ namespace TagLib.Id3v2
                throw new CorruptFileException ("Data must contain at least a frame ID.");
 
             // Set the frame ID -- the first four bytes
-            frame_id = data.Mid (0, 4);
+            frame_id = new ReadOnlyByteVector (data.Mid (0, 4));
 
             // If the full header information was not passed in, do not continue
             // steps to parse the frame size and flags.
@@ -164,10 +164,10 @@ namespace TagLib.Id3v2
       #endregion
       
       #region Public Properties
-      public ByteVector FrameId
+      public ReadOnlyByteVector FrameId
       {
          get {return frame_id;}
-         set {if (value != null) frame_id = value.Mid (0, 4);}
+         set {if (value != null) frame_id = value.Count == 4 ? value : new ReadOnlyByteVector (value.Mid (0, 4));}
       }
       
       public uint FrameSize
@@ -191,10 +191,10 @@ namespace TagLib.Id3v2
       
       
       #region Private Methods
-      private static ByteVector ConvertId (ByteVector id, byte version, bool to_version)
+      private static ReadOnlyByteVector ConvertId (ByteVector id, byte version, bool to_version)
       {
          if (version == 4)
-            return id;
+            return id is ReadOnlyByteVector ? id as ReadOnlyByteVector : new ReadOnlyByteVector (id);
          
          if (id == null || version < 2)
             return null;
@@ -230,10 +230,10 @@ namespace TagLib.Id3v2
          if ((id.Count != 4 && version > 2) || (id.Count != 3 && version == 2))
             return null;
          
-         return id;
+         return id is ReadOnlyByteVector ? id as ReadOnlyByteVector : new ReadOnlyByteVector (id);
       }
       
-      private static readonly ByteVector [,] version2_frames = new ByteVector [57,2] {
+      private static readonly ReadOnlyByteVector [,] version2_frames = new ReadOnlyByteVector [57,2] {
          { "BUF", "RBUF" },
          { "CNT", "PCNT" },
          { "COM", "COMM" },
@@ -293,7 +293,7 @@ namespace TagLib.Id3v2
          { "WXX", "WXXX" }
       };
       
-      private static readonly ByteVector [,] version3_frames = new ByteVector [2,2] {
+      private static readonly ReadOnlyByteVector [,] version3_frames = new ReadOnlyByteVector [2,2] {
          { "TORY", "TDOR" },
          { "TYER", "TDRC" }
       };

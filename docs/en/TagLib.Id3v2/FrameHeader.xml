@@ -10,10 +10,10 @@
   <Interfaces />
   <Members>
     <Member MemberName="FrameId">
-      <MemberSignature Language="C#" Value="public TagLib.ByteVector FrameId { set; get; };" />
+      <MemberSignature Language="C#" Value="public TagLib.ReadOnlyByteVector FrameId { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.ByteVector</ReturnType>
+        <ReturnType>TagLib.ReadOnlyByteVector</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>Gets and sets the ID3v2.4 frame ID for the current instance.</summary>
