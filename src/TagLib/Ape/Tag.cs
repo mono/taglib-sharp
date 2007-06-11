@@ -27,7 +27,7 @@ using System.Globalization;
 
 namespace TagLib.Ape
 {
-   public class Tag : TagLib.Tag
+   public class Tag : TagLib.Tag, IEnumerable<string>
    {
       #region Private Properties
       private Footer _footer = new Footer ();
@@ -333,6 +333,16 @@ namespace TagLib.Ape
       
       
       #region Public Methods
+      public IEnumerator<string> GetEnumerator()
+      {
+         return _items.Keys.GetEnumerator();
+      }
+      
+      IEnumerator IEnumerable.GetEnumerator()
+      {
+         return _items.Keys.GetEnumerator();
+      }
+      
       public void AddValue (string key, uint number, uint count)
       {
          if (number == 0 && count == 0)

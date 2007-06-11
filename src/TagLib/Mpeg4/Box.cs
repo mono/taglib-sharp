@@ -140,7 +140,7 @@ namespace TagLib.Mpeg4
          return null;
       }
       
-      public Box GetChild (System.Type type)
+/*      public Box GetChild (System.Type type)
       {
          if (Children != null)
             foreach (Box box in Children)
@@ -148,7 +148,7 @@ namespace TagLib.Mpeg4
                   return box;
          
          return null;
-      }
+      }*/
       
       public Box GetChildRecursively (ByteVector type)
       {

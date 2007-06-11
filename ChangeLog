@@ -1,3 +1,61 @@
+2007-06-10  Brian Nickel <brian.nickel@gmail.com>
+
+	+-------------+
+	| VERSON BUMP |
+	|    2.0.0    |
+	+-------------+
+	
+	The official announcement, tarballs, and excessive drinking will come
+	tomorrow after I get Windows documentation in order. In the mean time
+	I'll tidy up the site a bit.
+
+	* src/TagLib/Id3v2/Tag.cs: Combine TYER, TDAT, and TIME into a single 
+	TDRC, rather than discarding TDAT and TIME.
+	
+	* src/TagLib/Id3v2/FrameTypes.cs: Add some more types.
+	
+	* src/TagLib/Id3v2/FrameFactory.cs: Change for renamed frames.
+	
+	* src/TagLib/Id3v2/FrameHeader.cs: Don't discard TIME and TDAT.
+	
+	* src/TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs: Remove SetText.
+	It is redundant and identical to set_Text.
+	
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs: Remove SetText. It is
+	redundant and identical to set_Text.
+	
+	* src/TagLib/Id3v2/Frames/MusicCdIdentifierFrame.cs: Rename 
+	MusicCdIdentifier to MusicCdIdentiferFrame. I don't know how I made that
+	mistake.
+	
+	* src/TagLib/Id3v2/Frames/TermsOfUseFrame.cs: Remove SetText. It is
+	redundant and identical to set_Text.
+	
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs: Rename to 
+	TextInformationFrame to better reflect specification. (Text
+	Identification frame is a subset of Text Information Frame). Split TDRC
+	into TYER, TDAT, and TIME if saving as version 2.3.
+	
+	* src/TagLib/Id3v2/Frame.cs: Make Render virtual to allow for more 
+	robust features. (Applied in TextInformationFrame.)
+	
+	* src/TagLib/ByteVector.cs: Fix typo.
+	
+	* src/TagLib/Ape/Tag.cs: Make enumerable.
+	
+	* src/TagLib/Mpeg4/Box.cs: Remove GetChild(System.Type), as all other 
+	System.Type based functionality has been removed.
+	
+	* src/AssemblyInfo-windows.cs: Version bump.
+	
+	* configure.ac: Version bump. Remove unit tests to shrink tarball.
+	
+	* Makefile.am: Remove unit tests to shrink tarball.
+
+2007-06-10  Brian Nickel <brian.nickel@gmail.com>
+
+	* docs/*: Get 100% caught up.
+
 2007-06-07  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/CombinedTag.cs: Add Tag.Clear, Tag.IsEmpty

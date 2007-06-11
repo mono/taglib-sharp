@@ -3,7 +3,7 @@ using System;
 
 namespace TagLib.Id3v2
 {
-   public class MusicCdIdentifier : Frame
+   public class MusicCdIdentifierFrame : Frame
    {
       #region Private Properties
       private ByteVector field_data = null;
@@ -12,16 +12,16 @@ namespace TagLib.Id3v2
       
       
       #region Constructors
-      public MusicCdIdentifier (ByteVector data, byte version) : base (data, version)
+      public MusicCdIdentifierFrame (ByteVector data, byte version) : base (data, version)
       {
          SetData (data, 0, version, true);
       }
       
-      public MusicCdIdentifier () : base (FrameType.MCDI, 4)
+      public MusicCdIdentifierFrame () : base (FrameType.MCDI, 4)
       {
       }
       
-      protected internal MusicCdIdentifier (ByteVector data, int offset, FrameHeader header, byte version) : base(header)
+      protected internal MusicCdIdentifierFrame (ByteVector data, int offset, FrameHeader header, byte version) : base(header)
       {
          SetData (data, offset, version, false);
       }
@@ -49,16 +49,16 @@ namespace TagLib.Id3v2
       
       
       #region Public Static Methods
-      public static MusicCdIdentifier Get (Tag tag, bool create)
+      public static MusicCdIdentifierFrame Get (Tag tag, bool create)
       {
          foreach (Frame f in tag)
-            if (f is MusicCdIdentifier)
-               return f as MusicCdIdentifier;
+            if (f is MusicCdIdentifierFrame)
+               return f as MusicCdIdentifierFrame;
          
          if (!create)
             return null;
          
-         MusicCdIdentifier frame = new MusicCdIdentifier ();
+         MusicCdIdentifierFrame frame = new MusicCdIdentifierFrame ();
          tag.AddFrame (frame);
          return frame;
       }

@@ -199,7 +199,7 @@ namespace TagLib.Id3v2
          if (id == null || version < 2)
             return null;
          
-         if (!to_version && (id == "EQUA" || id == "RVAD" || id == "TIME" || id == "TRDA" || id == "TSIZ" || id == "TDAT"))
+         if (!to_version && (id == FrameType.EQUA || id == FrameType.RVAD || id == FrameType.TRDA || id == FrameType.TSIZ))
             return null;
          
          

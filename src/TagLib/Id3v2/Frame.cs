@@ -92,7 +92,7 @@ namespace TagLib.Id3v2
       
       
       #region Public Methods
-      public ByteVector Render (byte version)
+      public virtual ByteVector Render (byte version)
       {
          if (version < 4)
             Flags &= ~(FrameFlags.DataLengthIndicator | FrameFlags.Unsychronisation);

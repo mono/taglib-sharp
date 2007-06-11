@@ -65,11 +65,6 @@ namespace TagLib.Id3v2
       {
          return text;
       }
-      
-      public void SetText (string text)
-      {
-         this.text = text;
-      }
       #endregion
       
       

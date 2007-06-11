@@ -84,10 +84,10 @@ namespace TagLib.Id3v2
          
          // Text Identification (frames 4.2)
          if (header.FrameId == FrameType.TXXX)
-            return new UserTextIdentificationFrame (data, position, header, version);
+            return new UserTextInformationFrame (data, position, header, version);
       	 
          if (header.FrameId [0] == (byte) 'T')
-            return new TextIdentificationFrame (data, position, header, version);
+            return new TextInformationFrame (data, position, header, version);
       	 
          // Unique File Identifier (frames 4.1)
          if (header.FrameId == FrameType.UFID)
@@ -95,7 +95,7 @@ namespace TagLib.Id3v2
          
          // Music CD Identifier (frames 4.5)
          if (header.FrameId == FrameType.MCDI)
-            return new MusicCdIdentifier (data, position, header, version);
+            return new MusicCdIdentifierFrame (data, position, header, version);
 
          // Unsynchronized Lyrics (frames 4.8)
          if (header.FrameId == FrameType.USLT)

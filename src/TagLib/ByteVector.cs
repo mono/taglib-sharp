@@ -716,7 +716,7 @@ namespace TagLib
            return FromFile (new File.LocalFileAbstraction (path), out firstChunk, copyFirstChunk);
         }
 
-        public static ByteVector FromFile (File.LocalFileAbstraction abstraction)
+        public static ByteVector FromFile (File.IFileAbstraction abstraction)
         {
             byte [] tmp_out;
             return FromFile (abstraction, out tmp_out, false);

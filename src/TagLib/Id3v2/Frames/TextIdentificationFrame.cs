@@ -25,7 +25,7 @@ using System;
 
 namespace TagLib.Id3v2
 {
-   public class TextIdentificationFrame : Frame
+   public class TextInformationFrame : Frame
    {
       #region Private Properties
       private StringType encoding   = StringType.UTF8;
@@ -39,17 +39,26 @@ namespace TagLib.Id3v2
       
       
       #region Constructors
-      public TextIdentificationFrame (ByteVector type, StringType encoding) : base (type, 4)
+      public TextInformationFrame (ByteVector type, StringType encoding) :
+         base (type, 4)
       {
          this.encoding = encoding;
       }
 
-      public TextIdentificationFrame (ByteVector data, byte version) : base (data, version)
+      public TextInformationFrame (ByteVector type) :
+         this (type, Id3v2.Tag.DefaultEncoding)
+      {
+      }
+
+      public TextInformationFrame (ByteVector data, byte version) :
+         base (data, version)
       {
          SetData (data, 0, version, true);
       }
 
-      protected internal TextIdentificationFrame (ByteVector data, int offset, FrameHeader header, byte version) : base(header)
+      protected internal TextInformationFrame (ByteVector data, int offset,
+                                                  FrameHeader header,
+                                                  byte version) : base(header)
       {
          SetData (data, offset, version, false);
       }
@@ -92,31 +101,61 @@ namespace TagLib.Id3v2
          ParseRawData ();
          return field_list.ToString ();
       }
+      
+      public override ByteVector Render (byte version)
+      {
+         if (version != 3 || FrameId != FrameType.TDRC)
+            return base.Render (version);
+      	
+         string text = ToString ();
+         if (text.Length < 10 || text [4] != '-' || text [7] != '-')
+            return base.Render (version);
+         
+         ByteVector output = new ByteVector ();
+         TextInformationFrame f;
+         
+         f = new TextInformationFrame (FrameType.TYER, encoding);
+         f.SetText (text.Substring (0, 4));
+         output.Add (f.Render (version));
+         
+         f = new TextInformationFrame (FrameType.TDAT, encoding);
+         f.SetText (text.Substring (5, 2) + text.Substring (8, 2));
+         output.Add (f.Render (version));
+         
+         if (text.Length < 16 || text [10] != 'T' || text [13] != ':')
+            return output;
+         
+         f = new TextInformationFrame (FrameType.TIME, encoding);
+         f.SetText (text.Substring (11, 2) + text.Substring (14, 2));
+         output.Add (f.Render (version));
+         
+         return output;
+      }
       #endregion
       
       
       
       #region Public Static Methods
-      public static TextIdentificationFrame Get (Tag tag, ByteVector type, StringType encoding, bool create)
+      public static TextInformationFrame Get (Tag tag, ByteVector type, StringType encoding, bool create)
       {
          foreach (Frame f in tag.GetFrames (type))
-            if (f is TextIdentificationFrame)
-               return f as TextIdentificationFrame;
+            if (f is TextInformationFrame)
+               return f as TextInformationFrame;
          
          if (!create)
             return null;
          
-         TextIdentificationFrame frame = new TextIdentificationFrame (type, encoding);
+         TextInformationFrame frame = new TextInformationFrame (type, encoding);
          tag.AddFrame (frame);
          return frame;
       }
       
-      public static TextIdentificationFrame Get (Tag tag, ByteVector type, bool create)
+      public static TextInformationFrame Get (Tag tag, ByteVector type, bool create)
       {
          return Get (tag, type, Tag.DefaultEncoding, create);
       }
       
-      public static TextIdentificationFrame Get (Tag tag, ByteVector type)
+      public static TextInformationFrame Get (Tag tag, ByteVector type)
       {
          return Get (tag, type, false);
       }
@@ -240,10 +279,10 @@ namespace TagLib.Id3v2
    
    
    
-   public class UserTextIdentificationFrame : TextIdentificationFrame
+   public class UserTextInformationFrame : TextInformationFrame
    {
       #region Constructors
-      public UserTextIdentificationFrame (string description, StringType encoding) : base (FrameType.TXXX, encoding)
+      public UserTextInformationFrame (string description, StringType encoding) : base (FrameType.TXXX, encoding)
       {
          StringCollection l = new StringCollection ();
          l.Add (description);
@@ -252,12 +291,12 @@ namespace TagLib.Id3v2
          base.SetText (l);
       }
       
-      public UserTextIdentificationFrame (ByteVector data, byte version) : base (data, version)
+      public UserTextInformationFrame (ByteVector data, byte version) : base (data, version)
       {
          CheckFields ();
       }
       
-      protected internal UserTextIdentificationFrame (ByteVector data, int offset, FrameHeader header, byte version) : base (data, offset, header, version)
+      protected internal UserTextInformationFrame (ByteVector data, int offset, FrameHeader header, byte version) : base (data, offset, header, version)
       {
          CheckFields ();
       }
@@ -322,26 +361,26 @@ namespace TagLib.Id3v2
       
       
       #region Public Static Methods
-      public static UserTextIdentificationFrame Get (Tag tag, string description, StringType type, bool create)
+      public static UserTextInformationFrame Get (Tag tag, string description, StringType type, bool create)
       {
          foreach (Frame f in tag.GetFrames (FrameType.TXXX))
-            if (f is UserTextIdentificationFrame && (f as UserTextIdentificationFrame).Description == description)
-               return f as UserTextIdentificationFrame;
+            if (f is UserTextInformationFrame && (f as UserTextInformationFrame).Description == description)
+               return f as UserTextInformationFrame;
          
          if (!create)
             return null;
          
-         UserTextIdentificationFrame frame = new UserTextIdentificationFrame (description, type);
+         UserTextInformationFrame frame = new UserTextInformationFrame (description, type);
          tag.AddFrame (frame);
          return frame;
       }
 
-      public static UserTextIdentificationFrame Get (Tag tag, string description, bool create)
+      public static UserTextInformationFrame Get (Tag tag, string description, bool create)
       {
          return Get (tag, description, TagLib.Id3v2.Tag.DefaultEncoding, create);
       }
       
-      public static UserTextIdentificationFrame Get (Tag tag, string description)
+      public static UserTextInformationFrame Get (Tag tag, string description)
       {
          return Get (tag, description, false);
       }

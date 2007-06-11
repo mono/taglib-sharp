@@ -1,8 +1,7 @@
 SUBDIRS = \
    src    \
    examples \
-   docs \
-   tests
+   docs
 
 pkgconfig_in_files = taglib-sharp.pc.in
 pkgconfigdir = $(libdir)/pkgconfig

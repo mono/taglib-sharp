@@ -1,9 +1,9 @@
 AC_INIT(src/TagLib/File.cs)
 AC_CANONICAL_SYSTEM
 
-MAJOR_VERSION=1
-MINOR_VERSION=9
-PATCH_VERSION=99995
+MAJOR_VERSION=2
+MINOR_VERSION=0
+PATCH_VERSION=0
 VERSION="$MAJOR_VERSION.$MINOR_VERSION.$PATCH_VERSION"
 ASM_VERSION="$MAJOR_VERSION.$MINOR_VERSION.0.0"
 
@@ -82,11 +82,11 @@ else
 	AM_CONDITIONAL(HAVE_GNOME_SHARP, false)
 fi
 
-PKG_CHECK_MODULES(MONO_NUNIT, mono-nunit >= 1.0, do_tests="yes", do_tests="no") AC_SUBST(MONO_NUNIT_LIBS)
-AM_CONDITIONAL(ENABLE_TESTS, test "x$do_tests" = "xyes")
-if test "x$do_tests" = "xno"; then
-	AC_MSG_WARN([Could not find mono-nunit: tests will not be available.])
-fi
+#PKG_CHECK_MODULES(MONO_NUNIT, mono-nunit >= 1.0, do_tests="yes", do_tests="no") AC_SUBST(MONO_NUNIT_LIBS)
+#AM_CONDITIONAL(ENABLE_TESTS, test "x$do_tests" = "xyes")
+#if test "x$do_tests" = "xno"; then
+#	AC_MSG_WARN([Could not find mono-nunit: tests will not be available.])
+#fi
 
 AC_OUTPUT([
 Makefile
@@ -95,6 +95,5 @@ src/Makefile
 src/AssemblyInfo.cs
 examples/Makefile
 docs/Makefile
-tests/Makefile
 ])
 
