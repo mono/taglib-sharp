@@ -1,1 +1,8 @@
-Describe the new features here
+Version 2.0.0
+June 11, 2007
+
+This is the first stable release of TagLib#. TagLib# is a .NET 2.0 library for
+reading and writing tagging data from audio and video files. In addition it
+supports the reading of audio and video properties and can be used for media 
+validation. Special thanks to Aaron Bockover and Da_FileServer their help, and 
+everyone who has submitted a bug report or feature request.

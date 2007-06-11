@@ -28,7 +28,7 @@ namespace TagLib.Ogg
             
          for (int i = 0; i < page_packets.Length; i ++)
          {
-            if ((page.Header.Flags & PageFlags.FirstPacketContinued) == 0 && i == 0)
+            if ((page.Header.Flags & PageFlags.FirstPacketContinued) != 0 && i == 0 && packets.Count > 0)
                packets [packets.Count - 1].Add (page_packets [0]);
             else
                packets.Add (page_packets [i]);

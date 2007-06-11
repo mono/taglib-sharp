@@ -1,3 +1,10 @@
+2007-06-11  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Ogg/Paginator.cs: Fix save support in OGG. Thanks to
+	maciej for pointing this out.
+	
+	* NEWS: Added NEWS file.
+
 2007-06-10  Brian Nickel <brian.nickel@gmail.com>
 
 	+-------------+
