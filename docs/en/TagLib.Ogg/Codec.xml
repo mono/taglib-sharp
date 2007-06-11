@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public abstract class Codec : TagLib.ICodec" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -83,8 +83,8 @@
         <Parameter Name="lastGranularPosition" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="firstGranularPosition">To be added.</param>
-        <param name="lastGranularPosition">To be added.</param>
+        <param name="firstGranularPosition">A <see cref="T:System.Int64" /> containing the first absolute granular position of the stream.</param>
+        <param name="lastGranularPosition">A <see cref="T:System.Int64" /> containing the last absolute granular position of the stream.</param>
         <summary>Gets the duration of the stream represented by the current instance by providing the first and last granular position.</summary>
         <returns>A <see cref="T:System.TimeSpan" /> containing the duration of the current instance.</returns>
         <remarks />
@@ -150,10 +150,10 @@
         <Parameter Name="comment" Type="TagLib.Ogg.XiphComment" />
       </Parameters>
       <Docs>
-        <param name="packets">To be added.</param>
-        <param name="comment">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="packets">A <see cref="T:TagLib.ByteVectorCollection" /> containing packets for the bitstream using the current instance.</param>
+        <param name="comment">A <see cref="T:TagLib.Ogg.XiphComment" /> to store in the packet collection.</param>
+        <summary>Stores a Vorbis Comment into the appropriate packet in the stream.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>

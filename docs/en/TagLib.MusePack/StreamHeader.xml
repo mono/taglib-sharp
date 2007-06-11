@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public struct StreamHeader : TagLib.IAudioCodec" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.ValueType</BaseTypeName>
@@ -22,7 +22,7 @@
       </Parameters>
       <Docs>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing header bytes for MusePack stream header.</param>
-        <param name="streamLength">To be added.</param>
+        <param name="streamLength">A <see cref="T:System.Int64" /> containing the length of the stream in bytes.</param>
         <summary>Constructs and initialized the current instance of <see cref="T:TagLib.MusePack.StreamHeader" /> based on the stream header data and the stream length.</summary>
         <remarks>
           <paramref name="stream_length" /> is required for determining the bitrate.</remarks>
@@ -131,8 +131,8 @@
         <ReturnType>TagLib.ReadOnlyByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gets the identifier used for finding stream headers in a file.</summary>
+        <remarks>Always "MP+".</remarks>
       </Docs>
     </Member>
   </Members>

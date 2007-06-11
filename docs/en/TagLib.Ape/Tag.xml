@@ -1,13 +1,17 @@
 <Type Name="Tag" FullName="TagLib.Ape.Tag">
-  <TypeSignature Language="C#" Value="public class Tag : TagLib.Tag" />
+  <TypeSignature Language="C#" Value="public class Tag : TagLib.Tag, System.Collections.Generic.IEnumerable&lt;string&gt;" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.Tag</BaseTypeName>
   </Base>
-  <Interfaces />
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.Collections.Generic.IEnumerable&lt;System.String&gt;</InterfaceName>
+    </Interface>
+  </Interfaces>
   <Members>
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Tag ();" />
@@ -27,12 +31,10 @@
       </Parameters>
       <Docs>
         <param name="file">A <see cref="T:TagLib.File" /> containing a tag to read.</param>
-        <param name="position">To be added.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying at what seek position to start reading.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ape.Tag" /> by reading from a <see cref="T:TagLib.File" /> at a specified position.</summary>
         <remarks>
-          <para>
-To access or create an <see cref="T:TagLib.Ape.Tag" /> in an existing <see cref="T:TagLib.File" />, use <see cref="M:TagLib.File.GetTag(TagLib.TagTypes,bool)" />.
-</para>
+          <para>To access or create an <see cref="T:TagLib.Ape.Tag" /> in an existing <see cref="T:TagLib.File" />, use <see cref="M:TagLib.File.GetTag(TagLib.TagTypes,bool)" />.</para>
         </remarks>
       </Docs>
     </Member>
@@ -128,7 +130,7 @@ To access or create an <see cref="T:TagLib.Ape.Tag" /> in an existing <see cref=
       </Parameters>
       <Docs>
         <param name="file">A <see cref="T:TagLib.File" /> containing a tag to read.</param>
-        <param name="position">To be added.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying at what seek position to start reading.</param>
         <summary>Populates the current instance by reading a tag from a file.</summary>
         <remarks />
       </Docs>
@@ -254,8 +256,21 @@ Otherwise, the values will be added as "<paramref name="number" />/<paramref nam
         <ReturnType>TagLib.ReadOnlyByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gets the identifier used for finding APE tags in a file.</summary>
+        <remarks>Always "APETAGEX".</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetEnumerator">
+      <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerator&lt;string&gt; GetEnumerator ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IEnumerator&lt;System.String&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Gets the enumerator for the current instance.</summary>
+        <returns>A <see cref="T:System.Collections.Generic.IEnumerator&lt;System.String&gt;" /> enumerating through the item keys contained in the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
   </Members>

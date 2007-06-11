@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public struct BlockHeader" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.ValueType</BaseTypeName>
@@ -30,7 +30,7 @@
       </Parameters>
       <Docs>
         <param name="type">A <see cref="T:TagLib.Flac.BlockType" /> specifying the block type of the new instance.</param>
-        <param name="blockSize">To be added.</param>
+        <param name="blockSize">A <see cref="T:System.UInt32" /> specifying the size of the block data.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Flac.BlockHeader" /> with a specific type and length.</summary>
         <remarks />
       </Docs>
@@ -82,9 +82,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the size of the block data.</summary>
+        <value>A <see cref="T:System.UInt32" /> containing the size of the data block.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Size">
@@ -95,8 +95,8 @@
       </ReturnValue>
       <MemberValue>4</MemberValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gets the size of a FLAC metadata block header.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>

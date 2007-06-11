@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public struct VideoHeader : TagLib.IVideoCodec" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.ValueType</BaseTypeName>
@@ -22,7 +22,7 @@
       </Parameters>
       <Docs>
         <param name="file">A <see cref="T:TagLib.File" /> containing a video header to read.</param>
-        <param name="position">To be added.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying at what seek position to start reading.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg.VideoHeader" /> by reading one from a specified file.</summary>
         <remarks />
       </Docs>

@@ -1,5 +1,5 @@
-<Type Name="PlayCountFrame" FullName="TagLib.Id3v2.PlayCountFrame">
-  <TypeSignature Language="C#" Value="public class PlayCountFrame : TagLib.Id3v2.Frame" />
+<Type Name="MusicCdIdentifierFrame" FullName="TagLib.Id3v2.MusicCdIdentifierFrame">
+  <TypeSignature Language="C#" Value="public class MusicCdIdentifierFrame : TagLib.Id3v2.Frame" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
@@ -10,16 +10,16 @@
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public PlayCountFrame ();" />
+      <MemberSignature Language="C#" Value="public MusicCdIdentifierFrame ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.PlayCountFrame" />.</summary>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.MusicCdIdentifierFrame" />.</summary>
         <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public PlayCountFrame (TagLib.ByteVector data, byte version);" />
+      <MemberSignature Language="C#" Value="public MusicCdIdentifierFrame (TagLib.ByteVector data, byte version);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="data" Type="TagLib.ByteVector" />
@@ -28,12 +28,12 @@
       <Docs>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
         <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
-        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.PlayCountFrame" /> from a raw ID3v2 frame.</summary>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.MusicCdIdentifierFrame" /> from a raw ID3v2 frame.</summary>
         <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected PlayCountFrame (TagLib.ByteVector data, int offset, TagLib.Id3v2.FrameHeader header, byte version);" />
+      <MemberSignature Language="C#" Value="protected MusicCdIdentifierFrame (TagLib.ByteVector data, int offset, TagLib.Id3v2.FrameHeader header, byte version);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="data" Type="TagLib.ByteVector" />
@@ -46,15 +46,27 @@
         <param name="offset">A <see cref="T:System.Int32" /> specifying at what index in <paramref name="data" /> the frame begins.</param>
         <param name="header">A <see cref="T:TagLib.Id3v2.FrameHeader" /> containing header information for the new instance.</param>
         <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
-        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.PlayCountFrame" /> from a raw ID3v2 frame.</summary>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.MusicCdIdentifierFrame" /> from a raw ID3v2 frame.</summary>
         <remarks />
       </Docs>
     </Member>
+    <Member MemberName="Data">
+      <MemberSignature Language="C#" Value="public TagLib.ByteVector Data { set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>TagLib.ByteVector</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets and sets the data contained in the current instance.</summary>
+        <value>A <see cref="T:TagLib.ByteVector" /> containing the music CD identifier data.</value>
+        <remarks>The contents of this frame should be the raw table of contents contained in the CD.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="Get">
-      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.PlayCountFrame Get (TagLib.Id3v2.Tag tag, bool create);" />
+      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.MusicCdIdentifierFrame Get (TagLib.Id3v2.Tag tag, bool create);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.Id3v2.PlayCountFrame</ReturnType>
+        <ReturnType>TagLib.Id3v2.MusicCdIdentifierFrame</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="tag" Type="TagLib.Id3v2.Tag" />
@@ -63,26 +75,14 @@
       <Docs>
         <param name="tag">A <see cref="T:TagLib.Id3v2.Tag" /> to search.</param>
         <param name="create">A <see cref="T:System.Boolean" /> specifying whether or not to create a new instance if one is not found.</param>
-        <summary>Searches for a <see cref="T:TagLib.Id3v2.PlayCountFrame" />, optionally creating one if none is found.</summary>
-        <returns>A <see cref="T:TagLib.Id3v2.PlayCountFrame" />, or <see langword="null" /> if not found and not creating.</returns>
-        <remarks />
-      </Docs>
-    </Member>
-    <Member MemberName="PlayCount">
-      <MemberSignature Language="C#" Value="public ulong PlayCount { set; get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.UInt64</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>Gets and sets the play count of the current instance.</summary>
-        <value>A <see cref="T:System.UInt64" /> containing the play count.</value>
+        <summary>Searches for a <see cref="T:TagLib.Id3v2.MusicCdIdentifierFrame" />, optionally creating one if none is found.</summary>
+        <returns>A <see cref="T:TagLib.Id3v2.MusicCdIdentifierFrame" />, or <see langword="null" /> if not found and not creating.</returns>
         <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>This class is used for accessing and modifying ID3v2 Play Count (PCNT) frames.</summary>
+    <summary>This class is used for accessing and modifying ID3v2 Music CD Identifier (MCDI) frames.</summary>
     <remarks />
   </Docs>
 </Type>

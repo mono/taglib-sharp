@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public abstract class ListTag : TagLib.Tag" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.Tag</BaseTypeName>
@@ -204,10 +204,10 @@
         <Parameter Name="id" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
+        <summary>Gets the value of an item as a <see cref="T:TagLib.StringCollection" />.</summary>
+        <returns>A <see cref="T:TagLib.StringCollection" /> containing the values of the item.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetValue">
@@ -221,10 +221,10 @@
         <Parameter Name="value" Type="TagLib.StringCollection" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
+        <param name="value">A <see cref="T:TagLib.StringCollection" /> containing values to store.</param>
+        <summary>Sets the value of an item to a specified string collection.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetValues">
@@ -237,10 +237,10 @@
         <Parameter Name="id" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
+        <summary>Gets the values of an item as a <see cref="T:TagLib.ByteVectorCollection" />.</summary>
+        <returns>A <see cref="T:TagLib.ByteVectorCollection" /> containing the values of the item.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetValue">
@@ -254,10 +254,10 @@
         <Parameter Name="value" Type="TagLib.ByteVectorCollection" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
+        <param name="value">A <see cref="T:TagLib.ByteVectorCollection" /> containing values to store.</param>
+        <summary>Sets the value of an item to a specified <see cref="T:TagLib.ByteVector" /> collection.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public sealed class ReadOnlyByteVector : TagLib.ByteVector" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.ByteVector</BaseTypeName>
@@ -14,8 +14,12 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>
+          <para>
+            Constructs and initializes a new instance of the <see cref="T:TagLib.ReadOnlyByteVector" /> class that is empty.
+          </para>
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -31,9 +35,13 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:System.Byte" />[] containing the bytes to be copied to the new instance.</param>
+        <summary>
+          <para>
+            Constructs and initializes a new instance of the <see cref="T:TagLib.ReadOnlyByteVector" /> class copying the elements from a specified <see cref="T:System.Byte" />[].
+          </para>
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -44,10 +52,14 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="length">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:System.Byte" />[] containing the bytes to be copied to the new instance.</param>
+        <param name="length">A <see cref="T:System.Int32" /> that specified the number of bytes to be copied to the new instance.</param>
+        <summary>
+          <para>
+            Constructs and initializes a new instance of the <see cref="T:TagLib.ReadOnlyByteVector" /> class copying a specified number of elements from the beginning of a specified <see cref="T:System.Byte" />[].
+          </para>
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -57,9 +69,17 @@
         <Parameter Name="size" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="size">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="size">A <see cref="T:System.Int32" /> that specifies the number of bytes to be stored in the new instance.</param>
+        <summary>
+          <para>
+            Constructs and initializes a new instance of the <see cref="T:TagLib.ByteVector" /> class of specified size containing bytes with a zeroed value.
+          </para>
+        </summary>
+        <remarks>
+          <para>
+            Each element of the new instance will have a value of 0x00. <see cref="C:TagLib.ReadOnlyByteVector(T:System.Int32,System.Byte)" /> to fill a new instance with a specified value.
+          </para>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -70,10 +90,14 @@
         <Parameter Name="value" Type="System.Byte" />
       </Parameters>
       <Docs>
-        <param name="size">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="size">A <see cref="T:System.Int32" /> that specifies the number of bytes to be stored in the new instance.</param>
+        <param name="value">A <see cref="T:System.Byte" /> that specifies the value to be stored in the new instance</param>
+        <summary>
+          <para>
+            Constructs and initializes a new instance of the <see cref="T:TagLib.ReadOnlyByteVector" /> class of specified size containing bytes of specified value.
+          </para>
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -83,9 +107,13 @@
         <Parameter Name="vector" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="vector">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="vector">A <see cref="T:TagLib.ByteVector" /> containing the bytes to be stored in the new instance.</param>
+        <summary>
+          <para>
+            Constructs and initializes a new instance of the <see cref="T:TagLib.ReadOnlyByteVector" /> class by copying the values from another instance.
+          </para>
+        </summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="op_Implicit">
@@ -98,10 +126,10 @@
         <Parameter Name="value" Type="System.Byte" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">A <see cref="T:System.Byte" /> to convert.</param>
+        <summary>Converts a <see cref="T:Sytem.Byte" /> to a new instance of <see cref="T:TagLib.ReadOnlyByteVector" />.</summary>
+        <returns>A new instance of <see cref="T:TagLib.ReadOnlyByteVector" /> containing the original value.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="op_Implicit">
@@ -114,10 +142,10 @@
         <Parameter Name="value" Type="System.Byte[]" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">A <see cref="T:System.Byte" /> array to convert.</param>
+        <summary>Converts a <see cref="T:Sytem.Byte" /> array to a new instance of <see cref="T:TagLib.ReadOnlyByteVector" />.</summary>
+        <returns>A new instance of <see cref="T:TagLib.ReadOnlyByteVector" /> containing the original value.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="op_Implicit">
@@ -130,15 +158,15 @@
         <Parameter Name="value" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">A <see cref="T:System.String" /> to convert.</param>
+        <summary>Converts a <see cref="T:Sytem.String" /> to a new instance of <see cref="T:TagLib.ReadOnlyByteVector" />.</summary>
+        <returns>A new instance of <see cref="T:TagLib.ReadOnlyByteVector" /> containing the original value.</returns>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class provides an immutable version of <see cref="T:TagLib.ByteVector" />.</summary>
+    <remarks />
   </Docs>
 </Type>

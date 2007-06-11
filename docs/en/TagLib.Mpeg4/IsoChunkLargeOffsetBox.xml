@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class IsoChunkLargeOffsetBox : TagLib.Mpeg4.FullBox" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.Mpeg4.FullBox</BaseTypeName>
@@ -22,7 +22,7 @@
       </Parameters>
       <Docs>
         <param name="file">A <see cref="T:TagLib.Mpeg4.File" /> to write to.</param>
-        <param name="sizeDifference">To be added.</param>
+        <param name="sizeDifference">A <see cref="T:System.Int64" /> specifying the number of byte added to or removed from the file.</param>
         <param name="after">A <see cref="T:System.Int64" /> specifying the seek position after which changes should be applied.</param>
         <summary>Overwrites the version of the current instance on the disk with new offset values due to file change.</summary>
         <remarks>If an offset contains a position less than the value in <paramref name="after" /> no change will be made to it.</remarks>
@@ -39,7 +39,7 @@
         <Parameter Name="after" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="sizeDifference">To be added.</param>
+        <param name="sizeDifference">A <see cref="T:System.Int64" /> specifying the number of byte added to or removed from the file.</param>
         <param name="after">A <see cref="T:System.Int64" /> specifying the seek position after which changes should be applied.</param>
         <summary>Renders the current instance as a ChunkLargeOffsetBox applying a size change in the file.</summary>
         <returns>A rendered version of the current instance.</returns>
@@ -67,11 +67,11 @@
         <Parameter Name="handler" Type="TagLib.Mpeg4.IsoHandlerBox" />
       </Parameters>
       <Docs>
-        <param name="header">To be added.</param>
-        <param name="file">To be added.</param>
-        <param name="handler">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="header">A <see cref="T:TagLib.Mpeg4.BoxHeader" /> containing information about the new instance, including the position at which to read.</param>
+        <param name="file">A <see cref="T:TagLib.File" /> to containing the box to read.</param>
+        <param name="handler">A <see cref="T:TagLib.Mpeg4.IsoHandlerBox" /> to use as a handler for the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.IsoChunkLargeOffsetBox" /> by reading the contents from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>

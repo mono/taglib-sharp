@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class Picture : TagLib.IPicture" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -80,10 +80,10 @@
         <Parameter Name="abstraction" Type="TagLib.File+IFileAbstraction" />
       </Parameters>
       <Docs>
-        <param name="abstraction">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="abstraction">A <see cref="T:TagLib.File+IFileAbstraction" /> to read from.</param>
+        <summary>Creates a new instance of <see cref="T:TagLib.Picture" /> by reading the contents of a file.</summary>
+        <returns>A new <see cref="T:TagLib.Picture" /> containing the contents of the file.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="CreateFromPath">
@@ -96,10 +96,10 @@
         <Parameter Name="path" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="path">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="path">A <see cref="T:System.String" /> containing the name of a file to read from.</param>
+        <summary>Creates a new instance of <see cref="T:TagLib.Picture" /> by reading the contents of a file.</summary>
+        <returns>A new <see cref="T:TagLib.Picture" /> containing the contents of the file.</returns>
+        <remarks />
       </Docs>
     </Member>
   </Members>

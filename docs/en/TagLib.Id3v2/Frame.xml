@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public abstract class Frame" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -119,7 +119,7 @@
       </Docs>
     </Member>
     <Member MemberName="Render">
-      <MemberSignature Language="C#" Value="public TagLib.ByteVector Render (byte version);" />
+      <MemberSignature Language="C#" Value="public virtual TagLib.ByteVector Render (byte version);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
@@ -150,7 +150,7 @@
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
         <param name="offset">A <see cref="T:System.Int32" /> specifying at what index in <paramref name="data" /> the frame begins.</param>
         <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
-        <param name="readHeader">To be added.</param>
+        <param name="readHeader">A <see cref="T:System.Boolean" /> inidcating whether or not the frame header should be read.</param>
         <summary>Sets the data of the current instance from ID3v2 frame data.</summary>
         <remarks />
       </Docs>
@@ -185,10 +185,10 @@
         <Parameter Name="version" Type="System.Byte" />
       </Parameters>
       <Docs>
-        <param name="frameData">To be added.</param>
-        <param name="offset">A <see cref="T:System.Int32" /> specifying at what index in <paramref name="data" /> the frame begins.</param>
+        <param name="frameData">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
+        <param name="offset">A <see cref="T:System.Int32" /> specifying at what index in <paramref name="frameData" /> the frame begins.</param>
         <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
-        <summary>Parses and extrats the field data from the extra information included in the frame's body.</summary>
+        <summary>Parses and extracts the field data from the extra information included in the frame's body.</summary>
         <returns>A <see cref="T:TagLib.ByteVector" /> containing the extracted frame data.</returns>
         <remarks />
       </Docs>

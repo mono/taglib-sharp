@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class List : System.Collections.Generic.Dictionary&lt;TagLib.ByteVector,TagLib.ByteVectorCollection&gt;" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Collections.Generic.Dictionary&lt;TagLib.ByteVector,TagLib.ByteVectorCollection&gt;</BaseTypeName>
@@ -215,10 +215,10 @@
         <Parameter Name="context" Type="System.Runtime.Serialization.StreamingContext" />
       </Parameters>
       <Docs>
-        <param name="info">To be added.</param>
-        <param name="context">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="info">A <see cref="T:System.Runtime.Serialization.SerializationInfo" /> containing the serialization information for the new instance.</param>
+        <param name="context">A <see cref="T:System.Runtime.Serialization.StreamingContext" /> containing the streaming context for the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.List" /> from serialization information.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetValuesAsStringCollection">
@@ -231,10 +231,10 @@
         <Parameter Name="id" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
+        <summary>Gets the value of an item as a <see cref="T:TagLib.StringCollection" />.</summary>
+        <returns>A <see cref="T:TagLib.StringCollection" /> containing the values of the item.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetValues">
@@ -247,10 +247,10 @@
         <Parameter Name="id" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> representing an item's FourCC identifier.</param>
+        <summary>Gets the values of an item as a <see cref="T:TagLib.ByteVectorCollection" />.</summary>
+        <returns>A <see cref="T:TagLib.ByteVectorCollection" /> containing the values of the item.</returns>
+        <remarks />
       </Docs>
     </Member>
   </Members>

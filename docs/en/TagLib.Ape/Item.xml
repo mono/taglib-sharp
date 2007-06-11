@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class Item" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -174,10 +174,10 @@
         <Parameter Name="value" Type="TagLib.StringCollection" />
       </Parameters>
       <Docs>
-        <param name="key">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="key">A <see cref="T:System.String" /> representing an APE item key.</param>
+        <param name="value">A <see cref="T:TagLib.StringCollection" /> to store.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ape.Item" /> with a specified key and string values.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>

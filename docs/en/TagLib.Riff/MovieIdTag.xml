@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class MovieIdTag : TagLib.Riff.ListTag" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.Riff.ListTag</BaseTypeName>

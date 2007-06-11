@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class AppleTag : TagLib.Tag, System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.Box&gt;" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.Tag</BaseTypeName>
@@ -201,9 +201,9 @@
         <Parameter Name="box" Type="TagLib.Mpeg4.IsoUserDataBox" />
       </Parameters>
       <Docs>
-        <param name="box">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="box">A <see cref="T:TagLib.Mpeg4.IsoUserDataBox" /> which contains, or should contain the tag.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.AppleTag" /> for a specified User Data box.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetEnumerator">
@@ -214,9 +214,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets the enumerator for the current instance.</summary>
+        <returns>A <see cref="T:System.Collections.Generic.IEnumerator&lt;TagLib.Mpeg4.Box&gt;" /> enumerating through the boxes contained in the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="SetData">
@@ -231,11 +231,11 @@
         <Parameter Name="flags" Type="System.UInt32" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <param name="data">To be added.</param>
-        <param name="flags">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="type">A <see cref="T:TagLib.ByteVector" /> containing a box type.</param>
+        <param name="data">A <see cref="T:TagLib.ByteVectorCollection" /> containing data to store.</param>
+        <param name="flags">A <see cref="T:System.UInt32" /> containing flag data for to use for the boxes.</param>
+        <summary>Sets the data for a specified data box type.</summary>
+        <remarks>One box will be created per value in <paramref name="data" />.</remarks>
       </Docs>
     </Member>
   </Members>

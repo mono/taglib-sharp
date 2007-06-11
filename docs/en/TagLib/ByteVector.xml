@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class ByteVector : IComparable&lt;TagLib.ByteVector&gt;, System.Collections.Generic.IList&lt;byte&gt;" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -67,7 +67,7 @@
         </summary>
         <remarks>
           <para>
-            Each element of the new instance will have a value of 0x00. <see cref="T:TagLib.ByteVector" />(<see cref="T:System.Int32" />, <see cref="T:System.Byte" />) to fill a new instance with a specified value.
+            Each element of the new instance will have a value of 0x00. <see cref="C:TagLib.ByteVector(System.Int32,System.Byte)" /> to fill a new instance with a specified value.
           </para>
         </remarks>
       </Docs>
@@ -194,7 +194,7 @@
       <Docs>
         <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the pattern to be found in the current instance.</param>
         <param name="offset">A <see cref="T:System.Int32" /> specifying the index at which to begin the search.</param>
-        <param name="byteAlign">To be added.</param>
+        <param name="byteAlign">A <see cref="T:System.Int32" /> specifying the byte alignment to use when searching.</param>
         <summary>Searches the current instance for a <see cref="T:TagLib.ByteVector" /> pattern, starting at a specified offset, with a specified byte alignment.</summary>
         <returns>A <see cref="System.Int32" /> containing either the index at which the value was found or -1 if it was not found. The value will be divisible by <paramref name="byte_align" />.</returns>
         <remarks />
@@ -248,7 +248,7 @@
       <Docs>
         <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the pattern to be found in the current instance.</param>
         <param name="offset">A <see cref="T:System.Int32" /> specifying the index at which to begin the search.</param>
-        <param name="byteAlign">To be added.</param>
+        <param name="byteAlign">A <see cref="T:System.Int32" /> specifying the byte alignment to use when searching.</param>
         <summary>Searches backwards through the current instance for a <see cref="T:TagLib.ByteVector" /> pattern, starting at a specified offset, with a specified byte alignment.</summary>
         <returns>A <see cref="System.Int32" /> containing either the index at which the value was found or -1 if it was not found. The value will be divisible by <paramref name="byte_align" />.</returns>
         <remarks />
@@ -303,8 +303,8 @@
       <Docs>
         <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the pattern to be found in the current instance.</param>
         <param name="offset">A <see cref="T:System.Int32" /> specifying the location within the current instance at which to check.</param>
-        <param name="patternOffset">To be added.</param>
-        <param name="patternLength">To be added.</param>
+        <param name="patternOffset">A <see cref="T:System.Int32" /> specifying where in <paramref name="pattern" /> the pattern to match begins.</param>
+        <param name="patternLength">A <see cref="T:System.Int32" /> specifying the number of bytes in the pattern to match.</param>
         <summary>Checks the current instance to determine whether it contains a specified portion of another <see cref="T:TagLib.ByteVector" /> at a specified offset.</summary>
         <returns>
           <see langword="true" /> if the portion of the pattern if found at the specified offset, otherwise <see langword="false" />.</returns>
@@ -325,7 +325,7 @@
       <Docs>
         <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing the pattern to be found in the current instance.</param>
         <param name="offset">A <see cref="T:System.Int32" /> specifying the location within the current instance at which to check.</param>
-        <param name="patternOffset">To be added.</param>
+        <param name="patternOffset">A <see cref="T:System.Int32" /> specifying where in <paramref name="pattern" /> the pattern to match begins.</param>
         <summary>Checks the current instance to determine whether it contains a specified portion of another <see cref="T:TagLib.ByteVector" /> at a specified offset.</summary>
         <returns>
           <see langword="true" /> if the portion of the pattern if found at the specified offset, otherwise <see langword="false" />.</returns>
@@ -612,7 +612,7 @@
       </Parameters>
       <Docs>
         <param name="value">A <see cref="T:System.UInt32" /> to be converted.</param>
-        <param name="mostSignificantByteFirst">To be added.</param>
+        <param name="mostSignificantByteFirst">A <see cref="T:System.Boolean" /> specifying whether or not the most significant byte appears first.</param>
         <summary>Converts a <see cref="T:System.UInt32" /> into a four byte <see cref="T:TagLib.ByteVector" />.</summary>
         <returns>A four byte <see cref="T:TagLib.ByteVector" /> representing the converted value.</returns>
         <remarks />
@@ -646,7 +646,7 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="text">To be added.</param>
+        <param name="text">A <see cref="T:System.String" /> containing text to convert.</param>
         <param name="type">A <see cref="T:TagLib.StringType" /> specifying the encoding to use when converting the string.</param>
         <param name="length">A <see cref="T:System.Int32" /> specifying the number of characters to convert.</param>
         <summary>Creates a new instance of <see cref="T:TagLib.ByteVector" /> by converting a <see cref="T:System.String" /> into a specified encoding.</summary>
@@ -665,7 +665,7 @@
         <Parameter Name="type" Type="TagLib.StringType" />
       </Parameters>
       <Docs>
-        <param name="text">To be added.</param>
+        <param name="text">A <see cref="T:System.String" /> containing text to convert.</param>
         <param name="type">A <see cref="T:TagLib.StringType" /> specifying the encoding to use when converting the string.</param>
         <summary>Creates a new instance of <see cref="T:TagLib.ByteVector" /> by converting a <see cref="T:System.String" /> into a specified encoding.</summary>
         <returns>A new <see cref="T:TagLib.ByteVector" /> containing the string data in the specified encoding.</returns>
@@ -683,7 +683,7 @@
         <Parameter Name="length" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="text">To be added.</param>
+        <param name="text">A <see cref="T:System.String" /> containing text to convert.</param>
         <param name="length">A <see cref="T:System.Int32" /> specifying the number of characters to convert.</param>
         <summary>Creates a new instance of <see cref="T:TagLib.ByteVector" /> by converting a <see cref="T:System.String" /> into UTF-8 encoding.</summary>
         <returns>A new <see cref="T:TagLib.ByteVector" /> containing the string data in UTF-8 encoding.</returns>
@@ -700,7 +700,7 @@
         <Parameter Name="text" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="text">A <see cref="T:System.String" /> to convert.</param>
+        <param name="text">A <see cref="T:System.String" /> containing text to convert.</param>
         <summary>Creates a new instance of <see cref="T:TagLib.ByteVector" /> by converting a <see cref="T:System.String" /> into UTF-8 encoding.</summary>
         <returns>A new <see cref="T:TagLib.ByteVector" /> containing the string data in UTF-8 encoding.</returns>
         <remarks />
@@ -807,7 +807,7 @@
       </Parameters>
       <Docs>
         <param name="array">A <see cref="T:System.Byte" /> array to copy values to.</param>
-        <param name="arrayIndex">To be added.</param>
+        <param name="arrayIndex">A <see cref="T:System.Int32" /> specifying at what byte in the destination array to start copying.</param>
         <summary>Copies elements from the current instance to a specified <see cref="T:System.Byte" /> array.</summary>
         <remarks />
       </Docs>
@@ -855,7 +855,7 @@
       </Parameters>
       <Docs>
         <param name="index">A <see cref="T:System.Int32" /> specifying at what index to add a single byte.</param>
-        <param name="item">To be added.</param>
+        <param name="item">A <see cref="T:System.Byte" /> to insert into the current instance.</param>
         <summary>Inserts a single byte into the current instance.</summary>
         <remarks />
       </Docs>
@@ -887,8 +887,8 @@
         <Parameter Name="second" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="first">To be added.</param>
-        <param name="second">To be added.</param>
+        <param name="first">The first <see cref="T:TagLib.ByteVector" /> to compare.</param>
+        <param name="second">The second <see cref="T:TagLib.ByteVector" /> to compare.</param>
         <summary>Returns a <see cref="T:System.Boolean" /> value indicating whether the two specified values are equal to each other.</summary>
         <returns>
           <para>
@@ -908,8 +908,8 @@
         <Parameter Name="second" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="first">To be added.</param>
-        <param name="second">To be added.</param>
+        <param name="first">The first <see cref="T:TagLib.ByteVector" /> to compare.</param>
+        <param name="second">The second <see cref="T:TagLib.ByteVector" /> to compare.</param>
         <summary>Returns a <see cref="T:System.Boolean" /> value indicating whether the two specified values are unequal to each other.</summary>
         <returns>
           <para>
@@ -929,8 +929,8 @@
         <Parameter Name="second" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="first">To be added.</param>
-        <param name="second">To be added.</param>
+        <param name="first">The first <see cref="T:TagLib.ByteVector" /> to compare.</param>
+        <param name="second">The second <see cref="T:TagLib.ByteVector" /> to compare.</param>
         <summary>Returns a <see cref="T:System.Boolean" /> value indicating whether the the first value is less than the second.</summary>
         <returns>
           <para>
@@ -950,8 +950,8 @@
         <Parameter Name="second" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="first">To be added.</param>
-        <param name="second">To be added.</param>
+        <param name="first">The first <see cref="T:TagLib.ByteVector" /> to compare.</param>
+        <param name="second">The second <see cref="T:TagLib.ByteVector" /> to compare.</param>
         <summary>Returns a <see cref="T:System.Boolean" /> value indicating whether the the first value is less than or equal to the second.</summary>
         <returns>
           <para>
@@ -971,8 +971,8 @@
         <Parameter Name="second" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="first">To be added.</param>
-        <param name="second">To be added.</param>
+        <param name="first">The first <see cref="T:TagLib.ByteVector" /> to compare.</param>
+        <param name="second">The second <see cref="T:TagLib.ByteVector" /> to compare.</param>
         <summary>Returns a <see cref="T:System.Boolean" /> value indicating whether the the first value is greater than the second.</summary>
         <returns>
           <para>
@@ -992,8 +992,8 @@
         <Parameter Name="second" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="first">To be added.</param>
-        <param name="second">To be added.</param>
+        <param name="first">The first <see cref="T:TagLib.ByteVector" /> to compare.</param>
+        <param name="second">The second <see cref="T:TagLib.ByteVector" /> to compare.</param>
         <summary>Returns a <see cref="T:System.Boolean" /> value indicating whether the the first value is greater than or equal to the second.</summary>
         <returns>
           <para>
@@ -1013,8 +1013,8 @@
         <Parameter Name="second" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="first">To be added.</param>
-        <param name="second">To be added.</param>
+        <param name="first">The first <see cref="T:TagLib.ByteVector" /> to compare.</param>
+        <param name="second">The second <see cref="T:TagLib.ByteVector" /> to compare.</param>
         <summary>Adds two instances of <see cref="T:TagLib.ByteVector" /> together.</summary>
         <returns>
           <para>A new instance of <see cref="T:TagLib.ByteVector" /> containing all of the elements of <paramref name="a" /> followed by all the elements of <paramref name="b" />.</para>
@@ -1246,7 +1246,7 @@
       </Parameters>
       <Docs>
         <param name="value">A <see cref="T:System.UInt16" /> to be converted.</param>
-        <param name="mostSignificantByteFirst">To be added.</param>
+        <param name="mostSignificantByteFirst">A <see cref="T:System.Boolean" /> specifying whether or not the most significant byte appears first.</param>
         <summary>Converts a <see cref="T:System.UInt16" /> into a two byte <see cref="T:TagLib.ByteVector" />.</summary>
         <returns>A two byte <see cref="T:TagLib.ByteVector" /> representing the converted value.</returns>
         <remarks />
@@ -1280,7 +1280,7 @@
       </Parameters>
       <Docs>
         <param name="value">A <see cref="T:System.UInt64" /> to be converted.</param>
-        <param name="mostSignificantByteFirst">To be added.</param>
+        <param name="mostSignificantByteFirst">A <see cref="T:System.Boolean" /> specifying whether or not the most significant byte appears first.</param>
         <summary>Converts a <see cref="T:System.UInt64" /> into a eight byte <see cref="T:TagLib.ByteVector" />.</summary>
         <returns>A eight byte <see cref="T:TagLib.ByteVector" /> representing the converted value.</returns>
         <remarks />
@@ -1313,10 +1313,10 @@
         <Parameter Name="count" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="index">To be added.</param>
-        <param name="count">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="index">A <see cref="T:System.Int32" /> specifying at what index to start removing data.</param>
+        <param name="count">A <see cref="T:System.Int32" /> specifying the number of bytes to remove.</param>
+        <summary>Removes a portion of data from the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Checksum">
@@ -1326,9 +1326,9 @@
         <ReturnType>System.UInt32</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the CRC-32 checksum of the current instance.</summary>
+        <value>A <see cref="T:System.Int32" /> containing the CRC-32 checksum of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Equals">
@@ -1341,26 +1341,27 @@
         <Parameter Name="other" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="other">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="other">A <see cref="T:TagLib.ByteVector" /> to compare to the current instance.</param>
+        <summary>Compares another <see cref="T:TagLib.ByteVector" /> to the current instance.</summary>
+        <returns>
+          <see langword="true" /> if the two values are equal. Otherwise <see langword="false" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="FromFile">
-      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FromFile (TagLib.File.LocalFileAbstraction abstraction);" />
+      <MemberSignature Language="C#" Value="public static TagLib.ByteVector FromFile (TagLib.File.IFileAbstraction abstraction);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>TagLib.ByteVector</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="abstraction" Type="TagLib.File+LocalFileAbstraction" />
+        <Parameter Name="abstraction" Type="TagLib.File+IFileAbstraction" />
       </Parameters>
       <Docs>
-        <param name="abstraction">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="abstraction">A <see cref="T:TagLib.File+IFileAbstraction" /> to read from.</param>
+        <summary>Creates a new instance of <see cref="T:TagLib.ByteVector" /> by reading the contents of a file.</summary>
+        <returns>A new <see cref="T:TagLib.ByteVector" /> containing the contents of the file.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="FromPath">
@@ -1373,10 +1374,10 @@
         <Parameter Name="path" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="path">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="path">A <see cref="T:System.String" /> containing the name of a file to read from.</param>
+        <summary>Creates a new instance of <see cref="T:TagLib.ByteVector" /> by reading the contents of a file.</summary>
+        <returns>A new <see cref="T:TagLib.ByteVector" /> containing the contents of the file.</returns>
+        <remarks />
       </Docs>
     </Member>
   </Members>

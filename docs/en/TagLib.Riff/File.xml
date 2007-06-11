@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class File : TagLib.File" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.File</BaseTypeName>
@@ -103,8 +103,8 @@
         <ReturnType>TagLib.ReadOnlyByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gets the identifier used for identifying RIFF file.</summary>
+        <remarks>Always "RIFF".</remarks>
       </Docs>
     </Member>
   </Members>

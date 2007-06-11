@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public static class Genres" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -112,9 +112,9 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets a list of common audio genres.</summary>
+        <value>A <see cref="T:System.String" /> array containing common audio genres.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Video">
@@ -124,9 +124,9 @@
         <ReturnType>System.String[]</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets a list of common video genres.</summary>
+        <value>A <see cref="T:System.String" /> array containing common video genres.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>

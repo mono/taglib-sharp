@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class TermsOfUseFrame : TagLib.Id3v2.Frame" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.Id3v2.Frame</BaseTypeName>
@@ -16,9 +16,9 @@
         <Parameter Name="language" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="language">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="language">A <see cref="T:System.String" /> containing a language of the new instance.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Id3v2.TermsOfUseFrame" /> with a specified language.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -29,10 +29,10 @@
         <Parameter Name="encoding" Type="TagLib.StringType" />
       </Parameters>
       <Docs>
-        <param name="language">To be added.</param>
-        <param name="encoding">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="language">A <see cref="T:System.String" /> containing the ISO-639-2 language of the new instance.</param>
+        <param name="encoding">A <see cref="T:TagLib.StringType" /> specifying what text encoding to use when saving the new instance.</param>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Id3v2.TermsOfUseFrame" /> with a specified language and encoding.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -43,10 +43,10 @@
         <Parameter Name="version" Type="System.Byte" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="version">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
+        <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.TermsOfUseFrame" /> from a raw ID3v2 frame.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -59,12 +59,12 @@
         <Parameter Name="version" Type="System.Byte" />
       </Parameters>
       <Docs>
-        <param name="data">To be added.</param>
-        <param name="offset">To be added.</param>
-        <param name="header">To be added.</param>
-        <param name="version">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
+        <param name="offset">A <see cref="T:System.Int32" /> specifying at what index in <paramref name="data" /> the frame begins.</param>
+        <param name="header">A <see cref="T:TagLib.Id3v2.FrameHeader" /> containing header information for the new instance.</param>
+        <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.TermsOfUseFrame" /> from a raw ID3v2 frame.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Get">
@@ -79,12 +79,12 @@
         <Parameter Name="create" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <param name="language">To be added.</param>
-        <param name="create">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="tag">A <see cref="T:TagLib.Id3v2.Tag" /> to search.</param>
+        <param name="language">A <see cref="T:System.String" /> specifying a language to search for.</param>
+        <param name="create">A <see cref="T:System.Boolean" /> specifying whether or not to create a new instance if one is not found.</param>
+        <summary>Searches for a <see cref="T:TagLib.Id3v2.TermsOfUseFrame" /> with a specified language, optionally creating one if none is found.</summary>
+        <returns>A <see cref="T:TagLib.Id3v2.TermsOfUseFrame" /> containing with the given language, or <see langword="null" /> if not found and not creating.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetPreferred">
@@ -98,11 +98,11 @@
         <Parameter Name="language" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="tag">To be added.</param>
-        <param name="language">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="tag">A <see cref="T:TagLib.Id3v2.Tag" /> to search.</param>
+        <param name="language">A <see cref="T:System.String" /> specifying a language to search for.</param>
+        <summary>Searches for the <see cref="T:TagLib.Id3v2.TermsOfUseFrame" /> which most closely matches the specified description and language.</summary>
+        <returns>The <see cref="T:TagLib.Id3v2.TermsOfUseFrame" /> which most closely matches the specified language, or <see langword="null" /> if none was found.</returns>
+        <remarks>If an exact match is found, it will be returned. Otherwise the first frame found.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Language">
@@ -112,24 +112,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="SetText">
-      <MemberSignature Language="C#" Value="public void SetText (string text);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="text" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="text">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the ISO-639-2 language code of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing an ISO-639-2 language code for the current instance.</value>
+        <remarks>If the language is unknown, "XXX" is the appropriate filler.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Text">
@@ -139,9 +124,9 @@
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the text of the current instance.</summary>
+        <value>A <see cref="T:System.String" /> containing the text of the current instance.</value>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="TextEncoding">
@@ -151,14 +136,14 @@
         <ReturnType>TagLib.StringType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets and sets the text encoding to use when rendering the current instance.</summary>
+        <value>A <see cref="T:TagLib.StringType" /> specifying the text encoding to use when rendering.</value>
+        <remarks>This value is overridden if <see cref="P:TagLib.Id3v2.Tag.ForceDefaultEncoding" /> is <see langword="true" /> or if the save version does not support it.</remarks>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class is used for accessing and modifying ID3v2 Terms of Use (USER) frames.</summary>
+    <remarks />
   </Docs>
 </Type>

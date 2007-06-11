@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class AppleAnnotationBox : TagLib.Mpeg4.Box" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.Mpeg4.Box</BaseTypeName>
@@ -30,11 +30,11 @@
         <Parameter Name="handler" Type="TagLib.Mpeg4.IsoHandlerBox" />
       </Parameters>
       <Docs>
-        <param name="header">To be added.</param>
-        <param name="file">To be added.</param>
-        <param name="handler">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="header">A <see cref="T:TagLib.Mpeg4.BoxHeader" /> containing information about the new instance, including the position at which to read.</param>
+        <param name="file">A <see cref="T:TagLib.File" /> to containing the box to read.</param>
+        <param name="handler">A <see cref="T:TagLib.Mpeg4.IsoHandlerBox" /> to use as a handler for the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.AppleAnnotationBox" /> by reading the contents from a file.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>

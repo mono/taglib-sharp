@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class StringCollection : TagLib.ListBase&lt;string&gt;" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.ListBase&lt;System.String&gt;</BaseTypeName>
@@ -22,8 +22,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.StringCollection" /> with not contents.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -39,9 +39,9 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="values">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="values">A <see cref="T:System.String" /> array containing values to store in the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.StringCollection" /> from a collection of strings.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -51,9 +51,9 @@
         <Parameter Name="values" Type="TagLib.StringCollection" />
       </Parameters>
       <Docs>
-        <param name="values">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="values">A <see cref="T:TagLib.StringCollection" /> containing values to store in the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.StringCollection" /> from a collection of strings.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Split">
@@ -67,11 +67,11 @@
         <Parameter Name="pattern" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="value">To be added.</param>
-        <param name="pattern">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="value">A <see cref="T:System.String" /> to split.</param>
+        <param name="pattern">A <see cref="T:System.String" /> containing the pattern on which to split.</param>
+        <summary>Splits a string into a <see cref="T:TagLib.StringCollection" />.</summary>
+        <returns>A <see cref="T:TagLib.StringCollection" /> containing the split up form of <paramref name="value" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -81,9 +81,9 @@
         <Parameter Name="vectorList" Type="TagLib.ByteVectorCollection" />
       </Parameters>
       <Docs>
-        <param name="vectorList">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="vectorList">A <see cref="T:TagLib.ByteVectorCollection" /> containing string data to convert.</param>
+        <summary>Converts a UTF-8 encoded <see cref="T:TagLib.ByteVectorCollection" /> into a string collection.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -94,15 +94,15 @@
         <Parameter Name="type" Type="TagLib.StringType" />
       </Parameters>
       <Docs>
-        <param name="vectorList">To be added.</param>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="vectorList">A <see cref="T:TagLib.ByteVectorCollection" /> containing string data to convert.</param>
+        <param name="type">A <see cref="T:TagLib.StringType" /> containing the encoding to use when converting the data.</param>
+        <summary>Converts a <see cref="T:TagLib.ByteVectorCollection" /> into a string collection using a specified encoding.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>This class contains a collection of <see cref="T:System.String" /> objects.</summary>
+    <remarks />
   </Docs>
 </Type>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public abstract class File" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -16,7 +16,7 @@
         <Parameter Name="path" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="path">A file name relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+        <param name="path">A <see cref="T:System.String" /> specifying the path of the file in the default file system.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.File" /> for a specified file name.</summary>
         <remarks />
       </Docs>
@@ -77,7 +77,7 @@
       </Parameters>
       <Docs>
         <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing data to be found in the file.</param>
-        <param name="startPosition">To be added.</param>
+        <param name="startPosition">A <see cref="T:System.Int64" /> specifying at what seek position to start searching.</param>
         <param name="before">A <see cref="T:TagLib.ByteVector" /> containing data which must not occur before <paramref name="pattern" />.</param>
         <summary>Searches for a byte pattern in a file after a given offset, checking that it does not occur before another pattern.</summary>
         <returns>A <see cref="T:System.Int64" /> specifying at which index the pattern was found. If the pattern is not found or <paramref name="before" /> is found first, -1 is returned.</returns>
@@ -96,7 +96,7 @@
       </Parameters>
       <Docs>
         <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing data to be found in the file.</param>
-        <param name="startPosition">To be added.</param>
+        <param name="startPosition">A <see cref="T:System.Int64" /> specifying at what seek position to start searching.</param>
         <summary>Searches for a byte pattern in a file after a given offset.</summary>
         <returns>A <see cref="T:System.Int64" /> specifying at which index the pattern was found. If the pattern is not found, -1 is returned.</returns>
         <remarks />
@@ -130,7 +130,7 @@
       </Parameters>
       <Docs>
         <param name="pattern">A <see cref="T:TagLib.ByteVector" /> containing data to be found in the file.</param>
-        <param name="startPosition">To be added.</param>
+        <param name="startPosition">A <see cref="T:System.Int64" /> specifying at what seek position to start searching.</param>
         <summary>Searches backward for a byte pattern in a file before a given offset.</summary>
         <returns>A <see cref="T:System.Int64" /> specifying at which index the pattern was found. If the pattern is not found, -1 is returned.</returns>
         <remarks />
@@ -326,7 +326,7 @@
         <Parameter Name="path" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="path">A <see cref="T:System.String" /> containing path relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+        <param name="path">A <see cref="T:System.String" /> specifying the path of the file in the default file system.</param>
         <summary>Creates a new instance of a <see cref="T:TagLib.File" /> child class based on the file extention.</summary>
         <returns>A new <see cref="T:TagLib.File" />.</returns>
         <remarks />
@@ -343,8 +343,8 @@
         <Parameter Name="propertiesStyle" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
-        <param name="path">A <see cref="T:System.String" /> containing path relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
-        <param name="propertiesStyle">To be added.</param>
+        <param name="path">A <see cref="T:System.String" /> specifying the path of the file in the default file system.</param>
+        <param name="propertiesStyle">A <see cref="T:TagLib.ReadStyle" /> specifying the detail at which to read the properties.</param>
         <summary>Creates a new instance of a <see cref="T:TagLib.File" /> child class based on the file extention.</summary>
         <returns>A new <see cref="T:TagLib.File" />.</returns>
         <remarks />
@@ -362,9 +362,9 @@
         <Parameter Name="propertiesStyle" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
-        <param name="path">A <see cref="T:System.String" /> containing path relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
+        <param name="path">A <see cref="T:System.String" /> specifying the path of the file in the default file system.</param>
         <param name="mimetype">A <see cref="T:System.String" /> containing the mime-type to use when reading the file.</param>
-        <param name="propertiesStyle">To be added.</param>
+        <param name="propertiesStyle">A <see cref="T:TagLib.ReadStyle" /> specifying the detail at which to read the properties.</param>
         <summary>Creates a new instance of a <see cref="T:TagLib.File" /> child class for a specified mime-type.</summary>
         <returns>A new <see cref="T:TagLib.File" />.</returns>
         <remarks />
@@ -527,9 +527,9 @@
         <Parameter Name="abstraction" Type="TagLib.File+IFileAbstraction" />
       </Parameters>
       <Docs>
-        <param name="abstraction">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="abstraction">A <see cref="T:TagLib.File+IFileAbstraction" /> providing a file abstraction to use to access the contents.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.File" /> for a given file abstraction.</summary>
+        <remarks>Files should be created using <see cref="M:TagLib.File.Create(TagLib.File.IFileAbstraction)" /> rather than through format specific constructors.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Create">
@@ -542,10 +542,10 @@
         <Parameter Name="abstraction" Type="TagLib.File+IFileAbstraction" />
       </Parameters>
       <Docs>
-        <param name="abstraction">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="abstraction">A <see cref="T:TagLib.File+IFileAbstraction" /> providing a file abstraction to use to access the contents.</param>
+        <summary>Creates a new instance of a <see cref="T:TagLib.File" /> child class based on the file extention.</summary>
+        <returns>A new <see cref="T:TagLib.File" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Create">
@@ -560,12 +560,12 @@
         <Parameter Name="propertiesStyle" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
-        <param name="abstraction">To be added.</param>
-        <param name="mimetype">To be added.</param>
-        <param name="propertiesStyle">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="abstraction">A <see cref="T:TagLib.File+IFileAbstraction" /> providing a file abstraction to use to access the contents.</param>
+        <param name="mimetype">A <see cref="T:System.String" /> containing the mime-type to use when reading the file.</param>
+        <param name="propertiesStyle">A <see cref="T:TagLib.ReadStyle" /> specifying the detail at which to read the properties.</param>
+        <summary>Creates a new instance of a <see cref="T:TagLib.File" /> child class for a specified mime-type.</summary>
+        <returns>A new <see cref="T:TagLib.File" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="Create">
@@ -579,11 +579,11 @@
         <Parameter Name="propertiesStyle" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
-        <param name="abstraction">To be added.</param>
-        <param name="propertiesStyle">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="abstraction">A <see cref="T:TagLib.File+IFileAbstraction" /> providing a file abstraction to use to access the contents.</param>
+        <param name="propertiesStyle">A <see cref="T:TagLib.ReadStyle" /> specifying the detail at which to read the properties.</param>
+        <summary>Creates a new instance of a <see cref="T:TagLib.File" /> child class based on the file extention.</summary>
+        <returns>A new <see cref="T:TagLib.File" />.</returns>
+        <remarks />
       </Docs>
     </Member>
   </Members>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class Tag : TagLib.Tag, System.Collections.Generic.IEnumerable&lt;TagLib.Id3v2.Frame&gt;" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.Tag</BaseTypeName>
@@ -30,9 +30,9 @@
         <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">A <see cref="T:TagLib.File" /> to read from.</param>
-        <param name="position">To be added.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v2.Tag" /> with no contents.</summary>
+        <param name="file">A <see cref="T:TagLib.File" /> containing a tag to read.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying at what seek position to start reading.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Id3v2.Tag" /> by reading the contents from a file..</summary>
         <remarks />
       </Docs>
     </Member>
@@ -91,8 +91,8 @@
         <Parameter Name="newFrame" Type="TagLib.Id3v2.Frame" />
       </Parameters>
       <Docs>
-        <param name="oldFrame">To be added.</param>
-        <param name="newFrame">To be added.</param>
+        <param name="oldFrame">A <see cref="T:TagLib.Id3v2.Frame" /> to remove.</param>
+        <param name="newFrame">A <see cref="T:TagLib.Id3v2.Frame" /> to add.</param>
         <summary>Replaces one frame with another in the current instance.</summary>
         <remarks />
       </Docs>
@@ -258,7 +258,7 @@
       </Parameters>
       <Docs>
         <param name="file">A <see cref="T:TagLib.File" /> containing a tag to read.</param>
-        <param name="position">To be added.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying at what seek position to start reading.</param>
         <summary>Populates the current instance with data read from a specified file.</summary>
         <remarks />
       </Docs>
@@ -309,10 +309,10 @@
         <Parameter Name="value" Type="TagLib.StringCollection" />
       </Parameters>
       <Docs>
-        <param name="id">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="id">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2.4 frame ID.</param>
+        <param name="value">A <see cref="T:TagLib.StringCollection" /> containing values to store.</param>
+        <summary>Stores a text value in and ID3v2 text frame with a given ID.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetEnumerator">
@@ -323,9 +323,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Gets the enumerator for the current instance.</summary>
+        <returns>A <see cref="T:System.Collections.Generic.IEnumerator&lt;TagLib.Id3v2.Frame&gt;" /> enumerating through the frames contained in the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
   </Members>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class PrivateFrame : TagLib.Id3v2.Frame" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.Id3v2.Frame</BaseTypeName>
@@ -105,7 +105,7 @@
       <Docs>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
         <param name="offset">A <see cref="T:System.Int32" /> specifying at what index in <paramref name="data" /> the frame begins.</param>
-        <param name="header">To be added.</param>
+        <param name="header">A <see cref="T:TagLib.Id3v2.FrameHeader" /> containing header information for the new instance.</param>
         <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
         <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.PrivateFrame" /> from a raw ID3v2 frame.</summary>
         <remarks />

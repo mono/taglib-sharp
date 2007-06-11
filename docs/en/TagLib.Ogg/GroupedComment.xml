@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class GroupedComment : TagLib.Tag" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.Tag</BaseTypeName>
@@ -45,7 +45,7 @@
         <Parameter Name="comment" Type="TagLib.Ogg.XiphComment" />
       </Parameters>
       <Docs>
-        <param name="streamSerialNumber">To be added.</param>
+        <param name="streamSerialNumber">A <see cref="T:System.UInt32" /> containing the serial number of the OGG bitstream containing the comment.</param>
         <param name="comment">A <see cref="T:TagLib.Ogg.XiphComment" /> for a specified OGG bitstream.</param>
         <summary>Adds a Vorbis Comment for a specified bitstream.</summary>
         <remarks />
@@ -62,7 +62,7 @@
         <Parameter Name="data" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="streamSerialNumber">To be added.</param>
+        <param name="streamSerialNumber">A <see cref="T:System.UInt32" /> containing the serial number of the OGG bitstream containing the comment.</param>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing a Vorbis Comment for a specified OGG bitstream.</param>
         <summary>Adds a Vorbis Comment for a specified bitstream.</summary>
         <remarks />

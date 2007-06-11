@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public struct WaveFormatEx : TagLib.IAudioCodec" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.ValueType</BaseTypeName>
@@ -157,10 +157,11 @@
         <Parameter Name="other" Type="TagLib.Riff.WaveFormatEx" />
       </Parameters>
       <Docs>
-        <param name="other">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="other">A <see cref="T:TagLib.Riff.WaveFormatEx" /> to compare to the current instance.</param>
+        <summary>Compares the current instance to another WaveFormatEx structure to determine if they are equal to eachother.</summary>
+        <returns>
+          <see langword="true" /> if they are equal. Otherwise <see langword="false" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="op_Equality">
@@ -174,11 +175,12 @@
         <Parameter Name="second" Type="TagLib.Riff.WaveFormatEx" />
       </Parameters>
       <Docs>
-        <param name="first">To be added.</param>
-        <param name="second">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="first">The first <see cref="T:TagLib.Riff.WaveFormatEx" /> to compare.</param>
+        <param name="second">The second <see cref="T:TagLib.Riff.WaveFormatEx" /> to compare.</param>
+        <summary>Compares two WaveFormatEx structures to determine if they are equal to eachother.</summary>
+        <returns>
+          <see langword="true" /> if they are equal. Otherwise <see langword="false" />.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="op_Inequality">
@@ -192,11 +194,12 @@
         <Parameter Name="second" Type="TagLib.Riff.WaveFormatEx" />
       </Parameters>
       <Docs>
-        <param name="first">To be added.</param>
-        <param name="second">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="first">The first <see cref="T:TagLib.Riff.WaveFormatEx" /> to compare.</param>
+        <param name="second">The second <see cref="T:TagLib.Riff.WaveFormatEx" /> to compare.</param>
+        <summary>Compares two WaveFormatEx structures to determine if they are unequal to eachother.</summary>
+        <returns>
+          <see langword="true" /> if they are unequal. Otherwise <see langword="false" />.</returns>
+        <remarks />
       </Docs>
     </Member>
   </Members>

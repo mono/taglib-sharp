@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class Box" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -181,9 +181,9 @@
         <Parameter Name="box" Type="TagLib.Mpeg4.Box" />
       </Parameters>
       <Docs>
-        <param name="box">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="box">A <see cref="T:TagLib.Mpeg4.Box" /> to add to the current instance.</param>
+        <summary>Adds a child box to the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="ClearChildren">
@@ -194,24 +194,8 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="GetChild">
-      <MemberSignature Language="C#" Value="public TagLib.Mpeg4.Box GetChild (Type type);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>TagLib.Mpeg4.Box</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="type" Type="System.Type" />
-      </Parameters>
-      <Docs>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <summary>Removes all children form the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetChild">
@@ -224,10 +208,10 @@
         <Parameter Name="type" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="type">A <see cref="T:TagLib.ByteVector" /> containing the type of box to get.</param>
+        <summary>Gets the first child of of a specified type from the current instance.</summary>
+        <returns>A <see cref="T:TagLib.Mpeg4.Box" /> of the specified type, or <see langword="null" /> if none was found.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="GetChildRecursively">
@@ -240,10 +224,10 @@
         <Parameter Name="type" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="type">A <see cref="T:TagLib.ByteVector" /> containing the type of box to get.</param>
+        <summary>Recursively gets the first child of of a specified type from the current instance.</summary>
+        <returns>A <see cref="T:TagLib.Mpeg4.Box" /> of the specified type, or <see langword="null" /> if none was found.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="LoadChildren">
@@ -256,10 +240,10 @@
         <Parameter Name="file" Type="TagLib.File" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="file">The <see cref="T:TagLib.File" /> containing the box.</param>
+        <summary>Loads the box children from the file into the current instance.</summary>
+        <returns>A <see cref="T:System.Collections.Generic.IEnumerable&lt;TagLib.Mpeg4.Box&gt;" /> containing the children of the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="LoadData">
@@ -272,10 +256,10 @@
         <Parameter Name="file" Type="TagLib.File" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="file">The <see cref="T:TagLib.File" /> containing the box.</param>
+        <summary>Loads the box data from the file into the current instance.</summary>
+        <returns>A <see cref="T:TagLib.ByteVector" /> containing the box data of the current instance.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RemoveChild">
@@ -288,9 +272,9 @@
         <Parameter Name="type" Type="TagLib.ByteVector" />
       </Parameters>
       <Docs>
-        <param name="type">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="type">A <see cref="T:TagLib.ByteVector" /> containing the type of box to remove.</param>
+        <summary>Removes all children of a given type from the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="RemoveChild">
@@ -303,9 +287,9 @@
         <Parameter Name="box" Type="TagLib.Mpeg4.Box" />
       </Parameters>
       <Docs>
-        <param name="box">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="box">A <see cref="T:TagLib.Mpeg4.Box" /> to remove from the current instance.</param>
+        <summary>Removes a child from the current instance.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -316,10 +300,10 @@
         <Parameter Name="handler" Type="TagLib.Mpeg4.IsoHandlerBox" />
       </Parameters>
       <Docs>
-        <param name="header">To be added.</param>
-        <param name="handler">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="header">A <see cref="T:TagLib.Mpeg4.BoxHeader" /> containing the header for the new instance.</param>
+        <param name="handler">A <see cref="T:TagLib.Mpeg4.IsoHandlerBox" /> to use as a handler for the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.Box" /> for a specified header with a specified handler.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="HasChildren">
@@ -329,9 +313,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets whether or not the current instance has children.</summary>
+        <value>A <see cref="T:System.Boolean" /> indicating whether or not the current instance has children.</value>
+        <remarks />
       </Docs>
     </Member>
   </Members>

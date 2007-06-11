@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class Page" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -30,7 +30,7 @@
       </Parameters>
       <Docs>
         <param name="file">A <see cref="T:TagLib.Ogg.File" /> to read from.</param>
-        <param name="position">To be added.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying at what seek position to start reading.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ogg.Page" /> by reading it from a file.</summary>
         <remarks />
       </Docs>
@@ -92,10 +92,10 @@
         <Parameter Name="header" Type="TagLib.Ogg.PageHeader" />
       </Parameters>
       <Docs>
-        <param name="packets">To be added.</param>
-        <param name="header">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="packets">A <see cref="T:TagLib.ByteVectorCollection" /> containing packets to store in the page.</param>
+        <param name="header">A <see cref="T:TagLib.Ogg.PageHeader" /> containing properties of the new instance.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Ogg.Page" /> with a specifed page header and packets.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public abstract class File : TagLib.File" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>TagLib.File</BaseTypeName>
@@ -17,8 +17,8 @@
         <Parameter Name="propertiesStyle" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
-        <param name="path">To be added.</param>
-        <param name="propertiesStyle">To be added.</param>
+        <param name="path">A <see cref="T:System.String" /> specifying the path of the file in the default file system.</param>
+        <param name="propertiesStyle">A <see cref="T:TagLib.ReadStyle" /> specifying the detail at which to read the properties.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.NonContainer.File" /> for a given filename and read style.</summary>
         <remarks />
       </Docs>
@@ -30,8 +30,8 @@
         <Parameter Name="path" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="path">A file name relevant to the current <see cref="T:TagLib.File+FileAbstractionCreator" />. By default this is a standard operating system path.</param>
-        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Riff.File" /> for a given filename.</summary>
+        <param name="path">A <see cref="T:System.String" /> specifying the path of the file in the default file system.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.NonContainer.File" /> for a given filename.</summary>
         <remarks />
       </Docs>
     </Member>
@@ -47,7 +47,7 @@
       </Parameters>
       <Docs>
         <param name="start">A <see cref="T:System.Int64" /> containing the seek position at which tagging ends at the beginning of the file.</param>
-        <param name="propertiesStyle">To be added.</param>
+        <param name="propertiesStyle">A <see cref="T:TagLib.ReadStyle" /> specifying the detail at which to read the properties.</param>
         <summary>Reads format specific information at the start of the file.</summary>
         <remarks>This method is ALWAYS called by the constructor immediately after the tags at the beginning of the file are read. It should be used for reading content specific information and properties.</remarks>
       </Docs>
@@ -64,7 +64,7 @@
       </Parameters>
       <Docs>
         <param name="end">A <see cref="T:System.Int64" /> containing the seek position at which tagging begins at the end of the file.</param>
-        <param name="propertiesStyle">To be added.</param>
+        <param name="propertiesStyle">A <see cref="T:TagLib.ReadStyle" /> specifying the detail at which to read the properties.</param>
         <summary>Reads format specific information at the end of the file.</summary>
         <remarks>This method is ALWAYS called by the constructor immediately after the tags at the end of the file are read. It should be used for reading content specific information and properties.</remarks>
       </Docs>
@@ -83,7 +83,7 @@
       <Docs>
         <param name="start">A <see cref="T:System.Int64" /> containing the seek position at which tagging ends at the beginning of the file.</param>
         <param name="end">A <see cref="T:System.Int64" /> containing the seek position at which tagging begins at the end of the file.</param>
-        <param name="propertiesStyle">To be added.</param>
+        <param name="propertiesStyle">A <see cref="T:TagLib.ReadStyle" /> specifying the detail at which to read the properties.</param>
         <summary>Reads the media properties contained in the current instance.</summary>
         <returns>A <see cref="T:TagLib.Properties" /> containing the media properties for the current instance.</returns>
         <remarks>This is only called IF the read style used for the file IS NOT <see cref="F:TagLib.ReadStyle.None" />.</remarks>
@@ -120,9 +120,9 @@
         <Parameter Name="abstraction" Type="TagLib.File+IFileAbstraction" />
       </Parameters>
       <Docs>
-        <param name="abstraction">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="abstraction">A <see cref="T:TagLib.File+IFileAbstraction" /> providing a file abstraction to use to access the contents.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.NonContainer.File" /> for a given file abstraction.</summary>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -133,10 +133,10 @@
         <Parameter Name="propertiesStyle" Type="TagLib.ReadStyle" />
       </Parameters>
       <Docs>
-        <param name="abstraction">To be added.</param>
-        <param name="propertiesStyle">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="abstraction">A <see cref="T:TagLib.File+IFileAbstraction" /> providing a file abstraction to use to access the contents.</param>
+        <param name="propertiesStyle">A <see cref="T:TagLib.ReadStyle" /> specifying the detail at which to read the properties.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.NonContainer.File" /> for a given file abstraction and read style.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>

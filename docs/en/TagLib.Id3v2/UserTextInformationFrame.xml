@@ -1,16 +1,16 @@
-<Type Name="UserTextIdentificationFrame" FullName="TagLib.Id3v2.UserTextIdentificationFrame">
-  <TypeSignature Language="C#" Value="public class UserTextIdentificationFrame : TagLib.Id3v2.TextIdentificationFrame" />
+<Type Name="UserTextInformationFrame" FullName="TagLib.Id3v2.UserTextInformationFrame">
+  <TypeSignature Language="C#" Value="public class UserTextInformationFrame : TagLib.Id3v2.TextInformationFrame" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>TagLib.Id3v2.TextIdentificationFrame</BaseTypeName>
+    <BaseTypeName>TagLib.Id3v2.TextInformationFrame</BaseTypeName>
   </Base>
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public UserTextIdentificationFrame (string description, TagLib.StringType encoding);" />
+      <MemberSignature Language="C#" Value="public UserTextInformationFrame (string description, TagLib.StringType encoding);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="description" Type="System.String" />
@@ -19,15 +19,15 @@
       <Docs>
         <param name="description">A <see cref="T:System.String" /> containing a description of the new instance.</param>
         <param name="encoding">A <see cref="T:TagLib.StringType" /> specifying what text encoding to use when saving the new instance.</param>
-        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Id3v2.UserTextIdentificationFrame" /> with a specified description and text encoding.</summary>
+        <summary>Constructs and initialized a new instance of <see cref="T:TagLib.Id3v2.UserTextInformationFrame" /> with a specified description and text encoding.</summary>
         <remarks />
       </Docs>
     </Member>
     <Member MemberName="Get">
-      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.UserTextIdentificationFrame Get (TagLib.Id3v2.Tag tag, string description, TagLib.StringType type, bool create);" />
+      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.UserTextInformationFrame Get (TagLib.Id3v2.Tag tag, string description, TagLib.StringType type, bool create);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.Id3v2.UserTextIdentificationFrame</ReturnType>
+        <ReturnType>TagLib.Id3v2.UserTextInformationFrame</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="tag" Type="TagLib.Id3v2.Tag" />
@@ -40,16 +40,16 @@
         <param name="description">A <see cref="T:System.String" /> specifying a description to search for.</param>
         <param name="type">Gets a <see cref="T:TagLib.StringType" /> specifying the encoding to use if creating a new instance.</param>
         <param name="create">A <see cref="T:System.Boolean" /> specifying whether or not to create a new instance if one is not found.</param>
-        <summary>Searches for a <see cref="T:TagLib.Id3v2.UserTextIdentificationFrame" /> with a specified description, optionally creating one if none is found.</summary>
-        <returns>A <see cref="T:TagLib.Id3v2.UserTextIdentificationFrame" /> containing with the given description, or <see langword="null" /> if not found and not creating.</returns>
+        <summary>Searches for a <see cref="T:TagLib.Id3v2.UserTextInformationFrame" /> with a specified description, optionally creating one if none is found.</summary>
+        <returns>A <see cref="T:TagLib.Id3v2.UserTextInformationFrame" /> containing with the given description, or <see langword="null" /> if not found and not creating.</returns>
         <remarks />
       </Docs>
     </Member>
     <Member MemberName="Get">
-      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.UserTextIdentificationFrame Get (TagLib.Id3v2.Tag tag, string description);" />
+      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.UserTextInformationFrame Get (TagLib.Id3v2.Tag tag, string description);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.Id3v2.UserTextIdentificationFrame</ReturnType>
+        <ReturnType>TagLib.Id3v2.UserTextInformationFrame</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="tag" Type="TagLib.Id3v2.Tag" />
@@ -58,8 +58,8 @@
       <Docs>
         <param name="tag">A <see cref="T:TagLib.Id3v2.Tag" /> to search.</param>
         <param name="description">A <see cref="T:System.String" /> specifying a description to search for.</param>
-        <summary>Searches for a <see cref="T:TagLib.Id3v2.UserTextIdentificationFrame" /> with a specified description.</summary>
-        <returns>A <see cref="T:TagLib.Id3v2.UserTextIdentificationFrame" /> containing with the given description, or <see langword="null" /> if not found.</returns>
+        <summary>Searches for a <see cref="T:TagLib.Id3v2.UserTextInformationFrame" /> with a specified description.</summary>
+        <returns>A <see cref="T:TagLib.Id3v2.UserTextInformationFrame" /> containing with the given description, or <see langword="null" /> if not found.</returns>
         <remarks />
       </Docs>
     </Member>
@@ -88,10 +88,10 @@
       </Docs>
     </Member>
     <Member MemberName="Get">
-      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.UserTextIdentificationFrame Get (TagLib.Id3v2.Tag tag, string description, bool create);" />
+      <MemberSignature Language="C#" Value="public static TagLib.Id3v2.UserTextInformationFrame Get (TagLib.Id3v2.Tag tag, string description, bool create);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
-        <ReturnType>TagLib.Id3v2.UserTextIdentificationFrame</ReturnType>
+        <ReturnType>TagLib.Id3v2.UserTextInformationFrame</ReturnType>
       </ReturnValue>
       <Parameters>
         <Parameter Name="tag" Type="TagLib.Id3v2.Tag" />
@@ -102,8 +102,8 @@
         <param name="tag">A <see cref="T:TagLib.Id3v2.Tag" /> to search.</param>
         <param name="description">A <see cref="T:System.String" /> specifying a description to search for.</param>
         <param name="create">A <see cref="T:System.Boolean" /> specifying whether or not to create a new instance if one is not found.</param>
-        <summary>Searches for a <see cref="T:TagLib.Id3v2.UserTextIdentificationFrame" /> with a specified description, optionally creating one if none is found.</summary>
-        <returns>A <see cref="T:TagLib.Id3v2.UserTextIdentificationFrame" /> containing with the given description, or <see langword="null" /> if not found and not creating.</returns>
+        <summary>Searches for a <see cref="T:TagLib.Id3v2.UserTextInformationFrame" /> with a specified description, optionally creating one if none is found.</summary>
+        <returns>A <see cref="T:TagLib.Id3v2.UserTextInformationFrame" /> containing with the given description, or <see langword="null" /> if not found and not creating.</returns>
         <remarks />
       </Docs>
     </Member>
@@ -123,7 +123,7 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public UserTextIdentificationFrame (TagLib.ByteVector data, byte version);" />
+      <MemberSignature Language="C#" Value="public UserTextInformationFrame (TagLib.ByteVector data, byte version);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="data" Type="TagLib.ByteVector" />
@@ -132,12 +132,12 @@
       <Docs>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
         <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
-        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.UserTextIdentificationFrame" /> from a raw ID3v2 frame.</summary>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.UserTextInformationFrame" /> from a raw ID3v2 frame.</summary>
         <remarks />
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="protected UserTextIdentificationFrame (TagLib.ByteVector data, int offset, TagLib.Id3v2.FrameHeader header, byte version);" />
+      <MemberSignature Language="C#" Value="protected UserTextInformationFrame (TagLib.ByteVector data, int offset, TagLib.Id3v2.FrameHeader header, byte version);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
         <Parameter Name="data" Type="TagLib.ByteVector" />
@@ -148,9 +148,9 @@
       <Docs>
         <param name="data">A <see cref="T:TagLib.ByteVector" /> containing an ID3v2 frame.</param>
         <param name="offset">A <see cref="T:System.Int32" /> specifying at what index in <paramref name="data" /> the frame begins.</param>
-        <param name="header">To be added.</param>
+        <param name="header">A <see cref="T:TagLib.Id3v2.FrameHeader" /> containing header information for the new instance.</param>
         <param name="version">A <see cref="T:System.Byte" /> specifying the ID3v2 version the frame is stored in.</param>
-        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.UserTextIdentificationFrame" /> from a raw ID3v2 frame.</summary>
+        <summary>Constructs and intializes a new instance of <see cref="T:TagLib.Id3v2.UserTextInformationFrame" /> from a raw ID3v2 frame.</summary>
         <remarks />
       </Docs>
     </Member>
@@ -164,9 +164,9 @@
         <Parameter Name="fields" Type="TagLib.StringCollection" />
       </Parameters>
       <Docs>
-        <param name="fields">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="fields">A <see cref="T:TagLib.StringCollection" /> containing text values to store in the current instance.</param>
+        <summary>Sets the text for the current instance to the contents of a string collection.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>

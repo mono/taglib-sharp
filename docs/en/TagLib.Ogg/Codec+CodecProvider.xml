@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public delegate TagLib.Ogg.Codec Codec.CodecProvider(ByteVector packet);" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Delegate</BaseTypeName>

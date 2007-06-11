@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public struct Header" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.ValueType</BaseTypeName>
@@ -113,8 +113,8 @@
         <ReturnType>TagLib.ReadOnlyByteVector</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Gets the identifier used for finding frame headers in a file.</summary>
+        <remarks>Always "ID3".</remarks>
       </Docs>
     </Member>
   </Members>

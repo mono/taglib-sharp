@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public struct BoxHeader" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.ValueType</BaseTypeName>
@@ -44,7 +44,7 @@
       </Parameters>
       <Docs>
         <param name="type">A <see cref="T:TagLib.ByteVector" /> specifying the type of the new instance.</param>
-        <param name="extendedType">To be added.</param>
+        <param name="extendedType">A <see cref="T:TagLib.ByteVector" /> containing the extended type of the new instance, or <see langref="null" /> if not "uuid".</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.BoxHeader" /> with a specified type and extended type.</summary>
         <remarks>Boxed of type "uuid", and only those boxes, must have a 16 byte extended type.</remarks>
       </Docs>
@@ -168,11 +168,11 @@
         <Parameter Name="sizeChange" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="sizeChange">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="file">The <see cref="T:TagLib.File" /> containing the current instance.</param>
+        <param name="sizeChange">A <see cref="T:System.Int64" /> specifying the change in size in the box containing the current instance.</param>
+        <summary>Overwrites the current instance on disk, applying a size change.</summary>
+        <returns>A <see cref="T:System.Int64" /> indicating the size change after the header has been written to disk.</returns>
+        <remarks>If the header changes from having a short size to a long size, the header size will change.</remarks>
       </Docs>
     </Member>
   </Members>

@@ -1,6 +1,6 @@
 <Overview>
   <Assemblies>
-    <Assembly Name="taglib-sharp" Version="1.9.0.0">
+    <Assembly Name="taglib-sharp" Version="2.0.0.0">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -15,7 +15,7 @@
           <AttributeName>System.Reflection.AssemblyCopyright("Copyright (c) 2006-2007 Brian Nickel")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyDescription("A library for reading and writing metatags to audio and video files.")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyDescription("A library for reading and writing audio metatags.")</AttributeName>
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyTitle("TagLib#")</AttributeName>
@@ -103,8 +103,8 @@
       <Type Name="CommentsFrame" />
       <Type Name="PrivateFrame" />
       <Type Name="RelativeVolumeFrame" />
-      <Type Name="TextIdentificationFrame" />
-      <Type Name="UserTextIdentificationFrame" />
+      <Type Name="TextInformationFrame" />
+      <Type Name="UserTextInformationFrame" />
       <Type Name="UniqueFileIdentifierFrame" />
       <Type Name="UnknownFrame" />
       <Type Name="UnsynchronisedLyricsFrame" />
@@ -126,7 +126,7 @@
       <Type Name="SynchedTextType" />
       <Type Name="PlayCountFrame" />
       <Type Name="TermsOfUseFrame" />
-      <Type Name="MusicCdIdentifier" />
+      <Type Name="MusicCdIdentifierFrame" />
     </Namespace>
     <Namespace Name="TagLib.Mpeg">
       <Type Name="File" />

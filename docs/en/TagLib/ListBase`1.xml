@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class ListBase&lt;T&gt; : System.Collections.Generic.IList&lt;T&gt;" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeParameters>
     <TypeParameter>T</TypeParameter>
@@ -55,7 +55,7 @@
         </Parameter>
       </Parameters>
       <Docs>
-        <param name="list">A <see cref="T:T" /> array to copy values from.</param>
+        <param name="list">An item array to copy values from.</param>
         <summary>Constructs and initializes a new instance of <see cref="T:TagLib.ListBase&lt;T&gt;" /> by copying values from a T collection.</summary>
         <remarks />
       </Docs>
@@ -85,7 +85,7 @@
         <Parameter Name="list" Type="T[]" />
       </Parameters>
       <Docs>
-        <param name="list">A <see cref="T:T" /> array to copy values from.</param>
+        <param name="list">An item array to copy values from.</param>
         <summary>Adds elements of an array to the current instance.</summary>
         <remarks />
       </Docs>
@@ -101,7 +101,7 @@
         <Parameter Name="unique" Type="System.Boolean" />
       </Parameters>
       <Docs>
-        <param name="item">To be added.</param>
+        <param name="item">An item to insert into the current instance.</param>
         <param name="unique">A <see cref="T:System.Boolean" /> specifying whether or the element should be inserted if an equal is found.</param>
         <summary>Inserts an element into the current instance in sorted order, optionally not adding it if an equal is found.</summary>
         <remarks />
@@ -117,7 +117,7 @@
         <Parameter Name="item" Type="T" />
       </Parameters>
       <Docs>
-        <param name="item">A <see cref="T:T" /> to add to the current instance.</param>
+        <param name="item">An item to add to the current instance.</param>
         <summary>Inserts an element into the current instance in sorted order.</summary>
         <remarks />
       </Docs>
@@ -131,7 +131,7 @@
       <Parameters />
       <Docs>
         <summary>Converts the current instance to an array.</summary>
-        <returns>A <see cref="T:T" /> array containing all the values from the current instance.</returns>
+        <returns>An item array containing all the values from the current instance.</returns>
         <remarks />
       </Docs>
     </Member>
@@ -145,7 +145,7 @@
         <Parameter Name="item" Type="T" />
       </Parameters>
       <Docs>
-        <param name="item">A <see cref="T:T" /> to add to the current instance.</param>
+        <param name="item">An item to add to the current instance.</param>
         <summary>Adds a single value to the current instance.</summary>
         <remarks />
       </Docs>
@@ -172,7 +172,7 @@
         <Parameter Name="item" Type="T" />
       </Parameters>
       <Docs>
-        <param name="item">A <see cref="T:T" /> to search for in the current instance.</param>
+        <param name="item">An item to search for in the current instance.</param>
         <summary>Checks whether or not the current instance contains a value.</summary>
         <returns>A <see cref="T:System.Boolean" /> representing whether or not the current instance contains a value.</returns>
         <remarks />
@@ -188,7 +188,7 @@
         <Parameter Name="item" Type="T" />
       </Parameters>
       <Docs>
-        <param name="item">A <see cref="T:T" /> to search for in the current instance.</param>
+        <param name="item">An item to search for in the current instance.</param>
         <summary>Finds the first matching value in the current instance and returns its index.</summary>
         <returns>A <see cref="T:System.Int32" /> specifying the index at which the value was found, or -1 if not found.</returns>
         <remarks />
@@ -206,7 +206,7 @@
       </Parameters>
       <Docs>
         <param name="index">A <see cref="T:System.Int32" /> specifying the index a which to insert the value.</param>
-        <param name="item">To be added.</param>
+        <param name="item">An item to insert into the current instance.</param>
         <summary>Inserts a value into the current instance.</summary>
         <remarks />
       </Docs>
@@ -221,7 +221,7 @@
         <Parameter Name="item" Type="T" />
       </Parameters>
       <Docs>
-        <param name="item">A <see cref="T:T" /> to remove from the current instance.</param>
+        <param name="item">An item to remove from the current instance.</param>
         <summary>Removes the first instance of a value from the current instance.</summary>
         <returns>A <see cref="T:System.Boolean" /> specifying whether or not the value was found and removed from the current instance.</returns>
         <remarks />
@@ -270,7 +270,7 @@
       </Parameters>
       <Docs>
         <param name="array">An array to copy the values to.</param>
-        <param name="arrayIndex">To be added.</param>
+        <param name="arrayIndex">A <see cref="T:System.Int32" /> specifying the index in the destination at which to start copying.</param>
         <summary>Copies values from the current instance to an array.</summary>
         <remarks />
       </Docs>
@@ -377,7 +377,7 @@
       <Docs>
         <param name="index">A <see cref="T:System.Int32" /> specifying the index to read and write from.</param>
         <summary>Gets or sets the element at the specified index of the current instance.</summary>
-        <value>The <see cref="T:T" /> at the specified index of the current instance.</value>
+        <value>The item at the specified index of the current instance.</value>
         <remarks />
       </Docs>
     </Member>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class FileParser" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -148,9 +148,9 @@
         <Parameter Name="file" Type="TagLib.File" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.File" /> to parse.</param>
+        <summary>Constructs and initializes a new instance of <see cref="T:TagLib.Mpeg4.FileParser" /> for a specified file.</summary>
+        <remarks />
       </Docs>
     </Member>
   </Members>

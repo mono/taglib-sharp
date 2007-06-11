@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public enum BlockType" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Enum</BaseTypeName>
@@ -75,7 +75,7 @@
         <ReturnType>TagLib.Flac.BlockType</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>The block contains a Vorbis Comment.</summary>
       </Docs>
     </Member>
   </Members>

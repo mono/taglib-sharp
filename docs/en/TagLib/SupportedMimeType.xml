@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public sealed class SupportedMimeType : Attribute" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Attribute</BaseTypeName>
@@ -36,7 +36,7 @@
         <Parameter Name="extension" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="mimetype">To be added.</param>
+        <param name="mimetype">A <see cref="T:System.String" /> containing a mime-type.</param>
         <param name="extension">A <see cref="T:System.String" /> containing a file extension.</param>
         <summary>
           <para>Constructs and initializes a new instance of the <see cref="T:System.SupportedMimeType" /> class with a specified mime-type and file extension.</para>

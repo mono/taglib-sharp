@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public delegate TagLib.File File.FileTypeResolver(File.IFileAbstraction abstraction, string mimetype, ReadStyle style);" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Delegate</BaseTypeName>
@@ -16,8 +16,8 @@
     <ReturnType>TagLib.File</ReturnType>
   </ReturnValue>
   <Docs>
-    <param name="abstraction">To be added.</param>
-    <param name="mimetype">To be added.</param>
+    <param name="abstraction">A <see cref="T:TagLib.File+IFileAbstraction" /> representing the file to read.</param>
+    <param name="mimetype">A <see cref="T:System.String" /> containing the mime-type of the file.</param>
     <param name="style">A <see cref="T:TagLib.ReadStyle" /> specifying how to read media properties from the file.</param>
     <summary>Intervenes in the <see cref="M:TagLib.File.Create(System.String,TagLib.ReadStyle)" /> method by resolving the file type before any standard resolution operations.</summary>
     <returns>A new <see cref="T:TagLib.File" /> or null.</returns>

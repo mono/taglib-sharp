@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public static class BoxFactory" />
   <AssemblyInfo>
     <AssemblyName>taglib-sharp</AssemblyName>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -20,11 +20,11 @@
         <Parameter Name="position" Type="System.Int64" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.File" /> containing the box to read.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying the seek position at which to start reading.</param>
+        <summary>Creates a box by reading it from a specified file.</summary>
+        <returns>A <see cref="T:TagLib.Mpeg4.Box" /> containing a box, or <see langword="null" /> if none was found.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="CreateBox">
@@ -39,12 +39,12 @@
         <Parameter Name="handler" Type="TagLib.Mpeg4.IsoHandlerBox" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="position">To be added.</param>
-        <param name="handler">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.File" /> containing the box to read.</param>
+        <param name="position">A <see cref="T:System.Int64" /> specifying the seek position at which to start reading.</param>
+        <param name="handler">A <see cref="T:TagLib.Mpeg4.IsoHandlerBox" /> to use as a handler for the new box.</param>
+        <summary>Creates a box by reading it from a specified file.</summary>
+        <returns>A <see cref="T:TagLib.Mpeg4.Box" /> containing a box, or <see langword="null" /> if none was found.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="CreateBox">
@@ -58,11 +58,11 @@
         <Parameter Name="header" Type="TagLib.Mpeg4.BoxHeader" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="header">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.File" /> containing the box to read.</param>
+        <param name="header">A <see cref="T:TagLib.Mpeg4.BoxHeader" /> containing information about the new box, including the position at which to read.</param>
+        <summary>Creates a box by reading it from a specified file.</summary>
+        <returns>A <see cref="T:TagLib.Mpeg4.Box" /> containing a box, or <see langword="null" /> if none was found.</returns>
+        <remarks />
       </Docs>
     </Member>
     <Member MemberName="CreateBox">
@@ -77,12 +77,12 @@
         <Parameter Name="handler" Type="TagLib.Mpeg4.IsoHandlerBox" />
       </Parameters>
       <Docs>
-        <param name="file">To be added.</param>
-        <param name="header">To be added.</param>
-        <param name="handler">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="file">A <see cref="T:TagLib.File" /> containing the box to read.</param>
+        <param name="header">A <see cref="T:TagLib.Mpeg4.BoxHeader" /> containing information about the new box, including the position at which to read.</param>
+        <param name="handler">A <see cref="T:TagLib.Mpeg4.IsoHandlerBox" /> to use as a handler for the new box.</param>
+        <summary>Creates a box by reading it from a specified file.</summary>
+        <returns>A <see cref="T:TagLib.Mpeg4.Box" /> containing a box, or <see langword="null" /> if none was found.</returns>
+        <remarks />
       </Docs>
     </Member>
   </Members>
