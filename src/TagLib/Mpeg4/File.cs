@@ -66,13 +66,13 @@ namespace TagLib.Mpeg4
          ByteVector tag_data = udta_box.Render ();
          
          // If we don't have a "udta" box to overwrite...
-         if (parser.UdtaTree.Length == 0 || parser.UdtaTree [parser.UdtaTree.Length - 1].BoxType != BoxType.Udta)
+         if (parser.UdtaTree == null || parser.UdtaTree.Length == 0 || parser.UdtaTree [parser.UdtaTree.Length - 1].BoxType != BoxType.Udta)
          {
             // Stick the box at the end of the moov box.
             BoxHeader moov_header = parser.MoovTree [parser.MoovTree.Length - 1];
             size_change = tag_data.Count;
-            write_position = 0;
-            Insert (tag_data, moov_header.Position + moov_header.TotalBoxSize, 0);
+            write_position = moov_header.Position + moov_header.TotalBoxSize;
+            Insert (tag_data, write_position, 0);
             
             // Overwrite the parent box sizes.
             for (int i = parser.MoovTree.Length - 1; i >= 0; i --)
@@ -84,7 +84,7 @@ namespace TagLib.Mpeg4
             BoxHeader udta_header = parser.UdtaTree [parser.UdtaTree.Length - 1];
             size_change = tag_data.Count - udta_header.TotalBoxSize;
             write_position = udta_header.Position;
-            Insert (tag_data, udta_header.Position, udta_header.TotalBoxSize);
+            Insert (tag_data, write_position, udta_header.TotalBoxSize);
             
             // Overwrite the parent box sizes.
             for (int i = parser.UdtaTree.Length - 2; i >= 0; i --)

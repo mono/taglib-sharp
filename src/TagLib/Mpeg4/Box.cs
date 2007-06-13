@@ -98,7 +98,7 @@ namespace TagLib.Mpeg4
          // If there was a free, don't take it away, and let meta be a special case.
          if (free_found || BoxType == Mpeg4.BoxType.Meta)
          {
-            long size_difference =  header.DataSize - output.Count;
+            long size_difference = DataSize - output.Count;
             
             // If we have room for free space, add it so we don't have to resize the file.
             if (header.DataSize != 0 && size_difference >= 8)
@@ -191,7 +191,7 @@ namespace TagLib.Mpeg4
       public void RemoveChild (ByteVector type)
       {
          if (Children != null && Children is ICollection<Box>)
-            foreach (Box b in Children)
+            foreach (Box b in new List<Box> (Children))
                if (b.BoxType == type)
                   (Children as ICollection<Box>).Remove (b);
       }

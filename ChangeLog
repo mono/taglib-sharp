@@ -1,3 +1,21 @@
+2007-06-12  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Mpeg4/File.cs: Fix support for writing files that don't 
+	have UTDA tags. (Thanks to renzska for the bug report.)
+	
+	* src/TagLib/Mpeg4/Box.cs: Fix support for clearing boxes. (Thanks to 
+	maciej for the bug report.) Calculate padding size based on DataSize 
+	rather than header.DataSize. Fixes problem where 4 bytes are added on 
+	every save. (Discovered in bug report by lindea.)
+	
+	* src/TagLib/Riff/WaveFormatEx.cs: Recognize WMA Lossless. (Thanks to 
+	JustinC for the patch.)
+	
+	* ALSO: Thanks to JustinC for reminding me to credit people for their 
+	contributions. With the countless audio and video files in existence,
+	TagLib# would be far less complete and considerably buggier if not for 
+	everyone's contributions. Thank you!
+
 2007-06-11  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Ogg/Paginator.cs: Fix save support in OGG. Thanks to

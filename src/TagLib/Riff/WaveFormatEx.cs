@@ -172,6 +172,7 @@ namespace TagLib.Riff
             case 0x0160: return "Microsoft WMA1 Audio";
             case 0x0161: return "Microsoft WMA2 Audio";
             case 0x0162: return "Microsoft Multichannel WMA Audio";
+            case 0x0163: return "Microsoft Lossless WMA Audio";
 /*
             case 0x0170 	WAVE_FORMAT_UNISYS_NAP_ADPCM 	Unisys Corporation 	Not specified
             case 0x0171 	WAVE_FORMAT_UNISYS_NAP_ULAW 	Unisys Corporation 	Not specified
