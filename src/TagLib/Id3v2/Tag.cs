@@ -184,7 +184,7 @@ namespace TagLib.Id3v2
       {
          get
          {
-            TextInformationFrame f = TextInformationFrame.Get (this, FrameType.TPE1);
+            TextInformationFrame f = TextInformationFrame.Get (this, FrameType.TPE2);
             return f == null ? new string [] {} : f.FieldList.ToArray ();
          }
          set
@@ -197,7 +197,7 @@ namespace TagLib.Id3v2
       {
          get
          {
-            TextInformationFrame f = TextInformationFrame.Get (this, FrameType.TPE2);
+            TextInformationFrame f = TextInformationFrame.Get (this, FrameType.TPE1);
             return f == null ? new string [] {} : f.FieldList.ToArray ();
          }
          set

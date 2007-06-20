@@ -103,7 +103,7 @@ namespace TagLib.Riff
          set {title = value != null ? value.Trim () : String.Empty;}
       }
       
-      public override string [] AlbumArtists
+      public override string [] Performers
       {
          get {return new string [] {artist};}
          set {artist = (new StringCollection (value)).ToString (",").Trim ();}

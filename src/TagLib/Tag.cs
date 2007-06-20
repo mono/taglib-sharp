@@ -64,15 +64,23 @@ namespace TagLib
       
       public virtual IPicture [] Pictures { get { return new Picture [] { }; } set { } }
       
-      public string FirstArtist    { get { return FirstInGroup(AlbumArtists);} }
-      public string FirstPerformer { get { return FirstInGroup(Performers);  } }
-      public string FirstComposer  { get { return FirstInGroup(Composers);   } }
-      public string FirstGenre     { get { return FirstInGroup(Genres);      } }
+      [Obsolete("For album artists use AlbumArtists. For track artists, use Performers")]
+      public virtual string [] Artists      {get {return new string [] {};} set {}}
       
-      public string JoinedArtists    { get { return JoinGroup(AlbumArtists);} }
-      public string JoinedPerformers { get { return JoinGroup(Performers);  } } 
-      public string JoinedComposers  { get { return JoinGroup(Composers);   } }
-      public string JoinedGenres     { get { return JoinGroup(Genres);      } }
+      [Obsolete("For album artists use FirstAlbumArtist. For track artists, use FirstPerformer")]
+      public string FirstArtist      { get { return FirstPerformer;} }
+      
+      public string FirstAlbumArtist { get { return FirstInGroup(AlbumArtists);} }
+      public string FirstPerformer   { get { return FirstInGroup(Performers);  } }
+      public string FirstComposer    { get { return FirstInGroup(Composers);   } }
+      public string FirstGenre       { get { return FirstInGroup(Genres);      } }
+      
+      [Obsolete("For album artists use FirstAlbumArtist. For track artists, use FirstPerformer")]
+      public string JoinedArtists      { get { return JoinedPerformers;} }
+      public string JoinedAlbumArtists { get { return JoinGroup(AlbumArtists);} }
+      public string JoinedPerformers   { get { return JoinGroup(Performers);  } } 
+      public string JoinedComposers    { get { return JoinGroup(Composers);   } }
+      public string JoinedGenres       { get { return JoinGroup(Genres);      } }
 
       private static string FirstInGroup(string [] group)
       {

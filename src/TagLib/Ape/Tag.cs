@@ -74,12 +74,12 @@ namespace TagLib.Ape
       {
          get
          {
-            Item item = GetItem ("ARTIST");
+            Item item = GetItem ("ALBUM ARTIST");
             return item != null ? item.ToStringArray () : new string [] {};
          }
          set
          {
-            SetValue ("ARTIST", value);
+            SetValue ("ALBUM ARTIST", value);
          }
       }
       
@@ -87,12 +87,12 @@ namespace TagLib.Ape
       {
          get
          {
-            Item item = GetItem ("PERFORMER");
+            Item item = GetItem ("ARTIST");
             return item != null ? item.ToStringArray () : new string [] {};
          }
          set
          {
-            SetValue ("PERFORMER", value);
+            SetValue ("ARTIST", value);
          }
       }
       

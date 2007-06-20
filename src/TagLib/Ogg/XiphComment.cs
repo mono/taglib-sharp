@@ -203,14 +203,14 @@ namespace TagLib.Ogg
       
       public override string [] AlbumArtists
       {
-         get {return GetField ("ARTIST");}
-         set {SetField ("ARTIST", value);}
+         get {return GetField ("ALBUMARTIST");}
+         set {SetField ("ALBUMARTIST", value);}
       }
       
       public override string [] Performers
       {
-         get {return GetField ("PERFORMER");}
-         set {SetField ("PERFORMER", value);}
+         get {return GetField ("ARTIST");}
+         set {SetField ("ARTIST", value);}
       }
       
       public override string [] Composers

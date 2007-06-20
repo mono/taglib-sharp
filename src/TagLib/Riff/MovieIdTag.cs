@@ -53,7 +53,7 @@ namespace TagLib.Riff
          set {SetValue ("TITL", value);}
       }
       
-      public override string [] AlbumArtists
+      public override string [] Performers
       {
          get {return GetValuesAsStringCollection ("IART").ToArray ();}
          set {SetValue ("IART", value);}

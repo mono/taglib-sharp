@@ -1,3 +1,22 @@
+2007-06-20  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Id3v1/Tag.cs: Rework to match Picard specs.
+	
+	* src/TagLib/Riff/DivXTag.cs: Rework to match Picard specs.
+	
+	* src/TagLib/Riff/MovieIdTag.cs: Rework to match Picard specs.
+	
+	* src/TagLib/Id3v2/Tag.cs: Rework to match Picard specs.
+	
+	* src/TagLib/Ape/Tag.cs: Rework to match Picard specs.
+	
+	* src/TagLib/Ogg/XiphComment.cs: Rework to match Picard specs.
+
+	* src/TagLib/Tag.cs: Added JoinedAlbumArtists and FirstAlbumArtist.
+	Changed JoinedArtists and FirstArtist to point to Performers (marked as
+	obsolete), and added Artists which points to Performers (also obsolete).
+	This should aleviate confusion.
+	
 2007-06-12  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Mpeg4/File.cs: Fix support for writing files that don't 
