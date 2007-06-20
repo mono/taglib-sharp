@@ -215,11 +215,7 @@ namespace TagLib.Mpeg4
       
       public override string [] AlbumArtists
       {
-         get
-         {
-            string [] text = GetText(BoxType.Aart);
-            return text.Length > 0 ? text : Performers;
-         }
+         get {return GetText (BoxType.Aart);}
          set { SetText(BoxType.Aart, value); }
       }
       

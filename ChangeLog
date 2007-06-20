@@ -1,5 +1,16 @@
 2007-06-20  Brian Nickel <brian.nickel@gmail.com>
 
+	* src/TagLib/Mpeg4/AppleTag.cs:
+	* src/TagLib/Asf/Tag.cs: Don't return Performers if AlbumArtists is not
+	found. This, provided with the second to last commit should resolve
+	inconsistancies in the behaviour. (Thanks to JustinC for the bug
+	report, otherwise that travesty that is the previous implementation may
+	have gone on forever.)
+	
+	* src/TagLib/Tag.cs: Fix typos.
+
+2007-06-20  Brian Nickel <brian.nickel@gmail.com>
+
 	* src/TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs:
 	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
 	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:

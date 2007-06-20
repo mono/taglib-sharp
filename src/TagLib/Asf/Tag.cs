@@ -95,18 +95,9 @@ namespace TagLib.Asf
          set {description.Title = value;}
       }
       
-      // This may seem unintuitive, but the artists field is actually
-      // performers. This makes sense as Artists should descibe the album
-      // artist and Performers should describe who is in the song.
-      // Because this may not be set, we'll return performers if we can't get
-      // an artist.
       public override string [] AlbumArtists
       {
-         get
-         {
-            string value = GetDescriptorString ("WM/AlbumArtist", "AlbumArtist");
-            return (value != null) ? SplitAndClean (value) : Performers;
-         }
+         get {return GetDescriptorStrings ("WM/AlbumArtist", "AlbumArtist");}
          set {SetDescriptorStrings (value, "WM/AlbumArtist", "AlbumArtist");}
       }
       

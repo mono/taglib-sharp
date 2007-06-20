@@ -75,7 +75,7 @@ namespace TagLib
       public string FirstComposer    { get { return FirstInGroup(Composers);   } }
       public string FirstGenre       { get { return FirstInGroup(Genres);      } }
       
-      [Obsolete("For album artists use FirstAlbumArtist. For track artists, use FirstPerformer")]
+      [Obsolete("For album artists use JoinedAlbumArtists. For track artists, use JoinedPerformers")]
       public string JoinedArtists      { get { return JoinedPerformers;} }
       public string JoinedAlbumArtists { get { return JoinGroup(AlbumArtists);} }
       public string JoinedPerformers   { get { return JoinGroup(Performers);  } } 
