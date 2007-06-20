@@ -1,5 +1,25 @@
 2007-06-20  Brian Nickel <brian.nickel@gmail.com>
 
+	* src/TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
+	* src/TagLib/Id3v2/Frames/SynchronizedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:
+	* src/TagLib/Id3v2/Frames/UniqueFileIdentifierFrame.cs:
+	* src/TagLib/Id3v2/Frames/PrivateFrame.cs:
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs:
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs: Use
+	ByteVector.TextDelimiter instead of Frame.TextDelimiter.
+	
+	* src/TagLib/Id3v2/Frame.cs: Mark TextDelimiter as obsolete.
+	* src/TagLib/ByteVector.cs: Add TextDelimiter method.
+	
+	* src/TagLib/Asf/Tag.cs: Discard new pictures if their rendered size is
+	greater than 64KB to avoid corrupting files. (Thanks to renzska for the
+	bug report.)
+
+2007-06-20  Brian Nickel <brian.nickel@gmail.com>
+
 	* src/TagLib/Id3v1/Tag.cs: Rework to match Picard specs.
 	
 	* src/TagLib/Riff/DivXTag.cs: Rework to match Picard specs.

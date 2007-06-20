@@ -134,21 +134,21 @@ namespace TagLib.Id3v2
          text_encoding =  (StringType) data [field_start++];
          int byte_align = text_encoding == StringType.Latin1 || text_encoding == StringType.UTF8 ? 1 : 2;
          
-         int field_end = data.Find (TextDelimiter (StringType.Latin1), field_start);
+         int field_end = data.Find (ByteVector.TextDelimiter (StringType.Latin1), field_start);
          
          if (field_end < field_start)
             return;
          
          mime_type = data.Mid (field_start, field_end - field_start).ToString (StringType.Latin1);
          field_start = field_end + 1;
-         field_end = data.Find (TextDelimiter (text_encoding), field_start, byte_align);
+         field_end = data.Find (ByteVector.TextDelimiter (text_encoding), field_start, byte_align);
          
          if (field_end < field_start)
             return;
          
          file_name = data.Mid (field_start, field_end - field_start).ToString (text_encoding);
          field_start = field_end + 1;
-         field_end = data.Find (TextDelimiter (text_encoding), field_start, byte_align);
+         field_end = data.Find (ByteVector.TextDelimiter (text_encoding), field_start, byte_align);
          
          if (field_end < field_start)
             return;
@@ -168,15 +168,15 @@ namespace TagLib.Id3v2
          
          if (MimeType != null)
             v.Add (ByteVector.FromString (MimeType, StringType.Latin1));
-         v.Add (TextDelimiter (StringType.Latin1));
+         v.Add (ByteVector.TextDelimiter (StringType.Latin1));
          
          if (FileName != null)
             v.Add (ByteVector.FromString (FileName, encoding));
-         v.Add (TextDelimiter (encoding));
+         v.Add (ByteVector.TextDelimiter (encoding));
          
          if (Description != null)
             v.Add (ByteVector.FromString (Description, encoding));
-         v.Add (TextDelimiter (encoding));
+         v.Add (ByteVector.TextDelimiter (encoding));
          
          v.Add (data);
          

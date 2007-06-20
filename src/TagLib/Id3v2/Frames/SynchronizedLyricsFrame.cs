@@ -177,7 +177,7 @@ namespace TagLib.Id3v2
          timestamp_format = (TimestampFormat) data [4];
          lyrics_type = (SynchedTextType) data [5];
          
-         ByteVector delim = TextDelimiter (text_encoding);
+         ByteVector delim = ByteVector.TextDelimiter (text_encoding);
          int delim_index = data.Find (delim, 6);
          
          if (delim_index < 0)
@@ -210,7 +210,7 @@ namespace TagLib.Id3v2
       protected override ByteVector RenderFields (byte version)
       {
          StringType encoding = CorrectEncoding(TextEncoding, version);
-         ByteVector delim = TextDelimiter (encoding);
+         ByteVector delim = ByteVector.TextDelimiter (encoding);
          ByteVector v = new ByteVector ();
          
          v.Add ((byte)encoding);

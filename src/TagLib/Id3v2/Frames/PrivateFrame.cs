@@ -105,7 +105,7 @@ namespace TagLib.Id3v2
          if (data.Count < 1)
             throw new CorruptFileException ("A private frame must contain at least 1 byte.");
          
-         ByteVectorCollection l = ByteVectorCollection.Split (data, TextDelimiter (StringType.Latin1), 1, 2);
+         ByteVectorCollection l = ByteVectorCollection.Split (data, ByteVector.TextDelimiter (StringType.Latin1), 1, 2);
          
          if (l.Count == 2)
          {
@@ -121,7 +121,7 @@ namespace TagLib.Id3v2
          if (version > 2)
          {
             v.Add (ByteVector.FromString (owner, StringType.Latin1));
-            v.Add (TextDelimiter (StringType.Latin1));
+            v.Add (ByteVector.TextDelimiter (StringType.Latin1));
             v.Add (data);
          }
          

@@ -161,7 +161,7 @@ namespace TagLib.Id3v2
       #region Protected Properties
       protected override void ParseFields (ByteVector data, byte version)
       {
-         int pos = data.Find (TextDelimiter (StringType.Latin1));
+         int pos = data.Find (ByteVector.TextDelimiter (StringType.Latin1));
          if (pos < 0)
             return;
          
@@ -195,7 +195,7 @@ namespace TagLib.Id3v2
 
          ByteVector data = new ByteVector ();
          data.Add (ByteVector.FromString (identification, StringType.Latin1));
-         data.Add (TextDelimiter(StringType.Latin1));
+         data.Add (ByteVector.TextDelimiter(StringType.Latin1));
 
          foreach (ChannelData channel in channels.Values)
          {

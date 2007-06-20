@@ -189,7 +189,7 @@ namespace TagLib.Id3v2
          v.Add ((byte) encoding);
          v.Add (ByteVector.FromString (Language, StringType.Latin1));
          v.Add (ByteVector.FromString (description, encoding));
-         v.Add (TextDelimiter (encoding));
+         v.Add (ByteVector.TextDelimiter (encoding));
          v.Add (ByteVector.FromString (text, encoding));
 
          return v;

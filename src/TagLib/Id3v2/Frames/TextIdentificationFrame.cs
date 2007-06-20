@@ -188,13 +188,13 @@ namespace TagLib.Id3v2
          {
             string value = data.ToString (encoding, 1);
 
-            if (value.Length == 0 || value [0] == '\0')
+            if (value.Length == 0 || value [0] == 0)
                goto done;
             
             // Do a fast removal of end bytes.
-            if (value.Length > 1 && value [value.Length - 1] == '\0')
+            if (value.Length > 1 && value [value.Length - 1] == 0)
                for (int i = value.Length - 1; i >= 0; i --)
-                  if (value [i] != '\0')
+                  if (value [i] != 0)
                   {
                      value = value.Substring (0, i + 1);
                      break;
@@ -253,7 +253,7 @@ namespace TagLib.Id3v2
                // first element in the list, append the appropriate delimiter
                // for this encoding.
                if (i !=0)
-                  v.Add (TextDelimiter (encoding));
+                  v.Add (ByteVector.TextDelimiter (encoding));
             
                v.Add (ByteVector.FromString (field_list [i], encoding));
             }

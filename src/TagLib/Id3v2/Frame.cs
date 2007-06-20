@@ -148,10 +148,13 @@ namespace TagLib.Id3v2
       
       
       #region Public Static Methods
+      
+      [Obsolete("Use ByteVector.TextDelimiter.")]
       public static ByteVector TextDelimiter (StringType type)
       {
-         return new ByteVector ((type == StringType.UTF16 || type == StringType.UTF16BE) ? 2 : 1, (byte) 0);
+         return ByteVector.TextDelimiter (type);
       }
+      
       #endregion
       
       

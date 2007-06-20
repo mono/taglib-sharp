@@ -103,7 +103,7 @@ namespace TagLib.Id3v2
          ByteVector data = new ByteVector ();
          
          data.Add (ByteVector.FromString (owner, StringType.Latin1));
-         data.Add (TextDelimiter (StringType.Latin1));
+         data.Add (ByteVector.TextDelimiter (StringType.Latin1));
          data.Add (identifier);
          
          return data;

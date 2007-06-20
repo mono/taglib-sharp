@@ -328,13 +328,13 @@ namespace TagLib.Asf
          	   int size = (int) data.Mid (offset, 4).ToUInt (false);
          		offset += 4;
          		
-         		int found = data.Find ("\0\0", offset, 2);
+         		int found = data.Find (ByteVector.TextDelimiter (StringType.UTF16LE), offset, 2);
          		if (found == -1)
          			continue;
          		p.MimeType = data.Mid (offset, found - offset).ToString (StringType.UTF16LE);
          		offset = found + 2;
          		
-         		found = data.Find ("\0\0", offset, 2);
+         		found = data.Find (ByteVector.TextDelimiter (StringType.UTF16LE), offset, 2);
          		if (found == -1)
          			continue;
          		p.Description = data.Mid (offset, found - offset).ToString (StringType.UTF16LE);
@@ -356,19 +356,23 @@ namespace TagLib.Asf
          		return;
          	}
          	
-         	ContentDescriptor [] descriptors = new ContentDescriptor [value.Length];
+         	List<ContentDescriptor> descriptors = new List<ContentDescriptor> ();
          	for (int i = 0; i < value.Length; i ++)
          	{
          		ByteVector v = new ByteVector ((byte) value [i].Type);
          		v.Add (Object.RenderDWord ((uint) value [i].Data.Count));
          		v.Add (Object.RenderUnicode (value [i].MimeType));
          		v.Add (Object.RenderUnicode (value [i].Description));
-         		v.Add (value [i].Data);
          		
-            	descriptors [i] = new ContentDescriptor ("WM/Picture", v);
+         		/// If its too big, ignore it.
+         		if (v.Count > 0xFFFF - value [i].Data.Count)
+         			continue;
+         		
+         		v.Add (value [i].Data);
+         		descriptors [i] = new ContentDescriptor ("WM/Picture", v);
          	}
          	
-            SetDescriptors ("WM/Picture", descriptors);
+            SetDescriptors ("WM/Picture", descriptors.ToArray ());
          }
       }
       

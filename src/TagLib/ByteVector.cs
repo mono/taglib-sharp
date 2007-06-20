@@ -504,7 +504,7 @@ namespace TagLib
             int pos = offset;
             
             StringCollection l = new StringCollection ();
-            ByteVector separator = TagLib.Id3v2.Frame.TextDelimiter (type);
+            ByteVector separator = TextDelimiter (type);
             int align = separator.Count;
             while (chunk < count && pos < Count)
             {
@@ -780,6 +780,13 @@ namespace TagLib
         #endregion
       
         #region Utilities
+        
+      private static readonly ReadOnlyByteVector td1 = new ReadOnlyByteVector ((int)1);
+      private static readonly ReadOnlyByteVector td2 = new ReadOnlyByteVector ((int)2);
+      public static ByteVector TextDelimiter (StringType type)
+      {
+         return (type == StringType.UTF16 || type == StringType.UTF16BE || type == StringType.UTF16LE) ? td2 : td1;
+      }
         
         private static System.Text.Encoding last_utf16_encoding = System.Text.Encoding.Unicode;
         private static System.Text.Encoding StringTypeToEncoding(StringType type, ByteVector bom)

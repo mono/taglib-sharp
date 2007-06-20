@@ -187,7 +187,7 @@ namespace TagLib.Id3v2
          
          if (raw_version > 2)
          {
-            offset = raw_data.Find (TextDelimiter (StringType.Latin1), pos);
+            offset = raw_data.Find (ByteVector.TextDelimiter (StringType.Latin1), pos);
 
             if(offset < pos)
                return;
@@ -210,7 +210,7 @@ namespace TagLib.Id3v2
          
          type = (PictureType) raw_data [pos++];
          
-         offset = raw_data.Find (TextDelimiter (text_encoding), pos, byte_align);
+         offset = raw_data.Find (ByteVector.TextDelimiter (text_encoding), pos, byte_align);
 
          if(offset < pos)
             return;  
@@ -251,12 +251,12 @@ namespace TagLib.Id3v2
          else
          {
             data.Add (ByteVector.FromString (MimeType, StringType.Latin1));
-            data.Add (TextDelimiter (StringType.Latin1));
+            data.Add (ByteVector.TextDelimiter (StringType.Latin1));
          }
          
          data.Add ((byte) type);
          data.Add (ByteVector.FromString (Description, encoding));
-         data.Add (TextDelimiter (encoding));
+         data.Add (ByteVector.TextDelimiter (encoding));
          data.Add (this.data);
 
          return data;
