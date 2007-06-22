@@ -407,11 +407,11 @@ namespace TagLib.Id3v2
          }
          
          set {
+            RemoveFrames(FrameType.APIC);
+            
             if(value == null || value.Length < 1) {
                return;
             }
-            
-            RemoveFrames(FrameType.APIC);
             
             foreach(IPicture picture in value) {
                if (picture is AttachedPictureFrame)

@@ -1,3 +1,8 @@
+2007-06-22  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Id3v2/Tag.cs: Remove picture frames if Picture is set to
+	null or an empty array. (Thanks to wilson for the but report.)
+
 2007-06-20  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Mpeg4/AppleTag.cs:
