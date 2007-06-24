@@ -1,3 +1,9 @@
+2007-06-24  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs: Split the string into 3
+	pieces instead of 2. This way nil delimiters and badly formatted strings
+	don't mess up the value. (Thanks to gozza11 for the but report.)
+
 2007-06-22  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Id3v2/Tag.cs: Remove picture frames if Picture is set to

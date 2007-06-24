@@ -165,8 +165,11 @@ namespace TagLib.Id3v2
          
          encoding = (StringType) data [0];
          language = data.Mid (1, 3).ToString (StringType.Latin1);
-         
-         string [] split = data.ToStrings (encoding, 4, 2);
+      	
+         // Instead of splitting into two string, in the format
+         // [{desc}\0{value}], try splitting into three strings in case of a
+         // misformatted [{desc}\0{value}\0].
+         string [] split = data.ToStrings (encoding, 4, 3);
          
          if (split.Length == 1)
          {
