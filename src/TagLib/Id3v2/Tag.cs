@@ -189,7 +189,7 @@ namespace TagLib.Id3v2
          }
          set
          {
-            SetTextFrame (FrameType.TPE1, new StringCollection (value));
+            SetTextFrame (FrameType.TPE2, new StringCollection (value));
          }
       }
       
@@ -202,7 +202,7 @@ namespace TagLib.Id3v2
          }
          set
          {
-            SetTextFrame (FrameType.TPE2, new StringCollection (value));
+            SetTextFrame (FrameType.TPE1, new StringCollection (value));
          }
       }
       
