@@ -1,16 +1,24 @@
 AC_INIT(src/TagLib/File.cs)
 AC_CANONICAL_SYSTEM
 
+ASSEMBLY_NAME="taglib-sharp"
+
 MAJOR_VERSION=2
 MINOR_VERSION=0
-PATCH_VERSION=0
+PATCH_VERSION=1
 VERSION="$MAJOR_VERSION.$MINOR_VERSION.$PATCH_VERSION"
-ASM_VERSION="$MAJOR_VERSION.$MINOR_VERSION.0.0"
+ASSEMBLY_VERSION="$MAJOR_VERSION.$MINOR_VERSION.$PATCH_VERSION.0"
+
+
+POLICY_2_0_VERSIONS="2.0.0.0-$ASSEMBLY_VERSION"
+AC_SUBST(POLICY_2_0_VERSIONS)
+
 
 AC_SUBST(VERSION)
-AC_SUBST(ASM_VERSION)
+AC_SUBST(ASSEMBLY_VERSION)
+AC_SUBST(ASSEMBLY_NAME)
 
-AM_INIT_AUTOMAKE(taglib-sharp, $VERSION)
+AM_INIT_AUTOMAKE($ASSEMBLY_NAME, $VERSION)
 AM_MAINTAINER_MODE
 
 AC_PROG_INSTALL
@@ -49,8 +57,10 @@ if test x$GACUTIL = x; then
 	AC_MSG_ERROR(You need gacutil)
 fi
 
-GACUTIL_FLAGS='/package taglib-sharp /gacdir $(libdir) /root $(DESTDIR)$(libdir)'
+GACUTIL_FLAGS='/package $(ASSEMBLY_NAME) /gacdir $(libdir) /root $(DESTDIR)$(libdir)'
 AC_SUBST(GACUTIL_FLAGS)
+GACUTIL_POLICY_FLAGS='/gacdir $(libdir) /root $(DESTDIR)$(libdir)'
+AC_SUBST(GACUTIL_POLICY_FLAGS)
 
 AC_ARG_ENABLE(docs, AC_HELP_STRING([--disable-docs], [Do not build documentation]), with_docs=no, with_docs=yes)
 
@@ -93,6 +103,7 @@ Makefile
 taglib-sharp.pc
 src/Makefile
 src/AssemblyInfo.cs
+src/policy.2.0.taglib-sharp.config
 examples/Makefile
 docs/Makefile
 ])

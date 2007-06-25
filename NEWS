@@ -1,3 +1,34 @@
+Version 2.0.1
+June 24, 2007
+
+This is the first bug fix release for TagLib#. Fixes include:
+	* Use Picard Tag mapping for all tags to improve constistency.
+	* Add JoinedAlbumArtists and FirstAlbumArtist for clarity.
+	* Add Artist pointing to Performers with an ObsoleteAttribute.
+	* Handle ID3v2 comments ending with text delimiters better.
+	* Clear ID3v2 pictures when Pictures is set to null.
+	* Don't try storing pictures larger than 64K in ASF files.
+	* Don't throw an exception when saving MPEG-4 files without UTDA boxes.
+	* Fix the clearing of MPEG-4 boxes.
+	* Use Box.DataSize instead of Header.DataSize when calculating the
+	MPEG-4 padding.
+	* Recognize WMA Lossless in the codec description.
+
+Outstanding bugs:
+	* MPEG-4 tags do not show up in Nokia N95 Phone.
+
+Special thanks to those who contributed in some way to the project over the past
+year:
+	Aaron Bockover, Alan, Alexander Hixon, Andrés Gómez Aragoneses,
+	Clint Banzhaf, D Bera, David Wu, Da_FileServer, Dennis Cranston,
+	Fabrice Deshayes aka Xtream, Gabriel Rosenhouse, gozza11, Gustavo Rubio,
+	Herman Mahone, HugoPalma, Ilya Konstantinov, Ion Todirel, jc BAUDHUIN,
+	jmurphy, JustinC, lindea, Michael Monreal, maciej, mikec, mtampe,
+	Patrick Laplante, renzska, Sebastian Dröge, Timm Preetz, wilson, and
+	anyone else who I may have forgotten.
+
+--------------------------------------------------------------------------------
+
 Version 2.0.0
 June 11, 2007
 

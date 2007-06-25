@@ -23,7 +23,7 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly:AssemblyVersion("2.0.0.0")]
+[assembly:AssemblyVersion("2.0.1.0")]
 [assembly:AssemblyTitle ("TagLib#")]
 [assembly:AssemblyDescription ("A library for reading and writing metatags to audio and video files.")]
 [assembly:AssemblyCopyright ("Copyright (c) 2006-2007 Brian Nickel")]

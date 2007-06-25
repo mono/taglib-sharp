@@ -1,5 +1,20 @@
 2007-06-24  Brian Nickel <brian.nickel@gmail.com>
 
+	+-------------+
+	| VERSON BUMP |
+	|    2.0.1    |
+	+-------------+
+	
+	* src/AssemblyInfo.cs.in:
+	* configure.ac:
+	* src/Makefile.am:
+	* src/policy.2.0.taglib-sharp.config.in: Install a policy in GAC so
+	assemblies compiled against older versions use 2.0.1.0.
+	* src/AssemblyInfo-windows.cs: Version bump.
+	* NEWS: Information on new release.
+
+2007-06-24  Brian Nickel <brian.nickel@gmail.com>
+
 	* src/TagLib/Id3v2/Tag.cs: Fixed bug in commit from 2007-06-20.
 	TPE2 and TPE1 were being swapped when they were stored. (Thanks to
 	jmurphy for the but report.)

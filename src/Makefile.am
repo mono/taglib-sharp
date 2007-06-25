@@ -1,4 +1,4 @@
-ASSEMBLY_NAME = taglib-sharp
+POLICIES = policy.2.0.$(ASSEMBLY_NAME).dll
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 TARGET = $(ASSEMBLY)
 
@@ -11,25 +11,40 @@ taglib-sharp.snk: $(top_srcdir)/taglib-sharp.snk
 
 taglib_sources_in = AssemblyInfo.cs.in
 taglib_generated_sources = $(taglib_sources_in:.in=)
+taglib_policy_names = $(POLICIES:.dll=)
+taglib_policy_configs = $(POLICIES:.dll=.config)
+taglib_policy_configs_in = $(POLICIES:.dll=.config.in)
 
 $(ASSEMBLY): $(TAGLIB_CSFILES) $(taglib_generated_sources) taglib-sharp.snk
 	$(CSC) -target:library $(LIBFLAGS) -out:$@ $(TAGLIB_CSFILES) $(taglib_generated_sources)
 
-all: $(ASSEMBLY)
+policy.%.$(ASSEMBLY_NAME).dll: policy.%.$(ASSEMBLY_NAME).config
+	$(AL) al /link:$< /out:$@ /keyfile:taglib-sharp.snk
 
-EXTRA_DIST = $(TAGLIB_CSFILES) $(taglib_sources_in) AssemblyInfo-windows.cs
+all: $(ASSEMBLY) $(POLICIES)
+
+EXTRA_DIST = $(TAGLIB_CSFILES) $(taglib_sources_in) AssemblyInfo-windows.cs \
+	$(taglib_policy_configs_in)
 DISTCLEANFILES = *.pidb
-CLEANFILES = $(ASSEMBLY) $(ASSEMBLY).mdb taglib-sharp.snk 
+CLEANFILES = $(ASSEMBLY) $(ASSEMBLY).mdb $(POLICIES) taglib-sharp.snk 
 MAINTAINERCLEANFILES = Makefile.in
 
 install-data-local:
 	@if test -n '$(TARGET)'; then						\
-	  echo "$(GACUTIL) /i $(ASSEMBLY) /f $(GACUTIL_FLAGS)";	\
-	  $(GACUTIL) /i $(ASSEMBLY) /f $(GACUTIL_FLAGS) || exit 1;	\
+	  echo "$(GACUTIL) /i $(ASSEMBLY) /f $(GACUTIL_FLAGS)";			\
+	  $(GACUTIL) /i $(ASSEMBLY) /f $(GACUTIL_FLAGS) || exit 1;		\
+	  for POLICY in $(POLICIES); 						\
+	    do echo "$(GACUTIL) /i $$POLICY /f $(GACUTIL_POLICY_FLAGS)";	\
+	    $(GACUTIL) /i $$POLICY /f $(GACUTIL_POLICY_FLAGS) || exit 1;	\
+	  done									\
 	fi
 
 uninstall-local:
 	@if test -n '$(TARGET)'; then						\
-	  echo "$(GACUTIL) /u $(ASSEMBLY_NAME) $(GACUTIL_FLAGS)";	\
-	  $(GACUTIL) /u $(ASSEMBLY_NAME) $(GACUTIL_FLAGS) || exit 1;	\
+	  echo "$(GACUTIL) /u $(ASSEMBLY_NAME) $(GACUTIL_FLAGS)";		\
+	  $(GACUTIL) /u $(ASSEMBLY_NAME) $(GACUTIL_FLAGS) || exit 1;		\
+	  for POLICY in $(taglib_policy_names);					\
+	    do echo "$(GACUTIL) /u $$POLICY /f $(GACUTIL_POLICY_FLAGS)";	\
+	    $(GACUTIL) /u $$POLICY /f $(GACUTIL_POLICY_FLAGS) || exit 1;	\
+	  done									\
 	fi
