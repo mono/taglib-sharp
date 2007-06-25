@@ -109,8 +109,8 @@ namespace TagLib.Id3v2
          
          if (l.Count == 2)
          {
-            owner = l [0].ToString (StringType.Latin1);
-            data  = l [1];
+            this.owner = l [0].ToString (StringType.Latin1);
+            this.data  = l [1];
          }
       }
 
