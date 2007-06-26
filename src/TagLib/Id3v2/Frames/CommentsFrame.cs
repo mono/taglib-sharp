@@ -278,6 +278,17 @@ namespace TagLib.Id3v2 {
 		
 		
 		
+		#region Public Methods
+		
+		public override string ToString ()
+		{
+			return Text;
+		}
+		
+		#endregion
+		
+		
+		
 		#region Public Static Methods
 		
 		/// <summary>

@@ -34,7 +34,7 @@ namespace TagLib.FormatTests
         public void ReadTags()
         {
             Assert.AreEqual("MP3 album v2", file.Tag.Album);
-            Assert.AreEqual("MP3 artist", file.Tag.FirstArtist);
+            Assert.AreEqual("MP3 artist", file.Tag.FirstPerformer);
             Assert.AreEqual("MP3 comment v2", file.Tag.Comment);
             Assert.AreEqual("Acid Punk", file.Tag.FirstGenre);
             Assert.AreEqual("MP3 title v2", file.Tag.Title);
@@ -60,7 +60,7 @@ namespace TagLib.FormatTests
             Assert.AreEqual("MP3 title", file.GetTag (TagLib.TagTypes.Id3v1).Title);
             Assert.AreEqual("MP3 album", file.GetTag (TagLib.TagTypes.Id3v1).Album);
             Assert.AreEqual("MP3 comment", file.GetTag (TagLib.TagTypes.Id3v1).Comment);
-            Assert.AreEqual("MP3 artist", file.GetTag (TagLib.TagTypes.Id3v1).FirstArtist);
+            Assert.AreEqual("MP3 artist", file.GetTag (TagLib.TagTypes.Id3v1).FirstPerformer);
             Assert.AreEqual(1235, (int)file.GetTag (TagLib.TagTypes.Id3v1).Year);
             Assert.AreEqual(6, (int)file.GetTag (TagLib.TagTypes.Id3v1).Track);
             Assert.AreEqual(0, (int)file.GetTag (TagLib.TagTypes.Id3v1).TrackCount);

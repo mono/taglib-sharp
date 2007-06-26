@@ -32,6 +32,7 @@ namespace TagLib.Mpeg
       //////////////////////////////////////////////////////////////////////////
       private uint frames;
       private uint size;
+      private bool present;
       
       public static readonly XingHeader Unknown = new XingHeader (0, 0);
       //////////////////////////////////////////////////////////////////////////
@@ -41,6 +42,7 @@ namespace TagLib.Mpeg
       {
          this.frames = frame;
          this.size = size;
+         this.present = false;
       }
       
       public XingHeader (ByteVector data)
@@ -51,18 +53,22 @@ namespace TagLib.Mpeg
          // Check to see if a valid Xing header is available.
          if (!data.StartsWith ("Xing"))
             throw new CorruptFileException ("Not a valid Xing header");
+         
+         int position = 8;
+         
+         if ((data [7] & 0x01) != 0) {
+            frames = data.Mid (position, 4).ToUInt ();
+            position += 4;
+         } else
+            frames = 0;
+         
+         if ((data [7] & 0x02) != 0) {
+            size = data.Mid (position, 4).ToUInt ();
+            position += 4;
+         } else
+            size = 0;
 
-         // If the XingHeader doesn't contain the number of frames and the total stream
-         // info it's invalid.
-
-         if ((data [7] & 0x01) == 0)
-            throw new CorruptFileException ("Xing header doesn't contain the total number of frames.");
-
-         if ((data[7] & 0x02) == 0)
-            throw new CorruptFileException ("Xing header doesn't contain the total stream size.");
-
-         frames = data.Mid (8, 4).ToUInt ();
-         size = data.Mid (12, 4).ToUInt ();
+         present = true;
       }
 
       //////////////////////////////////////////////////////////////////////////
@@ -70,6 +76,7 @@ namespace TagLib.Mpeg
       //////////////////////////////////////////////////////////////////////////
       public uint TotalFrames {get {return frames;}}
       public uint TotalSize {get {return size;}}
+      public bool Present   {get {return present;}}
 
       //////////////////////////////////////////////////////////////////////////
       // public static methods

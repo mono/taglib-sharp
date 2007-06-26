@@ -26,7 +26,7 @@ namespace TagLib.FormatTests
         public void ReadTags()
         {
             Assert.AreEqual("MPC album", file.Tag.Album);
-            Assert.AreEqual("MPC artist", file.Tag.FirstArtist);
+            Assert.AreEqual("MPC artist", file.Tag.FirstPerformer);
             Assert.AreEqual("MPC comment", file.Tag.Comment);
             Assert.AreEqual("Acid Punk", file.Tag.FirstGenre);
             Assert.AreEqual("MPC title", file.Tag.Title);

@@ -1,5 +1,26 @@
 2007-06-26  Brian Nickel <brian.nickel@gmail.com>
 
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs: Readd ToString.
+	
+	* src/TagLib/Mpeg/XingHeader.cs: Don't throw an exception just because
+	the header doesn't contain everything we want.
+	
+	* src/TagLib/Mpeg/AudioHeader.cs: Prevent infinite loop. (Thanks to
+	sambeckett for the bug report.) Add "VBR" to the description if a Xing
+	header is present.
+	
+	* tests/fixtures/TagLib.FormatTests/FlacFormatTest.cs:
+	* tests/fixtures/TagLib.FormatTests/Id3V1FormatTest.cs:
+	* tests/fixtures/TagLib.FormatTests/Id3V2FormatTest.cs:
+	* tests/fixtures/TagLib.FormatTests/AsfFormatTest.cs:
+	* tests/fixtures/TagLib.FormatTests/Id3BothFormatTest.cs:
+	* tests/fixtures/TagLib.FormatTests/OggFormatTest.cs:
+	* tests/fixtures/TagLib.FormatTests/MpcFormatTest.cs:
+	* tests/fixtures/TagLib.FormatTests/M4aFormatTest.cs: Use Performers
+	instead of Artists.
+
+2007-06-26  Brian Nickel <brian.nickel@gmail.com>
+
 	* src/TagLib/CorruptFileException.cs:
 	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
 	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:

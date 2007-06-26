@@ -77,6 +77,7 @@ namespace TagLib.Mpeg
       private long        position;
       private long        stream_length;
       private XingHeader  xing_header;
+      private TimeSpan    duration;
       #endregion
       
       public static readonly AudioHeader Unknown = new AudioHeader (0,0,0,XingHeader.Unknown);
@@ -88,10 +89,12 @@ namespace TagLib.Mpeg
          this.position = position;
          this.stream_length = streamLength;
          this.xing_header = xing_header;
+         this.duration = TimeSpan.Zero;
       }
       
       private AudioHeader (ByteVector data, TagLib.File file, long position)
       {
+         this.duration = TimeSpan.Zero;
          this.position = position;
          stream_length = 0;
          if (data.Count < 4)
@@ -156,8 +159,8 @@ namespace TagLib.Mpeg
       {
          get
          {
-            if (xing_header.TotalSize > 0)
-               return (int) (Duration > TimeSpan.Zero ? ((XingHeader.TotalSize * 8L) / Duration.TotalSeconds) / 1000 : 0);
+            if (xing_header.TotalSize > 0 && duration > TimeSpan.Zero)
+               return (int) (((XingHeader.TotalSize * 8L) / duration.TotalSeconds) / 1000);
             
             int version_index = Version == Version.Version1 ? 0 : 1;
             int layer_index = AudioLayer > 0 ? AudioLayer - 1 : 0;
@@ -181,9 +184,9 @@ namespace TagLib.Mpeg
             // Calculate the frame length
             switch (AudioLayer)
             {
-            case 1: return (((12000  * AudioBitrate) / AudioSampleRate) + (IsPadded ? 1 : 0))*4;
-            case 2: return   (144000 * AudioBitrate) / AudioSampleRate + (IsPadded ? 1 : 0);
-            case 3: return (((144000 * AudioBitrate) / AudioSampleRate) / (Version == Version.Version1 ? 1 : 2)) + (IsPadded ? 1 : 0);
+            case 1:  return (((12000  * AudioBitrate) / AudioSampleRate) + (IsPadded ? 1 : 0))*4;
+            case 2:  return   (144000 * AudioBitrate) / AudioSampleRate + (IsPadded ? 1 : 0);
+            case 3:  return (((144000 * AudioBitrate) / AudioSampleRate) / (Version == Version.Version1 ? 1 : 2)) + (IsPadded ? 1 : 0);
             default: return 0;
             }
          }
@@ -193,22 +196,24 @@ namespace TagLib.Mpeg
       {
          get
          {
+            if (duration > TimeSpan.Zero)
+               return duration;
+            
             if (xing_header.TotalFrames > 0)
             {
                // Read the length and the bitrate from the Xing header.
                double time_per_frame = (double) block_size [(int) Version, AudioLayer] / (double) AudioSampleRate;
-               return TimeSpan.FromSeconds (time_per_frame * XingHeader.TotalFrames);
+               duration = TimeSpan.FromSeconds (time_per_frame * XingHeader.TotalFrames);
             }
-            
-            if (AudioFrameLength > 0 && AudioBitrate > 0)
+            else if (AudioFrameLength > 0 && AudioBitrate > 0)
             {
                // Since there was no valid Xing header found, we hope that we're
                // in a constant bitrate file.
                int frames = (int) ((stream_length - position) / AudioFrameLength + 1);
-               return TimeSpan.FromSeconds ((double) (AudioFrameLength * frames) / (double) (AudioBitrate * 125) + 0.5);
+               duration = TimeSpan.FromSeconds ((double) (AudioFrameLength * frames) / (double) (AudioBitrate * 125) + 0.5);
             }
             
-            return TimeSpan.Zero;
+            return duration;
          }
       }
       
@@ -226,6 +231,9 @@ namespace TagLib.Mpeg
             }
             builder.Append (" Audio, Layer ");
             builder.Append (AudioLayer);
+            
+            if (xing_header.Present)
+               builder.Append (" VBR");
             
             return builder.ToString ();
          }
