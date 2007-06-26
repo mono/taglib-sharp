@@ -3,14 +3,15 @@ AC_CANONICAL_SYSTEM
 
 ASSEMBLY_NAME="taglib-sharp"
 
-if test -d .svn; then
-	svn info ChangeLog |grep Revision: |cut --bytes=11- > svn-revision
+if test -d $srcdir/.svn && test -e $srcdir/.svn/entries; then
+	svn info $srcdir/ChangeLog |grep Revision: |cut --bytes=11- > $srcdir/svn-revision
 fi
-SVN_REVISION=$(cat svn-revision)
+SVN_REVISION=$(cat $srcdir/svn-revision)
 
-VERSION="2.0.1"
-ASSEMBLY_VERSION="$VERSION.$SVN_REVISION"
+VERSION="2.0.1.$SVN_REVISION"
+ASSEMBLY_VERSION="$VERSION"
 
+echo "$ASSEMBLY_VERSION"
 
 POLICY_2_0_VERSIONS="2.0.0.0-$ASSEMBLY_VERSION"
 AC_SUBST(POLICY_2_0_VERSIONS)
@@ -110,3 +111,4 @@ examples/Makefile
 docs/Makefile
 ])
 
+echo "TagLib# ($ASSEMBLY_NAME-$ASSEMBLY_VERSION) is ready to be compiled."

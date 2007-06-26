@@ -1,3 +1,26 @@
+2007-06-26  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/CorruptFileException.cs:
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:
+	* src/TagLib/Id3v2/Frames/PrivateFrame.cs:
+	* src/TagLib/Id3v2/Frames/MusicCdIdentifierFrame.cs:
+	* src/TagLib/Id3v2/Frames/PlayCountFrame.cs:
+	* src/TagLib/UnsupportedFormatException.cs: Added XML documentation.
+	
+	* src/TagLib/Tag.cs: Started XML documentation. Artists was pointing 
+	nowhere. Pointed at Performers.
+
+	* src/TagLib/ByteVector.cs: ByteVector.Find was not returning -1 if 
+	searching at (data.Count == pattern.Count + offset). Caused extra '\0' 
+	to appear in comment frames. (Thanks to gozza11 for the bug report.)
+	
+	* src/taglib-sharp.mdp:
+	
+	* configure.ac: Work with "make distcheck"
+	
+	* Makefile.am: Include "svn-version" in dist.
+
 2007-06-25  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Id3v2/Frames/PrivateFrame.cs: Set to this.data instead of

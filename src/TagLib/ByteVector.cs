@@ -188,7 +188,7 @@ namespace TagLib
             if (pattern == null)
                throw new ArgumentNullException ("pattern");
          
-            if (pattern.Count > Count || offset >= Count - 1)
+            if (pattern.Count > Count - offset)
                 return -1;
 
             // Let's go ahead and special case a pattern of size one since that's common
@@ -244,7 +244,7 @@ namespace TagLib
             if (pattern == null)
                 throw new ArgumentNullException ("pattern");
             
-            if (pattern.Count == 0 || pattern.Count > _data.Count || _data.Count - pattern.Count - offset < 0)
+            if (pattern.Count == 0 || pattern.Count > Count - offset)
                 return -1;
 
             // Let's go ahead and special case a pattern of size one since that's common
@@ -497,48 +497,46 @@ namespace TagLib
         {
             return ToStrings (type, offset, int.MaxValue);
         }
-
-        public string[] ToStrings (StringType type, int offset, int count)
-        {
-            int chunk = 0;
-            int pos = offset;
-            
-            StringCollection l = new StringCollection ();
-            ByteVector separator = TextDelimiter (type);
-            int align = separator.Count;
-            while (chunk < count && pos < Count)
-            {
-               int start = pos;
-               
-               if (chunk + 1 == count)
-                  pos = offset + count;
-               else
-               {
-                  pos = Find (separator, start, align);
-                  
-                  if (pos < 0)
-                     pos = Count;
-               }
-               
-               int length = pos - start;
-               
-               if (length == 0)
-                  l.Add (string.Empty);
-               else
-               {
-                  string s = Mid (start, length).ToString (type);
-                  if (s.Length != 0 && (s[0] == 0xfffe || s[0] == 0xfeff))
-                  { // UTF16 BOM
-                      s = s.Substring (1);
-                  }
-               
-                  l.Add (s);
-               }
-               
-               pos += align;
-            }
-            return l.ToArray ();
-        }
+		
+		public string[] ToStrings (StringType type, int offset, int count)
+		{
+			int chunk = 0;
+			int position = offset;
+			
+			StringCollection list = new StringCollection ();
+			ByteVector separator = TextDelimiter (type);
+			int align = separator.Count;
+			
+			while (chunk < count && position < Count) {
+				int start = position;
+				
+				if (chunk + 1 == count) {
+					position = offset + count;
+				} else {
+					position = Find (separator, start, align);
+					
+					if (position < 0)
+						position = Count;
+				}
+				
+				int length = position - start;
+				
+				if (length == 0) {
+					list.Add (string.Empty);
+				} else {
+					string s = Mid (start, length).ToString (type);
+					if (s.Length != 0 && (s[0] == 0xfffe || s[0] == 0xfeff)) { // UTF16 BOM
+						s = s.Substring (1);
+					}
+					
+					list.Add (s);
+				}
+				
+				position += align;
+			}
+			
+			return list.ToArray ();
+		}
         
         #endregion
         
