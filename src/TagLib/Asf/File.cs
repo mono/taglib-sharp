@@ -132,27 +132,36 @@ namespace TagLib.Asf
       {
          for (int i = 0; i < (int) count; i ++)
          {
-            Seek (position);
-            System.Guid id = ReadGuid ();
-            
-            Object obj;
-            
-            if (id.Equals (Guid.AsfFilePropertiesObject))
-               obj = new FilePropertiesObject (this, position);
-            else if (id.Equals (Guid.AsfStreamPropertiesObject))
-               obj = new StreamPropertiesObject (this, position);
-            else if (id.Equals (Guid.AsfContentDescriptionObject))
-               obj = new ContentDescriptionObject (this, position);
-            else if (id.Equals (Guid.AsfExtendedContentDescriptionObject))
-               obj = new ExtendedContentDescriptionObject (this, position);
-            else if (id.Equals (Guid.AsfPaddingObject))
-               obj = new PaddingObject (this, position);
-            else
-               obj = new UnknownObject (this, position);
-            
+            Object obj = ReadObject (position);
             position += (long) obj.OriginalSize;
             yield return obj;
          }
+      }
+      
+      public Object ReadObject (long position)
+      {
+         Seek (position);
+         System.Guid id = ReadGuid ();
+         
+         if (id.Equals (Guid.AsfFilePropertiesObject))
+            return new FilePropertiesObject (this, position);
+         
+         if (id.Equals (Guid.AsfStreamPropertiesObject))
+            return new StreamPropertiesObject (this, position);
+         
+         if (id.Equals (Guid.AsfContentDescriptionObject))
+            return new ContentDescriptionObject (this, position);
+         
+         else if (id.Equals (Guid.AsfExtendedContentDescriptionObject))
+            return new ExtendedContentDescriptionObject (this, position);
+         
+         else if (id.Equals (Guid.AsfPaddingObject))
+            return new PaddingObject (this, position);
+         
+         else if (id.Equals (Guid.AsfHeaderExtensionObject))
+            return new HeaderExtensionObject (this, position);
+         
+         return new UnknownObject (this, position);
       }
       
       

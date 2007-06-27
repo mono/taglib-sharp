@@ -139,6 +139,7 @@
     <File name="./TagLib/Id3v2/Frames/MusicCdIdentifierFrame.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/ReadOnlyByteVector.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Id3v2/FrameTypes.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Asf/HeaderExtensionObject.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

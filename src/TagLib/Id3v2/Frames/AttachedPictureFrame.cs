@@ -268,7 +268,13 @@ namespace TagLib.Id3v2 {
 		///    stored in the current instance.
 		/// </value>
 		public string MimeType {
-			get {ParseRawData (); return mime_type;}
+			get {
+				ParseRawData ();
+				if (mime_type != null)
+					return mime_type;
+				
+				return string.Empty;
+			}
 			set {mime_type = value;}
 		}
 		
@@ -302,7 +308,13 @@ namespace TagLib.Id3v2 {
 		///    description and type per tag.
 		/// </remarks>
 		public string Description {
-			get {ParseRawData (); return description;}
+			get {
+				ParseRawData ();
+				if (description != null)
+					return description;
+				
+				return string.Empty;
+			}
 			set {description = value;}
 		}
 		
@@ -315,7 +327,10 @@ namespace TagLib.Id3v2 {
 		///    stored in the current instance.
 		/// </value>
 		public ByteVector Data {
-			get {ParseRawData (); return data;}
+			get {
+				ParseRawData ();
+				return data != null ? data : new ByteVector ();
+			}
 			set {data = value;}
 		}
 		
@@ -325,12 +340,19 @@ namespace TagLib.Id3v2 {
 		
 		#region Public Methods
 		
+		/// <summary>
+		///    Gets a string representation of the current instance.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="string" /> representing the current
+		///    instance.
+		/// </returns>
 		public override string ToString ()
 		{
 			System.Text.StringBuilder builder
 				= new System.Text.StringBuilder ();
 			
-			if (Description != null) {
+			if (string.IsNullOrEmpty (Description)) {
 				builder.Append (Description);
 				builder.Append (" ");
 			}
@@ -592,7 +614,7 @@ namespace TagLib.Id3v2 {
 			
 			description = raw_data.Mid (pos, offset - pos).ToString (
 				text_encoding);
-			pos = offset + 1;
+			pos = offset + delim.Count;
 			raw_data.RemoveRange (0, pos);
 			this.data = raw_data;
 			

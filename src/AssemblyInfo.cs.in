@@ -19,8 +19,10 @@
  *   USA                                                                   *
  ***************************************************************************/
 
+using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 [assembly:AssemblyVersion("@ASSEMBLY_VERSION@")]
 [assembly:AssemblyTitle ("TagLib#")]
@@ -29,4 +31,4 @@ using System.Runtime.CompilerServices;
 [assembly:AssemblyCompany ("")]
 [assembly:AssemblyDelaySign(false)]
 [assembly:AssemblyKeyFile("taglib-sharp.snk")]
-[assembly:System.CLSCompliant(false)]
+[assembly:CLSCompliant(false)]

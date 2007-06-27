@@ -125,6 +125,7 @@
     <Compile Include="src\TagLib\Asf\ContentDescriptionObject.cs" />
     <Compile Include="src\TagLib\Asf\File.cs" />
     <Compile Include="src\TagLib\Asf\HeaderObject.cs" />
+    <Compile Include="src\TagLib\Asf\HeaderExtensionObject.cs" />
     <Compile Include="src\TagLib\Asf\UnknownObject.cs" />
     <Compile Include="src\TagLib\Asf\ContentDescriptor.cs" />
     <Compile Include="src\TagLib\Asf\FilePropertiesObject.cs" />

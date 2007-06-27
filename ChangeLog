@@ -1,3 +1,33 @@
+2007-06-27  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs: Fixed reading problem
+	with UTF-16 encoded descriptions. (Thanks to renzska for the bug
+	report.)
+	
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs: Use Mono
+	coding guidelines.
+	
+	* src/TagLib/Asf/File.cs: Added ReadObject and detection of
+	HeaderExtensionObject.
+	
+	* src/TagLib/TagLib.sources: Added HeaderExtensionObject.cs
+	
+	* src/TagLib/Asf/HeaderExtensionObject.cs: ADDED. This will be used to
+	store large objects in the future (pictures bigger than 64k).
+	
+	* src/TagLib/Asf/Guid.cs: Added GUID's for HeaderExtensionObject.
+	
+	* src/AssemblyInfo.cs.in: Cleaned up.
+	* src/AssemblyInfo-windows.cs: Cleaned up.
+	
+	* src/taglib-sharp.mdp: Added HeaderExtensionObject.cs
+	
+	* configure.ac: Removed extra line.
+	
+	* taglib-sharp.csproj: Added HeaderExtensionObject.cs
+
 2007-06-26  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Id3v2/Frames/CommentsFrame.cs: Readd ToString.

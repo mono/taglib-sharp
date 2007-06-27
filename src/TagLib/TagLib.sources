@@ -10,6 +10,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Asf/ExtendedContentDescriptionObject.cs \
 	$(srcdir)/TagLib/Asf/ContentDescriptionObject.cs \
 	$(srcdir)/TagLib/Asf/HeaderObject.cs \
+	$(srcdir)/TagLib/Asf/HeaderExtensionObject.cs \
 	$(srcdir)/TagLib/Asf/File.cs \
 	$(srcdir)/TagLib/Asf/FilePropertiesObject.cs \
 	$(srcdir)/TagLib/Asf/PaddingObject.cs \

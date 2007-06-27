@@ -270,7 +270,12 @@ namespace TagLib.Id3v2 {
 		///    stored in the current instance.
 		/// </value>
 		public string Text {
-			get {return text;}
+			get {
+				if (text != null)
+					return text;
+				
+				return string.Empty;
+			}
 			set {text = value;}
 		}
 		
@@ -280,6 +285,12 @@ namespace TagLib.Id3v2 {
 		
 		#region Public Methods
 		
+		/// <summary>
+		///    Gets a string representation of the current instance.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="string" /> containing the comment text.
+		/// </returns>
 		public override string ToString ()
 		{
 			return Text;
