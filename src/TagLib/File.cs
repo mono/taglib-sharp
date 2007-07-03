@@ -155,24 +155,48 @@ namespace TagLib
          return GetTag (type, false);
       }
       
-      public ByteVector ReadBlock (int length)
-      {
-         if (length < 0)
-            throw new ArgumentException ("Length must be non-negative", "length");
-         
-         if (length == 0)
-            return new ByteVector ();
-         
-         Mode = AccessMode.Read;
-         
-         if (Tell + length > Length)
-            length = (int) (Length - Tell);
-         
-         byte [] buffer = new byte [length];
-         int count = file_stream.Read (buffer, 0, length);
-         return new ByteVector (buffer, count);
-      }
-                           
+		/// <summary>
+		///    Reads a specified number of bytes at the current seek
+		///    position from the current instance.
+		/// </summary>
+		/// <param name="length">
+		///    A <see cref="int" /> specifying the number of bytes to
+		///    read.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector" /> containing the data.
+		/// </returns>
+		/// <remarks>
+		///    <para>This method reads the block of data at the current
+		///    seek position. To change the seek position, use <see
+		///    cref="Seek(long,System.IO.SeekOrigin)" />.</para>
+		/// </remarks>
+		/// <exception cref="ArgumentException">
+		///    <paramref name="length" /> is less than zero.
+		/// </exception>
+		public ByteVector ReadBlock (int length)
+		{
+			if (length < 0)
+				throw new ArgumentException (
+					"Length must be non-negative",
+					"length");
+			
+			if (length == 0)
+				return new ByteVector ();
+			
+			Mode = AccessMode.Read;
+			
+			if (Tell + length > Length)
+				length = (int) (Length - Tell);
+			
+			if (length <= 0)
+				return new ByteVector ();
+			
+			byte [] buffer = new byte [length];
+			int count = file_stream.Read (buffer, 0, length);
+			return new ByteVector (buffer, count);
+		}
+		
       public void WriteBlock (ByteVector data)
       {
          if (data == null)

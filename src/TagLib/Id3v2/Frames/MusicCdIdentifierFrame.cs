@@ -88,7 +88,7 @@ namespace TagLib.Id3v2 {
 	/// 	}
 	/// }
 	///    </code>
-	///    <code lang="C#">
+	///    <code lang="VB">
 	/// Imports TagLib
 	/// Imports TagLib.Id3v2
 	/// 
@@ -105,7 +105,7 @@ namespace TagLib.Id3v2 {
 	/// 	End Sub
 	/// End Class
 	///    </code>
-	///    <code lang="C#">
+	///    <code lang="Boo">
 	/// import TagLib
 	/// import TagLib.Id3v2
 	/// 

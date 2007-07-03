@@ -16,15 +16,14 @@ taglib_policy_configs = $(POLICIES:.dll=.config)
 taglib_policy_configs_in = $(POLICIES:.dll=.config.in)
 
 $(ASSEMBLY): $(TAGLIB_CSFILES) $(taglib_generated_sources) taglib-sharp.snk
-	$(CSC) -target:library $(LIBFLAGS) -out:$@ $(TAGLIB_CSFILES) $(taglib_generated_sources)
+	$(CSC) /target:library $(LIBFLAGS) /define:SIGN /out:$@ $(TAGLIB_CSFILES) $(taglib_generated_sources)
 
 policy.%.$(ASSEMBLY_NAME).dll: policy.%.$(ASSEMBLY_NAME).config
 	$(AL) al /link:$< /out:$@ /keyfile:taglib-sharp.snk
 
 all: $(ASSEMBLY) $(POLICIES)
 
-EXTRA_DIST = $(TAGLIB_CSFILES) $(taglib_sources_in) AssemblyInfo-windows.cs \
-	$(taglib_policy_configs_in)
+EXTRA_DIST = $(TAGLIB_CSFILES) $(taglib_sources_in) $(taglib_policy_configs_in)
 DISTCLEANFILES = *.pidb
 CLEANFILES = $(ASSEMBLY) $(ASSEMBLY).mdb $(POLICIES) taglib-sharp.snk 
 MAINTAINERCLEANFILES = Makefile.in
@@ -48,3 +47,11 @@ uninstall-local:
 	    $(GACUTIL) /u $$POLICY /f $(GACUTIL_POLICY_FLAGS) || exit 1;	\
 	  done									\
 	fi
+
+distwin:
+	mkdir -p $(srcdir)/../$(WINDIR)/Libraries
+	cp $(srcdir)/*.dll $(srcdir)/*.config $(srcdir)/../$(WINDIR)/Libraries
+	for FILE in $(TAGLIB_CSFILES) $(taglib_generated_sources);		\
+	  do mkdir -p $(srcdir)/../$(WINDIR)/src/`dirname $$FILE`;		\
+	  cp $$FILE $(srcdir)/../$(WINDIR)/src/`dirname $$FILE`;		\
+	done

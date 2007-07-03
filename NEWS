@@ -1,3 +1,41 @@
+Version 2.0.2.0
+July 3, 2007
+
+This is the second bug fix release for TagLib#. Fixes include:
+	* Read AttachedPictureFrame correctly when UTF-16 encoded.
+	* Stop infinite recursion with rare Xing header.
+	* Add "VBR" to the MPEG Audio description if a Xing header is present.
+	* Update unit tests for changes in 2.0.1.
+	* Fix Artists (added in 2.0.1) to point to Performers. Was pointing
+	nowhere.
+	* Make ByteVector.Find return correctly if (data.Count == pattern.Count
+	+ offset).
+	* Set to this.data instead of data in PrivateFrame constructor.
+
+Outstanding bugs:
+	* MPEG-4 tags do not show up in Nokia N95 Phone.
+	* Large pictures should be stored in the ASF HeaderExtensionObject.
+
+Outstanding feature requests:
+	* Add slow read support to get correct information from VBR MP3's
+	lacking Xing headers.
+	* Add TagLib.Tag.Key
+	* Add TagLib.Id3v2.PopularimeterFrame
+	* Support ID3v2 chapters.
+	* Return invariant data sections for a file.
+
+Special thanks to those who contributed in some way to the project over the past
+year:
+	Aaron Bockover, Alan, Alexander Hixon, Andrés Gómez Aragoneses,
+	Clint Banzhaf, D Bera, David Wu, Da_FileServer, Dennis Cranston,
+	Fabrice Deshayes aka Xtream, Gabriel Rosenhouse, gozza11, Gustavo Rubio,
+	Herman Mahone, HugoPalma, Ilya Konstantinov, Ion Todirel, jc BAUDHUIN,
+	jmurphy, JustinC, lindea, Michael Monreal, maciej, mikec, mtampe,
+	Patrick Laplante, pipes, renzska, sambeckett, Sebastian Dröge,
+	Timm Preetz, wilson, and anyone else who I may have forgotten.
+
+--------------------------------------------------------------------------------
+
 Version 2.0.1
 June 24, 2007
 

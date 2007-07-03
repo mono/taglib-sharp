@@ -1,3 +1,29 @@
+2007-07-03  Brian Nickel <brian.nickel@gmail.com>
+
+	+-------------+
+	| VERSON BUMP |
+	|    2.0.2    |
+	+-------------+
+	
+	* src/TagLib/Id3v2/Frames/MusicCdIdentifierFrame.cs: Fix docs.
+	* src/TagLib/File.cs: Some doc work.
+	* src/AssemblyInfo.cs.in: Conditionally sign the assembly.
+	* src/AssemblyInfo-windows.cs: DELETED. AssemblyInfo.cs.in is all that's
+	necessary.
+	* src/Makefile.am: Add distwin target
+	
+	* windows-files/TagLibSharpDocs.chm: Added.
+	
+	* configure.ac: Don't use svn revision because it is greater than
+	ushort.MaxValue.
+	
+	* Makefile.am: Add distwin target.
+	
+	* NEWS: Updated for new release.
+	
+	* src/taglib-sharp.mdp:
+	* taglib-sharp.csproj: Use AssemblyInfo.cs.
+
 2007-06-27  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs: Fixed reading problem

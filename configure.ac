@@ -3,12 +3,7 @@ AC_CANONICAL_SYSTEM
 
 ASSEMBLY_NAME="taglib-sharp"
 
-if test -d $srcdir/.svn && test -e $srcdir/.svn/entries; then
-	svn info $srcdir/ChangeLog |grep Revision: |cut --bytes=11- > $srcdir/svn-revision
-fi
-SVN_REVISION=$(cat $srcdir/svn-revision)
-
-VERSION="2.0.1.$SVN_REVISION"
+VERSION="2.0.2.0"
 ASSEMBLY_VERSION="$VERSION"
 
 POLICY_2_0_VERSIONS="2.0.0.0-$ASSEMBLY_VERSION"
@@ -26,6 +21,9 @@ AC_PROG_INSTALL
 
 MONO_REQUIRED=1.1
 MONODOC_REQUIRED=1.1.9
+
+WINDIR="$ASSEMBLY_NAME-$VERSION-windows"
+AC_SUBST(WINDIR)
 
 DISTCHECK_CONFIGURE_FLAGS="--disable-docs"
 AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
