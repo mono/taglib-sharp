@@ -1,3 +1,28 @@
+2007-07-22  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Id3v2/Tag.cs: 
+	* src/TagLib/Ape/Tag.cs: 
+	* src/TagLib/Ogg/XiphComment.cs: Parse beats per minute as floating
+	point numbers, round them, and then convert them to uints. Values were
+	showing up as 0 if a decimal point was present. (Thanks to nokturnal for
+	the bug report.)
+
+	* src/TagLib/ByteVector.cs: Switch back from "_data" to "data"
+
+	* src/TagLib/ICodec.cs: Minor reorganization.
+
+	* src/TagLib/Genres.cs: 
+	* src/TagLib/Properties.cs: 
+	* src/TagLib/SupportedMimeType.cs: 
+	* src/TagLib/StringList.cs: 
+	* src/TagLib/FileTypes.cs: 
+	* src/TagLib/Tag.cs: 
+	* src/TagLib/Picture.cs: 
+	* src/TagLib/File.cs: 
+	* src/TagLib/ReadOnlyByteVector.cs: Documentation.
+
+	* configure.ac: Now 2.0.2.1
+
 2007-07-03  Brian Nickel <brian.nickel@gmail.com>
 
 	+-------------+

@@ -1,29 +1,33 @@
-/***************************************************************************
-    copyright            : (C) 2005 by Brian Nickel
-    email                : brian.nickel@gmail.com
-    based on             : tag.cpp from TagLib
- ***************************************************************************/
-
-/***************************************************************************
- *   This library is free software; you can redistribute it and/or modify  *
- *   it  under the terms of the GNU Lesser General Public License version  *
- *   2.1 as published by the Free Software Foundation.                     *
- *                                                                         *
- *   This library is distributed in the hope that it will be useful, but   *
- *   WITHOUT ANY WARRANTY; without even the implied warranty of            *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU     *
- *   Lesser General Public License for more details.                       *
- *                                                                         *
- *   You should have received a copy of the GNU Lesser General Public      *
- *   License along with this library; if not, write to the Free Software   *
- *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  *
- *   USA                                                                   *
- ***************************************************************************/
+//
+// Tag.cs: This abstract class provides generic access to standard tag
+// features. All tag types will extend this class.
+//
+// Author:
+//   Brian Nickel (brian.nickel@gmail.com)
+//
+// Original Source:
+//   tag.cpp from TagLib
+//
+// Copyright (C) 2005-2007 Brian Nickel
+// 
+// This library is free software; you can redistribute it and/or modify
+// it  under the terms of the GNU Lesser General Public License version
+// 2.1 as published by the Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
+// USA
+//
 
 using System;
 
 namespace TagLib {
-	
 	/// <summary>
 	///    Indicates the tag types used by a file.
 	/// </summary>
@@ -93,7 +97,7 @@ namespace TagLib {
 	
 	/// <summary>
 	///    This abstract class provides generic access to standard tag
-	///    features.
+	///    features. All tag types will extend this class.
 	/// </summary>
 	/// <remarks>
 	///    Because not every tag type supports the same features, it may be
@@ -124,8 +128,8 @@ namespace TagLib {
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string" /> containing the title for the
-		///    media described by the current instance or <see
+		///    A <see cref="string" /> object containing the title for
+		///    the media described by the current instance or <see
 		///    langword="null" /> if no value is present.
 		/// </value>
 		/// <remarks>
@@ -147,7 +151,7 @@ namespace TagLib {
 		/// <value>
 		///    A <see cref="string[]" /> containing the performers or
 		///    artists who performed in the media described by the
-		///    current instance or an empty array if not value is
+		///    current instance or an empty array if no value is
 		///    present.
 		/// </value>
 		/// <remarks>
@@ -177,7 +181,7 @@ namespace TagLib {
 		///    A <see cref="string[]" /> containing the band or artist
 		///    who is credited in the creation of the entire album or
 		///    collection containing the media described by the current
-		///    instance or an empty array if not value is present.
+		///    instance or an empty array if no value is present.
 		/// </value>
 		/// <remarks>
 		///    <para>This field is typically optional but aids in the
@@ -205,7 +209,7 @@ namespace TagLib {
 		/// <value>
 		///    A <see cref="string[]" /> containing the composers of the
 		///    media represented by the current instance or an empty
-		///    array if not value is present.
+		///    array if no value is present.
 		/// </value>
 		/// <remarks>
 		///    <para>This field represents the composers, song writers,
@@ -222,9 +226,9 @@ namespace TagLib {
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string" /> containing the album of the media
-		///    represented by the current instance or null if no value
-		///    is present.
+		///    A <see cref="string" /> object containing the album of
+		///    the media represented by the current instance or <see
+		///    langword="null" /> if no value is present.
 		/// </value>
 		/// <remarks>
 		///    <para>This field represents the name of the album the
@@ -242,11 +246,13 @@ namespace TagLib {
 		}
 		
 		/// <summary>
-		///    Gets and sets a user comment on the media.
+		///    Gets and sets a user comment on the media represented by
+		///    the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string" /> containing user comments on the
-		///    media.
+		///    A <see cref="string" /> object containing user comments
+		///    on the media represented by the current instance or <see
+		///    langword="null" /> if no value is present.
 		/// </value>
 		/// <remarks>
 		///    <para>This field should be used to store user notes and
@@ -264,124 +270,474 @@ namespace TagLib {
 			set {}
 		}
 		
+		/// <summary>
+		///    Gets and sets the genres of the media represented by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the genres of the
+		///    media represented by the current instance or an empty
+		///    array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field represents genres that apply to the song
+		///    or album. This is often used for filtering media.</para>
+		///    <para>A list of common audio genres as popularized by
+		///    ID3v1, are stored in <see cref="Genres.Audio" />.
+		///    Additionally, <see cref="Genres.Video" /> contains video
+		///    genres as used by DivX.</para>
+		/// </remarks>
 		public virtual string [] Genres {
 			get {return new string [] {};}
 			set {}
 		}
 		
+		/// <summary>
+		///    Gets and sets the year that the media represented by the
+		///    current instance was recorded.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> containing the year that the media
+		///    represented by the current instance was created or zero
+		///    if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>Some tagging formats store higher precision dates
+		///    which will be truncated when this property is set. Format
+		///    specific implementations are necessary access the higher
+		///    precision values.</para>
+		/// </remarks>
 		public virtual uint Year {
 			get {return 0;}
 			set {}
 		}
 		
+		/// <summary>
+		///    Gets and sets the position of the media represented by
+		///    the current instance in its containing album.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> containing the position of the
+		///    media represented by the current instance in its
+		///    containing album or zero if not specified.
+		/// </value>
+		/// <remarks>
+		///    <para>This value should be the same as is listed on the
+		///    album cover and no more than <see cref="TrackCount"
+		///    /> if <see cref="TrackCount" /> is non-zero.</para>
+		/// </remarks>
 		public virtual uint Track {
 			get {return 0;}
 			set {}
 		}
 		
+		/// <summary>
+		///    Gets and sets the number of tracks in the album
+		///    containing the media represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> containing the number of tracks in
+		///    the album containing the media represented by the current
+		///    instance or zero if not specified.
+		/// </value>
+		/// <remarks>
+		///    <para>If non-zero, this value should be at least equal to
+		///    <see cref="Track" />. If <see cref="Track" /> is zero,
+		///    this value should also be zero.</para>
+		/// </remarks>
 		public virtual uint TrackCount {
 			get {return 0;}
 			set {}
 		}
 		
+		/// <summary>
+		///    Gets and sets the number of the disc containing the media
+		///    represented by the current instance in the boxed set.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> containing the number of the disc
+		///    containing the media represented by the current instance
+		///    in the boxed set.
+		/// </value>
+		/// <remarks>
+		///    <para>This value should be the same as is number that
+		///    appears on the disc. For example, if the disc is the
+		///    first of three, the value should be <c>1</c>. It should
+		///    be no more than <see cref="DiscCount" /> if <see
+		///    cref="DiscCount" /> is non-zero.</para>
+		/// </remarks>
 		public virtual uint Disc {
 			get {return 0;}
 			set {}
 		}
 		
+		/// <summary>
+		///    Gets and sets the number of discs in the boxed set
+		///    containing the media represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> containing the number of discs in
+		///    the boxed set containing the media represented by the
+		///    current instance or zero if not specified.
+		/// </value>
+		/// <remarks>
+		///    <para>If non-zero, this value should be at least equal to
+		///    <see cref="Disc" />. If <see cref="Disc" /> is zero,
+		///    this value should also be zero.</para>
+		/// </remarks>
 		public virtual uint DiscCount {
 			get {return 0;}
 			set {}
 		}
 		
+		/// <summary>
+		///    Gets and sets the lyrics or script of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the lyrics or
+		///    script of the media represented by the current instance
+		///    or <see langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field contains a plain text representation of
+		///    the lyrics or scripts with line breaks and whitespace
+		///    being the only formatting marks.</para>
+		///    <para>Some formats support more advances lyrics, like
+		///    synchronized lyrics, but those must be accessed using
+		///    format specific implementations.</para>
+		/// </remarks>
 		public virtual string Lyrics {
 			get {return null;}
 			set {}
 		}
 		
+		/// <summary>
+		///    Gets and sets the grouping on the album which the media
+		///    in the current instance belongs to.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the grouping on
+		///    the album which the media in the current instance belongs
+		///    to or <see langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field contains a non-physical grouping to
+		///    which the track belongs. In classical music, this could
+		///    be a movement. It could also be parts of a series like
+		///    "Introduction", "Closing Remarks", etc.</para>
+		/// </remarks>
 		public virtual string Grouping {
 			get {return null;}
 			set {}
 		}
 		
+		/// <summary>
+		///    Gets and sets the number of beats per minute in the audio
+		///    of the media represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> containing the number of beats per
+		///    minute in the audio of the media represented by the
+		///    current instance, or zero if not specified.
+		/// </value>
+		/// <remarks>
+		///    <para>This field is useful for DJ's who are trying to
+		///    match songs. It should be calculated from the audio or
+		///    pulled from a database.</para>
+		/// </remarks>
 		public virtual uint BeatsPerMinute {
 			get {return 0;}
 			set {}
 		}
 		
+		/// <summary>
+		///    Gets and sets the conductor or director of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the conductor
+		///    or director of the media represented by the current
+		///    instance or <see langref="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field is most useful for organizing classical
+		///    music and movies.</para>
+		/// </remarks>
 		public virtual string Conductor {
 			get {return null;}
 			set {}
 		}
 		
+		/// <summary>
+		///    Gets and sets the copyright information for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the copyright
+		///    information for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field should be used for storing copyright
+		///    information. It may be useful to show this information
+		///    somewhere in the program while the media is
+		///    playing.</para>
+		///    <para>Players should not support editing this field, but
+		///    media creation tools should definitely allow
+		///    modification.</para>
+		/// </remarks>
 		public virtual string Copyright {
 			get {return null;}
 			set {}
 		}
 		
+		/// <summary>
+		///    Gets and sets a collection of pictures associated with
+		///    the media represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="IPicture[]" /> containing a collection of
+		///    pictures associated with the media represented by the
+		///    current instance or an empty array if none are present.
+		/// </value>
+		/// <remarks>
+		///    <para>Typically, this value is used to store an album
+		///    cover or icon to use for the file, but it is capable of
+		///    holding any type of image, including pictures of the
+		///    band, the recording studio, the concert, etc.</para>
+		/// </remarks>
 		public virtual IPicture [] Pictures {
 			get {return new Picture [] {};}
 			set {}
 		}
 		
+		/// <summary>
+		///    Gets and sets the same value as <see cref="Performers"
+		///    />.
+		/// </summary>
+		/// <value>
+		///    The same value as <see cref="Performers" />.
+		/// </value>
+		/// <remarks>
+		///    This property exists to aleviate confusion. Use <see
+		///    cref="Performers" /> for track artists and <see
+		///    cref="AlbumArtists" /> for album artists.
+		/// </remarks>
 		[Obsolete("For album artists use AlbumArtists. For track artists, use Performers")]
 		public virtual string [] Artists {
 			get {return Performers;}
 			set {Performers = value;}
 		}
 		
+		/// <summary>
+		///    Gets the same value as <see cref="FirstPerformer" />.
+		/// </summary>
+		/// <value>
+		///    The same value as <see cref="FirstPerformer" />.
+		/// </value>
+		/// <remarks>
+		///    This property exists to aleviate confusion. Use <see
+		///    cref="FirstPerformer" /> for track artists and <see
+		///    cref="FirstAlbumArtist" /> for album artists.
+		/// </remarks>
 		[Obsolete("For album artists use FirstAlbumArtist. For track artists, use FirstPerformer")]
 		public string FirstArtist {
 			get {return FirstPerformer;}
 		}
 		
+		/// <summary>
+		///    Gets the first value contained in <see
+		///    cref="AlbumArtists" />.
+		/// </summary>
+		/// <value>
+		///    The first <see cref="string" /> object in <see
+		///    cref="AlbumArtists" />, or <see langword="null" /> is it
+		///    contains no values.
+		/// </value>
+		/// <remarks>
+		///    This property is provided for convenience. Use <see
+		///    cref="AlbumArtists" /> to set the value.
+		/// </remarks>
 		public string FirstAlbumArtist {
 			get {return FirstInGroup(AlbumArtists);}
 		}
 		
+		/// <summary>
+		///    Gets the first value contained in <see
+		///    cref="Performers" />.
+		/// </summary>
+		/// <value>
+		///    The first <see cref="string" /> object in <see
+		///    cref="Performers" />, or <see langword="null" /> is it
+		///    contains no values.
+		/// </value>
+		/// <remarks>
+		///    This property is provided for convenience. Use <see
+		///    cref="Performers" /> to set the value.
+		/// </remarks>
 		public string FirstPerformer {
 			get {return FirstInGroup(Performers);}
 		}
 		
+		/// <summary>
+		///    Gets the first value contained in <see
+		///    cref="Composers" />.
+		/// </summary>
+		/// <value>
+		///    The first <see cref="string" /> object in <see
+		///    cref="Composers" />, or <see langword="null" /> is it
+		///    contains no values.
+		/// </value>
+		/// <remarks>
+		///    This property is provided for convenience. Use <see
+		///    cref="Composers" /> to set the value.
+		/// </remarks>
 		public string FirstComposer {
 			get {return FirstInGroup(Composers);}
 		}
 		
+		/// <summary>
+		///    Gets the first value contained in <see cref="Genres" />.
+		/// </summary>
+		/// <value>
+		///    The first <see cref="string" /> object in <see
+		///    cref="Genres" />, or <see langword="null" /> is it
+		///    contains no values.
+		/// </value>
+		/// <remarks>
+		///    This property is provided for convenience. Use <see
+		///    cref="Genres" /> to set the value.
+		/// </remarks>
 		public string FirstGenre {
 			get {return FirstInGroup(Genres);}
 		}
 		
+		/// <summary>
+		///    Gets the same value as <see cref="JoinedPerformers" />.
+		/// </summary>
+		/// <value>
+		///    The same value as <see cref="JoinedPerformers" />.
+		/// </value>
+		/// <remarks>
+		///    This property exists to aleviate confusion. Use <see
+		///    cref="JoinedPerformers" /> for track artists and <see
+		///    cref="JoinedAlbumArtists" /> for album artists.
+		/// </remarks>
 		[Obsolete("For album artists use JoinedAlbumArtists. For track artists, use JoinedPerformers")]
 		public string JoinedArtists {
 			get {return JoinedPerformers;}
 		}
 		
+		/// <summary>
+		///    Gets a comma separated string containing the values in
+		///    <see cref="AlbumArtists" />.
+		/// </summary>
+		/// <value>
+		///    A comma separated <see cref="string" /> object containing
+		///    the values in <see cref="AlbumArtists" />.
+		/// </value>
+		/// <remarks>
+		///    This property is provided for convenience. Use <see
+		///    cref="AlbumArtists" /> to set the value.
+		/// </remarks>
 		public string JoinedAlbumArtists {
 			get {return JoinGroup(AlbumArtists);}
 		}
 		
+		/// <summary>
+		///    Gets a comma separated string containing the values in
+		///    <see cref="Performers" />.
+		/// </summary>
+		/// <value>
+		///    A comma separated <see cref="string" /> object containing
+		///    the values in <see cref="Performers" />.
+		/// </value>
+		/// <remarks>
+		///    This property is provided for convenience. Use <see
+		///    cref="Performers" /> to set the value.
+		/// </remarks>
 		public string JoinedPerformers {
 			get {return JoinGroup(Performers);}
 		}
 		
+		/// <summary>
+		///    Gets a comma separated string containing the values in
+		///    <see cref="Composers" />.
+		/// </summary>
+		/// <value>
+		///    A comma separated <see cref="string" /> object containing
+		///    the values in <see cref="Composers" />.
+		/// </value>
+		/// <remarks>
+		///    This property is provided for convenience. Use <see
+		///    cref="Composers" /> to set the value.
+		/// </remarks>
 		public string JoinedComposers {
 			get {return JoinGroup(Composers);}
 		}
 		
+		/// <summary>
+		///    Gets a comma separated string containing the values in
+		///    <see cref="Genres" />.
+		/// </summary>
+		/// <value>
+		///    A comma separated <see cref="string" /> object containing
+		///    the values in <see cref="Genres" />.
+		/// </value>
+		/// <remarks>
+		///    This property is provided for convenience. Use <see
+		///    cref="Genres" /> to set the value.
+		/// </remarks>
 		public string JoinedGenres {
 			get {return JoinGroup(Genres);}
 		}
 		
+		/// <summary>
+		///    Gets the first string in an array.
+		/// </summary>
+		/// <param name="group">
+		///    A <see cref="string[]" /> to get the first string from.
+		/// </param>
+		/// <returns>
+		///    The first <see cref="string" /> object contained in
+		///    <paramref name="group" />, or <see langword="null" /> if
+		///    the array is <see langword="null" /> or empty.
+		/// </returns>
 		private static string FirstInGroup(string [] group)
 		{
-			return group == null || group.Length == 0 ? null : group[0];
+			return group == null || group.Length == 0 ?
+				null : group[0];
 		}
 		
+		/// <summary>
+		///    Joins a array of strings into a single, comma separated,
+		///    string.
+		/// </summary>
+		/// <param name="group">
+		///    A <see cref="string[]" /> containing values to combine.
+		/// </param>
+		/// <returns>
+		///    A comma separated <see cref="string" /> object containing
+		///    the values from <paramref name="group" />.
+		/// </returns>
 		private static string JoinGroup(string [] group)
 		{
 			return new StringCollection(group).ToString(", ");
 		}
 
+		/// <summary>
+		///    Gets whether or not the current instance is empty.
+		/// </summary>
+		/// <value>
+		///    <see langword="true" /> if the current instance does not
+		///    any values. Otherwise <see langword="false" />.
+		/// </value>
+		/// <remarks>
+		///    In the default implementation, this checks the values
+		///    supported by <see cref="Tag" />, but it may be extended
+		///    by child classes to support other values.
+		/// </remarks>
 		public virtual bool IsEmpty {
 			get {
 				return IsNullOrLikeEmpty (Title) &&
@@ -403,9 +759,46 @@ namespace TagLib {
 			}
 		}
 		
+		/// <summary>
+		///    Clears the values stored in the current instance.
+		/// </summary>
+		/// <remarks>
+		///    The clearing procedure is format specific and should
+		///    clear all values.
+		/// </remarks>
 		public abstract void Clear ();
 		
-		public static void Duplicate (Tag source, Tag target, bool overwrite)
+		/// <summary>
+		///    Copies all standard values from one tag to another,
+		///    optionally overwriting existing values.
+		/// </summary>
+		/// <param name="source">
+		///    A <see cref="Tag" /> object containing the source tag to
+		///    copy the values from.
+		/// </param>
+		/// <param name="target">
+		///    A <see cref="Tag" /> object containing the target tag to
+		///    copy values to.
+		/// </param>
+		/// <param name="overwrite">
+		///    A <see cref="bool" /> specifying whether or not to copy
+		///    values over existing one.
+		/// </param>
+		/// <remarks>
+		///    <para>This method only copies the most basic values,
+		///    those contained in this class, between tags. To copy
+		///    format specific tags, or additional details, additional
+		///    implementations need to be applied. For example, copying
+		///    from one <see cref="TagLib.Id3v2.Tag" /> to another:
+		///    <c>foreach (TagLib.Id3v2.Frame frame in old_tag)
+		///    new_tag.AddFrame (frame);</c></para>
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="source" /> or <paramref name="target" />
+		///    is <see langword="null" />.
+		/// </exception>
+		public static void Duplicate (Tag source, Tag target,
+		                              bool overwrite)
 		{
 			if (source == null)
 				throw new ArgumentNullException ("source");
@@ -462,11 +855,39 @@ namespace TagLib {
 				target.Conductor = source.Copyright;
 		}
 		
+		/// <summary>
+		///    Checks if a <see cref="string" /> is <see langword="null"
+		///    /> or contains only whitespace characters.
+		/// </summary>
+		/// <param name="value">
+		///    A <see cref="string" /> object to check.
+		/// </param>
+		/// <returns>
+		///    <see langword="true" /> if the string is <see
+		///    langword="null" /> or contains only whitespace
+		///    characters. Otherwise <see langword="false" />.
+		/// </returns>
 		private static bool IsNullOrLikeEmpty (string value)
 		{
 			return value == null || value.Trim ().Length == 0;
 		}
 		
+		/// <summary>
+		///    Checks if all the strings in the array return <see
+		///    langword="true" /> with <see
+		///    cref="IsNullOrLikeEmpty(string)" /> or if the array is
+		///    <see langword="null" /> or is empty.
+		/// </summary>
+		/// <param name="value">
+		///    A <see cref="string[]" /> to check the contents of.
+		/// </param>
+		/// <returns>
+		///    <see langword="true" /> if the array is <see
+		///    langword="null" /> or empty, or all elements return <see
+		///    langword="true" /> for <see
+		///    cref="IsNullOrLikeEmpty(string)" />. Otherwise <see
+		///    langword="false" />.
+		/// </returns>
 		private static bool IsNullOrLikeEmpty (string [] value)
 		{
 			if (value == null)

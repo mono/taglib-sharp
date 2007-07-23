@@ -439,10 +439,10 @@ namespace TagLib.Id3v2
       {
          get
          {
-            uint value;
+            double value;
             foreach (TextInformationFrame f in GetFrames(FrameType.TBPM))
-                if(uint.TryParse(f.ToString(), out value))
-                    return value;
+                if(double.TryParse(f.ToString(), out value) && value > 0)
+                    return (uint) Math.Round(value);
            
             return 0;
          }

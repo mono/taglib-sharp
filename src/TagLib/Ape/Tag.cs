@@ -302,10 +302,10 @@ namespace TagLib.Ape
          get
          {
             Item item = GetItem ("TEMPO");
-            uint value;
+            double value;
             
-            if ((item = GetItem ("TEMPO")) != null && uint.TryParse (item.ToString (), out value))
-               return value;
+            if ((item = GetItem ("TEMPO")) != null && double.TryParse (item.ToString (), out value))
+               return (uint) Math.Round (value);
             
             return 0;
          }

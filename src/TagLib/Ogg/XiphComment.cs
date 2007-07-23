@@ -363,8 +363,9 @@ namespace TagLib.Ogg
          get
          {
             string text = GetFirstField ("TEMPO");
-            uint value;
-            return (text != null && uint.TryParse (text, out value)) ? value : 0;
+            double value;
+            return (text != null && double.TryParse (text, out value)
+		&& value > 0) ? (uint) Math.Round (value) : 0;
          }
          set {SetField ("TEMPO", value);}
       }
