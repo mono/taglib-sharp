@@ -1,3 +1,28 @@
+2007-07-29  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/CombinedTag.cs: Fully documented and replaced the protected
+	constructor with a public one, as it wasn't protecting anything and
+	causing a compiler error in Orcas. (Thanks to jmurphy for the bug
+	report.)
+	
+	* src/TagLib/ByteVectorList.cs: Reformatted code. I had beautiful
+	documentation, but MonoDevelop crashed. :(
+	
+	* src/TagLib/ByteVector.cs: Started documenting and adding some
+	exceptions rather than letting them occur in the underlying methods.
+	
+	* src/TagLib/ListBase.cs: Reformatted code.
+	
+	* src/TagLib/File.cs: Added total documentation.
+	
+	* src/TagLib/Debugger.cs: Reformatted code.
+	
+	* src/Makefile.am:
+	* Makefile.am: Added MonoDevelop files to EXTRA_DIST. (Thanks to jopsen
+	for pointing this out.)
+	
+	* configure.ac: Now 2.0.2.2
+
 2007-07-22  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Id3v2/Tag.cs: 

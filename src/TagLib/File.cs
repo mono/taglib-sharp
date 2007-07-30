@@ -1,45 +1,99 @@
-/***************************************************************************
-    copyright            : (C) 2005 by Brian Nickel
-                         : (C) 2006 Novell, Inc.
-    email                : brian.nickel@gmail.com
-                         : Aaron Bockover <abockover@novell.com>
- ***************************************************************************/
-
-/***************************************************************************
- *   This library is free software; you can redistribute it and/or modify  *
- *   it  under the terms of the GNU Lesser General Public License version  *
- *   2.1 as published by the Free Software Foundation.                     *
- *                                                                         *
- *   This library is distributed in the hope that it will be useful, but   *
- *   WITHOUT ANY WARRANTY; without even the implied warranty of            *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU     *
- *   Lesser General Public License for more details.                       *
- *                                                                         *
- *   You should have received a copy of the GNU Lesser General Public      *
- *   License along with this library; if not, write to the Free Software   *
- *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  *
- *   USA                                                                   *
- ***************************************************************************/
+//
+// File.cs: Provides a basic framework for reading from and writing to
+// a file, as well as accessing basic tagging and media properties.
+//
+// Author:
+//   Brian Nickel (brian.nickel@gmail.com)
+//   Aaron Bockover (abockover@novell.com)
+//
+// Original Source:
+//   tfile.cpp from TagLib
+//
+// Copyright (C) 2005, 2007 Brian Nickel
+// Copyright (C) 2006 Novell, Inc.
+// 
+// This library is free software; you can redistribute it and/or modify
+// it  under the terms of the GNU Lesser General Public License version
+// 2.1 as published by the Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
+// USA
+//
 
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 
 namespace TagLib {
+	
+	/// <summary>
+	///    Specifies the level of intensity to use when reading the media
+	///    properties.
+	/// </summary>
 	public enum ReadStyle {
+		/// <summary>
+		///    The media properties will not be read.
+		/// </summary>
 		None = 0,
+		
 		// Fast = 1,
+		
+		/// <summary>
+		///    The media properties will be read with average accuracy.
+		/// </summary>
 		Average = 2,
+		
 		// Accurate = 3
 	}
 	
+	/// <summary>
+	///    This abstract class provides a basic framework for reading from
+	///    and writing to a file, as well as accessing basic tagging and
+	///    media properties.
+	/// </summary>
+	/// <remarks>
+	///    <para>This class is agnostic to all specific media types. Its
+	///    child classes, on the other hand, support the the intricacies of
+	///    different media and tagging formats. For example, <see
+	///    cref="Mpeg4.File" /> supports the MPEG-4 specificication and
+	///    Apple's tagging format.</para>
+	///    <para>Each file type can be created using its format specific
+	///    constructors, ie. <see cref="Mpeg4.File(string)" />, but the
+	///    preferred method is to use <see
+	///    cref="File.Create(string,string,ReadStyle)" /> or one of its
+	///    variants, as it automatically detects the appropriate class from
+	///    the file extension or provided mime-type.</para>
+	/// </remarks>
 	public abstract class File
 	{
 		#region Enums
 		
+		/// <summary>
+		///   Specifies the type of file access operations currently
+		///   permitted on an instance of <see cref="File" />.
+		/// </summary>
 		public enum AccessMode {
+			/// <summary>
+			///    Read operations can be performed.
+			/// </summary>
 			Read,
+		
+			/// <summary>
+			///    Read and write operations can be performed.
+			/// </summary>
 			Write,
+		
+			/// <summary>
+			///    The file is closed for both read and write
+			///    operations.
+			/// </summary>
 			Closed
 		}
 		
@@ -49,6 +103,45 @@ namespace TagLib {
 		
 		#region Delegates
 		
+		/// <summary>
+		///    This delegate is used for intervening in <see
+		///    cref="Create(string)" /> by resolving the file type
+		///    before any standard resolution operations.
+		/// </summary>
+		/// <param name="abstraction">
+		///    A <see cref="IFileAbstraction" /> object representing the
+		///    file to be read.
+		/// </param>
+		/// <param name="mimetype">
+		///    A <see cref="string" /> object containing the mime-type
+		///    of the file.
+		/// </param>
+		/// <param name="style">
+		///    A <see cref="ReadStyle" /> value specifying how to read
+		///    media properties from the file.
+		/// </param>
+		/// <returns>
+		///    A new instance of <see cref="File" /> or <see
+		///    langword="null" /> if the resolver could not match it.
+		/// </returns>
+		/// <remarks>
+		///    <para>A <see cref="FileTypeResolver" /> is one way of
+		///    altering the behavior of <see cref="Create(string)"
+		///    />.</para>
+		///    <para>When <see cref="Create(string)" /> is called, the
+		///    registered resolvers are invoked in the reverse order in
+		///    which they were registered. The resolver may then perform
+		///    any operations necessary, including other type-finding
+		///    methods.</para>
+		///    <para>If the resolver returns a new <see cref="File" />,
+		///    it will instantly be returned, by <see
+		///    cref="Create(string)" />. If it returns <see 
+		///    langword="null" />, <see cref="Create(string)" /> will
+		///    continue to process. If the resolver throws an exception
+		///    it will be uncaught.</para>
+		///    <para>To register a resolver, use <see
+		///    cref="AddFileTypeResolver" />.</para>
+		/// </remarks>
 		public delegate File FileTypeResolver (IFileAbstraction abstraction,
 		                                       string mimetype,
 		                                       ReadStyle style);
@@ -59,11 +152,36 @@ namespace TagLib {
 		
 		#region Private Properties
 		
+		/// <summary>
+		///    Contains the current stream used in reading/writing.
+		/// </summary>
 		private System.IO.Stream file_stream;
+		
+		/// <summary>
+		///    Contains the internal file abstraction.
+		/// </summary>
 		private IFileAbstraction file_abstraction;
+		
+		/// <summary>
+		///    Contains the mime-type of the file as provided by <see
+		///    cref="Create(string)" />.
+		/// </summary>
 		private string mime_type;
+		
+		/// <summary>
+		///    Contains the types of tags in the file on disk.
+		/// </summary>
 		private TagTypes tags_on_disk = TagTypes.None;
+		
+		/// <summary>
+		///    Contains buffer size to use when reading.
+		/// </summary>
 		private static int buffer_size = 1024;
+		
+		/// <summary>
+		///    Contains the file type resolvers to use in <see
+		///    cref="Create(string)" />.
+		/// </summary>
 		private static List<FileTypeResolver> file_type_resolvers
 			= new List<FileTypeResolver> ();
 		
@@ -73,6 +191,14 @@ namespace TagLib {
 		
 		#region Public Static Properties
 		
+		/// <summary>
+		///    The buffer size to use when reading large blocks of data
+		///    in the <see cref="File" /> class.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> containing the buffer size to use
+		///    when reading large blocks of data.
+		/// </value>
 		public static uint BufferSize {
 			get {return (uint) buffer_size;}
 		}
@@ -82,13 +208,43 @@ namespace TagLib {
 		
 		#region Constructors
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="File" /> for a specified specified path in the
+		///    local file system.
+		/// </summary>
+		/// <param name="path">
+		///    A <see cref="string" /> object containing the path of the
+		///    file to use in the new instance.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="path" /> is <see langref="null" />.
+		/// </exception>
 		protected File (string path)
-			: this (new LocalFileAbstraction (path))
 		{
+			if (path == null)
+				throw new ArgumentNullException ("path");
+			
+			file_abstraction = new LocalFileAbstraction (path);
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="File" /> for a specified file abstraction.
+		/// </summary>
+		/// <param name="abstraction">
+		///    A <see cref="IFileAbstraction" /> object to use when
+		///    reading from and writing to the file.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="abstraction" /> is <see langref="null"
+		///    />.
+		/// </exception>
 		protected File (IFileAbstraction abstraction)
 		{
+			if (abstraction == null)
+				throw new ArgumentNullException ("abstraction");
+			
 			file_abstraction = abstraction;
 		}
 		
@@ -98,37 +254,128 @@ namespace TagLib {
 		
 		#region Public Properties
 		
+		/// <summary>
+		///    Gets a abstract representation of all tags stored in the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="TagLib.Tag" /> object representing all tags
+		///    stored in the current instance.
+		/// </value>
+		/// <remarks>
+		///    <para>This property provides generic and general access
+		///    to the most common tagging features of a file. To access
+		///    or add a specific type of tag in the file, use <see
+		///    cref="GetTag(TagLib.TagTypes,bool)" />.</para>
+		/// </remarks>
 		public abstract Tag Tag {get;}
+		
+		/// <summary>
+		///    Gets the media properties of the file represented by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="TagLib.Properties" /> object containing the
+		///    media properties of the file represented by the current
+		///    instance.
+		/// </value>
 		public abstract Properties Properties {get;}
 		
+		/// <summary>
+		///    Gets the tag types contained in the physical file
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A bitwise combined <see cref="TagLib.TagTypes" /> value
+		///    containing the tag types stored in the physical file as
+		///    it was read or last saved.
+		/// </value>
 		public TagTypes TagTypesOnDisk {
 			get {return tags_on_disk;}
 			protected set {tags_on_disk = value;}
 		}
 		
+		/// <summary>
+		///    Gets the tag types contained in the current instance.
+		/// </summary>
+		/// <value>
+		///    A bitwise combined <see cref="TagLib.TagTypes" /> value
+		///    containing the tag types stored in the current instance.
+		/// </value>
 		public TagTypes TagTypes {
 			get {return Tag != null ? Tag.TagTypes : TagTypes.None;}
 		}
 		
+		/// <summary>
+		///    Gets the name of the file as stored in its file
+		///    abstraction.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the name of the
+		///    file as stored in the <see cref="IFileAbstraction" />
+		///    object used to create it or the path if created with a
+		///    local path.
+		/// </value>
 		public string Name {
 			get {return file_abstraction.Name;}
 		}
 		
+		/// <summary>
+		///    Gets the mime-type of the file as determined by <see
+		///    cref="Create(IFileAbstraction,string,ReadStyle)" /> if
+		///    that method was used to create the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the mime-type
+		///    used to create the file or <see langref="null" /> if <see
+		///    cref="Create(IFileAbstraction,string,ReadStyle)" /> was
+		///    not used to create the current instance.
+		/// </value>
 		public string MimeType {
 			get {return mime_type;}
 			internal set {mime_type = value;}
 		}
 		
+		/// <summary>
+		///    Gets the seek position in the internal stream used by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="long" /> value representing the seek
+		///    position, or 0 if the file is not open for reading.
+		/// </value>
 		public long Tell {
 			get {return (Mode == AccessMode.Closed) ?
 				0 : file_stream.Position;}
 		}
 		
+		/// <summary>
+		///    Gets the length of the file represented by the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="long" /> value representing the size of the
+		///    file, or 0 if the file is not open for reading.
+		/// </value>
 		public long Length {
 			get {return (Mode == AccessMode.Closed) ?
 				0 : file_stream.Length;}
 		}
 		
+		/// <summary>
+		///    Gets and sets the file access mode in use by the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="AccessMode" /> value describing the features
+		///    of stream currently in use by the current instance.
+		/// </value>
+		/// <remarks>
+		///    Changing the value will cause the stream currently in use
+		///    to be closed, except when a change is made from <see
+		///    cref="AccessMode.Write" /> to <see cref="AccessMode.Read"
+		///    /> which has no effect.
+		/// </remarks>
 		public AccessMode Mode {
 			get {return (file_stream == null) ?
 				AccessMode.Closed : (file_stream.CanWrite) ?
@@ -158,10 +405,126 @@ namespace TagLib {
 		
 		#region Public Methods
 		
+		/// <summary>
+		///    Saves the changes made in the current instance to the
+		///    file it represents.
+		/// </summary>
 		public abstract void Save ();
+		
+		/// <summary>
+		///    Removes a set of tag types from the current instance.
+		/// </summary>
+		/// <param name="types">
+		///    A bitwise combined <see cref="TagLib.TagTypes" /> value
+		///    containing tag types to be removed from the file.
+		/// </param>
+		/// <remarks>
+		///    In order to remove all tags from a file, pass <see
+		///    cref="TagTypes.AllTags" /> as <paramref name="types" />.
+		/// </remarks>
 		public abstract void RemoveTags (TagTypes types);
+		
+		/// <summary>
+		///    Gets a tag of a specified type from the current instance,
+		///    optionally creating a new tag if possible.
+		/// </summary>
+		/// <param name="type">
+		///    A <see cref="TagLib.TagTypes" /> value indicating the
+		///    type of tag to read.
+		/// </param>
+		/// <param name="create">
+		///    A <see cref="bool" /> value specifying whether or not to
+		///    try and create the tag if one is not found.
+		/// </param>
+		/// <returns>
+		///    A <see cref="Tag" /> object containing the tag that was
+		///    accessed from or added to the current instance. If no
+		///    matching tag was found and none was created, <see
+		///    langref="null" /> is returned.
+		/// </returns>
+		/// <remarks>
+		///    <para>Passing <see langref="true" /> to <paramref
+		///    name="create" /> does not guarantee the tag will be
+		///    created. For example, trying to create an ID3v2 tag on an
+		///    OGG Vorbis file will always fail.</para>
+		///    <para>It is safe to assume that if <see langword="null"
+		///    /> is not returned, the returned tag can be cast to the
+		///    appropriate type.</para>
+		/// </remarks>
+		/// <example>
+		///    <para>The following example sets the mood of a file to
+		///    several tag types.</para>
+		///    <code lang="C#">string [] SetMoods (TagLib.File file, params string[] moods)
+		///{
+		///   TagLib.Id3v2.Tag id3 = file.GetTag (TagLib.TagTypes.Id3v2, true);
+		///   if (id3 != null)
+		///      id3.SetTextFrame ("TMOO", moods);
+		///   
+		///   TagLib.Asf.Tag asf = file.GetTag (TagLib.TagTypes.Asf, true);
+		///   if (asf != null)
+		///      asf.SetDescriptorStrings (moods, "WM/Mood", "Mood");
+		///   
+		///   TagLib.Ape.Tag ape = file.GetTag (TagLib.TagTypes.Ape);
+		///   if (ape != null)
+		///      ape.SetValue ("MOOD", moods);
+		///      
+		///   // Whatever tag types you want...
+		///}</code>
+		/// </example>
 		public abstract Tag GetTag (TagTypes type, bool create);
 		
+		/// <summary>
+		///    Gets a tag of a specified type from the current instance.
+		/// </summary>
+		/// <param name="type">
+		///    A <see cref="TagLib.TagTypes" /> value indicating the
+		///    type of tag to read.
+		/// </param>
+		/// <returns>
+		///    A <see cref="Tag" /> object containing the tag that was
+		///    accessed from the current instance. If no matching tag
+		///    was found, <see langref="null" /> is returned.
+		/// </returns>
+		/// <remarks>
+		///    <para>This class merely accesses the tag if it exists.
+		///    <see cref="GetTag(TagTypes,bool)" /> provides the option
+		///    of adding the tag to the current instance if it does not
+		///    exist.</para>
+		///    <para>It is safe to assume that if <see langword="null"
+		///    /> is not returned, the returned tag can be cast to the
+		///    appropriate type.</para>
+		/// </remarks>
+		/// <example>
+		///    <para>The following example reads the mood of a file from
+		///    several tag types.</para>
+		///    <code lang="C#">static string [] GetMoods (TagLib.File file)
+		///{
+		///   TagLib.Id3v2.Tag id3 = file.GetTag (TagLib.TagTypes.Id3v2);
+		///   if (id3 != null) {
+		///      TextIdentificationFrame f = TextIdentificationFrame.Get (this, "TMOO");
+		///      if (f != null)
+		///         return f.FieldList.ToArray ();
+		///   }
+		///   
+		///   TagLib.Asf.Tag asf = file.GetTag (TagLib.TagTypes.Asf);
+		///   if (asf != null) {
+		///      string [] value = asf.GetDescriptorStrings ("WM/Mood", "Mood");
+		///      if (value.Length &gt; 0)
+		///         return value;
+		///   }
+		///   
+		///   TagLib.Ape.Tag ape = file.GetTag (TagLib.TagTypes.Ape);
+		///   if (ape != null) {
+		///      Item item = ape.GetItem ("MOOD");
+		///      if (item != null)
+		///         return item.ToStringArray ();
+		///   }
+		///      
+		///   // Whatever tag types you want...
+		///   
+		///   return new string [] {};
+		///}</code>
+		/// </example>
 		public Tag GetTag (TagTypes type)
 		{
 			return GetTag (type, false);
@@ -172,11 +535,12 @@ namespace TagLib {
 		///    position from the current instance.
 		/// </summary>
 		/// <param name="length">
-		///    A <see cref="int" /> specifying the number of bytes to
-		///    read.
+		///    A <see cref="int" /> value specifying the number of bytes
+		///    to read.
 		/// </param>
 		/// <returns>
-		///    A <see cref="ByteVector" /> containing the data.
+		///    A <see cref="ByteVector" /> object containing the data
+		///    read from the current instance.
 		/// </returns>
 		/// <remarks>
 		///    <para>This method reads the block of data at the current
@@ -209,15 +573,56 @@ namespace TagLib {
 			return new ByteVector (buffer, count);
 		}
 		
+		/// <summary>
+		///    Writes a block of data to the file represented by the
+		///    current instance at the current seek position.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing data to be
+		///    written to the current instance.
+		/// </param>
+		/// <remarks>
+		///    This will overwrite any existing data at the seek
+		///    position and append new data to the file if writing past
+		///    the current end.
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="data" /> is <see langref="null" />.
+		/// </exception>
 		public void WriteBlock (ByteVector data)
 		{
 			if (data == null)
 				throw new ArgumentNullException ("data");
-					Mode = AccessMode.Write;
+			
+			Mode = AccessMode.Write;
 			
 			file_stream.Write (data.Data, 0, data.Count);
 		}
 		
+		/// <summary>
+		///    Searches forwards through a file for a specified
+		///    pattern, starting at a specified offset.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector" /> object containing a pattern
+		///    to search for in the current instance.
+		/// </param>
+		/// <param name="startPosition">
+		///    A <see cref="int" /> value specifying at what
+		///    seek position to start searching.
+		/// </param>
+		/// <param name="before">
+		///    A <see cref="ByteVector" /> object specifying a pattern
+		///    that the searched for pattern must appear before. If this
+		///    pattern is found first, -1 is returned.
+		/// </param>
+		/// <returns>
+		///    A <see cref="long" /> value containing the index at which
+		///    the value was found. If not found, -1 is returned.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="pattern" /> is <see langref="null" />.
+		/// </exception>
 		public long Find (ByteVector pattern, long startPosition,
 		                  ByteVector before)
 		{
@@ -348,19 +753,84 @@ namespace TagLib {
 			return -1;
 		}
 		
+		/// <summary>
+		///    Searches forwards through a file for a specified
+		///    pattern, starting at a specified offset.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector" /> object containing a pattern
+		///    to search for in the current instance.
+		/// </param>
+		/// <param name="startPosition">
+		///    A <see cref="int" /> value specifying at what
+		///    seek position to start searching.
+		/// </param>
+		/// <returns>
+		///    A <see cref="long" /> value containing the index at which
+		///    the value was found. If not found, -1 is returned.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="pattern" /> is <see langref="null" />.
+		/// </exception>
 		public long Find (ByteVector pattern, long startPosition)
 		{
 			return Find (pattern, startPosition, null);
 		}
 		
+		/// <summary>
+		///    Searches forwards through a file for a specified
+		///    pattern, starting at the beginning of the file.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector" /> object containing a pattern
+		///    to search for in the current instance.
+		/// </param>
+		/// <returns>
+		///    A <see cref="long" /> value containing the index at which
+		///    the value was found. If not found, -1 is returned.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="pattern" /> is <see langref="null" />.
+		/// </exception>
 		public long Find (ByteVector pattern)
 		{
 			return Find (pattern, 0);
 		}
 		
+		/// <summary>
+		///    Searches backwards through a file for a specified
+		///    pattern, starting at a specified offset.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector" /> object containing a pattern
+		///    to search for in the current instance.
+		/// </param>
+		/// <param name="startPosition">
+		///    A <see cref="int" /> value specifying at what
+		///    seek position to start searching.
+		/// </param>
+		/// <param name="after">
+		///    A <see cref="ByteVector" /> object specifying a pattern
+		///    that the searched for pattern must appear after. If this
+		///    pattern is found first, -1 is returned.
+		/// </param>
+		/// <returns>
+		///    A <see cref="long" /> value containing the index at which
+		///    the value was found. If not found, -1 is returned.
+		/// </returns>
+		/// <remarks>
+		///    Searching for <paramref name="after" /> is not yet
+		///    implemented.
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="pattern" /> is <see langref="null" />.
+		/// </exception>
 		long RFind (ByteVector pattern, long startPosition,
-			ByteVector before)
+		            ByteVector after)
 		{
+			if (pattern == null)
+				throw new ArgumentNullException ("pattern");
+			
 			Mode = AccessMode.Read;
 			
 			if (pattern.Count > buffer_size)
@@ -393,7 +863,7 @@ namespace TagLib {
 				Seek (-1 * buffer_size,
 					System.IO.SeekOrigin.End);
 			else
-				Seek (startPosition + -1 * buffer_size,
+				Seek (startPosition - 1 * buffer_size,
 					System.IO.SeekOrigin.Begin);
 			
 			buffer_offset = file_stream.Position;
@@ -414,7 +884,7 @@ namespace TagLib {
 					return buffer_offset + location;
 				}
 				
-				if(before != null && buffer.Find (before) >= 0) {
+				if(after != null && buffer.RFind (after) >= 0) {
 					file_stream.Position = original_position;
 					return -1;
 				}
@@ -432,16 +902,72 @@ namespace TagLib {
 			return -1;
 		}
 		
+		/// <summary>
+		///    Searches backwards through a file for a specified
+		///    pattern, starting at a specified offset.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector" /> object containing a pattern
+		///    to search for in the current instance.
+		/// </param>
+		/// <param name="startPosition">
+		///    A <see cref="int" /> value specifying at what
+		///    seek position to start searching.
+		/// </param>
+		/// <returns>
+		///    A <see cref="long" /> value containing the index at which
+		///    the value was found. If not found, -1 is returned.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="pattern" /> is <see langref="null" />.
+		/// </exception>
 		public long RFind (ByteVector pattern, long startPosition)
 		{
 			return RFind (pattern, startPosition, null);
 		}
 		
+		/// <summary>
+		///    Searches backwards through a file for a specified
+		///    pattern, starting at the end of the file.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector" /> object containing a pattern
+		///    to search for in the current instance.
+		/// </param>
+		/// <returns>
+		///    A <see cref="long" /> value containing the index at which
+		///    the value was found. If not found, -1 is returned.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="pattern" /> is <see langref="null" />.
+		/// </exception>
 		public long RFind (ByteVector pattern)
 		{
 			return RFind (pattern, 0);
 		}
 		
+		/// <summary>
+		///    Inserts a specifed block of data into the file repesented
+		///    by the current instance at a specified location,
+		///    replacing a specified number of bytes.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing the data to
+		///    insert into the file.
+		/// </param>
+		/// <param name="start">
+		///    A <see cref="long" /> value specifying at which point to
+		///    insert the data.
+		/// </param>
+		/// <param name="replace">
+		///    A <see cref="long" /> value specifying the number of
+		///    bytes to replace. Typically this is the original size of
+		///    the data block so that a new block will replace the old
+		///    one.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="data" /> is <see langref="null" />.
+		/// </exception>
 		public void Insert (ByteVector data, long start, long replace)
 		{
 			if (data == null)
@@ -547,14 +1073,47 @@ namespace TagLib {
 			}
 		}
 		
+		/// <summary>
+		///    Inserts a specifed block of data into the file repesented
+		///    by the current instance at a specified location.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing the data to
+		///    insert into the file.
+		/// </param>
+		/// <param name="start">
+		///    A <see cref="long" /> value specifying at which point to
+		///    insert the data.
+		/// </param>
+		/// <remarks>
+		///    This method inserts a new block of data into the file. To
+		///    replace an existing block, ie. replacing an existing
+		///    tag with a new one of different size, use <see
+		///    cref="Insert(ByteVector,long,long)" />.
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="data" /> is <see langref="null" />.
+		/// </exception>
 		public void Insert (ByteVector data, long start)
 		{
 			Insert (data, start, 0);
 		}
 		
+		/// <summary>
+		///    Removes a specified block of data from the file
+		///    represented by the current instance.
+		/// </summary>
+		/// <param name="start">
+		///    A <see cref="long" /> value specifying at which point to
+		///    remove data.
+		/// </param>
+		/// <param name="length">
+		///    A <see cref="long" /> value specifying the number of
+		///    bytes to remove.
+		/// </param>
 		public void RemoveBlock (long start, long length)
 		{
-			if (length == 0)
+			if (length <= 0)
 				return;
 			
 			Mode = AccessMode.Write;
@@ -579,12 +1138,32 @@ namespace TagLib {
 			Truncate (write_position);
 		}
 		
+		/// <summary>
+		///    Seeks the read/write pointer to a specified offset in the
+		///    current instance, relative to a specified origin.
+		/// </summary>
+		/// <param name="offset">
+		///    A <see cref="long" /> value indicating the byte offset to
+		///    seek to.
+		/// </param>
+		/// <param name="origin">
+		///    A <see cref="System.IO.SeekOrigin" /> value specifying an
+		///    origin to seek from.
+		/// </param>
 		public void Seek (long offset, System.IO.SeekOrigin origin)
 		{
 			if (Mode != AccessMode.Closed)
 				file_stream.Seek (offset, origin);
 		}
 		
+		/// <summary>
+		///    Seeks the read/write pointer to a specified offset in the
+		///    current instance, relative to the beginning of the file.
+		/// </summary>
+		/// <param name="offset">
+		///    A <see cref="long" /> value indicating the byte offset to
+		///    seek to.
+		/// </param>
 		public void Seek (long offset)
 		{
 			Seek (offset, System.IO.SeekOrigin.Begin);
@@ -596,28 +1175,154 @@ namespace TagLib {
 		
 		#region Public Static Methods
 		
+		/// <summary>
+		///    Creates a new instance of a <see cref="File" /> subclass
+		///    for a specified path, guessing the mime-type from the
+		///    file's extension and using the average read style.
+		/// </summary>
+		/// <param name="path">
+		///    A <see cref="string" /> object specifying the file to
+		///    read from and write to.
+		/// </param>
+		/// <returns>
+		///    A new instance of <see cref="File" /> as read from the
+		///    specified path.
+		/// </returns>
+		/// <exception cref="CorruptFileException">
+		///    The file could not be read due to corruption.
+		/// </exception>
+		/// <exception cref="UnsupportedFormatException">
+		///    The file could not be read because the mime-type could
+		///    not be resolved or the library does not support an
+		///    internal feature of the file crucial to its reading.
+		/// </exception>
 		public static File Create (string path)
 		{
 			return Create(path, null, ReadStyle.Average);
 		}
 		
+		/// <summary>
+		///    Creates a new instance of a <see cref="File" /> subclass
+		///    for a specified file abstraction, guessing the mime-type
+		///    from the file's extension and using the average read
+		///    style.
+		/// </summary>
+		/// <param name="abstraction">
+		///    A <see cref="IFileAbstraction" /> object to use when
+		///    reading to and writing from the current instance.
+		/// </param>
+		/// <returns>
+		///    A new instance of <see cref="File" /> as read from the
+		///    specified abstraction.
+		/// </returns>
+		/// <exception cref="CorruptFileException">
+		///    The file could not be read due to corruption.
+		/// </exception>
+		/// <exception cref="UnsupportedFormatException">
+		///    The file could not be read because the mime-type could
+		///    not be resolved or the library does not support an
+		///    internal feature of the file crucial to its reading.
+		/// </exception>
 		public static File Create (IFileAbstraction abstraction)
 		{
 			return Create(abstraction, null, ReadStyle.Average);
 		}
 		
+		/// <summary>
+		///    Creates a new instance of a <see cref="File" /> subclass
+		///    for a specified path and read style, guessing the
+		///    mime-type from the file's extension.
+		/// </summary>
+		/// <param name="path">
+		///    A <see cref="string" /> object specifying the file to
+		///    read from and write to.
+		/// </param>
+		/// <param name="propertiesStyle">
+		///    A <see cref="ReadStyle" /> value specifying the level of
+		///    detail to use when reading the media information from the
+		///    new instance.
+		/// </param>
+		/// <returns>
+		///    A new instance of <see cref="File" /> as read from the
+		///    specified path.
+		/// </returns>
+		/// <exception cref="CorruptFileException">
+		///    The file could not be read due to corruption.
+		/// </exception>
+		/// <exception cref="UnsupportedFormatException">
+		///    The file could not be read because the mime-type could
+		///    not be resolved or the library does not support an
+		///    internal feature of the file crucial to its reading.
+		/// </exception>
 		public static File Create (string path,
 		                           ReadStyle propertiesStyle)
 		{
 			return Create(path, null, propertiesStyle);
 		}
 		
+		/// <summary>
+		///    Creates a new instance of a <see cref="File" /> subclass
+		///    for a specified file abstraction and read style, guessing
+		///    the mime-type from the file's extension.
+		/// </summary>
+		/// <param name="abstraction">
+		///    A <see cref="IFileAbstraction" /> object to use when
+		///    reading to and writing from the current instance.
+		/// </param>
+		/// <param name="propertiesStyle">
+		///    A <see cref="ReadStyle" /> value specifying the level of
+		///    detail to use when reading the media information from the
+		///    new instance.
+		/// </param>
+		/// <returns>
+		///    A new instance of <see cref="File" /> as read from the
+		///    specified abstraction.
+		/// </returns>
+		/// <exception cref="CorruptFileException">
+		///    The file could not be read due to corruption.
+		/// </exception>
+		/// <exception cref="UnsupportedFormatException">
+		///    The file could not be read because the mime-type could
+		///    not be resolved or the library does not support an
+		///    internal feature of the file crucial to its reading.
+		/// </exception>
 		public static File Create (IFileAbstraction abstraction,
 		                           ReadStyle propertiesStyle)
 		{
 			return Create(abstraction, null, propertiesStyle);
 		}
 		
+		/// <summary>
+		///    Creates a new instance of a <see cref="File" /> subclass
+		///    for a specified path, mime-type, and read style.
+		/// </summary>
+		/// <param name="path">
+		///    A <see cref="string" /> object specifying the file to
+		///    read from and write to.
+		/// </param>
+		/// <param name="mimetype">
+		///    A <see cref="string" /> object containing the mime-type
+		///    to use when selecting the appropriate class to use, or
+		///    <see langref="null" /> if the extension in <paramref
+		///    name="abstraction" /> is to be used.
+		/// </param>
+		/// <param name="propertiesStyle">
+		///    A <see cref="ReadStyle" /> value specifying the level of
+		///    detail to use when reading the media information from the
+		///    new instance.
+		/// </param>
+		/// <returns>
+		///    A new instance of <see cref="File" /> as read from the
+		///    specified path.
+		/// </returns>
+		/// <exception cref="CorruptFileException">
+		///    The file could not be read due to corruption.
+		/// </exception>
+		/// <exception cref="UnsupportedFormatException">
+		///    The file could not be read because the mime-type could
+		///    not be resolved or the library does not support an
+		///    internal feature of the file crucial to its reading.
+		/// </exception>
 		public static File Create (string path, string mimetype,
 		                           ReadStyle propertiesStyle)
 		{
@@ -625,9 +1330,41 @@ namespace TagLib {
 				mimetype, propertiesStyle);
 		}
 		
-		public static File Create(IFileAbstraction abstraction,
-		                          string mimetype,
-		                          ReadStyle propertiesStyle)
+		/// <summary>
+		///    Creates a new instance of a <see cref="File" /> subclass
+		///    for a specified file abstraction, mime-type, and read
+		///    style.
+		/// </summary>
+		/// <param name="abstraction">
+		///    A <see cref="IFileAbstraction" /> object to use when
+		///    reading to and writing from the current instance.
+		/// </param>
+		/// <param name="mimetype">
+		///    A <see cref="string" /> object containing the mime-type
+		///    to use when selecting the appropriate class to use, or
+		///    <see langref="null" /> if the extension in <paramref
+		///    name="abstraction" /> is to be used.
+		/// </param>
+		/// <param name="propertiesStyle">
+		///    A <see cref="ReadStyle" /> value specifying the level of
+		///    detail to use when reading the media information from the
+		///    new instance.
+		/// </param>
+		/// <returns>
+		///    A new instance of <see cref="File" /> as read from the
+		///    specified abstraction.
+		/// </returns>
+		/// <exception cref="CorruptFileException">
+		///    The file could not be read due to corruption.
+		/// </exception>
+		/// <exception cref="UnsupportedFormatException">
+		///    The file could not be read because the mime-type could
+		///    not be resolved or the library does not support an
+		///    internal feature of the file crucial to its reading.
+		/// </exception>
+		public static File Create (IFileAbstraction abstraction,
+		                           string mimetype,
+		                           ReadStyle propertiesStyle)
 		{
 			if(mimetype == null) {
 				string ext = String.Empty;
@@ -676,7 +1413,7 @@ namespace TagLib {
 		///    Adds a <see cref="FileTypeResolver" /> to the <see
 		///    cref="File" /> class. The one added last gets run first.
 		/// </summary>
-		/// <param name="FileTypeResolver">
+		/// <param name="resolver">
 		///    A <see cref="FileTypeResolver" /> delegate to add to the
 		///    file type recognition stack.
 		/// </param>

@@ -23,7 +23,7 @@ policy.%.$(ASSEMBLY_NAME).dll: policy.%.$(ASSEMBLY_NAME).config
 
 all: $(ASSEMBLY) $(POLICIES)
 
-EXTRA_DIST = $(TAGLIB_CSFILES) $(taglib_sources_in) $(taglib_policy_configs_in)
+EXTRA_DIST = $(TAGLIB_CSFILES) $(taglib_sources_in) $(taglib_policy_configs_in) taglib-sharp.mdp
 DISTCLEANFILES = *.pidb
 CLEANFILES = $(ASSEMBLY) $(ASSEMBLY).mdb $(POLICIES) taglib-sharp.snk 
 MAINTAINERCLEANFILES = Makefile.in
