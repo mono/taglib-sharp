@@ -1,3 +1,17 @@
+2007-08-02  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Id3v2/Frame.cs: Files were throwing ArgumentOutOfRange
+	exceptions after the changes on 2007-07-29. It now checks that the
+	ByteVector contains enough bytes and if not throws a
+	CorruptFileException. (Caught in TagLib.Id3v2.Tag)
+	
+	* src/TagLib/Mpeg/AudioFile.cs: Limit scanning to only the first 0x4000
+	bytes of the audio stream to avoid reading bad files forever. I got no
+	false negatives at 0x1000 so I'm hoping this is enough. If not, I can
+	throttle it up more. (Thanks to its-me for the bug report.)
+	
+	* configure.ac: Now 2.0.2.3
+
 2007-07-29  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/CombinedTag.cs: Fully documented and replaced the protected

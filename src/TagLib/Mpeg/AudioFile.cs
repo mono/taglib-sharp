@@ -76,7 +76,9 @@ namespace TagLib.Mpeg
 
       protected override void ReadStart (long start, ReadStyle propertiesStyle)
       {
-         if (propertiesStyle != ReadStyle.None && !AudioHeader.Find (out first_header, this, start))
+         // Only check the first 16 bytes so we're not stuck reading a bad file
+         // forever.
+         if (propertiesStyle != ReadStyle.None && !AudioHeader.Find (out first_header, this, start, 0x4000))
             throw new CorruptFileException ("MPEG audio header not found.");
       }
       

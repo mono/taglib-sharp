@@ -205,6 +205,11 @@ namespace TagLib.Id3v2
             data_length--;
          }
          
+         if (data_length > frameData.Count - data_offset)
+         	throw new CorruptFileException ("Frame size exceeds bounds.");
+         if (data_length < 0 )
+         	throw new CorruptFileException ("Frame size less than zero.");
+         
          ByteVector data = frameData.Mid (data_offset, data_length);
          
          if ((Flags & FrameFlags.Unsychronisation) != 0)
