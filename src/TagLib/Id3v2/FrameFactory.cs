@@ -121,9 +121,13 @@ namespace TagLib.Id3v2
          if(header.FrameId == FrameType.GEOB)
             return new GeneralEncapsulatedObjectFrame (data, position, header, version);
          
-         // Play Count (frames 4.15)
+         // Play Count (frames 4.16)
          if(header.FrameId == FrameType.PCNT)
             return new PlayCountFrame (data, position, header, version);
+         
+         // Play Count (frames 4.17)
+         if(header.FrameId == FrameType.POPM)
+            return new PopularimeterFrame (data, position, header, version);
          
          // Terms of Use (frames 4.22)
          if(header.FrameId == FrameType.USER)

@@ -1,5 +1,5 @@
 //
-// PlayCountFrame.cs:
+// PopularimeterFrame.cs:
 //
 // Author:
 //   Brian Nickel (brian.nickel@gmail.com)
@@ -25,145 +25,30 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-
 using System;
 
-namespace TagLib.Id3v2 {
+namespace TagLib.Id3v2
+{
 	/// <summary>
 	///    This class extends <see cref="Frame" />, implementing support for
-	///    ID3v2 Play Count (PCNT) Frames.
+	///    ID3v2 Popularimeter (POPM) Frames.
 	/// </summary>
-	/// <example>
-	///    <para>Getting and incrementing the play count of a file.</para>
-	///    <code lang="C#">
-	/// using TagLib;
-	/// using TagLib.Id3v2;
-	///
-	/// public static class TrackUtil
-	/// {
-	/// 	public static int GetPlayCount (string filename)
-	/// 	{
-	/// 		File file = File.Create (filename, ReadStyle.None);
-	/// 		Id3v2.Tag tag = file.GetTag (TagTypes.Id3v2, false) as Id3v2.Tag;
-	/// 		if (tag == null)
-	/// 			return 0;
-	/// 		
-	/// 		PlayCountFrame frame = PlayCountFrame.Get (tag, false);
-	/// 		if (frame == null)
-	/// 			return 0;
-	///
-	/// 		return frame.PlayCount;
-	/// 	}
-	/// 	
-	/// 	public static void IncrementPlayCount (string filename)
-	/// 	{
-	/// 		File file = File.Create (filename, ReadStyle.None);
-	/// 		Id3v2.Tag tag = file.GetTag (TagTypes.Id3v2, true) as Id3v2.Tag;
-	/// 		if (tag == null)
-	/// 			return;
-	/// 		
-	/// 		PlayCountFrame.Get (tag, true).PlayCount ++;
-	/// 		file.Save ();
-	/// 	}
-	/// }
-	///    </code>
-	///    <code lang="C++">
-	/// #using &lt;System.dll>
-	/// #using &lt;taglib-sharp.dll>
-	///
-	/// using System;
-	/// using TagLib;
-	/// using TagLib::Id3v2;
-	///
-	/// public ref class TrackUtil abstract sealed
-	/// {
-	/// public:
-	/// 	static int GetPlayCount (String^ filename)
-	/// 	{
-	/// 		File^ file = File.Create (filename, ReadStyle.None);
-	/// 		Id3v2::Tag^ tag = dynamic_cast&lt;Id3v2::Tag^> (file.GetTag (TagTypes::Id3v2, false));
-	/// 		if (tag == null)
-	/// 			return 0;
-	/// 		
-	/// 		PlayCountFrame^ frame = PlayCountFrame::Get (tag, false);
-	/// 		if (frame == null)
-	/// 			return 0;
-	///
-	/// 		return frame->PlayCount;
-	/// 	}
-	/// 	
-	/// 	static void IncrementPlayCount (String^ filename)
-	/// 	{
-	/// 		File^ file = File::Create (filename, ReadStyle::None);
-	/// 		Id3v2.Tag^ tag = dynamic_cast&lt;Id3v2::Tag^> (file.GetTag (TagTypes::Id3v2, true));
-	/// 		if (tag == null)
-	/// 			return;
-	/// 		
-	/// 		PlayCountFrame::Get (tag, true)->PlayCount ++;
-	/// 		file->Save ();
-	/// 	}
-	/// }
-	///    </code>
-	///    <code lang="VB">
-	/// Imports TagLib
-	/// Imports TagLib.Id3v2
-	///
-	/// Public Shared Class TrackUtil
-	/// 	Public Shared Sub GetPlayCount (filename As String) As Integer
-	/// 		Dim file As File = File.Create (filename, ReadStyle.None)
-	/// 		Dim tag As Id3v2.Tag = file.GetTag (TagTypes.Id3v2, False)
-	/// 		If tag Is Nothing Then Return 0
-	/// 		
-	/// 		Dim frame As PlayCountFrame = PlayCountFrame.Get (tag, False)
-	///		If frame Is Nothing Then Return 0
-	///
-	/// 		Return frame.PlayCount
-	/// 	End Sub
-	///
-	///	Public Shared Sub IncrementPlayCount (filename As String)
-	/// 		Dim file As File = File.Create (filename, ReadStyle.None)
-	/// 		Dim tag As Id3v2.Tag = file.GetTag (TagTypes.Id3v2, True)
-	/// 		If tag Is Nothing Then Exit Sub
-	/// 		
-	/// 		PlayCountFrame.Get (tag, True).PlayCount += 1
-	/// 		file.Save ()
-	/// 	End Sub
-	/// End Class
-	///    </code>
-	///    <code lang="Boo">
-	/// import TagLib
-	/// import TagLib.Id3v2
-	/// 
-	/// public static class TrackUtil:
-	/// 	static def GetPlayCount (filename as string) as int:
-	/// 		file As File = File.Create (filename, ReadStyle.None)
-	/// 		tag as Id3v2.Tag = file.GetTag (TagTypes.Id3v2, false)
-	///		if tag == null:
-	/// 			return 0
-	/// 		
-	/// 		frame as PlayCountFrame = PlayCountFrame.Get (tag, false)
-	/// 		if frame == null:
-	///			return 0
-	///
-	/// 		return frame.PlayCount
-	///
-	///	static def IncrementPlayCount (filename as string):
-	/// 		file as File = File.Create (filename, ReadStyle.None)
-	/// 		tag as Id3v2.Tag = file.GetTag (TagTypes.Id3v2, True)
-	///		if tag == null:
-	/// 			return
-	/// 		
-	/// 		PlayCountFrame.Get (tag, true).PlayCount ++
-	/// 		file.Save ()
-	///    </code>
-	/// </example>
-	public class PlayCountFrame : Frame
+	public class PopularimeterFrame : Frame
 	{
 		#region Private Properties
 		
 		/// <summary>
-		///    Contains the total number of times the file has been
-		///    played.
+		///    Contains the email of the user this frame belongs to.
+		/// </summary>
+		private string user = string.Empty;
+		
+		/// <summary>
+		///    Contains the rating of the files from 0 to 255.
+		/// </summary>
+		private byte rating = 0;
+		
+		/// <summary>
+		///    Contains the number of times this file has been played.
 		/// </summary>
 		private ulong play_count = 0;
 		
@@ -175,20 +60,23 @@ namespace TagLib.Id3v2 {
 		
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
-		///    cref="PlayCountFrame" /> with a count of zero.
+		///    cref="PopularimeterFrame" /> for a specified user with a
+		///    rating and play count of zero.
 		/// </summary>
 		/// <remarks>
 		///    When a frame is created, it is not automatically added to
 		///    the tag. Consider using <see cref="Get" /> for more
 		///    integrated frame creation.
 		/// </remarks>
-		public PlayCountFrame () : base (FrameType.PCNT, 4)
+		public PopularimeterFrame (string user)
+			: base (FrameType.POPM, 4)
 		{
+			User = user;
 		}
 		
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
-		///    cref="PlayCountFrame" /> by reading its raw data in a
+		///    cref="PopularimeterFrame" /> by reading its raw data in a
 		///    specified ID3v2 version.
 		/// </summary>
 		/// <param name="data">
@@ -199,7 +87,7 @@ namespace TagLib.Id3v2 {
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		public PlayCountFrame (ByteVector data, byte version)
+		public PopularimeterFrame (ByteVector data, byte version)
 			: base (data, version)
 		{
 			SetData (data, 0, version, true);
@@ -207,7 +95,7 @@ namespace TagLib.Id3v2 {
 		
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
-		///    cref="PlayCountFrame" /> by reading its raw data in a
+		///    cref="PopularimeterFrame" /> by reading its raw data in a
 		///    specified ID3v2 version.
 		/// </summary>
 		/// <param name="data">
@@ -226,9 +114,11 @@ namespace TagLib.Id3v2 {
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		protected internal PlayCountFrame (ByteVector data, int offset,
-		                                   FrameHeader header,
-		                                   byte version) : base(header)
+		protected internal PopularimeterFrame (ByteVector data,
+		                                       int offset,
+		                                       FrameHeader header,
+		                                       byte version)
+			: base (header)
 		{
 			SetData (data, offset, version, false);
 		}
@@ -239,6 +129,31 @@ namespace TagLib.Id3v2 {
 		
 		#region Public Properties
 		
+		/// <summary>
+		///    Gets and sets the user to whom the current instance
+		///    belongs.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the user to whom the
+		///    current instance belongs.
+		/// </value>
+		public string User {
+			get {return user;}
+			set {user = value != null ? value : string.Empty;}
+		}
+		
+		/// <summary>
+		///    Gets and sets the rating of the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="byte" /> containing the rating of the
+		///    current instance.
+		/// </value>
+		public byte Rating {
+			get {return rating;}
+			set {rating = value;}
+		}
+
 		/// <summary>
 		///    Gets and sets the play count of the current instance.
 		/// </summary>
@@ -258,38 +173,43 @@ namespace TagLib.Id3v2 {
 		#region Public Static Methods
 		
 		/// <summary>
-		///    Gets a play count frame from a specified tag, optionally
-		///    creating it if it does not exist.
+		///    Gets a popularimeter frame from a specified tag,
+		///    optionally creating it if it does not exist.
 		/// </summary>
 		/// <param name="tag">
 		///    A <see cref="Tag" /> object to search in.
+		/// </param>
+		/// <param name="user">
+		///    A <see cref="string" /> containing the user to search for
+		///    in the current instance.
 		/// </param>
 		/// <param name="create">
 		///    A <see cref="bool" /> specifying whether or not to create
 		///    and add a new frame to the tag if a match is not found.
 		/// </param>
 		/// <returns>
-		///    A <see cref="PlayCountFrame" /> object containing the
+		///    A <see cref="PopularimeterFrame" /> object containing the
 		///    matching frame, or <see langword="null" /> if a match
 		///    wasn't found and <paramref name="create" /> is <see
 		///    langword="false" />.
 		/// </returns>
-		public static PlayCountFrame Get (Tag tag, bool create)
+		public static PopularimeterFrame Get (Tag tag, string user,
+		                                      bool create)
 		{
-			PlayCountFrame pcnt;
+			PopularimeterFrame popm;
 			foreach (Frame frame in tag) {
-				pcnt = frame as PlayCountFrame;
+				popm = frame as PopularimeterFrame;
 				
-				if (pcnt != null)
-					return pcnt;
+				if (popm != null && popm.user.Equals (user))
+					return popm;
 			}
 			
 			if (!create)
 				return null;
 			
-			pcnt = new PlayCountFrame ();
-			tag.AddFrame (pcnt);
-			return pcnt;
+			popm = new PopularimeterFrame (user);
+			tag.AddFrame (popm);
+			return popm;
 		}
 		
 		#endregion
@@ -310,9 +230,20 @@ namespace TagLib.Id3v2 {
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    field data is encoded in.
 		/// </param>
-		protected override void ParseFields (ByteVector data, byte version)
+		protected override void ParseFields (ByteVector data,
+		                                     byte version)
 		{
-			play_count = data.ToULong ();
+			ByteVector delim = ByteVector.TextDelimiter (
+				StringType.Latin1);
+			
+			int index = data.Find (delim);
+			if (index < 0)
+				throw new CorruptFileException (
+					"Popularimeter frame does not contain a text delimiter");
+			
+			user = data.Mid (0, index).ToString (StringType.Latin1);
+			rating = data [index + 1];
+			play_count = data.Mid (index + 2).ToULong ();
 		}
 		
 		/// <summary>
@@ -330,9 +261,12 @@ namespace TagLib.Id3v2 {
 		protected override ByteVector RenderFields (byte version)
 		{
 			ByteVector data = ByteVector.FromULong (play_count);
-			while (data.Count > 4 && data [0] == 0)
+			while (data [0] == 0)
 				data.RemoveAt (0);
 			
+			data.Insert (0, rating);
+			data.Insert (0, ByteVector.FromString (user,
+				StringType.Latin1));
 			return data;
 		}
 		

@@ -10,6 +10,7 @@ namespace TagLib.Id3v2
       public static readonly ReadOnlyByteVector GEOB = "GEOB";
       public static readonly ReadOnlyByteVector MCDI = "MCDI";
       public static readonly ReadOnlyByteVector PCNT = "PCNT";
+      public static readonly ReadOnlyByteVector POPM = "POPM";
       public static readonly ReadOnlyByteVector PRIV = "PRIV";
       public static readonly ReadOnlyByteVector RVA2 = "RVA2";
       public static readonly ReadOnlyByteVector RVAD = "RVAD";

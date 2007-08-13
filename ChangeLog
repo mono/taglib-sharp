@@ -1,5 +1,22 @@
 2007-08-12  Brian Nickel <brian.nickel@gmail.com>
 
+	* src/TagLib/Id3v2/FrameTypes.cs: Added POPM
+	
+	* src/TagLib/Id3v2/FrameFactory.cs: Added PopularimeterFrame
+	
+	* src/TagLib/Id3v2/Frames/PopularimeterFrame.cs: NEW. Supports ID3v2
+	POPM (4.17) frame. (Thanks to renzska for the feature request.)
+	
+	* src/TagLib/Id3v2/Frames/PlayCountFrame.cs: Removed 'using
+	System.Collections;
+
+	* src/TagLib/TagLib.sources:
+	* src/taglib-sharp.mdp: Added PopularimeterFrame.cs
+	
+	* configure.ac: Now 2.0.2.5
+
+2007-08-12  Brian Nickel <brian.nickel@gmail.com>
+
 	* src/TagLib/Riff/List.cs: Reordered operations. Was incrementing a
 	value after it would have made a difference.
 	
