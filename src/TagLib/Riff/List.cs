@@ -68,10 +68,11 @@ namespace TagLib.Riff
             
             this [id].Add (data.Mid (offset + 8, length));
             
-            offset += 8 + length;
-            
             if (length % 2 == 1)
                length ++;
+            
+            offset += 8 + length;
+            
          }
       }
       

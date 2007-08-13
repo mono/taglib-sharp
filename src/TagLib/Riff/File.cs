@@ -79,7 +79,6 @@ namespace TagLib.Riff
             Seek (position);
             string fourcc = ReadBlock (4).ToString ();
             uint   size = ReadBlock (4).ToUInt (false);
-            
             switch (fourcc)
             {
             case "fmt ":
@@ -90,8 +89,12 @@ namespace TagLib.Riff
                }
                break;
             case "data":
-               if (stream_format == "WAVE" && style != ReadStyle.None && codecs.Length == 1 && codecs [0] is WaveFormatEx)
-                  duration += TimeSpan.FromSeconds ((double) size / (double) ((WaveFormatEx) codecs [0]).AverageBytesPerSecond);
+               if (stream_format == "WAVE") {
+                  if (style != ReadStyle.None && codecs.Length == 1 && codecs [0] is WaveFormatEx)
+                     duration += TimeSpan.FromSeconds ((double) size / (double) ((WaveFormatEx) codecs [0]).AverageBytesPerSecond);
+                  InvariantStartPosition = position;
+                  InvariantEndPosition = position + size;
+               }
                break;
             case "LIST":
             {
@@ -116,6 +119,12 @@ namespace TagLib.Riff
                   if (read_tags && mid_tag == null)
                      mid_tag = new MovieIdTag (this, position + 12, (int) (size - 4));
                   tag_found = true;
+                  break;
+               case "movi":
+                  if (stream_format == "AVI ") {
+                     InvariantStartPosition = position;
+                     InvariantEndPosition = position + size;
+                  }
                   break;
                }
                break;

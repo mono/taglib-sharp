@@ -42,6 +42,7 @@ namespace TagLib.Id3v2
       private static bool force_default_version = false;
       private static StringType default_string_type = StringType.UTF8;
       private static bool force_default_string_type = false;
+      private static bool use_numeric_genres = true;
       
       //////////////////////////////////////////////////////////////////////////
       // public methods
@@ -275,7 +276,7 @@ namespace TagLib.Id3v2
          }
          set
          {
-            if (value != null)
+            if (value != null && use_numeric_genres)
                for (int i = 0; i < value.Length; i ++)
                {
                   int index = TagLib.Genres.AudioToIndex (value [i]);
@@ -544,8 +545,30 @@ namespace TagLib.Id3v2
          set {force_default_string_type = value;}
       }
       
-      public HeaderFlags Flags {get {return header.Flags;} set {header.Flags = value;}}
-      
+		/// <summary>
+		///    Gets and sets whether or not to use ID3v1 style numeric
+		///    genres when possible.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value specifying whether or not to
+		///    use genres with numeric values when possible.
+		/// </value>
+		/// <remarks>
+		///    If <see langword="true" />, TagLib# will try looking up
+		///    the numeric genre code when storing the value. For
+		///    ID3v2.2 and ID3v2.3, "Rock" would be stored as "(17)" and
+		///    for ID3v2.4 it would be stored as "17".
+		/// </remarks>
+		public static bool UseNumericGenres {
+			get {return use_numeric_genres;}
+			set {use_numeric_genres = value;}
+		}
+		
+		public HeaderFlags Flags {
+			get {return header.Flags;}
+			set {header.Flags = value;}
+		}
+		
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////

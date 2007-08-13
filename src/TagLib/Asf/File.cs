@@ -48,39 +48,57 @@ namespace TagLib.Asf
       public File (string path) : this (path, ReadStyle.Average)
       {}
       
-      public File (File.IFileAbstraction abstraction, ReadStyle propertiesStyle) : base (abstraction)
-      {
-         Mode = AccessMode.Read;
-         Read (propertiesStyle);
-         Mode = AccessMode.Closed;
-      }
+		public File (File.IFileAbstraction abstraction,
+		             ReadStyle propertiesStyle) : base (abstraction)
+		{
+			Mode = AccessMode.Read;
+			
+			HeaderObject header = new HeaderObject (this, 0);
+			
+			if (header.HasContentDescriptors)
+				TagTypesOnDisk |= TagTypes.Asf;
+			
+			asf_tag = new Asf.Tag (header);
+			
+			InvariantStartPosition = (long) header.OriginalSize;
+			InvariantEndPosition = Length;
+			
+			if (propertiesStyle != ReadStyle.None)
+				properties = header.Properties;
+			
+			Mode = AccessMode.Closed;
+		}
 
       public File (File.IFileAbstraction abstraction) : this (abstraction, ReadStyle.Average)
       {}
       
-      public override void Save ()
-      {
-         Mode = AccessMode.Write;
-         
-         HeaderObject header = new HeaderObject (this, 0);
-         
-         if (asf_tag == null)
-         {
-            header.RemoveContentDescriptors ();
-            TagTypesOnDisk &= ~ TagTypes.Asf;
-         }
-         else
-         {
-            TagTypesOnDisk |= TagTypes.Asf;
-            header.AddUniqueObject (asf_tag.ContentDescriptionObject);
-            header.AddUniqueObject (asf_tag.ExtendedContentDescriptionObject);
-         }
-         
-         Insert (header.Render (), 0, (long) header.OriginalSize);
-         
-         Mode = AccessMode.Closed;
-      }
-      
+		public override void Save ()
+		{
+			Mode = AccessMode.Write;
+			
+			HeaderObject header = new HeaderObject (this, 0);
+			
+			if (asf_tag == null) {
+				header.RemoveContentDescriptors ();
+				TagTypesOnDisk &= ~ TagTypes.Asf;
+			} else {
+				TagTypesOnDisk |= TagTypes.Asf;
+				header.AddUniqueObject (
+					asf_tag.ContentDescriptionObject);
+				header.AddUniqueObject (
+					asf_tag.ExtendedContentDescriptionObject);
+			}
+			
+			ByteVector output = header.Render ();
+			long diff = output.Count - (long) header.OriginalSize;
+			Insert (output, 0, (long) header.OriginalSize);
+			
+			InvariantStartPosition += diff;
+			InvariantEndPosition += diff;
+			
+			Mode = AccessMode.Closed;
+		}
+		
       public override TagLib.Tag GetTag (TagTypes type, bool create)
       {
          if (type == TagTypes.Asf)
@@ -171,22 +189,5 @@ namespace TagLib.Asf
       public override TagLib.Tag Tag {get {return asf_tag;}}
       
       public override TagLib.Properties Properties {get {return properties;}}
-      
-      
-      //////////////////////////////////////////////////////////////////////////
-      // private methods
-      //////////////////////////////////////////////////////////////////////////
-      private void Read (ReadStyle properties_style)
-      {
-         HeaderObject header = new HeaderObject (this, 0);
-         
-         if (header.HasContentDescriptors)
-            TagTypesOnDisk |= TagTypes.Asf;
-         
-         asf_tag = new Asf.Tag (header);
-         
-         if(properties_style != ReadStyle.None)
-            properties = header.Properties;
-      }
    }
 }

@@ -60,6 +60,9 @@ namespace TagLib.Mpeg4
          FileParser parser = new FileParser (this);
          parser.ParseBoxHeaders ();
          
+         InvariantStartPosition = parser.MdatStartPosition;
+         InvariantEndPosition = parser.MdatEndPosition;
+         
          long size_change = 0;
          long write_position = 0;
          
@@ -96,6 +99,8 @@ namespace TagLib.Mpeg4
          {
             // We may have moved the offset boxes, so we need to reread.
             parser.ParseChunkOffsets ();
+            InvariantStartPosition = parser.MdatStartPosition;
+            InvariantEndPosition = parser.MdatEndPosition;
             
             foreach (Box box in parser.ChunkOffsetBoxes)
             {
@@ -148,6 +153,9 @@ namespace TagLib.Mpeg4
             parser.ParseTag ();
          else
             parser.ParseTagAndProperties ();
+         
+         InvariantStartPosition = parser.MdatStartPosition;
+         InvariantEndPosition = parser.MdatEndPosition;
          
          udta_box = parser.UserDataBox;
          

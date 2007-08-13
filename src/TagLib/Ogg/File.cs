@@ -65,6 +65,8 @@ namespace TagLib.Ogg
          long end;
          Dictionary<uint, Bitstream> streams = ReadStreams (null, out end);
          List<ICodec> codecs = new List<ICodec> ();
+         InvariantStartPosition = end;
+         InvariantEndPosition = Length;
          
          foreach (uint id in streams.Keys)
          {
@@ -142,6 +144,8 @@ namespace TagLib.Ogg
          } while (!empty);
          
          Insert (output, 0, end);
+         InvariantStartPosition = output.Count;
+         InvariantEndPosition = Length;
          
          Mode = AccessMode.Closed;
          TagTypesOnDisk = TagTypes;

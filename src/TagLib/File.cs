@@ -185,6 +185,17 @@ namespace TagLib {
 		private static List<FileTypeResolver> file_type_resolvers
 			= new List<FileTypeResolver> ();
 		
+		/// <summary>
+		///    Contains position at which the invariant data portion of
+		///    the file begins.
+		/// </summary>
+		private long invariant_start_position = -1;
+		
+		/// <summary>
+		///    Contains position at which the invariant data portion of
+		///    the file ends.
+		/// </summary>
+		private long invariant_end_position = -1;
 		#endregion
 		
 		
@@ -360,6 +371,36 @@ namespace TagLib {
 		public long Length {
 			get {return (Mode == AccessMode.Closed) ?
 				0 : file_stream.Length;}
+		}
+		
+		/// <summary>
+		///    Gets the position at which the invariant portion of the
+		///    current instance begins.
+		/// </summary>
+		/// <value>
+		///    A <see cref="long" /> value representing the seek
+		///    position at which the file's invariant (media) data
+		///    section begins. If the value could not be determined,
+		///    <c>-1</c> is returned.
+		/// </value>
+		public long InvariantStartPosition {
+			get {return invariant_start_position;}
+			protected set {invariant_start_position = value;}
+		}
+		
+		/// <summary>
+		///    Gets the position at which the invariant portion of the
+		///    current instance ends.
+		/// </summary>
+		/// <value>
+		///    A <see cref="long" /> value representing the seek
+		///    position at which the file's invariant (media) data
+		///    section ends. If the value could not be determined,
+		///    <c>-1</c> is returned.
+		/// </value>
+		public long InvariantEndPosition {
+			get {return invariant_end_position;}
+			protected set {invariant_end_position = value;}
 		}
 		
 		/// <summary>

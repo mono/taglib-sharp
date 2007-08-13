@@ -22,6 +22,7 @@ namespace TagLib.Mpeg4
       public static readonly ReadOnlyByteVector Grp  = AppleTag.FixId("grp");
       public static readonly ReadOnlyByteVector Hdlr = "hdlr";
       public static readonly ReadOnlyByteVector Lyr  = AppleTag.FixId ("lyr");
+      public static readonly ReadOnlyByteVector Mdat = "mdat";
       public static readonly ReadOnlyByteVector Mdia = "mdia";
       public static readonly ReadOnlyByteVector Meta = "meta";
       public static readonly ReadOnlyByteVector Mean = "mean";

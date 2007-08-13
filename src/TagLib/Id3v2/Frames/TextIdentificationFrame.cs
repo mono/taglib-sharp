@@ -20,8 +20,8 @@
  *   USA                                                                   *
  ***************************************************************************/
 
-using System.Collections;
 using System;
+using System.Text;
 
 namespace TagLib.Id3v2
 {
@@ -263,10 +263,13 @@ namespace TagLib.Id3v2
             if (FrameId == FrameType.TCON)
             {
                byte id;
-               string data = string.Empty;
+               StringBuilder data = new StringBuilder ();
                foreach (string s in field_list)
-                  data += byte.TryParse (s, out id) ? ("(" + id + ")") : s;
-               v.Add (ByteVector.FromString (data, encoding));
+                  if (byte.TryParse (s, out id))
+                     data.AppendFormat (System.Globalization.CultureInfo.InvariantCulture, "({0})", id);
+                  else
+                     data.Append (s);
+               v.Add (ByteVector.FromString (data.ToString (), encoding));
             }
             else
                v.Add (ByteVector.FromString (field_list.ToString ("/"), encoding));

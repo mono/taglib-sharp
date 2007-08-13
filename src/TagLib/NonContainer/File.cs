@@ -58,6 +58,9 @@ namespace TagLib.NonContainer
          properties = (propertiesStyle != ReadStyle.None) ?
             ReadProperties (start, end, propertiesStyle) : null;
          
+         InvariantStartPosition = start;
+         InvariantEndPosition = end;
+         
          Mode = AccessMode.Closed;
       }
       
@@ -75,6 +78,8 @@ namespace TagLib.NonContainer
          long start, end;
          Mode = AccessMode.Write;
          tag.Write (out start, out end);
+         InvariantStartPosition = start;
+         InvariantEndPosition = end;
          Mode = AccessMode.Closed;
          TagTypesOnDisk = TagTypes;
       }

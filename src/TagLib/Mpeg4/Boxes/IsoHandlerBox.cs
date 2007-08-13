@@ -13,7 +13,11 @@ namespace TagLib.Mpeg4
          file.Seek (DataPosition + 4);
          ByteVector box_data = file.ReadBlock (DataSize - 4);
          handler_type = box_data.Mid (0, 4);
-         name = box_data.Mid (16, box_data.Find ((byte) 0, 16) - 16).ToString ();
+         
+         int end = box_data.Find ((byte) 0, 16);
+         if (end < 16)
+         	end = box_data.Count;
+         name = box_data.Mid (16, end - 16).ToString ();
       }
       
       public IsoHandlerBox (ByteVector handlerType, string name) : base ("hdlr", 0, 0)

@@ -1,3 +1,33 @@
+2007-08-12  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Riff/List.cs: Reordered operations. Was incrementing a
+	value after it would have made a difference.
+	
+	* src/TagLib/Id3v2/Tag.cs: Added static UseNumericGenres which can be
+	set to false to prevent genres from being stored as ID3v1 indices.
+	(Thanks to craig for the feature request.)
+	
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs: Use a
+	StringBuilder instead of + operations when formatting genres.
+	
+	* src/TagLib/Mpeg4/Boxes/IsoHandlerBox.cs: Check that a negative length
+	is not being passed to Mid if '\0' is not found.
+	
+	* src/TagLib/Mpeg4/BoxTypes.cs: Add Mdat.
+	
+	* src/TagLib/Riff/File.cs:
+	* src/TagLib/Mpeg4/FileParser.cs:
+	* src/TagLib/Mpeg4/File.cs:
+	* src/TagLib/NonContainer/File.cs:
+	* src/TagLib/Asf/File.cs:
+	* src/TagLib/Ogg/File.cs:
+	* src/TagLib/File.cs: Added InvariantStartPosition and
+	InvariantEndPosition describing the invariant/media section of the file
+	that should be uneffected by TagLib# write operations. (Thanks to AgentS
+	and kajic for their feature requests.)
+	
+	* configure.ac: Now 2.0.2.4
+
 2007-08-02  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Id3v2/Frame.cs: Files were throwing ArgumentOutOfRange
