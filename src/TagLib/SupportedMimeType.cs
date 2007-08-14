@@ -165,9 +165,10 @@ namespace TagLib {
 		///    <see cref="SupportedMimeType" />.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IEnumerable{string}" /> object
-		///    containing all the mime-types that have been registered
-		///    with <see cref="SupportedMimeType" />.
+		///    A <see
+		///    cref="T:System.Collections.Generic.IEnumerable&lt;System.String&gt;"
+		///    /> object containing all the mime-types that have been
+		///    registered with <see cref="SupportedMimeType" />.
 		/// </value>
 		/// <remarks>
 		///    <para>These values are used by <see
@@ -186,9 +187,10 @@ namespace TagLib {
 		///    <see cref="SupportedMimeType" />.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IEnumerable{string}" /> object
-		///    containing all the extensions that have been registered
-		///    with <see cref="SupportedMimeType" />.
+		///    A <see
+		///    cref="T:System.Collections.Generic.IEnumerable&lt;System.String&gt;"
+		///    /> object containing all the extensions that have been
+		///    registered with <see cref="SupportedMimeType" />.
 		/// </value>
 		/// <remarks>
 		///    <para>These values are currently not used in file type

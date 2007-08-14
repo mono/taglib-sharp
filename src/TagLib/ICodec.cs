@@ -110,7 +110,7 @@ namespace TagLib {
 		///    instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="int" /> object containing a bitrate of the
+		///    A <see cref="int" /> value containing a bitrate of the
 		///    audio represented by the current instance.
 		/// </value>
 		int AudioBitrate {get;}
@@ -120,8 +120,8 @@ namespace TagLib {
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="int" /> containing the sample rate of the
-		///    audio represented by the current instance.
+		///    A <see cref="int" /> value containing the sample rate of
+		///    the audio represented by the current instance.
 		/// </value>
 		int AudioSampleRate {get;}
 		
@@ -130,7 +130,7 @@ namespace TagLib {
 		///    the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="int" /> object containing the number of
+		///    A <see cref="int" /> value containing the number of
 		///    channels in the audio represented by the current
 		///    instance.
 		/// </value>

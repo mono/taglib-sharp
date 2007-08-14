@@ -1,3 +1,23 @@
+2007-08-14  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Mpeg/XingHeader.cs: Add XingHeader.FileIdentifier to speed
+	things up.
+	
+	* src/TagLib/Mpeg/AudioHeader.cs: Fully document, reformat and add a
+	check for the Xing identifier before calling the constructor to avoid an
+	unnecessary exception/try/catch.
+	
+	* src/TagLib/ICodec.cs: Correct some documentation.
+	
+	* src/TagLib/Properties.cs:
+	* src/TagLib/SupportedMimeType.cs:
+	* src/TagLib/StringList.cs:
+	* src/TagLib/FileTypes.cs: Correct for documentation compiler warning.
+	
+	* taglib-sharp.csproj: Added PopularimeterFrame.cs
+
+	* configure.ac: Now 2.0.2.6
+
 2007-08-12  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Id3v2/FrameTypes.cs: Added POPM
