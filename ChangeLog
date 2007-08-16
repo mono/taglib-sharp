@@ -1,3 +1,11 @@
+2007-08-16  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Mpeg/AudioHeader.cs: Use non-property checks in public
+	constructor, assigning the XingHeader after sanity tests was causing
+	compiler problems on MS .NET. (Thanks to jmurphy for the bug report.)
+
+	* configure.ac: Now 2.0.2.7
+
 2007-08-14  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Mpeg/XingHeader.cs: Add XingHeader.FileIdentifier to speed

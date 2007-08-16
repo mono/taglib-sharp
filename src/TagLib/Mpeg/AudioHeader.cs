@@ -257,11 +257,11 @@ namespace TagLib.Mpeg {
 			
 			flags = data.ToUInt ();
 			
-			if (AudioBitrate < 0)
+			if (((flags >> 12) & 0x0F) == 0x0F)
 				throw new CorruptFileException (
 					"Header uses invalid bitrate index.");
 			
-			if (AudioSampleRate == 0)
+			if (((flags >> 10) & 0x03) == 0x03)
 				throw new CorruptFileException (
 					"Invalid sample rate.");
 
