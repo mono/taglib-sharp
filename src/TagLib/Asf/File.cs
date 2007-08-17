@@ -87,6 +87,8 @@ namespace TagLib.Asf
 					asf_tag.ContentDescriptionObject);
 				header.AddUniqueObject (
 					asf_tag.ExtendedContentDescriptionObject);
+				header.Extension.AddUniqueObject (
+					asf_tag.MetadataLibraryObject);
 			}
 			
 			ByteVector output = header.Render ();
@@ -156,31 +158,52 @@ namespace TagLib.Asf
          }
       }
       
-      public Object ReadObject (long position)
-      {
-         Seek (position);
-         System.Guid id = ReadGuid ();
-         
-         if (id.Equals (Guid.AsfFilePropertiesObject))
-            return new FilePropertiesObject (this, position);
-         
-         if (id.Equals (Guid.AsfStreamPropertiesObject))
-            return new StreamPropertiesObject (this, position);
-         
-         if (id.Equals (Guid.AsfContentDescriptionObject))
-            return new ContentDescriptionObject (this, position);
-         
-         else if (id.Equals (Guid.AsfExtendedContentDescriptionObject))
-            return new ExtendedContentDescriptionObject (this, position);
-         
-         else if (id.Equals (Guid.AsfPaddingObject))
-            return new PaddingObject (this, position);
-         
-         else if (id.Equals (Guid.AsfHeaderExtensionObject))
-            return new HeaderExtensionObject (this, position);
-         
-         return new UnknownObject (this, position);
-      }
+		/// <summary>
+		///    Reads a <see cref="Object" /> from the current instance.
+		/// </summary>
+		/// <param name="position">
+		///    A <see cref="long" /> value specifying the seek position
+		///    at which to start reading.
+		/// </param>
+		/// <returns>
+		///    A new <see cref="Object" /> object of appropriate type as
+		///    read from the current instance.
+		/// </returns>
+		public Object ReadObject (long position)
+		{
+			Seek (position);
+			System.Guid id = ReadGuid ();
+			
+			if (id.Equals (Guid.AsfFilePropertiesObject))
+				return new FilePropertiesObject (this,
+					position);
+			
+			if (id.Equals (Guid.AsfStreamPropertiesObject))
+				return new StreamPropertiesObject (this,
+					position);
+			
+			if (id.Equals (Guid.AsfContentDescriptionObject))
+				return new ContentDescriptionObject (this,
+					position);
+			
+			if (id.Equals (
+				Guid.AsfExtendedContentDescriptionObject))
+				return new ExtendedContentDescriptionObject (
+					this, position);
+			
+			if (id.Equals (Guid.AsfPaddingObject))
+				return new PaddingObject (this, position);
+			
+			if (id.Equals (Guid.AsfHeaderExtensionObject))
+				return new HeaderExtensionObject (this,
+					position);
+			
+			if (id.Equals (Guid.AsfMetadataLibraryObject))
+				return new MetadataLibraryObject (this,
+					position);
+			
+			return new UnknownObject (this, position);
+		}
       
       
       //////////////////////////////////////////////////////////////////////////

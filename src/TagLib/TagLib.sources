@@ -9,12 +9,14 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Asf/Object.cs \
 	$(srcdir)/TagLib/Asf/ExtendedContentDescriptionObject.cs \
 	$(srcdir)/TagLib/Asf/ContentDescriptionObject.cs \
+	$(srcdir)/TagLib/Asf/MetadataLibraryObject.cs \
 	$(srcdir)/TagLib/Asf/HeaderObject.cs \
 	$(srcdir)/TagLib/Asf/HeaderExtensionObject.cs \
 	$(srcdir)/TagLib/Asf/File.cs \
 	$(srcdir)/TagLib/Asf/FilePropertiesObject.cs \
 	$(srcdir)/TagLib/Asf/PaddingObject.cs \
 	$(srcdir)/TagLib/Asf/ContentDescriptor.cs \
+	$(srcdir)/TagLib/Asf/DescriptionRecord.cs \
 	$(srcdir)/TagLib/Mpc/StreamHeader.cs \
 	$(srcdir)/TagLib/Mpc/File.cs \
 	$(srcdir)/TagLib/Ogg/GroupedComment.cs \

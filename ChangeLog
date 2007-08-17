@@ -1,3 +1,40 @@
+2007-08-17  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Mpeg/AudioHeader.cs: Go back to setting XingHeader early,
+	there are just too many things that depend on `this'. (Thanks to jmurphy
+	for the bug report.)
+	
+	* src/TagLib/Ape/Tag.cs: Support APEv2 cover pictures. (Thanks to
+	renzska for the feature request.)
+	
+	* src/TagLib/Picture.cs: Add new constructors, obsolete CreateFromFile
+	and CreateFromPath, detect GIF and BMP files.
+	
+	* src/TagLib/NonContainer/EndTag.cs: Check that the footer contains
+	sane values.
+
+	* configure.ac: Now 2.0.2.9. Remove pkgconfig check for Mono. It isn't
+	really needed.
+
+2007-08-16  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Asf/Tag.cs:
+	* src/TagLib/Asf/File.cs:
+	* src/TagLib/Asf/HeaderObject.cs:
+	* src/TagLib/Asf/DescriptionRecord.cs:
+	* src/TagLib/Asf/MetadataLibraryObject.cs:
+	* src/TagLib/Asf/ContentDescriptor.cs: Added support for the ASF
+	Metadata Library Object. This object supports content descriptors as big
+	as uint.MaxValue as opposed to ushort.MaxValue. Tag.Pictures now reads
+	from this source as well, and large pictures are now written to it. They
+	were previously ignored. (Thanks to renzska for the bug report.)
+
+	* src/TagLib/TagLib.sources:
+	* src/taglib-sharp.mdp:
+	* taglib-sharp.csproj: Added new files.
+	
+	* configure.ac: Now 2.0.2.8
+
 2007-08-16  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Mpeg/AudioHeader.cs: Use non-property checks in public

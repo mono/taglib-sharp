@@ -31,7 +31,8 @@ namespace TagLib.Asf
       Bool    = 2,
       DWord   = 3,
       QWord   = 4,
-      Word    = 5
+      Word    = 5,
+      Guid    = 6
    }
    
    public class ContentDescriptor

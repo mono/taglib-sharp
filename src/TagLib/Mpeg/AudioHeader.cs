@@ -265,15 +265,17 @@ namespace TagLib.Mpeg {
 				throw new CorruptFileException (
 					"Invalid sample rate.");
 
+			xing_header = XingHeader.Unknown;
+			
 			// Check for a Xing header that will help us in
 			// gathering information about a VBR stream.
 			file.Seek (position + XingHeader.XingHeaderOffset (
 				Version, ChannelMode));
-			
+				
 			ByteVector xing_data = file.ReadBlock (16);
-			xing_header = xing_data.Count == 16 &&
-				xing_data.StartsWith (XingHeader.FileIdentifier) ?
-				new XingHeader (xing_data) : XingHeader.Unknown;
+			if (xing_data.Count == 16 && xing_data.StartsWith (
+				XingHeader.FileIdentifier))
+				xing_header = new XingHeader (xing_data);
 		}
 		
 		#endregion

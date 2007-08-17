@@ -115,6 +115,15 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       // public properties
       //////////////////////////////////////////////////////////////////////////
+		public HeaderExtensionObject Extension {
+			get {
+				foreach (Object child in children)
+					if (child is HeaderExtensionObject)
+						return child as HeaderExtensionObject;
+				return null;
+			}
+		}
+      
       public IEnumerable<Object> Children {get {return children;}}
       
       public Properties Properties

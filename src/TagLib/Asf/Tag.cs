@@ -32,35 +32,45 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       private ContentDescriptionObject         description;
       private ExtendedContentDescriptionObject ext_description;
+      private MetadataLibraryObject metadata_library;
       
       
       //////////////////////////////////////////////////////////////////////////
       // public methods
       //////////////////////////////////////////////////////////////////////////
-      public Tag () : base ()
-      {
-         Clear ();
-      }
-      
-      public Tag (HeaderObject header) : this ()
-      {
-         if (header == null)
-            throw new ArgumentNullException ("header");
-         
-         foreach (Object child in header.Children)
-         {
-            if (child is ContentDescriptionObject)
-               description = (ContentDescriptionObject) child;
-            
-            if (child is ExtendedContentDescriptionObject)
-               ext_description = (ExtendedContentDescriptionObject) child;
-         }
-      }
+		public Tag () : base ()
+		{
+			description = new ContentDescriptionObject ();
+			ext_description = new ExtendedContentDescriptionObject ();
+			metadata_library = new MetadataLibraryObject ();
+		}
+		
+		public Tag (HeaderObject header) : this ()
+		{
+			if (header == null)
+				throw new ArgumentNullException ("header");
+			
+			foreach (Object child in header.Children) {
+				if (child is ContentDescriptionObject)
+					description =
+						child as ContentDescriptionObject;
+			
+				if (child is ExtendedContentDescriptionObject)
+					ext_description =
+						child as ExtendedContentDescriptionObject;
+			}
+			
+			foreach (Object child in header.Extension.Children)
+				if (child is MetadataLibraryObject)
+					metadata_library =
+						child as MetadataLibraryObject;
+		}
       
       public override void Clear ()
       {
          description     = new ContentDescriptionObject ();
          ext_description = new ExtendedContentDescriptionObject ();
+         metadata_library.RemoveRecords (0, 0, "WM/Picture");
       }
       
       public void RemoveDescriptors (string name)
@@ -299,85 +309,138 @@ namespace TagLib.Asf
          }
       }
     
-      public override IPicture [] Pictures
-      {
-         get
-         {
-         	List<IPicture> l = new List<IPicture> ();
-         	
-            foreach (ContentDescriptor descriptor in GetDescriptors ("WM/Picture"))
-         	{
-         		ByteVector data = descriptor.ToByteVector ();
-            	Picture p = new Picture ();
-            	
-            	if (data.Count < 9)
-            		continue;
-            	
-            	int offset = 0;
-            	p.Type = (PictureType) data [0];
-         	   offset += 1;
-         	   int size = (int) data.Mid (offset, 4).ToUInt (false);
-         		offset += 4;
+		public override IPicture [] Pictures {
+			get {
+				List<IPicture> l = new List<IPicture> ();
+				
+				foreach (ContentDescriptor descriptor in
+					GetDescriptors ("WM/Picture")) {
+					IPicture p = PictureFromData (
+						descriptor.ToByteVector ());
+					if (p != null)
+						l.Add (p);
+				}
+				
+				foreach (DescriptionRecord record in
+					metadata_library.GetRecords (0, 0,
+						"WM/Picture")) {
+					IPicture p = PictureFromData (
+						record.ToByteVector ());
+					if (p != null)
+						l.Add (p);
+				}
+				
+				return l.ToArray ();
+			}
+			set {
+				if (value == null || value.Length == 0) {
+					RemoveDescriptors ("WM/Picture");
+					metadata_library.RemoveRecords (0, 0,
+						"WM/Picture");
+					return;
+				}
+				
+				List<ByteVector> pics = new List<ByteVector> ();
+				
+				bool big_pics = false;
+				
+				foreach (IPicture pic in value) {
+					ByteVector data = PictureToData (pic);
+					pics.Add (data);
+					if (data.Count > 0xFFFF)
+						big_pics = true;
+				}
+				
+				if (big_pics) {
+					DescriptionRecord [] records =
+						new DescriptionRecord [pics.Count];
+					for (int i = 0; i < pics.Count; i ++)
+						records [i] = new DescriptionRecord (
+							0, 0, "WM/Picture", pics [i]);
+					RemoveDescriptors ("WM/Picture");
+					metadata_library.SetRecords (0, 0,
+						"WM/Picture", records);
+				} else {
+					ContentDescriptor [] descs =
+						new ContentDescriptor [pics.Count];
+					for (int i = 0; i < pics.Count; i ++)
+						descs [i] = new ContentDescriptor (
+							"WM/Picture", pics [i]);
+					metadata_library.RemoveRecords (0, 0,
+						"WM/Picture");
+					SetDescriptors ("WM/Picture", descs);
+				}
+			}
+		}
+
+		private static IPicture PictureFromData (ByteVector data)
+		{
+			if (data.Count < 9)
+				return null;
+			
+			int offset = 0;
+			Picture p = new Picture ();
+			
+			// Get the picture type:
+			
+			p.Type = (PictureType) data [offset];
+			offset += 1;
+			
+			// Get the picture size:
+			
+			int size = (int) data.Mid (offset, 4).ToUInt (false);
+			offset += 4;
+			
+			// Get the mime-type:
+			
+			int found = data.Find (ByteVector.TextDelimiter (
+				StringType.UTF16LE), offset, 2);
+			if (found < 0)
+				return null;
+			
+			p.MimeType = data.Mid (offset,
+				found - offset).ToString (StringType.UTF16LE);
+			offset = found + 2;
+			
+			// Get the description:
+			
+			found = data.Find (ByteVector.TextDelimiter (StringType.UTF16LE), offset, 2);
+			if (found < 0)
+				return null;
+			
+			p.Description = data.Mid (offset, found - offset).ToString (StringType.UTF16LE);
+			offset = found + 2;
+			
+			p.Data = data.Mid (offset, size);
          		
-         		int found = data.Find (ByteVector.TextDelimiter (StringType.UTF16LE), offset, 2);
-         		if (found == -1)
-         			continue;
-         		p.MimeType = data.Mid (offset, found - offset).ToString (StringType.UTF16LE);
-         		offset = found + 2;
-         		
-         		found = data.Find (ByteVector.TextDelimiter (StringType.UTF16LE), offset, 2);
-         		if (found == -1)
-         			continue;
-         		p.Description = data.Mid (offset, found - offset).ToString (StringType.UTF16LE);
-         		offset = found + 2;
-         		
-         		p.Data = data.Mid (offset, size);
-         		
-            	l.Add (p);
-            }
-            
-            return l.ToArray ();
-         }
-         
-         set
-         {
-         	if (value == null || value.Length == 0)
-         	{
-         	   RemoveDescriptors ("WM/Picture");
-         		return;
+         		return p;
          	}
          	
-         	List<ContentDescriptor> descriptors = new List<ContentDescriptor> ();
-         	for (int i = 0; i < value.Length; i ++)
-         	{
-         		ByteVector v = new ByteVector ((byte) value [i].Type);
-         		v.Add (Object.RenderDWord ((uint) value [i].Data.Count));
-         		v.Add (Object.RenderUnicode (value [i].MimeType));
-         		v.Add (Object.RenderUnicode (value [i].Description));
-         		
-         		/// If its too big, ignore it.
-         		if (v.Count > 0xFFFF - value [i].Data.Count)
-         			continue;
-         		
-         		v.Add (value [i].Data);
-         		descriptors [i] = new ContentDescriptor ("WM/Picture", v);
-         	}
-         	
-            SetDescriptors ("WM/Picture", descriptors.ToArray ());
-         }
-      }
-      
-      public override bool IsEmpty
-      {
-         get
-         {
-            return description.IsEmpty && ext_description.IsEmpty;
-         }
-      }
-      
-      
-      public ContentDescriptionObject         ContentDescriptionObject         {get {return description;}}
-      public ExtendedContentDescriptionObject ExtendedContentDescriptionObject {get {return ext_description;}}
+		private static ByteVector PictureToData (IPicture picture)
+		{
+			ByteVector v = new ByteVector ((byte) picture.Type);
+			v.Add (Object.RenderDWord ((uint) picture.Data.Count));
+			v.Add (Object.RenderUnicode (picture.MimeType));
+			v.Add (Object.RenderUnicode (picture.Description));
+			v.Add (picture.Data);
+			return v;
+		}
+		
+		public override bool IsEmpty {
+			get {return description.IsEmpty && ext_description.IsEmpty;}
+		}
+		
+		public ContentDescriptionObject ContentDescriptionObject {
+			get {return description;}
+		}
+		
+		public ExtendedContentDescriptionObject ExtendedContentDescriptionObject {
+			get {return ext_description;}
+		}
+		
+		public MetadataLibraryObject MetadataLibraryObject {
+			get {return metadata_library;}
+		}
 
       public string GetDescriptorString (params string [] names)
       {

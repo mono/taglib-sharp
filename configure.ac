@@ -3,7 +3,7 @@ AC_CANONICAL_SYSTEM
 
 ASSEMBLY_NAME="taglib-sharp"
 
-VERSION="2.0.2.7"
+VERSION="2.0.2.9"
 ASSEMBLY_VERSION="$VERSION"
 
 POLICY_2_0_VERSIONS="2.0.0.0-$ASSEMBLY_VERSION"
@@ -19,7 +19,6 @@ AM_MAINTAINER_MODE
 
 AC_PROG_INSTALL
 
-MONO_REQUIRED=1.1
 MONODOC_REQUIRED=1.1.9
 
 WINDIR="$ASSEMBLY_NAME-$VERSION-windows"
@@ -28,13 +27,12 @@ AC_SUBST(WINDIR)
 DISTCHECK_CONFIGURE_FLAGS="--disable-docs"
 AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
 
-PKG_CHECK_MODULES(MONO, mono >= $MONO_REQUIRED)
-
 dnl Check for Mono
 AC_PATH_PROG(MCS, gmcs)
 if test x$MCS = x; then
 	AC_MSG_ERROR(You need mcs)
 fi
+
 AC_PATH_PROG(MONO, mono)
 if test x$MONO = x; then
 	AC_MSG_ERROR(You need mono)
@@ -62,6 +60,8 @@ GACUTIL_POLICY_FLAGS='/gacdir $(libdir) /root $(DESTDIR)$(libdir)'
 AC_SUBST(GACUTIL_POLICY_FLAGS)
 
 AC_ARG_ENABLE(docs, AC_HELP_STRING([--disable-docs], [Do not build documentation]), with_docs=no, with_docs=yes)
+
+PKG_PROG_PKG_CONFIG
 
 dnl Monodoc
 if test "x$with_docs" = "xyes"; then

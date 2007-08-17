@@ -225,13 +225,52 @@ namespace TagLib {
 		
 		
 		
+		#region Constructors
+		
+		public Picture ()
+		{
+		}
+		
+		public Picture (string filename)
+		{
+			if (filename == null)
+				throw new ArgumentNullException ("filename");
+			
+			Data = ByteVector.FromPath (filename);
+			FillInMimeFromData ();
+			Description = filename;
+		}
+		
+		public Picture (File.IFileAbstraction abstraction)
+		{
+			if (abstraction == null)
+				throw new ArgumentNullException ("abstraction");
+			
+			Data = ByteVector.FromFile (abstraction);
+			FillInMimeFromData ();
+			Description = abstraction.Name;
+		}
+		
+		public Picture (ByteVector data)
+		{
+			if (data == null)
+				throw new ArgumentNullException ("data");
+			
+			Data = new ByteVector (data);
+			FillInMimeFromData ();
+		}
+		
+		#endregion
+		
+		
+		
 		#region Public Static Methods
 		
 		/// <summary>
 		///    Creates a new <see cref="Picture" />, populating it with
 		///    the contents of a file.
 		/// </summary>
-		/// <param name="path">
+		/// <param name="filename">
 		///    A <see cref="string" /> object containing the path to a
 		///    file to read the picture from.
 		/// </param>
@@ -240,10 +279,10 @@ namespace TagLib {
 		///    contents of the file and with a mime-type guessed from
 		///    the file's contents.
 		/// </returns>
-		public static Picture CreateFromPath (string path)
+		[Obsolete("Use Picture(string filename) instead.")]
+		public static Picture CreateFromPath (string filename)
 		{
-			return CreateFromFile (
-				new File.LocalFileAbstraction (path));
+			return new Picture (filename);
 		}
 		
 		/// <summary>
@@ -259,30 +298,10 @@ namespace TagLib {
 		///    contents of the file and with a mime-type guessed from
 		///    the file's contents.
 		/// </returns>
+		[Obsolete("Use Picture(File.IFileAbstraction abstraction) instead.")]
 		public static Picture CreateFromFile (File.IFileAbstraction abstraction)
 		{
-			byte [] fc;
-			string filename = null;
-			string mimetype = "image/jpeg";
-			string ext = "jpg";
-			
-			Picture picture = new Picture();
-			picture.Data = ByteVector.FromFile (abstraction, out fc,
-				true);
-			if (fc.Length >= 4 &&
-				(fc[1] == 'P' &&
-				 fc[2] == 'N' &&
-				 fc[3] == 'G')) {
-				mimetype = "image/png";
-				ext = "png";
-			}
-			
-			picture.MimeType = mimetype;
-			picture.Type = PictureType.FrontCover;
-			picture.Description = filename == null ?
-				("cover." + ext) : mimetype;
-			
-			return picture;
+			return new Picture (abstraction);
 		}
 		
 		#endregion
@@ -342,6 +361,41 @@ namespace TagLib {
 		public ByteVector Data {
 			get { return data; }
 			set { data = value; }
+		}
+		
+		#endregion
+		
+		
+		
+		#region Private Methods
+		
+		private void FillInMimeFromData ()
+		{
+			string mimetype = "image/jpeg";
+			string ext = "jpg";
+			
+			if (Data.Count >= 4 &&
+				(Data[1] == 'P' &&
+				 Data[2] == 'N' &&
+				 Data[3] == 'G')) {
+				mimetype = "image/png";
+				ext = "png";
+			} else if (Data.Count >= 3 &&
+				(Data[0] == 'G' &&
+				 Data[1] == 'I' &&
+				 Data[2] == 'F')) {
+				mimetype = "image/png";
+				ext = "gif";
+			} else if (Data.Count >= 2 &&
+				(Data[0] == 'B' &&
+				 Data[1] == 'M')) {
+				mimetype = "image/bmp";
+				ext = "bmp";
+			}
+			
+			MimeType = mimetype;
+			Type = PictureType.FrontCover;
+			Description = "cover." + ext;
 		}
 		
 		#endregion

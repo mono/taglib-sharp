@@ -101,6 +101,8 @@ namespace TagLib.NonContainer
             if (tag_data.StartsWith (TagLib.Ape.Footer.FileIdentifier))
             {
                TagLib.Ape.Footer footer = new TagLib.Ape.Footer (tag_data);
+               if (footer.CompleteTagSize == 0 || (footer.Flags & TagLib.Ape.FooterFlags.IsHeader) != 0)
+                  return TagTypes.None;
                position -= footer.CompleteTagSize;
                return TagTypes.Ape;
             }

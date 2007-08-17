@@ -315,6 +315,38 @@ namespace TagLib.Ape
          }
       }
       
+		public override IPicture [] Pictures {
+			get {
+				Item item = GetItem ("Cover Art (front)");
+				if (item == null || item.Type != ItemType.Binary)
+					return new IPicture [0];
+				
+				int index = item.Value.Find (
+					ByteVector.TextDelimiter (StringType.UTF8));
+				
+				if (index < 0)
+					return new IPicture [0];
+				
+				Picture pic = new Picture (item.Value.Mid (index + 1));
+				pic.Description = item.Value.Mid (0, index
+					).ToString (StringType.UTF8);
+				
+				return new IPicture [] {pic};
+			}
+			set {
+				if (value == null || value.Length == 0)
+					RemoveItem ("Cover Art (front)");
+				
+				ByteVector data = ByteVector.FromString (
+					value [0].Description, StringType.UTF8);
+				data.Add (ByteVector.TextDelimiter (
+					StringType.UTF8));
+				data.Add (value [0].Data);
+				
+				SetItem (new Item ("Cover Art (front)", data));
+			}
+		}
+		
       public bool HeaderPresent
       {
          get {return (_footer.Flags & FooterFlags.HeaderPresent) != 0;}
@@ -343,15 +375,18 @@ namespace TagLib.Ape
          return _items.Keys.GetEnumerator();
       }
       
-      public void AddValue (string key, uint number, uint count)
-      {
-         if (number == 0 && count == 0)
-            return;
-         else if (count != 0)
-            AddValue (key, number.ToString (CultureInfo.InvariantCulture) + "/" + count.ToString (CultureInfo.InvariantCulture));
-         else
-            AddValue (key, number.ToString (CultureInfo.InvariantCulture));
-      }
+		public void AddValue (string key, uint number, uint count)
+		{
+			if (number == 0 && count == 0)
+				return;
+			else if (count != 0)
+				AddValue (key, string.Format (
+					CultureInfo.InvariantCulture, "{0}/{1}",
+					number, count));
+			else
+				AddValue (key, number.ToString (
+					CultureInfo.InvariantCulture));
+		}
       
       public void SetValue (string key, uint number, uint count)
       {
