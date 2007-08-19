@@ -221,8 +221,8 @@ namespace TagLib {
 		
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
-		///    cref="File" /> for a specified specified path in the
-		///    local file system.
+		///    cref="File" /> for a specified path in the local file
+		///    system.
 		/// </summary>
 		/// <param name="path">
 		///    A <see cref="string" /> object containing the path of the
@@ -479,7 +479,7 @@ namespace TagLib {
 		/// </param>
 		/// <returns>
 		///    A <see cref="Tag" /> object containing the tag that was
-		///    accessed from or added to the current instance. If no
+		///    found in or added to the current instance. If no
 		///    matching tag was found and none was created, <see
 		///    langref="null" /> is returned.
 		/// </returns>
@@ -523,7 +523,7 @@ namespace TagLib {
 		/// </param>
 		/// <returns>
 		///    A <see cref="Tag" /> object containing the tag that was
-		///    accessed from the current instance. If no matching tag
+		///    found in the current instance. If no matching tag
 		///    was found, <see langref="null" /> is returned.
 		/// </returns>
 		/// <remarks>
