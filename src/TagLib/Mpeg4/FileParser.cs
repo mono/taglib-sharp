@@ -4,19 +4,56 @@ using System.Collections.Generic;
 namespace TagLib.Mpeg4 {
 	public class FileParser
 	{
+		/// <summary>
+		///    Contains the file to read from.
+		/// </summary>
 		private TagLib.File file;
+		
+		/// <summary>
+		///    Contains the first header found in the file.
+		/// </summary>
 		private BoxHeader first_header;
 		
+		/// <summary>
+		///    Contains the ISO movie header box.
+		/// </summary>
 		private IsoMovieHeaderBox mvhd_box;
+		
+		/// <summary>
+		///    Contains the ISO user data box.
+		/// </summary>
 		private IsoUserDataBox udta_box;
 		
+		/// <summary>
+		///    Contains the box headers from the top of the file to the
+		///    "moov" box.
+		/// </summary>
 		private BoxHeader [] moov_tree;
+		
+		/// <summary>
+		///    Contains the box headers from the top of the file to the
+		///    "udta" box.
+		/// </summary>
 		private BoxHeader [] udta_tree;
 		
+		/// <summary>
+		///    Contains the "stco" boxes found in the file.
+		/// </summary>
 		private List<Box> stco_boxes;
+		
+		/// <summary>
+		///    Contains the "stsd" boxes found in the file.
+		/// </summary>
 		private List<Box> stsd_boxes;
 		
+		/// <summary>
+		///    Contains the position at which the "mdat" box starts.
+		/// </summary>
 		private long mdat_start = -1;
+		
+		/// <summary>
+		///    Contains the position at which the "mdat" box ends.
+		/// </summary>
 		private long mdat_end = -1;
 		
 		public FileParser (TagLib.File file)
@@ -119,7 +156,7 @@ namespace TagLib.Mpeg4 {
 						parents, header);
 					moov_tree = new_parents.ToArray ();
 					ParseBoxHeaders (
-						header.DataOffset + position,
+						header.HeaderSize + position,
 						header.TotalBoxSize + position,
 						new_parents);
 				} else if (header.BoxType == BoxType.Mdia ||
@@ -127,7 +164,7 @@ namespace TagLib.Mpeg4 {
 					header.BoxType == BoxType.Stbl ||
 					header.BoxType == BoxType.Trak) {
 					ParseBoxHeaders (
-						header.DataOffset + position,
+						header.HeaderSize + position,
 						header.TotalBoxSize + position,
 						AddParent (parents, header));
 				} else if (udta_box == null &&
@@ -159,7 +196,7 @@ namespace TagLib.Mpeg4 {
 					header.BoxType == BoxType.Minf ||
 					header.BoxType == BoxType.Stbl ||
 					header.BoxType == BoxType.Trak) {
-					ParseTag (header.DataOffset + position,
+					ParseTag (header.HeaderSize + position,
 						header.TotalBoxSize + position);
 				} else if (udta_box == null &&
 					header.BoxType == BoxType.Udta) {
@@ -196,7 +233,7 @@ namespace TagLib.Mpeg4 {
 					type == BoxType.Stbl ||
 					type == BoxType.Trak) {
 					ParseTagAndProperties (
-						header.DataOffset + position,
+						header.HeaderSize + position,
 						header.TotalBoxSize + position,
 						handler);
 				} else if (type == BoxType.Stsd) {
@@ -241,7 +278,7 @@ namespace TagLib.Mpeg4 {
 				
 				if (header.BoxType == BoxType.Moov) {
 					ParseChunkOffsets (
-						header.DataOffset + position,
+						header.HeaderSize + position,
 						header.TotalBoxSize + position);
 				} else if (header.BoxType == BoxType.Moov ||
 					header.BoxType == BoxType.Mdia ||
@@ -249,7 +286,7 @@ namespace TagLib.Mpeg4 {
 					header.BoxType == BoxType.Stbl ||
 					header.BoxType == BoxType.Trak) {
 					ParseChunkOffsets (
-						header.DataOffset + position,
+						header.HeaderSize + position,
 						header.TotalBoxSize + position);
 				} else if (header.BoxType == BoxType.Stco ||
 					header.BoxType == BoxType.Co64) {

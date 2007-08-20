@@ -1,187 +1,419 @@
+//
+// File.cs: Provides tagging and properties support for MPEG-4 files.
+//
+// Author:
+//   Brian Nickel (brian.nickel@gmail.com)
+//
+// Copyright (C) 2006-2007 Brian Nickel
+// 
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+// 
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+
 using System;
 
-namespace TagLib.Mpeg4
-{
-   [SupportedMimeType("taglib/m4a", "m4a")]
-   [SupportedMimeType("taglib/m4v", "m4v")]
-   [SupportedMimeType("taglib/m4p", "m4p")]
-   [SupportedMimeType("taglib/mp4", "mp4")]
-   [SupportedMimeType("audio/mp4")]
-   [SupportedMimeType("audio/x-m4a")]
-   [SupportedMimeType("video/mp4")]
-   [SupportedMimeType("video/x-m4v")]
-   public class File : TagLib.File
-   {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
-      private AppleTag    apple_tag;
-      private CombinedTag tag;
-      private Properties  properties;
-      private IsoUserDataBox udta_box;
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
-      public File (string path, ReadStyle propertiesStyle) : this (new File.LocalFileAbstraction (path), propertiesStyle)
-      {}
-      
-      public File (string path) : this (path, ReadStyle.Average)
-      {}
-      
-      public File (File.IFileAbstraction abstraction, ReadStyle propertiesStyle) : base (abstraction)
-      {
-         // TODO: Support Id3v2 boxes!!!
-         tag = new CombinedTag ();
-         
-         Mode = AccessMode.Read;
-         Read (propertiesStyle);
-         Mode = AccessMode.Closed;
-      }
-      
-      public File (File.IFileAbstraction abstraction) : this (abstraction, ReadStyle.Average)
-      {}
-      
-      // Read the tag. If it doesn't exist, create.
-      public override TagLib.Tag Tag {get {return tag;}}
-      
-      // Read the properties.
-      public override TagLib.Properties Properties {get {return properties;}}
-      
-      // Save. This work is done in the AppleTag.
-      public override void Save () 
-      {
-         if (udta_box == null)
-            udta_box = new IsoUserDataBox ();
-         
-         // Try to get into write mode.
-         Mode = File.AccessMode.Write;
-         
-         FileParser parser = new FileParser (this);
-         parser.ParseBoxHeaders ();
-         
-         InvariantStartPosition = parser.MdatStartPosition;
-         InvariantEndPosition = parser.MdatEndPosition;
-         
-         long size_change = 0;
-         long write_position = 0;
-         
-         ByteVector tag_data = udta_box.Render ();
-         
-         // If we don't have a "udta" box to overwrite...
-         if (parser.UdtaTree == null || parser.UdtaTree.Length == 0 || parser.UdtaTree [parser.UdtaTree.Length - 1].BoxType != BoxType.Udta)
-         {
-            // Stick the box at the end of the moov box.
-            BoxHeader moov_header = parser.MoovTree [parser.MoovTree.Length - 1];
-            size_change = tag_data.Count;
-            write_position = moov_header.Position + moov_header.TotalBoxSize;
-            Insert (tag_data, write_position, 0);
-            
-            // Overwrite the parent box sizes.
-            for (int i = parser.MoovTree.Length - 1; i >= 0; i --)
-               size_change = parser.MoovTree [i].Overwrite (this, size_change);
-         }
-         else
-         {
-            // Overwrite the old box.
-            BoxHeader udta_header = parser.UdtaTree [parser.UdtaTree.Length - 1];
-            size_change = tag_data.Count - udta_header.TotalBoxSize;
-            write_position = udta_header.Position;
-            Insert (tag_data, write_position, udta_header.TotalBoxSize);
-            
-            // Overwrite the parent box sizes.
-            for (int i = parser.UdtaTree.Length - 2; i >= 0; i --)
-               size_change = parser.UdtaTree [i].Overwrite (this, size_change);
-         }
-         
-         // If we've had a size change, we may need to adjust chunk offsets.
-         if (size_change != 0)
-         {
-            // We may have moved the offset boxes, so we need to reread.
-            parser.ParseChunkOffsets ();
-            InvariantStartPosition = parser.MdatStartPosition;
-            InvariantEndPosition = parser.MdatEndPosition;
-            
-            foreach (Box box in parser.ChunkOffsetBoxes)
-            {
-               if (box is IsoChunkLargeOffsetBox)
-                  (box as IsoChunkLargeOffsetBox).Overwrite (this, size_change, write_position);
-               
-               if (box is IsoChunkOffsetBox)
-                  (box as IsoChunkOffsetBox).Overwrite (this, size_change, write_position);
-            }
-         }
-         
-         Mode = File.AccessMode.Closed;
-         TagTypesOnDisk = TagTypes;
-      }
-      
-      // Get the Apple Tag.
-      public override TagLib.Tag GetTag (TagTypes type, bool create)
-      {
-         if (type == TagTypes.Apple)
-         {
-            if (apple_tag == null && create)
-            {
-               apple_tag = new AppleTag (udta_box);
-               tag.SetTags (apple_tag);
-            }
-            
-            return apple_tag;
-         }
-         
-         return null;
-      }
-      
-      // Remove the Apple Tag.
-      public override void RemoveTags (TagTypes types)
-      {
-         if ((types & TagTypes.Apple) != TagTypes.Apple || apple_tag == null)
-            return;
-         
-         apple_tag.DetachIlst ();
-         apple_tag = null;
-         tag.SetTags ();
-      }
-      
-      // Read the file.
-      private void Read (ReadStyle properties_style)
-      {
-         FileParser parser = new FileParser (this);
-         
-         if (properties_style == ReadStyle.None)
-            parser.ParseTag ();
-         else
-            parser.ParseTagAndProperties ();
-         
-         InvariantStartPosition = parser.MdatStartPosition;
-         InvariantEndPosition = parser.MdatEndPosition;
-         
-         udta_box = parser.UserDataBox;
-         
-         if (udta_box != null && udta_box.GetChild (BoxType.Meta) != null && udta_box.GetChild (BoxType.Meta).GetChild (BoxType.Ilst) != null)
-            TagTypesOnDisk |= TagTypes.Apple;
-         
-         if (udta_box == null)
-            udta_box = new IsoUserDataBox ();
+namespace TagLib.Mpeg4 {
+	/// <summary>
+	///    This class extends <see cref="TagLib.NonContainer.File" /> to
+	///    provide tagging and properties support for MPEG-4 files.
+	/// </summary>
+	[SupportedMimeType("taglib/m4a", "m4a")]
+	[SupportedMimeType("taglib/m4v", "m4v")]
+	[SupportedMimeType("taglib/m4p", "m4p")]
+	[SupportedMimeType("taglib/mp4", "mp4")]
+	[SupportedMimeType("audio/mp4")]
+	[SupportedMimeType("audio/x-m4a")]
+	[SupportedMimeType("video/mp4")]
+	[SupportedMimeType("video/x-m4v")]
+	public class File : TagLib.File
+	{
+		#region Private Fields
+		
+		/// <summary>
+		///    Contains the Apple tag.
+		/// </summary>
+		private AppleTag    apple_tag;
+		
+		/// <summary>
+		///    Contains the combined tag.
+		/// </summary>
+		/// <remarks>
+		///    TODO: Add support for ID3v2 tags.
+		/// </remarks>
+		private CombinedTag tag;
+		
+		/// <summary>
+		///    Contains the media properties.
+		/// </summary>
+		private Properties  properties;
+		
+		/// <summary>
+		///    Contains the ISO user data box.
+		/// </summary>
+		private IsoUserDataBox udta_box;
+		
+		#endregion
+		
+		
+		
+		#region Constructors
+		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="File" /> for a specified path in the local file
+		///    system and specified read style.
+		/// </summary>
+		/// <param name="path">
+		///    A <see cref="string" /> object containing the path of the
+		///    file to use in the new instance.
+		/// </param>
+		/// <param name="propertiesStyle">
+		///    A <see cref="ReadStyle" /> value specifying at what level
+		///    of accuracy to read the media properties, or <see
+		///    cref="ReadStyle.None" /> to ignore the properties.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="path" /> is <see langref="null" />.
+		/// </exception>
+		protected File (string path, ReadStyle propertiesStyle)
+			: base (path)
+		{
+			Read (propertiesStyle);
+		}
+		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="File" /> for a specified path in the local file
+		///    system with an average read style.
+		/// </summary>
+		/// <param name="path">
+		///    A <see cref="string" /> object containing the path of the
+		///    file to use in the new instance.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="path" /> is <see langref="null" />.
+		/// </exception>
+		protected File (string path) : this (path, ReadStyle.Average)
+		{
+		}
+		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="File" /> for a specified file abstraction and
+		///    specified read style.
+		/// </summary>
+		/// <param name="abstraction">
+		///    A <see cref="IFileAbstraction" /> object to use when
+		///    reading from and writing to the file.
+		/// </param>
+		/// <param name="propertiesStyle">
+		///    A <see cref="ReadStyle" /> value specifying at what level
+		///    of accuracy to read the media properties, or <see
+		///    cref="ReadStyle.None" /> to ignore the properties.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="abstraction" /> is <see langref="null"
+		///    />.
+		/// </exception>
+		protected File (File.IFileAbstraction abstraction,
+		                ReadStyle propertiesStyle)
+		: base (abstraction)
+		{
+			Read (propertiesStyle);
+		}
+		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="File" /> for a specified file abstraction with an
+		///    average read style.
+		/// </summary>
+		/// <param name="abstraction">
+		///    A <see cref="IFileAbstraction" /> object to use when
+		///    reading from and writing to the file.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="abstraction" /> is <see langref="null"
+		///    />.
+		/// </exception>
+		protected File (File.IFileAbstraction abstraction)
+			: this (abstraction, ReadStyle.Average)
+		{
+		}
+		
+		#endregion
+		
+		
+		
+		#region Public Properties
+		
+		/// <summary>
+		///    Gets a abstract representation of all tags stored in the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="TagLib.Tag" /> object representing all tags
+		///    stored in the current instance.
+		/// </value>
+		public override TagLib.Tag Tag {
+			get {return tag;}
+		}
+		
+		/// <summary>
+		///    Gets the media properties of the file represented by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="TagLib.Properties" /> object containing the
+		///    media properties of the file represented by the current
+		///    instance.
+		/// </value>
+		public override TagLib.Properties Properties {
+			get {return properties;}
+		}
+		
+		#endregion
+		
+		
+		
+		#region Public Methods
+		
+		/// <summary>
+		///    Saves the changes made in the current instance to the
+		///    file it represents.
+		/// </summary>
+		public override void Save ()
+		{
+			if (udta_box == null)
+				udta_box = new IsoUserDataBox ();
+			
+			// Try to get into write mode.
+			Mode = File.AccessMode.Write;
+			
+			FileParser parser = new FileParser (this);
+			parser.ParseBoxHeaders ();
+			
+			InvariantStartPosition = parser.MdatStartPosition;
+			InvariantEndPosition = parser.MdatEndPosition;
+			
+			long size_change = 0;
+			long write_position = 0;
+			
+			ByteVector tag_data = udta_box.Render ();
+			
+			// If we don't have a "udta" box to overwrite...
+			if (parser.UdtaTree == null ||
+				parser.UdtaTree.Length == 0 ||
+				parser.UdtaTree [parser.UdtaTree.Length - 1
+				].BoxType != BoxType.Udta) {
+				
+				// Stick the box at the end of the moov box.
+				BoxHeader moov_header = parser.MoovTree [
+					parser.MoovTree.Length - 1];
+				size_change = tag_data.Count;
+				write_position = moov_header.Position +
+					moov_header.TotalBoxSize;
+				Insert (tag_data, write_position, 0);
+				
+				// Overwrite the parent box sizes.
+				for (int i = parser.MoovTree.Length - 1; i >= 0;
+					i --)
+					size_change = parser.MoovTree [i
+						].Overwrite (this, size_change);
+			} else {
+				// Overwrite the old box.
+				BoxHeader udta_header = parser.UdtaTree [
+					parser.UdtaTree.Length - 1];
+				size_change = tag_data.Count -
+					udta_header.TotalBoxSize;
+				write_position = udta_header.Position;
+				Insert (tag_data, write_position,
+					udta_header.TotalBoxSize);
+				
+				// Overwrite the parent box sizes.
+				for (int i = parser.UdtaTree.Length - 2; i >= 0;
+					i --)
+					size_change = parser.UdtaTree [i
+						].Overwrite (this, size_change);
+			}
+			
+			// If we've had a size change, we may need to adjust
+			// chunk offsets.
+			if (size_change != 0) {
+				// We may have moved the offset boxes, so we
+				// need to reread.
+				parser.ParseChunkOffsets ();
+				InvariantStartPosition = parser.MdatStartPosition;
+				InvariantEndPosition = parser.MdatEndPosition;
+				
+				foreach (Box box in parser.ChunkOffsetBoxes) {
+					IsoChunkLargeOffsetBox co64 = 
+						box as IsoChunkLargeOffsetBox;
+					
+					if (co64 != null) {
+						co64.Overwrite (this,
+							size_change,
+							write_position);
+						continue;
+					}
+					
+					IsoChunkOffsetBox stco = 
+						box as IsoChunkOffsetBox;
+					
+					if (stco != null) {
+						stco.Overwrite (this,
+							size_change,
+							write_position);
+						continue;
+					}
+				}
+			}
+			
+			Mode = File.AccessMode.Closed;
+			TagTypesOnDisk = TagTypes;
+		}
 
-         apple_tag = new AppleTag (udta_box);
-         tag.SetTags (apple_tag);
-         
-         // If we're not reading properties, we're done.
-         if (properties_style == ReadStyle.None)
-            return;
-         
-         // Get the movie header box.
-         IsoMovieHeaderBox mvhd_box = parser.MovieHeaderBox;
-         if(mvhd_box == null)
-            throw new CorruptFileException ("mvhd box not found.");
-         
-         IsoAudioSampleEntry  audio_sample_entry  = parser.AudioSampleEntry;
-         IsoVisualSampleEntry visual_sample_entry = parser.VisualSampleEntry;
-         
-         // Read the properties.
-         properties = new Properties (mvhd_box.Duration, audio_sample_entry, visual_sample_entry);
-      }
-   }
+		/// <summary>
+		///    Gets a tag of a specified type from the current instance,
+		///    optionally creating a new tag if possible.
+		/// </summary>
+		/// <param name="type">
+		///    A <see cref="TagLib.TagTypes" /> value indicating the
+		///    type of tag to read.
+		/// </param>
+		/// <param name="create">
+		///    A <see cref="bool" /> value specifying whether or not to
+		///    try and create the tag if one is not found.
+		/// </param>
+		/// <returns>
+		///    A <see cref="Tag" /> object containing the tag that was
+		///    found in or added to the current instance. If no
+		///    matching tag was found and none was created, <see
+		///    langref="null" /> is returned.
+		/// </returns>
+		/// <remarks>
+		///    At the time of this writing, only <see cref="AppleTag" />
+		///    is supported. All other tag types will be ignored.
+		/// </remarks>
+		public override TagLib.Tag GetTag (TagTypes type, bool create)
+		{
+			if (type == TagTypes.Apple) {
+				if (apple_tag == null && create) {
+					apple_tag = new AppleTag (udta_box);
+					tag.SetTags (apple_tag);
+				}
+				
+				return apple_tag;
+			}
+			
+			return null;
+		}
+		
+		/// <summary>
+		///    Removes a set of tag types from the current instance.
+		/// </summary>
+		/// <param name="types">
+		///    A bitwise combined <see cref="TagLib.TagTypes" /> value
+		///    containing tag types to be removed from the file.
+		/// </param>
+		/// <remarks>
+		///    In order to remove all tags from a file, pass <see
+		///    cref="TagTypes.AllTags" /> as <paramref name="types" />.
+		/// </remarks>
+		public override void RemoveTags (TagTypes types)
+		{
+			if ((types & TagTypes.Apple) != TagTypes.Apple ||
+				apple_tag == null)
+				return;
+			
+			apple_tag.DetachIlst ();
+			apple_tag = null;
+			tag.SetTags ();
+		}
+		
+		#endregion
+		
+		
+		
+		#region Private Methods
+		
+		/// <summary>
+		///    Reads the file with a specified read style.
+		/// </summary>
+		/// <param name="propertiesStyle">
+		///    A <see cref="ReadStyle" /> value specifying at what level
+		///    of accuracy to read the media properties, or <see
+		///    cref="ReadStyle.None" /> to ignore the properties.
+		/// </param>
+		private void Read (ReadStyle propertiesStyle)
+		{
+			// TODO: Support Id3v2 boxes!!!
+			tag = new CombinedTag ();
+			Mode = AccessMode.Read;
+			
+			FileParser parser = new FileParser (this);
+			
+			if (propertiesStyle == ReadStyle.None)
+				parser.ParseTag ();
+			else
+				parser.ParseTagAndProperties ();
+			
+			InvariantStartPosition = parser.MdatStartPosition;
+			InvariantEndPosition = parser.MdatEndPosition;
+			
+			udta_box = parser.UserDataBox;
+			
+			if (udta_box != null && udta_box.GetChild (BoxType.Meta)
+				!= null && udta_box.GetChild (BoxType.Meta
+				).GetChild (BoxType.Ilst) != null)
+				TagTypesOnDisk |= TagTypes.Apple;
+			
+			if (udta_box == null)
+				udta_box = new IsoUserDataBox ();
+			
+			apple_tag = new AppleTag (udta_box);
+			tag.SetTags (apple_tag);
+			
+			// If we're not reading properties, we're done.
+			if (propertiesStyle == ReadStyle.None) {
+				Mode = AccessMode.Closed;
+				return;
+			}
+			
+			// Get the movie header box.
+			IsoMovieHeaderBox mvhd_box = parser.MovieHeaderBox;
+			if(mvhd_box == null) {
+				Mode = AccessMode.Closed;
+				throw new CorruptFileException (
+					"mvhd box not found.");
+			}
+			
+			IsoAudioSampleEntry  audio_sample_entry =
+				parser.AudioSampleEntry;
+			IsoVisualSampleEntry visual_sample_entry =
+				parser.VisualSampleEntry;
+			
+			// Read the properties.
+			properties = new Properties (mvhd_box.Duration,
+				audio_sample_entry, visual_sample_entry);
+			Mode = AccessMode.Closed;
+		}
+		
+		#endregion
+	}
 }

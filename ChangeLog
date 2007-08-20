@@ -1,5 +1,33 @@
 2007-08-19  Brian Nickel <brian.nickel@gmail.com>
 
+	* src/TagLib/Id3v2/Frames/PopularimeterFrame.cs: Fix an exception when
+	saving a PopularimeterFrame with a play count of 0.
+	
+	* src/taglib-sharp.mdp: Remove BoxList.cs. It hasn't been used in
+	forever and is an empty file.
+	
+	* src/TagLib/Mpeg4/FileParser.cs: Started documentation.
+	
+	* src/TagLib/Mpeg4/BoxTypes.cs:
+	* src/TagLib/Mpeg4/File.cs:
+	* src/TagLib/Mpeg4/BoxFactory.cs:
+	* src/TagLib/Mpeg4/BoxHeader.cs:
+	* src/TagLib/Mpeg4/BoxList.cs:
+	* src/TagLib/Mpeg4/Box.cs:
+	* src/TagLib/Mpc/File.cs:
+	* src/TagLib/WavPack/File.cs: Completed documentation.
+	
+	* src/TagLib/Mpc/StreamHeader.cs:
+	* src/TagLib/WavPack/StreamHeader.cs: Completed documentation, except
+	for IEquitable overrides.
+	
+	* src/TagLib/Mpeg4/AppleTag.cs: Completed documentation, except for
+	IEnumerable overrides.
+	
+	* configure.ac: Now 2.0.2.10.
+
+2007-08-19  Brian Nickel <brian.nickel@gmail.com>
+
 	* src/TagLib/File.cs: Fix some typos in documentation.
 	
 	* src/TagLib/NonContainer/Tag.cs:

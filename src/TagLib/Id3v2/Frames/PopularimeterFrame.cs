@@ -261,7 +261,7 @@ namespace TagLib.Id3v2
 		protected override ByteVector RenderFields (byte version)
 		{
 			ByteVector data = ByteVector.FromULong (play_count);
-			while (data [0] == 0)
+			while (data.Count > 0 && data [0] == 0)
 				data.RemoveAt (0);
 			
 			data.Insert (0, rating);
