@@ -30,7 +30,7 @@ using System;
 
 namespace TagLib.WavPack {
 	/// <summary>
-	///    This struct implements <see cref="IAudioCodec" />, providing
+	///    This struct implements <see cref="IAudioCodec" /> to provide
 	///    support for reading WavPack audio properties.
 	/// </summary>
 	public struct StreamHeader : IAudioCodec, IEquatable<StreamHeader>

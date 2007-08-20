@@ -150,6 +150,7 @@ namespace TagLib.Mpeg4 {
 		/// <param name="position">
 		///    A <see cref="long" /> value specifying at what seek
 		///    position in <paramref name="file" /> to start reading.
+		/// </param>
 		/// <param name="parent">
 		///    A <see cref="BoxHeader" /> object containing the header
 		///    of the parent box.
@@ -184,6 +185,7 @@ namespace TagLib.Mpeg4 {
 		/// <param name="position">
 		///    A <see cref="long" /> value specifying at what seek
 		///    position in <paramref name="file" /> to start reading.
+		/// </param>
 		/// <param name="handler">
 		///    A <see cref="IsoHandlerBox" /> object containing the
 		///    handler that applies to the new box.
@@ -209,6 +211,7 @@ namespace TagLib.Mpeg4 {
 		/// <param name="position">
 		///    A <see cref="long" /> value specifying at what seek
 		///    position in <paramref name="file" /> to start reading.
+		/// </param>
 		/// <returns>
 		///    A newly created <see cref="Box" /> object.
 		/// </returns>

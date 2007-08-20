@@ -29,7 +29,7 @@ using System;
 
 namespace TagLib.MusePack {
 	/// <summary>
-	///    This struct implements <see cref="IAudioCodec" />, providing
+	///    This struct implements <see cref="IAudioCodec" /> to provide
 	///    support for reading MusePack audio properties.
 	/// </summary>
 	public struct StreamHeader : IAudioCodec

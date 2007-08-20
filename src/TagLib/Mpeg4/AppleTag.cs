@@ -276,11 +276,11 @@ namespace TagLib.Mpeg4 {
 			if (added)
 				return;
 			
-			Box box = new AppleAnnotationBox (type);
-			ilst_box.AddChild (box);
+			Box box2 = new AppleAnnotationBox (type);
+			ilst_box.AddChild (box2);
 			
 			foreach (AppleDataBox b in boxes)
-				box.AddChild (b);
+				box2.AddChild (b);
 		}
 		
 		/// <summary>

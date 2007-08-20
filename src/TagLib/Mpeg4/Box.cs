@@ -148,7 +148,8 @@ namespace TagLib.Mpeg4 {
 		///    Gets the children of the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="T:System.Collections.IEnumerable&lt;Box&gt;"
+		///    A <see
+		///    cref="T:System.Collections.Generic.IEnumerable&lt;Box&gt;"
 		///    /> object enumerating the children of the current
 		///    instance.
 		/// </value>

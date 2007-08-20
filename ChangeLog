@@ -1,5 +1,18 @@
 2007-08-19  Brian Nickel <brian.nickel@gmail.com>
 
+	* src/TagLib/Mpeg4/Boxes/IsoVisualSampleEntry.cs:
+	* src/TagLib/Mpeg4/Boxes/UnknownBox.cs: Document completely.
+
+	* src/TagLib/Mpeg4/AppleTag.cs: Committed too soon. File didn't compile.
+	* src/TagLib/Mpeg4/BoxFactory.cs: Forgot a bunch of end tags.
+	
+	* src/TagLib/Mpeg4/Box.cs: Fix doc typo.
+	
+	* src/TagLib/Mpc/StreamHeader.cs:
+	* src/TagLib/WavPack/StreamHeader.cs: Slight change in wording.
+
+2007-08-19  Brian Nickel <brian.nickel@gmail.com>
+
 	* src/TagLib/Id3v2/Frames/PopularimeterFrame.cs: Fix an exception when
 	saving a PopularimeterFrame with a play count of 0.
 	
