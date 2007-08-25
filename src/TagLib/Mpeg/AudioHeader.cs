@@ -8,6 +8,7 @@
 //   mpegheader.cpp from TagLib
 //
 // Copyright (C) 2005-2007 Brian Nickel
+// Copyright (C) 2003 by Scott Wheeler (Original Implementation)
 // 
 // This library is free software; you can redistribute it and/or modify
 // it  under the terms of the GNU Lesser General Public License version
@@ -24,7 +25,6 @@
 // USA
 //
 
-using System.Collections;
 using System;
 
 namespace TagLib.Mpeg {
@@ -86,7 +86,7 @@ namespace TagLib.Mpeg {
 	#endregion
 	
 	/// <summary>
-	///    This class implements <see cref="IAudioCodec" /> and provides
+	///    This structure implements <see cref="IAudioCodec" /> and provides
 	///    information about an MPEG audio stream.
 	/// </summary>
 	public struct AudioHeader : IAudioCodec

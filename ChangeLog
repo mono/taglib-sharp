@@ -1,3 +1,39 @@
+2007-08-24  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Mpeg/AudioHeader.cs: Restore copyright notice.
+	
+	* src/TagLib/ICodec.cs: Wording Change.
+	
+	* src/TagLib/Mpeg/XingHeader.cs:
+	* src/TagLib/Mpeg/VideoHeader.cs:
+	* src/TagLib/Mpeg/AudioFile.cs: 
+	* src/TagLib/Mpeg4/Boxes/FullBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoMovieHeaderBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoSampleTableBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoSampleEntry.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoChunkLargeOffsetBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/AppleAdditionalInfoBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoFreeSpaceBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/AppleItemListBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoUserDataBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoAudioSampleEntry.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoHandlerBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/AppleElementaryStreamDescriptor.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoVisualSampleEntry.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoChunkOffsetBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/AppleDataBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/AppleAnnotationBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/UnknownBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoSampleDescriptionBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoMetaBox.cs: 
+	* src/TagLib/Mpeg4/FileParser.cs: 
+	* src/TagLib/Mpeg4/AppleTag.cs: 
+	* src/TagLib/Mpeg4/BoxTypes.cs: 
+	* src/TagLib/Mpeg4/File.cs: 
+	* src/TagLib/Mpeg4/BoxFactory.cs: 
+	* src/TagLib/Mpeg4/BoxHeader.cs: 
+	* src/TagLib/Mpeg4/Box.cs: Document completely.
+
 2007-08-19  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Mpeg4/Boxes/IsoVisualSampleEntry.cs:

@@ -1,30 +1,25 @@
 //
 // IsoVisualSampleEntry.cs: Provides an implementation of a ISO/IEC 14496-12
-// VisualSampleEntry and reading MPEG-4 video properties.
+// VisualSampleEntry and support for reading MPEG-4 video properties.
 //
 // Author:
 //   Brian Nickel (brian.nickel@gmail.com)
 //
 // Copyright (C) 2006-2007 Brian Nickel
 // 
-// Permission is hereby granted, free of charge, to any person obtaining
-// a copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to
-// permit persons to whom the Software is furnished to do so, subject to
-// the following conditions:
-// 
-// The above copyright notice and this permission notice shall be
-// included in all copies or substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// This library is free software; you can redistribute it and/or modify
+// it  under the terms of the GNU Lesser General Public License version
+// 2.1 as published by the Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
+// USA
 //
 
 using System;
@@ -34,8 +29,8 @@ namespace TagLib.Mpeg4 {
 	/// <summary>
 	///    This class extends <see cref="IsoSampleEntry" /> and implements
 	///    <see cref="IVideoCodec" /> to provide an implementation of a
-	///    ISO/IEC 14496-12 VisualSampleEntry and reading MPEG-4 video
-	///    properties.
+	///    ISO/IEC 14496-12 VisualSampleEntry and support for reading MPEG-4
+	///    video properties.
 	/// </summary>
 	public class IsoVisualSampleEntry : IsoSampleEntry, IVideoCodec
 	{
@@ -66,8 +61,8 @@ namespace TagLib.Mpeg4 {
 		
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
-		///    cref="UnknownBox" /> with a provided header and handler
-		///    by reading the contents from a specified file.
+		///    cref="IsoVisualSampleEntry" /> with a provided header and
+		///    handler by reading the contents from a specified file.
 		/// </summary>
 		/// <param name="header">
 		///    A <see cref="BoxHeader" /> object containing the header
@@ -88,9 +83,6 @@ namespace TagLib.Mpeg4 {
 		                             IsoHandlerBox handler)
 			: base (header, file, handler)
 		{
-			if (file == null)
-				throw new ArgumentNullException ("file");
-			
 			file.Seek (base.DataPosition + 16);
 			width = file.ReadBlock (2).ToUShort ();
 			height = file.ReadBlock (2).ToUShort ();

@@ -1,39 +1,62 @@
-/***************************************************************************
-    copyright            : (C) 2005 by Brian Nickel
-    email                : brian.nickel@gmail.com
-    based on             : xingheader.cpp from TagLib
- ***************************************************************************/
-
-/***************************************************************************
- *   This library is free software; you can redistribute it and/or modify  *
- *   it  under the terms of the GNU Lesser General Public License version  *
- *   2.1 as published by the Free Software Foundation.                     *
- *                                                                         *
- *   This library is distributed in the hope that it will be useful, but   *
- *   WITHOUT ANY WARRANTY; without even the implied warranty of            *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU     *
- *   Lesser General Public License for more details.                       *
- *                                                                         *
- *   You should have received a copy of the GNU Lesser General Public      *
- *   License along with this library; if not, write to the Free Software   *
- *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  *
- *   USA                                                                   *
- ***************************************************************************/
+//
+// XingHeader.cs: Provides information about a variable bitrate MPEG audio
+// stream.
+//
+// Author:
+//   Brian Nickel (brian.nickel@gmail.com)
+//
+// Original Source:
+//   xingheader.cpp from TagLib
+//
+// Copyright (C) 2005-2007 Brian Nickel
+// Copyright (C) 2003 by Ismael Orenstein (Original Implementation)
+// 
+// This library is free software; you can redistribute it and/or modify
+// it  under the terms of the GNU Lesser General Public License version
+// 2.1 as published by the Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
+// USA
+//
 
 using System.Collections;
 using System;
 
-namespace TagLib.Mpeg
-{
-   public struct XingHeader
-   {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
-      private uint frames;
-      private uint size;
-      private bool present;
-      
+namespace TagLib.Mpeg {
+	/// <summary>
+	///    This structure provides information about a variable bitrate MPEG
+	///    audio stream.
+	/// </summary>
+	public struct XingHeader
+	{
+		#region Private Fields
+		
+		/// <summary>
+		///    Contains the frame count.
+		/// </summary>
+		private uint frames;
+		
+		/// <summary>
+		///    Contains the stream size.
+		/// </summary>
+		private uint size;
+		
+		/// <summary>
+		///    Indicates that a physical Xing header is present.
+		/// </summary>
+		private bool present;
+		
+		#endregion
+		
+		
+		
 		#region Public Fields
 		
 		/// <summary>
@@ -118,33 +141,81 @@ namespace TagLib.Mpeg
 		}
 		
 		#endregion
-
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
-      public uint TotalFrames {get {return frames;}}
-      public uint TotalSize {get {return size;}}
-      public bool Present   {get {return present;}}
-
-      //////////////////////////////////////////////////////////////////////////
-      // public static methods
-      //////////////////////////////////////////////////////////////////////////
-      public static int XingHeaderOffset (Version version, ChannelMode channelMode)
-      {
-         if (version == Version.Version1)
-         {
-            if (channelMode == ChannelMode.SingleChannel)
-               return 0x15;
-            else
-               return 0x24;
-         }
-         else
-         {
-            if (channelMode == ChannelMode.SingleChannel)
-               return 0x0D;
-            else
-               return 0x15;
-         }
-      }
-   }
+		
+		
+		
+		#region Public Properties
+		
+		/// <summary>
+		///    Gets the total number of frames in the file, as indicated
+		///    by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> value containing the number of
+		///    frames in the file, or <c>0</c> if not specified.
+		/// </value>
+		public uint TotalFrames {
+			get {return frames;}
+		}
+		
+		/// <summary>
+		///    Gets the total size of the file, as indicated by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> value containing the total size of
+		///    the file, or <c>0</c> if not specified.
+		/// </value>
+		public uint TotalSize {
+			get {return size;}
+		}
+		
+		/// <summary>
+		///    Gets whether or not a physical Xing header is present in
+		///    the file.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value indicating whether or not the
+		///    current instance represents a physical Xing header.
+		/// </value>
+		public bool Present {
+			get {return present;}
+		}
+		
+		#endregion
+		
+		
+		
+		#region Public Static Methods
+		
+		/// <summary>
+		///    Gets the offset at which a Xing header would appear in an
+		///    MPEG audio packet based on the version and channel mode.
+		/// </summary>
+		/// <param name="version">
+		///    A <see cref="Version" /> value specifying the version of
+		///    the MPEG audio packet.
+		/// </param>
+		/// <param name="channelMode">
+		///    A <see cref="ChannelMode" /> value specifying the channel
+		///    mode of the MPEG audio packet.
+		/// </param>
+		/// <returns>
+		///    A <see cref="int" /> value indicating the offset in an
+		///    MPEG audio packet at which the Xing header would appear.
+		/// </returns>
+		public static int XingHeaderOffset (Version version,
+		                                    ChannelMode channelMode)
+		{
+			bool single_channel =
+				channelMode == ChannelMode.SingleChannel;
+			
+			if (version == Version.Version1)
+				return single_channel ? 0x15 : 0x24;
+			else
+				return single_channel ? 0x0D : 0x15;
+		}
+		
+		#endregion
+	}
 }

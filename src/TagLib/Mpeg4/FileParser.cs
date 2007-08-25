@@ -1,9 +1,39 @@
+//
+// FileParser.cs: Provides methods for reading important information from an
+// MPEG-4 file.
+//
+// Author:
+//   Brian Nickel (brian.nickel@gmail.com)
+//
+// Copyright (C) 2006-2007 Brian Nickel
+// 
+// This library is free software; you can redistribute it and/or modify
+// it  under the terms of the GNU Lesser General Public License version
+// 2.1 as published by the Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
+// USA
+//
+
 using System;
 using System.Collections.Generic;
 
 namespace TagLib.Mpeg4 {
+	/// <summary>
+	///    This class provides methods for reading important information
+	///    from an MPEG-4 file.
+	/// </summary>
 	public class FileParser
 	{
+		#region Private Fields
+		
 		/// <summary>
 		///    Contains the file to read from.
 		/// </summary>
@@ -39,12 +69,12 @@ namespace TagLib.Mpeg4 {
 		/// <summary>
 		///    Contains the "stco" boxes found in the file.
 		/// </summary>
-		private List<Box> stco_boxes;
+		private List<Box> stco_boxes = new List<Box> ();
 		
 		/// <summary>
 		///    Contains the "stsd" boxes found in the file.
 		/// </summary>
-		private List<Box> stsd_boxes;
+		private List<Box> stsd_boxes = new List<Box> ();
 		
 		/// <summary>
 		///    Contains the position at which the "mdat" box starts.
@@ -56,27 +86,88 @@ namespace TagLib.Mpeg4 {
 		/// </summary>
 		private long mdat_end = -1;
 		
+		#endregion
+		
+		
+		
+		#region Constructors
+		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="FileParser" /> for a specified file.
+		/// </summary>
+		/// <param name="file">
+		///    A <see cref="TagLib.File" /> object to perform operations
+		///    on.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="file" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="CorruptFileException">
+		///    <paramref name="file" /> does not start with a
+		///    "<c>ftyp</c>" box.
+		/// </exception>
 		public FileParser (TagLib.File file)
 		{
+			if (file == null)
+				throw new ArgumentNullException ("file");
+			
 			this.file = file;
 			first_header = new BoxHeader (file, 0);
 			
 			if (first_header.BoxType != "ftyp")
 				throw new CorruptFileException (
 					"File does not start with 'ftyp' box.");
-			
-			stco_boxes = new List<Box> ();
-			stsd_boxes = new List<Box> ();
 		}
 		
+		#endregion
+		
+		
+		
+		#region Public Properties
+		
+		/// <summary>
+		///    Gets the movie header box read by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="IsoMovieHeaderBox" /> object read by the
+		///    current instance, or <see langref="null" /> if not found.
+		/// </value>
+		/// <remarks>
+		///    This value will only be set by calling <see
+		///    cref="ParseTagAndProperties()" />.
+		/// </remarks>
 		public IsoMovieHeaderBox MovieHeaderBox {
 			get {return mvhd_box;}
 		}
 		
+		/// <summary>
+		///    Gets the user data box read by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="IsoUserDataBox" /> object read by the
+		///    current instance, or <see langref="null" /> if not found.
+		/// </value>
+		/// <remarks>
+		///    This value will only be set by calling <see
+		///    cref="ParseTag()" /> and <see
+		///    cref="ParseTagAndProperties()" />.
+		/// </remarks>
 		public IsoUserDataBox UserDataBox {
 			get {return udta_box;}
 		}
 		
+		/// <summary>
+		///    Gets the audio sample entry read by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="IsoAudioSampleEntry" /> object read by the
+		///    current instance, or <see langref="null" /> if not found.
+		/// </value>
+		/// <remarks>
+		///    This value will only be set by calling <see
+		///    cref="ParseTagAndProperties()" />.
+		/// </remarks>
 		public IsoAudioSampleEntry AudioSampleEntry {
 			get {
 				foreach (IsoSampleDescriptionBox box in stsd_boxes)
@@ -91,6 +182,18 @@ namespace TagLib.Mpeg4 {
 			}
 		}
 		
+		/// <summary>
+		///    Gets the visual sample entry read by the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="IsoVisualSampleEntry" /> object read by the
+		///    current instance, or <see langref="null" /> if not found.
+		/// </value>
+		/// <remarks>
+		///    This value will only be set by calling <see
+		///    cref="ParseTagAndProperties()" />.
+		/// </remarks>
 		public IsoVisualSampleEntry VisualSampleEntry {
 			get {
 				foreach (IsoSampleDescriptionBox box in stsd_boxes)
@@ -105,42 +208,167 @@ namespace TagLib.Mpeg4 {
 			}
 		}
 		
+		/// <summary>
+		///    Gets the box headers for the first "<c>moov</c>" box and
+		///    all parent boxes up to the top of the file as read by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="BoxHeader[]" /> containing the headers for
+		///    the first "<c>moov</c>" box and its parent boxes up to
+		///    the top of the file, in the order they appear, or <see
+		///    langword="null" /> if none is present.
+		/// </value>
+		/// <remarks>
+		///    This value is useful for overwriting box headers, and is
+		///    only be set by calling <see cref="ParseBoxHeaders()" />.
+		/// </remarks>
 		public BoxHeader [] MoovTree {
 			get {return moov_tree;}
 		}
 		
+		/// <summary>
+		///    Gets the box headers for the first "<c>udta</c>" box and
+		///    all parent boxes up to the top of the file as read by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="BoxHeader[]" /> containing the headers for
+		///    the first "<c>udta</c>" box and its parent boxes up to
+		///    the top of the file, in the order they appear, or <see
+		///    langword="null" /> if none is present.
+		/// </value>
+		/// <remarks>
+		///    This value is useful for overwriting box headers, and is
+		///    only be set by calling <see cref="ParseBoxHeaders()" />.
+		/// </remarks>
 		public BoxHeader [] UdtaTree {
 			get {return udta_tree;}
 		}
 		
+		/// <summary>
+		///    Gets all chunk offset boxes read by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="Box[]" /> containing all chunk offset boxes
+		///    read by the current instance.
+		/// </value>
+		/// <remarks>
+		///    These boxes contain offset information for media data in
+		///    the current instance and can be devalidated by size
+		///    change operations, in which case they need to be
+		///    corrected. This value will only be set by calling <see
+		///    cref="ParseChunkOffsets()" />.
+		/// </remarks>
 		public Box [] ChunkOffsetBoxes {
 			get {return stco_boxes.ToArray ();}
 		}
 		
+		/// <summary>
+		///    Gets the position at which the "<c>mdat</c>" box starts.
+		/// </summary>
+		/// <value>
+		///    A <see cref="long" /> value containing the seek position
+		///    at which the "<c>mdat</c>" box starts.
+		/// </value>
+		/// <remarks>
+		///    The "<c>mdat</c>" box contains the media data for the
+		///    file and is used for estimating the invariant data
+		///    portion of the file.
+		/// </remarks>
 		public long MdatStartPosition {
 			get {return mdat_start;}
 		}
 		
+		/// <summary>
+		///    Gets the position at which the "<c>mdat</c>" box ends.
+		/// </summary>
+		/// <value>
+		///    A <see cref="long" /> value containing the seek position
+		///    at which the "<c>mdat</c>" box ends.
+		/// </value>
+		/// <remarks>
+		///    The "<c>mdat</c>" box contains the media data for the
+		///    file and is used for estimating the invariant data
+		///    portion of the file.
+		/// </remarks>
 		public long MdatEndPosition {
 			get {return mdat_end;}
 		}
 		
-		private static List<BoxHeader> AddParent (List<BoxHeader> parents,
-		                                          BoxHeader current)
-		{
-			List<BoxHeader> boxes = new List<BoxHeader> ();
-			if (parents != null)
-				boxes.AddRange (parents);
-			boxes.Add (current);
-			return boxes;
-		}
+		#endregion
 		
+		
+		
+		#region Public Methods
+		
+		/// <summary>
+		///    Parses the file referenced by the current instance,
+		///    searching for box headers that will be useful in saving
+		///    the file.
+		/// </summary>
 		public void ParseBoxHeaders ()
 		{
+			ResetFields ();
 			ParseBoxHeaders (first_header.TotalBoxSize,
 				file.Length, null);
 		}
 		
+		/// <summary>
+		///    Parses the file referenced by the current instance,
+		///    searching for tags.
+		/// </summary>
+		public void ParseTag ()
+		{
+			ResetFields ();
+			ParseTag (first_header.TotalBoxSize, file.Length);
+		}
+		
+		/// <summary>
+		///    Parses the file referenced by the current instance,
+		///    searching for tags and properties.
+		/// </summary>
+		public void ParseTagAndProperties ()
+		{
+			ResetFields ();
+			ParseTagAndProperties (first_header.TotalBoxSize,
+				file.Length, null);
+		}
+		
+		/// <summary>
+		///    Parses the file referenced by the current instance,
+		///    searching for chunk offset boxes.
+		/// </summary>
+		public void ParseChunkOffsets ()
+		{
+			ResetFields ();
+			ParseChunkOffsets (first_header.TotalBoxSize,
+				file.Length);
+		}
+		
+		#endregion
+		
+		
+		
+		#region Private Methods
+		
+		/// <summary>
+		///    Parses boxes for a specified range, looking for headers.
+		/// </summary>
+		/// <param name="start">
+		///    A <see cref="long" /> value specifying the seek position
+		///    at which to start reading.
+		/// </param>
+		/// <param name="end">
+		///    A <see cref="long" /> value specifying the seek position
+		///    at which to stop reading.
+		/// </param>
+		/// <param name="parents">
+		///    A <see
+		///    cref="T:System.Collections.Generic.List&lt;BoxHeader&gt;"
+		///    /> object containing all the parent handlers that apply
+		///    to the range.
+		/// </param>
 		private void ParseBoxHeaders (long start, long end,
 		                              List<BoxHeader> parents)
 		{
@@ -167,7 +395,7 @@ namespace TagLib.Mpeg4 {
 						header.HeaderSize + position,
 						header.TotalBoxSize + position,
 						AddParent (parents, header));
-				} else if (udta_box == null &&
+				} else if (moov_tree == null &&
 					header.BoxType == BoxType.Udta) {
 					udta_tree = AddParent (parents,
 						header).ToArray ();
@@ -178,11 +406,17 @@ namespace TagLib.Mpeg4 {
 			}
 		}
 		
-		public void ParseTag ()
-		{
-			ParseTag (first_header.TotalBoxSize, file.Length);
-		}
-		
+		/// <summary>
+		///    Parses boxes for a specified range, looking for tags.
+		/// </summary>
+		/// <param name="start">
+		///    A <see cref="long" /> value specifying the seek position
+		///    at which to start reading.
+		/// </param>
+		/// <param name="end">
+		///    A <see cref="long" /> value specifying the seek position
+		///    at which to stop reading.
+		/// </param>
 		private void ParseTag (long start, long end)
 		{
 			long position = start;
@@ -211,12 +445,22 @@ namespace TagLib.Mpeg4 {
 			} while (header.TotalBoxSize != 0 && position < end);
 		}
 		
-		public void ParseTagAndProperties ()
-		{
-			ParseTagAndProperties (first_header.TotalBoxSize,
-				file.Length, null);
-		}
-		
+		/// <summary>
+		///    Parses boxes for a specified range, looking for tags and
+		///    properties.
+		/// </summary>
+		/// <param name="start">
+		///    A <see cref="long" /> value specifying the seek position
+		///    at which to start reading.
+		/// </param>
+		/// <param name="end">
+		///    A <see cref="long" /> value specifying the seek position
+		///    at which to stop reading.
+		/// </param>
+		/// <param name="handler">
+		///    A <see cref="IsoHandlerBox" /> object that applied to the
+		///    range being searched.
+		/// </param>
 		private void ParseTagAndProperties (long start, long end,
 		                                    IsoHandlerBox handler)
 		{
@@ -262,12 +506,18 @@ namespace TagLib.Mpeg4 {
 			} while (header.TotalBoxSize != 0 && position < end);
 		}
 		
-		public void ParseChunkOffsets ()
-		{
-			ParseChunkOffsets (first_header.TotalBoxSize,
-				file.Length);
-		}
-		
+		/// <summary>
+		///    Parses boxes for a specified range, looking for chunk
+		///    offset boxes.
+		/// </summary>
+		/// <param name="start">
+		///    A <see cref="long" /> value specifying the seek position
+		///    at which to start reading.
+		/// </param>
+		/// <param name="end">
+		///    A <see cref="long" /> value specifying the seek position
+		///    at which to stop reading.
+		/// </param>
 		private void ParseChunkOffsets (long start, long end)
 		{
 			long position = start;
@@ -300,5 +550,53 @@ namespace TagLib.Mpeg4 {
 				position += header.TotalBoxSize;
 			} while (header.TotalBoxSize != 0 && position < end);
 		}
+		
+		/// <summary>
+		///    Resets all internal fields.
+		/// </summary>
+		private void ResetFields ()
+		{
+			mvhd_box = null;
+			udta_box = null;
+			moov_tree = null;
+			udta_tree = null;
+			stco_boxes.Clear ();
+			stsd_boxes.Clear ();
+			mdat_start = -1;
+			mdat_end = -1;
+		}
+		
+		#endregion
+		
+		#region Private Static Methods
+		
+		/// <summary>
+		///    Adds a parent to the end of an existing list of parents.
+		/// </summary>
+		/// <param name="parents">
+		///    A <see
+		///    cref="T:System.Collections.Generic.List&lt;BoxHeader&gt;"
+		///    /> object containing an existing list of parents.
+		/// </param>
+		/// <param name="current">
+		///    A <see cref="BoxHeader" /> object to add to the list.
+		/// </param>
+		/// <returns>
+		///    A new <see
+		///    cref="T:System.Collections.Generic.List&lt;BoxHeader&gt;"
+		///    /> object containing the list of parents, including the
+		///    added header.
+		/// </returns>
+		private static List<BoxHeader> AddParent (List<BoxHeader> parents,
+		                                          BoxHeader current)
+		{
+			List<BoxHeader> boxes = new List<BoxHeader> ();
+			if (parents != null)
+				boxes.AddRange (parents);
+			boxes.Add (current);
+			return boxes;
+		}
+		
+		#endregion
 	}
 }

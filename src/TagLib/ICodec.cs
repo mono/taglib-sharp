@@ -154,8 +154,8 @@ namespace TagLib {
 		///    instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="int" /> containing the width of the video
-		///    represented by the current instance.
+		///    A <see cref="int" /> value containing the width of the
+		///    video represented by the current instance.
 		/// </value>
 		int VideoWidth  {get;}
 		
@@ -164,8 +164,8 @@ namespace TagLib {
 		///    instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="int" /> containing the height of the video
-		///    represented by the current instance.
+		///    A <see cref="int" /> value containing the height of the
+		///    video represented by the current instance.
 		/// </value>
 		int VideoHeight {get;}
 	}
