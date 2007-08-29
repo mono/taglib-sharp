@@ -97,9 +97,8 @@ namespace TagLib {
 		///    to be read from the codecs.
 		/// </param>
 		/// <param name="codecs">
-		///    A <see
-		///    cref="T:System.Collections.Generic.IEnumerable&lt;TagLib.ICodec&gt;"
-		///    /> containing the codecs to be used in the new instance.
+		///    A <see cref="IEnumerable{T}" /> object containing the
+		///    codec to be used in the new instance.
 		/// </param>
 		public Properties (TimeSpan duration, IEnumerable<ICodec> codecs)
 		{
@@ -117,10 +116,9 @@ namespace TagLib {
 		///    Gets the codecs contained in the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see
-		///    cref="T:System.Collections.Generic.IEnumerable&lt;TagLib.ICodec&gt;"
-		///    /> object containing the <see cref="ICodec" /> objects
-		///    contained in the current instance.
+		///    A <see cref="IEnumerable{T}" /> object containing the
+		///    <see cref="ICodec" /> objects contained in the current
+		///    instance.
 		/// </value>
 		public IEnumerable<ICodec> Codecs {get {return codecs;}}
 		

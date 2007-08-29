@@ -122,9 +122,8 @@ namespace TagLib {
 		///    />.
 		/// </summary>
 		/// <value>
-		///    A <see
-		///    cref="T:System.Collections.Generic.IDictionary&lt;System.String,System.Type&gt;"
-		///    /> object containing the supported mime-types.
+		///    A <see cref="IDictionary{T,U}" /> object containing the
+		///    supported mime-types.
 		/// </value>
 		public static IDictionary<string, Type> AvailableTypes {
 			get {return file_types;}

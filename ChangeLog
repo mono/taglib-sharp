@@ -1,3 +1,44 @@
+2007-08-28  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Ape/Tag.cs: Stop parsing when a corrupt item is detected.
+	
+	* src/TagLib/Ape/Item.cs: UTF-8 encoded length != string.Length. Was
+	messing up with Chinese titles. (Thanks to jms for the bug report.)
+	
+	* src/TagLib/CombinedTag.cs: Fix header.
+	
+	* src/TagLib/Id3v2/Tag.cs: Document, add generic GetFrames()
+	
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs: 
+	* src/TagLib/Id3v2/Frame.cs: 
+	* src/TagLib/Mpeg/File.cs: Document.
+	
+	* src/TagLib/Mpeg/VideoHeader.cs: Fix copyright info.
+	
+	* src/TagLib/Mpeg/AudioFile.cs: Fix some typos.
+	
+	* src/TagLib/Properties.cs: 
+	* src/TagLib/SupportedMimeType.cs: 
+	* src/TagLib/StringList.cs: 
+	* src/TagLib/FileTypes.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoSampleTableBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/AppleItemListBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoUserDataBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoAudioSampleEntry.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoVisualSampleEntry.cs: 
+	* src/TagLib/Mpeg4/Boxes/AppleAnnotationBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoSampleDescriptionBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoMetaBox.cs: 
+	* src/TagLib/Mpeg4/FileParser.cs: 
+	* src/TagLib/Mpeg4/AppleTag.cs: 
+	* src/TagLib/Mpeg4/Box.cs: Fixed generics documentation.
+	
+	* src/TagLib/Mpeg4/File.cs: Accidentally marked constructors as
+	protected when copy/pasting code from NonContainer.File. (Thanks to
+	hwahrmann for the bug report.)
+	
+	* configure.ac:  Now 2.0.2.11.
+
 2007-08-24  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Mpeg/AudioHeader.cs: Restore copyright notice.

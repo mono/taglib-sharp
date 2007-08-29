@@ -29,9 +29,8 @@ using System.Runtime.InteropServices;
 
 namespace TagLib {
 	/// <summary>
-	///    This class extends <see
-	///    cref="T:TagLib.ListBase&lt;System.String&gt;" /> for a
-	///    collection of <see cref="string" /> objects.
+	///    This class extends <see cref="ListBase{T}" /> for a collection of
+	///    <see cref="string" /> objects.
 	/// </summary>
 	[ComVisible(false)]
 	public class StringCollection : ListBase<string>

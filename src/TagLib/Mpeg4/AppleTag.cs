@@ -122,14 +122,12 @@ namespace TagLib.Mpeg4 {
 		///    Gets all data boxes that match any of the provided types.
 		/// </summary>
 		/// <param name="types">
-		///    A <see
-		///    cref="T:System.Collections.Generic.IEnumerable&lt;ByteVector&gt;"
-		///    /> object enumerating a list of box types to match.
+		///    A <see cref="IEnumerable{T}" /> object enumerating a list
+		///    of box types to match.
 		/// </param>
 		/// <returns>
-		///    A <see
-		///    cref="T:System.Collections.Generic.IEnumerable&lt;AppleDataBox&gt;"
-		///    /> object enumerating the matching boxes.
+		///    A <see cref="IEnumerable{T}" /> object enumerating the
+		///    matching boxes.
 		/// </returns>
 		public IEnumerable<AppleDataBox> DataBoxes (IEnumerable<ByteVector> types)
 		{
@@ -152,9 +150,8 @@ namespace TagLib.Mpeg4 {
 		///    types to match.
 		/// </param>
 		/// <returns>
-		///    A <see
-		///    cref="T:System.Collections.Generic.IEnumerable&lt;AppleDataBox&gt;"
-		///    /> object enumerating the matching boxes.
+		///    A <see cref="IEnumerable{T}" /> object enumerating the
+		///    matching boxes.
 		/// </returns>
 		public IEnumerable<AppleDataBox> DataBoxes (params ByteVector [] types)
 		{
@@ -174,9 +171,8 @@ namespace TagLib.Mpeg4 {
 		///    match.
 		/// </param>
 		/// <returns>
-		///    A <see
-		///    cref="T:System.Collections.Generic.IEnumerable&lt;AppleDataBox&gt;"
-		///    /> object enumerating the matching boxes.
+		///    A <see cref="IEnumerable{T}" /> object enumerating the
+		///    matching boxes.
 		/// </returns>
 		public IEnumerable<AppleDataBox> DataBoxes (string mean,
 		                                            string name)

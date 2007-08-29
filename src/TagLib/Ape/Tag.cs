@@ -498,23 +498,27 @@ namespace TagLib.Ape
       	Parse (file.ReadBlock ((int)(_footer.TagSize - Footer.Size)));
       }
 
-      protected void Parse (ByteVector data)
-      {
-         if (data == null)
-            throw new ArgumentNullException ("data");
-         
-         int pos = 0;
-         
-         // 11 bytes is the minimum size for an APE item
-         for (uint i = 0; i < _footer.ItemCount && pos <= data.Count - 11; i++)
-         {
-            Item item = new Item (data, pos);
-            
-            SetItem (item);
-            
-            pos += item.Size;
-         }
-      }
-      #endregion
-   }
+		protected void Parse (ByteVector data)
+		{
+			if (data == null)
+				throw new ArgumentNullException ("data");
+			
+			int pos = 0;
+			
+			try {
+				// 11 bytes is the minimum size for an APE item
+				for (uint i = 0; i < _footer.ItemCount &&
+					pos <= data.Count - 11; i++) {
+					Item item = new Item (data, pos);
+					SetItem (item);
+					pos += item.Size;
+				}
+			} catch (CorruptFileException) {
+				// A corrupt item was encountered, considered
+				// the tag finished with what has been read.
+			}
+		}
+		
+		#endregion
+	}
 }

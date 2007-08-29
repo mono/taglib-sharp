@@ -38,7 +38,8 @@ namespace TagLib.Mpeg {
 	///    A <see cref="TagLib.Id3v1.Tag" /> and <see
 	///    cref="TagLib.Id3v2.Tag" /> will be added automatically to any
 	///    file that doesn't contain one. This change does not effect the
-	///    file and can be reversed using the following method:
+	///    file until it is saved and can be reversed using the following
+	///    method:
 	///    <code>file.RemoveTags (file.TagTypes &amp; ~file.TagTypesOnDisk);</code>
 	/// </remarks>
 	[SupportedMimeType("taglib/mp3", "mp3")]
@@ -66,8 +67,8 @@ namespace TagLib.Mpeg {
 		
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
-		///    cref="File" /> for a specified path in the local file
-		///    system and specified read style.
+		///    cref="AudioFile" /> for a specified path in the local
+		///    file system and specified read style.
 		/// </summary>
 		/// <param name="path">
 		///    A <see cref="string" /> object containing the path of the
@@ -88,8 +89,8 @@ namespace TagLib.Mpeg {
 		
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
-		///    cref="File" /> for a specified path in the local file
-		///    system with an average read style.
+		///    cref="AudioFile" /> for a specified path in the local
+		///    file system with an average read style.
 		/// </summary>
 		/// <param name="path">
 		///    A <see cref="string" /> object containing the path of the
@@ -104,7 +105,7 @@ namespace TagLib.Mpeg {
 		
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
-		///    cref="File" /> for a specified file abstraction and
+		///    cref="AudioFile" /> for a specified file abstraction and
 		///    specified read style.
 		/// </summary>
 		/// <param name="abstraction">
@@ -128,8 +129,8 @@ namespace TagLib.Mpeg {
 		
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
-		///    cref="File" /> for a specified file abstraction with an
-		///    average read style.
+		///    cref="AudioFile" /> for a specified file abstraction with
+		///    an average read style.
 		/// </summary>
 		/// <param name="abstraction">
 		///    A <see cref="IFileAbstraction" /> object to use when

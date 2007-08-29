@@ -86,7 +86,7 @@ namespace TagLib.Mpeg4 {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langref="null" />.
 		/// </exception>
-		protected File (string path, ReadStyle propertiesStyle)
+		public File (string path, ReadStyle propertiesStyle)
 			: base (path)
 		{
 			Read (propertiesStyle);
@@ -104,7 +104,7 @@ namespace TagLib.Mpeg4 {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langref="null" />.
 		/// </exception>
-		protected File (string path) : this (path, ReadStyle.Average)
+		public File (string path) : this (path, ReadStyle.Average)
 		{
 		}
 		
@@ -126,7 +126,7 @@ namespace TagLib.Mpeg4 {
 		///    <paramref name="abstraction" /> is <see langref="null"
 		///    />.
 		/// </exception>
-		protected File (File.IFileAbstraction abstraction,
+		public File (File.IFileAbstraction abstraction,
 		                ReadStyle propertiesStyle)
 		: base (abstraction)
 		{
@@ -146,7 +146,7 @@ namespace TagLib.Mpeg4 {
 		///    <paramref name="abstraction" /> is <see langref="null"
 		///    />.
 		/// </exception>
-		protected File (File.IFileAbstraction abstraction)
+		public File (File.IFileAbstraction abstraction)
 			: this (abstraction, ReadStyle.Average)
 		{
 		}

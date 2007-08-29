@@ -4,9 +4,6 @@
 // Author:
 //   Brian Nickel (brian.nickel@gmail.com)
 //
-// Original Source:
-//   tag.cpp from TagLib
-//
 // Copyright (C) 2005-2007 Brian Nickel
 // 
 // This library is free software; you can redistribute it and/or modify
