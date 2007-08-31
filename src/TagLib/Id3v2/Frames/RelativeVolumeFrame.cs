@@ -210,15 +210,13 @@ namespace TagLib.Id3v2 {
 			if (pos < 0)
 				return;
 			
-			identification = data.Mid (0, pos).ToString (
+			identification = data.Mid (0, pos++).ToString (
 				StringType.Latin1);
-			pos += 1;
 			
 			// Each channel is at least 4 bytes.
 			
 			while (pos <= data.Count - 4) {
-				ChannelType type = (ChannelType) data [pos];
-				pos += 1;
+				ChannelType type = (ChannelType) data [pos++];
 				
 				unchecked {
 					SetVolumeAdjustmentIndex (type,
@@ -227,8 +225,11 @@ namespace TagLib.Id3v2 {
 				}
 				pos += 2;
 				
-				int bytes = BitsToBytes (data [pos]);
-				pos += 1;
+				int bytes = BitsToBytes (data [pos++]);
+				
+				if (data.Count < pos + bytes)
+					throw new CorruptFileException (
+						"Insufficient peak data.");
 				
 				SetPeakVolumeIndex (type, data.Mid (pos,
 					bytes).ToULong ());

@@ -348,18 +348,20 @@ namespace TagLib {
 		///    elements to copy from the current instance.
 		/// </param>
 		/// <exception cref="ArgumentOutOfRangeException">
-		///    <paramref name="startIndex" /> is less than zero or or
-		///    equal to <see cref="Count" />. OR <paramref name="length"
-		///    /> is less than zero or greater than the amount of
-		///    available; data.
+		///    <paramref name="startIndex" /> is less than zero or
+		///    greater than or equal to <see cref="Count" />. OR
+		///    <paramref name="length" /> is less than zero or greater
+		///    than the amount of available data.
 		/// </exception>
 		public ByteVector Mid (int startIndex, int length)
 		{
 			if (startIndex < 0 || startIndex > Count)
-				throw new ArgumentOutOfRangeException ("startIndex");
+				throw new ArgumentOutOfRangeException (
+					"startIndex");
 			
 			if (length < 0 || startIndex + length > Count)
-				throw new ArgumentOutOfRangeException ("length");
+				throw new ArgumentOutOfRangeException (
+					"length");
 			
 			if (length == 0)
 				return new ByteVector ();
@@ -373,69 +375,88 @@ namespace TagLib {
 			
 			return data;
 		}
-
-        public ByteVector Mid(int index)
-        {
-            return Mid(index, Count - index);
-        }
-        
-        public int Find (ByteVector pattern, int offset, int byteAlign)
-        {
-            if (pattern == null)
-               throw new ArgumentNullException ("pattern");
-         
-            if (pattern.Count > Count - offset)
-                return -1;
-
-            // Let's go ahead and special case a pattern of size one since that's common
-            // and easy to make fast.
-
-            if (pattern.Count == 1)
-            {
-                byte p = pattern [0];
-                for (int i = offset; i < this.data.Count; i += byteAlign)
-                    if (this [i] == p)
-                        return i;
-                return -1;
-            }
-
-            int [] last_occurrence = new int [256];
-
-            for (int i = 0; i < 256; ++i)
-                last_occurrence [i] = pattern.Count;
-
-            for (int i = 0; i < pattern.Count - 1; ++i)
-                last_occurrence [pattern [i]] = pattern.Count - i - 1;
-
-            for (int i = pattern.Count - 1 + offset; i < this.data.Count; i += last_occurrence [this.data [i]])
-            {
-                int iBuffer = i;
-                int iPattern = pattern.Count - 1;
-                
-                while(iPattern >= 0 && this.data [iBuffer] == pattern [iPattern])
-                {
-                    --iBuffer;
-                    --iPattern;
-                }
-
-                if(-1 == iPattern && (iBuffer + 1 - offset) % byteAlign == 0)
-                    return iBuffer + 1;
-            }
-
-            return -1;
-        }
-
-        public int Find(ByteVector pattern, int offset)
-        {
-            return Find(pattern, offset, 1);
-        }
-
-        public int Find(ByteVector pattern)
-        {
-            return Find(pattern, 0, 1);
-        }
-      
-        public int RFind (ByteVector pattern, int offset, int byteAlign)
+		
+		/// <summary>
+		///    Creates a new instance of <see cref="ByteVector" />
+		///    containing elements from the current instance starting
+		///    from a specified point.
+		/// </summary>
+		/// <param name="index">
+		///    A <see cref="int" /> value specifying the index at which
+		///    to start copying elements from the current instance.
+		/// </param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		///    <paramref name="ndex" /> is less than zero or greater
+		///    than or equal to <see cref="Count" />.
+		/// </exception>
+		public ByteVector Mid (int index)
+		{
+			return Mid(index, Count - index);
+		}
+		
+		public int Find (ByteVector pattern, int offset, int byteAlign)
+		{
+			if (pattern == null)
+				throw new ArgumentNullException ("pattern");
+			
+			if (offset < 0)
+				throw new ArgumentOutOfRangeException (
+					"offset");
+			
+			if (pattern.Count > Count - offset)
+				return -1;
+			
+			// Let's go ahead and special case a pattern of size one
+			// since that's common and easy to make fast.
+			
+			if (pattern.Count == 1) {
+				byte p = pattern [0];
+				for (int i = offset; i < this.data.Count;
+					i += byteAlign)
+					if (this.data [i] == p)
+						return i;
+				return -1;
+			}
+			
+			int [] last_occurrence = new int [256];
+			for (int i = 0; i < 256; ++i)
+				last_occurrence [i] = pattern.Count;
+			
+			for (int i = 0; i < pattern.Count - 1; ++i)
+				last_occurrence [pattern [i]] =
+					pattern.Count - i - 1;
+			
+			for (int i = pattern.Count - 1 + offset;
+				i < this.data.Count;
+				i += last_occurrence [this.data [i]]) {
+				int iBuffer = i;
+				int iPattern = pattern.Count - 1;
+				
+				while(iPattern >= 0 && this.data [iBuffer] ==
+					pattern [iPattern]) {
+					--iBuffer;
+					--iPattern;
+				}
+				
+				if (-1 == iPattern && (iBuffer + 1 - offset) %
+					byteAlign == 0)
+					return iBuffer + 1;
+			}
+			
+			return -1;
+		}
+		
+		public int Find(ByteVector pattern, int offset)
+		{
+			return Find(pattern, offset, 1);
+		}
+		
+		public int Find(ByteVector pattern)
+		{
+			return Find(pattern, 0, 1);
+		}
+		
+		public int RFind (ByteVector pattern, int offset, int byteAlign)
         {
             if (pattern == null)
                 throw new ArgumentNullException ("pattern");
@@ -699,7 +720,7 @@ namespace TagLib {
 			int chunk = 0;
 			int position = offset;
 			
-			StringCollection list = new StringCollection ();
+			List<string> list = new List<string> ();
 			ByteVector separator = TextDelimiter (type);
 			int align = separator.Count;
 			

@@ -1,3 +1,39 @@
+2007-08-31  Brian Nickel <brian.nickel@gmail.com>
+ 
+	* src/TagLib/Ape/File.cs: 
+	* src/TagLib/Ape/StreamHeader.cs: 
+	* src/TagLib/FileTypes.cs: Added support for reading APE files. (Thanks
+	to hwahrmann for authoring the classes.)
+	
+	* src/TagLib/Id3v2/Tag.cs: Fixed docs.
+	
+	* src/TagLib/Ape/Item.cs: Completed docs.
+	
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs: Prevent
+	ArgumentOutOfRangeException when a corrupt frame is encountered. (Thanks
+	to jms for the bug report.)
+
+	* src/TagLib/Id3v1/Tag.cs: 
+	* src/TagLib/Riff/List.cs: 
+	* src/TagLib/Riff/DivXTag.cs: 
+	* src/TagLib/Riff/ListTag.cs: 
+	* src/TagLib/Riff/InfoTag.cs: 
+	* src/TagLib/Riff/MovieIdTag.cs: 
+	* src/TagLib/ByteVector.cs: 
+	* src/TagLib/Properties.cs: 
+	* src/TagLib/Ape/Tag.cs: 
+	* src/TagLib/Mpeg4/AppleTag.cs: 
+	* src/TagLib/Tag.cs: 
+	* src/TagLib/Asf/Tag.cs: 
+	* src/TagLib/Ogg/XiphComment.cs: Removed StringCollection usage (and
+	replaced some collections with arrays.
+	
+	* src/TagLib/TagLib.sources: 
+	* src/taglib-sharp.mdp: 
+	* taglib-sharp.csproj: Added files.
+
+	* configure.ac:  Now 2.0.2.12.
+
 2007-08-28  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Ape/Tag.cs: Stop parsing when a corrupt item is detected.

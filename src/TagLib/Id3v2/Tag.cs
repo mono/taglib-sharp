@@ -327,10 +327,6 @@ namespace TagLib.Id3v2 {
 		///    Removes all frames with a specified identifier from the
 		///    current instance.
 		/// </summary>
-		/// <param name="frame">
-		///    A <see cref="Frame" /> object to remove from the current
-		///    instance.
-		/// </param>
 		/// <param name="ident">
 		///    A <see cref="ByteVector" /> object containing the
 		///    identifier of the frames to remove.

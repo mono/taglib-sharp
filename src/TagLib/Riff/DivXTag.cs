@@ -106,7 +106,11 @@ namespace TagLib.Riff
       public override string [] Performers
       {
          get {return new string [] {artist};}
-         set {artist = (new StringCollection (value)).ToString (",").Trim ();}
+			set {
+				artist = value == null ?
+					string.Empty :
+					string.Join (",", value).Trim ();
+			}
       }
       
       public override string Comment

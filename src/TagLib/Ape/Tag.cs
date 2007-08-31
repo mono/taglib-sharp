@@ -31,7 +31,7 @@ namespace TagLib.Ape
    {
       #region Private Properties
       private Footer _footer = new Footer ();
-      private Dictionary<string,Item> _items = new Dictionary<string,Item> ();
+      private List<Item> items = new List<Item> ();
       #endregion
       
       
@@ -43,21 +43,33 @@ namespace TagLib.Ape
       
       
       #region Constructors
-      public Tag () : base ()
+      public Tag ()
       {}
       
-      public Tag (File file, long position) : this ()
-      {
-         Read (file, position);
-      }
-      #endregion
-      
-      
-      
-      #region Public Properties
-      public override TagTypes TagTypes {get {return TagTypes.Ape;}}
-
-      public override string Title
+		public Tag (TagLib.File file, long position)
+		{
+			if (file == null)
+				throw new ArgumentNullException ("file");
+			
+			if (position < 0 ||
+				position > file.Length - Footer.Size)
+				throw new ArgumentOutOfRangeException (
+					"position");
+			
+			Read (file, position);
+		}
+		
+		#endregion
+		
+		
+		
+		#region Public Properties
+		
+		public override TagTypes TagTypes {
+			get {return TagTypes.Ape;}
+		}
+		
+		public override string Title
       {
          get
          {
@@ -359,24 +371,29 @@ namespace TagLib.Ape
          }
       }
       
-      public override bool IsEmpty {get {return _items.Count == 0;}}
+      public override bool IsEmpty {get {return items.Count == 0;}}
       #endregion
       
       
       
-      #region Public Methods
-      public IEnumerator<string> GetEnumerator()
-      {
-         return _items.Keys.GetEnumerator();
-      }
-      
-      IEnumerator IEnumerable.GetEnumerator()
-      {
-         return _items.Keys.GetEnumerator();
-      }
+		#region Public Methods
+		
+		public IEnumerator<string> GetEnumerator ()
+		{
+			foreach (Item item in items)
+				yield return item.Key;
+		}
+		
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator ();
+		}
       
 		public void AddValue (string key, uint number, uint count)
 		{
+			if (key == null)
+				throw new ArgumentNullException ("key");
+			
 			if (number == 0 && count == 0)
 				return;
 			else if (count != 0)
@@ -387,79 +404,141 @@ namespace TagLib.Ape
 				AddValue (key, number.ToString (
 					CultureInfo.InvariantCulture));
 		}
+		
+		public void SetValue (string key, uint number, uint count)
+		{
+			if (key == null)
+				throw new ArgumentNullException ("key");
+			
+			if (number == 0 && count == 0)
+				RemoveItem (key);
+			else if (count != 0)
+				SetValue (key, string.Format (
+					CultureInfo.InvariantCulture, "{0}/{1}",
+					number, count));
+			else
+				SetValue (key, number.ToString (
+					CultureInfo.InvariantCulture));
+		}
+		
+		public void AddValue (string key, string value)
+		{
+			if (key == null)
+				throw new ArgumentNullException ("key");
+			
+			if (string.IsNullOrEmpty (value))
+				return;
+			
+			AddValue (key, new string [] {value});
+		}
+		
+		public void SetValue (string key, string value)
+		{
+			if (key == null)
+				throw new ArgumentNullException ("key");
+			
+			if (string.IsNullOrEmpty (value))
+				RemoveItem (key);
+			else
+				SetValue (key, new string [] {value});
+		}
+		
+		public void AddValue (string key, string [] value)
+		{
+			if (key == null)
+				throw new ArgumentNullException ("key");
+			
+			if (value == null || value.Length == 0)
+				return;
+			
+			int index = GetItemIndex (key);
+			
+			List<string> values = new List<string> ();
+			
+			if (index >= 0)
+				values.AddRange (items [index].ToStringArray ());
+			
+			values.AddRange (value);
+			
+			Item item = new Item (key, values.ToArray ());
+			
+			if (index >= 0)
+				items [index] = item;
+			else
+				items.Add (item);
+		}
+		
+		public void SetValue (string key, string [] value)
+		{
+			if (key == null)
+				throw new ArgumentNullException ("key");
+			
+			if (value == null || value.Length == 0) {
+				RemoveItem (key);
+				return;
+			}
+			
+			Item item = new Item (key, value);
+			
+			int index = GetItemIndex (key);
+			if (index >= 0)
+				items [index] = item;
+			else
+				items.Add (item);
+			
+		}
       
-      public void SetValue (string key, uint number, uint count)
-      {
-         RemoveItem (key);
-         AddValue (key, number, count);
-      }
-      
-      public void AddValue (string key, string value)
-      {
-         if (string.IsNullOrEmpty (value))
-            return;
-         
-         StringCollection l = new StringCollection ();
-         Item old_item = GetItem (key);
-         if (old_item != null)
-            l.Add (old_item.ToStringArray ());
-         
-         l.Add (value);
-         
-         SetItem (new Item (key, l));
-      }
-      
-      public void SetValue (string key, string value)
-      {
-         RemoveItem (key);
-         AddValue (key, value);
-      }
-      
-      public void AddValue (string key, string [] value)
-      {
-         if (value != null)
-            foreach (string s in value)
-               AddValue (key, s);
-      }
-
-      public void SetValue (string key, string [] value)
-      {
-         RemoveItem (key);
-         AddValue (key, value);
-      }
-      
-      public Item GetItem (string key)
-      {
-         key = key.ToUpper (CultureInfo.InvariantCulture);
-         return _items.ContainsKey (key) ? _items [key] : null;
-      }
-      
-      public void SetItem (Item item)
-      {
-         string key = item.Key.ToUpper (CultureInfo.InvariantCulture);
-         if (_items.ContainsKey (key))
-            _items [key] = item;
-         else
-            _items.Add (key, item);
-      }
-      
-      public void RemoveItem (string key)
-      {
-         _items.Remove (key.ToUpper (CultureInfo.InvariantCulture));
-      }
-      
-      public ByteVector Render ()
-      {
-         ByteVector data = new ByteVector ();
-         uint item_count = 0;
-
-         foreach (Item item in _items.Values)
-         {
-            data.Add (item.Render ());
-            item_count ++;
-         }
-         
-         _footer.ItemCount = item_count;
+		public Item GetItem (string key)
+		{
+			if (key == null)
+				throw new ArgumentNullException ("key");
+			
+			StringComparison comparison =
+				StringComparison.InvariantCultureIgnoreCase;
+			
+			foreach (Item item in items)
+				if (key.Equals (item.Key, comparison))
+					return item;
+			
+			return null;
+		}
+		
+		public void SetItem (Item item)
+		{
+			if (item == null)
+				throw new ArgumentNullException ("item");
+			
+			int index = GetItemIndex (item.Key);
+			if (index >= 0)
+				items [index] = item;
+			else
+				items.Add (item);
+		}
+		
+		public void RemoveItem (string key)
+		{
+			if (key == null)
+				throw new ArgumentNullException ("key");
+			
+			StringComparison comparison =
+				StringComparison.InvariantCultureIgnoreCase;
+			
+			for (int i = items.Count - 1; i >= 0; i --)
+				if (key.Equals (items [i].Key, comparison))
+					items.RemoveAt (i);
+		}
+		
+		public ByteVector Render ()
+		{
+			ByteVector data = new ByteVector ();
+			uint item_count = 0;
+			
+			foreach (Item item in items) {
+				data.Add (item.Render ());
+				item_count ++;
+			}
+			
+			_footer.ItemCount = item_count;
          _footer.TagSize   = (uint) (data.Count + Footer.Size);
          HeaderPresent    = true;
 
@@ -468,21 +547,20 @@ namespace TagLib.Ape
          return data;
       }
       
-      public override void Clear ()
-      {
-         _items.Clear ();
-      }
-      #endregion
-      
-      
-      
-      #region Protected Methods
-      protected void Read (File file, long position)
-      {
-         if (file == null)
-            throw new ArgumentException ("File object is null.", "file");
-         
-         file.Mode = File.AccessMode.Read;
+		public override void Clear ()
+		{
+			items.Clear ();
+		}
+		
+		#endregion
+		
+		
+		
+		#region Protected Methods
+		
+		protected void Read (TagLib.File file, long position)
+		{
+			file.Mode = File.AccessMode.Read;
          file.Seek (position);
          _footer = new Footer (file.ReadBlock ((int)Footer.Size));
          
@@ -517,6 +595,24 @@ namespace TagLib.Ape
 				// A corrupt item was encountered, considered
 				// the tag finished with what has been read.
 			}
+		}
+		
+		#endregion
+		
+		
+		
+		#region Private Methods
+		
+		private int GetItemIndex (string key)
+		{
+			StringComparison comparison =
+				StringComparison.InvariantCultureIgnoreCase;
+			
+			for (int i = 0; i < items.Count; i ++)
+				if (key.Equals (items [i].Key, comparison))
+					return i;
+			
+			return -1;
 		}
 		
 		#endregion

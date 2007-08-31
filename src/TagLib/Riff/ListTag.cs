@@ -19,6 +19,8 @@
  *   USA                                                                   *
  ***************************************************************************/
 
+using System;
+
 namespace TagLib.Riff
 {
    public abstract class ListTag : Tag
@@ -69,10 +71,17 @@ namespace TagLib.Riff
          return fields.GetValues (id);
       }
       
-      public StringCollection GetValuesAsStringCollection (ByteVector id)
-      {
-         return fields.GetValuesAsStringCollection (id);
-      }
+		public string [] GetValuesAsStrings (ByteVector id)
+		{
+			return fields.GetValuesAsStrings (id);
+		}
+		
+		[Obsolete("Use GetValuesAsStrings(ByteVector)")]
+		public StringCollection GetValuesAsStringCollection (ByteVector id)
+		{
+			return new StringCollection (
+				fields.GetValuesAsStrings (id));
+		}
       
       public uint GetValueAsUInt (ByteVector id)
       {
@@ -94,6 +103,7 @@ namespace TagLib.Riff
          fields.SetValue (id, value);
       }
       
+		[Obsolete("Use SetValue(ByteVector,string[])")]
       public void SetValue (ByteVector id, StringCollection value)
       {
          fields.SetValue (id, value);

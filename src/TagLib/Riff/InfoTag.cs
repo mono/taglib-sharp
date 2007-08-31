@@ -44,7 +44,7 @@ namespace TagLib.Riff
       {
          get
          {
-            foreach (string s in GetValuesAsStringCollection ("INAM"))
+            foreach (string s in GetValuesAsStrings ("INAM"))
                if (s != null)
                   return s;
             
@@ -55,19 +55,19 @@ namespace TagLib.Riff
       
       public override string [] AlbumArtists
       {
-         get {return GetValuesAsStringCollection ("IART").ToArray ();}
+         get {return GetValuesAsStrings ("IART");}
          set {SetValue ("IART", value);}
       }
       
       public override string [] Performers
       {
-         get {return GetValuesAsStringCollection ("ISTR").ToArray ();}
+         get {return GetValuesAsStrings ("ISTR");}
          set {SetValue ("ISTR", value);}
       }
       
       public override string [] Composers
       {
-         get {return GetValuesAsStringCollection ("IWRI").ToArray ();}
+         get {return GetValuesAsStrings ("IWRI");}
          set {SetValue ("IWRI", value);}
       }
       
@@ -75,7 +75,7 @@ namespace TagLib.Riff
       {
          get
          {
-            foreach (string s in GetValuesAsStringCollection ("ICMT"))
+            foreach (string s in GetValuesAsStrings ("ICMT"))
                if (s != null)
                   return s;
             
@@ -86,7 +86,7 @@ namespace TagLib.Riff
       
       public override string [] Genres
       {
-         get {return GetValuesAsStringCollection ("IGNR").ToArray ();}
+         get {return GetValuesAsStrings ("IGNR");}
          set {SetValue ("IGNR", value);}
       }
       
@@ -112,7 +112,7 @@ namespace TagLib.Riff
       {
          get
          {
-            foreach (string s in GetValuesAsStringCollection ("ICOP"))
+            foreach (string s in GetValuesAsStrings ("ICOP"))
                if (s != null)
                   return s;
             

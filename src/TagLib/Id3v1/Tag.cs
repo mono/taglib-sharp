@@ -133,7 +133,10 @@ namespace TagLib.Id3v1
       public override string [] Performers
       {
          get {return new string [] {artist};}
-         set {artist = (new StringCollection (value)).ToString (",").Trim ();}
+			set {
+				artist = value != null ?
+					string.Join (",", value) : string.Empty;
+			}
       }
       
       public override string Album

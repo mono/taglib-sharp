@@ -721,9 +721,12 @@ namespace TagLib {
 		///    A comma separated <see cref="string" /> object containing
 		///    the values from <paramref name="group" />.
 		/// </returns>
-		private static string JoinGroup(string [] group)
+		private static string JoinGroup (string [] group)
 		{
-			return new StringCollection(group).ToString(", ");
+			if (group == null)
+				return null;
+			
+			return string.Join (", ", group);
 		}
 
 		/// <summary>

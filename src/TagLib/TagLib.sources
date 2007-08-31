@@ -2,6 +2,8 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Ape/Tag.cs \
 	$(srcdir)/TagLib/Ape/Item.cs \
 	$(srcdir)/TagLib/Ape/Footer.cs \
+	$(srcdir)/TagLib/Ape/File.cs \
+	$(srcdir)/TagLib/Ape/StreamHeader.cs \
 	$(srcdir)/TagLib/Asf/Guid.cs \
 	$(srcdir)/TagLib/Asf/StreamPropertiesObject.cs \
 	$(srcdir)/TagLib/Asf/UnknownObject.cs \

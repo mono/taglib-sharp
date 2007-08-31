@@ -26,6 +26,7 @@
 //
 
 using System;
+using System.Text;
 using System.Collections.Generic;
 
 namespace TagLib {
@@ -41,7 +42,7 @@ namespace TagLib {
 		/// <summary>
 		///    Contains the codecs.
 		/// </summary>
-		private List<ICodec> codecs = new List<ICodec> ();
+		private ICodec[] codecs = new ICodec [0];
 		
 		/// <summary>
 		///    Contains the duration.
@@ -83,7 +84,8 @@ namespace TagLib {
 		public Properties (TimeSpan duration, params ICodec[] codecs)
 		{
 			this.duration = duration;
-			this.codecs.AddRange (codecs);
+			if (codecs != null)
+				this.codecs = codecs;
 		}
 		
 		/// <summary>
@@ -103,7 +105,9 @@ namespace TagLib {
 		public Properties (TimeSpan duration, IEnumerable<ICodec> codecs)
 		{
 			this.duration = duration;
-			this.codecs.AddRange (codecs);
+			if (codecs != null)
+				this.codecs = new List<ICodec> (codecs)
+					.ToArray ();
 		}
 		
 		#endregion
@@ -120,7 +124,9 @@ namespace TagLib {
 		///    <see cref="ICodec" /> objects contained in the current
 		///    instance.
 		/// </value>
-		public IEnumerable<ICodec> Codecs {get {return codecs;}}
+		public IEnumerable<ICodec> Codecs {
+			get {return codecs;}
+		}
 		
 		#endregion
 		
@@ -190,13 +196,17 @@ namespace TagLib {
 		/// </remarks>
 		public string Description {
 			get {
-				StringCollection l = new StringCollection ();
-				
-				foreach (ICodec codec in codecs)
-					if (codec != null)
-						l.Add (codec.Description);
-				
-				return string.Join ("; ", l.ToArray ());
+				StringBuilder builder = new StringBuilder ();
+				foreach (ICodec codec in codecs) {
+					if (codec == null)
+						continue;
+					
+					if (builder.Length != 0)
+						builder.Append ("; ");
+					
+					builder.Append (codec.Description);
+				}
+				return builder.ToString ();
 			}
 		}
 		

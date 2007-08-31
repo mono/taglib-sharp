@@ -220,11 +220,11 @@ namespace TagLib.Mpeg4 {
 		///    matching boxes.
 		/// </returns>
 		public string [] GetText (ByteVector type) {
-			StringCollection l = new StringCollection ();
+			List<string> result = new List<string> ();
 			foreach (AppleDataBox box in DataBoxes (type))
 				if (box.Text != null)
-					l.Add (box.Text);
-			return l.ToArray ();
+					result.Add (box.Text);
+			return result.ToArray ();
 		}
 		
 		/// <summary>
@@ -602,15 +602,14 @@ namespace TagLib.Mpeg4 {
 		/// </remarks>
 		public override string [] Genres {
 			get {
-				StringCollection l = new StringCollection ();
-				ByteVectorCollection names =
-					new ByteVectorCollection ();
-				names.Add (BoxType.Gen);
-				names.Add (BoxType.Gnre);
+				List<string> result = new List<string> ();
+				ByteVector [] names = new ByteVector [] {
+					BoxType.Gen, BoxType.Gnre
+				};
 				
 				foreach (AppleDataBox box in DataBoxes (names)) {
 					if (box.Text != null) {
-						l.Add (box.Text);
+						result.Add (box.Text);
 						continue;
 					}
 					
@@ -624,9 +623,9 @@ namespace TagLib.Mpeg4 {
 						(byte) (box.Data.ToUShort (true) - 1));
 					
 					if (genre != null)
-						l.Add (genre);
+						result.Add (genre);
 				}
-				return l.ToArray ();
+				return result.ToArray ();
 			}
 			set {
 				ClearData (BoxType.Gnre);

@@ -136,26 +136,31 @@ namespace TagLib.Asf
       }
       public override string [] Genres
       {
-         get
-         {
-            string value = GetDescriptorString ("WM/Genre", "WM/GenreID", "Genre");
-            if (value == null || value.Trim ().Length == 0)
-               return new string [] {};
-            
-            StringCollection l = StringCollection.Split (value, ";");
-            for (int i = 0; i < l.Count; i ++)
-            {
-               string genre = l [i].Trim ();
-               
-               byte genre_id;
-               int closing = genre.IndexOf (')');
-               if (closing > 0 && genre[0] == '(' && byte.TryParse (genre.Substring (1, closing - 1), out genre_id))
-                  genre = TagLib.Genres.IndexToAudio (genre_id);
-               
-               l [i] = genre;
-            }
-            return l.ToArray ();
-         }
+			get {
+				string value = GetDescriptorString ("WM/Genre",
+					"WM/GenreID", "Genre");
+				
+				if (value == null || value.Trim ().Length == 0)
+					return new string [] {};
+				
+				string [] result = value.Split (';');
+				
+				for (int i = 0; i < result.Length; i ++) {
+					string genre = result [i].Trim ();
+					
+					byte genre_id;
+					int closing = genre.IndexOf (')');
+					if (closing > 0 && genre[0] == '(' &&
+						byte.TryParse (genre.Substring (
+						1, closing - 1), out genre_id))
+						genre = TagLib.Genres
+							.IndexToAudio (genre_id);
+					
+					result [i] = genre;
+				}
+				
+				return result;
+			}
          set
          {
             SetDescriptorString (String.Join ("; ", value), "WM/Genre", "Genre");
@@ -478,15 +483,17 @@ namespace TagLib.Asf
       //////////////////////////////////////////////////////////////////////////
       // private methods
       //////////////////////////////////////////////////////////////////////////
-      private static string [] SplitAndClean (string s)
-      {
-         if (s == null || s.Trim ().Length == 0)
-            return new string [] {};
-         
-         StringCollection l = StringCollection.Split (s, ";");
-         for (int i = 0; i < l.Count; i ++)
-            l [i] = l [i].Trim ();
-         return l.ToArray ();
-      }
-   }
+		private static string [] SplitAndClean (string s)
+		{
+			if (s == null || s.Trim ().Length == 0)
+				return new string [0];
+			
+			string [] result = s.Split (';');
+			
+			for (int i = 0; i < result.Length; i ++)
+				result [i] = result [i].Trim ();
+			
+			return result;
+		}
+	}
 }

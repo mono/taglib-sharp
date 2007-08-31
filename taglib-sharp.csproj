@@ -41,8 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\AssemblyInfo.cs" />
+    <Compile Include="src\TagLib\Ape\File.cs" />
     <Compile Include="src\TagLib\Ape\Footer.cs" />
     <Compile Include="src\TagLib\Ape\Item.cs" />
+    <Compile Include="src\TagLib\Ape\StreamHeader.cs" />
     <Compile Include="src\TagLib\Ape\Tag.cs" />
     <Compile Include="src\TagLib\Asf\ContentDescriptionObject.cs" />
     <Compile Include="src\TagLib\Asf\ContentDescriptor.cs" />

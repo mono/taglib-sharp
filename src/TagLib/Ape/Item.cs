@@ -1,24 +1,29 @@
-/***************************************************************************
-    copyright            : (C) 2005 by Brian Nickel
-    email                : brian.nickel@gmail.com
-    based on             : apeitem.cpp from TagLib
- ***************************************************************************/
-
-/***************************************************************************
- *   This library is free software; you can redistribute it and/or modify  *
- *   it  under the terms of the GNU Lesser General Public License version  *
- *   2.1 as published by the Free Software Foundation.                     *
- *                                                                         *
- *   This library is distributed in the hope that it will be useful, but   *
- *   WITHOUT ANY WARRANTY; without even the implied warranty of            *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU     *
- *   Lesser General Public License for more details.                       *
- *                                                                         *
- *   You should have received a copy of the GNU Lesser General Public      *
- *   License along with this library; if not, write to the Free Software   *
- *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  *
- *   USA                                                                   *
- ***************************************************************************/
+//
+// Item.cs: Provides support for reading and writing APEv2 items.
+//
+// Author:
+//   Brian Nickel (brian.nickel@gmail.com)
+//
+// Original Source:
+//   apeitem.cpp from TagLib
+//
+// Copyright (C) 2005-2007 Brian Nickel
+// Copyright (C) 2004 by Allan Sandfeld Jensen (Original Implementation)
+// 
+// This library is free software; you can redistribute it and/or modify
+// it  under the terms of the GNU Lesser General Public License version
+// 2.1 as published by the Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
+// USA
+//
 
 using System;
 
@@ -45,6 +50,9 @@ namespace TagLib.Ape {
 		Locator = 2
 	}
 	
+	/// <summary>
+	///    This class provides support for reading and writing APEv2 items.
+	/// </summary>
 	public class Item
 	{
 		#region Private Fields
@@ -85,6 +93,27 @@ namespace TagLib.Ape {
 		
 		#region Constructors
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="Item" />  by reading in a raw APEv2 item.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing the item to
+		///    read.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int" /> value specifying the offset in
+		///    <paramref name="data" /> at which the item data begins.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="data" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		///    <paramref name="offset" /> is less than zero.
+		/// </exception>
+		/// <exception cref="CorruptFileException">
+		///    A complete item could not be read.
+		/// </exception>
 		public Item (ByteVector data, int offset)
 		{
 			if (data == null)
@@ -93,6 +122,22 @@ namespace TagLib.Ape {
 			Parse (data, offset);
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="Item" /> with a specified key and value.
+		/// </summary>
+		/// <param name="key">
+		///    A <see cref="string" /> object containing the key to use
+		///    for the current instance.
+		/// </param>
+		/// <param name="value">
+		///    A <see cref="string" /> object containing the value to
+		///    store in the new instance.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="key" /> or <paramref name="value" /> is
+		///    <see langword="null" />.
+		/// </exception>
 		public Item (string key, string value)
 		{
 			if (key == null)
@@ -105,6 +150,23 @@ namespace TagLib.Ape {
 			this.text = new string [] {value};
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="Item" /> with a specified key and collection of
+		///    values.
+		/// </summary>
+		/// <param name="key">
+		///    A <see cref="string" /> object containing the key to use
+		///    for the current instance.
+		/// </param>
+		/// <param name="value">
+		///    A <see cref="string[]" /> containing the values to store
+		///    in the new instance.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="key" /> or <paramref name="value" /> is
+		///    <see langword="null" />.
+		/// </exception>
 		public Item (string key, params string [] value)
 		{
 			if (key == null)
@@ -117,6 +179,24 @@ namespace TagLib.Ape {
 			this.text = (string[]) value.Clone ();
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="Item" /> with a specified key and collection of
+		///    values.
+		/// </summary>
+		/// <param name="key">
+		///    A <see cref="string" /> object containing the key to use
+		///    for the current instance.
+		/// </param>
+		/// <param name="value">
+		///    A <see cref="StringCollection" /> object containing the
+		///    values to store in the new instance.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="key" /> or <paramref name="value" /> is
+		///    <see langword="null" />.
+		/// </exception>
+		/// <seealso cref="Item(string,string[])" />
 		[Obsolete("Use Item(string,string[])")]
 		public Item (string key, StringCollection value)
 		{
@@ -130,6 +210,27 @@ namespace TagLib.Ape {
 			this.text = value.ToArray ();
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="Item" /> with a specified key and raw data.
+		/// </summary>
+		/// <param name="key">
+		///    A <see cref="string" /> object containing the key to use
+		///    for the current instance.
+		/// </param>
+		/// <param name="value">
+		///    A <see cref="StringCollection" /> object containing the
+		///    values to store in the new instance.
+		/// </param>
+		/// <remarks>
+		///    This constructor automatically marks the new instance as
+		///    <see cref="ItemType.Binary" />.
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="key" /> or <paramref name="value" /> is
+		///    <see langword="null" />.
+		/// </exception>
+		/// <seealso cref="Item(string,string[])" />
 		public Item (string key, ByteVector value)
 		{
 			this.key = key;
@@ -146,28 +247,80 @@ namespace TagLib.Ape {
 		
 		#region Public Properties
 		
+		/// <summary>
+		///    Gets the key used to identify the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the key used to
+		///    identify the current instance.
+		/// </value>
+		/// <remarks>
+		///    This value is used for specifying the contents of the
+		///    item in a common and consistant fashion. For example,
+		///    <c>"TITLE"</c> specifies that the item contains the title
+		///    of the track.
+		/// </remarks>
 		public string Key {
 			get {return key;}
 		}
 		
+		/// <summary>
+		///    Gets the binary value stored in the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="ByteVector" /> object containing the binary
+		///    value stored in the current instance, or <see
+		///    langword="null" /> if the item contains text.
+		/// </value>
 		public ByteVector Value {
 			get {return (type == ItemType.Binary) ? data : null;}
 		}
 		
+		/// <summary>
+		///    Gets the size of the current instance as it last appeared
+		///    on disk.
+		/// </summary>
+		/// <value>
+		///    A <see cref="int" /> value containing the size of the
+		///    current instance as it last appeared on disk.
+		/// </value>
 		public int Size {
 			get {return size_on_disk;}
 		}
 		
+		/// <summary>
+		///    Gets and sets the type of value contained in the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="ItemType" /> value indicating the type of
+		///    value contained in the current instance.
+		/// </value>
 		public ItemType Type {
 			get {return type;}
 			set {type = value;}
 		}
 		
+		/// <summary>
+		///    Gets and sets whether or not the current instance is
+		///    flagged as read-only on disk.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value indicating whether or not the
+		///    current instance is flagged as read-only on disk.
+		/// </value>
 		public bool ReadOnly {
 			get {return read_only;}
 			set {read_only = value;}
 		}
 		
+		/// <summary>
+		///    Gets whether or not the current instance is empty.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value indicating whether or not the
+		///    current instance contains no value.
+		/// </value>
 		public bool IsEmpty {
 			get {
 				if (type != ItemType.Binary)
@@ -182,16 +335,36 @@ namespace TagLib.Ape {
 		
 		
 		#region Public Methods
+		
+		/// <summary>
+		///    Gets the contents of the current instance as a <see
+		///    cref="string" />.
+		/// </summary>
+		/// <returns>
+		///    <para>A <see cref="string" /> object containing the text
+		///    stored in the current instance, or <see langword="null"
+		///    /> if the item is empty of contains binary data.</para>
+		///    <para>If the current instance contains multiple string
+		///    values, they will be returned as a comma separated
+		///    value.</para>
+		/// </returns>
 		public override string ToString ()
 		{
-			if (type == ItemType.Binary)
-				return "[BINARY DATA]";
-			else if (text == null)
+			if (type == ItemType.Binary || text == null)
 				return null;
 			else
 				return string.Join (", ", text);
 		}
 		
+		/// <summary>
+		///    Gets the contents of the current instance as a <see
+		///    cref="string" /> array.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="string[]" /> containing the text stored in
+		///    the current instance, or an empty array if the item
+		///    contains binary data.
+		/// </returns>
 		public string [] ToStringArray ()
 		{
 			if (type == ItemType.Binary || text == null)
@@ -200,6 +373,13 @@ namespace TagLib.Ape {
 			return text;
 		}
 		
+		/// <summary>
+		///    Renders the current instance as an APEv2 item.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="ByteVector" /> object containing the
+		///    rendered version of the current instance.
+		/// </returns>
 		public ByteVector Render ()
 		{
 			uint flags = (uint) ((ReadOnly) ? 1 : 0) |
@@ -211,8 +391,11 @@ namespace TagLib.Ape {
 			ByteVector result = null;
 			
 			if (type == ItemType.Binary) {
-				result = data;
-			} else if (text != null) {
+				if (text == null && data != null)
+					result = data;
+			}
+			
+			if (result == null && text != null) {
 				result = new ByteVector ();
 				
 				for (int i = 0; i < text.Length; i ++) {
@@ -244,14 +427,41 @@ namespace TagLib.Ape {
 		#endregion
 		
 		#region Protected Methods
+		
+		/// <summary>
+		///    Populates the current instance by reading in a raw APEv2
+		///    item.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing the item to
+		///    read.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int" /> value specifying the offset in
+		///    <paramref name="data" /> at which the item data begins.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="data" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		///    <paramref name="offset" /> is less than zero.
+		/// </exception>
+		/// <exception cref="CorruptFileException">
+		///    A complete item could not be read.
+		/// </exception>
 		protected void Parse (ByteVector data, int offset)
 		{
 			if (data == null)
 				throw new ArgumentNullException ("data");
 			
+			if (offset < 0)
+				throw new ArgumentOutOfRangeException ("offset");
+			
+			
 			// 11 bytes is the minimum size for an APE item
 			if(data.Count < offset + 11)
-				throw new CorruptFileException ("Not enough data for APE Item");
+				throw new CorruptFileException (
+					"Not enough data for APE Item");
 			
 			uint value_length = data.Mid (offset, 4).ToUInt (false);
 			uint flags = data.Mid (offset + 4, 4).ToUInt (false);
