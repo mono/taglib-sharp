@@ -1,3 +1,27 @@
+2007-09-03  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Id3v2/Tag.cs: Renamed private method. Tidied up Read.
+	
+	* src/TagLib/Ape/Item.cs: Fixed some documentation.
+	
+	* src/TagLib/Ape/Tag.cs: 
+	* src/TagLib/Ape/Footer.cs: 
+	* src/TagLib/Asf/Tag.cs: 
+	* src/TagLib/Asf/HeaderExtensionObject.cs: 
+	* src/TagLib/Asf/File.cs: 
+	* src/TagLib/Asf/HeaderObject.cs: 
+	* src/TagLib/Asf/DescriptionRecord.cs: 
+	* src/TagLib/Asf/FilePropertiesObject.cs: 
+	* src/TagLib/Asf/ExtendedContentDescriptionObject.cs: 
+	* src/TagLib/Asf/UnknownObject.cs: 
+	* src/TagLib/Asf/Guid.cs: 
+	* src/TagLib/Asf/MetadataLibraryObject.cs: 
+	* src/TagLib/Asf/PaddingObject.cs: 
+	* src/TagLib/Asf/StreamPropertiesObject.cs: 
+	* src/TagLib/Asf/ContentDescriptionObject.cs: 
+	* src/TagLib/Asf/Object.cs: 
+	* src/TagLib/Asf/ContentDescriptor.cs: Completed docs.
+
 2007-08-31  Brian Nickel <brian.nickel@gmail.com>
  
 	* src/TagLib/Ape/File.cs: 

@@ -1,5 +1,6 @@
 //
-// Item.cs: Provides support for reading and writing APEv2 items.
+// Item.cs: Provides a representation of an APEv2 tag item which can be read
+// from and written to disk.
 //
 // Author:
 //   Brian Nickel (brian.nickel@gmail.com)
@@ -51,7 +52,8 @@ namespace TagLib.Ape {
 	}
 	
 	/// <summary>
-	///    This class provides support for reading and writing APEv2 items.
+	///    This class provides a representation of an APEv2 tag item which
+	///    can be read from and written to disk.
 	/// </summary>
 	public class Item
 	{

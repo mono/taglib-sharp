@@ -1,26 +1,32 @@
-/***************************************************************************
-    copyright            : (C) 2005 by Brian Nickel
-    email                : brian.nickel@gmail.com
-    based on             : apefooter.cpp from TagLib
- ***************************************************************************/
+//
+// Footer.cs: Provides a representation of an APEv2 tag footer which can be read
+// from and written to disk.
+//
+// Author:
+//   Brian Nickel (brian.nickel@gmail.com)
+//
+// Original Source:
+//   apefooter.cpp from TagLib
+//
+// Copyright (C) 2005-2007 Brian Nickel
+// Copyright (C) 2004 Allan Sandfeld Jensen (Original Implementation)
+// copyright (C) 2002, 2003 Scott Wheeler (Original Implementation)
+// 
+// This library is free software; you can redistribute it and/or modify
+// it  under the terms of the GNU Lesser General Public License version
+// 2.1 as published by the Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
+// USA
+//
 
-/***************************************************************************
- *   This library is free software; you can redistribute it and/or modify  *
- *   it  under the terms of the GNU Lesser General Public License version  *
- *   2.1 as published by the Free Software Foundation.                     *
- *                                                                         *
- *   This library is distributed in the hope that it will be useful, but   *
- *   WITHOUT ANY WARRANTY; without even the implied warranty of            *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU     *
- *   Lesser General Public License for more details.                       *
- *                                                                         *
- *   You should have received a copy of the GNU Lesser General Public      *
- *   License along with this library; if not, write to the Free Software   *
- *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  *
- *   USA                                                                   *
- ***************************************************************************/
-
-using System.Collections;
 using System;
 
 namespace TagLib.Ape {
@@ -52,8 +58,8 @@ namespace TagLib.Ape {
 	
 	
 	/// <summary>
-	///    This structure provides support for reading and writing APEv2
-	///    footers.
+	///    This structure provides a representation of an APEv2 tag footer
+	///    which can be read from and written to disk.
 	/// </summary>
 	public struct Footer : IEquatable<Footer>
 	{
@@ -62,23 +68,23 @@ namespace TagLib.Ape {
 		/// <summary>
 		///    Contains the APE tag version.
 		/// </summary>
-		private uint _version;
+		private uint version;
 		
 		/// <summary>
 		///    Contains the footer flags.
 		/// </summary>
-		private uint _flags;
+		private FooterFlags flags;
 		
 		/// <summary>
 		///    Contains the number of items in the tag.
 		/// </summary>
-		private uint _item_count;
+		private uint item_count;
 		
 		/// <summary>
 		///    Contains the tag size including the footer but excluding
 		///    the header.
 		/// </summary>
-		private uint _tag_size;
+		private uint tag_size;
 		
 		#endregion
 		
@@ -106,6 +112,22 @@ namespace TagLib.Ape {
 		
 		#region Constructors
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="Footer" /> by reading it from raw footer data.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing the raw
+		///    data to build the new instance from.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="data" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="CorruptFileException">
+		///    <paramref name="data" /> is smaller than <see
+		///    cref="Size" /> or does not begin with <see
+		///    cref="FileIdentifier" />.
+		/// </exception>
 		public Footer (ByteVector data)
 		{
 			if (data == null)
@@ -119,10 +141,10 @@ namespace TagLib.Ape {
 				throw new CorruptFileException (
 					"Provided data does not start with File Identifier");
 			
-			_version = data.Mid (8, 4).ToUInt (false);
-			_tag_size = data.Mid (12, 4).ToUInt (false);
-			_item_count = data.Mid (16, 4).ToUInt (false);
-			_flags = data.Mid (20, 4).ToUInt (false);
+			version = data.Mid (8, 4).ToUInt (false);
+			tag_size = data.Mid (12, 4).ToUInt (false);
+			item_count = data.Mid (16, 4).ToUInt (false);
+			flags = (FooterFlags) data.Mid (20, 4).ToUInt (false);
 		}
 		
 		#endregion
@@ -131,25 +153,66 @@ namespace TagLib.Ape {
 		
 		#region Public Properties
 		
+		/// <summary>
+		///    Gets the version of APE tag described by the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> value containing the version of the
+		///    APE tag described by the current instance.
+		/// </value>
 		public uint Version {
-			get {return _version == 0 ? 2000 : _version;}
+			get {return version == 0 ? 2000 : version;}
 		}
 		
+		/// <summary>
+		///    Gets and sets the flags that apply to the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A bitwise combined <see cref="FooterFlags" /> value
+		///    containing the flags that apply to the current instance.
+		/// </value>
 		public FooterFlags Flags {
-			get {return (FooterFlags) _flags;}
-			set {_flags = (uint) value;}
+			get {return flags;}
+			set {flags = value;}
 		}
 		
+		/// <summary>
+		///    Gets and sets the number of items in the tag represented
+		///    by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> value containing the number of
+		///    items in the tag represented by the current instance.
+		/// </value>
 		public uint ItemCount {
-			get {return _item_count;}
-			set {_item_count = value;}
+			get {return item_count;}
+			set {item_count = value;}
 		}
 		
+		/// <summary>
+		///    Gets the size of the tag represented by the current
+		///    instance, including the footer but excluding the header
+		///    if applicable.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> value containing the size of the
+		///    tag represented by the current instance.
+		/// </value>
 		public uint TagSize {
-			get {return _tag_size;}
-			set {_tag_size = value;}
+			get {return tag_size;}
+			set {tag_size = value;}
 		}
 		
+		/// <summary>
+		///    Gets the complete size of the tag represented by the
+		///    current instance, including the header and footer.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> value containing the size of the
+		///    tag represented by the current instance.
+		/// </value>
 		public uint CompleteTagSize {
 			get {
 				return TagSize + ((Flags &
@@ -164,11 +227,28 @@ namespace TagLib.Ape {
 		
 		#region Public Methods
 		
+		/// <summary>
+		///    Renders the current instance as an APE tag footer.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="ByteVector" /> object containing the
+		///    rendered version of the current instance.
+		/// </returns>
 		public ByteVector RenderFooter ()
 		{
 			return Render (false);
 		}
 		
+		/// <summary>
+		///    Renders the current instance as an APE tag header.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="ByteVector" /> object containing the
+		///    rendered version of the current instance or an empty
+		///    <see cref="ByteVector" /> object if <see cref="Flags" />
+		///    does not include <see cref="FooterFlags.HeaderPresent"
+		///    />.
+		/// </returns>
 		public ByteVector RenderHeader ()
 		{
 			return (Flags & FooterFlags.HeaderPresent) != 0 ?
@@ -180,6 +260,19 @@ namespace TagLib.Ape {
 		
 		
 		#region Private Methods
+		
+		/// <summary>
+		///    Renders the current instance as either an APE tag header
+		///    or footer.
+		/// </summary>
+		/// <param name="isHeader">
+		///    A <see cref="bool" /> value indicating whether or not the
+		///    current instance is to be rendered as a header.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector" /> object containing the
+		///    rendered version of the current instance.
+		/// </returns>
 		private ByteVector Render (bool isHeader)
 		{
 			ByteVector v = new ByteVector ();
@@ -192,10 +285,10 @@ namespace TagLib.Ape {
 			v.Add (ByteVector.FromUInt (2000, false));
 			
 			// add the tag size
-			v.Add (ByteVector.FromUInt (_tag_size, false));
+			v.Add (ByteVector.FromUInt (tag_size, false));
 			
 			// add the item count
-			v.Add (ByteVector.FromUInt (_item_count, false));
+			v.Add (ByteVector.FromUInt (item_count, false));
 			
 			// render and add the flags
 			uint flags = 0;
@@ -204,7 +297,10 @@ namespace TagLib.Ape {
 				flags |= (uint) FooterFlags.HeaderPresent;
 			
 			// footer is always present
-			if (isHeader) flags |= (uint) FooterFlags.IsHeader;
+			if (isHeader)
+				flags |= (uint) FooterFlags.IsHeader;
+			else
+				flags &= (uint) ~FooterFlags.IsHeader;
 			
 			v.Add (ByteVector.FromUInt (flags, false));
 			
@@ -215,40 +311,108 @@ namespace TagLib.Ape {
 		}
 		
 		#endregion
-      
-      
-      
-      #region IEquatable
-      public override int GetHashCode ()
-      {
-         unchecked
-         {            return (int) (_flags ^ _tag_size ^ _item_count ^ _version);
-         }
-      }
-      
-      public override bool Equals (object obj)
-      {
-         if (!(obj is Footer))
-            return false;
-         
-         return Equals ((Footer) obj);
-      }
-      
-      public bool Equals (Footer other)
-      {
-         return _flags == other._flags && _tag_size == other._tag_size &&
-         _item_count == other._item_count && _version == other._version;
-      }
-      
-      public static bool operator == (Footer first, Footer second)
-      {
-         return first.Equals (second);
-      }
-      
-      public static bool operator != (Footer first, Footer second)
-      {
-         return !first.Equals (second);
-      }
-      #endregion
-   }
+		
+		
+		
+		#region IEquatable
+		
+		/// <summary>
+		///    Generates a hash code for the current instance.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="int" /> value containing the hash code for
+		///    the current instance.
+		/// </returns>
+		public override int GetHashCode ()
+		{
+			unchecked {
+				return (int) ((uint) flags ^ tag_size ^
+					item_count ^ version);
+			}
+		}
+		
+		/// <summary>
+		///    Checks whether or not the current instance is equal to
+		///    another object.
+		/// </summary>
+		/// <param name="other">
+		///    A <see cref="object" /> to compare to the current
+		///    instance.
+		/// </param>
+		/// <returns>
+		///    A <see cref="bool" /> value indicating whether or not the
+		///    current instance is equal to <paramref name="other" />.
+		/// </returns>
+		/// <seealso cref="IEquatable{T}.Equals" />
+		public override bool Equals (object other)
+		{
+			if (!(other is Footer))
+				return false;
+			
+			return Equals ((Footer) other);
+		}
+		
+		/// <summary>
+		///    Checks whether or not the current instance is equal to
+		///    another instance of <see cref="Footer" />.
+		/// </summary>
+		/// <param name="other">
+		///    A <see cref="Footer" /> object to compare to the current
+		///    instance.
+		/// </param>
+		/// <returns>
+		///    A <see cref="bool" /> value indicating whether or not the
+		///    current instance is equal to <paramref name="other" />.
+		/// </returns>
+		/// <seealso cref="IEquatable{T}.Equals" />
+		public bool Equals (Footer other)
+		{
+			return flags == other.flags &&
+				tag_size == other.tag_size &&
+				item_count == other.item_count &&
+				version == other.version;
+		}
+		
+		/// <summary>
+		///    Gets whether or not two instances of <see cref="Footer"
+		///    /> are equal to eachother.
+		/// </summary>
+		/// <param name="first">
+		///    The first <see cref="Footer" /> object to compare.
+		/// </param>
+		/// <param name="second">
+		///    The second <see cref="Footer" /> object to compare.
+		/// </param>
+		/// <returns>
+		///    <see langref="true" /> if <paramref name="first" /> is
+		///    equal to <paramref name="second" />. Otherwise, <see
+		///    langref="false" />.
+		/// </returns>
+		public static bool operator == (Footer first, Footer second)
+		{
+			return first.Equals (second);
+		}
+		
+		/// <summary>
+		///    Gets whether or not two instances of <see cref="Footer"
+		///    /> are unequal to eachother.
+		/// </summary>
+		/// <param name="first">
+		///    The first <see cref="Footer" /> object to compare.
+		/// </param>
+		/// <param name="second">
+		///    The second <see cref="Footer" /> object to compare.
+		/// </param>
+		/// <returns>
+		///    <see langref="true" /> if <paramref name="first" /> is
+		///    unequal to <paramref name="second" />. Otherwise, <see
+		///    langref="false" />.
+		/// </returns>
+		public static bool operator != (Footer first, Footer second)
+		{
+			return !first.Equals (second);
+		}
+		
+		#endregion
+	}
 }

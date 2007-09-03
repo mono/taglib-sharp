@@ -132,7 +132,8 @@ namespace TagLib.Id3v2 {
 			
 			file.Mode = TagLib.File.AccessMode.Read;
 			
-			if (position < 0 || position > file.Length + Header.Size)
+			if (position < 0 ||
+				position > file.Length - Header.Size)
 				throw new ArgumentOutOfRangeException (
 					"position");
 			
@@ -711,13 +712,12 @@ namespace TagLib.Id3v2 {
 			if (file == null)
 				throw new ArgumentNullException ("file");
 			
-			file.Mode = TagLib.File.AccessMode.Read;
+			file.Mode = File.AccessMode.Read;
 			
-			if (position < 0 || position > file.Length + Header.Size)
+			if (position < 0 || position > file.Length - Header.Size)
 				throw new ArgumentOutOfRangeException (
 					"position");
 			
-			file.Mode = File.AccessMode.Read;
 			file.Seek (position);
 			
 			header = new Header (file.ReadBlock ((int) Header.Size));
@@ -733,7 +733,7 @@ namespace TagLib.Id3v2 {
 		
 		/// <summary>
 		///    Populates the current instance by parsing the contents of
-		///    an ID3v2 tag, minus the header.
+		///    a raw ID3v2 tag, minus the header.
 		/// </summary>
 		/// <param name="data">
 		///    A <see cref="ByteVector" /> object containing the content
@@ -942,7 +942,7 @@ namespace TagLib.Id3v2 {
 		///    A <see cref="uint" /> value read from the list in the
 		///    frame, or 0 if the value wasn't found.
 		/// </returns>
-		private uint GetTextAsUint (ByteVector ident, int index)
+		private uint GetTextAsUInt32 (ByteVector ident, int index)
 		{
 			string text = GetTextAsString (ident);
 			
@@ -1218,7 +1218,7 @@ namespace TagLib.Id3v2 {
 		///    Information Frame.
 		/// </remarks>
 		public override uint Track {
-			get {return GetTextAsUint (FrameType.TRCK, 0);}
+			get {return GetTextAsUInt32 (FrameType.TRCK, 0);}
 			set {SetNumberFrame (FrameType.TRCK, value, TrackCount);}
 		}
 		
@@ -1236,7 +1236,7 @@ namespace TagLib.Id3v2 {
 		///    Information Frame.
 		/// </remarks>
 		public override uint TrackCount {
-			get {return GetTextAsUint (FrameType.TRCK, 1);}
+			get {return GetTextAsUInt32 (FrameType.TRCK, 1);}
 			set {SetNumberFrame (FrameType.TRCK, Track, value);}
 		}
 		
@@ -1254,7 +1254,7 @@ namespace TagLib.Id3v2 {
 		///    Information Frame.
 		/// </remarks>
 		public override uint Disc {
-			get {return GetTextAsUint (FrameType.TPOS, 0);}
+			get {return GetTextAsUInt32 (FrameType.TPOS, 0);}
 			set {SetNumberFrame (FrameType.TPOS, value, DiscCount);}
 		}
 		
@@ -1272,7 +1272,7 @@ namespace TagLib.Id3v2 {
 		///    Information Frame.
 		/// </remarks>
 		public override uint DiscCount {
-			get {return GetTextAsUint (FrameType.TPOS, 1);}
+			get {return GetTextAsUInt32 (FrameType.TPOS, 1);}
 			set {SetNumberFrame (FrameType.TPOS, Disc, value);}
 		}
 		
