@@ -11,6 +11,7 @@
 //
 // Copyright (C) 2005, 2007 Brian Nickel
 // Copyright (C) 2006 Novell, Inc.
+// Copyright (C) 2002,2003 Scott Wheeler (Original Implementation)
 // 
 // This library is free software; you can redistribute it and/or modify
 // it  under the terms of the GNU Lesser General Public License version

@@ -1,24 +1,29 @@
-/***************************************************************************
-    copyright            : (C) 2005 by Brian Nickel
-    email                : brian.nickel@gmail.com
-    based on             : id3v2tag.cpp from TagLib
- ***************************************************************************/
-
-/***************************************************************************
- *   This library is free software; you can redistribute it and/or modify  *
- *   it  under the terms of the GNU Lesser General Public License version  *
- *   2.1 as published by the Free Software Foundation.                     *
- *                                                                         *
- *   This library is distributed in the hope that it will be useful, but   *
- *   WITHOUT ANY WARRANTY; without even the implied warranty of            *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU     *
- *   Lesser General Public License for more details.                       *
- *                                                                         *
- *   You should have received a copy of the GNU Lesser General Public      *
- *   License along with this library; if not, write to the Free Software   *
- *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  *
- *   USA                                                                   *
- ***************************************************************************/
+//
+// Tag.cs: Provide support for reading and writing ID3v2 tags.
+//
+// Author:
+//   Brian Nickel (brian.nickel@gmail.com)
+//
+// Original Source:
+//   id3v2tag.cpp from TagLib
+//
+// Copyright (C) 2005-2007 Brian Nickel
+// Copyright (C) 2002,2003 Scott Wheeler (Original Implementation)
+//
+// This library is free software; you can redistribute it and/or modify
+// it  under the terms of the GNU Lesser General Public License version
+// 2.1 as published by the Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
+// USA
+//
 
 using System;
 using System.Collections;
@@ -29,7 +34,7 @@ using System.Text;
 namespace TagLib.Id3v2 {
 	/// <summary>
 	///    This class extends <see cref="TagLib.Tag" /> and implements <see
-	///    cref="IEnumerable{T}" /> to provide support for reading and
+	///    cref="T:System.Collections.Generic.IEnumerable`1" /> to provide support for reading and
 	///    writing ID3v2 tags.
 	/// </summary>
 	public class Tag : TagLib.Tag, IEnumerable<Frame>
@@ -150,7 +155,7 @@ namespace TagLib.Id3v2 {
 		///    Gets all frames contained in the current instance.
 		/// </summary>
 		/// <returns>
-		///    A <see cref="IEnumerable{T}" /> object enumerating
+		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating
 		///    through the frames.
 		/// </returns>
 		public IEnumerable<Frame> GetFrames ()
@@ -167,7 +172,7 @@ namespace TagLib.Id3v2 {
 		///    identifier of the frames to return.
 		/// </param>
 		/// <returns>
-		///    A <see cref="IEnumerable{T}" /> object enumerating
+		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating
 		///    through the frames.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
@@ -200,7 +205,7 @@ namespace TagLib.Id3v2 {
 		///    to return from in the current instance.
 		/// </typeparam>
 		/// <returns>
-		///    A <see cref="IEnumerable{T}" /> object enumerating
+		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating
 		///    through the frames.
 		/// </returns>
 		public IEnumerable<T> GetFrames <T> () where T : Frame
@@ -226,7 +231,7 @@ namespace TagLib.Id3v2 {
 		///    identifier of the frames to return.
 		/// </param>
 		/// <returns>
-		///    A <see cref="IEnumerable{T}" /> object enumerating
+		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating
 		///    through the frames.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">

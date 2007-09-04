@@ -32,10 +32,10 @@ using System;
 namespace TagLib.Ape {
 	#region Enums
 	
-	[Flags]
 	/// <summary>
 	///    Indicates the flags applied to a <see cref="Footer" /> object.
 	/// </summary>
+	[Flags]
 	public enum FooterFlags : uint {
 		/// <summary>
 		///    The tag lacks a footer object.
@@ -343,7 +343,7 @@ namespace TagLib.Ape {
 		///    A <see cref="bool" /> value indicating whether or not the
 		///    current instance is equal to <paramref name="other" />.
 		/// </returns>
-		/// <seealso cref="IEquatable{T}.Equals" />
+		/// <seealso cref="M:System.IEquatable`1.Equals" />
 		public override bool Equals (object other)
 		{
 			if (!(other is Footer))
@@ -364,7 +364,7 @@ namespace TagLib.Ape {
 		///    A <see cref="bool" /> value indicating whether or not the
 		///    current instance is equal to <paramref name="other" />.
 		/// </returns>
-		/// <seealso cref="IEquatable{T}.Equals" />
+		/// <seealso cref="M:System.IEquatable`1.Equals" />
 		public bool Equals (Footer other)
 		{
 			return flags == other.flags &&

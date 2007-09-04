@@ -328,7 +328,7 @@ namespace TagLib.Asf {
 		///    at which to start reading.
 		/// </param>
 		/// <returns>
-		///    A new <see cref="IEnumerable{T}" /> object enumerating
+		///    A new <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating
 		///    through the <see cref="Object" /> objects read from the
 		///    current instance.
 		/// </returns>

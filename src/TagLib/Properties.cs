@@ -8,7 +8,8 @@
 // Original Source:
 //   audioproperties.cpp from TagLib
 //
-// Copyright (C) 2006 Brian Nickel
+// Copyright (C) 2006,2007 Brian Nickel
+// Copyright (C) 2003 Scott Wheeler (Original Implementation)
 // 
 // This library is free software; you can redistribute it and/or modify
 // it  under the terms of the GNU Lesser General Public License version
@@ -99,7 +100,7 @@ namespace TagLib {
 		///    to be read from the codecs.
 		/// </param>
 		/// <param name="codecs">
-		///    A <see cref="IEnumerable{T}" /> object containing the
+		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object containing the
 		///    codec to be used in the new instance.
 		/// </param>
 		public Properties (TimeSpan duration, IEnumerable<ICodec> codecs)
@@ -120,7 +121,7 @@ namespace TagLib {
 		///    Gets the codecs contained in the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IEnumerable{T}" /> object containing the
+		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object containing the
 		///    <see cref="ICodec" /> objects contained in the current
 		///    instance.
 		/// </value>

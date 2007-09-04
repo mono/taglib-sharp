@@ -34,7 +34,7 @@ using System.Globalization;
 namespace TagLib.Ape {
 	/// <summary>
 	///    This class extends <see cref="TagLib.Tag" /> and implements <see
-	///    cref="IEnumerable{T}" /> to provide a representation of an APEv2
+	///    cref="T:System.Collections.Generic.IEnumerable`1" /> to provide a representation of an APEv2
 	///    tag which can be read from and written to disk.
 	/// </summary>
 	public class Tag : TagLib.Tag, IEnumerable<string>

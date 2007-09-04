@@ -123,7 +123,7 @@ namespace TagLib.Asf {
 		///    Gets the child objects contained in the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IEnumerable{T}" /> object enumerating
+		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating
 		///    through the children of the current instance.
 		/// </value>
 		public IEnumerable<Object> Children {

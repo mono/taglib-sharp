@@ -6,11 +6,12 @@
 //   Brian Nickel (brian.nickel@gmail.com)
 //
 // Original Source:
-//   id3v2attachedpictureframe.cpp from TagLib
+//   attachedpictureframe.cpp from TagLib
 //
 // Copyright (C) 2006 Novell, Inc.
 // Copyright (C) 2007 Brian Nickel
-// 
+// Copyright (C) 2004 Scott Wheeler (Original Implementation)
+//
 // This library is free software; you can redistribute it and/or modify
 // it  under the terms of the GNU Lesser General Public License version
 // 2.1 as published by the Free Software Foundation.

@@ -123,7 +123,7 @@ namespace TagLib {
 		///    />.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IDictionary{T,U}" /> object containing the
+		///    A <see cref="T:System.Collections.Generic.IDictionary`2" /> object containing the
 		///    supported mime-types.
 		/// </value>
 		public static IDictionary<string, Type> AvailableTypes {

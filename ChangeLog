@@ -1,3 +1,89 @@
+2007-09-04  Brian Nickel <brian.nickel@gmail.com>
+
+	Only 713 public members away from doing away with MonoDoc.
+	
+	* src/TagLib/Flac/File.cs: Completed docs.
+	
+	* src/TagLib/ByteVectorList.cs: 
+	* src/TagLib/Id3v1/Tag.cs: 
+	* src/TagLib/Id3v1/StringHandler.cs: 
+	* src/TagLib/Riff/List.cs: 
+	* src/TagLib/Riff/AviStream.cs: 
+	* src/TagLib/Riff/File.cs: 
+	* src/TagLib/Riff/BitmapInfoHeader.cs: 
+	* src/TagLib/Riff/AviHeaderList.cs: 
+	* src/TagLib/Riff/DivXTag.cs: 
+	* src/TagLib/Riff/ListTag.cs: 
+	* src/TagLib/Riff/InfoTag.cs: 
+	* src/TagLib/Riff/MovieIdTag.cs: 
+	* src/TagLib/Riff/WaveFormatEx.cs: 
+	* src/TagLib/Genres.cs: 
+	* src/TagLib/Id3v2/Tag.cs: 
+	* src/TagLib/Id3v2/Footer.cs: 
+	* src/TagLib/Id3v2/SynchData.cs: 
+	* src/TagLib/Id3v2/FrameTypes.cs: 
+	* src/TagLib/Id3v2/FrameFactory.cs: 
+	* src/TagLib/Id3v2/FrameHeader.cs: 
+	* src/TagLib/Id3v2/Header.cs: 
+	* src/TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs: 
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs: 
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs: 
+	* src/TagLib/Id3v2/Frames/SynchronizedLyricsFrame.cs: 
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs: 
+	* src/TagLib/Id3v2/Frames/UniqueFileIdentifierFrame.cs: 
+	* src/TagLib/Id3v2/Frames/TermsOfUseFrame.cs: 
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs: 
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs: 
+	* src/TagLib/Id3v2/Frames/UnknownFrame.cs: 
+	* src/TagLib/Id3v2/ExtendedHeader.cs: 
+	* src/TagLib/Id3v2/Frame.cs: 
+	* src/TagLib/ByteVector.cs: 
+	* src/TagLib/Properties.cs: 
+	* src/TagLib/SupportedMimeType.cs: 
+	* src/TagLib/Flac/Picture.cs: 
+	* src/TagLib/Flac/BlockHeader.cs: 
+	* src/TagLib/Flac/StreamHeader.cs: 
+	* src/TagLib/Flac/Block.cs: 
+	* src/TagLib/Ape/Tag.cs: 
+	* src/TagLib/Ape/Footer.cs: 
+	* src/TagLib/StringList.cs: 
+	* src/TagLib/FileTypes.cs: 
+	* src/TagLib/ListBase.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoSampleTableBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/AppleItemListBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoUserDataBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoAudioSampleEntry.cs: 
+	* src/TagLib/Mpeg4/Boxes/AppleAnnotationBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoSampleDescriptionBox.cs: 
+	* src/TagLib/Mpeg4/Boxes/IsoMetaBox.cs: 
+	* src/TagLib/Mpeg4/FileParser.cs: 
+	* src/TagLib/Mpeg4/AppleTag.cs: 
+	* src/TagLib/Mpeg4/Box.cs: 
+	* src/TagLib/Picture.cs: 
+	* src/TagLib/Tag.cs: 
+	* src/TagLib/File.cs: 
+	* src/TagLib/Debugger.cs: 
+	* src/TagLib/Asf/Tag.cs: 
+	* src/TagLib/Asf/HeaderExtensionObject.cs: 
+	* src/TagLib/Asf/HeaderObject.cs: 
+	* src/TagLib/Asf/File.cs: 
+	* src/TagLib/Asf/ExtendedContentDescriptionObject.cs: 
+	* src/TagLib/Asf/Guid.cs: 
+	* src/TagLib/Asf/MetadataLibraryObject.cs: 
+	* src/TagLib/Ogg/XiphComment.cs: 
+	* src/TagLib/Ogg/Page.cs: 
+	* src/TagLib/Ogg/Codecs/Theora.cs: 
+	* src/TagLib/Ogg/Codecs/Vorbis.cs: 
+	* src/TagLib/Ogg/Codec.cs: 
+	* src/TagLib/Ogg/File.cs: 
+	* src/TagLib/Ogg/Paginator.cs: 
+	* src/TagLib/Ogg/PageHeader.cs: 
+	* src/TagLib/Ogg/GroupedComment.cs: 
+	* src/TagLib/Ogg/Bitstream.cs: 
+	* src/AssemblyInfo.cs.in: Replaced headers and use cref="T:...`1"
+	instead of "...{T}" until gmcs is fixed. This reduces warnings to
+	strictly CS1591.
+
 2007-09-03  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Id3v2/Tag.cs: Renamed private method. Tidied up Read.

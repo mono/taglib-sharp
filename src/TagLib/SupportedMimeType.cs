@@ -165,7 +165,7 @@ namespace TagLib {
 		///    <see cref="SupportedMimeType" />.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IEnumerable{T}" /> object containing all the
+		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object containing all the
 		///    mime-types that have been registered with <see
 		///    cref="SupportedMimeType" />.
 		/// </value>
@@ -186,7 +186,7 @@ namespace TagLib {
 		///    <see cref="SupportedMimeType" />.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IEnumerable{T}" /> object containing all the
+		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object containing all the
 		///    extensions that have been registered with <see
 		///    cref="SupportedMimeType" />.
 		/// </value>

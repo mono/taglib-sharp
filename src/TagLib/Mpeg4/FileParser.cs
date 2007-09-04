@@ -364,7 +364,7 @@ namespace TagLib.Mpeg4 {
 		///    at which to stop reading.
 		/// </param>
 		/// <param name="parents">
-		///    A <see cref="List{T}" /> object containing all the parent
+		///    A <see cref="T:System.Collections.Generic.List`1" /> object containing all the parent
 		///    handlers that apply to the range.
 		/// </param>
 		private void ParseBoxHeaders (long start, long end,
@@ -572,14 +572,14 @@ namespace TagLib.Mpeg4 {
 		///    Adds a parent to the end of an existing list of parents.
 		/// </summary>
 		/// <param name="parents">
-		///    A <see cref="List{T}" /> object containing an existing
+		///    A <see cref="T:System.Collections.Generic.List`1" /> object containing an existing
 		///    list of parents.
 		/// </param>
 		/// <param name="current">
 		///    A <see cref="BoxHeader" /> object to add to the list.
 		/// </param>
 		/// <returns>
-		///    A new <see cref="List{T}" /> object containing the list
+		///    A new <see cref="T:System.Collections.Generic.List`1" /> object containing the list
 		///    of parents, including the added header.
 		/// </returns>
 		private static List<BoxHeader> AddParent (List<BoxHeader> parents,

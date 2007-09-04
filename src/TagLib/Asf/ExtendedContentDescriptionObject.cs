@@ -172,7 +172,7 @@ namespace TagLib.Asf {
 		///    <paramref name="names" /> is <see langword="null" />.
 		/// </exception>
 		/// <returns>
-		///    A <see cref="IEnumerable{T}" /> object enumerating
+		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating
 		///    through the <see cref="ContentDescriptor" /> objects
 		///    retrieved from the current instance.
 		/// </returns>
@@ -190,7 +190,7 @@ namespace TagLib.Asf {
 		/// <summary>
 		///    Adds a descriptor to the current instance.
 		/// </summary>
-		/// <param name="record">
+		/// <param name="descriptor">
 		///    A <see cref="ContentDescriptor" /> object to add to the
 		///    current instance.
 		/// </param>

@@ -39,7 +39,7 @@ namespace TagLib.Asf {
 		
 		/// <summary>
 		///    Indicates that an object is a <see
-		///    cref="ExtendedContentDescriptorObject" />.
+		///    cref="ExtendedContentDescriptionObject" />.
 		/// </summary>
 		public static readonly System.Guid AsfExtendedContentDescriptionObject =
 			new System.Guid ("D2D0A440-E307-11D2-97F0-00A0C95EA850");

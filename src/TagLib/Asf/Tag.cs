@@ -308,7 +308,7 @@ namespace TagLib.Asf {
 		///    <paramref name="names" /> is <see langword="null" />.
 		/// </exception>
 		/// <returns>
-		///    A <see cref="IEnumerable{T}" /> object enumerating
+		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating
 		///    through the <see cref="ContentDescriptor" /> objects
 		///    retrieved from the current instance.
 		/// </returns>

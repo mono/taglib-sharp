@@ -143,7 +143,7 @@ namespace TagLib.Mpeg4 {
 		///    Gets the children of the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IEnumerable{T}" /> object enumerating the
+		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating the
 		///    children of the current instance.
 		/// </value>
 		public virtual IEnumerable<Box> Children {
@@ -450,7 +450,7 @@ namespace TagLib.Mpeg4 {
 		///    instance was read and from which to read the children.
 		/// </param>
 		/// <returns>
-		///    A <see cref="IEnumerable{T}" /> object enumerating the
+		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating the
 		///    boxes read from the file.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
