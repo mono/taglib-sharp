@@ -1,3 +1,18 @@
+2007-09-05  Brian Nickel <brian.nickel@gmail.com>
+
+	* src/TagLib/Flac/Block.cs: Completed docs.
+	
+	* src/TagLib/Id3v2/Tag.cs: GetItemAsUInt32 was fubar and always
+	returning zero. (Thanks to renzska for the bug report.) Always set the
+	encoding to the default when setting the contents of a frame. This
+	should hopefully prevent bad encoding. (Thanks to evgeni for the bug
+	report.)
+
+	* src/TagLib/Ape/Tag.cs: GetItemAsUInt32 was fubar and always returning
+	zero.
+	
+	* configure.ac:  Now 2.0.2.13.
+
 2007-09-04  Brian Nickel <brian.nickel@gmail.com>
 
 	Only 713 public members away from doing away with MonoDoc.

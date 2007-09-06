@@ -387,17 +387,18 @@ namespace TagLib.Id3v2 {
 					"Identifier must be four bytes long.",
 					"ident");
 			
-			bool invalid = true;
 			if (text != null)
-				for (int i = 0; invalid && i < text.Length; i ++)
-					if (!string.IsNullOrEmpty (text [i]))
-						invalid = false;
+				for (int i = 0; i < text.Length; i ++)
+					if (!string.IsNullOrEmpty (text [i])) {
+						RemoveFrames (ident);
+						return;
+					}
 			
-			if (invalid)
-				RemoveFrames (ident);
-			else
-				TextInformationFrame.Get (this, ident, true)
-					.Text = text;
+			TextInformationFrame frame =
+				TextInformationFrame.Get (this, ident, true);
+			
+			frame.Text = text;
+			frame.TextEncoding = DefaultEncoding;
 		}
 		
 		/// <summary>
@@ -955,7 +956,7 @@ namespace TagLib.Id3v2 {
 				return 0;
 			
 			string [] values = text.Split (new char [] {'/'},
-				index);
+				index + 2);
 			
 			if (values.Length < index + 1)
 				return 0;
@@ -1114,8 +1115,11 @@ namespace TagLib.Id3v2 {
 				return f != null ? f.ToString () : null;
 			}
 			set {
-				CommentsFrame.Get (this, String.Empty, Language,
-					true).Text = value;
+				CommentsFrame frame = CommentsFrame.Get (this,
+					String.Empty, Language, true);
+				
+				frame.Text = value;
+				frame.TextEncoding = DefaultEncoding;
 			}
 		}
 		
@@ -1304,9 +1308,12 @@ namespace TagLib.Id3v2 {
 				return f != null ? f.ToString () : null;
 			}
 			set {
-				UnsynchronisedLyricsFrame.Get (this,
-					String.Empty, Language, true).Text =
-						value;
+				UnsynchronisedLyricsFrame frame =
+					UnsynchronisedLyricsFrame.Get (this,
+						String.Empty, Language, true);
+				
+				frame.Text = value;
+				frame.TextEncoding = DefaultEncoding;
 			}
 		}
 		

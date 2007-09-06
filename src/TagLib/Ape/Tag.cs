@@ -649,7 +649,7 @@ namespace TagLib.Ape {
 				return 0;
 			
 			string [] values = text.Split (new char [] {'/'},
-				index);
+				index + 2);
 			
 			if (values.Length < index + 1)
 				return 0;
