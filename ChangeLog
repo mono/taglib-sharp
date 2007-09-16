@@ -1,3 +1,12 @@
+2007-09-16  Brian Nickel <brian.nickel@gmail.com>
+	
+	* src/TagLib/Id3v2/SynchData.cs:
+	* src/TagLib/Id3v2/FrameTypes.cs:
+	* src/TagLib/Id3v2/FrameHeader.cs:
+	* src/TagLib/Id3v2/Header.cs:
+	* src/TagLib/ByteVector.cs:
+	* src/TagLib/Ape/StreamHeader.cs: Documentation.
+
 2007-09-05  Brian Nickel <brian.nickel@gmail.com>
 
 	* src/TagLib/Flac/Block.cs: Completed docs.

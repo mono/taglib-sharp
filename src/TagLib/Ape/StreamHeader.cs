@@ -32,11 +32,34 @@ namespace TagLib.Ape {
 	///    Audio APE file.
 	/// </summary>
 	public enum CompressionLevel {
+		/// <summary>
+		///    The audio is not compressed.
+		/// </summary>
 		None = 0,
+		
+		/// <summary>
+		///    The audio is mildly compressed.
+		/// </summary>
 		Fast = 1000,
+		
+		/// <summary>
+		///    The audio is compressed at a normal level.
+		/// </summary>
 		Normal = 2000,
+		
+		/// <summary>
+		///    The audio is highly compressed.
+		/// </summary>
 		High = 3000,
+		
+		/// <summary>
+		///    The audio is extremely highly compressed.
+		/// </summary>
 		ExtraHigh = 4000,
+		
+		/// <summary>
+		///    The audio is compressed to an insane level.
+		/// </summary>
 		Insane
 	}
 	

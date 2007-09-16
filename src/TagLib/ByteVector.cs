@@ -847,95 +847,248 @@ namespace TagLib {
             return ByteVector.FromString(value);
         }
         
-        #endregion
-
-        #region Static Conversions
-
-        public static ByteVector FromUInt(uint value, bool mostSignificantByteFirst)
-        {
-            ByteVector vector = new ByteVector();
-            for(int i = 0; i < 4; i++) {
-                vector.Add((byte)(value >> ((mostSignificantByteFirst ? 3 - i : i) * 8) & 0xFF));
-            }
-            return vector;
-        }
-
-        public static ByteVector FromUInt(uint value)
-        {
-            return FromUInt(value, true);
-        }
-
-        public static ByteVector FromUShort(ushort value, bool mostSignificantByteFirst)
-        {
-            ByteVector vector = new ByteVector();
-            for(int i = 0; i < 2; i++) {
-                vector.Add((byte)(value >> ((mostSignificantByteFirst ? 1 - i : i) * 8) & 0xFF));
-            }
-            return vector;
-        }
-
-        public static ByteVector FromUShort(ushort value)
-        {
-            return FromUShort(value, true);
-        }
-
-        public static ByteVector FromULong(ulong value, bool mostSignificantByteFirst)
-        {
-            ByteVector vector = new ByteVector();
-            for(int i = 0; i < 8; i++) {
-                vector.Add((byte)(value >> ((mostSignificantByteFirst ? 7 - i : i) * 8) & 0xFF));
-            }
-            return vector;
-        }
-
-        public static ByteVector FromULong(ulong value)
-        {
-            return FromULong(value, true);
-        }
-        
-        public static ByteVector FromString(string text, StringType type, int length)
-        {
-            ByteVector data = new ByteVector ();
-            
-            if (type == StringType.UTF16)
-                data.Add (new byte [] {0xff, 0xfe});
-            
-            if (text == null || text.Length == 0)
-                return data;
-            
-            if (text.Length > length)
-                text = text.Substring (0, length);
-            
-            data.Add (StringTypeToEncoding (type, null).GetBytes (text));
-            
-            return data;
-        }
-
-        public static ByteVector FromString(string text, StringType type)
-        {
-            return FromString(text, type, Int32.MaxValue);
-        }
-
-        public static ByteVector FromString(string text, int length)
-        {
-            return FromString(text, StringType.UTF8, length);
-        }
-
-        public static ByteVector FromString(string text)
-        {
-            return FromString (text, StringType.UTF8);
-        }
-      
-        public static ByteVector FromPath (string path)
-        {
-            byte [] tmp_out;
-            return FromPath (path, out tmp_out, false);
-        }
-        
-        internal static ByteVector FromPath (string path, out byte [] firstChunk, bool copyFirstChunk)
-        {
-           return FromFile (new File.LocalFileAbstraction (path), out firstChunk, copyFirstChunk);
-        }
+#endregion
+		
+		
+		
+#region Static Conversions
+		
+		/// <summary>
+		///    Converts an unsigned value into a data representation.
+		/// </summary>
+		/// <param name="value">
+		///    A <see cref="uint"/> value to convert into bytes.
+		/// </param>
+		/// <param name="mostSignificantByteFirst">
+		///    <see langword="true" /> if the most significant byte is
+		///    to appear first (big endian format), or <see
+		///    langword="false" /> if the least significant byte is to
+		///    appear first (little endian format).
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the encoded
+		///    representation of <paramref name="value" />.
+		/// </returns>
+		public static ByteVector FromUInt (uint value,
+		                                   bool mostSignificantByteFirst)
+		{
+			ByteVector vector = new ByteVector();
+			for(int i = 0; i < 4; i++) {
+				int offset = mostSignificantByteFirst ? 3-i : i;
+				vector.Add ((byte)(value >> (offset * 8) & 0xFF));
+			}
+			
+			return vector;
+		}
+		
+		/// <summary>
+		///    Converts an unsigned value into a big-endian data
+		///    representation.
+		/// </summary>
+		/// <param name="value">
+		///    A <see cref="uint"/> value to convert into bytes.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the encoded
+		///    representation of <paramref name="value" />.
+		/// </returns>
+		public static ByteVector FromUInt (uint value)
+		{
+			return FromUInt(value, true);
+		}
+		
+		/// <summary>
+		///    Converts an unsigned value into a data representation.
+		/// </summary>
+		/// <param name="value">
+		///    A <see cref="ushort"/> value to convert into bytes.
+		/// </param>
+		/// <param name="mostSignificantByteFirst">
+		///    <see langword="true" /> if the most significant byte is
+		///    to appear first (big endian format), or <see
+		///    langword="false" /> if the least significant byte is to
+		///    appear first (little endian format).
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the encoded
+		///    representation of <paramref name="value" />.
+		/// </returns>
+		public static ByteVector FromUShort (ushort value,
+		                                     bool mostSignificantByteFirst)
+		{
+			ByteVector vector = new ByteVector();
+			for(int i = 0; i < 2; i++) {
+				int offset = mostSignificantByteFirst ? 1-i : i;
+				vector.Add ((byte)(value >> (offset * 8) & 0xFF));
+			}
+			
+			return vector;
+		}
+		
+		/// <summary>
+		///    Converts an unsigned value into a big-endian data
+		///    representation.
+		/// </summary>
+		/// <param name="value">
+		///    A <see cref="ushort"/> value to convert into bytes.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the encoded
+		///    representation of <paramref name="value" />.
+		/// </returns>
+		public static ByteVector FromUShort(ushort value)
+		{
+			return FromUShort (value, true);
+		}
+		
+		/// <summary>
+		///    Converts an unsigned value into a data representation.
+		/// </summary>
+		/// <param name="value">
+		///    A <see cref="ulong"/> value to convert into bytes.
+		/// </param>
+		/// <param name="mostSignificantByteFirst">
+		///    <see langword="true" /> if the most significant byte is
+		///    to appear first (big endian format), or <see
+		///    langword="false" /> if the least significant byte is to
+		///    appear first (little endian format).
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the encoded
+		///    representation of <paramref name="value" />.
+		/// </returns>
+		public static ByteVector FromULong(ulong value, bool mostSignificantByteFirst)
+		{
+			ByteVector vector = new ByteVector();
+			for(int i = 0; i < 8; i++) {
+				int offset = mostSignificantByteFirst ? 7-i : i;
+				vector.Add ((byte)(value >> (offset * 8) & 0xFF));
+			}
+			return vector;
+		}
+		
+		/// <summary>
+		///    Converts an unsigned value into a big-endian data
+		///    representation.
+		/// </summary>
+		/// <param name="value">
+		///    A <see cref="ulong"/> value to convert into bytes.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the encoded
+		///    representation of <paramref name="value" />.
+		/// </returns>
+		public static ByteVector FromULong(ulong value)
+		{
+			return FromULong(value, true);
+		}
+		
+		/// <summary>
+		///    Converts an string into a encoded data representation.
+		/// </summary>
+		/// <param name="text">
+		///    A <see cref="string"/> object containing the text to
+		///    convert.
+		/// </param>
+		/// <param name="type">
+		///    A <see cref="StringType"/> value specifying the encoding
+		///    to use when converting the text.
+		/// </param>
+		/// <param name="length">
+		///    A <see cref="int"/> value specifying the number of
+		///    characters in <paramref name="text" /> to encoded.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the encoded
+		///    representation of <paramref name="text" />.
+		/// </returns>
+		public static ByteVector FromString (string text,
+		                                     StringType type,
+		                                     int length)
+		{
+			ByteVector data = new ByteVector ();
+			
+			if (type == StringType.UTF16)
+				data.Add (new byte [] {0xff, 0xfe});
+			
+			if (text == null || text.Length == 0)
+				return data;
+			
+			if (text.Length > length)
+				text = text.Substring (0, length);
+			
+			data.Add (StringTypeToEncoding (type, null).GetBytes (text));
+			
+			return data;
+		}
+		
+		/// <summary>
+		///    Converts an string into a encoded data representation.
+		/// </summary>
+		/// <param name="text">
+		///    A <see cref="string"/> object containing the text to
+		///    convert.
+		/// </param>
+		/// <param name="type">
+		///    A <see cref="StringType"/> value specifying the encoding
+		///    to use when converting the text.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the encoded
+		///    representation of <paramref name="text" />.
+		/// </returns>
+		public static ByteVector FromString(string text,
+		                                    StringType type)
+		{
+			return FromString(text, type, Int32.MaxValue);
+		}
+		
+		/// <summary>
+		///    Converts an string into a encoded data representation.
+		/// </summary>
+		/// <param name="text">
+		///    A <see cref="string"/> object containing the text to
+		///    convert.
+		/// </param>
+		/// <param name="length">
+		///    A <see cref="int"/> value specifying the number of
+		///    characters in <paramref name="text" /> to encoded.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the encoded
+		///    representation of <paramref name="text" />.
+		/// </returns>
+		public static ByteVector FromString(string text, int length)
+		{
+			return FromString(text, StringType.UTF8, length);
+		}
+		
+		/// <summary>
+		///    Converts an string into a encoded data representation.
+		/// </summary>
+		/// <param name="text">
+		///    A <see cref="string"/> object containing the text to
+		///    convert.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the encoded
+		///    representation of <paramref name="text" />.
+		/// </returns>
+		public static ByteVector FromString(string text)
+		{
+			return FromString (text, StringType.UTF8);
+		}
+		
+		public static ByteVector FromPath (string path)
+		{
+			byte [] tmp_out;
+			return FromPath (path, out tmp_out, false);
+		}
+		
+		internal static ByteVector FromPath (string path, out byte [] firstChunk, bool copyFirstChunk)
+		{
+			return FromFile (new File.LocalFileAbstraction (path), out firstChunk, copyFirstChunk);
+		}
 
         public static ByteVector FromFile (File.IFileAbstraction abstraction)
         {

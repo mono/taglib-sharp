@@ -1,5 +1,6 @@
 //
-// SynchData.cs:
+// SynchData.cs: Provides support for encoding and decoding unsynchronized data
+// and numbers.
 //
 // Author:
 //   Brian Nickel (brian.nickel@gmail.com)
@@ -27,52 +28,117 @@
 
 using System;
 
-namespace TagLib.Id3v2
-{
-   public static class SynchData
-   {
-      public static uint ToUInt (ByteVector data)
-      {
-         if (data == null)
-            throw new ArgumentNullException ("data");
-         
-         uint sum = 0;
-         int last = data.Count > 4 ? 3 : data.Count - 1;
-
-         for(int i = 0; i <= last; i++)
-            sum |= (uint) (data [i] & 0x7f) << ((last - i) * 7);
-
-         return sum;
-      }
-
-      public static ByteVector FromUInt (uint value)
-      {
-         ByteVector v = new ByteVector (4, 0);
-
-         for (int i = 0; i < 4; i++)
-            v [i] = (byte) (value >> ((3 - i) * 7) & 0x7f);
-
-         return v;
-      }
-      
-      public static void UnsynchByteVector (ByteVector data)
-      {
-         if (data == null)
-            throw new ArgumentNullException ("data");
-         
-         for (int i = data.Count - 2; i >= 0; i --)
-            if (data [i] == 0xFF && (data [i+1] == 0 || (data [i+1] & 0xE0) != 0))
-               data.Insert (i+1, 0);
-      }
-      
-      public static void ResynchByteVector (ByteVector data)
-      {
-         if (data == null)
-            throw new ArgumentNullException ("data");
-         
-         for (int i = data.Count - 2; i >= 0; i --)
-            if (data [i] == 0xFF && data [i+1] == 0)
-               data.RemoveAt (i+1);
-      }
-   }
+namespace TagLib.Id3v2 {
+	/// <summary>
+	///    This static class provides support for encoding and decoding
+	///    unsynchronized data and numbers.
+	/// </summary>
+	/// <remarks>
+	///    Unsynchronization is designed so that portions of the tag won't
+	///    be misinterpreted as MPEG audio stream headers by removing the
+	///    possibility of the synch bytes occuring in the tag.
+	/// </remarks>
+	public static class SynchData
+	{
+		/// <summary>
+		///    Decodes synchronized integer data into a <see
+		///    cref="uint" /> value.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing the number
+		///    to decode. Only the first 4 bytes of this value will be
+		///    used.
+		/// </param>
+		/// <returns>
+		///    A <see cref="uint" /> value containing the decoded
+		///    number.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="data" /> is <see langword="null" />.
+		/// </exception>
+		public static uint ToUInt (ByteVector data)
+		{
+			if (data == null)
+				throw new ArgumentNullException ("data");
+			
+			uint sum = 0;
+			int last = data.Count > 4 ? 3 : data.Count - 1;
+			
+			for(int i = 0; i <= last; i++)
+				sum |= (uint) (data [i] & 0x7f)
+					<< ((last - i) * 7);
+			
+			return sum;
+		}
+		
+		/// <summary>
+		///    Encodes a <see cref="uint" /> value as synchronized
+		///    integer data.
+		/// </summary>
+		/// <param name="value">
+		///    A <see cref="uint" /> value containing the number to
+		///    encode.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector" /> object containing the encoded
+		///    number.
+		/// </returns>
+		/// <exception cref="ArgumentOutOfRangeException">
+		///    <paramref name="value" /> is greater than 268435455.
+		/// </exception>
+		public static ByteVector FromUInt (uint value)
+		{
+			if ((value >> 28) != 0)
+				throw new ArgumentOutOfRangeException ("value",
+					"value must be less than 268435456.");
+			
+			ByteVector v = new ByteVector (4, 0);
+			
+			for (int i = 0; i < 4; i++)
+				v [i] = (byte) (value >> ((3 - i) * 7) & 0x7f);
+			
+			return v;
+		}
+		
+		/// <summary>
+		///    Unsynchronizes a <see cref="ByteVector" /> object by
+		///    inserting empty bytes where necessary.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object to unsynchronize.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="data" /> is <see langword="null" />.
+		/// </exception>
+		public static void UnsynchByteVector (ByteVector data)
+		{
+			if (data == null)
+				throw new ArgumentNullException ("data");
+			
+			for (int i = data.Count - 2; i >= 0; i --)
+				if (data [i] == 0xFF && (data [i+1] == 0 ||
+					(data [i+1] & 0xE0) != 0))
+					data.Insert (i+1, 0);
+		}
+		
+		/// <summary>
+		///    Resynchronizes a <see cref="ByteVector" /> object by
+		///    removing the added bytes.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object to resynchronize.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="data" /> is <see langword="null" />.
+		/// </exception>
+		public static void ResynchByteVector (ByteVector data)
+		{
+			if (data == null)
+				throw new ArgumentNullException ("data");
+			
+			for (int i = data.Count - 2; i >= 0; i --)
+				if (data [i] == 0xFF && data [i+1] == 0)
+					data.RemoveAt (i+1);
+		}
+	}
 }
