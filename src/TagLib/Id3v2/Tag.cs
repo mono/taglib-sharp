@@ -39,7 +39,7 @@ namespace TagLib.Id3v2 {
 	/// </summary>
 	public class Tag : TagLib.Tag, IEnumerable<Frame>
 	{
-		#region Private Static Fields
+#region Private Static Fields
 		
 		/// <summary>
 		///    Contains the language to use for language specific
@@ -75,11 +75,11 @@ namespace TagLib.Id3v2 {
 		/// </summary>
 		private static bool use_numeric_genres = true;
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Private Fields
+#region Private Fields
 		
 		/// <summary>
 		///    Contains the tag's header.
@@ -96,11 +96,11 @@ namespace TagLib.Id3v2 {
 		/// </summary>
 		private List<Frame> frame_list = new List<Frame> ();
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Constructors
+#region Constructors
 		
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
@@ -145,11 +145,11 @@ namespace TagLib.Id3v2 {
 			Read (file, position);
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Public Methods
+#region Public Methods
 		
 		/// <summary>
 		///    Gets all frames contained in the current instance.
@@ -387,12 +387,17 @@ namespace TagLib.Id3v2 {
 					"Identifier must be four bytes long.",
 					"ident");
 			
+			bool empty = true;
+			
 			if (text != null)
-				for (int i = 0; i < text.Length; i ++)
-					if (!string.IsNullOrEmpty (text [i])) {
-						RemoveFrames (ident);
-						return;
-					}
+				for (int i = 0; empty && i < text.Length; i ++)
+					if (!string.IsNullOrEmpty (text [i]))
+						empty = false;
+			
+			if (empty) {
+				RemoveFrames (ident);
+				return;
+			}
 			
 			TextInformationFrame frame =
 				TextInformationFrame.Get (this, ident, true);
@@ -555,12 +560,12 @@ namespace TagLib.Id3v2 {
 			
 			return tag_data;
 		}
-      
-		#endregion
+		
+#endregion
 		
 		
 		
-		#region Public Properties
+#region Public Properties
 		
 		/// <summary>
 		///    Gets and sets the header flags applied to the current
@@ -689,11 +694,11 @@ namespace TagLib.Id3v2 {
 			set {use_numeric_genres = value;}
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Protected Methods
+#region Protected Methods
 		
 		/// <summary>
 		///    Populates the current instance be reading in a tag from
@@ -880,11 +885,11 @@ namespace TagLib.Id3v2 {
 			RemoveFrames (FrameType.TIME);
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Private Methods
+#region Private Methods
 		
 		// TODO: These should become public some day.
 		
@@ -984,11 +989,11 @@ namespace TagLib.Id3v2 {
 			return frame_list.GetEnumerator ();
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region TagLib.Tag
+#region TagLib.Tag
 		
 		/// <summary>
 		///    Gets the tag types contained in the current instance.
@@ -1458,6 +1463,6 @@ namespace TagLib.Id3v2 {
 			frame_list.Clear ();
 		}
 		
-		#endregion
+#endregion
 	}
 }

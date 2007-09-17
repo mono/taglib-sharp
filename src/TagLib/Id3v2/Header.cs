@@ -34,6 +34,11 @@ namespace TagLib.Id3v2 {
 	[Flags]
 	public enum HeaderFlags : byte {
 		/// <summary>
+		///    The header contains no flags.
+		/// </summary>
+		None = 0,
+		
+		/// <summary>
 		///    The tag described by the header has been unsynchronized.
 		/// </summary>
 		Unsynchronisation = 0x80,

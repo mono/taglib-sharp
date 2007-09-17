@@ -1,3 +1,16 @@
+2007-09-17  Brian Nickel <brian.nickel@gmail.com>
+	
+	* src/TagLib/Id3v2/Tag.cs: New logic for SetFrameText was backwards,
+	causing frames to disappear. (Thanks to hwahrmann for the bug report.)
+	
+	* src/TagLib/Id3v2/FrameHeader.cs: Fix the reading of version 2 and 3
+	headers. They weren't being converted to the new headers. Add
+	FrameFlags.None.
+	
+	* src/TagLib/Id3v2/Header.cs: Add HeaderFlags.None.
+	
+	* configure.ac: Now 2.0.2.14.
+
 2007-09-16  Brian Nickel <brian.nickel@gmail.com>
 	
 	* src/TagLib/Id3v2/SynchData.cs:

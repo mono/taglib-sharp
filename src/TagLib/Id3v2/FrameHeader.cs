@@ -37,6 +37,11 @@ namespace TagLib.Id3v2 {
 	public enum FrameFlags : ushort
 	{
 		/// <summary>
+		///    The header contains no flags.
+		/// </summary>
+		None = 0,
+		
+		/// <summary>
 		///    Indicates that the frame is to be deleted if the tag is
 		///    altered.
 		/// </summary>
@@ -380,7 +385,8 @@ namespace TagLib.Id3v2 {
 			
 			if (version == 2)
 				for (int i = 0; i < 57; i ++) {
-					if (!version2_frames [i,1].Equals (id))
+					if (!version2_frames [i,
+						toVersion ? 1 : 0].Equals (id))
 						continue;
 					
 					return version2_frames [i,
@@ -389,7 +395,8 @@ namespace TagLib.Id3v2 {
 			
 			if (version == 3)
 				for (int i = 0; i < 2; i ++) {
-					if (!version3_frames [i,1].Equals (id))
+					if (!version3_frames [i,
+						toVersion ? 1 : 0].Equals (id))
 						continue;
 					
 					return version3_frames [i,
