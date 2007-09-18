@@ -75,6 +75,8 @@ namespace TagLib {
 	/// </summary>
 	public class ByteVector : IList<byte>, IComparable<ByteVector>
 	{
+#region Private Static Fields
+		
 		/// <summary>
 		///    Contains values to use in CRC calculation.
 		/// </summary>
@@ -107,10 +109,10 @@ namespace TagLib {
 			0xbfa1b04b, 0xbb60adfc, 0xb6238b25, 0xb2e29692,
 			0x8aad2b2f, 0x8e6c3698, 0x832f1041, 0x87ee0df6,
 			0x99a95df3, 0x9d684044, 0x902b669d, 0x94ea7b2a,
-			0xe0b41de7, 0xe4750050, 0xe9362689, 0xedf73b3e, 
+			0xe0b41de7, 0xe4750050, 0xe9362689, 0xedf73b3e,
 			0xf3b06b3b, 0xf771768c, 0xfa325055, 0xfef34de2,
 			0xc6bcf05f, 0xc27dede8, 0xcf3ecb31, 0xcbffd686,
-			0xd5b88683, 0xd1799b34, 0xdc3abded, 0xd8fba05a, 
+			0xd5b88683, 0xd1799b34, 0xdc3abded, 0xd8fba05a,
 			0x690ce0ee, 0x6dcdfd59, 0x608edb80, 0x644fc637,
 			0x7a089632, 0x7ec98b85, 0x738aad5c, 0x774bb0eb,
 			0x4f040d56, 0x4bc510e1, 0x46863638, 0x42472b8f,
@@ -124,39 +126,73 @@ namespace TagLib {
 			0xd727bbb6, 0xd3e6a601, 0xdea580d8, 0xda649d6f,
 			0xc423cd6a, 0xc0e2d0dd, 0xcda1f604, 0xc960ebb3,
 			0xbd3e8d7e, 0xb9ff90c9, 0xb4bcb610, 0xb07daba7,
-			0xae3afba2, 0xaafbe615, 0xa7b8c0cc, 0xa379dd7b, 
-			0x9b3660c6, 0x9ff77d71, 0x92b45ba8, 0x9675461f, 
+			0xae3afba2, 0xaafbe615, 0xa7b8c0cc, 0xa379dd7b,
+			0x9b3660c6, 0x9ff77d71, 0x92b45ba8, 0x9675461f,
 			0x8832161a, 0x8cf30bad, 0x81b02d74, 0x857130c3,
-			0x5d8a9099, 0x594b8d2e, 0x5408abf7, 0x50c9b640, 
+			0x5d8a9099, 0x594b8d2e, 0x5408abf7, 0x50c9b640,
 			0x4e8ee645, 0x4a4ffbf2, 0x470cdd2b, 0x43cdc09c,
 			0x7b827d21, 0x7f436096, 0x7200464f, 0x76c15bf8,
 			0x68860bfd, 0x6c47164a, 0x61043093, 0x65c52d24,
 			0x119b4be9, 0x155a565e, 0x18197087, 0x1cd86d30,
 			0x029f3d35, 0x065e2082, 0x0b1d065b, 0x0fdc1bec,
-			0x3793a651, 0x3352bbe6, 0x3e119d3f, 0x3ad08088, 
+			0x3793a651, 0x3352bbe6, 0x3e119d3f, 0x3ad08088,
 			0x2497d08d, 0x2056cd3a, 0x2d15ebe3, 0x29d4f654,
 			0xc5a92679, 0xc1683bce, 0xcc2b1d17, 0xc8ea00a0,
 			0xd6ad50a5, 0xd26c4d12, 0xdf2f6bcb, 0xdbee767c,
 			0xe3a1cbc1, 0xe760d676, 0xea23f0af, 0xeee2ed18,
 			0xf0a5bd1d, 0xf464a0aa, 0xf9278673, 0xfde69bc4,
 			0x89b8fd09, 0x8d79e0be, 0x803ac667, 0x84fbdbd0,
-			0x9abc8bd5, 0x9e7d9662, 0x933eb0bb, 0x97ffad0c, 
+			0x9abc8bd5, 0x9e7d9662, 0x933eb0bb, 0x97ffad0c,
 			0xafb010b1, 0xab710d06, 0xa6322bdf, 0xa2f33668,
 			0xbcb4666d, 0xb8757bda, 0xb5365d03, 0xb1f740b4
 		};
 		
-		#region Private Fields
+		/// <summary>
+		///    Specifies whether or not to use a broken Latin-1
+		///    behavior.
+		/// </summary>
+		private static bool use_broken_latin1 = false;
+		
+		/// <summary>
+		///    Contains a one byte text delimiter.
+		/// </summary>
+		private static readonly ReadOnlyByteVector td1 =
+			new ReadOnlyByteVector ((int)1);
+		
+		/// <summary>
+		///    Contains a two byte text delimiter.
+		/// </summary>
+		private static readonly ReadOnlyByteVector td2 =
+			new ReadOnlyByteVector ((int)2);
+		
+		/// <summary>
+		///    Contains the last generic UTF-16 encoding read.
+		/// </summary>
+		/// <remarks>
+		///    When reading a collection of UTF-16 strings, sometimes
+		///    only the first one will contain the BOM. In that case,
+		///    this field will inform the file what encoding to use for
+		///    the second string.
+		/// </remarks>
+		private static System.Text.Encoding last_utf16_encoding =
+			System.Text.Encoding.Unicode;
+		
+#endregion
+		
+		
+		
+#region Private Fields
 		
 		/// <summary>
 		///    Contains the internal byte list.
 		/// </summary>
 		private List<byte> data = new List<byte>();
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Constructors
+#region Constructors
 		
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
@@ -334,11 +370,44 @@ namespace TagLib {
 			}
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Public Methods
+#region Public Static Properties
+		
+		/// <summary>
+		///    Gets and sets whether or not to use a broken behavior for
+		///    Latin-1 strings, common to ID3v1 and ID3v2 tags.
+		/// </summary>
+		/// <value>
+		///    <see langref="true" /> if the broken behavior is to be
+		///    used. Otherwise, <see langword="false" />.
+		/// </value>
+		/// <remarks>
+		///    <para>Many media players and taggers incorrectly treat
+		///    Latin-1 fields as "default encoding" fields. As such, a
+		///    tag may end up with Windows-1250 encoded text. While this
+		///    problem would be apparent when moving a file from one
+		///    computer to another, it would not be apparent on the
+		///    original machine. By setting this property to <see
+		///    langword="true" />, your program will behave like Windows
+		///    Media Player and others, who read tags with this broken
+		///    behavior.</para>
+		///    <para>Please note that TagLib# stores tag data in Unicode
+		///    formats at every possible instance to avoid these
+		///    problems in tags it has written.</para>
+		/// </remarks>
+		public static bool UseBrokenLatin1Behavior {
+			get {return use_broken_latin1;}
+			set {use_broken_latin1 = value;}
+		}
+		
+#endregion
+		
+		
+		
+#region Public Methods
 		
 		/// <summary>
 		///    Creates a new instance of <see cref="ByteVector" />
@@ -400,6 +469,37 @@ namespace TagLib {
 			return Mid(index, Count - index);
 		}
 		
+		/// <summary>
+		///    Finds the first byte-aligned occurance of a pattern in
+		///    the current instance, starting at a specified position.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector"/> object containing the pattern
+		///    to search for in the current instance.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int"/> value specifying the index in the
+		///    current instance at which to start searching.
+		/// </param>
+		/// <param name="byteAlign">
+		///    A <see cref="int"/> value specifying the byte alignment
+		///    of the pattern to search for, relative to <paramref
+		///    name="offset" />.
+		/// </param>
+		/// <returns>
+		///    A <see cref="int"/> value containing the index at which
+		///    <paramref name="pattern" /> was found in the current
+		///    instance, or -1 if the pattern was not found. The
+		///    difference between the position and <paramref
+		///    name="offset" /> will be divisible by <paramref
+		///    name="byteAlign" />.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="pattern" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		///    <paramref name="offset" /> is less than zero.
+		/// </exception>
 		public int Find (ByteVector pattern, int offset, int byteAlign)
 		{
 			if (pattern == null)
@@ -452,274 +552,513 @@ namespace TagLib {
 			return -1;
 		}
 		
+		/// <summary>
+		///    Finds the first occurance of a pattern in the current
+		///    instance, starting at a specified position.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector"/> object containing the pattern
+		///    to search for in the current instance.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int"/> value specifying the index in the
+		///    current instance at which to start searching.
+		/// </param>
+		/// <returns>
+		///    A <see cref="int"/> value containing the index at which
+		///    <paramref name="pattern" /> was found in the current
+		///    instance, or -1 if the pattern was not found.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="pattern" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		///    <paramref name="offset" /> is less than zero.
+		/// </exception>
 		public int Find(ByteVector pattern, int offset)
 		{
 			return Find(pattern, offset, 1);
 		}
 		
+		/// <summary>
+		///    Finds the first occurance of a pattern in the current
+		///    instance.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector"/> object containing the pattern
+		///    to search for in the current instance.
+		/// </param>
+		/// <returns>
+		///    A <see cref="int"/> value containing the index at which
+		///    <paramref name="pattern" /> was found in the current
+		///    instance, or -1 if the pattern was not found.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="pattern" /> is <see langword="null" />.
+		/// </exception>
 		public int Find(ByteVector pattern)
 		{
 			return Find(pattern, 0, 1);
 		}
 		
+		/// <summary>
+		///    Finds the last byte-aligned occurance of a pattern in
+		///    the current instance, starting before a specified
+		///    position.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector"/> object containing the pattern
+		///    to search for in the current instance.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int"/> value specifying the index in the
+		///    current instance at which to start searching.
+		/// </param>
+		/// <param name="byteAlign">
+		///    A <see cref="int"/> value specifying the byte alignment
+		///    of the pattern to search for, relative to <paramref
+		///    name="offset" />.
+		/// </param>
+		/// <returns>
+		///    A <see cref="int"/> value containing the index at which
+		///    <paramref name="pattern" /> was found in the current
+		///    instance, or -1 if the pattern was not found. The
+		///    difference between the position and <paramref
+		///    name="offset" /> will be divisible by <paramref
+		///    name="byteAlign" />.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="pattern" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		///    <paramref name="offset" /> is less than zero.
+		/// </exception>
 		public int RFind (ByteVector pattern, int offset, int byteAlign)
-        {
-            if (pattern == null)
-                throw new ArgumentNullException ("pattern");
-            
-            if (pattern.Count == 0 || pattern.Count > Count - offset)
-                return -1;
-
-            // Let's go ahead and special case a pattern of size one since that's common
-            // and easy to make fast.
-
-            if (pattern.Count == 1)
-            {
-                byte p = pattern [0];
-                for (int i = Count - offset - 1; i >= 0; i -= byteAlign)
-                    if (this.data [i] == p)
-                        return i;
-                return -1;
-            }
-            
-            int [] first_occurrence = new int [256];
-            
-            for (int i = 0; i < 256; ++i)
-                first_occurrence [i] = pattern.Count;
-            
-            for (int i = pattern.Count - 1; i > 0; --i)
-                first_occurrence [pattern [i]] = i;
-            
-            for (int i = Count - offset - pattern.Count; i >= 0; i -= first_occurrence [this.data [i]])
-                if (ContainsAt (pattern, i) && (offset - i) % byteAlign == 0)
-                    return i;
-            
-            return -1;
-        }
-        
-        public int RFind(ByteVector pattern, int offset)
-        {
-            return RFind (pattern, offset, 1);
-        }
-
-        public int RFind(ByteVector pattern)
-        {
-            return RFind(pattern, 0, 1);
-        }
-      
-        public bool ContainsAt(ByteVector pattern, int offset, 
-            int patternOffset, int patternLength)
-        {
-            if (pattern == null)
-               throw new ArgumentNullException ("pattern");
-         
-            if(pattern.Count < patternLength) {
-                patternLength = pattern.Count;
-            }
-
-            // do some sanity checking -- all of these things are 
-            // needed for the search to be valid
-            if(patternLength > this.data.Count || offset >= this.data.Count || 
-                patternOffset >= pattern.Count || patternLength == 0) {
-                return false;
-            }
-            
-            // loop through looking for a mismatch
-            for(int i = 0; i < patternLength - patternOffset; i++) {
-                if(this.data[i + offset] != pattern[i + patternOffset]) {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        public bool ContainsAt(ByteVector pattern, int offset, int patternOffset)
-        {
-            return ContainsAt(pattern, offset, patternOffset, Int32.MaxValue);
-        }
-
-        public bool ContainsAt(ByteVector pattern, int offset)
-        {
-            return ContainsAt(pattern, offset, 0);
-        }
-      
-        public bool StartsWith(ByteVector pattern)
-        {
-            return ContainsAt(pattern, 0);
-        }
-      
-        public bool EndsWith(ByteVector pattern)
-        {
-            if (pattern == null)
-               throw new ArgumentNullException ("pattern");
-         
-            return ContainsAt(pattern, this.data.Count - pattern.Count);
-        }
-
-        public int EndsWithPartialMatch(ByteVector pattern)
-        {
-            if (pattern == null)
-               throw new ArgumentNullException ("pattern");
-         
-            if(pattern.Count > this.data.Count) {
-                return -1;
-            }
-
-            int start_index = this.data.Count - pattern.Count;
-
-            // try to match the last n-1 bytes from the vector (where n is 
-            // the pattern size) -- continue trying to match n-2, n-3...1 bytes
-
-            for(int i = 1; i < pattern.Count; i++) {
-                if(ContainsAt(pattern, start_index + i, 0, pattern.Count - i)) {
-                    return start_index + i;
-                }
-            }
-
-            return -1;
-        }
-
-        public void Add(ByteVector vector)
-        {
-        	   if (IsReadOnly)
-               throw new NotSupportedException ("Cannot edit readonly objects.");
-            
-            if(vector != null) {
-                this.data.AddRange(vector);
-            }
-        }
-
-        public void Add(byte [] vector)
-        {
-        	   if (IsReadOnly)
-               throw new NotSupportedException ("Cannot edit readonly objects.");
-            
-            if(vector != null) {
-                this.data.AddRange(vector);
-            }
-        }
-        
-        public void Insert (int index, ByteVector vector)
-        {
-        	   if (IsReadOnly)
-               throw new NotSupportedException ("Cannot edit readonly objects.");
-            
-            if(vector != null) {
-                this.data.InsertRange (index, vector);
-            }
-        }
-        
-        public void Insert (int index, byte [] vector)
-        {
-        	   if (IsReadOnly)
-               throw new NotSupportedException ("Cannot edit readonly objects.");
-            
-            if(vector != null) {
-                this.data.InsertRange (index, vector);
-            }
-        }
-        
-        public ByteVector Resize(int size, byte padding)
-        {
-        	   if (IsReadOnly)
-               throw new NotSupportedException ("Cannot edit readonly objects.");
-            
-            if(this.data.Count > size) {
-                this.data.RemoveRange(size, this.data.Count - size);
-            }
-            
-            while(this.data.Count < size) {
-                this.data.Add (padding);
-            }
-            
-            return this;
-        }
-
-        public ByteVector Resize(int size)
-        {
-            return Resize(size, 0);
-        }
-        
-        public void RemoveRange (int index, int count)
-        {
-        	   if (IsReadOnly)
-               throw new NotSupportedException ("Cannot edit readonly objects.");
-            
-           this.data.RemoveRange (index, count);
-        }
-        #endregion
-        
-        #region Conversions
-
-        public uint ToUInt(bool mostSignificantByteFirst)
-        {
-            uint sum = 0;
-            for(int i = 0, last = Count > 4 ? 3 : Count - 1; i <= last; i++) {
-                sum |= (uint)this[i] << ((mostSignificantByteFirst ? last - i : i) * 8);
-            }
-            return sum;
-        }
-
-        public uint ToUInt()
-        {
-            return ToUInt(true);
-        }
-
-        public ushort ToUShort(bool mostSignificantByteFirst)
-        {
-            ushort sum = 0;
-            for(int i = 0, last = Count > 2 ? 1 : Count - 1; i <= last; i++) {
-                sum |= (ushort)(this[i] << ((mostSignificantByteFirst ? last - i : i) * 8));
-            }
-            return sum;
-        }
-
-        public ushort ToUShort()
-        {
-            return ToUShort(true);
-        }
-
-        public ulong ToULong(bool mostSignificantByteFirst)
-        {
-            ulong sum = 0;
-            for(int i = 0, last = Count > 8 ? 7 : Count - 1; i <= last; i++) {
-                sum |= (ulong)this [i] << ((mostSignificantByteFirst ? last - i : i) * 8);
-            }
-            return sum;
-        }
-
-        public ulong ToULong()
-        {
-            return ToULong(true);
-        }
-
-        public string ToString(StringType type, int offset)
-        {
-            ByteVector bom = type == StringType.UTF16 && this.data.Count > 1 ? Mid(offset, 2) : null;
-            string s = StringTypeToEncoding(type, bom).GetString(Data, offset, Count - offset);
-            
-            if(s.Length != 0 && (s[0] == 0xfffe || s[0] == 0xfeff)) { // UTF16 BOM
-                return s.Substring (1);
-            }
-            
-            return s;
-        }
-
-        public string ToString(StringType type)
-        {
-            return ToString (type, 0);
-        }
-
-        public override string ToString()
-        {
-            return ToString(StringType.UTF8);
-        }
-        
-        public string[] ToStrings (StringType type, int offset)
-        {
-            return ToStrings (type, offset, int.MaxValue);
-        }
+		{
+			if (pattern == null)
+				throw new ArgumentNullException ("pattern");
+			
+			if (offset < 0)
+				throw new ArgumentOutOfRangeException (
+					"offset");
+			
+			if (pattern.Count == 0 || pattern.Count > Count - offset)
+				return -1;
+			
+			// Let's go ahead and special case a pattern of size one
+			// since that's common and easy to make fast.
+			
+			if (pattern.Count == 1) {
+				byte p = pattern [0];
+				for (int i = Count - offset - 1; i >= 0;
+					i -= byteAlign)
+					if (this.data [i] == p)
+						return i;
+				return -1;
+			}
+			
+			int [] first_occurrence = new int [256];
+			
+			for (int i = 0; i < 256; ++i)
+				first_occurrence [i] = pattern.Count;
+			
+			for (int i = pattern.Count - 1; i > 0; --i)
+				first_occurrence [pattern [i]] = i;
+			
+			for (int i = Count - offset - pattern.Count; i >= 0;
+				i -= first_occurrence [this.data [i]])
+				if ((offset - i) % byteAlign == 0 &&
+					ContainsAt (pattern, i))
+					return i;
+			
+			return -1;
+		}
+		
+		/// <summary>
+		///    Finds the last occurance of a pattern in the current
+		///    instance, starting before a specified position.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector"/> object containing the pattern
+		///    to search for in the current instance.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int"/> value specifying the index in the
+		///    current instance at which to start searching.
+		/// </param>
+		/// <returns>
+		///    A <see cref="int"/> value containing the index at which
+		///    <paramref name="pattern" /> was found in the current
+		///    instance, or -1 if the pattern was not found.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="pattern" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		///    <paramref name="offset" /> is less than zero.
+		/// </exception>
+		public int RFind(ByteVector pattern, int offset)
+		{
+			return RFind (pattern, offset, 1);
+		}
+		
+		/// <summary>
+		///    Finds the last occurance of a pattern in the current
+		///    instance.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector"/> object containing the pattern
+		///    to search for in the current instance.
+		/// </param>
+		/// <returns>
+		///    A <see cref="int"/> value containing the index at which
+		///    <paramref name="pattern" /> was found in the current
+		///    instance, or -1 if the pattern was not found.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="pattern" /> is <see langword="null" />.
+		/// </exception>
+		public int RFind(ByteVector pattern)
+		{
+			return RFind(pattern, 0, 1);
+		}
+		
+		/// <summary>
+		///    Checks whether or not a pattern appears at a specified
+		///    position in the current instance.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector"/> object containing the pattern
+		///    to check for in the current instance.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int"/> value specifying the offset in the
+		///    current instance at which to check for the pattern.
+		/// </param>
+		/// <param name="patternOffset">
+		///    A <see cref="int"/> value specifying the position in
+		///    <paramref name="pattern" /> at which to start checking.
+		/// </param>
+		/// <param name="patternLength">
+		///    A <see cref="int"/> value specifying the number of bytes
+		///    in <paramref name="pattern" /> to compare.
+		/// </param>
+		/// <returns>
+		///    <see langword="true"/> if the pattern was found at the
+		///    specified position. Otherwise, <see langword="false"/>.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="pattern" /> is <see langword="null" />.
+		/// </exception>
+		public bool ContainsAt (ByteVector pattern, int offset, 
+		                        int patternOffset, int patternLength)
+		{
+			if (pattern == null)
+				throw new ArgumentNullException ("pattern");
+			
+			if(pattern.Count < patternLength) {
+				patternLength = pattern.Count;
+			}
+			
+			// do some sanity checking -- all of these things are 
+			// needed for the search to be valid
+			if (patternLength > this.data.Count ||
+				offset >= this.data.Count ||
+				patternOffset >= pattern.Count ||
+				patternLength <= 0 || offset < 0)
+				return false;
+			
+			// loop through looking for a mismatch
+			for (int i = 0; i < patternLength - patternOffset; i++)
+				if (this.data[i + offset] !=
+					pattern [i + patternOffset])
+					return false;
+			
+			return true;
+		}
+		
+		/// <summary>
+		///    Checks whether or not a pattern appears at a specified
+		///    position in the current instance.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector"/> object containing the pattern
+		///    to check for in the current instance.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int"/> value specifying the offset in the
+		///    current instance at which to check for the pattern.
+		/// </param>
+		/// <param name="patternOffset">
+		///    A <see cref="int"/> value specifying the position in
+		///    <paramref name="pattern" /> at which to start checking.
+		/// </param>
+		/// <returns>
+		///    <see langword="true"/> if the pattern was found at the
+		///    specified position. Otherwise, <see langword="false"/>.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="pattern" /> is <see langword="null" />.
+		/// </exception>
+		public bool ContainsAt (ByteVector pattern, int offset,
+		                        int patternOffset)
+		{
+			return ContainsAt (pattern, offset, patternOffset,
+				int.MaxValue);
+		}
+		
+		/// <summary>
+		///    Checks whether or not a pattern appears at a specified
+		///    position in the current instance.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector"/> object containing the pattern
+		///    to check for in the current instance.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int"/> value specifying the offset in the
+		///    current instance at which to check for the pattern.
+		/// </param>
+		/// <returns>
+		///    <see langword="true"/> if the pattern was found at the
+		///    specified position. Otherwise, <see langword="false"/>.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="pattern" /> is <see langword="null" />.
+		/// </exception>
+		public bool ContainsAt (ByteVector pattern, int offset)
+		{
+			return ContainsAt (pattern, offset, 0);
+		}
+		
+		/// <summary>
+		///    Checks whether or not a pattern appears at the beginning
+		///    of the current instance.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector"/> object containing the pattern
+		///    to check for in the current instance.
+		/// </param>
+		/// <returns>
+		///    <see langword="true"/> if the pattern was found at the
+		///    beginning of the current instance. Otherwise, <see
+		///    langword="false"/>.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="pattern" /> is <see langword="null" />.
+		/// </exception>
+		public bool StartsWith (ByteVector pattern)
+		{
+			return ContainsAt (pattern, 0);
+		}
+		
+		/// <summary>
+		///    Checks whether or not a pattern appears at the end of the
+		///    current instance.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector"/> object containing the pattern
+		///    to check for in the current instance.
+		/// </param>
+		/// <returns>
+		///    <see langword="true"/> if the pattern was found at the
+		///    end of the current instance. Otherwise, <see
+		///    langword="false"/>.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="pattern" /> is <see langword="null" />.
+		/// </exception>
+		public bool EndsWith (ByteVector pattern)
+		{
+			if (pattern == null)
+				throw new ArgumentNullException ("pattern");
+			
+			return ContainsAt (pattern,
+				this.data.Count - pattern.Count);
+		}
+		
+		public int EndsWithPartialMatch (ByteVector pattern)
+		{
+			if (pattern == null)
+				throw new ArgumentNullException ("pattern");
+			
+			if(pattern.Count > this.data.Count) {
+				return -1;
+			}
+			
+			int start_index = this.data.Count - pattern.Count;
+			
+			// try to match the last n-1 bytes from the vector
+			// (where n is the pattern size) -- continue trying to
+			// match n-2, n-3...1 bytes
+			
+			for(int i = 1; i < pattern.Count; i++) {
+				if (ContainsAt (pattern, start_index + i, 0,
+					pattern.Count - i)) {
+					return start_index + i;
+				}
+			}
+			
+			return -1;
+		}
+		
+		public void Add (ByteVector vector)
+		{
+			if (IsReadOnly)
+				throw new NotSupportedException (
+					"Cannot edit readonly objects.");
+			
+			if(vector != null) {
+				this.data.AddRange(vector);
+			}
+		}
+		
+		public void Add(byte [] vector)
+		{
+			if (IsReadOnly)
+				throw new NotSupportedException (
+					"Cannot edit readonly objects.");
+			
+			if(vector != null)
+				this.data.AddRange(vector);
+		}
+		
+		public void Insert (int index, ByteVector vector)
+		{
+			if (IsReadOnly)
+				throw new NotSupportedException (
+					"Cannot edit readonly objects.");
+			
+			if(vector != null)
+				this.data.InsertRange (index, vector);
+		}
+		
+		public void Insert (int index, byte [] vector)
+		{
+			if (IsReadOnly)
+				throw new NotSupportedException (
+					"Cannot edit readonly objects.");
+			
+			if(vector != null)
+				this.data.InsertRange (index, vector);
+		}
+		
+		public ByteVector Resize(int size, byte padding)
+		{
+			if (IsReadOnly)
+				throw new NotSupportedException (
+					"Cannot edit readonly objects.");
+			
+			if (this.data.Count > size)
+				this.data.RemoveRange (size,
+					this.data.Count - size);
+			
+			while (this.data.Count < size)
+				this.data.Add (padding);
+			
+			return this;
+		}
+		
+		public ByteVector Resize (int size)
+		{
+			return Resize (size, 0);
+		}
+		
+		public void RemoveRange (int index, int count)
+		{
+			if (IsReadOnly)
+				throw new NotSupportedException (
+					"Cannot edit readonly objects.");
+			
+			this.data.RemoveRange (index, count);
+		}
+		
+#endregion
+		
+		
+		
+#region Conversions
+		
+		public uint ToUInt (bool mostSignificantByteFirst)
+		{
+			uint sum = 0;
+			int last = Count > 4 ? 3 : Count - 1;
+			
+			for (int i = 0; i <= last; i++) {
+				int offset = mostSignificantByteFirst ? last-i : i;
+				sum |= (uint) this[i] << (offset * 8);
+			}
+			
+			return sum;
+		}
+		
+		public uint ToUInt()
+		{
+			return ToUInt (true);
+		}
+		
+		public ushort ToUShort(bool mostSignificantByteFirst)
+		{
+			ushort sum = 0;
+			int last = Count > 2 ? 1 : Count - 1;
+			for (int i = 0; i <= last; i++) {
+				int offset = mostSignificantByteFirst ? last-i : i;
+				sum |= (ushort)(this[i] << (offset * 8));
+			}
+			
+			return sum;
+		}
+		
+		public ushort ToUShort ()
+		{
+			return ToUShort (true);
+		}
+		
+		public ulong ToULong (bool mostSignificantByteFirst)
+		{
+			ulong sum = 0;
+			int last = Count > 8 ? 7 : Count - 1;
+			for(int i = 0; i <= last; i++) {
+				int offset = mostSignificantByteFirst ? last-i : i;
+				sum |= (ulong) (this[i] << (offset * 8));
+			}
+			return sum;
+		}
+		
+		public ulong ToULong ()
+		{
+			return ToULong (true);
+		}
+		
+		public string ToString (StringType type, int offset)
+		{
+			ByteVector bom = type == StringType.UTF16 &&
+				this.data.Count > 1 ? Mid (offset, 2) : null;
+			
+			string s = StringTypeToEncoding (type, bom)
+				.GetString (Data, offset, Count - offset);
+			
+			// UTF16 BOM
+			if(s.Length != 0 && (s[0] == 0xfffe || s[0] == 0xfeff)) 
+				return s.Substring (1);
+			
+			return s;
+		}
+		
+		public string ToString (StringType type)
+		{
+			return ToString (type, 0);
+		}
+		
+		public override string ToString ()
+		{
+			return ToString (StringType.UTF8);
+		}
+		
+		public string[] ToStrings (StringType type, int offset)
+		{
+			return ToStrings (type, offset, int.MaxValue);
+		}
 		
 		public string[] ToStrings (StringType type, int offset, int count)
 		{
@@ -842,10 +1181,10 @@ namespace TagLib {
             return new ByteVector(value);
         }
 
-        public static implicit operator ByteVector(string value)
-        {
-            return ByteVector.FromString(value);
-        }
+		public static implicit operator ByteVector (string value)
+		{
+			return ByteVector.FromString (value, StringType.UTF8);
+		}
         
 #endregion
 		
@@ -1074,144 +1413,290 @@ namespace TagLib {
 		///    A <see cref="ByteVector"/> object containing the encoded
 		///    representation of <paramref name="text" />.
 		/// </returns>
+		[Obsolete("Use FromString(string,StringType)")]
 		public static ByteVector FromString(string text)
 		{
 			return FromString (text, StringType.UTF8);
 		}
 		
+		/// <summary>
+		///    Creates a new instance of <see cref="ByteVector" /> by
+		///    reading in the contents of a specified file.
+		/// </summary>
+		/// <param name="path">
+		///    A <see cref="string"/> object containing the path of the
+		///    file to read.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the contents
+		///    of the specified file.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="path" /> is <see langword="null" />.
+		/// </exception>
 		public static ByteVector FromPath (string path)
 		{
 			byte [] tmp_out;
 			return FromPath (path, out tmp_out, false);
 		}
 		
-		internal static ByteVector FromPath (string path, out byte [] firstChunk, bool copyFirstChunk)
+		/// <summary>
+		///    Creates a new instance of <see cref="ByteVector" /> by
+		///    reading in the contents of a specified file.
+		/// </summary>
+		/// <param name="path">
+		///    A <see cref="string"/> object containing the path of the
+		///    file to read.
+		/// </param>
+		/// <param name="firstChunk">
+		///    A <see cref="byte[]"/> reference to be filled with the
+		///    first data chunk from the read file.
+		/// </param>
+		/// <param name="copyFirstChunk">
+		///    A <see cref="bool"/> value specifying whether or not to
+		///    copy the first chunk of the file into <paramref
+		///    name="firstChunk" />.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the contents
+		///    of the specified file.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="path" /> is <see langword="null" />.
+		/// </exception>
+		internal static ByteVector FromPath (string path,
+		                                     out byte [] firstChunk,
+		                                     bool copyFirstChunk)
 		{
-			return FromFile (new File.LocalFileAbstraction (path), out firstChunk, copyFirstChunk);
+			if (path == null)
+				throw new ArgumentNullException ("path");
+			
+			return FromFile (new File.LocalFileAbstraction (path),
+				out firstChunk, copyFirstChunk);
 		}
-
-        public static ByteVector FromFile (File.IFileAbstraction abstraction)
-        {
-            byte [] tmp_out;
-            return FromFile (abstraction, out tmp_out, false);
-        }
-        
-        internal static ByteVector FromFile (File.IFileAbstraction abstraction, out byte [] firstChunk, bool copyFirstChunk)
-        {
-           System.IO.Stream stream = abstraction.ReadStream;
-           ByteVector output = FromStream (stream, out firstChunk, copyFirstChunk);
-           abstraction.CloseStream (stream);
-           return output;
-        }
-
-        public static ByteVector FromStream(System.IO.Stream stream)
-        {
-            byte [] tmp_out;
-            return FromStream(stream, out tmp_out, false);
-        }
-
-        internal static ByteVector FromStream(System.IO.Stream stream, 
-            out byte [] firstChunk, bool copyFirstChunk)
-        {
-            ByteVector vector = new ByteVector();
-            byte [] bytes = new byte[4096];
-            int read_size = bytes.Length;
-            int bytes_read = 0;
-            bool set_first_chunk = false;
-
-            firstChunk = null;
-
-            while(true) {
-                Array.Clear(bytes, 0, bytes.Length);
-                int n = stream.Read(bytes, 0, read_size);
-                vector.Add(bytes);
-                bytes_read += n;
-
-                if(!set_first_chunk) {
-                    if(copyFirstChunk) {
-                        if(firstChunk == null || firstChunk.Length != read_size) {
-                            firstChunk = new byte[read_size];
-                        }
-
-                        Array.Copy(bytes, 0, firstChunk, 0, n);
-                    }
-                    set_first_chunk = true;
-                }
-
-                if((bytes_read == stream.Length && stream.Length > 0) || 
-                    (n < read_size && stream.Length <= 0)) {
-                    break;
-                }
-            }
-
-            if(stream.Length > 0 && vector.Count != stream.Length) {
-                vector.Resize((int)stream.Length);
-            }
-
-            return vector;
-        }
-      
-        #endregion
-      
-        #region Utilities
-        
-      private static readonly ReadOnlyByteVector td1 = new ReadOnlyByteVector ((int)1);
-      private static readonly ReadOnlyByteVector td2 = new ReadOnlyByteVector ((int)2);
-      public static ByteVector TextDelimiter (StringType type)
-      {
-         return (type == StringType.UTF16 || type == StringType.UTF16BE || type == StringType.UTF16LE) ? td2 : td1;
-      }
-        
-        private static System.Text.Encoding last_utf16_encoding = System.Text.Encoding.Unicode;
-        private static System.Text.Encoding StringTypeToEncoding(StringType type, ByteVector bom)
-        {
-            switch(type) {
-                case StringType.UTF16:
-                    // If we have a BOM, return the appropriate encoding.
-                    // Otherwise, assume we're reading from a string that
-                    // was already identified. In that case, the encoding will
-                    // be stored as last_utf16_encoding;
-                    if (bom == null || (bom [0] == 0xFF && bom [1] == 0xFE))
-                        return (last_utf16_encoding = System.Text.Encoding.Unicode);
-                    if (bom == null || (bom [1] == 0xFF && bom [0] == 0xFE))
-                        return (last_utf16_encoding = System.Text.Encoding.BigEndianUnicode);
-                    return last_utf16_encoding;
-                case StringType.UTF16BE:
-                    return System.Text.Encoding.BigEndianUnicode;
-                case StringType.UTF8:
-                    return System.Text.Encoding.UTF8;
-                case StringType.UTF16LE:
-                    return System.Text.Encoding.Unicode;
-            }
-            
-            try
-            {
-               // The right format but not ECMA.
-               return System.Text.Encoding.GetEncoding("latin1");
-            }
-            catch (ArgumentException)
-            {
-               return System.Text.Encoding.UTF8;
-            }
-        }
-      
-        #endregion
-      
-        #region System.Object
-      
-      public override bool Equals (object obj)
-      {
-         if (!(obj is ByteVector))
-            return false;
-         
-         return Equals ((ByteVector) obj);
-      }
-      
-      public bool Equals (ByteVector other)
-      {
-         return CompareTo (other) == 0;
-      }
-      
+		
+		/// <summary>
+		///    Creates a new instance of <see cref="ByteVector" /> by
+		///    reading in the contents of a specified file abstraction.
+		/// </summary>
+		/// <param name="abstraction">
+		///    A <see cref="File.IFileAbstraction"/> object containing
+		///    abstraction of the file to read.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the contents
+		///    of the specified file.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="abstraction" /> is <see langword="null"
+		///    />.
+		/// </exception>
+		public static ByteVector FromFile (File.IFileAbstraction abstraction)
+		{
+			byte [] tmp_out;
+			return FromFile (abstraction, out tmp_out, false);
+		}
+		
+		/// <summary>
+		///    Creates a new instance of <see cref="ByteVector" /> by
+		///    reading in the contents of a specified file abstraction.
+		/// </summary>
+		/// <param name="abstraction">
+		///    A <see cref="File.IFileAbstraction"/> object containing
+		///    abstraction of the file to read.
+		/// </param>
+		/// <param name="firstChunk">
+		///    A <see cref="byte[]"/> reference to be filled with the
+		///    first data chunk from the read file.
+		/// </param>
+		/// <param name="copyFirstChunk">
+		///    A <see cref="bool"/> value specifying whether or not to
+		///    copy the first chunk of the file into <paramref
+		///    name="firstChunk" />.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the contents
+		///    of the specified file.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="abstraction" /> is <see langword="null"
+		///    />.
+		/// </exception>
+		internal static ByteVector FromFile (File.IFileAbstraction abstraction,
+		                                     out byte [] firstChunk,
+		                                     bool copyFirstChunk)
+		{
+			if (abstraction == null)
+				throw new ArgumentNullException ("abstraction");
+			
+			System.IO.Stream stream = abstraction.ReadStream;
+			ByteVector output = FromStream (stream, out firstChunk, copyFirstChunk);
+			abstraction.CloseStream (stream);
+			return output;
+		}
+		
+		/// <summary>
+		///    Creates a new instance of <see cref="ByteVector" /> by
+		///    reading in the contents of a specified stream.
+		/// </summary>
+		/// <param name="stream">
+		///    A <see cref="System.IO.Stream"/> object containing
+		///    the stream to read.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the contents
+		///    of the specified stream.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="stream" /> is <see langword="null" />.
+		/// </exception>
+		public static ByteVector FromStream (System.IO.Stream stream)
+		{
+			byte [] tmp_out;
+			return FromStream (stream, out tmp_out, false);
+		}
+		
+		/// <summary>
+		///    Creates a new instance of <see cref="ByteVector" /> by
+		///    reading in the contents of a specified stream.
+		/// </summary>
+		/// <param name="stream">
+		///    A <see cref="System.IO.Stream"/> object containing
+		///    the stream to read.
+		/// </param>
+		/// <param name="firstChunk">
+		///    A <see cref="byte[]"/> reference to be filled with the
+		///    first data chunk from the read stream.
+		/// </param>
+		/// <param name="copyFirstChunk">
+		///    A <see cref="bool"/> value specifying whether or not to
+		///    copy the first chunk of the stream into <paramref
+		///    name="firstChunk" />.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the contents
+		///    of the specified stream.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="stream" /> is <see langword="null" />.
+		/// </exception>
+		internal static ByteVector FromStream(System.IO.Stream stream,
+		                                      out byte [] firstChunk,
+		                                      bool copyFirstChunk)
+		{
+			ByteVector vector = new ByteVector();
+			byte [] bytes = new byte[4096];
+			int read_size = bytes.Length;
+			int bytes_read = 0;
+			bool set_first_chunk = false;
+			
+			firstChunk = null;
+			
+			while(true) {
+				Array.Clear(bytes, 0, bytes.Length);
+				int n = stream.Read(bytes, 0, read_size);
+				vector.Add(bytes);
+				bytes_read += n;
+				
+				if(!set_first_chunk) {
+					if(copyFirstChunk) {
+						if(firstChunk == null ||
+							firstChunk.Length != read_size) {
+							firstChunk = new byte [read_size];
+						}
+						
+						Array.Copy (bytes, 0, firstChunk, 0, n);
+					}
+					set_first_chunk = true;
+				}
+				
+				if((bytes_read == stream.Length && stream.Length > 0) || 
+					(n < read_size && stream.Length <= 0)) {
+					break;
+				}
+			}
+			
+			if(stream.Length > 0 && vector.Count != stream.Length) {
+				vector.Resize((int)stream.Length);
+			}
+			
+			return vector;
+		}
+		
+#endregion
+		
+#region Utilities
+		
+		public static ByteVector TextDelimiter (StringType type)
+		{
+			return type == StringType.UTF16 ||
+				type == StringType.UTF16BE ||
+				type == StringType.UTF16LE ? td2 : td1;
+		}
+		
+		private static System.Text.Encoding StringTypeToEncoding (StringType type,
+		                                                          ByteVector bom)
+		{
+			switch(type) {
+			case StringType.UTF16:
+				// If we have a BOM, return the appropriate
+				// encoding. Otherwise, assume we're reading
+				// from a string that was already identified. In
+				// that case, the encoding will be stored as
+				// last_utf16_encoding.
+				
+				if (bom == null)
+					return last_utf16_encoding;
+				
+				if (bom [0] == 0xFF && bom [1] == 0xFE)
+					return last_utf16_encoding =
+						System.Text.Encoding.Unicode;
+				
+				if (bom [1] == 0xFF && bom [0] == 0xFE)
+					return last_utf16_encoding =
+						System.Text.Encoding.BigEndianUnicode;
+				
+				return last_utf16_encoding;
+				
+			case StringType.UTF16BE:
+				return System.Text.Encoding.BigEndianUnicode;
+				
+			case StringType.UTF8:
+				return System.Text.Encoding.UTF8;
+				
+			case StringType.UTF16LE:
+				return System.Text.Encoding.Unicode;
+			}
+			
+			if (use_broken_latin1)
+				return System.Text.Encoding.Default;
+			
+			try {
+				return System.Text.Encoding.GetEncoding ("latin1");
+			} catch (ArgumentException) {
+				return System.Text.Encoding.UTF8;
+				}
+		}
+		
+#endregion
+		
+		
+		
+#region System.Object
+		
+		public override bool Equals (object obj)
+		{
+			if (!(obj is ByteVector))
+				return false;
+			
+			return Equals ((ByteVector) obj);
+		}
+		
+		public bool Equals (ByteVector other)
+		{
+			return CompareTo (other) == 0;
+		}
+		
         public override int GetHashCode ()
         {
            unchecked
@@ -1277,68 +1762,78 @@ namespace TagLib {
                throw new NotSupportedException ("Cannot edit readonly objects.");
             
             return this.data.Remove(item);
-        }
-        
-        public void CopyTo(byte [] array, int arrayIndex)
-        {
-            this.data.CopyTo(array, arrayIndex);
-        }
-        
-        public bool Contains(byte item)
-        {
-            return this.data.Contains(item);
-        }
-
-        public int Count {
-            get { return this.data.Count; }
-        }
-
-        public bool IsSynchronized {
-            get { return false; }
-        }
-
-        public object SyncRoot {
-            get { return this; }
-        }
-        
-        #endregion
-        
-        #region IList<T>
-        
-        public void RemoveAt(int index)
-        {
-        	   if (IsReadOnly)
-               throw new NotSupportedException ("Cannot edit readonly objects.");
-            
-            this.data.RemoveAt(index);
-        }
-        
-        public void Insert(int index, byte item)
-        {
-        	   if (IsReadOnly)
-               throw new NotSupportedException ("Cannot edit readonly objects.");
-            
-            this.data.Insert(index, item);
-        }
-        
-        public int IndexOf(byte item)
-        {
-            return this.data.IndexOf(item);
-        }
-        
-        public virtual bool IsReadOnly {
-            get { return false; }
-        }
-        
-        public virtual bool IsFixedSize {
-            get { return false; }
-        }
-        
-        public byte this[int index] {
-            get { return this.data[index]; }
-            set { if (IsReadOnly) throw new NotSupportedException ("Cannot edit readonly objects."); data[index] = value; }
-        }
-        
-        #endregion
-    }
+		}
+		
+		public void CopyTo (byte [] array, int arrayIndex)
+		{
+			this.data.CopyTo (array, arrayIndex);
+		}
+		
+		public bool Contains (byte item)
+		{
+			return this.data.Contains (item);
+		}
+		
+		public int Count {
+			get {return this.data.Count;}
+		}
+		
+		public bool IsSynchronized {
+			get {return false;}
+		}
+		
+		public object SyncRoot {
+			get {return this;}
+		}
+		
+#endregion
+		
+		
+		
+#region IList<T>
+		
+		public void RemoveAt(int index)
+		{
+			if (IsReadOnly)
+				throw new NotSupportedException (
+					"Cannot edit readonly objects.");
+			
+			this.data.RemoveAt(index);
+		}
+		
+		public void Insert (int index, byte item)
+		{
+			if (IsReadOnly)
+				throw new NotSupportedException (
+					"Cannot edit readonly objects.");
+			
+			this.data.Insert(index, item);
+		}
+		
+		public int IndexOf (byte item)
+		{
+			return this.data.IndexOf (item);
+		}
+		
+		public virtual bool IsReadOnly {
+			get {return false;}
+		}
+		
+		public virtual bool IsFixedSize {
+			get {return false;}
+		}
+		
+		public byte this[int index] {
+			get {return this.data[index]; }
+			set {
+				if (IsReadOnly)
+					throw new NotSupportedException (
+						"Cannot edit readonly objects.");
+				
+				data[index] = value;
+			}
+		}
+		
+#endregion
+	}
 }

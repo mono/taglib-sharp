@@ -403,7 +403,7 @@ namespace TagLib.Asf {
 				return strValue;
 			
 			if (type == DataType.Bytes)
-				return byteValue.ToString ();
+				return byteValue.ToString (StringType.UTF16LE);
 			
 			return longValue.ToString ();
 		}

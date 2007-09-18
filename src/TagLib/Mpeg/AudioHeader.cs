@@ -449,8 +449,8 @@ namespace TagLib.Mpeg {
 					// found, we hope that we're in a
 					// constant bitrate file.
 					
-					int frames = (int) ((stream_length -
-						position) / AudioFrameLength + 1);
+					int frames = (int) (stream_length
+						 / AudioFrameLength + 1);
 					
 					duration = TimeSpan.FromSeconds (
 						(double) (AudioFrameLength *

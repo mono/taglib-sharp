@@ -111,6 +111,10 @@ namespace TagLib.Asf {
 			rating = file.ReadUnicode (rating_length);
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="ContentDescriptionObject" /> with no contents.
+		/// </summary>
 		public ContentDescriptionObject ()
 			: base (Asf.Guid.AsfContentDescriptionObject)
 		{

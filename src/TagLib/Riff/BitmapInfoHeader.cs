@@ -80,16 +80,20 @@ namespace TagLib.Riff
       public MediaTypes MediaTypes {get {return MediaTypes.Video;}}
       public System.TimeSpan Duration {get {return System.TimeSpan.Zero;}}
       
-      public string Description
-      {
-         get
-         {
-            switch (CompressionId.ToString ().ToUpper (CultureInfo.InvariantCulture))
-            {
-            case "AEMI": return "Array VideoONE MPEG1-I capture";
-            case "ALPH": return "Ziracom Video";
-            case "AMPG": return "Array VideoONE capture/compression";
-            case "ANIM": return "Intel RDX";
+		public string Description {
+			get {
+				string id = CompressionId.ToString (StringType.UTF8)
+					.ToUpper (CultureInfo.InvariantCulture);
+				switch (id)
+				{
+				case "AEMI":
+					return "Array VideoONE MPEG1-I capture";
+				case "ALPH":
+					return "Ziracom Video";
+				case "AMPG":
+					return "Array VideoONE capture/compression";
+				case "ANIM":
+					return "Intel RDX";
 /*
 AP41 	Microsoft Corporation 	Reserved. 	02-Apr-01
 AUR2 	AuraVision Corporation 	AuraVision Aura 2 codec. 	04-Jan-94
@@ -109,13 +113,14 @@ CWLT 	Microsoft Corporation 	Reserved. 	24-Jul-94
 CYUV 	Creative Labs, Inc. 	Creative Labs YUV. 	Not specified.
 DIV3 	Microsoft Corporation 	Reserved. 	02-Apr-01
 */
-            case "DIV3":
-            case "MP43":
-               return "Microsoft MPEG-4 Version 3 Video";
+				case "DIV3":
+				case "MP43":
+					return "Microsoft MPEG-4 Version 3 Video";
 /*
 DIV4 	Microsoft Corporation 	Reserved. 	02-Apr-01
 */
-            case "DIVX": return "DivX Video";
+				case "DIVX":
+					return "DivX Video";
 /*
 DJPG 	Data Translation, Inc. 	Broadway 101 Motion JPEG codec. 	27-Jul-98
 DP16 	Matsushita Electric Industrial Co., Ltd. 	YUV411 with DPCM 6-bit compression. 	19-May-98
@@ -139,7 +144,8 @@ DVX2 	Lucent Technologies 	Lucent DVX2000S video decoder. 	17-Feb-99
 DVX3 	Lucent Technologies 	Lucent DVX3000S video decoder. 	17-Feb-99
 DXTC 	Microsoft Corporation 	DirectX texture compression. 	27-Jan-98
 */
-            case "DX50": return "DivX Version 5 Video";
+				case "DX50":
+					return "DivX Version 5 Video";
 /*
 EMWC 	EverAd, Inc. 	EverAd Marquee WMA codec. 	12-Jan-01
 ETV1 	eTreppid Technologies, LLC 	eTreppid video codec. 	11-Oct-01
@@ -175,30 +181,30 @@ IRAW 	Intel Corporation 	Intel YUV uncompressed. 	12-Jun-96
 ISME 	Intel Corporation 	Intel's next-generation video codec. 	01-Jul-98
 IUYV 	LEAD Technologies, Inc. 	UYVY interlaced (even, then odd lines). 	09-Aug-01
 */
-            case "IV30":
-            case "IV31":
-            case "IV32":
-            case "IV33":
-            case "IV34":
-            case "IV35":
-            case "IV36":
-            case "IV37":
-            case "IV38":
-            case "IV39":
-               return "Intel Indeo Video Version 3";
-            case "IV40":
-            case "IV41":
-            case "IV42":
-            case "IV43":
-            case "IV44":
-            case "IV45":
-            case "IV46":
-            case "IV47":
-            case "IV48":
-            case "IV49":
-               return "Intel Indeo Video Version 4";
-            case "IV50":
-               return "Intel Indeo Video Version 5";
+				case "IV30":
+				case "IV31":
+				case "IV32":
+				case "IV33":
+				case "IV34":
+				case "IV35":
+				case "IV36":
+				case "IV37":
+				case "IV38":
+				case "IV39":
+					return "Intel Indeo Video Version 3";
+				case "IV40":
+				case "IV41":
+				case "IV42":
+				case "IV43":
+				case "IV44":
+				case "IV45":
+				case "IV46":
+				case "IV47":
+				case "IV48":
+				case "IV49":
+					return "Intel Indeo Video Version 4";
+				case "IV50":
+					return "Intel Indeo Video Version 5";
 /*
 IY41 	LEAD Technologies, Inc. 	Y41P interlaced (even, then odd lines). 	09-Aug-01
 IYU1 	Microsoft Corporation 	IEEE 1394 Digital Camera 1.04 Specification: mode 2, 12-bit YUV (4:1:1). 	17-Aug-99
@@ -226,7 +232,8 @@ MP4V 	Media Excel Inc. 	MPEG-4 video. 	20-Sep-01
 MPEG 	Chromatic Research, Inc. 	MPEG-1 video, I frame. 	16-Sep-97
 MPG4 	Microsoft Corporation 	Reserved. 	02-Apr-01
 */
-            case "MPG4": return "Microsoft MPEG-4 Version 1 Video";
+				case "MPG4":
+					return "Microsoft MPEG-4 Version 1 Video";
 /*
 MRCA 	FAST Multimedia AG 	Mrcodec. 	16-Sep-97
 MRLE 	Microsoft Corporation 	Run length encoding. 	01-Nov-92
@@ -299,9 +306,12 @@ WJPG 	Winbond Electronics Corporation 	Winbond motion JPEG bitstream format. 	04
 WMxx 	Microsoft Corporation 	All FOURCC codes starting with 'WS' are reserved. 	22-Jun-01
 WMS2 	Microsoft Corporation 	Reserved. 	02-Apr-01
 */
-            case "WMV1": return "Microsoft Windows Media Video Version 7";
-            case "WMV2": return "Microsoft Windows Media Video Version 8";
-            case "WMV3": return "Microsoft Windows Media Video Version 9";
+				case "WMV1":
+					return "Microsoft Windows Media Video Version 7";
+				case "WMV2":
+					return "Microsoft Windows Media Video Version 8";
+				case "WMV3":
+					return "Microsoft Windows Media Video Version 9";
 /*
 WNV1 	Winnov, Inc. 	Not specified. 	11-May-00
 WPY2 	Winnov, Inc. 	Not specified. 	11-May-00
@@ -310,28 +320,41 @@ WZDC 	CORE Co. Ltd. 	iSnap. 	20-Jun-00
 XJPG 	Xirlink, Inc. 	Xirlink JPEG-like compressor. 	14-Feb-01
 XLV0 	NetXL, Inc. 	XL video decoder. 	18-Sep-97
 */
-            case "XVID": return "XviD Video";
-            case "YC12": return "Intel YUV12 Video";
-            case "YCCK": return "Uncompressed YCbCr Video with key data";
-            case "YU92": return "Intel YUV Video";
-            case "YUV8": return "Winnov Caviar YUV8 Video";
-            case "YUV9": return "Intel YUV Video";
-            case "YUYP": return "Evans & Sutherland YCbCr 4:2:2 extended precision, 10 bits per component Video";
-            case "YUYV": return "Canopus YUYV Compressor Video";
-            case "ZPEG": return "Metheus Corporation Video Zipper";
-            case "ZPG1":
-            case "ZPG2":
-            case "ZPG3":
-            case "ZPG4":
-               return "VoDeo Solutions Video";
-            default: return "Unknown Image (" + CompressionId.ToString () + ")";
-            }
-         }
-      }
-      
-      
-      
-      #region IEquatable
+				case "XVID":
+					return "XviD Video";
+				case "YC12":
+					return "Intel YUV12 Video";
+				case "YCCK":
+					return "Uncompressed YCbCr Video with key data";
+				case "YU92":
+					return "Intel YUV Video";
+				case "YUV8":
+					return "Winnov Caviar YUV8 Video";
+				case "YUV9":
+					return "Intel YUV Video";
+				case "YUYP":
+					return "Evans & Sutherland YCbCr 4:2:2 extended precision, 10 bits per component Video";
+				case "YUYV":
+					return "Canopus YUYV Compressor Video";
+				case "ZPEG":
+					return "Metheus Corporation Video Zipper";
+				case "ZPG1":
+				case "ZPG2":
+				case "ZPG3":
+				case "ZPG4":
+					return "VoDeo Solutions Video";
+				default:
+					return string.Format (
+						CultureInfo.InvariantCulture,
+						"Unknown Image ({0})",
+						CompressionId);
+				}
+			}
+		}
+		
+		
+		
+#region IEquatable
       public override int GetHashCode ()
       {
          unchecked
@@ -363,15 +386,15 @@ XLV0 	NetXL, Inc. 	XL video decoder. 	18-Sep-97
          colors_important == other.colors_important;
       }
       
-      public static bool operator == (BitmapInfoHeader first, BitmapInfoHeader second)
-      {
-         return first.Equals (second);
-      }
-      
-      public static bool operator != (BitmapInfoHeader first, BitmapInfoHeader second)
-      {
-         return !first.Equals (second);
-      }
-      #endregion
-   }
+		public static bool operator == (BitmapInfoHeader first, BitmapInfoHeader second)
+		{
+			return first.Equals (second);
+		}
+		
+		public static bool operator != (BitmapInfoHeader first, BitmapInfoHeader second)
+		{
+			return !first.Equals (second);
+		}
+#endregion
+	}
 }

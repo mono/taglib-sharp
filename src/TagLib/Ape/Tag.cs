@@ -667,12 +667,26 @@ namespace TagLib.Ape {
 		
 		#region IEnumerable
 		
+		/// <summary>
+		///    Gets the enumerator for the current instance.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="T:System.Collections.Generic.IEnumerator`1" /> object enumerating through
+		///    the item keys stored in the current instance.
+		/// </returns>
 		public IEnumerator<string> GetEnumerator ()
 		{
 			foreach (Item item in items)
 				yield return item.Key;
 		}
 		
+		/// <summary>
+		///    Gets the enumerator for the current instance.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="IEnumerator" /> object enumerating through
+		///    the item keys stored in the current instance.
+		/// </returns>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator ();

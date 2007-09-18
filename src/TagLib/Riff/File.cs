@@ -100,7 +100,7 @@ namespace TagLib.Riff
             bool tag_found = false;
             
             Seek (position);
-            string fourcc = ReadBlock (4).ToString ();
+            string fourcc = ReadBlock (4).ToString (StringType.UTF8);
             uint   size = ReadBlock (4).ToUInt (false);
             switch (fourcc)
             {
@@ -121,10 +121,10 @@ namespace TagLib.Riff
                break;
             case "LIST":
             {
-               switch (ReadBlock (4).ToString ())
-               {
-               case "hdrl":
-                  if (stream_format == "AVI " && style != ReadStyle.None)
+					switch (ReadBlock (4).ToString (StringType.UTF8))
+					{
+					case "hdrl":
+						if (stream_format == "AVI " && style != ReadStyle.None)
                   {
                      AviHeaderList header_list = new AviHeaderList (this, position + 12, (int) (size - 4));
                      duration = header_list.Header.Duration;

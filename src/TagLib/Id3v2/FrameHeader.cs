@@ -25,7 +25,6 @@
 // USA
 //
 
-using System.Collections;
 using System;
 
 namespace TagLib.Id3v2 {

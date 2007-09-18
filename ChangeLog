@@ -1,3 +1,27 @@
+2007-09-18  Brian Nickel <brian.nickel@gmail.com>
+	
+	* src/TagLib/Riff/BitmapInfoHeader.cs: Reformat.
+	
+	* src/TagLib/Id3v2/FrameHeader.cs: Remove 'using System.Collections'
+	
+	* src/TagLib/Mpeg/AudioHeader.cs: Don't double-count position when
+	counting frames. (Thanks to hwahrmann for the bug report.)
+	
+	* src/TagLib/ByteVector.cs: Add UseBrokenLatin1Behavior to emulate bad
+	behavior of many taggers. When true, TagLib# will read Latin1 strings as
+	the system default encoding.
+	
+	* src/TagLib/Asf/ContentDescriptionObject.cs: 
+	* src/TagLib/Ape/Tag.cs: Documented.
+	
+	* src/TagLib/Riff/File.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoHandlerBox.cs:
+	* src/TagLib/Asf/DescriptionRecord.cs:
+	* src/TagLib/Asf/ContentDescriptor.cs:
+	* src/TagLib/ReadOnlyByteVector.cs: Use ToString(StringType).
+
+	* configure.ac: Now 2.0.2.15.
+
 2007-09-17  Brian Nickel <brian.nickel@gmail.com>
 	
 	* src/TagLib/Id3v2/Tag.cs: New logic for SetFrameText was backwards,
