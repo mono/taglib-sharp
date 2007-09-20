@@ -1,3 +1,17 @@
+2007-09-20  Brian Nickel <brian.nickel@gmail.com>
+	
+	* src/TagLib/ByteVector.cs: Fix overflow problem introduced last
+	release. (Thanks to hwahrmann for the bug report.)
+	
+	* src/TagLib/Asf/HeaderObject.cs: Switch the order of play_duration and
+	send_duration. Standard implementation is backwards from the
+	specification. (Thanks to hwahrmann for the bug report.)
+	
+	* src/TagLib/Asf/FilePropertiesObject.cs: Subtract preroll from
+	duration. (Thanks to hwahrmann for the bug report.)
+	
+	* configure.ac: Now 2.0.2.16.
+
 2007-09-18  Brian Nickel <brian.nickel@gmail.com>
 	
 	* src/TagLib/Riff/BitmapInfoHeader.cs: Reformat.

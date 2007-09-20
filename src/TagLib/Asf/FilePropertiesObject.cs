@@ -134,8 +134,8 @@ namespace TagLib.Asf {
 			file_size = file.ReadQWord ();
 			creation_date = file.ReadQWord ();
 			data_packets_count = file.ReadQWord ();
-			play_duration = file.ReadQWord ();
 			send_duration = file.ReadQWord ();
+			play_duration = file.ReadQWord ();
 			preroll = file.ReadQWord ();
 			flags = file.ReadDWord ();
 			minimum_data_packet_size = file.ReadDWord ();
@@ -303,8 +303,8 @@ namespace TagLib.Asf {
 			output.Add (RenderQWord (file_size));
 			output.Add (RenderQWord (creation_date));
 			output.Add (RenderQWord (data_packets_count));
-			output.Add (RenderQWord (play_duration));
 			output.Add (RenderQWord (send_duration));
+			output.Add (RenderQWord (play_duration));
 			output.Add (RenderQWord (preroll));
 			output.Add (RenderDWord (flags));
 			output.Add (RenderDWord (minimum_data_packet_size));

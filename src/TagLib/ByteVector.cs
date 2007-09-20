@@ -1020,7 +1020,7 @@ namespace TagLib {
 			int last = Count > 8 ? 7 : Count - 1;
 			for(int i = 0; i <= last; i++) {
 				int offset = mostSignificantByteFirst ? last-i : i;
-				sum |= (ulong) (this[i] << (offset * 8));
+				sum |= (ulong) this[i] << (offset * 8);
 			}
 			return sum;
 		}
@@ -1296,7 +1296,8 @@ namespace TagLib {
 		///    A <see cref="ByteVector"/> object containing the encoded
 		///    representation of <paramref name="value" />.
 		/// </returns>
-		public static ByteVector FromULong(ulong value, bool mostSignificantByteFirst)
+		public static ByteVector FromULong (ulong value,
+		                                    bool mostSignificantByteFirst)
 		{
 			ByteVector vector = new ByteVector();
 			for(int i = 0; i < 8; i++) {

@@ -144,13 +144,22 @@ namespace TagLib.Asf {
 				List<ICodec> codecs = new List<ICodec> ();
 				
 				foreach (Object obj in Children) {
-					if (obj is FilePropertiesObject)
-						duration = (obj as
-							FilePropertiesObject).PlayDuration;
-				
-					if (obj is StreamPropertiesObject)
-						codecs.Add ((obj as
-							StreamPropertiesObject).Codec);
+					FilePropertiesObject fpobj = obj as
+						FilePropertiesObject;
+					
+					if (fpobj != null) {
+						duration = fpobj.PlayDuration -
+							new TimeSpan((long) fpobj.Preroll);
+						continue;
+					}
+					
+					StreamPropertiesObject spobj = obj as
+						StreamPropertiesObject;
+					
+					if (spobj != null) {
+						codecs.Add (spobj.Codec);
+						continue;
+					}
 				}
 				
 				return new Properties (duration, codecs);
