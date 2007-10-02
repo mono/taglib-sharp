@@ -414,8 +414,8 @@ namespace TagLib.Asf {
 			if (found < 0)
 				return null;
 			
-			p.MimeType = data.Mid (offset,
-				found - offset).ToString (StringType.UTF16LE);
+			p.MimeType = data.ToString (StringType.UTF16LE, offset,
+				found - offset);
 			offset = found + 2;
 			
 			// Get the description:
@@ -425,8 +425,8 @@ namespace TagLib.Asf {
 			if (found < 0)
 				return null;
 			
-			p.Description = data.Mid (offset, found - offset)
-				.ToString (StringType.UTF16LE);
+			p.Description = data.ToString (StringType.UTF16LE,
+				offset, found - offset);
 			offset = found + 2;
 			
 			p.Data = data.Mid (offset, size);
@@ -991,12 +991,12 @@ namespace TagLib.Asf {
 		///    instance or <see langword="null" /> if no value present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "Copyright"
-		///    Content Descriptor.
+		///    This property is implemented using the copyright stored
+		///    in the ASF Content Description Object.
 		/// </remarks>
 		public override string Copyright {
-			get {return GetDescriptorString ("Copyright");}
-			set {SetDescriptorString (value, "Copyright");}
+			get {return description.Copyright;}
+			set {description.Copyright = value;}
 		}
 		
 		/// <summary>

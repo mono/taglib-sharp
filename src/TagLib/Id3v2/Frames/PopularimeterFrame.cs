@@ -241,7 +241,7 @@ namespace TagLib.Id3v2
 				throw new CorruptFileException (
 					"Popularimeter frame does not contain a text delimiter");
 			
-			user = data.Mid (0, index).ToString (StringType.Latin1);
+			user = data.ToString (StringType.Latin1, 0, index);
 			rating = data [index + 1];
 			play_count = data.Mid (index + 2).ToULong ();
 		}
@@ -265,6 +265,7 @@ namespace TagLib.Id3v2
 				data.RemoveAt (0);
 			
 			data.Insert (0, rating);
+			data.Insert (0, 0);
 			data.Insert (0, ByteVector.FromString (user,
 				StringType.Latin1));
 			return data;

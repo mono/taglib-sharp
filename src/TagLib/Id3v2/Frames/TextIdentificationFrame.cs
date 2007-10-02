@@ -820,7 +820,8 @@ namespace TagLib.Id3v2 {
 			if (raw_version > 3 || FrameId == FrameType.TXXX) {
 				field_list.AddRange (data.ToStrings (encoding, 1));
 			} else if (data.Count > 1 && data [1] != 0) {
-				string value = data.ToString (encoding, 1);
+				string value = data.ToString (encoding, 1,
+					data.Count - 1);
 				
 				// Do a fast removal of end bytes.
 				if (value.Length > 1 &&

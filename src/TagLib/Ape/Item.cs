@@ -474,8 +474,8 @@ namespace TagLib.Ape {
 			int pos = data.Find (ByteVector.TextDelimiter (
 				StringType.UTF8), offset + 8);
 			
-			key = data.Mid (offset + 8, pos - offset - 8)
-				.ToString (StringType.UTF8);
+			key = data.ToString (StringType.UTF8,
+				offset + 8, pos - offset - 8);
 			
 			if (value_length > data.Count - pos - 1)
 				throw new CorruptFileException (

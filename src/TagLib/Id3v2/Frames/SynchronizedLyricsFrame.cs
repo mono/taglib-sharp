@@ -195,7 +195,7 @@ namespace TagLib.Id3v2
             throw new CorruptFileException ("Not enough bytes in field.");
          
          text_encoding = (StringType) data [0];
-         language = data.Mid (1, 3).ToString (StringType.Latin1);
+         language = data.ToString (StringType.Latin1, 1, 3);
          timestamp_format = (TimestampFormat) data [4];
          lyrics_type = (SynchedTextType) data [5];
          
@@ -205,7 +205,7 @@ namespace TagLib.Id3v2
          if (delim_index < 0)
             throw new CorruptFileException ("Text delimiter expected.");
          
-         description = data.Mid (6, delim_index - 6).ToString (text_encoding);
+         description = data.ToString (text_encoding, 6, delim_index - 6);
          
          int offset = delim_index + delim.Count;
          List<SynchedText> l = new List<SynchedText> ();
@@ -216,7 +216,7 @@ namespace TagLib.Id3v2
             if (delim_index < offset)
                throw new CorruptFileException ("Text delimiter expected.");
             
-            string text = data.Mid (offset, delim_index - offset).ToString (text_encoding);
+            string text = data.ToString (text_encoding, offset, delim_index - offset);
             offset = delim_index + delim.Count;
             
             if (offset + 4 > data.Count)

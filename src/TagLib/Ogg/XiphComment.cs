@@ -398,7 +398,7 @@ namespace TagLib.Ogg
          int vendor_length = (int) data.Mid (pos, 4).ToUInt (false);
          pos += 4;
 
-         vendor_id = data.Mid (pos, vendor_length).ToString (StringType.UTF8);
+         vendor_id = data.ToString (StringType.UTF8, pos, vendor_length);
          pos += vendor_length;
 
          // Next the number of fields in the comment vector.
@@ -414,7 +414,7 @@ namespace TagLib.Ogg
             int comment_length = (int) data.Mid (pos, 4).ToUInt (false);
             pos += 4;
 
-            string comment = data.Mid (pos, comment_length).ToString (StringType.UTF8);
+            string comment = data.ToString (StringType.UTF8, pos, comment_length);
             pos += comment_length;
 
             int comment_separator_position = comment.IndexOf ('=');

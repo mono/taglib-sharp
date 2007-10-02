@@ -215,8 +215,8 @@ namespace TagLib.Id3v2 {
 			if (pos < 0)
 				return;
 			
-			identification = data.Mid (0, pos++).ToString (
-				StringType.Latin1);
+			identification = data.ToString (StringType.Latin1, 0,
+				pos++);
 			
 			// Each channel is at least 4 bytes.
 			

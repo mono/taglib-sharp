@@ -145,11 +145,6 @@ namespace TagLib.Mpeg {
 		private uint flags;
 		
 		/// <summary>
-		///    Contains the header position.
-		/// </summary>
-		private long position;
-		
-		/// <summary>
 		///    Contains the audio stream length.
 		/// </summary>
 		private long stream_length;
@@ -174,7 +169,7 @@ namespace TagLib.Mpeg {
 		///    An empty and unset header.
 		/// </summary>
 		public static readonly AudioHeader Unknown =
-			new AudioHeader (0, 0, 0, XingHeader.Unknown);
+			new AudioHeader (0, 0, XingHeader.Unknown);
 		
 		#endregion
 		
@@ -203,11 +198,10 @@ namespace TagLib.Mpeg {
 		///    A <see cref="XingHeader" /> object representing the Xing
 		///    header associated with the new instance.
 		/// </param>
-		private AudioHeader (uint flags, long position,
-			long streamLength, XingHeader xingHeader)
+		private AudioHeader (uint flags, long streamLength,
+		                     XingHeader xingHeader)
 		{
 			this.flags = flags;
-			this.position = position;
 			this.stream_length = streamLength;
 			this.xing_header = xingHeader;
 			this.duration = TimeSpan.Zero;
@@ -240,7 +234,6 @@ namespace TagLib.Mpeg {
 		                     long position)
 		{
 			this.duration = TimeSpan.Zero;
-			this.position = position;
 			stream_length = 0;
 			
 			if (data.Count < 4)

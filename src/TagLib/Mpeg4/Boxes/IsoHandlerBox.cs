@@ -83,8 +83,7 @@ namespace TagLib.Mpeg4 {
 			int end = box_data.Find ((byte) 0, 16);
 			if (end < 16)
 				end = box_data.Count;
-			name = box_data.Mid (16, end - 16)
-				.ToString (StringType.UTF8);
+			name = box_data.ToString (StringType.UTF8, 16, end - 16);
 		}
 		
 		/// <summary>

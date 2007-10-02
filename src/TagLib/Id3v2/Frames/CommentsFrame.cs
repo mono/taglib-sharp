@@ -458,7 +458,7 @@ namespace TagLib.Id3v2 {
 					"Not enough bytes in field.");
 			
 			encoding = (StringType) data [0];
-			language = data.Mid (1, 3).ToString (StringType.Latin1);
+			language = data.ToString (StringType.Latin1, 1, 3);
 			
 			// Instead of splitting into two string, in the format
 			// [{desc}\0{value}], try splitting into three strings

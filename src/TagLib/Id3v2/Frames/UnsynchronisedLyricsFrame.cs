@@ -173,7 +173,7 @@ namespace TagLib.Id3v2
             throw new CorruptFileException ("Not enough bytes in field.");
          
          encoding = (StringType) data [0];
-         language = data.Mid (1, 3).ToString (StringType.Latin1);
+         language = data.ToString (StringType.Latin1, 1, 3);
 
          string [] split = data.ToStrings (encoding, 4, 2);
          

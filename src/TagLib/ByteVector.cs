@@ -877,6 +877,22 @@ namespace TagLib {
 				this.data.Count - pattern.Count);
 		}
 		
+		/// <summary>
+		///    Checks whether or not the current instance ends with part
+		///    of a pattern.
+		/// </summary>
+		/// <param name="pattern">
+		///    A <see cref="ByteVector"/> object containing the pattern
+		///    to search for in the current instance.
+		/// </param>
+		/// <returns>
+		///    A <see cref="int" /> value containing the index at which
+		///    a partial match was located, or -1 if no match was found.
+		/// </returns>
+		/// <remarks>
+		///    <para>This function is useful for checking for patterns
+		///    across multiple buffers.</para>
+		/// </remarks>
 		public int EndsWithPartialMatch (ByteVector pattern)
 		{
 			if (pattern == null)
@@ -902,48 +918,114 @@ namespace TagLib {
 			return -1;
 		}
 		
-		public void Add (ByteVector vector)
+		/// <summary>
+		///    Adds the contents of another <see cref="ByteVector" />
+		///    object to the end of the current instance.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector"/> object containing data to add
+		///    to the end of the current instance.
+		/// </param>
+		public void Add (ByteVector data)
 		{
 			if (IsReadOnly)
 				throw new NotSupportedException (
 					"Cannot edit readonly objects.");
 			
-			if(vector != null) {
-				this.data.AddRange(vector);
+			if(data != null) {
+				this.data.AddRange(data);
 			}
 		}
 		
-		public void Add(byte [] vector)
+		/// <summary>
+		///    Adds the contents of an array to the end of the current
+		///    instance.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="byte[]"/> containing data to add to the end
+		///    of the current instance.
+		/// </param>
+		/// <exception cref="NotSupportedException">
+		///    The current instance is read-only.
+		/// </exception>
+		public void Add(byte [] data)
 		{
 			if (IsReadOnly)
 				throw new NotSupportedException (
 					"Cannot edit readonly objects.");
 			
-			if(vector != null)
-				this.data.AddRange(vector);
+			if(data != null)
+				this.data.AddRange(data);
 		}
 		
-		public void Insert (int index, ByteVector vector)
+		/// <summary>
+		///    Inserts the contents of another <see cref="ByteVector" />
+		///    object into the current instance.
+		/// </summary>
+		/// <param name="index">
+		///    A <see cref="int"/> value specifying the index at which
+		///    to insert the data.
+		/// </param>
+		/// <param name="data">
+		///    A <see cref="ByteVector"/> object containing data to
+		///    insert into the current instance.
+		/// </param>
+		/// <exception cref="NotSupportedException">
+		///    The current instance is read-only.
+		/// </exception>
+		public void Insert (int index, ByteVector data)
 		{
 			if (IsReadOnly)
 				throw new NotSupportedException (
 					"Cannot edit readonly objects.");
 			
-			if(vector != null)
-				this.data.InsertRange (index, vector);
+			if (data != null)
+				this.data.InsertRange (index, data);
 		}
 		
-		public void Insert (int index, byte [] vector)
+		/// <summary>
+		///    Inserts the contents of an array to insert into the
+		///    current instance.
+		/// </summary>
+		/// <param name="index">
+		///    A <see cref="int"/> value specifying the index at which
+		///    to insert the data.
+		/// </param>
+		/// <param name="data">
+		///    A <see cref="byte[]"/> containing data to insert into the
+		///    current instance.
+		/// </param>
+		/// <exception cref="NotSupportedException">
+		///    The current instance is read-only.
+		/// </exception>
+		public void Insert (int index, byte [] data)
 		{
 			if (IsReadOnly)
 				throw new NotSupportedException (
 					"Cannot edit readonly objects.");
 			
-			if(vector != null)
-				this.data.InsertRange (index, vector);
+			if (data != null)
+				this.data.InsertRange (index, data);
 		}
 		
-		public ByteVector Resize(int size, byte padding)
+		/// <summary>
+		///    Resizes the current instance.
+		/// </summary>
+		/// <param name="size">
+		///    A <see cref="int"/> value specifying the new size of the
+		///    current instance.
+		/// </param>
+		/// <param name="padding">
+		///    A <see cref="byte"/> object containing the padding byte
+		///    to use if the current instance is growing.
+		/// </param>
+		/// <returns>
+		///    The current instance.
+		/// </returns>
+		/// <exception cref="NotSupportedException">
+		///    The current instance is read-only.
+		/// </exception>
+		public ByteVector Resize (int size, byte padding)
 		{
 			if (IsReadOnly)
 				throw new NotSupportedException (
@@ -959,11 +1041,44 @@ namespace TagLib {
 			return this;
 		}
 		
+		/// <summary>
+		///    Resizes the current instance.
+		/// </summary>
+		/// <param name="size">
+		///    A <see cref="int"/> value specifying the new size of the
+		///    current instance.
+		/// </param>
+		/// <returns>
+		///    The current instance.
+		/// </returns>
+		/// <remarks>
+		///    If the current instance grows, the added bytes are filled
+		///    with '0'. Use <see cref="Resize(int,byte)" /> to specify
+		///    the padding byte.
+		/// </remarks>
+		/// <exception cref="NotSupportedException">
+		///    The current instance is read-only.
+		/// </exception>
+		/// <seealso cref="Resize(int,byte)" />
 		public ByteVector Resize (int size)
 		{
 			return Resize (size, 0);
 		}
 		
+		/// <summary>
+		///    Removes a range of data from the current instance.
+		/// </summary>
+		/// <param name="index">
+		///    A <see cref="int" /> value specifying the index at which
+		///    to start removing data.
+		/// </param>
+		/// <param name="count">
+		///    A <see cref="int"/> value specifying the number of bytes
+		///    to remove.
+		/// </param>
+		/// <exception cref="NotSupportedException">
+		///    The current instance is read-only.
+		/// </exception>
 		public void RemoveRange (int index, int count)
 		{
 			if (IsReadOnly)
@@ -979,6 +1094,20 @@ namespace TagLib {
 		
 #region Conversions
 		
+		/// <summary>
+		///    Converts an first four bytes of the current instance to
+		///    a <see cref="uint" /> value.
+		/// </summary>
+		/// <param name="mostSignificantByteFirst">
+		///    <see langword="true" /> if the most significant byte
+		///    appears first (big endian format), or <see
+		///    langword="false" /> if the least significant byte appears
+		///    first (little endian format).
+		/// </param>
+		/// <returns>
+		///    A <see cref="uint"/> value containing the value read from
+		///    the current instance.
+		/// </returns>
 		public uint ToUInt (bool mostSignificantByteFirst)
 		{
 			uint sum = 0;
@@ -992,12 +1121,34 @@ namespace TagLib {
 			return sum;
 		}
 		
-		public uint ToUInt()
+		/// <summary>
+		///    Converts an first four bytes of the current instance to
+		///    a <see cref="uint" /> value using big-endian format.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="uint"/> value containing the value read from
+		///    the current instance.
+		/// </returns>
+		public uint ToUInt ()
 		{
 			return ToUInt (true);
 		}
 		
-		public ushort ToUShort(bool mostSignificantByteFirst)
+		/// <summary>
+		///    Converts an first two bytes of the current instance to a
+		///    <see cref="ushort" /> value.
+		/// </summary>
+		/// <param name="mostSignificantByteFirst">
+		///    <see langword="true" /> if the most significant byte
+		///    appears first (big endian format), or <see
+		///    langword="false" /> if the least significant byte appears
+		///    first (little endian format).
+		/// </param>
+		/// <returns>
+		///    A <see cref="ushort"/> value containing the value read
+		///    from the current instance.
+		/// </returns>
+		public ushort ToUShort (bool mostSignificantByteFirst)
 		{
 			ushort sum = 0;
 			int last = Count > 2 ? 1 : Count - 1;
@@ -1009,11 +1160,33 @@ namespace TagLib {
 			return sum;
 		}
 		
+		/// <summary>
+		///    Converts an first two bytes of the current instance to
+		///    a <see cref="ushort" /> value using big-endian format.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="ushort"/> value containing the value read
+		///    from the current instance.
+		/// </returns>
 		public ushort ToUShort ()
 		{
 			return ToUShort (true);
 		}
 		
+		/// <summary>
+		///    Converts an first eight bytes of the current instance to
+		///    a <see cref="ulong" /> value.
+		/// </summary>
+		/// <param name="mostSignificantByteFirst">
+		///    <see langword="true" /> if the most significant byte
+		///    appears first (big endian format), or <see
+		///    langword="false" /> if the least significant byte appears
+		///    first (little endian format).
+		/// </param>
+		/// <returns>
+		///    A <see cref="ulong"/> value containing the value read
+		///    from the current instance.
+		/// </returns>
 		public ulong ToULong (bool mostSignificantByteFirst)
 		{
 			ulong sum = 0;
@@ -1025,18 +1198,32 @@ namespace TagLib {
 			return sum;
 		}
 		
+		/// <summary>
+		///    Converts an first eight bytes of the current instance to
+		///    a <see cref="ulong" /> value using big-endian format.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="ulong"/> value containing the value read
+		///    from the current instance.
+		/// </returns>
 		public ulong ToULong ()
 		{
 			return ToULong (true);
 		}
 		
-		public string ToString (StringType type, int offset)
+		public string ToString (StringType type, int offset, int count)
 		{
+			if (offset < 0 || offset > Count)
+				throw new ArgumentOutOfRangeException ("offset");
+			
+			if (count < 0 || count + offset > Count)
+				throw new ArgumentOutOfRangeException ("count");
+			
 			ByteVector bom = type == StringType.UTF16 &&
 				this.data.Count > 1 ? Mid (offset, 2) : null;
 			
 			string s = StringTypeToEncoding (type, bom)
-				.GetString (Data, offset, Count - offset);
+				.GetString (Data, offset, count);
 			
 			// UTF16 BOM
 			if(s.Length != 0 && (s[0] == 0xfffe || s[0] == 0xfeff)) 
@@ -1045,9 +1232,15 @@ namespace TagLib {
 			return s;
 		}
 		
+		[Obsolete ("Use ToString(StringType,int,int)")]
+		public string ToString (StringType type, int offset)
+		{
+			return ToString (type, offset, Count - offset);
+		}
+		
 		public string ToString (StringType type)
 		{
-			return ToString (type, 0);
+			return ToString (type, 0, Count);
 		}
 		
 		public override string ToString ()
@@ -1086,7 +1279,7 @@ namespace TagLib {
 				if (length == 0) {
 					list.Add (string.Empty);
 				} else {
-					string s = Mid (start, length).ToString (type);
+					string s = ToString (type, start, length);
 					if (s.Length != 0 && (s[0] == 0xfffe || s[0] == 0xfeff)) { // UTF16 BOM
 						s = s.Substring (1);
 					}

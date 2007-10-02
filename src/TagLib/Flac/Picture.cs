@@ -51,13 +51,13 @@ namespace TagLib.Flac
          int mimetype_length = (int) data.Mid (pos, 4).ToUInt ();
          pos += 4;
          
-         _mimetype = data.Mid (pos, mimetype_length).ToString (StringType.Latin1);
+         _mimetype = data.ToString (StringType.Latin1, pos, mimetype_length);
          pos += mimetype_length;
          
          int description_length = (int) data.Mid (pos, 4).ToUInt ();
          pos += 4;
          
-         _description = data.Mid (pos, description_length).ToString (StringType.UTF8);
+         _description = data.ToString (StringType.UTF8, pos, description_length);
          pos += description_length;
          
          _width = (int) data.Mid (pos, 4).ToUInt ();

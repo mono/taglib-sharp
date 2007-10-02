@@ -170,8 +170,8 @@ namespace TagLib.Riff {
 				while (length > 0 && data [length - 1] == 0)
 					length --;
 				
-				result [i] = data.Mid (0, length)
-					.ToString (StringType.UTF8);
+				result [i] = data
+					.ToString (StringType.UTF8, 0, length);
 			}
 			
 			return result;

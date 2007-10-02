@@ -587,8 +587,8 @@ namespace TagLib.Id3v2 {
 				if(offset < pos)
 					return;
 				
-				mime_type = raw_data.Mid (pos,
-					offset - pos).ToString (StringType.Latin1);
+				mime_type = raw_data.ToString (
+					StringType.Latin1, pos, offset - pos);
 				pos = offset + 1;
 			} else {
 				ByteVector ext = raw_data.Mid (pos, 3);
@@ -613,8 +613,8 @@ namespace TagLib.Id3v2 {
 			if(offset < pos)
 				return;
 			
-			description = raw_data.Mid (pos, offset - pos).ToString (
-				text_encoding);
+			description = raw_data.ToString (text_encoding, pos,
+				offset - pos);
 			pos = offset + delim.Count;
 			raw_data.RemoveRange (0, pos);
 			this.data = raw_data;

@@ -195,8 +195,8 @@ namespace TagLib.Id3v2 {
 			if (end < start)
 				return;
 			
-			mime_type = data.Mid (start, end - start).ToString (
-				StringType.Latin1);
+			mime_type = data.ToString (StringType.Latin1, start,
+				end - start);
 			
 			ByteVector delim = ByteVector.TextDelimiter (
 				text_encoding);
@@ -206,16 +206,16 @@ namespace TagLib.Id3v2 {
 			if (end < start)
 				return;
 			
-			file_name = data.Mid (start, end - start).ToString (
-				text_encoding);
+			file_name = data.ToString (text_encoding, start,
+				end - start);
 			start = end + 1;
 			end = data.Find (delim, start, delim.Count);
 			
 			if (end < start)
 				return;
 			
-			description = data.Mid (start, end - start).ToString (
-				text_encoding);
+			description = data.ToString (text_encoding, start,
+				end - start);
 			start = end + 1;
 			
 			data.RemoveRange (0, start);

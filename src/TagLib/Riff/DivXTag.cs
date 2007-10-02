@@ -62,11 +62,11 @@ namespace TagLib.Riff
          if (data.Count != Size || !data.EndsWith (FileIdentifier))
             throw new CorruptFileException  ("Malformed DivX tag.");
          
-         title      = data.Mid (  0, 32).ToString (StringType.Latin1).Trim ();
-         artist     = data.Mid ( 32, 28).ToString (StringType.Latin1).Trim ();
-         year       = data.Mid ( 60,  4).ToString (StringType.Latin1).Trim ();
-         comment    = data.Mid ( 64, 48).ToString (StringType.Latin1).Trim ();
-         genre      = data.Mid (122,  3).ToString (StringType.Latin1).Trim ();
+         title      = data.ToString (StringType.Latin1,  0, 32).Trim ();
+         artist     = data.ToString (StringType.Latin1, 32, 28).Trim ();
+         year       = data.ToString (StringType.Latin1, 60,  4).Trim ();
+         comment    = data.ToString (StringType.Latin1, 64, 48).Trim ();
+         genre      = data.ToString (StringType.Latin1,122,  3).Trim ();
          extra_data = data.Mid (115,  6);
       }
       

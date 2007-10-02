@@ -1054,8 +1054,8 @@ namespace TagLib.Ape {
 					return new IPicture [0];
 				
 				Picture pic = new Picture (item.Value.Mid (index + 1));
-				pic.Description = item.Value.Mid (0, index
-					).ToString (StringType.UTF8);
+				pic.Description = item.Value
+					.ToString (StringType.UTF8, 0, index);
 				
 				return new IPicture [] {pic};
 			}

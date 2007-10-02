@@ -1,3 +1,42 @@
+2007-10-02  Brian Nickel <brian.nickel@gmail.com>
+	
+	* src/TagLib/Riff/List.cs:
+	* src/TagLib/Riff/DivXTag.cs:
+	* src/TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
+	* src/TagLib/Id3v2/Frames/SynchronizedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:
+	* src/TagLib/Id3v2/Frames/TermsOfUseFrame.cs:
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs:
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs:
+	* src/TagLib/Flac/Picture.cs: 
+	* src/TagLib/Ape/Tag.cs:
+	* src/TagLib/Ape/Item.cs:
+	* src/TagLib/Mpeg4/Boxes/IsoHandlerBox.cs:
+	* src/TagLib/Ogg/XiphComment.cs: Use ToString (StringType,int,int)
+	instead of ToString(StringType)
+	
+	* src/TagLib/Mpeg/AudioHeader.cs: Remove AudioHeader.position as it is
+	no longer needed.
+	
+	* src/TagLib/ByteVector.cs: Use ToString(StringType,int,int) in
+	ToStrings, mark ToString(StringType,int) as obsolete, add
+	ToString(StringType,int,int), add documentation. Relax exception
+	exception checking in ToString as it was causing unnecessary exceptions
+	when reading some zero byte strings. (Thanks to sambeckett for the bug
+	report.)
+	
+	* src/TagLib/Asf/Tag.cs: Use ContentDescriptionObject.Copyright instead
+	of an extended content descriptor. (Thanks to Dakuja for the bug
+	report.)
+
+	* src/TagLib/Id3v2/Frames/PopularimeterFrame.cs: Add nil separator when
+	rendering. Was causing tag to be unreadable. (Thanks to cody for the bug
+	report.)
+
+	* configure.ac: Now 2.0.2.17.
+
 2007-09-20  Brian Nickel <brian.nickel@gmail.com>
 	
 	* src/TagLib/ByteVector.cs: Fix overflow problem introduced last
