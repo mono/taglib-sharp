@@ -817,9 +817,12 @@ namespace TagLib.Id3v2 {
 			encoding = (StringType) data [0];
 			List<string> field_list = new List<string> ();
 			
+			ByteVector delim = ByteVector.TextDelimiter (encoding);
+			
 			if (raw_version > 3 || FrameId == FrameType.TXXX) {
 				field_list.AddRange (data.ToStrings (encoding, 1));
-			} else if (data.Count > 1 && data [1] != 0) {
+			} else if (data.Count > 1 && !data.Mid (1,
+				delim.Count).Equals (delim)) {
 				string value = data.ToString (encoding, 1,
 					data.Count - 1);
 				
@@ -856,7 +859,7 @@ namespace TagLib.Id3v2 {
 					}
 					
 					if (value.Length > 0)
-						field_list.Add (value);
+						field_list.AddRange (value.Split (new char [] {'/'}));
 				} else {
 					field_list.Add (value);
 				}
@@ -912,14 +915,22 @@ namespace TagLib.Id3v2 {
 				}
 			} else if (FrameId == FrameType.TCON) {
 				byte id;
+				bool prev_value_indexed = true;
 				StringBuilder data = new StringBuilder ();
-				foreach (string s in text)
-					if (byte.TryParse (s, out id))
+				foreach (string s in text) {
+					if (!prev_value_indexed) {
+						data.Append ("/").Append (s);
+						continue;
+					}
+					
+					if (prev_value_indexed =
+						byte.TryParse (s, out id))
 						data.AppendFormat (
 							CultureInfo.InvariantCulture,
 								"({0})", id);
 					else
 						data.Append (s);
+				}
 				
 				v.Add (ByteVector.FromString (data.ToString (),
 					encoding));
@@ -943,6 +954,12 @@ namespace TagLib.Id3v2 {
 		public UserTextInformationFrame (string description,
 		                                 StringType encoding)
 			: base (FrameType.TXXX, encoding)
+		{
+			base.Text = new string [] {description};
+		}
+		
+		public UserTextInformationFrame (string description)
+			: base (FrameType.TXXX)
 		{
 			base.Text = new string [] {description};
 		}

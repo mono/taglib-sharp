@@ -145,6 +145,31 @@ namespace TagLib.Id3v2 {
 			Read (file, position);
 		}
 		
+		public Tag (ByteVector data)
+		{
+			if (data == null)
+				throw new ArgumentNullException ("data");
+			
+			if (data.Count < Header.Size)
+				throw new CorruptFileException (
+					"Does not contain enough header data.");
+			
+			header = new Header (data);
+			
+			// If the tag size is 0, then this is an invalid tag.
+			// Tags must contain at least one frame.
+			
+			if(header.TagSize == 0)
+				return;
+			
+			if (data.Count - Header.Size < header.TagSize)
+				throw new CorruptFileException (
+					"Does not contain enough tag data.");
+			
+			Parse (data.Mid ((int) Header.Size,
+				(int) header.TagSize));
+		}
+		
 #endregion
 		
 		
@@ -1120,8 +1145,20 @@ namespace TagLib.Id3v2 {
 				return f != null ? f.ToString () : null;
 			}
 			set {
-				CommentsFrame frame = CommentsFrame.Get (this,
-					String.Empty, Language, true);
+				CommentsFrame frame;
+				
+				if (string.IsNullOrEmpty (value)) {
+					while ((frame = CommentsFrame
+						.GetPreferred (this,
+							string.Empty,
+							Language)) != null)
+						RemoveFrame (frame);
+					
+					return;
+				}
+				
+				frame = CommentsFrame.Get (this, String.Empty,
+					Language, true);
 				
 				frame.Text = value;
 				frame.TextEncoding = DefaultEncoding;
@@ -1175,6 +1212,10 @@ namespace TagLib.Id3v2 {
 					return;
 				}
 				
+				// Clone the array so changes made won't effect
+				// the passed array.
+				value = (string []) value.Clone ();
+				
 				for (int i = 0; i < value.Length; i ++) {
 					int index = TagLib.Genres.AudioToIndex (
 						value [i]);
@@ -1199,7 +1240,8 @@ namespace TagLib.Id3v2 {
 		/// </value>
 		/// <remarks>
 		///    This property is implemented using the "TDRC" Text
-		///    Information Frame.
+		///    Information Frame. If a value greater than 9999 is set,
+		///    this property will be cleared.
 		/// </remarks>
 		public override uint Year {
 			get {
@@ -1215,7 +1257,12 @@ namespace TagLib.Id3v2 {
 				
 				return 0;
 			}
-			set {SetNumberFrame (FrameType.TDRC, value, 0);}
+			set {
+				if (value > 9999)
+					value = 0;
+				
+				SetNumberFrame (FrameType.TDRC, value, 0);
+			}
 		}
 		
 		/// <summary>
@@ -1308,13 +1355,24 @@ namespace TagLib.Id3v2 {
 			get {
 				UnsynchronisedLyricsFrame f =
 					UnsynchronisedLyricsFrame.GetPreferred (
-						this, String.Empty, Language);
+						this, string.Empty, Language);
 				
 				return f != null ? f.ToString () : null;
 			}
 			set {
-				UnsynchronisedLyricsFrame frame =
-					UnsynchronisedLyricsFrame.Get (this,
+				UnsynchronisedLyricsFrame frame;
+				
+				if (string.IsNullOrEmpty (value)) {
+					while ((frame = UnsynchronisedLyricsFrame
+						.GetPreferred (this,
+							string.Empty,
+							Language)) != null)
+						RemoveFrame (frame);
+					
+					return;
+				}
+				
+				frame = UnsynchronisedLyricsFrame.Get (this,
 						String.Empty, Language, true);
 				
 				frame.Text = value;

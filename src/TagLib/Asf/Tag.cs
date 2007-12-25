@@ -664,7 +664,7 @@ namespace TagLib.Asf {
 			}
 			set {
 				SetDescriptorString (String.Join ("; ", value),
-					"WM/Genre", "Genre");
+					"WM/Genre", "Genre", "WM/GenreID");
 			}
 		}
 		

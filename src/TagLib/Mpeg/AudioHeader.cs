@@ -186,10 +186,6 @@ namespace TagLib.Mpeg {
 		///    A <see cref="uint" /> value specifying flags for the new
 		///    instance.
 		/// </param>
-		/// <param name="position">
-		///    A <see cref="long" /> value specifying the seek position
-		///    of the new instance.
-		/// </param>
 		/// <param name="streamLength">
 		///    A <see cref="long" /> value specifying the stream length
 		///    of the new instance.
@@ -496,8 +492,7 @@ namespace TagLib.Mpeg {
 		///    instance.
 		/// </summary>
 		/// <value>
-		///    A bitwise combined <see cref="MediaTypes" /> containing
-		///    the types of media represented by the current instance.
+		///    Always <see cref="MediaTypes.Audio" />.
 		/// </value>
 		public MediaTypes MediaTypes {
 			get {return MediaTypes.Audio;}

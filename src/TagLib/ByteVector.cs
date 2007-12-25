@@ -1550,7 +1550,7 @@ namespace TagLib {
 			if (text.Length > length)
 				text = text.Substring (0, length);
 			
-			data.Add (StringTypeToEncoding (type, null).GetBytes (text));
+			data.Add (StringTypeToEncoding (type, data).GetBytes (text));
 			
 			return data;
 		}

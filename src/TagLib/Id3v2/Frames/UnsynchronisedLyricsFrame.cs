@@ -1,5 +1,5 @@
 //
-// UnknownFrame.cs:
+// UnsynchronisedLyricsFrame.cs:
 //
 // Author:
 //   Patrick Laplante

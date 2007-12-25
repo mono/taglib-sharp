@@ -181,8 +181,8 @@ namespace TagLib.Asf {
 			if (names == null)
 				throw new ArgumentNullException ("names");
 			
-			foreach (ContentDescriptor desc in descriptors)
-				foreach (string name in names)
+			foreach (string name in names)
+				foreach (ContentDescriptor desc in descriptors)
 					if (desc.Name == name)
 						yield return desc;
 		}

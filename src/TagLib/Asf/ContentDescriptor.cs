@@ -423,7 +423,8 @@ namespace TagLib.Asf {
 			ByteVector output = new ByteVector ();
 			output.Add (Object.RenderWord ((ushort) name.Count));
 			output.Add (name);
-			output.Add (Object.RenderDWord ((uint) value.Count));
+			output.Add (Object.RenderWord ((ushort) type));
+			output.Add (Object.RenderWord ((ushort) value.Count));
 			output.Add (value);
 			
 			return output;
@@ -455,7 +456,6 @@ namespace TagLib.Asf {
 			type = (DataType) file.ReadWord ();
 			
 			int value_count = file.ReadWord ();
-			
 			switch (type)
 			{
 			case DataType.Word:

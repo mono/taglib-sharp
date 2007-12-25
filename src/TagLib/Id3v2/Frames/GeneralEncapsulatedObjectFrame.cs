@@ -208,7 +208,7 @@ namespace TagLib.Id3v2 {
 			
 			file_name = data.ToString (text_encoding, start,
 				end - start);
-			start = end + 1;
+			start = end + delim.Count;
 			end = data.Find (delim, start, delim.Count);
 			
 			if (end < start)
@@ -216,7 +216,7 @@ namespace TagLib.Id3v2 {
 			
 			description = data.ToString (text_encoding, start,
 				end - start);
-			start = end + 1;
+			start = end + delim.Count;
 			
 			data.RemoveRange (0, start);
 			this.data = data;

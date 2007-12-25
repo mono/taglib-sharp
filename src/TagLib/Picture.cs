@@ -140,7 +140,7 @@ namespace TagLib {
 		BandLogo = 0x13,
 		
 		/// <summary>
-		///    The picture is the logo of the publisher or record.
+		///    The picture is the logo of the publisher or record
 		///    company.
 		/// </summary>
 		PublisherLogo = 0x14

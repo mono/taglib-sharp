@@ -235,7 +235,10 @@ namespace TagLib.Riff {
 				throw new ArgumentException (
 					"ID must be 4 bytes long.", "id");
 			
-			SetValue (id, values as IEnumerable<ByteVector>);
+			if (values == null || values.Length == 0)
+				RemoveValue (id);
+			else
+				SetValue (id, values as IEnumerable<ByteVector>);
 		}
 		
 		public void SetValue (ByteVector id, uint value)
@@ -279,7 +282,10 @@ namespace TagLib.Riff {
 				l.Add (data);
 			}
 			
-			SetValue (id, l);
+			if (l.Count == 0)
+				RemoveValue (id);
+			else
+				SetValue (id, l);
 		}
 		
 		public void SetValue (ByteVector id, params string [] values)
@@ -291,7 +297,10 @@ namespace TagLib.Riff {
 				throw new ArgumentException (
 					"ID must be 4 bytes long.", "id");
 			
-			SetValue (id, values as IEnumerable<string>);
+			if (values == null || values.Length == 0)
+				RemoveValue (id);
+			else
+				SetValue (id, values as IEnumerable<string>);
 		}
 		
 		public void RemoveValue (ByteVector id)

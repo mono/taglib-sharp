@@ -388,15 +388,20 @@ namespace TagLib.Id3v2 {
 		///    A <see cref="ByteVector" /> object containing the
 		///    rendered field data.
 		/// </returns>
+		/// <exception cref="NotImplementedException">
+		///    <paramref name="version" /> is less than 3. ID3v2.2 does
+		///    not support this frame.
+		/// </exception>
 		protected override ByteVector RenderFields (byte version)
 		{
+			if (version < 3)
+				throw new NotImplementedException ();
+			
 			ByteVector v = new ByteVector ();
 			
-			if (version > 2) {
-				v.Add (ByteVector.FromString (owner, StringType.Latin1));
-				v.Add (ByteVector.TextDelimiter (StringType.Latin1));
-				v.Add (data);
-			}
+			v.Add (ByteVector.FromString (owner, StringType.Latin1));
+			v.Add (ByteVector.TextDelimiter (StringType.Latin1));
+			v.Add (data);
 			
 			return v;
 		}

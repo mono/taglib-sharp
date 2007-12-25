@@ -590,7 +590,7 @@ namespace TagLib.Flac {
 		}
 		
 		/// <summary>
-		///    Gets the first xip comment stored in the current
+		///    Gets the first Xiph comment stored in the current
 		///    instance, optionally creating one if necessary.
 		/// </summary>
 		/// <param name="create">

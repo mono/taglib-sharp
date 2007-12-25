@@ -1,3 +1,85 @@
+2007-12-25  Brian Nickel <brian.nickel@gmail.com>
+	
+	* src/TagLib/Id3v1/Tag.cs: Added constructor to create from data. Added
+	documentation. Fixed properties to produce correct output when empty.
+	Removed broken IsEmpty property.
+	
+	* src/TagLib/Riff/List.cs: Make sure fields are cleared when SetValue
+	is called with any type of empty result.
+	
+	* src/TagLib/Riff/DivXTag.cs: Added constructor to create from data.
+	Added documentation. Fixed properties to produce correct output when
+	empty. Make Clear() clear `title'. Resize fields after encoding rather
+	than before to avoid possible sizing problems.
+	
+	* src/TagLib/Riff/MovieIdTag.cs: Read genre from correct position.
+	
+	* src/TagLib/Riff/WaveFormatEx.cs: Reformat and complete codec
+	descriptions.
+	
+	* src/TagLib/Id3v2/Tag.cs: Add constructor to create from data. Fixed
+	properties to produce correct output when empty.
+	
+	* src/TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs: Correct file
+	header.
+	
+	* src/TagLib/Id3v2/Frames/SynchronizedLyricsFrame.cs: Use alignment when
+	searching for delimiter to avoid breakage with UTF16BE.
+	
+	* src/TagLib/Id3v2/Frames/UniqueFileIdentifierFrame.cs: Tidy up a bit.
+	Add constructor with only owner as argument.
+	
+	* src/TagLib/Id3v2/Frames/PrivateFrame.cs: Throw NotImplementedException
+	when version is less than 3, rather than just outputting an empty tag.
+	
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs: Add size
+	of delimiter rather than 1 to avoid breakage with UTF16.
+	
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs: Use delimiter
+	rather than single byte in a rejection method to avoid breakage. Have
+	genres produce "/" separated values after first non-indexable value is
+	encountered. eg. {"Blues", "Country", "Foobar", "Jazz"} becomes
+	"(0)(2)Foobar/Jazz". This format is completely recoverable. Add
+	constructor for User* which accepts just a description.
+	
+	* src/TagLib/Mpeg/AudioHeader.cs: Correct some documentation.
+	
+	* src/TagLib/ByteVector.cs: Pass generated BOM to StringTypeToEncoding
+	to make sure the correct encoding is used.
+	
+	* src/TagLib/Flac/File.cs: Correct documentation typo.
+	
+	* src/TagLib/Ape/Tag.cs: Add support for one of each type of picture
+	rather than just one front cover. Allow parsing of years not 4 digits
+	in length.
+	
+	* src/TagLib/Mpeg4/FileParser.cs: Prevent a crash if there isn't
+	sufficient data for reading the first block in parsers. Fix typo which
+	caused UtdaTree to not be filled, resulting in written tags not being
+	readable.
+	
+	* src/TagLib/Mpeg4/AppleTag.cs: Allow parsing of years not 4 digits
+	in length. Correctly clear zeroed values.
+	
+	* src/TagLib/Tag.cs: Use semicolons, rather than commas in Joined* to
+	reflect behavior of WMP.
+	
+	* src/TagLib/Picture.cs: Fix documentation typo.
+	
+	* src/TagLib/WavPack/StreamHeader.cs: Add some docs.
+	
+	* src/TagLib/Asf/Tag.cs: Remove "WM/GenreID" when a new genre is stored.
+	
+	* src/TagLib/Asf/ExtendedContentDescriptionObject.cs: Loop through names
+	rather than descriptors first when getting descriptors. That way the
+	first matching name is chosen rather than the first descriptor of any
+	name.
+	
+	* src/TagLib/Asf/ContentDescriptor.cs: Fix rendering bug that broke
+	storing values.
+
+	* configure.ac: Now 2.0.2.18.
+
 2007-10-02  Brian Nickel <brian.nickel@gmail.com>
 	
 	* src/TagLib/Riff/List.cs:

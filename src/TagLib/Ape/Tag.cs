@@ -39,7 +39,42 @@ namespace TagLib.Ape {
 	/// </summary>
 	public class Tag : TagLib.Tag, IEnumerable<string>
 	{
-		#region Private Fields
+		
+#region Private Static Fields
+		
+		/// <summary>
+		///    Contains names of picture fields, indexed to correspond
+		///    to their picture item names.
+		/// </summary>
+		private static string [] picture_item_names = new string [] {
+			"Cover Art (other)",
+			"Cover Art (icon)",
+			"Cover Art (other icon)",
+			"Cover Art (front)",
+			"Cover Art (back)",
+			"Cover Art (leaflet)",
+			"Cover Art (media)",
+			"Cover Art (lead)",
+			"Cover Art (artist)",
+			"Cover Art (conductor)",
+			"Cover Art (band)",
+			"Cover Art (composer)",
+			"Cover Art (lyricist)",
+			"Cover Art (studio)",
+			"Cover Art (recording)",
+			"Cover Art (performance)",
+			"Cover Art (movie scene)",
+			"Cover Art (colored fish)",
+			"Cover Art (illustration)",
+			"Cover Art (band logo)",
+			"Cover Art (publisher logo)"
+		};
+		
+#endregion
+		
+		
+		
+#region Private Fields
 		
 		/// <summary>
 		///    Contains the tag footer.
@@ -114,6 +149,36 @@ namespace TagLib.Ape {
 					"position");
 			
 			Read (file, position);
+		}
+		
+		public Tag (ByteVector data)
+		{
+			if (data == null)
+				throw new ArgumentNullException ("data");
+			
+			if (data.Count < Footer.Size)
+				throw new CorruptFileException (
+					"Does not contain enough footer data.");
+			
+			footer = new Footer (
+				data.Mid ((int) (data.Count - Footer.Size)));
+			
+			if (footer.TagSize == 0)
+				throw new CorruptFileException (
+					"Tag size out of bounds.");
+			
+			// If we've read a header at the end of the block, the
+			// block is invalid.
+			if ((footer.Flags & FooterFlags.IsHeader) != 0)
+				throw new CorruptFileException (
+					"Footer was actually header.");
+			
+			if (data.Count < footer.TagSize)
+				throw new CorruptFileException (
+					"Does not contain enough tag data.");
+			
+			Parse (data.Mid ((int) (data.Count - footer.TagSize),
+				(int) (footer.TagSize - Footer.Size)));
 		}
 		
 		#endregion
@@ -850,12 +915,14 @@ namespace TagLib.Ape {
 			get {
 				string text = GetItemAsString ("YEAR");
 				
-				if (text == null || text.Length < 4)
+				if (text == null || text.Length == 0)
 					return 0;
 				
 				uint value;
-				if (uint.TryParse (text.Substring (0, 4),
-					out value))
+				if (uint.TryParse (text, out value) ||
+					(text.Length >= 4 && uint.TryParse (
+						text.Substring (0, 4),
+						out value)))
 					return value;
 				
 				return 0;
@@ -1038,38 +1105,71 @@ namespace TagLib.Ape {
 		///    current instance or an empty array if none are present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "Cover Art
-		///    (front)" item and supports only one picture.
+		///    This property is implemented using the "Cover Art" items
+		///    and supports only one picture per type.
 		/// </remarks>
 		public override IPicture [] Pictures {
 			get {
-				Item item = GetItem ("Cover Art (front)");
-				if (item == null || item.Type != ItemType.Binary)
-					return new IPicture [0];
+				List<IPicture> pictures = new List<IPicture> ();
 				
-				int index = item.Value.Find (
-					ByteVector.TextDelimiter (StringType.UTF8));
+				for (int i = 0; i < picture_item_names.Length;
+					i++) {
+					Item item = GetItem (
+						picture_item_names [i]);
+					
+					if (item == null ||
+						item.Type != ItemType.Binary)
+						continue;
+					
+					int index = item.Value.Find (
+						ByteVector.TextDelimiter (
+							StringType.UTF8));
+					
+					if (index < 0)
+						continue;
+					
+					Picture pic = new Picture (
+						item.Value.Mid (index + 1));
+					
+					pic.Description = item.Value
+						.ToString (StringType.UTF8, 0,
+							index);
+					
+					pic.Type = (PictureType) i;
+					
+					pictures.Add (pic);
+				}
 				
-				if (index < 0)
-					return new IPicture [0];
-				
-				Picture pic = new Picture (item.Value.Mid (index + 1));
-				pic.Description = item.Value
-					.ToString (StringType.UTF8, 0, index);
-				
-				return new IPicture [] {pic};
+				return pictures.ToArray ();
 			}
 			set {
+				foreach (string item_name in picture_item_names)
+					RemoveItem (item_name);
+				
 				if (value == null || value.Length == 0)
-					RemoveItem ("Cover Art (front)");
+					return;
 				
-				ByteVector data = ByteVector.FromString (
-					value [0].Description, StringType.UTF8);
-				data.Add (ByteVector.TextDelimiter (
-					StringType.UTF8));
-				data.Add (value [0].Data);
-				
-				SetItem (new Item ("Cover Art (front)", data));
+				foreach (Picture pic in value) {
+					int type = (int) pic.Type;
+					
+					if (type >= picture_item_names.Length)
+						type = 0;
+					
+					string name = picture_item_names [type];
+					
+					if (GetItem (name) != null)
+						continue;
+					
+					ByteVector data = ByteVector
+						.FromString (
+							pic.Description,
+							StringType.UTF8);
+					data.Add (ByteVector.TextDelimiter (
+						StringType.UTF8));
+					data.Add (pic.Data);
+					
+					SetItem (new Item (name, data));
+				}
 			}
 		}
 		

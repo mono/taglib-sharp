@@ -200,7 +200,7 @@ namespace TagLib.Id3v2
          lyrics_type = (SynchedTextType) data [5];
          
          ByteVector delim = ByteVector.TextDelimiter (text_encoding);
-         int delim_index = data.Find (delim, 6);
+         int delim_index = data.Find (delim, 6, delim.Count);
          
          if (delim_index < 0)
             throw new CorruptFileException ("Text delimiter expected.");
@@ -212,7 +212,7 @@ namespace TagLib.Id3v2
          
          while (offset + delim.Count + 4 < data.Count)
          {
-            delim_index = data.Find (delim, offset);
+            delim_index = data.Find (delim, offset, delim.Count);
             if (delim_index < offset)
                throw new CorruptFileException ("Text delimiter expected.");
             

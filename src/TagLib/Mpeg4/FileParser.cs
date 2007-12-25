@@ -370,9 +370,9 @@ namespace TagLib.Mpeg4 {
 		private void ParseBoxHeaders (long start, long end,
 		                              List<BoxHeader> parents)
 		{
-			long position = start;
-			for (BoxHeader header = new BoxHeader (file, position);
-				header.TotalBoxSize != 0 && position < end;
+			BoxHeader header;
+			
+			for (long position = start; position < end;
 				position += header.TotalBoxSize) {
 				header = new BoxHeader (file, position);
 				
@@ -393,7 +393,7 @@ namespace TagLib.Mpeg4 {
 						header.HeaderSize + position,
 						header.TotalBoxSize + position,
 						AddParent (parents, header));
-				} else if (moov_tree == null &&
+				} else if (udta_tree == null &&
 					header.BoxType == BoxType.Udta) {
 					udta_tree = AddParent (parents,
 						header).ToArray ();
@@ -401,6 +401,9 @@ namespace TagLib.Mpeg4 {
 					mdat_start = position;
 					mdat_end = position + header.TotalBoxSize;
 				}
+				
+				if (header.TotalBoxSize == 0)
+					break;
 			}
 		}
 		
@@ -417,10 +420,10 @@ namespace TagLib.Mpeg4 {
 		/// </param>
 		private void ParseTag (long start, long end)
 		{
-			long position = start;
 			BoxHeader header;
 			
-			do {
+			for (long position = start; position < end;
+				position += header.TotalBoxSize) {
 				header = new BoxHeader (file, position);
 				
 				if (header.BoxType == BoxType.Moov ||
@@ -439,8 +442,9 @@ namespace TagLib.Mpeg4 {
 					mdat_end = position + header.TotalBoxSize;
 				}
 				
-				position += header.TotalBoxSize;
-			} while (header.TotalBoxSize != 0 && position < end);
+				if (header.TotalBoxSize == 0)
+					break;
+			}
 		}
 		
 		/// <summary>
@@ -462,10 +466,10 @@ namespace TagLib.Mpeg4 {
 		private void ParseTagAndProperties (long start, long end,
 		                                    IsoHandlerBox handler)
 		{
-			long position = start;
 			BoxHeader header;
 			
-			do {
+			for (long position = start; position < end;
+				position += header.TotalBoxSize) {
 				header = new BoxHeader (file, position);
 				ByteVector type = header.BoxType;
 				
@@ -500,8 +504,9 @@ namespace TagLib.Mpeg4 {
 					mdat_end = position + header.TotalBoxSize;
 				}
 				
-				position += header.TotalBoxSize;
-			} while (header.TotalBoxSize != 0 && position < end);
+				if (header.TotalBoxSize == 0)
+					break;
+			}
 		}
 		
 		/// <summary>
@@ -518,10 +523,10 @@ namespace TagLib.Mpeg4 {
 		/// </param>
 		private void ParseChunkOffsets (long start, long end)
 		{
-			long position = start;
 			BoxHeader header;
 			
-			do {
+			for (long position = start; position < end;
+				position += header.TotalBoxSize) {
 				header = new BoxHeader (file, position);
 				
 				if (header.BoxType == BoxType.Moov) {
@@ -545,8 +550,9 @@ namespace TagLib.Mpeg4 {
 					mdat_end = position + header.TotalBoxSize;
 				}
 				
-				position += header.TotalBoxSize;
-			} while (header.TotalBoxSize != 0 && position < end);
+				if (header.TotalBoxSize == 0)
+					break;
+			}
 		}
 		
 		/// <summary>

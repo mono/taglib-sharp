@@ -649,17 +649,22 @@ namespace TagLib.Mpeg4 {
 			get {
 				uint value;
 				foreach (AppleDataBox box in DataBoxes (BoxType.Day))
-					if (box.Text != null && uint.TryParse (
-						box.Text.Length > 4 ?
-						box.Text.Substring (0, 4) :
-						box.Text, out value))
+					if (box.Text != null && (uint.TryParse (
+						box.Text, out value) ||
+						uint.TryParse (
+							box.Text.Length > 4 ?
+							box.Text.Substring (0, 4)
+							: box.Text, out value)))
 						return value;
 				
 				return 0;
 			}
 			set {
-				SetText (BoxType.Day, value.ToString (
-					CultureInfo.InvariantCulture));
+				if (value == 0)
+					ClearData (BoxType.Day);
+				else
+					SetText (BoxType.Day, value.ToString (
+						CultureInfo.InvariantCulture));
 			}
 		}
 		
@@ -686,9 +691,15 @@ namespace TagLib.Mpeg4 {
 				return 0;
 			}
 			set {
+				uint count = TrackCount;
+				if (value == 0 && count == 0) {
+					ClearData (BoxType.Trkn);
+					return;
+				}
+				
 				ByteVector v = ByteVector.FromUShort (0);
 				v.Add (ByteVector.FromUShort ((ushort) value));
-				v.Add (ByteVector.FromUShort ((ushort) TrackCount));
+				v.Add (ByteVector.FromUShort ((ushort) count));
 				v.Add (ByteVector.FromUShort (0));
 				
 				SetData (BoxType.Trkn, v, (int)
@@ -719,8 +730,14 @@ namespace TagLib.Mpeg4 {
 				return 0;
 			}
 			set {
+				uint track = Track;
+				if (value == 0 && track == 0) {
+					ClearData (BoxType.Trkn);
+					return;
+				}
+				
 				ByteVector v = ByteVector.FromUShort (0);
-				v.Add (ByteVector.FromUShort ((ushort) Track));
+				v.Add (ByteVector.FromUShort ((ushort) track));
 				v.Add (ByteVector.FromUShort ((ushort) value));
 				v.Add (ByteVector.FromUShort (0));
 				SetData (BoxType.Trkn, v, (int)
@@ -751,9 +768,15 @@ namespace TagLib.Mpeg4 {
 				return 0;
 			}
 			set {
+				uint count = DiscCount;
+				if (value == 0 && count == 0) {
+					ClearData (BoxType.Disk);
+					return;
+				}
+				
 				ByteVector v = ByteVector.FromUShort (0);
 				v.Add (ByteVector.FromUShort ((ushort) value));
-				v.Add (ByteVector.FromUShort ((ushort) DiscCount));
+				v.Add (ByteVector.FromUShort ((ushort) count));
 				v.Add (ByteVector.FromUShort (0));
 				
 				SetData (BoxType.Disk, v, (int)
@@ -784,8 +807,14 @@ namespace TagLib.Mpeg4 {
 				return 0;
 			}
 			set {
+				uint disc = Disc;
+				if (value == 0 && disc == 0) {
+					ClearData (BoxType.Disk);
+					return;
+				}
+				
 				ByteVector v = ByteVector.FromUShort (0);
-				v.Add (ByteVector.FromUShort ((ushort) Disc));
+				v.Add (ByteVector.FromUShort ((ushort) disc));
 				v.Add (ByteVector.FromUShort ((ushort) value));
 				v.Add (ByteVector.FromUShort (0));
 				SetData (BoxType.Disk, v, (int)
@@ -860,6 +889,11 @@ namespace TagLib.Mpeg4 {
 				return 0;
 			}
 			set {
+				if (value == 0) {
+					ClearData (BoxType.Tmpo);
+					return;
+				}
+				
 				SetData (BoxType.Tmpo,
 					ByteVector.FromUInt (value),
 					(uint) AppleDataBox.FlagType.ForTempo);

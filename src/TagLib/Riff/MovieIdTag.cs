@@ -23,8 +23,7 @@
 
 using System;
 
-namespace TagLib.Riff
-{
+namespace TagLib.Riff {
    public class MovieIdTag : ListTag
    {
       public MovieIdTag () : base ()
@@ -41,56 +40,83 @@ namespace TagLib.Riff
          return RenderEnclosed ("MID ");
       }
 
-      public override TagTypes TagTypes {get {return TagTypes.MovieId;}}
-      
-      public override string Title
-      {
-         get
-         {
-            foreach (string s in GetValuesAsStrings ("TITL"))
-               if (s != null)
-                  return s;
-            
-            return null;
-         }
-         set {SetValue ("TITL", value);}
-      }
-      
-      public override string [] Performers
-      {
-         get {return GetValuesAsStrings ("IART");}
-         set {SetValue ("IART", value);}
-      }
-      
-      public override string Comment
-      {
-         get
-         {
-            foreach (string s in GetValuesAsStrings ("COMM"))
-               if (s != null)
-                  return s;
-            
-            return null;
-         }
-         set {SetValue ("COMM", value);}
-      }
-      
-      public override string [] Genres
-      {
-         get {return GetValuesAsStrings ("GENT");}
-         set {SetValue ("GENR", value);}
-      }
-      
-      public override uint Track
-      {
-         get {return GetValueAsUInt ("PRT1");}
-         set {SetValue ("PRT1", value);}
-      }
-      
-      public override uint TrackCount
-      {
-         get {return GetValueAsUInt ("PRT2");}
-         set {SetValue ("PRT2", value);}
-      }
-   }
+#region TagLib.Tag
+		
+		/// <summary>
+		///    Gets the tag types contained in the current instance.
+		/// </summary>
+		/// <value>
+		///    Always <see cref="TagTypes.MovieId" />.
+		/// </value>
+		public override TagTypes TagTypes {
+			get {return TagTypes.MovieId;}
+		}
+		
+		/// <summary>
+		///    Gets and sets the title for the media described by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the title for
+		///    the media described by the current instance or <see
+		///    langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TITL" item.
+		/// </remarks>
+		public override string Title {
+			get {
+				foreach (string s in GetValuesAsStrings ("TITL"))
+					if (s != null)
+						return s;
+				
+				return null;
+			}
+			set {SetValue ("TITL", value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the performers or artists who performed in
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the performers or
+		///    artists who performed in the media described by the
+		///    current instance or an empty array if no value is
+		///    present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "IART" item.
+		/// </remarks>
+		public override string [] Performers {
+			get {return GetValuesAsStrings ("IART");}
+			set {SetValue ("IART", value);}
+		}
+		
+		public override string Comment {
+			get {
+				foreach (string s in GetValuesAsStrings ("COMM"))
+					if (s != null)
+						return s;
+				return null;
+			}
+			set {SetValue ("COMM", value);}
+		}
+		
+		public override string [] Genres {
+			get {return GetValuesAsStrings ("GENR");}
+			set {SetValue ("GENR", value);}
+		}
+		
+		public override uint Track {
+			get {return GetValueAsUInt ("PRT1");}
+			set {SetValue ("PRT1", value);}
+		}
+		
+		public override uint TrackCount {
+			get {return GetValueAsUInt ("PRT2");}
+			set {SetValue ("PRT2", value);}
+		}
+#endregion
+	}
 }

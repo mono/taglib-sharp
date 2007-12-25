@@ -303,6 +303,9 @@ namespace TagLib {
 		///    if no value is present.
 		/// </value>
 		/// <remarks>
+		///    <para>Years greater than 9999 cannot be stored by most
+		///    tagging formats and will be cleared if a higher value is
+		///    set.</para>
 		///    <para>Some tagging formats store higher precision dates
 		///    which will be truncated when this property is set. Format
 		///    specific implementations are necessary access the higher
@@ -631,12 +634,12 @@ namespace TagLib {
 		}
 		
 		/// <summary>
-		///    Gets a comma separated string containing the values in
-		///    <see cref="AlbumArtists" />.
+		///    Gets a semicolon separated string containing the values
+		///    in <see cref="AlbumArtists" />.
 		/// </summary>
 		/// <value>
-		///    A comma separated <see cref="string" /> object containing
-		///    the values in <see cref="AlbumArtists" />.
+		///    A semicolon separated <see cref="string" /> object
+		///    containing the values in <see cref="AlbumArtists" />.
 		/// </value>
 		/// <remarks>
 		///    This property is provided for convenience. Use <see
@@ -647,12 +650,12 @@ namespace TagLib {
 		}
 		
 		/// <summary>
-		///    Gets a comma separated string containing the values in
-		///    <see cref="Performers" />.
+		///    Gets a semicolon separated string containing the values
+		///    in <see cref="Performers" />.
 		/// </summary>
 		/// <value>
-		///    A comma separated <see cref="string" /> object containing
-		///    the values in <see cref="Performers" />.
+		///    A semicolon separated <see cref="string" /> object
+		///    containing the values in <see cref="Performers" />.
 		/// </value>
 		/// <remarks>
 		///    This property is provided for convenience. Use <see
@@ -663,12 +666,12 @@ namespace TagLib {
 		}
 		
 		/// <summary>
-		///    Gets a comma separated string containing the values in
-		///    <see cref="Composers" />.
+		///    Gets a semicolon separated string containing the values
+		///    in <see cref="Composers" />.
 		/// </summary>
 		/// <value>
-		///    A comma separated <see cref="string" /> object containing
-		///    the values in <see cref="Composers" />.
+		///    A semicolon separated <see cref="string" /> object
+		///    containing the values in <see cref="Composers" />.
 		/// </value>
 		/// <remarks>
 		///    This property is provided for convenience. Use <see
@@ -679,12 +682,12 @@ namespace TagLib {
 		}
 		
 		/// <summary>
-		///    Gets a comma separated string containing the values in
-		///    <see cref="Genres" />.
+		///    Gets a semicolon separated string containing the values
+		///    in <see cref="Genres" />.
 		/// </summary>
 		/// <value>
-		///    A comma separated <see cref="string" /> object containing
-		///    the values in <see cref="Genres" />.
+		///    A semicolon separated <see cref="string" /> object
+		///    containing the values in <see cref="Genres" />.
 		/// </value>
 		/// <remarks>
 		///    This property is provided for convenience. Use <see
@@ -708,26 +711,26 @@ namespace TagLib {
 		private static string FirstInGroup(string [] group)
 		{
 			return group == null || group.Length == 0 ?
-				null : group[0];
+				null : group [0];
 		}
 		
 		/// <summary>
-		///    Joins a array of strings into a single, comma separated,
-		///    string.
+		///    Joins a array of strings into a single, semicolon
+		///    separated, string.
 		/// </summary>
 		/// <param name="group">
 		///    A <see cref="string[]" /> containing values to combine.
 		/// </param>
 		/// <returns>
-		///    A comma separated <see cref="string" /> object containing
-		///    the values from <paramref name="group" />.
+		///    A semicolon separated <see cref="string" /> object
+		///    containing the values from <paramref name="group" />.
 		/// </returns>
 		private static string JoinGroup (string [] group)
 		{
 			if (group == null)
 				return null;
 			
-			return string.Join (", ", group);
+			return string.Join ("; ", group);
 		}
 
 		/// <summary>

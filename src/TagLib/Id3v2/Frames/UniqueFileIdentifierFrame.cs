@@ -39,23 +39,39 @@ namespace TagLib.Id3v2
       
       
       
-      #region Constructors
-      public UniqueFileIdentifierFrame (ByteVector data, byte version) : base (data, version)
-      {
-         SetData (data, 0, version, true);
-      }
-
-      public UniqueFileIdentifierFrame (string owner, ByteVector id) : base (FrameType.UFID, 4)
-      {
-         this.owner = owner;
-         identifier = id;
-      }
-      
-      protected internal UniqueFileIdentifierFrame (ByteVector data, int offset, FrameHeader header, byte version) : base(header)
-      {
-         SetData (data, offset, version, false);
-      }
-      #endregion
+#region Constructors
+		
+		public UniqueFileIdentifierFrame (string owner, ByteVector id) :
+			base (FrameType.UFID, 4)
+		{
+			if (owner == null)
+				throw new ArgumentNullException ("owner");
+			
+			this.owner = owner;
+			identifier = id;
+		}
+		
+		public UniqueFileIdentifierFrame (string owner) :
+			this (owner, null)
+		{
+		}
+		
+		public UniqueFileIdentifierFrame (ByteVector data, byte version)
+			: base (data, version)
+		{
+			SetData (data, 0, version, true);
+		}
+		
+		protected internal UniqueFileIdentifierFrame (ByteVector data,
+		                                              int offset,
+		                                              FrameHeader header,
+		                                              byte version) :
+			base(header)
+		{
+			SetData (data, offset, version, false);
+		}
+		
+#endregion
       
       
       
