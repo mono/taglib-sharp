@@ -203,11 +203,14 @@ namespace TagLib.NonContainer {
 		{
 			long start, end;
 			Mode = AccessMode.Write;
-			tag.Write (out start, out end);
-			InvariantStartPosition = start;
-			InvariantEndPosition = end;
-			Mode = AccessMode.Closed;
-			TagTypesOnDisk = TagTypes;
+			try {
+				tag.Write (out start, out end);
+				InvariantStartPosition = start;
+				InvariantEndPosition = end;
+				TagTypesOnDisk = TagTypes;
+			} finally {
+				Mode = AccessMode.Closed;
+			}
 		}
 		
 		/// <summary>
@@ -366,27 +369,29 @@ namespace TagLib.NonContainer {
 		private void Read (ReadStyle propertiesStyle)
 		{
 			Mode = AccessMode.Read;
-			tag = new Tag (this);
-			
-			// Read the tags and property data at the beginning of
-			// the file.
-			InvariantStartPosition = tag.ReadStart ();
-			TagTypesOnDisk |= StartTag.TagTypes;
-			ReadStart (InvariantStartPosition, propertiesStyle);
-			
-			// Read the tags and property data at the end of the
-			// file.
-			InvariantEndPosition = tag.ReadEnd ();
-			TagTypesOnDisk |= EndTag.TagTypes;
-			ReadEnd (InvariantEndPosition, propertiesStyle);
-			
-			// Read the audio properties.
-			properties = (propertiesStyle != ReadStyle.None) ?
-				ReadProperties (InvariantStartPosition,
-					InvariantEndPosition, propertiesStyle) :
-				null;
-			
-			Mode = AccessMode.Closed;
+			try {
+				tag = new Tag (this);
+				
+				// Read the tags and property data at the beginning of
+				// the file.
+				InvariantStartPosition = tag.ReadStart ();
+				TagTypesOnDisk |= StartTag.TagTypes;
+				ReadStart (InvariantStartPosition, propertiesStyle);
+				
+				// Read the tags and property data at the end of the
+				// file.
+				InvariantEndPosition = tag.ReadEnd ();
+				TagTypesOnDisk |= EndTag.TagTypes;
+				ReadEnd (InvariantEndPosition, propertiesStyle);
+				
+				// Read the audio properties.
+				properties = (propertiesStyle != ReadStyle.None) ?
+					ReadProperties (InvariantStartPosition,
+						InvariantEndPosition, propertiesStyle) :
+					null;
+			} finally {
+				Mode = AccessMode.Closed;
+			}
 		}
 		
 		#endregion

@@ -199,88 +199,90 @@ namespace TagLib.Mpeg4 {
 			
 			// Try to get into write mode.
 			Mode = File.AccessMode.Write;
-			
-			FileParser parser = new FileParser (this);
-			parser.ParseBoxHeaders ();
-			
-			InvariantStartPosition = parser.MdatStartPosition;
-			InvariantEndPosition = parser.MdatEndPosition;
-			
-			long size_change = 0;
-			long write_position = 0;
-			
-			ByteVector tag_data = udta_box.Render ();
-			
-			// If we don't have a "udta" box to overwrite...
-			if (parser.UdtaTree == null ||
-				parser.UdtaTree.Length == 0 ||
-				parser.UdtaTree [parser.UdtaTree.Length - 1
-				].BoxType != BoxType.Udta) {
+			try {
+				FileParser parser = new FileParser (this);
+				parser.ParseBoxHeaders ();
 				
-				// Stick the box at the end of the moov box.
-				BoxHeader moov_header = parser.MoovTree [
-					parser.MoovTree.Length - 1];
-				size_change = tag_data.Count;
-				write_position = moov_header.Position +
-					moov_header.TotalBoxSize;
-				Insert (tag_data, write_position, 0);
-				
-				// Overwrite the parent box sizes.
-				for (int i = parser.MoovTree.Length - 1; i >= 0;
-					i --)
-					size_change = parser.MoovTree [i
-						].Overwrite (this, size_change);
-			} else {
-				// Overwrite the old box.
-				BoxHeader udta_header = parser.UdtaTree [
-					parser.UdtaTree.Length - 1];
-				size_change = tag_data.Count -
-					udta_header.TotalBoxSize;
-				write_position = udta_header.Position;
-				Insert (tag_data, write_position,
-					udta_header.TotalBoxSize);
-				
-				// Overwrite the parent box sizes.
-				for (int i = parser.UdtaTree.Length - 2; i >= 0;
-					i --)
-					size_change = parser.UdtaTree [i
-						].Overwrite (this, size_change);
-			}
-			
-			// If we've had a size change, we may need to adjust
-			// chunk offsets.
-			if (size_change != 0) {
-				// We may have moved the offset boxes, so we
-				// need to reread.
-				parser.ParseChunkOffsets ();
 				InvariantStartPosition = parser.MdatStartPosition;
 				InvariantEndPosition = parser.MdatEndPosition;
 				
-				foreach (Box box in parser.ChunkOffsetBoxes) {
-					IsoChunkLargeOffsetBox co64 = 
-						box as IsoChunkLargeOffsetBox;
+				long size_change = 0;
+				long write_position = 0;
+				
+				ByteVector tag_data = udta_box.Render ();
+				
+				// If we don't have a "udta" box to overwrite...
+				if (parser.UdtaTree == null ||
+					parser.UdtaTree.Length == 0 ||
+					parser.UdtaTree [parser.UdtaTree.Length - 1
+					].BoxType != BoxType.Udta) {
 					
-					if (co64 != null) {
-						co64.Overwrite (this,
-							size_change,
-							write_position);
-						continue;
-					}
+					// Stick the box at the end of the moov box.
+					BoxHeader moov_header = parser.MoovTree [
+						parser.MoovTree.Length - 1];
+					size_change = tag_data.Count;
+					write_position = moov_header.Position +
+						moov_header.TotalBoxSize;
+					Insert (tag_data, write_position, 0);
 					
-					IsoChunkOffsetBox stco = 
-						box as IsoChunkOffsetBox;
+					// Overwrite the parent box sizes.
+					for (int i = parser.MoovTree.Length - 1; i >= 0;
+						i --)
+						size_change = parser.MoovTree [i
+							].Overwrite (this, size_change);
+				} else {
+					// Overwrite the old box.
+					BoxHeader udta_header = parser.UdtaTree [
+						parser.UdtaTree.Length - 1];
+					size_change = tag_data.Count -
+						udta_header.TotalBoxSize;
+					write_position = udta_header.Position;
+					Insert (tag_data, write_position,
+						udta_header.TotalBoxSize);
 					
-					if (stco != null) {
-						stco.Overwrite (this,
-							size_change,
-							write_position);
-						continue;
+					// Overwrite the parent box sizes.
+					for (int i = parser.UdtaTree.Length - 2; i >= 0;
+						i --)
+						size_change = parser.UdtaTree [i
+							].Overwrite (this, size_change);
+				}
+				
+				// If we've had a size change, we may need to adjust
+				// chunk offsets.
+				if (size_change != 0) {
+					// We may have moved the offset boxes, so we
+					// need to reread.
+					parser.ParseChunkOffsets ();
+					InvariantStartPosition = parser.MdatStartPosition;
+					InvariantEndPosition = parser.MdatEndPosition;
+					
+					foreach (Box box in parser.ChunkOffsetBoxes) {
+						IsoChunkLargeOffsetBox co64 = 
+							box as IsoChunkLargeOffsetBox;
+						
+						if (co64 != null) {
+							co64.Overwrite (this,
+								size_change,
+								write_position);
+							continue;
+						}
+						
+						IsoChunkOffsetBox stco = 
+							box as IsoChunkOffsetBox;
+						
+						if (stco != null) {
+							stco.Overwrite (this,
+								size_change,
+								write_position);
+							continue;
+						}
 					}
 				}
+				
+				TagTypesOnDisk = TagTypes;
+			} finally {
+				Mode = File.AccessMode.Closed;
 			}
-			
-			Mode = File.AccessMode.Closed;
-			TagTypesOnDisk = TagTypes;
 		}
 
 		/// <summary>
@@ -360,53 +362,55 @@ namespace TagLib.Mpeg4 {
 			// TODO: Support Id3v2 boxes!!!
 			tag = new CombinedTag ();
 			Mode = AccessMode.Read;
-			
-			FileParser parser = new FileParser (this);
-			
-			if (propertiesStyle == ReadStyle.None)
-				parser.ParseTag ();
-			else
-				parser.ParseTagAndProperties ();
-			
-			InvariantStartPosition = parser.MdatStartPosition;
-			InvariantEndPosition = parser.MdatEndPosition;
-			
-			udta_box = parser.UserDataBox;
-			
-			if (udta_box != null && udta_box.GetChild (BoxType.Meta)
-				!= null && udta_box.GetChild (BoxType.Meta
-				).GetChild (BoxType.Ilst) != null)
-				TagTypesOnDisk |= TagTypes.Apple;
-			
-			if (udta_box == null)
-				udta_box = new IsoUserDataBox ();
-			
-			apple_tag = new AppleTag (udta_box);
-			tag.SetTags (apple_tag);
-			
-			// If we're not reading properties, we're done.
-			if (propertiesStyle == ReadStyle.None) {
+			try {
+				FileParser parser = new FileParser (this);
+				
+				if (propertiesStyle == ReadStyle.None)
+					parser.ParseTag ();
+				else
+					parser.ParseTagAndProperties ();
+				
+				InvariantStartPosition = parser.MdatStartPosition;
+				InvariantEndPosition = parser.MdatEndPosition;
+				
+				udta_box = parser.UserDataBox;
+				
+				if (udta_box != null && udta_box.GetChild (BoxType.Meta)
+					!= null && udta_box.GetChild (BoxType.Meta
+					).GetChild (BoxType.Ilst) != null)
+					TagTypesOnDisk |= TagTypes.Apple;
+				
+				if (udta_box == null)
+					udta_box = new IsoUserDataBox ();
+				
+				apple_tag = new AppleTag (udta_box);
+				tag.SetTags (apple_tag);
+				
+				// If we're not reading properties, we're done.
+				if (propertiesStyle == ReadStyle.None) {
+					Mode = AccessMode.Closed;
+					return;
+				}
+				
+				// Get the movie header box.
+				IsoMovieHeaderBox mvhd_box = parser.MovieHeaderBox;
+				if(mvhd_box == null) {
+					Mode = AccessMode.Closed;
+					throw new CorruptFileException (
+						"mvhd box not found.");
+				}
+				
+				IsoAudioSampleEntry  audio_sample_entry =
+					parser.AudioSampleEntry;
+				IsoVisualSampleEntry visual_sample_entry =
+					parser.VisualSampleEntry;
+				
+				// Read the properties.
+				properties = new Properties (mvhd_box.Duration,
+					audio_sample_entry, visual_sample_entry);
+			} finally {
 				Mode = AccessMode.Closed;
-				return;
 			}
-			
-			// Get the movie header box.
-			IsoMovieHeaderBox mvhd_box = parser.MovieHeaderBox;
-			if(mvhd_box == null) {
-				Mode = AccessMode.Closed;
-				throw new CorruptFileException (
-					"mvhd box not found.");
-			}
-			
-			IsoAudioSampleEntry  audio_sample_entry =
-				parser.AudioSampleEntry;
-			IsoVisualSampleEntry visual_sample_entry =
-				parser.VisualSampleEntry;
-			
-			// Read the properties.
-			properties = new Properties (mvhd_box.Duration,
-				audio_sample_entry, visual_sample_entry);
-			Mode = AccessMode.Closed;
 		}
 		
 		#endregion

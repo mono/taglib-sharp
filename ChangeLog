@@ -1,5 +1,16 @@
 2007-12-25  Brian Nickel <brian.nickel@gmail.com>
 	
+	* src/TagLib/Riff/File.cs:
+	* src/TagLib/Flac/File.cs:
+	* src/TagLib/Mpeg4/File.cs:
+	* src/TagLib/NonContainer/File.cs:
+	* src/TagLib/Asf/File.cs:
+	* src/TagLib/Ogg/File.cs: Wrap constructors and save operations in
+	try/finally to ensure the streams get closed. (Thanks to oliphant for
+	the bug report.)
+
+2007-12-25  Brian Nickel <brian.nickel@gmail.com>
+	
 	* src/TagLib/Id3v1/Tag.cs: Added constructor to create from data. Added
 	documentation. Fixed properties to produce correct output when empty.
 	Removed broken IsEmpty property.

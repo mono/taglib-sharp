@@ -179,30 +179,31 @@ namespace TagLib.Asf {
 		public override void Save ()
 		{
 			Mode = AccessMode.Write;
-			
-			HeaderObject header = new HeaderObject (this, 0);
-			
-			if (asf_tag == null) {
-				header.RemoveContentDescriptors ();
-				TagTypesOnDisk &= ~ TagTypes.Asf;
-			} else {
-				TagTypesOnDisk |= TagTypes.Asf;
-				header.AddUniqueObject (
-					asf_tag.ContentDescriptionObject);
-				header.AddUniqueObject (
-					asf_tag.ExtendedContentDescriptionObject);
-				header.Extension.AddUniqueObject (
-					asf_tag.MetadataLibraryObject);
+			try {
+				HeaderObject header = new HeaderObject (this, 0);
+				
+				if (asf_tag == null) {
+					header.RemoveContentDescriptors ();
+					TagTypesOnDisk &= ~ TagTypes.Asf;
+				} else {
+					TagTypesOnDisk |= TagTypes.Asf;
+					header.AddUniqueObject (
+						asf_tag.ContentDescriptionObject);
+					header.AddUniqueObject (
+						asf_tag.ExtendedContentDescriptionObject);
+					header.Extension.AddUniqueObject (
+						asf_tag.MetadataLibraryObject);
+				}
+				
+				ByteVector output = header.Render ();
+				long diff = output.Count - (long) header.OriginalSize;
+				Insert (output, 0, (long) header.OriginalSize);
+				
+				InvariantStartPosition += diff;
+				InvariantEndPosition += diff;
+			} finally {
+				Mode = AccessMode.Closed;
 			}
-			
-			ByteVector output = header.Render ();
-			long diff = output.Count - (long) header.OriginalSize;
-			Insert (output, 0, (long) header.OriginalSize);
-			
-			InvariantStartPosition += diff;
-			InvariantEndPosition += diff;
-			
-			Mode = AccessMode.Closed;
 		}
 		
 		/// <summary>
@@ -406,21 +407,22 @@ namespace TagLib.Asf {
 		private void Read (ReadStyle propertiesStyle)
 		{
 			Mode = AccessMode.Read;
-			
-			HeaderObject header = new HeaderObject (this, 0);
-			
-			if (header.HasContentDescriptors)
-				TagTypesOnDisk |= TagTypes.Asf;
-			
-			asf_tag = new Asf.Tag (header);
-			
-			InvariantStartPosition = (long) header.OriginalSize;
-			InvariantEndPosition = Length;
-			
-			if (propertiesStyle != ReadStyle.None)
-				properties = header.Properties;
-			
-			Mode = AccessMode.Closed;
+			try {
+				HeaderObject header = new HeaderObject (this, 0);
+				
+				if (header.HasContentDescriptors)
+					TagTypesOnDisk |= TagTypes.Asf;
+				
+				asf_tag = new Asf.Tag (header);
+				
+				InvariantStartPosition = (long) header.OriginalSize;
+				InvariantEndPosition = Length;
+				
+				if (propertiesStyle != ReadStyle.None)
+					properties = header.Properties;
+			} finally {
+				Mode = AccessMode.Closed;
+			}
 		}
 		
 		#endregion

@@ -58,22 +58,27 @@ namespace TagLib.Riff
       public File (string path) : this (path, ReadStyle.Average)
       {}
       
-      public File (File.IFileAbstraction abstraction, ReadStyle propertiesStyle) : base (abstraction)
-      {
-         uint riff_size;
-         long tag_start, tag_end;
-         
-         Mode = AccessMode.Read;
-         Read (true, propertiesStyle, out riff_size, out tag_start, out tag_end);
-         Mode = AccessMode.Closed;
-         
-         TagTypesOnDisk = TagTypes;
-         
-         GetTag (TagTypes.Id3v2, true);
-         GetTag (TagTypes.RiffInfo, true);
-         GetTag (TagTypes.MovieId, true);
-         GetTag (TagTypes.DivX, true);
-      }
+		public File (File.IFileAbstraction abstraction,
+		             ReadStyle propertiesStyle) : base (abstraction)
+		{
+			uint riff_size;
+			long tag_start, tag_end;
+
+			Mode = AccessMode.Read;
+			try {
+				Read (true, propertiesStyle, out riff_size,
+					out tag_start, out tag_end);
+			} finally {
+				Mode = AccessMode.Closed;
+			}
+
+			TagTypesOnDisk = TagTypes;
+
+			GetTag (TagTypes.Id3v2, true);
+			GetTag (TagTypes.RiffInfo, true);
+			GetTag (TagTypes.MovieId, true);
+			GetTag (TagTypes.DivX, true);
+		}
       
       public File (File.IFileAbstraction abstraction) : this (abstraction, ReadStyle.Average)
       {}
@@ -258,63 +263,69 @@ namespace TagLib.Riff
          tag.SetTags (id32_tag, info_tag, mid_tag, divx_tag);
       }
       
-      public override void Save ()
-      {
-         Mode = AccessMode.Write;
-         
-         ByteVector data = new ByteVector ();
-         
-         if (id32_tag != null)
-         {
-            ByteVector tag_data = id32_tag.Render ();
-            if (tag_data.Count > 10)
-            {
-               if (tag_data.Count % 2 == 1)
-                  tag_data.Add (0);
-               data.Add ("ID32");
-               data.Add (ByteVector.FromUInt ((uint) tag_data.Count, false));
-               data.Add (tag_data);
-            }
-         }
-         
-         if (info_tag != null)
-            data.Add (info_tag.RenderEnclosed ());
-         
-         if (mid_tag != null)
-            data.Add (mid_tag.RenderEnclosed ());
-         
-         if (divx_tag != null && !divx_tag.IsEmpty)
-         {
-            ByteVector tag_data = divx_tag.Render ();
-            data.Add ("IDVX");
-            data.Add (ByteVector.FromUInt ((uint) tag_data.Count, false));
-            data.Add (tag_data);
-         }
-         
-         uint riff_size;
-         long tag_start, tag_end;
-         Read (false, ReadStyle.None, out riff_size, out tag_start, out tag_end);
-         
-         if (tag_start < 12 || tag_end < tag_start)
-            tag_start = tag_end = Length;
-         
-         int length = (int)(tag_end - tag_start);
-         int padding_size = length - data.Count - 8;
-         if (padding_size < 0)
-            padding_size = 1024;
-         
-         data.Add ("JUNK");
-         data.Add (ByteVector.FromUInt ((uint)padding_size, false));
-         data.Add (new ByteVector (padding_size));
-         
-         Insert (data, tag_start, length);
-         
-         if (data.Count - length != 0 && tag_start <= riff_size)
-            Insert (ByteVector.FromUInt ((uint)(riff_size + data.Count - length), false), 4, 4);
-         
-         Mode = AccessMode.Closed;
-         
-         TagTypesOnDisk = TagTypes;
-      }
-   }
+		public override void Save ()
+		{
+			Mode = AccessMode.Write;
+			try {
+				ByteVector data = new ByteVector ();
+
+				if (id32_tag != null) {
+					ByteVector tag_data = id32_tag.Render ();
+					if (tag_data.Count > 10) {
+						if (tag_data.Count % 2 == 1)
+							tag_data.Add (0);
+						data.Add ("ID32");
+						data.Add (ByteVector.FromUInt (
+							(uint) tag_data.Count,
+							false));
+						data.Add (tag_data);
+					}
+				}
+
+				if (info_tag != null)
+					data.Add (info_tag.RenderEnclosed ());
+
+				if (mid_tag != null)
+					data.Add (mid_tag.RenderEnclosed ());
+
+				if (divx_tag != null && !divx_tag.IsEmpty) {
+					ByteVector tag_data = divx_tag.Render ();
+					data.Add ("IDVX");
+					data.Add (ByteVector.FromUInt (
+						(uint) tag_data.Count, false));
+					data.Add (tag_data);
+				}
+
+				uint riff_size;
+				long tag_start, tag_end;
+				Read (false, ReadStyle.None, out riff_size,
+					out tag_start, out tag_end);
+
+				if (tag_start < 12 || tag_end < tag_start)
+					tag_start = tag_end = Length;
+
+				int length = (int)(tag_end - tag_start);
+				int padding_size = length - data.Count - 8;
+				if (padding_size < 0)
+					padding_size = 1024;
+
+				data.Add ("JUNK");
+				data.Add (ByteVector.FromUInt (
+					(uint)padding_size, false));
+				data.Add (new ByteVector (padding_size));
+
+				Insert (data, tag_start, length);
+
+				if (data.Count - length != 0 &&
+					tag_start <= riff_size)
+					Insert (ByteVector.FromUInt ((uint)
+						(riff_size + data.Count - length),
+						false), 4, 4);
+
+				TagTypesOnDisk = TagTypes;
+			} finally {
+				Mode = AccessMode.Closed;
+			}
+		}
+	}
 }

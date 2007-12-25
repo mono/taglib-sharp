@@ -53,14 +53,18 @@ namespace TagLib.Ogg
       public File (string path) : this (path, ReadStyle.Average)
       {}
       
-      public File (File.IFileAbstraction abstraction, ReadStyle propertiesStyle) : base (abstraction)
-      {
-         Mode = AccessMode.Read;
-         tag = new GroupedComment ();
-         Read (propertiesStyle);
-         Mode = AccessMode.Closed;
-         TagTypesOnDisk = TagTypes;
-      }
+		public File (File.IFileAbstraction abstraction,
+		             ReadStyle propertiesStyle) : base (abstraction)
+		{
+			Mode = AccessMode.Read;
+			try {
+				tag = new GroupedComment ();
+				Read (propertiesStyle);
+				TagTypesOnDisk = TagTypes;
+			} finally {
+				Mode = AccessMode.Closed;
+			}
+		}
       
       public File (File.IFileAbstraction abstraction) : this (abstraction, ReadStyle.Average)
       {}
@@ -105,56 +109,61 @@ namespace TagLib.Ogg
             tag.Clear ();
       }
       
-      public override void Save ()
-      {
-         Mode = AccessMode.Write;
-         
-         long end;
-         List<Page> pages = new List<Page> ();
-         Dictionary<uint, Bitstream> streams = ReadStreams (pages, out end);
-         Dictionary<uint, Paginator> paginators = new Dictionary<uint, Paginator> ();
-         List<List<Page>> new_pages = new List<List<Page>> ();
-         
-         foreach (Page page in pages)
-         {
-            uint id = page.Header.StreamSerialNumber;
-            if (!paginators.ContainsKey (id))
-               paginators.Add (id, new Paginator (streams [id].Codec));
-            
-            paginators [id].AddPage (page);
-         }
-         
-         foreach (uint id in paginators.Keys)
-         {
-            paginators [id].SetComment (tag.GetComment (id));
-            new_pages.Add (new List<Page> (paginators [id].Paginate ()));
-         }
-         
-         ByteVector output = new ByteVector ();
-         bool empty;
-         do
-         {
-            empty = true;
-            foreach (List<Page> stream_pages in new_pages)
-            {
-               if (stream_pages.Count == 0)
-                  continue;
-               
-               output.Add (stream_pages [0].Render ());
-               stream_pages.RemoveAt (0);
-               
-               if (stream_pages.Count != 0)
-                  empty = false;
-            }
-         } while (!empty);
-         
-         Insert (output, 0, end);
-         InvariantStartPosition = output.Count;
-         InvariantEndPosition = Length;
-         
-         Mode = AccessMode.Closed;
-         TagTypesOnDisk = TagTypes;
-      }
+		public override void Save ()
+		{
+			Mode = AccessMode.Write;
+			try {
+				long end;
+				List<Page> pages = new List<Page> ();
+				Dictionary<uint, Bitstream> streams =
+					ReadStreams (pages, out end);
+				Dictionary<uint, Paginator> paginators =
+					new Dictionary<uint, Paginator> ();
+				List<List<Page>> new_pages =
+					new List<List<Page>> ();
+
+				foreach (Page page in pages) {
+					uint id = page.Header.StreamSerialNumber;
+					if (!paginators.ContainsKey (id))
+					paginators.Add (id, new Paginator (
+						streams [id].Codec));
+
+					paginators [id].AddPage (page);
+				}
+
+				foreach (uint id in paginators.Keys) {
+					paginators [id].SetComment (
+						tag.GetComment (id));
+					new_pages.Add (new List<Page> (
+						paginators [id].Paginate ()));
+				}
+
+				ByteVector output = new ByteVector ();
+				bool empty;
+				do {
+					empty = true;
+					foreach (List<Page> stream_pages in new_pages) {
+						if (stream_pages.Count == 0)
+							continue;
+
+						output.Add (stream_pages [0]
+							.Render ());
+						stream_pages.RemoveAt (0);
+
+						if (stream_pages.Count != 0)
+							empty = false;
+					}
+				} while (!empty);
+
+				Insert (output, 0, end);
+				InvariantStartPosition = output.Count;
+				InvariantEndPosition = Length;
+
+				TagTypesOnDisk = TagTypes;
+			} finally {
+				Mode = AccessMode.Closed;
+			}
+		}
       
       private Dictionary<uint, Bitstream> ReadStreams (List<Page> pages, out long end)
       {
