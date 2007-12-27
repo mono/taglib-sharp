@@ -106,8 +106,8 @@ namespace TagLib.Mpeg4 {
 				return false;
 			}
 			set {
-				SetData (BoxType.Cpil, ByteVector.FromUInt (
-					(uint) (value ? 1 : 0)),
+				SetData (BoxType.Cpil, new ByteVector(
+					(byte) (value ? 1 : 0)),
 					(uint) AppleDataBox.FlagType.ForTempo);
 			}
 		}
@@ -960,25 +960,9 @@ namespace TagLib.Mpeg4 {
 			get {
 				List<Picture> l = new List<Picture> ();
 				
-				foreach (AppleDataBox box in  DataBoxes(BoxType.Covr)) {
-					string type = null;
-					string desc = null;
-					
-					if (box.Flags == (int)
-						AppleDataBox.FlagType.ContainsJpegData) {
-						type = "image/jpeg";
-						desc = "cover.jpg";
-					} else if (box.Flags == (int)
-						AppleDataBox.FlagType.ContainsPngData) {
-						type = "image/png";
-						desc = "cover.png";
-					} else continue;
-					
-					Picture p = new Picture ();
+				foreach (AppleDataBox box in DataBoxes(BoxType.Covr)) {
+					Picture p = new Picture (box.Data);
 					p.Type = PictureType.FrontCover;
-					p.Data = box.Data;
-					p.MimeType = type;
-					p.Description = desc;
 					l.Add (p);
 				}
 				

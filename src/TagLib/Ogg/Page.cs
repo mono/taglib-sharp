@@ -89,6 +89,48 @@ namespace TagLib.Ogg
 
          return data;
       }
+		
+		public static void OverwriteSequenceNumbers (File file,
+		                                             long position,
+		                                             IDictionary<uint, int> shiftTable)
+		{
+			bool done = true;
+			foreach (KeyValuePair<uint, int> pair in shiftTable)
+				if (pair.Value != 0) {
+					done = false;
+					break;
+				}
+			
+			if (done)
+				return;
+			
+			while (position < file.Length) {
+				PageHeader header = new PageHeader (file, position);
+				int size = (int) (header.Size + header.DataSize);
+				
+				if (shiftTable.ContainsKey (header.StreamSerialNumber)
+					&& shiftTable [header.StreamSerialNumber] != 0) {
+					file.Seek (position);
+					ByteVector page_data = file.ReadBlock (size);
+					
+					ByteVector new_data = ByteVector.FromUInt (
+						(uint)(header.PageSequenceNumber +
+						shiftTable [header.StreamSerialNumber]),
+						false);
+					
+					for (int i = 18; i < 22; i ++)
+						page_data [i] = new_data [i - 18];
+					for (int i = 22; i < 26; i++)
+						page_data [i] = 0;
+					
+					new_data.Add (ByteVector.FromUInt (
+						page_data.Checksum, false));
+					file.Seek (position + 18);
+					file.WriteBlock (new_data);
+				}
+				position += size;
+			}
+		}
       
       //////////////////////////////////////////////////////////////////////////
       // public properties

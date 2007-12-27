@@ -1192,6 +1192,49 @@ namespace TagLib.Ape {
 			items.Clear ();
 		}
 		
+		/// <summary>
+		///    Copies the values from the current instance to another
+		///    <see cref="TagLib.Tag" />, optionally overwriting
+		///    existing values.
+		/// </summary>
+		/// <param name="target">
+		///    A <see cref="Tag" /> object containing the target tag to
+		///    copy values to.
+		/// </param>
+		/// <param name="overwrite">
+		///    A <see cref="bool" /> specifying whether or not to copy
+		///    values over existing one.
+		/// </param>
+		/// <remarks>
+		///    <para>If <paramref name="target" /> is of type <see
+		///    cref="Tag" /> a complete copy of all values will be
+		///    performed. Otherwise, only standard values will be
+		///    copied.</para>
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="target" /> is <see langword="null" />.
+		/// </exception>
+		public virtual void CopyTo (Tag target, bool overwrite)
+		{
+			if (target == null)
+				throw new ArgumentNullException ("target");
+			
+			TagLib.Ape.Tag match = target as TagLib.Ape.Tag;
+			
+			if (match == null) {
+				base.CopyTo (target, overwrite);
+				return;
+			}
+			
+			foreach (Item item in items) {
+				if (!overwrite &&
+					target.GetItem (item.Key) != null)
+					continue;
+				
+				target.items.Add (item.Clone ());
+			}
+		}
+		
 		#endregion
 	}
 }

@@ -212,7 +212,7 @@ namespace TagLib.NonContainer {
 		/// </param>
 		/// <param name="copy">
 		///    A <see cref="TagLib.Tag" /> to copy values from using
-		///    <see cref="TagLib.Tag.Duplicate" />, or <see
+		///    <see cref="TagLib.Tag.CopyTo" />, or <see
 		///    langword="null" /> if no tag is to be copied.
 		/// </param>
 		/// <returns>
@@ -237,7 +237,7 @@ namespace TagLib.NonContainer {
 			
 			if (tag != null) {
 				if (copy != null)
-					Tag.Duplicate (copy, tag, true);
+					copy.CopyTo (tag, true);
 				
 				AddTag (tag);
 			}

@@ -623,7 +623,7 @@ namespace TagLib.Flac {
 			Ogg.XiphComment c = new Ogg.XiphComment ();
 			
 			if (copy != null)
-				TagLib.Tag.Duplicate (copy, c, true);
+				copy.CopyTo (c, true);
 			
 			AddTag (c);
 			

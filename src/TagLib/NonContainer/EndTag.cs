@@ -221,7 +221,7 @@ namespace TagLib.NonContainer {
 		/// </param>
 		/// <param name="copy">
 		///    A <see cref="TagLib.Tag" /> to copy values from using
-		///    <see cref="TagLib.Tag.Duplicate" />, or <see
+		///    <see cref="TagLib.Tag.CopyTo" />, or <see
 		///    langword="null" /> if no tag is to be copied.
 		/// </param>
 		/// <returns>
@@ -250,7 +250,7 @@ namespace TagLib.NonContainer {
 			
 			if (tag != null) {
 				if (copy != null)
-					Tag.Duplicate (copy, tag, true);
+					copy.CopyTo (tag, true);
 				
 				if (type == TagTypes.Id3v1)
 					AddTag (tag);
@@ -326,6 +326,9 @@ namespace TagLib.NonContainer {
 		/// </returns>
 		private TagTypes ReadTagInfo (ref long position)
 		{
+			if (position - read_size < 0)
+				return TagTypes.None;
+			
 			file.Seek (position - read_size);
 			ByteVector data = file.ReadBlock (read_size);
 			

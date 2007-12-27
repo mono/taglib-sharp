@@ -385,7 +385,7 @@ namespace TagLib {
 				(Data[0] == 'G' &&
 				 Data[1] == 'I' &&
 				 Data[2] == 'F')) {
-				mimetype = "image/png";
+				mimetype = "image/gif";
 				ext = "gif";
 			} else if (Data.Count >= 2 &&
 				(Data[0] == 'B' &&

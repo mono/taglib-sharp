@@ -29,6 +29,7 @@ namespace TagLib.Riff
 {
    [SupportedMimeType("taglib/avi", "avi")]
    [SupportedMimeType("taglib/wav", "wav")]
+   [SupportedMimeType("taglib/divx", "divx")]
    [SupportedMimeType("video/avi")]
    [SupportedMimeType("video/msvideo")]
    [SupportedMimeType("video/x-msvideo")]
@@ -215,7 +216,7 @@ namespace TagLib.Riff
                id32_tag = new Id3v2.Tag ();
                id32_tag.Version = 4;
                id32_tag.Flags |= Id3v2.HeaderFlags.FooterPresent;
-               TagLib.Tag.Duplicate (this.tag, id32_tag, true);
+               this.tag.CopyTo (id32_tag, true);
             }
             tag = id32_tag;
             break;
@@ -223,7 +224,7 @@ namespace TagLib.Riff
             if (info_tag == null && create)
             {
                info_tag = new InfoTag ();
-               TagLib.Tag.Duplicate (this.tag, info_tag, true);
+               this.tag.CopyTo (info_tag, true);
             }
             tag = info_tag;
             break;
@@ -231,7 +232,7 @@ namespace TagLib.Riff
             if (mid_tag == null && create)
             {
                mid_tag = new MovieIdTag ();
-               TagLib.Tag.Duplicate (this.tag, mid_tag, true);
+               this.tag.CopyTo (mid_tag, true);
             }
             tag = mid_tag;
             break;
@@ -239,7 +240,7 @@ namespace TagLib.Riff
             if (divx_tag == null && create)
             {
                divx_tag = new DivXTag ();
-               TagLib.Tag.Duplicate (this.tag, divx_tag, true);
+               this.tag.CopyTo (divx_tag, true);
             }
             tag = divx_tag;
             break;

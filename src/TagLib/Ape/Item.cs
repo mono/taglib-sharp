@@ -55,7 +55,7 @@ namespace TagLib.Ape {
 	///    This class provides a representation of an APEv2 tag item which
 	///    can be read from and written to disk.
 	/// </summary>
-	public class Item
+	public class Item : ICloneable
 	{
 		#region Private Fields
 		
@@ -241,6 +241,18 @@ namespace TagLib.Ape {
 			data = value as ReadOnlyByteVector;
 			if (data == null)
 				data = new ReadOnlyByteVector (value);
+		}
+		
+		private Item (Item item)
+		{
+			type = item.type;
+			key = item.key;
+			if (item.data != null)
+				data = new ReadOnlyByteVector (item.data);
+			if (item.text != null)
+				text = (string[]) item.text.Clone ();
+			read_only = item.read_only;
+			size_on_disk = item.size_on_disk;
 		}
 		
 		#endregion
@@ -492,6 +504,22 @@ namespace TagLib.Ape {
 						StringType.UTF8, 0);
 		}
 		
-		#endregion
+#endregion
+		
+		
+		
+#region IClonable
+		
+		public Item Clone ()
+		{
+			return new Item (this);
+		}
+		
+		object ICloneable.Clone()
+		{
+			return Clone();
+		}
+		
+#endregion
 	}
 }

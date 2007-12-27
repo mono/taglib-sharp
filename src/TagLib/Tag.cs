@@ -804,6 +804,7 @@ namespace TagLib {
 		///    <paramref name="source" /> or <paramref name="target" />
 		///    is <see langword="null" />.
 		/// </exception>
+		[Obsolete("Use Tag.CopyTo(Tag,bool)")]
 		public static void Duplicate (Tag source, Tag target,
 		                              bool overwrite)
 		{
@@ -813,53 +814,85 @@ namespace TagLib {
 			if (target == null)
 				throw new ArgumentNullException ("target");
 			
+			source.CopyTo (target, overwrite);
+		}
+		
+		/// <summary>
+		///    Copies the values from the current instance to another
+		///    <see cref="TagLib.Tag" />, optionally overwriting
+		///    existing values.
+		/// </summary>
+		/// <param name="target">
+		///    A <see cref="Tag" /> object containing the target tag to
+		///    copy values to.
+		/// </param>
+		/// <param name="overwrite">
+		///    A <see cref="bool" /> specifying whether or not to copy
+		///    values over existing one.
+		/// </param>
+		/// <remarks>
+		///    <para>This method only copies the most basic values when
+		///    copying between different tag formats, however, if
+		///    <paramref name="target" /> is of the same type as the
+		///    current instance, more advanced copying may be done.
+		///    For example, <see cref="TagLib.Id3v2.Tag" /> will copy
+		///    all of its frames to another tag.</para>
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="target" /> is <see langword="null" />.
+		/// </exception>
+		public virtual void CopyTo (Tag target, bool overwrite)
+		{
+			if (target == null)
+				throw new ArgumentNullException ("target");
+			
 			if (overwrite || IsNullOrLikeEmpty (target.Title))
-				target.Title = source.Title;
+				target.Title = Title;
 			
 			if (overwrite || IsNullOrLikeEmpty (target.AlbumArtists))
-				target.AlbumArtists = source.AlbumArtists;
+				target.AlbumArtists = AlbumArtists;
 			
 			if (overwrite || IsNullOrLikeEmpty (target.Performers))
-				target.Performers = source.Performers;
+				target.Performers = Performers;
 			
 			if (overwrite || IsNullOrLikeEmpty (target.Composers))
-				target.Composers = source.Composers;
+				target.Composers = Composers;
 			
 			if (overwrite || IsNullOrLikeEmpty (target.Album))
-				target.Album = source.Album;
+				target.Album = Album;
 			
 			if (overwrite || IsNullOrLikeEmpty (target.Comment))
-				target.Comment = source.Comment;
+				target.Comment = Comment;
 			
 			if (overwrite || IsNullOrLikeEmpty (target.Genres))
-				target.Genres = source.Genres;
+				target.Genres = Genres;
 			
 			if (overwrite || target.Year == 0)
-				target.Year = source.Year;
+				target.Year = Year;
 			
 			if (overwrite || target.Track == 0)
-				target.Track = source.Track;
+				target.Track = Track;
 			
 			if (overwrite || target.TrackCount == 0)
-				target.TrackCount = source.TrackCount;
+				target.TrackCount = TrackCount;
 			
 			if (overwrite || target.Disc == 0)
-				target.Disc = source.Disc;
+				target.Disc = Disc;
 			
 			if (overwrite || target.DiscCount == 0)
-				target.DiscCount = source.DiscCount;
+				target.DiscCount = DiscCount;
 			
 			if (overwrite || target.BeatsPerMinute == 0)
-				target.BeatsPerMinute = source.BeatsPerMinute;
+				target.BeatsPerMinute = BeatsPerMinute;
 			
 			if (overwrite || IsNullOrLikeEmpty (target.Grouping))
-				target.Grouping = source.Grouping;
+				target.Grouping = Grouping;
 			
 			if (overwrite || IsNullOrLikeEmpty (target.Conductor))
-				target.Conductor = source.Conductor;
+				target.Conductor = Conductor;
 			
 			if (overwrite || IsNullOrLikeEmpty (target.Copyright))
-				target.Conductor = source.Copyright;
+				target.Conductor = Copyright;
 		}
 		
 		/// <summary>

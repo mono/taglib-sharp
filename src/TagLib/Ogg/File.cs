@@ -121,21 +121,25 @@ namespace TagLib.Ogg
 					new Dictionary<uint, Paginator> ();
 				List<List<Page>> new_pages =
 					new List<List<Page>> ();
-
+				Dictionary<uint, int> shifts =
+					new Dictionary<uint, int> ();
+				
 				foreach (Page page in pages) {
 					uint id = page.Header.StreamSerialNumber;
 					if (!paginators.ContainsKey (id))
-					paginators.Add (id, new Paginator (
-						streams [id].Codec));
-
+						paginators.Add (id, new Paginator (
+							streams [id].Codec));
+					
 					paginators [id].AddPage (page);
 				}
 
 				foreach (uint id in paginators.Keys) {
 					paginators [id].SetComment (
 						tag.GetComment (id));
+					int shift;
 					new_pages.Add (new List<Page> (
-						paginators [id].Paginate ()));
+						paginators [id].Paginate (out shift)));
+					shifts.Add (id, shift);
 				}
 
 				ByteVector output = new ByteVector ();
@@ -160,6 +164,9 @@ namespace TagLib.Ogg
 				InvariantEndPosition = Length;
 
 				TagTypesOnDisk = TagTypes;
+				
+				Page.OverwriteSequenceNumbers (this,
+					output.Count, shifts);
 			} finally {
 				Mode = AccessMode.Closed;
 			}

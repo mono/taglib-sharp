@@ -64,7 +64,7 @@ namespace TagLib.Ogg
             
             // If we're at the first packet of the page, and we're continuing an
             // old packet, combine the old with the new.
-            if (i == 0 && (page.Header.Flags & PageFlags.FirstPacketContinued) == 0 && _previous_packet != null)
+            if (i == 0 && (page.Header.Flags & PageFlags.FirstPacketContinued) != 0 && _previous_packet != null)
             {
                _previous_packet.Add (packet);
                packet = _previous_packet;

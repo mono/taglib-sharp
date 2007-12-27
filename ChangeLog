@@ -1,3 +1,75 @@
+2007-12-27  Brian Nickel <brian.nickel@gmail.com>
+	
+	This commit does the following:
+		- Adds support for .divx extension. (Just an AVI)
+		- Adds Tag.CopyTo to obsolete Tag.Duplicate. The difference is
+		  that Tag.CopyTo is overridable, so tags and implement their
+		  own, better, copying.
+		- Several small bugfixes correcting Mpeg4.Tag.IsCompilation,
+		  GIF images, reading Mpeg4 pictures without flags, and
+		  NonContainer.EndTag reading small files.
+		  
+		- COMPLETE REWORK of OGG pagination to handle multipage comments
+		  and saving that results in the creation of new pages. This
+		  fixes a bug posted by kurros on the forum and Banshee bug
+		  #502628.
+	
+	* src/TagLib/Riff/File.cs: Recognize the .divx extension. (Thanks to
+	sukhjinder for the feature request and jocker for confirming the fix.)
+	Use Tag.CopyTo instead of Tag.Duplicate.
+	
+	* src/TagLib/Flac/File.cs: Use Tag.CopyTo instead of Tag.Duplicate.
+	
+	* src/TagLib/Ape/Tag.cs: Add first real implementation of Tag.CopyTo.
+	
+	* src/TagLib/Ape/Item.cs: Make clonable.
+	
+	* src/TagLib/Mpeg4/AppleTag.cs: Don't check for image format flags, just
+	use data to identify the image type. iTunes apparently doesn't use the
+	flags anymore. (Thanks to DavidT@Imerge for the bug report.) Use 1 byte
+	rather than 4 to store the compilation setting. (Thanks to DavidT@Imerge
+	for the fix.)
+	
+	* src/TagLib/Picture.cs: Was setting mime-type to "image/png" for GIF.
+	
+	* src/TagLib/Tag.cs: Mark Tag.Duplicate as obsolete and replace with
+	overridable Tag.CopyTo. This will provide the option for better copying
+	from one tag to another if their types match rather than just doing the
+	simply copy available in Tag.Duplicate. See Ape.Tag for an
+	implemenation. More coming soon.
+	
+	* src/TagLib/NonContainer/File.cs: Don't read tags at the end of the
+	file if the tags at the start of the file are the entire file. (No
+	double dipping.)
+	
+	* src/TagLib/NonContainer/EndTag.cs: Don't crash if start < 128 when
+	reading. (Thanks to jonx for the bug report.) Use Tag.CopyTo instead of
+	Tag.Duplicate.
+	
+	* src/TagLib/NonContainer/StartTag.cs: Use Tag.CopyTo instead of
+	Tag.Duplicate.
+	
+	* src/TagLib/Ogg/File.cs: Use changes in Page and Paginator classes to
+	handle situations where the number of pages in the stream changes.
+	
+	* src/TagLib/Ogg/Page.cs: Add method for updating all Ogg pages after a
+	certain position with new page numbers. This is necessary if new pages
+	are inserted to avoid corrupting the file. Part of sweeping changes to
+	Ogg support.
+	
+	* src/TagLib/Ogg/Paginator.cs: Instead of just saving a single page,
+	properly paginate using a single page for the first packet in the file.
+	Optimally, produce the same number of pages as were in the file before,
+	but allow for creating more pages if the situation warrents it.
+	
+	* src/TagLib/Ogg/PageHeader.cs: Add a constructor which clones a header
+	but offsets page sequence by a specified number.
+	
+	* src/TagLib/Ogg/Bitstream.cs: Fix typo that was preventing multi-page
+	packets from reading correctly. What a difference a negation makes.
+
+	* configure.ac: Now 2.0.2.19.
+
 2007-12-25  Brian Nickel <brian.nickel@gmail.com>
 	
 	* src/TagLib/Riff/File.cs:

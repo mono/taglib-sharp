@@ -59,14 +59,15 @@ namespace TagLib.Ogg
       {
          _version = 0;
          _flags = flags;
-         if (pageNumber == 0 && (flags & PageFlags.FirstPacketContinued) == 0)
-            _flags |= PageFlags.FirstPageOfStream;
          _absolute_granular_position = 0;
          _stream_serial_number = streamSerialNumber;
          _page_sequence_number = pageNumber;
          _size = 0;
          _data_size = 0;
          _packet_sizes = new List<int> ();
+         
+         if (pageNumber == 0 && (flags & PageFlags.FirstPacketContinued) == 0)
+            _flags |= PageFlags.FirstPageOfStream;
       }
       
       public PageHeader (File file, long position)
@@ -118,6 +119,22 @@ namespace TagLib.Ogg
          if (packet_size > 0)
             _packet_sizes.Add (packet_size);
       }
+      
+		public PageHeader (PageHeader original, uint offset, PageFlags flags)
+		{
+			_version = original._version;
+			_flags = flags;
+			_absolute_granular_position = original._absolute_granular_position;
+			_stream_serial_number = original._stream_serial_number;
+			_page_sequence_number = original._page_sequence_number + offset;
+			_size = original._size;
+			_data_size = original._data_size;
+			_packet_sizes = new List<int> ();
+			
+			if (_page_sequence_number == 0 && (flags & PageFlags.FirstPacketContinued) == 0)
+				_flags |= PageFlags.FirstPageOfStream;
+		}
+      
       #endregion
       
       
@@ -195,14 +212,18 @@ namespace TagLib.Ogg
       
       
       
-      #region IEquatable
-      public override int GetHashCode ()
-      {
-         unchecked
-         {
-            return (int) (LacingValues.GetHashCode () ^ _version ^ (int) _flags ^ (int) _absolute_granular_position ^ _stream_serial_number ^ _page_sequence_number ^ _size ^ _data_size);
-         }
-      }
+#region IEquatable
+		
+		public override int GetHashCode ()		{
+			unchecked {
+				return (int) (LacingValues.GetHashCode () ^
+					_version ^ (int) _flags ^
+					(int) _absolute_granular_position ^
+					_stream_serial_number ^
+					_page_sequence_number ^ _size ^
+					_data_size);
+		}
+		}
       
       public override bool Equals (object obj)
       {

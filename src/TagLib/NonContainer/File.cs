@@ -380,7 +380,9 @@ namespace TagLib.NonContainer {
 				
 				// Read the tags and property data at the end of the
 				// file.
-				InvariantEndPosition = tag.ReadEnd ();
+				InvariantEndPosition =
+					(InvariantStartPosition == Length) ?
+					Length : tag.ReadEnd ();
 				TagTypesOnDisk |= EndTag.TagTypes;
 				ReadEnd (InvariantEndPosition, propertiesStyle);
 				
