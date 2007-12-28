@@ -271,6 +271,20 @@ namespace TagLib.Id3v2
 			return data;
 		}
 		
-		#endregion
+#endregion
+		
+		
+		
+#region IClonable
+		
+		public override Frame Clone ()
+		{
+			PopularimeterFrame frame = new PopularimeterFrame (user);
+			frame.play_count = play_count;
+			frame.rating = rating;
+			return frame;
+		}
+		
+#endregion
 	}
 }

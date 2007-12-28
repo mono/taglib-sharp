@@ -302,6 +302,20 @@ namespace TagLib.Id3v2 {
 			return field_data != null ? field_data : new ByteVector ();
 		}
 		
-		#endregion
+#endregion
+		
+		
+		
+#region IClonable
+		
+		public override Frame Clone ()
+		{
+			MusicCdIdentifierFrame frame = new MusicCdIdentifierFrame ();
+			if (field_data != null)
+				frame.field_data = new ByteVector (field_data);
+			return frame;
+		}
+		
+#endregion
 	}
 }

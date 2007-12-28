@@ -1198,8 +1198,8 @@ namespace TagLib.Ape {
 		///    existing values.
 		/// </summary>
 		/// <param name="target">
-		///    A <see cref="Tag" /> object containing the target tag to
-		///    copy values to.
+		///    A <see cref="TagLib.Tag" /> object containing the target
+		///    tag to copy values to.
 		/// </param>
 		/// <param name="overwrite">
 		///    A <see cref="bool" /> specifying whether or not to copy
@@ -1207,14 +1207,14 @@ namespace TagLib.Ape {
 		/// </param>
 		/// <remarks>
 		///    <para>If <paramref name="target" /> is of type <see
-		///    cref="Tag" /> a complete copy of all values will be
-		///    performed. Otherwise, only standard values will be
-		///    copied.</para>
+		///    cref="TagLib.Ape.Tag" /> a complete copy of all values
+		///    will be performed. Otherwise, only standard values will
+		///    be copied.</para>
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="target" /> is <see langword="null" />.
 		/// </exception>
-		public virtual void CopyTo (Tag target, bool overwrite)
+		public override void CopyTo (TagLib.Tag target, bool overwrite)
 		{
 			if (target == null)
 				throw new ArgumentNullException ("target");
@@ -1228,13 +1228,13 @@ namespace TagLib.Ape {
 			
 			foreach (Item item in items) {
 				if (!overwrite &&
-					target.GetItem (item.Key) != null)
+					match.GetItem (item.Key) != null)
 					continue;
 				
-				target.items.Add (item.Clone ());
+				match.items.Add (item.Clone ());
 			}
 		}
 		
-		#endregion
+#endregion
 	}
 }

@@ -155,6 +155,11 @@ namespace TagLib.Mpeg {
 		private XingHeader xing_header;
 		
 		/// <summary>
+		///    Contains the associated VBRI header.
+		/// </summary>
+		private VBRIHeader vbri_header;
+		
+		/// <summary>
 		///    Contains the audio stream duration.
 		/// </summary>
 		private TimeSpan duration;
@@ -169,7 +174,8 @@ namespace TagLib.Mpeg {
 		///    An empty and unset header.
 		/// </summary>
 		public static readonly AudioHeader Unknown =
-			new AudioHeader (0, 0, XingHeader.Unknown);
+			new AudioHeader (0, 0, XingHeader.Unknown,
+				VBRIHeader.Unknown);
 		
 		#endregion
 		
@@ -194,12 +200,18 @@ namespace TagLib.Mpeg {
 		///    A <see cref="XingHeader" /> object representing the Xing
 		///    header associated with the new instance.
 		/// </param>
+		/// <param name="vbriHeader">
+		///    A <see cref="VBRIHeader" /> object representing the VBRI
+		///    header associated with the new instance.
+		/// </param>
 		private AudioHeader (uint flags, long streamLength,
-		                     XingHeader xingHeader)
+		                     XingHeader xingHeader,
+		                     VBRIHeader vbriHeader)
 		{
 			this.flags = flags;
 			this.stream_length = streamLength;
 			this.xing_header = xingHeader;
+			this.vbri_header = vbriHeader;
 			this.duration = TimeSpan.Zero;
 		}
 		
@@ -256,6 +268,8 @@ namespace TagLib.Mpeg {
 
 			xing_header = XingHeader.Unknown;
 			
+			vbri_header = VBRIHeader.Unknown;
+			
 			// Check for a Xing header that will help us in
 			// gathering information about a VBR stream.
 			file.Seek (position + XingHeader.XingHeaderOffset (
@@ -265,6 +279,20 @@ namespace TagLib.Mpeg {
 			if (xing_data.Count == 16 && xing_data.StartsWith (
 				XingHeader.FileIdentifier))
 				xing_header = new XingHeader (xing_data);
+
+			if (xing_header.Present)
+				return;
+			
+			// A Xing header could not be found, next chec for a
+			// Fraunhofer VBRI header.
+			file.Seek (position + VBRIHeader.VBRIHeaderOffset ());
+
+			// Only get the first 24 bytes of the Header.
+			// We're not interested in the TOC entries.
+			ByteVector vbri_data = file.ReadBlock (24);
+			if (vbri_data.Count == 24 &&
+				vbri_data.StartsWith(VBRIHeader.FileIdentifier))
+			vbri_header = new VBRIHeader (vbri_data);
 		}
 		
 		#endregion
@@ -331,8 +359,15 @@ namespace TagLib.Mpeg {
 			get {
 				if (xing_header.TotalSize > 0 &&
 					duration > TimeSpan.Zero)
-					return (int) (((XingHeader.TotalSize * 8L)
-						/ duration.TotalSeconds) / 1000);
+					return (int) Math.Round (((
+						(XingHeader.TotalSize * 8L) /
+						duration.TotalSeconds) / 1000.0));
+
+				if (vbri_header.TotalSize > 0 && 
+					duration > TimeSpan.Zero)
+					return (int)Math.Round(((
+						(VBRIHeader.TotalSize * 8L) /
+						duration.TotalSeconds) / 1000.0));
 				
 				return bitrates [
 					Version == Version.Version1 ? 0 : 1,
@@ -414,6 +449,10 @@ namespace TagLib.Mpeg {
 		///    cref="XingHeader.Unknown" /> and <see
 		///    cref="SetStreamLength" /> has not been called, this value
 		///    will not be correct.
+		///    If <see cref="VBRIHeader" /> is equal to <see
+		///    cref="VBRIHeader.Unknown" /> and <see
+		///    cref="SetStreamLength" /> has not been called, this value
+		///    will not be correct.
 		/// </remarks>
 		public TimeSpan Duration {
 			get {
@@ -432,10 +471,22 @@ namespace TagLib.Mpeg {
 					duration = TimeSpan.FromSeconds (
 						time_per_frame *
 						XingHeader.TotalFrames);
+				} else if (vbri_header.TotalFrames > 0) {
+					// Read the length and the bitrate from
+					// the VBRI header.
+
+					double time_per_frame =
+						(double) block_size [
+							(int) Version, AudioLayer]
+						/ (double) AudioSampleRate;
+
+					duration = TimeSpan.FromSeconds (
+						Math.Round (time_per_frame *
+							VBRIHeader.TotalFrames));
 				} else if (AudioFrameLength > 0 &&
 					AudioBitrate > 0) {
-					// Since there was no valid Xing header
-					// found, we hope that we're in a
+					// Since there was no valid Xing or VBRI
+					// header found, we hope that we're in a
 					// constant bitrate file.
 					
 					int frames = (int) (stream_length
@@ -480,7 +531,7 @@ namespace TagLib.Mpeg {
 				builder.Append (" Audio, Layer ");
 				builder.Append (AudioLayer);
 				
-				if (xing_header.Present)
+				if (xing_header.Present || vbri_header.Present)
 					builder.Append (" VBR");
 				
 				return builder.ToString ();
@@ -573,6 +624,19 @@ namespace TagLib.Mpeg {
 			get {return xing_header;}
 		}
 		
+		/// <summary>
+		///    Gets the VBRI header found in the audio represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="VBRIHeader" /> object containing the VBRI
+		///    header found in the audio represented by the current
+		///    instance, or <see cref="VBRIHeader.Unknown" /> if no
+		///    header was found.
+		/// </value>
+		public VBRIHeader VBRIHeader {
+			get {return vbri_header;}
+		}
 		#endregion
 		
 		
@@ -598,7 +662,8 @@ namespace TagLib.Mpeg {
 			
 			// Force the recalculation of duration if it depends on
 			// the stream length.
-			if (xing_header.TotalFrames == 0)
+			if (xing_header.TotalFrames == 0 ||
+				vbri_header.TotalFrames == 0)
 				duration = TimeSpan.Zero;
 		}
 		

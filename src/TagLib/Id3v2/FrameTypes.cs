@@ -45,6 +45,7 @@ namespace TagLib.Id3v2 {
 		public static readonly ReadOnlyByteVector TCOM = "TCOM";
 		public static readonly ReadOnlyByteVector TCON = "TCON";
 		public static readonly ReadOnlyByteVector TCOP = "TCOP";
+		public static readonly ReadOnlyByteVector TCMP = "TCMP";
 		public static readonly ReadOnlyByteVector TDRC = "TDRC";
 		public static readonly ReadOnlyByteVector TDAT = "TDAT";
 		public static readonly ReadOnlyByteVector TEXT = "TEXT";

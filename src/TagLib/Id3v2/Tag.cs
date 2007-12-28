@@ -1521,6 +1521,89 @@ namespace TagLib.Id3v2 {
 			frame_list.Clear ();
 		}
 		
+		/// <summary>
+		///    Gets and sets whether or not the album described by the
+		///    current instance is a compilation.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value indicating whether or not the
+		///    album described by the current instance is a compilation.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TCMP" Text
+		///    Information Frame to provide support for a feature of the
+		///    Apple iPod and iTunes products.
+		/// </remarks>
+		public bool IsCompilation {
+			get {
+				string val = GetTextAsString (FrameType.TCMP);
+				return !string.IsNullOrEmpty (val) && val != "0";
+			}
+			set {SetTextFrame (FrameType.TCMP, value ? "1" : null);}
+		}
+		
+		/// <summary>
+		///    Copies the values from the current instance to another
+		///    <see cref="TagLib.Tag" />, optionally overwriting
+		///    existing values.
+		/// </summary>
+		/// <param name="target">
+		///    A <see cref="TagLib.Tag" /> object containing the target
+		///    tag to copy values to.
+		/// </param>
+		/// <param name="overwrite">
+		///    A <see cref="bool" /> specifying whether or not to copy
+		///    values over existing one.
+		/// </param>
+		/// <remarks>
+		///    <para>If <paramref name="target" /> is of type <see
+		///    cref="TagLib.Ape.Tag" /> a complete copy of all values
+		///    will be performed. Otherwise, only standard values will
+		///    be copied.</para>
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="target" /> is <see langword="null" />.
+		/// </exception>
+		public override void CopyTo (TagLib.Tag target, bool overwrite)
+		{
+			if (target == null)
+				throw new ArgumentNullException ("target");
+			
+			TagLib.Id3v2.Tag match = target as TagLib.Id3v2.Tag;
+			
+			if (match == null) {
+				base.CopyTo (target, overwrite);
+				return;
+			}
+			
+			List<Frame> frames = new List<Frame> (frame_list);
+			while (frames.Count > 0) {
+				ByteVector ident = frames [0].FrameId;
+				bool copy = true;
+				if (overwrite) {
+					match.RemoveFrames (ident);
+				} else {
+					foreach (Frame f in match.frame_list)
+						if (f.FrameId.Equals (ident)) {
+							copy = false;
+							break;
+						}
+				}
+				
+				for (int i = 0; i < frames.Count;) {
+					if (frames [i].FrameId.Equals (ident)) {
+						if (copy)
+							match.frame_list.Add (
+								frames [i].Clone ());
+						
+						frames.RemoveAt (i);
+					} else {
+						i ++;
+					}
+				}
+			}
+		}
+		
 #endregion
 	}
 }

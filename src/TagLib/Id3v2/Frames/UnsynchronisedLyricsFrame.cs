@@ -203,6 +203,22 @@ namespace TagLib.Id3v2
 
          return v;
       }
-      #endregion
-   }
+		
+#endregion
+		
+		
+		
+#region IClonable
+		
+		public override Frame Clone ()
+		{
+			UnsynchronisedLyricsFrame frame =
+				new UnsynchronisedLyricsFrame (description,
+					language, encoding);
+			frame.text = text;
+			return frame;
+		}
+		
+#endregion
+	}
 }

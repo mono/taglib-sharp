@@ -129,6 +129,22 @@ namespace TagLib.Id3v2
          
          return data;
       }
-      #endregion
-   }
+		
+#endregion
+		
+		
+		
+#region IClonable
+		
+		public override Frame Clone ()
+		{
+			UniqueFileIdentifierFrame frame =
+				new UniqueFileIdentifierFrame (owner);
+			if (identifier != null)
+				frame.identifier = new ByteVector (identifier);
+			return frame;
+		}
+		
+#endregion
+	}
 }

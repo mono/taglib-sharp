@@ -515,9 +515,9 @@ namespace TagLib.Ape {
 			return new Item (this);
 		}
 		
-		object ICloneable.Clone()
+		object ICloneable.Clone ()
 		{
-			return Clone();
+			return Clone ();
 		}
 		
 #endregion

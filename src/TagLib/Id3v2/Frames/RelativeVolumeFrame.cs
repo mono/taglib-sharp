@@ -56,9 +56,7 @@ namespace TagLib.Id3v2 {
 		#region Private Properties
 		
 		private string identification = null;
-		
-		private Dictionary<ChannelType,ChannelData> channels =
-			new Dictionary<ChannelType,ChannelData> ();
+		private ChannelData [] channels = new ChannelData [9];
 		
 		#endregion
 		
@@ -98,10 +96,11 @@ namespace TagLib.Id3v2 {
 		
 		public ChannelType [] Channels {
 			get {
-				ChannelType [] output =
-					new ChannelType [channels.Count];
-				channels.Keys.CopyTo (output, channels.Count);
-				return output;
+				List<ChannelType> types = new List<ChannelType> ();
+				for (int i = 0; i < 9; i ++)
+					if (channels [i].IsSet)
+						types.Add ((ChannelType) i);
+				return types.ToArray ();
 			}
 		}
 		
@@ -118,57 +117,44 @@ namespace TagLib.Id3v2 {
 		
 		public short GetVolumeAdjustmentIndex (ChannelType type)
 		{
-			if (channels.ContainsKey (type))
-				return channels [type].VolumeAdjustment;
-			
-			return 0;
+			return channels [(int) type].VolumeAdjustmentIndex;
 		}
 		
 		public void SetVolumeAdjustmentIndex (ChannelType type,
 		                                      short index)
 		{
-			if (!channels.ContainsKey (type))
-				channels.Add (type, new ChannelData (type));
-			
-			channels [type].VolumeAdjustment = index;
+			channels [(int) type].VolumeAdjustmentIndex = index;
 		}
 		
 		public float GetVolumeAdjustment (ChannelType type)
 		{
-			return ((float) GetVolumeAdjustmentIndex (type)) / 512f;
+			return channels [(int) type].VolumeAdjustment;
 		}
 		
 		public void SetVolumeAdjustment (ChannelType type,
 		                                 float adjustment)
 		{
-			SetVolumeAdjustmentIndex (type,
-				(short) (adjustment * 512f));
+			channels [(int) type].VolumeAdjustment = adjustment;
 		}
 		
 		public ulong GetPeakVolumeIndex (ChannelType type)
 		{
-			if (channels.ContainsKey (type))
-				return channels [type].PeakVolume;
-			
-			return 0;
+			return channels [(int) type].PeakVolumeIndex;
 		}
 		
 		public void SetPeakVolumeIndex (ChannelType type, ulong index)
 		{
-			if (!channels.ContainsKey (type))
-				channels.Add (type, new ChannelData (type));
-			
-			channels [type].PeakVolume = index;
+			channels [(int) type].PeakVolumeIndex = index;
 		}
 		
 		public double GetPeakVolume (ChannelType type)
 		{
-			return ((double) GetPeakVolumeIndex (type)) / 512.0;
+			return channels [(int) type].PeakVolume;
 		}
 		
-		public void SetPeakVolume (ChannelType type, double adjustment)
+		public void SetPeakVolume (ChannelType type, double peak)
 		{
-			SetPeakVolumeIndex (type, (ulong) (adjustment * 512.0));
+			channels [(int) type].PeakVolume = peak;
 		}
 		
 		#endregion
@@ -221,12 +207,12 @@ namespace TagLib.Id3v2 {
 			// Each channel is at least 4 bytes.
 			
 			while (pos <= data.Count - 4) {
-				ChannelType type = (ChannelType) data [pos++];
+				int type = data [pos++];
 				
 				unchecked {
-					SetVolumeAdjustmentIndex (type,
+					channels [type].VolumeAdjustmentIndex =
 						(short) data.Mid (pos,
-							2).ToUShort ());
+							2).ToUShort ();
 				}
 				pos += 2;
 				
@@ -236,8 +222,8 @@ namespace TagLib.Id3v2 {
 					throw new CorruptFileException (
 						"Insufficient peak data.");
 				
-				SetPeakVolumeIndex (type, data.Mid (pos,
-					bytes).ToULong ());
+				channels [type].PeakVolumeIndex = data.Mid (pos,
+					bytes).ToULong ();
 				pos += bytes;
 			}
 		}
@@ -252,35 +238,55 @@ namespace TagLib.Id3v2 {
 				StringType.Latin1));
 			data.Add (ByteVector.TextDelimiter(StringType.Latin1));
 			
-			foreach (ChannelData channel in channels.Values) {
-				data.Add ((byte) channel.ChannelType);
+			for (byte i = 0; i < 9; i ++) {
+				if (!channels [i].IsSet)
+					continue;
+				
+				data.Add (i);
 				unchecked {
 					data.Add (ByteVector.FromUShort (
-						(ushort)channel.VolumeAdjustment));
+						(ushort) channels [i]
+							.VolumeAdjustmentIndex));
 				}
 				
 				byte bits = 0;
 				
-				for (byte i = 0; i < 64; i ++)
-					if ((channel.PeakVolume & (1UL << i)) != 0)
-						bits = (byte)(i + 1);
+				for (byte j = 0; j < 64; j ++)
+					if ((channels [i].PeakVolumeIndex &
+						(1UL << j)) != 0)
+						bits = (byte)(j + 1);
 				
 				data.Add (bits);
 				
 				if (bits > 0)
 					data.Add (ByteVector.FromULong (
-						channel.PeakVolume).Mid (
-							8 - BitsToBytes (bits)));
+						channels [i].PeakVolumeIndex)
+							.Mid (8 - BitsToBytes (bits)));
 			}
 			
 			return data;
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Private Static Methods
+#region IClonable
+		
+		public override Frame Clone ()
+		{
+			RelativeVolumeFrame frame =
+				new RelativeVolumeFrame (identification);
+			for (int i = 0; i < 9; i ++)
+				frame.channels [i] = channels [i];
+			return frame;
+		}
+		
+#endregion
+		
+		
+		
+#region Private Static Methods
 		
 		private static int BitsToBytes (int i)
 		{
@@ -293,15 +299,29 @@ namespace TagLib.Id3v2 {
 		
 		#region Classes
 		
-		private class ChannelData
+		private struct ChannelData
 		{
-			public ChannelType ChannelType;
-			public short VolumeAdjustment;
-			public ulong PeakVolume;
+			public short VolumeAdjustmentIndex;
+			public ulong PeakVolumeIndex;
 			
-			public ChannelData (ChannelType type)
-			{
-				ChannelType = type;
+			public bool IsSet {
+				get {
+					return VolumeAdjustmentIndex != 0 ||
+						PeakVolumeIndex != 0;
+				}
+			}
+			
+			public float VolumeAdjustment {
+				get {return VolumeAdjustmentIndex / 512f;}
+				set {
+					VolumeAdjustmentIndex =
+						(short) (value * 512f);
+				}
+			}
+			
+			public double PeakVolume {
+				get {return PeakVolumeIndex / 512.0;}
+				set {PeakVolumeIndex = (ulong) (value * 512.0);}
 			}
 		}
 		

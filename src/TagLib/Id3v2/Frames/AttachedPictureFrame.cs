@@ -52,7 +52,7 @@ namespace TagLib.Id3v2 {
 		/// <summary>
 		///    Contains the text encoding to use when rendering.
 		/// </summary>
-		private StringType  text_encoding = Tag.DefaultEncoding;
+		private StringType text_encoding = Tag.DefaultEncoding;
 		
 		/// <summary>
 		///    Contains the mime type of <see cref="data" />.
@@ -672,6 +672,27 @@ namespace TagLib.Id3v2 {
 			return data;
 		}
 		
-		#endregion
+#endregion
+		
+		
+		
+#region IClonable
+		
+		public override Frame Clone ()
+		{
+			AttachedPictureFrame frame = new AttachedPictureFrame ();
+			frame.text_encoding = text_encoding;
+			frame.mime_type = mime_type;
+			frame.type = type;
+			frame.description = description;
+			if (data != null)
+				frame.data = new ByteVector (data);
+			if (raw_data != null)
+				frame.data = new ByteVector (raw_data);
+			frame.raw_version = raw_version;
+			return frame;
+		}
+		
+#endregion
 	}
 }

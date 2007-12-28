@@ -37,6 +37,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Flac/Picture.cs \
 	$(srcdir)/TagLib/Flac/File.cs \
 	$(srcdir)/TagLib/Mpeg/XingHeader.cs \
+	$(srcdir)/TagLib/Mpeg/VBRIHeader.cs \
 	$(srcdir)/TagLib/Mpeg/File.cs \
 	$(srcdir)/TagLib/Mpeg/AudioFile.cs \
 	$(srcdir)/TagLib/Mpeg/AudioHeader.cs \

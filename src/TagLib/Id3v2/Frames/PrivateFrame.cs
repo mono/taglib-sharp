@@ -406,6 +406,20 @@ namespace TagLib.Id3v2 {
 			return v;
 		}
 		
-		#endregion
+#endregion
+		
+		
+		
+#region IClonable
+		
+		public override Frame Clone ()
+		{
+			PrivateFrame frame = new PrivateFrame (owner);
+			if (data != null)
+				frame.data = new ByteVector (data);
+			return frame;
+		}
+		
+#endregion
 	}
 }

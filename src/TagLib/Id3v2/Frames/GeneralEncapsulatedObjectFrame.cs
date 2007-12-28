@@ -248,6 +248,26 @@ namespace TagLib.Id3v2 {
 			v.Add (data);
 			return v;
 		}
-		#endregion
+		
+#endregion
+		
+		
+		
+#region IClonable
+		
+		public override Frame Clone ()
+		{
+			GeneralEncapsulatedObjectFrame frame =
+				new GeneralEncapsulatedObjectFrame ();
+			frame.text_encoding = text_encoding;
+			frame.mime_type = mime_type;
+			frame.file_name = file_name;
+			frame.description = description;
+			if (data != null)
+				frame.data = new ByteVector (data);
+			return frame;
+		}
+		
+#endregion
 	}
 }

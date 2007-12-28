@@ -251,8 +251,25 @@ namespace TagLib.Id3v2
          
          return v;
       }
-      #endregion
-   }
+		
+#endregion
+		
+		
+		
+#region IClonable
+		
+		public override Frame Clone ()
+		{
+			SynchronisedLyricsFrame frame =
+				new SynchronisedLyricsFrame (description,
+					language, lyrics_type, text_encoding);
+			frame.timestamp_format = timestamp_format;
+			frame.text = (SynchedText[]) text.Clone ();
+			return frame;
+		}
+		
+#endregion
+	}
    
    
    

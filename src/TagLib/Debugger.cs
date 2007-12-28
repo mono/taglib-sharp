@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 
 namespace TagLib {
-	public static class Debugger
+	internal static class Debugger
 	{
 		public delegate void DebugMessageSentHandler (string message);
 
@@ -39,10 +39,58 @@ namespace TagLib {
 
 		public static void DumpHex (ByteVector data)
 		{
-			foreach (byte b in data)
-				Console.Write ("{0:x2}", b);
-			Console.WriteLine (String.Empty);
+			DumpHex (data.Data);
 		}
+		
+		public static void DumpHex (byte [] data)
+		{
+		        int cols = 16;
+		        int rows = data.Length / cols +
+		        	(data.Length % cols != 0 ? 1 : 0);
+			
+			for (int row = 0; row < rows; row ++) {
+				for (int col = 0; col < cols; col ++) {
+					if (row == rows - 1 &&
+						data.Length % cols != 0 &&
+						col >= data.Length % cols)
+						Console.Write ("   ");
+					else
+						Console.Write (" {0:x2}",
+							data [row * cols + col]);
+				}
+				
+				Console.Write (" | ");
+				
+				for (int col = 0; col < cols; col ++) {
+					if (row == rows - 1 &&
+						data.Length % cols != 0 &&
+						col >= data.Length % cols)
+						Console.Write (" ");
+					else
+						WriteByte2 (
+							data [row * cols + col]);
+				}
+				
+				Console.WriteLine ();
+			}
+			Console.WriteLine ();
+		}
+
+		private static void WriteByte2 (byte data)
+		{
+			foreach (char c in allowed)
+				if (c == data) {
+					Console.Write (c);
+					return;
+				}
+			
+			Console.Write (".");
+		}
+		
+		private static string allowed = "0123456789abcdefghijklmnopqr" +
+			"stuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`~!@#$%^&*()_+-={}" +
+			"[];:'\",.<>?/\\|";
+
 
 		private static Dictionary <object, Dictionary <object, DebugTimeData>>
 			debug_times = new Dictionary <object, Dictionary <object, DebugTimeData>> ();

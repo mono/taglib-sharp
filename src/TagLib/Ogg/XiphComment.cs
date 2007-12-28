@@ -387,42 +387,53 @@ namespace TagLib.Ogg
       //////////////////////////////////////////////////////////////////////////
       // protected methods
       //////////////////////////////////////////////////////////////////////////
-      protected void Parse (ByteVector data)
-      {
-         if (data == null)
-            return;
-         
-         // The first thing in the comment data is the vendor ID length, followed by a
-         // UTF8 string with the vendor ID.
-         int pos = 0;
-         int vendor_length = (int) data.Mid (pos, 4).ToUInt (false);
-         pos += 4;
+		protected void Parse (ByteVector data)
+		{
+			if (data == null)
+			return;
 
-         vendor_id = data.ToString (StringType.UTF8, pos, vendor_length);
-         pos += vendor_length;
+			// The first thing in the comment data is the vendor ID
+			// length, followed by a UTF8 string with the vendor ID.
+			int pos = 0;
+			int vendor_length = (int) data.Mid (pos, 4)
+				.ToUInt (false);
+			pos += 4;
 
-         // Next the number of fields in the comment vector.
+			vendor_id = data.ToString (StringType.UTF8, pos,
+				vendor_length);
+			pos += vendor_length;
 
-         int comment_fields = (int) data.Mid (pos, 4).ToUInt (false);
-         pos += 4;
+			// Next the number of fields in the comment vector.
 
-         for(int i = 0; i < comment_fields; i++)
-         {
-            // Each comment field is in the format "KEY=value" in a UTF8 string and has
-            // 4 bytes before the text starts that gives the length.
+			int comment_fields = (int) data.Mid (pos, 4)
+				.ToUInt (false);
+			pos += 4;
 
-            int comment_length = (int) data.Mid (pos, 4).ToUInt (false);
-            pos += 4;
+			for(int i = 0; i < comment_fields; i++) {
+				// Each comment field is in the format
+				// "KEY=value" in a UTF8 string and has 4 bytes
+				// before the text starts that gives the length.
 
-            string comment = data.ToString (StringType.UTF8, pos, comment_length);
-            pos += comment_length;
+				int comment_length = (int) data.Mid (pos, 4)
+					.ToUInt (false);
+				pos += 4;
 
-            int comment_separator_position = comment.IndexOf ('=');
+				string comment = data.ToString (StringType.UTF8,
+					pos, comment_length);
+				pos += comment_length;
 
-            string key = comment.Substring (0, comment_separator_position).ToUpper (CultureInfo.InvariantCulture);
-            string value = comment.Substring (comment_separator_position + 1);
-            
-            
+				int comment_separator_position = comment
+					.IndexOf ('=');
+
+				if (comment_separator_position < 0)
+					continue;
+
+				string key = comment.Substring (0,
+					comment_separator_position)
+					.ToUpper (
+						CultureInfo.InvariantCulture);
+				string value = comment.Substring (
+					comment_separator_position + 1);
 				string [] values;
 				
 				if (field_list.TryGetValue (key, out values)) {
@@ -430,8 +441,9 @@ namespace TagLib.Ogg
 						values.Length + 1);
 					values [values.Length - 1] = value;
 					field_list [key] = values;
-				} else
+				} else {
 					SetField (key, value);
+				}
 			}
 		}
 	}

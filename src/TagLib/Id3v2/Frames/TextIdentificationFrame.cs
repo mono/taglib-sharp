@@ -942,7 +942,25 @@ namespace TagLib.Id3v2 {
 			return v;
 		}
 		
-		#endregion
+		
+#endregion
+		
+		
+		
+#region IClonable
+		
+		public override Frame Clone ()
+		{
+			TextInformationFrame frame = new TextInformationFrame (
+				FrameId, encoding);
+			frame.text_fields = (string[]) text_fields.Clone ();
+			if (raw_data != null)
+				frame.raw_data = new ByteVector (raw_data);
+			frame.raw_version = raw_version;
+			return frame;
+		}
+		
+#endregion
 	}
 	
 	

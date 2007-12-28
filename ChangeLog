@@ -1,3 +1,55 @@
+2007-12-28  Brian Nickel <brian.nickel@gmail.com>
+	
+	This commit does the following:
+		- Adds IsCompilation to Id3v2.
+		- Adds support for deep CopyTo with Id3v2.
+		- Fixes support for deep CopyTo with Ape.
+		- Adds support for Fraunhofer VBRI headers in MPEG audio.
+		- Fixes a bug in reading XiphComments.
+		- Other trivial changes.
+	
+	* src/TagLib/Id3v2/Tag.cs: Added IsCompilation and CopyTo.
+	
+	* src/TagLib/Id3v2/FrameTypes.cs: Added TCMP.
+	
+	* src/TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
+	* src/TagLib/Id3v2/Frames/SynchronizedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/PopularimeterFrame.cs:
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:
+	* src/TagLib/Id3v2/Frames/UniqueFileIdentifierFrame.cs:
+	* src/TagLib/Id3v2/Frames/PrivateFrame.cs:
+	* src/TagLib/Id3v2/Frames/MusicCdIdentifierFrame.cs:
+	* src/TagLib/Id3v2/Frames/TermsOfUseFrame.cs:
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs:
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs:
+	* src/TagLib/Id3v2/Frames/PlayCountFrame.cs:
+	* src/TagLib/Id3v2/Frame.cs: Made clonable.
+	
+	* src/TagLib/TagLib.sources:
+	* src/TagLib/Mpeg/VBRIHeader.cs:
+	* src/TagLib/Mpeg/AudioHeader.cs: Added support for Fraunhofer VBRI
+	header. This improves coverage of VBR files. (Thanks to hwahrmann for
+	proposing and authoring the changes.)
+	
+	* src/TagLib/Ape/Tag.cs: Fixed CopyTo to actually override
+	TagLib.Tag.CopyTo.
+	
+	* src/TagLib/Ape/Item.cs: Trivial formatting.
+	
+	* src/TagLib/Picture.cs: Try to make ObsoleteAttributes a bit clearer.
+	
+	* src/TagLib/Debugger.cs: Much nicer DumpHex.
+	
+	* src/TagLib/Ogg/XiphComment.cs: Don't fail when a bad comment (one
+	without a = is encountered, just ignore that field. (Thanks to hwahrmann
+	for the bug report and authoring the changes.)
+	
+	* examples/BatchSet.cs: Allow setting pictures.
+
+	* configure.ac: Now 2.0.2.20.
+
 2007-12-27  Brian Nickel <brian.nickel@gmail.com>
 	
 	This commit does the following:

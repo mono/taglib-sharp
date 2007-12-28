@@ -336,6 +336,19 @@ namespace TagLib.Id3v2 {
 			return data;
 		}
 		
-		#endregion
+#endregion
+		
+		
+		
+#region IClonable
+		
+		public override Frame Clone ()
+		{
+			PlayCountFrame frame = new PlayCountFrame ();
+			frame.play_count = play_count;
+			return frame;
+		}
+		
+#endregion
 	}
 }

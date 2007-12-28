@@ -280,7 +280,7 @@ namespace TagLib {
 		///    contents of the file and with a mime-type guessed from
 		///    the file's contents.
 		/// </returns>
-		[Obsolete("Use Picture(string filename) instead.")]
+		[Obsolete("Use Picture(string filename) constructor instead.")]
 		public static Picture CreateFromPath (string filename)
 		{
 			return new Picture (filename);
@@ -299,7 +299,7 @@ namespace TagLib {
 		///    contents of the file and with a mime-type guessed from
 		///    the file's contents.
 		/// </returns>
-		[Obsolete("Use Picture(File.IFileAbstraction abstraction) instead.")]
+		[Obsolete("Use Picture(File.IFileAbstraction abstraction) constructor instead.")]
 		public static Picture CreateFromFile (File.IFileAbstraction abstraction)
 		{
 			return new Picture (abstraction);

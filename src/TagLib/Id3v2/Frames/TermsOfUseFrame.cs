@@ -154,6 +154,20 @@ namespace TagLib.Id3v2
 
          return v;
       }
-      #endregion
-   }
+		
+#endregion
+		
+		
+		
+#region IClonable
+		
+		public override Frame Clone ()
+		{
+			TermsOfUseFrame frame = new TermsOfUseFrame (language, encoding);
+			frame.text = text;
+			return frame;
+		}
+		
+#endregion
+	}
 }
