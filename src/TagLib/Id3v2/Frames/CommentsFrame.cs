@@ -404,14 +404,21 @@ namespace TagLib.Id3v2 {
 			 * content, so we try to get one with no description
 			 * first.
 			 */
-			 
-			 int best_value = -1;
+			
+			bool skip_itunes = description == null ||
+				!description.StartsWith ("iTun");
+			
+			int best_value = -1;
 			CommentsFrame best_frame = null;
 			
 			foreach (Frame frame in tag.GetFrames (FrameType.COMM)) {
 				CommentsFrame comm = frame as CommentsFrame;
 				
 				if (comm == null)
+					continue;
+				
+				if (skip_itunes &&
+					comm.Description.StartsWith ("iTun"))
 					continue;
 				
 				bool same_name = comm.Description == description;

@@ -45,7 +45,8 @@ namespace TagLib.Id3v2 {
 		///    Contains the language to use for language specific
 		///    fields.
 		/// </summary>
-		private static string language = "XXX";
+		private static string language = 
+			CultureInfo.CurrentCulture.ThreeLetterISOLanguageName;
 		
 		/// <summary>
 		///    Contains the field to use for new tags.
@@ -646,14 +647,14 @@ namespace TagLib.Id3v2 {
 		///    language specific values.
 		/// </value>
 		/// <remarks>
-		///    If the language is unknown, "XXX" is the appropriate
+		///    If the language is unknown, "   " is the appropriate
 		///    filler.
 		/// </remarks>
 		public static string Language {
 			get {return language;}
 			set {
 				language = (value == null || value.Length < 3) ?
-					"XXX" : value.Substring (0,3);
+					"   " : value.Substring (0,3);
 			}
 		}
 		
@@ -998,6 +999,30 @@ namespace TagLib.Id3v2 {
 			return 0;
 		}
 		
+		private void MakeFirstOfType (Frame frame)
+		{
+			ByteVector type = frame.FrameId;
+			Frame swapping = null;
+			for (int i = 0; i < frame_list.Count; i ++) {
+				if (swapping == null) {
+					if (frame_list [i].FrameId.Equals (type))
+						swapping = frame;
+					else
+						continue;
+				}
+				
+				Frame tmp = frame_list [i];
+				frame_list [i] = swapping;
+				swapping = tmp;
+				
+				if (swapping == frame)
+					return;
+			}
+			
+			if (swapping != null)
+				frame_list.Add (swapping);
+		}
+		
 		#endregion
 		
 		
@@ -1162,6 +1187,7 @@ namespace TagLib.Id3v2 {
 				
 				frame.Text = value;
 				frame.TextEncoding = DefaultEncoding;
+				MakeFirstOfType (frame);
 			}
 		}
 		

@@ -1,3 +1,34 @@
+2007-12-30  Brian Nickel <brian.nickel@gmail.com>
+	
+	This commit does the following:
+		- Makes Id3v2 skip iTunes settings-style comments.
+		- Makes ; the separator for multivalue fields in Mpeg4, rather
+		  than storing in multiple boxes.
+		- Cleans up Mpeg4 genre logic.
+		- Uses System.Globalization to choose the default language in
+		  Id3v2.
+		- Moves the comment written when Id3v2.Tag.Comment to be the
+		  first COMM in the frame so it is the first one recognized by
+		  other programs.
+	
+	*  src/TagLib/Id3v2/Tag.cs: Move the written comment to be the first
+	COMM frame if it isn't. Make "   " the fallback comment per instructions
+	on id3.org. Get the default language from CultureInfo.CurrentCulture
+	.ThreeLetterISOLanguageName.
+	
+	*  src/TagLib/Id3v2/Frames/CommentsFrame.cs: Skip iTunes comments if
+	they are set. There's no need for gibberish to show up as the comment.
+	
+	*  src/TagLib/Mpeg4/AppleTag.cs: Instead of adding multiple data boxes
+	for multi-string values, use `;' as a separator. It wasn't working out
+	in iTunes. (TagLib# can still read the tags is wrote earlier just fine.)
+	Use `@gnr' or `gnre', but don't attempt a weird mix of both at the same
+	time.
+	
+	*  tests/tests.mdp: Automatic changes by MonoDevelop 0.18.
+
+	* configure.ac: Now 2.0.2.21.
+
 2007-12-29  Brian Nickel <brian.nickel@gmail.com>
 	
 	This commit introduces some powerful new tests. They add more intensive

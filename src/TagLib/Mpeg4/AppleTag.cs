@@ -135,11 +135,16 @@ namespace TagLib.Mpeg4 {
 			// provided types. If a match is found, loop through the
 			// children and add any data box.
 			foreach (Box box in ilst_box.Children)
-				foreach (ByteVector v in types)
-					if (FixId (v) == box.BoxType)
-						foreach (Box data_box in box.Children)
-							if (data_box is AppleDataBox)
-								yield return data_box as AppleDataBox;
+				foreach (ByteVector v in types) {
+					if (FixId (v) != box.BoxType)
+						continue;
+					foreach (Box data_box in box.Children) {
+						AppleDataBox adb = data_box as
+							AppleDataBox;
+						if (adb != null)
+							yield return adb;
+					}
+				}
 		}
 		
 		/// <summary>
@@ -221,9 +226,14 @@ namespace TagLib.Mpeg4 {
 		/// </returns>
 		public string [] GetText (ByteVector type) {
 			List<string> result = new List<string> ();
-			foreach (AppleDataBox box in DataBoxes (type))
-				if (box.Text != null)
-					result.Add (box.Text);
+			foreach (AppleDataBox box in DataBoxes (type)) {
+				if (box.Text == null)
+					continue;
+				
+				foreach (string text in box.Text.Split (';'))
+					result.Add (text.Trim ());
+			}
+			
 			return result.ToArray ();
 		}
 		
@@ -349,17 +359,7 @@ namespace TagLib.Mpeg4 {
 				return;
 			}
 			
-			// Create a list...
-			ByteVectorCollection l = new ByteVectorCollection ();
-			
-			// and populate it with the ByteVectorized strings.
-			foreach (string value in text)
-				l.Add (ByteVector.FromString (value,
-					StringType.UTF8));
-			
-			// Send our final byte vectors to SetData
-			SetData (type, l, (uint)
-				AppleDataBox.FlagType.ContainsText);
+			SetText (type, string.Join ("; ", text));
 		}
 		
 		/// <summary>
@@ -380,7 +380,10 @@ namespace TagLib.Mpeg4 {
 				return;
 			}
 			
-			SetText (type, new string [] {text});
+			ByteVectorCollection l = new ByteVectorCollection ();
+			l.Add (ByteVector.FromString (text, StringType.UTF8));
+			SetData (type, l, (uint)
+				AppleDataBox.FlagType.ContainsText);
 		}
 		
 		/// <summary>
@@ -602,30 +605,32 @@ namespace TagLib.Mpeg4 {
 		/// </remarks>
 		public override string [] Genres {
 			get {
-				List<string> result = new List<string> ();
-				ByteVector [] names = new ByteVector [] {
-					BoxType.Gen, BoxType.Gnre
-				};
+				string [] text = GetText (BoxType.Gen);
+				if (text.Length > 0)
+					return text;
 				
-				foreach (AppleDataBox box in DataBoxes (names)) {
-					if (box.Text != null) {
-						result.Add (box.Text);
-						continue;
-					}
-					
-					if (box.Flags != (int)
-						AppleDataBox.FlagType.ContainsData)
+				foreach (AppleDataBox box in DataBoxes (BoxType.Gnre)) {
+					if (box.Flags != (int) AppleDataBox
+						.FlagType.ContainsData)
 						continue;
 					
 					// iTunes stores genre's in the GNRE box
 					// as (ID3# + 1).
-					string genre = TagLib.Genres.IndexToAudio (
-						(byte) (box.Data.ToUShort (true) - 1));
 					
-					if (genre != null)
-						result.Add (genre);
+					ushort index = box.Data.ToUShort (true);
+					if (index == 0) continue;
+					
+					string str = TagLib.Genres
+						.IndexToAudio ((byte) (index - 1));
+					
+					if (str == null)
+						continue;
+					
+					text = new string [] {str};
+					break;
 				}
-				return result.ToArray ();
+				
+				return text;
 			}
 			set {
 				ClearData (BoxType.Gnre);
