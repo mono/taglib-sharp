@@ -1,5 +1,43 @@
 2007-12-29  Brian Nickel <brian.nickel@gmail.com>
 	
+	This commit introduces some powerful new tests. They add more intensive
+	checking of saving and rendering and have lead to the preemptive
+	correction of several bugs.
+	
+	*  tests/tests.mdp: 
+	*  tests/fixtures/Helpers.cs: 
+	*  tests/fixtures/TagLib.FormatTests/FlacFormatTest.cs: 
+	*  tests/fixtures/TagLib.FormatTests/Id3V1FormatTest.cs: 
+	*  tests/fixtures/TagLib.FormatTests/Id3V2FormatTest.cs: 
+	*  tests/fixtures/TagLib.FormatTests/IFormatTest.cs: 
+	*  tests/fixtures/TagLib.FormatTests/AsfFormatTest.cs: 
+	*  tests/fixtures/TagLib.FormatTests/Id3BothFormatTest.cs: 
+	*  tests/fixtures/TagLib.FormatTests/OggFormatTest.cs: 
+	*  tests/fixtures/TagLib.FormatTests/MpcFormatTest.cs: 
+	*  tests/fixtures/TagLib.FormatTests/M4aFormatTest.cs: 
+	*  tests/fixtures/TagLib.Tests.FileFormats/FlacFormatTest.cs: 
+	*  tests/fixtures/TagLib.Tests.FileFormats/Id3V1FormatTest.cs: 
+	*  tests/fixtures/TagLib.Tests.FileFormats/Id3V2FormatTest.cs: 
+	*  tests/fixtures/TagLib.Tests.FileFormats/IFormatTest.cs: 
+	*  tests/fixtures/TagLib.Tests.FileFormats/AsfFormatTest.cs: 
+	*  tests/fixtures/TagLib.Tests.FileFormats/StandardTests.cs: 
+	*  tests/fixtures/TagLib.Tests.FileFormats/Id3BothFormatTest.cs: 
+	*  tests/fixtures/TagLib.Tests.FileFormats/OggFormatTest.cs: 
+	*  tests/fixtures/TagLib.Tests.FileFormats/MpcFormatTest.cs: 
+	*  tests/fixtures/TagLib.Tests.FileFormats/M4aFormatTest.cs: 
+	*  tests/fixtures/TagLib.Tests.TaggingFormats/Mpeg4Test.cs: 
+	*  tests/fixtures/TagLib.Tests.TaggingFormats/ApeTest.cs: 
+	*  tests/fixtures/TagLib.Tests.TaggingFormats/Id3V1Test.cs: 
+	*  tests/fixtures/TagLib.Tests.TaggingFormats/Id3V2Test.cs: 
+	*  tests/fixtures/TagLib.Tests.TaggingFormats/InfoTagTest.cs: 
+	*  tests/fixtures/TagLib.Tests.TaggingFormats/XiphTest.cs: 
+	*  tests/fixtures/TagLib.Tests.TaggingFormats/MovieIdTagTest.cs: 
+	*  tests/fixtures/TagLib.Tests.TaggingFormats/AsfTest.cs: 
+	*  tests/fixtures/TagLib.Tests.TaggingFormats/DivXTest.cs: Replaced unit
+	tests with new versions.
+
+2007-12-29  Brian Nickel <brian.nickel@gmail.com>
+	
 	This commit does the following:
 		- Fixes support for IsCompilation when saving as ID3v2.2.
 		- Makes Id3v2.Tag clonable.

@@ -2,7 +2,7 @@ using System;
 using NUnit.Framework;
 using TagLib;
 
-namespace TagLib.CollectionTests
+namespace TagLib.Tests.Collections
 {   
     [TestFixture]
     public class ByteVectorCollectionTest

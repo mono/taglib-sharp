@@ -3,13 +3,13 @@ using System.Security.Cryptography;
 using NUnit.Framework;
 using TagLib;
 
-namespace TagLib.CollectionTests
+namespace TagLib.Tests.Collections
 {   
     [TestFixture]
     public class ByteVectorTest
     {   
         private static readonly string TestInput = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        private static readonly ByteVector TestVector = ByteVector.FromString(TestInput);
+        private static readonly ByteVector TestVector = ByteVector.FromString(TestInput, StringType.UTF8);
         
         [Test]
         public void Length()
@@ -55,15 +55,15 @@ namespace TagLib.CollectionTests
         [Test]
         public void Mid()
         {
-            Assert.AreEqual(ByteVector.FromString("KLMNOPQRSTUVWXYZ"), TestVector.Mid(10));
-            Assert.AreEqual(ByteVector.FromString("PQRSTU"), TestVector.Mid(15, 6));
+            Assert.AreEqual(ByteVector.FromString("KLMNOPQRSTUVWXYZ", StringType.UTF8), TestVector.Mid(10));
+            Assert.AreEqual(ByteVector.FromString("PQRSTU", StringType.UTF8), TestVector.Mid(15, 6));
         }
     
         [Test]
         public void CopyResize()
         {
             ByteVector a = new ByteVector(TestVector);
-            ByteVector b = ByteVector.FromString("ABCDEFGHIJKL");
+            ByteVector b = ByteVector.FromString("ABCDEFGHIJKL", StringType.UTF8);
             a.Resize(12);
             
             Assert.AreEqual(b, a);
@@ -107,6 +107,7 @@ namespace TagLib.CollectionTests
         }
         
         [Test]
+        [Ignore("Skip performance testing")]
         public void OperatorAdd()
         {
             using(new CodeTimer("Operator Add")) {

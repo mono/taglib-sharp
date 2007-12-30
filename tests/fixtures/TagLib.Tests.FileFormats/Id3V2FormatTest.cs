@@ -2,17 +2,19 @@ using System;
 using NUnit.Framework;
 using TagLib;
 
-namespace TagLib.FormatTests
+namespace TagLib.Tests.FileFormats
 {   
     [TestFixture]
-    public class Id3V1FormatTest : IFormatTest
+    public class Id3V2FormatTest : IFormatTest
     {
+        private static string sample_file = "samples/sample_v2_only.mp3";
+        private static string tmp_file = "samples/tmpwrite_v2_only.mp3";
         private File file;
         
         [TestFixtureSetUp]
         public void Init()
         {
-            file = File.Create("samples/sample_v1_only.mp3");
+            file = File.Create(sample_file);
         }
     
         [Test]
@@ -31,7 +33,14 @@ namespace TagLib.FormatTests
             Assert.AreEqual("Acid Punk", file.Tag.FirstGenre);
             Assert.AreEqual("MP3 title", file.Tag.Title);
             Assert.AreEqual(6, file.Tag.Track);
+            Assert.AreEqual(7, file.Tag.TrackCount);
             Assert.AreEqual(1234, file.Tag.Year);
+        }
+        
+        [Test]
+        public void WriteStandardTags ()
+        {
+            StandardTests.WriteStandardTags (sample_file, tmp_file);
         }
         
         [Test]

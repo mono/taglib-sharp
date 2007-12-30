@@ -2,24 +2,25 @@ using System;
 using NUnit.Framework;
 using TagLib;
 
-namespace TagLib.FormatTests
+namespace TagLib.Tests.FileFormats
 {   
     [TestFixture]
     public class FlacFormatTest : IFormatTest
     {
+        private static string sample_file = "samples/sample.flac";
+        private static string tmp_file = "samples/tmpwrite.flac";
         private File file;
         
         [TestFixtureSetUp]
         public void Init()
         {
-            file = File.Create("samples/sample.flac");
+            file = File.Create(sample_file);
         }
     
         [Test]
         public void ReadAudioProperties()
         {
-            Assert.AreEqual(44100, file.Properties.AudioSampleRate);
-            Assert.AreEqual(5, file.Properties.Duration.Seconds);
+            StandardTests.ReadAudioProperties (file);
         }
         
         [Test]
@@ -34,17 +35,17 @@ namespace TagLib.FormatTests
             Assert.AreEqual(7, file.Tag.TrackCount);
             Assert.AreEqual(1234, file.Tag.Year);
         }
-                
+        
+        [Test]
+        public void WriteStandardTags ()
+        {
+            StandardTests.WriteStandardTags (sample_file, tmp_file);
+        }
+        
         [Test]
         public void TestCorruptionResistance()
         {
-            try {
-                File.Create("samples/corrupt/a.flac");
-            } catch(CorruptFileException) {
-            } catch(NullReferenceException e) {
-                throw e;
-            } catch {
-            }
+            StandardTests.TestCorruptionResistance ("samples/corrupt/a.flac");
         }
     }
 }

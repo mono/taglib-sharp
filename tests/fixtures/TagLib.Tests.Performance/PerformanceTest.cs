@@ -2,9 +2,10 @@ using System;
 using NUnit.Framework;
 using TagLib;
 
-namespace TagLib.PerformanceTests
-{           
+namespace TagLib.Tests.Performance
+{
     [TestFixture]
+    [Ignore("Skip performance testing")]
     public class FileTest
     {
         [Test]

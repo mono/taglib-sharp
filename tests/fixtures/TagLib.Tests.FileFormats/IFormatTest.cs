@@ -1,4 +1,4 @@
-namespace TagLib.FormatTests 
+namespace TagLib.Tests.FileFormats 
 {
     public interface IFormatTest
     {
