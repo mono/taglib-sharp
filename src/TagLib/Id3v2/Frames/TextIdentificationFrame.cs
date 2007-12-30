@@ -951,8 +951,10 @@ namespace TagLib.Id3v2 {
 		
 		public override Frame Clone ()
 		{
-			TextInformationFrame frame = new TextInformationFrame (
-				FrameId, encoding);
+			TextInformationFrame frame =
+				(this is UserTextInformationFrame) ?
+				new UserTextInformationFrame (null, encoding) :
+				new TextInformationFrame (FrameId, encoding);
 			frame.text_fields = (string[]) text_fields.Clone ();
 			if (raw_data != null)
 				frame.raw_data = new ByteVector (raw_data);
@@ -967,7 +969,7 @@ namespace TagLib.Id3v2 {
 	
 	public class UserTextInformationFrame : TextInformationFrame
 	{
-		#region Constructors
+#region Constructors
 		
 		public UserTextInformationFrame (string description,
 		                                 StringType encoding)
@@ -995,11 +997,11 @@ namespace TagLib.Id3v2 {
 		{
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Public Properties
+#region Public Properties
 		
 		public string Description {
 			get {
@@ -1043,9 +1045,11 @@ namespace TagLib.Id3v2 {
 			}
 		}
 		
-		#endregion
+#endregion
 		
-		#region Public Methods
+		
+		
+#region Public Methods
 		
 		public override string ToString ()
 		{
@@ -1055,11 +1059,11 @@ namespace TagLib.Id3v2 {
 				.Append (base.ToString ()).ToString ();
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Public Static Methods
+#region Public Static Methods
 		
 		public static UserTextInformationFrame Get (Tag tag,
 		                                            string description,
@@ -1108,6 +1112,6 @@ namespace TagLib.Id3v2 {
 			return Get (tag, description, false);
 		}
 		
-		#endregion
+#endregion
 	}
 }

@@ -30,7 +30,7 @@ using System;
 
 namespace TagLib.Id3v2
 {
-   public class ExtendedHeader
+	public class ExtendedHeader : ICloneable
    {
       private uint size;
       
@@ -52,5 +52,24 @@ namespace TagLib.Id3v2
          
          size = SynchData.ToUInt (data.Mid (0, 4));
       }
-   }
+		
+		
+		
+		
+#region IClonable
+		
+		public ExtendedHeader Clone ()
+		{
+			ExtendedHeader header = new ExtendedHeader ();
+			header.size = size;
+			return header;
+		}
+		
+		object ICloneable.Clone ()
+		{
+			return Clone ();
+		}
+		
+#endregion
+	}
 }

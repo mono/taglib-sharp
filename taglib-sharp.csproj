@@ -133,6 +133,7 @@
     <Compile Include="src\TagLib\Mpeg\File.cs" />
     <Compile Include="src\TagLib\Mpeg\VideoHeader.cs" />
     <Compile Include="src\TagLib\Mpeg\XingHeader.cs" />
+    <Compile Include="src\TagLib\Mpeg\VBRIHeader.cs" />
     <Compile Include="src\TagLib\NonContainer\EndTag.cs" />
     <Compile Include="src\TagLib\NonContainer\File.cs" />
     <Compile Include="src\TagLib\NonContainer\StartTag.cs" />

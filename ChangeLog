@@ -1,3 +1,36 @@
+2007-12-29  Brian Nickel <brian.nickel@gmail.com>
+	
+	This commit does the following:
+		- Fixes support for IsCompilation when saving as ID3v2.2.
+		- Makes Id3v2.Tag clonable.
+		- Fixes the project files.
+		- Fixes cloning UserTextInformationFrame.
+		
+		- CHANGES THE DEFAULT ID3v2 VERSION TO 3. While this may result
+		in some boos from people who consider ID3v2.4 to be the perfect
+		tagging format (myself included), the number of applications
+		that hiccup on ID3v2.4 is too astounding. This will not cause
+		tags already encoded at 2.4 to be reencoded at 2.3, but if new
+		tags are added to the file, they will be 2.3.
+	
+	*  src/TagLib/Id3v2/Tag.cs: Make Tag cloneable. Make default version 3.
+	
+	*  src/TagLib/Id3v2/FrameHeader.cs: Add version 2 mapping for TCMP so
+	IsComposer is saved in Id3v2.2.
+	
+	*  src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs: If the frame
+	is a User*, create a User* when cloning.
+	
+	*  src/TagLib/Id3v2/ExtendedHeader.cs: Make cloneable.
+	
+	*  src/TagLib/Id3v2/FrameTypes.cs:
+	*  src/TagLib/Mpeg4/BoxTypes.cs: Add description of why these classes
+	exist, why they are internal, and why they aren't necessary for third
+	party programmers.
+	
+	*  src/taglib-sharp.mdp: 
+	*  taglib-sharp.csproj: Add VBRIHeader.cs
+
 2007-12-28  Brian Nickel <brian.nickel@gmail.com>
 	
 	This commit does the following:

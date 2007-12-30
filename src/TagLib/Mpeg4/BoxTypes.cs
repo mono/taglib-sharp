@@ -22,6 +22,21 @@
 //
 
 namespace TagLib.Mpeg4 {
+	/// <summary>
+	///    <see cref="BoxType" /> provides references to different box types
+	///    used by the library.
+	/// </summary>
+	/// <remarks>
+	///    <para>This class is used to severely reduce the number of times
+	///    these types are created in <see cref="AppleTag" />, greatly
+	///    improving the speed at which warm files are read.</para>
+	///    <para>The reason it is marked as internal is because I'm not sure
+	///    I like the way the fields are named, and it is really
+	///    unneccessary for external uses. While the library may use
+	///    <c>DataBoxes (BoxType.Gen, BoxType.Gnre);</c>, an external user
+	///    could use <c>tag.DataBoxes ("gen", "gnre");</c> with the same
+	///    result.</para>
+	/// </remarks>
 	internal static class BoxType
 	{
 		public static readonly ReadOnlyByteVector Aart = "aART";

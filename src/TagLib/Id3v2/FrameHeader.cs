@@ -412,7 +412,7 @@ namespace TagLib.Id3v2 {
 		}
 		
 		private static readonly ReadOnlyByteVector [,] version2_frames =
-			new ReadOnlyByteVector [57,2] {
+			new ReadOnlyByteVector [58,2] {
 				{ "BUF", "RBUF" },
 				{ "CNT", "PCNT" },
 				{ "COM", "COMM" },
@@ -431,6 +431,7 @@ namespace TagLib.Id3v2 {
 				{ "TBP", "TBPM" },
 				{ "TCM", "TCOM" },
 				{ "TCO", "TCON" },
+				{ "TCP", "TCMP" },
 				{ "TCR", "TCOP" },
 				{ "TDA", "TDRC" },
 				{ "TDY", "TDLY" },

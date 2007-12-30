@@ -37,7 +37,7 @@ namespace TagLib.Id3v2 {
 	///    cref="T:System.Collections.Generic.IEnumerable`1" /> to provide support for reading and
 	///    writing ID3v2 tags.
 	/// </summary>
-	public class Tag : TagLib.Tag, IEnumerable<Frame>
+	public class Tag : TagLib.Tag, IEnumerable<Frame>, ICloneable
 	{
 #region Private Static Fields
 		
@@ -50,7 +50,7 @@ namespace TagLib.Id3v2 {
 		/// <summary>
 		///    Contains the field to use for new tags.
 		/// </summary>
-		private static byte default_version = 4;
+		private static byte default_version = 3;
 		
 		/// <summary>
 		///    Indicates whether or not all tags should be saved in
@@ -663,7 +663,7 @@ namespace TagLib.Id3v2 {
 		/// </summary>
 		/// <value>
 		///    A <see cref="byte" /> value specifying the default ID3v2
-		///    version.
+		///    version. The default version for this library is 3.
 		/// </value>
 		/// <remarks>
 		///    If <see cref="ForceDefaultVersion" /> is <see
@@ -1602,6 +1602,30 @@ namespace TagLib.Id3v2 {
 					}
 				}
 			}
+		}
+		
+#endregion
+		
+		
+		
+#region IClonable
+		
+		public Tag Clone ()
+		{
+			Tag tag = new Tag ();
+			tag.header = header;
+			if (tag.extended_header != null)
+				tag.extended_header = extended_header.Clone ();
+			
+			foreach (Frame frame in frame_list)
+				tag.frame_list.Add (frame.Clone ());
+			
+			return tag;
+		}
+		
+		object ICloneable.Clone ()
+		{
+			return Clone ();
 		}
 		
 #endregion

@@ -64,6 +64,7 @@
     <File name="./TagLib/Mpeg/File.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg/AudioHeader.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg/XingHeader.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TagLib/Mpeg/VBRIHeader.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/AppleTag.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/BoxHeader.cs" subtype="Code" buildaction="Compile" />
     <File name="./TagLib/Mpeg4/BoxFactory.cs" subtype="Code" buildaction="Compile" />
