@@ -249,8 +249,8 @@ namespace TagLib.Id3v2 {
 		///    stored in the current instance.
 		/// </value>
 		/// <remarks>
-		///    There should only be one file with a matching description
-		///    and ISO-639-2 language code per tag.
+		///    There should only be one frame with a matching
+		///    description and ISO-639-2 language code per tag.
 		/// </remarks>
 		public string Description {
 			get {
@@ -380,31 +380,30 @@ namespace TagLib.Id3v2 {
 		///    <para>The method tries matching with the following order
 		///    of precidence:</para>
 		///    <list type="number">
-		///       <item><term>The first comment with a matching
+		///       <item><term>The first frame with a matching
 		///       description and language.</term></item>
-		///       <item><term>The first comment with a matching
+		///       <item><term>The first frame with a matching
 		///       language.</term></item>
-		///       <item><term>The first comment with a matching
+		///       <item><term>The first frame with a matching
 		///       description.</term></item>
-		///       <item><term>The first comment.</term></item>
+		///       <item><term>The first frame.</term></item>
 		///    </list>
 		/// </remarks>
 		public static CommentsFrame GetPreferred (Tag tag,
 		                                          string description,
 		                                          string language)
 		{
-			/* This is weird, so bear with me. The best thing we can
-			 * have is something straightforward and in our own
-			 * language. If it has a description, then it is
-			 * probably used for something other than an actual
-			 * comment. If that doesn't work, we'd still rather have
-			 * something in our language than something in another.
-			 * After that all we have left are things in other
-			 * languages, so we'd rather have one with actual
-			 * content, so we try to get one with no description
-			 * first.
-			 */
-			
+			// This is weird, so bear with me. The best thing we can
+			// have is something straightforward and in our own
+			// language. If it has a description, then it is
+			// probably used for something other than an actual
+			// comment. If that doesn't work, we'd still rather have
+			// something in our language than something in another.
+			// After that all we have left are things in other
+			// languages, so we'd rather have one with actual
+			// content, so we try to get one with no description
+			// first.
+
 			bool skip_itunes = description == null ||
 				!description.StartsWith ("iTun");
 			
@@ -513,8 +512,15 @@ namespace TagLib.Id3v2 {
 		
 		
 		
-#region IClonable
+#region ICloneable
 		
+		/// <summary>
+		///    Creates a deep copy of the current instance.
+		/// </summary>
+		/// <returns>
+		///    A new <see cref="Frame" /> object identical to the
+		///    current instance.
+		/// </returns>
 		public override Frame Clone ()
 		{
 			CommentsFrame frame = new CommentsFrame (description,

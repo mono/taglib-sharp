@@ -1,3 +1,44 @@
+2008-01-01  Brian Nickel <brian.nickel@gmail.com>
+	
+	I'm working to finish up the xmldocs so I can get rid of the aging docs
+	directory.
+	
+	* src/TagLib/Riff/List.cs:
+	* src/TagLib/Riff/AviStream.cs:
+	* src/TagLib/Riff/File.cs:
+	* src/TagLib/Riff/BitmapInfoHeader.cs:
+	* src/TagLib/Riff/AviHeaderList.cs:
+	* src/TagLib/Riff/DivXTag.cs:
+	* src/TagLib/Riff/ListTag.cs:
+	* src/TagLib/Riff/InfoTag.cs:
+	* src/TagLib/Riff/MovieIdTag.cs:
+	* src/TagLib/Riff/WaveFormatEx.cs:
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
+	* src/TagLib/Id3v2/Frames/SynchronizedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/PopularimeterFrame.cs:
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:
+	* src/TagLib/Id3v2/Frames/UniqueFileIdentifierFrame.cs:
+	* src/TagLib/Id3v2/Frames/PrivateFrame.cs:
+	* src/TagLib/Id3v2/Frames/MusicCdIdentifierFrame.cs:
+	* src/TagLib/Id3v2/Frames/TermsOfUseFrame.cs:
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs:
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs:
+	* src/TagLib/Id3v2/Frames/PlayCountFrame.cs:
+	* src/TagLib/Id3v2/ExtendedHeader.cs:
+	* src/TagLib/Id3v2/Frame.cs:
+	* src/TagLib/ByteVector.cs:
+	* src/TagLib/Flac/BlockHeader.cs:
+	* src/TagLib/Ape/Tag.cs:
+	* src/TagLib/Ape/Item.cs:
+	* src/TagLib/Picture.cs:
+	* src/TagLib/Ogg/XiphComment.cs: A little documentation and
+	reformatting.
+	
+	* examples/BatchSet.cs: Add support for setting the ID3v2 version.
+
 2007-12-30  Brian Nickel <brian.nickel@gmail.com>
 	
 	This commit does the following:

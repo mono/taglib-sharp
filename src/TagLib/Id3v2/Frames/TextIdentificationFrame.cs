@@ -947,8 +947,15 @@ namespace TagLib.Id3v2 {
 		
 		
 		
-#region IClonable
+#region ICloneable
 		
+		/// <summary>
+		///    Creates a deep copy of the current instance.
+		/// </summary>
+		/// <returns>
+		///    A new <see cref="Frame" /> object identical to the
+		///    current instance.
+		/// </returns>
 		public override Frame Clone ()
 		{
 			TextInformationFrame frame =

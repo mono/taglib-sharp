@@ -228,20 +228,49 @@ namespace TagLib {
 		
 		#region Constructors
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="Picture" /> with no data or values.
+		/// </summary>
 		public Picture ()
 		{
 		}
 		
-		public Picture (string filename)
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="Picture" /> by reading in the contents of a
+		///    specified file.
+		/// </summary>
+		/// <param name="path">
+		///    A <see cref="string"/> object containing the path of the
+		///    file to read.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="path" /> is <see langref="null" />.
+		/// </exception>
+		public Picture (string path)
 		{
-			if (filename == null)
-				throw new ArgumentNullException ("filename");
+			if (path == null)
+				throw new ArgumentNullException ("path");
 			
-			Data = ByteVector.FromPath (filename);
+			Data = ByteVector.FromPath (path);
 			FillInMimeFromData ();
-			Description = filename;
+			Description = path;
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="Picture" /> by reading in the contents of a
+		///    specified file abstraction.
+		/// </summary>
+		/// <param name="abstraction">
+		///    A <see cref="File.IFileAbstraction"/> object containing
+		///    abstraction of the file to read.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="abstraction" /> is <see langref="null"
+		///    />.
+		/// </exception>
 		public Picture (File.IFileAbstraction abstraction)
 		{
 			if (abstraction == null)
@@ -252,6 +281,18 @@ namespace TagLib {
 			Description = abstraction.Name;
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="Picture" /> by using the contents of a <see
+		///    cref="ByteVector" /> object.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector"/> object containing picture data
+		///    to use.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="data" /> is <see langref="null" />.
+		/// </exception>
 		public Picture (ByteVector data)
 		{
 			if (data == null)
@@ -370,6 +411,11 @@ namespace TagLib {
 		
 		#region Private Methods
 		
+		/// <summary>
+		///    Fills in the mime type of the current instance by reading
+		///    the first few bytes of the file. If the format cannot be
+		///    identified, it assumed to be a JPEG file.
+		/// </summary>
 		private void FillInMimeFromData ()
 		{
 			string mimetype = "image/jpeg";

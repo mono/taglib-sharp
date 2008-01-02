@@ -58,6 +58,19 @@ public class BatchSet
 				string value = tags [key];
 				try {
 					switch (key) {
+					case "id3version":
+						byte number = byte.Parse (value);
+						if (number == 1) {
+							file.RemoveTags (TagTypes.Id3v2);
+						} else {
+							TagLib.Id3v2.Tag v2 =
+								file.GetTag (TagTypes.Id3v2, true)
+								as TagLib.Id3v2.Tag;
+							
+							if (v2 != null)
+								v2.Version = number;
+						}
+						break;
 					case "album":
 						file.Tag.Album = value;
 						break;

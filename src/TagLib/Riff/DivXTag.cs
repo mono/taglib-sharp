@@ -30,6 +30,10 @@ using System.Text;
 using System.Globalization;
 
 namespace TagLib.Riff {
+	/// <summary>
+	///    This class extends <see cref="Tag" /> to provide support for
+	///    reading and writing tags stored in the DivX format.
+	/// </summary>
 	public class DivXTag : TagLib.Tag
 	{
 #region Private Fields
@@ -150,6 +154,22 @@ namespace TagLib.Riff {
 			Parse (data);
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="DivXTag" /> by reading the contents raw tag data
+		///    stored in a specified <see cref="ByteVector" /> object.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector"/> containing a raw DivX tag to
+		///    read into the new instance.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="data" /> is <see langref="null" />.
+		/// </exception>
+		/// <exception cref="CorruptFileException">
+		///    The file does not contain the file identifier at the
+		///    correct offset from the given position.
+		/// </exception>
 		public DivXTag (ByteVector data)
 		{
 			if (data == null)

@@ -28,9 +28,10 @@
 // USA
 //
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System;
+using System.Text;
 
 namespace TagLib {
 	/// <summary>
@@ -926,6 +927,9 @@ namespace TagLib {
 		///    A <see cref="ByteVector"/> object containing data to add
 		///    to the end of the current instance.
 		/// </param>
+		/// <exception cref="NotSupportedException">
+		///    The current instance is read-only.
+		/// </exception>
 		public void Add (ByteVector data)
 		{
 			if (IsReadOnly)
@@ -948,7 +952,7 @@ namespace TagLib {
 		/// <exception cref="NotSupportedException">
 		///    The current instance is read-only.
 		/// </exception>
-		public void Add(byte [] data)
+		public void Add (byte [] data)
 		{
 			if (IsReadOnly)
 				throw new NotSupportedException (
@@ -1211,6 +1215,32 @@ namespace TagLib {
 			return ToULong (true);
 		}
 		
+		/// <summary>
+		///    Converts a portion of the current instance to a <see
+		///    cref="string"/> object using a specified encoding.
+		/// </summary>
+		/// <param name="type">
+		///    A <see cref="StringType"/> value indicating the encoding
+		///    to use when converting to a <see cref="string"/> object.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int"/> value specify the index in the
+		///    current instance at which to start converting.
+		/// </param>
+		/// <param name="count">
+		///    A <see cref="int"/> value specify the number of bytes to
+		///    convert.
+		/// </param>
+		/// <returns>
+		///    A <see cref="string"/> object containing the converted
+		///    text.
+		/// </returns>
+		/// <exception cref="ArgumentOutOfRangeException">
+		///    <paramref name="offset" /> is less than zero or greater
+		///    than the total number of bytes, or <paramref name="count"
+		///    /> is less than zero or greater than the number of bytes
+		///    after <paramref name="offset" />.
+		/// </exception>
 		public string ToString (StringType type, int offset, int count)
 		{
 			if (offset < 0 || offset > Count)
@@ -1232,28 +1262,105 @@ namespace TagLib {
 			return s;
 		}
 		
+		/// <summary>
+		///    Converts all data after a specified index in the current
+		///    instance to a <see cref="string"/> object using a
+		///    specified encoding.
+		/// </summary>
+		/// <param name="type">
+		///    A <see cref="StringType"/> value indicating the encoding
+		///    to use when converting to a <see cref="string"/> object.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int"/> value specify the index in the
+		///    current instance at which to start converting.
+		/// </param>
+		/// <returns>
+		///    A <see cref="string"/> object containing the converted
+		///    text.
+		/// </returns>
+		/// <exception cref="ArgumentOutOfRangeException">
+		///    <paramref name="offset" /> is less than zero or greater
+		///    than the total number of bytes.
+		/// </exception>
 		[Obsolete ("Use ToString(StringType,int,int)")]
 		public string ToString (StringType type, int offset)
 		{
 			return ToString (type, offset, Count - offset);
 		}
 		
+		/// <summary>
+		///    Converts the current instance into a <see cref="string"/>
+		///    object using a specified encoding.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="string"/> object containing the converted
+		///    text.
+		/// </returns>
 		public string ToString (StringType type)
 		{
 			return ToString (type, 0, Count);
 		}
 		
+		/// <summary>
+		///    Converts the current instance into a <see cref="string"/>
+		///    object using a UTF-8 encoding.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="string"/> object containing the converted
+		///    text.
+		/// </returns>
 		public override string ToString ()
 		{
 			return ToString (StringType.UTF8);
 		}
 		
+		/// <summary>
+		///    Converts the current instance into a <see cref="string[]"
+		///    /> starting at a specified offset and using a specified
+		///    encoding, assuming the values are nil separated.
+		/// </summary>
+		/// <param name="type">
+		///    A <see cref="StringType"/> value indicating the encoding
+		///    to use when converting to a <see cref="string"/> object.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int"/> value specify the index in the
+		///    current instance at which to start converting.
+		/// </param>
+		/// <returns>
+		///    A <see cref="string[]" /> containing the converted text.
+		/// </returns>
 		public string[] ToStrings (StringType type, int offset)
 		{
 			return ToStrings (type, offset, int.MaxValue);
 		}
 		
-		public string[] ToStrings (StringType type, int offset, int count)
+		/// <summary>
+		///    Converts the current instance into a <see cref="string[]"
+		///    /> starting at a specified offset and using a specified
+		///    encoding, assuming the values are nil separated and
+		///    limiting it to a specified number of items.
+		/// </summary>
+		/// <param name="type">
+		///    A <see cref="StringType"/> value indicating the encoding
+		///    to use when converting to a <see cref="string"/> object.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int"/> value specify the index in the
+		///    current instance at which to start converting.
+		/// </param>
+		/// <param name="count">
+		///    A <see cref="int"/> value specifying a limit to the
+		///    number of strings to create. Once the limit has been
+		///    reached, the last string will be filled by the remainder
+		///    of the data.
+		/// </param>
+		/// <returns>
+		///    A <see cref="string[]" /> containing the converted text.
+		/// </returns>
+		public string[] ToStrings (StringType type, int offset,
+		                           int count)
 		{
 			int chunk = 0;
 			int position = offset;
@@ -1268,7 +1375,8 @@ namespace TagLib {
 				if (chunk + 1 == count) {
 					position = offset + count;
 				} else {
-					position = Find (separator, start, align);
+					position = Find (separator, start,
+						align);
 					
 					if (position < 0)
 						position = Count;
@@ -1279,8 +1387,10 @@ namespace TagLib {
 				if (length == 0) {
 					list.Add (string.Empty);
 				} else {
-					string s = ToString (type, start, length);
-					if (s.Length != 0 && (s[0] == 0xfffe || s[0] == 0xfeff)) { // UTF16 BOM
+					string s = ToString (type, start,
+						length);
+					if (s.Length != 0 && (s[0] == 0xfffe ||
+						s[0] == 0xfeff)) { // UTF16 BOM
 						s = s.Substring (1);
 					}
 					
@@ -1292,88 +1402,252 @@ namespace TagLib {
 			
 			return list.ToArray ();
 		}
-        
-        #endregion
-        
-        #region Operators
-      
-        public static bool operator==(ByteVector first, ByteVector second)
-        {
-            if((object) first == null && (object) second == null) {
-                return true;
-            } else if((object) first == null || (object) second == null) {
-                return false;
-            }
-            
-            return first.Equals (second);
-        }
-        
-        public static bool operator!=(ByteVector first, ByteVector second)
-        {
-           return !(first == second);
-        }
+		
+#endregion
+		
+		
+		
+#region Operators
+		
+		/// <summary>
+		///    Determines whether two specified <see cref="ByteVector"
+		///    /> objects are equal.
+		/// </summary>
+		/// <param name="first">
+		///    A <see cref="ByteVector"/> to compare.
+		/// </param>
+		/// <param name="second">
+		///    A <see cref="ByteVector"/> to compare.
+		/// </param>
+		/// <returns>
+		///    <para><see langword="true" /> if <paramref name="first"
+		///    /> and <paramref name="second" /> contain the same
+		///    data; otherwise, <see langword="false" />.</para>
+		/// </returns>
+		public static bool operator== (ByteVector first,
+		                               ByteVector second)
+		{
+			bool fnull = (object) first == null;
+			bool snull = (object) second == null;
+			if (fnull && snull)
+				return true;
+			else if (fnull || snull)
+				return false;
+			
+			return first.Equals (second);
+		}
 
-        public static bool operator<(ByteVector first, ByteVector second)
-        {
-            if (first == null)
-               throw new ArgumentNullException ("first");
-            
-            if (second == null)
-               throw new ArgumentNullException ("second");
-           
-            return first.CompareTo (second) < 0;
-        }
+		/// <summary>
+		///    Determines whether two specified <see cref="ByteVector"
+		///    /> objects differ.
+		/// </summary>
+		/// <param name="first">
+		///    A <see cref="ByteVector"/> to compare.
+		/// </param>
+		/// <param name="second">
+		///    A <see cref="ByteVector"/> to compare.
+		/// </param>
+		/// <returns>
+		///    <para><see langword="true" /> if <paramref name="first"
+		///    /> and <paramref name="second" /> contain different
+		///    data; otherwise, <see langword="false" />.</para>
+		/// </returns>
+		public static bool operator!= (ByteVector first,
+		                               ByteVector second)
+		{
+			return !(first == second);
+		}
 
-        public static bool operator<=(ByteVector first, ByteVector second)
-        {
-            if (first == null)
-               throw new ArgumentNullException ("first");
-            
-            if (second == null)
-               throw new ArgumentNullException ("second");
-           
-            return first.CompareTo (second) <= 0;
-        }
+		/// <summary>
+		///    Determines whether or not one <see cref="ByteVector" />
+		///    is less than another.
+		/// </summary>
+		/// <param name="first">
+		///    A <see cref="ByteVector"/> to compare.
+		/// </param>
+		/// <param name="second">
+		///    A <see cref="ByteVector"/> to compare.
+		/// </param>
+		/// <returns>
+		///    <para><see langword="true" /> if <paramref name="first"
+		///    /> is less than <paramref name="second" />; otherwise,
+		///    <see langword="false" />.</para>
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="first" /> or <paramref name="second" />
+		///    is <see langref="null" />.
+		/// </exception>
+		public static bool operator< (ByteVector first,
+		                              ByteVector second)
+		{
+			if (first == null)
+				throw new ArgumentNullException ("first");
 
-        public static bool operator>(ByteVector first, ByteVector second)
-        {
-            if (first == null)
-               throw new ArgumentNullException ("first");
-            
-            if (second == null)
-               throw new ArgumentNullException ("second");
-           
-            return first.CompareTo (second) > 0;
-        }
+			if (second == null)
+				throw new ArgumentNullException ("second");
+			
+			return first.CompareTo (second) < 0;
+		}
 
-        public static bool operator>=(ByteVector first, ByteVector second)
-        {
-            if (first == null)
-               throw new ArgumentNullException ("first");
-            
-            if (second == null)
-               throw new ArgumentNullException ("second");
-           
-            return first.CompareTo (second) >= 0;
-        }
+		/// <summary>
+		///    Determines whether or not one <see cref="ByteVector" />
+		///    is less than or equal to another.
+		/// </summary>
+		/// <param name="first">
+		///    A <see cref="ByteVector"/> to compare.
+		/// </param>
+		/// <param name="second">
+		///    A <see cref="ByteVector"/> to compare.
+		/// </param>
+		/// <returns>
+		///    <para><see langword="true" /> if <paramref name="first"
+		///    /> is less than or equal to <paramref name="second" />;
+		///    otherwise, <see langword="false" />.</para>
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="first" /> or <paramref name="second" />
+		///    is <see langref="null" />.
+		/// </exception>
+		public static bool operator<= (ByteVector first,
+		                               ByteVector second)
+		{
+			if (first == null)
+				throw new ArgumentNullException ("first");
+			
+			if (second == null)
+				throw new ArgumentNullException ("second");
+			
+			return first.CompareTo (second) <= 0;
+		}
 
-        public static ByteVector operator+(ByteVector first, ByteVector second)
-        {
-            ByteVector sum = new ByteVector(first);
-            sum.Add(second);
-            return sum;
-        }
+		/// <summary>
+		///    Determines whether or not one <see cref="ByteVector" />
+		///    is greater than another.
+		/// </summary>
+		/// <param name="first">
+		///    A <see cref="ByteVector"/> to compare.
+		/// </param>
+		/// <param name="second">
+		///    A <see cref="ByteVector"/> to compare.
+		/// </param>
+		/// <returns>
+		///    <para><see langword="true" /> if <paramref name="first"
+		///    /> is greater than <paramref name="second" />; otherwise,
+		///    <see langword="false" />.</para>
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="first" /> or <paramref name="second" />
+		///    is <see langref="null" />.
+		/// </exception>
+		public static bool operator> (ByteVector first,
+		                              ByteVector second)
+		{
+			if (first == null)
+				throw new ArgumentNullException ("first");
 
-        public static implicit operator ByteVector(byte value)
-        {
-            return new ByteVector(value);
-        }
+			if (second == null)
+				throw new ArgumentNullException ("second");
 
-        public static implicit operator ByteVector(byte [] value)
-        {
-            return new ByteVector(value);
-        }
+			return first.CompareTo (second) > 0;
+		}
 
+		/// <summary>
+		///    Determines whether or not one <see cref="ByteVector" />
+		///    is greater than or equal to another.
+		/// </summary>
+		/// <param name="first">
+		///    A <see cref="ByteVector"/> to compare.
+		/// </param>
+		/// <param name="second">
+		///    A <see cref="ByteVector"/> to compare.
+		/// </param>
+		/// <returns>
+		///    <para><see langword="true" /> if <paramref name="first"
+		///    /> is greater than or equal to <paramref name="second"
+		///    />; otherwise, <see langword="false" />.</para>
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="first" /> or <paramref name="second" />
+		///    is <see langref="null" />.
+		/// </exception>
+		public static bool operator>= (ByteVector first,
+		                               ByteVector second)
+		{
+			if (first == null)
+				throw new ArgumentNullException ("first");
+
+			if (second == null)
+				throw new ArgumentNullException ("second");
+
+			return first.CompareTo (second) >= 0;
+		}
+		
+		/// <summary>
+		///    Creates a new <see cref="ByteVector"/> object by adding
+		///    two objects together.
+		/// </summary>
+		/// <param name="first">
+		///    A <see cref="ByteVector"/> to combine.
+		/// </param>
+		/// <param name="second">
+		///    A <see cref="ByteVector"/> to combine.
+		/// </param>
+		/// <returns>
+		///    A new instance of <see cref="ByteVector" /> with the
+		///    contents of <paramref name="first" /> followed by the
+		///    contents of <paramref name="second" />.
+		/// </returns>
+		public static ByteVector operator+ (ByteVector first,
+		                                    ByteVector second)
+		{
+			ByteVector sum = new ByteVector(first);
+			sum.Add(second);
+			return sum;
+		}
+		
+		/// <summary>
+		///    Converts a <see cref="byte" /> to a new <see
+		///    cref="ByteVector" /> object.
+		/// </summary>
+		/// <param name="value">
+		///    A <see cref="byte" /> to convert.
+		/// </param>
+		/// <returns>
+		///    A new instance of <see cref="ByteVector" /> containing
+		///    <paramref name="value" />.
+		/// </returns>
+		public static implicit operator ByteVector (byte value)
+		{
+			return new ByteVector (value);
+		}
+
+		/// <summary>
+		///    Converts a <see cref="byte[]" /> to a new <see
+		///    cref="ByteVector" /> object.
+		/// </summary>
+		/// <param name="value">
+		///    A <see cref="byte[]" /> to convert.
+		/// </param>
+		/// <returns>
+		///    A new instance of <see cref="ByteVector" /> containing
+		///    the contents of <paramref name="value" />.
+		/// </returns>
+		public static implicit operator ByteVector (byte [] value)
+		{
+			return new ByteVector (value);
+		}
+
+		/// <summary>
+		///    Converts a <see cref="string" /> to a new <see
+		///    cref="ByteVector" /> object.
+		/// </summary>
+		/// <param name="value">
+		///    A <see cref="string" /> to convert.
+		/// </param>
+		/// <returns>
+		///    A new instance of <see cref="ByteVector" /> containing
+		///    the UTF-8 encoded contents of <paramref name="value" />.
+		/// </returns>
 		public static implicit operator ByteVector (string value)
 		{
 			return ByteVector.FromString (value, StringType.UTF8);
@@ -1550,7 +1824,8 @@ namespace TagLib {
 			if (text.Length > length)
 				text = text.Substring (0, length);
 			
-			data.Add (StringTypeToEncoding (type, data).GetBytes (text));
+			data.Add (StringTypeToEncoding (type, data)
+				.GetBytes (text));
 			
 			return data;
 		}
@@ -1685,7 +1960,8 @@ namespace TagLib {
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public static ByteVector FromFile (File.IFileAbstraction abstraction)
+		public static ByteVector FromFile (File.IFileAbstraction
+		                                   abstraction)
 		{
 			byte [] tmp_out;
 			return FromFile (abstraction, out tmp_out, false);
@@ -1716,7 +1992,8 @@ namespace TagLib {
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		internal static ByteVector FromFile (File.IFileAbstraction abstraction,
+		internal static ByteVector FromFile (File.IFileAbstraction
+		                                     abstraction,
 		                                     out byte [] firstChunk,
 		                                     bool copyFirstChunk)
 		{
@@ -1724,7 +2001,8 @@ namespace TagLib {
 				throw new ArgumentNullException ("abstraction");
 			
 			System.IO.Stream stream = abstraction.ReadStream;
-			ByteVector output = FromStream (stream, out firstChunk, copyFirstChunk);
+			ByteVector output = FromStream (stream, out firstChunk,
+				copyFirstChunk);
 			abstraction.CloseStream (stream);
 			return output;
 		}
@@ -1774,9 +2052,9 @@ namespace TagLib {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="stream" /> is <see langword="null" />.
 		/// </exception>
-		internal static ByteVector FromStream(System.IO.Stream stream,
-		                                      out byte [] firstChunk,
-		                                      bool copyFirstChunk)
+		internal static ByteVector FromStream (System.IO.Stream stream,
+		                                       out byte [] firstChunk,
+		                                       bool copyFirstChunk)
 		{
 			ByteVector vector = new ByteVector();
 			byte [] bytes = new byte[4096];
@@ -1786,14 +2064,14 @@ namespace TagLib {
 			
 			firstChunk = null;
 			
-			while(true) {
+			while (true) {
 				Array.Clear(bytes, 0, bytes.Length);
 				int n = stream.Read(bytes, 0, read_size);
 				vector.Add(bytes);
 				bytes_read += n;
 				
-				if(!set_first_chunk) {
-					if(copyFirstChunk) {
+				if (!set_first_chunk) {
+					if (copyFirstChunk) {
 						if(firstChunk == null ||
 							firstChunk.Length != read_size) {
 							firstChunk = new byte [read_size];
@@ -1804,14 +2082,14 @@ namespace TagLib {
 					set_first_chunk = true;
 				}
 				
-				if((bytes_read == stream.Length && stream.Length > 0) || 
+				if ((bytes_read == stream.Length && stream.Length > 0) || 
 					(n < read_size && stream.Length <= 0)) {
 					break;
 				}
 			}
 			
-			if(stream.Length > 0 && vector.Count != stream.Length) {
-				vector.Resize((int)stream.Length);
+			if (stream.Length > 0 && vector.Count != stream.Length) {
+				vector.Resize ((int)stream.Length);
 			}
 			
 			return vector;
@@ -1819,8 +2097,22 @@ namespace TagLib {
 		
 #endregion
 		
+		
+		
 #region Utilities
 		
+		/// <summary>
+		///    Gets the text delimiter for nil separated string lists of
+		///    a specified encoding.
+		/// </summary>
+		/// <param name="type">
+		///    A <see cref="StringType"/> value specifying the encoding
+		///    to use.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the text
+		///    delimiter.
+		/// </returns>
 		public static ByteVector TextDelimiter (StringType type)
 		{
 			return type == StringType.UTF16 ||
@@ -1828,8 +2120,30 @@ namespace TagLib {
 				type == StringType.UTF16LE ? td2 : td1;
 		}
 		
-		private static System.Text.Encoding StringTypeToEncoding (StringType type,
-		                                                          ByteVector bom)
+		/// <summary>
+		///    Gets the <see cref="Encoding" /> to use for a specified
+		///    encoding.
+		/// </summary>
+		/// <param name="type">
+		///    A <see cref="StringType"/> value specifying encoding to
+		///    use.
+		/// </param>
+		/// <param name="bom">
+		///    A <see cref="ByteVector"/> object containing the first
+		///    two bytes of the data to convert if <paramref
+		///    name="type" /> equals <see cref="StringType.UTF16" />.
+		/// </param>
+		/// <returns>
+		///    A <see cref="Encoding" /> object capable of encoding
+		///    and decoding text with the specified type.
+		/// </returns>
+		/// <remarks>
+		///    <paramref name="bom" /> is used to determine whether the
+		///    encoding is big or little endian. If it does not contain
+		///    BOM data, the previously used endian format is used.
+		/// </remarks>
+		private static Encoding StringTypeToEncoding (StringType type,
+		                                              ByteVector bom)
 		{
 			switch(type) {
 			case StringType.UTF16:
@@ -1844,32 +2158,32 @@ namespace TagLib {
 				
 				if (bom [0] == 0xFF && bom [1] == 0xFE)
 					return last_utf16_encoding =
-						System.Text.Encoding.Unicode;
+						Encoding.Unicode;
 				
 				if (bom [1] == 0xFF && bom [0] == 0xFE)
 					return last_utf16_encoding =
-						System.Text.Encoding.BigEndianUnicode;
+						Encoding.BigEndianUnicode;
 				
 				return last_utf16_encoding;
 				
 			case StringType.UTF16BE:
-				return System.Text.Encoding.BigEndianUnicode;
+				return Encoding.BigEndianUnicode;
 				
 			case StringType.UTF8:
-				return System.Text.Encoding.UTF8;
+				return Encoding.UTF8;
 				
 			case StringType.UTF16LE:
-				return System.Text.Encoding.Unicode;
+				return Encoding.Unicode;
 			}
 			
 			if (use_broken_latin1)
-				return System.Text.Encoding.Default;
+				return Encoding.Default;
 			
 			try {
-				return System.Text.Encoding.GetEncoding ("latin1");
+				return Encoding.GetEncoding ("latin1");
 			} catch (ArgumentException) {
-				return System.Text.Encoding.UTF8;
-				}
+				return Encoding.UTF8;
+			}
 		}
 		
 #endregion
@@ -1878,104 +2192,240 @@ namespace TagLib {
 		
 #region System.Object
 		
-		public override bool Equals (object obj)
+		/// <summary>
+		///    Determines whether another object is equal to the current
+		///    instance.
+		/// </summary>
+		/// <param name="other">
+		///    A <see cref="object"/> to compare to the current
+		///    instance.
+		/// </param>
+		/// <returns>
+		///    <see langref="true" /> if <paramref name="other"/> is not
+		///    <see langref="null" />, is of type <see
+		///    cref="ByteVector" />, and is equal to the current
+		///    instance; otherwise <see langref="false" />.
+		/// </returns>
+		public override bool Equals (object other)
 		{
-			if (!(obj is ByteVector))
+			if (!(other is ByteVector))
 				return false;
 			
-			return Equals ((ByteVector) obj);
+			return Equals ((ByteVector) other);
 		}
 		
+		/// <summary>
+		///    Determines whether another <see cref="ByteVector"/>
+		///    object is equal to the current instance.
+		/// </summary>
+		/// <param name="other">
+		///    A <see cref="ByteVector"/> object to compare to the
+		///    current instance.
+		/// </param>
+		/// <returns>
+		///    <see langref="true" /> if <paramref name="other"/> is not
+		///    <see langref="null" /> and equal to the current instance;
+		///    otherwise <see langref="false" />.
+		/// </returns>
 		public bool Equals (ByteVector other)
 		{
 			return CompareTo (other) == 0;
 		}
 		
-        public override int GetHashCode ()
-        {
-           unchecked
-           {
-              return (int) Checksum;
-           }
-        }
-        
-        #endregion
-        
-        #region IComparable<T>
-        
-        public int CompareTo (ByteVector other)
-        {
-           if ((object) other == null)
-              throw new ArgumentNullException ("other");
-           
-           int diff = Count - other.Count;
-           
-           for(int i = 0; diff == 0 && i < Count; i ++)
-              diff = this [i] - other [i];
-           
-           return diff;
-        }
-        
-        #endregion
-        
-        #region IEnumerable<T>
-
-        public IEnumerator<byte> GetEnumerator()
-        {
-            return this.data.GetEnumerator();
-        }
-        
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.data.GetEnumerator();
-        }
-        
-        #endregion
-
-        #region ICollection<T>
-        
-        public void Clear()
-        {
-        	   if (IsReadOnly)
-               throw new NotSupportedException ("Cannot edit readonly objects.");
-            
-            this.data.Clear();
-        }
-
-        public void Add(byte item)
-        {
-        	   if (IsReadOnly)
-               throw new NotSupportedException ("Cannot edit readonly objects.");
-            
-            this.data.Add(item);
-        }
-
-        public bool Remove(byte item)
-        {
-        	   if (IsReadOnly)
-               throw new NotSupportedException ("Cannot edit readonly objects.");
-            
-            return this.data.Remove(item);
+		/// <summary>
+		///    Gets the hash value for the current instance.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="int" /> value equal to the CRC checksum of
+		///    the current instance.
+		/// </returns>
+		public override int GetHashCode ()
+		{
+			unchecked {return (int) Checksum;}
 		}
 		
+#endregion
+		
+		
+		
+#region IComparable<T>
+		
+		/// <summary>
+		///    Compares the current instance to another to determine if
+		///    their order.
+		/// </summary>
+		/// <param name="other">
+		///    A <see cref="ByteVector" /> object to compare to the
+		///    current instance.
+		/// </param>
+		/// <returns>
+		///    A <see cref="int" /> which is less than zero if the
+		///    current instance is less than <paramref name="other" />,
+		///    zero if it is equal to <paramref name="other" />, and
+		///    greater than zero if the current instance is greater than
+		///    <paramref name="other" />.
+		/// </returns>
+		public int CompareTo (ByteVector other)
+		{
+			if ((object) other == null)
+				throw new ArgumentNullException ("other");
+		
+			int diff = Count - other.Count;
+		
+			for(int i = 0; diff == 0 && i < Count; i ++)
+				diff = this [i] - other [i];
+		
+			return diff;
+		}
+		
+#endregion
+		
+		
+		
+#region IEnumerable<T>
+
+		/// <summary>
+		///    Gets an enumerator for enumerating through the the bytes
+		///    in the current instance.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="T:System.Collections.IEnumerator`1" /> for
+		///    enumerating through the contents of the current instance.
+		/// </returns>
+		public IEnumerator<byte> GetEnumerator()
+		{
+			return this.data.GetEnumerator();
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return this.data.GetEnumerator();
+		}
+		
+#endregion
+		
+		
+		
+#region ICollection<T>
+		
+		/// <summary>
+		///    Clears the current instance.
+		/// </summary>
+		/// <exception cref="NotSupportedException">
+		///    The current instance is read-only.
+		/// </exception>
+		public void Clear()
+		{
+			if (IsReadOnly)
+				throw new NotSupportedException ("Cannot edit readonly objects.");
+		
+			this.data.Clear();
+		}
+		
+		/// <summary>
+		///    Adds a single byte to the end of the current instance.
+		/// </summary>
+		/// <param name="item">
+		///    A <see cref="byte" /> to add to the current instance.
+		/// </param>
+		/// <exception cref="NotSupportedException">
+		///    The current instance is read-only.
+		/// </exception>
+		public void Add (byte item)
+		{
+			if (IsReadOnly)
+				throw new NotSupportedException (
+					"Cannot edit readonly objects.");
+		
+			this.data.Add(item);
+		}
+		
+		/// <summary>
+		///    Removes the first occurance of a <see cref="byte" /> from
+		///    the current instance.
+		/// </summary>
+		/// <param name="item">
+		///    A <see cref="byte"/> to remove from the current instance.
+		/// </param>
+		/// <returns>
+		///    <see langref="true" /> if the value was removed;
+		///    otherwise the value did not appear in the current
+		///    instance and <see langref="false" /> is returned.
+		/// </returns>
+		/// <exception cref="NotSupportedException">
+		///    The current instance is read-only.
+		/// </exception>
+		public bool Remove (byte item)
+		{
+			if (IsReadOnly)
+				throw new NotSupportedException (
+					"Cannot edit readonly objects.");
+			
+			return this.data.Remove(item);
+		}
+		
+		/// <summary>
+		///    Copies the current instance to a <see cref="byte[]"/>
+		///    starting at a specified index.
+		/// </summary>
+		/// <param name="array">
+		///    A <see cref="byte[]" /> to copy to.
+		/// </param>
+		/// <param name="arrayIndex">
+		///    A <see cref="int" /> value indicating the index in
+		///    <paramref name="array" /> at which to start copying.
+		/// </param>
 		public void CopyTo (byte [] array, int arrayIndex)
 		{
 			this.data.CopyTo (array, arrayIndex);
 		}
 		
+		/// <summary>
+		///    Gets whether or not the current instance contains a
+		///    specified byte.
+		/// </summary>
+		/// <param name="item">
+		///    A <see cref="byte" /> value to look for in the current
+		///    instance.
+		/// </param>
+		/// <returns>
+		///    <see langword="true" /> if the value could be found;
+		///    otherwise <see langword="false" />.
+		/// </returns>
 		public bool Contains (byte item)
 		{
 			return this.data.Contains (item);
 		}
 		
+		/// <summary>
+		///    Gets the number of elements in the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="int" /> value containing the number of bytes
+		///    in the current instance.
+		/// </value>
 		public int Count {
 			get {return this.data.Count;}
 		}
 		
+		/// <summary>
+		///    Gets whether or not the current instance is synchronized.
+		/// </summary>
+		/// <value>
+		///    Always <see langword="false" />.
+		/// </value>
 		public bool IsSynchronized {
 			get {return false;}
 		}
 		
+		/// <summary>
+		///    Gets the object that can be used to synchronize the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="object" /> that can be used to synchronize
+		///    the current instance.
+		/// </value>
 		public object SyncRoot {
 			get {return this;}
 		}
@@ -1986,7 +2436,17 @@ namespace TagLib {
 		
 #region IList<T>
 		
-		public void RemoveAt(int index)
+		/// <summary>
+		///    Removes the byte at the specified index.
+		/// </summary>
+		/// <param name="index">
+		///    A <see cref="int" /> value specifying the position at
+		///    which to remove a byte.
+		/// </param>
+		/// <exception cref="NotSupportedException">
+		///    The current instance is read-only.
+		/// </exception>
+		public void RemoveAt (int index)
 		{
 			if (IsReadOnly)
 				throw new NotSupportedException (
@@ -1995,6 +2455,21 @@ namespace TagLib {
 			this.data.RemoveAt(index);
 		}
 		
+		/// <summary>
+		///    Inserts a single byte into the current instance at a
+		//     specified index.
+		/// </summary>
+		/// <param name="index">
+		///    A <see cref="int" /> value specifying the position at
+		///    which to insert the value.
+		/// </param>
+		/// <param name="item">
+		///    A <see cref="byte"/> value to insert into the current
+		///    instance.
+		/// </param>
+		/// <exception cref="NotSupportedException">
+		///    The current instance is read-only.
+		/// </exception>
 		public void Insert (int index, byte item)
 		{
 			if (IsReadOnly)
@@ -2004,19 +2479,50 @@ namespace TagLib {
 			this.data.Insert(index, item);
 		}
 		
+		/// <summary>
+		///    Gets the index of the first occurance of a value.
+		/// </summary>
+		/// <param name="item">
+		///    A <see cref="byte" /> to find in the current instance.
+		/// </param>
+		/// <returns>
+		///    A <see cref="int" /> value containing the first index
+		///    at which the value was found, or -1 if it was not found.
+		/// </returns>
 		public int IndexOf (byte item)
 		{
 			return this.data.IndexOf (item);
 		}
 		
+		/// <summary>
+		///    Gets whether or not the current instance is read-only.
+		/// </summary>
+		/// <value>
+		///    <see langref="true" /> if the current instance is
+		///    read-only; otherwise <see langref="false" />.
+		/// </value>
 		public virtual bool IsReadOnly {
 			get {return false;}
 		}
 		
+		/// <summary>
+		///    Gets whether or not the current instance has a fixed
+		///    size.
+		/// </summary>
+		/// <value>
+		///    <see langref="true" /> if the current instance has a
+		///    fixed size; otherwise <see langref="false" />.
+		/// </value>
 		public virtual bool IsFixedSize {
 			get {return false;}
 		}
 		
+		/// <summary>
+		///    Gets and sets the value as a specified index.
+		/// </summary>
+		/// <exception cref="NotSupportedException">
+		///    The current instance is read-only.
+		/// </exception>
 		public byte this[int index] {
 			get {return this.data[index]; }
 			set {

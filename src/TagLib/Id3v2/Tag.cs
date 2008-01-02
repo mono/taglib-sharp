@@ -999,6 +999,14 @@ namespace TagLib.Id3v2 {
 			return 0;
 		}
 		
+		/// <summary>
+		///    Moves a specified frame so it is the first of its type in
+		///    the tag.
+		/// </summary>
+		/// <param name="frame">
+		///    A <see cref="Frame" /> object to make the first of its
+		///    type.
+		/// </param>
 		private void MakeFirstOfType (Frame frame)
 		{
 			ByteVector type = frame.FrameId;
@@ -1027,8 +1035,16 @@ namespace TagLib.Id3v2 {
 		
 		
 		
-		#region IEnumerable
+#region IEnumerable
 		
+		/// <summary>
+		///    Gets an enumerator for enumerating through the the
+		///    frames.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="T:System.Collections.IEnumerator`1" /> for
+		///    enumerating through the frames.
+		/// </returns>
 		public IEnumerator<Frame> GetEnumerator ()
 		{
 			return frame_list.GetEnumerator ();
@@ -1634,8 +1650,15 @@ namespace TagLib.Id3v2 {
 		
 		
 		
-#region IClonable
+#region ICloneable
 		
+		/// <summary>
+		///    Creates a deep copy of the current instance.
+		/// </summary>
+		/// <returns>
+		///    A new <see cref="Tag" /> object identical to the current
+		///    instance.
+		/// </returns>
 		public Tag Clone ()
 		{
 			Tag tag = new Tag ();

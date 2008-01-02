@@ -28,14 +28,34 @@ using System.Globalization;
 using System.Runtime.Serialization;
 
 namespace TagLib.Riff {
+	/// <summary>
+	///    This class extends <see
+	///    cref="T:System.Collections.Generic.Dictionary`2" /> to provide
+	///    support for reading and writing RIFF lists.
+	/// </summary>
 	[Serializable]
 	[ComVisible(false)]
 	public class List : Dictionary <ByteVector,ByteVectorCollection>
 	{
+#region Constructors
+		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="List" /> with no contents.
+		/// </summary>
 		public List ()
 		{
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="List" /> by reading the contents of a raw RIFF
+		///    list stored in a <see cref="ByteVector" /> object.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector"/> containing a raw RIFF list to
+		///    read into the new instance.
+		/// </param>
 		public List (ByteVector data)
 		{
 			if (data == null)
@@ -44,6 +64,31 @@ namespace TagLib.Riff {
 			Parse (data);
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="List" /> by reading the contents of a raw RIFF list
+		///    from a specified position in a <see cref="TagLib.File"/>.
+		/// </summary>
+		/// <param name="file">
+		///    A <see cref="TagLib.File" /> object containing the file
+		///    from which the contents of the new instance is to be
+		///    read.
+		/// </param>
+		/// <param name="position">
+		///    A <see cref="long" /> value specify at what position to
+		///    read the list.
+		/// </param>
+		/// <param name="length">
+		///    A <see cref="int" /> value specifying the number of bytes
+		///    to read.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="file" /> is <see langref="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		///    <paramref name="position" /> is less than zero or greater
+		///    than the size of the file.
+		/// </exception>
 		public List (TagLib.File file, long position, int length)
 		{
 			if (file == null)
@@ -61,32 +106,42 @@ namespace TagLib.Riff {
 			Parse (file.ReadBlock (length));
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="List" /> from a specified serialization info and
+		///    streaming context.
+		/// </summary>
+		/// <param name="info">
+		///    A <see cref="SerializationInfo" /> object containing the
+		///    serialized data to be used for the new instance.
+		/// </param>
+		/// <param name="context">
+		///    A <see cref="StreamingContext" /> object containing the
+		///    streaming context information for the new instance.
+		/// </param>
+		/// <remarks>
+		///    This constructor is implemented because <see
+		///    cref="List" /> implements the <see cref="ISerializable"
+		///    /> interface.
+		/// </remarks>
 		protected List (SerializationInfo info,
 		                StreamingContext context)
 			: base (info, context)
 		{
 		}
+#endregion
 		
-		private void Parse (ByteVector data)
-		{
-			int offset = 0;
-			while (offset + 8 < data.Count) {
-				ByteVector id = data.Mid (offset, 4);
-				int length = (int) data.Mid (offset + 4, 4)
-					.ToUInt (false);
-				
-				if (!ContainsKey (id))
-					Add (id, new ByteVectorCollection ());
-				
-				this [id].Add (data.Mid (offset + 8, length));
-				
-				if (length % 2 == 1)
-					length ++;
-				
-				offset += 8 + length;
-			}
-		}
 		
+		
+#region Public Methods
+		
+		/// <summary>
+		///    Renders the current instance as a raw RIFF list.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the rendered
+		///    version of the current instance.
+		/// </returns>
 		public ByteVector Render ()
 		{
 			ByteVector data = new ByteVector ();
@@ -108,6 +163,24 @@ namespace TagLib.Riff {
 			return data;
 		}
 		
+		/// <summary>
+		///    Renders the current instance enclosed in an item with a
+		///    specified ID.
+		/// </summary>
+		/// <param name="id">
+		///    A <see cref="ByteVector"/> object containing the ID of
+		///    the item to enclose the current instance in.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the rendered
+		///    version of the current instance.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="id" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		///    <paramref name="id" /> isn't exactly four bytes long.
+		/// </exception>
 		public ByteVector RenderEnclosed (ByteVector id)
 		{
 			if (id == null)
@@ -130,6 +203,24 @@ namespace TagLib.Riff {
 			return data;
 		}
 		
+		/// <summary>
+		///    Gets the values for a specified item in the current
+		///    instance as a <see cref="ByteVectorCollection" />.
+		/// </summary>
+		/// <param name="id">
+		///    A <see cref="ByteVector" /> object containing the ID of
+		///    the item to set.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVectorCollection" /> object containing
+		///    the values of the specified item.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="id" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		///    <paramref name="id" /> isn't exactly four bytes long.
+		/// </exception>
 		public ByteVectorCollection GetValues (ByteVector id)
 		{
 			if (id == null)
@@ -145,6 +236,24 @@ namespace TagLib.Riff {
 				value : new ByteVectorCollection ();
 		}
 		
+		/// <summary>
+		///    Gets the values for a specified item in the current
+		///    instance as a <see cref="string[]" />.
+		/// </summary>
+		/// <param name="id">
+		///    A <see cref="ByteVector" /> object containing the ID of
+		///    the item to set.
+		/// </param>
+		/// <returns>
+		///    A <see cref="string[]" /> containing the values of the
+		///    specified item.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="id" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		///    <paramref name="id" /> isn't exactly four bytes long.
+		/// </exception>
 		public string [] GetValuesAsStrings (ByteVector id)
 		{
 			if (id == null)
@@ -177,6 +286,24 @@ namespace TagLib.Riff {
 			return result;
 		}
 		
+		/// <summary>
+		///    Gets the values for a specified item in the current
+		///    instance as a <see cref="StringCollection" />.
+		/// </summary>
+		/// <param name="id">
+		///    A <see cref="ByteVector" /> object containing the ID of
+		///    the item to set.
+		/// </param>
+		/// <returns>
+		///    A <see cref="StringCollection" /> object containing the
+		///    values of the specified item.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="id" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		///    <paramref name="id" /> isn't exactly four bytes long.
+		/// </exception>
 		[Obsolete("Use GetValuesAsStrings(ByteVector)")]
 		public StringCollection GetValuesAsStringCollection (ByteVector id)
 		{
@@ -190,6 +317,25 @@ namespace TagLib.Riff {
 			return new StringCollection (GetValuesAsStrings (id));
 		}
 		
+		/// <summary>
+		///    Gets the value for a specified item in the current
+		///    instance as a <see cref="uint"/>.
+		/// </summary>
+		/// <param name="id">
+		///    A <see cref="ByteVector" /> object containing the ID of
+		///    the item to set.
+		/// </param>
+		/// <returns>
+		///    A <see cref="uint" /> value containing the first value
+		///    with the specified ID that could be converted to an
+		///    integer, or zero if none could be found.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="id" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		///    <paramref name="id" /> isn't exactly four bytes long.
+		/// </exception>
 		public uint GetValueAsUInt (ByteVector id)
 		{
 			if (id == null)
@@ -208,6 +354,26 @@ namespace TagLib.Riff {
 			return 0;
 		}
 		
+		/// <summary>
+		///    Sets the value for a specified item in the current
+		///    instance to the contents of a <see
+		///    cref="T:System.Collections.Generic.IEnumerable`1" />.
+		/// </summary>
+		/// <param name="id">
+		///    A <see cref="ByteVector" /> object containing the ID of
+		///    the item to set.
+		/// </param>
+		/// <param name="values">
+		///    A <see cref="T:System.Collections.Generic.IEnumerable`1"
+		///    /> containing the <see cref="ByteVector"/> objects to
+		///    store in the specified item.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="id" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		///    <paramref name="id" /> isn't exactly four bytes long.
+		/// </exception>
 		public void SetValue (ByteVector id,
 		                      IEnumerable<ByteVector> values)
 		{
@@ -226,6 +392,25 @@ namespace TagLib.Riff {
 				Add (id, new ByteVectorCollection (values));
 		}
 		
+		/// <summary>
+		///    Sets the value for a specified item in the current
+		///    instance to the contents of a <see cref="ByteVector[]"
+		///    />.
+		/// </summary>
+		/// <param name="id">
+		///    A <see cref="ByteVector" /> object containing the ID of
+		///    the item to set.
+		/// </param>
+		/// <param name="values">
+		///    A <see cref="ByteVector[]" /> containing the values to
+		///    store in the specified item.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="id" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		///    <paramref name="id" /> isn't exactly four bytes long.
+		/// </exception>
 		public void SetValue (ByteVector id, params ByteVector [] values)
 		{
 			if (id == null)
@@ -241,6 +426,24 @@ namespace TagLib.Riff {
 				SetValue (id, values as IEnumerable<ByteVector>);
 		}
 		
+		/// <summary>
+		///    Sets the value for a specified item in the current
+		///    instance to the value of a <see cref="uint"/>.
+		/// </summary>
+		/// <param name="id">
+		///    A <see cref="ByteVector" /> object containing the ID of
+		///    the item to set.
+		/// </param>
+		/// <param name="value">
+		///    A <see cref="uint" /> value to store in the specified
+		///    item.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="id" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		///    <paramref name="id" /> isn't exactly four bytes long.
+		/// </exception>
 		public void SetValue (ByteVector id, uint value)
 		{
 			if (id == null)
@@ -257,6 +460,26 @@ namespace TagLib.Riff {
 					CultureInfo.InvariantCulture));
 		}
 		
+		/// <summary>
+		///    Sets the value for a specified item in the current
+		///    instance to the contents of a <see
+		///    cref="T:System.Collections.Generic.IEnumerable`1" />.
+		/// </summary>
+		/// <param name="id">
+		///    A <see cref="ByteVector" /> object containing the ID of
+		///    the item to set.
+		/// </param>
+		/// <param name="values">
+		///    A <see cref="T:System.Collections.Generic.IEnumerable`1"
+		///    /> containing the <see cref="string"/> objects to store
+		///    in the specified item.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="id" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		///    <paramref name="id" /> isn't exactly four bytes long.
+		/// </exception>
 		public void SetValue (ByteVector id, IEnumerable<string> values)
 		{
 			if (id == null)
@@ -288,6 +511,24 @@ namespace TagLib.Riff {
 				SetValue (id, l);
 		}
 		
+		/// <summary>
+		///    Sets the value for a specified item in the current
+		///    instance to the contents of a <see cref="string[]" />.
+		/// </summary>
+		/// <param name="id">
+		///    A <see cref="ByteVector" /> object containing the ID of
+		///    the item to set.
+		/// </param>
+		/// <param name="values">
+		///    A <see cref="string[]" /> containing the values to store
+		///    in the specified item.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="id" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		///    <paramref name="id" /> isn't exactly four bytes long.
+		/// </exception>
 		public void SetValue (ByteVector id, params string [] values)
 		{
 			if (id == null)
@@ -303,6 +544,20 @@ namespace TagLib.Riff {
 				SetValue (id, values as IEnumerable<string>);
 		}
 		
+		/// <summary>
+		///    Removes the item with the specified ID from the current
+		///    instance.
+		/// </summary>
+		/// <param name="id">
+		///    A <see cref="ByteVector"/> object containing the ID of
+		///    the item to remove from the current instance.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="id" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		///    <paramref name="id" /> isn't exactly four bytes long.
+		/// </exception>
 		public void RemoveValue (ByteVector id)
 		{
 			if (id == null)
@@ -315,5 +570,41 @@ namespace TagLib.Riff {
 			if (ContainsKey (id))
 				Remove (id);
 		}
+		
+#endregion
+		
+		
+		
+#region Private Methods
+		
+		/// <summary>
+		///    Populates the current instance by reading in the contents
+		///    of a raw RIFF list stored in a <see cref="ByteVector" />
+		///    object.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector"/> containing a raw RIFF list to
+		///    read into the current instance.
+		/// </param>
+		private void Parse (ByteVector data)
+		{
+			int offset = 0;
+			while (offset + 8 < data.Count) {
+				ByteVector id = data.Mid (offset, 4);
+				int length = (int) data.Mid (offset + 4, 4)
+					.ToUInt (false);
+				
+				if (!ContainsKey (id))
+					Add (id, new ByteVectorCollection ());
+				
+				this [id].Add (data.Mid (offset + 8, length));
+				
+				if (length % 2 == 1)
+					length ++;
+				
+				offset += 8 + length;
+			}
+		}
+#endregion
 	}
 }

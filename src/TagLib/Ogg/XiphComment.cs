@@ -32,32 +32,86 @@ using System.Globalization;
 
 namespace TagLib.Ogg
 {
-   public class XiphComment : TagLib.Tag, IEnumerable<string>
-   {
-      //////////////////////////////////////////////////////////////////////////
-      // private properties
-      //////////////////////////////////////////////////////////////////////////
-      private Dictionary<string,string[]> field_list = new Dictionary<string,string[]> ();
-      private string vendor_id;
-      private string comment_field = "DESCRIPTION";
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
+	/// <summary>
+	///    This class extends <see cref="TagLib.Tag" /> and implements <see
+	///    cref="T:System.Collections.Generic.IEnumerable`1" /> to provide support for reading and
+	///    writing Xiph comments.
+	/// </summary>
+	public class XiphComment : TagLib.Tag, IEnumerable<string>
+	{
+#region Private Fields
+		
+		/// <summary>
+		///    Contains the comment fields.
+		/// </summary>
+		private Dictionary<string,string[]> field_list =
+			new Dictionary<string,string[]> ();
+		
+		/// <summary>
+		///    Contains the ventor ID.
+		/// </summary>
+		private string vendor_id;
+		
+		/// <summary>
+		///    Contains the field identifier to use for <see
+		///    cref="Comment" />.
+		/// </summary>
+		private string comment_field = "DESCRIPTION";
+		
+#endregion
+		
+		
+		
+#region Constructors
+		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="XiphComment" /> with no contents.
+		/// </summary>
 		public XiphComment ()
 		{
 		}
-		
+
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="XiphComment" /> by reading the contents of a raw
+		///    Xiph Comment from a <see cref="ByteVector" /> object.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing a raw Xiph
+		///    comment.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="data" /> is <see langword="null" />.
+		/// </exception>
 		public XiphComment (ByteVector data)
 		{
+			if (data == null)
+				throw new ArgumentNullException ("data");
+
 			Parse (data);
 		}
-      
-      public override void Clear ()
-      {
-         field_list.Clear ();
-      }
-      
+		
+#endregion
+		
+		
+		
+#region Public Methods
+		
+		/// <summary>
+		///    Gets the field data for a given field identifier.
+		/// </summary>
+		/// <param name="key">
+		///    A <see cref="string"/> object containing the field
+		///    identifier.
+		/// </param>
+		/// <returns>
+		///    A <see cref="string[]"/> containing the field data or an
+		///    empty array if the field was not found.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="key" /> is <see langword="null" />.
+		/// </exception>
 		public string [] GetField (string key)
 		{
 			if (key == null)
@@ -71,6 +125,20 @@ namespace TagLib.Ogg
 			return (string []) field_list [key].Clone ();
 		}
 		
+		/// <summary>
+		///    Gets the first field for a given field identifier.
+		/// </summary>
+		/// <param name="key">
+		///    A <see cref="string"/> object containing the field
+		///    identifier.
+		/// </param>
+		/// <returns>
+		///    A <see cref="string"/> containing the field data or <see
+		///    langref="null" /> if the field was not found.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="key" /> is <see langword="null" />.
+		/// </exception>
 		public string GetFirstField (string key)
 		{
 			if (key == null)
@@ -165,32 +233,21 @@ namespace TagLib.Ogg
 
          return data;
       }
-      
-		public IEnumerator<string> GetEnumerator()
-		{
-			return field_list.Keys.GetEnumerator();
-		}
-      
-      IEnumerator IEnumerable.GetEnumerator()
-      {
-         return field_list.Keys.GetEnumerator();
-      }
-      
-      //////////////////////////////////////////////////////////////////////////
-      // public properties
-      //////////////////////////////////////////////////////////////////////////
-      public override TagTypes TagTypes {get {return TagTypes.Xiph;}}
-      
-		public override bool IsEmpty {
-			get {
-				foreach (string [] values in field_list.Values)
-					if (values.Length != 0)
-						return false;
-				
-				return true;
-			}
-		}
 		
+#endregion
+		
+		
+		
+#region Public Properties
+		
+		/// <summary>
+		///    Gets the number of fields contained in the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> value containing the number of
+		///    fields in the current instance.
+		/// </value>
 		public uint FieldCount {
 			get {
 				uint count = 0;
@@ -200,198 +257,41 @@ namespace TagLib.Ogg
 				return count;
 			}
 		}
-      
-      public string VendorId
-      {
-         get
-         {
-            return vendor_id;
-         }
-      }
-
-      public override string Title
-      {
-         get {return GetFirstField ("TITLE");}
-         set {SetField ("TITLE", value);}
-      }
-      
-      public override string [] AlbumArtists
-      {
-         get {return GetField ("ALBUMARTIST");}
-         set {SetField ("ALBUMARTIST", value);}
-      }
-      
-      public override string [] Performers
-      {
-         get {return GetField ("ARTIST");}
-         set {SetField ("ARTIST", value);}
-      }
-      
-      public override string [] Composers
-      {
-         get {return GetField ("COMPOSER");}
-         set {SetField ("COMPOSER", value);}
-      }
-
-      public override string Album
-      {
-         get {return GetFirstField ("ALBUM");}
-         set {SetField ("ALBUM", value);}
-      }
-
-      public override string Comment
-      {
-         get
-         {
-            string value = GetFirstField (comment_field);
-            if (value != null || comment_field == "COMMENT")
-               return value;
-            
-            comment_field = "COMMENT";
-            return GetFirstField (comment_field);
-         }
-         set {SetField (comment_field, value);}
-      }
-      
-      public override string [] Genres
-      {
-         get {return GetField ("GENRE");}
-         set {SetField ("GENRE", value);}
-      }
-      
-      public override uint Year
-      {
-         get
-         {
-            string text = GetFirstField ("DATE");
-            uint value;
-            return (text != null && uint.TryParse (text.Length > 4 ? text.Substring (0, 4) : text, out value)) ? value : 0;
-         }
-         set {SetField ("DATE", value);}
-      }
-      
-      public override uint Track
-      {
-         get
-         {
-            string text = GetFirstField ("TRACKNUMBER");
-            string [] values;
-            uint value;
-            
-            if (text != null && (values = text.Split ('/')).Length > 0 && uint.TryParse (values [0], out value))
-               return value;
-            
-            return 0;
-         }
-         set
-         {
-            SetField ("TRACKTOTAL", TrackCount);
-            SetField ("TRACKNUMBER", value);
-         }
-      }
-      
-      public override uint TrackCount
-      {
-         get
-         {
-            string text;
-            string [] values;
-            uint value;
-            
-            if ((text = GetFirstField ("TRACKTOTAL")) != null && uint.TryParse (text, out value))
-               return value;
-            
-            if ((text = GetFirstField ("TRACKNUMBER")) != null && (values = text.Split ('/')).Length > 1 && uint.TryParse (values [1], out value))
-               return value;
-            
-            return 0;
-         }
-         set {SetField ("TRACKTOTAL", value);}
-      }
-      
-      public override uint Disc
-      {
-         get
-         {
-            string text = GetFirstField ("DISCNUMBER");
-            string [] values;
-            uint value;
-            
-            if (text != null && (values = text.Split ('/')).Length > 0 && uint.TryParse (values [0], out value))
-               return value;
-            
-            return 0;
-         }
-         set
-         {
-            SetField ("DISCTOTAL", TrackCount);
-            SetField ("DISCNUMBER", value);
-         }
-      }
-      
-      public override uint DiscCount
-      {
-         get
-         {
-            string text;
-            string [] values;
-            uint value;
-            
-            if ((text = GetFirstField ("DISCTOTAL")) != null && uint.TryParse (text, out value))
-               return value;
-            
-            if ((text = GetFirstField ("DISCNUMBER")) != null && (values = text.Split ('/')).Length > 1 && uint.TryParse (values [1], out value))
-               return value;
-            
-            return 0;
-         }
-         set {SetField ("DISCTOTAL", value);}
-      }
-      
-      public override string Lyrics
-      {
-         get {return GetFirstField ("LYRICS");}
-         set {SetField ("LYRICS", value);}
-      }
-      
-      public override string Copyright
-      {
-         get {return GetFirstField ("COPYRIGHT");}
-         set {SetField ("COPYRIGHT", value);}
-      }
-      
-      public override string Conductor
-      {
-         get {return GetFirstField ("CONDUCTOR");}
-         set {SetField ("CONDUCTOR", value);}
-      }
-      
-      public override string Grouping
-      {
-         get {return GetFirstField ("GROUPING");}
-         set {SetField ("GROUPING", value);}
-      }
-      
-      public override uint BeatsPerMinute
-      {
-         get
-         {
-            string text = GetFirstField ("TEMPO");
-            double value;
-            return (text != null && double.TryParse (text, out value)
-		&& value > 0) ? (uint) Math.Round (value) : 0;
-         }
-         set {SetField ("TEMPO", value);}
-      }
-      
-      //////////////////////////////////////////////////////////////////////////
-      // protected methods
-      //////////////////////////////////////////////////////////////////////////
+		
+		/// <summary>
+		///    Gets the vendor ID for the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the vendor ID
+		///    for current instance.
+		/// </value>
+		public string VendorId {
+			get {return vendor_id;}
+		}
+		
+#endregion
+		
+		
+		
+#region Protected Methods
+		
+		/// <summary>
+		///    Populates and initializes a new instance of <see
+		///    cref="XiphComment" /> by reading the contents of a raw
+		///    Xiph Comment from a <see cref="ByteVector" /> object.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing a raw Xiph
+		///    comment.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="data" /> is <see langword="null" />.
+		/// </exception>
 		protected void Parse (ByteVector data)
 		{
 			if (data == null)
-			return;
-
+				throw new ArgumentNullException ("data");
+			
 			// The first thing in the comment data is the vendor ID
 			// length, followed by a UTF8 string with the vendor ID.
 			int pos = 0;
@@ -446,5 +346,455 @@ namespace TagLib.Ogg
 				}
 			}
 		}
+		
+#endregion
+		
+		
+		
+#region IEnumerable
+		
+		/// <summary>
+		///    Gets an enumerator for enumerating through the the field
+		///    identifiers.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="T:System.Collections.IEnumerator`1" /> for
+		///    enumerating through the field identifiers.
+		/// </returns>
+		public IEnumerator<string> GetEnumerator ()
+		{
+			return field_list.Keys.GetEnumerator();
+		}
+		
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return field_list.Keys.GetEnumerator();
+		}
+		
+#endregion
+		
+		
+		
+#region TagLib.Tag
+		
+		/// <summary>
+		///    Gets the tag types contained in the current instance.
+		/// </summary>
+		/// <value>
+		///    Always <see cref="TagTypes.Xiph" />.
+		/// </value>
+		public override TagTypes TagTypes {
+			get {return TagTypes.Xiph;}
+		}
+		
+		/// <summary>
+		///    Gets and sets the title for the media described by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the title for
+		///    the media described by the current instance or <see
+		///    langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TITLE" field.
+		/// </remarks>
+		public override string Title {
+			get {return GetFirstField ("TITLE");}
+			set {SetField ("TITLE", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the performers or artists who performed in
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the performers or
+		///    artists who performed in the media described by the
+		///    current instance or an empty array if no value is
+		///    present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ARTIST" field.
+		/// </remarks>
+		public override string [] Performers {
+			get {return GetField ("ARTIST");}
+			set {SetField ("ARTIST", value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the band or artist who is credited in the
+		///    creation of the entire album or collection containing the
+		///    media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the band or artist
+		///    who is credited in the creation of the entire album or
+		///    collection containing the media described by the current
+		///    instance or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ALBUMARTIST"
+		///    field.
+		/// </remarks>
+		public override string [] AlbumArtists {
+			get {return GetField ("ALBUMARTIST");}
+			set {SetField ("ALBUMARTIST", value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the composers of the media represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the composers of the
+		///    media represented by the current instance or an empty
+		///    array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "COMPOSER" field.
+		/// </remarks>
+		public override string [] Composers {
+			get {return GetField ("COMPOSER");}
+			set {SetField ("COMPOSER", value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the album of the media represented by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the album of
+		///    the media represented by the current instance or <see
+		///    langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ALBUM" field.
+		/// </remarks>
+		public override string Album {
+			get {return GetFirstField ("ALBUM");}
+			set {SetField ("ALBUM", value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets a user comment on the media represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing user comments
+		///    on the media represented by the current instance or <see
+		///    langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "COMMENT" or
+		///    "DESCRIPTION" field, preferring "DESCRIPTION" but using
+		///    "COMMENT" if that is the field used by the comment.
+		/// </remarks>
+		public override string Comment {
+			get {
+				string value = GetFirstField (comment_field);
+				if (value != null || comment_field == "COMMENT")
+					return value;
+				
+				comment_field = "COMMENT";
+				return GetFirstField (comment_field);
+			}
+			set {SetField (comment_field, value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the genres of the media represented by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the genres of the
+		///    media represented by the current instance or an empty
+		///    array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "GENRE" field.
+		/// </remarks>
+		public override string [] Genres {
+			get {return GetField ("GENRE");}
+			set {SetField ("GENRE", value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the year that the media represented by the
+		///    current instance was recorded.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> containing the year that the media
+		///    represented by the current instance was created or zero
+		///    if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "DATE" field. If a
+		///    value greater than 9999 is set, this property will be
+		///    cleared.
+		/// </remarks>
+		public override uint Year {
+			get {
+				string text = GetFirstField ("DATE");
+				uint value;
+				return (text != null && uint.TryParse (
+					text.Length > 4 ? text.Substring (0, 4)
+					: text, out value)) ? value : 0;
+			}
+			set {SetField ("DATE", value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the position of the media represented by
+		///    the current instance in its containing album.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> containing the position of the
+		///    media represented by the current instance in its
+		///    containing album or zero if not specified.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TRACKNUMER"
+		///    field.
+		/// </remarks>
+		public override uint Track {
+			get {
+				string text = GetFirstField ("TRACKNUMBER");
+				string [] values;
+				uint value;
+				
+				if (text != null && (values = text.Split ('/'))
+					.Length > 0 && uint.TryParse (
+						values [0], out value))
+					return value;
+				
+				return 0;
+			}
+			set {
+				SetField ("TRACKTOTAL", TrackCount);
+				SetField ("TRACKNUMBER", value);
+			}
+		}
+		
+		/// <summary>
+		///    Gets and sets the number of tracks in the album
+		///    containing the media represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> containing the number of tracks in
+		///    the album containing the media represented by the current
+		///    instance or zero if not specified.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TRACKTOTAL" field
+		///    but is capable of reading from "TRACKNUMBER" if the total
+		///    is stored in {track}/{count} format.
+		/// </remarks>
+		public override uint TrackCount {
+			get {
+				string text;
+				string [] values;
+				uint value;
+				
+				if ((text = GetFirstField ("TRACKTOTAL")) !=
+					null && uint.TryParse (text, out value))
+					return value;
+				
+				if ((text = GetFirstField ("TRACKNUMBER")) !=
+					null && (values = text.Split ('/'))
+					.Length > 1 && uint.TryParse (
+						values [1], out value))
+					return value;
+				
+				return 0;
+			}
+			set {SetField ("TRACKTOTAL", value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the number of the disc containing the media
+		///    represented by the current instance in the boxed set.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> containing the number of the disc
+		///    containing the media represented by the current instance
+		///    in the boxed set.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "DISCNUMBER"
+		///    field.
+		/// </remarks>
+		public override uint Disc {
+			get {
+				string text = GetFirstField ("DISCNUMBER");
+				string [] values;
+				uint value;
+				
+				if (text != null && (values = text.Split ('/'))
+					.Length > 0 && uint.TryParse (
+						values [0], out value))
+					return value;
+				
+				return 0;
+			}
+			set {
+				SetField ("DISCTOTAL", TrackCount);
+				SetField ("DISCNUMBER", value);
+			}
+		}
+		
+		/// <summary>
+		///    Gets and sets the number of discs in the boxed set
+		///    containing the media represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> containing the number of discs in
+		///    the boxed set containing the media represented by the
+		///    current instance or zero if not specified.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "DISCTOTAL" field
+		///    but is capable of reading from "DISCNUMBER" if the total
+		///    is stored in {disc}/{count} format.
+		/// </remarks>
+		public override uint DiscCount {
+			get {
+				string text;
+				string [] values;
+				uint value;
+
+				if ((text = GetFirstField ("DISCTOTAL")) != null
+					&& uint.TryParse (text, out value))
+					return value;
+				
+				if ((text = GetFirstField ("DISCNUMBER")) !=
+					null && (values = text.Split ('/'))
+					.Length > 1 && uint.TryParse (
+						values [1], out value))
+					return value;
+				
+				return 0;
+			}
+			set {SetField ("DISCTOTAL", value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the lyrics or script of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the lyrics or
+		///    script of the media represented by the current instance
+		///    or <see langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "LYRICS" field.
+		/// </remarks>
+		public override string Lyrics {
+			get {return GetFirstField ("LYRICS");}
+			set {SetField ("LYRICS", value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the grouping on the album which the media
+		///    in the current instance belongs to.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the grouping on
+		///    the album which the media in the current instance belongs
+		///    to or <see langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "GROUPING" field.
+		/// </remarks>
+		public override string Grouping {
+			get {return GetFirstField ("GROUPING");}
+			set {SetField ("GROUPING", value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the number of beats per minute in the audio
+		///    of the media represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> containing the number of beats per
+		///    minute in the audio of the media represented by the
+		///    current instance, or zero if not specified.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TEMPO" field.
+		/// </remarks>
+		public override uint BeatsPerMinute {
+			get {
+				string text = GetFirstField ("TEMPO");
+				double value;
+				return (text != null &&
+					double.TryParse (text, out value) &&
+					value > 0) ? (uint) Math.Round (value) :
+					0;
+			}
+			set {SetField ("TEMPO", value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the conductor or director of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the conductor
+		///    or director of the media represented by the current
+		///    instance or <see langref="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "CONDUCTOR" field.
+		/// </remarks>
+		public override string Conductor {
+			get {return GetFirstField ("CONDUCTOR");}
+			set {SetField ("CONDUCTOR", value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the copyright information for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the copyright
+		///    information for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "COPYRIGHT" field.
+		/// </remarks>
+		public override string Copyright {
+			get {return GetFirstField ("COPYRIGHT");}
+			set {SetField ("COPYRIGHT", value);}
+		}
+		
+		/// <summary>
+		///    Gets whether or not the current instance is empty.
+		/// </summary>
+		/// <value>
+		///    <see langword="true" /> if the current instance does not
+		///    any values. Otherwise <see langword="false" />.
+		/// </value>
+		public override bool IsEmpty {
+			get {
+				foreach (string [] values in field_list.Values)
+					if (values.Length != 0)
+						return false;
+				
+				return true;
+			}
+		}
+		
+		/// <summary>
+		///    Clears the values stored in the current instance.
+		/// </summary>
+		public override void Clear ()
+		{
+			field_list.Clear ();
+		}
+		
+#endregion
 	}
 }

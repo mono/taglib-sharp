@@ -406,12 +406,27 @@ namespace TagLib.Id3v2 {
 		
 		
 		
-#region IClonable
+#region ICloneable
 		
+		/// <summary>
+		///    Creates a deep copy of the current instance.
+		/// </summary>
+		/// <returns>
+		///    A new <see cref="Frame" /> object identical to the
+		///    current instance.
+		/// </returns>
+		/// <remarks>
+		///    This method is implemented by rendering the current
+		///    instance as an ID3v2.4 frame and using <see
+		///    cref="FrameFactory.CreateFrame" /> to create a new
+		///    frame. As such, this method should be overridden by
+		///    child classes.
+		/// </remarks>
 		public virtual Frame Clone ()
 		{
 			int index = 0;
-			return FrameFactory.CreateFrame (Render (4), ref index, 4);
+			return FrameFactory.CreateFrame (Render (4), ref index,
+				4);
 		}
 		
 		object ICloneable.Clone ()

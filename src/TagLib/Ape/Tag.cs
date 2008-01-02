@@ -116,7 +116,7 @@ namespace TagLib.Ape {
 		public Tag ()
 		{
 		}
-      
+		
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Tag" /> by reading the contents from a specified
@@ -151,6 +151,23 @@ namespace TagLib.Ape {
 			Read (file, position);
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="Tag" /> by reading the contents of a raw tag in a
+		///    specified <see cref="ByteVector"/> object.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing the raw
+		///    tag.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="data" /> is <see langref="null"/>.
+		/// </exception>
+		/// <exception cref="CorruptFileException">
+		///    <paramref name="data" /> is too small to contain a tag,
+		///    has a header where the footer should be, or is smaller
+		///    than the tag it is supposed to contain.
+		/// </exception>
 		public Tag (ByteVector data)
 		{
 			if (data == null)

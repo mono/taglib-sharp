@@ -25,12 +25,13 @@ using System;
 
 namespace TagLib.Riff {
 	/// <summary>
-	///    This class provides a representation of a Microsoft WaveFormatEx
-	///    structure that can be read from disk.
+	///    This structure provides a representation of a Microsoft
+	///    WaveFormatEx structure.
 	/// </summary>
 	public struct WaveFormatEx : IAudioCodec
 	{
 #region Private Fields
+		
 		/// <summary>
 		///    Contains the format tag of the audio.
 		/// </summary>
@@ -55,6 +56,7 @@ namespace TagLib.Riff {
 		///    Contains the number of bits per sample.
 		/// </summary>
 		ushort bits_per_sample;
+		
 #endregion
 		
 		
@@ -726,10 +728,10 @@ namespace TagLib.Riff {
 		///    cref="WaveFormatEx" /> are equal to eachother.
 		/// </summary>
 		/// <param name="first">
-		///    The first <see cref="WaveFormatEx" /> object to compare.
+		///    A <see cref="WaveFormatEx" /> object to compare.
 		/// </param>
 		/// <param name="second">
-		///    The second <see cref="WaveFormatEx" /> object to compare.
+		///    A <see cref="WaveFormatEx" /> object to compare.
 		/// </param>
 		/// <returns>
 		///    <see langref="true" /> if <paramref name="first" /> is
@@ -744,13 +746,13 @@ namespace TagLib.Riff {
 		
 		/// <summary>
 		///    Gets whether or not two instances of <see
-		///    cref="WaveFormatEx" /> are unequal to eachother.
+		///    cref="WaveFormatEx" /> differ.
 		/// </summary>
 		/// <param name="first">
-		///    The first <see cref="WaveFormatEx" /> object to compare.
+		///    A <see cref="WaveFormatEx" /> object to compare.
 		/// </param>
 		/// <param name="second">
-		///    The second <see cref="WaveFormatEx" /> object to compare.
+		///    A <see cref="WaveFormatEx" /> object to compare.
 		/// </param>
 		/// <returns>
 		///    <see langref="true" /> if <paramref name="first" /> is
