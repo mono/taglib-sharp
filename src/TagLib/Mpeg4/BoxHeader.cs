@@ -164,7 +164,7 @@ namespace TagLib.Mpeg4 {
 		///    used to create a header of type "<c>uuid</c>".
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="type" /> is <see langref="null" /> or is
+		///    <paramref name="type" /> is <see langword="null" /> or is
 		///    equal to "<c>uuid</c>".
 		/// </exception>
 		/// <exception cref="ArgumentException">
@@ -188,16 +188,16 @@ namespace TagLib.Mpeg4 {
 		///    byte box type.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="type" /> is <see langref="null" /> - or -
+		///    <paramref name="type" /> is <see langword="null" /> - or -
 		///    <paramref name="type" /> is equal to "<c>uuid</c>" and
-		///    <paramref name="extendedType" /> is <see langref="null"
+		///    <paramref name="extendedType" /> is <see langword="null"
 		///    />.
 		/// </exception>
 		/// <exception cref="ArgumentException">
 		///    <paramref name="type" /> isn't exactly 4 bytes long - or
 		///    - <paramref name="type" /> isn't "<c>uuid</c>" but
 		///    <paramref name="extendedType" /> isn't <see
-		///    langref="null" /> - or - paramref name="type" /> is
+		///    langword="null" /> - or - paramref name="type" /> is
 		///    "<c>uuid</c>" but <paramref name="extendedType" /> isn't
 		///    exactly 16 bytes long.
 		/// </exception>
@@ -263,7 +263,7 @@ namespace TagLib.Mpeg4 {
 		/// </summary>
 		/// <value>
 		///    A <see cref="ByteVector" /> object containing the 16 byte
-		///    extended type, or <see langref="null" /> if <see
+		///    extended type, or <see langword="null" /> if <see
 		///    cref="BoxType" /> is not "<c>uuid</c>".
 		/// </value>
 		public ByteVector ExtendedType {

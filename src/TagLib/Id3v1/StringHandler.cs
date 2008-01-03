@@ -30,24 +30,48 @@ using System;
 
 namespace TagLib.Id3v1
 {
-   public class StringHandler
-   {
-      //////////////////////////////////////////////////////////////////////////
-      // public methods
-      //////////////////////////////////////////////////////////////////////////
-      public virtual string Parse (ByteVector data)
-      {
-         if (data == null)
-            throw new ArgumentNullException ("data");
-         
-        string output = data.ToString (StringType.Latin1).Trim ();
-        int i = output.IndexOf ('\0');
-        return (i >= 0) ? output.Substring (0, i) : output;
-      }
-
-      public virtual ByteVector Render (string text)
-      {
-        return ByteVector.FromString (text, StringType.Latin1);
-      }
-   }
+	/// <summary>
+	///    This class provides a mechanism for customizing how Id3v1 text
+	///    is read and written.
+	/// </summary>
+	public class StringHandler
+	{
+		/// <summary>
+		///    Converts raw ID3v1 text data to a <see cref="string" />
+		///    object.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing raw Id3v1
+		///    text data.
+		/// </param>
+		/// <returns>
+		///    A <see cref="string"/> object containing the converted
+		///    text.
+		/// </returns>
+		public virtual string Parse (ByteVector data)
+		{
+			if (data == null)
+				throw new ArgumentNullException ("data");
+			
+			string output = data.ToString (StringType.Latin1).Trim ();
+			int i = output.IndexOf ('\0');
+			return (i >= 0) ? output.Substring (0, i) : output;
+		}
+		
+		/// <summary>
+		///    Converts a <see cref="string" /> object to raw ID3v1 text
+		///    data.
+		/// </summary>
+		/// <param name="text">
+		///    A <see cref="string" /> object to convert.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> containing the raw ID3v1 text
+		///    data.
+		/// </returns>
+		public virtual ByteVector Render (string text)
+		{
+			return ByteVector.FromString (text, StringType.Latin1);
+		}
+	}
 }

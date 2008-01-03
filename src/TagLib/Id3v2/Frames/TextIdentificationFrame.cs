@@ -680,8 +680,8 @@ namespace TagLib.Id3v2 {
 		/// <returns>
 		///    A <see cref="TextInformationFrame" /> object containing
 		///    the frame found in or added to <paramref name="tag" /> or
-		///    <see langref="null" /> if no value was found <paramref
-		///    name="create" /> is <see langref="false" />.
+		///    <see langword="null" /> if no value was found <paramref
+		///    name="create" /> is <see langword="false" />.
 		/// </returns>
 		/// <remarks>
 		///    To create a frame without having to specify the encoding,
@@ -689,7 +689,7 @@ namespace TagLib.Id3v2 {
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="tag" /> or <paramref name="type" /> is
-		///    <see langref="null" />.
+		///    <see langword="null" />.
 		/// </exception>
 		/// <exception cref="ArgumentException">
 		///    <paramref name="type" /> is not exactly four bytes long.
@@ -743,12 +743,12 @@ namespace TagLib.Id3v2 {
 		/// <returns>
 		///    A <see cref="TextInformationFrame" /> object containing
 		///    the frame found in or added to <paramref name="tag" /> or
-		///    <see langref="null" /> if no value was found <paramref
-		///    name="create" /> is <see langref="false" />.
+		///    <see langword="null" /> if no value was found <paramref
+		///    name="create" /> is <see langword="false" />.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="tag" /> or <paramref name="ident" /> is
-		///    <see langref="null" />.
+		///    <see langword="null" />.
 		/// </exception>
 		/// <exception cref="ArgumentException">
 		///    <paramref name="ident" /> is not exactly four bytes long.
@@ -775,11 +775,11 @@ namespace TagLib.Id3v2 {
 		/// <returns>
 		///    A <see cref="TextInformationFrame" /> object containing
 		///    the frame found in <paramref name="tag" /> or <see
-		///    langref="null" /> if no value was found.
+		///    langword="null" /> if no value was found.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="tag" /> or <paramref name="type" /> is
-		///    <see langref="null" />.
+		///    <see langword="null" />.
 		/// </exception>
 		/// <exception cref="ArgumentException">
 		///    <paramref name="type" /> is not exactly four bytes long.

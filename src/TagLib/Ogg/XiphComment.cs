@@ -34,8 +34,8 @@ namespace TagLib.Ogg
 {
 	/// <summary>
 	///    This class extends <see cref="TagLib.Tag" /> and implements <see
-	///    cref="T:System.Collections.Generic.IEnumerable`1" /> to provide support for reading and
-	///    writing Xiph comments.
+	///    cref="T:System.Collections.Generic.IEnumerable`1" /> to provide
+	///    support for reading and writing Xiph comments.
 	/// </summary>
 	public class XiphComment : TagLib.Tag, IEnumerable<string>
 	{
@@ -134,7 +134,7 @@ namespace TagLib.Ogg
 		/// </param>
 		/// <returns>
 		///    A <see cref="string"/> containing the field data or <see
-		///    langref="null" /> if the field was not found.
+		///    langword="null" /> if the field was not found.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="key" /> is <see langword="null" />.
@@ -148,6 +148,19 @@ namespace TagLib.Ogg
 			return (values.Length > 0) ? values [0] : null;
 		}
 		
+		/// <summary>
+		///    Sets the contents of a specified field to a number.
+		/// </summary>
+		/// <param name="key">
+		///    A <see cref="string"/> object containing the field
+		///    identifier.
+		/// </param>
+		/// <param name="number">
+		///    A <see cref="uint" /> value to set the field to.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="key" /> is <see langword="null" />.
+		/// </exception>
 		public void SetField (string key, uint number)
 		{
 			if (key == null)
@@ -160,6 +173,21 @@ namespace TagLib.Ogg
 					CultureInfo.InvariantCulture));
 		}
 		
+		/// <summary>
+		///    Sets the contents of a specified field to the contents of
+		///    a <see cref="string[]" />.
+		/// </summary>
+		/// <param name="key">
+		///    A <see cref="string"/> object containing the field
+		///    identifier.
+		/// </param>
+		/// <param name="values">
+		///    A <see cref="string[]"/> containing the values to store
+		///    in the current instance.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="key" /> is <see langword="null" />.
+		/// </exception>
 		public void SetField (string key, params string [] values)
 		{
 			if (key == null)
@@ -185,6 +213,17 @@ namespace TagLib.Ogg
 				field_list.Add (key, result.ToArray ());
 		}
 		
+		/// <summary>
+		///    Removes a field and all its values from the current
+		///    instance.
+		/// </summary>
+		/// <param name="key">
+		///    A <see cref="string"/> object containing the field
+		///    identifier.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="key" /> is <see langword="null" />.
+		/// </exception>
 		public void RemoveField (string key)
 		{
 			if (key == null)
@@ -194,46 +233,65 @@ namespace TagLib.Ogg
 			
 			field_list.Remove (key);
 		}
-      
-      public ByteVector Render (bool addFramingBit)
-      {
-         ByteVector data = new ByteVector ();
-
-         // Add the vendor ID length and the vendor ID.  It's important to use the
-         // length of the data(String::UTF8) rather than the lenght of the the string
-         // since this is UTF8 text and there may be more characters in the data than
-         // in the UTF16 string.
-
-         ByteVector vendor_data = ByteVector.FromString (vendor_id, StringType.UTF8);
-
-         data.Add (ByteVector.FromUInt ((uint) vendor_data.Count, false));
-         data.Add (vendor_data);
-
-         // Add the number of fields.
-
-         data.Add (ByteVector.FromUInt (FieldCount, false));
-
-         foreach (KeyValuePair<string,string[]> entry in field_list)
-         {
-            // And now iterate over the values of the current list.
-
-            foreach (string value in entry.Value) {
-               ByteVector field_data = ByteVector.FromString (entry.Key, StringType.UTF8);
-               field_data.Add ((byte) '=');
-               field_data.Add (ByteVector.FromString (value, StringType.UTF8));
-
-               data.Add (ByteVector.FromUInt ((uint) field_data.Count, false));
-               data.Add (field_data);
-            }
-         }
-
-         // Append the "framing bit".
-         if (addFramingBit)
-            data.Add ((byte) 1);
-
-         return data;
-      }
 		
+		/// <summary>
+		///    Renders the current instance as a raw Xiph comment,
+		///    optionally adding a framing bit.
+		/// </summary>
+		/// <param name="addFramingBit">
+		///    If <see langword="true" />, a framing bit will be added to
+		///    the end of the content.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the rendered
+		///    version of the current instance.
+		/// </returns>
+		public ByteVector Render (bool addFramingBit)
+		{
+			ByteVector data = new ByteVector ();
+
+			// Add the vendor ID length and the vendor ID.  It's
+			// important to use the length of the data(String::UTF8)
+			// rather than the lenght of the the string since this
+			// is UTF8 text and there may be more characters in the
+			// data than in the UTF16 string.
+			
+			ByteVector vendor_data = ByteVector.FromString (
+				vendor_id, StringType.UTF8);
+
+			data.Add (ByteVector.FromUInt ((uint) vendor_data.Count,
+				false));
+			data.Add (vendor_data);
+
+			// Add the number of fields.
+
+			data.Add (ByteVector.FromUInt (FieldCount, false));
+
+			foreach (KeyValuePair<string,string[]> entry in field_list) {
+				// And now iterate over the values of the
+				// current list.
+
+				foreach (string value in entry.Value) {
+					ByteVector field_data =
+						ByteVector.FromString (
+							entry.Key, StringType.UTF8);
+					field_data.Add ((byte) '=');
+					field_data.Add (ByteVector.FromString (
+						value, StringType.UTF8));
+					
+					data.Add (ByteVector.FromUInt ((uint)
+						field_data.Count, false));
+					data.Add (field_data);
+				}
+			}
+
+			// Append the "framing bit".
+			if (addFramingBit)
+				data.Add ((byte) 1);
+
+			return data;
+		}
+
 #endregion
 		
 		
@@ -743,7 +801,7 @@ namespace TagLib.Ogg
 		/// <value>
 		///    A <see cref="string" /> object containing the conductor
 		///    or director of the media represented by the current
-		///    instance or <see langref="null" /> if no value present.
+		///    instance or <see langword="null" /> if no value present.
 		/// </value>
 		/// <remarks>
 		///    This property is implemented using the "CONDUCTOR" field.

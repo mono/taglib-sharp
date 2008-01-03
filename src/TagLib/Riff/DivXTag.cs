@@ -117,7 +117,7 @@ namespace TagLib.Riff {
 		///    read the tag.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="file" /> is <see langref="null" />.
+		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="ArgumentOutOfRangeException">
 		///    <paramref name="position" /> is less than zero or greater
@@ -164,7 +164,7 @@ namespace TagLib.Riff {
 		///    read into the new instance.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="data" /> is <see langref="null" />.
+		///    <paramref name="data" /> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="CorruptFileException">
 		///    The file does not contain the file identifier at the

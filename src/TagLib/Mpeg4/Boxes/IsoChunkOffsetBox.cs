@@ -143,7 +143,7 @@ namespace TagLib.Mpeg4 {
 		///    offset is before this point, it won't be updated.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <param name="file" /> is <see langref="null" />.
+		///    <param name="file" /> is <see langword="null" />.
 		/// </exception>
 		public void Overwrite (File file, long sizeDifference,
 		                       long after)

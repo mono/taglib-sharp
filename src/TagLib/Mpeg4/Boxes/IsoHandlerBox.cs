@@ -99,7 +99,7 @@ namespace TagLib.Mpeg4 {
 		///    name.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="handlerType" /> is <see langref="null"
+		///    <paramref name="handlerType" /> is <see langword="null"
 		///    />.
 		/// </exception>
 		/// <exception cref="ArgumentException">

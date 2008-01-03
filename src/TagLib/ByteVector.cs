@@ -382,7 +382,7 @@ namespace TagLib {
 		///    Latin-1 strings, common to ID3v1 and ID3v2 tags.
 		/// </summary>
 		/// <value>
-		///    <see langref="true" /> if the broken behavior is to be
+		///    <see langword="true" /> if the broken behavior is to be
 		///    used. Otherwise, <see langword="false" />.
 		/// </value>
 		/// <remarks>
@@ -499,7 +499,8 @@ namespace TagLib {
 		///    <paramref name="pattern" /> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="ArgumentOutOfRangeException">
-		///    <paramref name="offset" /> is less than zero.
+		///    <paramref name="offset" /> is less than zero or
+		///    <paramref name="byteAlign" /> is less than 1.
 		/// </exception>
 		public int Find (ByteVector pattern, int offset, int byteAlign)
 		{
@@ -508,7 +509,12 @@ namespace TagLib {
 			
 			if (offset < 0)
 				throw new ArgumentOutOfRangeException (
-					"offset");
+					"offset", "offset must be at least 0.");
+			
+			if (byteAlign < 1)
+				throw new ArgumentOutOfRangeException (
+					"byteAlign",
+					"byteAlign must be at least 1.");
 			
 			if (pattern.Count > Count - offset)
 				return -1;
@@ -1475,7 +1481,7 @@ namespace TagLib {
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="first" /> or <paramref name="second" />
-		///    is <see langref="null" />.
+		///    is <see langword="null" />.
 		/// </exception>
 		public static bool operator< (ByteVector first,
 		                              ByteVector second)
@@ -1506,7 +1512,7 @@ namespace TagLib {
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="first" /> or <paramref name="second" />
-		///    is <see langref="null" />.
+		///    is <see langword="null" />.
 		/// </exception>
 		public static bool operator<= (ByteVector first,
 		                               ByteVector second)
@@ -1537,7 +1543,7 @@ namespace TagLib {
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="first" /> or <paramref name="second" />
-		///    is <see langref="null" />.
+		///    is <see langword="null" />.
 		/// </exception>
 		public static bool operator> (ByteVector first,
 		                              ByteVector second)
@@ -1568,7 +1574,7 @@ namespace TagLib {
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="first" /> or <paramref name="second" />
-		///    is <see langref="null" />.
+		///    is <see langword="null" />.
 		/// </exception>
 		public static bool operator>= (ByteVector first,
 		                               ByteVector second)
@@ -2201,10 +2207,10 @@ namespace TagLib {
 		///    instance.
 		/// </param>
 		/// <returns>
-		///    <see langref="true" /> if <paramref name="other"/> is not
-		///    <see langref="null" />, is of type <see
+		///    <see langword="true" /> if <paramref name="other"/> is not
+		///    <see langword="null" />, is of type <see
 		///    cref="ByteVector" />, and is equal to the current
-		///    instance; otherwise <see langref="false" />.
+		///    instance; otherwise <see langword="false" />.
 		/// </returns>
 		public override bool Equals (object other)
 		{
@@ -2223,9 +2229,9 @@ namespace TagLib {
 		///    current instance.
 		/// </param>
 		/// <returns>
-		///    <see langref="true" /> if <paramref name="other"/> is not
-		///    <see langref="null" /> and equal to the current instance;
-		///    otherwise <see langref="false" />.
+		///    <see langword="true" /> if <paramref name="other"/> is not
+		///    <see langword="null" /> and equal to the current instance;
+		///    otherwise <see langword="false" />.
 		/// </returns>
 		public bool Equals (ByteVector other)
 		{
@@ -2348,9 +2354,9 @@ namespace TagLib {
 		///    A <see cref="byte"/> to remove from the current instance.
 		/// </param>
 		/// <returns>
-		///    <see langref="true" /> if the value was removed;
+		///    <see langword="true" /> if the value was removed;
 		///    otherwise the value did not appear in the current
-		///    instance and <see langref="false" /> is returned.
+		///    instance and <see langword="false" /> is returned.
 		/// </returns>
 		/// <exception cref="NotSupportedException">
 		///    The current instance is read-only.
@@ -2498,8 +2504,8 @@ namespace TagLib {
 		///    Gets whether or not the current instance is read-only.
 		/// </summary>
 		/// <value>
-		///    <see langref="true" /> if the current instance is
-		///    read-only; otherwise <see langref="false" />.
+		///    <see langword="true" /> if the current instance is
+		///    read-only; otherwise <see langword="false" />.
 		/// </value>
 		public virtual bool IsReadOnly {
 			get {return false;}
@@ -2510,8 +2516,8 @@ namespace TagLib {
 		///    size.
 		/// </summary>
 		/// <value>
-		///    <see langref="true" /> if the current instance has a
-		///    fixed size; otherwise <see langref="false" />.
+		///    <see langword="true" /> if the current instance has a
+		///    fixed size; otherwise <see langword="false" />.
 		/// </value>
 		public virtual bool IsFixedSize {
 			get {return false;}

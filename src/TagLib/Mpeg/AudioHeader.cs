@@ -698,7 +698,7 @@ namespace TagLib.Mpeg {
 		///    header was found.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="file" /> is <see langref="null" />.
+		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		public static bool Find (out AudioHeader header,
 		                         TagLib.File file, long position,

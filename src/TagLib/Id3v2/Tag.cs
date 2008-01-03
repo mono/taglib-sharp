@@ -125,7 +125,7 @@ namespace TagLib.Id3v2 {
 		///    read the tag.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="file" /> is <see langref="null" />.
+		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="ArgumentOutOfRangeException">
 		///    <paramref name="position" /> is less than zero or greater
@@ -202,7 +202,7 @@ namespace TagLib.Id3v2 {
 		///    through the frames.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="ident" /> is <see langref="null" />.
+		///    <paramref name="ident" /> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="ArgumentException">
 		///    <paramref name="ident" /> is not exactly four bytes long.
@@ -261,7 +261,7 @@ namespace TagLib.Id3v2 {
 		///    through the frames.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="ident" /> is <see langref="null" />.
+		///    <paramref name="ident" /> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="ArgumentException">
 		///    <paramref name="ident" /> is not exactly four bytes long.
@@ -292,7 +292,7 @@ namespace TagLib.Id3v2 {
 		///    instance.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="frame" /> is <see langref="null" />.
+		///    <paramref name="frame" /> is <see langword="null" />.
 		/// </exception>
 		public void AddFrame (Frame frame)
 		{
@@ -316,7 +316,7 @@ namespace TagLib.Id3v2 {
 		/// </param>
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="oldFrame" /> or <paramref name="newFrame"
-		///    /> is <see langref="null" />.
+		///    /> is <see langword="null" />.
 		/// </exception>
 		public void ReplaceFrame (Frame oldFrame, Frame newFrame)
 		{
@@ -344,7 +344,7 @@ namespace TagLib.Id3v2 {
 		///    instance.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="frame" /> is <see langref="null" />.
+		///    <paramref name="frame" /> is <see langword="null" />.
 		/// </exception>
 		public void RemoveFrame (Frame frame)
 		{
@@ -364,7 +364,7 @@ namespace TagLib.Id3v2 {
 		///    identifier of the frames to remove.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="ident" /> is <see langref="null" />.
+		///    <paramref name="ident" /> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="ArgumentException">
 		///    <paramref name="ident" /> is not exactly four bytes long.
@@ -397,7 +397,7 @@ namespace TagLib.Id3v2 {
 		///    the value.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="ident" /> is <see langref="null" />.
+		///    <paramref name="ident" /> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="ArgumentException">
 		///    <paramref name="ident" /> is not exactly four bytes long.
@@ -445,7 +445,7 @@ namespace TagLib.Id3v2 {
 		///    langword="null" /> to unset the value.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="ident" /> is <see langref="null" />.
+		///    <paramref name="ident" /> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="ArgumentException">
 		///    <paramref name="ident" /> is not exactly four bytes long.
@@ -486,7 +486,7 @@ namespace TagLib.Id3v2 {
 		///    />/<paramref name="count" />".
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="ident" /> is <see langref="null" />.
+		///    <paramref name="ident" /> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="ArgumentException">
 		///    <paramref name="ident" /> is not exactly four bytes long.
@@ -631,11 +631,11 @@ namespace TagLib.Id3v2 {
 			}
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Public Static Properties
+#region Public Static Properties
 		
 		/// <summary>
 		///    Gets and sets the ISO-639-2 language code to use when
@@ -930,7 +930,7 @@ namespace TagLib.Id3v2 {
 		/// </param>
 		/// <returns>
 		///    A <see cref="string" /> object containing the text of the
-		///    specified frame, or <see langref="null" /> if no value
+		///    specified frame, or <see langword="null" /> if no value
 		///    was found.
 		/// </returns>
 		private string GetTextAsString (ByteVector ident)
@@ -1038,8 +1038,7 @@ namespace TagLib.Id3v2 {
 #region IEnumerable
 		
 		/// <summary>
-		///    Gets an enumerator for enumerating through the the
-		///    frames.
+		///    Gets an enumerator for enumerating through the frames.
 		/// </summary>
 		/// <returns>
 		///    A <see cref="T:System.Collections.IEnumerator`1" /> for
@@ -1477,7 +1476,7 @@ namespace TagLib.Id3v2 {
 		/// <value>
 		///    A <see cref="string" /> object containing the conductor
 		///    or director of the media represented by the current
-		///    instance or <see langref="null" /> if no value present.
+		///    instance or <see langword="null" /> if no value present.
 		/// </value>
 		/// <remarks>
 		///    This property is implemented using the "TPE3" Text

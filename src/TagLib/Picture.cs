@@ -246,7 +246,7 @@ namespace TagLib {
 		///    file to read.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="path" /> is <see langref="null" />.
+		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		public Picture (string path)
 		{
@@ -268,7 +268,7 @@ namespace TagLib {
 		///    abstraction of the file to read.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="abstraction" /> is <see langref="null"
+		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
 		public Picture (File.IFileAbstraction abstraction)
@@ -291,7 +291,7 @@ namespace TagLib {
 		///    to use.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="data" /> is <see langref="null" />.
+		///    <paramref name="data" /> is <see langword="null" />.
 		/// </exception>
 		public Picture (ByteVector data)
 		{

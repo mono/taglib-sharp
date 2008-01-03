@@ -230,7 +230,7 @@ namespace TagLib {
 		///    file to use in the new instance.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="path" /> is <see langref="null" />.
+		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		protected File (string path)
 		{
@@ -249,7 +249,7 @@ namespace TagLib {
 		///    reading from and writing to the file.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="abstraction" /> is <see langref="null"
+		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
 		protected File (IFileAbstraction abstraction)
@@ -339,7 +339,7 @@ namespace TagLib {
 		/// </summary>
 		/// <value>
 		///    A <see cref="string" /> object containing the mime-type
-		///    used to create the file or <see langref="null" /> if <see
+		///    used to create the file or <see langword="null" /> if <see
 		///    cref="Create(IFileAbstraction,string,ReadStyle)" /> was
 		///    not used to create the current instance.
 		/// </value>
@@ -482,10 +482,10 @@ namespace TagLib {
 		///    A <see cref="Tag" /> object containing the tag that was
 		///    found in or added to the current instance. If no
 		///    matching tag was found and none was created, <see
-		///    langref="null" /> is returned.
+		///    langword="null" /> is returned.
 		/// </returns>
 		/// <remarks>
-		///    <para>Passing <see langref="true" /> to <paramref
+		///    <para>Passing <see langword="true" /> to <paramref
 		///    name="create" /> does not guarantee the tag will be
 		///    created. For example, trying to create an ID3v2 tag on an
 		///    OGG Vorbis file will always fail.</para>
@@ -525,7 +525,7 @@ namespace TagLib {
 		/// <returns>
 		///    A <see cref="Tag" /> object containing the tag that was
 		///    found in the current instance. If no matching tag
-		///    was found, <see langref="null" /> is returned.
+		///    was found, <see langword="null" /> is returned.
 		/// </returns>
 		/// <remarks>
 		///    <para>This class merely accesses the tag if it exists.
@@ -629,7 +629,7 @@ namespace TagLib {
 		///    the current end.
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="data" /> is <see langref="null" />.
+		///    <paramref name="data" /> is <see langword="null" />.
 		/// </exception>
 		public void WriteBlock (ByteVector data)
 		{
@@ -663,7 +663,7 @@ namespace TagLib {
 		///    the value was found. If not found, -1 is returned.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="pattern" /> is <see langref="null" />.
+		///    <paramref name="pattern" /> is <see langword="null" />.
 		/// </exception>
 		public long Find (ByteVector pattern, long startPosition,
 		                  ByteVector before)
@@ -812,7 +812,7 @@ namespace TagLib {
 		///    the value was found. If not found, -1 is returned.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="pattern" /> is <see langref="null" />.
+		///    <paramref name="pattern" /> is <see langword="null" />.
 		/// </exception>
 		public long Find (ByteVector pattern, long startPosition)
 		{
@@ -832,7 +832,7 @@ namespace TagLib {
 		///    the value was found. If not found, -1 is returned.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="pattern" /> is <see langref="null" />.
+		///    <paramref name="pattern" /> is <see langword="null" />.
 		/// </exception>
 		public long Find (ByteVector pattern)
 		{
@@ -865,7 +865,7 @@ namespace TagLib {
 		///    implemented.
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="pattern" /> is <see langref="null" />.
+		///    <paramref name="pattern" /> is <see langword="null" />.
 		/// </exception>
 		long RFind (ByteVector pattern, long startPosition,
 		            ByteVector after)
@@ -961,7 +961,7 @@ namespace TagLib {
 		///    the value was found. If not found, -1 is returned.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="pattern" /> is <see langref="null" />.
+		///    <paramref name="pattern" /> is <see langword="null" />.
 		/// </exception>
 		public long RFind (ByteVector pattern, long startPosition)
 		{
@@ -981,7 +981,7 @@ namespace TagLib {
 		///    the value was found. If not found, -1 is returned.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="pattern" /> is <see langref="null" />.
+		///    <paramref name="pattern" /> is <see langword="null" />.
 		/// </exception>
 		public long RFind (ByteVector pattern)
 		{
@@ -1008,7 +1008,7 @@ namespace TagLib {
 		///    one.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="data" /> is <see langref="null" />.
+		///    <paramref name="data" /> is <see langword="null" />.
 		/// </exception>
 		public void Insert (ByteVector data, long start, long replace)
 		{
@@ -1134,7 +1134,7 @@ namespace TagLib {
 		///    cref="Insert(ByteVector,long,long)" />.
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="data" /> is <see langref="null" />.
+		///    <paramref name="data" /> is <see langword="null" />.
 		/// </exception>
 		public void Insert (ByteVector data, long start)
 		{
@@ -1345,7 +1345,7 @@ namespace TagLib {
 		/// <param name="mimetype">
 		///    A <see cref="string" /> object containing the mime-type
 		///    to use when selecting the appropriate class to use, or
-		///    <see langref="null" /> if the extension in <paramref
+		///    <see langword="null" /> if the extension in <paramref
 		///    name="abstraction" /> is to be used.
 		/// </param>
 		/// <param name="propertiesStyle">
@@ -1384,7 +1384,7 @@ namespace TagLib {
 		/// <param name="mimetype">
 		///    A <see cref="string" /> object containing the mime-type
 		///    to use when selecting the appropriate class to use, or
-		///    <see langref="null" /> if the extension in <paramref
+		///    <see langword="null" /> if the extension in <paramref
 		///    name="abstraction" /> is to be used.
 		/// </param>
 		/// <param name="propertiesStyle">
@@ -1524,7 +1524,7 @@ namespace TagLib {
 			///    path of the file to use in the new instance.
 			/// </param>
 			/// <exception cref="ArgumentNullException">
-			///    <paramref name="path" /> is <see langref="null"
+			///    <paramref name="path" /> is <see langword="null"
 			///    />.
 			/// </exception>
 			public LocalFileAbstraction (string path)

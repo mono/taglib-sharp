@@ -156,7 +156,7 @@ namespace TagLib.NonContainer {
 		///    A <see cref="Tag" /> object containing the tag that was
 		///    found in the current instance. If no
 		///    matching tag was found and none was created, <see
-		///    langref="null" /> is returned.
+		///    langword="null" /> is returned.
 		/// </returns>
 		public TagLib.Tag GetTag (TagTypes type)
 		{

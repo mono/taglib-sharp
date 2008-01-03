@@ -86,7 +86,7 @@ namespace TagLib.Mpeg {
 		///    <paramref name="file" /> at which the header begins.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="file" /> is <see langref="null" />.
+		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="CorruptFileException">
 		///    Insufficient data could be read for the header.

@@ -91,7 +91,7 @@ namespace TagLib.NonContainer {
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="path" /> is <see langref="null" />.
+		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		protected File (string path, ReadStyle propertiesStyle)
 			: base (path)
@@ -109,7 +109,7 @@ namespace TagLib.NonContainer {
 		///    file to use in the new instance.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="path" /> is <see langref="null" />.
+		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		protected File (string path) : this (path, ReadStyle.Average)
 		{
@@ -130,7 +130,7 @@ namespace TagLib.NonContainer {
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="abstraction" /> is <see langref="null"
+		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
 		protected File (File.IFileAbstraction abstraction,
@@ -150,7 +150,7 @@ namespace TagLib.NonContainer {
 		///    reading from and writing to the file.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="abstraction" /> is <see langref="null"
+		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
 		protected File (File.IFileAbstraction abstraction)

@@ -31,6 +31,10 @@ using System.Globalization;
 
 namespace TagLib.Id3v1
 {
+	/// <summary>
+	///    This class extends <see cref="Tag" /> to provide support for
+	///    reading and writing tags stored in the ID3v1.1 format.
+	/// </summary>
 	public class Tag : TagLib.Tag
 	{
 #region Private Static Fields
@@ -127,15 +131,15 @@ namespace TagLib.Id3v1
 		///    read the tag.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="file" /> is <see langref="null" />.
+		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="ArgumentOutOfRangeException">
 		///    <paramref name="position" /> is less than zero or greater
 		///    than the size of the file.
 		/// </exception>
 		/// <exception cref="CorruptFileException">
-		///    The file does not contain the file identifier at the
-		///    given position.
+		///    The file does not contain <see cref="FileIdentifier" />
+		///    at the given position.
 		/// </exception>
 		public Tag (File file, long position)
 		{
@@ -164,6 +168,21 @@ namespace TagLib.Id3v1
 			Parse (data);
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="Tag" /> by reading the contents from a specified
+		///    <see cref="ByteVector" /> object.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object to read the tag from.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="data" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="CorruptFileException">
+		///    <paramref name="data" /> is less than 128 bytes or does
+		///    not start with <see cref="FileIdentifier" />.
+		/// </exception>
 		public Tag (ByteVector data)
 		{
 			if (data == null)

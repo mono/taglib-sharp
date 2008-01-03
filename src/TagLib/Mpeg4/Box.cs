@@ -65,7 +65,7 @@ namespace TagLib.Mpeg4 {
 		/// <param name="handler">
 		///    A <see cref="IsoHandlerBox" /> object containing the
 		///    handler that applies to the new instance, or <see
-		///    langref="null" /> if no handler applies.
+		///    langword="null" /> if no handler applies.
 		/// </param>
 		protected Box (BoxHeader header, IsoHandlerBox handler)
 		{
@@ -454,7 +454,7 @@ namespace TagLib.Mpeg4 {
 		///    boxes read from the file.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="file" /> is <see langref="null" />.
+		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		protected IEnumerable<Box> LoadChildren (TagLib.File file)
 		{
@@ -492,7 +492,7 @@ namespace TagLib.Mpeg4 {
 		///    read from the file.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="file" /> is <see langref="null" />.
+		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		protected ByteVector LoadData (TagLib.File file)
 		{

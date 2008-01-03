@@ -818,9 +818,9 @@ namespace TagLib.Riff
 		///    A <see cref="BitmapInfoHeader" /> object to compare.
 		/// </param>
 		/// <returns>
-		///    <see langref="true" /> if <paramref name="first" /> is
+		///    <see langword="true" /> if <paramref name="first" /> is
 		///    equal to <paramref name="second" />. Otherwise, <see
-		///    langref="false" />.
+		///    langword="false" />.
 		/// </returns>
 		public static bool operator == (BitmapInfoHeader first,
 		                                BitmapInfoHeader second)
@@ -839,9 +839,9 @@ namespace TagLib.Riff
 		///    A <see cref="BitmapInfoHeader" /> object to compare.
 		/// </param>
 		/// <returns>
-		///    <see langref="true" /> if <paramref name="first" /> is
+		///    <see langword="true" /> if <paramref name="first" /> is
 		///    unequal to <paramref name="second" />. Otherwise, <see
-		///    langref="false" />.
+		///    langword="false" />.
 		/// </returns>
 		public static bool operator != (BitmapInfoHeader first,
 		                                BitmapInfoHeader second)

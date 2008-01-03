@@ -315,7 +315,7 @@ namespace TagLib {
 		/// </param>
 		/// <returns>
 		///    A <see cref="string" /> object containing the audio genre
-		///    found at the index, or <see langref="null" /> if it does
+		///    found at the index, or <see langword="null" /> if it does
 		///    not exist.
 		/// </returns>
 		public static string IndexToAudio (byte index)
@@ -332,7 +332,7 @@ namespace TagLib {
 		/// </param>
 		/// <returns>
 		///    A <see cref="string" /> object containing the video genre
-		///    found at the index, or <see langref="null" /> if it does
+		///    found at the index, or <see langword="null" /> if it does
 		///    not exist.
 		/// </returns>
 		public static string IndexToVideo (byte index)
@@ -349,7 +349,7 @@ namespace TagLib {
 		/// </param>
 		/// <returns>
 		///    A <see cref="string" /> object containing the audio genre
-		///    found at the index, or <see langref="null" /> if it does
+		///    found at the index, or <see langword="null" /> if it does
 		///    not exist.
 		/// </returns>
 		public static string IndexToAudio (string text)
@@ -366,7 +366,7 @@ namespace TagLib {
 		/// </param>
 		/// <returns>
 		///    A <see cref="string" /> object containing the video genre
-		///    found at the index, or <see langref="null" /> if it does
+		///    found at the index, or <see langword="null" /> if it does
 		///    not exist.
 		/// </returns>
 		public static string IndexToVideo (string text)

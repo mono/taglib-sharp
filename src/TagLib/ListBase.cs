@@ -33,28 +33,57 @@ using System.Collections.Generic;
 namespace TagLib {
 	public class ListBase<T> : IList<T> where T : IComparable<T>
 	{
-		private List<T> data = new List<T>();
+		private List<T> data = new List<T> ();
 
 		#region Constructors
-
-		public ListBase() 
+		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="T:TagLib.ListBase`1" /> with no contents.
+		/// </summary>
+		public ListBase ()
 		{
 		}
 
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="T:TagLib.ListBase`1" /> with specified contents.
+		/// </summary>
+		/// <param name="list">
+		///   A <see cref="T:System.Collections.Generic.IEnumerable`1"
+		///   /> containing objects to add to the current instance.
+		/// </param>
 		public ListBase(ListBase<T> list)
 		{
-			Add(list);
+			if (list != null)
+				Add (list);
 		}
 
-		public ListBase(params T [] list)
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="T:TagLib.ListBase`1" /> with specified contents.
+		/// </summary>
+		/// <param name="list">
+		///   A <see cref="System.Array" /> containing objects to add to
+		///   the current instance.
+		/// </param>
+		public ListBase (params T [] list)
 		{
-			Add(list);
+			if (list != null)
+				Add (list);
 		}
 
 		#endregion
 
 		#region Properties
-
+		
+		/// <summary>
+		///    Gets whether or not the current instance is empty.
+		/// </summary>
+		/// <value>
+		///    <see langword="true" /> if the current instance is empty;
+		///    otherwise <see langword="false" />.
+		/// </value>
 		public bool IsEmpty {
 			get {return Count == 0;}
 		}
@@ -84,8 +113,26 @@ namespace TagLib {
 			}
 		}
 
-		public virtual void SortedInsert(T item, bool unique)
+		/// <summary>
+		///    Performs a sorted insert of an object into the current
+		///    instance, optionally only adding if the item is unique.
+		/// </summary>
+		/// <param name="item">
+		///    An object to add to the current instance.
+		/// </param>
+		/// <param name="unique">
+		///    If <see langword="true" />, the object will only be added
+		///    if an identical value is not already contained in the
+		///    current instance.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="item" /> is <see langword="null" />.
+		/// </exception>
+		public virtual void SortedInsert (T item, bool unique)
 		{
+			if (item == null)
+				throw new ArgumentNullException ("item");
+			
 			int i = 0;
 			for(; i < data.Count; i++) {
 				if(item.CompareTo(data[i]) == 0 && unique) {
@@ -100,66 +147,111 @@ namespace TagLib {
 			Insert(i, item);
 		}
 
-		public void SortedInsert(T item)
+		/// <summary>
+		///    Performs a sorted insert of an object into the current
+		///    instance.
+		/// </summary>
+		/// <param name="item">
+		///    An object to add to the current instance.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="item" /> is <see langword="null" />.
+		/// </exception>
+		public void SortedInsert (T item)
 		{
+			if (item == null)
+				throw new ArgumentNullException ("item");
+			
 			SortedInsert(item, false);
 		}
-
-		public T [] ToArray()
+		
+		/// <summary>
+		///    Converts the current instance to an array.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="System.Array" /> containing the contents of
+		///    the current instance.
+		/// </returns>
+		public T [] ToArray ()
 		{
 			return data.ToArray();
 		}
 
 		#endregion
 
-		#region IList<T>
-
+#region IList<T>
+		
+		/// <summary>
+		///    Gets whether or not the current instance is read-only.
+		/// </summary>
+		/// <value>
+		///    Always <see langword="false" />.
+		/// </value>
 		public bool IsReadOnly {
 			get { return false; }
 		}
-
+		
+		/// <summary>
+		///    Gets whether or not the current instance has a fixed
+		///    size.
+		/// </summary>
+		/// <value>
+		///    Always <see langword="false" />.
+		/// </value>
 		public bool IsFixedSize {
 			get { return false; }
 		}
-
-		public T this[int index] {
+		
+		/// <summary>
+		///    Gets and sets the value as a specified index.
+		/// </summary>
+		public T this [int index] {
 			get { return data[index]; }
 			set { data[index] = value; }
 		}
-
-		public void Add(T item)
+		
+		/// <summary>
+		///    Adds a single item to end of the current instance.
+		/// </summary>
+		/// <param name="item">
+		///    An object to add to the end of the current instance.
+		/// </param>
+		public void Add (T item)
 		{
-			data.Add(item);
+			data.Add (item);
 		}
-
-		public void Clear()
+		
+		/// <summary>
+		///    Clears the contents of the current instance.
+		/// </summary>
+		public void Clear ()
 		{
-			data.Clear();
+			data.Clear ();
 		}
-
-		public bool Contains(T item)
+		
+		public bool Contains (T item)
 		{
-			return data.Contains(item);
+			return data.Contains (item);
 		}
-
-		public int IndexOf(T item)
+		
+		public int IndexOf (T item)
 		{
-			return data.IndexOf(item);
+			return data.IndexOf (item);
 		}
-
-		public void Insert(int index, T item)
+		
+		public void Insert (int index, T item)
 		{
-			data.Insert(index, item);
+			data.Insert (index, item);
 		}
-
+		
 		public bool Remove(T item)
 		{
-			return data.Remove(item);
+			return data.Remove (item);
 		}
-
+		
 		public void RemoveAt(int index)
 		{
-			data.RemoveAt(index);
+			data.RemoveAt (index);
 		}
 
 		public string ToString(string separator)
@@ -182,41 +274,54 @@ namespace TagLib {
 			return ToString(", ");
 		}
 
-		#endregion
-
-		#region ICollection<T>
-
+#endregion
+		
+		
+		
+#region ICollection<T>
+		
 		public int Count {
 			get {return data.Count;}
 		}
-
+		
 		public bool IsSynchronized { 
 			get {return false;}
 		}
-
+		
 		public object SyncRoot { 
 			get {return this;}
 		}
-
-		public void CopyTo(T [] array, int arrayIndex)
+		
+		public void CopyTo (T [] array, int arrayIndex)
 		{
-			data.CopyTo(array, arrayIndex);
+			data.CopyTo (array, arrayIndex);
 		}
-
-		#endregion
-
-		#region IEnumerable<T>
-
+		
+#endregion
+		
+		
+		
+		
+#region IEnumerable<T>
+		
+		/// <summary>
+		///    Gets an enumerator for enumerating through the elements
+		///    in the current instance.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="T:System.Collections.IEnumerator`1" /> for
+		///    enumerating through the tag's data boxes.
+		/// </returns>
+		public IEnumerator<T> GetEnumerator()
+		{
+			return data.GetEnumerator();
+		}
+		
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return data.GetEnumerator();
 		}
 
-		public IEnumerator<T> GetEnumerator()
-		{
-			return data.GetEnumerator();
-		}
-
-		#endregion
+#endregion
 	}
 }

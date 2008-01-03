@@ -448,6 +448,14 @@ namespace TagLib.Mpeg4 {
 		
 		#region IEnumerable<Box>
 		
+		/// <summary>
+		///    Gets an enumerator for enumerating through the tag's data
+		///    boxes.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="T:System.Collections.IEnumerator`1" /> for
+		///    enumerating through the tag's data boxes.
+		/// </returns>
 		public IEnumerator<Box> GetEnumerator()
 		{
 			return ilst_box.Children.GetEnumerator();
@@ -912,7 +920,7 @@ namespace TagLib.Mpeg4 {
 		/// <value>
 		///    A <see cref="string" /> object containing the conductor
 		///    or director of the media represented by the current
-		///    instance or <see langref="null" /> if no value present.
+		///    instance or <see langword="null" /> if no value present.
 		/// </value>
 		/// <remarks>
 		///    This property is implemented using the "cond" data box.

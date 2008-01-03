@@ -150,7 +150,7 @@ namespace TagLib {
 		/// <value>
 		///    A <see cref="string" /> object containing the extension
 		///    registered by the current instance, or <see
-		///    langref="null" /> if not specified.
+		///    langword="null" /> if not specified.
 		/// </value>
 		/// <remarks>
 		///    <para>The value is the file extension minus the preceding

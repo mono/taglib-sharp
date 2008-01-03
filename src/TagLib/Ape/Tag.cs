@@ -132,7 +132,7 @@ namespace TagLib.Ape {
 		///    read the tag.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="file" /> is <see langref="null" />.
+		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="ArgumentOutOfRangeException">
 		///    <paramref name="position" /> is less than zero or greater
@@ -161,7 +161,7 @@ namespace TagLib.Ape {
 		///    tag.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="data" /> is <see langref="null"/>.
+		///    <paramref name="data" /> is <see langword="null"/>.
 		/// </exception>
 		/// <exception cref="CorruptFileException">
 		///    <paramref name="data" /> is too small to contain a tag,
@@ -256,7 +256,7 @@ namespace TagLib.Ape {
 		///    />/<paramref name="count" />".
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="key" /> is <see langref="null" />.
+		///    <paramref name="key" /> is <see langword="null" />.
 		/// </exception>
 		public void AddValue (string key, uint number, uint count)
 		{
@@ -299,7 +299,7 @@ namespace TagLib.Ape {
 		///    />/<paramref name="count" />".
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="ident" /> is <see langref="null" />.
+		///    <paramref name="ident" /> is <see langword="null" />.
 		/// </exception>
 		public void SetValue (string key, uint number, uint count)
 		{
@@ -334,7 +334,7 @@ namespace TagLib.Ape {
 		///    or empty, the value will not be added.
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="key" /> is <see langref="null" />.
+		///    <paramref name="key" /> is <see langword="null" />.
 		/// </exception>
 		public void AddValue (string key, string value)
 		{
@@ -364,7 +364,7 @@ namespace TagLib.Ape {
 		///    or empty, the value will be cleared.
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="key" /> is <see langref="null" />.
+		///    <paramref name="key" /> is <see langword="null" />.
 		/// </exception>
 		public void SetValue (string key, string value)
 		{
@@ -393,7 +393,7 @@ namespace TagLib.Ape {
 		///    or empty, the value will not be added.
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="key" /> is <see langref="null" />.
+		///    <paramref name="key" /> is <see langword="null" />.
 		/// </exception>
 		public void AddValue (string key, string [] value)
 		{
@@ -436,7 +436,7 @@ namespace TagLib.Ape {
 		///    or empty, the value will be cleared.
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="key" /> is <see langref="null" />.
+		///    <paramref name="key" /> is <see langword="null" />.
 		/// </exception>
 		public void SetValue (string key, string [] value)
 		{
@@ -679,7 +679,7 @@ namespace TagLib.Ape {
 		/// </param>
 		/// <returns>
 		///    A <see cref="string" /> object containing the text of the
-		///    specified frame, or <see langref="null" /> if no value
+		///    specified frame, or <see langword="null" /> if no value
 		///    was found.
 		/// </returns>
 		private string GetItemAsString (string key)
@@ -1085,7 +1085,7 @@ namespace TagLib.Ape {
 		/// <value>
 		///    A <see cref="string" /> object containing the conductor
 		///    or director of the media represented by the current
-		///    instance or <see langref="null" /> if no value present.
+		///    instance or <see langword="null" /> if no value present.
 		/// </value>
 		/// <remarks>
 		///    This property is implemented using the "CONDUCTOR" item.

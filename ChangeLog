@@ -1,3 +1,75 @@
+2008-01-02  Brian Nickel <brian.nickel@gmail.com>
+	
+	*  src/TagLib/CombinedTag.cs:
+	*  src/TagLib/ByteVectorList.cs:
+	*  src/TagLib/Id3v1/Tag.cs:
+	*  src/TagLib/Id3v1/StringHandler.cs:
+	*  src/TagLib/Riff/List.cs:
+	*  src/TagLib/Riff/File.cs:
+	*  src/TagLib/Riff/BitmapInfoHeader.cs:
+	*  src/TagLib/Riff/AviHeaderList.cs:
+	*  src/TagLib/Riff/DivXTag.cs:
+	*  src/TagLib/Riff/ListTag.cs:
+	*  src/TagLib/Riff/InfoTag.cs:
+	*  src/TagLib/Riff/MovieIdTag.cs:
+	*  src/TagLib/Riff/WaveFormatEx.cs:
+	*  src/TagLib/Genres.cs:
+	*  src/TagLib/Id3v2/Tag.cs:
+	*  src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs:
+	*  src/TagLib/Id3v2/ExtendedHeader.cs:
+	*  src/TagLib/Mpeg/File.cs:
+	*  src/TagLib/Mpeg/VideoHeader.cs:
+	*  src/TagLib/Mpeg/AudioFile.cs:
+	*  src/TagLib/Mpeg/AudioHeader.cs:
+	*  src/TagLib/ByteVector.cs:
+	*  src/TagLib/SupportedMimeType.cs:
+	*  src/TagLib/Flac/Picture.cs:
+	*  src/TagLib/Flac/File.cs:
+	*  src/TagLib/Flac/StreamHeader.cs:
+	*  src/TagLib/Ape/Tag.cs:
+	*  src/TagLib/Ape/Footer.cs:
+	*  src/TagLib/Ape/File.cs:
+	*  src/TagLib/ListBase.cs:
+	*  src/TagLib/Mpeg4/Boxes/FullBox.cs:
+	*  src/TagLib/Mpeg4/Boxes/IsoChunkLargeOffsetBox.cs:
+	*  src/TagLib/Mpeg4/Boxes/IsoHandlerBox.cs:
+	*  src/TagLib/Mpeg4/Boxes/IsoChunkOffsetBox.cs:
+	*  src/TagLib/Mpeg4/Boxes/IsoMetaBox.cs:
+	*  src/TagLib/Mpeg4/FileParser.cs:
+	*  src/TagLib/Mpeg4/AppleTag.cs:
+	*  src/TagLib/Mpeg4/File.cs:
+	*  src/TagLib/Mpeg4/BoxHeader.cs:
+	*  src/TagLib/Mpeg4/Box.cs:
+	*  src/TagLib/Picture.cs:
+	*  src/TagLib/Tag.cs:
+	*  src/TagLib/Mpc/File.cs:
+	*  src/TagLib/Mpc/StreamHeader.cs:
+	*  src/TagLib/File.cs:
+	*  src/TagLib/WavPack/File.cs:
+	*  src/TagLib/WavPack/StreamHeader.cs:
+	*  src/TagLib/NonContainer/Tag.cs:
+	*  src/TagLib/NonContainer/File.cs:
+	*  src/TagLib/NonContainer/EndTag.cs:
+	*  src/TagLib/NonContainer/StartTag.cs:
+	*  src/TagLib/Asf/Tag.cs:
+	*  src/TagLib/Asf/HeaderExtensionObject.cs:
+	*  src/TagLib/Asf/File.cs:
+	*  src/TagLib/Asf/HeaderObject.cs:
+	*  src/TagLib/Asf/FilePropertiesObject.cs:
+	*  src/TagLib/Asf/ExtendedContentDescriptionObject.cs:
+	*  src/TagLib/Asf/UnknownObject.cs:
+	*  src/TagLib/Asf/MetadataLibraryObject.cs:
+	*  src/TagLib/Asf/PaddingObject.cs:
+	*  src/TagLib/Asf/StreamPropertiesObject.cs:
+	*  src/TagLib/Asf/ContentDescriptionObject.cs:
+	*  src/TagLib/Asf/Object.cs:
+	*  src/TagLib/Ogg/XiphComment.cs:
+	*  src/TagLib/Ogg/Page.cs:
+	*  src/TagLib/Ogg/File.cs:
+	*  src/TagLib/Ogg/Paginator.cs:
+	*  src/TagLib/Ogg/PageHeader.cs:
+	*  src/TagLib/Ogg/GroupedComment.cs: More docs, corrected some typos.
+
 2008-01-01  Brian Nickel <brian.nickel@gmail.com>
 	
 	I'm working to finish up the xmldocs so I can get rid of the aging docs

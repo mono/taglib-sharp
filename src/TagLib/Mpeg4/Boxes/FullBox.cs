@@ -123,7 +123,7 @@ namespace TagLib.Mpeg4 {
 		///    new instance.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="type" /> is <see langref="null" /> of
+		///    <paramref name="type" /> is <see langword="null" /> of
 		///    equal to "<c>uuid</c>".
 		/// </exception>
 		/// <exception cref="ArgumentException">

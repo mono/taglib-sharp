@@ -217,7 +217,7 @@ namespace TagLib.NonContainer {
 		/// </param>
 		/// <returns>
 		///    The <see cref="TagLib.Tag" /> object added to the current
-		///    instance, or <see langref="null" /> if it couldn't be
+		///    instance, or <see langword="null" /> if it couldn't be
 		///    created.
 		/// </returns>
 		/// <remarks>
@@ -263,7 +263,7 @@ namespace TagLib.NonContainer {
 		/// </param>
 		/// <returns>
 		///    A <see cref="TagLib.Tag" /> object representing the tag
-		///    found at the specified position, or <see langref="null"
+		///    found at the specified position, or <see langword="null"
 		///    /> if no tag was found.
 		/// </returns>
 		private TagLib.Tag ReadTag (ref long start)

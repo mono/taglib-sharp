@@ -131,7 +131,7 @@ namespace TagLib.Mpeg4 {
 		/// </summary>
 		/// <value>
 		///    A <see cref="IsoMovieHeaderBox" /> object read by the
-		///    current instance, or <see langref="null" /> if not found.
+		///    current instance, or <see langword="null" /> if not found.
 		/// </value>
 		/// <remarks>
 		///    This value will only be set by calling <see
@@ -146,7 +146,7 @@ namespace TagLib.Mpeg4 {
 		/// </summary>
 		/// <value>
 		///    A <see cref="IsoUserDataBox" /> object read by the
-		///    current instance, or <see langref="null" /> if not found.
+		///    current instance, or <see langword="null" /> if not found.
 		/// </value>
 		/// <remarks>
 		///    This value will only be set by calling <see
@@ -162,7 +162,7 @@ namespace TagLib.Mpeg4 {
 		/// </summary>
 		/// <value>
 		///    A <see cref="IsoAudioSampleEntry" /> object read by the
-		///    current instance, or <see langref="null" /> if not found.
+		///    current instance, or <see langword="null" /> if not found.
 		/// </value>
 		/// <remarks>
 		///    This value will only be set by calling <see
@@ -188,7 +188,7 @@ namespace TagLib.Mpeg4 {
 		/// </summary>
 		/// <value>
 		///    A <see cref="IsoVisualSampleEntry" /> object read by the
-		///    current instance, or <see langref="null" /> if not found.
+		///    current instance, or <see langword="null" /> if not found.
 		/// </value>
 		/// <remarks>
 		///    This value will only be set by calling <see

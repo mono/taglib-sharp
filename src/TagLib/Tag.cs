@@ -462,7 +462,7 @@ namespace TagLib {
 		/// <value>
 		///    A <see cref="string" /> object containing the conductor
 		///    or director of the media represented by the current
-		///    instance or <see langref="null" /> if no value present.
+		///    instance or <see langword="null" /> if no value present.
 		/// </value>
 		/// <remarks>
 		///    <para>This field is most useful for organizing classical

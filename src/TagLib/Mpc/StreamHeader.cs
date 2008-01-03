@@ -259,6 +259,13 @@ namespace TagLib.MusePack {
 		
 		#region IEquatable
 		
+		/// <summary>
+		///    Generates a hash code for the current instance.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="int" /> value containing the hash code for
+		///    the current instance.
+		/// </returns>
 		public override int GetHashCode ()
 		{
 			unchecked {
@@ -267,14 +274,40 @@ namespace TagLib.MusePack {
 			}
 		}
 		
-		public override bool Equals (object obj)
+		/// <summary>
+		///    Checks whether or not the current instance is equal to
+		///    another object.
+		/// </summary>
+		/// <param name="other">
+		///    A <see cref="object" /> to compare to the current
+		///    instance.
+		/// </param>
+		/// <returns>
+		///    A <see cref="bool" /> value indicating whether or not the
+		///    current instance is equal to <paramref name="other" />.
+		/// </returns>
+		/// <seealso cref="M:System.IEquatable`1.Equals" />
+		public override bool Equals (object other)
 		{
-			if (!(obj is StreamHeader))
+			if (!(other is StreamHeader))
 				return false;
 			
-			return Equals ((StreamHeader) obj);
+			return Equals ((StreamHeader) other);
 		}
 		
+		/// <summary>
+		///    Checks whether or not the current instance is equal to
+		///    another instance of <see cref="StreamHeader" />.
+		/// </summary>
+		/// <param name="other">
+		///    A <see cref="StreamHeader" /> object to compare to the
+		///    current instance.
+		/// </param>
+		/// <returns>
+		///    A <see cref="bool" /> value indicating whether or not the
+		///    current instance is equal to <paramref name="other" />.
+		/// </returns>
+		/// <seealso cref="M:System.IEquatable`1.Equals" />
 		public bool Equals (StreamHeader other)
 		{
 			return header_data == other.header_data &&
@@ -283,12 +316,42 @@ namespace TagLib.MusePack {
 				frames == other.frames;
 		}
 		
+		/// <summary>
+		///    Gets whether or not two instances of <see
+		///    cref="StreamHeader" /> are equal to eachother.
+		/// </summary>
+		/// <param name="first">
+		///    A <see cref="StreamHeader" /> object to compare.
+		/// </param>
+		/// <param name="second">
+		///    A <see cref="StreamHeader" /> object to compare.
+		/// </param>
+		/// <returns>
+		///    <see langword="true" /> if <paramref name="first" /> is
+		///    equal to <paramref name="second" />. Otherwise, <see
+		///    langword="false" />.
+		/// </returns>
 		public static bool operator == (StreamHeader first,
 		                                StreamHeader second)
 		{
 			return first.Equals (second);
 		}
 		
+		/// <summary>
+		///    Gets whether or not two instances of <see
+		///    cref="StreamHeader" /> differ.
+		/// </summary>
+		/// <param name="first">
+		///    A <see cref="StreamHeader" /> object to compare.
+		/// </param>
+		/// <param name="second">
+		///    A <see cref="StreamHeader" /> object to compare.
+		/// </param>
+		/// <returns>
+		///    <see langword="true" /> if <paramref name="first" /> is
+		///    unequal to <paramref name="second" />. Otherwise, <see
+		///    langword="false" />.
+		/// </returns>
 		public static bool operator != (StreamHeader first,
 		                                StreamHeader second)
 		{

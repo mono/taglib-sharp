@@ -30,6 +30,11 @@ using System.Collections.Generic;
 
 namespace TagLib.Ogg
 {
+	/// <summary>
+	///    This class accepts a sequence of pages for a single Ogg stream,
+	///    accepts changes, and produces a new sequence of pages to write to
+	///    disk.
+	/// </summary>
 	public class Paginator
 	{
 #region Private Fields
@@ -60,15 +65,32 @@ namespace TagLib.Ogg
 		
 #region Constructors
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="Paginator" /> for a given <see cref="Codec" />
+		///    object.
+		/// </summary>
+		/// <param name="codec">
+		///    A <see cref="Codec"/> object to use when processing
+		///    packets.
+		/// </param>
 		public Paginator (Codec codec)
 		{
 			this.codec = codec;
 		}
+		
 #endregion
 		
 		
 		
+#region Public Methods
 		
+		/// <summary>
+		///    Adds the next page to the current instance.
+		/// </summary>
+		/// <param name="page">
+		///    The next <see cref="Page" /> object found in the stream.
+		/// </param>
 		public void AddPage (Page page)
 		{
 			pages_read ++;
@@ -90,12 +112,28 @@ namespace TagLib.Ogg
 					packets.Add (page_packets [i]);
 			}
 		}
-
+		
+		/// <summary>
+		///    Stores a Xiph comment in the codec-specific comment
+		///    packet.
+		/// </summary>
+		/// <param name="comment">
+		///    A <see cref="XiphComment" /> object to store in the
+		///    comment packet.
+		/// </param>
 		public void SetComment (XiphComment comment)
 		{
 			codec.SetCommentPacket (packets, comment);
 		}
-
+		
+		/// <summary>
+		///    Repaginates the pages passed into the current instance to
+		///    handle changes made to the Xiph comment.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="Page[]" /> containing the new page
+		///    collection.
+		/// </returns>
 		[Obsolete("Use Paginator.Paginate(out int)")]
 		public Page [] Paginate ()
 		{
@@ -103,6 +141,19 @@ namespace TagLib.Ogg
 			return Paginate (out dummy);
 		}
 		
+		/// <summary>
+		///    Repaginates the pages passed into the current instance to
+		///    handle changes made to the Xiph comment.
+		/// </summary>
+		/// <param name="change">
+		///    A <see cref="int" /> value reference containing the
+		///    the difference between the number of pages returned and
+		///    the number of pages that were added to the class.
+		/// </param>
+		/// <returns>
+		///    A <see cref="Page[]" /> containing the new page
+		///    collection.
+		/// </returns>
 		public Page [] Paginate (out int change)
 		{
 			// Ogg Pagination: Welcome to sucksville!
@@ -189,10 +240,36 @@ namespace TagLib.Ogg
 			return pages.ToArray ();
 		}
 		
-		private int GetLacingValueLength (ByteVectorCollection packets, int index)
+#endregion
+		
+		
+		
+#region Private Methods
+		
+		/// <summary>
+		///    Gets the number of lacing value bytes that would be
+		///    required for a given packet.
+		/// </summary>
+		/// <param name="packets">
+		///    A <see cref="ByteVectorCollection" /> object containing
+		///    the packet.
+		/// </param>
+		/// <param name="index">
+		///    A <see cref="int" /> value containing the index of the
+		///    packet to compute.
+		/// </param>
+		/// <returns>
+		///    A <see cref="int" /> value containing the number of bytes
+		///    needed to store the length.
+		/// </returns>
+		private static int GetLacingValueLength (ByteVectorCollection packets,
+		                                         int index)
 		{
 			int size = packets [index].Count;
-			return size / 0xff + ((index + 1 < packets.Count || size % 0xff > 0) ? 1 : 0);
+			return size / 0xff + ((index + 1 < packets.Count ||
+				size % 0xff > 0) ? 1 : 0);
 		}
+		
+#endregion
 	}
 }

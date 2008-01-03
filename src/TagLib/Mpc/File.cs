@@ -72,7 +72,7 @@ namespace TagLib.MusePack {
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="path" /> is <see langref="null" />.
+		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		public File (string path, ReadStyle propertiesStyle)
 			: base (path, propertiesStyle)
@@ -89,7 +89,7 @@ namespace TagLib.MusePack {
 		///    file to use in the new instance.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="path" /> is <see langref="null" />.
+		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		public File (string path) : base (path)
 		{
@@ -110,7 +110,7 @@ namespace TagLib.MusePack {
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="abstraction" /> is <see langref="null"
+		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
@@ -129,7 +129,7 @@ namespace TagLib.MusePack {
 		///    reading from and writing to the file.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="abstraction" /> is <see langref="null"
+		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction)
@@ -159,7 +159,7 @@ namespace TagLib.MusePack {
 		///    A <see cref="Tag" /> object containing the tag that was
 		///    found in or added to the current instance. If no
 		///    matching tag was found and none was created, <see
-		///    langref="null" /> is returned.
+		///    langword="null" /> is returned.
 		/// </returns>
 		/// <remarks>
 		///    If a <see cref="TagLib.Id3v2.Tag" /> is added to the

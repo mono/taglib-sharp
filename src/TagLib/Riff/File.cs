@@ -113,7 +113,7 @@ namespace TagLib.Riff
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="path" /> is <see langref="null" />.
+		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		public File (string path, ReadStyle propertiesStyle)
 			: this (new File.LocalFileAbstraction (path),
@@ -131,7 +131,7 @@ namespace TagLib.Riff
 		///    file to use in the new instance.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="path" /> is <see langref="null" />.
+		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		public File (string path) : this (path, ReadStyle.Average)
 		{
@@ -152,7 +152,7 @@ namespace TagLib.Riff
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="abstraction" /> is <see langref="null"
+		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
@@ -187,7 +187,7 @@ namespace TagLib.Riff
 		///    reading from and writing to the file.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="abstraction" /> is <see langref="null"
+		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction)
@@ -363,7 +363,7 @@ namespace TagLib.Riff
 		///    A <see cref="Tag" /> object containing the tag that was
 		///    found in or added to the current instance. If no
 		///    matching tag was found and none was created, <see
-		///    langref="null" /> is returned.
+		///    langword="null" /> is returned.
 		/// </returns>
 		public override TagLib.Tag GetTag (TagTypes type, bool create)
 		{

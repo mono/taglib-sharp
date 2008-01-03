@@ -25,8 +25,8 @@ using System;
 
 namespace TagLib.Mpeg4 {
 	/// <summary>
-	///    This class extends <see cref="TagLib.NonContainer.File" /> to
-	///    provide tagging and properties support for MPEG-4 files.
+	///    This class extends <see cref="TagLib.File" /> to provide tagging
+	///    and properties support for MPEG-4 files.
 	/// </summary>
 	[SupportedMimeType("taglib/m4a", "m4a")]
 	[SupportedMimeType("taglib/m4v", "m4v")]
@@ -84,7 +84,7 @@ namespace TagLib.Mpeg4 {
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="path" /> is <see langref="null" />.
+		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		public File (string path, ReadStyle propertiesStyle)
 			: base (path)
@@ -102,7 +102,7 @@ namespace TagLib.Mpeg4 {
 		///    file to use in the new instance.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="path" /> is <see langref="null" />.
+		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		public File (string path) : this (path, ReadStyle.Average)
 		{
@@ -123,7 +123,7 @@ namespace TagLib.Mpeg4 {
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="abstraction" /> is <see langref="null"
+		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
@@ -143,7 +143,7 @@ namespace TagLib.Mpeg4 {
 		///    reading from and writing to the file.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="abstraction" /> is <see langref="null"
+		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction)
@@ -301,7 +301,7 @@ namespace TagLib.Mpeg4 {
 		///    A <see cref="Tag" /> object containing the tag that was
 		///    found in or added to the current instance. If no
 		///    matching tag was found and none was created, <see
-		///    langref="null" /> is returned.
+		///    langword="null" /> is returned.
 		/// </returns>
 		/// <remarks>
 		///    At the time of this writing, only <see cref="AppleTag" />

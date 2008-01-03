@@ -63,7 +63,7 @@ namespace TagLib.Asf {
 		///    read the object.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="file" /> is <see langref="null" />.
+		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="ArgumentOutOfRangeException">
 		///    <paramref name="position" /> is less than zero or greater

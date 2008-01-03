@@ -207,7 +207,7 @@ namespace TagLib {
 		/// </value>
 		/// <remarks>
 		///    <para>When getting the value, the child tags are looped
-		///    through in order and the first non-<see langref="null" />
+		///    through in order and the first non-<see langword="null" />
 		///    value is returned.</para>
 		///    <para>When setting the value, it is stored in each child
 		///    tag.</para>
@@ -247,7 +247,7 @@ namespace TagLib {
 		/// </value>
 		/// <remarks>
 		///    <para>When getting the value, the child tags are looped
-		///    through in order and the first non-<see langref="null" />
+		///    through in order and the first non-<see langword="null" />
 		///    and non-empty value is returned.</para>
 		///    <para>When setting the value, it is stored in each child
 		///    tag.</para>
@@ -288,7 +288,7 @@ namespace TagLib {
 		/// </value>
 		/// <remarks>
 		///    <para>When getting the value, the child tags are looped
-		///    through in order and the first non-<see langref="null" />
+		///    through in order and the first non-<see langword="null" />
 		///    and non-empty value is returned.</para>
 		///    <para>When setting the value, it is stored in each child
 		///    tag.</para>
@@ -327,7 +327,7 @@ namespace TagLib {
 		/// </value>
 		/// <remarks>
 		///    <para>When getting the value, the child tags are looped
-		///    through in order and the first non-<see langref="null" />
+		///    through in order and the first non-<see langword="null" />
 		///    and non-empty value is returned.</para>
 		///    <para>When setting the value, it is stored in each child
 		///    tag.</para>
@@ -366,7 +366,7 @@ namespace TagLib {
 		/// </value>
 		/// <remarks>
 		///    <para>When getting the value, the child tags are looped
-		///    through in order and the first non-<see langref="null" />
+		///    through in order and the first non-<see langword="null" />
 		///    value is returned.</para>
 		///    <para>When setting the value, it is stored in each child
 		///    tag.</para>
@@ -405,7 +405,7 @@ namespace TagLib {
 		/// </value>
 		/// <remarks>
 		///    <para>When getting the value, the child tags are looped
-		///    through in order and the first non-<see langref="null" />
+		///    through in order and the first non-<see langword="null" />
 		///    value is returned.</para>
 		///    <para>When setting the value, it is stored in each child
 		///    tag.</para>
@@ -444,7 +444,7 @@ namespace TagLib {
 		/// </value>
 		/// <remarks>
 		///    <para>When getting the value, the child tags are looped
-		///    through in order and the first non-<see langref="null" />
+		///    through in order and the first non-<see langword="null" />
 		///    and non-empty value is returned.</para>
 		///    <para>When setting the value, it is stored in each child
 		///    tag.</para>
@@ -678,7 +678,7 @@ namespace TagLib {
 		/// </value>
 		/// <remarks>
 		///    <para>When getting the value, the child tags are looped
-		///    through in order and the first non-<see langref="null" />
+		///    through in order and the first non-<see langword="null" />
 		///    value is returned.</para>
 		///    <para>When setting the value, it is stored in each child
 		///    tag.</para>
@@ -717,7 +717,7 @@ namespace TagLib {
 		/// </value>
 		/// <remarks>
 		///    <para>When getting the value, the child tags are looped
-		///    through in order and the first non-<see langref="null" />
+		///    through in order and the first non-<see langword="null" />
 		///    value is returned.</para>
 		///    <para>When setting the value, it is stored in each child
 		///    tag.</para>
@@ -791,11 +791,11 @@ namespace TagLib {
 		/// <value>
 		///    A <see cref="string" /> object containing the conductor
 		///    or director of the media represented by the current
-		///    instance or <see langref="null" /> if no value present.
+		///    instance or <see langword="null" /> if no value present.
 		/// </value>
 		/// <remarks>
 		///    <para>When getting the value, the child tags are looped
-		///    through in order and the first non-<see langref="null" />
+		///    through in order and the first non-<see langword="null" />
 		///    value is returned.</para>
 		///    <para>When setting the value, it is stored in each child
 		///    tag.</para>
@@ -834,7 +834,7 @@ namespace TagLib {
 		/// </value>
 		/// <remarks>
 		///    <para>When getting the value, the child tags are looped
-		///    through in order and the first non-<see langref="null" />
+		///    through in order and the first non-<see langword="null" />
 		///    value is returned.</para>
 		///    <para>When setting the value, it is stored in each child
 		///    tag.</para>
@@ -873,7 +873,7 @@ namespace TagLib {
 		/// </value>
 		/// <remarks>
 		///    <para>When getting the value, the child tags are looped
-		///    through in order and the first non-<see langref="null" />
+		///    through in order and the first non-<see langword="null" />
 		///    and non-empty value is returned.</para>
 		///    <para>When setting the value, it is stored in each child
 		///    tag.</para>
