@@ -1,6 +1,0 @@
-<Namespace Name="TagLib.MusePack">
-  <Docs>
-    <summary>The TagLib.MusePack namespace contains classes for handling the MusePack file format.</summary>
-    <remarks>See http://www.musepack.net/ for the complete specification.</remarks>
-  </Docs>
-</Namespace>

@@ -1,6 +1,0 @@
-<Namespace Name="TagLib">
-  <Docs>
-    <summary>TagLib provides a generic interface for reading media properties and editing tags on different audio and video files.</summary>
-    <remarks>The most straightforward way to read a file is through <see cref="M:TagLib.File.Create(System.String)" />, which does type detection to create the correct <see cref="T:TagLib.File" />.</remarks>
-  </Docs>
-</Namespace>

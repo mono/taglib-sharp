@@ -1,6 +1,0 @@
-<Namespace Name="TagLib.Flac">
-  <Docs>
-    <summary>The TagLib.Flac namespace contains classes for handling the Xiph FLAC file format.</summary>
-    <remarks>See http://flac.sourceforge.net/format.html for the complete specification.</remarks>
-  </Docs>
-</Namespace>

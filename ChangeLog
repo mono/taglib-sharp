@@ -1,5 +1,14 @@
 2008-01-02  Brian Nickel <brian.nickel@gmail.com>
 	
+	* src/Makefile.am: Generate taglib-sharp-docs.xml when building docs.
+	* docs/en/: Deleted. Will be replaced with autogeneration after this
+	update.
+	
+	* docs/Makefile.am: Add docs/Packages.en.xml do DIST_EXTRA
+	* docs/Package.en.xml: Contains values not in slashdocs.
+
+2008-01-02  Brian Nickel <brian.nickel@gmail.com>
+	
 	*  src/TagLib/CombinedTag.cs:
 	*  src/TagLib/ByteVectorList.cs:
 	*  src/TagLib/Id3v1/Tag.cs:

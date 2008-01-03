@@ -28,9 +28,6 @@ update-html:
 	mkdir taglib-sharp-web-docs; \
 	monodocs2html --source en --dest taglib-sharp-web-docs;
 
-update-slashdoc:
-	monodocs2slashdoc en;
-
 taglib-sharp-docs.zip taglib-sharp-docs.tree: $(srcdir)/en/*/*.xml $(srcdir)/en/*.xml
 	$(DOC_ASSEMBLER) $(srcdir)/en
 
@@ -45,7 +42,8 @@ EXTRA_DIST = \
 	$(srcdir)/en/*.xml \
 	$(srcdir)/en/*/*.xml \
 	taglib-sharp-docs.source \
-	MonodocNodeConfig.cs
+	MonodocNodeConfig.cs \
+	Package.en.xml
 	
 DISTCLEANFILES = \
 	taglib-sharp-docs.zip \

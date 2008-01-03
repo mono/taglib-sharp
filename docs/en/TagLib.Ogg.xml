@@ -1,6 +1,0 @@
-<Namespace Name="TagLib.Ogg">
-  <Docs>
-    <summary>The TagLib.Ogg namespace contains classes for handling the Xiph OGG file format.</summary>
-    <remarks>See http://www.xiph.org/ogg/ for the complete specification.</remarks>
-  </Docs>
-</Namespace>

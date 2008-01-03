@@ -1,6 +1,0 @@
-<Namespace Name="TagLib.WavPack">
-  <Docs>
-    <summary>The TagLib.WavPack namespace contains all classes relevant to the reading of WavPack files.</summary>
-    <remarks>See http://www.wavpack.com/ for the complete specification.</remarks>
-  </Docs>
-</Namespace>

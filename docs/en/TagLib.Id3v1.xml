@@ -1,6 +1,0 @@
-<Namespace Name="TagLib.Id3v1">
-  <Docs>
-    <summary>The TagLib.Id3v1 namespace contains classes for handling the ID3v1.1 tagging format.</summary>
-    <remarks>See http://www.id3.org/ID3v1 for the complete specification.</remarks>
-  </Docs>
-</Namespace>
