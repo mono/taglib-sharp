@@ -105,6 +105,7 @@ src/AssemblyInfo.cs
 src/policy.2.0.taglib-sharp.config
 examples/Makefile
 docs/Makefile
+docs/Package.en.xml
 ])
 
 echo "TagLib# ($ASSEMBLY_NAME-$ASSEMBLY_VERSION) is ready to be compiled."

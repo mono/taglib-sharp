@@ -1,15 +1,13 @@
 DOC_UPDATER = @MONODOCER@ -delete -pretty
 DOC_ASSEMBLER = @MDASSEMBLER@ --out taglib-sharp-docs --ecma
 
-ASSEMBLIES = \
-	$(top_builddir)/src/taglib-sharp.dll
-
-ASSEMBLIES_BUILD = $(foreach asm,$(ASSEMBLIES),$(addprefix -assembly:,$(asm)))
+ASSEMBLY = $(top_builddir)/src/$(ASSEMBLY_NAME).dll
+SLASHDOC = $(ASSEMBLY).xml
 
 if BUILD_DOCS
-all: MonodocNodeConfig.exe
+all: XmlInjector.exe
 
-MonodocNodeConfig.exe: MonodocNodeConfig.cs
+XmlInjector.exe: XmlInjector.cs
 	mcs -out:$@ -r:System.Xml $<
 
 monodocdir = $(DESTDIR)$(DOCDIR)
@@ -18,32 +16,42 @@ monodoc_DATA = \
 	taglib-sharp-docs.tree \
 	taglib-sharp-docs.source
 
-update-docs: $(ASSEMBLIES)
-	$(DOC_UPDATER) $(ASSEMBLIES_BUILD) -path:en
+$(srcdir)/en/index.xml: $(ASSEMBLY) $(SLASHDOC) $(srcdir)/XmlInjector.exe $(srcdir)/Package.en.xml
+# monodocer will create duplicate tags if run multiple times. Delete the whole
+# directory and start over.
+	if [ -d $(srcdir)/en ]; then \
+		rm -rf $(srcdir)/en; \
+	fi
+	monodocer /assembly:$(ASSEMBLY) /importslashdoc:$(SLASHDOC) /path:en
+	$(MONO) $(srcdir)/XmlInjector.exe $(srcdir)/Package.en.xml InsertMissingValues
 
-update-html:
+update-html: $(srcdir)/en
 	if [ -d taglib-sharp-web-docs ]; then \
 		rm -rf taglib-sharp-web-docs; \
 	fi; \
 	mkdir taglib-sharp-web-docs; \
 	monodocs2html --source en --dest taglib-sharp-web-docs;
 
-taglib-sharp-docs.zip taglib-sharp-docs.tree: $(srcdir)/en/*/*.xml $(srcdir)/en/*.xml
+taglib-sharp-docs.zip taglib-sharp-docs.tree: $(srcdir)/en/index.xml
 	$(DOC_ASSEMBLER) $(srcdir)/en
 
-install-data-hook:
-	$(MONO) $(top_builddir)/docs/MonodocNodeConfig.exe --insert "TagLib#" classlib-taglib-sharp $(DOCDIR)/../monodoc.xml
+install-data-hook: $(srcdir)/XmlInjector.exe $(srcdir)/Package.en.xml
+	$(MONO) $(srcdir)/XmlInjector.exe $(srcdir)/Package.en.xml InjectMenuItem
 
-uninstall-hook:
-	$(MONO) $(top_builddir)/docs/MonodocNodeConfig.exe --remove classlib-taglib-sharp $(DOCDIR)/../monodoc.xml
+uninstall-hook: $(srcdir)/XmlInjector.exe $(srcdir)/Package.en.xml
+	$(MONO) $(srcdir)/XmlInjector.exe $(srcdir)/Package.en.xml RemoveMenuItem
+
+clean-local:
+	if [ -d $(srcdir)/en ]; then \
+		rm -rf $(srcdir)/en; \
+	fi
+
 endif
 
 EXTRA_DIST = \
-	$(srcdir)/en/*.xml \
-	$(srcdir)/en/*/*.xml \
 	taglib-sharp-docs.source \
-	MonodocNodeConfig.cs \
-	Package.en.xml
+	XmlInjector.cs \
+	Package.en.xml.in
 	
 DISTCLEANFILES = \
 	taglib-sharp-docs.zip \
@@ -53,5 +61,4 @@ MAINTAINERCLEANFILES = \
 	Makefile.in
 
 CLEANFILES = \
-	MonodocNodeConfig.exe
-
+	XmlInjector.exe

@@ -3,7 +3,7 @@ ASSEMBLY = $(ASSEMBLY_NAME).dll
 TARGET = $(ASSEMBLY)
 
 if BUILD_DOCS
-DOCFILE = taglib-sharp-docs.xml
+DOCFILE = $(ASSEMBLY).xml
 DOCFLAGS = /doc:$(DOCFILE) /warn:4
 else
 DOCFILE =

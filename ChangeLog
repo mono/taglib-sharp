@@ -1,3 +1,22 @@
+2008-01-03  Brian Nickel <brian.nickel@gmail.com>
+	
+	*  src/Makefile.am: Generate taglib-sharp.dll.xml instead.
+	*  docs/Package.en.xml.in: Contains missing documentation and rules for
+	XmlInjector.exe.
+	
+	*  docs/XmlInjector.cs: A new XML manager which can remove, replace, and
+	insert nodes into an XML document based on XPath queries.
+	
+	*  docs/Makefile.am: Build XML from the slashdoc and use XmlInjector.exe
+	to insert missing parts into documentation as well as modify monodoc.xml
+	
+	*  docs/Package.en.xml: Depreciated by docs/Package.en.xml.in.
+	
+	*  docs/MonodocNodeConfig.cs: Depreciated by docs/XmlInjector.cs.
+	
+	*  configure.ac: Generate docs/Package.en.xml from
+	docs/Package.en.xml.in
+
 2008-01-02  Brian Nickel <brian.nickel@gmail.com>
 	
 	* src/Makefile.am: Generate taglib-sharp-docs.xml when building docs.

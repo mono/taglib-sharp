@@ -3,8 +3,7 @@
 		<Title>TagLib#</Title>
 		<Remarks>This package provides support for reading and writing
 		the tagging information for a large number of tagging formats,
-		as well as reading media properties for many standard audio and
-		video formats.</Remarks>
+		as well as reading media properties for many standard audio and video formats.</Remarks>
 		<Copyright>Copyright (C) 2007-2008 Brian Nickel</Copyright>
 	</Overview>
 	<Namespace Name="TagLib">
@@ -132,4 +131,67 @@
 			specification.</remarks>
 		</Docs>
 	</Namespace>
+	<ActionSet Name="InjectMenuItem">
+		<File Path="@DOCDIR@/../monodoc.xml">
+			<Insert Target="/node/node[@name='various']" IfMissing="//node[@name='classlib-taglib-sharp']">
+				<node label="TagLib#" name="classlib-taglib-sharp" />
+			</Insert>
+		</File>
+	</ActionSet>
+	
+	<ActionSet Name="RemoveMenuItem">
+		<File Path="@DOCDIR@/../monodoc.xml">
+			<Remove Target="//node[@name='classlib-taglib-sharp']" />
+		</File>
+	</ActionSet>
+	
+	<ActionSet Name="InsertMissingValues">
+		<File Path="en/index.xml">
+			<Replace Source="/Package/Overview/Title" Target="/Overview/Title" />
+			<Replace Source="/Package/Overview/Copyright" Target="/Overview/Copyright" />
+			<Replace Source="/Package/Overview/Remarks" Target="/Overview/Remarks" />
+		</File>
+		<File Path="en/TagLib.xml">
+			<Replace Source="/Package/Namespace[@Name='TagLib']/Docs" Target="/Namespace/Docs" />
+		</File>
+		<File Path="en/TagLib.Ape.xml">
+			<Replace Source="/Package/Namespace[@Name='TagLib.Ape']/Docs" Target="/Namespace/Docs" />
+		</File>
+		<File Path="en/TagLib.Asf.xml">
+			<Replace Source="/Package/Namespace[@Name='TagLib.Asf']/Docs" Target="/Namespace/Docs" />
+		</File>
+		<File Path="en/TagLib.Flac.xml">
+			<Replace Source="/Package/Namespace[@Name='TagLib.Flac']/Docs" Target="/Namespace/Docs" />
+		</File>
+		<File Path="en/TagLib.Id3v1.xml">
+			<Replace Source="/Package/Namespace[@Name='TagLib.Id3v1']/Docs" Target="/Namespace/Docs" />
+		</File>
+		<File Path="en/TagLib.Id3v2.xml">
+			<Replace Source="/Package/Namespace[@Name='TagLib.Id3v2']/Docs" Target="/Namespace/Docs" />
+		</File>
+		<File Path="en/TagLib.Mpeg4.xml">
+			<Replace Source="/Package/Namespace[@Name='TagLib.Mpeg4']/Docs" Target="/Namespace/Docs" />
+		</File>
+		<File Path="en/TagLib.Mpeg.xml">
+			<Replace Source="/Package/Namespace[@Name='TagLib.Mpeg']/Docs" Target="/Namespace/Docs" />
+		</File>
+		<File Path="en/TagLib.MusePack.xml">
+			<Replace Source="/Package/Namespace[@Name='TagLib.MusePack']/Docs" Target="/Namespace/Docs" />
+		</File>
+		<File Path="en/TagLib.NonContainer.xml">
+			<Replace Source="/Package/Namespace[@Name='TagLib.NonContainer']/Docs" Target="/Namespace/Docs" />
+		</File>
+		<File Path="en/TagLib.Ogg.Codecs.xml">
+			<Replace Source="/Package/Namespace[@Name='TagLib.Ogg.Codecs']/Docs" Target="/Namespace/Docs" />
+		</File>
+		<File Path="en/TagLib.Ogg.xml">
+			<Replace Source="/Package/Namespace[@Name='TagLib.Ogg']/Docs" Target="/Namespace/Docs" />
+		</File>
+		<File Path="en/TagLib.Riff.xml">
+			<Replace Source="/Package/Namespace[@Name='TagLib.Riff']/Docs" Target="/Namespace/Docs" />
+		</File>
+		<File Path="en/TagLib.WavPack.xml">
+			<Replace Source="/Package/Namespace[@Name='TagLib.WavPack']/Docs" Target="/Namespace/Docs" />
+		</File>
+	</ActionSet>
 </Package>
