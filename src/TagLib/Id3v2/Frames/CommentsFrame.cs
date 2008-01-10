@@ -43,7 +43,7 @@ namespace TagLib.Id3v2 {
 	/// </remarks>
 	public class CommentsFrame : Frame
 	{
-		#region Private Properties
+#region Private Fields
 		
 		/// <summary>
 		///    Contains the text encoding to use when rendering the
@@ -67,11 +67,11 @@ namespace TagLib.Id3v2 {
 		/// </summary>
 		private string text = null;
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Constructors
+#region Constructors
 		
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
@@ -193,11 +193,11 @@ namespace TagLib.Id3v2 {
 			SetData (data, offset, version, false);
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Public Properties
+#region Public Properties
 		
 		/// <summary>
 		///    Gets and sets the text encoding to use when storing the
@@ -280,11 +280,11 @@ namespace TagLib.Id3v2 {
 			set {text = value;}
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Public Methods
+#region Public Methods
 		
 		/// <summary>
 		///    Gets a string representation of the current instance.
@@ -297,11 +297,11 @@ namespace TagLib.Id3v2 {
 			return Text;
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Public Static Methods
+#region Public Static Methods
 		
 		/// <summary>
 		///    Gets a specified comments frame from the specified tag,
@@ -438,11 +438,11 @@ namespace TagLib.Id3v2 {
 			return best_frame;
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Protected Methods
+#region Protected Methods
 		
 		/// <summary>
 		///    Populates the values in the current instance by parsing
@@ -496,7 +496,8 @@ namespace TagLib.Id3v2 {
 		/// </returns>
 		protected override ByteVector RenderFields (byte version)
 		{
-			StringType encoding = CorrectEncoding (TextEncoding, version);
+			StringType encoding = CorrectEncoding (TextEncoding,
+				version);
 			ByteVector v = new ByteVector ();
 			
 			v.Add ((byte) encoding);

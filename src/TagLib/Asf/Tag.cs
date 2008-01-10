@@ -32,7 +32,7 @@ namespace TagLib.Asf {
 	///    representation of an ASF tag which can be read from and written
 	///    to disk.
 	/// </summary>
-	public class Tag : TagLib.Tag
+	public class Tag : TagLib.Tag, IEnumerable<ContentDescriptor>
 	{
 		#region Private Fields
 		
@@ -479,6 +479,31 @@ namespace TagLib.Asf {
 		}
 		
 		#endregion
+		
+		
+		
+#region IEnumerable
+		
+		/// <summary>
+		///    Gets an enumerator for enumerating through the content
+		///    descriptors.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="T:System.Collections.IEnumerator`1" /> for
+		///    enumerating through the content descriptors.
+		/// </returns>
+		public IEnumerator<ContentDescriptor> GetEnumerator ()
+		{
+			return ext_description.GetEnumerator ();
+		}
+		
+		System.Collections.IEnumerator
+			System.Collections.IEnumerable.GetEnumerator ()
+		{
+			return ext_description.GetEnumerator ();
+		}
+		
+#endregion
 		
 		
 		

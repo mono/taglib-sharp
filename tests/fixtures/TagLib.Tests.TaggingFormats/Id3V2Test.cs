@@ -888,7 +888,7 @@ namespace TagLib.Tests.TaggingFormats
 			frame.SetPeakVolume ((ChannelType) 8, (double) i);
 			frame.SetVolumeAdjustment ((ChannelType) 8, (float) -i);
 			
-			FrameTest (frame, 4, null,
+			FrameTest (frame, 2, null,
 				delegate (ByteVector d_, byte v_) {
 					return new RelativeVolumeFrame (d_, v_);
 				},

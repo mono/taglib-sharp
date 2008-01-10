@@ -383,7 +383,7 @@ namespace TagLib.Id3v2 {
 				return null;
 			
 			if (version == 2)
-				for (int i = 0; i < 57; i ++) {
+				for (int i = 0; i < version2_frames.GetLength (0); i ++) {
 					if (!version2_frames [i,
 						toVersion ? 1 : 0].Equals (id))
 						continue;
@@ -393,7 +393,7 @@ namespace TagLib.Id3v2 {
 				}
 			
 			if (version == 3)
-				for (int i = 0; i < 2; i ++) {
+				for (int i = 0; i < version3_frames.GetLength (0); i ++) {
 					if (!version3_frames [i,
 						toVersion ? 1 : 0].Equals (id))
 						continue;
@@ -412,7 +412,7 @@ namespace TagLib.Id3v2 {
 		}
 		
 		private static readonly ReadOnlyByteVector [,] version2_frames =
-			new ReadOnlyByteVector [58,2] {
+			new ReadOnlyByteVector [59,2] {
 				{ "BUF", "RBUF" },
 				{ "CNT", "PCNT" },
 				{ "COM", "COMM" },
@@ -470,13 +470,16 @@ namespace TagLib.Id3v2 {
 				{ "WCM", "WCOM" },
 				{ "WCP", "WCOP" },
 				{ "WPB", "WPUB" },
-				{ "WXX", "WXXX" }
+				{ "WXX", "WXXX" },
+				{ "XRV", "RVA2" }
 			};
 		
 		private static readonly ReadOnlyByteVector [,] version3_frames =
-			new ReadOnlyByteVector [2,2] {
+			new ReadOnlyByteVector [3,2] {
 				{ "TORY", "TDOR" },
-				{ "TYER", "TDRC" }
+				{ "TYER", "TDRC" },
+				{ "XRVA", "RVA2" }
+
 			};
 		
 		#endregion

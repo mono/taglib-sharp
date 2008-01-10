@@ -31,8 +31,16 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace TagLib {
+	/// <summary>
+	///    This class implements <see cref="T:System.Collections.Generic`1"/>
+	///    for objects that implement <see cref="T:System.IComparable`1"/>,
+	///    providing extra features used in lists in TagLib#.
+	/// </summary>
 	public class ListBase<T> : IList<T> where T : IComparable<T>
 	{
+		/// <summary>
+		///    Contains the internal list.
+		/// </summary>
 		private List<T> data = new List<T> ();
 
 		#region Constructors
@@ -92,6 +100,13 @@ namespace TagLib {
 
 		#region Methods
 
+		/// <summary>
+		///    Adds a collection of elements to the current instance.
+		/// </summary>
+		/// <param name="list">
+		///    A <see cref="T:TagLib.ListBase`1"/> object containing
+		///    elements to add to the current instance.
+		/// </param>
 		public void Add(ListBase<T> list)
 		{
 			if(list != null) {
@@ -99,6 +114,13 @@ namespace TagLib {
 			}
 		}
 
+		/// <summary>
+		///    Adds a collection of elements to the current instance.
+		/// </summary>
+		/// <param name="list">
+		///    A <see cref="T:System.Collections.Generic.IEnumerable`1"/> object containing
+		///    elements to add to the current instance.
+		/// </param>
 		public void Add(IEnumerable<T> list)
 		{
 			if(list != null) {
@@ -106,6 +128,13 @@ namespace TagLib {
 			}
 		}
 
+		/// <summary>
+		///    Adds a collection of elements to the current instance.
+		/// </summary>
+		/// <param name="list">
+		///    An array containing elements to add to the current
+		///    instance.
+		/// </param>
 		public void Add(T [] list)
 		{
 			if(list != null) {
@@ -229,32 +258,95 @@ namespace TagLib {
 			data.Clear ();
 		}
 		
+		/// <summary>
+		///    Gets whether or not the current instance contains a
+		///    specified object.
+		/// </summary>
+		/// <param name="item">
+		///    An object to look for in the current instance.
+		/// </param>
+		/// <returns>
+		///    <see langword="true" /> if the item could be found;
+		///    otherwise <see langword="false" />.
+		/// </returns>
 		public bool Contains (T item)
 		{
 			return data.Contains (item);
 		}
 		
+		/// <summary>
+		///    Gets the index of the first occurance of a value.
+		/// </summary>
+		/// <param name="item">
+		///    A object to find in the current instance.
+		/// </param>
+		/// <returns>
+		///    A <see cref="int" /> value containing the first index
+		///    at which the value was found, or -1 if it was not found.
+		/// </returns>
 		public int IndexOf (T item)
 		{
 			return data.IndexOf (item);
 		}
 		
+		/// <summary>
+		///    Inserts a single value into the current instance at a
+		//     specified index.
+		/// </summary>
+		/// <param name="index">
+		///    A <see cref="int" /> value specifying the position at
+		///    which to insert the value.
+		/// </param>
+		/// <param name="item">
+		///    An object to insert into the current instance.
+		/// </param>
 		public void Insert (int index, T item)
 		{
 			data.Insert (index, item);
 		}
 		
-		public bool Remove(T item)
+		/// <summary>
+		///    Removes the first occurance of an object from the current
+		///    instance.
+		/// </summary>
+		/// <param name="item">
+		///    An object to remove from the current instance.
+		/// </param>
+		/// <returns>
+		///    <see langword="true" /> if the value was removed;
+		///    otherwise the value did not appear in the current
+		///    instance and <see langword="false" /> is returned.
+		/// </returns>
+		public bool Remove (T item)
 		{
 			return data.Remove (item);
 		}
 		
-		public void RemoveAt(int index)
+		/// <summary>
+		///    Removes the item at the specified index.
+		/// </summary>
+		/// <param name="index">
+		///    A <see cref="int" /> value specifying the position at
+		///    which to remove an item.
+		/// </param>
+		public void RemoveAt (int index)
 		{
 			data.RemoveAt (index);
 		}
-
-		public string ToString(string separator)
+		
+		/// <summary>
+		///    Gets a string representation of the contents of the
+		///    current instance, joined by a separator.
+		/// </summary>
+		/// <param name="separator">
+		///    A <see cref="string" /> object to separate the items
+		///    with.
+		/// </param>
+		/// <returns>
+		///    A <see cref="string" /> object containing the contents
+		///    of the current instance.
+		/// </returns>
+		public string ToString (string separator)
 		{
 			StringBuilder builder = new StringBuilder();
 
@@ -269,6 +361,14 @@ namespace TagLib {
 			return builder.ToString ();
 		}
 
+		/// <summary>
+		///    Gets a string representation of the contents of the
+		///    current instance, joined by commas.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="string" /> object containing the contents
+		///    of the current instance.
+		/// </returns>
 		public override string ToString ()
 		{
 			return ToString(", ");
@@ -280,18 +380,50 @@ namespace TagLib {
 		
 #region ICollection<T>
 		
+		/// <summary>
+		///    Gets the number of elements in the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="int" /> value containing the number of
+		///    elements in the current instance.
+		/// </value>
 		public int Count {
 			get {return data.Count;}
 		}
 		
+		/// <summary>
+		///    Gets whether or not the current instance is synchronized.
+		/// </summary>
+		/// <value>
+		///    Always <see langword="false" />.
+		/// </value>
 		public bool IsSynchronized { 
 			get {return false;}
 		}
 		
+		/// <summary>
+		///    Gets the object that can be used to synchronize the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="object" /> that can be used to synchronize
+		///    the current instance.
+		/// </value>
 		public object SyncRoot { 
 			get {return this;}
 		}
 		
+		/// <summary>
+		///    Copies the current instance to an array, starting at a
+		///    specified index.
+		/// </summary>
+		/// <param name="array">
+		///    An array to copy to.
+		/// </param>
+		/// <param name="arrayIndex">
+		///    A <see cref="int" /> value indicating the index in
+		///    <paramref name="array" /> at which to start copying.
+		/// </param>
 		public void CopyTo (T [] array, int arrayIndex)
 		{
 			data.CopyTo (array, arrayIndex);

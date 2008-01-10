@@ -32,7 +32,8 @@ namespace TagLib.Asf {
 	///    representation of an ASF Extended Content Description object
 	///    which can be read from and written to disk.
 	/// </summary>
-	public class ExtendedContentDescriptionObject : Object
+	public class ExtendedContentDescriptionObject : Object,
+		IEnumerable<ContentDescriptor>
 	{
 		#region Private Fields
 		
@@ -50,8 +51,8 @@ namespace TagLib.Asf {
 		
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
-		///    cref="ExtendedContentDescriptionObject" /> by reading the contents
-		///    from a specified position in a specified file.
+		///    cref="ExtendedContentDescriptionObject" /> by reading the
+		///    contents from a specified position in a specified file.
 		/// </summary>
 		/// <param name="file">
 		///    A <see cref="Asf.File" /> object containing the file from
@@ -246,5 +247,30 @@ namespace TagLib.Asf {
 		}
 		
 		#endregion
+		
+		
+		
+#region IEnumerable
+		
+		/// <summary>
+		///    Gets an enumerator for enumerating through the content
+		///    descriptors.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="T:System.Collections.IEnumerator`1" /> for
+		///    enumerating through the content descriptors.
+		/// </returns>
+		public IEnumerator<ContentDescriptor> GetEnumerator ()
+		{
+			return descriptors.GetEnumerator ();
+		}
+		
+		System.Collections.IEnumerator
+			System.Collections.IEnumerable.GetEnumerator ()
+		{
+			return descriptors.GetEnumerator ();
+		}
+		
+#endregion
 	}
 }

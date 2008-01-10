@@ -31,7 +31,8 @@ namespace TagLib.Asf {
 	///    representation of an ASF Metadata Library object which can be
 	///    read from and written to disk.
 	/// </summary>
-	public class MetadataLibraryObject : Object
+	public class MetadataLibraryObject : Object,
+		IEnumerable<DescriptionRecord>
 	{
 		#region Private Fields
 		
@@ -268,5 +269,30 @@ namespace TagLib.Asf {
 		}
 		
 		#endregion
+		
+		
+		
+#region IEnumerable
+		
+		/// <summary>
+		///    Gets an enumerator for enumerating through the
+		///    description records.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="T:System.Collections.IEnumerator`1" /> for
+		///    enumerating through the description records.
+		/// </returns>
+		public IEnumerator<DescriptionRecord> GetEnumerator ()
+		{
+			return records.GetEnumerator ();
+		}
+		
+		System.Collections.IEnumerator
+			System.Collections.IEnumerable.GetEnumerator ()
+		{
+			return records.GetEnumerator ();
+		}
+		
+#endregion
 	}
 }

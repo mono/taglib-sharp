@@ -654,9 +654,12 @@ namespace TagLib.Id3v2
 
 #endregion
 	}
-
-
-
+	
+	
+	/// <summary>
+	///    This structure contains a single entry in a <see
+	///    cref="SynchronisedLyricsFrame" /> object.
+	/// </summary>
 	public struct SynchedText
 	{
 		/// <summary>

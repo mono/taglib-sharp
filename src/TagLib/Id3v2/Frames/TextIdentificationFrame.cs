@@ -607,12 +607,30 @@ namespace TagLib.Id3v2 {
 			Text = text;
 		}
 		
+		/// <summary>
+		///    Gets a string representation of the current instance.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="string" /> containing the joined text.
+		/// </returns>
 		public override string ToString ()
 		{
 			ParseRawData ();
-			return string.Join (", ", Text);
+			return string.Join ("; ", Text);
 		}
 		
+		/// <summary>
+		///    Renders the current instance, encoded in a specified
+		///    ID3v2 version.
+		/// </summary>
+		/// <param name="version">
+		///    A <see cref="byte" /> value specifying the version of
+		///    ID3v2 to use when encoding the current instance.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector" /> object containing the
+		///    rendered version of the current instance.
+		/// </returns>
 		public override ByteVector Render (byte version)
 		{
 			if (version != 3 || FrameId != FrameType.TDRC)
@@ -797,6 +815,18 @@ namespace TagLib.Id3v2 {
 		
 		#region Protected Methods
 		
+		/// <summary>
+		///    Populates the values in the current instance by parsing
+		///    its field data in a specified version.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing the
+		///    extracted field data.
+		/// </param>
+		/// <param name="version">
+		///    A <see cref="byte" /> indicating the ID3v2 version the
+		///    field data is encoded in.
+		/// </param>
 		protected override void ParseFields (ByteVector data,
 		                                     byte version)
 		{
@@ -804,6 +834,17 @@ namespace TagLib.Id3v2 {
 			raw_version = version;
 		}
 		
+		/// <summary>
+		///    Performs the actual parsing of the raw data.
+		/// </summary>
+		/// <remarks>
+		///    Because of the high parsing cost and relatively low usage
+		///    of the class, <see cref="ParseFields" /> only stores the
+		///    field data so it can be parsed on demand. Whenever a
+		///    property or method is called which requires the data,
+		///    this method is called, and only on the first call does it
+		///    actually parse the data.
+		/// </remarks>
 		protected void ParseRawData ()
 		{
 			if (raw_data == null)
@@ -850,12 +891,18 @@ namespace TagLib.Id3v2 {
 						if (closing < 0)
 							break;
 						
-						field_list.Add (
-							value.Substring (1,
-								closing - 1));
+						string number = value.Substring (1,
+								closing - 1);
+						
+						field_list.Add (number);
 						
 						value = value.Substring (
-							closing + 1);
+							closing + 1).TrimStart ('/', ' ');
+						
+						string text = Genres.IndexToAudio (number);
+						if (text != null && value.StartsWith (text))
+							value = value.Substring (text.Length)
+								.TrimStart ('/', ' ');
 					}
 					
 					if (value.Length > 0)
@@ -876,6 +923,18 @@ namespace TagLib.Id3v2 {
 			text_fields = field_list.ToArray ();
 		}
 		
+		/// <summary>
+		///    Renders the values in the current instance into field
+		///    data for a specified version.
+		/// </summary>
+		/// <param name="version">
+		///    A <see cref="byte" /> indicating the ID3v2 version the
+		///    field data is to be encoded in.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector" /> object containing the
+		///    rendered field data.
+		/// </returns>
 		protected override ByteVector RenderFields (byte version) {
 			if (raw_data != null && raw_version == version)
 				return raw_data;
@@ -974,10 +1033,33 @@ namespace TagLib.Id3v2 {
 	
 	
 	
+	/// <summary>
+	///    This class extends <see cref="TextInformationFrame" /> to provide
+	///    support for ID3v2 User Text Information (TXXX) Frames.
+	/// </summary>
 	public class UserTextInformationFrame : TextInformationFrame
 	{
 #region Constructors
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="UserTextInformationFrame" /> with a specified
+		///    description and text encoding.
+		/// </summary>
+		/// <param name="description">
+		///    A <see cref="string" /> containing the description of the
+		///    new frame.
+		/// </param>
+		/// <param name="encoding">
+		///    A <see cref="StringType" /> containing the text encoding
+		///    to use when rendering the new frame.
+		/// </param>
+		/// <remarks>
+		///    When a frame is created, it is not automatically added to
+		///    the tag. Consider using <see
+		///    cref="Get(Tag,string,StringType,bool)" /> for more
+		///    integrated frame creation.
+		/// </remarks>
 		public UserTextInformationFrame (string description,
 		                                 StringType encoding)
 			: base (FrameType.TXXX, encoding)
@@ -985,17 +1067,66 @@ namespace TagLib.Id3v2 {
 			base.Text = new string [] {description};
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="UserTextInformationFrame" /> with a specified
+		///    description.
+		/// </summary>
+		/// <param name="description">
+		///    A <see cref="string" /> containing the description of the
+		///    new frame.
+		/// </param>
+		/// <remarks>
+		///    When a frame is created, it is not automatically added to
+		///    the tag. Consider using <see
+		///    cref="Get(Tag,string,bool)" /> for more integrated frame
+		///    creation.
+		/// </remarks>
 		public UserTextInformationFrame (string description)
 			: base (FrameType.TXXX)
 		{
 			base.Text = new string [] {description};
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="UserTextInformationFrame" /> by reading its raw
+		///    data in a specified ID3v2 version.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object starting with the raw
+		///    representation of the new frame.
+		/// </param>
+		/// <param name="version">
+		///    A <see cref="byte" /> indicating the ID3v2 version the
+		///    raw frame is encoded in.
+		/// </param>
 		public UserTextInformationFrame (ByteVector data, byte version)
 			: base (data, version)
 		{
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="UserTextInformationFrame" /> by reading its raw
+		///    data in a specified ID3v2 version.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing the raw
+		///    representation of the new frame.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int" /> indicating at what offset in
+		///    <paramref name="data" /> the frame actually begins.
+		/// </param>
+		/// <param name="header">
+		///    A <see cref="FrameHeader" /> containing the header of the
+		///    frame found at <paramref name="offset" /> in the data.
+		/// </param>
+		/// <param name="version">
+		///    A <see cref="byte" /> indicating the ID3v2 version the
+		///    raw frame is encoded in.
+		/// </param>
 		protected internal UserTextInformationFrame (ByteVector data,
 		                                             int offset,
 		                                             FrameHeader header,
@@ -1010,6 +1141,18 @@ namespace TagLib.Id3v2 {
 		
 #region Public Properties
 		
+		/// <summary>
+		///    Gets and sets the description stored in the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the description
+		///    stored in the current instance.
+		/// </value>
+		/// <remarks>
+		///    There should only be one frame with a matching
+		///    description per tag.
+		/// </remarks>
 		public string Description {
 			get {
 				string [] text = base.Text;
@@ -1027,6 +1170,19 @@ namespace TagLib.Id3v2 {
 			}
 		}
 		
+		/// <summary>
+		///    Gets and sets the text contained in the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the text contained
+		///    in the current instance.
+		/// </value>
+		/// <remarks>
+		///    <para>Modifying the contents of the returned value will
+		///    not modify the contents of the current instance. The
+		///    value must be reassigned for the value to change.</para>
+		/// </remarks>
 		public override string [] Text {
 			get {
 				string [] text = base.Text;
@@ -1058,6 +1214,12 @@ namespace TagLib.Id3v2 {
 		
 #region Public Methods
 		
+		/// <summary>
+		///    Gets a string representation of the current instance.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="string" /> containing the joined text.
+		/// </returns>
 		public override string ToString ()
 		{
 			return new StringBuilder ().Append ("[")
@@ -1072,6 +1234,31 @@ namespace TagLib.Id3v2 {
 		
 #region Public Static Methods
 		
+		/// <summary>
+		///    Gets a specified user text frame from the specified tag,
+		///    optionally creating it if it does not exist.
+		/// </summary>
+		/// <param name="tag">
+		///    A <see cref="Tag" /> object to search in.
+		/// </param>
+		/// <param name="description">
+		///    A <see cref="string" /> specifying the description to
+		///    match.
+		/// </param>
+		/// <param name="type">
+		///    A <see cref="StringType" /> specifying the encoding to
+		///    use if creating a new frame.
+		/// </param>
+		/// <param name="create">
+		///    A <see cref="bool" /> specifying whether or not to create
+		///    and add a new frame to the tag if a match is not found.
+		/// </param>
+		/// <returns>
+		///    A <see cref="UserTextInformationFrame" /> object
+		///    containing the matching frame, or <see langword="null" />
+		///    if a match wasn't found and <paramref name="create" /> is
+		///    <see langword="false" />.
+		/// </returns>
 		public static UserTextInformationFrame Get (Tag tag,
 		                                            string description,
 		                                            StringType type,
@@ -1104,6 +1291,27 @@ namespace TagLib.Id3v2 {
 			return new_frame;
 		}
 		
+		/// <summary>
+		///    Gets a specified user text frame from the specified tag,
+		///    optionally creating it if it does not exist.
+		/// </summary>
+		/// <param name="tag">
+		///    A <see cref="Tag" /> object to search in.
+		/// </param>
+		/// <param name="description">
+		///    A <see cref="string" /> specifying the description to
+		///    match.
+		/// </param>
+		/// <param name="create">
+		///    A <see cref="bool" /> specifying whether or not to create
+		///    and add a new frame to the tag if a match is not found.
+		/// </param>
+		/// <returns>
+		///    A <see cref="UserTextInformationFrame" /> object
+		///    containing the matching frame, or <see langword="null" />
+		///    if a match wasn't found and <paramref name="create" /> is
+		///    <see langword="false" />.
+		/// </returns>
 		public static UserTextInformationFrame Get (Tag tag,
 		                                            string description,
 		                                            bool create)
@@ -1112,6 +1320,21 @@ namespace TagLib.Id3v2 {
 				create);
 		}
 		
+		/// <summary>
+		///    Gets a specified user text frame from the specified tag.
+		/// </summary>
+		/// <param name="tag">
+		///    A <see cref="Tag" /> object to search in.
+		/// </param>
+		/// <param name="description">
+		///    A <see cref="string" /> specifying the description to
+		///    match.
+		/// </param>
+		/// <returns>
+		///    A <see cref="UserTextInformationFrame" /> object
+		///    containing the matching frame, or <see langword="null" />
+		///    if a match wasn't found.
+		/// </returns>
 		[Obsolete("Use UserTextInformationFrame.Get(Tag,string,bool)")]
 		public static UserTextInformationFrame Get (Tag tag,
 		                                            string description)

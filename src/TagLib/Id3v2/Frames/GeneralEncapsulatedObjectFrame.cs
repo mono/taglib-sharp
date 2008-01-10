@@ -1,5 +1,5 @@
 //
-// RelativeVolumeFrame.cs:
+// GeneralEncapsulatedObjectFrame.cs:
 //
 // Author:
 //   Brian Nickel (brian.nickel@gmail.com)
@@ -29,31 +29,74 @@ using System.Collections;
 using System;
 
 namespace TagLib.Id3v2 {
+	/// <summary>
+	///    This class extends <see cref="Frame" />, implementing support for
+	///    ID3v2 General Encapsulated Object (GEOB) Frames.
+	/// </summary>
+	/// <remarks>
+	///    <para>A <see cref="GeneralEncapsulatedObjectFrame" /> should be
+	///    used for storing files and other objects relevant to the file but
+	///    not supported by other frames.</para>
+	/// </remarks>
 	public class GeneralEncapsulatedObjectFrame : Frame
 	{
-		#region Private Properties
+#region Private Fields
 		
-		StringType text_encoding = StringType.UTF8;
+		/// <summary>
+		///    Contains the text encoding to use when rendering the
+		///    current instance.
+		/// </summary>
+		private StringType encoding = Tag.DefaultEncoding;
 		
-		string mime_type = null;
+		/// <summary>
+		///    Contains the mime type of <see cref="data" />.
+		/// </summary>
+		private string mime_type = null;
 		
+		/// <summary>
+		///    Contains the original file name.
+		/// </summary>
 		string file_name = null;
 		
-		string description = null;
+		/// <summary>
+		///    Contains the description.
+		/// </summary>
+		private string description = null;
 		
-		ByteVector data = null;
+		/// <summary>
+		///    Contains the data.
+		/// </summary>
+		private ByteVector data = null;
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Constructors
+#region Constructors
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="GeneralEncapsulatedObjectFrame" /> with no
+		///    contents.
+		/// </summary>
 		public GeneralEncapsulatedObjectFrame ()
 			: base (FrameType.GEOB, 4)
 		{
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="GeneralEncapsulatedObjectFrame" /> by reading its
+		///    raw data in a specified ID3v2 version.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object starting with the raw
+		///    representation of the new frame.
+		/// </param>
+		/// <param name="version">
+		///    A <see cref="byte" /> indicating the ID3v2 version the
+		///    raw frame is encoded in.
+		/// </param>
 		public GeneralEncapsulatedObjectFrame (ByteVector data,
 		                                       byte version)
 			: base (data, version)
@@ -61,6 +104,27 @@ namespace TagLib.Id3v2 {
 			SetData (data, 0, version, true);
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="GeneralEncapsulatedObjectFrame" /> by reading its
+		///    raw data in a specified ID3v2 version.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing the raw
+		///    representation of the new frame.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int" /> indicating at what offset in
+		///    <paramref name="data" /> the frame actually begins.
+		/// </param>
+		/// <param name="header">
+		///    A <see cref="FrameHeader" /> containing the header of the
+		///    frame found at <paramref name="offset" /> in the data.
+		/// </param>
+		/// <param name="version">
+		///    A <see cref="byte" /> indicating the ID3v2 version the
+		///    raw frame is encoded in.
+		/// </param>
 		protected internal GeneralEncapsulatedObjectFrame (ByteVector data,
 		                                                   int offset,
 		                                                   FrameHeader header,
@@ -70,17 +134,39 @@ namespace TagLib.Id3v2 {
 			SetData (data, offset, version, false);
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Public Properties
+#region Public Properties
 		
+		/// <summary>
+		///    Gets and sets the text encoding to use when storing the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the text encoding to
+		///    use when storing the current instance.
+		/// </value>
+		/// <remarks>
+		///    This encoding is overridden when rendering if <see
+		///    cref="Tag.ForceDefaultEncoding" /> is <see
+		///    langword="true" /> or the render version does not support
+		///    it.
+		/// </remarks>
 		public StringType TextEncoding {
-			get {return text_encoding;}
-			set {text_encoding = value;}
+			get {return encoding;}
+			set {encoding = value;}
 		}
 		
+		/// <summary>
+		///    Gets and sets the mime-type of the object stored in the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the mime-type of the
+		///    object stored in the current instance.
+		/// </value>
 		public string MimeType {
 			get {
 				if (mime_type != null)
@@ -91,6 +177,14 @@ namespace TagLib.Id3v2 {
 			set {mime_type = value;}
 		}
 		
+		/// <summary>
+		///    Gets and sets the file name of the object stored in the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the file name of the
+		///    object stored in the current instance.
+		/// </value>
 		public string FileName {
 			get {
 				if (file_name != null)
@@ -101,6 +195,18 @@ namespace TagLib.Id3v2 {
 			set {file_name = value;}
 		}
 		
+		/// <summary>
+		///    Gets and sets the description stored in the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the description
+		///    stored in the current instance.
+		/// </value>
+		/// <remarks>
+		///    There should only be one frame with a matching
+		///    description and type per tag.
+		/// </remarks>
 		public string Description {
 			get {
 				if (description != null)
@@ -111,17 +217,32 @@ namespace TagLib.Id3v2 {
 			set {description = value;}
 		}
 		
+		/// <summary>
+		///    Gets and sets the object data stored in the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="ByteVector" /> containing the object data
+		///    stored in the current instance.
+		/// </value>
 		public ByteVector Object {
 			get {return data != null ? data : new ByteVector ();}
 			set {data = value;}
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Public Methods
+#region Public Methods
 		
+		/// <summary>
+		///    Creates a text description of the current instance.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="string" /> object containing a description
+		///    of the current instance.
+		/// </returns>
 		public override string ToString ()
 		{
 			System.Text.StringBuilder builder
@@ -139,12 +260,34 @@ namespace TagLib.Id3v2 {
 			return builder.ToString ();
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Public Static Methods
+#region Public Static Methods
 		
+		/// <summary>
+		///    Gets a specified encapsulated object frame from the
+		///    specified tag, optionally creating it if it does not
+		///    exist.
+		/// </summary>
+		/// <param name="tag">
+		///    A <see cref="Tag" /> object to search in.
+		/// </param>
+		/// <param name="description">
+		///    A <see cref="string" /> specifying the description to
+		///    match.
+		/// </param>
+		/// <param name="create">
+		///    A <see cref="bool" /> specifying whether or not to create
+		///    and add a new frame to the tag if a match is not found.
+		/// </param>
+		/// <returns>
+		///    A <see cref="GeneralEncapsulatedObjectFrame" /> object
+		///    containing the matching frame, or <see langword="null" />
+		///    if a match wasn't found and <paramref name="create" /> is
+		///    <see langword="false" />.
+		/// </returns>
 		public static GeneralEncapsulatedObjectFrame Get (Tag tag,
 		                                                  string description,
 		                                                  bool create)
@@ -171,12 +314,27 @@ namespace TagLib.Id3v2 {
 			return geob;
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Protected Methods
+#region Protected Methods
 		
+		/// <summary>
+		///    Populates the values in the current instance by parsing
+		///    its field data in a specified version.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing the
+		///    extracted field data.
+		/// </param>
+		/// <param name="version">
+		///    A <see cref="byte" /> indicating the ID3v2 version the
+		///    field data is encoded in.
+		/// </param>
+		/// <exception cref="CorruptFileException">
+		///    <paramref name="data" /> contains less than 5 bytes.
+		/// </exception>
 		protected override void ParseFields (ByteVector data,
 		                                     byte version)
 		{
@@ -186,7 +344,7 @@ namespace TagLib.Id3v2 {
 			
 			int start = 0;
 			
-			text_encoding =  (StringType) data [start++];
+			encoding =  (StringType) data [start++];
 			
 			int end = data.Find (
 				ByteVector.TextDelimiter (StringType.Latin1),
@@ -199,14 +357,14 @@ namespace TagLib.Id3v2 {
 				end - start);
 			
 			ByteVector delim = ByteVector.TextDelimiter (
-				text_encoding);
+				encoding);
 			start = end + 1;
 			end = data.Find (delim, start, delim.Count);
 			
 			if (end < start)
 				return;
 			
-			file_name = data.ToString (text_encoding, start,
+			file_name = data.ToString (encoding, start,
 				end - start);
 			start = end + delim.Count;
 			end = data.Find (delim, start, delim.Count);
@@ -214,7 +372,7 @@ namespace TagLib.Id3v2 {
 			if (end < start)
 				return;
 			
-			description = data.ToString (text_encoding, start,
+			description = data.ToString (encoding, start,
 				end - start);
 			start = end + delim.Count;
 			
@@ -222,9 +380,21 @@ namespace TagLib.Id3v2 {
 			this.data = data;
 		}
 		
+		/// <summary>
+		///    Renders the values in the current instance into field
+		///    data for a specified version.
+		/// </summary>
+		/// <param name="version">
+		///    A <see cref="byte" /> indicating the ID3v2 version the
+		///    field data is to be encoded in.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector" /> object containing the
+		///    rendered field data.
+		/// </returns>
 		protected override ByteVector RenderFields (byte version)
 		{
-			StringType encoding = CorrectEncoding (text_encoding,
+			StringType encoding = CorrectEncoding (this.encoding,
 				version);
 			ByteVector v = new ByteVector ();
 			
@@ -266,7 +436,7 @@ namespace TagLib.Id3v2 {
 		{
 			GeneralEncapsulatedObjectFrame frame =
 				new GeneralEncapsulatedObjectFrame ();
-			frame.text_encoding = text_encoding;
+			frame.encoding = encoding;
 			frame.mime_type = mime_type;
 			frame.file_name = file_name;
 			frame.description = description;

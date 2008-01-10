@@ -322,6 +322,24 @@ namespace TagLib.Id3v2 {
 		
 		#region Protected Methods
 		
+		/// <summary>
+		///    Converts an encoding to be a supported encoding for a
+		///    specified tag version.
+		/// </summary>
+		/// <param name="type">
+		///    A <see cref="StringType" /> value containing the original
+		///    encoding.
+		/// </param>
+		/// <param name="version">
+		///    A <see cref="byte" /> value containing the ID3v2 version
+		///    to be encoded for.
+		/// </param>
+		/// <returns>
+		///    A <see cref="StringType" /> value containing the correct
+		///    encoding to use, based on <see
+		///    cref="Tag.ForceDefaultEncoding" /> and what is supported
+		///    by <paramref name="version" />.
+		/// </returns>
 		protected static StringType CorrectEncoding (StringType type,
 		                                             byte version)
 		{
@@ -331,76 +349,165 @@ namespace TagLib.Id3v2 {
 			return (version < 4 && type == StringType.UTF8) ?
 				StringType.UTF16 : type;
 		}
-      
-      protected void SetData (ByteVector data, int offset, byte version, bool readHeader)
-      {
-         if (readHeader)
-            header = new FrameHeader (data, version);
-         ParseFields (FieldData (data, offset, version), version);
-      }
-      
-      protected abstract void ParseFields(ByteVector data, byte version);
-      protected abstract ByteVector RenderFields (byte version);
-      
-      protected ByteVector FieldData (ByteVector frameData, int offset, byte version)
-      {
-         if (frameData == null)
-            throw new ArgumentNullException ("frameData");
-         
-         int data_offset              = offset + (int) FrameHeader.Size (version);
-         int data_length              = (int) Size;
-         /*int uncompressed_data_length;*/
-         
-         if ((Flags & (FrameFlags.Compression | FrameFlags.DataLengthIndicator)) != 0)
-         {
-            /*uncompressed_data_length = (int) frame_data.Mid (data_offset, 4).ToUInt () + 4;*/
-            data_offset += 4;
-            data_offset -= 4;
-         }
-         
-         if ((Flags & FrameFlags.GroupingIdentity) != 0)
-         {
-            group_id = frameData [data_offset++];
-            data_length--;
-         }
-         
-         if ((Flags & FrameFlags.Encryption) != 0)
-         {
-            encryption_id = frameData [data_offset++];
-            data_length--;
-         }
-         
-         if (data_length > frameData.Count - data_offset)
-         	throw new CorruptFileException ("Frame size exceeds bounds.");
-         if (data_length < 0 )
-         	throw new CorruptFileException ("Frame size less than zero.");
-         
-         ByteVector data = frameData.Mid (data_offset, data_length);
-         
-         if ((Flags & FrameFlags.Unsychronisation) != 0)
-            SynchData.ResynchByteVector (data);
-         
-         // FIXME: Implement encryption.
-         if ((Flags & FrameFlags.Encryption) != 0)
-            throw new NotImplementedException ();
-         
-         // FIXME: Implement compression.
-         if ((Flags & FrameFlags.Compression) != 0)
-            throw new NotImplementedException ();
-         /*
-            if(d->header->compression()) {
-               ByteVector data(frameDataLength);
-               uLongf uLongTmp = frameDataLength;
-               ::uncompress((Bytef *) data.data(),
-                           (uLongf *) &uLongTmp,
-                           (Bytef *) frameData.data() + frameDataOffset,
-                           size());
-               return data;
-            }
-         */
-         
-         return data;
-      }
+		
+		/// <summary>
+		///    Populates the current instance by reading the raw frame
+		///    from disk, optionally reading the header.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing the raw
+		///    ID3v2 frame.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int" /> value containing the offset in
+		///    <paramref name="data" /> at which the frame begins.
+		/// </param>
+		/// <param name="version">
+		///    A <see cref="byte" /> value containing the ID3v2 version
+		///    of the raw frame contained in <paramref name="data" />.
+		/// </param>
+		/// <param name="readHeader">
+		///    A <see cref="bool" /> value indicating whether or not to
+		///    read the header into current instance.
+		/// </param>
+		protected void SetData (ByteVector data, int offset,
+		                        byte version, bool readHeader)
+		{
+			if (readHeader)
+				header = new FrameHeader (data, version);
+			ParseFields (FieldData (data, offset, version),
+				version);
+		}
+		
+		/// <summary>
+		///    Populates the values in the current instance by parsing
+		///    its field data in a specified version.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing the
+		///    extracted field data.
+		/// </param>
+		/// <param name="version">
+		///    A <see cref="byte" /> indicating the ID3v2 version the
+		///    field data is encoded in.
+		/// </param>
+		protected abstract void ParseFields (ByteVector data,
+		                                     byte version);
+		
+		/// <summary>
+		///    Renders the values in the current instance into field
+		///    data for a specified version.
+		/// </summary>
+		/// <param name="version">
+		///    A <see cref="byte" /> indicating the ID3v2 version the
+		///    field data is to be encoded in.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector" /> object containing the
+		///    rendered field data.
+		/// </returns>
+		protected abstract ByteVector RenderFields (byte version);
+		
+		/// <summary>
+		///    Extracts the field data from the raw data portion of an
+		///    ID3v2 frame.
+		/// </summary>
+		/// <param name="frameData">
+		///    A <see cref="ByteVector" /> object containing fraw frame
+		///    data.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int" /> value containing the index at which
+		///    the data is contained.
+		/// </param>
+		/// <param name="version">
+		///    A <see cref="byte" /> value containing the ID3v2 version
+		///    of the data.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector" /> object containing the
+		///    extracted field data.
+		/// </returns>
+		/// <remarks>
+		///    This method is necessary for extracting extra data
+		///    prepended to the frame such as the grouping ID.
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="frameData" /> is <see langword="null" />.
+		/// </exception>
+		protected ByteVector FieldData (ByteVector frameData,
+		                                int offset, byte version)
+		{
+			if (frameData == null)
+				throw new ArgumentNullException ("frameData");
+			
+			int data_offset = offset + (int) FrameHeader
+				.Size (version);
+			int data_length = (int) Size;
+			/*int uncompressed_data_length;*/
+			
+			if ((Flags & (FrameFlags.Compression |
+				FrameFlags.DataLengthIndicator)) != 0) {
+				/*
+				uncompressed_data_length =
+					(int) frame_data.Mid (data_offset, 4)
+					.ToUInt () + 4;
+				*/
+				data_offset += 4;
+				data_offset -= 4;
+			}
+			
+			if ((Flags & FrameFlags.GroupingIdentity) != 0) {
+				if (frameData.Count >= data_offset)
+					throw new TagLib.CorruptFileException (
+						"Frame data incomplete.");
+				group_id = frameData [data_offset++];
+				data_length--;
+			}
+			
+			if ((Flags & FrameFlags.Encryption) != 0) {
+				if (frameData.Count >= data_offset)
+					throw new TagLib.CorruptFileException (
+						"Frame data incomplete.");
+				encryption_id = frameData [data_offset++];
+				data_length--;
+			}
+			
+			if (data_length > frameData.Count - data_offset)
+				throw new CorruptFileException (
+					"Frame data incomplete.");
+			
+			if (data_length < 0 )
+				throw new CorruptFileException (
+					"Frame size less than zero.");
+			
+			ByteVector data = frameData.Mid (data_offset,
+				data_length);
+			
+			if ((Flags & FrameFlags.Unsychronisation) != 0)
+				SynchData.ResynchByteVector (data);
+			
+			// FIXME: Implement encryption.
+			if ((Flags & FrameFlags.Encryption) != 0)
+				throw new NotImplementedException ();
+			
+			// FIXME: Implement compression.
+			if ((Flags & FrameFlags.Compression) != 0)
+				throw new NotImplementedException ();
+			/*
+			if(d->header->compression()) {
+				ByteVector data(frameDataLength);
+				uLongf uLongTmp = frameDataLength;
+				::uncompress((Bytef *) data.data(),
+				(uLongf *) &uLongTmp,
+				(Bytef *) frameData.data() + frameDataOffset,
+				size());
+				return data;
+			}
+			*/
+			
+			return data;
+		}
 		
 #endregion
 		

@@ -261,12 +261,12 @@ namespace TagLib.Id3v2 {
 		}
 		
 		/// <summary>
-		///    Gets and sets the mime type stored in the current
-		///    instance.
+		///    Gets and sets the mime-type of the picture stored in the
+		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string" /> containing the mime type
-		///    stored in the current instance.
+		///    A <see cref="string" /> containing the mime-type of the
+		///    picture stored in the current instance.
 		/// </value>
 		public string MimeType {
 			get {

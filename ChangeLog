@@ -1,3 +1,46 @@
+2008-01-09  Brian Nickel <brian.nickel@gmail.com>
+	
+	This commit does the following:
+		- Finishes XML documentation.
+		- Makes ASF tags enumerable.
+		- Allows saving RelativeVolumeFrames in 2.2 and 2.3 via
+		  semi-standard XRV and XRVA names.
+		- Prevents duplicates when genres are stored in "(0)Blues"
+		  format.
+	
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Id3v2/Footer.cs:
+	* src/TagLib/Id3v2/FrameFactory.cs:
+	* src/TagLib/Id3v2/Header.cs:
+	* src/TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
+	* src/TagLib/Id3v2/Frames/SynchronizedLyricsFrame.cs:
+	* src/TagLib/Id3v2/Frames/AttachedPictureFrame.cs:
+	* src/TagLib/Id3v2/Frames/UniqueFileIdentifierFrame.cs:
+	* src/TagLib/Id3v2/Frames/TermsOfUseFrame.cs:
+	* src/TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs:
+	* src/TagLib/Id3v2/Frames/UnknownFrame.cs:
+	* src/TagLib/Id3v2/Frame.cs:
+	* src/TagLib/ListBase.cs:
+	* src/TagLib/Ogg/Codecs/Theora.cs:
+	* src/TagLib/Ogg/Codecs/Vorbis.cs:
+	* src/TagLib/Ogg/Codec.cs:
+	* src/TagLib/Ogg/Bitstream.cs: Finish documentation.
+	
+	* src/TagLib/Asf/Tag.cs:
+	* src/TagLib/Asf/ExtendedContentDescriptionObject.cs:
+	* src/TagLib/Asf/MetadataLibraryObject.cs: Make enumerable.
+	
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs: If genre index is
+	followed by genre text, don't store it twice.
+	
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
+	* src/TagLib/Id3v2/FrameHeader.cs:
+	* tests/fixtures/TagLib.Tests.TaggingFormats/Id3V2Test.cs: Save RVA2 as
+	XRVA and XRV in older versions.
+	
+	* configure.ac: Now 2.0.2.22.
+
 2008-01-03  Brian Nickel <brian.nickel@gmail.com>
 	
 	*  src/Makefile.am: Generate taglib-sharp.dll.xml instead.

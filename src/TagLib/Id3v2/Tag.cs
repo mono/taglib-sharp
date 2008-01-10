@@ -146,6 +146,20 @@ namespace TagLib.Id3v2 {
 			Read (file, position);
 		}
 		
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="Tag" /> by reading the contents from a specified
+		///    <see cref="ByteVector" /> object.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object to read the tag from.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="data" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="CorruptFileException">
+		///    <paramref name="data" /> does not contain enough data.
+		/// </exception>
 		public Tag (ByteVector data)
 		{
 			if (data == null)
@@ -686,16 +700,43 @@ namespace TagLib.Id3v2 {
 			}
 		}
 		
+		/// <summary>
+		///    Gets and sets whether or not to save all tags in the
+		///    default version rather than their original version.
+		/// </summary>
+		/// <value>
+		///    If <see langword="true"/>, tags will be saved in
+		///    <see cref="DefaultVersion" /> rather than their original
+		///    format, with the exception of tags with footers, which
+		///    will be saved in version 4.
+		/// </value>
 		public static bool ForceDefaultVersion {
 			get {return force_default_version;}
 			set {force_default_version = value;}
 		}
 		
+		/// <summary>
+		///    Gets and sets the encoding to use when creating new
+		///    frames.
+		/// </summary>
+		/// <value>
+		///    A <see cref="StringType" /> value specifying the encoding
+		///    to use when creating new frames.
+		/// </value>
 		public static StringType DefaultEncoding {
 			get {return default_string_type;}
 			set {default_string_type = value;}
 		}
 		
+		/// <summary>
+		///    Gets and sets whether or not to render all frames with
+		///    the default encoding rather than their original encoding.
+		/// </summary>
+		/// <value>
+		///    If <see langword="true"/>, fames will be rendered in
+		///    <see cref="DefaultEncoding" /> rather than their original
+		///    encoding.
+		/// </value>
 		public static bool ForceDefaultEncoding {
 			get {return force_default_string_type;}
 			set {force_default_string_type = value;}

@@ -64,9 +64,9 @@ namespace TagLib.Id3v2 {
 	///    This structure provides a representation of an ID3v2 tag header
 	///    which can be read from and written to disk.
 	/// </summary>
-	public struct Header {
-		
-		#region Private Fields
+	public struct Header
+	{
+#region Private Fields
 		
 		/// <summary>
 		///    Contains the tag's major version.
@@ -88,11 +88,11 @@ namespace TagLib.Id3v2 {
 		/// </summary>
 		private uint tag_size;
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Public Fields
+#region Public Fields
 		
 		/// <summary>
 		///    The size of a ID3v2 header.
@@ -107,11 +107,11 @@ namespace TagLib.Id3v2 {
 		/// </value>
 		public static readonly ReadOnlyByteVector FileIdentifier = "ID3";
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Constructors
+#region Constructors
 		
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
@@ -167,11 +167,11 @@ namespace TagLib.Id3v2 {
 			tag_size = SynchData.ToUInt (data.Mid (6, 4));
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Public Properties
+#region Public Properties
 		
 		/// <summary>
 		///    Gets and sets the major version of the tag described by
@@ -291,11 +291,11 @@ namespace TagLib.Id3v2 {
 			}
 		}
 		
-		#endregion
+#endregion
 		
 		
 		
-		#region Public Methods
+#region Public Methods
 		
 		/// <summary>
 		///    Renders the current instance as a raw ID3v2 header.
@@ -315,6 +315,6 @@ namespace TagLib.Id3v2 {
 			return v;
 		}
 		
-		#endregion
+#endregion
 	}
 }
