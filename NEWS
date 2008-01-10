@@ -1,3 +1,107 @@
+Version 2.0.3.0
+January 10, 2008
+
+This release of TagLib# features many bug fixes and a complete rework of the
+documentation to better serve the Windows community. Fixes include:
+	* Make Asf.Tag enumerable.
+	* Don't duplicate genres stored in "(0)Blues" format.
+	* Save Id3v2.RelativeVolumeFrame as XRVA and XRV in ID3v2.3 and ID3v2.2.
+	* Insert new comments before other comment frames in Id3v2.Tag
+	* Use CultureInfo.CurrentCulture to get the correct comment language in
+	  Id3v2.Tag.
+	* Skip iTunes comments in Id3v2.CommentsFrame.
+	* Save multi-string values as a single box with a semicolon separator
+	  in Mpeg4.AppleTag to improve compatability with iTunes.
+	* Make the Id3v2.Tag.DefaultVersion = 3 because most commercial programs
+	  have some crippling ID3v2.4 problem.
+	* Added Id3v2.Tag.IsCompilation
+	* Don't crash on misformatted field in XiphComment.
+	* Recognize the .divx extension as a RIFF file.
+	* Use one byte rather than four to store compilation in Mpeg4.AppleTag.
+	* Don't check the image format flags anymore in Mpeg4.AppleTag, just use
+	  the file contents.
+	* Don't crash in NonContainer.EndTag when the file is less than 128
+	  bytes.
+	* Allow saving of multi-page comment packets in Ogg through massive
+	  rewrite of pagination.
+	* Allow correct reading of multi-page comment packets in Ogg.Bitstream.
+	* Use try/finally on all load and save operations to prevent files from
+	  being left open.
+	* Produce correct output on empty ID3v1 tag.
+	* Remove broken Id3v1.Tag.IsEmpty.
+	* src/TagLib/Riff/List.cs: Make sure fields are cleared when SetValue
+	* Clear value when null is passed in Riff.List.SetValue.
+	* Make Riff.DivXTag.Clear clear the title.
+	* Read genres correctly in Riff.MovieIdTag.
+	* Complete codec descriptions for RIFF and ASF files.
+	* Fix reading of UTF16-BE Id3v2.SynchronizedLyricsFrames.
+	* Throw NotImplementedException for private frames in ID3v2.2.
+	* Fix writing Id3v2.GeneralEncapulatedObjectFrame in UTF16.
+	* Added support for multiple non-indexed artists in ID3v2.3
+	* Correctly parse nil separated UTF-16BE strings.
+	* Allow parsing of variable length years in Ape.Tag.
+	* Fix writing of Mpeg4 files by correctly reading in values to
+	  Mpeg4.FileParser.UtdaTree.
+	* Allow parsing of all year lengths in Mpeg4.AppleTag and correctly
+	  clear zeroed values.
+	* Use Semicolons rather than commas in Tag.Joined* to reflect the
+	  behavior of Windows Media Player.
+	* Remove "WM/GenreID" from Asf.Tag when storing a new genre.
+	* Switch ordering of check in looking for ASF content descriptors to
+	  emphasize name rather than order.
+	* Don't throw exception on zero byte strings in ByteVector.ToString ().
+	* Use ContentDescriptionObject.Copyright in Asf.Tag.
+	* Switch order of play_duration and send_duration in Asf.HeaderObject.
+	  This is backwards from the specification but conforms to actual files.
+	* Don't count preroll in ASF durations.
+	* Don't double-count position when counting frames.
+	* Ensure Id3v2.FrameHeader is converting headers from versions 2 and 3.
+	* Always set the encoding to default in Id3v2.Tag when writing a frame
+	  to prevent misencoding.
+	* Stopped ArgumentOutOfRangeExceptions from occuring when corrupt
+	  RelativeVolumeframe is encountered.
+	* Fixed rendering of Ape.Item on non-latin characters.
+	* Added new constructors to Picture to obsolete CreateFromFile,
+	  CreateFromPath.
+	* Changed Asf.Tag to write large pictures to the ASF Metadata Library
+	  Object rather than ignoring them.
+	* Changed the way Mpeg.AudioHeader checked for Xing identifier to
+	  prevent first change exception if none was found.
+	* Use StringBuilder instead of string addition.
+	* Don't crash if Mpeg4.IsoHandlerBox does not contain a nil delimiter.
+	* Limit scanning in Mpeg.AudioFile to 4096 bytes of audio stream to
+	  prevent reading whole file if corrupt.
+	* Replace protected CombinedTag constructor with public one to allow
+	  compiling in Orcas.
+	* Include MonoDevelop files in distributed package.
+	* Correctly parse beats per minute when they contain floating point
+	  numbers.
+
+Added features:
+	* Added support for Fraunhofer VBRI header. (Authored by hwahrmann.)
+	* Obsoleted Tag.Duplicate in favor of Tag.CopyTo which can be extended
+	  to provide better support for copying between matching tag types.
+	* Added ByteVector.UseBrokenLatin1Behavior that when true reads tags
+	  from the system encoding instead of Latin1.
+	* Added support for reading APE files. (Authored by hwahrmann.)
+	* Added generic Id3v2.GetFrames<T>() to reduce casting.
+	* Added support for one of each type of cover image in Ape.Tag
+	* Added recognition of BMP and GIF images in Picture.
+	* Added Id3v2.PopularimeterFrame capable of handling ratings from
+	  Windows Media Player.
+	* Added Id3v2.Tag.UseNumericGenres which can be disabled to prevent
+	  genres from being written as indices.
+	* Added File.InvariantStartPosition and File.InvariantEndPosition to
+	  mark the edges of the media portion of the file.
+	  
+Special thanks to those who contributed since the last release:
+	AgentS, codi, craig, Dakuja, DavidT@Imerge, evgeni, hwahrmann, jms,
+	jmurphy, jocker, jonx, jposen, kajic, kurros, nokturnal, oliphant,
+	renzska, sambeckett, sukhjinder, and anyone else who I may have
+	forgotten.
+
+--------------------------------------------------------------------------------
+
 Version 2.0.2.0
 July 3, 2007
 

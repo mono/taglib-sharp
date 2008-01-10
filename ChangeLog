@@ -1,3 +1,9 @@
+2008-01-10  Brian Nickel <brian.nickel@gmail.com>
+	
+	* NEWS: Updated for new release.
+	
+	* configure.ac: Now 2.0.3.0
+
 2008-01-09  Brian Nickel <brian.nickel@gmail.com>
 	
 	This commit does the following:
@@ -29,10 +35,12 @@
 	
 	* src/TagLib/Asf/Tag.cs:
 	* src/TagLib/Asf/ExtendedContentDescriptionObject.cs:
-	* src/TagLib/Asf/MetadataLibraryObject.cs: Make enumerable.
+	* src/TagLib/Asf/MetadataLibraryObject.cs: Make enumerable. (Thanks to
+	sambeckett for pointing out this missing feature.)
 	
 	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs: If genre index is
-	followed by genre text, don't store it twice.
+	followed by genre text, don't store it twice. (Thanks to sukhjinder for
+	the bug report.)
 	
 	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
 	* src/TagLib/Id3v2/FrameHeader.cs:
