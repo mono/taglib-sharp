@@ -252,7 +252,13 @@ namespace TagLib.Mpeg {
 				throw new CorruptFileException (
 					"First byte did not match MPEG synch.");
 			
-			if (data [1] < 0xE0)
+			// Checking bits from high to low:
+			//
+			// First 3 bits MUST be set. Bits 4 and 5 can
+			// be 00, 10, or 11 but not 01. One or more of
+			// bits 6 and 7 must be set. Bit 8 can be
+			// anything.
+			if ((data [1] & 0xE6) <= 0xE0 || (data [1] & 0x18) == 0x08)
 				throw new CorruptFileException (
 					"Second byte did not match MPEG synch.");
 			

@@ -1,3 +1,9 @@
+2008-01-16  Jeffrey Stedfast  <fejj@novell.com>
+
+	* src/TagLib/Mpeg/AudioHeader.cs (AudioHeader): Do a bit more
+	thorough bitwise examination of the second byte in the MPEG sync
+	header.
+
 2008-01-10  Brian Nickel <brian.nickel@gmail.com>
 	
 	* NEWS: Updated for new release.
