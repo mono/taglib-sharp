@@ -128,7 +128,7 @@ namespace TagLib {
 		/// <remarks>
 		///    <para>A <see cref="FileTypeResolver" /> is one way of
 		///    altering the behavior of <see cref="Create(string)"
-		///    />.</para>
+		///    .</para>
 		///    <para>When <see cref="Create(string)" /> is called, the
 		///    registered resolvers are invoked in the reverse order in
 		///    which they were registered. The resolver may then perform
