@@ -30,6 +30,9 @@ MAINTAINERCLEANFILES = \
 	config.guess \
 	mkinstalldirs
 
+test:
+	pushd tests; make test; popd;
+
 distwin: all
 	mkdir -p $(srcdir)/$(WINDIR)
 	cp $(srcdir)/NEWS $(srcdir)/$(WINDIR)/NEWS.txt

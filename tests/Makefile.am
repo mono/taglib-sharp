@@ -29,26 +29,20 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.TaggingFormats/Mpeg4Test.cs \
 	fixtures/TagLib.Tests.TaggingFormats/XiphTest.cs
 
-NUNIT_TESTER_NAME = ConsoleUi
-NUNIT_TESTER = $(NUNIT_TESTER_NAME).exe
-NUNIT_TESTER_CSFILES = $(srcdir)/$(NUNIT_TESTER_NAME).cs $(srcdir)/AssemblyInfo.cs
-
 $(ASSEMBLY): $(ASSEMBLY_CSFILES)
 	$(MCS) $(MCS_FLAGS) $(NUNIT_FLAGS) -out:$@ -target:library -r:$(top_builddir)/src/taglib-sharp.dll $(ASSEMBLY_CSFILES)
 
-$(NUNIT_TESTER): $(NUNIT_TESTER_CSFILES)
-	$(MCS) $(MCS_FLAGS) -out:$@ $(NUNIT_FLAGS) $(NUNIT_TESTER_CSFILES)
+TAGLIB_ASM = ../src/taglib-sharp.dll
 
 if ENABLE_TESTS
-run-test: $(NUNIT_TESTER) $(ASSEMBLY)
-	MONO_PATH="../src" mono --debug $(NUNIT_TESTER) $(ASSEMBLY)
+test: $(ASSEMBLY) $(TAGLIB_ASM)
+	MONO_PATH="../src" $(NUNIT_CMD) $(ASSEMBLY)
 endif
 
-CLEANFILES = $(ASSEMBLY) $(NUNIT_TESTER) TestResult.xml *.mdb *.dll *.exe
+CLEANFILES = $(ASSEMBLY) TestResult.xml *.mdb *.dll *.exe
 DISTCLEANFILES = *.pidb
 MAINTAINERCLEANFILES = Makefile.in
 EXTRA_DIST = \
-	$(NUNIT_TESTER_CSFILES) \
 	$(ASSEMBLY_CS_FILES) \
 	$(srcdir)/samples/* \
 	$(srcdir)/samples/unsupported/*

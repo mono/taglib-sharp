@@ -1,5 +1,15 @@
 2008-12-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* tests/ConsoleUi.cs:
+	* tests/Makefile.am:
+	* configure.ac: Remove ConsoleUi in favor of system-installed
+	nunit-console2.  Make the tests depend on the taglib-sharp.dll, and rename
+	the target 'test'.
+
+	* Makefile.am: Add 'test' target that calls make test in tests/
+
+2008-12-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/AssemblyInfo.cs.in: remove the if #SIGN - always sign
 
 	* tests/Makefile.am: Fix up source files list.
