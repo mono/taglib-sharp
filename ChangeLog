@@ -1,3 +1,13 @@
+2008-12-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/AssemblyInfo.cs.in: remove the if #SIGN - always sign
+
+	* tests/Makefile.am: Fix up source files list.
+
+	* tests/tests.mdp: enable Makefile integration
+
+	* configure.ac: Uncomment the nunit check and generate tests/Makefile
+
 2008-01-16  Jeffrey Stedfast  <fejj@novell.com>
 
 	* src/TagLib/Mpeg/AudioHeader.cs (AudioHeader): Do a bit more

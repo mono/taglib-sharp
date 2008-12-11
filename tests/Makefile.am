@@ -3,9 +3,31 @@ NUNIT_FLAGS = @MONO_NUNIT_LIBS@
 
 ASSEMBLY_NAME = tests
 ASSEMBLY = $(ASSEMBLY_NAME).dll
-ASSEMBLY_CSFILES = \
-	$(srcdir)/CodeTimer.cs \
-	$(srcdir)/fixtures/*/*.cs
+ASSEMBLY_CSFILES =  \
+	fixtures/Helpers.cs \
+	fixtures/TagLib.Tests.Collections/ByteVectorCollectionTest.cs \
+	fixtures/TagLib.Tests.Collections/ByteVectorTest.cs \
+	fixtures/TagLib.Tests.Collections/StringCollectionTest.cs \
+	fixtures/TagLib.Tests.FileFormats/AsfFormatTest.cs \
+	fixtures/TagLib.Tests.FileFormats/FlacFormatTest.cs \
+	fixtures/TagLib.Tests.FileFormats/Id3BothFormatTest.cs \
+	fixtures/TagLib.Tests.FileFormats/Id3V1FormatTest.cs \
+	fixtures/TagLib.Tests.FileFormats/Id3V2FormatTest.cs \
+	fixtures/TagLib.Tests.FileFormats/IFormatTest.cs \
+	fixtures/TagLib.Tests.FileFormats/M4aFormatTest.cs \
+	fixtures/TagLib.Tests.FileFormats/MpcFormatTest.cs \
+	fixtures/TagLib.Tests.FileFormats/OggFormatTest.cs \
+	fixtures/TagLib.Tests.FileFormats/StandardTests.cs \
+	fixtures/TagLib.Tests.Performance/PerformanceTest.cs \
+	fixtures/TagLib.Tests.TaggingFormats/ApeTest.cs \
+	fixtures/TagLib.Tests.TaggingFormats/AsfTest.cs \
+	fixtures/TagLib.Tests.TaggingFormats/DivXTest.cs \
+	fixtures/TagLib.Tests.TaggingFormats/Id3V1Test.cs \
+	fixtures/TagLib.Tests.TaggingFormats/Id3V2Test.cs \
+	fixtures/TagLib.Tests.TaggingFormats/InfoTagTest.cs \
+	fixtures/TagLib.Tests.TaggingFormats/MovieIdTagTest.cs \
+	fixtures/TagLib.Tests.TaggingFormats/Mpeg4Test.cs \
+	fixtures/TagLib.Tests.TaggingFormats/XiphTest.cs
 
 NUNIT_TESTER_NAME = ConsoleUi
 NUNIT_TESTER = $(NUNIT_TESTER_NAME).exe
