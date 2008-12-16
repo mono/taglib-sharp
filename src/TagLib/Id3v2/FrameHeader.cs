@@ -76,7 +76,7 @@ namespace TagLib.Id3v2 {
 		/// <summary>
 		///    Indicates that the frame data has been unsynchronized.
 		/// </summary>
-		Unsychronisation = 0x0002,
+		Unsynchronisation = 0x0002,
 		
 		/// <summary>
 		///    Indicates that the frame has a data length indicator.

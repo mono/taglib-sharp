@@ -112,6 +112,10 @@ namespace TagLib.Id3v2
 		///    A <see cref="byte" /> value specifying the ID3v2 version
 		///    the frame in <paramref name="data"/> is encoded in.
 		/// </param>
+		/// <param name="alreadyUnsynched">
+		///    A <see cref="bool" /> value specifying whether the entire
+		///    tag has already been unsynchronized.
+		/// </param>
 		/// <returns>
 		///    A <see cref="Frame" /> object read from the data, or <see
 		///    langword="null" /> if none is found.
@@ -121,7 +125,7 @@ namespace TagLib.Id3v2
 		///    converted to ID3v2 or uses encryption or compression.
 		/// </exception>
 		public static Frame CreateFrame (ByteVector data,
-		                                 ref int offset, byte version)
+		                                 ref int offset, byte version, bool alreadyUnsynched)
 		{
 			int position = offset;
 			
@@ -140,6 +144,12 @@ namespace TagLib.Id3v2
 						(c < '1' || c > '9'))
 						return null;
 			}
+
+            if (alreadyUnsynched) {
+                // Mark the frame as not Unsynchronozed because the entire
+                // tag has already been Unsynchronized
+                header.Flags &= ~FrameFlags.Unsynchronisation;
+            }
 			
 			// Windows Media Player may create zero byte frames.
 			// Just send them off as unknown and delete them.

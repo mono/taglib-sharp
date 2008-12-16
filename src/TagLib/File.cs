@@ -604,12 +604,6 @@ namespace TagLib {
 			
 			Mode = AccessMode.Read;
 			
-			if (Tell + length > Length)
-				length = (int) (Length - Tell);
-			
-			if (length <= 0)
-				return new ByteVector ();
-			
 			byte [] buffer = new byte [length];
 			int count = file_stream.Read (buffer, 0, length);
 			return new ByteVector (buffer, count);

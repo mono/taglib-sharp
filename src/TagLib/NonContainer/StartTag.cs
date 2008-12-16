@@ -252,7 +252,7 @@ namespace TagLib.NonContainer {
 		#region Private Methods
 		
 		/// <summary>
-		///    Reads a tag ending at a specified position and moves the
+		///    Reads a tag starting at a specified position and moves the
 		///    cursor to its start position.
 		/// </summary>
 		/// <param name="start">
@@ -282,16 +282,16 @@ namespace TagLib.NonContainer {
 					tag = new TagLib.Id3v2.Tag (file, start);
 					break;
 				}
-				
-				start = end;
-			} catch (CorruptFileException) {
+			} catch (CorruptFileException e) {
+                Console.Error.WriteLine ("taglib-sharp caught exception creating tag: {0}", e);
 			}
-			
+
+			start = end;
 			return tag;
 		}
 		
 		/// <summary>
-		///    Looks for a tag ending at a specified position and moves
+		///    Looks for a tag starting at a specified position and moves
 		///    the cursor to its start position.
 		/// </summary>
 		/// <param name="position">

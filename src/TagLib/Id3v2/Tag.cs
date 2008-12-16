@@ -826,7 +826,7 @@ namespace TagLib.Id3v2 {
 		{
 			if (data == null)
 				throw new ArgumentNullException ("data");
-			
+
 			// If the entire tag is marked as unsynchronized,
 			// resynchronize it.
 			
@@ -871,7 +871,8 @@ namespace TagLib.Id3v2 {
 				try {
 					frame = FrameFactory.CreateFrame (data,
 						ref frame_data_position,
-						header.MajorVersion);
+						header.MajorVersion,
+                        (header.Flags & HeaderFlags.Unsynchronisation) != 0);
 				} catch (NotImplementedException) {
 					continue;
 				}

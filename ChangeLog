@@ -1,3 +1,21 @@
+2008-12-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Id3v2/FrameFactory.cs: Add an alreadyUnsynched argument to
+	CreateFrame that is true when the overall id3v2 Tag has the Unsync flag
+	set, and used to ensure we don't double-synchronize the data for a frame.
+
+	* src/TagLib/Id3v2/FrameHeader.cs: Fix typo
+
+	* src/TagLib/Id3v2/Frame.cs: Fix typo, use the new CreateFrame
+
+	* src/TagLib/File.cs: Remove unnecessary (and buggy) position/length
+	adjustments in ReadBlock method.
+
+	* src/TagLib/NonContainer/StartTag.cs: Fix typos, ensure that ReadTag
+	returns the valid start value even if there is an exception creating it,
+	and write any tag-creation exceptions to Console.Error.
+
 2008-12-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* tests/ConsoleUi.cs:

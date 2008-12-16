@@ -240,7 +240,7 @@ namespace TagLib.Id3v2 {
 			// of ID3v2.
 			if (version < 4)
 				Flags &= ~(FrameFlags.DataLengthIndicator |
-					FrameFlags.Unsychronisation);
+					FrameFlags.Unsynchronisation);
 			
 			if (version < 3)
 				Flags &= ~(FrameFlags.Compression |
@@ -280,7 +280,7 @@ namespace TagLib.Id3v2 {
 				throw new NotImplementedException (
 					"Encryption not yet supported");
 			
-			if ((Flags & FrameFlags.Unsychronisation) != 0)
+			if ((Flags & FrameFlags.Unsynchronisation) != 0)
 				SynchData.UnsynchByteVector (field_data);
 			
 			if (front_data.Count > 0)
@@ -441,20 +441,12 @@ namespace TagLib.Id3v2 {
 			if (frameData == null)
 				throw new ArgumentNullException ("frameData");
 			
-			int data_offset = offset + (int) FrameHeader
-				.Size (version);
+			int data_offset = offset + (int) FrameHeader.Size (version);
 			int data_length = (int) Size;
-			/*int uncompressed_data_length;*/
-			
+
 			if ((Flags & (FrameFlags.Compression |
 				FrameFlags.DataLengthIndicator)) != 0) {
-				/*
-				uncompressed_data_length =
-					(int) frame_data.Mid (data_offset, 4)
-					.ToUInt () + 4;
-				*/
 				data_offset += 4;
-				data_offset -= 4;
 			}
 			
 			if ((Flags & FrameFlags.GroupingIdentity) != 0) {
@@ -472,20 +464,20 @@ namespace TagLib.Id3v2 {
 				encryption_id = frameData [data_offset++];
 				data_length--;
 			}
-			
-			if (data_length > frameData.Count - data_offset)
-				throw new CorruptFileException (
-					"Frame data incomplete.");
-			
+
+			data_length = Math.Min (data_length, frameData.Count - data_offset);
 			if (data_length < 0 )
 				throw new CorruptFileException (
 					"Frame size less than zero.");
 			
 			ByteVector data = frameData.Mid (data_offset,
 				data_length);
-			
-			if ((Flags & FrameFlags.Unsychronisation) != 0)
+
+            if ((Flags & FrameFlags.Unsynchronisation) != 0) {
+                int before_length = data.Count;
 				SynchData.ResynchByteVector (data);
+                data_length -= (data.Count - before_length);
+            }
 			
 			// FIXME: Implement encryption.
 			if ((Flags & FrameFlags.Encryption) != 0)
@@ -533,7 +525,7 @@ namespace TagLib.Id3v2 {
 		{
 			int index = 0;
 			return FrameFactory.CreateFrame (Render (4), ref index,
-				4);
+				4, false);
 		}
 		
 		object ICloneable.Clone ()
