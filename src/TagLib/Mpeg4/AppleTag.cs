@@ -406,6 +406,86 @@ namespace TagLib.Mpeg4 {
 			meta_box.RemoveChild (ilst_box);
 		}
 		
+		/// <summary>
+		/// Gets the text string from a specific data box in a Dash (----) atom
+		/// </summary>
+		/// <param name="meanstring">String specifying text from mean box</param>
+		/// <param name="namestring">String specifying text from name box</param>
+		/// <returns>Text string from data box</returns>
+		public string GetDashBox(string meanstring, string namestring)
+		{
+			AppleDataBox data_box = GetDashAtoms(meanstring, namestring);
+			if (data_box != null) {
+				return data_box.Text;
+			} else {
+				return null;
+			}
+		}
+			
+		/// <summary>
+		/// Sets a specific strings in Dash (----) atom.  This method updates
+		/// and existing atom, or creates a new one.
+		/// </summary>
+		/// <param name="meanstring">String specifying text for mean box</param>
+		/// <param name="namestring">String specifying text for name box</param>
+		/// <param name="datastring">String specifying text for data box</param>
+		public void SetDashBox(string meanstring, string namestring, string datastring)
+		{
+			AppleDataBox data_box = GetDashAtoms(meanstring, namestring);
+
+			if (data_box != null) {
+				data_box.Text = datastring;
+			} else {
+				AppleAdditionalInfoBox amean_box = new AppleAdditionalInfoBox(BoxType.Mean, 0, 0);
+				AppleAdditionalInfoBox aname_box = new AppleAdditionalInfoBox(BoxType.Name, 0, 0);
+				AppleDataBox adata_box = new AppleDataBox(BoxType.Data, 0);
+				amean_box.Text = meanstring;
+				aname_box.Text = namestring;
+				adata_box.Text = datastring;
+				AppleAnnotationBox whole_box = new AppleAnnotationBox(BoxType.DASH);
+				whole_box.AddChild(amean_box);
+				whole_box.AddChild(aname_box);
+				whole_box.AddChild(adata_box);
+				ilst_box.AddChild(whole_box);
+			}
+		}
+		
+		/// <summary>
+		/// Gets the AppleDataBox that corresponds to the specified mean and name values.
+		/// </summary>
+		/// <param name="meanstring">String specifying text for mean box</param>
+		/// <param name="namestring">String specifying text for name box</param>
+		/// <returns>Existing AppleDataBox or null if one does not exist</returns>
+		private AppleDataBox GetDashAtoms(string meanstring, string namestring)
+		{
+			foreach (Box box in ilst_box.Children) {
+				if (box.BoxType != BoxType.DASH)
+					continue;
+				
+				// Get the mean and name boxes, make sure
+				// they're legit, check the Text fields for
+				// a match.  If we have a match return
+				// the AppleDatabox containing the data
+				
+				AppleAdditionalInfoBox mean_box =
+					(AppleAdditionalInfoBox)
+					box.GetChild(BoxType.Mean);
+				AppleAdditionalInfoBox name_box =
+					(AppleAdditionalInfoBox)
+					box.GetChild(BoxType.Name);
+					
+				if (mean_box == null || name_box == null ||
+					mean_box.Text != meanstring ||
+					name_box.Text != namestring) {
+					continue;
+				} else {
+					return (AppleDataBox)box.GetChild(BoxType.Data);
+				}
+			}
+			// If we haven't returned the found box yet, there isn't one, return null
+			return null;
+		}
+		
 		#endregion
 		
 		

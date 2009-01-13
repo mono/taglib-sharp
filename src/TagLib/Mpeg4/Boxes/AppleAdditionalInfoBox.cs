@@ -70,6 +70,17 @@ namespace TagLib.Mpeg4 {
 			Data = file.ReadBlock (DataSize);
 		}
 		
+		/// <summary>
+		/// Constructs and initializes a new instance of <see
+		///    cref="AppleAdditionalInfoBox" /> using specified header, version and flags
+		/// </summary>
+		/// <param name="header"></param>
+		/// <param name="version"></param>
+		/// <param name="flags"></param>
+		public AppleAdditionalInfoBox (ByteVector header, byte version, uint flags) : base (header, version, flags)
+		{
+		}
+		
 		#endregion
 		
 		

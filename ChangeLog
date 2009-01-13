@@ -1,3 +1,15 @@
+2008-01-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	Patch from Andy Beal adding support for Dash atoms, used primarily for
+	storing extra text tags, such as the MusicBrainz tags.  The equivalent in
+	ID3 are the UserTextInfo frames.
+
+	* src/TagLib/Mpeg4/Boxes/AppleAdditionalInfoBox.cs: Add Constructor to
+	enable Instantiating a new AdditionalInfoBox without reading from file.
+
+	* src/TagLib/Mpeg4/AppleTag.cs: Add Methods for reading and writing
+	values to/from Dash Boxes (----)
+
 2008-12-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/TagLib/Id3v2/Tag.cs:
