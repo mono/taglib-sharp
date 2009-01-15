@@ -1,3 +1,12 @@
+2009-01-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/TagLib/Ape/File.cs:
+	* src/TagLib/Asf/File.cs:
+	* src/TagLib/Ogg/File.cs: Add more mimetypes and file extensions including
+	.oga and .ogv (BGO #532561)
+
+	* examples/ReadFromUri.cs: Avoid NRE crash
+
 2008-01-15  Gabriel Burt  <gabriel.burt@gmail.com>
 	
 	* src/TagLib/Mpeg4/file.cs: Patch from Andy Beal to recognize .m4b

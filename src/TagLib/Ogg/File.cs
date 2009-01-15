@@ -35,6 +35,8 @@ namespace TagLib.Ogg
 	///    and properties support for Ogg files.
 	/// </summary>
 	[SupportedMimeType("taglib/ogg", "ogg")]
+	[SupportedMimeType("taglib/oga", "oga")]
+	[SupportedMimeType("taglib/ogv", "ogv")]
 	[SupportedMimeType("application/ogg")]
 	[SupportedMimeType("application/x-ogg")]
 	[SupportedMimeType("audio/vorbis")]
@@ -42,6 +44,10 @@ namespace TagLib.Ogg
 	[SupportedMimeType("audio/x-vorbis+ogg")]
 	[SupportedMimeType("audio/ogg")]
 	[SupportedMimeType("audio/x-ogg")]
+	[SupportedMimeType("video/ogg")]
+	[SupportedMimeType("video/x-ogm+ogg")]
+	[SupportedMimeType("video/x-theora+ogg")]
+	[SupportedMimeType("video/x-theora")]
 	public class File : TagLib.File
 	{
 #region Private Fields

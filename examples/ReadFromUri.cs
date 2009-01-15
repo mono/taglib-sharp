@@ -114,7 +114,11 @@ public class ReadFromUri
         
         Console.WriteLine ("Total running time:    " + (end - start));
         Console.WriteLine ("Total files read:      " + songs_read);
-        Console.WriteLine ("Average time per file: " + new TimeSpan ((end - start).Ticks / songs_read));
+
+        if (songs_read > 0)
+        {
+            Console.WriteLine ("Average time per file: " + new TimeSpan ((end - start).Ticks / songs_read));
+        }
     }
 }
 

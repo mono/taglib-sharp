@@ -40,6 +40,8 @@ namespace TagLib.Ape {
 	/// </remarks>
 	[SupportedMimeType("taglib/ape", "ape")]
 	[SupportedMimeType("audio/x-ape")]
+	[SupportedMimeType("audio/ape")]
+	[SupportedMimeType("application/x-ape")]
 	public class File : TagLib.NonContainer.File
 	{
 		#region Private Fields

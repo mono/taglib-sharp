@@ -33,6 +33,7 @@ namespace TagLib.Asf {
 	[SupportedMimeType("taglib/wmv", "wmv")]
 	[SupportedMimeType("taglib/asf", "asf")]
 	[SupportedMimeType("audio/x-ms-wma")]
+	[SupportedMimeType("audio/x-ms-asf")]
 	[SupportedMimeType("video/x-ms-asf")]
 	public class File : TagLib.File
 	{
