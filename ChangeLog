@@ -1,3 +1,8 @@
+2008-01-15  Gabriel Burt  <gabriel.burt@gmail.com>
+	
+	* src/TagLib/Mpeg4/file.cs: Patch from Andy Beal to recognize .m4b
+	files (Audiobook extention) in mpeg4 (BGO #567826)
+
 2008-01-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	Patch from Andy Beal adding support for Dash atoms, used primarily for

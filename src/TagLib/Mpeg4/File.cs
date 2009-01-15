@@ -29,6 +29,7 @@ namespace TagLib.Mpeg4 {
 	///    and properties support for MPEG-4 files.
 	/// </summary>
 	[SupportedMimeType("taglib/m4a", "m4a")]
+	[SupportedMimeType("taglib/m4b", "m4b")]
 	[SupportedMimeType("taglib/m4v", "m4v")]
 	[SupportedMimeType("taglib/m4p", "m4p")]
 	[SupportedMimeType("taglib/mp4", "mp4")]
