@@ -1,5 +1,10 @@
 2009-01-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* tests/fixtures/TagLib.Tests.TaggingFormats/XiphTest.cs: Update unit test
+	to reflect that we do now support writing cover art to ogg files.
+
+2009-01-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/TagLib/Ogg/XiphComment.cs: Patch from John Millikin adding cover art
 	reading and writing support to Ogg (BGO #563168)
 

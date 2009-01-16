@@ -490,7 +490,7 @@ namespace TagLib.Tests.TaggingFormats
 			tag.Pictures = pictures;
 			
 			TagTestWithSave (ref tag, delegate (Ogg.XiphComment t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Set (IsEmpty): " + m);
+				Assert.IsTrue (!t.IsEmpty, "Value Set (IsEmpty): " + m);
 			});
 			
 			tag.Pictures = new Picture [0];
