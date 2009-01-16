@@ -829,6 +829,39 @@ namespace TagLib.Ogg
 		}
 		
 		/// <summary>
+		///    Gets and sets a collection of pictures associated with
+		///    the media represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="IPicture[]" /> containing a collection of
+		///    pictures associated with the media represented by the
+		///    current instance or an empty array if none are present.
+		/// </value>
+		/// <remarks>
+		///    <para>This property is implemented using the COVERART
+		///    field.</para>
+		/// </remarks>
+		public override IPicture [] Pictures {
+			get {
+				string[] covers = GetField ("COVERART");
+				IPicture[] pictures = new Picture[covers.Length];
+				for (int ii = 0; ii < covers.Length; ii++) {
+					ByteVector data = new ByteVector (Convert.FromBase64String (covers[ii]));
+					pictures[ii] = new Picture (data);
+				}
+				return pictures;
+			}
+			set {
+				string[] covers = new string[value.Length];
+				for (int ii = 0; ii < value.Length; ii++) {
+					IPicture old = value[ii];
+					covers[ii] = Convert.ToBase64String (old.Data.Data);
+				}
+				SetField ("COVERART", covers);
+			}
+		}
+		
+		/// <summary>
 		///    Gets whether or not the current instance is empty.
 		/// </summary>
 		/// <value>

@@ -1,5 +1,10 @@
 2009-01-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/TagLib/Ogg/XiphComment.cs: Patch from John Millikin adding cover art
+	reading and writing support to Ogg (BGO #563168)
+
+2009-01-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/TagLib/Ape/File.cs:
 	* src/TagLib/Asf/File.cs:
 	* src/TagLib/Ogg/File.cs: Add more mimetypes and file extensions including
