@@ -1,6 +1,8 @@
 2009-01-20  Aaron Bockover  <abock@gnome.org>
 
-	* configure.ac: Bumped version to 2.0.3.1
+	* configure.ac: Bumped version to 2.0.3.1, output bz2 and gz
+
+	* Makefile.am: Added a push-release target
 
 	* NEWS: Updated for 2.0.3.1 release
 

@@ -46,3 +46,24 @@ distwin: all
 	cd $(srcdir)/src && make distwin
 	zip -9 -r $(srcdir)/$(WINDIR).zip $(srcdir)/$(WINDIR)
 	rm -rf $(srcdir)/$(WINDIR)
+
+UPLOAD_HOST = "$$BANSHEE_USER@download.banshee-project.org"
+UPLOAD_PATH = "download.banshee-project.org/taglib-sharp"
+push-release: distcheck distwin
+	[[ -z "$$BANSHEE_USER" ]] && { echo "Set BANSHEE_USER"; exit 1; } || true
+	[[ -z "$$MONO_USER" ]] && { echo "Set MONO_USER"; exit 1; } || true
+	mkdir -p release
+	mv $(WINDIR).zip release
+	mv $(PACKAGE)-$(VERSION).tar.* release
+	cp ChangeLog release/$(PACKAGE)-$(VERSION).changes
+	cp ChangeLog release/$(PACKAGE)-$(VERSION).news
+	pushd release; sha1sum * > $(PACKAGE)-$(VERSION).sha1sum; popd
+	scp -r release $(UPLOAD_HOST):$(UPLOAD_PATH)/$(VERSION)
+	rm -rf release
+	ssh $(UPLOAD_HOST) rm -f $(UPLOAD_PATH)/LATEST-IS\*
+	ssh $(UPLOAD_HOST) touch $(UPLOAD_PATH)/LATEST-IS-$(VERSION)
+	svn cp \
+		-m "Tag for $(PACKAGE) release $(VERSION)"
+		svn+ssh://$$MONO_USER@mono-cvs.ximian.com/source/trunk/taglib-sharp \
+		svn+ssh://$$MONO_USER@mono-cvs.ximian.com/source/tags/taglib-sharp/$(VERSION)
+
