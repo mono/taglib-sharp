@@ -16,7 +16,7 @@ public class SetPictures
         Picture [] pictures = new Picture[args.Length - 1];
     
         for(int i = 1; i < args.Length; i++) {
-            Picture picture = Picture.CreateFromPath(args[i]);
+            Picture picture = new Picture(args[i]);
             pictures[i - 1] = picture;
         }
         
