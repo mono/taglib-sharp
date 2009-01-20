@@ -63,7 +63,7 @@ push-release: distcheck distwin
 	ssh $(UPLOAD_HOST) rm -f $(UPLOAD_PATH)/LATEST-IS\*
 	ssh $(UPLOAD_HOST) touch $(UPLOAD_PATH)/LATEST-IS-$(VERSION)
 	svn cp \
-		-m "Tag for $(PACKAGE) release $(VERSION)"
+		-m "Tag for $(PACKAGE) release $(VERSION)" \
 		svn+ssh://$$MONO_USER@mono-cvs.ximian.com/source/trunk/taglib-sharp \
 		svn+ssh://$$MONO_USER@mono-cvs.ximian.com/source/tags/taglib-sharp/$(VERSION)
 
