@@ -461,6 +461,25 @@ namespace TagLib.Ogg
 			get {return GetFirstField ("TITLE");}
 			set {SetField ("TITLE", value);}
 		}
+		
+		/// <summary>
+		///    Gets and sets the sort names for the Track Title of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the sort name of 
+		///    the Track Title of the media described by the current
+		///    instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TITLESORT"
+		///    field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string TitleSort {
+			get {return GetFirstField ("TITLESORT");}
+			set {SetField ("TITLESORT", value);}
+		}
 
 		/// <summary>
 		///    Gets and sets the performers or artists who performed in
@@ -478,6 +497,25 @@ namespace TagLib.Ogg
 		public override string [] Performers {
 			get {return GetField ("ARTIST");}
 			set {SetField ("ARTIST", value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the sort names of the performers or artists
+		///    who performed in the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names for
+		///    the performers or artists who performed in the media
+		///    described by the current instance, or an empty array if
+		///    no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ARTISTSORT" field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string [] PerformersSort {
+			get {return GetField ("ARTISTSORT");}
+			set {SetField ("ARTISTSORT", value);}
 		}
 		
 		/// <summary>
@@ -501,6 +539,29 @@ namespace TagLib.Ogg
 		}
 		
 		/// <summary>
+		///    Gets and sets the sort names for the band or artist who
+		///    is credited in the creation of the entire album or
+		///    collection containing the media described by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names
+		///    for the band or artist who is credited in the creation
+		///    of the entire album or collection containing the media
+		///    described by the current instance or an empty array if
+		///    no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ALBUMARTISTSORT"
+		///    field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string [] AlbumArtistsSort {
+			get {return GetField ("ALBUMARTISTSORT");}
+			set {SetField ("ALBUMARTISTSORT", value);}
+		}
+		
+		/// <summary>
 		///    Gets and sets the composers of the media represented by
 		///    the current instance.
 		/// </summary>
@@ -518,6 +579,25 @@ namespace TagLib.Ogg
 		}
 		
 		/// <summary>
+		///    Gets and sets the sort names for the composers of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names
+		///    for the composer of the media described by the current
+		///    instance or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "COMPOSERSORT"
+		///    field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string [] ComposersSort {
+			get {return GetField ("COMPOSERSORT");}
+			set {SetField ("COMPOSERSORT", value);}
+		}
+
+		/// <summary>
 		///    Gets and sets the album of the media represented by the
 		///    current instance.
 		/// </summary>
@@ -534,6 +614,25 @@ namespace TagLib.Ogg
 			set {SetField ("ALBUM", value);}
 		}
 		
+		/// <summary>
+		///    Gets and sets the sort names for the Album Title of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the sort name of 
+		///    the Album Title of the media described by the current
+		///    instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ALBUMSORT"
+		///    field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string AlbumSort {
+			get {return GetFirstField ("ALBUMSORT");}
+			set {SetField ("ALBUMSORT", value);}
+		}
+
 		/// <summary>
 		///    Gets and sets a user comment on the media represented by
 		///    the current instance.

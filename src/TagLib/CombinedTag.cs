@@ -169,7 +169,7 @@ namespace TagLib {
 		#endregion
 		
 		
-      
+		
 		#region Overrides
 		
 		/// <summary>
@@ -276,6 +276,89 @@ namespace TagLib {
 		}
 		
 		/// <summary>
+		///    Gets and sets the sort names of the performers or artists
+		///    who performed in the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names for
+		///    the performers or artists who performed in the media
+		///    described by the current instance, or an empty array if
+		///    no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.PerformersSort" />
+		public override string[] PerformersSort {
+			get {
+				foreach (Tag tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string[] value = tag.PerformersSort;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return new string[] { };
+			}
+			
+			set {
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.PerformersSort = value;
+			}
+		}
+		
+		/// <summary>
+		///    Gets and sets the sort names for the band or artist who
+		///    is credited in the creation of the entire album or
+		///    collection containing the media described by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names
+		///    for the band or artist who is credited in the creation
+		///    of the entire album or collection containing the media
+		///    described by the current instance or an empty array if
+		///    no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.AlbumArtistsSort" />
+		public override string[] AlbumArtistsSort {
+			get {
+				foreach (Tag tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string[] value = tag.AlbumArtistsSort;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return new string[] { };
+			}
+			
+			set {
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.AlbumArtistsSort = value;
+			}
+		}
+		
+		/// <summary>
 		///    Gets and sets the band or artist who is credited in the
 		///    creation of the entire album or collection containing the
 		///    media described by the current instance.
@@ -352,6 +435,123 @@ namespace TagLib {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.Composers = value;
+			}
+		}
+		
+		/// <summary>
+		///    Gets and sets the sort names for the composer of the 
+		///    media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names
+		///    for the composers of the media described by the 
+		///    current instance or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.ComposersSort" />
+		public override string[] ComposersSort {
+			get {
+				foreach (Tag tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string[] value = tag.ComposersSort;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return new string[] { };
+			}
+			
+			set {
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.ComposersSort = value;
+			}
+		}
+		
+		/// <summary>
+		///    Gets and sets the sort names for the Track Title of the 
+		///    media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the sort names
+		///    for the Track Title of the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.TitleSort" />
+		public override string TitleSort {
+			get {
+				foreach (Tag tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.TitleSort;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return null;
+			}
+			
+			set {
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.TitleSort = value;
+			}
+		}
+		
+		/// <summary>
+		///    Gets and sets the sort names for the Album Title of the 
+		///    media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the sort names
+		///    for the Title of the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.AlbumSort" />
+		public override string AlbumSort {
+			get {
+				foreach (Tag tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.AlbumSort;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return null;
+			}
+			
+			set {
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.AlbumSort = value;
 			}
 		}
 		

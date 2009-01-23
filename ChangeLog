@@ -1,3 +1,18 @@
+2009-01-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/TagLib/CombinedTag.cs:
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Id3v2/FrameTypes.cs:
+	* src/TagLib/Mpeg4/AppleTag.cs:
+	* src/TagLib/Mpeg4/BoxTypes.cs:
+	* src/TagLib/Tag.cs:
+	* src/TagLib/Asf/Tag.cs:
+	* src/TagLib/Ogg/XiphComment.cs:
+	* src/TagLib/Ogg/GroupedComment.cs: Patch from John Millikin and Andy Beal
+	adding support for PerformerSort, AlbumArtistSort, ComposerSort,
+	TitleSort, and AlbumSort to TagLib.Tag, with backends for Ogg, ID3, mpeg4,
+	and asf (BGO #567657).
+
 2009-01-20  Aaron Bockover  <abock@gnome.org>
 
 	* configure.ac: Bumped version to 2.0.3.1, output bz2 and gz

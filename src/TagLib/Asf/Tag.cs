@@ -538,6 +538,29 @@ namespace TagLib.Asf {
 		}
 		
 		/// <summary>
+		///    Gets and sets the sort names for the Track Title of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the sort name of 
+		///    the Track Title of the media described by the current
+		///    instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "WM/TitleSortOrder"
+		///    field.
+		///    http://msdn.microsoft.com/en-us/library/aa386866(VS.85).aspx
+		/// </remarks>
+		public override string TitleSort {
+			get {
+				return GetDescriptorString ("WM/TitleSortOrder");
+			}
+			set {
+				SetDescriptorString (value, "WM/TitleSortOrder");
+			}
+		}
+		
+		/// <summary>
 		///    Gets and sets the performers or artists who performed in
 		///    the media described by the current instance.
 		/// </summary>
@@ -554,6 +577,29 @@ namespace TagLib.Asf {
 		public override string [] Performers {
 			get {return SplitAndClean (description.Author);}
 			set {description.Author = string.Join ("; ", value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the sort names of the performers or artists
+		///    who performed in the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names for
+		///    the performers or artists who performed in the media
+		///    described by the current instance, or an empty array if
+		///    no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "WM/ArtistSortOrder" field.
+		///    http://msdn.microsoft.com/en-us/library/aa386866(VS.85).aspx
+		/// </remarks>
+		public override string [] PerformersSort {
+			get {
+				return GetDescriptorStrings ("WM/ArtistSortOrder");
+			}
+			set {
+				SetDescriptorStrings (value, "WM/ArtistSortOrder");
+			}
 		}
 		
 		/// <summary>
@@ -579,6 +625,33 @@ namespace TagLib.Asf {
 			set {
 				SetDescriptorStrings (value, "WM/AlbumArtist",
 					"AlbumArtist");
+			}
+		}
+		
+		/// <summary>
+		///    Gets and sets the sort names for the band or artist who
+		///    is credited in the creation of the entire album or
+		///    collection containing the media described by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names
+		///    for the band or artist who is credited in the creation
+		///    of the entire album or collection containing the media
+		///    described by the current instance or an empty array if
+		///    no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "WM/AlbumArtistSortOrder"
+		///    field.
+		///    http://msdn.microsoft.com/en-us/library/aa386866(VS.85).aspx
+		/// </remarks>
+		public override string [] AlbumArtistsSort {
+			get {
+				return GetDescriptorStrings ("WM/AlbumArtistSortOrder");
+			}
+			set {
+				SetDescriptorStrings (value, "WM/AlbumArtistSortOrder");
 			}
 		}
 		
@@ -627,6 +700,29 @@ namespace TagLib.Asf {
 			set {
 				SetDescriptorString (value, "WM/AlbumTitle",
 					"Album");
+			}
+		}
+		
+		/// <summary>
+		///    Gets and sets the sort names for the Album Title of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the sort name of 
+		///    the Album Title of the media described by the current
+		///    instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "WM/AlbumSortOrder"
+		///    field.
+		///    http://msdn.microsoft.com/en-us/library/aa386866(VS.85).aspx
+		/// </remarks>
+		public override string AlbumSort {
+			get {
+				return GetDescriptorString ("WM/AlbumSortOrder");
+			}
+			set {
+				SetDescriptorString (value, "WM/AlbumSortOrder");
 			}
 		}
 		

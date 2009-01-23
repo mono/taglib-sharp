@@ -1131,6 +1131,24 @@ namespace TagLib.Id3v2 {
 		}
 		
 		/// <summary>
+		///    Gets and sets the sort names of the Title of the
+		///    media represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the sort names for
+		///    the Title of the media described by the current instance,
+		///    or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TSOT" Text
+		///    Information Frame.
+		/// </remarks>
+		public override string TitleSort {
+			get {return GetTextAsString (FrameType.TSOT);}
+			set {SetTextFrame (FrameType.TSOT, value);}
+		}
+
+		/// <summary>
 		///    Gets and sets the performers or artists who performed in
 		///    the media described by the current instance.
 		/// </summary>
@@ -1149,6 +1167,45 @@ namespace TagLib.Id3v2 {
 			set {SetTextFrame (FrameType.TPE1, value);}
 		}
 		
+		/// <summary>
+		///    Gets and sets the sort names of the performers or artists
+		///    who performed in the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names for
+		///    the performers or artists who performed in the media
+		///    described by the current instance, or an empty array if
+		///    no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TSOP" Text
+		///    Information Frame. http://www.id3.org/id3v2.4.0-frames
+		/// </remarks>
+		public override string [] PerformersSort {
+			get {return GetTextAsArray (FrameType.TSOP);}
+			set {SetTextFrame (FrameType.TSOP, value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the sort names of the band or artist who is 
+		///    credited in the creation of the entire album or collection
+		///    containing the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names for
+		///    the performers or artists who performed in the media
+		///    described by the current instance, or an empty array if
+		///    no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TSO2" Text
+		///    Information Frame. http://www.id3.org/iTunes
+		/// </remarks>
+		public override string [] AlbumArtistsSort {
+			get {return GetTextAsArray (FrameType.TSO2);}
+			set {SetTextFrame (FrameType.TSO2, value);}
+		}
+
 		/// <summary>
 		///    Gets and sets the band or artist who is credited in the
 		///    creation of the entire album or collection containing the
@@ -1188,6 +1245,25 @@ namespace TagLib.Id3v2 {
 		}
 		
 		/// <summary>
+		///    Gets and sets the sort names of the composers of the
+		///    media represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names for
+		///    the performers or artists who performed in the media
+		///    described by the current instance, or an empty array if
+		///    no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TSOC" Text
+		///    Information Frame. http://www.id3.org/id3v2.4.0-frames
+		/// </remarks>
+		public override string [] ComposersSort {
+			get {return GetTextAsArray (FrameType.TSOC);}
+			set {SetTextFrame (FrameType.TSOC, value);}
+		}
+
+		/// <summary>
 		///    Gets and sets the album of the media represented by the
 		///    current instance.
 		/// </summary>
@@ -1203,6 +1279,24 @@ namespace TagLib.Id3v2 {
 		public override string Album {
 			get {return GetTextAsString (FrameType.TALB);}
 			set {SetTextFrame (FrameType.TALB, value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the sort names of the Album title of the
+		///    media represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the sort names for
+		///    the Title in the media described by the current instance,
+		///    or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TSOA" Text
+		///    Information Frame. http://www.id3.org/id3v2.4.0-frames
+		/// </remarks>
+		public override string AlbumSort {
+			get {return GetTextAsString (FrameType.TSOA);}
+			set {SetTextFrame (FrameType.TSOA, value);}
 		}
 		
 		/// <summary>

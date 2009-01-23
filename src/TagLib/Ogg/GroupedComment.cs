@@ -186,6 +186,40 @@ namespace TagLib.Ogg
 		}
 		
 		/// <summary>
+		///    Gets and sets the sort names for the individual track title of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the sort name
+		///    for the track title of the media described by the current 
+		///    instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are
+		///    looped through in order and the first non-empty value is
+		///    returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.TitleSort" />
+		public override string TitleSort {
+			get {
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.TitleSort;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return null;
+			}
+			set {if (tags.Count > 0) tags [0].TitleSort = value;}
+		}
+		
+		/// <summary>
 		///    Gets and sets the performers or artists who performed in
 		///    the media described by the current instance.
 		/// </summary>
@@ -215,6 +249,41 @@ namespace TagLib.Ogg
 			set {if (tags.Count > 0) tags [0].Performers = value;}
 		}
 
+		/// <summary>
+		///    Gets and sets the sort names of the performers or artists
+		///    who performed in the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names for
+		///    the performers or artists who performed in the media
+		///    described by the current instance, or an empty array if
+		///    no value is present. 
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are
+		///    looped through in order and the first non-empty value is
+		///    returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.PerformersSort" />
+		public override string [] PerformersSort {
+			get {
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string[] value = tag.PerformersSort;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return new string[] { };
+			}
+			set {if (tags.Count > 0) tags [0].PerformersSort = value;}
+		}
+		
 		/// <summary>
 		///    Gets and sets the band or artist who is credited in the
 		///    creation of the entire album or collection containing the
@@ -247,6 +316,45 @@ namespace TagLib.Ogg
 		}
 
 		/// <summary>
+		///    Gets and sets the sort names for the band or artist who
+		///    is credited in the creation of the entire album or
+		///    collection containing the media described by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names
+		///    for the band or artist who is credited in the creation
+		///    of the entire album or collection containing the media
+		///    described by the current instance or an empty array if
+		///    no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are
+		///    looped through in order and the first non-empty value is
+		///    returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.AlbumArtistsSort" />
+		public override string[] AlbumArtistsSort {
+			get {
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string[] value = tag.AlbumArtistsSort;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return new string[] { };
+			}
+			
+			set {if (tags.Count > 0) tags [0].AlbumArtistsSort = value;}
+		}
+		
+		/// <summary>
 		///    Gets and sets the composers of the media represented by
 		///    the current instance.
 		/// </summary>
@@ -276,6 +384,40 @@ namespace TagLib.Ogg
 		}
 		
 		/// <summary>
+		///    Gets and sets the sort names for the composer of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names
+		///    for the composer of the media described by the current
+		///    instance or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are
+		///    looped through in order and the first non-empty value is
+		///    returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.ComposersSort" />
+		public override string [] ComposersSort {
+			get {
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string[] value = tag.ComposersSort;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return new string[] { };
+			}
+			set {if (tags.Count > 0) tags [0].ComposersSort = value;}
+		}
+		
+		/// <summary>
 		///    Gets and sets the album of the media represented by the
 		///    current instance.
 		/// </summary>
@@ -302,6 +444,40 @@ namespace TagLib.Ogg
 				return output;
 			}
 			set {if (tags.Count > 0) tags [0].Album = value;}
+		}
+		
+		/// <summary>
+		///    Gets and sets the sort names for the album title of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the sort names
+		///    for the album title of the media described by the
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are
+		///    looped through in order and the first non-empty value is
+		///    returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.AlbumSort" />
+		public override string AlbumSort {
+			get {
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.AlbumSort;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return null;
+			}
+			set {if (tags.Count > 0) tags [0].AlbumSort = value;}
 		}
 		
 		/// <summary>

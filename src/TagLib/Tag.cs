@@ -146,6 +146,23 @@ namespace TagLib {
 		}
 		
 		/// <summary>
+		///    Gets and sets the sort name for the title of the media 
+		///    described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the sort name for
+		///    the title of the media described by the current instance or <see
+		///    langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    Possibly used to sort compilations, or episodic content.
+		/// </remarks>
+		public virtual string TitleSort {
+			get {return null;}
+			set {}
+		}
+		
+		/// <summary>
 		///    Gets and sets the performers or artists who performed in
 		///    the media described by the current instance.
 		/// </summary>
@@ -169,6 +186,28 @@ namespace TagLib {
 		///    choice they may make.</para>
 		/// </remarks>
 		public virtual string [] Performers {
+			get {return new string [] {};}
+			set {}
+		}
+		
+		/// <summary>
+		///    Gets and sets the sort names of the performers or artists
+		///    who performed in the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names for
+		///    the performers or artists who performed in the media
+		///    described by the current instance, or an empty array if
+		///    no value is present. 
+		/// </value>
+		/// <remarks>
+		///    <para>This is used to provide more control over how tracks
+		///    are sorted. Typical uses are to skip common prefixes or
+		///    sort by last name. For example, "The Beatles" might be
+		///    sorted as "Beatles, The".
+		///    </para>
+		/// </remarks>
+		public virtual string [] PerformersSort {
 			get {return new string [] {};}
 			set {}
 		}
@@ -204,6 +243,38 @@ namespace TagLib {
 		}
 		
 		/// <summary>
+		///    Gets and sets the sort names for the band or artist who
+		///    is credited in the creation of the entire album or
+		///    collection containing the media described by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names
+		///    for the band or artist who is credited in the creation
+		///    of the entire album or collection containing the media
+		///    described by the current instance or an empty array if
+		///    no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field is typically optional but aids in the
+		///    sorting of compilations or albums with multiple artists.
+		///    For example, if an album has several artists, sorting by
+		///    artist will split up the album and sorting by album will
+		///    split up albums by the same artist. Having a single album
+		///    artist for an entire album will solve this
+		///    problem.</para>
+		///    <para>As this value is to be used as a sorting key, it
+		///    should be used with less variation than <see
+		///    cref="Performers" />. Where performers can be broken into
+		///    muliple artist it is best to stick with a single band
+		///    name. For example, "Beatles, The".</para>
+		/// </remarks>
+		public virtual string [] AlbumArtistsSort {
+			get {return new string [] {};}
+			set {}
+		}
+		
+		/// <summary>
 		///    Gets and sets the composers of the media represented by
 		///    the current instance.
 		/// </summary>
@@ -218,6 +289,30 @@ namespace TagLib {
 		///    media.</para>
 		/// </remarks>
 		public virtual string [] Composers {
+			get {return new string [] {};}
+			set {}
+		}
+		
+		/// <summary>
+		///    Gets and sets the sort names for the composers of the 
+		///    media represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names
+		///    for the composers of the media represented by the 
+		///    current instance or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field is typically optional but aids in the
+		///    sorting of compilations or albums with multiple Composers.
+		///    </para>
+		///    <para>As this value is to be used as a sorting key, it
+		///    should be used with less variation than <see
+		///    cref="Composers" />. Where performers can be broken into
+		///    muliple artist it is best to stick with a single composer.
+		///    For example, "McCartney, Paul".</para>
+		/// </remarks>
+		public virtual string [] ComposersSort {
 			get {return new string [] {};}
 			set {}
 		}
@@ -242,6 +337,25 @@ namespace TagLib {
 		///    boxed set of movies).</para>
 		/// </remarks>
 		public virtual string Album {
+			get {return null;}
+			set {}
+		}
+		
+		/// <summary>
+		///    Gets and sets the sort names for the Album Title of the 
+		///    media represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names
+		///    for the Album Title of the media represented by the 
+		///    current instance or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field is typically optional but aids in the
+		///    sorting of compilations or albums with Similar Titles.
+		///    </para>
+		/// </remarks>
+		public virtual string AlbumSort {
 			get {return null;}
 			set {}
 		}
@@ -569,6 +683,23 @@ namespace TagLib {
 		
 		/// <summary>
 		///    Gets the first value contained in <see
+		///    cref="AlbumArtistsSort" />.
+		/// </summary>
+		/// <value>
+		///    The first <see cref="string" /> object in <see
+		///    cref="AlbumArtistsSort" />, or <see langword="null" /> is it
+		///    contains no values.
+		/// </value>
+		/// <remarks>
+		///    This property is provided for convenience. Use <see
+		///    cref="AlbumArtistsSort" /> to set the value.
+		/// </remarks>
+		public string FirstAlbumArtistSort {
+			get {return FirstInGroup(AlbumArtistsSort);}
+		}
+		
+		/// <summary>
+		///    Gets the first value contained in <see
 		///    cref="Performers" />.
 		/// </summary>
 		/// <value>
@@ -582,6 +713,40 @@ namespace TagLib {
 		/// </remarks>
 		public string FirstPerformer {
 			get {return FirstInGroup(Performers);}
+		}
+
+		/// <summary>
+		///    Gets the first value contained in <see
+		///    cref="PerformersSort" />.
+		/// </summary>
+		/// <value>
+		///    The first <see cref="string" /> object in <see
+		///    cref="PerformersSort" />, or <see langword="null" /> is it
+		///    contains no values.
+		/// </value>
+		/// <remarks>
+		///    This property is provided for convenience. Use <see
+		///    cref="PerformersSort" /> to set the value.
+		/// </remarks>
+		public string FirstPerformerSort {
+			get {return FirstInGroup(PerformersSort);}
+		}
+		
+		/// <summary>
+		///    Gets the first value contained in <see
+		///    cref="ComposersSort" />.
+		/// </summary>
+		/// <value>
+		///    The first <see cref="string" /> object in <see
+		///    cref="ComposersSort" />, or <see langword="null" /> is it
+		///    contains no values.
+		/// </value>
+		/// <remarks>
+		///    This property is provided for convenience. Use <see
+		///    cref="ComposersSort" /> to set the value.
+		/// </remarks>
+		public string FirstComposerSort {
+			get {return FirstInGroup(ComposersSort);}
 		}
 		
 		/// <summary>
@@ -663,6 +828,22 @@ namespace TagLib {
 		/// </remarks>
 		public string JoinedPerformers {
 			get {return JoinGroup(Performers);}
+		}
+		
+		/// <summary>
+		///    Gets a semicolon separated string containing the values
+		///    in <see cref="PerformersSort" />.
+		/// </summary>
+		/// <value>
+		///    A semicolon separated <see cref="string" /> object
+		///    containing the values in <see cref="PerformersSort" />.
+		/// </value>
+		/// <remarks>
+		///    This property is provided for convenience. Use <see
+		///    cref="PerformersSort" /> to set the value.
+		/// </remarks>
+		public string JoinedPerformersSort {
+			get {return JoinGroup(PerformersSort);}
 		}
 		
 		/// <summary>

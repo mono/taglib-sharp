@@ -1038,6 +1038,113 @@ namespace TagLib.Mpeg4 {
 		}
 		
 		/// <summary>
+		///    Gets and sets the sort names for the band or artist who
+		///    is credited in the creation of the entire album or
+		///    collection containing the media described by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names
+		///    for the band or artist who is credited in the creation
+		///    of the entire album or collection containing the media
+		///    described by the current instance or an empty array if
+		///    no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "soaa"
+		///    Box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		///    http://code.google.com/p/mp4v2/wiki/iTunesMetadata
+		/// </remarks>
+		public override string [] AlbumArtistsSort {
+			get {return GetText (BoxType.Soaa);}
+			set {SetText (BoxType.Soaa, value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the sort names of the performers or artists
+		///    who performed in the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names for
+		///    the performers or artists who performed in the media
+		///    described by the current instance, or an empty array if
+		///    no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "soar" box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		///    http://code.google.com/p/mp4v2/wiki/iTunesMetadata
+		/// </remarks>
+		public override string[] PerformersSort {
+			get {return GetText (BoxType.Soar);}
+			set {SetText (BoxType.Soar, value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the sort names of the Composer credited
+		///    in the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the sort names for
+		///    the Composers in the media described by the current instance,
+		///    or an empty array if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "soar" box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		///    http://code.google.com/p/mp4v2/wiki/iTunesMetadata
+		/// </remarks>
+		public override string[] ComposersSort {
+			get {return GetText (BoxType.Soco);}
+			set {SetText (BoxType.Soco, value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the sort names of the Album Title of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the sort names for
+		///    the Album Title in the media described by the current
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "soal" box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		///    http://code.google.com/p/mp4v2/wiki/iTunesMetadata
+		/// </remarks>
+		public override string AlbumSort {
+			get {
+				string [] text = GetText (BoxType.Soal);
+				return text.Length == 0 ? null : text [0];
+			}
+			set {SetText (BoxType.Soal, value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the sort names of the Track Title in the
+		///    media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the sort names for
+		///    the Track Title in the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "sonm" box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		///    http://code.google.com/p/mp4v2/wiki/iTunesMetadata
+		/// </remarks>
+		public override string TitleSort {
+			get {
+				string [] text = GetText (BoxType.Sonm);
+				return text.Length == 0 ? null : text [0];
+			}
+			set {SetText (BoxType.Sonm, value);}
+		}
+		
+		/// <summary>
 		///    Gets and sets a collection of pictures associated with
 		///    the media represented by the current instance.
 		/// </summary>

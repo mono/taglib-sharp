@@ -69,6 +69,11 @@ namespace TagLib.Mpeg4 {
 		public static readonly ReadOnlyByteVector Nam  = AppleTag.FixId ("nam");
 		public static readonly ReadOnlyByteVector Name = "name";
 		public static readonly ReadOnlyByteVector Skip = "skip";
+		public static readonly ReadOnlyByteVector Soaa = "soaa"; // Album Artist Sort
+		public static readonly ReadOnlyByteVector Soar = "soar"; // Performer Sort
+		public static readonly ReadOnlyByteVector Soco = "soco"; // Composer Sort
+		public static readonly ReadOnlyByteVector Sonm = "sonm"; // Track Title Sort
+		public static readonly ReadOnlyByteVector Soal = "soal"; // Album Title Sort
 		public static readonly ReadOnlyByteVector Stbl = "stbl";
 		public static readonly ReadOnlyByteVector Stco = "stco";
 		public static readonly ReadOnlyByteVector Stsd = "stsd";
