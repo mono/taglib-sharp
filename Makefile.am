@@ -5,7 +5,7 @@ SUBDIRS = \
    tests
 
 pkgconfig_in_files = taglib-sharp.pc.in
-pkgconfigdir = $(libdir)/pkgconfig
+pkgconfigdir = $(datadir)/pkgconfig
 pkgconfig_DATA = $(pkgconfig_in_files:.pc.in=.pc)
 
 EXTRA_DIST =             \
