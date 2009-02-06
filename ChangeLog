@@ -1,5 +1,10 @@
 2009-02-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/TagLib/Properties.cs: Patch from Andy Beal fixing VideoWidth getter, 
+	was incorrectly returning height (BGO #570745)
+
+2009-02-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/TagLib/Id3v2/Frame.cs: Patch from Andy Beal, fixing bug with not
 	skipping over Data Length Indicator field properly (BGO #568946)
 

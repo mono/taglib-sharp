@@ -331,7 +331,7 @@ namespace TagLib {
 					IVideoCodec video = codec as IVideoCodec;
 					
 					if (video != null && video.VideoWidth != 0)
-						return video.VideoHeight;
+						return video.VideoWidth;
 				}
 				
 				return 0;
