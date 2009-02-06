@@ -1,3 +1,8 @@
+2009-02-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/TagLib/Id3v2/Frame.cs: Patch from Andy Beal, fixing bug with not
+	skipping over Data Length Indicator field properly (BGO #568946)
+
 2009-01-23  Aaron Bockover  <abock@gnome.org>
 
 	* Makefile.am: Install .pc file to datadir since we're noarch

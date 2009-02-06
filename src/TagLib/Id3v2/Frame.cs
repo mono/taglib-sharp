@@ -447,6 +447,7 @@ namespace TagLib.Id3v2 {
 			if ((Flags & (FrameFlags.Compression |
 				FrameFlags.DataLengthIndicator)) != 0) {
 				data_offset += 4;
+				data_length -= 4;
 			}
 			
 			if ((Flags & FrameFlags.GroupingIdentity) != 0) {
