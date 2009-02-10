@@ -468,7 +468,7 @@ namespace TagLib.Riff
 			
 			long position = 12;
 			long length = Length;
-			
+			uint size = 0;
 			TimeSpan duration = TimeSpan.Zero;
 			ICodec [] codecs = new ICodec [0];
 			
@@ -478,7 +478,7 @@ namespace TagLib.Riff
 				
 				Seek (position);
 				string fourcc = ReadBlock (4).ToString (StringType.UTF8);
-				uint   size = ReadBlock (4).ToUInt (false);
+				size = ReadBlock (4).ToUInt (false);
 				
 				switch (fourcc)
 				{
@@ -621,8 +621,7 @@ namespace TagLib.Riff
 				}
 				
 				// Move to the next item.
-				position += 8 + size;
-			} while (position + 8 < length);
+			} while ((position += 8 + size) + 8 < length);
 			
 			// If we're reading properties, and one were found,
 			// throw an exception. Otherwise, create the Properties

@@ -1,5 +1,12 @@
 2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/TagLib/Riff/File.cs: Patch from Andy Beal fixing bug where within a
+	while clause we would 'continue', but the actual counter incrementing
+	happened later in the while clause so the while condition was always true,
+	causing a freezing while writing video files (BGO #570892)
+
+2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* tests/Makefile.am:
 	* tests/samples/sample.avi:
 	* tests/fixtures/TagLib.Tests.FileFormats/AviFormatTest.cs: Patch from
