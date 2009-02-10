@@ -1,3 +1,11 @@
+2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* tests/Makefile.am:
+	* tests/samples/sample.avi:
+	* tests/fixtures/TagLib.Tests.FileFormats/AviFormatTest.cs: Patch from
+	Andy Beal adding unit testing for AVI files; currently gets stuck in
+	infinite loop because of bug with writing to AVI files.
+	
 2009-02-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/TagLib/Properties.cs: Patch from Andy Beal fixing VideoWidth getter, 

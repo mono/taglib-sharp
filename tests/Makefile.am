@@ -9,6 +9,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Collections/ByteVectorTest.cs \
 	fixtures/TagLib.Tests.Collections/StringCollectionTest.cs \
 	fixtures/TagLib.Tests.FileFormats/AsfFormatTest.cs \
+	fixtures/TagLib.Tests.FileFormats/AviFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/FlacFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/Id3BothFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/Id3V1FormatTest.cs \
