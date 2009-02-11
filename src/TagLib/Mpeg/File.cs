@@ -598,6 +598,12 @@ namespace TagLib.Mpeg {
 					video_header = new VideoHeader (this,
 						offset + 4);
 					video_found = true;
+				} else {
+					// advance the offset by 6 bytes, so the next iteration of the
+					// loop won't find the same marker and get stuck.  6 bytes because findMarker is a
+					// generic find that could get both PES packets and Stream packets, the smallest
+					// posible pes packet with a size =0 would be 6 bytes.
+					offset += 6;
 				}
 			
 			position += length;

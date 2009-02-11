@@ -1,5 +1,11 @@
 2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/TagLib/Mpeg/File.cs: Patch from Andy Beal fixing issue where offset
+	was not being advanced when trying to read a GOP video packet inside a
+	video sequence (BGO #568964)
+
+2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* configure.ac: Bump in prep for the next release.
 
 	* examples/ReadFromUri.cs: Refactor a bit, and print out the *Sort
