@@ -1,5 +1,12 @@
 2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* configure.ac: Bump in prep for the next release.
+
+	* examples/ReadFromUri.cs: Refactor a bit, and print out the *Sort
+	properties.
+
+2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/TagLib/Riff/File.cs: Patch from Andy Beal fixing bug where within a
 	while clause we would 'continue', but the actual counter incrementing
 	happened later in the while clause so the while condition was always true,

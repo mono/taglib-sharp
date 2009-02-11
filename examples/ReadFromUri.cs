@@ -4,6 +4,21 @@ using Gnome.Vfs;
 
 public class ReadFromUri
 {
+    public static void Write (string name, object value)
+    {
+        Console.WriteLine ("{0,20}: {1}",
+            name, value == null ? "" : value
+        );
+    }
+
+    public static void Write (string name, string [] values)
+    {
+        Console.WriteLine ("{0,20}: {1}",
+            name, 
+            values == null ? "" : String.Join ("\n            ", values)
+        );
+    }
+
     public static void Main(string [] args)
     {
         if(args.Length == 0) {
@@ -45,25 +60,31 @@ public class ReadFromUri
                 Console.WriteLine("Tags in object: " +  file.TagTypes);
                 Console.WriteLine (String.Empty);
                
-                Console.WriteLine("Grouping:   " +  file.Tag.Grouping);
-                Console.WriteLine("Title:      " +  file.Tag.Title);
-                Console.WriteLine("Artists:    " + (file.Tag.AlbumArtists == null ? String.Empty : System.String.Join ("\n            ", file.Tag.AlbumArtists)));
-                Console.WriteLine("Performers: " + (file.Tag.Performers   == null ? String.Empty : System.String.Join ("\n            ", file.Tag.Performers)));
-                Console.WriteLine("Composers:  " + (file.Tag.Composers    == null ? String.Empty : System.String.Join ("\n            ", file.Tag.Composers)));
-                Console.WriteLine("Conductor:  " +  file.Tag.Conductor);
-                Console.WriteLine("Album:      " +  file.Tag.Album);
-                Console.WriteLine("Comment:    " +  file.Tag.Comment);
-                Console.WriteLine("Copyright:  " +  file.Tag.Copyright);
-                Console.WriteLine("Genres:     " + (file.Tag.Genres       == null ? String.Empty : System.String.Join ("\n            ", file.Tag.Genres)));
-                Console.WriteLine("BPM:        " +  file.Tag.BeatsPerMinute);
-                Console.WriteLine("Year:       " +  file.Tag.Year);
-                Console.WriteLine("Track:      " +  file.Tag.Track);
-                Console.WriteLine("TrackCount: " +  file.Tag.TrackCount);
-                Console.WriteLine("Disc:       " +  file.Tag.Disc);
-                Console.WriteLine("DiscCount:  " +  file.Tag.DiscCount);
+                Write ("Grouping",              file.Tag.Grouping);
+                Write ("Title",                 file.Tag.Title);
+                Write ("TitleSort",             file.Tag.TitleSort);
+                Write ("Album Artists",         file.Tag.AlbumArtists);
+                Write ("Album Artists Sort",    file.Tag.AlbumArtistsSort);
+                Write ("Performers",            file.Tag.Performers);
+                Write ("Performers Sort",       file.Tag.PerformersSort);
+                Write ("Composers",             file.Tag.Composers);
+                Write ("Composers Sort",        file.Tag.ComposersSort);
+                Write ("Conductor",             file.Tag.Conductor);
+                Write ("Album",                 file.Tag.Album);
+                Write ("Album Sort",            file.Tag.AlbumSort);
+                Write ("Comment",               file.Tag.Comment);
+                Write ("Copyright",             file.Tag.Copyright);
+                Write ("Genres",                file.Tag.Genres);
+                Write ("BPM",                   file.Tag.BeatsPerMinute);
+                Write ("Year",                  file.Tag.Year);
+                Write ("Track",                 file.Tag.Track);
+                Write ("TrackCount",            file.Tag.TrackCount);
+                Write ("Disc",                  file.Tag.Disc);
+                Write ("DiscCount",             file.Tag.DiscCount);
+
                 Console.WriteLine("Lyrics:\n"    +  file.Tag.Lyrics + "\n");
                 
-                Console.WriteLine("Media Types: " + file.Properties.MediaTypes + "\n");
+                Console.WriteLine("Media Types:     " + file.Properties.MediaTypes + "\n");
                 
                 foreach (TagLib.ICodec codec in file.Properties.Codecs)
                 {
