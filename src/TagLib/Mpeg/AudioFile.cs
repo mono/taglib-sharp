@@ -50,6 +50,10 @@ namespace TagLib.Mpeg {
 	[SupportedMimeType("audio/x-mpeg-3")]
 	[SupportedMimeType("audio/mpeg3")]
 	[SupportedMimeType("audio/mp3")]
+	[SupportedMimeType("taglib/mp2", "mp2")]
+	[SupportedMimeType("taglib/mp1", "mp1")]
+	[SupportedMimeType("audio/x-mp2")]
+	[SupportedMimeType("audio/x-mp1")]
 	public class AudioFile : TagLib.NonContainer.File
 	{
 		#region Private Fields
@@ -109,7 +113,7 @@ namespace TagLib.Mpeg {
 		///    specified read style.
 		/// </summary>
 		/// <param name="abstraction">
-		///    A <see cref="IFileAbstraction" /> object to use when
+		///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
 		///    reading from and writing to the file.
 		/// </param>
 		/// <param name="propertiesStyle">
@@ -133,7 +137,7 @@ namespace TagLib.Mpeg {
 		///    an average read style.
 		/// </summary>
 		/// <param name="abstraction">
-		///    A <see cref="IFileAbstraction" /> object to use when
+		///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
 		///    reading from and writing to the file.
 		/// </param>
 		/// <exception cref="ArgumentNullException">

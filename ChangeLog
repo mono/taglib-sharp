@@ -1,5 +1,10 @@
 2009-02-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/TagLib/Mpeg/AudioFile.cs: Patch from Bernd Niedergesaess with style
+	help from Andy Beal, adding mp1/mp2 extensions/mimetypes (BGO #571466)
+
+2009-02-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/TagLib/Mpeg4/AppleTag.cs: Patch from Bernd Niedergesaess fixing
 	mpeg4 writing of BPM to file (BGO #571411)
 
