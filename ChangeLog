@@ -1,3 +1,12 @@
+2009-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	Patches from Bertrand Lorentz.
+
+	* tests/Makefile.am: fixes the typo that caused the test source files not
+	to be included in the tarball (BGO #569299)
+
+	* configure.ac: remove the call to AC_CANONICAL_SYSTEM (BGO #571361)
+
 2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/TagLib/Mpeg/File.cs: Patch from Andy Beal fixing issue where offset

@@ -44,7 +44,7 @@ CLEANFILES = $(ASSEMBLY) TestResult.xml *.mdb *.dll *.exe
 DISTCLEANFILES = *.pidb
 MAINTAINERCLEANFILES = Makefile.in
 EXTRA_DIST = \
-	$(ASSEMBLY_CS_FILES) \
+	$(ASSEMBLY_CSFILES) \
 	$(srcdir)/samples/* \
 	$(srcdir)/samples/unsupported/*
 
