@@ -988,7 +988,7 @@ namespace TagLib.Mpeg4 {
 				}
 				
 				SetData (BoxType.Tmpo,
-					ByteVector.FromUInt (value),
+					ByteVector.FromUShort ((ushort)value),
 					(uint) AppleDataBox.FlagType.ForTempo);
 			}
 		}

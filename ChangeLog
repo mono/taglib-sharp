@@ -1,3 +1,8 @@
+2009-02-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/TagLib/Mpeg4/AppleTag.cs: Patch from Bernd Niedergesaess fixing
+	mpeg4 writing of BPM to file (BGO #571411)
+
 2009-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	Patches from Bertrand Lorentz.
