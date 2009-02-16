@@ -1,3 +1,26 @@
+Version 2.0.3.2
+February 16, 2009
+
+TagLib# bugs are now tracked at http://bugzilla.gnome.org.
+
+Get releases from http://download.banshee-project.org/taglib-sharp/
+
+Contributors to this release:
+  Aaron Bockover, Andy Beal, Bernd Niedergesaess,
+  Bertrand Lorentz, Gabriel Burt, John Millikin
+
+Fixes in this release include:
+  * Fix infinite loops when reading/writing video files
+  * Fix parsing ID3v2 with Data Length Indicator set
+  * Fix install/build issues with the docs
+  * Fix casing of APE tags
+  * Add support for *Sort values for artist, album, etc
+  * Install .pc file to datadir since we're noarch
+  * New unit tests for AVI files
+  * Recognize mp1/mp2 extensions and mimetypes
+
+--------------------------------------------------------------------------------
+
 Version 2.0.3.1
 January 20, 2009
 

@@ -1,5 +1,9 @@
 2009-02-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* NEWS: Update for 2.0.3.2 release
+
+2009-02-16  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/TagLib/Ape/Tag.cs: Patch from Bernd Niedergesaess and Andy Beal
 	fixing our APE tag writing from writing out all uppercase tags to writing
 	the recommended tag casing.  But we support reading in any casing.  Also,
