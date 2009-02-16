@@ -1,3 +1,11 @@
+2009-02-16  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Ape/Tag.cs:
+	* docs/Package.en.xml.in:
+	* docs/Makefile.am: Patch from Bertrand Lorentz fixing build issue
+	with docs (BGO #571368)
+
 2009-02-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/TagLib/Mpeg/AudioFile.cs: Patch from Bernd Niedergesaess with style

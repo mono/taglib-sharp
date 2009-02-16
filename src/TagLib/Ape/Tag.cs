@@ -572,7 +572,7 @@ namespace TagLib.Ape {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
-		/// <exception name="ArgumentOutOfRangeException">
+		/// <exception cref="ArgumentOutOfRangeException">
 		///    <paramref name="position" /> is less than 0 or greater
 		///    than the size of the file.
 		/// </exception>

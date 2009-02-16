@@ -16,34 +16,36 @@ monodoc_DATA = \
 	taglib-sharp-docs.tree \
 	taglib-sharp-docs.source
 
-$(srcdir)/en/index.xml: $(ASSEMBLY) $(SLASHDOC) $(srcdir)/XmlInjector.exe $(srcdir)/Package.en.xml
+en/index.xml: $(ASSEMBLY) $(SLASHDOC) XmlInjector.exe Package.en.xml
 # monodocer will create duplicate tags if run multiple times. Delete the whole
 # directory and start over.
-	if [ -d $(srcdir)/en ]; then \
-		rm -rf $(srcdir)/en; \
+	if [ -d en ]; then \
+		rm -rf en; \
 	fi
-	monodocer /assembly:$(ASSEMBLY) /importslashdoc:$(SLASHDOC) /path:en
-	$(MONO) $(srcdir)/XmlInjector.exe $(srcdir)/Package.en.xml InsertMissingValues
+	$(DOC_UPDATER) -assembly:$(ASSEMBLY) -importslashdoc:$(SLASHDOC) -path:en
+	$(MONO) XmlInjector.exe Package.en.xml InsertMissingValues
 
-update-html: $(srcdir)/en
+update-html: en
 	if [ -d taglib-sharp-web-docs ]; then \
 		rm -rf taglib-sharp-web-docs; \
 	fi; \
 	mkdir taglib-sharp-web-docs; \
-	monodocs2html --source en --dest taglib-sharp-web-docs;
+	monodocs2html -o taglib-sharp-web-docs en;
 
-taglib-sharp-docs.zip taglib-sharp-docs.tree: $(srcdir)/en/index.xml
-	$(DOC_ASSEMBLER) $(srcdir)/en
+taglib-sharp-docs.tree: taglib-sharp-docs.zip
 
-install-data-hook: $(srcdir)/XmlInjector.exe $(srcdir)/Package.en.xml
-	$(MONO) $(srcdir)/XmlInjector.exe $(srcdir)/Package.en.xml InjectMenuItem
+taglib-sharp-docs.zip: en/index.xml
+	$(DOC_ASSEMBLER) en
 
-uninstall-hook: $(srcdir)/XmlInjector.exe $(srcdir)/Package.en.xml
-	$(MONO) $(srcdir)/XmlInjector.exe $(srcdir)/Package.en.xml RemoveMenuItem
+install-data-hook: XmlInjector.exe Package.en.xml
+	$(MONO) XmlInjector.exe Package.en.xml InjectMenuItem
+
+uninstall-hook: XmlInjector.exe Package.en.xml
+	$(MONO) XmlInjector.exe Package.en.xml RemoveMenuItem
 
 clean-local:
-	if [ -d $(srcdir)/en ]; then \
-		rm -rf $(srcdir)/en; \
+	if [ -d en ]; then \
+		rm -rf en; \
 	fi
 
 endif

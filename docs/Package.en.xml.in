@@ -151,46 +151,46 @@
 			<Replace Source="/Package/Overview/Copyright" Target="/Overview/Copyright" />
 			<Replace Source="/Package/Overview/Remarks" Target="/Overview/Remarks" />
 		</File>
-		<File Path="en/TagLib.xml">
+		<File Path="en/ns-TagLib.xml">
 			<Replace Source="/Package/Namespace[@Name='TagLib']/Docs" Target="/Namespace/Docs" />
 		</File>
-		<File Path="en/TagLib.Ape.xml">
+		<File Path="en/ns-TagLib.Ape.xml">
 			<Replace Source="/Package/Namespace[@Name='TagLib.Ape']/Docs" Target="/Namespace/Docs" />
 		</File>
-		<File Path="en/TagLib.Asf.xml">
+		<File Path="en/ns-TagLib.Asf.xml">
 			<Replace Source="/Package/Namespace[@Name='TagLib.Asf']/Docs" Target="/Namespace/Docs" />
 		</File>
-		<File Path="en/TagLib.Flac.xml">
+		<File Path="en/ns-TagLib.Flac.xml">
 			<Replace Source="/Package/Namespace[@Name='TagLib.Flac']/Docs" Target="/Namespace/Docs" />
 		</File>
-		<File Path="en/TagLib.Id3v1.xml">
+		<File Path="en/ns-TagLib.Id3v1.xml">
 			<Replace Source="/Package/Namespace[@Name='TagLib.Id3v1']/Docs" Target="/Namespace/Docs" />
 		</File>
-		<File Path="en/TagLib.Id3v2.xml">
+		<File Path="en/ns-TagLib.Id3v2.xml">
 			<Replace Source="/Package/Namespace[@Name='TagLib.Id3v2']/Docs" Target="/Namespace/Docs" />
 		</File>
-		<File Path="en/TagLib.Mpeg4.xml">
+		<File Path="en/ns-TagLib.Mpeg4.xml">
 			<Replace Source="/Package/Namespace[@Name='TagLib.Mpeg4']/Docs" Target="/Namespace/Docs" />
 		</File>
-		<File Path="en/TagLib.Mpeg.xml">
+		<File Path="en/ns-TagLib.Mpeg.xml">
 			<Replace Source="/Package/Namespace[@Name='TagLib.Mpeg']/Docs" Target="/Namespace/Docs" />
 		</File>
-		<File Path="en/TagLib.MusePack.xml">
+		<File Path="en/ns-TagLib.MusePack.xml">
 			<Replace Source="/Package/Namespace[@Name='TagLib.MusePack']/Docs" Target="/Namespace/Docs" />
 		</File>
-		<File Path="en/TagLib.NonContainer.xml">
+		<File Path="en/ns-TagLib.NonContainer.xml">
 			<Replace Source="/Package/Namespace[@Name='TagLib.NonContainer']/Docs" Target="/Namespace/Docs" />
 		</File>
-		<File Path="en/TagLib.Ogg.Codecs.xml">
+		<File Path="en/ns-TagLib.Ogg.Codecs.xml">
 			<Replace Source="/Package/Namespace[@Name='TagLib.Ogg.Codecs']/Docs" Target="/Namespace/Docs" />
 		</File>
-		<File Path="en/TagLib.Ogg.xml">
+		<File Path="en/ns-TagLib.Ogg.xml">
 			<Replace Source="/Package/Namespace[@Name='TagLib.Ogg']/Docs" Target="/Namespace/Docs" />
 		</File>
-		<File Path="en/TagLib.Riff.xml">
+		<File Path="en/ns-TagLib.Riff.xml">
 			<Replace Source="/Package/Namespace[@Name='TagLib.Riff']/Docs" Target="/Namespace/Docs" />
 		</File>
-		<File Path="en/TagLib.WavPack.xml">
+		<File Path="en/ns-TagLib.WavPack.xml">
 			<Replace Source="/Package/Namespace[@Name='TagLib.WavPack']/Docs" Target="/Namespace/Docs" />
 		</File>
 	</ActionSet>
