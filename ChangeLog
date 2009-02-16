@@ -1,10 +1,10 @@
 2009-02-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
-	* src/TagLib/Ape/Tag.cs: Patch from Andy Beal fixing our APE tag writing
-	from writing out all uppercase tags to writing the recommended tag casing.
-	But we support reading in any casing.  Also, use BPM instead of TEMPO, and
-	use Album Artist instead of AlbumArtist, but read/write the latter for
-	compabibility (BGO #571563)
+	* src/TagLib/Ape/Tag.cs: Patch from Bernd Niedergesaess and Andy Beal
+	fixing our APE tag writing from writing out all uppercase tags to writing
+	the recommended tag casing.  But we support reading in any casing.  Also,
+	use BPM instead of TEMPO, and use Album Artist instead of AlbumArtist,
+	but read/write the latter for compabibility (BGO #571563)
 
 2009-02-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
