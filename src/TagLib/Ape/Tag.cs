@@ -527,6 +527,28 @@ namespace TagLib.Ape {
 		}
 		
 		/// <summary>
+		/// Checks if an item exists.
+		/// </summary>
+		/// <param name="key">
+		///    A <see cref="string" /> object containing the key of the
+		///    item to check.
+		/// </param>
+		/// <returns>
+		///    Returns <see langword="true"/> if the <paramref name="key"/>
+		///    exists - else <see langword="false"/> is returned.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="key" /> is <see langword="null" />.
+		/// </exception>
+		public bool HasItem(string key)
+		{
+			if (key == null)
+				throw new ArgumentNullException("key");
+			
+			return GetItemIndex(key) >= 0;
+		}
+		
+		/// <summary>
 		///    Renders the current instance as a raw APEv2 tag.
 		/// </summary>
 		/// <returns>
@@ -800,14 +822,14 @@ namespace TagLib.Ape {
 		///    langword="null" /> if no value is present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "TITLE" item.
+		///    This property is implemented using the "Title" item.
 		/// </remarks>
 		public override string Title {
 			get {
-				Item item = GetItem ("TITLE");
+				Item item = GetItem ("Title");
 				return item != null ? item.ToString () : null;
 			}
-			set {SetValue ("TITLE", value);}
+			set {SetValue ("Title", value);}
 		}
 		
 		/// <summary>
@@ -821,11 +843,11 @@ namespace TagLib.Ape {
 		///    present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "ARTIST" item.
+		///    This property is implemented using the "Artist" item.
 		/// </remarks>
 		public override string [] Performers {
-			get {return GetItemAsStrings ("ARTIST");}
-			set {SetValue ("ARTIST", value);}
+			get {return GetItemAsStrings ("Artist");}
+			set {SetValue ("Artist", value);}
 		}
 		
 		/// <summary>
@@ -840,12 +862,22 @@ namespace TagLib.Ape {
 		///    instance or an empty array if no value is present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "ALBUM ARTIST"
-		///    item.
+		///    This property is implemented using the "Album Artist"
+		///    item, and "AlbumArtist" as a backup property if it exists.
 		/// </remarks>
 		public override string [] AlbumArtists {
-			get {return GetItemAsStrings ("ALBUM ARTIST");}
-			set {SetValue ("ALBUM ARTIST", value);}
+			get {
+				string[] list = GetItemAsStrings("Album Artist");
+				if (list.Length == 0)
+					list = GetItemAsStrings("AlbumArtist");
+				return list;
+			}
+			set {
+				SetValue("Album Artist", value);
+				// compatibility
+				if (HasItem("AlbumArtist"))
+					SetValue("AlbumArtist", value);
+				}
 		}
 		
 		/// <summary>
@@ -858,11 +890,11 @@ namespace TagLib.Ape {
 		///    array if no value is present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "COMPOSER" item.
+		///    This property is implemented using the "Composer" item.
 		/// </remarks>
 		public override string [] Composers {
-			get {return GetItemAsStrings ("COMPOSER");}
-			set {SetValue ("COMPOSER", value);}
+			get {return GetItemAsStrings ("Composer");}
+			set {SetValue ("Composer", value);}
 		}
 		
 		/// <summary>
@@ -875,11 +907,11 @@ namespace TagLib.Ape {
 		///    langword="null" /> if no value is present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "ALBUM" item.
+		///    This property is implemented using the "Album" item.
 		/// </remarks>
 		public override string Album {
-			get {return GetItemAsString ("ALBUM");}
-			set {SetValue ("ALBUM", value);}
+			get {return GetItemAsString ("Album");}
+			set {SetValue ("Album", value);}
 		}
 		
 		/// <summary>
@@ -892,11 +924,11 @@ namespace TagLib.Ape {
 		///    langword="null" /> if no value is present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "COMMENT" item.
+		///    This property is implemented using the "Comment" item.
 		/// </remarks>
 		public override string Comment {
-			get {return GetItemAsString ("COMMENT");}
-			set {SetValue ("COMMENT", value);}
+			get {return GetItemAsString ("Comment");}
+			set {SetValue ("Comment", value);}
 		}
 		
 		/// <summary>
@@ -909,11 +941,11 @@ namespace TagLib.Ape {
 		///    array if no value is present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "GENRE" item.
+		///    This property is implemented using the "Genre" item.
 		/// </remarks>
 		public override string [] Genres {
-			get {return GetItemAsStrings ("GENRE");}
-			set {SetValue ("GENRE", value);}
+			get {return GetItemAsStrings ("Genre");}
+			set {SetValue ("Genre", value);}
 		}
 		
 		/// <summary>
@@ -926,11 +958,11 @@ namespace TagLib.Ape {
 		///    if no value is present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "YEAR" item.
+		///    This property is implemented using the "Year" item.
 		/// </remarks>
 		public override uint Year {
 			get {
-				string text = GetItemAsString ("YEAR");
+				string text = GetItemAsString ("Year");
 				
 				if (text == null || text.Length == 0)
 					return 0;
@@ -944,7 +976,7 @@ namespace TagLib.Ape {
 				
 				return 0;
 			}
-			set {SetValue ("YEAR", value, 0);}
+			set {SetValue ("Year", value, 0);}
 		}
 		
 		/// <summary>
@@ -957,11 +989,11 @@ namespace TagLib.Ape {
 		///    containing album or zero if not specified.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "TRACK" item.
+		///    This property is implemented using the "Track" item.
 		/// </remarks>
 		public override uint Track {
-			get {return GetItemAsUInt32 ("TRACK", 0);}
-			set {SetValue ("TRACK", value, TrackCount);}
+			get {return GetItemAsUInt32 ("Track", 0);}
+			set {SetValue ("Track", value, TrackCount);}
 		}
 		
 		/// <summary>
@@ -974,11 +1006,11 @@ namespace TagLib.Ape {
 		///    instance or zero if not specified.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "TRACK" item.
+		///    This property is implemented using the "Track" item.
 		/// </remarks>
 		public override uint TrackCount {
-			get {return GetItemAsUInt32 ("TRACK", 1);}
-			set {SetValue ("TRACK", Track, value);}
+			get {return GetItemAsUInt32 ("Track", 1);}
+			set {SetValue ("Track", Track, value);}
 		}
 		
 		/// <summary>
@@ -991,11 +1023,11 @@ namespace TagLib.Ape {
 		///    in the boxed set.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "DISC" item.
+		///    This property is implemented using the "Disc" item.
 		/// </remarks>
 		public override uint Disc {
-			get {return GetItemAsUInt32 ("DISC", 0);}
-			set {SetValue ("DISC", value, DiscCount);}
+			get {return GetItemAsUInt32 ("Disc", 0);}
+			set {SetValue ("Disc", value, DiscCount);}
 		}
 		
 		/// <summary>
@@ -1008,11 +1040,11 @@ namespace TagLib.Ape {
 		///    current instance or zero if not specified.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "DISC" item.
+		///    This property is implemented using the "Disc" item.
 		/// </remarks>
 		public override uint DiscCount {
-			get {return GetItemAsUInt32 ("DISC", 1);}
-			set {SetValue ("DISC", Disc, value);}
+			get {return GetItemAsUInt32 ("Disc", 1);}
+			set {SetValue ("Disc", Disc, value);}
 		}
 		
 		/// <summary>
@@ -1025,11 +1057,11 @@ namespace TagLib.Ape {
 		///    or <see langword="null" /> if no value is present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "LYRICS" item.
+		///    This property is implemented using the "Lyrics" item.
 		/// </remarks>
 		public override string Lyrics {
-			get {return GetItemAsString ("LYRICS");}
-			set {SetValue ("LYRICS", value);}
+			get {return GetItemAsString ("Lyrics");}
+			set {SetValue ("Lyrics", value);}
 		}
 		
 		/// <summary>
@@ -1042,11 +1074,11 @@ namespace TagLib.Ape {
 		///    to or <see langword="null" /> if no value is present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "GROUPING" item.
+		///    This property is implemented using the "Grouping" item.
 		/// </remarks>
 		public override string Grouping {
-			get {return GetItemAsString ("GROUPING");}
-			set {SetValue ("GROUPING", value);}
+			get {return GetItemAsString ("Grouping");}
+			set {SetValue ("Grouping", value);}
 		}
 		
 		/// <summary>
@@ -1059,11 +1091,11 @@ namespace TagLib.Ape {
 		///    current instance, or zero if not specified.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "TEMPO" item.
+		///    This property is implemented using the "BPM" item.
 		/// </remarks>
 		public override uint BeatsPerMinute {
 			get {
-				string text = GetItemAsString ("TEMPO");
+				string text = GetItemAsString ("BPM");
 				
 				if (text == null)
 					return 0;
@@ -1075,7 +1107,7 @@ namespace TagLib.Ape {
 				
 				return 0;
 			}
-			set {SetValue ("TEMPO", value, 0);}
+			set {SetValue ("BPM", value, 0);}
 		}
 		
 		/// <summary>
@@ -1088,11 +1120,11 @@ namespace TagLib.Ape {
 		///    instance or <see langword="null" /> if no value present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "CONDUCTOR" item.
+		///    This property is implemented using the "Conductor" item.
 		/// </remarks>
 		public override string Conductor {
-			get {return GetItemAsString ("CONDUCTOR");}
-			set {SetValue ("CONDUCTOR", value);}
+			get {return GetItemAsString ("Conductor");}
+			set {SetValue ("Conductor", value);}
 		}
 		
 		/// <summary>
@@ -1105,11 +1137,11 @@ namespace TagLib.Ape {
 		///    instance or <see langword="null" /> if no value present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "COPYRIGHT" item.
+		///    This property is implemented using the "Copyright" item.
 		/// </remarks>
 		public override string Copyright {
-			get {return GetItemAsString ("COPYRIGHT");}
-			set {SetValue ("COPYRIGHT", value);}
+			get {return GetItemAsString ("Copyright");}
+			set {SetValue ("Copyright", value);}
 		}
 		
 		/// <summary>
