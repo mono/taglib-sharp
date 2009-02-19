@@ -8,7 +8,7 @@ if BUILD_DOCS
 all: XmlInjector.exe
 
 XmlInjector.exe: XmlInjector.cs
-	mcs -out:$@ -r:System.Xml $<
+	$(MCS) -out:$@ -r:System.Xml $<
 
 monodocdir = $(DESTDIR)$(DOCDIR)
 monodoc_DATA = \

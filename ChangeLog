@@ -1,3 +1,8 @@
+2009-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* docs/Makefile.am: Patch from Bertrand Lorentz fixing hardcoded mcs
+	reference (BGO #572450)
+
 2009-02-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* NEWS: Update for 2.0.3.2 release
