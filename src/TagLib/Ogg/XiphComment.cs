@@ -795,7 +795,7 @@ namespace TagLib.Ogg
 				return 0;
 			}
 			set {
-				SetField ("DISCTOTAL", TrackCount);
+				SetField ("DISCTOTAL", DiscCount);
 				SetField ("DISCNUMBER", value);
 			}
 		}

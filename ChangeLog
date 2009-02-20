@@ -1,5 +1,11 @@
 2009-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/TagLib/Ogg/XiphComment.cs: Patch from Gregory S. Chudov fixing typo
+	in the Ogg DiscNumber setter that wrote the TrackCount to the DISCTOTAL
+	field (BGO #572381)
+
+2009-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/TagLib/Tag.cs: Patch from Gregory S. Chudov fixing bug in the CopyTo
 	method that copied the Copyright into the Conductor tag (BGO #572382)
 
