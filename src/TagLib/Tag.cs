@@ -1073,7 +1073,7 @@ namespace TagLib {
 				target.Conductor = Conductor;
 			
 			if (overwrite || IsNullOrLikeEmpty (target.Copyright))
-				target.Conductor = Copyright;
+				target.Copyright = Copyright;
 		}
 		
 		/// <summary>
