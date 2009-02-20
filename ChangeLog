@@ -1,5 +1,13 @@
 2009-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/TagLib/Flac/File.cs: Patch from Gregory S. Chudov fixing NRE thrown
+	when calling GetTag on a flac File (BGO #572380)
+
+	* tests/fixtures/TagLib.Tests.FileFormats/FlacFormatTest.cs: Add a unit
+	test written by me that fails without Gregory's patch, passes with it.
+
+2009-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/TagLib/Ogg/XiphComment.cs: Patch from Gregory S. Chudov fixing typo
 	in the Ogg DiscNumber setter that wrote the TrackCount to the DISCTOTAL
 	field (BGO #572381)

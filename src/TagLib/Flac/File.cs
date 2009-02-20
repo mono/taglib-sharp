@@ -290,7 +290,7 @@ namespace TagLib.Flac {
 				return metadata;
 			}
 			
-			Tag t = (Tag as TagLib.NonContainer.Tag).GetTag (type);
+			Tag t = (base.Tag as TagLib.NonContainer.Tag).GetTag (type);
 			
 			if (t != null || !create)
 				return t;

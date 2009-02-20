@@ -41,6 +41,16 @@ namespace TagLib.Tests.FileFormats
         {
             StandardTests.WriteStandardTags (sample_file, tmp_file);
         }
+
+        [Test]
+        public void TestGetTagType ()
+        {
+            try {
+                file.GetTag(TagTypes.Id3v2);
+            } catch (System.NullReferenceException) {
+                Assert.Fail ("Should not throw System.NullReferenceException calling file.GetTag method: http://bugzilla.gnome.org/show_bug.cgi?id=572380");
+            }
+        }
         
         [Test]
         public void TestCorruptionResistance()
