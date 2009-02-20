@@ -49,9 +49,9 @@ if test x$GACUTIL = x; then
 	AC_MSG_ERROR(You need gacutil)
 fi
 
-GACUTIL_FLAGS='/package $(ASSEMBLY_NAME) /gacdir $(libdir) /root $(DESTDIR)$(libdir)'
+GACUTIL_FLAGS='/package $(ASSEMBLY_NAME) /gacdir $(prefix)/lib /root $(DESTDIR)$(prefix)/lib'
 AC_SUBST(GACUTIL_FLAGS)
-GACUTIL_POLICY_FLAGS='/gacdir $(libdir) /root $(DESTDIR)$(libdir)'
+GACUTIL_POLICY_FLAGS='/gacdir $(prefix)/lib /root $(DESTDIR)$(prefix)/lib'
 AC_SUBST(GACUTIL_POLICY_FLAGS)
 
 AC_ARG_ENABLE(docs, AC_HELP_STRING([--disable-docs], [Do not build documentation]), with_docs=no, with_docs=yes)

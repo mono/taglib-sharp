@@ -1,5 +1,10 @@
 2009-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* configure.ac: Patch from Bertrand Lorentz using $(prefix)/lib in
+	GACUTIL_FLAGS instead of $(libdir) (BGO #572259)
+
+2009-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* docs/Makefile.am: Patch from Bertrand Lorentz fixing hardcoded mcs
 	reference (BGO #572450)
 
