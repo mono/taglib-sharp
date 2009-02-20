@@ -106,7 +106,7 @@ namespace TagLib {
 		
 		/// <summary>
 		///    This delegate is used for intervening in <see
-		///    cref="Create(string)" /> by resolving the file type
+		///    cref="File.Create(string)" /> by resolving the file type
 		///    before any standard resolution operations.
 		/// </summary>
 		/// <param name="abstraction">
@@ -127,17 +127,17 @@ namespace TagLib {
 		/// </returns>
 		/// <remarks>
 		///    <para>A <see cref="FileTypeResolver" /> is one way of
-		///    altering the behavior of <see cref="Create(string)"
+		///    altering the behavior of <see cref="File.Create(string)" />
 		///    .</para>
-		///    <para>When <see cref="Create(string)" /> is called, the
+		///    <para>When <see cref="File.Create(string)" /> is called, the
 		///    registered resolvers are invoked in the reverse order in
 		///    which they were registered. The resolver may then perform
 		///    any operations necessary, including other type-finding
 		///    methods.</para>
 		///    <para>If the resolver returns a new <see cref="File" />,
 		///    it will instantly be returned, by <see
-		///    cref="Create(string)" />. If it returns <see 
-		///    langword="null" />, <see cref="Create(string)" /> will
+		///    cref="File.Create(string)" />. If it returns <see 
+		///    langword="null" />, <see cref="File.Create(string)" /> will
 		///    continue to process. If the resolver throws an exception
 		///    it will be uncaught.</para>
 		///    <para>To register a resolver, use <see
