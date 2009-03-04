@@ -1,3 +1,13 @@
+2009-03-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs: Patch from John
+	Millikin to be more robust in the face of tags with NULL bytes in the
+	middle of them by truncating the value before the first one (BGO #558123)
+
+	* tests/samples/corrupt/null_title_v2.mp3:
+	* tests/fixtures/TagLib.Tests.FileFormats/Id3V2FormatTest.cs: New corrupt
+	file with NULL bytes in the title field, and a test that we handle it ok.
+
 2009-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/TagLib/Flac/File.cs: Patch from Gregory S. Chudov fixing NRE thrown

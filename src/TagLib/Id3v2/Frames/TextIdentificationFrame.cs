@@ -867,14 +867,11 @@ namespace TagLib.Id3v2 {
 				string value = data.ToString (encoding, 1,
 					data.Count - 1);
 				
-				// Do a fast removal of end bytes.
-				if (value.Length > 1 &&
-					value [value.Length - 1] == 0)
-					for (int i = value.Length - 1; i >= 0; i --)
-						if (value [i] != 0) {
-							value = value.Substring (0, i + 1);
-							break;
-						}
+				// Truncate values containing NULL bytes
+				int null_index = value.IndexOf ('\x00');
+				if (null_index >= 0) {
+					value = value.Substring (0, null_index);
+				}
 				
 				if (FrameId == FrameType.TCOM ||
 					FrameId == FrameType.TEXT ||

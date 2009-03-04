@@ -8,6 +8,7 @@ namespace TagLib.Tests.FileFormats
     public class Id3V2FormatTest : IFormatTest
     {
         private static string sample_file = "samples/sample_v2_only.mp3";
+        private static string corrupt_file = "samples/corrupt/null_title_v2.mp3";
         private static string tmp_file = "samples/tmpwrite_v2_only.mp3";
         private File file;
         
@@ -41,6 +42,19 @@ namespace TagLib.Tests.FileFormats
         public void WriteStandardTags ()
         {
             StandardTests.WriteStandardTags (sample_file, tmp_file);
+        }
+        
+        [Test] // http://bugzilla.gnome.org/show_bug.cgi?id=558123
+        public void TestTruncateOnNull ()
+        {
+            if (System.IO.File.Exists (tmp_file)) {
+                System.IO.File.Delete (tmp_file);
+            }
+            
+            System.IO.File.Copy (corrupt_file, tmp_file);
+            File tmp = File.Create (tmp_file);
+            
+            Assert.AreEqual ("T", tmp.Tag.Title);
         }
         
         [Test]
