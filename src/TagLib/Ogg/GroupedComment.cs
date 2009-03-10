@@ -175,14 +175,19 @@ namespace TagLib.Ogg
 		/// <seealso cref="Tag.Title" />
 		public override string Title {
 			get {
-				string output = null;
-				foreach (XiphComment tag in tags)
-					if (tag != null && output == null)
-						output = tag.Title;
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.Title;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
 				
-				return output;
+				return null;
 			}
-			set {if (tags.Count > 0) tags [0].Title = value;}
+			set { if (tags.Count > 0) tags[0].Title = value; }
 		}
 		
 		/// <summary>
@@ -224,7 +229,7 @@ namespace TagLib.Ogg
 		///    the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the performers or
+		///    A <see cref="string" /> array containing the performers or
 		///    artists who performed in the media described by the
 		///    current instance or an empty array if no value is
 		///    present.
@@ -237,16 +242,21 @@ namespace TagLib.Ogg
 		///    comment.</para>
 		/// </remarks>
 		/// <seealso cref="Tag.Performers" />
-		public override string [] Performers {
+		public override string[] Performers {
 			get {
-				string [] output = new string [0];
-				foreach (XiphComment tag in tags)
-					if (tag != null && output.Length == 0)
-						output = tag.Performers;
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string[] value = tag.Performers;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
 				
-				return output;
+				return new string[] { };
 			}
-			set {if (tags.Count > 0) tags [0].Performers = value;}
+			set { if (tags.Count > 0) tags[0].Performers = value; }
 		}
 
 		/// <summary>
@@ -290,7 +300,7 @@ namespace TagLib.Ogg
 		///    media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the band or artist
+		///    A <see cref="string" /> array containing the band or artist
 		///    who is credited in the creation of the entire album or
 		///    collection containing the media described by the current
 		///    instance or an empty array if no value is present.
@@ -303,16 +313,21 @@ namespace TagLib.Ogg
 		///    comment.</para>
 		/// </remarks>
 		/// <seealso cref="Tag.AlbumArtists" />
-		public override string [] AlbumArtists {
+		public override string[] AlbumArtists {
 			get {
-				string [] output = new string [0];
-				foreach (XiphComment tag in tags)
-					if (tag != null && output.Length == 0)
-						output = tag.AlbumArtists;
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string[] value = tag.AlbumArtists;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
 				
-				return output;
+				return new string[] { };
 			}
-			set {if (tags.Count > 0) tags [0].AlbumArtists = value;}
+			set { if (tags.Count > 0) tags[0].AlbumArtists = value; }
 		}
 
 		/// <summary>
@@ -359,7 +374,7 @@ namespace TagLib.Ogg
 		///    the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the composers of the
+		///    A <see cref="string" /> array containing the composers of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -371,16 +386,21 @@ namespace TagLib.Ogg
 		///    comment.</para>
 		/// </remarks>
 		/// <seealso cref="Tag.Composers" />
-		public override string [] Composers {
+		public override string[] Composers {
 			get {
-				string [] output = new string [0];
-				foreach (XiphComment tag in tags)
-					if (tag != null && output.Length == 0)
-						output = tag.Composers;
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string[] value = tag.Composers;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
 				
-				return output;
+				return new string[] { };
 			}
-			set {if (tags.Count > 0) tags [0].Composers = value;}
+			set { if (tags.Count > 0) tags[0].Composers = value; }
 		}
 		
 		/// <summary>
@@ -436,14 +456,19 @@ namespace TagLib.Ogg
 		/// <seealso cref="Tag.Album" />
 		public override string Album {
 			get {
-				string output = null;
-				foreach (XiphComment tag in tags)
-					if (tag != null && output == null)
-						output = tag.Album;
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.Album;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
 				
-				return output;
+				return null;
 			}
-			set {if (tags.Count > 0) tags [0].Album = value;}
+			set { if (tags.Count > 0) tags[0].Album = value; }
 		}
 		
 		/// <summary>
@@ -499,14 +524,19 @@ namespace TagLib.Ogg
 		/// <seealso cref="Tag.Comment" />
 		public override string Comment {
 			get {
-				string output = null;
-				foreach (XiphComment tag in tags)
-					if (tag != null && output == null)
-						output = tag.Comment;
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.Comment;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
 				
-				return output;
+				return null;
 			}
-			set {if (tags.Count > 0) tags [0].Comment = value;}
+			set { if (tags.Count > 0) tags[0].Comment = value; }
 		}
 		
 		/// <summary>
@@ -514,7 +544,7 @@ namespace TagLib.Ogg
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the genres of the
+		///    A <see cref="string" /> array containing the genres of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -526,16 +556,21 @@ namespace TagLib.Ogg
 		///    comment.</para>
 		/// </remarks>
 		/// <seealso cref="Tag.Genres" />
-		public override string [] Genres {
+		public override string[] Genres {
 			get {
-				string [] output = new string [0];
-				foreach (XiphComment tag in tags)
-					if (tag != null && output.Length == 0)
-						output = tag.Genres;
-				
-				return output;
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string[] value = tag.Genres;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+			
+				return new string[] { };
 			}
-			set {if (tags.Count > 0) tags [0].Genres = value;}
+			set { if (tags.Count > 0) tags[0].Genres = value; }
 		}
 		
 		/// <summary>
@@ -543,28 +578,27 @@ namespace TagLib.Ogg
 		///    current instance was recorded.
 		/// </summary>
 		/// <value>
-		///    A <see cref="uint" /> containing the year that the media
+		///    A <see cref="string" /> containing the year that the media
 		///    represented by the current instance was created or zero
 		///    if no value is present.
 		/// </value>
 		/// <remarks>
 		///    <para>When getting the value, the child comments are
-		///    looped through in order and the first non-zero value is
-		///    returned.</para>
+		///    looped through in order and the first non-<see
+		///    langword="null" /> value is returned.</para>
 		///    <para>When setting the value, it is stored in the first
 		///    comment.</para>
 		/// </remarks>
 		/// <seealso cref="Tag.Year" />
 		public override uint Year {
 			get {
-				uint output = 0;
 				foreach (XiphComment tag in tags)
-					if (tag != null && output == 0)
-						output = tag.Year;
+					if (tag != null && tag.Year != 0)
+						return tag.Year;
 				
-				return output;
+				return 0;
 			}
-			set {if (tags.Count > 0) tags [0].Year = value;}
+			set { if (tags.Count > 0) tags[0].Year = value; }
 		}
 		
 		/// <summary>
@@ -586,14 +620,13 @@ namespace TagLib.Ogg
 		/// <seealso cref="Tag.Track" />
 		public override uint Track {
 			get {
-				uint output = 0;
 				foreach (XiphComment tag in tags)
-					if (tag != null && output == 0)
-						output = tag.Track;
+					if (tag != null && tag.Track != 0)
+						return tag.Track;
 				
-				return output;
+				return 0;
 			}
-			set {if (tags.Count > 0) tags [0].Track = value;}
+			set { if (tags.Count > 0) tags[0].Track = value; }
 		}
 		
 		/// <summary>
@@ -615,14 +648,13 @@ namespace TagLib.Ogg
 		/// <seealso cref="Tag.TrackCount" />
 		public override uint TrackCount {
 			get {
-				uint output = 0;
 				foreach (XiphComment tag in tags)
-					if (tag != null && output == 0)
-						output = tag.TrackCount;
+					if (tag != null && tag.TrackCount != 0)
+						return tag.TrackCount;
 				
-				return output;
+				return 0;
 			}
-			set {if (tags.Count > 0) tags [0].TrackCount = value;}
+			set { if (tags.Count > 0) tags[0].TrackCount = value; }
 		}
 		
 		/// <summary>
@@ -644,14 +676,13 @@ namespace TagLib.Ogg
 		/// <seealso cref="Tag.Disc" />
 		public override uint Disc {
 			get {
-				uint output = 0;
 				foreach (XiphComment tag in tags)
-					if (tag != null && output == 0)
-						output = tag.Disc;
+					if (tag != null && tag.Disc != 0)
+						return tag.Disc;
 				
-				return output;
+				return 0;
 			}
-			set {if (tags.Count > 0) tags [0].Disc = value;}
+			set { if (tags.Count > 0) tags[0].Disc = value; }
 		}
 		
 		/// <summary>
@@ -673,14 +704,13 @@ namespace TagLib.Ogg
 		/// <seealso cref="Tag.DiscCount" />
 		public override uint DiscCount {
 			get {
-				uint output = 0;
 				foreach (XiphComment tag in tags)
-					if (tag != null && output == 0)
-						output = tag.DiscCount;
+					if (tag != null && tag.DiscCount != 0)
+						return tag.DiscCount;
 				
-				return output;
+				return 0;
 			}
-			set {if (tags.Count > 0) tags [0].DiscCount = value;}
+			set { if (tags.Count > 0) tags[0].DiscCount = value; }
 		}
 		
 		/// <summary>
@@ -702,14 +732,19 @@ namespace TagLib.Ogg
 		/// <seealso cref="Tag.Lyrics" />
 		public override string Lyrics {
 			get {
-				string output = null;
-				foreach (XiphComment tag in tags)
-					if (tag != null && output == null)
-						output = tag.Lyrics;
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.Lyrics;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
 				
-				return output;
+				return null;
 			}
-			set {if (tags.Count > 0) tags [0].Lyrics = value;}
+			set { if (tags.Count > 0) tags[0].Lyrics = value; }
 		}
 		
 		/// <summary>
@@ -731,14 +766,19 @@ namespace TagLib.Ogg
 		/// <seealso cref="Tag.Grouping" />
 		public override string Grouping {
 			get {
-				string output = null;
-				foreach (XiphComment tag in tags)
-					if (tag != null && output == null)
-						output = tag.Grouping;
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.Grouping;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
 				
-				return output;
+				return null;
 			}
-			set {if (tags.Count > 0) tags [0].Grouping = value;}
+			set { if (tags.Count > 0) tags[0].Grouping = value; }
 		}
 		
 		/// <summary>
@@ -760,17 +800,14 @@ namespace TagLib.Ogg
 		/// <seealso cref="Tag.BeatsPerMinute" />
 		public override uint BeatsPerMinute {
 			get {
-				uint output = 0;
 				foreach (XiphComment tag in tags)
-					if (tag != null && output == 0)
-						output = tag.BeatsPerMinute;
+					if (tag != null && tag.BeatsPerMinute != 0)
+						return tag.BeatsPerMinute;
 				
-				return output;
-			}
-			set {
-				if (tags.Count > 0)
-					tags [0].BeatsPerMinute = value;
-			}
+				return 0;
+				}
+			
+			set { if (tags.Count > 0) tags[0].BeatsPerMinute = value; }
 		}
 
 		/// <summary>
@@ -792,14 +829,19 @@ namespace TagLib.Ogg
 		/// <seealso cref="Tag.Conductor" />
 		public override string Conductor {
 			get {
-				string output = null;
-				foreach (XiphComment tag in tags)
-					if (tag != null && output == null)
-						output = tag.Conductor;
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.Conductor;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
 				
-				return output;
+				return null;
 			}
-			set {if (tags.Count > 0) tags [0].Conductor = value;}
+			set { if (tags.Count > 0) tags[0].Conductor = value; }
 		}
 		
 		/// <summary>
@@ -821,14 +863,19 @@ namespace TagLib.Ogg
 		/// <seealso cref="Tag.Copyright" />
 		public override string Copyright {
 			get {
-				string output = null;
-				foreach (XiphComment tag in tags)
-					if (tag != null && output == null)
-						output = tag.Copyright;
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.Copyright;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
 				
-				return output;
+				return null;
 			}
-			set {if (tags.Count > 0) tags [0].Copyright = value;}
+			set { if (tags.Count > 0) tags[0].Copyright = value; }
 		}
 		
 		/// <summary>
