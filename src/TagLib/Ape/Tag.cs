@@ -825,13 +825,27 @@ namespace TagLib.Ape {
 		///    This property is implemented using the "Title" item.
 		/// </remarks>
 		public override string Title {
-			get {
-				Item item = GetItem ("Title");
-				return item != null ? item.ToString () : null;
-			}
+			get { return GetItemAsString ("Title"); }
 			set {SetValue ("Title", value);}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets the sort names of the Title of the
+		///    media represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the sort names for
+		///    the Title of the media described by the current instance,
+		///    or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TitleSort" item.
+		/// </remarks>
+		public override string TitleSort {
+			get { return GetItemAsString ("TitleSort"); }
+			set { SetValue ("TitleSort", value); }
+		}
+
 		/// <summary>
 		///    Gets and sets the performers or artists who performed in
 		///    the media described by the current instance.
@@ -849,7 +863,26 @@ namespace TagLib.Ape {
 			get {return GetItemAsStrings ("Artist");}
 			set {SetValue ("Artist", value);}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets the sort names of the performers or artists
+		///    who performed in the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> array containing the sort names for
+		///    the performers or artists who performed in the media
+		///    described by the current instance, or an empty array if
+		///    no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ArtistSort" field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string[] PerformersSort {
+			get { return GetItemAsStrings ("ArtistSort"); }
+			set { SetValue ("ArtistSort", value); }
+		}
+
 		/// <summary>
 		///    Gets and sets the band or artist who is credited in the
 		///    creation of the entire album or collection containing the
@@ -879,7 +912,30 @@ namespace TagLib.Ape {
 					SetValue("AlbumArtist", value);
 				}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets the sort names for the band or artist who
+		///    is credited in the creation of the entire album or
+		///    collection containing the media described by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> array containing the sort names
+		///    for the band or artist who is credited in the creation
+		///    of the entire album or collection containing the media
+		///    described by the current instance or an empty array if
+		///    no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "AlbumArtistSort"
+		///    field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string[] AlbumArtistsSort {
+			get { return GetItemAsStrings ("AlbumArtistSort"); }
+			set { SetValue ("AlbumArtistSort", value); }
+		}
+
 		/// <summary>
 		///    Gets and sets the composers of the media represented by
 		///    the current instance.
@@ -896,7 +952,26 @@ namespace TagLib.Ape {
 			get {return GetItemAsStrings ("Composer");}
 			set {SetValue ("Composer", value);}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets the sort names for the composers of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> array containing the sort names
+		///    for the composer of the media described by the current
+		///    instance or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ComposerSort"
+		///    field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string[] ComposersSort {
+			get { return GetItemAsStrings ("ComposerSort"); }
+			set { SetValue ("ComposerSort", value); }
+		}
+
 		/// <summary>
 		///    Gets and sets the album of the media represented by the
 		///    current instance.
@@ -913,7 +988,26 @@ namespace TagLib.Ape {
 			get {return GetItemAsString ("Album");}
 			set {SetValue ("Album", value);}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets the sort names for the Album Title of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the sort name of 
+		///    the Album Title of the media described by the current
+		///    instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "AlbumSort"
+		///    field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string AlbumSort {
+			get { return GetItemAsString ("AlbumSort"); }
+			set { SetValue ("AlbumSort", value); }
+		}
+
 		/// <summary>
 		///    Gets and sets a user comment on the media represented by
 		///    the current instance.

@@ -1,5 +1,10 @@
 2009-03-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/TagLib/Ape/Tag.cs: Patch from Bernd Niedergesaess adding support for
+	Sort* values in Ape tags (BGO #571421)
+
+2009-03-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/TagLib/Ogg/GroupedComment.cs: Patch from Bernd Niedergesaess and
 	Andy Beal improving code consistency (BGO #571443)
 
