@@ -1,3 +1,9 @@
+2009-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/TagLib/Mpeg/File.cs:
+	* src/TagLib/Mpeg/AudioFile.cs:
+    Patch from Andy Beal adding support for m2v and m2v files (BGO #574411)
+
 2009-03-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/TagLib/Ape/Tag.cs: Patch from Bernd Niedergesaess adding support for

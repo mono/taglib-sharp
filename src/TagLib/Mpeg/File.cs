@@ -92,6 +92,7 @@ namespace TagLib.Mpeg {
 	[SupportedMimeType("taglib/mpeg", "mpeg")]
 	[SupportedMimeType("taglib/mpe", "mpe")]
 	[SupportedMimeType("taglib/mpv2", "mpv2")]
+	[SupportedMimeType("taglib/m2v", "m2v")]
 	[SupportedMimeType("video/x-mpg")]
 	[SupportedMimeType("video/mpeg")]
 	public class File : TagLib.NonContainer.File

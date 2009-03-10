@@ -50,6 +50,7 @@ namespace TagLib.Mpeg {
 	[SupportedMimeType("audio/x-mpeg-3")]
 	[SupportedMimeType("audio/mpeg3")]
 	[SupportedMimeType("audio/mp3")]
+	[SupportedMimeType("taglib/m2a", "m2a")]
 	[SupportedMimeType("taglib/mp2", "mp2")]
 	[SupportedMimeType("taglib/mp1", "mp1")]
 	[SupportedMimeType("audio/x-mp2")]
