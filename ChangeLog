@@ -1,5 +1,9 @@
 2009-03-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* docs/Makefile.am: Reduce the verbosity of docs build output.
+
+2009-03-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	Patch from Andy Beal adding new properties: MusicBrainz -ArtistId,
 	-ReleaseId, -ReleaseArtistId, -TrackId, -DiscId, -ReleaseStatus, -ReleaseType,
 	-ReleaseCountry, MusicIpId, and AmazonId (BGO #563170)

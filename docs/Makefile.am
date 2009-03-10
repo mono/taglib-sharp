@@ -22,7 +22,7 @@ en/index.xml: $(ASSEMBLY) $(SLASHDOC) XmlInjector.exe Package.en.xml
 	if [ -d en ]; then \
 		rm -rf en; \
 	fi
-	$(DOC_UPDATER) -assembly:$(ASSEMBLY) -importslashdoc:$(SLASHDOC) -path:en
+	$(DOC_UPDATER) -assembly:$(ASSEMBLY) -importslashdoc:$(SLASHDOC) -path:en > /dev/null
 	$(MONO) XmlInjector.exe Package.en.xml InsertMissingValues
 
 update-html: en
