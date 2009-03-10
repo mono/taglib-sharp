@@ -832,6 +832,336 @@ namespace TagLib.Ogg
 		}
 		
 		/// <summary>
+		///    Gets and sets the MusicBrainz Artist ID.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ArtistID for the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.MusicBrainzArtistId" />
+		public override string MusicBrainzArtistId {
+			get {
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.MusicBrainzArtistId;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return null;
+			}
+			set {if (tags.Count > 0) tags [0].MusicBrainzArtistId = value;}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release ID.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ReleaseID for the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.MusicBrainzReleaseId" />
+		public override string MusicBrainzReleaseId {
+			get {
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.MusicBrainzReleaseId;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return null;
+			}
+			set {if (tags.Count > 0) tags [0].MusicBrainzReleaseId = value;}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Artist ID.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ReleaseArtistID for the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.MusicBrainzReleaseArtistId" />
+		public override string MusicBrainzReleaseArtistId {
+			get {
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.MusicBrainzReleaseArtistId;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return null;
+			}
+			set {if (tags.Count > 0) tags [0].MusicBrainzReleaseArtistId = value;}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Track ID.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    TrackID for the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.MusicBrainzTrackId" />
+		public override string MusicBrainzTrackId {
+			get {
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.MusicBrainzTrackId;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return null;
+			}
+			set {if (tags.Count > 0) tags [0].MusicBrainzTrackId = value;}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Disc ID.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    DiscID for the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.MusicBrainzDiscId" />
+		public override string MusicBrainzDiscId {
+			get {
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.MusicBrainzDiscId;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return null;
+			}
+			set {if (tags.Count > 0) tags [0].MusicBrainzDiscId = value;}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicIP PUID.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicIP PUID
+		///    for the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.MusicIpId" />
+		public override string MusicIpId {
+			get {
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.MusicIpId;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return null;
+			}
+			set {if (tags.Count > 0) tags [0].MusicIpId = value;}
+		}
+
+		/// <summary>
+		///    Gets and sets the Amazon ID.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the Amazon ID
+		///    for the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.AmazonId" />
+		public override string AmazonId {
+			get {
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.AmazonId;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return null;
+			}
+			set {if (tags.Count > 0) tags [0].AmazonId = value;}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Status.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    Release Status for the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.MusicBrainzReleaseStatus" />
+		public override string MusicBrainzReleaseStatus {
+			get {
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.MusicBrainzReleaseStatus;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return null;
+			}
+			set {if (tags.Count > 0) tags [0].MusicBrainzReleaseStatus = value;}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Type.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    Release Type for the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.MusicBrainzReleaseType" />
+		public override string MusicBrainzReleaseType {
+			get {
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.MusicBrainzReleaseType;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return null;
+			}
+			set {if (tags.Count > 0) tags [0].MusicBrainzReleaseType = value;}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Country.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    Release Country for the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.MusicBrainzReleaseCountry" />
+		public override string MusicBrainzReleaseCountry {
+			get {
+				foreach (XiphComment tag in tags) {
+					if (tag == null)
+						continue;
+					
+					string value = tag.MusicBrainzReleaseCountry;
+					
+					if (value != null && value.Length > 0)
+						return value;
+				}
+				
+				return null;
+			}
+			set {if (tags.Count > 0) tags [0].MusicBrainzReleaseCountry = value;}
+		}
+
+		/// <summary>
 		///    Gets and sets a collection of pictures associated with
 		///    the media represented by the current instance.
 		/// </summary>

@@ -928,6 +928,176 @@ namespace TagLib.Ogg
 		}
 		
 		/// <summary>
+		///    Gets and sets the MusicBrainz Artist ID for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    ArtistID for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_ARTISTID" field.
+		/// </remarks>
+		public override string MusicBrainzArtistId {
+			get {return GetFirstField ("MUSICBRAINZ_ARTISTID");}
+			set {SetField ("MUSICBRAINZ_ARTISTID", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release ID for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    ReleaseID for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_ALBUMID" field.
+		/// </remarks>
+		public override string MusicBrainzReleaseId {
+			get {return GetFirstField ("MUSICBRAINZ_ALBUMID");}
+			set {SetField ("MUSICBRAINZ_ALBUMID", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Artist ID for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    ReleaseArtistID for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_ALBUMARTISTID" field.
+		/// </remarks>
+		public override string MusicBrainzReleaseArtistId {
+			get {return GetFirstField ("MUSICBRAINZ_ALBUMARTISTID");}
+			set {SetField ("MUSICBRAINZ_ALBUMARTISTID", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Track ID for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    TrackID for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_TRACKID" field.
+		/// </remarks>
+		public override string MusicBrainzTrackId {
+			get {return GetFirstField ("MUSICBRAINZ_TRACKID");}
+			set {SetField ("MUSICBRAINZ_TRACKID", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Disc ID for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    DiscID for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_DISCID" field.
+		/// </remarks>
+		public override string MusicBrainzDiscId {
+			get {return GetFirstField ("MUSICBRAINZ_DISCID");}
+			set {SetField ("MUSICBRAINZ_DISCID", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicIP PUID for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicIP PUID
+		///    for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICIP_PUID" field.
+		/// </remarks>
+		public override string MusicIpId {
+			get {return GetFirstField ("MUSICIP_PUID");}
+			set {SetField ("MUSICIP_PUID", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the Amazon ID for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the AmazonID
+		///    for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ASIN" field.
+		/// </remarks>
+		public override string AmazonId {
+			get {return GetFirstField ("ASIN");}
+			set {SetField ("ASIN", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Status for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    ReleaseStatus for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_ALBUMSTATUS" field.
+		/// </remarks>
+		public override string MusicBrainzReleaseStatus {
+			get {return GetFirstField ("MUSICBRAINZ_ALBUMSTATUS");}
+			set {SetField ("MUSICBRAINZ_ALBUMSTATUS", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Type for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    ReleaseType for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_ALBUMTYPE" field.
+		/// </remarks>
+		public override string MusicBrainzReleaseType {
+			get {return GetFirstField ("MUSICBRAINZ_ALBUMTYPE");}
+			set {SetField ("MUSICBRAINZ_ALBUMTYPE", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Country for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    ReleaseCountry for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "RELEASECOUNTRY" field.
+		/// </remarks>
+		public override string MusicBrainzReleaseCountry {
+			get {return GetFirstField ("RELEASECOUNTRY");}
+			set {SetField ("RELEASECOUNTRY", value);}
+		}
+
+		/// <summary>
 		///    Gets and sets a collection of pictures associated with
 		///    the media represented by the current instance.
 		/// </summary>

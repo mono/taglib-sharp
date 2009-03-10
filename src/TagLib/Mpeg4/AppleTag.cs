@@ -424,7 +424,8 @@ namespace TagLib.Mpeg4 {
 			
 		/// <summary>
 		/// Sets a specific strings in Dash (----) atom.  This method updates
-		/// and existing atom, or creates a new one.
+		/// and existing atom, or creates a new one.  If an empty datastring is
+		/// specified, the Dash box and its children are removed.
 		/// </summary>
 		/// <param name="meanstring">String specifying text for mean box</param>
 		/// <param name="namestring">String specifying text for name box</param>
@@ -432,13 +433,23 @@ namespace TagLib.Mpeg4 {
 		public void SetDashBox(string meanstring, string namestring, string datastring)
 		{
 			AppleDataBox data_box = GetDashAtoms(meanstring, namestring);
-
+			
+			// If we did find a data_box and we have an empty datastring we should
+			// remove the entire dash box.
+			if (data_box != null && string.IsNullOrEmpty(datastring)) {
+				AppleAnnotationBox dash_box = GetParentDashBox(meanstring, namestring);
+				dash_box.ClearChildren();
+				ilst_box.RemoveChild(dash_box);
+				return;
+			}
+			
 			if (data_box != null) {
 				data_box.Text = datastring;
 			} else {
-				AppleAdditionalInfoBox amean_box = new AppleAdditionalInfoBox(BoxType.Mean, 0, 0);
-				AppleAdditionalInfoBox aname_box = new AppleAdditionalInfoBox(BoxType.Name, 0, 0);
-				AppleDataBox adata_box = new AppleDataBox(BoxType.Data, 0);
+				//Create the new boxes, should use 1 for text as a flag
+				AppleAdditionalInfoBox amean_box = new AppleAdditionalInfoBox(BoxType.Mean, 0, 1);
+				AppleAdditionalInfoBox aname_box = new AppleAdditionalInfoBox(BoxType.Name, 0, 1);
+				AppleDataBox adata_box = new AppleDataBox(BoxType.Data, 1);
 				amean_box.Text = meanstring;
 				aname_box.Text = namestring;
 				adata_box.Text = datastring;
@@ -486,6 +497,41 @@ namespace TagLib.Mpeg4 {
 			return null;
 		}
 		
+		/// <summary>
+		/// Returns the Parent Dash box object for a given mean/name combination
+		/// </summary>
+		/// <param name="meanstring">String specifying text for mean box</param>
+		/// <param name="namestring">String specifying text for name box</param>
+		/// <returns>AppleAnnotationBox object that is the parent for the mean/name combination</returns>
+		private AppleAnnotationBox GetParentDashBox(string meanstring, string namestring)
+		{
+			foreach (Box box in ilst_box.Children) {
+				if (box.BoxType != BoxType.DASH)
+					continue;
+				
+				// Get the mean and name boxes, make sure
+				// they're legit, check the Text fields for
+				// a match.  If we have a match return
+				// the AppleAnnotationBox that is the Parent
+				
+				AppleAdditionalInfoBox mean_box =
+					(AppleAdditionalInfoBox)
+					box.GetChild(BoxType.Mean);
+				AppleAdditionalInfoBox name_box =
+					(AppleAdditionalInfoBox)
+					box.GetChild(BoxType.Name);
+					
+				if (mean_box == null || name_box == null ||
+					mean_box.Text != meanstring ||
+					name_box.Text != namestring) {
+					continue;
+				} else {
+					return (AppleAnnotationBox)box;
+				}
+			}
+			// If we haven't returned the found box yet, there isn't one, return null
+			return null;
+		}
 		#endregion
 		
 		
@@ -992,7 +1038,7 @@ namespace TagLib.Mpeg4 {
 					(uint) AppleDataBox.FlagType.ForTempo);
 			}
 		}
-      
+		
 		/// <summary>
 		///    Gets and sets the conductor or director of the media
 		///    represented by the current instance.
@@ -1143,7 +1189,177 @@ namespace TagLib.Mpeg4 {
 			}
 			set {SetText (BoxType.Sonm, value);}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz ArtistID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ArtistID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dash"/"----" box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzArtistId {
+			get {return GetDashBox("com.apple.iTunes","MusicBrainz Artist Id");}
+			set {SetDashBox("com.apple.iTunes", "MusicBrainz Artist Id", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz ReleaseID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ReleaseID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dash"/"----" box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseId {
+			get {return GetDashBox("com.apple.iTunes","MusicBrainz Album Id");}
+			set {SetDashBox("com.apple.iTunes", "MusicBrainz Album Id",value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz ReleaseArtistID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ReleaseArtistID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dash"/"----" box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseArtistId {
+			get {return GetDashBox("com.apple.iTunes","MusicBrainz Album Artist Id");}
+			set {SetDashBox("com.apple.iTunes", "MusicBrainz Album Artist Id",value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz TrackID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    TrackID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dash"/"----" box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzTrackId {
+		    get { return GetDashBox("com.apple.iTunes","MusicIP PUID");}
+		    set {SetDashBox("com.apple.iTunes", "MusicIP PUID", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz DiscID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    DiscID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dash"/"----" box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzDiscId {
+			get {return GetDashBox("com.apple.iTunes","MusicBrainz Disc Id");}
+			set {SetDashBox("com.apple.iTunes", "MusicBrainz Disc Id",value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicIP PUID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicIP Puid
+		///    for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dash"/"----" box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicIpId {
+			get {return GetDashBox("com.apple.iTunes","MusicIP PUID");}
+			set {SetDashBox("com.apple.iTunes", "MusicIP PUID",value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the AmazonID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the AmazonID
+		///    for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dash"/"----" box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string AmazonId {
+			get {return GetDashBox("com.apple.iTunes","ASIN");}
+			set {SetDashBox("com.apple.iTunes", "ASIN",value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz ReleaseStatus
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ReleaseStatus for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dash"/"----" box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseStatus {
+			get {return GetDashBox("com.apple.iTunes","MusicBrainz Album Status");}
+			set {SetDashBox("com.apple.iTunes", "MusicBrainz Album Status",value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz ReleaseType
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ReleaseType for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dash"/"----" box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseType {
+			get {return GetDashBox("com.apple.iTunes","MusicBrainz Album Type");}
+			set {SetDashBox("com.apple.iTunes", "MusicBrainz Album Type",value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Country
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ReleaseCountry for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dash"/"----" box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseCountry {
+			get {return GetDashBox("com.apple.iTunes","MusicBrainz Album Release Country");}
+			set {SetDashBox("com.apple.iTunes", "MusicBrainz Album Release Country",value);}
+		}
+
 		/// <summary>
 		///    Gets and sets a collection of pictures associated with
 		///    the media represented by the current instance.

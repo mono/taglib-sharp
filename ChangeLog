@@ -1,3 +1,24 @@
+2009-03-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	Patch from Andy Beal adding new properties: MusicBrainz -ArtistId,
+	-ReleaseId, -ReleaseArtistId, -TrackId, -DiscId, -ReleaseStatus, -ReleaseType,
+	-ReleaseCountry, MusicIpId, and AmazonId (BGO #563170)
+
+	* src/TagLib/CombinedTag.cs:
+	* src/TagLib/Tag.cs:
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Ape/Tag.cs:
+	* src/TagLib/Mpeg4/AppleTag.cs:
+	* src/TagLib/Asf/Tag.cs:
+	* src/TagLib/Ogg/XiphComment.cs:
+	* src/TagLib/Ogg/GroupedComment.cs:
+	* tests/fixtures/TagLib.Tests.TaggingFormats/Mpeg4Test.cs:
+	* tests/fixtures/TagLib.Tests.TaggingFormats/ApeTest.cs:
+	* tests/fixtures/TagLib.Tests.TaggingFormats/Id3V2Test.cs:
+	* tests/fixtures/TagLib.Tests.TaggingFormats/XiphTest.cs:
+	* tests/fixtures/TagLib.Tests.TaggingFormats/AsfTest.cs: Add and test the
+	new properties.
+
 2009-03-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/TagLib/Id3v2/Frames/TextIdentificationFrame.cs: Patch from John

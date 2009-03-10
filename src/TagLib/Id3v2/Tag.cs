@@ -1040,7 +1040,86 @@ namespace TagLib.Id3v2 {
 			
 			return 0;
 		}
-		
+
+		/// <summary>
+		/// Gets a TXXX frame via reference of the description field
+		/// </summary>
+		/// <param name="description">String containing the description field</param>
+		/// <returns>UserTextInformationFrame (TXXX) that corresponds to the description</returns>
+		private string GetUserTextAsString (string description){
+
+			//Gets the TXXX frame, frame will be null if nonexistant
+			UserTextInformationFrame frame = UserTextInformationFrame.Get (
+				this, description, false);
+
+			//TXXX frames support multivalue strings, join them up and return
+			//only the text from the frame.
+			string result = frame == null ? null : string.Join (";",frame.Text);
+			return string.IsNullOrEmpty (result) ? null : result;
+
+		}
+
+		/// <summary>
+		/// Creates and/or sets a UserTextInformationFrame (TXXX)  with the given
+		/// description and text.
+		/// </summary>
+		/// <param name="description">String containing the Description field for the
+		/// TXXX frame</param>
+		/// <param name="text">String containing the Text field for the TXXX frame</param>
+		private void SetUserTextAsString(string description, string text) {
+
+			//Get the TXXX frame, create a new one if needed
+			UserTextInformationFrame frame = UserTextInformationFrame.Get(
+				this, description, true);
+
+			if (!string.IsNullOrEmpty(text)) {
+				frame.Text = text.Split(';');
+			}
+			else {
+			//Text string is null or empty, delete the frame, prevent empties
+				RemoveFrame(frame);
+			}
+
+		}
+
+		/// <summary>
+		/// Gets the text from a particular UFID frame, referenced by the owner field
+		/// </summary>
+		/// <param name="owner">String containing the "Owner" data</param>
+		/// <returns>String containing the text from the UFID frame, or null</returns>
+		private string GetUfidText(string owner) {
+
+			//Get the UFID frame, frame will be null if nonexistant
+			UniqueFileIdentifierFrame frame = UniqueFileIdentifierFrame.Get(
+				this, owner, false);
+			
+			//If the frame existed: frame.Identifier is a bytevector, get a string
+			string result = frame == null ? null : frame.Identifier.ToString();
+			return string.IsNullOrEmpty (result) ? null : result;
+		}
+
+		/// <summary>
+		/// Creates and/or sets the text for a UFID frame, referenced by owner
+		/// </summary>
+		/// <param name="owner">String containing the Owner field</param>
+		/// <param name="text">String containing the text to set for the frame</param>
+		private void SetUfidText(string owner, string text) {
+
+			//Get a UFID frame, create if necessary
+			UniqueFileIdentifierFrame frame = UniqueFileIdentifierFrame.Get(
+				this, owner, true);
+
+			//If we have a real string, convert to ByteVector and apply to frame
+			if (!string.IsNullOrEmpty(text)) {
+				ByteVector identifier = ByteVector.FromString(text, StringType.UTF8);
+				frame.Identifier = identifier;
+			}
+			else {
+				//String was null or empty, remove the frame to prevent empties
+				RemoveFrame(frame);
+			}
+		}
+
 		/// <summary>
 		///    Moves a specified frame so it is the first of its type in
 		///    the tag.
@@ -1639,6 +1718,176 @@ namespace TagLib.Id3v2 {
 		public override string Copyright {
 			get {return GetTextAsString (FrameType.TCOP);}
 			set {SetTextFrame (FrameType.TCOP, value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz ArtistID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ArtistID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TXXX:MusicBrainz Artist Id" frame.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzArtistId {
+			get {return GetUserTextAsString ("MusicBrainz Artist Id");}
+			set {SetUserTextAsString ("MusicBrainz Artist Id",value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz ReleaseID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ReleaseID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TXXX:MusicBrainz Album Id" frame.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseId {
+			get {return GetUserTextAsString ("MusicBrainz Album Id");}
+			set {SetUserTextAsString ("MusicBrainz Album Id",value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz ReleaseArtistID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ReleaseArtistID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TXXX:MusicBrainz Album Artist Id" frame.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseArtistId {
+			get {return GetUserTextAsString ("MusicBrainz Album Artist Id");}
+			set {SetUserTextAsString ("MusicBrainz Album Artist Id",value);}
+		}
+		
+		/// <summary>
+		///    Gets and sets the MusicBrainz TrackID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    TrackID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "UFID:http://musicbrainz.org" frame.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzTrackId {
+		    get { return GetUfidText ("http://musicbrainz.org");}
+		    set {SetUfidText ("http://musicbrainz.org", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz DiscID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    DiscID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TXXX:MusicBrainz Disc Id" frame.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzDiscId {
+			get {return GetUserTextAsString ("MusicBrainz Disc Id");}
+			set {SetUserTextAsString ("MusicBrainz Disc Id",value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicIP PUID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicIP PUID
+		///    for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TXXX:MusicIP PUID" frame.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicIpId {
+			get {return GetUserTextAsString ("MusicIP PUID");}
+			set {SetUserTextAsString ("MusicIP PUID",value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the Amazon ID (ASIN)
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the Amazon Id
+		///    for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TXXX:ASIN" frame.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string AmazonId {
+			get {return GetUserTextAsString ("ASIN");}
+			set {SetUserTextAsString ("ASIN",value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz ReleaseStatus
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ReleaseStatus for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TXXX:MusicBrainz Album Status" frame.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseStatus {
+			get {return GetUserTextAsString ("MusicBrainz Album Status");}
+			set {SetUserTextAsString ("MusicBrainz Album Status",value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz ReleaseType
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ReleaseType for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TXXX:MusicBrainz Album Type" frame.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseType {
+			get {return GetUserTextAsString ("MusicBrainz Album Type");}
+			set {SetUserTextAsString ("MusicBrainz Album Type",value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz ReleaseCountry
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ReleaseCountry for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TXXX:MusicBrainz Album Release Country" frame.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseCountry {
+			get {return GetUserTextAsString ("MusicBrainz Album Release Country");}
+			set {SetUserTextAsString ("MusicBrainz Album Release Country",value);}
 		}
 		
 		/// <summary>

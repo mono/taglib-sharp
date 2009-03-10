@@ -611,6 +611,194 @@ namespace TagLib {
 		}
 		
 		/// <summary>
+		///    Gets and sets the MusicBrainz Artist ID of the media represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz ArtistID of the
+		///    media represented by the current instance or an empty
+		///    array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field represents the MusicBrainz ArtistID, and is used
+		///    to uniquely identify a particular Artist of the track.</para>
+		/// </remarks>
+		public virtual string MusicBrainzArtistId {
+			get { return null; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release ID of the media represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz ReleaseID of the
+		///    media represented by the current instance or an empty
+		///    array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field represents the MusicBrainz ReleaseID, and is used
+		///    to uniquely identify a particular Release to which this track belongs.</para>
+		/// </remarks>
+		public virtual string MusicBrainzReleaseId {
+			get { return null; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Artist ID of the media represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz ReleaseArtistID of the
+		///    media represented by the current instance or an empty
+		///    array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field represents the MusicBrainz Release ArtistID, and is used
+		///    to uniquely identify a particular Album Artist credited with the Album.</para>
+		/// </remarks>
+		public virtual string MusicBrainzReleaseArtistId {
+			get { return null; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Track ID of the media represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz TrackID of the
+		///    media represented by the current instance or an empty
+		///    array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field represents the MusicBrainz TrackID, and is used
+		///    to uniquely identify a particular track.</para>
+		/// </remarks>
+		public virtual string MusicBrainzTrackId {
+			get { return null; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Disc ID of the media represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz DiscID of the
+		///    media represented by the current instance or an empty
+		///    array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field represents the MusicBrainz DiscID, and is used
+		///    to uniquely identify the particular Released Media associated with
+		///    this track.</para>
+		/// </remarks>
+		public virtual string MusicBrainzDiscId {
+			get { return null; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicIP PUID of the media represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicIP PUID of the
+		///    media represented by the current instance or an empty
+		///    array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field represents the MusicIP PUID, and is an acoustic
+		///    fingerprint identifier.  It Identifies what this track "Sounds Like".</para>
+		/// </remarks>
+		public virtual string MusicIpId {
+			get { return null; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets and sets the Amazon ID of the media represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the AmazonID of the
+		///    media represented by the current instance or an empty
+		///    array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field represents the AmazonID, and is used
+		///    to identify the particular track or album in the Amazon Catalog.</para>
+		/// </remarks>
+		public virtual string AmazonId {
+			get { return null; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Status of the media represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz ReleaseStatus of the
+		///    media represented by the current instance or an empty
+		///    array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field represents the MusicBrainz ReleaseStatus, and is used
+		///    to describes how 'official' a Release is.  Common Status are: Official, Promotion,
+		///    Bootleg, Pseudo-release.</para>
+		/// </remarks>
+		public virtual string MusicBrainzReleaseStatus {
+			get { return null; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Type of the media represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz ReleaseType of the
+		///    media represented by the current instance or an empty
+		///    array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field represents the MusicBrainz ReleaseType, that describes
+		///    what kind of release a Release is..  Common Status are: Single, Album,
+		///    EP, Compilation, Soundtrack, SpokenWord, Interview, Audiobook, Live, Remix,
+		///    and Other.  Careful thought must be given when using this field to decide if
+		///    a particular track "Is a Compilation".</para>
+		/// </remarks>
+		public virtual string MusicBrainzReleaseType {
+			get { return null; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Country of the media represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz ReleaseCountry of the
+		///    media represented by the current instance or an empty
+		///    array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field represents the MusicBrainz ReleaseCountry, that describes
+		///    the country in which an album was released.  Note that the ReleaseCountry 
+		///    of an album is not necessarily the country in which it was produced. The 
+		///    label itself will typically be more relevant. eg, a release on "Foo Records UK" 
+		///    that has "Made in Austria" printed on it, will likely be a UK release.</para>
+		/// </remarks>
+		public virtual string MusicBrainzReleaseCountry {
+			get { return null; }
+			set {}
+		}
+
+		/// <summary>
 		///    Gets and sets a collection of pictures associated with
 		///    the media represented by the current instance.
 		/// </summary>

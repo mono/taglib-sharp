@@ -1121,6 +1121,195 @@ namespace TagLib.Asf {
 		}
 		
 		/// <summary>
+		///    Gets and sets the MusicBrainz Artist ID of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz 
+		///    ArtistID for the media described by the current
+		///    instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MusicBrainz/Artist Id"
+		///    field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzArtistId {
+			get {return GetDescriptorString ("MusicBrainz/Artist Id");}
+			set {SetDescriptorString (value, "MusicBrainz/Artist Id");}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release ID of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz 
+		///    ReleaseID for the media described by the current
+		///    instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MusicBrainz/Album Id"
+		///    field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseId {
+			get {return GetDescriptorString ("MusicBrainz/Album Id");}
+			set {SetDescriptorString (value, "MusicBrainz/Album Id");}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Artist ID of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz 
+		///    ReleaseArtistID for the media described by the current
+		///    instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MusicBrainz/Album Artist Id"
+		///    field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseArtistId {
+			get {return GetDescriptorString ("MusicBrainz/Album Artist Id");}
+			set {SetDescriptorString (value, "MusicBrainz/Album Artist Id");}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Track ID of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz 
+		///    TrackID for the media described by the current
+		///    instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MusicBrainz/Track Id"
+		///    field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzTrackId {
+			get {return GetDescriptorString ("MusicBrainz/Track Id");}
+			set {SetDescriptorString (value, "MusicBrainz/Track Id");}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Disc ID of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz 
+		///    DiscID for the media described by the current
+		///    instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MusicBrainz/Disc Id"
+		///    field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzDiscId {
+			get {return GetDescriptorString ("MusicBrainz/Disc Id");}
+			set {SetDescriptorString (value, "MusicBrainz/Disc Id");}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicIP PUID of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicIPPUID 
+		///    for the media described by the current instance or
+		///    null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MusicIP/PUID"
+		///    field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicIpId {
+			get {return GetDescriptorString ("MusicIP/PUID");}
+			set {SetDescriptorString (value, "MusicIP/PUID");}
+		}
+
+		// <summary>
+		//    Gets and sets the AmazonID of
+		//    the media described by the current instance.
+		// </summary>
+		// <value>
+		//    A <see cref="string" /> containing the AmazonID 
+		//    for the media described by the current instance or
+		//    null if no value is present.  
+		// </value>
+		// <remarks>
+		//    A definition on where to store the ASIN for
+		//    Windows Media is not currently defined
+		// </remarks>
+		//public override string AmazonId {
+		//    get { return null; }
+		//    set {}
+		//}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Status of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz 
+		///    ReleaseStatus for the media described by the current
+		///    instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MusicBrainz/Album Status"
+		///    field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseStatus {
+			get {return GetDescriptorString ("MusicBrainz/Album Status");}
+			set {SetDescriptorString (value, "MusicBrainz/Album Status");}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Type of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz 
+		///    ReleaseType for the media described by the current
+		///    instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MusicBrainz/Album Type"
+		///    field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseType {
+			get {return GetDescriptorString ("MusicBrainz/Album Type");}
+			set {SetDescriptorString (value, "MusicBrainz/Album Type");}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Country of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz 
+		///    ReleaseCountry for the media described by the current
+		///    instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MusicBrainz/Album Release Country"
+		///    field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseCountry {
+			get {return GetDescriptorString ("MusicBrainz/Album Release Country");}
+			set {SetDescriptorString (value, "MusicBrainz/Album Release Country");}
+		}
+
+		/// <summary>
 		///    Gets and sets a collection of pictures associated with
 		///    the media represented by the current instance.
 		/// </summary>

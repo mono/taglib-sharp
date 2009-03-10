@@ -510,6 +510,256 @@ namespace TagLib.Tests.TaggingFormats
 		}
         
 		[Test]
+		public void TestMusicBrainzArtistID ()
+		{
+			Ape.Tag tag = new Ape.Tag ();
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzArtistId, "Initial (Null): " + m);
+			});
+			
+			tag.MusicBrainzArtistId = val_sing;
+			
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzArtistId, "Value Set (!Null): " + m);
+			});
+			
+			tag.MusicBrainzArtistId = string.Empty;
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzArtistId, "Value Cleared (Null): " + m);
+			});
+		}
+		
+		[Test]
+		public void TestMusicBrainzReleaseID ()
+		{
+			Ape.Tag tag = new Ape.Tag ();
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseId, "Initial (Null): " + m);
+			});
+			
+			tag.MusicBrainzReleaseId = val_sing;
+			
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzReleaseId, "Value Set (!Null): " + m);
+			});
+			
+			tag.MusicBrainzReleaseId = string.Empty;
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseId, "Value Cleared (Null): " + m);
+			});
+		}
+		
+		[Test]
+		public void TestMusicBrainzReleaseArtistID ()
+		{
+			Ape.Tag tag = new Ape.Tag ();
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseArtistId, "Initial (Null): " + m);
+			});
+			
+			tag.MusicBrainzReleaseArtistId = val_sing;
+			
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzReleaseArtistId, "Value Set (!Null): " + m);
+			});
+			
+			tag.MusicBrainzReleaseArtistId = string.Empty;
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseArtistId, "Value Cleared (Null): " + m);
+			});
+		}
+		
+		[Test]
+		public void TestMusicBrainzTrackID ()
+		{
+			Ape.Tag tag = new Ape.Tag ();
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzTrackId, "Initial (Null): " + m);
+			});
+			
+			tag.MusicBrainzTrackId = val_sing;
+			
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzTrackId, "Value Set (!Null): " + m);
+			});
+			
+			tag.MusicBrainzTrackId = string.Empty;
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzTrackId, "Value Cleared (Null): " + m);
+			});
+		}
+		
+		[Test]
+		public void TestMusicBrainzDiscID ()
+		{
+			Ape.Tag tag = new Ape.Tag ();
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzDiscId, "Initial (Null): " + m);
+			});
+			
+			tag.MusicBrainzDiscId = val_sing;
+			
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzDiscId, "Value Set (!Null): " + m);
+			});
+			
+			tag.MusicBrainzDiscId = string.Empty;
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzDiscId, "Value Cleared (Null): " + m);
+			});
+		}
+		
+		[Test]
+		public void TestMusicIPPUID ()
+		{
+			Ape.Tag tag = new Ape.Tag ();
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicIpId, "Initial (Null): " + m);
+			});
+			
+			tag.MusicIpId = val_sing;
+			
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicIpId, "Value Set (!Null): " + m);
+			});
+			
+			tag.MusicIpId = string.Empty;
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicIpId, "Value Cleared (Null): " + m);
+			});
+		}
+		
+		[Test]
+		public void TestAmazonID ()
+		{
+			Ape.Tag tag = new Ape.Tag ();
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.AmazonId, "Initial (Null): " + m);
+			});
+			
+			tag.AmazonId = val_sing;
+			
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.AmazonId, "Value Set (!Null): " + m);
+			});
+			
+			tag.AmazonId = string.Empty;
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.AmazonId, "Value Cleared (Null): " + m);
+			});
+		}
+				
+		[Test]
+		public void TestMusicBrainzReleaseStatus ()
+		{
+			Ape.Tag tag = new Ape.Tag ();
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseStatus, "Initial (Null): " + m);
+			});
+			
+			tag.MusicBrainzReleaseStatus = val_sing;
+			
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzReleaseStatus, "Value Set (!Null): " + m);
+			});
+			
+			tag.MusicBrainzReleaseStatus = string.Empty;
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseStatus, "Value Cleared (Null): " + m);
+			});
+		}
+				
+		[Test]
+		public void TestMusicBrainzReleaseType ()
+		{
+			Ape.Tag tag = new Ape.Tag ();
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseType, "Initial (Null): " + m);
+			});
+			
+			tag.MusicBrainzReleaseType = val_sing;
+			
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzReleaseType, "Value Set (!Null): " + m);
+			});
+			
+			tag.MusicBrainzReleaseType = string.Empty;
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseType, "Value Cleared (Null): " + m);
+			});
+		}
+				
+		[Test]
+		public void TestMusicBrainzReleaseCountry ()
+		{
+			Ape.Tag tag = new Ape.Tag ();
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseCountry, "Initial (Null): " + m);
+			});
+			
+			tag.MusicBrainzReleaseCountry = val_sing;
+			
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzReleaseCountry, "Value Set (!Null): " + m);
+			});
+			
+			tag.MusicBrainzReleaseCountry = string.Empty;
+
+			TagTestWithSave (ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseCountry, "Value Cleared (Null): " + m);
+			});
+		}
+		
+		[Test]
 		public void TestClear ()
 		{
 			Ape.Tag tag = new Ape.Tag ();

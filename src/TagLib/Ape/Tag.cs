@@ -1143,7 +1143,187 @@ namespace TagLib.Ape {
 			get {return GetItemAsString ("Copyright");}
 			set {SetValue ("Copyright", value);}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Artist ID of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    ArtistID for the media represented by the current instance
+		///    or <see langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_ARTISTID" item.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzArtistId {
+			get {return GetItemAsString ("MUSICBRAINZ_ARTISTID");}
+			set {SetValue ("MUSICBRAINZ_ARTISTID", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release ID of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    ReleaseID for the media represented by the current instance
+		///    or <see langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_ALBUMID" item.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseId {
+			get {return GetItemAsString ("MUSICBRAINZ_ALBUMID");}
+			set {SetValue ("MUSICBRAINZ_ALBUMID", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Artist ID of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    ReleaseArtistID for the media represented by the current instance
+		///    or <see langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_ALBUMARTISTID" item.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseArtistId {
+			get {return GetItemAsString ("MUSICBRAINZ_ALBUMARTISTID");}
+			set {SetValue ("MUSICBRAINZ_ALBUMARTISTID", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Track ID of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    TrackID for the media represented by the current instance
+		///    or <see langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_TRACKID" item.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzTrackId {
+			get {return GetItemAsString ("MUSICBRAINZ_TRACKID");}
+			set {SetValue ("MUSICBRAINZ_TRACKID", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Disc ID of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    DiscID for the media represented by the current instance
+		///    or <see langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_DISCID" item.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzDiscId {
+			get {return GetItemAsString ("MUSICBRAINZ_DISCID");}
+			set {SetValue ("MUSICBRAINZ_DISCID", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicIP PUID of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicIPPUID
+		///    for the media represented by the current instance
+		///    or <see langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICIP_PUID" item.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicIpId {
+			get {return GetItemAsString ("MUSICIP_PUID");}
+			set {SetValue ("MUSICIP_PUID", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the Amazon ID of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the AmazonID
+		///    for the media represented by the current instance
+		///    or <see langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ASIN" item.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string AmazonId {
+			get {return GetItemAsString ("ASIN");}
+			set {SetValue ("ASIN", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Status of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    ReleaseStatus for the media represented by the current instance
+		///    or <see langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_ALBUMSTATUS" item.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseStatus {
+			get {return GetItemAsString ("MUSICBRAINZ_ALBUMSTATUS");}
+			set {SetValue ("MUSICBRAINZ_ALBUMSTATUS", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Type of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    ReleaseType for the media represented by the current instance
+		///    or <see langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_ALBUMTYPE" item.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseType {
+			get {return GetItemAsString ("MUSICBRAINZ_ALBUMTYPE");}
+			set {SetValue ("MUSICBRAINZ_ALBUMTYPE", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz ReleaseCountry of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    ReleaseCountry for the media represented by the current instance
+		///    or <see langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "RELEASECOUNTRY" item.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseCountry {
+			get {return GetItemAsString ("RELEASECOUNTRY");}
+			set {SetValue ("RELEASECOUNTRY", value);}
+		}
+
 		/// <summary>
 		///    Gets and sets a collection of pictures associated with
 		///    the media represented by the current instance.

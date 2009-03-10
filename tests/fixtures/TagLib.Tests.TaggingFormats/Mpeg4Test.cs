@@ -527,6 +527,266 @@ namespace TagLib.Tests.TaggingFormats
 			});
 		}
         
+        [Test]
+		public void TestMusicBrainzArtistID ()
+		{
+			MemoryFileAbstraction abst;
+			Mpeg4.File file = CreateFile (out abst);
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzArtistId, "Initial (Null): " + m);
+			});
+			
+			file.Tag.MusicBrainzArtistId = val_sing;
+			
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzArtistId, "Value Set (!Null): " + m);
+			});
+			
+			file.Tag.MusicBrainzArtistId = string.Empty;
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzArtistId, "Value Cleared (Null): " + m);
+			});
+		}
+		
+		[Test]
+		public void TestMusicBrainzReleaseID ()
+		{
+			MemoryFileAbstraction abst;
+			Mpeg4.File file = CreateFile (out abst);
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseId, "Initial (Null): " + m);
+			});
+			
+			file.Tag.MusicBrainzReleaseId = val_sing;
+			
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzReleaseId, "Value Set (!Null): " + m);
+			});
+			
+			file.Tag.MusicBrainzReleaseId = string.Empty;
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseId, "Value Cleared (Null): " + m);
+			});
+		}
+		
+		[Test]
+		public void TestMusicBrainzReleaseArtistID ()
+		{
+			MemoryFileAbstraction abst;
+			Mpeg4.File file = CreateFile (out abst);
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseArtistId, "Initial (Null): " + m);
+			});
+			
+			file.Tag.MusicBrainzReleaseArtistId = val_sing;
+			
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzReleaseArtistId, "Value Set (!Null): " + m);
+			});
+			
+			file.Tag.MusicBrainzReleaseArtistId = string.Empty;
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseArtistId, "Value Cleared (Null): " + m);
+			});
+		}
+		
+		[Test]
+		public void TestMusicBrainzTrackID ()
+		{
+			MemoryFileAbstraction abst;
+			Mpeg4.File file = CreateFile (out abst);
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzTrackId, "Initial (Null): " + m);
+			});
+			
+			file.Tag.MusicBrainzTrackId = val_sing;
+			
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzTrackId, "Value Set (!Null): " + m);
+			});
+			
+			file.Tag.MusicBrainzTrackId = string.Empty;
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzTrackId, "Value Cleared (Null): " + m);
+			});
+		}
+		
+		[Test]
+		public void TestMusicBrainzDiscID ()
+		{
+			MemoryFileAbstraction abst;
+			Mpeg4.File file = CreateFile (out abst);
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzDiscId, "Initial (Null): " + m);
+			});
+			
+			file.Tag.MusicBrainzDiscId = val_sing;
+			
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzDiscId, "Value Set (!Null): " + m);
+			});
+			
+			file.Tag.MusicBrainzDiscId = string.Empty;
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzDiscId, "Value Cleared (Null): " + m);
+			});
+		}
+		
+		[Test]
+		public void TestMusicIPPUID ()
+		{
+			MemoryFileAbstraction abst;
+			Mpeg4.File file = CreateFile (out abst);
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicIpId, "Initial (Null): " + m);
+			});
+			
+			file.Tag.MusicIpId = val_sing;
+			
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicIpId, "Value Set (!Null): " + m);
+			});
+			
+			file.Tag.MusicIpId = string.Empty;
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicIpId, "Value Cleared (Null): " + m);
+			});
+		}
+		
+		[Test]
+		public void TestAmazonID ()
+		{
+			MemoryFileAbstraction abst;
+			Mpeg4.File file = CreateFile (out abst);
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.AmazonId, "Initial (Null): " + m);
+			});
+			
+			file.Tag.AmazonId = val_sing;
+			
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.AmazonId, "Value Set (!Null): " + m);
+			});
+			
+			file.Tag.AmazonId = string.Empty;
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.AmazonId, "Value Cleared (Null): " + m);
+			});
+		}
+				
+		[Test]
+		public void TestMusicBrainzReleaseStatus ()
+		{
+			MemoryFileAbstraction abst;
+			Mpeg4.File file = CreateFile (out abst);
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseStatus, "Initial (Null): " + m);
+			});
+			
+			file.Tag.MusicBrainzReleaseStatus = val_sing;
+			
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzReleaseStatus, "Value Set (!Null): " + m);
+			});
+			
+			file.Tag.MusicBrainzReleaseStatus = string.Empty;
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseStatus, "Value Cleared (Null): " + m);
+			});
+		}
+				
+		[Test]
+		public void TestMusicBrainzReleaseType ()
+		{
+			MemoryFileAbstraction abst;
+			Mpeg4.File file = CreateFile (out abst);
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseType, "Initial (Null): " + m);
+			});
+			
+			file.Tag.MusicBrainzReleaseType = val_sing;
+			
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzReleaseType, "Value Set (!Null): " + m);
+			});
+			
+			file.Tag.MusicBrainzReleaseType = string.Empty;
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseType, "Value Cleared (Null): " + m);
+			});
+		}
+				
+		[Test]
+		public void TestMusicBrainzReleaseCountry ()
+		{
+			MemoryFileAbstraction abst;
+			Mpeg4.File file = CreateFile (out abst);
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseCountry, "Initial (Null): " + m);
+			});
+			
+			file.Tag.MusicBrainzReleaseCountry = val_sing;
+			
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzReleaseCountry, "Value Set (!Null): " + m);
+			});
+			
+			file.Tag.MusicBrainzReleaseCountry = string.Empty;
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzReleaseCountry, "Value Cleared (Null): " + m);
+			});
+		}
+		
 		[Test]
 		public void TestClear ()
 		{
