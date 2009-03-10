@@ -1,5 +1,10 @@
 2009-03-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/TagLib/Riff/AviHeaderList.cs: Patch from Bernd Niedergesaess to not
+	use obsolete ctor (BGO #571452)
+
+2009-03-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* docs/Makefile.am: Reduce the verbosity of docs build output.
 
 2009-03-09  Gabriel Burt  <gabriel.burt@gmail.com>

@@ -98,7 +98,7 @@ namespace TagLib.Riff
 				throw new CorruptFileException (
 					"Invalid header length.");
 			
-			header = new AviHeader (header_data);
+			header = new AviHeader (header_data, 0);
 			
 			foreach (ByteVector list_data in list ["LIST"])
 				if (list_data.StartsWith ("strl"))
