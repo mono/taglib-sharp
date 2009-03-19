@@ -1,8 +1,15 @@
+2009-03-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* tests/Makefile.am:
+	* examples/Makefile.am: Patch from Bertrand Lorentz fixing issue with
+	random files slipping into the tarball/dist (BGO #575302).  make distcheck
+	and running ./configure && make && make test work on the tarball
+
 2009-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/TagLib/Mpeg/File.cs:
 	* src/TagLib/Mpeg/AudioFile.cs:
-    Patch from Andy Beal adding support for m2v and m2v files (BGO #574411)
+	Patch from Andy Beal adding support for m2v and m2v files (BGO #574411)
 
 2009-03-09  Gabriel Burt  <gabriel.burt@gmail.com>
 

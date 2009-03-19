@@ -29,7 +29,9 @@ $(LIST_TYPES).exe: $(LIST_TYPES).cs
 $(BATCH_SET).exe: $(BATCH_SET).cs
 	$(MCS) -out:$@ -debug $(REFERENCES) $<
 
-EXTRA_DIST = $(READ_FROM_URI).cs $(SET_PICTURES).cs $(LIST_TYPES).cs $(BATCH_SET).cs
+EXTRA_DIST = $(READ_FROM_URI).cs $(SET_PICTURES).cs $(LIST_TYPES).cs $(BATCH_SET).cs \
+	$(srcdir)/covers/sample*
+
 DISTCLEANFILES = *.pidb
 CLEANFILES = *.dll *.exe *.mdb
 MAINTAINERCLEANFILES = Makefile.in

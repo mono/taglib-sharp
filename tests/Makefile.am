@@ -37,7 +37,7 @@ TAGLIB_ASM = ../src/taglib-sharp.dll
 
 if ENABLE_TESTS
 test: $(ASSEMBLY) $(TAGLIB_ASM)
-	MONO_PATH="../src" $(NUNIT_CMD) $(ASSEMBLY)
+	MONO_PATH="../src" $(NUNIT_CMD) -noshadow $(ASSEMBLY)
 endif
 
 CLEANFILES = $(ASSEMBLY) TestResult.xml *.mdb *.dll *.exe
@@ -45,6 +45,10 @@ DISTCLEANFILES = *.pidb
 MAINTAINERCLEANFILES = Makefile.in
 EXTRA_DIST = \
 	$(ASSEMBLY_CSFILES) \
-	$(srcdir)/samples/* \
-	$(srcdir)/samples/unsupported/*
+	$(srcdir)/samples/sample* \
+	$(srcdir)/samples/vector.bin \
+	$(srcdir)/samples/LICENSE \
+	$(srcdir)/samples/corrupt/a.* \
+	$(srcdir)/samples/corrupt/null_title_v2.mp3 \
+	$(srcdir)/samples/unsupported/sample*
 
