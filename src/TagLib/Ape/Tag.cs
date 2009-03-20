@@ -1472,7 +1472,7 @@ namespace TagLib.Ape {
 				if (value == null || value.Length == 0)
 					return;
 				
-				foreach (Picture pic in value) {
+				foreach (IPicture pic in value) {
 					int type = (int) pic.Type;
 					
 					if (type >= picture_item_names.Length)

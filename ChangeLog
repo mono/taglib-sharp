@@ -1,3 +1,8 @@
+2009-03-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/TagLib/Ape/Tag.cs: Patch from Gregory S. Chudov fixing bug with
+	Ape.Tag's Pictures setter (BGO #575943)
+
 2009-03-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* tests/Makefile.am:
