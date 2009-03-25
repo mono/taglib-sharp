@@ -534,7 +534,20 @@ namespace TagLib.Ogg
 		///    field.
 		/// </remarks>
 		public override string [] AlbumArtists {
-			get {return GetField ("ALBUMARTIST");}
+			get {
+				// First try to get AlbumArtist, if that comment is not present try: 
+				// ENSEMBLE: set by TAG & RENAME
+				// ALBUM ARTIST: set by The GodFather
+				string[] value = GetField("ALBUMARTIST");
+				if (value != null && value.Length > 0)
+				  return value;
+
+				value = GetField("ALBUM ARTIST");
+				if (value != null && value.Length > 0)
+				  return value;
+
+				return GetField ("ENSEMBLE"); 
+			}
 			set {SetField ("ALBUMARTIST", value);}
 		}
 		
