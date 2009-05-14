@@ -17,10 +17,19 @@
 			cref="T:TagLib.File" />.</remarks>
 		</Docs>
 	</Namespace>
+	<Namespace Name="TagLib.Aiff">
+		<Docs>
+			<summary><para>The TagLib.Aiff namespace contains classes
+			for handling the AIFF file format.</para></summary>
+			<remarks><para>See
+			http://en.wikipedia.org/wiki/Audio_Interchange_File_Format for
+			the complete specification.</para></remarks>
+		</Docs>
+	</Namespace>
 	<Namespace Name="TagLib.Ape">
 		<Docs>
 			<summary><para>The TagLib.Ape namespace contains classes
-			for handling the reading APE tags.</para></summary>
+			for reading APE tags.</para></summary>
 			<remarks><para>See
 			http://wiki.hydrogenaudio.org/index.php?title=APEv2 for
 			the complete specification.</para></remarks>
@@ -153,6 +162,9 @@
 		</File>
 		<File Path="en/ns-TagLib.xml">
 			<Replace Source="/Package/Namespace[@Name='TagLib']/Docs" Target="/Namespace/Docs" />
+		</File>
+		<File Path="en/ns-TagLib.Aiff.xml">
+			<Replace Source="/Package/Namespace[@Name='TagLib.Aiff']/Docs" Target="/Namespace/Docs" />
 		</File>
 		<File Path="en/ns-TagLib.Ape.xml">
 			<Replace Source="/Package/Namespace[@Name='TagLib.Ape']/Docs" Target="/Namespace/Docs" />

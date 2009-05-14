@@ -38,9 +38,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\AssemblyInfo.cs" />
+    <Compile Include="src\TagLib\Aiff\File.cs" />
+    <Compile Include="src\TagLib\Aiff\StreamHeader.cs" />
     <Compile Include="src\TagLib\Ape\File.cs" />
     <Compile Include="src\TagLib\Ape\Footer.cs" />
     <Compile Include="src\TagLib\Ape\Item.cs" />
@@ -171,6 +175,7 @@
   <ItemGroup>
     <Folder Include="src" />
     <Folder Include="src\TagLib" />
+    <Folder Include="src\TagLib\Aiff" />
     <Folder Include="src\TagLib\Ape" />
     <Folder Include="src\TagLib\Asf" />
     <Folder Include="src\TagLib\Flac" />

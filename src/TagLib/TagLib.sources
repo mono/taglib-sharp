@@ -1,4 +1,6 @@
 TAGLIB_CSFILES = \
+	$(srcdir)/TagLib/Aiff/File.cs \
+	$(srcdir)/TagLib/Aiff/StreamHeader.cs \
 	$(srcdir)/TagLib/Ape/Tag.cs \
 	$(srcdir)/TagLib/Ape/Item.cs \
 	$(srcdir)/TagLib/Ape/Footer.cs \
