@@ -492,7 +492,7 @@ namespace TagLib.Riff
 					
 					Seek (position + 8);
 					codecs = new ICodec [] {
-						new WaveFormatEx (ReadBlock (18))
+						new WaveFormatEx (ReadBlock (18), 0)
 					};
 					break;
 				

@@ -1,3 +1,19 @@
+2009-05-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/TagLib/Riff/File.cs:
+	* src/TagLib/FileTypes.cs:
+	* src/TagLib/Aac/File.cs:
+	* src/TagLib/Aac/AudioHeader.cs:
+	* src/TagLib/Aac/BitStream.cs:
+	* src/TagLib/TagLib.sources:
+	* src/taglib-sharp.mdp:
+	* docs/Package.en.xml.in:
+	* tests/tests.mdp:
+	* tests/fixtures/TagLib.Tests.FileFormats/AacFormatTest.cs:
+	* tests/Makefile.am:
+	* taglib-sharp.csproj: Patch from Patrick Dehne adding support for ADTS AAC
+	files (BGO #580553)
+
 2009-05-14  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/TagLib/Aiff/File.cs:

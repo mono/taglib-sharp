@@ -58,6 +58,7 @@ namespace TagLib {
 		///    of heap.
 		/// </remarks>
 		private static Type [] static_file_types = new Type [] {
+			typeof(TagLib.Aac.File),
 			typeof(TagLib.Aiff.File),
 			typeof(TagLib.Ape.File),
 			typeof(TagLib.Asf.File),

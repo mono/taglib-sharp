@@ -1,4 +1,7 @@
 TAGLIB_CSFILES = \
+	$(srcdir)/TagLib/Aac/AudioHeader.cs \
+	$(srcdir)/TagLib/Aac/BitStream.cs \
+	$(srcdir)/TagLib/Aac/File.cs \
 	$(srcdir)/TagLib/Aiff/File.cs \
 	$(srcdir)/TagLib/Aiff/StreamHeader.cs \
 	$(srcdir)/TagLib/Ape/Tag.cs \

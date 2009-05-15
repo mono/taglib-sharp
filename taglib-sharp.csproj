@@ -43,6 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\AssemblyInfo.cs" />
+    <Compile Include="src\TagLib\Aac\AudioHeader.cs" />
+    <Compile Include="src\TagLib\Aac\BitStream.cs" />
+    <Compile Include="src\TagLib\Aac\File.cs" />
     <Compile Include="src\TagLib\Aiff\File.cs" />
     <Compile Include="src\TagLib\Aiff\StreamHeader.cs" />
     <Compile Include="src\TagLib\Ape\File.cs" />

@@ -147,6 +147,9 @@
     <File name="TagLib/Ape/File.cs" subtype="Code" buildaction="Compile" />
     <File name="TagLib/Aiff/File.cs" subtype="Code" buildaction="Compile" />
     <File name="TagLib/Aiff/StreamHeader.cs" subtype="Code" buildaction="Compile" />
+    <File name="TagLib/Aac/AudioHeader.cs" subtype="Code" buildaction="Compile" />
+    <File name="TagLib/Aac/BitStream.cs" subtype="Code" buildaction="Compile" />
+    <File name="TagLib/Aac/File.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
