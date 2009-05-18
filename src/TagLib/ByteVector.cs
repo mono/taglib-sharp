@@ -1256,7 +1256,7 @@ namespace TagLib {
 				throw new ArgumentOutOfRangeException ("count");
 			
 			ByteVector bom = type == StringType.UTF16 &&
-				this.data.Count > 1 ? Mid (offset, 2) : null;
+				this.data.Count - offset > 1 ? Mid (offset, 2) : null;
 			
 			string s = StringTypeToEncoding (type, bom)
 				.GetString (Data, offset, count);

@@ -1,3 +1,10 @@
+2009-05-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/TagLib/ByteVector.cs:
+	* tests/fixtures/TagLib.Tests.Collections/ByteVectorTest.cs: Patch from
+	Alexander Kojevnikov fixing ArgumentOutOfRangeException when parsing some
+	comment frames (BGO #582735)
+
 2009-05-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/TagLib/Riff/File.cs:

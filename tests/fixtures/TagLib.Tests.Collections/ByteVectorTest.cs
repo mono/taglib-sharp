@@ -125,6 +125,20 @@ namespace TagLib.Tests.Collections
             }
         }
         
+        [Test]
+        public void CommentsFrameError ()
+        {
+            // http://bugzilla.gnome.org/show_bug.cgi?id=582735
+            // Comments data found in the wild
+            ByteVector vector = new ByteVector (
+                1, 255, 254, 73, 0, 68, 0, 51, 0, 71, 0, 58, 0, 32, 0, 50, 0, 55, 0, 0, 0);
+
+            var encoding = (StringType) vector [0];
+            var language = vector.ToString (StringType.Latin1, 1, 3);
+            var split = vector.ToStrings (encoding, 4, 3);
+            Assert.AreEqual (2, split.Length);
+        }
+
         private static string MD5Hash(byte [] bytes)
         {
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
