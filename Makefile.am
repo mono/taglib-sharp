@@ -56,7 +56,7 @@ push-release: distcheck distwin
 	mv $(WINDIR).zip release
 	mv $(PACKAGE)-$(VERSION).tar.* release
 	cp ChangeLog release/$(PACKAGE)-$(VERSION).changes
-	cp ChangeLog release/$(PACKAGE)-$(VERSION).news
+	cp NEWS release/$(PACKAGE)-$(VERSION).news
 	pushd release; sha1sum * > $(PACKAGE)-$(VERSION).sha1sum; popd
 	scp -r release $(UPLOAD_HOST):$(UPLOAD_PATH)/$(VERSION)
 	rm -rf release
