@@ -1,3 +1,8 @@
+2009-09-30  Aaron Bockover  <abockover@novell.com>
+
+	* NEWS: Update for 2.0.3.3 release
+	* configure.ac: Bump to 2.0.3.3
+
 2009-05-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/TagLib/ByteVector.cs:
@@ -30,7 +35,7 @@
 	* src/taglib-sharp.mdp:
 	* docs/Package.en.xml.in:
 	* tests/tests.mdp:
-	* tests/fixtures/TagLib.Tests.FileFormats/AiffFormatTest.cs:
+	* tests/fixtures/TagLib.Tbgoests.FileFormats/AiffFormatTest.cs:
 	* tests/Makefile.am:
 	* taglib-sharp.csproj: Patch from Helmut Wahrmann adding support for the
 	AIFF file format (BGO #579261)

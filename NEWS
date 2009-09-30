@@ -1,3 +1,36 @@
+Version 2.0.3.3
+September 30, 2009
+
+TagLib# bugs are now tracked at http://bugzilla.gnome.org.
+
+Get releases from http://download.banshee-project.org/taglib-sharp/
+
+Fixes and Features in this release include:
+  * Be more robust with tags with NULL bytes in the middle (bgo#558123)
+  * Support AIFF file format (bgo#579261)
+  * Support ADTS AAC files (bgo#580553)
+  * Support for m2v files (bgo#574411)
+  * Support for Sort* values in Ape tags (bgo#571421)
+  * Add new properties: MusicBrainz, ArtistId, ReleaseId, ReleaseArtistId,
+    TrackId, DiscId, ReleaseStatus, ReleaseType, ReleaseCountry, MusicIpId,
+	and AmazonId (bgo#563170)
+  * Add fallback options for album artist getter (bgo#574652)
+  * Fixed bug with Ape.Tag's Pictures setter (bgo#575943)
+  * Fix crashing when parsing some comment frames (bgo#582735)
+  * Fixed CopyTo method (bgo#572382)
+  * Fixed typo in Ogg DiscNumber setter that wrote TrackCount
+    to the DISCTOTAL field (bgo#572382)
+  * Fixed NRE when calling GetTag on FLAC file (bgo#572380)
+  * Build improvements
+  * API documentation fixes
+
+Contributors to this release:
+  Alexander Kojevnikov, Andy Beal, Bernd Niedergesaess, Bertrand Lorentz,
+  Félix Velasco, Gabriel Burt, Gregory S. Chudov, Helmut Wahrmann, 
+  John Millikin, Patrick Dehne
+
+--------------------------------------------------------------------------------
+
 Version 2.0.3.2
 February 16, 2009
 
