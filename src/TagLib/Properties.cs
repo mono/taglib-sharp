@@ -32,11 +32,12 @@ using System.Collections.Generic;
 
 namespace TagLib {
 	/// <summary>
-	///    This class implements <see cref="IAudioCodec" /> and <see
-	///    cref="IVideoCodec" /> and combines codecs to create generic media
-	///    properties for a file.
+	///    This class implements <see cref="IAudioCodec" />, <see
+	///    cref="IVideoCodec" /> and <see cref="IPhotoCodec" />
+	///    and combines codecs to create generic media properties
+	///    for a file.
 	/// </summary>
-	public class Properties : IAudioCodec, IVideoCodec
+	public class Properties : IAudioCodec, IVideoCodec, IPhotoCodec
 	{
 		#region Private Fields
 		
@@ -395,6 +396,62 @@ namespace TagLib {
 			}
 		}
 		
+		#endregion
+
+
+
+		#region IPhotoCodec
+
+		/// <summary>
+		///    Gets the width of the photo represented by the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="int" /> value containing the width of the
+		///    photo represented by the current instance.
+		/// </value>
+		public int PhotoWidth {
+			get {
+				foreach (ICodec codec in codecs) {
+					if (codec == null ||
+						(codec.MediaTypes & MediaTypes.Photo) == 0)
+						continue;
+
+					IPhotoCodec photo = codec as IPhotoCodec;
+
+					if (photo != null && photo.PhotoWidth != 0)
+						return photo.PhotoWidth;
+				}
+
+				return 0;
+			}
+		}
+
+		/// <summary>
+		///    Gets the height of the photo represented by the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="int" /> value containing the height of the
+		///    photo represented by the current instance.
+		/// </value>
+		public int PhotoHeight {
+			get {
+				foreach (ICodec codec in codecs) {
+					if (codec == null ||
+						(codec.MediaTypes & MediaTypes.Photo) == 0)
+						continue;
+
+					IPhotoCodec photo = codec as IPhotoCodec;
+
+					if (photo != null && photo.PhotoHeight != 0)
+						return photo.PhotoHeight;
+				}
+
+				return 0;
+			}
+		}
+
 		#endregion
 	}
 }

@@ -91,6 +91,46 @@ namespace TagLib {
 		FlacMetadata = 0x00000200,
 		
 		/// <summary>
+		///    TIFF IFD Tag
+		/// </summary>
+		TiffIFD = 0x00000400,
+
+		/// <summary>
+		///    XMP Tag
+		/// </summary>
+		XMP = 0x00000800,
+
+		/// <summary>
+		///    EXIF Tag
+		/// </summary>
+		Exif = 0x00001000,
+
+		/// <summary>
+		///    Jpeg Comment Tag
+		/// </summary>
+		JpegComment = 0x00002000,
+
+		/// <summary>
+		///    GPS Tag
+		/// </summary>
+		GPS = 0x00004000,
+
+		/// <summary>
+		///    Interoperability Tag
+		/// </summary>
+		IOP = 0x00008000,
+
+		/// <summary>
+		///    Thumbail Tag
+		/// </summary>
+		Thumbnail = 0x00010000,
+
+		/// <summary>
+		///    Thumbail Tag
+		/// </summary>
+		CanonMarkerNote = 0x00020000,
+
+		/// <summary>
 		///    All tag types.
 		/// </summary>
 		AllTags      = 0xFFFFFFFF

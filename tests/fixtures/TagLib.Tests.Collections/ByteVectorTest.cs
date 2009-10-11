@@ -71,6 +71,17 @@ namespace TagLib.Tests.Collections
             Assert.IsFalse(a.Count == TestVector.Count);
         }
         
+		[Test]
+        public void Int()
+        {
+            Assert.AreEqual(Int32.MaxValue, ByteVector.FromInt(Int32.MaxValue).ToInt());
+            Assert.AreEqual(Int32.MinValue, ByteVector.FromInt(Int32.MinValue).ToInt());
+            Assert.AreEqual(0, ByteVector.FromInt(0).ToInt());
+            Assert.AreEqual(30292, ByteVector.FromInt(30292).ToInt());
+			Assert.AreEqual(-30292, ByteVector.FromInt(-30292).ToInt());
+			Assert.AreEqual(-1, ByteVector.FromInt(-1).ToInt());
+        }
+
         [Test]
         public void UInt()
         {
