@@ -36,6 +36,11 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Ogg/XiphComment.cs \
 	$(srcdir)/TagLib/Ogg/PageHeader.cs \
 	$(srcdir)/TagLib/Ogg/File.cs \
+	$(srcdir)/TagLib/Exif/CanonMakerNoteTag.cs \
+	$(srcdir)/TagLib/Exif/ExifTag.cs \
+	$(srcdir)/TagLib/Exif/GPSTag.cs \
+	$(srcdir)/TagLib/Exif/IOPTag.cs \
+	$(srcdir)/TagLib/Exif/ThumbnailTag.cs \
 	$(srcdir)/TagLib/Flac/Block.cs \
 	$(srcdir)/TagLib/Flac/BlockHeader.cs \
 	$(srcdir)/TagLib/Flac/StreamHeader.cs \

@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.IO;
 
 using TagLib.IFD.Entries;
+using TagLib.Exif;
 
 namespace TagLib.IFD
 {
@@ -489,18 +490,26 @@ namespace TagLib.IFD
 			}
 
 			if (tag == (ushort) IFDEntryTag.ExifIFD) {
-				// TODO
+				uint next_offset;
+				ExifTag exif_tag = new ExifTag (file, base_offset, offset, is_bigendian, out next_offset);
+				return new SubIFDEntry (tag, type, count, exif_tag);
 			}
 
 			if (tag == (ushort) IFDEntryTag.IopIFD) {
-				// TODO
+				uint next_offset;
+				IOPTag iop_tag = new IOPTag (file, base_offset, offset, is_bigendian, out next_offset);
+				return new SubIFDEntry (tag, type, count, iop_tag);
 			}
 
 			// A maker note may be a Sub IFD, but it may also be in an arbitrary
 			// format. We try to parse a Sub IFD, if this fails, go ahead to read
 			// it as an Undefined Entry below.
 			if (tag == (ushort) IFDEntryTag.MakerNoteIFD) {
-				// TODO
+				try {
+					uint next_offset;
+					CanonMakerNoteTag canon_tag = new CanonMakerNoteTag (file, base_offset, offset, is_bigendian, out next_offset);
+					return new SubIFDEntry (tag, type, count, canon_tag);
+				} catch {}
 			}
 
 			// handle first the values stored in the offset data itself

@@ -178,10 +178,9 @@ namespace TagLib.Tests.FileFormats
 				Assert.AreEqual (6285, entry.Data.Data.Length);
 			}
 			{
-				var entry = entries [23] as LongIFDEntry;
+				var entry = entries [23] as SubIFDEntry;
 				Assert.IsFalse (entry == null);
 				Assert.AreEqual ((ushort) IFDEntryTag.ExifIFD, entry.Tag);
-				Assert.AreEqual (6730, entry.Value);
 			}
 		}
 

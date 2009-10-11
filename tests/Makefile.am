@@ -23,6 +23,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.FileFormats/OggFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/TiffFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/StandardTests.cs \
+	fixtures/TagLib.Tests.FileFormats/StandardExifTests.cs \
 	fixtures/TagLib.Tests.Performance/PerformanceTest.cs \
 	fixtures/TagLib.Tests.TaggingFormats/ApeTest.cs \
 	fixtures/TagLib.Tests.TaggingFormats/AsfTest.cs \
