@@ -18,6 +18,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.FileFormats/Id3V24FormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/Id3V2FormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/IFormatTest.cs \
+	fixtures/TagLib.Tests.FileFormats/JpegFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/M4aFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/MpcFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/OggFormatTest.cs \
