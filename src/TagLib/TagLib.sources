@@ -77,6 +77,19 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Id3v2/SynchData.cs \
 	$(srcdir)/TagLib/Id3v2/Header.cs \
 	$(srcdir)/TagLib/Id3v2/Footer.cs \
+	$(srcdir)/TagLib/IFD/Entries/ByteVectorIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/LongArrayIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/LongIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/RationalIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/ShortArrayIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/ShortIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/SRationalIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/StringIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/SubIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/UndefinedIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/IFDEntry.cs \
+	$(srcdir)/TagLib/IFD/IFDEntryTag.cs \
+	$(srcdir)/TagLib/IFD/IFDTag.cs \
 	$(srcdir)/TagLib/Mpeg4/AppleTag.cs \
 	$(srcdir)/TagLib/Mpeg4/Box.cs \
 	$(srcdir)/TagLib/Mpeg4/BoxFactory.cs \
@@ -113,6 +126,9 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Riff/List.cs \
 	$(srcdir)/TagLib/Riff/ListTag.cs \
 	$(srcdir)/TagLib/Riff/MovieIdTag.cs \
+	$(srcdir)/TagLib/Tiff/Codec.cs \
+	$(srcdir)/TagLib/Tiff/File.cs \
+	$(srcdir)/TagLib/Tiff/TiffTag.cs \
 	$(srcdir)/TagLib/WavPack/File.cs \
 	$(srcdir)/TagLib/WavPack/StreamHeader.cs \
 	$(srcdir)/TagLib/ICodec.cs \
