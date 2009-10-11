@@ -131,6 +131,10 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Tiff/TiffTag.cs \
 	$(srcdir)/TagLib/WavPack/File.cs \
 	$(srcdir)/TagLib/WavPack/StreamHeader.cs \
+	$(srcdir)/TagLib/Xmp/XmlNodeExtensions.cs \
+	$(srcdir)/TagLib/Xmp/XmpTag.cs \
+	$(srcdir)/TagLib/Xmp/XmpNode.cs \
+	$(srcdir)/TagLib/Xmp/XmpNodeVisitor.cs \
 	$(srcdir)/TagLib/ICodec.cs \
 	$(srcdir)/TagLib/Tag.cs \
 	$(srcdir)/TagLib/ReadOnlyByteVector.cs \

@@ -21,6 +21,7 @@
 // USA
 //
 
+using TagLib.Xmp;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
 
@@ -53,6 +54,34 @@ namespace TagLib.Tiff
 		internal void AddIFDTag (IFD.IFDTag tag)
 		{
 			AddTag (tag);
+
+			ByteVector xmp_data = FindXMPData ();
+			if (xmp_data != null)
+				AddTag (new XmpTag (File, xmp_data));
+		}
+
+#endregion
+
+#region Private Methods
+
+		private ByteVector FindXMPData ()
+		{
+			IFDTag ifd_tag = null;
+			foreach (Tag tag in Tags) {
+				if (tag is IFDTag) {
+					ifd_tag = tag as IFDTag;
+					break;
+				}
+			}
+
+			if (ifd_tag == null)
+				return null;
+
+			var xmp_entry = ifd_tag.GetEntry ((ushort) IFDEntryTag.XMP) as ByteVectorIFDEntry;
+			if (xmp_entry == null)
+				return null;
+
+			return xmp_entry.Data;
 		}
 
 #endregion
