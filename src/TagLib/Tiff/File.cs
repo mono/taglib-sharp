@@ -236,57 +236,6 @@ namespace TagLib.Tiff
 			return null;
 		}
 
-		/// <summary>
-		///    Reads a 2-byte short from the current instance.
-		/// </summary>
-		/// <returns>
-		///    A <see cref="ushort" /> value containing the short read
-		///    from the current instance.
-		/// </returns>
-		public ushort ReadShort ()
-		{
-			return ReadBlock (2).ToUShort (is_bigendian);
-		}
-
-		/// <summary>
-		///    Reads a 4-byte int from the current instance.
-		/// </summary>
-		/// <returns>
-		///    A <see cref="uint" /> value containing the int read
-		///    from the current instance.
-		/// </returns>
-		public uint ReadInt ()
-		{
-			return ReadBlock (4).ToUInt (is_bigendian);
-		}
-
-		/// <summary>
-		///    Reads an array of 2-byte shorts from the current instance.
-		/// </summary>
-		/// <returns>
-		///    An array of <see cref="ushort" /> values containing the
-		///    shorts read from the current instance.
-		/// </returns>
-		public ushort [] ReadUShortArray (uint count)
-		{
-			ushort [] data = new ushort [count];
-			for (int i = 0; i < count; i++)
-				data [i] = ReadShort ();
-			return data;
-		}
-
-		/// <summary>
-		///    Reads an ASCII string from the current instance.
-		/// </summary>
-		/// <returns>
-		///    A <see cref="string" /> read from the current instance.
-		/// </returns>
-		public string ReadAsciiString (int count)
-		{
-			// The last character is \0
-			return ReadBlock (count - 1).ToString ();
-		}
-
 #endregion
 
 #region Private Methods
