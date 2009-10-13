@@ -70,6 +70,14 @@ namespace TagLib.Jpeg
 			AddTag (tag);
 		}
 
+
+		internal void RemoveJpegComment ()
+		{
+			foreach (JpegCommentTag tag in Tags)
+				if (tag != null)
+					RemoveTag (tag);
+		}
+
 #endregion
 
 #region Private Methods

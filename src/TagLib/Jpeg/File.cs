@@ -240,7 +240,8 @@ namespace TagLib.Jpeg
 		/// </remarks>
 		public override void RemoveTags (TagLib.TagTypes types)
 		{
-			throw new NotImplementedException ();
+			if ((types & TagTypes.JpegComment) != 0)
+				jpeg_tag.RemoveJpegComment ();
 		}
 
 		/// <summary>
@@ -264,14 +265,23 @@ namespace TagLib.Jpeg
 		public override TagLib.Tag GetTag (TagLib.TagTypes type,
 		                                   bool create)
 		{
-			if (create)
-				throw new NotImplementedException ();
-
 			foreach (Tag tag in jpeg_tag.Tags) {
 				if ((tag.TagTypes & type) == type)
 					return tag;
 			}
-			return null;
+
+			if ( ! create)
+				return null;
+
+			switch (type) {
+			case TagTypes.JpegComment:
+				JpegCommentTag com_tag = new JpegCommentTag ();
+				jpeg_tag.AddJpegComment (com_tag);
+				return com_tag;
+
+			default:
+				throw new NotImplementedException ();
+			}
 		}
 
 #endregion

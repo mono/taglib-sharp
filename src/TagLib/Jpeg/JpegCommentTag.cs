@@ -43,6 +43,13 @@ namespace TagLib.Jpeg
 			Value = value;
 		}
 
+		/// <summary>
+		///    Constructs a new <see cref="JpegComment" />.
+		/// </summary>
+		public JpegCommentTag () {
+			Value = null;
+		}
+
 #endregion
 
 #region Public Properties
@@ -50,7 +57,7 @@ namespace TagLib.Jpeg
 		/// <summary>
 		///    The value of this <see cref="JpegComment" />.
 		/// </summary>
-		public string Value { get; private set; }
+		public string Value { get; set; }
 
 #endregion
 
