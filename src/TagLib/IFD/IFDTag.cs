@@ -491,14 +491,23 @@ namespace TagLib.IFD
 
 			if (tag == (ushort) IFDEntryTag.ExifIFD) {
 				uint next_offset;
-				ExifTag exif_tag = new ExifTag (file, base_offset, offset, is_bigendian, out next_offset);
+				ExifTag exif_tag =
+					new ExifTag (file, base_offset, offset, is_bigendian, out next_offset);
 				return new SubIFDEntry (tag, type, count, exif_tag);
 			}
 
 			if (tag == (ushort) IFDEntryTag.IopIFD) {
 				uint next_offset;
-				IOPTag iop_tag = new IOPTag (file, base_offset, offset, is_bigendian, out next_offset);
+				IOPTag iop_tag =
+					new IOPTag (file, base_offset, offset, is_bigendian, out next_offset);
 				return new SubIFDEntry (tag, type, count, iop_tag);
+			}
+
+			if (tag == (ushort) IFDEntryTag.GPSIFD) {
+				uint next_offset;
+				GPSTag gps_tag =
+					new GPSTag (file, base_offset, offset, is_bigendian, out next_offset);
+				return new SubIFDEntry (tag, type, count, gps_tag);
 			}
 
 			// A maker note may be a Sub IFD, but it may also be in an arbitrary
