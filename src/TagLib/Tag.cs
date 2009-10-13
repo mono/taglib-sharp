@@ -126,7 +126,7 @@ namespace TagLib {
 		Thumbnail = 0x00010000,
 
 		/// <summary>
-		///    Thumbail Tag
+		///    Canon Maker Note Tag
 		/// </summary>
 		CanonMakerNote = 0x00020000,
 
