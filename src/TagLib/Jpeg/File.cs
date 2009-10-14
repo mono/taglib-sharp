@@ -280,8 +280,34 @@ namespace TagLib.Jpeg
 				jpeg_tag.AddJpegComment (com_tag);
 				return com_tag;
 
-			default:
+			case TagTypes.XMP:
 				throw new NotImplementedException ();
+
+			case TagTypes.TiffIFD:
+			{
+				IFDTag ifd_tag = new IFDTag (this);
+				jpeg_tag.AddIFDTag (ifd_tag);
+				return ifd_tag;
+			}
+
+			case TagTypes.Exif:
+			{
+				ExifTag exif_tag = new ExifTag (this);
+				IFDTag ifd_tag = GetTag (TagTypes.TiffIFD, true) as IFDTag;
+				ifd_tag.SetEntry (new SubIFDEntry ((uint) IFDEntryTag.ExifIFD, (uint) IFDEntryType.Long, 1, exif_tag));
+				return exif_tag;
+			}
+
+			case TagTypes.GPS:
+			{
+				GPSTag gps_tag = new GPSTag (this);
+				IFDTag ifd_tag = GetTag (TagTypes.TiffIFD, true) as IFDTag;
+				ifd_tag.SetEntry (new SubIFDEntry ((uint) IFDEntryTag.GPSIFD, (uint) IFDEntryType.Long, 1, gps_tag));
+				return gps_tag;
+			}
+
+			default:
+				return null;
 			}
 		}
 

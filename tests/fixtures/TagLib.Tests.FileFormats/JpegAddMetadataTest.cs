@@ -45,5 +45,11 @@ namespace TagLib.Tests.FileFormats
 			Assert.IsFalse (com_tag == null);
 			Assert.AreEqual (comment, com_tag.Value);
 		}
+
+		[Test]
+		public void AddExif ()
+		{
+			AddImageMetadataTests.AddExif (sample_file, tmp_file);
+		}
 	}
 }

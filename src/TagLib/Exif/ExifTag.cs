@@ -46,6 +46,8 @@ namespace TagLib.Exif
 		public ExifTag (File file, uint ifd_offset, bool is_bigendian, out uint next_offset)
 			: base (file, ifd_offset, is_bigendian, out next_offset) {}
 
+		public ExifTag (File file) : base (file) {}
+
 #endregion
 
 
@@ -81,6 +83,12 @@ namespace TagLib.Exif
 				SetEntry (comment_entry);
 			}
 		}
+
+		public override string Comment {
+			get { return UserComment; }
+			set { UserComment = value; }
+		}
+
 
 #endregion
 

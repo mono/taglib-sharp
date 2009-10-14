@@ -39,6 +39,9 @@ namespace TagLib.Exif
 		public GPSTag (File file, uint ifd_offset, bool is_bigendian, out uint next_offset)
 			: base (file, ifd_offset, is_bigendian, out next_offset) {}
 
+
+		public GPSTag (File file) : base (file) {}
+
 #endregion
 
 

@@ -118,7 +118,7 @@ namespace TagLib.IFD
 		/// <param name="file">
 		///    A <see cref="File"/> this instance belongs to.
 		/// </param>
-		protected IFDTag (File file)
+		public IFDTag (File file)
 		{
 			this.file = file;
 		}
