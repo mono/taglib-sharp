@@ -23,12 +23,14 @@
 
 using System;
 
+using TagLib.Image;
+
 namespace TagLib.Jpeg
 {
 	/// <summary>
 	///    Contains the JPEG comment.
 	/// </summary>
-	public class JpegCommentTag : Tag
+	public class JpegCommentTag : ImageTag
 	{
 #region Constructors
 

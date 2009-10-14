@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+using TagLib.Image;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
 using TagLib.Exif;
@@ -265,7 +266,7 @@ namespace TagLib.Jpeg
 		public override TagLib.Tag GetTag (TagLib.TagTypes type,
 		                                   bool create)
 		{
-			foreach (Tag tag in jpeg_tag.Tags) {
+			foreach (ImageTag tag in jpeg_tag.ImageTags) {
 				if ((tag.TagTypes & type) == type)
 					return tag;
 			}

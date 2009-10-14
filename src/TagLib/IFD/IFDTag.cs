@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+using TagLib.Image;
 using TagLib.IFD.Entries;
 using TagLib.Exif;
 
@@ -35,7 +36,7 @@ namespace TagLib.IFD
 	/// <summary>
 	///    Contains the metadata for one IFD (Image File Directory).
 	/// </summary>
-	public class IFDTag : Tag
+	public class IFDTag : ImageTag
 	{
 #region Private Fields
 
@@ -84,8 +85,8 @@ namespace TagLib.IFD
 		///     to <see cref="base_offset"/>.
 		/// </param>
 		public IFDTag (File file, long base_offset, uint ifd_offset, bool is_bigendian, out uint next_offset)
+			: this (file)
 		{
-			this.file = file;
 			this.is_bigendian = is_bigendian;
 
 			ReadIFD (base_offset, ifd_offset, out next_offset);
@@ -109,6 +110,18 @@ namespace TagLib.IFD
 		/// </param>
 		public IFDTag (File file, uint ifd_offset, bool is_bigendian, out uint next_offset)
 			: this (file, 0, ifd_offset, is_bigendian, out next_offset) {}
+
+
+		/// <summary>
+		///    Constructor. Creates an empty IFD instace. For using in subclasses.
+		/// </summary>
+		/// <param name="file">
+		///    A <see cref="File"/> this instance belongs to.
+		/// </param>
+		protected IFDTag (File file)
+		{
+			this.file = file;
+		}
 
 #endregion
 
@@ -139,6 +152,31 @@ namespace TagLib.IFD
 		/// </value>
 		public override TagTypes TagTypes {
 			get { return TagTypes.TiffIFD; }
+		}
+
+
+		/// <summary>
+		///    Returns the IFDTags stored as SubIFD in the current instance
+		/// </summary>
+		/// <value>
+		///    A <see cref="IFDTag[]"/> with the IFDTags stored inside this
+		///    directory.
+		/// </value>
+		public IFDTag[] SubIFDs {
+			get {
+				List<IFDTag> sub_ifds = new List<IFDTag> ();
+
+				foreach (IFDEntry entry in entries.Values) {
+					if (entry is SubIFDEntry) {
+						var sub_ifd = (entry as SubIFDEntry).IFDTag;
+
+						if (sub_ifd != null)
+							sub_ifds.Add (sub_ifd);
+					}
+				}
+
+				return sub_ifds.ToArray ();
+			}
 		}
 
 #endregion

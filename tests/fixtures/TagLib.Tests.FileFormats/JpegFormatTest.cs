@@ -16,6 +16,15 @@ namespace TagLib.Tests.FileFormats
         private static string tmp_file = "samples/tmpwrite.jpg";
 		private File file;
 
+		private TagTypes contained_types =
+				TagTypes.JpegComment |
+				TagTypes.TiffIFD |
+				TagTypes.Exif |
+				TagTypes.XMP |
+				TagTypes.Thumbnail |
+				TagTypes.CanonMakerNote |
+				TagTypes.IOP;
+
         [TestFixtureSetUp]
         public void Init()
         {
@@ -27,8 +36,8 @@ namespace TagLib.Tests.FileFormats
 		{
 			Assert.IsTrue (file is Jpeg.File);
 
-			Assert.AreEqual (TagTypes.JpegComment | TagTypes.TiffIFD | TagTypes.Exif | TagTypes.XMP | TagTypes.Thumbnail , file.TagTypes);
-			Assert.AreEqual (TagTypes.JpegComment | TagTypes.TiffIFD | TagTypes.Exif | TagTypes.XMP | TagTypes.Thumbnail , file.TagTypesOnDisk);
+			Assert.AreEqual (contained_types, file.TagTypes);
+			Assert.AreEqual (contained_types, file.TagTypesOnDisk);
 
 
 			JpegCommentTag tag = file.GetTag (TagTypes.JpegComment) as JpegCommentTag;

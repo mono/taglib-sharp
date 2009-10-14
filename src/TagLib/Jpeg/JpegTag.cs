@@ -22,6 +22,9 @@
 // USA
 //
 
+using System;
+
+using TagLib.Image;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
 using TagLib.Exif;
@@ -30,19 +33,16 @@ using TagLib.Xmp;
 
 namespace TagLib.Jpeg
 {
-	internal class JpegTag : TagLib.CombinedTag
+	internal class JpegTag : CombinedImageTag
 	{
 		internal File File { get; private set; }
 
 #region Constructors
 
 		internal JpegTag (File file)
-		{
-			File = file;
-		}
+			: base (file) {}
 
 #endregion
-
 
 #region Internal Methods
 
@@ -51,13 +51,10 @@ namespace TagLib.Jpeg
 			AddTag (tag);
 		}
 
-		internal void AddIFDTag (IFD.IFDTag tag)
+		internal void AddIFDTag (IFDTag tag)
 		{
 			AddTag (tag);
-
-			var exif_tag = FindExifTag (tag);
-			if (exif_tag != null)
-				AddExifTag (exif_tag);
+			AddSubIFDTags (tag);
 		}
 
 		internal void AddXmpTag (XmpTag tag)
@@ -65,22 +62,24 @@ namespace TagLib.Jpeg
 			AddTag (tag);
 		}
 
-		internal void AddExifTag (ExifTag tag)
-		{
-			AddTag (tag);
-		}
-
-
 		internal void RemoveJpegComment ()
 		{
-			foreach (JpegCommentTag tag in Tags)
-				if (tag != null)
+			foreach (ImageTag tag in ImageTags)
+				if (tag is JpegCommentTag)
 					RemoveTag (tag);
 		}
 
 #endregion
 
 #region Private Methods
+
+		private void AddSubIFDTags (IFDTag tag)
+		{
+			foreach (IFDTag sub_ifd in tag.SubIFDs) {
+				AddTag (sub_ifd);
+				AddSubIFDTags (sub_ifd);
+			}
+		}
 
 		private ExifTag FindExifTag (IFD.IFDTag ifd_tag)
 		{

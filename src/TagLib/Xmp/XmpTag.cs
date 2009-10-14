@@ -25,9 +25,11 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 
+using TagLib.Image;
+
 namespace TagLib.Xmp
 {
-	public class XmpTag : Tag
+	public class XmpTag : ImageTag
 	{
 #region Parsing speedup
 		private Dictionary<string, Dictionary<string, XmpNode>> nodes;
