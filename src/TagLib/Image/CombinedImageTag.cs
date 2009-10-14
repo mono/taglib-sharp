@@ -101,8 +101,25 @@ namespace TagLib.Image
 		///    current instace.
 		/// </value>
 		public override string Comment {
-			get { return null; }
-			set {}
+			get {
+				foreach (ImageTag tag in image_tags) {
+					if (tag == null)
+						continue;
+
+					string value = tag.Comment;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+
+			set {
+				foreach (ImageTag tag in image_tags)
+					if (tag != null)
+						tag.Comment = value;
+			}
 		}
 
 		/// <summary>
@@ -114,8 +131,25 @@ namespace TagLib.Image
 		///    current instace.
 		/// </value>
 		public override string[] Keywords {
-			get { return new string [] {}; }
-			set {}
+			get {
+				foreach (ImageTag tag in image_tags) {
+					if (tag == null)
+						continue;
+
+					string[] value = tag.Keywords;
+
+					if (value != null && value.Length > 0)
+						return value;
+				}
+
+				return new string[] {};
+			}
+
+			set {
+				foreach (ImageTag tag in image_tags)
+					if (tag != null)
+						tag.Keywords = value;
+			}
 		}
 
 		/// <summary>
@@ -127,8 +161,25 @@ namespace TagLib.Image
 		///    current instace.
 		/// </value>
 		public override uint Rating {
-			get { return 0; }
-			set {}
+			get {
+				foreach (ImageTag tag in image_tags) {
+					if (tag == null)
+						continue;
+
+					uint value = tag.Rating;
+
+					if (value != 0)
+						return value;
+				}
+
+				return 0;
+			}
+
+			set {
+				foreach (ImageTag tag in image_tags)
+					if (tag != null)
+						tag.Rating = value;
+			}
 		}
 
 		/// <summary>
@@ -139,8 +190,25 @@ namespace TagLib.Image
 		///    A <see cref="DateTime" /> with the time the image was taken.
 		/// </value>
 		public override DateTime DateTime {
-			get { return DateTime.MinValue; }
-			set {}
+			get {
+				foreach (ImageTag tag in image_tags) {
+					if (tag == null)
+						continue;
+
+					DateTime value = tag.DateTime;
+
+					if (value != DateTime.MinValue)
+						return value;
+				}
+
+				return DateTime.MinValue;
+			}
+
+			set {
+				foreach (ImageTag tag in image_tags)
+					if (tag != null)
+						tag.DateTime = value;
+			}
 		}
 
 		/// <summary>
@@ -152,8 +220,25 @@ namespace TagLib.Image
 		///    image
 		/// </value>
 		public override uint Orientation {
-			get { return 0; }
-			set {}
+			get {
+				foreach (ImageTag tag in image_tags) {
+					if (tag == null)
+						continue;
+
+					uint value = tag.Orientation;
+
+					if (value != 0)
+						return value;
+				}
+
+				return 0;
+			}
+
+			set {
+				foreach (ImageTag tag in image_tags)
+					if (tag != null)
+						tag.Orientation = value;
+			}
 		}
 
 		/// <summary>
@@ -165,8 +250,25 @@ namespace TagLib.Image
 		///    software the current instace was created with.
 		/// </value>
 		public override string Software {
-			get { return null; }
-			set {}
+			get {
+				foreach (ImageTag tag in image_tags) {
+					if (tag == null)
+						continue;
+
+					string value = tag.Software;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+
+			set {
+				foreach (ImageTag tag in image_tags)
+					if (tag != null)
+						tag.Software = value;
+			}
 		}
 
 		/// <summary>
@@ -177,7 +279,19 @@ namespace TagLib.Image
 		///    A <see cref="double" /> with the exposure time in seconds.
 		/// </value>
 		public override double ExposureTime {
-			get { return 0.0d; }
+			get {
+				foreach (ImageTag tag in image_tags) {
+					if (tag == null)
+						continue;
+
+					double value = tag.ExposureTime;
+
+					if (value > 0.0d)
+						return value;
+				}
+
+				return 0.0d;
+			}
 		}
 
 		//// <summary>
@@ -188,7 +302,19 @@ namespace TagLib.Image
 		///    A <see cref="double" /> with the FNumber.
 		/// </value>
 		public override double FNumber {
-			get { return 0.0d; }
+			get {
+				foreach (ImageTag tag in image_tags) {
+					if (tag == null)
+						continue;
+
+					double value = tag.FNumber;
+
+					if (value > 0.0d)
+						return value;
+				}
+
+				return 0.0d;
+			}
 		}
 
 		/// <summary>
@@ -199,7 +325,19 @@ namespace TagLib.Image
 		///    A <see cref="uint" /> with the ISO speed as defined in ISO 12232.
 		/// </value>
 		public override uint ISOSpeedRatings {
-			get { return 0; }
+			get {
+				foreach (ImageTag tag in image_tags) {
+					if (tag == null)
+						continue;
+
+					uint value = tag.ISOSpeedRatings;
+
+					if (value > 0)
+						return value;
+				}
+
+				return 0;
+			}
 		}
 
 		/// <summary>
@@ -210,7 +348,19 @@ namespace TagLib.Image
 		///    A <see cref="double" /> with the focal length in millimeters.
 		/// </value>
 		public override double FocalLength {
-			get { return 0.0d; }
+			get {
+				foreach (ImageTag tag in image_tags) {
+					if (tag == null)
+						continue;
+
+					double value = tag.FocalLength;
+
+					if (value > 0.0d)
+						return value;
+				}
+
+				return 0.0d;
+			}
 		}
 
 		/// <summary>
@@ -221,7 +371,19 @@ namespace TagLib.Image
 		///    A <see cref="string" /> with the manufacture name.
 		/// </value>
 		public override string Make {
-			get { return null; }
+			get {
+				foreach (ImageTag tag in image_tags) {
+					if (tag == null)
+						continue;
+
+					string value = tag.Make;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
 		}
 
 		/// <summary>
@@ -232,7 +394,19 @@ namespace TagLib.Image
 		///    A <see cref="string" /> with the model name.
 		/// </value>
 		public override string Model {
-			get { return null; }
+			get {
+				foreach (ImageTag tag in image_tags) {
+					if (tag == null)
+						continue;
+
+					string value = tag.Model;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
 		}
 #endregion
 
