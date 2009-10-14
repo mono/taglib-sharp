@@ -234,6 +234,24 @@ namespace TagLib.IFD
 		GPSIFD                                         = 34853,
 
 		/// <summary>
+		///     The date and time when the original image data was generated. (Hex: 0x9003)
+		///     http://www.awaresystems.be/imaging/tiff/tifftags/privateifd/exif/datetimeoriginal.html
+		/// </summary>
+		DateTimeOriginal                               = 36867,
+
+		/// <summary>
+		///     The date and time when the image was stored as digital data.  (Hex: 0x9004)
+		///     http://www.awaresystems.be/imaging/tiff/tifftags/privateifd/exif/datetimedigitized.html
+		/// </summary>
+		DateTimeDigitized                              = 36868,
+
+		/// <summary>
+		///     The actual focal length of the lens, in mm. (Hex: 0x920A)
+		///     http://www.awaresystems.be/imaging/tiff/tifftags/privateifd/exif/focallength.html
+		/// </summary>
+		FocalLength                                    = 37386,
+
+		/// <summary>
 		///     A pointer to the MakerNote data. Used to record any desired information.
 		///     The contents are up to the manufacturer, but this tag should not be used
 		///     for any other than its intended purpose. (Hex: 0x927C)

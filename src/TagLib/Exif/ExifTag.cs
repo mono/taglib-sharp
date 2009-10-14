@@ -84,11 +84,126 @@ namespace TagLib.Exif
 			}
 		}
 
+		public DateTime DateTimeOriginal {
+			get {
+				return GetDateTimeValue ((ushort) IFDEntryTag.DateTimeOriginal);
+			}
+			set {
+				SetDateTimeValue ((ushort) IFDEntryTag.DateTimeOriginal, value);
+			}
+		}
+
+		public DateTime DateTimeDigitized {
+			get {
+				return GetDateTimeValue ((ushort) IFDEntryTag.DateTimeDigitized);
+			}
+			set {
+				SetDateTimeValue ((ushort) IFDEntryTag.DateTimeDigitized, value);
+			}
+		}
+
+		/// <summary>
+		///    Gets or sets the comment for the image described
+		///    by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the comment of the
+		///    current instace.
+		/// </value>
 		public override string Comment {
 			get { return UserComment; }
 			set { UserComment = value; }
 		}
 
+		/// <summary>
+		///    Gets or sets the time when the image, the current instance
+		///    belongs to, was taken.
+		/// </summary>
+		/// <value>
+		///    A <see cref="DateTime" /> with the time the image was taken.
+		/// </value>
+		public override DateTime DateTime {
+			get { return DateTimeOriginal; }
+			set { DateTimeOriginal = value; }
+		}
+
+		/// <summary>
+		///    Gets the exposure time the image, the current instance belongs
+		///    to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="double" /> with the exposure time in seconds.
+		/// </value>
+		public override double ExposureTime {
+			get {
+				return GetRationalValue ((ushort) IFDEntryTag.ExposureTime);
+			}
+		}
+
+		//// <summary>
+		///    Gets the FNumber the image, the current instance belongs
+		///    to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="double" /> with the FNumber.
+		/// </value>
+		public override double FNumber {
+			get {
+				return GetRationalValue ((ushort) IFDEntryTag.FNumber);
+			}
+		}
+
+		/// <summary>
+		///    Gets the ISO speed the image, the current instance belongs
+		///    to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> with the ISO speed as defined in ISO 12232.
+		/// </value>
+		public override uint ISOSpeedRatings {
+			get {
+				return GetLongValue ((ushort) IFDEntryTag.ISOSpeedRatings);
+			}
+		}
+
+		/// <summary>
+		///    Gets the focal length the image, the current instance belongs
+		///    to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="double" /> with the focal length in millimeters.
+		/// </value>
+		public override double FocalLength {
+			get {
+				return GetRationalValue ((ushort) IFDEntryTag.FocalLength);
+			}
+		}
+
+		/// <summary>
+		///    Gets the manufacture of the recording equipment the image, the
+		///    current instance belongs to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> with the manufacture name.
+		/// </value>
+		public override string Make {
+			get {
+				return GetStringValue ((ushort) IFDEntryTag.Make);
+			}
+		}
+
+		/// <summary>
+		///    Gets the model name of the recording equipment the image, the
+		///    current instance belongs to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> with the model name.
+		/// </value>
+		public override string Model {
+			get {
+				return GetStringValue ((ushort) IFDEntryTag.Model);
+			}
+		}
 
 #endregion
 

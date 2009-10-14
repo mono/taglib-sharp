@@ -38,6 +38,9 @@ namespace TagLib.IFD
 	/// </summary>
 	public class IFDTag : ImageTag
 	{
+		public static readonly string DATETIME_FORMAT = "yyyy:MM:dd HH:mm:ss";
+
+
 #region Private Fields
 
 		/// <summary>
@@ -315,6 +318,79 @@ namespace TagLib.IFD
 			ByteVector ifd_data = RenderIFD (ifd_offset, last);
 
 			return ifd_data;
+		}
+
+		public string GetStringValue (ushort entry_tag)
+		{
+			var entry = GetEntry (entry_tag);
+
+			if (entry != null && entry is StringIFDEntry)
+				return (entry as StringIFDEntry).Value;
+
+			return null;
+		}
+
+		public uint GetLongValue (ushort entry_tag)
+		{
+			var entry = GetEntry (entry_tag);
+
+			if (entry != null) {
+
+				if (entry is LongIFDEntry)
+					return (entry as LongIFDEntry).Value;
+
+				if (entry is ShortIFDEntry)
+					return (entry as ShortIFDEntry).Value;
+			}
+
+			return 0;
+		}
+
+		public double GetRationalValue (ushort entry_tag)
+		{
+			var entry = GetEntry (entry_tag);
+
+			if (entry != null) {
+
+				if (entry is RationalIFDEntry)
+					return (entry as RationalIFDEntry).Value;
+
+				if (entry is SRationalIFDEntry)
+					return (entry as SRationalIFDEntry).Value;
+			}
+
+			return 0.0d;
+		}
+
+		public DateTime GetDateTimeValue (ushort entry_tag)
+		{
+			string date_string = GetStringValue (entry_tag);
+
+			if (date_string == null)
+				return DateTime.MinValue;
+
+			try {
+				DateTime date_time =
+					DateTime.ParseExact (date_string,
+					                     DATETIME_FORMAT,
+					                     System.Globalization.CultureInfo.InvariantCulture);
+
+				return date_time;
+			} catch {}
+
+			return DateTime.MinValue;
+		}
+
+		public void SetStringValue (ushort entry_tag, string value)
+		{
+			SetEntry (new StringIFDEntry (entry_tag, value));
+		}
+
+		public void SetDateTimeValue (ushort entry_tag, DateTime value)
+		{
+			string date_string = value.ToString (DATETIME_FORMAT);
+
+			SetStringValue (entry_tag, date_string);
 		}
 
 #endregion
