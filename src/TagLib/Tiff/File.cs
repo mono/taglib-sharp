@@ -25,8 +25,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+using TagLib.Image;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
+using TagLib.Exif;
+using TagLib.Xmp;
 
 namespace TagLib.Tiff
 {
@@ -40,11 +43,6 @@ namespace TagLib.Tiff
 	public class File : TagLib.Image.File
 	{
 #region Private Fields
-
-		/// <summary>
-		///   Contains the tags for the file.
-		/// </summary>
-		private TiffTag tiff_tag;
 
 		/// <summary>
 		///    Contains the media properties.
@@ -120,7 +118,7 @@ namespace TagLib.Tiff
 		public File (File.IFileAbstraction abstraction,
 		             ReadStyle propertiesStyle) : base (abstraction)
 		{
-			tiff_tag = new TiffTag (this);
+			ImageTag = new CombinedImageTag (TagTypes.TiffIFD | TagTypes.XMP | TagTypes.Exif);
 
 			Mode = AccessMode.Read;
 			try {
@@ -152,18 +150,6 @@ namespace TagLib.Tiff
 #region Public Properties
 
 		/// <summary>
-		///    Gets a abstract representation of all tags stored in the
-		///    current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="TagLib.Tag" /> object representing all tags
-		///    stored in the current instance.
-		/// </value>
-		public override Tag Tag {
-			get { return tiff_tag; }
-		}
-
-		/// <summary>
 		///    Gets the media properties of the file represented by the
 		///    current instance.
 		/// </summary>
@@ -187,53 +173,6 @@ namespace TagLib.Tiff
 		public override void Save ()
 		{
 			throw new NotImplementedException ();
-		}
-
-		/// <summary>
-		///    Removes a set of tag types from the current instance.
-		/// </summary>
-		/// <param name="types">
-		///    A bitwise combined <see cref="TagLib.TagTypes" /> value
-		///    containing tag types to be removed from the file.
-		/// </param>
-		/// <remarks>
-		///    In order to remove all tags from a file, pass <see
-		///    cref="TagTypes.AllTags" /> as <paramref name="types" />.
-		/// </remarks>
-		public override void RemoveTags (TagLib.TagTypes types)
-		{
-			throw new NotImplementedException ();
-		}
-
-		/// <summary>
-		///    Gets a tag of a specified type from the current instance,
-		///    optionally creating a new tag if possible.
-		/// </summary>
-		/// <param name="type">
-		///    A <see cref="TagLib.TagTypes" /> value indicating the
-		///    type of tag to read.
-		/// </param>
-		/// <param name="create">
-		///    A <see cref="bool" /> value specifying whether or not to
-		///    try and create the tag if one is not found.
-		/// </param>
-		/// <returns>
-		///    A <see cref="Tag" /> object containing the tag that was
-		///    found in or added to the current instance. If no
-		///    matching tag was found and none was created, <see
-		///    langword="null" /> is returned.
-		/// </returns>
-		public override TagLib.Tag GetTag (TagLib.TagTypes type,
-		                                   bool create)
-		{
-			if (create)
-				throw new NotImplementedException ();
-
-			foreach (Tag tag in tiff_tag.ImageTags) {
-				if ((tag.TagTypes & type) == type)
-					return tag;
-			}
-			return null;
 		}
 
 #endregion
@@ -281,9 +220,26 @@ namespace TagLib.Tiff
 		{
 			Mode = AccessMode.Read;
 			try {
-				uint next_offset = ReadFirstIFDOffset ();
+				uint offset = ReadFirstIFDOffset ();
 
-				tiff_tag.AddIFDTag (new IFDTag (this, next_offset, is_bigendian, out next_offset));
+				var ifd_tag = new IFDTag (this, offset, is_bigendian);
+				uint next_offset = ifd_tag.NextOffset;
+				if (next_offset != 0)
+					throw new Exception ("Multiple IFD file encountered, this is not handled yet! (RAW file?)");
+				ImageTag.AddTag (ifd_tag);
+
+				// Find XMP data
+				var xmp_entry = ifd_tag.GetEntry ((ushort) IFDEntryTag.XMP) as ByteVectorIFDEntry;
+				if (xmp_entry != null) {
+					ImageTag.AddTag (new XmpTag (this, xmp_entry.Data));
+				}
+
+				// Find Exif data
+				var exif_entry = ifd_tag.GetEntry ((ushort) IFDEntryTag.ExifIFD) as LongIFDEntry;
+				if (exif_entry != null) {
+					ImageTag.AddTag (new ExifTag (this, exif_entry.Value, is_bigendian));
+				}
+
 
 				if (propertiesStyle == ReadStyle.None)
 					return;

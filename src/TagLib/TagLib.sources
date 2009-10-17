@@ -36,10 +36,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Ogg/XiphComment.cs \
 	$(srcdir)/TagLib/Ogg/PageHeader.cs \
 	$(srcdir)/TagLib/Ogg/File.cs \
-	$(srcdir)/TagLib/Exif/CanonMakerNoteTag.cs \
 	$(srcdir)/TagLib/Exif/ExifTag.cs \
-	$(srcdir)/TagLib/Exif/GPSTag.cs \
-	$(srcdir)/TagLib/Exif/IOPTag.cs \
 	$(srcdir)/TagLib/Exif/ThumbnailTag.cs \
 	$(srcdir)/TagLib/Flac/Block.cs \
 	$(srcdir)/TagLib/Flac/BlockHeader.cs \
@@ -52,7 +49,6 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Image/ImageTag.cs \
 	$(srcdir)/TagLib/Jpeg/Codec.cs \
 	$(srcdir)/TagLib/Jpeg/File.cs \
-	$(srcdir)/TagLib/Jpeg/JpegTag.cs \
 	$(srcdir)/TagLib/Jpeg/JpegCommentTag.cs \
 	$(srcdir)/TagLib/Jpeg/Marker.cs \
 	$(srcdir)/TagLib/Mpeg/XingHeader.cs \
@@ -141,7 +137,6 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Riff/MovieIdTag.cs \
 	$(srcdir)/TagLib/Tiff/Codec.cs \
 	$(srcdir)/TagLib/Tiff/File.cs \
-	$(srcdir)/TagLib/Tiff/TiffTag.cs \
 	$(srcdir)/TagLib/WavPack/File.cs \
 	$(srcdir)/TagLib/WavPack/StreamHeader.cs \
 	$(srcdir)/TagLib/Xmp/XmlNodeExtensions.cs \

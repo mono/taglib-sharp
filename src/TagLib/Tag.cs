@@ -111,24 +111,9 @@ namespace TagLib {
 		JpegComment = 0x00002000,
 
 		/// <summary>
-		///    GPS Tag
-		/// </summary>
-		GPS = 0x00004000,
-
-		/// <summary>
-		///    Interoperability Tag
-		/// </summary>
-		IOP = 0x00008000,
-
-		/// <summary>
 		///    Thumbail Tag
 		/// </summary>
 		Thumbnail = 0x00010000,
-
-		/// <summary>
-		///    Canon Maker Note Tag
-		/// </summary>
-		CanonMakerNote = 0x00020000,
 
 		/// <summary>
 		///    All tag types.

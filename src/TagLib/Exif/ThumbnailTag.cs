@@ -42,15 +42,11 @@ namespace TagLib.Exif
 
 #region Constructors
 
-		public ThumbnailTag (File file, long base_offset, uint ifd_offset, bool is_bigendian, out uint next_offset)
-			: base (file, base_offset, ifd_offset, is_bigendian, out next_offset)
+		public ThumbnailTag (File file, long base_offset, uint ifd_offset, bool is_bigendian)
+			: base (file, base_offset, ifd_offset, is_bigendian)
 		{
 			ReadThumbnail (base_offset);
 		}
-
-
-		public ThumbnailTag (File file, uint ifd_offset, bool is_bigendian, out uint next_offset)
-			: this (file, 0, ifd_offset, is_bigendian, out next_offset) {}
 
 #endregion
 

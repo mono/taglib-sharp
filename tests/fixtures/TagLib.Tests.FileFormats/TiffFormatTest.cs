@@ -34,7 +34,7 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual (10, file.Properties.PhotoHeight);
 			Assert.AreEqual (10, file.Properties.PhotoWidth);
 
-			Assert.AreEqual (TagTypes.TiffIFD | TagTypes.XMP, file.TagTypes);
+			Assert.AreEqual (TagTypes.TiffIFD | TagTypes.XMP | TagTypes.Exif, file.TagTypes);
 
 			IFDTag tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 			Assert.IsFalse (tag == null);
@@ -185,16 +185,17 @@ namespace TagLib.Tests.FileFormats
 				Assert.AreEqual (6285, entry.Data.Data.Length);
 			}
 			{
-				var entry = entries [23] as SubIFDEntry;
+				var entry = entries [23] as LongIFDEntry;
 				Assert.IsFalse (entry == null);
 				Assert.AreEqual ((ushort) IFDEntryTag.ExifIFD, entry.Tag);
+				Assert.AreEqual (6730, entry.Value);
 			}
 		}
 
 		[Test]
 		public void TestXMPRead()
 		{
-			Assert.AreEqual (TagTypes.TiffIFD | TagTypes.XMP, file.TagTypes);
+			Assert.AreEqual (TagTypes.TiffIFD | TagTypes.XMP | TagTypes.Exif, file.TagTypes);
 
 			XmpTag tag = file.GetTag (TagTypes.XMP) as XmpTag;
 			Assert.IsFalse (tag == null);

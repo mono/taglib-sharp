@@ -54,11 +54,6 @@ namespace TagLib.Jpeg
 #region Private Fields
 
 		/// <summary>
-		///    Contains the tags for the file.
-		/// </summary>
-		private JpegTag jpeg_tag;
-
-		/// <summary>
 		///    Contains the media properties.
 		/// </summary>
 		private Properties properties;
@@ -152,7 +147,7 @@ namespace TagLib.Jpeg
 		public File (File.IFileAbstraction abstraction,
 		             ReadStyle propertiesStyle) : base (abstraction)
 		{
-			jpeg_tag = new JpegTag (this);
+			ImageTag = new CombinedImageTag (TagTypes.XMP | TagTypes.Exif | TagTypes.JpegComment | TagTypes.Thumbnail);
 
 			Mode = AccessMode.Read;
 			try {
@@ -184,18 +179,6 @@ namespace TagLib.Jpeg
 #region Public Properties
 
 		/// <summary>
-		///    Gets a abstract representation of all tags stored in the
-		///    current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="TagLib.Tag" /> object representing all tags
-		///    stored in the current instance.
-		/// </value>
-		public override Tag Tag {
-			get { return jpeg_tag; }
-		}
-
-		/// <summary>
 		///    Gets the media properties of the file represented by the
 		///    current instance.
 		/// </summary>
@@ -225,89 +208,6 @@ namespace TagLib.Jpeg
 				TagTypesOnDisk = TagTypes;
 			} finally {
 				Mode = AccessMode.Closed;
-			}
-		}
-
-		/// <summary>
-		///    Removes a set of tag types from the current instance.
-		/// </summary>
-		/// <param name="types">
-		///    A bitwise combined <see cref="TagLib.TagTypes" /> value
-		///    containing tag types to be removed from the file.
-		/// </param>
-		/// <remarks>
-		///    In order to remove all tags from a file, pass <see
-		///    cref="TagTypes.AllTags" /> as <paramref name="types" />.
-		/// </remarks>
-		public override void RemoveTags (TagLib.TagTypes types)
-		{
-			if ((types & TagTypes.JpegComment) != 0)
-				jpeg_tag.RemoveJpegComment ();
-		}
-
-		/// <summary>
-		///    Gets a tag of a specified type from the current instance,
-		///    optionally creating a new tag if possible.
-		/// </summary>
-		/// <param name="type">
-		///    A <see cref="TagLib.TagTypes" /> value indicating the
-		///    type of tag to read.
-		/// </param>
-		/// <param name="create">
-		///    A <see cref="bool" /> value specifying whether or not to
-		///    try and create the tag if one is not found.
-		/// </param>
-		/// <returns>
-		///    A <see cref="Tag" /> object containing the tag that was
-		///    found in or added to the current instance. If no
-		///    matching tag was found and none was created, <see
-		///    langword="null" /> is returned.
-		/// </returns>
-		public override TagLib.Tag GetTag (TagLib.TagTypes type,
-		                                   bool create)
-		{
-			foreach (ImageTag tag in jpeg_tag.ImageTags) {
-				if ((tag.TagTypes & type) == type)
-					return tag;
-			}
-
-			if ( ! create)
-				return null;
-
-			switch (type) {
-			case TagTypes.JpegComment:
-				JpegCommentTag com_tag = new JpegCommentTag ();
-				jpeg_tag.AddJpegComment (com_tag);
-				return com_tag;
-
-			case TagTypes.XMP:
-				throw new NotImplementedException ();
-
-			case TagTypes.TiffIFD:
-			{
-				IFDTag ifd_tag = new IFDTag (this);
-				jpeg_tag.AddIFDTag (ifd_tag);
-				return ifd_tag;
-			}
-
-			case TagTypes.Exif:
-			{
-				ExifTag exif_tag = new ExifTag (this);
-				IFDTag ifd_tag = GetTag (TagTypes.TiffIFD, true) as IFDTag;
-				ifd_tag.SetEntry (new SubIFDEntry ((uint) IFDEntryTag.ExifIFD, (uint) IFDEntryType.Long, 1, exif_tag));
-				return exif_tag;
-			}
-
-			case TagTypes.GPS:
-			{
-				GPSTag gps_tag = new GPSTag (this);
-				IFDTag ifd_tag = GetTag (TagTypes.TiffIFD, true) as IFDTag;
-				ifd_tag.SetEntry (new SubIFDEntry ((uint) IFDEntryTag.GPSIFD, (uint) IFDEntryType.Long, 1, gps_tag));
-				return gps_tag;
-			}
-
-			default:
-				return null;
 			}
 		}
 
@@ -546,15 +446,14 @@ namespace TagLib.Jpeg
 
 					uint ifd_offset = data.Mid (10, 4).ToUInt (is_bigendian);
 
-					var ifd =
-						new IFDTag (this, position + 6, ifd_offset, is_bigendian, out ifd_offset);
-					jpeg_tag.AddIFDTag (ifd);
+					var ifd = new ExifTag (this, position + 6, ifd_offset, is_bigendian);
+					uint next_offset = ifd.NextOffset;
+					ImageTag.AddTag (ifd);
 					exif_position = position;
 
-					if (ifd_offset != 0) {
-						var thumbnail_ifd =
-							new ThumbnailTag (this,  position + 6, ifd_offset, is_bigendian, out ifd_offset);
-						jpeg_tag.AddIFDTag (thumbnail_ifd);
+					if (next_offset != 0) {
+						var thumbnail_ifd = new ThumbnailTag (this, position + 6, next_offset, is_bigendian);
+						ImageTag.AddTag (thumbnail_ifd);
 						return true;
 					}
 
@@ -576,7 +475,7 @@ namespace TagLib.Jpeg
 				if (data.ToString ().Equals (XmpTag.XAP_NS + "\0")) {
 					ByteVector xmp_data = ReadBlock (length - XmpTag.XAP_NS.Length - 1);
 
-					jpeg_tag.AddXmpTag (new XmpTag (this, xmp_data));
+					ImageTag.AddTag (new XmpTag (this, xmp_data));
 					xmp_position = position;
 
 					return true;
@@ -653,7 +552,7 @@ namespace TagLib.Jpeg
 		private ByteVector RenderExifSegment ()
 		{
 			// Check, if IFD0 is contained
-			IFDTag ifd_tag = (GetTag (TagTypes.TiffIFD) as IFDTag);
+			ExifTag ifd_tag = (GetTag (TagTypes.Exif) as ExifTag);
 			if (ifd_tag == null)
 				return null;
 
@@ -711,7 +610,7 @@ namespace TagLib.Jpeg
 				return false;
 
 			comment_position = Tell;
-			jpeg_tag.AddJpegComment (new JpegCommentTag (ReadBlock (length - 1).ToString ()));
+			ImageTag.AddTag (new JpegCommentTag (ReadBlock (length - 1).ToString ()));
 			return true;
 		}
 

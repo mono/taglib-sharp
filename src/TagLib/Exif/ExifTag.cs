@@ -39,12 +39,12 @@ namespace TagLib.Exif
 
 #region Constructors
 
-		public ExifTag (File file, long base_offset, uint ifd_offset, bool is_bigendian, out uint next_offset)
-			: base (file, base_offset, ifd_offset, is_bigendian, out next_offset) {}
+		public ExifTag (File file, long base_offset, uint ifd_offset, bool is_bigendian)
+			: base (file, base_offset, ifd_offset, is_bigendian) {}
 
 
-		public ExifTag (File file, uint ifd_offset, bool is_bigendian, out uint next_offset)
-			: base (file, ifd_offset, is_bigendian, out next_offset) {}
+		public ExifTag (File file, uint ifd_offset, bool is_bigendian)
+			: base (file, ifd_offset, is_bigendian) {}
 
 		public ExifTag (File file) : base (file) {}
 
@@ -220,6 +220,55 @@ namespace TagLib.Exif
 		}
 
 #endregion
+
+		/// <summary>
+		///    Try to parse the given IFD entry, used to discover format-specific entries.
+		/// </summary>
+		/// <param name="tag">
+		///    A <see cref="System.UInt16"/> with the tag of the entry.
+		/// </param>
+		/// <param name="type">
+		///    A <see cref="System.UInt16"/> with the type of the entry.
+		/// </param>
+		/// <param name="count">
+		///    A <see cref="System.UInt32"/> with the data count of the entry.
+		/// </param>
+		/// <param name="base_offset">
+		///    A <see cref="System.Int64"/> with the base offset which every offsets in the
+		///    IFD are relative to.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="System.UInt32"/> with the offset of the entry.
+		/// </param>
+		/// <returns>
+		///    A <see cref="IFDEntry"/> with the given parameters, or null if none was parsed, after
+		///    which the normal TIFF parsing is used.
+		/// </returns>
+		protected override IFDEntry ParseIFDEntry (ushort tag, ushort type, uint count, long base_offset, uint offset) {
+			IFDTag ifd_tag;
+
+			switch (tag) {
+				case (ushort) IFDEntryTag.ExifIFD:
+				case (ushort) IFDEntryTag.IopIFD:
+				case (ushort) IFDEntryTag.GPSIFD:
+					ifd_tag = new IFDTag (File, base_offset, offset, is_bigendian);
+					return new SubIFDEntry (tag, type, count, ifd_tag);
+
+				case (ushort) IFDEntryTag.MakerNoteIFD:
+					// A maker note may be a Sub IFD, but it may also be in an arbitrary
+					// format. We try to parse a Sub IFD, if this fails, go ahead to read
+					// it as an Undefined Entry below.
+					try {
+						ifd_tag = new IFDTag (File, base_offset, offset, is_bigendian);
+						return new SubIFDEntry (tag, type, count, ifd_tag);
+					} catch {
+						return null;
+					}
+
+				default:
+					return null;
+			}
+		}
 
 	}
 }

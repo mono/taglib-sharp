@@ -10,7 +10,7 @@ namespace TagLib.Tests.FileFormats
 {
     public static class AddImageMetadataTests
     {
-		public static string test_comment = "&Test?Comment%$@_ ";
+		public static string test_comment = "This is a TagLib# &Test?Comment%$@_ ";
 		public static readonly DateTime date_time = new DateTime (2009, 10, 15, 12, 12, 59);
 
 		public static File CreateTmpFile (string sample_file, string tmp_file)

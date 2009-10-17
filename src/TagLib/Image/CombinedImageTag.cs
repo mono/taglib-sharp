@@ -35,27 +35,40 @@ namespace TagLib.Image
 
 		private List<ImageTag> image_tags = new List<ImageTag> ();
 
-		private File file;
+		private TagTypes allowed_types;
 
 #endregion
 
 #region Constructors
 
-		public CombinedImageTag (File file)
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="CombinedImageTag" /> with a restriction on the
+		///    allowed tag types contained in this combined tag.
+		/// </summary>
+		/// <param name="allowed_types">
+		///    A <see cref="TagTypes" /> value, which restricts the
+		///    types of metadata that can be contained in this
+		///    combined tag.
+		/// </param>
+		public CombinedImageTag (TagTypes allowed_types)
 		{
-			this.file = file;
+			this.allowed_types = allowed_types;
 		}
 
 #endregion
 
 #region Protected Methods
 
-		protected void AddTag (ImageTag tag)
+		internal void AddTag (ImageTag tag)
 		{
+			if ((tag.TagTypes & allowed_types) != tag.TagTypes)
+				throw new Exception (String.Format ("Attempted to add {0} to an image, but the only allowed types are {1}", tag.TagTypes, allowed_types));
+
 			image_tags.Add (tag);
 		}
 
-		protected void RemoveTag (ImageTag tag)
+		internal void RemoveTag (ImageTag tag)
 		{
 			image_tags.Remove (tag);
 		}
@@ -63,10 +76,6 @@ namespace TagLib.Image
 #endregion
 
 #region Public Properties
-
-		public File File {
-			get { return file; }
-		}
 
 		public override TagTypes TagTypes {
 			get {

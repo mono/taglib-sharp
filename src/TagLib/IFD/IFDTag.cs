@@ -29,7 +29,6 @@ using System.IO;
 
 using TagLib.Image;
 using TagLib.IFD.Entries;
-using TagLib.Exif;
 
 namespace TagLib.IFD
 {
@@ -56,7 +55,7 @@ namespace TagLib.IFD
 		/// <summary>
 		///    If IFD is encoded in BigEndian or not
 		/// </summary>
-		private bool is_bigendian;
+		protected bool is_bigendian;
 
 #endregion
 
@@ -83,16 +82,12 @@ namespace TagLib.IFD
 		///     A <see cref="System.Boolean"/>, it must be true, if the data of the IFD should be
 		///     read as bigendian, otherwise false.
 		/// </param>
-		/// <param name="next_offset">
-		///     A <see cref="System.UInt32"/> containing the offset of the following IFD relative
-		///     to <see cref="base_offset"/>.
-		/// </param>
-		public IFDTag (File file, long base_offset, uint ifd_offset, bool is_bigendian, out uint next_offset)
+		public IFDTag (File file, long base_offset, uint ifd_offset, bool is_bigendian)
 			: this (file)
 		{
 			this.is_bigendian = is_bigendian;
 
-			ReadIFD (base_offset, ifd_offset, out next_offset);
+			NextOffset = ReadIFD (base_offset, ifd_offset);
 		}
 
 		/// <summary>
@@ -108,11 +103,8 @@ namespace TagLib.IFD
 		///     A <see cref="System.Boolean"/>, it must be true, if the data of the IFD should be
 		///     read as bigendian, otherwise false.
 		/// </param>
-		/// <param name="next_offset">
-		///     A <see cref="System.UInt32"/> containing the offset.
-		/// </param>
-		public IFDTag (File file, uint ifd_offset, bool is_bigendian, out uint next_offset)
-			: this (file, 0, ifd_offset, is_bigendian, out next_offset) {}
+		public IFDTag (File file, uint ifd_offset, bool is_bigendian)
+			: this (file, 0, ifd_offset, is_bigendian) {}
 
 
 		/// <summary>
@@ -129,6 +121,17 @@ namespace TagLib.IFD
 #endregion
 
 #region Public Properties
+
+		/// <summary>
+		///    The offset to the next IFD.
+		/// </summary>
+		/// <value>
+		///    An unsigned integer with the offset (in bytes) to the
+		///    next IFD.
+		/// </value>
+		public uint NextOffset {
+			get; private set;
+		}
 
 		/// <summary>
 		///    Gets the IFD entries contained in the current instance.
@@ -485,21 +488,20 @@ namespace TagLib.IFD
 		/// <param name="offset">
 		///    A <see cref="System.UInt32"/> with the offset of the IFD relative to <see cref="base_offset"/>
 		/// </param>
-		/// <param name="next_offset">
+		/// <returns>
 		///    A <see cref="System.UInt32"/> with the offset of the next IFD, the offset is also relative to
 		///    <see cref="base_offset"/>
-		/// </param>
-		private void ReadIFD (long base_offset, uint offset, out uint next_offset)
+		/// </returns>
+		private uint ReadIFD (long base_offset, uint offset)
 		{
 			if (base_offset + offset > file.Length)
 				throw new Exception (String.Format ("Invalid IFD offset {0}, length: {1}", offset, file.Length));
 
 			file.Seek (base_offset + offset, SeekOrigin.Begin);
 			ushort entry_count = ReadUShort ();
-			uint end_offset = offset + 2 + 12 * (uint) entry_count;
 
 			ByteVector entry_datas = file.ReadBlock (12 * entry_count);
-			next_offset = ReadUInt ();
+			uint next_offset = ReadUInt ();
 
 			for (int i = 0; i < entry_count; i++) {
 				ByteVector entry_data = entry_datas.Mid (i * 12, 12);
@@ -512,6 +514,7 @@ namespace TagLib.IFD
 				IFDEntry entry = CreateIFDEntry (entry_tag, type, value_count, base_offset, offset_data);
 				AddEntry (entry);
 			}
+			return next_offset;
 		}
 
 		/// <summary>
@@ -592,7 +595,7 @@ namespace TagLib.IFD
 		/// <returns>
 		///    A <see cref="IFDEntry"/> with the given parameter.
 		/// </returns>
-		protected virtual IFDEntry CreateIFDEntry (ushort tag, ushort type, uint count, long base_offset, ByteVector offset_data)
+		protected IFDEntry CreateIFDEntry (ushort tag, ushort type, uint count, long base_offset, ByteVector offset_data)
 		{
 			uint offset = offset_data.ToUInt (is_bigendian);
 
@@ -603,39 +606,11 @@ namespace TagLib.IFD
 				type = (ushort) IFDEntryType.Byte;
 			}
 
-			if (tag == (ushort) IFDEntryTag.ExifIFD) {
-				uint next_offset;
-				ExifTag exif_tag =
-					new ExifTag (file, base_offset, offset, is_bigendian, out next_offset);
-				return new SubIFDEntry (tag, type, count, exif_tag);
-			}
+			var ifd_entry = ParseIFDEntry (tag, type, count, base_offset, offset);
+			if (ifd_entry != null)
+				return ifd_entry;
 
-			if (tag == (ushort) IFDEntryTag.IopIFD) {
-				uint next_offset;
-				IOPTag iop_tag =
-					new IOPTag (file, base_offset, offset, is_bigendian, out next_offset);
-				return new SubIFDEntry (tag, type, count, iop_tag);
-			}
-
-			if (tag == (ushort) IFDEntryTag.GPSIFD) {
-				uint next_offset;
-				GPSTag gps_tag =
-					new GPSTag (file, base_offset, offset, is_bigendian, out next_offset);
-				return new SubIFDEntry (tag, type, count, gps_tag);
-			}
-
-			// A maker note may be a Sub IFD, but it may also be in an arbitrary
-			// format. We try to parse a Sub IFD, if this fails, go ahead to read
-			// it as an Undefined Entry below.
-			if (tag == (ushort) IFDEntryTag.MakerNoteIFD) {
-				try {
-					uint next_offset;
-					CanonMakerNoteTag canon_tag = new CanonMakerNoteTag (file, base_offset, offset, is_bigendian, out next_offset);
-					return new SubIFDEntry (tag, type, count, canon_tag);
-				} catch {}
-			}
-
-			// handle first the values stored in the offset data itself
+			// then handle the values stored in the offset data itself
 			if (count == 1) {
 				if (type == (ushort) IFDEntryType.Short)
 					return new ShortIFDEntry (tag, offset_data.Mid (0, 2).ToUShort (is_bigendian));
@@ -727,6 +702,33 @@ namespace TagLib.IFD
 
 			// TODO: We should ignore unreadable values, erroring for now until we have sufficient coverage.
 			throw new NotImplementedException (String.Format ("Unknown type/count {0}/{1}", type, count));
+		}
+
+		/// <summary>
+		///    Try to parse the given IFD entry, used to discover format-specific entries.
+		/// </summary>
+		/// <param name="tag">
+		///    A <see cref="System.UInt16"/> with the tag of the entry.
+		/// </param>
+		/// <param name="type">
+		///    A <see cref="System.UInt16"/> with the type of the entry.
+		/// </param>
+		/// <param name="count">
+		///    A <see cref="System.UInt32"/> with the data count of the entry.
+		/// </param>
+		/// <param name="base_offset">
+		///    A <see cref="System.Int64"/> with the base offset which every offsets in the
+		///    IFD are relative to.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="System.UInt32"/> with the offset of the entry.
+		/// </param>
+		/// <returns>
+		///    A <see cref="IFDEntry"/> with the given parameters, or null if none was parsed, after
+		///    which the normal TIFF parsing is used.
+		/// </returns>
+		protected virtual IFDEntry ParseIFDEntry (ushort tag, ushort type, uint count, long base_offset, uint offset) {
+			return null;
 		}
 
 		/// <summary>
@@ -877,5 +879,14 @@ namespace TagLib.IFD
 		}
 
 #endregion
+
+		public void Dump ()
+		{
+			Console.WriteLine ("Dumping IFD entries:");
+			foreach (IFDEntry entry in entries.Values) {
+				Console.WriteLine ("{0} - {1}", entry.Tag, entry);
+			}
+
+		}
 	}
 }

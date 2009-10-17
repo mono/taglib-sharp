@@ -22,6 +22,10 @@
 //
 
 using System;
+using System.Collections.Generic;
+
+using TagLib.Jpeg;
+using TagLib.Exif;
 
 namespace TagLib.Image
 {
@@ -31,6 +35,7 @@ namespace TagLib.Image
 	/// </summary>
 	public abstract class File : TagLib.File
 	{
+		private CombinedImageTag image_tag;
 
 #region Constructors
 
@@ -75,11 +80,93 @@ namespace TagLib.Image
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="TagLib.Image.ImageTag" /> object representing
-		///    all image tags stored in the current instance.
+		///    A <see cref="TagLib.Tag" /> object representing all tags
+		///    stored in the current instance.
 		/// </value>
-		public ImageTag ImageTag {
-			get { return Tag as ImageTag; }
+		public override Tag Tag { get { return ImageTag; } }
+
+		/// <summary>
+		///    Gets a abstract representation of all tags stored in the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="TagLib.Image.CombinedImageTag" /> object
+		///    representing all image tags stored in the current instance.
+		/// </value>
+		public CombinedImageTag ImageTag {
+			get { return image_tag; }
+			protected set { image_tag = value; }
+		}
+
+#endregion
+
+#region Public Methods
+
+		/// <summary>
+		///    Removes a set of tag types from the current instance.
+		/// </summary>
+		/// <param name="types">
+		///    A bitwise combined <see cref="TagLib.TagTypes" /> value
+		///    containing tag types to be removed from the file.
+		/// </param>
+		/// <remarks>
+		///    In order to remove all tags from a file, pass <see
+		///    cref="TagTypes.AllTags" /> as <paramref name="types" />.
+		/// </remarks>
+		public override void RemoveTags (TagLib.TagTypes types)
+		{
+			List<ImageTag> to_delete = new List<ImageTag> ();
+
+			foreach (ImageTag tag in ImageTag.ImageTags) {
+				if ((tag.TagTypes & types) == tag.TagTypes)
+					to_delete.Add (tag);
+			}
+
+			foreach (ImageTag tag in to_delete)
+				ImageTag.RemoveTag (tag);
+		}
+
+		/// <summary>
+		///    Gets a tag of a specified type from the current instance,
+		///    optionally creating a new tag if possible.
+		/// </summary>
+		/// <param name="type">
+		///    A <see cref="TagLib.TagTypes" /> value indicating the
+		///    type of tag to read.
+		/// </param>
+		/// <param name="create">
+		///    A <see cref="bool" /> value specifying whether or not to
+		///    try and create the tag if one is not found.
+		/// </param>
+		/// <returns>
+		///    A <see cref="Tag" /> object containing the tag that was
+		///    found in or added to the current instance. If no
+		///    matching tag was found and none was created, <see
+		///    langword="null" /> is returned.
+		/// </returns>
+		public override TagLib.Tag GetTag (TagLib.TagTypes type,
+		                                   bool create)
+		{
+			foreach (Tag tag in ImageTag.ImageTags) {
+				if ((tag.TagTypes & type) == type)
+					return tag;
+			}
+
+			if (!create)
+				return null;
+
+			ImageTag new_tag = null;
+			if (type == TagTypes.JpegComment)
+				new_tag = new JpegCommentTag ();
+			if (type == TagTypes.Exif)
+				new_tag = new ExifTag (this);
+
+			if (new_tag != null) {
+				ImageTag.AddTag (new_tag);
+				return new_tag;
+			}
+
+			throw new NotImplementedException (String.Format ("Adding tag of type {0} not supported!", type));
 		}
 
 #endregion
