@@ -480,17 +480,17 @@ namespace TagLib.IFD
 		}
 
 		/// <summary>
-		///    Reads an IFD from file at position <see cref="offset"/> relative to <see cref="base_offset"/>.
+		///    Reads an IFD from file at position <paramref name="offset"/> relative to <paramref name="base_offset"/>.
 		/// </summary>
 		/// <param name="base_offset">
 		///    A <see cref="System.Int64"/> with the base offset which every offset in IFD is relative to.
 		/// </param>
 		/// <param name="offset">
-		///    A <see cref="System.UInt32"/> with the offset of the IFD relative to <see cref="base_offset"/>
+		///    A <see cref="System.UInt32"/> with the offset of the IFD relative to <paramref name="base_offset"/>
 		/// </param>
 		/// <returns>
 		///    A <see cref="System.UInt32"/> with the offset of the next IFD, the offset is also relative to
-		///    <see cref="base_offset"/>
+		///    <paramref name="base_offset"/>
 		/// </returns>
 		private uint ReadIFD (long base_offset, uint offset)
 		{
@@ -518,7 +518,7 @@ namespace TagLib.IFD
 		}
 
 		/// <summary>
-		///    Renders the IFD to an ByteVector where the offset of the IFD itself is <see cref="ifd_offset"/>
+		///    Renders the IFD to an ByteVector where the offset of the IFD itself is <paramref name="ifd_offset"/>
 		///    and all offsets contained in the IFD are adjusted accroding it.
 		/// </summary>
 		/// <param name="ifd_offset">
@@ -732,7 +732,7 @@ namespace TagLib.IFD
 		}
 
 		/// <summary>
-		///    Adds the data of a single entry to <see cref="entry_data"/>.
+		///    Adds the data of a single entry to <paramref name="entry_data"/>.
 		/// </summary>
 		/// <param name="entry_data">
 		///    A <see cref="ByteVector"/> to add the entry to.
@@ -758,10 +758,12 @@ namespace TagLib.IFD
 		}
 
 		/// <summary>
-		///    Renders a complete entry together with the data. The entry itself is stored in
-		///    <see cref="entry_data"/> and the data of the entry is stored in <see cref="offset_data"/>
-		///    if it cannot be stored in the offset. This method is called for ever <see cref="IFDEntry"/>
-		///    of this IFD and can be overwritten in subclasses to provide special behavior.
+		///    Renders a complete entry together with the data. The entry itself
+		///    is stored in <paramref name="entry_data"/> and the data of the
+		///    entry is stored in <paramref name="offset_data"/> if it cannot be
+		///    stored in the offset. This method is called for every <see
+		///    cref="IFDEntry"/> of this IFD and can be overwritten in subclasses
+		///    to provide special behavior.
 		/// </summary>
 		/// <param name="entry">
 		///    A <see cref="IFDEntry"/> with the entry to render.
