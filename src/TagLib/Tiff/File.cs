@@ -37,7 +37,7 @@ namespace TagLib.Tiff
 	[SupportedMimeType("taglib/tiff", "tiff")]
 	[SupportedMimeType("taglib/tif", "tif")]
 	[SupportedMimeType("image/tiff")]
-	public class File : TagLib.File
+	public class File : TagLib.Image.File
 	{
 #region Private Fields
 
@@ -229,7 +229,7 @@ namespace TagLib.Tiff
 			if (create)
 				throw new NotImplementedException ();
 
-			foreach (Tag tag in tiff_tag.Tags) {
+			foreach (Tag tag in tiff_tag.ImageTags) {
 				if ((tag.TagTypes & type) == type)
 					return tag;
 			}

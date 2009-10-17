@@ -46,7 +46,7 @@ namespace TagLib.Jpeg
 	[SupportedMimeType("taglib/jfif", "jfif")]
 	[SupportedMimeType("taglib/jfi", "jfi")]
 	[SupportedMimeType("image/jpeg")]
-	public class File : TagLib.File
+	public class File : TagLib.Image.File
 	{
 
 		public static readonly string EXIF_IDENTIFIER = "Exif\0\0";

@@ -48,6 +48,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Flac/File.cs \
 	$(srcdir)/TagLib/Image/Codec.cs \
 	$(srcdir)/TagLib/Image/CombinedImageTag.cs \
+	$(srcdir)/TagLib/Image/File.cs \
 	$(srcdir)/TagLib/Image/ImageTag.cs \
 	$(srcdir)/TagLib/Jpeg/Codec.cs \
 	$(srcdir)/TagLib/Jpeg/File.cs \

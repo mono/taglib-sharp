@@ -81,18 +81,6 @@ namespace TagLib.Jpeg
 			}
 		}
 
-		private ExifTag FindExifTag (IFD.IFDTag ifd_tag)
-		{
-			if (ifd_tag == null)
-				return null;
-
-			var exif_entry = ifd_tag.GetEntry ((ushort) IFDEntryTag.ExifIFD) as SubIFDEntry;
-			if (exif_entry == null)
-				return null;
-
-			return exif_entry.IFDTag as ExifTag;
-		}
-
 #endregion
 	}
 }

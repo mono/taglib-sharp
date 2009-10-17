@@ -12,13 +12,20 @@ namespace TagLib.Tests.FileFormats
     public class TiffFormatTest
     {
 		private static string sample_file = "samples/sample.tiff";
-		private File file;
+		private Image.File file;
 
         [TestFixtureSetUp]
         public void Init()
         {
-            file = File.Create(sample_file);
+            file = File.Create(sample_file) as Image.File;
         }
+
+		[Test]
+		public void TestMetadata()
+		{
+			var tag = file.ImageTag;
+			Assert.IsFalse (tag == null);
+		}
 
 		[Test]
         public void TestIFDRead()

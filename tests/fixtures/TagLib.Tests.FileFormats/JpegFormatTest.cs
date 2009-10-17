@@ -14,7 +14,7 @@ namespace TagLib.Tests.FileFormats
     {
 		private static string sample_file = "samples/sample.jpg";
         private static string tmp_file = "samples/tmpwrite.jpg";
-		private File file;
+		private Image.File file;
 
 		private TagTypes contained_types =
 				TagTypes.JpegComment |
@@ -28,7 +28,7 @@ namespace TagLib.Tests.FileFormats
         [TestFixtureSetUp]
         public void Init()
         {
-            file = File.Create(sample_file);
+            file = File.Create(sample_file) as Image.File;
         }
 
 		[Test]
