@@ -159,7 +159,7 @@ namespace TagLib.Image
 			if (type == TagTypes.JpegComment)
 				new_tag = new JpegCommentTag ();
 			if (type == TagTypes.Exif)
-				new_tag = new ExifTag (this);
+				new_tag = new ExifTag ();
 
 			if (new_tag != null) {
 				ImageTag.AddTag (new_tag);

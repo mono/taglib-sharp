@@ -222,22 +222,24 @@ namespace TagLib.Tiff
 			try {
 				uint offset = ReadFirstIFDOffset ();
 
-				var ifd_tag = new IFDTag (this, offset, is_bigendian);
-				uint next_offset = ifd_tag.NextOffset;
-				if (next_offset != 0)
-					throw new Exception ("Multiple IFD file encountered, this is not handled yet! (RAW file?)");
+				var ifd_tag = new IFDTag ();
+				var reader = new IFDReader (this, is_bigendian, ifd_tag, 0, offset);
+				reader.Read ();
 				ImageTag.AddTag (ifd_tag);
 
 				// Find XMP data
-				var xmp_entry = ifd_tag.GetEntry ((ushort) IFDEntryTag.XMP) as ByteVectorIFDEntry;
+				var xmp_entry = ifd_tag.GetEntry (0, (ushort) IFDEntryTag.XMP) as ByteVectorIFDEntry;
 				if (xmp_entry != null) {
 					ImageTag.AddTag (new XmpTag (this, xmp_entry.Data));
 				}
 
 				// Find Exif data
-				var exif_entry = ifd_tag.GetEntry ((ushort) IFDEntryTag.ExifIFD) as LongIFDEntry;
+				var exif_entry = ifd_tag.GetEntry (0, (ushort) IFDEntryTag.ExifIFD) as LongIFDEntry;
 				if (exif_entry != null) {
-					ImageTag.AddTag (new ExifTag (this, exif_entry.Value, is_bigendian));
+					var exif_tag = new ExifTag ();
+					var exif_reader = new ExifReader (this, is_bigendian, exif_tag, 0, exif_entry.Value);
+					exif_reader.Read ();
+					ImageTag.AddTag (exif_tag);
 				}
 
 
@@ -265,11 +267,11 @@ namespace TagLib.Tiff
 
 			IFDTag tag = GetTag (TagTypes.TiffIFD) as IFDTag;
 
-			IFDEntry width_entry = tag.GetEntry ((ushort) IFDEntryTag.ImageWidth);
+			IFDEntry width_entry = tag.GetEntry (0, (ushort) IFDEntryTag.ImageWidth);
 			if (width_entry != null)
 				width = (width_entry as ShortIFDEntry).Value;
 
-			IFDEntry height_entry = tag.GetEntry ((ushort) IFDEntryTag.ImageLength);
+			IFDEntry height_entry = tag.GetEntry (0, (ushort) IFDEntryTag.ImageLength);
 			if (height_entry != null)
 				height = (height_entry as ShortIFDEntry).Value;
 

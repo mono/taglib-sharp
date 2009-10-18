@@ -37,7 +37,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Ogg/PageHeader.cs \
 	$(srcdir)/TagLib/Ogg/File.cs \
 	$(srcdir)/TagLib/Exif/ExifTag.cs \
-	$(srcdir)/TagLib/Exif/ThumbnailTag.cs \
+	$(srcdir)/TagLib/Exif/ExifReader.cs \
 	$(srcdir)/TagLib/Flac/Block.cs \
 	$(srcdir)/TagLib/Flac/BlockHeader.cs \
 	$(srcdir)/TagLib/Flac/StreamHeader.cs \
@@ -99,6 +99,9 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/IFD/IFDEntry.cs \
 	$(srcdir)/TagLib/IFD/IFDEntryTag.cs \
 	$(srcdir)/TagLib/IFD/IFDTag.cs \
+	$(srcdir)/TagLib/IFD/IFDDirectory.cs \
+	$(srcdir)/TagLib/IFD/IFDReader.cs \
+	$(srcdir)/TagLib/IFD/IFDRenderer.cs \
 	$(srcdir)/TagLib/Mpeg4/AppleTag.cs \
 	$(srcdir)/TagLib/Mpeg4/Box.cs \
 	$(srcdir)/TagLib/Mpeg4/BoxFactory.cs \

@@ -19,8 +19,7 @@ namespace TagLib.Tests.FileFormats
 		private TagTypes contained_types =
 				TagTypes.JpegComment |
 				TagTypes.Exif |
-				TagTypes.XMP |
-				TagTypes.Thumbnail;
+				TagTypes.XMP;
 
         [TestFixtureSetUp]
         public void Init()
@@ -48,22 +47,22 @@ namespace TagLib.Tests.FileFormats
 			ExifTag tag = file.GetTag (TagTypes.Exif) as ExifTag;
 			Assert.IsFalse (tag == null);
 
-			var exif_ifd = tag.GetEntry(IFDEntryTag.ExifIFD) as SubIFDEntry;
+			var exif_ifd = tag.GetEntry(0, IFDEntryTag.ExifIFD) as SubIFDEntry;
 			Assert.IsFalse (exif_ifd == null);
 			var exif_tag = exif_ifd.IFDTag;
 
 			{
-				var entry = exif_tag.GetEntry (IFDEntryTag.ExposureTime) as RationalIFDEntry;
+				var entry = exif_tag.GetEntry (0, IFDEntryTag.ExposureTime) as RationalIFDEntry;
 				Assert.IsFalse (entry == null);
 				Assert.AreEqual (0.008, entry.Value);
 			}
 			{
-				var entry = exif_tag.GetEntry (IFDEntryTag.FNumber) as RationalIFDEntry;
+				var entry = exif_tag.GetEntry (0, IFDEntryTag.FNumber) as RationalIFDEntry;
 				Assert.IsFalse (entry == null);
 				Assert.AreEqual (3.2, entry.Value);
 			}
 			{
-				var entry = exif_tag.GetEntry (IFDEntryTag.ISOSpeedRatings) as ShortIFDEntry;
+				var entry = exif_tag.GetEntry (0, IFDEntryTag.ISOSpeedRatings) as ShortIFDEntry;
 				Assert.IsFalse (entry == null);
 				Assert.AreEqual (100, entry.Value);
 			}

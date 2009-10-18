@@ -49,7 +49,10 @@ namespace TagLib.Jpeg
 	public class File : TagLib.Image.File
 	{
 
-		public static readonly string EXIF_IDENTIFIER = "Exif\0\0";
+		/// <summary>
+		///    The magic bits used to recognize an Exif segment
+		/// </summary>
+		private static readonly string EXIF_IDENTIFIER = "Exif\0\0";
 
 #region Private Fields
 
@@ -147,7 +150,7 @@ namespace TagLib.Jpeg
 		public File (File.IFileAbstraction abstraction,
 		             ReadStyle propertiesStyle) : base (abstraction)
 		{
-			ImageTag = new CombinedImageTag (TagTypes.XMP | TagTypes.Exif | TagTypes.JpegComment | TagTypes.Thumbnail);
+			ImageTag = new CombinedImageTag (TagTypes.XMP | TagTypes.Exif | TagTypes.JpegComment);
 
 			Mode = AccessMode.Read;
 			try {
@@ -446,18 +449,13 @@ namespace TagLib.Jpeg
 
 					uint ifd_offset = data.Mid (10, 4).ToUInt (is_bigendian);
 
-					var ifd = new ExifTag (this, position + 6, ifd_offset, is_bigendian);
-					uint next_offset = ifd.NextOffset;
-					ImageTag.AddTag (ifd);
+					var exif = new ExifTag ();
+					var reader = new ExifReader (this, is_bigendian, exif, position + 6, ifd_offset);
+					reader.Read ();
+					ImageTag.AddTag (exif);
 					exif_position = position;
 
-					if (next_offset != 0) {
-						var thumbnail_ifd = new ThumbnailTag (this, position + 6, next_offset, is_bigendian);
-						ImageTag.AddTag (thumbnail_ifd);
-						return true;
-					}
-
-					return false;
+					return true;
 				}
 			}
 
@@ -552,34 +550,28 @@ namespace TagLib.Jpeg
 		private ByteVector RenderExifSegment ()
 		{
 			// Check, if IFD0 is contained
-			ExifTag ifd_tag = (GetTag (TagTypes.Exif) as ExifTag);
-			if (ifd_tag == null)
+			ExifTag exif = GetTag (TagTypes.Exif) as ExifTag;
+			if (exif == null)
 				return null;
 
 			// first IFD starts at 8
 			uint first_ifd_offset = 8;
 
-			IFDTag thumb_tag = (GetTag (TagTypes.Thumbnail) as ThumbnailTag);
-
 			// Render IFD0, we use bigendian every time, since no other parts of the file
 			// are affected by this
-			ByteVector ifd_data = ifd_tag.Render (first_ifd_offset, true, thumb_tag == null);
-
-			if (thumb_tag != null) {
-				ByteVector thumb_data = thumb_tag.Render ((uint) (first_ifd_offset + ifd_data.Count), true, true);
-				ifd_data.Add (thumb_data);
-			}
+			var renderer = new IFDRenderer (true, exif, first_ifd_offset);
+			ByteVector exif_data = renderer.Render ();
 
 			// Create whole segment
 			ByteVector data = new ByteVector (new byte [] { 0xFF, 0xE1 });
-			data.Add (ByteVector.FromUShort ((ushort) (first_ifd_offset + ifd_data.Count + 2 + 6)));
+			data.Add (ByteVector.FromUShort ((ushort) (first_ifd_offset + exif_data.Count + 2 + 6)));
 			data.Add ("Exif\0\0");
 			data.Add (ByteVector.FromString ("MM"));
 			data.Add (ByteVector.FromUShort (42));
 			data.Add (ByteVector.FromUInt (first_ifd_offset));
 
 			// Add ifd data itself
-			data.Add (ifd_data);
+			data.Add (exif_data);
 
 			return data;
 		}

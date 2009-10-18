@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using TagLib;
 using TagLib.Tiff;
@@ -39,10 +40,11 @@ namespace TagLib.Tests.FileFormats
 			IFDTag tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 			Assert.IsFalse (tag == null);
 
-			Assert.AreEqual (tag.Entries.Length, 24);
+			Assert.AreEqual (tag.Directories.Length, 1);
+			Assert.AreEqual (tag.Directories [0].Count, 24);
 
 			// The tests below validate if the obtained data matches what tiffdump parsed.
-			IFDEntry [] entries = tag.Entries;
+			IFDEntry [] entries = new List<IFDEntry> (tag.Directories [0].Values).ToArray ();
 			{
 				var entry = entries [0] as LongIFDEntry;
 				Assert.IsFalse (entry == null);

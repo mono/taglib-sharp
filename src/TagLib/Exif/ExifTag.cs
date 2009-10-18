@@ -37,26 +37,38 @@ namespace TagLib.Exif
 		public static readonly ByteVector COMMENT_UNICODE_CODE = new byte[] {0x55, 0x4E, 0x49, 0x43, 0x4F, 0x44, 0x45, 0x00};
 		public static readonly ByteVector COMMENT_UNDEFINED_CODE = new byte[] {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
-#region Constructors
+		/// <summary>
+		///    A reference to the Exif IFD (which can be found by following the
+		///    pointer in IFD0, ExifIFD tag). This variable should not be used
+		///    directly, use the <see cref="ExifIFD"/> property instead.
+		/// </summary>
+		private IFDTag exif_ifd = null;
 
-		public ExifTag (File file, long base_offset, uint ifd_offset, bool is_bigendian)
-			: base (file, base_offset, ifd_offset, is_bigendian) {}
+		/// <summary>
+		///    The Exif IFD. Will create one if the file doesn't alread have it.
+		/// </summary>
+		private IFDTag ExifIFD {
+			get {
+				if (exif_ifd == null) {
+					var entry = GetEntry (0, IFDEntryTag.ExifIFD) as SubIFDEntry;
+					if (entry == null) {
+						exif_ifd = new IFDTag ();
+						entry = new SubIFDEntry ((uint) IFDEntryTag.ExifIFD, (ushort) IFDEntryType.Long, 1, exif_ifd);
+						SetEntry (0, entry);
+					}
 
+					exif_ifd = entry.IFDTag;
+				}
 
-		public ExifTag (File file, uint ifd_offset, bool is_bigendian)
-			: base (file, ifd_offset, is_bigendian) {}
-
-		public ExifTag (File file) : base (file) {}
-
-#endregion
-
+				return exif_ifd;
+			}
+		}
 
 #region Public Properties
 
 		public string UserComment {
 			get {
-				UndefinedIFDEntry comment_entry =
-					GetEntry (IFDEntryTag.UserComment) as UndefinedIFDEntry;
+				var comment_entry = ExifIFD.GetEntry (0, IFDEntryTag.UserComment) as UndefinedIFDEntry;
 
 				if (comment_entry == null)
 					return null;
@@ -77,28 +89,27 @@ namespace TagLib.Exif
 				data.Add (COMMENT_UNICODE_CODE);
 				data.Add (ByteVector.FromString (value, StringType.UTF8));
 
-				UndefinedIFDEntry comment_entry =
-					new UndefinedIFDEntry ((uint)IFDEntryTag.UserComment, data);
+				var comment_entry = new UndefinedIFDEntry ((uint)IFDEntryTag.UserComment, data);
 
-				SetEntry (comment_entry);
+				ExifIFD.SetEntry (0, comment_entry);
 			}
 		}
 
 		public DateTime DateTimeOriginal {
 			get {
-				return GetDateTimeValue ((ushort) IFDEntryTag.DateTimeOriginal);
+				return ExifIFD.GetDateTimeValue (0, (ushort) IFDEntryTag.DateTimeOriginal);
 			}
 			set {
-				SetDateTimeValue ((ushort) IFDEntryTag.DateTimeOriginal, value);
+				ExifIFD.SetDateTimeValue (0, (ushort) IFDEntryTag.DateTimeOriginal, value);
 			}
 		}
 
 		public DateTime DateTimeDigitized {
 			get {
-				return GetDateTimeValue ((ushort) IFDEntryTag.DateTimeDigitized);
+				return ExifIFD.GetDateTimeValue (0, (ushort) IFDEntryTag.DateTimeDigitized);
 			}
 			set {
-				SetDateTimeValue ((ushort) IFDEntryTag.DateTimeDigitized, value);
+				ExifIFD.SetDateTimeValue (0, (ushort) IFDEntryTag.DateTimeDigitized, value);
 			}
 		}
 
@@ -136,11 +147,11 @@ namespace TagLib.Exif
 		/// </value>
 		public override double ExposureTime {
 			get {
-				return GetRationalValue ((ushort) IFDEntryTag.ExposureTime);
+				return ExifIFD.GetRationalValue (0, (ushort) IFDEntryTag.ExposureTime);
 			}
 		}
 
-		//// <summary>
+		/// <summary>
 		///    Gets the FNumber the image, the current instance belongs
 		///    to, was taken with.
 		/// </summary>
@@ -149,7 +160,7 @@ namespace TagLib.Exif
 		/// </value>
 		public override double FNumber {
 			get {
-				return GetRationalValue ((ushort) IFDEntryTag.FNumber);
+				return ExifIFD.GetRationalValue (0, (ushort) IFDEntryTag.FNumber);
 			}
 		}
 
@@ -162,7 +173,7 @@ namespace TagLib.Exif
 		/// </value>
 		public override uint ISOSpeedRatings {
 			get {
-				return GetLongValue ((ushort) IFDEntryTag.ISOSpeedRatings);
+				return ExifIFD.GetLongValue (0, (ushort) IFDEntryTag.ISOSpeedRatings);
 			}
 		}
 
@@ -175,7 +186,7 @@ namespace TagLib.Exif
 		/// </value>
 		public override double FocalLength {
 			get {
-				return GetRationalValue ((ushort) IFDEntryTag.FocalLength);
+				return ExifIFD.GetRationalValue (0, (ushort) IFDEntryTag.FocalLength);
 			}
 		}
 
@@ -188,7 +199,7 @@ namespace TagLib.Exif
 		/// </value>
 		public override string Make {
 			get {
-				return GetStringValue ((ushort) IFDEntryTag.Make);
+				return ExifIFD.GetStringValue (0, (ushort) IFDEntryTag.Make);
 			}
 		}
 
@@ -201,7 +212,7 @@ namespace TagLib.Exif
 		/// </value>
 		public override string Model {
 			get {
-				return GetStringValue ((ushort) IFDEntryTag.Model);
+				return ExifIFD.GetStringValue (0, (ushort) IFDEntryTag.Model);
 			}
 		}
 
@@ -220,55 +231,6 @@ namespace TagLib.Exif
 		}
 
 #endregion
-
-		/// <summary>
-		///    Try to parse the given IFD entry, used to discover format-specific entries.
-		/// </summary>
-		/// <param name="tag">
-		///    A <see cref="System.UInt16"/> with the tag of the entry.
-		/// </param>
-		/// <param name="type">
-		///    A <see cref="System.UInt16"/> with the type of the entry.
-		/// </param>
-		/// <param name="count">
-		///    A <see cref="System.UInt32"/> with the data count of the entry.
-		/// </param>
-		/// <param name="base_offset">
-		///    A <see cref="System.Int64"/> with the base offset which every offsets in the
-		///    IFD are relative to.
-		/// </param>
-		/// <param name="offset">
-		///    A <see cref="System.UInt32"/> with the offset of the entry.
-		/// </param>
-		/// <returns>
-		///    A <see cref="IFDEntry"/> with the given parameters, or null if none was parsed, after
-		///    which the normal TIFF parsing is used.
-		/// </returns>
-		protected override IFDEntry ParseIFDEntry (ushort tag, ushort type, uint count, long base_offset, uint offset) {
-			IFDTag ifd_tag;
-
-			switch (tag) {
-				case (ushort) IFDEntryTag.ExifIFD:
-				case (ushort) IFDEntryTag.IopIFD:
-				case (ushort) IFDEntryTag.GPSIFD:
-					ifd_tag = new IFDTag (File, base_offset, offset, is_bigendian);
-					return new SubIFDEntry (tag, type, count, ifd_tag);
-
-				case (ushort) IFDEntryTag.MakerNoteIFD:
-					// A maker note may be a Sub IFD, but it may also be in an arbitrary
-					// format. We try to parse a Sub IFD, if this fails, go ahead to read
-					// it as an Undefined Entry below.
-					try {
-						ifd_tag = new IFDTag (File, base_offset, offset, is_bigendian);
-						return new SubIFDEntry (tag, type, count, ifd_tag);
-					} catch {
-						return null;
-					}
-
-				default:
-					return null;
-			}
-		}
 
 	}
 }

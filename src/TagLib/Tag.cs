@@ -111,11 +111,6 @@ namespace TagLib {
 		JpegComment = 0x00002000,
 
 		/// <summary>
-		///    Thumbail Tag
-		/// </summary>
-		Thumbnail = 0x00010000,
-
-		/// <summary>
 		///    All tag types.
 		/// </summary>
 		AllTags      = 0xFFFFFFFF
