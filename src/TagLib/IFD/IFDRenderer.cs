@@ -288,6 +288,14 @@ namespace TagLib.IFD
 
 			} else if (entry is SubIFDEntry) {
 				var sub_ifd = (entry as SubIFDEntry);
+
+				// Don't render empty SubIFDEntry
+				int sum = 0;
+				foreach (var directory in sub_ifd.IFDTag.Directories)
+					sum += directory.Count;
+				if (sum == 0)
+					return;
+
 				var renderer = CreateSubRenderer (is_bigendian, sub_ifd.IFDTag, offset);
 				data = renderer.Render ();
 
