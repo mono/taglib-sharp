@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 
 using TagLib.Jpeg;
-using TagLib.Exif;
+using TagLib.IFD;
 
 namespace TagLib.Image
 {
@@ -158,8 +158,8 @@ namespace TagLib.Image
 			ImageTag new_tag = null;
 			if (type == TagTypes.JpegComment)
 				new_tag = new JpegCommentTag ();
-			if (type == TagTypes.Exif)
-				new_tag = new ExifTag ();
+			if (type == TagTypes.TiffIFD)
+				new_tag = new IFDTag ();
 
 			if (new_tag != null) {
 				ImageTag.AddTag (new_tag);

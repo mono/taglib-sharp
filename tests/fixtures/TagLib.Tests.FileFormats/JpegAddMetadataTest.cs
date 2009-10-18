@@ -4,8 +4,6 @@ using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
 using TagLib.Jpeg;
-using TagLib.Exif;
-using TagLib.Xmp;
 
 namespace TagLib.Tests.FileFormats
 {
@@ -28,8 +26,7 @@ namespace TagLib.Tests.FileFormats
 
             File file = File.Create (tmp_file);
 
-			JpegCommentTag com_tag =
-				file.GetTag (TagTypes.JpegComment, true) as JpegCommentTag;
+			JpegCommentTag com_tag = file.GetTag (TagTypes.JpegComment, true) as JpegCommentTag;
 
 			Assert.IsFalse (com_tag == null);
 			Assert.IsTrue (com_tag.Value == null);

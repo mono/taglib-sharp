@@ -6,7 +6,6 @@ using TagLib.Tiff;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
 using TagLib.Xmp;
-using TagLib.Exif;
 
 namespace TagLib.Tests.FileFormats
 {
@@ -46,13 +45,6 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual ("Canon", tag.Make);
 		}
 
-		[Test]
-		public void TestConvenienceAPIExif()
-		{
-			var tag = file.GetTag (TagTypes.Exif) as ExifTag;
-			Assert.IsFalse (tag == null);
-		}
-
 		/// <summary>
 		///    This tests the internal IDF parsing structure. For normal usage,
 		///    you do not need to use these methods. Check the convenience API
@@ -65,16 +57,16 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual (10, file.Properties.PhotoHeight);
 			Assert.AreEqual (10, file.Properties.PhotoWidth);
 
-			Assert.AreEqual (TagTypes.TiffIFD | TagTypes.XMP | TagTypes.Exif, file.TagTypes);
+			Assert.AreEqual (TagTypes.TiffIFD | TagTypes.XMP, file.TagTypes);
 
 			IFDTag tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 			Assert.IsFalse (tag == null);
 
-			Assert.AreEqual (tag.Directories.Length, 1);
-			Assert.AreEqual (tag.Directories [0].Count, 24);
+			Assert.AreEqual (tag.Structure.Directories.Length, 1);
+			Assert.AreEqual (tag.Structure.Directories [0].Count, 24);
 
 			// The tests below validate if the obtained data matches what tiffdump parsed.
-			IFDEntry [] entries = new List<IFDEntry> (tag.Directories [0].Values).ToArray ();
+			IFDEntry [] entries = new List<IFDEntry> (tag.Structure.Directories [0].Values).ToArray ();
 			{
 				var entry = entries [0] as LongIFDEntry;
 				Assert.IsFalse (entry == null);
@@ -217,17 +209,16 @@ namespace TagLib.Tests.FileFormats
 				Assert.AreEqual (6285, entry.Data.Data.Length);
 			}
 			{
-				var entry = entries [23] as LongIFDEntry;
+				var entry = entries [23] as SubIFDEntry;
 				Assert.IsFalse (entry == null);
 				Assert.AreEqual ((ushort) IFDEntryTag.ExifIFD, entry.Tag);
-				Assert.AreEqual (6730, entry.Value);
 			}
 		}
 
 		[Test]
 		public void TestXMPRead()
 		{
-			Assert.AreEqual (TagTypes.TiffIFD | TagTypes.XMP | TagTypes.Exif, file.TagTypes);
+			Assert.AreEqual (TagTypes.TiffIFD | TagTypes.XMP, file.TagTypes);
 
 			XmpTag tag = file.GetTag (TagTypes.XMP) as XmpTag;
 			Assert.IsFalse (tag == null);

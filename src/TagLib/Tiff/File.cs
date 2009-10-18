@@ -28,7 +28,6 @@ using System.IO;
 using TagLib.Image;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
-using TagLib.Exif;
 using TagLib.Xmp;
 
 namespace TagLib.Tiff
@@ -118,7 +117,7 @@ namespace TagLib.Tiff
 		public File (File.IFileAbstraction abstraction,
 		             ReadStyle propertiesStyle) : base (abstraction)
 		{
-			ImageTag = new CombinedImageTag (TagTypes.TiffIFD | TagTypes.XMP | TagTypes.Exif);
+			ImageTag = new CombinedImageTag (TagTypes.TiffIFD | TagTypes.XMP);
 
 			Mode = AccessMode.Read;
 			try {
@@ -223,25 +222,15 @@ namespace TagLib.Tiff
 				uint offset = ReadFirstIFDOffset ();
 
 				var ifd_tag = new IFDTag ();
-				var reader = new IFDReader (this, is_bigendian, ifd_tag, 0, offset);
+				var reader = new IFDReader (this, is_bigendian, ifd_tag.Structure, 0, offset);
 				reader.Read ();
 				ImageTag.AddTag (ifd_tag);
 
 				// Find XMP data
-				var xmp_entry = ifd_tag.GetEntry (0, (ushort) IFDEntryTag.XMP) as ByteVectorIFDEntry;
+				var xmp_entry = ifd_tag.Structure.GetEntry (0, (ushort) IFDEntryTag.XMP) as ByteVectorIFDEntry;
 				if (xmp_entry != null) {
 					ImageTag.AddTag (new XmpTag (this, xmp_entry.Data));
 				}
-
-				// Find Exif data
-				var exif_entry = ifd_tag.GetEntry (0, (ushort) IFDEntryTag.ExifIFD) as LongIFDEntry;
-				if (exif_entry != null) {
-					var exif_tag = new ExifTag ();
-					var exif_reader = new ExifReader (this, is_bigendian, exif_tag, 0, exif_entry.Value);
-					exif_reader.Read ();
-					ImageTag.AddTag (exif_tag);
-				}
-
 
 				if (propertiesStyle == ReadStyle.None)
 					return;
@@ -267,11 +256,11 @@ namespace TagLib.Tiff
 
 			IFDTag tag = GetTag (TagTypes.TiffIFD) as IFDTag;
 
-			IFDEntry width_entry = tag.GetEntry (0, (ushort) IFDEntryTag.ImageWidth);
+			IFDEntry width_entry = tag.Structure.GetEntry (0, (ushort) IFDEntryTag.ImageWidth);
 			if (width_entry != null)
 				width = (width_entry as ShortIFDEntry).Value;
 
-			IFDEntry height_entry = tag.GetEntry (0, (ushort) IFDEntryTag.ImageLength);
+			IFDEntry height_entry = tag.Structure.GetEntry (0, (ushort) IFDEntryTag.ImageLength);
 			if (height_entry != null)
 				height = (height_entry as ShortIFDEntry).Value;
 

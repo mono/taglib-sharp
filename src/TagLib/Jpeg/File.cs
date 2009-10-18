@@ -29,7 +29,6 @@ using System.IO;
 using TagLib.Image;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
-using TagLib.Exif;
 using TagLib.Xmp;
 
 namespace TagLib.Jpeg
@@ -150,7 +149,7 @@ namespace TagLib.Jpeg
 		public File (File.IFileAbstraction abstraction,
 		             ReadStyle propertiesStyle) : base (abstraction)
 		{
-			ImageTag = new CombinedImageTag (TagTypes.XMP | TagTypes.Exif | TagTypes.JpegComment);
+			ImageTag = new CombinedImageTag (TagTypes.XMP | TagTypes.TiffIFD | TagTypes.JpegComment);
 
 			Mode = AccessMode.Read;
 			try {
@@ -449,8 +448,8 @@ namespace TagLib.Jpeg
 
 					uint ifd_offset = data.Mid (10, 4).ToUInt (is_bigendian);
 
-					var exif = new ExifTag ();
-					var reader = new ExifReader (this, is_bigendian, exif, position + 6, ifd_offset);
+					var exif = new IFDTag ();
+					var reader = new IFDReader (this, is_bigendian, exif.Structure, position + 6, ifd_offset);
 					reader.Read ();
 					ImageTag.AddTag (exif);
 					exif_position = position;
@@ -550,7 +549,7 @@ namespace TagLib.Jpeg
 		private ByteVector RenderExifSegment ()
 		{
 			// Check, if IFD0 is contained
-			ExifTag exif = GetTag (TagTypes.Exif) as ExifTag;
+			IFDTag exif = GetTag (TagTypes.TiffIFD) as IFDTag;
 			if (exif == null)
 				return null;
 
@@ -559,7 +558,7 @@ namespace TagLib.Jpeg
 
 			// Render IFD0, we use bigendian every time, since no other parts of the file
 			// are affected by this
-			var renderer = new IFDRenderer (true, exif, first_ifd_offset);
+			var renderer = new IFDRenderer (true, exif.Structure, first_ifd_offset);
 			ByteVector exif_data = renderer.Render ();
 
 			// Create whole segment

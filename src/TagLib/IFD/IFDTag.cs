@@ -37,14 +37,21 @@ namespace TagLib.IFD
 	/// </summary>
 	public class IFDTag : ImageTag
 	{
-		public static readonly string DATETIME_FORMAT = "yyyy:MM:dd HH:mm:ss";
+		public static readonly ByteVector COMMENT_ASCCI_CODE = new byte[] {0x41, 0x53, 0x43, 0x49, 0x49, 0x00, 0x00, 0x00};
+		public static readonly ByteVector COMMENT_JIS_CODE = new byte[] {0x4A, 0x49, 0x53, 0x00, 0x00, 0x00, 0x00, 0x00};
+		public static readonly ByteVector COMMENT_UNICODE_CODE = new byte[] {0x55, 0x4E, 0x49, 0x43, 0x4F, 0x44, 0x45, 0x00};
+		public static readonly ByteVector COMMENT_UNDEFINED_CODE = new byte[] {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 #region Private Fields
 
+		public IFDStructure Structure { get; private set; }
+
 		/// <summary>
-		///    Contains the IFD directories in this tag.
+		///    A reference to the Exif IFD (which can be found by following the
+		///    pointer in IFD0, ExifIFD tag). This variable should not be used
+		///    directly, use the <see cref="ExifIFD"/> property instead.
 		/// </summary>
-		internal readonly List<IFDDirectory> directories = new List<IFDDirectory> ();
+		private IFDStructure exif_ifd = null;
 
 #endregion
 
@@ -56,6 +63,7 @@ namespace TagLib.IFD
 		/// </summary>
 		public IFDTag ()
 		{
+			Structure = new IFDStructure ();
 		}
 
 #endregion
@@ -63,13 +71,28 @@ namespace TagLib.IFD
 #region Public Properties
 
 		/// <summary>
-		///    Gets the IFD directories contained in the current instance.
+		///    The Exif IFD. Will create one if the file doesn't alread have it.
 		/// </summary>
-		/// <value>
-		///    An array of <see cref="IFDirectory"/> instances.
-		/// </value>
-		public IFDDirectory [] Directories {
-			get { return directories.ToArray (); }
+		/// <remarks>
+		///    <para>Note how this also creates an empty IFD for exif, even if
+		///    you don't set a value. That's okay, empty nested IFDs get ignored
+		///    when rendering.</para>
+		/// </remarks>
+		public IFDStructure ExifIFD {
+			get {
+				if (exif_ifd == null) {
+					var entry = Structure.GetEntry (0, IFDEntryTag.ExifIFD) as SubIFDEntry;
+					if (entry == null) {
+						exif_ifd = new IFDStructure ();
+						entry = new SubIFDEntry ((uint) IFDEntryTag.ExifIFD, (ushort) IFDEntryType.Long, 1, exif_ifd);
+						Structure.SetEntry (0, entry);
+					}
+
+					exif_ifd = entry.Structure;
+				}
+
+				return exif_ifd;
+			}
 		}
 
 		/// <summary>
@@ -94,208 +117,140 @@ namespace TagLib.IFD
 			throw new NotImplementedException ();
 		}
 
-		/// <summary>
-		///    Checks, if a value for the given tag is contained in the IFD.
-		/// </summary>
-		/// <param name="directory">
-		///    A <see cref="System.Int32"/> value with the directory index that
-		///    contains the tag.
-		/// </param>
-		/// <param name="tag">
-		///    A <see cref="System.UInt32"/> value with the tag.
-		/// </param>
-		/// <returns>
-		///    A <see cref="System.Boolean"/>, which is true, if the tag is already
-		///    contained in the IFD, otherwise false.
-		/// </returns>
-		public bool ContainsTag (int directory, uint tag)
-		{
-			if (directory >= directories.Count)
-				return false;
-			return directories [directory].ContainsKey (tag);
-		}
-
-		/// <summary>
-		///    Removes a given tag from the IFD.
-		/// </summary>
-		/// <param name="directory">
-		///    A <see cref="System.Int32"/> value with the directory index that
-		///    contains the tag to remove.
-		/// </param>
-		/// <param name="tag">
-		///    A <see cref="System.UInt32"/> value with the tag to remove.
-		/// </param>
-		public void RemoveTag (int directory, uint tag)
-		{
-			directories [directory].Remove (tag);
-		}
-
-		/// <summary>
-		///    Removes a given tag from the IFD.
-		/// </summary>
-		/// <param name="directory">
-		///    A <see cref="System.Int32"/> value with the directory index that
-		///    contains the tag to remove.
-		/// </param>
-		/// <param name="entry_tag">
-		///    A <see cref="IFDEntryTag"/> value with the tag to remove.
-		/// </param>
-		public void RemoveTag (int directory, IFDEntryTag entry_tag)
-		{
-			RemoveTag (directory, (uint) entry_tag);
-		}
-
-		/// <summary>
-		///    Adds an <see cref="IFDEntry"/> to the IFD, if it is not already
-		///    contained in, it fails otherwise.
-		/// </summary>
-		/// <param name="directory">
-		///    A <see cref="System.Int32"/> value with the directory index that
-		///    should contain the tag that will be added.
-		/// </param>
-		/// <param name="entry">
-		///    A <see cref="IFDEntry"/> to add to the IFD.
-		/// </param>
-		public void AddEntry (int directory, IFDEntry entry)
-		{
-			while (directory >= directories.Count)
-				directories.Add (new IFDDirectory ());
-
-			directories [directory].Add (entry.Tag, entry);
-		}
-
-		/// <summary>
-		///    Adds an <see cref="IFDEntry"/> to the IFD. If it is already contained
-		///    in the IFD, it is overwritten.
-		/// </summary>
-		/// <param name="directory">
-		///    A <see cref="System.Int32"/> value with the directory index that
-		///    contains the tag that will be set.
-		/// </param>
-		/// <param name="entry">
-		///    A <see cref="IFDEntry"/> to add to the IFD.
-		/// </param>
-		public void SetEntry (int directory, IFDEntry entry)
-		{
-			if (ContainsTag (directory, entry.Tag))
-				RemoveTag (directory, entry.Tag);
-
-			AddEntry (directory, entry);
-		}
-
-		/// <summary>
-		///   Returns the <see cref="IFDEntry"/> belonging to the given tag.
-		/// </summary>
-		/// <param name="directory">
-		///    A <see cref="System.Int32"/> with the directory that contains
-		///    the wanted tag.
-		/// </param>
-		/// <param name="entry_tag">
-		///    A <see cref="System.UInt16"/> with the tag to get.
-		/// </param>
-		/// <returns>
-		///    A <see cref="IFDEntry"/> belonging to the given tag, or
-		///    null, if no such tag is contained in the IFD.
-		/// </returns>
-		public IFDEntry GetEntry (int directory, ushort entry_tag)
-		{
-			if (!ContainsTag (directory, entry_tag))
-				return null;
-
-			return directories [directory] [entry_tag];
-		}
-
-		/// <summary>
-		///   Returns the <see cref="IFDEntry"/> belonging to the given tag.
-		/// </summary>
-		/// <param name="directory">
-		///    A <see cref="System.Int32"/> with the directory that contains
-		///    the wanted tag.
-		/// </param>
-		/// <param name="tag">
-		///    A <see cref="IFDEntryTag"/> with the tag to get.
-		/// </param>
-		/// <returns>
-		///    A <see cref="IFDEntry"/> belonging to the given tag, or
-		///    null, if no such tag is contained in the IFD.
-		/// </returns>
-		public IFDEntry GetEntry (int directory, IFDEntryTag entry_tag)
-		{
-			return GetEntry (directory, (ushort) entry_tag);
-		}
-
-		public string GetStringValue (int directory, ushort entry_tag)
-		{
-			var entry = GetEntry (directory, entry_tag);
-
-			if (entry != null && entry is StringIFDEntry)
-				return (entry as StringIFDEntry).Value;
-
-			return null;
-		}
-
-		public uint GetLongValue (int directory, ushort entry_tag)
-		{
-			var entry = GetEntry (directory, entry_tag);
-
-			if (entry != null) {
-				if (entry is LongIFDEntry)
-					return (entry as LongIFDEntry).Value;
-
-				if (entry is ShortIFDEntry)
-					return (entry as ShortIFDEntry).Value;
-			}
-
-			return 0;
-		}
-
-		public double GetRationalValue (int directory, ushort entry_tag)
-		{
-			var entry = GetEntry (directory, entry_tag);
-
-			if (entry != null) {
-
-				if (entry is RationalIFDEntry)
-					return (entry as RationalIFDEntry).Value;
-
-				if (entry is SRationalIFDEntry)
-					return (entry as SRationalIFDEntry).Value;
-			}
-
-			return 0.0d;
-		}
-
-		public DateTime GetDateTimeValue (int directory, ushort entry_tag)
-		{
-			string date_string = GetStringValue (directory, entry_tag);
-
-			if (date_string == null)
-				return DateTime.MinValue;
-
-			try {
-				DateTime date_time = DateTime.ParseExact (date_string, DATETIME_FORMAT, System.Globalization.CultureInfo.InvariantCulture);
-
-				return date_time;
-			} catch {}
-
-			return DateTime.MinValue;
-		}
-
-		public void SetStringValue (int directory, ushort entry_tag, string value)
-		{
-			SetEntry (directory, new StringIFDEntry (entry_tag, value));
-		}
-
-		public void SetDateTimeValue (int directory, ushort entry_tag, DateTime value)
-		{
-			string date_string = value.ToString (DATETIME_FORMAT);
-
-			SetStringValue (directory, entry_tag, date_string);
-		}
-
 #endregion
 
 #region Metadata fields
+
+		/// <summary>
+		///    Gets or sets the comment for the image described
+		///    by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the comment of the
+		///    current instace.
+		/// </value>
+		public override string Comment {
+			get {
+				var comment_entry = ExifIFD.GetEntry (0, IFDEntryTag.UserComment) as UndefinedIFDEntry;
+				if (comment_entry == null) {
+					var description = ExifIFD.GetEntry (0, IFDEntryTag.ImageDescription) as StringIFDEntry;
+					return description == null ? null : description.Value;
+				}
+
+				ByteVector data = comment_entry.Data;
+
+				if (data.StartsWith (COMMENT_ASCCI_CODE))
+					return data.ToString (StringType.Latin1, COMMENT_ASCCI_CODE.Count);
+
+				if (data.StartsWith (COMMENT_UNICODE_CODE))
+					return data.ToString (StringType.UTF8, COMMENT_UNICODE_CODE.Count);
+
+				throw new NotImplementedException ("UserComment with other encoding than Latin1 or Unicode");
+			}
+			set {
+				ByteVector data = new ByteVector ();
+				data.Add (COMMENT_UNICODE_CODE);
+				data.Add (ByteVector.FromString (value, StringType.UTF8));
+
+				ExifIFD.SetEntry (0, new UndefinedIFDEntry ((uint)IFDEntryTag.UserComment, data));
+				ExifIFD.SetEntry (0, new StringIFDEntry ((uint)IFDEntryTag.ImageDescription, value));
+			}
+		}
+
+		/// <summary>
+		///    Gets or sets the time when the image, the current instance
+		///    belongs to, was taken.
+		/// </summary>
+		/// <value>
+		///    A <see cref="DateTime" /> with the time the image was taken.
+		/// </value>
+		public override DateTime DateTime {
+			get { return DateTimeOriginal; }
+			set { DateTimeOriginal = value; }
+		}
+
+		/// <summary>
+		///    The time of capturing.
+		/// </summary>
+		/// <value>
+		///    A <see cref="DateTime" /> with the time of capturing.
+		/// </value>
+		public DateTime DateTimeOriginal {
+			get {
+				return ExifIFD.GetDateTimeValue (0, (ushort) IFDEntryTag.DateTimeOriginal);
+			}
+			set {
+				ExifIFD.SetDateTimeValue (0, (ushort) IFDEntryTag.DateTimeOriginal, value);
+			}
+		}
+
+
+		/// <summary>
+		///    The time of digitization.
+		/// </summary>
+		/// <value>
+		///    A <see cref="DateTime" /> with the time of digitization.
+		/// </value>
+		public DateTime DateTimeDigitized {
+			get {
+				return ExifIFD.GetDateTimeValue (0, (ushort) IFDEntryTag.DateTimeDigitized);
+			}
+			set {
+				ExifIFD.SetDateTimeValue (0, (ushort) IFDEntryTag.DateTimeDigitized, value);
+			}
+		}
+
+		/// <summary>
+		///    Gets the exposure time the image, the current instance belongs
+		///    to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="double" /> with the exposure time in seconds.
+		/// </value>
+		public override double ExposureTime {
+			get {
+				return ExifIFD.GetRationalValue (0, (ushort) IFDEntryTag.ExposureTime);
+			}
+		}
+
+		/// <summary>
+		///    Gets the FNumber the image, the current instance belongs
+		///    to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="double" /> with the FNumber.
+		/// </value>
+		public override double FNumber {
+			get {
+				return ExifIFD.GetRationalValue (0, (ushort) IFDEntryTag.FNumber);
+			}
+		}
+
+		/// <summary>
+		///    Gets the ISO speed the image, the current instance belongs
+		///    to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> with the ISO speed as defined in ISO 12232.
+		/// </value>
+		public override uint ISOSpeedRatings {
+			get {
+				return ExifIFD.GetLongValue (0, (ushort) IFDEntryTag.ISOSpeedRatings);
+			}
+		}
+
+		/// <summary>
+		///    Gets the focal length the image, the current instance belongs
+		///    to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="double" /> with the focal length in millimeters.
+		/// </value>
+		public override double FocalLength {
+			get {
+				return ExifIFD.GetRationalValue (0, (ushort) IFDEntryTag.FocalLength);
+			}
+		}
 
 		/// <summary>
 		///    Gets the manufacture of the recording equipment the image, the
@@ -306,7 +261,20 @@ namespace TagLib.IFD
 		/// </value>
 		public override string Make {
 			get {
-				return GetStringValue (0, (ushort) IFDEntryTag.Make);
+				return Structure.GetStringValue (0, (ushort) IFDEntryTag.Make);
+			}
+		}
+
+		/// <summary>
+		///    Gets the model name of the recording equipment the image, the
+		///    current instance belongs to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> with the model name.
+		/// </value>
+		public override string Model {
+			get {
+				return ExifIFD.GetStringValue (0, (ushort) IFDEntryTag.Model);
 			}
 		}
 

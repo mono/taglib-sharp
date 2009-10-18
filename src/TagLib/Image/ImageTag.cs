@@ -40,7 +40,7 @@ namespace TagLib.Image
 		///    A <see cref="string" /> containing the comment of the
 		///    current instace.
 		/// </value>
-		public virtual string Comment {
+		public override string Comment {
 			get { return null; }
 			set {}
 		}

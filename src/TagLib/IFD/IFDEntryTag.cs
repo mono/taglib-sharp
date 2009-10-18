@@ -261,7 +261,7 @@ namespace TagLib.IFD
 
 		/// <summary>
 		///     User Comment (Hex: 0x9286)
-		///     http://www.awaresystems.be/imaging/tiff/tifftags/gpsifd.html
+		///     http://www.awaresystems.be/imaging/tiff/tifftags/privateifd/exif/usercomment.html
 		/// </summary>
 		UserComment                                    = 37510,
 

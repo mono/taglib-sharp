@@ -2,7 +2,6 @@ using System;
 using NUnit.Framework;
 
 using TagLib;
-using TagLib.Exif;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
 
@@ -27,10 +26,10 @@ namespace TagLib.Tests.FileFormats
 		{
 			File file = CreateTmpFile (sample_file, tmp_file);
 
-			ExifTag exif_tag = file.GetTag (TagTypes.Exif, false) as ExifTag;
+			IFDTag exif_tag = file.GetTag (TagTypes.TiffIFD, false) as IFDTag;
 			Assert.IsTrue (exif_tag == null);
 
-			exif_tag = file.GetTag (TagTypes.Exif, true) as ExifTag;
+			exif_tag = file.GetTag (TagTypes.TiffIFD, true) as IFDTag;
 			Assert.IsFalse (exif_tag == null);
 
 			exif_tag.Comment = test_comment;
@@ -46,7 +45,7 @@ namespace TagLib.Tests.FileFormats
 			file.Save ();
 			file = File.Create (tmp_file);
 
-			exif_tag = file.GetTag (TagTypes.Exif, false) as ExifTag;
+			exif_tag = file.GetTag (TagTypes.TiffIFD, false) as IFDTag;
 			Assert.IsFalse (exif_tag == null);
 
 			Assert.AreEqual (test_comment, exif_tag.Comment);

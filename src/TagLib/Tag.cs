@@ -101,14 +101,9 @@ namespace TagLib {
 		XMP = 0x00000800,
 
 		/// <summary>
-		///    EXIF Tag
-		/// </summary>
-		Exif = 0x00001000,
-
-		/// <summary>
 		///    Jpeg Comment Tag
 		/// </summary>
-		JpegComment = 0x00002000,
+		JpegComment = 0x00001000,
 
 		/// <summary>
 		///    All tag types.

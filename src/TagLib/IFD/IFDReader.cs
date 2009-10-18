@@ -1,5 +1,5 @@
 //
-// IFDReader.cs: Parses TIFF IFDs and populates an IFD tag.
+// IFDReader.cs: Parses TIFF IFDs and populates an IFD structure.
 //
 // Author:
 //   Ruben Vermeersch (ruben@savanne.be)
@@ -46,9 +46,9 @@ namespace TagLib.IFD
 		protected readonly bool is_bigendian;
 
 		/// <summary>
-		///    The IFD tag that will be populated
+		///    The IFD structure that will be populated
 		/// </summary>
-		protected readonly IFDTag tag;
+		protected readonly IFDStructure structure;
 
 		/// <summary>
 		///     A <see cref="System.Int64"/> value describing the base were the IFD offsets
@@ -78,8 +78,8 @@ namespace TagLib.IFD
 		///     A <see cref="System.Boolean"/>, it must be true, if the data of the IFD should be
 		///     read as bigendian, otherwise false.
 		/// </param>
-		/// <param name="tag">
-		///    A <see cref="IFDTag"/> that will be populated.
+		/// <param name="structure">
+		///    A <see cref="IFDStructure"/> that will be populated.
 		/// </param>
 		/// <param name="base_offset">
 		///     A <see cref="System.Int64"/> value describing the base were the IFD offsets
@@ -91,11 +91,11 @@ namespace TagLib.IFD
 		///     A <see cref="System.UInt32"/> value with the beginning of the IFD relative to
 		///     <paramref name="base_offset"/>.
 		/// </param>
-		public IFDReader (File file, bool is_bigendian, IFDTag tag, long base_offset, uint ifd_offset)
+		public IFDReader (File file, bool is_bigendian, IFDStructure structure, long base_offset, uint ifd_offset)
 		{
 			this.file = file;
 			this.is_bigendian = is_bigendian;
-			this.tag = tag;
+			this.structure = structure;
 			this.base_offset = base_offset;
 			this.ifd_offset = ifd_offset;
 		}
@@ -160,7 +160,7 @@ namespace TagLib.IFD
 				directory.Add (entry.Tag, entry);
 			}
 
-			tag.directories.Add (directory);
+			structure.directories.Add (directory);
 			return next_offset;
 		}
 
@@ -406,7 +406,30 @@ namespace TagLib.IFD
 		///    which the normal TIFF parsing is used.
 		/// </returns>
 		protected virtual IFDEntry ParseIFDEntry (ushort tag, ushort type, uint count, long base_offset, uint offset) {
-			return null;
+			IFDStructure ifd_structure = new IFDStructure ();
+			IFDReader reader = new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset);
+
+			switch (tag) {
+				case (ushort) IFDEntryTag.ExifIFD:
+				case (ushort) IFDEntryTag.IopIFD:
+				case (ushort) IFDEntryTag.GPSIFD:
+					reader.Read ();
+					return new SubIFDEntry (tag, type, count, ifd_structure);
+
+				case (ushort) IFDEntryTag.MakerNoteIFD:
+					// A maker note may be a Sub IFD, but it may also be in an arbitrary
+					// format. We try to parse a Sub IFD, if this fails, go ahead to read
+					// it as an Undefined Entry below.
+					try {
+						reader.Read ();
+						return new SubIFDEntry (tag, type, count, ifd_structure);
+					} catch {
+						return null;
+					}
+
+				default:
+					return null;
+			}
 		}
 
 #endregion

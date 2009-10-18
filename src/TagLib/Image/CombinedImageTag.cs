@@ -25,8 +25,8 @@
 using System;
 using System.Collections.Generic;
 
+using TagLib.IFD;
 using TagLib.Xmp;
-using TagLib.Exif;
 
 namespace TagLib.Image
 {
@@ -37,7 +37,7 @@ namespace TagLib.Image
 #region Private Fields
 
 		/// <summary>
-		///    Direct access to the Exif tag (if any)
+		///    Direct access to the Exif (IFD) tag (if any)
 		/// </summary>
 		public ImageTag Exif { get; private set; }
 
@@ -103,7 +103,7 @@ namespace TagLib.Image
 			if ((tag.TagTypes & allowed_types) != tag.TagTypes)
 				throw new Exception (String.Format ("Attempted to add {0} to an image, but the only allowed types are {1}", tag.TagTypes, allowed_types));
 
-			if (tag is ExifTag)
+			if (tag is IFDTag)
 				Exif = tag;
 			else if (tag is XmpTag)
 				Xmp = tag;
@@ -115,7 +115,7 @@ namespace TagLib.Image
 
 		internal void RemoveTag (ImageTag tag)
 		{
-			if (tag is ExifTag)
+			if (tag is IFDTag)
 				Exif = null;
 			else if (tag is XmpTag)
 				Xmp = null;

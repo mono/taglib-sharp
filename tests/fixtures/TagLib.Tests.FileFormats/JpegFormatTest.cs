@@ -4,7 +4,6 @@ using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
 using TagLib.Jpeg;
-using TagLib.Exif;
 using TagLib.Xmp;
 
 namespace TagLib.Tests.FileFormats
@@ -18,7 +17,7 @@ namespace TagLib.Tests.FileFormats
 
 		private TagTypes contained_types =
 				TagTypes.JpegComment |
-				TagTypes.Exif |
+				TagTypes.TiffIFD |
 				TagTypes.XMP;
 
         [TestFixtureSetUp]
@@ -44,12 +43,12 @@ namespace TagLib.Tests.FileFormats
 		[Test]
 		public void TestExif()
 		{
-			ExifTag tag = file.GetTag (TagTypes.Exif) as ExifTag;
+			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 			Assert.IsFalse (tag == null);
 
-			var exif_ifd = tag.GetEntry(0, IFDEntryTag.ExifIFD) as SubIFDEntry;
+			var exif_ifd = tag.Structure.GetEntry(0, IFDEntryTag.ExifIFD) as SubIFDEntry;
 			Assert.IsFalse (exif_ifd == null);
-			var exif_tag = exif_ifd.IFDTag;
+			var exif_tag = exif_ifd.Structure;
 
 			{
 				var entry = exif_tag.GetEntry (0, IFDEntryTag.ExposureTime) as RationalIFDEntry;

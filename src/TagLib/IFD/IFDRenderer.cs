@@ -1,5 +1,5 @@
 //
-// IFDRenderer.cs: Outputs an IFD tag into TIFF IFD bytes.
+// IFDRenderer.cs: Outputs an IFD structure into TIFF IFD bytes.
 //
 // Author:
 //   Ruben Vermeersch (ruben@savanne.be)
@@ -35,9 +35,9 @@ namespace TagLib.IFD
 #region Private Fields
 
 		/// <summary>
-		///    The IFD tag that will be rendered.
+		///    The IFD structure that will be rendered.
 		/// </summary>
-		private readonly IFDTag tag;
+		private readonly IFDStructure structure;
 
 		/// <summary>
 		///    If IFD should be encoded in BigEndian or not.
@@ -56,23 +56,23 @@ namespace TagLib.IFD
 #region Constructors
 
 		/// <summary>
-		///    Constructor. Will render the given IFD tag.
+		///    Constructor. Will render the given IFD structure.
 		/// </summary>
 		/// <param name="is_bigendian">
 		///    If IFD should be encoded in BigEndian or not.
 		/// </param>
-		/// <param name="tag">
-		///    The IFD tag that will be rendered.
+		/// <param name="structure">
+		///    The IFD structure that will be rendered.
 		/// </param>
 		/// <param name="ifd_offset">
 		///    A <see cref="System.UInt32"/> value with the offset of the
 		///    current IFD. All offsets inside the IFD must be adjusted
 		///    according to this given offset.
 		/// </param>
-		public IFDRenderer (bool is_bigendian, IFDTag tag, uint ifd_offset)
+		public IFDRenderer (bool is_bigendian, IFDStructure structure, uint ifd_offset)
 		{
 			this.is_bigendian = is_bigendian;
-			this.tag = tag;
+			this.structure = structure;
 			this.ifd_offset = ifd_offset;
 		}
 
@@ -91,7 +91,7 @@ namespace TagLib.IFD
 			ByteVector ifd_data = new ByteVector ();
 
 			uint current_offset = ifd_offset;
-			var directories = tag.directories;
+			var directories = structure.directories;
 
 			for (int index = 0; index < directories.Count; index++) {
 				ByteVector data = RenderIFD (directories [index], current_offset, index == directories.Count - 1);
@@ -291,12 +291,12 @@ namespace TagLib.IFD
 
 				// Don't render empty SubIFDEntry
 				int sum = 0;
-				foreach (var directory in sub_ifd.IFDTag.Directories)
+				foreach (var directory in sub_ifd.Structure.Directories)
 					sum += directory.Count;
 				if (sum == 0)
 					return;
 
-				var renderer = CreateSubRenderer (is_bigendian, sub_ifd.IFDTag, offset);
+				var renderer = CreateSubRenderer (is_bigendian, sub_ifd.Structure, offset);
 				data = renderer.Render ();
 
 				type = (ushort) sub_ifd.Type;
@@ -330,17 +330,17 @@ namespace TagLib.IFD
 		/// <param name="is_bigendian">
 		///    If IFD should be encoded in BigEndian or not.
 		/// </param>
-		/// <param name="tag">
-		///    The IFD tag that will be rendered.
+		/// <param name="structure">
+		///    The IFD structure that will be rendered.
 		/// </param>
 		/// <param name="ifd_offset">
 		///    A <see cref="System.UInt32"/> value with the offset of the
 		///    current IFD. All offsets inside the IFD must be adjusted
 		///    according to this given offset.
 		/// </param>
-		protected virtual IFDRenderer CreateSubRenderer (bool is_bigendian, IFDTag tag, uint ifd_offset)
+		protected virtual IFDRenderer CreateSubRenderer (bool is_bigendian, IFDStructure structure, uint ifd_offset)
 		{
-			return new IFDRenderer (is_bigendian, tag, ifd_offset);
+			return new IFDRenderer (is_bigendian, structure, ifd_offset);
 		}
 
 #endregion

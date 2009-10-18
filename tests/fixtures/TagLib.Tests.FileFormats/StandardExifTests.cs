@@ -2,7 +2,6 @@ using System;
 using NUnit.Framework;
 
 using TagLib;
-using TagLib.Exif;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
 
@@ -32,19 +31,19 @@ namespace TagLib.Tests.FileFormats
 
         public static void SetExifTags (File file)
         {
-			ExifTag tag = file.GetTag (TagTypes.Exif) as ExifTag;
+			IFDTag tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 			Assert.IsFalse (tag == null);
 
-			tag.UserComment = "Test Comment äüö";
+			tag.Comment = "Test Comment äüö";
         }
 
         public static void CheckTags (File file)
         {
-			ExifTag tag = file.GetTag (TagTypes.Exif) as ExifTag;
+			IFDTag tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 			Assert.IsFalse (tag == null);
 
 
-			Assert.AreEqual ("Test Comment äüö", tag.UserComment);
+			Assert.AreEqual ("Test Comment äüö", tag.Comment);
         }
 	}
 }
