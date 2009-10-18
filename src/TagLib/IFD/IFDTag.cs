@@ -295,5 +295,22 @@ namespace TagLib.IFD
 
 #endregion
 
+#region Metadata fields
+
+		/// <summary>
+		///    Gets the manufacture of the recording equipment the image, the
+		///    current instance belongs to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> with the manufacture name.
+		/// </value>
+		public override string Make {
+			get {
+				return GetStringValue (0, (ushort) IFDEntryTag.Make);
+			}
+		}
+
+#endregion
+
 	}
 }

@@ -6,6 +6,7 @@ using TagLib.Tiff;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
 using TagLib.Xmp;
+using TagLib.Exif;
 
 namespace TagLib.Tests.FileFormats
 {
@@ -22,14 +23,43 @@ namespace TagLib.Tests.FileFormats
         }
 
 		[Test]
-		public void TestMetadata()
+		public void TestConvenienceAPI()
 		{
 			var tag = file.ImageTag;
 			Assert.IsFalse (tag == null);
+			Assert.AreEqual ("Canon", tag.Make);
 		}
 
 		[Test]
-        public void TestIFDRead()
+		public void TestConvenienceAPIXMP()
+		{
+			var tag = file.GetTag (TagTypes.XMP) as XmpTag;
+			Assert.IsFalse (tag == null);
+			Assert.AreEqual ("Canon", tag.Make);
+		}
+
+		[Test]
+		public void TestConvenienceAPITIFF()
+		{
+			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
+			Assert.IsFalse (tag == null);
+			Assert.AreEqual ("Canon", tag.Make);
+		}
+
+		[Test]
+		public void TestConvenienceAPIExif()
+		{
+			var tag = file.GetTag (TagTypes.Exif) as ExifTag;
+			Assert.IsFalse (tag == null);
+		}
+
+		/// <summary>
+		///    This tests the internal IDF parsing structure. For normal usage,
+		///    you do not need to use these methods. Check the convenience API
+		///    for easier usage.
+		/// </summary>
+		[Test]
+        public void TestIFDInternals()
         {
 			Assert.IsTrue (file is Tiff.File);
 			Assert.AreEqual (10, file.Properties.PhotoHeight);

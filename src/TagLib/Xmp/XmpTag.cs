@@ -420,5 +420,23 @@ namespace TagLib.Xmp
 				tag.nodes [node.Namespace][node.Name] = node;
 			}
 		}
+
+#region Metadata fields
+
+		/// <summary>
+		///    Gets the manufacture of the recording equipment the image, the
+		///    current instance belongs to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> with the manufacture name.
+		/// </value>
+		public override string Make {
+			get {
+				var node = FindNode (XmpTag.TIFF_NS, "Make");
+				return node == null ? null : node.Value;
+			}
+		}
+
+#endregion
 	}
 }

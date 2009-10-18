@@ -117,7 +117,7 @@ namespace TagLib.Image
 		{
 			List<ImageTag> to_delete = new List<ImageTag> ();
 
-			foreach (ImageTag tag in ImageTag.ImageTags) {
+			foreach (ImageTag tag in ImageTag.AllTags) {
 				if ((tag.TagTypes & types) == tag.TagTypes)
 					to_delete.Add (tag);
 			}
@@ -147,7 +147,7 @@ namespace TagLib.Image
 		public override TagLib.Tag GetTag (TagLib.TagTypes type,
 		                                   bool create)
 		{
-			foreach (Tag tag in ImageTag.ImageTags) {
+			foreach (Tag tag in ImageTag.AllTags) {
 				if ((tag.TagTypes & type) == type)
 					return tag;
 			}
