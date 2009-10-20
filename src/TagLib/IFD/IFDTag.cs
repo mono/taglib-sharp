@@ -276,7 +276,7 @@ namespace TagLib.IFD
 		/// </value>
 		public override string Model {
 			get {
-				return ExifIFD.GetStringValue (0, (ushort) IFDEntryTag.Model);
+				return Structure.GetStringValue (0, (ushort) IFDEntryTag.Model);
 			}
 		}
 
