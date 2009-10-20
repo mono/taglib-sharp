@@ -135,7 +135,7 @@ namespace TagLib.IFD
 					ExifIFD.GetEntry (0, (ushort) ExifEntryTag.UserComment) as UndefinedIFDEntry;
 
 				if (comment_entry == null) {
-					var description = ExifIFD.GetEntry (0, IFDEntryTag.ImageDescription) as StringIFDEntry;
+					var description = Structure.GetEntry (0, IFDEntryTag.ImageDescription) as StringIFDEntry;
 					return description == null ? null : description.Value;
 				}
 
@@ -155,7 +155,7 @@ namespace TagLib.IFD
 				data.Add (ByteVector.FromString (value, StringType.UTF8));
 
 				ExifIFD.SetEntry (0, new UndefinedIFDEntry ((uint)ExifEntryTag.UserComment, data));
-				ExifIFD.SetEntry (0, new StringIFDEntry ((uint)IFDEntryTag.ImageDescription, value));
+				Structure.SetEntry (0, new StringIFDEntry ((uint)IFDEntryTag.ImageDescription, value));
 			}
 		}
 
