@@ -372,10 +372,25 @@ namespace TagLib.IFD
 		/// <returns>
 		///    A <see cref="string" /> read from the current instance.
 		/// </returns>
+		/// <remarks>
+		///    The exif standard allows to store multiple string separated
+		///    by '\0' in one ASCII-field. On the other hand some programs
+		///    (e.g. CanonZoomBrowser) fill some ASCII fields by trailing
+		///    '\0's.
+		///    We follow the Adobe practice as described in XMP Specification
+		///    Part 3 (Storeage in Files), and process the ASCII string only
+		///    to the first '\0'.
+		/// </remarks>
 		private string ReadAsciiString (int count)
 		{
 			// The last character is \0
-			return file.ReadBlock (count - 1).ToString ();
+			string str = file.ReadBlock (count - 1).ToString ();
+			int term = str.IndexOf ('\0');
+
+			if (term == -1)
+				return str;
+			else
+				return str.Substring (0, term);
 		}
 
 #endregion
