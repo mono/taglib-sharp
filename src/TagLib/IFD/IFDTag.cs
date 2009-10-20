@@ -147,6 +147,19 @@ namespace TagLib.IFD
 				if (data.StartsWith (COMMENT_UNICODE_CODE))
 					return data.ToString (StringType.UTF8, COMMENT_UNICODE_CODE.Count);
 
+				// Some programs like e.g. CanonZoomBrowser inserts just the first 0x00-byte
+				// followed by 7-bytes of trash.
+				if (data.StartsWith ((byte) 0x00) && data.Count >= 8) {
+
+					// And CanonZoomBrowser fills some trailing bytes of the comment field
+					// with '\0'. So we return only the characters before the first '\0'.
+					int term = data.Find ("\0", 8);
+					if (term != -1)
+						return data.ToString (StringType.Latin1, 8, term - 8);
+
+					return data.ToString (StringType.Latin1, 8);
+				}
+
 				throw new NotImplementedException ("UserComment with other encoding than Latin1 or Unicode");
 			}
 			set {
