@@ -411,12 +411,12 @@ namespace TagLib.IFD
 
 			switch (tag) {
 				case (ushort) IFDEntryTag.ExifIFD:
-				case (ushort) IFDEntryTag.IopIFD:
+				case (ushort) IFDEntryTag.InteroperabilityIFD:
 				case (ushort) IFDEntryTag.GPSIFD:
 					reader.Read ();
 					return new SubIFDEntry (tag, type, count, ifd_structure);
 
-				case (ushort) IFDEntryTag.MakerNoteIFD:
+				case (ushort) ExifEntryTag.MakerNote:
 					// A maker note may be a Sub IFD, but it may also be in an arbitrary
 					// format. We try to parse a Sub IFD, if this fails, go ahead to read
 					// it as an Undefined Entry below.

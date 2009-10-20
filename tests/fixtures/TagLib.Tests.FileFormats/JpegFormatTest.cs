@@ -51,17 +51,17 @@ namespace TagLib.Tests.FileFormats
 			var exif_tag = exif_ifd.Structure;
 
 			{
-				var entry = exif_tag.GetEntry (0, IFDEntryTag.ExposureTime) as RationalIFDEntry;
+				var entry = exif_tag.GetEntry (0, (ushort) ExifEntryTag.ExposureTime) as RationalIFDEntry;
 				Assert.IsFalse (entry == null);
 				Assert.AreEqual (0.008, entry.Value);
 			}
 			{
-				var entry = exif_tag.GetEntry (0, IFDEntryTag.FNumber) as RationalIFDEntry;
+				var entry = exif_tag.GetEntry (0, (ushort) ExifEntryTag.FNumber) as RationalIFDEntry;
 				Assert.IsFalse (entry == null);
 				Assert.AreEqual (3.2, entry.Value);
 			}
 			{
-				var entry = exif_tag.GetEntry (0, IFDEntryTag.ISOSpeedRatings) as ShortIFDEntry;
+				var entry = exif_tag.GetEntry (0, (ushort) ExifEntryTag.ISOSpeedRatings) as ShortIFDEntry;
 				Assert.IsFalse (entry == null);
 				Assert.AreEqual (100, entry.Value);
 			}

@@ -131,7 +131,9 @@ namespace TagLib.IFD
 		/// </value>
 		public override string Comment {
 			get {
-				var comment_entry = ExifIFD.GetEntry (0, IFDEntryTag.UserComment) as UndefinedIFDEntry;
+				var comment_entry =
+					ExifIFD.GetEntry (0, (ushort) ExifEntryTag.UserComment) as UndefinedIFDEntry;
+
 				if (comment_entry == null) {
 					var description = ExifIFD.GetEntry (0, IFDEntryTag.ImageDescription) as StringIFDEntry;
 					return description == null ? null : description.Value;
@@ -152,7 +154,7 @@ namespace TagLib.IFD
 				data.Add (COMMENT_UNICODE_CODE);
 				data.Add (ByteVector.FromString (value, StringType.UTF8));
 
-				ExifIFD.SetEntry (0, new UndefinedIFDEntry ((uint)IFDEntryTag.UserComment, data));
+				ExifIFD.SetEntry (0, new UndefinedIFDEntry ((uint)ExifEntryTag.UserComment, data));
 				ExifIFD.SetEntry (0, new StringIFDEntry ((uint)IFDEntryTag.ImageDescription, value));
 			}
 		}
@@ -177,10 +179,10 @@ namespace TagLib.IFD
 		/// </value>
 		public DateTime DateTimeOriginal {
 			get {
-				return ExifIFD.GetDateTimeValue (0, (ushort) IFDEntryTag.DateTimeOriginal);
+				return ExifIFD.GetDateTimeValue (0, (ushort) ExifEntryTag.DateTimeOriginal);
 			}
 			set {
-				ExifIFD.SetDateTimeValue (0, (ushort) IFDEntryTag.DateTimeOriginal, value);
+				ExifIFD.SetDateTimeValue (0, (ushort) ExifEntryTag.DateTimeOriginal, value);
 			}
 		}
 
@@ -193,10 +195,10 @@ namespace TagLib.IFD
 		/// </value>
 		public DateTime DateTimeDigitized {
 			get {
-				return ExifIFD.GetDateTimeValue (0, (ushort) IFDEntryTag.DateTimeDigitized);
+				return ExifIFD.GetDateTimeValue (0, (ushort) ExifEntryTag.DateTimeDigitized);
 			}
 			set {
-				ExifIFD.SetDateTimeValue (0, (ushort) IFDEntryTag.DateTimeDigitized, value);
+				ExifIFD.SetDateTimeValue (0, (ushort) ExifEntryTag.DateTimeDigitized, value);
 			}
 		}
 
@@ -209,7 +211,7 @@ namespace TagLib.IFD
 		/// </value>
 		public override double ExposureTime {
 			get {
-				return ExifIFD.GetRationalValue (0, (ushort) IFDEntryTag.ExposureTime);
+				return ExifIFD.GetRationalValue (0, (ushort) ExifEntryTag.ExposureTime);
 			}
 		}
 
@@ -222,7 +224,7 @@ namespace TagLib.IFD
 		/// </value>
 		public override double FNumber {
 			get {
-				return ExifIFD.GetRationalValue (0, (ushort) IFDEntryTag.FNumber);
+				return ExifIFD.GetRationalValue (0, (ushort) ExifEntryTag.FNumber);
 			}
 		}
 
@@ -235,7 +237,7 @@ namespace TagLib.IFD
 		/// </value>
 		public override uint ISOSpeedRatings {
 			get {
-				return ExifIFD.GetLongValue (0, (ushort) IFDEntryTag.ISOSpeedRatings);
+				return ExifIFD.GetLongValue (0, (ushort) ExifEntryTag.ISOSpeedRatings);
 			}
 		}
 
@@ -248,7 +250,7 @@ namespace TagLib.IFD
 		/// </value>
 		public override double FocalLength {
 			get {
-				return ExifIFD.GetRationalValue (0, (ushort) IFDEntryTag.FocalLength);
+				return ExifIFD.GetRationalValue (0, (ushort) ExifEntryTag.FocalLength);
 			}
 		}
 

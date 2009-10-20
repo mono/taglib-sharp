@@ -13,6 +13,7 @@ namespace TagLib.Tests.FileFormats
     public class TiffFormatTest
     {
 		private static string sample_file = "samples/sample.tiff";
+		private static string tmp_file = "samples/tmpwrite.tiff";
 		private Image.File file;
 
         [TestFixtureSetUp]
@@ -70,7 +71,7 @@ namespace TagLib.Tests.FileFormats
 			{
 				var entry = entries [0] as LongIFDEntry;
 				Assert.IsFalse (entry == null);
-				Assert.AreEqual ((ushort) IFDEntryTag.NewSubFileType, entry.Tag);
+				Assert.AreEqual ((ushort) IFDEntryTag.NewSubfileType, entry.Tag);
 				Assert.AreEqual (0, entry.Value);
 			}
 			{
@@ -103,7 +104,7 @@ namespace TagLib.Tests.FileFormats
 			{
 				var entry = entries [5] as ShortIFDEntry;
 				Assert.IsFalse (entry == null);
-				Assert.AreEqual ((ushort) IFDEntryTag.PhotoMetricInterpretation, entry.Tag);
+				Assert.AreEqual ((ushort) IFDEntryTag.PhotometricInterpretation, entry.Tag);
 				Assert.AreEqual (2, entry.Value);
 			}
 			{
