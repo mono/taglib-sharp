@@ -37,9 +37,24 @@ namespace TagLib.IFD
 	/// </summary>
 	public class IFDTag : ImageTag
 	{
-		public static readonly ByteVector COMMENT_ASCCI_CODE = new byte[] {0x41, 0x53, 0x43, 0x49, 0x49, 0x00, 0x00, 0x00};
+		/// <summary>
+		///   Marker for an ASCII-encoded UserComment tag.
+		/// </summary>
+		public static readonly ByteVector COMMENT_ASCII_CODE = new byte[] {0x41, 0x53, 0x43, 0x49, 0x49, 0x00, 0x00, 0x00};
+
+		/// <summary>
+		///   Marker for a JIS-encoded UserComment tag.
+		/// </summary>
 		public static readonly ByteVector COMMENT_JIS_CODE = new byte[] {0x4A, 0x49, 0x53, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+		/// <summary>
+		///   Marker for a UNICODE-encoded UserComment tag.
+		/// </summary>
 		public static readonly ByteVector COMMENT_UNICODE_CODE = new byte[] {0x55, 0x4E, 0x49, 0x43, 0x4F, 0x44, 0x45, 0x00};
+
+		/// <summary>
+		///   Marker for a UserComment tag with undefined encoding.
+		/// </summary>
 		public static readonly ByteVector COMMENT_UNDEFINED_CODE = new byte[] {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 #region Private Fields
@@ -141,8 +156,8 @@ namespace TagLib.IFD
 
 				ByteVector data = comment_entry.Data;
 
-				if (data.StartsWith (COMMENT_ASCCI_CODE))
-					return data.ToString (StringType.Latin1, COMMENT_ASCCI_CODE.Count);
+				if (data.StartsWith (COMMENT_ASCII_CODE))
+					return data.ToString (StringType.Latin1, COMMENT_ASCII_CODE.Count);
 
 				if (data.StartsWith (COMMENT_UNICODE_CODE))
 					return data.ToString (StringType.UTF8, COMMENT_UNICODE_CODE.Count);

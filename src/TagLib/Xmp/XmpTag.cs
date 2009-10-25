@@ -34,14 +34,49 @@ namespace TagLib.Xmp
 #region Parsing speedup
 		private Dictionary<string, Dictionary<string, XmpNode>> nodes;
 
+		/// <summary>
+		///    Adobe namespace
+		/// </summary>
 		public static readonly string ADOBE_X_NS = "adobe:ns:meta/";
+
+		/// <summary>
+		///    Camera Raw Settings namespace
+		/// </summary>
 		public static readonly string CRS_NS = "http://ns.adobe.com/camera-raw-settings/1.0/";
+
+		/// <summary>
+		///    Dublin Core namespace
+		/// </summary>
 		public static readonly string DC_NS = "http://purl.org/dc/elements/1.1/";
+
+		/// <summary>
+		///    Exif namespace
+		/// </summary>
 		public static readonly string EXIF_NS = "http://ns.adobe.com/exif/1.0/";
+
+		/// <summary>
+		///    RDF namespace
+		/// </summary>
 		public static readonly string RDF_NS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+
+		/// <summary>
+		///    TIFF namespace
+		/// </summary>
 		public static readonly string TIFF_NS = "http://ns.adobe.com/tiff/1.0/";
+
+		/// <summary>
+		///    XAP (XMP's previous name) namespace
+		/// </summary>
 		public static readonly string XAP_NS = "http://ns.adobe.com/xap/1.0/";
+
+		/// <summary>
+		///    XML namespace
+		/// </summary>
 		public static readonly string XML_NS = "http://www.w3.org/XML/1998/namespace";
+
+		/// <summary>
+		///    XMLNS namespace
+		/// </summary>
 		public static readonly string XMLNS_NS = "http://www.w3.org/2000/xmlns/";
 
 		internal static readonly string ABOUT_URI = "about";
