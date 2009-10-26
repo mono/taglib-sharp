@@ -472,6 +472,35 @@ namespace TagLib.Xmp
 			}
 		}
 
+		/// <summary>
+		///    Gets or sets the keywords for the image described
+		///    by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string[]" /> containing the keywords of the
+		///    current instace.
+		/// </value>
+		public override string[] Keywords {
+			get {
+				var node = FindNode (XmpTag.DC_NS, "subject");
+
+				if (node == null)
+					return new string [] {};
+
+				List<string> keywords = new List<string> ();
+
+				foreach (XmpNode child in node.Children) {
+					string keyword = child.Value;
+					if (keyword != null)
+						keywords.Add (keyword);
+				}
+
+				return keywords.ToArray ();
+			}
+			set {
+			}
+		}
+
 #endregion
 	}
 }
