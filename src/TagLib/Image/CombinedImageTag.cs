@@ -302,6 +302,81 @@ namespace TagLib.Image
 		}
 
 		/// <summary>
+		///    Gets or sets the latitude of the GPS coordinate the current
+		///    image was taken.
+		/// </summary>
+		/// <value>
+		///    A <see cref="double" /> with the latitude ranging from -90.0
+		///    to +90.0 degrees.
+		/// </value>
+		public override double Latitude {
+			get {
+				foreach (ImageTag tag in AllTags) {
+					double value = tag.Latitude;
+
+					if (value != 0.0d)
+						return value;
+				}
+
+				return 0.0d;
+			}
+			set {
+				foreach (ImageTag tag in AllTags)
+					tag.Latitude = value;
+			}
+		}
+
+		/// <summary>
+		///    Gets or sets the longitude of the GPS coordinate the current
+		///    image was taken.
+		/// </summary>
+		/// <value>
+		///    A <see cref="double" /> with the longitude ranging from 0
+		///    to +180.0 degrees.
+		/// </value>
+		public override double Longitude {
+			get {
+				foreach (ImageTag tag in AllTags) {
+					double value = tag.Longitude;
+
+					if (value != 0.0d)
+						return value;
+				}
+
+				return 0.0d;
+			}
+			set {
+				foreach (ImageTag tag in AllTags)
+					tag.Longitude = value;
+			}
+		}
+
+		/// <summary>
+		///    Gets or sets the altitude of the GPS coordinate the current
+		///    image was taken.
+		/// </summary>
+		/// <value>
+		///    A <see cref="double" /> with the altitude ranging from -90.0
+		///    to +90.0 degrees.
+		/// </value>
+		public override double Altitude {
+			get {
+				foreach (ImageTag tag in AllTags) {
+					double value = tag.Altitude;
+
+					if (value != 0.0d)
+						return value;
+				}
+
+				return 0.0d;
+			}
+			set {
+				foreach (ImageTag tag in AllTags)
+					tag.Altitude = value;
+			}
+		}
+
+		/// <summary>
 		///    Gets the exposure time the image, the current instance belongs
 		///    to, was taken with.
 		/// </summary>

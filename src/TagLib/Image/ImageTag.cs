@@ -110,6 +110,45 @@ namespace TagLib.Image
 		}
 
 		/// <summary>
+		///    Gets or sets the latitude of the GPS coordinate the current
+		///    image was taken.
+		/// </summary>
+		/// <value>
+		///    A <see cref="double" /> with the latitude ranging from -90.0
+		///    to +90.0 degrees.
+		/// </value>
+		public virtual double Latitude {
+			get { return 0.0d; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets or sets the longitude of the GPS coordinate the current
+		///    image was taken.
+		/// </summary>
+		/// <value>
+		///    A <see cref="double" /> with the longitude ranging from 0
+		///    to +180.0 degrees.
+		/// </value>
+		public virtual double Longitude {
+			get { return 0.0d; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets or sets the altitude of the GPS coordinate the current
+		///    image was taken.
+		/// </summary>
+		/// <value>
+		///    A <see cref="double" /> with the altitude ranging from -90.0
+		///    to +90.0 degrees.
+		/// </value>
+		public virtual double Altitude {
+			get { return 0.0d; }
+			set {}
+		}
+
+		/// <summary>
 		///    Gets the exposure time the image, the current instance belongs
 		///    to, was taken with.
 		/// </summary>
