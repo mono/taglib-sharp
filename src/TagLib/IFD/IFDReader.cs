@@ -35,6 +35,10 @@ namespace TagLib.IFD
 
 #region Private Fields
 
+		private static string PANASONIC_HEADER = "Panasonic\0\0\0";
+		private static string PENTAX_HEADER = "AOC\0";
+
+
 		/// <summary>
 		///    The <see cref="File" /> where this IFD is found in.
 		/// </summary>
@@ -420,6 +424,51 @@ namespace TagLib.IFD
 				return str.Substring (0, term);
 		}
 
+		private IFDEntry ParseMakernote (ushort tag, ushort type, uint count, long base_offset, uint offset)
+		{
+			long makernote_offset = base_offset + offset;
+			IFDStructure ifd_structure = new IFDStructure ();
+
+			if (file.Length < makernote_offset)
+			    throw new Exception ("offset to makernote is beyond file size");
+
+			if (file.Length < makernote_offset + PANASONIC_HEADER.Length)
+				throw new Exception ("offset to makernote is beyond file size");
+
+
+			file.Seek (makernote_offset, SeekOrigin.Begin);
+			if (file.ReadBlock (PANASONIC_HEADER.Length).ToString () == PANASONIC_HEADER) {
+				IFDReader reader =
+					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset + 12);
+
+				reader.ReadIFD (base_offset, offset + 12);
+				return new SubIFDEntry (tag, type, count, ifd_structure);
+			}
+
+			file.Seek (makernote_offset, SeekOrigin.Begin);
+			if (file.ReadBlock (PENTAX_HEADER.Length).ToString () == PENTAX_HEADER) {
+				IFDReader reader =
+					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset + 6);
+
+				reader.ReadIFD (base_offset, offset + 6);
+				return new SubIFDEntry (tag, type, count, ifd_structure);
+			}
+
+			// A maker note may be a Sub IFD, but it may also be in an arbitrary
+			// format. We try to parse a Sub IFD, if this fails, go ahead to read
+			// it as an Undefined Entry below.
+			file.Seek (makernote_offset, SeekOrigin.Begin);
+			try {
+				IFDReader reader =
+					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset);
+
+				reader.Read ();
+				return new SubIFDEntry (tag, type, count, ifd_structure);
+			} catch {
+				return null;
+			}
+		}
+
 #endregion
 
 #region Protected Methods
@@ -460,16 +509,9 @@ namespace TagLib.IFD
 					return new SubIFDEntry (tag, type, count, ifd_structure);
 
 				case (ushort) ExifEntryTag.MakerNote:
-					// A maker note may be a Sub IFD, but it may also be in an arbitrary
-					// format. We try to parse a Sub IFD, if this fails, go ahead to read
-					// it as an Undefined Entry below.
-					try {
-						reader.Read ();
-						return new SubIFDEntry (tag, type, count, ifd_structure);
-					} catch {
-						return null;
-					}
-
+				{
+					return ParseMakernote (tag, type, count, base_offset, offset);
+				}
 				default:
 					return null;
 			}
