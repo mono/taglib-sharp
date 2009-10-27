@@ -222,7 +222,12 @@ namespace TagLib.IFD
 			uint offset = (uint) (data_offset + offset_data.Count);
 			ByteVector data = null;
 
-			if (entry is ByteVectorIFDEntry) {
+			if (entry is ByteIFDEntry) {
+				data = (entry as ByteIFDEntry).Value;
+				type = (ushort) IFDEntryType.Byte;
+				count = 1;
+
+			} else if (entry is ByteVectorIFDEntry) {
 				data = (entry as ByteVectorIFDEntry).Data;
 				type = (ushort) IFDEntryType.Byte;
 				count = (uint) data.Count;
@@ -243,6 +248,33 @@ namespace TagLib.IFD
 				type = (ushort) IFDEntryType.Long;
 				count = 1;
 
+			} else if (entry is RationalIFDEntry) {
+				var rational_entry = entry as RationalIFDEntry;
+				data = new ByteVector ();
+				data.Add (ByteVector.FromUInt (rational_entry.Numerator, is_bigendian));
+				data.Add (ByteVector.FromUInt (rational_entry.Denominator, is_bigendian));
+				type = (ushort) IFDEntryType.Rational;
+				count = 1;
+
+			} else if (entry is RationalArrayIFDEntry) {
+				RationalIFDEntry [] rational_entries =
+					(entry as RationalArrayIFDEntry).Values;
+
+				count = (uint) rational_entries.Length;
+
+				data = new ByteVector ();
+				foreach (RationalIFDEntry rational_entry in rational_entries) {
+					data.Add (ByteVector.FromUInt (rational_entry.Numerator, is_bigendian));
+					data.Add (ByteVector.FromUInt (rational_entry.Denominator, is_bigendian));
+				}
+
+				type = (ushort) IFDEntryType.Rational;
+
+			} else if (entry is SByteIFDEntry) {
+				data = (byte) (entry as SByteIFDEntry).Value;
+				type = (ushort) IFDEntryType.SByte;
+				count = 1;
+
 			} else if (entry is ShortArrayIFDEntry) {
 				ShortIFDEntry [] short_entries = (entry as ShortArrayIFDEntry).Values;
 				count = (uint) short_entries.Length;
@@ -259,12 +291,9 @@ namespace TagLib.IFD
 				type = (ushort) IFDEntryType.Short;
 				count = 1;
 
-			} else if (entry is RationalIFDEntry) {
-				var rational_entry = entry as RationalIFDEntry;
-				data = new ByteVector ();
-				data.Add (ByteVector.FromUInt (rational_entry.Numerator, is_bigendian));
-				data.Add (ByteVector.FromUInt (rational_entry.Denominator, is_bigendian));
-				type = (ushort) IFDEntryType.Rational;
+			} else if (entry is SLongIFDEntry) {
+				data = ByteVector.FromInt ((entry as SLongIFDEntry).Value, is_bigendian);
+				type = (ushort) IFDEntryType.SLong;
 				count = 1;
 
 			} else if (entry is SRationalIFDEntry) {

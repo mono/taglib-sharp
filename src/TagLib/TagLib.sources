@@ -84,12 +84,16 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Id3v2/SynchData.cs \
 	$(srcdir)/TagLib/Id3v2/Header.cs \
 	$(srcdir)/TagLib/Id3v2/Footer.cs \
+	$(srcdir)/TagLib/IFD/Entries/ByteIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/ByteVectorIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/LongArrayIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/LongIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/RationalArrayIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/RationalIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/SByteIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/ShortArrayIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/ShortIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/SLongIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/SRationalIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/StringIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/SubIFDEntry.cs \

@@ -208,11 +208,20 @@ namespace TagLib.IFD
 
 			// then handle the values stored in the offset data itself
 			if (count == 1) {
+				if (type == (ushort) IFDEntryType.Byte)
+					return new ByteIFDEntry (tag, offset_data[0]);
+
+				if (type == (ushort) IFDEntryType.SByte)
+					return new SByteIFDEntry (tag, (sbyte)offset_data[0]);
+
 				if (type == (ushort) IFDEntryType.Short)
 					return new ShortIFDEntry (tag, offset_data.Mid (0, 2).ToUShort (is_bigendian));
 
 				if (type == (ushort) IFDEntryType.Long)
 					return new LongIFDEntry (tag, offset_data.ToUInt (is_bigendian));
+
+				if (type == (ushort) IFDEntryType.SLong)
+					return new SLongIFDEntry (tag, offset_data.ToInt (is_bigendian));
 
 			}
 
@@ -220,7 +229,8 @@ namespace TagLib.IFD
 				if (type == (ushort) IFDEntryType.Short) {
 					ushort [] data = new ushort [] {
 						offset_data.Mid (0, 2).ToUShort (is_bigendian),
-						offset_data.Mid (2, 2).ToUShort (is_bigendian)};
+						offset_data.Mid (2, 2).ToUShort (is_bigendian)
+					};
 
 					return new ShortArrayIFDEntry (tag, data);
 				}
@@ -228,10 +238,13 @@ namespace TagLib.IFD
 
 			if (count <= 4) {
 				if (type == (ushort) IFDEntryType.Undefined)
-					return new UndefinedIFDEntry (tag, offset_data);
+					return new UndefinedIFDEntry (tag, offset_data.Mid (0, (int)count));
 
 				if (type == (ushort) IFDEntryType.Ascii)
 					return new StringIFDEntry (tag, offset_data.Mid (0, (int)count - 1).ToString ());
+
+				if (type == (ushort) IFDEntryType.Byte)
+					return new ByteVectorIFDEntry (tag, offset_data.Mid (0, (int)count));
 			}
 
 
@@ -259,6 +272,20 @@ namespace TagLib.IFD
 					uint [] data = ReadUIntArray (count);
 
 					return new LongArrayIFDEntry (tag, data);
+				}
+
+				if (type == (ushort) IFDEntryType.Rational) {
+
+					RationalIFDEntry[] entries = new RationalIFDEntry [count];
+
+					for (int i = 0; i < count; i++) {
+						uint numerator = ReadUInt ();
+						uint denominator = ReadUInt ();
+
+						entries[i] = new RationalIFDEntry (tag, numerator, denominator);
+					}
+
+					return new RationalArrayIFDEntry (tag, entries);
 				}
 			}
 
@@ -420,7 +447,8 @@ namespace TagLib.IFD
 		///    A <see cref="IFDEntry"/> with the given parameters, or null if none was parsed, after
 		///    which the normal TIFF parsing is used.
 		/// </returns>
-		protected virtual IFDEntry ParseIFDEntry (ushort tag, ushort type, uint count, long base_offset, uint offset) {
+		protected virtual IFDEntry ParseIFDEntry (ushort tag, ushort type, uint count, long base_offset, uint offset)
+		{
 			IFDStructure ifd_structure = new IFDStructure ();
 			IFDReader reader = new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset);
 
