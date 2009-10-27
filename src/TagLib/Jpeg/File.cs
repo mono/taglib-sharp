@@ -337,7 +337,10 @@ namespace TagLib.Jpeg
 				// 0xFF00 encodes 0xFF in the data segement, thus no new
 				// segment is found. If the second byte is different of 0x00
 				// return the found segment byte.
-				if (segment_identifier != 0x00)
+				// The markers 0xD0 .. 0xD7 are restart-marker. So do not return and
+				// continue with searching end of data.
+				if (segment_identifier != 0x00 &&
+				    ! (segment_identifier >= 0xD0 && segment_identifier <= 0xD7))
 					return segment_identifier;
 			}
 		}
