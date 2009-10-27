@@ -22,6 +22,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.FileFormats/JpegCanonFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/JpegFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/JpegAddMetadataTest.cs \
+	fixtures/TagLib.Tests.FileFormats/JpegPanasonicTest.cs \
 	fixtures/TagLib.Tests.FileFormats/M4aFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/MpcFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/OggFormatTest.cs \
