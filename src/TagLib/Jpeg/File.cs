@@ -568,7 +568,7 @@ namespace TagLib.Jpeg
 			ByteVector data = new ByteVector (new byte [] { 0xFF, 0xE1 });
 			data.Add (ByteVector.FromUShort ((ushort) (first_ifd_offset + exif_data.Count + 2 + 6)));
 			data.Add ("Exif\0\0");
-			data.Add (ByteVector.FromString ("MM"));
+			data.Add (ByteVector.FromString ("MM", StringType.Latin1));
 			data.Add (ByteVector.FromUShort (42));
 			data.Add (ByteVector.FromUInt (first_ifd_offset));
 
@@ -623,7 +623,7 @@ namespace TagLib.Jpeg
 				return null;
 
 			// create comment data
-			ByteVector com_data = ByteVector.FromString (com_tag.Value + "\0");
+			ByteVector com_data = ByteVector.FromString (com_tag.Value + "\0", StringType.Latin1);
 
 			// create segment
 			ByteVector data = new ByteVector (new byte [] { 0xFF, 0xFE });

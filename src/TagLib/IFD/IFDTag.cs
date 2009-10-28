@@ -157,10 +157,10 @@ namespace TagLib.IFD
 				ByteVector data = comment_entry.Data;
 
 				if (data.StartsWith (COMMENT_ASCII_CODE))
-					return data.ToString (StringType.Latin1, COMMENT_ASCII_CODE.Count);
+					return data.ToString (StringType.Latin1, COMMENT_ASCII_CODE.Count, data.Count - COMMENT_ASCII_CODE.Count);
 
 				if (data.StartsWith (COMMENT_UNICODE_CODE))
-					return data.ToString (StringType.UTF8, COMMENT_UNICODE_CODE.Count);
+					return data.ToString (StringType.UTF8, COMMENT_UNICODE_CODE.Count, data.Count - COMMENT_UNICODE_CODE.Count);
 
 				// Some programs like e.g. CanonZoomBrowser inserts just the first 0x00-byte
 				// followed by 7-bytes of trash.
@@ -172,7 +172,7 @@ namespace TagLib.IFD
 					if (term != -1)
 						return data.ToString (StringType.Latin1, 8, term - 8);
 
-					return data.ToString (StringType.Latin1, 8);
+					return data.ToString (StringType.Latin1, 8, data.Count - 8);
 				}
 
 				throw new NotImplementedException ("UserComment with other encoding than Latin1 or Unicode");
