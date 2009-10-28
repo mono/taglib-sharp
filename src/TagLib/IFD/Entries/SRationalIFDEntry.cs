@@ -25,23 +25,17 @@
 namespace TagLib.IFD.Entries
 {
 	/// <summary>
-	///    Contains a RATIONAL value.
+	///    Contains a SRATIONAL value.
 	/// </summary>
 	public class SRationalIFDEntry : IFDEntry
 	{
 		public uint Tag { get; private set; }
-		public int Numerator { get; private set; }
-		public int Denominator { get; private set; }
+		public SRational Value { get; private set; }
 
-		public SRationalIFDEntry (uint tag, int numerator, int denominator)
+		public SRationalIFDEntry (uint tag, SRational value)
 		{
 			Tag = tag;
-			Numerator = numerator;
-			Denominator = denominator;
-		}
-
-		public double Value {
-			get { return (double) Numerator / (double) Denominator; }
+			Value = value;
 		}
 	}
 }

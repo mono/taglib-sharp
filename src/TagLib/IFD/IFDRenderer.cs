@@ -249,23 +249,22 @@ namespace TagLib.IFD
 				count = 1;
 
 			} else if (entry is RationalIFDEntry) {
-				var rational_entry = entry as RationalIFDEntry;
+				var rational = (entry as RationalIFDEntry).Value;
 				data = new ByteVector ();
-				data.Add (ByteVector.FromUInt (rational_entry.Numerator, is_bigendian));
-				data.Add (ByteVector.FromUInt (rational_entry.Denominator, is_bigendian));
+				data.Add (ByteVector.FromUInt (rational.Numerator, is_bigendian));
+				data.Add (ByteVector.FromUInt (rational.Denominator, is_bigendian));
 				type = (ushort) IFDEntryType.Rational;
 				count = 1;
 
 			} else if (entry is RationalArrayIFDEntry) {
-				RationalIFDEntry [] rational_entries =
-					(entry as RationalArrayIFDEntry).Values;
+				Rational [] rationals = (entry as RationalArrayIFDEntry).Values;
 
-				count = (uint) rational_entries.Length;
+				count = (uint) rationals.Length;
 
 				data = new ByteVector ();
-				foreach (RationalIFDEntry rational_entry in rational_entries) {
-					data.Add (ByteVector.FromUInt (rational_entry.Numerator, is_bigendian));
-					data.Add (ByteVector.FromUInt (rational_entry.Denominator, is_bigendian));
+				foreach (Rational rational in rationals) {
+					data.Add (ByteVector.FromUInt (rational.Numerator, is_bigendian));
+					data.Add (ByteVector.FromUInt (rational.Denominator, is_bigendian));
 				}
 
 				type = (ushort) IFDEntryType.Rational;
@@ -297,10 +296,10 @@ namespace TagLib.IFD
 				count = 1;
 
 			} else if (entry is SRationalIFDEntry) {
-				var rational_entry = entry as SRationalIFDEntry;
+				var srational = (entry as SRationalIFDEntry).Value;
 				data = new ByteVector ();
-				data.Add (ByteVector.FromInt (rational_entry.Numerator, is_bigendian));
-				data.Add (ByteVector.FromInt (rational_entry.Denominator, is_bigendian));
+				data.Add (ByteVector.FromInt (srational.Numerator, is_bigendian));
+				data.Add (ByteVector.FromInt (srational.Denominator, is_bigendian));
 				type = (ushort) IFDEntryType.SRational;
 				count = 1;
 

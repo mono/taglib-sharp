@@ -256,19 +256,11 @@ namespace TagLib.IFD
 			file.Seek (base_offset + offset, SeekOrigin.Begin);
 
 			if (count == 1) {
-				if (type == (ushort) IFDEntryType.Rational) {
-					uint numerator = ReadUInt ();
-					uint denominator = ReadUInt ();
+				if (type == (ushort) IFDEntryType.Rational)
+					return new RationalIFDEntry (tag, ReadRational ());
 
-					return new RationalIFDEntry (tag, numerator, denominator);
-				}
-
-				if (type == (ushort) IFDEntryType.SRational) {
-					int numerator = ReadInt ();
-					int denominator = ReadInt ();
-
-					return new SRationalIFDEntry (tag, numerator, denominator);
-				}
+				if (type == (ushort) IFDEntryType.SRational)
+					return new SRationalIFDEntry (tag, ReadSRational ());
 			}
 
 			if (count > 1) {
@@ -279,15 +271,10 @@ namespace TagLib.IFD
 				}
 
 				if (type == (ushort) IFDEntryType.Rational) {
+					Rational[] entries = new Rational [count];
 
-					RationalIFDEntry[] entries = new RationalIFDEntry [count];
-
-					for (int i = 0; i < count; i++) {
-						uint numerator = ReadUInt ();
-						uint denominator = ReadUInt ();
-
-						entries[i] = new RationalIFDEntry (tag, numerator, denominator);
-					}
+					for (int i = 0; i < count; i++)
+						entries[i] = ReadRational ();
 
 					return new RationalArrayIFDEntry (tag, entries);
 				}
@@ -365,6 +352,36 @@ namespace TagLib.IFD
 		private uint ReadUInt ()
 		{
 			return file.ReadBlock (4).ToUInt (is_bigendian);
+		}
+
+		/// <summary>
+		///    Reads a <see cref="Rational"/> by two following unsigned
+		///    int from the current file.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="Rational"/> value created by the read values.
+		/// </returns>
+		private Rational ReadRational ()
+		{
+			uint numerator = ReadUInt ();
+			uint denominator = ReadUInt ();
+
+			return new Rational (numerator, denominator);
+		}
+
+		/// <summary>
+		///    Reads a <see cref="SRational"/> by two following unsigned
+		///    int from the current file.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="SRational"/> value created by the read values.
+		/// </returns>
+		private SRational ReadSRational ()
+		{
+			int numerator = ReadInt ();
+			int denominator = ReadInt ();
+
+			return new SRational (numerator, denominator);
 		}
 
 		/// <summary>

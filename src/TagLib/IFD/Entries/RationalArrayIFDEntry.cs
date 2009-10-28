@@ -24,9 +24,9 @@
 
 namespace TagLib.IFD.Entries
 {
-	public class RationalArrayIFDEntry : ArrayIFDEntry<RationalIFDEntry>
+	public class RationalArrayIFDEntry : ArrayIFDEntry<Rational>
 	{
-		public RationalArrayIFDEntry (uint tag, RationalIFDEntry [] entries)
+		public RationalArrayIFDEntry (uint tag, Rational [] entries)
 			: base (tag)
 		{
 			Values = entries;

@@ -3,6 +3,7 @@
 //
 // Author:
 //   Ruben Vermeersch (ruben@savanne.be)
+//   Mike Gemuende (mike@gemuende.de)
 //
 // Copyright (C) 2009 Ruben Vermeersch
 //
@@ -29,18 +30,12 @@ namespace TagLib.IFD.Entries
 	public class RationalIFDEntry : IFDEntry
 	{
 		public uint Tag { get; private set; }
-		public uint Numerator { get; private set; }
-		public uint Denominator { get; private set; }
+		public Rational Value { get; private set; }
 
-		public RationalIFDEntry (uint tag, uint numerator, uint denominator)
+		public RationalIFDEntry (uint tag, Rational value)
 		{
 			Tag = tag;
-			Numerator = numerator;
-			Denominator = denominator;
-		}
-
-		public double Value {
-			get { return (double) Numerator / (double) Denominator; }
+			Value = value;
 		}
 	}
 }

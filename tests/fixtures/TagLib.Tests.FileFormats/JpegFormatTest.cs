@@ -53,12 +53,12 @@ namespace TagLib.Tests.FileFormats
 			{
 				var entry = exif_tag.GetEntry (0, (ushort) ExifEntryTag.ExposureTime) as RationalIFDEntry;
 				Assert.IsFalse (entry == null);
-				Assert.AreEqual (0.008, entry.Value);
+				Assert.AreEqual (0.008, (double)entry.Value);
 			}
 			{
 				var entry = exif_tag.GetEntry (0, (ushort) ExifEntryTag.FNumber) as RationalIFDEntry;
 				Assert.IsFalse (entry == null);
-				Assert.AreEqual (3.2, entry.Value);
+				Assert.AreEqual (3.2, (double)entry.Value);
 			}
 			{
 				var entry = exif_tag.GetEntry (0, (ushort) ExifEntryTag.ISOSpeedRatings) as ShortIFDEntry;

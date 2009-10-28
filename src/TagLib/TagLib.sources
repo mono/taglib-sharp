@@ -90,11 +90,13 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/IFD/Entries/LongIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/RationalArrayIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/RationalIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/Rational.cs \
 	$(srcdir)/TagLib/IFD/Entries/SByteIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/ShortArrayIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/ShortIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/SLongIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/SRationalIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/SRational.cs \
 	$(srcdir)/TagLib/IFD/Entries/StringIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/SubIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/UndefinedIFDEntry.cs \
