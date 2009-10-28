@@ -37,5 +37,13 @@ namespace TagLib.IFD.Entries
 			Tag = tag;
 			Data = data;
 		}
+
+		public ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
+		{
+			type = (ushort) IFDEntryType.Undefined;
+			count = (uint) Data.Count;
+
+			return Data;
+		}
 	}
 }

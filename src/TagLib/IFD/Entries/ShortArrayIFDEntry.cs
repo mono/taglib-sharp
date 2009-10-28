@@ -3,6 +3,7 @@
 //
 // Author:
 //   Ruben Vermeersch (ruben@savanne.be)
+//   Mike Gemuende (mike@gemuende.de)
 //
 // Copyright (C) 2009 Ruben Vermeersch
 //
@@ -31,6 +32,18 @@ namespace TagLib.IFD.Entries
 			for (int i = 0; i < data.Length; i++)
 				values [i] = new ShortIFDEntry (tag, data [i]);
 			Values = values;
+		}
+
+		public override ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
+		{
+			type = (ushort) IFDEntryType.Short;
+			count = (uint) Values.Length;
+
+			ByteVector data = new ByteVector ();
+			foreach (ShortIFDEntry entry in Values)
+				data.Add (ByteVector.FromUShort (entry.Value, is_bigendian));
+
+			return data;
 		}
 	}
 }

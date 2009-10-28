@@ -49,6 +49,8 @@ namespace TagLib.IFD
 		uint Tag {
 			get;
 		}
+
+		ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count);
 	}
 
 	public abstract class ArrayIFDEntry<T> : IFDEntry
@@ -60,5 +62,7 @@ namespace TagLib.IFD
 		{
 			Tag = tag;
 		}
+
+		public abstract ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count);
 	}
 }

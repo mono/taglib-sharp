@@ -42,5 +42,22 @@ namespace TagLib.IFD.Entries
 			Count = count;
 			Structure = structure;
 		}
+
+		public ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
+		{
+			type = (ushort) Type;
+			count = Count;
+
+			// Don't render empty SubIFDEntry
+			/*int sum = 0;
+			foreach (var directory in sub_ifd.Structure.Directories)
+				sum += directory.Count;
+			if (sum == 0)
+				return;
+			*/
+			var renderer = new IFDRenderer (is_bigendian, Structure, offset);
+
+			return renderer.Render ();
+		}
 	}
 }

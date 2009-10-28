@@ -3,6 +3,7 @@
 //
 // Author:
 //   Ruben Vermeersch (ruben@savanne.be)
+//   Mike Gemuende (mike@gemuende.de)
 //
 // Copyright (C) 2009 Ruben Vermeersch
 //
@@ -31,6 +32,18 @@ namespace TagLib.IFD.Entries
 			for (int i = 0; i < data.Length; i++)
 				values [i] = new LongIFDEntry (tag, data [i]);
 			Values = values;
+		}
+
+		public override ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
+		{
+			type = (ushort) IFDEntryType.Long;
+			count = (uint) Values.Length;
+
+			ByteVector data = new ByteVector ();
+			foreach (LongIFDEntry entry in Values)
+				data.Add (ByteVector.FromUInt (entry.Value, is_bigendian));
+
+			return data;
 		}
 	}
 }

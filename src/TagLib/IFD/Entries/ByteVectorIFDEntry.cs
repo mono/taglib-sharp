@@ -3,6 +3,7 @@
 //
 // Author:
 //   Ruben Vermeersch (ruben@savanne.be)
+//   Mike Gemuende (mike@gemuende.de)
 //
 // Copyright (C) 2009 Ruben Vermeersch
 //
@@ -35,6 +36,14 @@ namespace TagLib.IFD.Entries
 		{
 			Tag = tag;
 			Data = data;
+		}
+
+		public ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
+		{
+			type = (ushort) IFDEntryType.Byte;
+			count = (uint) Data.Count;
+
+			return Data;
 		}
 	}
 }
