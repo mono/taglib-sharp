@@ -164,6 +164,8 @@ namespace TagLib.IFD
 				directory.Add (entry.Tag, entry);
 			}
 
+			FixupDirectory (base_offset, directory);
+
 			structure.directories.Add (directory);
 			return next_offset;
 		}
@@ -439,6 +441,42 @@ namespace TagLib.IFD
 				return str;
 			else
 				return str.Substring (0, term);
+		}
+
+		/// <summary>
+		///    Performs some fixups to a read <see cref="IFDDirectory"/>. For some
+		///    special cases multiple <see cref="IFDEntry"/> instances contained
+		///    in the directory are needed. Therfore, we do the fixups after reading the
+		///    whole directory to be sure, all entries are present.
+		/// </summary>
+		/// <param name="base_offset">
+		///    A <see cref="System.Int64"/> value with the base offset, all offsets in the
+		///    directory refers to.
+		/// </param>
+		/// <param name="directory">
+		///    A <see cref="IFDDirectory"/> instance which was read and needs fixes.
+		/// </param>
+		private void FixupDirectory (long base_offset, IFDDirectory directory)
+		{
+			// The following two entries refer to thumbnail data, where one is  the offset
+			// to the data and the other is the length. Unnaturally both are used to describe
+			// the data. So it is needed to keep both entries in sync and keep the thumbnail data
+			// for writing it back.
+			// We determine the position of the data, read it and store it in an ThumbnailDataIFDEntry
+			// which replaces the offset-entry to thumbnail data.
+			ushort offset_tag = (ushort) IFDEntryTag.JPEGInterchangeFormat;
+			ushort length_tag = (ushort) IFDEntryTag.JPEGInterchangeFormatLength;
+			if (directory.ContainsKey (offset_tag) && directory.ContainsKey (length_tag)) {
+
+				uint offset = (directory [offset_tag] as LongIFDEntry).Value;
+				uint length = (directory [length_tag] as LongIFDEntry).Value;
+
+				file.Seek (base_offset + offset, SeekOrigin.Begin);
+				ByteVector data = file.ReadBlock ((int) length);
+
+				directory.Remove (offset_tag);
+				directory.Add (offset_tag, new ThumbnailDataIFDEntry (offset_tag, data));
+			}
 		}
 
 		private IFDEntry ParseMakernote (ushort tag, ushort type, uint count, long base_offset, uint offset)
