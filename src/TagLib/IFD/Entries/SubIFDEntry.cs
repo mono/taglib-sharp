@@ -30,12 +30,12 @@ namespace TagLib.IFD.Entries
 	public class SubIFDEntry : IFDEntry
 	{
 		public ushort Tag { get; private set; }
-		public uint Type { get; private set; }
+		public ushort Type { get; private set; }
 		public uint Count { get; private set; }
 
 		public IFDStructure Structure { get; private set; }
 
-		public SubIFDEntry (ushort tag, uint type, uint count, IFDStructure structure)
+		public SubIFDEntry (ushort tag, ushort type, uint count, IFDStructure structure)
 		{
 			Tag = tag;
 			Type = type;
