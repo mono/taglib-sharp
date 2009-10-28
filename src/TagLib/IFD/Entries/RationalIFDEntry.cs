@@ -29,10 +29,10 @@ namespace TagLib.IFD.Entries
 	/// </summary>
 	public class RationalIFDEntry : IFDEntry
 	{
-		public uint Tag { get; private set; }
+		public ushort Tag { get; private set; }
 		public Rational Value { get; private set; }
 
-		public RationalIFDEntry (uint tag, Rational value)
+		public RationalIFDEntry (ushort tag, Rational value)
 		{
 			Tag = tag;
 			Value = value;

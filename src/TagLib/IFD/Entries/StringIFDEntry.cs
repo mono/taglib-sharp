@@ -29,10 +29,10 @@ namespace TagLib.IFD.Entries
 	/// </summary>
 	public class StringIFDEntry : IFDEntry
 	{
-		public uint Tag { get; private set; }
+		public ushort Tag { get; private set; }
 		public string Value { get; private set; }
 
-		public StringIFDEntry (uint tag, string value)
+		public StringIFDEntry (ushort tag, string value)
 		{
 			Tag = tag;
 			Value = value;

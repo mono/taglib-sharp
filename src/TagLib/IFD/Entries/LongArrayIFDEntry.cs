@@ -26,7 +26,7 @@ namespace TagLib.IFD.Entries
 {
 	public class LongArrayIFDEntry : ArrayIFDEntry<LongIFDEntry>
 	{
-		public LongArrayIFDEntry (uint tag, uint [] data) : base (tag)
+		public LongArrayIFDEntry (ushort tag, uint [] data) : base (tag)
 		{
 			LongIFDEntry [] values = new LongIFDEntry [data.Length];
 			for (int i = 0; i < data.Length; i++)

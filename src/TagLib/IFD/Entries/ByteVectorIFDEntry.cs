@@ -29,10 +29,10 @@ namespace TagLib.IFD.Entries
 	/// </summary>
 	public class ByteVectorIFDEntry : IFDEntry
 	{
-		public uint Tag { get; private set; }
+		public ushort Tag { get; private set; }
 		public ByteVector Data { get; private set; }
 
-		public ByteVectorIFDEntry (uint tag, ByteVector data)
+		public ByteVectorIFDEntry (ushort tag, ByteVector data)
 		{
 			Tag = tag;
 			Data = data;

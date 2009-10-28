@@ -46,7 +46,7 @@ namespace TagLib.IFD
 	/// </summary>
 	public interface IFDEntry
 	{
-		uint Tag {
+		ushort Tag {
 			get;
 		}
 
@@ -55,10 +55,10 @@ namespace TagLib.IFD
 
 	public abstract class ArrayIFDEntry<T> : IFDEntry
 	{
-		public uint Tag { get; private set; }
+		public ushort Tag { get; private set; }
 		public T [] Values { get; protected set; }
 
-		public ArrayIFDEntry (uint tag)
+		public ArrayIFDEntry (ushort tag)
 		{
 			Tag = tag;
 		}

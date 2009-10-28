@@ -26,7 +26,7 @@ namespace TagLib.IFD.Entries
 {
 	public class ShortArrayIFDEntry : ArrayIFDEntry<ShortIFDEntry>
 	{
-		public ShortArrayIFDEntry (uint tag, ushort [] data) : base (tag)
+		public ShortArrayIFDEntry (ushort tag, ushort [] data) : base (tag)
 		{
 			ShortIFDEntry [] values = new ShortIFDEntry [data.Length];
 			for (int i = 0; i < data.Length; i++)

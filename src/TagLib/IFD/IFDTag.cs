@@ -99,7 +99,7 @@ namespace TagLib.IFD
 					var entry = Structure.GetEntry (0, IFDEntryTag.ExifIFD) as SubIFDEntry;
 					if (entry == null) {
 						exif_ifd = new IFDStructure ();
-						entry = new SubIFDEntry ((uint) IFDEntryTag.ExifIFD, (ushort) IFDEntryType.Long, 1, exif_ifd);
+						entry = new SubIFDEntry ((ushort) IFDEntryTag.ExifIFD, (ushort) IFDEntryType.Long, 1, exif_ifd);
 						Structure.SetEntry (0, entry);
 					}
 
@@ -182,8 +182,8 @@ namespace TagLib.IFD
 				data.Add (COMMENT_UNICODE_CODE);
 				data.Add (ByteVector.FromString (value, StringType.UTF8));
 
-				ExifIFD.SetEntry (0, new UndefinedIFDEntry ((uint)ExifEntryTag.UserComment, data));
-				Structure.SetEntry (0, new StringIFDEntry ((uint)IFDEntryTag.ImageDescription, value));
+				ExifIFD.SetEntry (0, new UndefinedIFDEntry ((ushort)ExifEntryTag.UserComment, data));
+				Structure.SetEntry (0, new StringIFDEntry ((ushort)IFDEntryTag.ImageDescription, value));
 			}
 		}
 

@@ -28,7 +28,7 @@ namespace TagLib.IFD
 	/// <summary>
 	///    Contains the entries in this IFD.
 	/// </summary>
-	public class IFDDirectory : Dictionary<uint, IFDEntry>
+	public class IFDDirectory : Dictionary<ushort, IFDEntry>
 	{
 
 	}

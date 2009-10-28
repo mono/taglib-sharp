@@ -71,13 +71,13 @@ namespace TagLib.IFD
 		///    contains the tag.
 		/// </param>
 		/// <param name="tag">
-		///    A <see cref="System.UInt32"/> value with the tag.
+		///    A <see cref="System.UInt16"/> value with the tag.
 		/// </param>
 		/// <returns>
 		///    A <see cref="System.Boolean"/>, which is true, if the tag is already
 		///    contained in the IFD, otherwise false.
 		/// </returns>
-		public bool ContainsTag (int directory, uint tag)
+		public bool ContainsTag (int directory, ushort tag)
 		{
 			if (directory >= directories.Count)
 				return false;
@@ -92,9 +92,9 @@ namespace TagLib.IFD
 		///    contains the tag to remove.
 		/// </param>
 		/// <param name="tag">
-		///    A <see cref="System.UInt32"/> value with the tag to remove.
+		///    A <see cref="System.UInt16"/> value with the tag to remove.
 		/// </param>
-		public void RemoveTag (int directory, uint tag)
+		public void RemoveTag (int directory, ushort tag)
 		{
 			directories [directory].Remove (tag);
 		}
@@ -111,7 +111,7 @@ namespace TagLib.IFD
 		/// </param>
 		public void RemoveTag (int directory, IFDEntryTag entry_tag)
 		{
-			RemoveTag (directory, (uint) entry_tag);
+			RemoveTag (directory, (ushort) entry_tag);
 		}
 
 		/// <summary>
@@ -166,12 +166,12 @@ namespace TagLib.IFD
 		///    A <see cref="IFDEntry"/> belonging to the given tag, or
 		///    null, if no such tag is contained in the IFD.
 		/// </returns>
-		public IFDEntry GetEntry (int directory, ushort entry_tag)
+		public IFDEntry GetEntry (int directory, ushort tag)
 		{
-			if (!ContainsTag (directory, entry_tag))
+			if (!ContainsTag (directory, tag))
 				return null;
 
-			return directories [directory] [entry_tag];
+			return directories [directory] [tag];
 		}
 
 		/// <summary>
