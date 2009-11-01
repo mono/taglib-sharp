@@ -68,6 +68,13 @@ namespace TagLib.IFD
 		/// </summary>
 		private IFDStructure exif_ifd = null;
 
+		/// <summary>
+		///    A reference to the GPS IFD (which can be found by following the
+		///    pointer in IFD0, GPSIFD tag). This variable should not be used
+		///    directly, use the <see cref="GPSIFD"/> property instead.
+		/// </summary>
+		private IFDStructure gps_ifd = null;
+
 #endregion
 
 #region Constructors
@@ -107,6 +114,31 @@ namespace TagLib.IFD
 				}
 
 				return exif_ifd;
+			}
+		}
+
+		/// <summary>
+		///    The GPS IFD. Will create one if the file doesn't alread have it.
+		/// </summary>
+		/// <remarks>
+		///    <para>Note how this also creates an empty IFD for GPS, even if
+		///    you don't set a value. That's okay, empty nested IFDs get ignored
+		///    when rendering.</para>
+		/// </remarks>
+		public IFDStructure GPSIFD {
+			get {
+				if (gps_ifd == null) {
+					var entry = Structure.GetEntry (0, IFDEntryTag.GPSIFD) as SubIFDEntry;
+					if (entry == null) {
+						gps_ifd = new IFDStructure ();
+						entry = new SubIFDEntry ((ushort) IFDEntryTag.GPSIFD, (ushort) IFDEntryType.Long, 1, gps_ifd, SubIFDType.GPS);
+						Structure.SetEntry (0, entry);
+					}
+
+					gps_ifd = entry.Structure;
+				}
+
+				return gps_ifd;
 			}
 		}
 
@@ -231,6 +263,120 @@ namespace TagLib.IFD
 		}
 
 		/// <summary>
+		///    Gets or sets the latitude of the GPS coordinate the current
+		///    image was taken.
+		/// </summary>
+		/// <value>
+		///    A <see cref="double" /> with the latitude ranging from -90.0
+		///    to +90.0 degrees.
+		/// </value>
+		public virtual double Latitude {
+			get {
+				var gps_ifd = GPSIFD;
+				var degree_entry = gps_ifd.GetEntry (0, (ushort) GPSEntryTag.GPSLatitude) as RationalArrayIFDEntry;
+				var ref_entry = gps_ifd.GetEntry (0, (ushort) GPSEntryTag.GPSLatitudeRef) as StringIFDEntry;
+
+				if (degree_entry == null || ref_entry == null)
+					return 0.0d;
+
+				Rational [] values  = degree_entry.Values;
+				double deg = values[0] + values[1] / 60.0d + values[2] / 3600.0d;
+
+				if (ref_entry.Value == "S")
+					deg *= -1.0d;
+
+				return Math.Max (Math.Min (deg, 90.0d), -90.0d);
+			}
+			set {
+				if (value < -90.0d || value > 90.0d)
+					throw new ArgumentException ("value");
+
+				InitGpsDirectory ();
+				var gps_ifd = GPSIFD;
+
+				gps_ifd.SetStringValue (0, (ushort) GPSEntryTag.GPSLatitudeRef, value < 0 ? "S" : "N");
+
+				double abs = Math.Abs (value);
+				uint deg = (uint) Math.Floor (abs);
+				uint min = (uint) ((abs - Math.Floor (abs)) * 60.0);
+				uint sec = (uint) ((abs - Math.Floor (abs) - (min / 60.0))  * 360000000.0);
+
+				Rational[] rationals = new Rational [] {
+					new Rational (deg, 1),
+					new Rational (min, 1),
+					new Rational (sec, 100000)
+				};
+
+				gps_ifd.SetEntry (0, new RationalArrayIFDEntry ((ushort) GPSEntryTag.GPSLatitude, rationals));
+			}
+		}
+
+		/// <summary>
+		///    Gets or sets the longitude of the GPS coordinate the current
+		///    image was taken.
+		/// </summary>
+		/// <value>
+		///    A <see cref="double" /> with the longitude ranging from 0
+		///    to +180.0 degrees.
+		/// </value>
+		public virtual double Longitude {
+			get {
+				var gps_ifd = GPSIFD;
+				var degree_entry = gps_ifd.GetEntry (0, (ushort) GPSEntryTag.GPSLongitude) as RationalArrayIFDEntry;
+				var ref_entry = gps_ifd.GetEntry (0, (ushort) GPSEntryTag.GPSLongitudeRef) as StringIFDEntry;
+
+				if (degree_entry == null || ref_entry == null)
+					return 0.0d;
+
+				Rational [] values  = degree_entry.Values;
+				double deg = values[0] + values[1] / 60.0d + values[2] / 3600.0d;
+
+				if (ref_entry.Value == "W")
+					deg = 180.0d + (-1.0d * deg);
+
+				return Math.Max (Math.Min (deg, 180.0d), 0.0d);
+			}
+			set {
+				if (value < 0.0d || value > 180.0d)
+					throw new ArgumentException ("value");
+
+				InitGpsDirectory ();
+				var gps_ifd = GPSIFD;
+
+				if (value >= 90.0d)
+					value = value - 180.0d;
+
+				gps_ifd.SetStringValue (0, (ushort) GPSEntryTag.GPSLongitudeRef, value < 0 ? "W" : "E");
+
+				double abs = Math.Abs (value);
+				uint deg = (uint) Math.Floor (abs);
+				uint min = (uint) ((abs - Math.Floor (abs)) * 60.0);
+				uint sec = (uint) ((abs - Math.Floor (abs) - (min / 60.0))  * 360000000.0);
+
+				Rational[] rationals = new Rational [] {
+					new Rational (deg, 1),
+					new Rational (min, 1),
+					new Rational (sec, 100000)
+				};
+
+				gps_ifd.SetEntry (0, new RationalArrayIFDEntry ((ushort) GPSEntryTag.GPSLongitude, rationals));
+			}
+		}
+
+		/// <summary>
+		///    Gets or sets the altitude of the GPS coordinate the current
+		///    image was taken.
+		/// </summary>
+		/// <value>
+		///    A <see cref="double" /> with the altitude ranging from -90.0
+		///    to +90.0 degrees.
+		/// </value>
+		public virtual double Altitude {
+			get { return 0.0d; }
+			set {}
+		}
+
+		/// <summary>
 		///    Gets the exposure time the image, the current instance belongs
 		///    to, was taken with.
 		/// </summary>
@@ -306,6 +452,19 @@ namespace TagLib.IFD
 			get {
 				return Structure.GetStringValue (0, (ushort) IFDEntryTag.Model);
 			}
+		}
+
+#endregion
+
+#region Private Methods
+
+		/// <summary>
+		///    Initilazies the GPS IFD with some basic entries.
+		/// </summary>
+		private void InitGpsDirectory ()
+		{
+			GPSIFD.SetStringValue (0, (ushort) GPSEntryTag.GPSVersionID, "2 0 0 0");
+			GPSIFD.SetStringValue (0, (ushort) GPSEntryTag.GPSMapDatum, "WGS-84");
 		}
 
 #endregion

@@ -9,7 +9,7 @@ using TagLib.Xmp;
 namespace TagLib.Tests.Images
 {
     [TestFixture]
-    public class JpegAddMetadataTest
+    public class JpegAddEmptyTest
     {
 		private static string sample_file = "samples/sample_no_metadata.jpg";
         private static string tmp_file = "samples/tmpwrite_no_metadata.jpg";
@@ -49,6 +49,12 @@ namespace TagLib.Tests.Images
 		public void AddExif ()
 		{
 			AddImageMetadataTests.AddExifTest (sample_file, tmp_file, false);
+		}
+
+		[Test]
+		public void AddGPS ()
+		{
+			AddImageMetadataTests.AddGPSTest (sample_file, tmp_file, false);
 		}
 	}
 }

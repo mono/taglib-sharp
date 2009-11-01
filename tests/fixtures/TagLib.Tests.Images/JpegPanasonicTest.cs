@@ -12,7 +12,7 @@ namespace TagLib.Tests.Images
 	public class JpegPanasonicTest
 	{
 		private static string sample_file = "samples/sample_panasonic.jpg";
-		private static string tmp_file = "samples/tmwrite_panasonic.jpg";
+		private static string tmp_file = "samples/tmpwrite_panasonic.jpg";
 
 		private TagTypes contained_types = TagTypes.TiffIFD | TagTypes.XMP;
 
@@ -55,6 +55,12 @@ namespace TagLib.Tests.Images
 		public void AddExif ()
 		{
 			AddImageMetadataTests.AddExifTest (sample_file, tmp_file, true);
+		}
+
+		[Test]
+		public void AddGPS ()
+		{
+			AddImageMetadataTests.AddGPSTest (sample_file, tmp_file, true);
 		}
 
 		public void CheckTags (File file) {

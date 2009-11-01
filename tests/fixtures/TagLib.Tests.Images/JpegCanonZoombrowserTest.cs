@@ -57,6 +57,12 @@ namespace TagLib.Tests.Images
 			AddImageMetadataTests.AddExifTest (sample_file, tmp_file, true);
 		}
 
+		[Test]
+		public void AddGPS ()
+		{
+			AddImageMetadataTests.AddGPSTest (sample_file, tmp_file, true);
+		}
+
 		public void CheckTags (File file) {
 			Assert.IsTrue (file is Jpeg.File);
 
