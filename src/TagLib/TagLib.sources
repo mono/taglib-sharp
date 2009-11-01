@@ -103,6 +103,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/IFD/Entries/UndefinedIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/IFDEntry.cs \
 	$(srcdir)/TagLib/IFD/IFDEntryTag.cs \
+	$(srcdir)/TagLib/IFD/IFDEntryType.cs \
 	$(srcdir)/TagLib/IFD/IFDTag.cs \
 	$(srcdir)/TagLib/IFD/IFDDirectory.cs \
 	$(srcdir)/TagLib/IFD/IFDStructure.cs \
