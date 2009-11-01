@@ -77,12 +77,6 @@ namespace TagLib.Tests.FileFormats
 			TestAltNode (tag, XmpTag.DC_NS, "description", new string[] {"Sample Image"});
 		}
 
-		[Test]
-		public void WriteExif ()
-		{
-			StandardExifTests.WriteTags (sample_file, tmp_file);
-		}
-
 		private void TestBagNode (XmpTag tag, string ns, string name, string[] values)
 		{
 			var node = tag.FindNode (ns, name);

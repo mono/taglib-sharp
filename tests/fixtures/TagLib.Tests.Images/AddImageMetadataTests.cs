@@ -5,29 +5,22 @@ using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
 
-namespace TagLib.Tests.FileFormats
+namespace TagLib.Tests.Images
 {
     public static class AddImageMetadataTests
     {
 		public static string test_comment = "This is a TagLib# &Test?Comment%$@_ ";
 		public static readonly DateTime date_time = new DateTime (2009, 10, 15, 12, 12, 59);
 
-		public static File CreateTmpFile (string sample_file, string tmp_file)
+		public static void AddExifTest (string sample_file, string tmp_file, bool contains_exif)
 		{
-			if (System.IO.File.Exists (tmp_file))
-                System.IO.File.Delete (tmp_file);
+			File file = Utils.CreateTmpFile (sample_file, tmp_file);
+			IFDTag exif_tag;
 
-            System.IO.File.Copy (sample_file, tmp_file);
-
-            return File.Create (tmp_file);
-		}
-
-		public static void AddExif (string sample_file, string tmp_file)
-		{
-			File file = CreateTmpFile (sample_file, tmp_file);
-
-			IFDTag exif_tag = file.GetTag (TagTypes.TiffIFD, false) as IFDTag;
-			Assert.IsTrue (exif_tag == null);
+			if (! contains_exif) {
+				exif_tag = file.GetTag (TagTypes.TiffIFD, false) as IFDTag;
+				Assert.IsTrue (exif_tag == null);
+			}
 
 			exif_tag = file.GetTag (TagTypes.TiffIFD, true) as IFDTag;
 			Assert.IsFalse (exif_tag == null);

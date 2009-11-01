@@ -6,35 +6,65 @@ using TagLib.IFD.Entries;
 using TagLib.Jpeg;
 using TagLib.Xmp;
 
-namespace TagLib.Tests.FileFormats
+namespace TagLib.Tests.Images
 {
     [TestFixture]
-    public class JpegCanonFormatTest
+    public class JpegCanonZoombrowserFormatTest
     {
 		private static string sample_file = "samples/sample_canon_zoombrowser.jpg";
-
-		private Image.File file;
+		private static string tmp_file = "samples/tmpwrite_canon_zoombrowser.jpg";
 
 		private TagTypes contained_types = TagTypes.TiffIFD;
 
-        [TestFixtureSetUp]
-        public void Init()
-        {
-            file = File.Create(sample_file) as Image.File;
-        }
+		private File file;
+
+		[TestFixtureSetUp]
+		public void Init()
+		{
+			file = File.Create (sample_file) as Image.File;
+		}
 
 		[Test]
-		public void TestJpegRead()
+		public void JpegRead () {
+			CheckTags (file);
+		}
+
+		[Test]
+		public void ExifRead () {
+			CheckExif (file);
+		}
+
+		[Test]
+		public void MakernoteRead () {
+			CheckMakerNote (file);
+		}
+
+		[Test]
+		public void Rewrite () {
+			File tmp = Utils.CreateTmpFile (sample_file, tmp_file);
+			tmp.Save ();
+
+			tmp = File.Create (tmp_file);
+
+			CheckTags (tmp);
+			CheckExif (tmp);
+			CheckMakerNote (tmp);
+		}
+
+		[Test]
+		public void AddExif ()
 		{
+			AddImageMetadataTests.AddExifTest (sample_file, tmp_file, true);
+		}
+
+		public void CheckTags (File file) {
 			Assert.IsTrue (file is Jpeg.File);
 
 			Assert.AreEqual (contained_types, file.TagTypes);
 			Assert.AreEqual (contained_types, file.TagTypesOnDisk);
 		}
 
-		[Test]
-		public void TestExif()
-		{
+		public void CheckExif (File file) {
 			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 			Assert.IsFalse (tag == null);
 
@@ -52,6 +82,11 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual (new DateTime (2009, 08, 09, 19, 12, 44), tag.DateTime);
 			Assert.AreEqual (new DateTime (2009, 08, 09, 19, 12, 44), tag.DateTimeDigitized);
 			Assert.AreEqual (new DateTime (2009, 08, 09, 19, 12, 44), tag.DateTimeOriginal);
+		}
+
+
+		public void CheckMakerNote (File file) {
+			/* TODO Check MarkeNote */
 		}
 	}
 }

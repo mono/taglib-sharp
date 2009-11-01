@@ -6,36 +6,65 @@ using TagLib.IFD.Entries;
 using TagLib.Jpeg;
 using TagLib.Xmp;
 
-namespace TagLib.Tests.FileFormats
+namespace TagLib.Tests.Images
 {
-    [TestFixture]
-    public class JpegPanasonicTest
-    {
+	[TestFixture]
+	public class JpegPanasonicTest
+	{
 		private static string sample_file = "samples/sample_panasonic.jpg";
 		private static string tmp_file = "samples/tmwrite_panasonic.jpg";
 
-		private Image.File file;
-
 		private TagTypes contained_types = TagTypes.TiffIFD | TagTypes.XMP;
 
-        [TestFixtureSetUp]
-        public void Init()
-        {
-            file = File.Create (sample_file) as Image.File;
-        }
+		private File file;
+
+		[TestFixtureSetUp]
+		public void Init () {
+			file = File.Create (sample_file);
+		}
 
 		[Test]
-		public void TestJpegRead()
+		public void JpegRead () {
+			CheckTags (file);
+		}
+
+		[Test]
+		public void ExifRead () {
+			CheckExif (file);
+		}
+
+		[Test]
+		public void MakernoteRead () {
+			CheckMakerNote (file);
+		}
+
+		[Test]
+		public void Rewrite () {
+			File tmp = Utils.CreateTmpFile (sample_file, tmp_file);
+			tmp.Save ();
+
+			tmp = File.Create (tmp_file);
+
+			// did not run at the moment, since XMP writing is not implemented
+			//CheckTags (tmp);
+			CheckExif (tmp);
+			CheckMakerNote (tmp);
+		}
+
+		[Test]
+		public void AddExif ()
 		{
+			AddImageMetadataTests.AddExifTest (sample_file, tmp_file, true);
+		}
+
+		public void CheckTags (File file) {
 			Assert.IsTrue (file is Jpeg.File);
 
 			Assert.AreEqual (contained_types, file.TagTypes);
 			Assert.AreEqual (contained_types, file.TagTypesOnDisk);
 		}
 
-		[Test]
-		public void TestExif()
-		{
+		public void CheckExif (File file) {
 			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 			Assert.IsFalse (tag == null);
 
@@ -54,14 +83,14 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual (new DateTime (2009, 06, 26, 12, 58, 30), tag.DateTimeOriginal);
 		}
 
-		[Test]
-		public void TestMakernoteRead()
-		{
+
+		public void CheckMakerNote (File file) {
 			IFDTag tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 			Assert.IsFalse (tag == null);
 
 			var makernote_ifd =
 				tag.ExifIFD.GetEntry (0, (ushort) ExifEntryTag.MakerNote) as SubIFDEntry;
+
 			Assert.IsFalse (makernote_ifd == null);
 
 			var structure = makernote_ifd.Structure;

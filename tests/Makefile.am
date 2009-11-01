@@ -9,7 +9,6 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Collections/ByteVectorTest.cs \
 	fixtures/TagLib.Tests.Collections/StringCollectionTest.cs \
 	fixtures/TagLib.Tests.FileFormats/AacFormatTest.cs \
-	fixtures/TagLib.Tests.FileFormats/AddImageMetadataTests.cs \
 	fixtures/TagLib.Tests.FileFormats/AiffFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/AsfFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/AviFormatTest.cs \
@@ -19,16 +18,17 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.FileFormats/Id3V24FormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/Id3V2FormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/IFormatTest.cs \
-	fixtures/TagLib.Tests.FileFormats/JpegCanonFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/JpegFormatTest.cs \
-	fixtures/TagLib.Tests.FileFormats/JpegAddMetadataTest.cs \
-	fixtures/TagLib.Tests.FileFormats/JpegPanasonicTest.cs \
 	fixtures/TagLib.Tests.FileFormats/M4aFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/MpcFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/OggFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/TiffFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/StandardTests.cs \
-	fixtures/TagLib.Tests.FileFormats/StandardExifTests.cs \
+	fixtures/TagLib.Tests.Images/AddImageMetadataTests.cs \
+	fixtures/TagLib.Tests.Images/JpegEmptyTest.cs \
+	fixtures/TagLib.Tests.Images/JpegCanonZoombrowserTest.cs \
+	fixtures/TagLib.Tests.Images/JpegPanasonicTest.cs \
+	fixtures/TagLib.Tests.Images/Utils.cs \
 	fixtures/TagLib.Tests.Performance/PerformanceTest.cs \
 	fixtures/TagLib.Tests.TaggingFormats/ApeTest.cs \
 	fixtures/TagLib.Tests.TaggingFormats/AsfTest.cs \
