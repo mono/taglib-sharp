@@ -86,7 +86,19 @@ namespace TagLib.Tests.Images
 
 
 		public void CheckMakerNote (File file) {
-			/* TODO Check MarkeNote */
+			IFDTag tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
+			Assert.IsFalse (tag == null);
+
+			var makernote_ifd =
+				tag.ExifIFD.GetEntry (0, (ushort) ExifEntryTag.MakerNote) as SubIFDEntry;
+
+			Assert.IsFalse (makernote_ifd == null);
+			Assert.AreEqual (SubIFDType.CanonMakernote, makernote_ifd.SubIFDType);
+
+			var structure = makernote_ifd.Structure;
+			Assert.IsFalse (structure == null);
+
+			/* TODO Check some Markenote entries */
 		}
 	}
 }

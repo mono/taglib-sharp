@@ -497,7 +497,7 @@ namespace TagLib.IFD
 					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset + 12);
 
 				reader.ReadIFD (base_offset, offset + 12);
-				return new SubIFDEntry (tag, type, count, ifd_structure);
+				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.PanasonicMakernote);
 			}
 
 			file.Seek (makernote_offset, SeekOrigin.Begin);
@@ -506,7 +506,7 @@ namespace TagLib.IFD
 					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset + 6);
 
 				reader.ReadIFD (base_offset, offset + 6);
-				return new SubIFDEntry (tag, type, count, ifd_structure);
+				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.PentaxMakernote);
 			}
 
 			// A maker note may be a Sub IFD, but it may also be in an arbitrary
@@ -518,7 +518,7 @@ namespace TagLib.IFD
 					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset);
 
 				reader.Read ();
-				return new SubIFDEntry (tag, type, count, ifd_structure);
+				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.CanonMakernote);
 			} catch {
 				return null;
 			}
@@ -553,23 +553,28 @@ namespace TagLib.IFD
 		/// </returns>
 		protected virtual IFDEntry ParseIFDEntry (ushort tag, ushort type, uint count, long base_offset, uint offset)
 		{
+			if (tag == (ushort) ExifEntryTag.MakerNote)
+				return ParseMakernote (tag, type, count, base_offset, offset);
+
 			IFDStructure ifd_structure = new IFDStructure ();
 			IFDReader reader = new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset);
 
-			switch (tag) {
-				case (ushort) IFDEntryTag.ExifIFD:
-				case (ushort) IFDEntryTag.InteroperabilityIFD:
-				case (ushort) IFDEntryTag.GPSIFD:
-					reader.Read ();
-					return new SubIFDEntry (tag, type, count, ifd_structure);
-
-				case (ushort) ExifEntryTag.MakerNote:
-				{
-					return ParseMakernote (tag, type, count, base_offset, offset);
-				}
-				default:
-					return null;
+			if (tag == (ushort) IFDEntryTag.ExifIFD) {
+				reader.Read ();
+				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.Exif);
 			}
+
+			if (tag == (ushort) IFDEntryTag.InteroperabilityIFD) {
+				reader.Read ();
+				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.Interoperability);
+			}
+
+			if (tag == (ushort) IFDEntryTag.GPSIFD) {
+				reader.Read ();
+				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.GPS);
+			}
+
+			return null;
 		}
 
 #endregion

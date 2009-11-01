@@ -24,6 +24,17 @@
 
 namespace TagLib.IFD.Entries
 {
+
+	public enum SubIFDType {
+		Exif,
+		Interoperability,
+		GPS,
+		CanonMakernote,
+		PanasonicMakernote,
+		PentaxMakernote
+	}
+
+
 	/// <summary>
 	///    Contains a Sub IFD.
 	/// </summary>
@@ -32,21 +43,38 @@ namespace TagLib.IFD.Entries
 		public ushort Tag { get; private set; }
 		public ushort Type { get; private set; }
 		public uint Count { get; private set; }
+		public SubIFDType SubIFDType { get; private set; }
 
 		public IFDStructure Structure { get; private set; }
 
-		public SubIFDEntry (ushort tag, ushort type, uint count, IFDStructure structure)
+		public SubIFDEntry (ushort tag, ushort type, uint count, IFDStructure structure, SubIFDType sub_ifd_type)
 		{
 			Tag = tag;
 			Type = type;
 			Count = count;
 			Structure = structure;
+			SubIFDType = sub_ifd_type;
 		}
 
 		public ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
 		{
 			type = (ushort) Type;
 			count = Count;
+
+			if (SubIFDType == SubIFDType.PanasonicMakernote) {
+				var renderer = new IFDRenderer (is_bigendian, Structure, offset + 12);
+				ByteVector data = renderer.Render ();
+				data.Insert (0, "Panasonic\0\0\0");
+
+				return data;
+			}
+
+			/*if (SubIFDType == SubIFDType.PentaxMakernote) {
+				var renderer = new IFDRenderer (is_bigendian, Structure, offset + 6);
+				ByteVector data = renderer.Render ();
+				data.Insert (0, "AOC\0");
+
+			}*/
 
 			// Don't render empty SubIFDEntry
 			/*int sum = 0;
@@ -55,9 +83,7 @@ namespace TagLib.IFD.Entries
 			if (sum == 0)
 				return;
 			*/
-			var renderer = new IFDRenderer (is_bigendian, Structure, offset);
-
-			return renderer.Render ();
+			return new IFDRenderer (is_bigendian, Structure, offset).Render ();
 		}
 	}
 }

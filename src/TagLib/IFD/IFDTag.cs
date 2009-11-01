@@ -99,7 +99,7 @@ namespace TagLib.IFD
 					var entry = Structure.GetEntry (0, IFDEntryTag.ExifIFD) as SubIFDEntry;
 					if (entry == null) {
 						exif_ifd = new IFDStructure ();
-						entry = new SubIFDEntry ((ushort) IFDEntryTag.ExifIFD, (ushort) IFDEntryType.Long, 1, exif_ifd);
+						entry = new SubIFDEntry ((ushort) IFDEntryTag.ExifIFD, (ushort) IFDEntryType.Long, 1, exif_ifd, SubIFDType.Exif);
 						Structure.SetEntry (0, entry);
 					}
 

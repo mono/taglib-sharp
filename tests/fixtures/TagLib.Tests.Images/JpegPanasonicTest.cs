@@ -92,6 +92,7 @@ namespace TagLib.Tests.Images
 				tag.ExifIFD.GetEntry (0, (ushort) ExifEntryTag.MakerNote) as SubIFDEntry;
 
 			Assert.IsFalse (makernote_ifd == null);
+			Assert.AreEqual (SubIFDType.PanasonicMakernote, makernote_ifd.SubIFDType);
 
 			var structure = makernote_ifd.Structure;
 			Assert.IsFalse (structure == null);
