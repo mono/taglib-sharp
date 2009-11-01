@@ -16,9 +16,6 @@ namespace TagLib.Tests.Images
 
 		private static string comment = " test comment ";
 
-		private File file;
-
-
 		[Test]
 		public void AddComment ()
 		{
