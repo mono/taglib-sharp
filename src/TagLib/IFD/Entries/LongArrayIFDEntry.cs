@@ -24,13 +24,10 @@
 
 namespace TagLib.IFD.Entries
 {
-	public class LongArrayIFDEntry : ArrayIFDEntry<LongIFDEntry>
+	public class LongArrayIFDEntry : ArrayIFDEntry<uint>
 	{
-		public LongArrayIFDEntry (ushort tag, uint [] data) : base (tag)
+		public LongArrayIFDEntry (ushort tag, uint [] values) : base (tag)
 		{
-			LongIFDEntry [] values = new LongIFDEntry [data.Length];
-			for (int i = 0; i < data.Length; i++)
-				values [i] = new LongIFDEntry (tag, data [i]);
 			Values = values;
 		}
 
@@ -40,8 +37,8 @@ namespace TagLib.IFD.Entries
 			count = (uint) Values.Length;
 
 			ByteVector data = new ByteVector ();
-			foreach (LongIFDEntry entry in Values)
-				data.Add (ByteVector.FromUInt (entry.Value, is_bigendian));
+			foreach (uint value in Values)
+				data.Add (ByteVector.FromUInt (value, is_bigendian));
 
 			return data;
 		}

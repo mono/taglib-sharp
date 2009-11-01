@@ -91,9 +91,9 @@ namespace TagLib.Tests.FileFormats
 				Assert.IsFalse (entry == null);
 				Assert.AreEqual ((ushort) IFDEntryTag.BitsPerSample, entry.Tag);
 				Assert.AreEqual (3, entry.Values.Length);
-				Assert.AreEqual (8, entry.Values [0].Value);
-				Assert.AreEqual (8, entry.Values [1].Value);
-				Assert.AreEqual (8, entry.Values [2].Value);
+				Assert.AreEqual (8, entry.Values [0]);
+				Assert.AreEqual (8, entry.Values [1]);
+				Assert.AreEqual (8, entry.Values [2]);
 			}
 			{
 				var entry = entries [4] as ShortIFDEntry;
