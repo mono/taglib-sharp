@@ -76,7 +76,6 @@ namespace TagLib.Tests.Images
 
 			var exif_ifd = tag.Structure.GetEntry(0, IFDEntryTag.ExifIFD) as SubIFDEntry;
 			Assert.IsFalse (exif_ifd == null);
-			var exif_tag = exif_ifd.Structure;
 
 			Assert.AreEqual ("Panasonic", tag.Make);
 			Assert.AreEqual ("DMC-FX35", tag.Model);

@@ -145,7 +145,7 @@ namespace TagLib.Tests.Collections
                 1, 255, 254, 73, 0, 68, 0, 51, 0, 71, 0, 58, 0, 32, 0, 50, 0, 55, 0, 0, 0);
 
             var encoding = (StringType) vector [0];
-            var language = vector.ToString (StringType.Latin1, 1, 3);
+            //var language = vector.ToString (StringType.Latin1, 1, 3);
             var split = vector.ToStrings (encoding, 4, 3);
             Assert.AreEqual (2, split.Length);
         }
