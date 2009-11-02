@@ -331,7 +331,7 @@ namespace TagLib.Image
 		///    image was taken.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the longitude ranging from 0
+		///    A <see cref="double" /> with the longitude ranging from -180.0
 		///    to +180.0 degrees.
 		/// </value>
 		public override double Longitude {

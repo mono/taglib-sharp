@@ -280,6 +280,9 @@ namespace TagLib.IFD
 					return 0.0d;
 
 				Rational [] values  = degree_entry.Values;
+				if (values.Length != 3)
+					return 0.0d;
+
 				double deg = values[0] + values[1] / 60.0d + values[2] / 3600.0d;
 
 				if (ref_entry.Value == "S")
@@ -296,18 +299,10 @@ namespace TagLib.IFD
 
 				gps_ifd.SetStringValue (0, (ushort) GPSEntryTag.GPSLatitudeRef, value < 0 ? "S" : "N");
 
-				double abs = Math.Abs (value);
-				uint deg = (uint) Math.Floor (abs);
-				uint min = (uint) ((abs - Math.Floor (abs)) * 60.0);
-				uint sec = (uint) ((abs - Math.Floor (abs) - (min / 60.0))  * 360000000.0);
-
-				Rational[] rationals = new Rational [] {
-					new Rational (deg, 1),
-					new Rational (min, 1),
-					new Rational (sec, 100000)
-				};
-
-				gps_ifd.SetEntry (0, new RationalArrayIFDEntry ((ushort) GPSEntryTag.GPSLatitude, rationals));
+				var entry =
+					new RationalArrayIFDEntry ((ushort) GPSEntryTag.GPSLatitude,
+					                           DegreeToRationals (Math.Abs (value)));
+				gps_ifd.SetEntry (0, entry);
 			}
 		}
 
@@ -316,7 +311,7 @@ namespace TagLib.IFD
 		///    image was taken.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the longitude ranging from 0
+		///    A <see cref="double" /> with the longitude ranging from -180.0
 		///    to +180.0 degrees.
 		/// </value>
 		public override double Longitude {
@@ -332,34 +327,23 @@ namespace TagLib.IFD
 				double deg = values[0] + values[1] / 60.0d + values[2] / 3600.0d;
 
 				if (ref_entry.Value == "W")
-					deg = 180.0d + (-1.0d * deg);
+					deg *= -1.0d;
 
-				return Math.Max (Math.Min (deg, 180.0d), 0.0d);
+				return Math.Max (Math.Min (deg, 180.0d), -180.0d);
 			}
 			set {
-				if (value < 0.0d || value > 180.0d)
+				if (value < -180.0d || value > 180.0d)
 					throw new ArgumentException ("value");
 
 				InitGpsDirectory ();
 				var gps_ifd = GPSIFD;
 
-				if (value >= 90.0d)
-					value = value - 180.0d;
-
 				gps_ifd.SetStringValue (0, (ushort) GPSEntryTag.GPSLongitudeRef, value < 0 ? "W" : "E");
 
-				double abs = Math.Abs (value);
-				uint deg = (uint) Math.Floor (abs);
-				uint min = (uint) ((abs - Math.Floor (abs)) * 60.0);
-				uint sec = (uint) ((abs - Math.Floor (abs) - (min / 60.0))  * 360000000.0);
-
-				Rational[] rationals = new Rational [] {
-					new Rational (deg, 1),
-					new Rational (min, 1),
-					new Rational (sec, 100000)
-				};
-
-				gps_ifd.SetEntry (0, new RationalArrayIFDEntry ((ushort) GPSEntryTag.GPSLongitude, rationals));
+				var entry =
+					new RationalArrayIFDEntry ((ushort) GPSEntryTag.GPSLongitude,
+					                           DegreeToRationals (Math.Abs (value)));
+				gps_ifd.SetEntry (0, entry);
 			}
 		}
 
@@ -465,6 +449,36 @@ namespace TagLib.IFD
 		{
 			GPSIFD.SetStringValue (0, (ushort) GPSEntryTag.GPSVersionID, "2 0 0 0");
 			GPSIFD.SetStringValue (0, (ushort) GPSEntryTag.GPSMapDatum, "WGS-84");
+		}
+
+		/// <summary>
+		///    Converts a given (positive) angle value to three rationals like they
+		///    are used to store an angle for GPS data.
+		/// </summary>
+		/// <param name="angle">
+		///    A <see cref="System.Double"/> between 0.0d and 180.0d with the angle
+		///    in degrees
+		/// </param>
+		/// <returns>
+		///    A <see cref="Rational"/> representing the same angle by degree, minutes
+		///    and seconds of the angle.
+		/// </returns>
+		private Rational[] DegreeToRationals (double angle)
+		{
+			if (angle < 0.0 || angle > 180.0)
+				throw new ArgumentException ("angle");
+
+			uint deg = (uint) Math.Floor (angle);
+			uint min = (uint) ((angle - Math.Floor (angle)) * 60.0);
+			uint sec = (uint) ((angle - Math.Floor (angle) - (min / 60.0))  * 360000000.0);
+
+			Rational[] rationals = new Rational [] {
+				new Rational (deg, 1),
+				new Rational (min, 1),
+				new Rational (sec, 100000)
+			};
+
+			return rationals;
 		}
 
 #endregion

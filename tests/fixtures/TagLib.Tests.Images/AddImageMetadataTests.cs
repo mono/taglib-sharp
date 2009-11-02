@@ -50,10 +50,10 @@ namespace TagLib.Tests.Images
 
 		public static void AddGPSTest (string sample_file, string tmp_file, bool contains_tiff)
 		{
-			AddGPSTest (sample_file, tmp_file, contains_tiff, +53.231d, +8.98712d);
+			AddGPSTest (sample_file, tmp_file, contains_tiff, +53.231d, +168.19823d);
 			AddGPSTest (sample_file, tmp_file, contains_tiff, -21.342d, +88.18232d);
-			AddGPSTest (sample_file, tmp_file, contains_tiff, +75.12931d, +168.19823d);
-			AddGPSTest (sample_file, tmp_file, contains_tiff, -42.1023d, +113.12432d);
+			AddGPSTest (sample_file, tmp_file, contains_tiff, +75.12931d, -8.98712d);
+			AddGPSTest (sample_file, tmp_file, contains_tiff, -42.1023d, -113.12432d);
 		}
 
 		private static void AddGPSTest (string sample_file, string tmp_file, bool contains_tiff, double latitude, double longitude)
