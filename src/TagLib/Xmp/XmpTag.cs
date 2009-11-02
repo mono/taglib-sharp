@@ -149,6 +149,7 @@ namespace TagLib.Xmp
 			NodeTree = ParseRDF (node);
 			NodeTree.Accept (new NodeIndexVisitor (this));
 			//NodeTree.Dump ();
+			//Console.WriteLine (node.OuterXml);
 		}
 
 #endregion
@@ -244,7 +245,7 @@ namespace TagLib.Xmp
 			} else {
 				bool has_other = false;
 				foreach (XmlAttribute attr in node.Attributes) {
-					if (attr.Is (XML_NS, LANG_URI) || attr.Is (RDF_NS, ID_URI))
+					if (attr.Is (XML_NS, LANG_URI) || attr.Is (RDF_NS, ID_URI) || attr.In (XMLNS_NS))
 						continue;
 					has_other = true;
 					break;
@@ -300,11 +301,11 @@ namespace TagLib.Xmp
 			foreach (XmlAttribute attr in node.Attributes) {
 				if (attr.Is (XML_NS, LANG_URI)) {
 					new_node.AddQualifier (new XmpNode (node.NamespaceURI, node.LocalName, attr.InnerText));
-				} else if (attr.Is (RDF_NS, ID_URI)) {
+				} else if (attr.Is (RDF_NS, ID_URI) || attr.In (XMLNS_NS)) {
 					continue;
 				}
 
-				throw new CorruptFileException ("Invalid attribute");
+				throw new CorruptFileException (String.Format ("Invalid attribute: {0}", attr.OuterXml));
 			}
 
 			bool has_xml_children = false;
@@ -345,7 +346,7 @@ namespace TagLib.Xmp
 			if (!node.IsPropertyElement ())
 				throw new CorruptFileException ("Invalid property");
 			if (node.HasChildNodes)
-				throw new CorruptFileException ("Can't have content in this node!");
+				throw new CorruptFileException (String.Format ("Can't have content in this node! Node: {0}", node.OuterXml));
 
 			var rdf_value = node.Attributes.GetNamedItem (VALUE_URI, RDF_NS) as XmlAttribute;
 			var rdf_resource = node.Attributes.GetNamedItem (RESOURCE_URI, RDF_NS) as XmlAttribute;

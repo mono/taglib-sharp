@@ -28,6 +28,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/JpegEmptyTest.cs \
 	fixtures/TagLib.Tests.Images/JpegCanonZoombrowserTest.cs \
 	fixtures/TagLib.Tests.Images/JpegPanasonicTest.cs \
+	fixtures/TagLib.Tests.Images/XmpCrashTest.cs \
 	fixtures/TagLib.Tests.Images/Utils.cs \
 	fixtures/TagLib.Tests.Performance/PerformanceTest.cs \
 	fixtures/TagLib.Tests.TaggingFormats/ApeTest.cs \
