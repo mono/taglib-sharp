@@ -170,7 +170,7 @@ namespace TagLib.Image
 			get { return 0.0d; }
 		}
 
-		//// <summary>
+		/// <summary>
 		///    Gets the ISO speed the image, the current instance belongs
 		///    to, was taken with.
 		/// </summary>

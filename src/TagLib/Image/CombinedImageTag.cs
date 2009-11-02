@@ -396,7 +396,7 @@ namespace TagLib.Image
 			}
 		}
 
-		//// <summary>
+		/// <summary>
 		///    Gets the FNumber the image, the current instance belongs
 		///    to, was taken with.
 		/// </summary>
