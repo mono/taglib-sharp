@@ -33,19 +33,6 @@ namespace TagLib.Image
 #region Public Properties
 
 		/// <summary>
-		///    Gets or sets the comment for the image described
-		///    by the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="string" /> containing the comment of the
-		///    current instace.
-		/// </value>
-		public override string Comment {
-			get { return null; }
-			set {}
-		}
-
-		/// <summary>
 		///    Gets or sets the keywords for the image described
 		///    by the current instance.
 		/// </summary>
