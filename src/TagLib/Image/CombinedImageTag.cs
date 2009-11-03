@@ -353,11 +353,11 @@ namespace TagLib.Image
 
 		/// <summary>
 		///    Gets or sets the altitude of the GPS coordinate the current
-		///    image was taken.
+		///    image was taken. The unit is meter.
 		/// </summary>
 		/// <value>
-		///    A <see cref="System.Nullable"/> with the altitude ranging from -90.0
-		///    to +90.0 degrees.
+		///    A <see cref="System.Nullable"/> with the altitude. A positive value
+		///    is above sea level, a negative one below sea level. The unit is meter.
 		/// </value>
 		public override double? Altitude {
 			get {

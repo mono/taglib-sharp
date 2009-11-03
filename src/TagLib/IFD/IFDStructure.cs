@@ -203,6 +203,16 @@ namespace TagLib.IFD
 			return null;
 		}
 
+		public byte? GetByteValue (int directory, ushort entry_tag)
+		{
+			var entry = GetEntry (directory, entry_tag);
+
+			if (entry != null && entry is ByteIFDEntry)
+				return (entry as ByteIFDEntry).Value;
+
+			return null;
+		}
+
 		public uint? GetLongValue (int directory, ushort entry_tag)
 		{
 			var entry = GetEntry (directory, entry_tag);
@@ -246,6 +256,28 @@ namespace TagLib.IFD
 		public void SetStringValue (int directory, ushort entry_tag, string value)
 		{
 			SetEntry (directory, new StringIFDEntry (entry_tag, value));
+		}
+
+		public void SetByteValue (int directory, ushort entry_tag, byte? value)
+		{
+			if (value == null) {
+				RemoveTag (directory, entry_tag);
+				return;
+			}
+
+			SetEntry (directory, new ByteIFDEntry (entry_tag, value.Value));
+		}
+
+		public void SetRationalValue (int directory, ushort entry_tag, double value)
+		{
+			if (value < 0.0d || value > (double)UInt32.MaxValue)
+				throw new ArgumentException ("value");
+
+			uint scale = (value >= 1.0d) ? 1 : UInt32.MaxValue;
+
+			Rational rational = new Rational ((uint) (scale * value), scale);
+
+			SetEntry (directory, new RationalIFDEntry (entry_tag, rational));
 		}
 
 		public void SetDateTimeValue (int directory, ushort entry_tag, DateTime? value)

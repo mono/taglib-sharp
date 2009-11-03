@@ -274,9 +274,9 @@ namespace TagLib.IFD
 			get {
 				var gps_ifd = GPSIFD;
 				var degree_entry = gps_ifd.GetEntry (0, (ushort) GPSEntryTag.GPSLatitude) as RationalArrayIFDEntry;
-				var ref_entry = gps_ifd.GetEntry (0, (ushort) GPSEntryTag.GPSLatitudeRef) as StringIFDEntry;
+				var degree_ref = gps_ifd.GetStringValue (0, (ushort) GPSEntryTag.GPSLatitudeRef);
 
-				if (degree_entry == null || ref_entry == null)
+				if (degree_entry == null || degree_ref == null)
 					return null;
 
 				Rational [] values  = degree_entry.Values;
@@ -285,7 +285,7 @@ namespace TagLib.IFD
 
 				double deg = values[0] + values[1] / 60.0d + values[2] / 3600.0d;
 
-				if (ref_entry.Value == "S")
+				if (degree_ref == "S")
 					deg *= -1.0d;
 
 				return Math.Max (Math.Min (deg, 90.0d), -90.0d);
@@ -327,9 +327,9 @@ namespace TagLib.IFD
 			get {
 				var gps_ifd = GPSIFD;
 				var degree_entry = gps_ifd.GetEntry (0, (ushort) GPSEntryTag.GPSLongitude) as RationalArrayIFDEntry;
-				var ref_entry = gps_ifd.GetEntry (0, (ushort) GPSEntryTag.GPSLongitudeRef) as StringIFDEntry;
+				var degree_ref = gps_ifd.GetStringValue (0, (ushort) GPSEntryTag.GPSLongitudeRef);
 
-				if (degree_entry == null || ref_entry == null)
+				if (degree_entry == null || degree_ref == null)
 					return null;
 
 				Rational [] values  = degree_entry.Values;
@@ -338,7 +338,7 @@ namespace TagLib.IFD
 
 				double deg = values[0] + values[1] / 60.0d + values[2] / 3600.0d;
 
-				if (ref_entry.Value == "W")
+				if (degree_ref == "W")
 					deg *= -1.0d;
 
 				return Math.Max (Math.Min (deg, 180.0d), -180.0d);
@@ -370,15 +370,42 @@ namespace TagLib.IFD
 
 		/// <summary>
 		///    Gets or sets the altitude of the GPS coordinate the current
-		///    image was taken.
+		///    image was taken. The unit is meter.
 		/// </summary>
 		/// <value>
-		///    A <see cref="System.Nullable"/> with the altitude ranging from -90.0
-		///    to +90.0 degrees.
+		///    A <see cref="System.Nullable"/> with the altitude. A positive value
+		///    is above sea level, a negative one below sea level. The unit is meter.
 		/// </value>
 		public virtual double? Altitude {
-			get { return null; }
-			set {}
+			get {
+				var gps_ifd = GPSIFD;
+				var altitude = gps_ifd.GetRationalValue (0, (ushort) GPSEntryTag.GPSAltitude);
+				var ref_entry = gps_ifd.GetByteValue (0, (ushort) GPSEntryTag.GPSAltitudeRef);
+
+				if (altitude == null || ref_entry == null)
+					return null;
+
+				if (ref_entry.Value == 1)
+					altitude *= -1.0d;
+
+				return altitude;
+			}
+			set {
+				var gps_ifd = GPSIFD;
+
+				if (value == null) {
+					gps_ifd.RemoveTag (0, (ushort) GPSEntryTag.GPSAltitudeRef);
+					gps_ifd.RemoveTag (0, (ushort) GPSEntryTag.GPSAltitude);
+					return;
+				}
+
+				double altitude = value.Value;
+
+				InitGpsDirectory ();
+
+				gps_ifd.SetByteValue (0, (ushort) GPSEntryTag.GPSAltitudeRef, (byte)(altitude < 0 ? 1 : 0));
+				gps_ifd.SetRationalValue (0, (ushort) GPSEntryTag.GPSAltitude, Math.Abs (altitude));
+			}
 		}
 
 		/// <summary>
