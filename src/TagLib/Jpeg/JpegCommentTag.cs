@@ -61,6 +61,19 @@ namespace TagLib.Jpeg
 		/// </summary>
 		public string Value { get; set; }
 
+		/// <summary>
+		///    Gets or sets the comment for the image described
+		///    by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the comment of the
+		///    current instace.
+		/// </value>
+		public override string Comment {
+			get { return Value; }
+			set { Value = value; }
+		}
+
 #endregion
 
 #region Public Methods
