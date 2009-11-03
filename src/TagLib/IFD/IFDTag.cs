@@ -214,8 +214,8 @@ namespace TagLib.IFD
 				data.Add (COMMENT_UNICODE_CODE);
 				data.Add (ByteVector.FromString (value, StringType.UTF8));
 
-				ExifIFD.SetEntry (0, new UndefinedIFDEntry ((ushort)ExifEntryTag.UserComment, data));
-				Structure.SetEntry (0, new StringIFDEntry ((ushort)IFDEntryTag.ImageDescription, value));
+				ExifIFD.SetEntry (0, new UndefinedIFDEntry ((ushort) ExifEntryTag.UserComment, data));
+				Structure.SetEntry (0, new StringIFDEntry ((ushort) IFDEntryTag.ImageDescription, value));
 			}
 		}
 
@@ -242,7 +242,12 @@ namespace TagLib.IFD
 				return ExifIFD.GetDateTimeValue (0, (ushort) ExifEntryTag.DateTimeOriginal);
 			}
 			set {
-				ExifIFD.SetDateTimeValue (0, (ushort) ExifEntryTag.DateTimeOriginal, value);
+				if (value == null) {
+					ExifIFD.RemoveTag (0, (ushort) ExifEntryTag.DateTimeOriginal);
+					return;
+				}
+
+				ExifIFD.SetDateTimeValue (0, (ushort) ExifEntryTag.DateTimeOriginal, value.Value);
 			}
 		}
 
@@ -258,7 +263,12 @@ namespace TagLib.IFD
 				return ExifIFD.GetDateTimeValue (0, (ushort) ExifEntryTag.DateTimeDigitized);
 			}
 			set {
-				ExifIFD.SetDateTimeValue (0, (ushort) ExifEntryTag.DateTimeDigitized, value);
+				if (value == null) {
+					ExifIFD.RemoveTag (0, (ushort) ExifEntryTag.DateTimeDigitized);
+					return;
+				}
+
+				ExifIFD.SetDateTimeValue (0, (ushort) ExifEntryTag.DateTimeDigitized, value.Value);
 			}
 		}
 

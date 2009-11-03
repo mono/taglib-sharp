@@ -193,6 +193,22 @@ namespace TagLib.IFD
 			return GetEntry (directory, (ushort) entry_tag);
 		}
 
+		/// <summary>
+		///    Returns the <see cref="System.String"/> stored in the
+		///    entry defined by <paramref name="entry_tag"/>.
+		/// </summary>
+		/// <param name="directory">
+		///    A <see cref="System.Int32"/> with the number of the directory
+		///    to search for the entry.
+		/// </param>
+		/// <param name="entry_tag">
+		///    A <see cref="System.UInt16"/> with the tag of the entry
+		/// </param>
+		/// <returns>
+		///    A <see cref="System.String"/> with the value stored in the entry
+		///    or <see langword="null" /> if no such entry is contained or it
+		///    does not contain a <see cref="System.String"/> value.
+		/// </returns>
 		public string GetStringValue (int directory, ushort entry_tag)
 		{
 			var entry = GetEntry (directory, entry_tag);
@@ -203,6 +219,24 @@ namespace TagLib.IFD
 			return null;
 		}
 
+		/// <summary>
+		///    Returns a <see cref="System.Nullable"/> containing the
+		///    <see cref="System.Byte"/> stored in the entry defined
+		///    by <paramref name="entry_tag"/>.
+		/// </summary>
+		/// <param name="directory">
+		///    A <see cref="System.Int32"/> with the number of the directory
+		///    to search for the entry.
+		/// </param>
+		/// <param name="entry_tag">
+		///    A <see cref="System.UInt16"/> with the tag of the entry
+		/// </param>
+		/// <returns>
+		///    A <see cref="System.Nullable"/> containing the
+		///    <see cref="System.Byte"/> stored in the entry, or
+		///    <see langword="null" /> if no such entry is contained or it
+		///    does not contain a <see cref="System.Byte"/> value.
+		/// </returns>
 		public byte? GetByteValue (int directory, ushort entry_tag)
 		{
 			var entry = GetEntry (directory, entry_tag);
@@ -213,6 +247,24 @@ namespace TagLib.IFD
 			return null;
 		}
 
+		/// <summary>
+		///    Returns a <see cref="System.Nullable"/> containing the
+		///    <see cref="System.UInt32"/> stored in the entry defined
+		///    by <paramref name="entry_tag"/>.
+		/// </summary>
+		/// <param name="directory">
+		///    A <see cref="System.Int32"/> with the number of the directory
+		///    to search for the entry.
+		/// </param>
+		/// <param name="entry_tag">
+		///    A <see cref="System.UInt16"/> with the tag of the entry
+		/// </param>
+		/// <returns>
+		///    A <see cref="System.Nullable"/> containing the
+		///    <see cref="System.UInt32"/> stored in the entry, or
+		///    <see langword="null" /> if no such entry is contained or it
+		///    does not contain a <see cref="System.UInt32"/> value.
+		/// </returns>
 		public uint? GetLongValue (int directory, ushort entry_tag)
 		{
 			var entry = GetEntry (directory, entry_tag);
@@ -226,6 +278,25 @@ namespace TagLib.IFD
 			return null;
 		}
 
+		/// <summary>
+		///    Returns a <see cref="System.Nullable"/> containing the
+		///    <see cref="System.Double"/> stored in the entry defined
+		///    by <paramref name="entry_tag"/>. The entry can be of type
+		///    <see cref="Entries.RationalIFDEntry"/> or
+		///    <see cref="Entries.SRationalIFDEntry"/>
+		/// </summary>
+		/// <param name="directory">
+		///    A <see cref="System.Int32"/> with the number of the directory
+		///    to search for the entry.
+		/// </param>
+		/// <param name="entry_tag">
+		///    A <see cref="System.UInt16"/> with the tag of the entry
+		/// </param>
+		/// <returns>
+		///    A <see cref="System.Nullable"/> containing the
+		///    <see cref="System.Double"/> stored in the entry, or
+		///    <see langword="null" /> if no such entry is contained.
+		/// </returns>
 		public double? GetRationalValue (int directory, ushort entry_tag)
 		{
 			var entry = GetEntry (directory, entry_tag);
@@ -239,6 +310,26 @@ namespace TagLib.IFD
 			return null;
 		}
 
+		/// <summary>
+		///    Returns a <see cref="System.Nullable"/> containing the
+		///    <see cref="System.DateTime"/> stored in the entry defined
+		///    by <paramref name="entry_tag"/>. The entry must be of type
+		///    <see cref="Entries.StringIFDEntry"/> and contain an datestring
+		///    according to the Exif specification.
+		/// </summary>
+		/// <param name="directory">
+		///    A <see cref="System.Int32"/> with the number of the directory
+		///    to search for the entry.
+		/// </param>
+		/// <param name="entry_tag">
+		///    A <see cref="System.UInt16"/> with the tag of the entry
+		/// </param>
+		/// <returns>
+		///    A <see cref="System.Nullable"/> containing the
+		///    <see cref="System.DateTime"/> stored in the entry, or
+		///    <see langword="null" /> if no such entry is contained or it
+		///    does not contain a valid value.
+		/// </returns>
 		public DateTime? GetDateTimeValue (int directory, ushort entry_tag)
 		{
 			string date_string = GetStringValue (directory, entry_tag);
@@ -253,21 +344,65 @@ namespace TagLib.IFD
 			return null;
 		}
 
+		/// <summary>
+		///    Adds a <see cref="Entries.StringIFDEntry"/> to the directory with tag
+		///    given by <paramref name="entry_tag"/> and value given by <paramref name="value"/>
+		/// </summary>
+		/// <param name="directory">
+		///    A <see cref="System.Int32"/> with the number of the directory
+		///    to add the entry to.
+		/// </param>
+		/// <param name="entry_tag">
+		///    A <see cref="System.UInt16"/> with the tag of the entry
+		/// </param>
+		/// <param name="value">
+		///    A <see cref="System.String"/> with the value to add. If it is <see langword="null" />
+		///    an possibly already contained entry is removed for given tag.
+		/// </param>
 		public void SetStringValue (int directory, ushort entry_tag, string value)
-		{
-			SetEntry (directory, new StringIFDEntry (entry_tag, value));
-		}
-
-		public void SetByteValue (int directory, ushort entry_tag, byte? value)
 		{
 			if (value == null) {
 				RemoveTag (directory, entry_tag);
 				return;
 			}
 
-			SetEntry (directory, new ByteIFDEntry (entry_tag, value.Value));
+			SetEntry (directory, new StringIFDEntry (entry_tag, value));
 		}
 
+		/// <summary>
+		///    Adds a <see cref="Entries.ByteIFDEntry"/> to the directory with tag
+		///    given by <paramref name="entry_tag"/> and value given by <paramref name="value"/>
+		/// </summary>
+		/// <param name="directory">
+		///    A <see cref="System.Int32"/> with the number of the directory
+		///    to add the entry to.
+		/// </param>
+		/// <param name="entry_tag">
+		///    A <see cref="System.UInt16"/> with the tag of the entry
+		/// </param>
+		/// <param name="value">
+		///    A <see cref="System.Byte"/> with the value to add.
+		/// </param>
+		public void SetByteValue (int directory, ushort entry_tag, byte value)
+		{
+			SetEntry (directory, new ByteIFDEntry (entry_tag, value));
+		}
+
+		/// <summary>
+		///    Adds a <see cref="Entries.RationalIFDEntry"/> to the directory with tag
+		///    given by <paramref name="entry_tag"/> and value given by <paramref name="value"/>
+		/// </summary>
+		/// <param name="directory">
+		///    A <see cref="System.Int32"/> with the number of the directory
+		///    to add the entry to.
+		/// </param>
+		/// <param name="entry_tag">
+		///    A <see cref="System.UInt16"/> with the tag of the entry
+		/// </param>
+		/// <param name="value">
+		///    A <see cref="System.Double"/> with the value to add. It must be possible to
+		///    represent the value by a <see cref="Entries.Rational">.
+		/// </param>
 		public void SetRationalValue (int directory, ushort entry_tag, double value)
 		{
 			if (value < 0.0d || value > (double)UInt32.MaxValue)
@@ -280,14 +415,24 @@ namespace TagLib.IFD
 			SetEntry (directory, new RationalIFDEntry (entry_tag, rational));
 		}
 
-		public void SetDateTimeValue (int directory, ushort entry_tag, DateTime? value)
+		/// <summary>
+		///    Adds a <see cref="Entries.StringIFDEntry"/> to the directory with tag
+		///    given by <paramref name="entry_tag"/> and value given by <paramref name="value"/>.
+		///    The value is stored as a date string according to the Exif specification.
+		/// </summary>
+		/// <param name="directory">
+		///    A <see cref="System.Int32"/> with the number of the directory
+		///    to add the entry to.
+		/// </param>
+		/// <param name="entry_tag">
+		///    A <see cref="System.UInt16"/> with the tag of the entry
+		/// </param>
+		/// <param name="value">
+		///    A <see cref="DateTime"/> with the value to add.
+		/// </param>
+		public void SetDateTimeValue (int directory, ushort entry_tag, DateTime value)
 		{
-			if (value == null) {
-				RemoveTag (directory, entry_tag);
-				return;
-			}
-
-			string date_string = value.Value.ToString (DATETIME_FORMAT);
+			string date_string = value.ToString (DATETIME_FORMAT);
 
 			SetStringValue (directory, entry_tag, date_string);
 		}
