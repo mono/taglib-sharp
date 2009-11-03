@@ -63,11 +63,11 @@ namespace TagLib.Image
 		///    by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="uint" /> containing the rating of the
+		///    A <see cref="System.Nullable"/> containing the rating of the
 		///    current instace.
 		/// </value>
-		public virtual uint Rating {
-			get { return 0; }
+		public virtual uint? Rating {
+			get { return null; }
 			set {}
 		}
 

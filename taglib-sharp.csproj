@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <RootNamespace>TagLib</RootNamespace>
@@ -19,6 +20,8 @@
     <FileAlignment>4096</FileAlignment>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -35,6 +38,17 @@
     <DebugSymbols>false</DebugSymbols>
     <DebugType>None</DebugType>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -174,25 +188,157 @@
     <Compile Include="src\TagLib\UnsupportedFormatException.cs" />
     <Compile Include="src\TagLib\WavPack\File.cs" />
     <Compile Include="src\TagLib\WavPack\StreamHeader.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\ByteIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\ByteVectorIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\LongArrayIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\LongIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\Rational.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\RationalArrayIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\RationalIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\SByteIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\ShortArrayIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\ShortIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\SLongIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\SRational.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\SRationalIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\StringIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\SubIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\ThumbnailDataIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\UndefinedIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\IFDDirectory.cs" />
+    <Compile Include="src\TagLib\IFD\IFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\IFDEntryTag.cs" />
+    <Compile Include="src\TagLib\IFD\IFDEntryType.cs" />
+    <Compile Include="src\TagLib\IFD\IFDReader.cs" />
+    <Compile Include="src\TagLib\IFD\IFDRenderer.cs" />
+    <Compile Include="src\TagLib\IFD\IFDStructure.cs" />
+    <Compile Include="src\TagLib\IFD\IFDTag.cs" />
+    <Compile Include="src\TagLib\Image\Codec.cs" />
+    <Compile Include="src\TagLib\Image\CombinedImageTag.cs" />
+    <Compile Include="src\TagLib\Image\File.cs" />
+    <Compile Include="src\TagLib\Image\ImageTag.cs" />
+    <Compile Include="src\TagLib\Jpeg\Codec.cs" />
+    <Compile Include="src\TagLib\Jpeg\File.cs" />
+    <Compile Include="src\TagLib\Jpeg\JpegCommentTag.cs" />
+    <Compile Include="src\TagLib\Jpeg\Marker.cs" />
+    <Compile Include="src\TagLib\Tiff\Codec.cs" />
+    <Compile Include="src\TagLib\Tiff\File.cs" />
+    <Compile Include="src\TagLib\Xmp\XmlNodeExtensions.cs" />
+    <Compile Include="src\TagLib\Xmp\XmpNode.cs" />
+    <Compile Include="src\TagLib\Xmp\XmpNodeVisitor.cs" />
+    <Compile Include="src\TagLib\Xmp\XmpTag.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Collections\ByteVectorCollectionTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Collections\ByteVectorTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Collections\StringCollectionTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\AacFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\AiffFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\AsfFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\AviFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\FlacFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\Id3BothFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\Id3V1FormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\Id3V2FormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\IFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\JpegFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\M4aFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\MpcFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\OggFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\StandardTests.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\TiffFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\AddImageMetadataTests.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\JpegCanonZoombrowserTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\JpegEmptyTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\JpegPanasonicTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\Utils.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\XmpCrashTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Performance\PerformanceTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\ApeTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\AsfTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\DivXTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\Id3V1Test.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\Id3V2Test.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\InfoTagTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\MovieIdTagTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\Mpeg4Test.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\XiphTest.cs" />
+    <Compile Include="tests\fixtures\Helpers.cs" />
+    <Compile Include="tests\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src" />
-    <Folder Include="src\TagLib" />
-    <Folder Include="src\TagLib\Aiff" />
-    <Folder Include="src\TagLib\Ape" />
-    <Folder Include="src\TagLib\Asf" />
-    <Folder Include="src\TagLib\Flac" />
-    <Folder Include="src\TagLib\Id3v1" />
-    <Folder Include="src\TagLib\Id3v2" />
-    <Folder Include="src\TagLib\Id3v2\Frames" />
-    <Folder Include="src\TagLib\Mpc" />
-    <Folder Include="src\TagLib\Mpeg" />
-    <Folder Include="src\TagLib\Mpeg4" />
-    <Folder Include="src\TagLib\Mpeg4\Boxes" />
-    <Folder Include="src\TagLib\Ogg" />
-    <Folder Include="src\TagLib\Ogg\Codecs" />
-    <Folder Include="src\TagLib\Riff" />
+    <Folder Include="src\" />
+    <Folder Include="src\TagLib\" />
+    <Folder Include="src\TagLib\" />
+    <Folder Include="src\TagLib\" />
+    <Folder Include="src\TagLib\" />
+    <Folder Include="src\TagLib\" />
+    <Folder Include="src\TagLib\" />
+    <Folder Include="src\TagLib\Id3v2\" />
+    <Folder Include="src\TagLib\" />
+    <Folder Include="src\TagLib\" />
+    <Folder Include="src\TagLib\" />
+    <Folder Include="src\TagLib\Mpeg4\" />
+    <Folder Include="src\TagLib\" />
+    <Folder Include="src\TagLib\Ogg\" />
+    <Folder Include="src\TagLib\" />
     <Content Include="taglib-sharp.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <ItemGroup>
+    <None Include="tests\samples\corrupt\a.aac" />
+    <None Include="tests\samples\corrupt\a.aif" />
+    <None Include="tests\samples\corrupt\a.ape" />
+    <None Include="tests\samples\corrupt\a.flac" />
+    <None Include="tests\samples\corrupt\a.m4a" />
+    <None Include="tests\samples\corrupt\a.mp3" />
+    <None Include="tests\samples\corrupt\a.mpc" />
+    <None Include="tests\samples\corrupt\a.ogg" />
+    <None Include="tests\samples\corrupt\a.wma" />
+    <None Include="tests\samples\corrupt\null_title_v2.mp3" />
+    <None Include="tests\samples\unsupported\sample.it" />
+    <None Include="tests\samples\unsupported\sample.mod" />
+    <None Include="tests\samples\unsupported\sample.s3m" />
+    <None Include="tests\samples\unsupported\sample.xm" />
+    <None Include="tests\samples\LICENSE" />
+    <None Include="tests\samples\sample.aac" />
+    <None Include="tests\samples\sample.aif" />
+    <None Include="tests\samples\sample.ape" />
+    <None Include="tests\samples\sample.avi" />
+    <None Include="tests\samples\sample.flac" />
+    <None Include="tests\samples\sample.jpg" />
+    <None Include="tests\samples\sample.m4a" />
+    <None Include="tests\samples\sample.mpc" />
+    <None Include="tests\samples\sample.ogg" />
+    <None Include="tests\samples\sample.tiff" />
+    <None Include="tests\samples\sample.wma" />
+    <None Include="tests\samples\sample_both.mp3" />
+    <None Include="tests\samples\sample_canon_zoombrowser.jpg" />
+    <None Include="tests\samples\sample_no_metadata.jpg" />
+    <None Include="tests\samples\sample_panasonic.jpg" />
+    <None Include="tests\samples\sample_v1_only.mp3" />
+    <None Include="tests\samples\sample_v2_only.mp3" />
+    <None Include="tests\samples\sample_xmpcrash.jpg" />
+    <None Include="tests\samples\tmpwrite.aac" />
+    <None Include="tests\samples\tmpwrite.aif" />
+    <None Include="tests\samples\tmpwrite.avi" />
+    <None Include="tests\samples\tmpwrite.flac" />
+    <None Include="tests\samples\tmpwrite.m4a" />
+    <None Include="tests\samples\tmpwrite.mpc" />
+    <None Include="tests\samples\tmpwrite.ogg" />
+    <None Include="tests\samples\tmpwrite.wma" />
+    <None Include="tests\samples\tmpwrite_both.mp3" />
+    <None Include="tests\samples\tmpwrite_canon_zoombrowser.jpg" />
+    <None Include="tests\samples\tmpwrite_no_metadata.jpg" />
+    <None Include="tests\samples\tmpwrite_panasonic.jpg" />
+    <None Include="tests\samples\tmpwrite_v1_only.mp3" />
+    <None Include="tests\samples\tmpwrite_v2_only.mp3" />
+    <None Include="tests\samples\vector.bin" />
+    <None Include="tests\C:\NUnitPrimaryTrace.txt" />
+    <None Include="tests\Makefile" />
+    <None Include="tests\Makefile.am" />
+    <None Include="tests\Makefile.in" />
+    <None Include="tests\TestResult.xml" />
+    <None Include="tests\tests.dll" />
+    <None Include="tests\tests.dll.mdb" />
+    <None Include="tests\tests.mdp" />
+  </ItemGroup>
 </Project>

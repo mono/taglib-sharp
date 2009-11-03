@@ -207,19 +207,19 @@ namespace TagLib.Image
 		///    by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="uint" /> containing the rating of the
+		///    A <see cref="System.Nullable"/> containing the rating of the
 		///    current instace.
 		/// </value>
-		public override uint Rating {
+		public override uint? Rating {
 			get {
 				foreach (ImageTag tag in AllTags) {
-					uint value = tag.Rating;
+					uint? value = tag.Rating;
 
-					if (value != 0)
+					if (value != null)
 						return value;
 				}
 
-				return 0;
+				return null;
 			}
 			set {
 				foreach (ImageTag tag in AllTags)
