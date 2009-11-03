@@ -232,18 +232,18 @@ namespace TagLib.Image
 		///    belongs to, was taken.
 		/// </summary>
 		/// <value>
-		///    A <see cref="DateTime" /> with the time the image was taken.
+		///    A <see cref="System.Nullable"/> with the time the image was taken.
 		/// </value>
-		public override DateTime DateTime {
+		public override DateTime? DateTime {
 			get {
 				foreach (ImageTag tag in AllTags) {
-					DateTime value = tag.DateTime;
+					DateTime? value = tag.DateTime;
 
-					if (value != DateTime.MinValue)
+					if (value != null)
 						return value;
 				}
 
-				return DateTime.MinValue;
+				return null;
 			}
 			set {
 				foreach (ImageTag tag in AllTags)
@@ -306,19 +306,19 @@ namespace TagLib.Image
 		///    image was taken.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the latitude ranging from -90.0
+		///    A <see cref="System.Nullable"/> with the latitude ranging from -90.0
 		///    to +90.0 degrees.
 		/// </value>
-		public override double Latitude {
+		public override double? Latitude {
 			get {
 				foreach (ImageTag tag in AllTags) {
-					double value = tag.Latitude;
+					double? value = tag.Latitude;
 
-					if (value != 0.0d)
+					if (value != null)
 						return value;
 				}
 
-				return 0.0d;
+				return null;
 			}
 			set {
 				foreach (ImageTag tag in AllTags)
@@ -331,19 +331,19 @@ namespace TagLib.Image
 		///    image was taken.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the longitude ranging from -180.0
+		///    A <see cref="System.Nullable"/> with the longitude ranging from -180.0
 		///    to +180.0 degrees.
 		/// </value>
-		public override double Longitude {
+		public override double? Longitude {
 			get {
 				foreach (ImageTag tag in AllTags) {
-					double value = tag.Longitude;
+					double? value = tag.Longitude;
 
-					if (value != 0.0d)
+					if (value != null)
 						return value;
 				}
 
-				return 0.0d;
+				return null;
 			}
 			set {
 				foreach (ImageTag tag in AllTags)
@@ -356,19 +356,19 @@ namespace TagLib.Image
 		///    image was taken.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the altitude ranging from -90.0
+		///    A <see cref="System.Nullable"/> with the altitude ranging from -90.0
 		///    to +90.0 degrees.
 		/// </value>
-		public override double Altitude {
+		public override double? Altitude {
 			get {
 				foreach (ImageTag tag in AllTags) {
-					double value = tag.Altitude;
+					double? value = tag.Altitude;
 
-					if (value != 0.0d)
+					if (value != null)
 						return value;
 				}
 
-				return 0.0d;
+				return null;
 			}
 			set {
 				foreach (ImageTag tag in AllTags)
@@ -381,18 +381,18 @@ namespace TagLib.Image
 		///    to, was taken with.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the exposure time in seconds.
+		///    A <see cref="System.Nullable"/> with the exposure time in seconds.
 		/// </value>
-		public override double ExposureTime {
+		public override double? ExposureTime {
 			get {
 				foreach (ImageTag tag in AllTags) {
-					double value = tag.ExposureTime;
+					double? value = tag.ExposureTime;
 
-					if (value > 0.0d)
+					if (value != null)
 						return value;
 				}
 
-				return 0.0d;
+				return null;
 			}
 		}
 
@@ -401,18 +401,18 @@ namespace TagLib.Image
 		///    to, was taken with.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the FNumber.
+		///    A <see cref="System.Nullable"/> with the FNumber.
 		/// </value>
-		public override double FNumber {
+		public override double? FNumber {
 			get {
 				foreach (ImageTag tag in AllTags) {
-					double value = tag.FNumber;
+					double? value = tag.FNumber;
 
-					if (value > 0.0d)
+					if (value != null)
 						return value;
 				}
 
-				return 0.0d;
+				return null;
 			}
 		}
 
@@ -421,18 +421,18 @@ namespace TagLib.Image
 		///    to, was taken with.
 		/// </summary>
 		/// <value>
-		///    A <see cref="uint" /> with the ISO speed as defined in ISO 12232.
+		///    A <see cref="System.Nullable"/> with the ISO speed as defined in ISO 12232.
 		/// </value>
-		public override uint ISOSpeedRatings {
+		public override uint? ISOSpeedRatings {
 			get {
 				foreach (ImageTag tag in AllTags) {
-					uint value = tag.ISOSpeedRatings;
+					uint? value = tag.ISOSpeedRatings;
 
-					if (value > 0)
+					if (value != null)
 						return value;
 				}
 
-				return 0;
+				return null;
 			}
 		}
 
@@ -441,18 +441,18 @@ namespace TagLib.Image
 		///    to, was taken with.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the focal length in millimeters.
+		///    A <see cref="System.Nullable"/> with the focal length in millimeters.
 		/// </value>
-		public override double FocalLength {
+		public override double? FocalLength {
 			get {
 				foreach (ImageTag tag in AllTags) {
-					double value = tag.FocalLength;
+					double? value = tag.FocalLength;
 
-					if (value > 0.0d)
+					if (value != null)
 						return value;
 				}
 
-				return 0.0d;
+				return null;
 			}
 		}
 

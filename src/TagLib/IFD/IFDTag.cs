@@ -224,9 +224,9 @@ namespace TagLib.IFD
 		///    belongs to, was taken.
 		/// </summary>
 		/// <value>
-		///    A <see cref="DateTime" /> with the time the image was taken.
+		///    A <see cref="System.Nullable"/> with the time the image was taken.
 		/// </value>
-		public override DateTime DateTime {
+		public override DateTime? DateTime {
 			get { return DateTimeOriginal; }
 			set { DateTimeOriginal = value; }
 		}
@@ -235,9 +235,9 @@ namespace TagLib.IFD
 		///    The time of capturing.
 		/// </summary>
 		/// <value>
-		///    A <see cref="DateTime" /> with the time of capturing.
+		///    A <see cref="System.Nullable"/> with the time of capturing.
 		/// </value>
-		public DateTime DateTimeOriginal {
+		public DateTime? DateTimeOriginal {
 			get {
 				return ExifIFD.GetDateTimeValue (0, (ushort) ExifEntryTag.DateTimeOriginal);
 			}
@@ -251,9 +251,9 @@ namespace TagLib.IFD
 		///    The time of digitization.
 		/// </summary>
 		/// <value>
-		///    A <see cref="DateTime" /> with the time of digitization.
+		///    A <see cref="System.Nullable"/> with the time of digitization.
 		/// </value>
-		public DateTime DateTimeDigitized {
+		public DateTime? DateTimeDigitized {
 			get {
 				return ExifIFD.GetDateTimeValue (0, (ushort) ExifEntryTag.DateTimeDigitized);
 			}
@@ -267,21 +267,21 @@ namespace TagLib.IFD
 		///    image was taken.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the latitude ranging from -90.0
+		///    A <see cref="System.Nullable"/> with the latitude ranging from -90.0
 		///    to +90.0 degrees.
 		/// </value>
-		public override double Latitude {
+		public virtual double? Latitude {
 			get {
 				var gps_ifd = GPSIFD;
 				var degree_entry = gps_ifd.GetEntry (0, (ushort) GPSEntryTag.GPSLatitude) as RationalArrayIFDEntry;
 				var ref_entry = gps_ifd.GetEntry (0, (ushort) GPSEntryTag.GPSLatitudeRef) as StringIFDEntry;
 
 				if (degree_entry == null || ref_entry == null)
-					return 0.0d;
+					return null;
 
 				Rational [] values  = degree_entry.Values;
 				if (values.Length != 3)
-					return 0.0d;
+					return null;
 
 				double deg = values[0] + values[1] / 60.0d + values[2] / 3600.0d;
 
@@ -291,17 +291,26 @@ namespace TagLib.IFD
 				return Math.Max (Math.Min (deg, 90.0d), -90.0d);
 			}
 			set {
-				if (value < -90.0d || value > 90.0d)
+				var gps_ifd = GPSIFD;
+
+				if (value == null) {
+					gps_ifd.RemoveTag (0, (ushort) GPSEntryTag.GPSLatitudeRef);
+					gps_ifd.RemoveTag (0, (ushort) GPSEntryTag.GPSLatitude);
+					return;
+				}
+
+				double angle = value.Value;
+
+				if (angle < -90.0d || angle > 90.0d)
 					throw new ArgumentException ("value");
 
 				InitGpsDirectory ();
-				var gps_ifd = GPSIFD;
 
-				gps_ifd.SetStringValue (0, (ushort) GPSEntryTag.GPSLatitudeRef, value < 0 ? "S" : "N");
+				gps_ifd.SetStringValue (0, (ushort) GPSEntryTag.GPSLatitudeRef, angle < 0 ? "S" : "N");
 
 				var entry =
 					new RationalArrayIFDEntry ((ushort) GPSEntryTag.GPSLatitude,
-					                           DegreeToRationals (Math.Abs (value)));
+					                           DegreeToRationals (Math.Abs (angle)));
 				gps_ifd.SetEntry (0, entry);
 			}
 		}
@@ -311,19 +320,22 @@ namespace TagLib.IFD
 		///    image was taken.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the longitude ranging from -180.0
+		///    A <see cref="System.Nullable"/> with the longitude ranging from -180.0
 		///    to +180.0 degrees.
 		/// </value>
-		public override double Longitude {
+		public virtual double? Longitude {
 			get {
 				var gps_ifd = GPSIFD;
 				var degree_entry = gps_ifd.GetEntry (0, (ushort) GPSEntryTag.GPSLongitude) as RationalArrayIFDEntry;
 				var ref_entry = gps_ifd.GetEntry (0, (ushort) GPSEntryTag.GPSLongitudeRef) as StringIFDEntry;
 
 				if (degree_entry == null || ref_entry == null)
-					return 0.0d;
+					return null;
 
 				Rational [] values  = degree_entry.Values;
+				if (values.Length != 3)
+					return null;
+
 				double deg = values[0] + values[1] / 60.0d + values[2] / 3600.0d;
 
 				if (ref_entry.Value == "W")
@@ -332,17 +344,26 @@ namespace TagLib.IFD
 				return Math.Max (Math.Min (deg, 180.0d), -180.0d);
 			}
 			set {
-				if (value < -180.0d || value > 180.0d)
+				var gps_ifd = GPSIFD;
+
+				if (value == null) {
+					gps_ifd.RemoveTag (0, (ushort) GPSEntryTag.GPSLongitudeRef);
+					gps_ifd.RemoveTag (0, (ushort) GPSEntryTag.GPSLongitude);
+					return;
+				}
+
+				double angle = value.Value;
+
+				if (angle < -180.0d || angle > 180.0d)
 					throw new ArgumentException ("value");
 
 				InitGpsDirectory ();
-				var gps_ifd = GPSIFD;
 
-				gps_ifd.SetStringValue (0, (ushort) GPSEntryTag.GPSLongitudeRef, value < 0 ? "W" : "E");
+				gps_ifd.SetStringValue (0, (ushort) GPSEntryTag.GPSLongitudeRef, angle < 0 ? "W" : "E");
 
 				var entry =
 					new RationalArrayIFDEntry ((ushort) GPSEntryTag.GPSLongitude,
-					                           DegreeToRationals (Math.Abs (value)));
+					                           DegreeToRationals (Math.Abs (angle)));
 				gps_ifd.SetEntry (0, entry);
 			}
 		}
@@ -352,11 +373,11 @@ namespace TagLib.IFD
 		///    image was taken.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the altitude ranging from -90.0
+		///    A <see cref="System.Nullable"/> with the altitude ranging from -90.0
 		///    to +90.0 degrees.
 		/// </value>
-		public override double Altitude {
-			get { return 0.0d; }
+		public virtual double? Altitude {
+			get { return null; }
 			set {}
 		}
 
@@ -365,9 +386,9 @@ namespace TagLib.IFD
 		///    to, was taken with.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the exposure time in seconds.
+		///    A <see cref="System.Nullable"/> with the exposure time in seconds.
 		/// </value>
-		public override double ExposureTime {
+		public override double? ExposureTime {
 			get {
 				return ExifIFD.GetRationalValue (0, (ushort) ExifEntryTag.ExposureTime);
 			}
@@ -378,9 +399,9 @@ namespace TagLib.IFD
 		///    to, was taken with.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the FNumber.
+		///    A <see cref="System.Nullable"/> with the FNumber.
 		/// </value>
-		public override double FNumber {
+		public override double? FNumber {
 			get {
 				return ExifIFD.GetRationalValue (0, (ushort) ExifEntryTag.FNumber);
 			}
@@ -391,9 +412,9 @@ namespace TagLib.IFD
 		///    to, was taken with.
 		/// </summary>
 		/// <value>
-		///    A <see cref="uint" /> with the ISO speed as defined in ISO 12232.
+		///    A <see cref="System.Nullable"/> with the ISO speed as defined in ISO 12232.
 		/// </value>
-		public override uint ISOSpeedRatings {
+		public override uint? ISOSpeedRatings {
 			get {
 				return ExifIFD.GetLongValue (0, (ushort) ExifEntryTag.ISOSpeedRatings);
 			}
@@ -404,9 +425,9 @@ namespace TagLib.IFD
 		///    to, was taken with.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the focal length in millimeters.
+		///    A <see cref="System.Nullable"/> with the focal length in millimeters.
 		/// </value>
-		public override double FocalLength {
+		public override double? FocalLength {
 			get {
 				return ExifIFD.GetRationalValue (0, (ushort) ExifEntryTag.FocalLength);
 			}

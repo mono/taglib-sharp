@@ -72,8 +72,10 @@ namespace TagLib.Tests.Images
 			ifd.Latitude = latitude;
 			ifd.Longitude = longitude;
 
-			AssertEqualDouble (latitude, ifd.Latitude, 0.00000001);
-			AssertEqualDouble (longitude, ifd.Longitude, 0.00000001);
+			Assert.IsFalse (ifd.Latitude == null);
+			Assert.IsFalse (ifd.Longitude == null);
+			AssertEqualDouble (latitude, ifd.Latitude.Value, 0.00000001);
+			AssertEqualDouble (longitude, ifd.Longitude.Value, 0.00000001);
 
 			// Store and reload file
 			file.Save ();
@@ -82,8 +84,10 @@ namespace TagLib.Tests.Images
 			ifd = file.GetTag (TagTypes.TiffIFD, false) as IFDTag;
 			Assert.IsFalse (ifd == null);
 
-			AssertEqualDouble (latitude, ifd.Latitude, 0.00000001);
-			AssertEqualDouble (longitude, ifd.Longitude, 0.00000001);
+			Assert.IsFalse (ifd.Latitude == null);
+			Assert.IsFalse (ifd.Longitude == null);
+			AssertEqualDouble (latitude, ifd.Latitude.Value, 0.00000001);
+			AssertEqualDouble (longitude, ifd.Longitude.Value, 0.00000001);
 		}
 
 		private static void AssertEqualDouble (double d1, double d2, double acc)

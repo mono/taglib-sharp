@@ -203,43 +203,35 @@ namespace TagLib.IFD
 			return null;
 		}
 
-		public uint GetLongValue (int directory, ushort entry_tag)
+		public uint? GetLongValue (int directory, ushort entry_tag)
 		{
 			var entry = GetEntry (directory, entry_tag);
 
-			if (entry != null) {
-				if (entry is LongIFDEntry)
-					return (entry as LongIFDEntry).Value;
+			if (entry is LongIFDEntry)
+				return (entry as LongIFDEntry).Value;
 
-				if (entry is ShortIFDEntry)
-					return (entry as ShortIFDEntry).Value;
-			}
+			if (entry is ShortIFDEntry)
+				return (entry as ShortIFDEntry).Value;
 
-			return 0;
+			return null;
 		}
 
-		public double GetRationalValue (int directory, ushort entry_tag)
+		public double? GetRationalValue (int directory, ushort entry_tag)
 		{
 			var entry = GetEntry (directory, entry_tag);
 
-			if (entry != null) {
+			if (entry is RationalIFDEntry)
+				return (entry as RationalIFDEntry).Value;
 
-				if (entry is RationalIFDEntry)
-					return (entry as RationalIFDEntry).Value;
+			if (entry is SRationalIFDEntry)
+				return (entry as SRationalIFDEntry).Value;
 
-				if (entry is SRationalIFDEntry)
-					return (entry as SRationalIFDEntry).Value;
-			}
-
-			return 0.0d;
+			return null;
 		}
 
-		public DateTime GetDateTimeValue (int directory, ushort entry_tag)
+		public DateTime? GetDateTimeValue (int directory, ushort entry_tag)
 		{
 			string date_string = GetStringValue (directory, entry_tag);
-
-			if (date_string == null)
-				return DateTime.MinValue;
 
 			try {
 				DateTime date_time = DateTime.ParseExact (date_string,
@@ -248,7 +240,7 @@ namespace TagLib.IFD
 				return date_time;
 			} catch {}
 
-			return DateTime.MinValue;
+			return null;
 		}
 
 		public void SetStringValue (int directory, ushort entry_tag, string value)
@@ -256,9 +248,14 @@ namespace TagLib.IFD
 			SetEntry (directory, new StringIFDEntry (entry_tag, value));
 		}
 
-		public void SetDateTimeValue (int directory, ushort entry_tag, DateTime value)
+		public void SetDateTimeValue (int directory, ushort entry_tag, DateTime? value)
 		{
-			string date_string = value.ToString (DATETIME_FORMAT);
+			if (value == null) {
+				RemoveTag (directory, entry_tag);
+				return;
+			}
+
+			string date_string = value.Value.ToString (DATETIME_FORMAT);
 
 			SetStringValue (directory, entry_tag, date_string);
 		}

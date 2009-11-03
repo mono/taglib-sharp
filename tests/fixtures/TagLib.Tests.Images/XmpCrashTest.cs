@@ -23,7 +23,7 @@ namespace TagLib.Tests.Images
 			var tag = file.ImageTag;
 			Assert.AreEqual ("Asahi Optical Co.,Ltd. ", tag.Make);
 			Assert.AreEqual ("PENTAX Optio 230   ", tag.Model);
-			Assert.AreEqual (0, tag.ISOSpeedRatings);
+			Assert.AreEqual (null, tag.ISOSpeedRatings);
 			Assert.AreEqual (new string [] { "Türkei 2004" }, tag.Keywords);
 			Assert.AreEqual (new DateTime (2004, 08, 23, 11, 20, 57), tag.DateTime);
 		}

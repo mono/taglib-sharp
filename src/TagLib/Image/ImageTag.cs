@@ -76,10 +76,10 @@ namespace TagLib.Image
 		///    belongs to, was taken.
 		/// </summary>
 		/// <value>
-		///    A <see cref="DateTime" /> with the time the image was taken.
+		///    A <see cref="System.Nullable"/> with the time the image was taken.
 		/// </value>
-		public virtual DateTime DateTime {
-			get { return DateTime.MinValue; }
+		public virtual DateTime? DateTime {
+			get { return null; }
 			set {}
 		}
 
@@ -114,11 +114,11 @@ namespace TagLib.Image
 		///    image was taken.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the latitude ranging from -90.0
+		///    A <see cref="System.Nullable"/> with the latitude ranging from -90.0
 		///    to +90.0 degrees.
 		/// </value>
-		public virtual double Latitude {
-			get { return 0.0d; }
+		public virtual double? Latitude {
+			get { return null; }
 			set {}
 		}
 
@@ -127,11 +127,11 @@ namespace TagLib.Image
 		///    image was taken.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the longitude ranging from -180.0
+		///    A <see cref="System.Nullable"/> with the longitude ranging from -180.0
 		///    to +180.0 degrees.
 		/// </value>
-		public virtual double Longitude {
-			get { return 0.0d; }
+		public virtual double? Longitude {
+			get { return null; }
 			set {}
 		}
 
@@ -140,11 +140,11 @@ namespace TagLib.Image
 		///    image was taken.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the altitude ranging from -90.0
+		///    A <see cref="System.Nullable"/> with the altitude ranging from -90.0
 		///    to +90.0 degrees.
 		/// </value>
-		public virtual double Altitude {
-			get { return 0.0d; }
+		public virtual double? Altitude {
+			get { return null; }
 			set {}
 		}
 
@@ -153,10 +153,10 @@ namespace TagLib.Image
 		///    to, was taken with.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the exposure time in seconds.
+		///    A <see cref="System.Nullable"/> with the exposure time in seconds.
 		/// </value>
-		public virtual double ExposureTime {
-			get { return 0.0d; }
+		public virtual double? ExposureTime {
+			get { return null; }
 		}
 
 		/// <summary>
@@ -164,10 +164,10 @@ namespace TagLib.Image
 		///    to, was taken with.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the FNumber.
+		///    A <see cref="System.Nullable"/> with the FNumber.
 		/// </value>
-		public virtual double FNumber {
-			get { return 0.0d; }
+		public virtual double? FNumber {
+			get { return null; }
 		}
 
 		/// <summary>
@@ -175,10 +175,10 @@ namespace TagLib.Image
 		///    to, was taken with.
 		/// </summary>
 		/// <value>
-		///    A <see cref="uint" /> with the ISO speed as defined in ISO 12232.
+		///    A <see cref="System.Nullable"/> with the ISO speed as defined in ISO 12232.
 		/// </value>
-		public virtual uint ISOSpeedRatings {
-			get { return 0; }
+		public virtual uint? ISOSpeedRatings {
+			get { return null; }
 		}
 
 		/// <summary>
@@ -186,10 +186,10 @@ namespace TagLib.Image
 		///    to, was taken with.
 		/// </summary>
 		/// <value>
-		///    A <see cref="double" /> with the focal length in millimeters.
+		///    A <see cref="System.Nullable"/> with the focal length in millimeters.
 		/// </value>
-		public virtual double FocalLength {
-			get { return 0.0d; }
+		public virtual double? FocalLength {
+			get { return null; }
 		}
 
 		/// <summary>
