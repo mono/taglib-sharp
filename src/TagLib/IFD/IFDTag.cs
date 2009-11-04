@@ -210,6 +210,11 @@ namespace TagLib.IFD
 				throw new NotImplementedException ("UserComment with other encoding than Latin1 or Unicode");
 			}
 			set {
+				if (value == null) {
+					ExifIFD.RemoveTag (0, (ushort) ExifEntryTag.UserComment);
+					Structure.RemoveTag (0, (ushort) IFDEntryTag.ImageDescription);
+				}
+
 				ByteVector data = new ByteVector ();
 				data.Add (COMMENT_UNICODE_CODE);
 				data.Add (ByteVector.FromString (value, StringType.UTF8));
