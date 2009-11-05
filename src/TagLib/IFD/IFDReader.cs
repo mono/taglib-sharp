@@ -37,6 +37,7 @@ namespace TagLib.IFD
 
 		private static string PANASONIC_HEADER = "Panasonic\0\0\0";
 		private static string PENTAX_HEADER = "AOC\0";
+		private static string NIKON_HEADER = "Nikon\0";
 
 
 		/// <summary>
@@ -223,6 +224,9 @@ namespace TagLib.IFD
 				if (type == (ushort) IFDEntryType.Short)
 					return new ShortIFDEntry (tag, offset_data.Mid (0, 2).ToUShort (is_bigendian));
 
+				if (type == (ushort) IFDEntryType.SShort)
+					return new SShortIFDEntry (tag, (short) offset_data.Mid (0, 2).ToUShort (is_bigendian));
+
 				if (type == (ushort) IFDEntryType.Long)
 					return new LongIFDEntry (tag, offset_data.ToUInt (is_bigendian));
 
@@ -239,6 +243,15 @@ namespace TagLib.IFD
 					};
 
 					return new ShortArrayIFDEntry (tag, data);
+				}
+
+				if (type == (ushort) IFDEntryType.SShort) {
+					short [] data = new short [] {
+						(short) offset_data.Mid (0, 2).ToUShort (is_bigendian),
+						(short) offset_data.Mid (2, 2).ToUShort (is_bigendian)
+					};
+
+					return new SShortArrayIFDEntry (tag, data);
 				}
 			}
 
@@ -288,6 +301,12 @@ namespace TagLib.IFD
 
 					return new ShortArrayIFDEntry (tag, data);
 				}
+
+				if (type == (ushort) IFDEntryType.Short) {
+					short [] data = ReadShortArray (count);
+
+					return new SShortArrayIFDEntry (tag, data);
+				}
 			}
 
 			if (count > 4) {
@@ -318,6 +337,18 @@ namespace TagLib.IFD
 
 			// TODO: We should ignore unreadable values, erroring for now until we have sufficient coverage.
 			throw new NotImplementedException (String.Format ("Unknown type/count {0}/{1}", type, count));
+		}
+
+		/// <summary>
+		///    Reads a 2-byte signed short from the current file.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="short" /> value containing the short read
+		///    from the current instance.
+		/// </returns>
+		private short ReadShort ()
+		{
+			return (short) file.ReadBlock (2).ToUShort (is_bigendian);
 		}
 
 		/// <summary>
@@ -398,6 +429,21 @@ namespace TagLib.IFD
 			ushort [] data = new ushort [count];
 			for (int i = 0; i < count; i++)
 				data [i] = ReadUShort ();
+			return data;
+		}
+
+		/// <summary>
+		///    Reads an array of 2-byte signed shorts from the current file.
+		/// </summary>
+		/// <returns>
+		///    An array of <see cref="short" /> values containing the
+		///    shorts read from the current instance.
+		/// </returns>
+		private short [] ReadShortArray (uint count)
+		{
+			short [] data = new short [count];
+			for (int i = 0; i < count; i++)
+				data [i] = ReadShort ();
 			return data;
 		}
 
@@ -507,6 +553,27 @@ namespace TagLib.IFD
 
 				reader.ReadIFD (base_offset, offset + 6);
 				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.PentaxMakernote);
+			}
+
+			file.Seek (makernote_offset, SeekOrigin.Begin);
+			if (file.ReadBlock (NIKON_HEADER.Length).ToString () == NIKON_HEADER) {
+
+				ByteVector header = file.ReadBlock (18);
+				ByteVector endian_bytes = header.Mid (4, 2);
+
+				if (endian_bytes.ToString () == "II" || endian_bytes.ToString () == "MM") {
+
+					bool makernote_endian = endian_bytes.ToString ().Equals ("MM");
+					ushort magic = header.Mid (6, 2).ToUShort (is_bigendian);
+
+					if (magic == 42) {
+						IFDReader reader =
+							new IFDReader (file, makernote_endian, ifd_structure, makernote_offset + NIKON_HEADER.Length + 4, 8);
+
+						reader.Read ();
+						return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.NikonMakernote3);
+					}
+				}
 			}
 
 			// A maker note may be a Sub IFD, but it may also be in an arbitrary

@@ -31,7 +31,10 @@ namespace TagLib.IFD.Entries
 		GPS,
 		CanonMakernote,
 		PanasonicMakernote,
-		PentaxMakernote
+		PentaxMakernote,
+		NikonMakernote1,
+		NikonMakernote2,
+		NikonMakernote3
 	}
 
 
@@ -59,12 +62,30 @@ namespace TagLib.IFD.Entries
 		public ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
 		{
 			type = (ushort) Type;
-			count = Count;
 
 			if (SubIFDType == SubIFDType.PanasonicMakernote) {
 				var renderer = new IFDRenderer (is_bigendian, Structure, offset + 12);
 				ByteVector data = renderer.Render ();
 				data.Insert (0, "Panasonic\0\0\0");
+
+				count = (uint) data.Count;
+
+				return data;
+			}
+
+			if (SubIFDType == SubIFDType.NikonMakernote3) {
+				var renderer = new IFDRenderer (is_bigendian, Structure, 8);
+				ByteVector data = renderer.Render ();
+
+				ByteVector header = "Nikon\0";
+				header.Add (new byte[] {2, 0, 0, 0});
+				header.Add (is_bigendian ? "MM" : "II");
+				header.Add (ByteVector.FromUShort (42, is_bigendian));
+				header.Add (new byte[] {0, 0, 0, 8});
+
+				data.Insert (0, header);
+
+				count = (uint) data.Count;
 
 				return data;
 			}
@@ -83,6 +104,8 @@ namespace TagLib.IFD.Entries
 			if (sum == 0)
 				return;
 			*/
+
+			count = Count;
 			return new IFDRenderer (is_bigendian, Structure, offset).Render ();
 		}
 	}

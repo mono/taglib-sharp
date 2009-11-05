@@ -27,6 +27,9 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/AddImageMetadataTests.cs \
 	fixtures/TagLib.Tests.Images/JpegEmptyTest.cs \
 	fixtures/TagLib.Tests.Images/JpegCanonZoombrowserTest.cs \
+	fixtures/TagLib.Tests.Images/JpegNikon1Test.cs \
+	fixtures/TagLib.Tests.Images/JpegNikon2Test.cs \
+	fixtures/TagLib.Tests.Images/JpegNikon3Test.cs \
 	fixtures/TagLib.Tests.Images/JpegPanasonicTest.cs \
 	fixtures/TagLib.Tests.Images/XmpCrashTest.cs \
 	fixtures/TagLib.Tests.Images/Utils.cs \
