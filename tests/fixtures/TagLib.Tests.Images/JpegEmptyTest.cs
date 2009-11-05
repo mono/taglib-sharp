@@ -24,12 +24,12 @@ namespace TagLib.Tests.Images
 			JpegCommentTag com_tag =
 				file.GetTag (TagTypes.JpegComment, false) as JpegCommentTag;
 
-			Assert.IsTrue (com_tag == null);
+			Assert.IsNull (com_tag, "JpegComment Tag contained");
 
 			com_tag = file.GetTag (TagTypes.JpegComment, true) as JpegCommentTag;
 
-			Assert.IsFalse (com_tag == null);
-			Assert.IsTrue (com_tag.Value == null);
+			Assert.IsNotNull (com_tag, "JpegComment Tag not created");
+			Assert.IsNull (com_tag.Value, "JpegComment Tag Value is not null");
 
 			com_tag.Value = comment;
 
@@ -38,7 +38,7 @@ namespace TagLib.Tests.Images
 
 			com_tag = file.GetTag (TagTypes.JpegComment) as JpegCommentTag;
 
-			Assert.IsFalse (com_tag == null);
+			Assert.IsNotNull (com_tag, "JpegComment Tag not read");
 			Assert.AreEqual (comment, com_tag.Value);
 		}
 

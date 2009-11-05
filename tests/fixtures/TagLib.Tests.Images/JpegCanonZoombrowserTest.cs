@@ -64,7 +64,7 @@ namespace TagLib.Tests.Images
 		}
 
 		public void CheckTags (File file) {
-			Assert.IsTrue (file is Jpeg.File);
+			Assert.IsTrue (file is Jpeg.File, "not a Jpeg file");
 
 			Assert.AreEqual (contained_types, file.TagTypes);
 			Assert.AreEqual (contained_types, file.TagTypesOnDisk);
@@ -72,10 +72,10 @@ namespace TagLib.Tests.Images
 
 		public void CheckExif (File file) {
 			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
-			Assert.IsFalse (tag == null);
+			Assert.IsNotNull (tag, "Tiff Tag not contained");
 
 			var exif_ifd = tag.Structure.GetEntry(0, IFDEntryTag.ExifIFD) as SubIFDEntry;
-			Assert.IsFalse (exif_ifd == null);
+			Assert.IsNotNull (exif_ifd, "Exif SubIFD not contained");
 
 			Assert.AreEqual ("Canon", tag.Make);
 			Assert.AreEqual ("Canon EOS 400D DIGITAL", tag.Model);
@@ -92,17 +92,16 @@ namespace TagLib.Tests.Images
 
 		public void CheckMakerNote (File file) {
 			IFDTag tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
-			Assert.IsFalse (tag == null);
+			Assert.IsNotNull (tag, "Tiff Tag not contained");
 
 			var makernote_ifd =
 				tag.ExifIFD.GetEntry (0, (ushort) ExifEntryTag.MakerNote) as SubIFDEntry;
 
-			Assert.IsFalse (makernote_ifd == null);
+			Assert.IsNotNull (makernote_ifd, "Makernote SubIFD not contained");
 			Assert.AreEqual (SubIFDType.CanonMakernote, makernote_ifd.SubIFDType);
 
 			var structure = makernote_ifd.Structure;
-			Assert.IsFalse (structure == null);
-
+			Assert.IsNotNull (structure, "Makernote IFD Structure not contained");
 			/* TODO Check some Markenote entries */
 		}
 	}

@@ -19,11 +19,11 @@ namespace TagLib.Tests.Images
 
 			if (! contains_exif) {
 				exif_tag = file.GetTag (TagTypes.TiffIFD, false) as IFDTag;
-				Assert.IsTrue (exif_tag == null);
+				Assert.IsNull (exif_tag, "Tiff Tag contained");
 			}
 
 			exif_tag = file.GetTag (TagTypes.TiffIFD, true) as IFDTag;
-			Assert.IsFalse (exif_tag == null);
+			Assert.IsNotNull (exif_tag, "Tiff Tag not created");
 
 			exif_tag.Comment = test_comment;
 			exif_tag.DateTime = date_time;
@@ -39,7 +39,7 @@ namespace TagLib.Tests.Images
 			file = File.Create (tmp_file);
 
 			exif_tag = file.GetTag (TagTypes.TiffIFD, false) as IFDTag;
-			Assert.IsFalse (exif_tag == null);
+			Assert.IsNotNull (exif_tag, "Tiff Tag not read");
 
 			Assert.AreEqual (test_comment, exif_tag.Comment);
 			Assert.AreEqual (date_time, exif_tag.DateTime);
@@ -65,19 +65,19 @@ namespace TagLib.Tests.Images
 
 			if (! contains_tiff) {
 				ifd = file.GetTag (TagTypes.TiffIFD, false) as IFDTag;
-				Assert.IsTrue (ifd == null);
+				Assert.IsNull (ifd, "Tiff IFD not contained");
 			}
 
 			ifd = file.GetTag (TagTypes.TiffIFD, true) as IFDTag;
-			Assert.IsFalse (ifd == null);
+			Assert.IsNotNull (ifd, "Tiff IFD not created");
 
 			ifd.Latitude = latitude;
 			ifd.Longitude = longitude;
 			ifd.Altitude = altitude;
 
-			Assert.IsFalse (ifd.Latitude == null);
-			Assert.IsFalse (ifd.Longitude == null);
-			Assert.IsFalse (ifd.Altitude == null);
+			Assert.IsNotNull (ifd.Latitude, "Latitude");
+			Assert.IsNotNull (ifd.Longitude, "Longitude");
+			Assert.IsNotNull (ifd.Altitude, "Altitude");
 			AssertEqualDouble (latitude, ifd.Latitude.Value, 0.00000001);
 			AssertEqualDouble (longitude, ifd.Longitude.Value, 0.00000001);
 			AssertEqualDouble (altitude, ifd.Altitude.Value, 0.00000001);
@@ -87,11 +87,11 @@ namespace TagLib.Tests.Images
 			file = File.Create (tmp_file);
 
 			ifd = file.GetTag (TagTypes.TiffIFD, false) as IFDTag;
-			Assert.IsFalse (ifd == null);
+			Assert.IsNotNull (ifd, "Tiff IFD not read");
 
-			Assert.IsFalse (ifd.Latitude == null);
-			Assert.IsFalse (ifd.Longitude == null);
-			Assert.IsFalse (ifd.Altitude == null);
+			Assert.IsNotNull (ifd.Latitude, "Latitude");
+			Assert.IsNotNull (ifd.Longitude, "Longitude");
+			Assert.IsNotNull (ifd.Altitude, "Altitude");
 			AssertEqualDouble (latitude, ifd.Latitude.Value, 0.00000001);
 			AssertEqualDouble (longitude, ifd.Longitude.Value, 0.00000001);
 			AssertEqualDouble (altitude, ifd.Altitude.Value, 0.00000001);
