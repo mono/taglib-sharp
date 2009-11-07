@@ -3,9 +3,10 @@ SET_PICTURES = SetPictures
 LIST_TYPES = ListSupportedMimeTypes
 BATCH_SET = BatchSet
 PARSE_PHOTO = ParsePhoto
+STRIP_IMAGE = StripImageData
 
 REFERENCES = -r:taglib-sharp.dll
-EXAMPLES_BUILD = taglib-sharp.dll $(SET_PICTURES).exe $(LIST_TYPES).exe $(BATCH_SET).exe $(PARSE_PHOTO).exe
+EXAMPLES_BUILD = taglib-sharp.dll $(SET_PICTURES).exe $(LIST_TYPES).exe $(BATCH_SET).exe $(PARSE_PHOTO).exe $(STRIP_IMAGE).exe
 
 if HAVE_GNOME_SHARP
 EXAMPLES_BUILD += $(READ_FROM_URI).exe
@@ -33,7 +34,10 @@ $(BATCH_SET).exe: $(BATCH_SET).cs
 $(PARSE_PHOTO).exe: $(PARSE_PHOTO).cs
 	$(MCS) -out:$@ -debug $(REFERENCES) $<
 
-EXTRA_DIST = $(READ_FROM_URI).cs $(SET_PICTURES).cs $(LIST_TYPES).cs $(BATCH_SET).cs $(PARSE_PHOTO).cs \
+$(STRIP_IMAGE).exe: $(STRIP_IMAGE).cs
+	$(MCS) -out:$@ -debug $(REFERENCES) $<
+
+EXTRA_DIST = $(READ_FROM_URI).cs $(SET_PICTURES).cs $(LIST_TYPES).cs $(BATCH_SET).cs $(PARSE_PHOTO).cs $(STRIP_IMAGE).cs \
 	$(srcdir)/covers/sample*
 
 DISTCLEANFILES = *.pidb
