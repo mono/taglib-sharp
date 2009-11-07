@@ -30,6 +30,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/JpegNikon1Test.cs \
 	fixtures/TagLib.Tests.Images/JpegNikon2Test.cs \
 	fixtures/TagLib.Tests.Images/JpegNikon3Test.cs \
+	fixtures/TagLib.Tests.Images/JpegNikon4Test.cs \
 	fixtures/TagLib.Tests.Images/JpegPanasonicTest.cs \
 	fixtures/TagLib.Tests.Images/XmpCrashTest.cs \
 	fixtures/TagLib.Tests.Images/Utils.cs \
