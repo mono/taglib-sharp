@@ -38,6 +38,8 @@ namespace TagLib.IFD
 		private static string PANASONIC_HEADER = "Panasonic\0\0\0";
 		private static string PENTAX_HEADER = "AOC\0";
 		private static string NIKON_HEADER = "Nikon\0";
+		private static string OLYMPUS1_HEADER = "OLYMP\0";
+		private static string OLYMPUS2_HEADER = "OLYMPUS\0";
 
 
 		/// <summary>
@@ -162,6 +164,13 @@ namespace TagLib.IFD
 				ByteVector offset_data = entry_data.Mid (8, 4);
 
 				IFDEntry entry = CreateIFDEntry (entry_tag, type, value_count, base_offset, offset_data);
+
+				if (entry == null)
+					continue;
+
+				if (directory.ContainsKey (entry.Tag))
+					directory.Remove (entry.Tag);
+
 				directory.Add (entry.Tag, entry);
 			}
 
@@ -285,6 +294,12 @@ namespace TagLib.IFD
 					return new LongArrayIFDEntry (tag, data);
 				}
 
+				if (type == (ushort) IFDEntryType.SLong) {
+					int [] data = ReadIntArray (count);
+
+					return new SLongArrayIFDEntry (tag, data);
+				}
+
 				if (type == (ushort) IFDEntryType.Rational) {
 					Rational[] entries = new Rational [count];
 
@@ -302,7 +317,7 @@ namespace TagLib.IFD
 					return new ShortArrayIFDEntry (tag, data);
 				}
 
-				if (type == (ushort) IFDEntryType.Short) {
+				if (type == (ushort) IFDEntryType.SShort) {
 					short [] data = ReadShortArray (count);
 
 					return new SShortArrayIFDEntry (tag, data);
@@ -334,6 +349,9 @@ namespace TagLib.IFD
 					return new UndefinedIFDEntry (tag, data);
 				}
 			}
+
+			if (type == (ushort) IFDEntryType.Float)
+				return null;
 
 			// TODO: We should ignore unreadable values, erroring for now until we have sufficient coverage.
 			throw new NotImplementedException (String.Format ("Unknown type/count {0}/{1}", type, count));
@@ -399,6 +417,12 @@ namespace TagLib.IFD
 			uint numerator = ReadUInt ();
 			uint denominator = ReadUInt ();
 
+			// correct illegal value
+			if (denominator == 0) {
+				numerator = 0;
+				denominator = 1;
+			}
+
 			return new Rational (numerator, denominator);
 		}
 
@@ -413,6 +437,12 @@ namespace TagLib.IFD
 		{
 			int numerator = ReadInt ();
 			int denominator = ReadInt ();
+
+			// correct illegal value
+			if (denominator == 0) {
+				numerator = 0;
+				denominator = 1;
+			}
 
 			return new SRational (numerator, denominator);
 		}
@@ -448,10 +478,25 @@ namespace TagLib.IFD
 		}
 
 		/// <summary>
+		///    Reads an array of 4-byte int from the current file.
+		/// </summary>
+		/// <returns>
+		///    An array of <see cref="int" /> values containing the
+		///    shorts read from the current instance.
+		/// </returns>
+		private int [] ReadIntArray (uint count)
+		{
+			int [] data = new int [count];
+			for (int i = 0; i < count; i++)
+				data [i] = ReadInt ();
+			return data;
+		}
+
+		/// <summary>
 		///    Reads an array of 4-byte unsigned int from the current file.
 		/// </summary>
 		/// <returns>
-		///    An array of <see cref="ushort" /> values containing the
+		///    An array of <see cref="uint" /> values containing the
 		///    shorts read from the current instance.
 		/// </returns>
 		private uint [] ReadUIntArray (uint count)
@@ -514,14 +559,19 @@ namespace TagLib.IFD
 			ushort length_tag = (ushort) IFDEntryTag.JPEGInterchangeFormatLength;
 			if (directory.ContainsKey (offset_tag) && directory.ContainsKey (length_tag)) {
 
-				uint offset = (directory [offset_tag] as LongIFDEntry).Value;
-				uint length = (directory [length_tag] as LongIFDEntry).Value;
+				var offset_entry = directory [offset_tag] as LongIFDEntry;
+				var length_entry = directory [length_tag] as LongIFDEntry;
 
-				file.Seek (base_offset + offset, SeekOrigin.Begin);
-				ByteVector data = file.ReadBlock ((int) length);
+				if (offset_entry != null && length_entry != null) {
+					uint offset = offset_entry.Value;
+					uint length = length_entry.Value;
 
-				directory.Remove (offset_tag);
-				directory.Add (offset_tag, new ThumbnailDataIFDEntry (offset_tag, data));
+					file.Seek (base_offset + offset, SeekOrigin.Begin);
+					ByteVector data = file.ReadBlock ((int) length);
+
+					directory.Remove (offset_tag);
+					directory.Add (offset_tag, new ThumbnailDataIFDEntry (offset_tag, data));
+				}
 			}
 		}
 
@@ -574,6 +624,28 @@ namespace TagLib.IFD
 						return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.NikonMakernote3);
 					}
 				}
+			}
+
+			file.Seek (makernote_offset, SeekOrigin.Begin);
+			if (file.ReadBlock (OLYMPUS1_HEADER.Length).ToString () == OLYMPUS1_HEADER) {
+
+				IFDReader reader =
+					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset + 8);
+
+				reader.Read ();
+				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.OlympusMakernote1);
+
+			}
+
+			file.Seek (makernote_offset, SeekOrigin.Begin);
+			if (file.ReadBlock (OLYMPUS2_HEADER.Length).ToString () == OLYMPUS2_HEADER) {
+
+				IFDReader reader =
+					new IFDReader (file, is_bigendian, ifd_structure, makernote_offset, 12);
+
+				reader.Read ();
+				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.OlympusMakernote2);
+
 			}
 
 			// A maker note may be a Sub IFD, but it may also be in an arbitrary
@@ -639,6 +711,11 @@ namespace TagLib.IFD
 			if (tag == (ushort) IFDEntryTag.GPSIFD) {
 				reader.Read ();
 				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.GPS);
+			}
+
+			if (type == (ushort) IFDEntryType.IFD) {
+				reader.Read ();
+				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.Interoperability);
 			}
 
 			return null;

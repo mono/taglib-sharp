@@ -34,7 +34,9 @@ namespace TagLib.IFD.Entries
 		PentaxMakernote,
 		NikonMakernote1,
 		NikonMakernote2,
-		NikonMakernote3
+		NikonMakernote3,
+		OlympusMakernote1,
+		OlympusMakernote2
 	}
 
 
@@ -84,6 +86,30 @@ namespace TagLib.IFD.Entries
 				header.Add (new byte[] {0, 0, 0, 8});
 
 				data.Insert (0, header);
+
+				count = (uint) data.Count;
+
+				return data;
+			}
+
+			if (SubIFDType == SubIFDType.OlympusMakernote1) {
+				var renderer = new IFDRenderer (is_bigendian, Structure, offset + 8);
+				ByteVector data = renderer.Render ();
+
+				data.Insert (0, new byte [] {0x01, 0x00});
+				data.Insert (0, "OLYMP\0");
+
+				count = (uint) data.Count;
+
+				return data;
+			}
+
+			if (SubIFDType == SubIFDType.OlympusMakernote2) {
+				var renderer = new IFDRenderer (is_bigendian, Structure, 12);
+				ByteVector data = renderer.Render ();
+
+				data.Insert (0, new byte [] {0x03, 0x00});
+				data.Insert (0, "OLYMPUS\0II");
 
 				count = (uint) data.Count;
 

@@ -97,6 +97,11 @@ namespace TagLib.IFD
 		/// <summary>
 		///    Double precision (8-byte) IEEE format.
 		/// </summary>
-		Double = 12
+		Double = 12,
+
+		/// <summary>
+		///    IFD
+		/// </summary>
+		IFD = 13
 	}
 }
