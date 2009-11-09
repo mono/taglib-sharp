@@ -143,6 +143,8 @@ namespace TagLib.Xmp
 			nsmgr.AddNamespace("rdf", RDF_NS);
 
 			XmlNode node = doc.SelectSingleNode("/x:xmpmeta/rdf:RDF", nsmgr);
+			// Old versions of XMP were called XAP, fall back to this case (tested in sample_xap.jpg)
+			node = node ?? doc.SelectSingleNode("/x:xapmeta/rdf:RDF", nsmgr);
 			if (node == null)
 				throw new CorruptFileException ();
 
