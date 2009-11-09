@@ -230,7 +230,7 @@ namespace TagLib.Xmp
 			}
 
 			foreach (XmlNode child in node.ChildNodes) {
-				if (child is XmlWhitespace)
+				if (child is XmlWhitespace || child is XmlComment)
 					continue;
 				ParsePropertyElement (parent, child);
 			}
