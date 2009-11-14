@@ -278,12 +278,11 @@ namespace TagLib.Xmp
 							ParseLiteralPropertyElement (parent, node);
 						} else if (!attr.Is (RDF_NS, PARSE_TYPE_URI)) {
 							ParseEmptyPropertyElement (parent, node);
-						} else if (attr.InnerText.Equals ("Literal")) {
-							throw new CorruptFileException ("This is not allowed in XMP!");
+						} else if (attr.InnerText.Equals ("Resource")) {
+							ParseTypeResourcePropertyElement (parent, node);
 						} else {
-							// Resource, Collection or other (bottom three parseType options)
-							Console.WriteLine (node.OuterXml);
-							throw new NotImplementedException ();
+							// Neither Literal, Collection or anything else is allowed
+							throw new CorruptFileException (String.Format ("This is not allowed in XMP! Bad XMP: {0}", node.OuterXml));
 						}
 					}
 				}
@@ -302,7 +301,7 @@ namespace TagLib.Xmp
 			XmpNode new_node = new XmpNode (node.NamespaceURI, node.LocalName);
 			foreach (XmlAttribute attr in node.Attributes) {
 				if (attr.Is (XML_NS, LANG_URI)) {
-					new_node.AddQualifier (new XmpNode (node.NamespaceURI, node.LocalName, attr.InnerText));
+					new_node.AddQualifier (new XmpNode (XML_NS, LANG_URI, attr.InnerText));
 				} else if (attr.Is (RDF_NS, ID_URI) || attr.In (XMLNS_NS)) {
 					continue;
 				}
@@ -338,6 +337,30 @@ namespace TagLib.Xmp
 			parent.AddChild (CreateTextPropertyWithQualifiers (node, node.InnerText));
 		}
 
+		// 7.2.18 parseTypeResourcePropertyElt
+		//		start-element ( URI == propertyElementURIs, attributes == set ( idAttr?, parseResource ) )
+		//		propertyEltList
+		//		end-element()
+		private void ParseTypeResourcePropertyElement (XmpNode parent, XmlNode node)
+		{
+			if (!node.IsPropertyElement ())
+				throw new CorruptFileException ("Invalid property");
+
+			XmpNode new_node = new XmpNode (node.NamespaceURI, node.LocalName);
+
+			foreach (XmlNode attr in node.Attributes) {
+				if (attr.Is (XML_NS, LANG_URI))
+					new_node.AddQualifier (new XmpNode (XML_NS, LANG_URI, attr.InnerText));
+			}
+
+			foreach (XmlNode child in node.ChildNodes) {
+				if (child is XmlWhitespace || child is XmlComment)
+					continue;
+				ParsePropertyElement (new_node, child);
+			}
+
+			parent.AddChild (new_node);
+		}
 
 		// 7.2.21 emptyPropertyElt
 		//		start-element ( URI == propertyElementURIs,

@@ -102,7 +102,7 @@ namespace TagLib.Xmp
 		}
 
 		internal void Dump (string prefix) {
-			Console.WriteLine ("{0}{1}{2} ({4}) = {3}", prefix, Namespace, Name, Value, Type);
+			Console.WriteLine ("{0}{1}{2} ({4}) = \"{3}\"", prefix, Namespace, Name, Value, Type);
 			if (qualifiers != null) {
 				Console.WriteLine ("{0}Qualifiers:", prefix);
 
