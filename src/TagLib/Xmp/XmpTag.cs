@@ -133,10 +133,10 @@ namespace TagLib.Xmp
 
 #region Constructors
 
-		public XmpTag (File file, ByteVector data)
+		public XmpTag (string data)
 		{
 			XmlDocument doc = new XmlDocument (NameTable);
-			doc.LoadXml (data.ToString ());
+			doc.LoadXml (data);
 
 			XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
 			nsmgr.AddNamespace("x", ADOBE_X_NS);

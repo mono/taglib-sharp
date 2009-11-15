@@ -229,7 +229,7 @@ namespace TagLib.Tiff
 				// Find XMP data
 				var xmp_entry = ifd_tag.Structure.GetEntry (0, (ushort) IFDEntryTag.XMP) as ByteVectorIFDEntry;
 				if (xmp_entry != null) {
-					ImageTag.AddTag (new XmpTag (this, xmp_entry.Data));
+					ImageTag.AddTag (new XmpTag (xmp_entry.Data.ToString ()));
 				}
 
 				if (propertiesStyle == ReadStyle.None)
