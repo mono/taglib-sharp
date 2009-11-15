@@ -525,7 +525,8 @@ namespace TagLib.Jpeg
 
 			// start with greatest offset, because this do not affect the smaller ones
 			Array.Sort<long> (metadata_positions);
-			foreach (long metadata_position in metadata_positions) {
+			for (int i = metadata_positions.Length - 1; i >= 0; i--) {
+				long metadata_position = metadata_positions[i];
 				if (2 + metadata_length < metadata_position)
 					DeleteSegment (metadata_position - 4);
 			}
