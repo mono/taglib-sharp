@@ -271,7 +271,7 @@ namespace TagLib.Xmp
 					}
 				} else {
 					foreach (XmlAttribute attr in node.Attributes) {
-						if (attr.Is (XML_NS, LANG_URI) || attr.Is (RDF_NS, ID_URI))
+						if (attr.Is (XML_NS, LANG_URI) || attr.Is (RDF_NS, ID_URI) || attr.In (XMLNS_NS))
 							continue;
 
 						if (attr.Is (RDF_NS, DATA_TYPE_URI)) {

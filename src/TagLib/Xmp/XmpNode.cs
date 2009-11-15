@@ -96,7 +96,7 @@ namespace TagLib.Xmp
 			return qualifiers [ns][name];
 		}
 
-		internal void Dump ()
+		public void Dump ()
 		{
 			Dump ("");
 		}
