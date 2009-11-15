@@ -35,9 +35,10 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/JpegOlympus2Test.cs \
 	fixtures/TagLib.Tests.Images/JpegOlympus3Test.cs \
 	fixtures/TagLib.Tests.Images/JpegPanasonicTest.cs \
+	fixtures/TagLib.Tests.Images/TiffXmpTest.cs \
+	fixtures/TagLib.Tests.Images/Utils.cs \
 	fixtures/TagLib.Tests.Images/XapTest.cs \
 	fixtures/TagLib.Tests.Images/XmpCrashTest.cs \
-	fixtures/TagLib.Tests.Images/Utils.cs \
 	fixtures/TagLib.Tests.Performance/PerformanceTest.cs \
 	fixtures/TagLib.Tests.TaggingFormats/ApeTest.cs \
 	fixtures/TagLib.Tests.TaggingFormats/AsfTest.cs \
