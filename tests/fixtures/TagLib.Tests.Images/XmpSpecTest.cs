@@ -277,7 +277,6 @@ namespace TagLib.Tests.Images
 
 			XmpTag tag = new XmpTag (metadata);
 			var tree = tag.NodeTree;
-			tree.Dump ();
 
 			Assert.IsTrue (tree != null);
 			Assert.AreEqual (1, tree.Children.Count);
