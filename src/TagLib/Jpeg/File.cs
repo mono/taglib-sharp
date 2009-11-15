@@ -319,29 +319,48 @@ namespace TagLib.Jpeg
 		/// </returns>
 		private byte SkipDataSegment ()
 		{
-			// loop until the end of data is found
+			// start with reading 4kb. It is maybe decreased laste, if not enough bytes
+			// are contained in the file.
+			int read_size = 4096;
+
+			// indicates, if the last read byte was 0xFF. It need to be declared here,
+			// because a segment marker can be split around 2 blocks we read.
+			bool ff_read = false;
+
 			while (true) {
-				// search segment header intro
-				long ff_position = Find (0xFF, Tell);
 
-				if (ff_position == -1)
-					throw new Exception ("End of data cannot be found");
+				// ensure to not red more bytes than are contained in the file
+				// note, that the cast is safe, because (Length - Tell) is ensured
+				// to be smaller than read_size, which is a positive int value.
+				if (read_size > Length - Tell)
+					read_size = (int) (Length - Tell);
 
-				if (ff_position + 1 >= Length)
-					throw new Exception ("Marker after data segment exceeds file size");
+				if (read_size <= 0)
+					throw new Exception ("Cannot find end of data segment");
 
-				// read second byte of segment header
-				Seek (ff_position + 1, SeekOrigin.Begin);
-				byte segment_identifier = ReadBlock (1)[0];
+				ByteVector data = ReadBlock (read_size);
 
-				// 0xFF00 encodes 0xFF in the data segement, thus no new
-				// segment is found. If the second byte is different of 0x00
-				// return the found segment byte.
-				// The markers 0xD0 .. 0xD7 are restart-marker. So do not return and
-				// continue with searching end of data.
-				if (segment_identifier != 0x00 &&
-				    ! (segment_identifier >= 0xD0 && segment_identifier <= 0xD7))
-					return segment_identifier;
+				// check every byte
+				for (int i = 0; i < read_size; i++) {
+					byte b = data[i];
+
+					// if last read byte was 0xFF, we can cheek for a complete
+					// segment marker
+					if (ff_read) {
+
+						if (b != 0x00 && ! (b >= 0xD0 && b <= 0xD7)) {
+
+							// set position correctly
+							Seek (i - read_size, SeekOrigin.Current);
+
+							return b;
+						}
+					}
+
+					// set this for the next loop, it indicates if the last read byte
+					// was 0xFF.
+					ff_read = (b == 0xFF);
+				}
 			}
 		}
 
