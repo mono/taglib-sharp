@@ -310,59 +310,6 @@ namespace TagLib.Jpeg
 			return segment_size;
 		}
 
-		/// <summary>
-		///    Skips the data segment and returns the second byte of the
-		///    segment marker for the following segment.
-		/// </summary>
-		/// <returns>
-		///    A <see cref="System.Byte"/> with the the second byte of the segment marker.
-		/// </returns>
-		private byte SkipDataSegment ()
-		{
-			// start with reading 4kb. It is maybe decreased laste, if not enough bytes
-			// are contained in the file.
-			int read_size = 4096;
-
-			// indicates, if the last read byte was 0xFF. It need to be declared here,
-			// because a segment marker can be split around 2 blocks we read.
-			bool ff_read = false;
-
-			while (true) {
-
-				// ensure to not red more bytes than are contained in the file
-				// note, that the cast is safe, because (Length - Tell) is ensured
-				// to be smaller than read_size, which is a positive int value.
-				if (read_size > Length - Tell)
-					read_size = (int) (Length - Tell);
-
-				if (read_size <= 0)
-					throw new Exception ("Cannot find end of data segment");
-
-				ByteVector data = ReadBlock (read_size);
-
-				// check every byte
-				for (int i = 0; i < read_size; i++) {
-					byte b = data[i];
-
-					// if last read byte was 0xFF, we can cheek for a complete
-					// segment marker
-					if (ff_read) {
-
-						if (b != 0x00 && ! (b >= 0xD0 && b <= 0xD7)) {
-
-							// set position correctly
-							Seek (i - read_size, SeekOrigin.Current);
-
-							return b;
-						}
-					}
-
-					// set this for the next loop, it indicates if the last read byte
-					// was 0xFF.
-					ff_read = (b == 0xFF);
-				}
-			}
-		}
 
 		/// <summary>
 		///    Extracts the metadata from the current file by reading every segment in file.
@@ -372,15 +319,8 @@ namespace TagLib.Jpeg
 		{
 			byte marker = ReadSegmentMarker ();
 
-			// loop while marker is not EOF
-			while (marker != 0xD9) {
-
-				// data segment found, skip it and start loop with next segment
-				// marker again
-				if (marker == 0xDA) {
-					marker = SkipDataSegment ();
-					continue;
-				}
+			// loop while marker is not EOF and not the data segment
+			while (marker != 0xD9 && marker != 0xDA) {
 
 				long position = Tell;
 				ushort segment_size = ReadSegmentSize ();
