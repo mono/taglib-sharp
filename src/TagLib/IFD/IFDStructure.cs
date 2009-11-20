@@ -53,7 +53,7 @@ namespace TagLib.IFD
 		///    Gets the IFD directories contained in the current instance.
 		/// </summary>
 		/// <value>
-		///    An array of <see cref="IFDirectory"/> instances.
+		///    An array of <see cref="IFDDirectory"/> instances.
 		/// </value>
 		public IFDDirectory [] Directories {
 			get { return directories.ToArray (); }
@@ -159,7 +159,7 @@ namespace TagLib.IFD
 		///    A <see cref="System.Int32"/> with the directory that contains
 		///    the wanted tag.
 		/// </param>
-		/// <param name="entry_tag">
+		/// <param name="tag">
 		///    A <see cref="System.UInt16"/> with the tag to get.
 		/// </param>
 		/// <returns>
@@ -181,7 +181,7 @@ namespace TagLib.IFD
 		///    A <see cref="System.Int32"/> with the directory that contains
 		///    the wanted tag.
 		/// </param>
-		/// <param name="tag">
+		/// <param name="entry_tag">
 		///    A <see cref="IFDEntryTag"/> with the tag to get.
 		/// </param>
 		/// <returns>
@@ -401,7 +401,7 @@ namespace TagLib.IFD
 		/// </param>
 		/// <param name="value">
 		///    A <see cref="System.Double"/> with the value to add. It must be possible to
-		///    represent the value by a <see cref="Entries.Rational">.
+		///    represent the value by a <see cref="Entries.Rational"/>.
 		/// </param>
 		public void SetRationalValue (int directory, ushort entry_tag, double value)
 		{

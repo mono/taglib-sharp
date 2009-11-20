@@ -285,7 +285,7 @@ namespace TagLib.IFD
 		///    A <see cref="System.Nullable"/> with the latitude ranging from -90.0
 		///    to +90.0 degrees.
 		/// </value>
-		public virtual double? Latitude {
+		public override double? Latitude {
 			get {
 				var gps_ifd = GPSIFD;
 				var degree_entry = gps_ifd.GetEntry (0, (ushort) GPSEntryTag.GPSLatitude) as RationalArrayIFDEntry;
@@ -338,7 +338,7 @@ namespace TagLib.IFD
 		///    A <see cref="System.Nullable"/> with the longitude ranging from -180.0
 		///    to +180.0 degrees.
 		/// </value>
-		public virtual double? Longitude {
+		public override double? Longitude {
 			get {
 				var gps_ifd = GPSIFD;
 				var degree_entry = gps_ifd.GetEntry (0, (ushort) GPSEntryTag.GPSLongitude) as RationalArrayIFDEntry;
@@ -391,7 +391,7 @@ namespace TagLib.IFD
 		///    A <see cref="System.Nullable"/> with the altitude. A positive value
 		///    is above sea level, a negative one below sea level. The unit is meter.
 		/// </value>
-		public virtual double? Altitude {
+		public override double? Altitude {
 			get {
 				var gps_ifd = GPSIFD;
 				var altitude = gps_ifd.GetRationalValue (0, (ushort) GPSEntryTag.GPSAltitude);
