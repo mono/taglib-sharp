@@ -155,6 +155,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Xmp/XmlNodeExtensions.cs \
 	$(srcdir)/TagLib/Xmp/XmpTag.cs \
 	$(srcdir)/TagLib/Xmp/XmpNode.cs \
+	$(srcdir)/TagLib/Xmp/XmpNodeType.cs \
 	$(srcdir)/TagLib/Xmp/XmpNodeVisitor.cs \
 	$(srcdir)/TagLib/ICodec.cs \
 	$(srcdir)/TagLib/Tag.cs \

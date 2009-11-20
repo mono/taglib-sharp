@@ -26,14 +26,6 @@ using System.Collections.Generic;
 
 namespace TagLib.Xmp
 {
-	public enum XmpNodeType
-	{
-		Simple,
-		Seq,
-		Alt,
-		Bag
-	}
-
 	public class XmpNode
 	{
 		private List<XmpNode> children;
