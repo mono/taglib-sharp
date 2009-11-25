@@ -317,10 +317,11 @@ namespace TagLib.Jpeg
 		/// </summary>
 		private void ReadMetadata ()
 		{
-			Marker marker = ReadSegmentMarker ();
-
 			// loop while marker is not EOI and not the data segment
-			while (marker != Marker.EOI && marker != Marker.SOS) {
+			while (true) {
+				Marker marker = ReadSegmentMarker ();
+				if (marker == Marker.EOI || marker == Marker.SOS)
+					break;
 
 				long position = Tell;
 				ushort segment_size = ReadSegmentSize ();
@@ -357,7 +358,6 @@ namespace TagLib.Jpeg
 
 				// set position to next segment and start with next segment marker
 				Seek (position + segment_size, SeekOrigin.Begin);
-				marker = ReadSegmentMarker ();
 			}
 		}
 
