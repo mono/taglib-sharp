@@ -335,18 +335,18 @@ namespace TagLib.Jpeg
 
 				bool is_metadata = false;
 
-				// possibly JFIF header
-				if (marker == Marker.APP0) {
+				switch (marker) {
+				case Marker.APP0:	// possibly JFIF header
 					is_metadata = ValidateJFIFHeader (data_size);
+					break;
 
-				// possibly Exif or Xmp data found
-				} else if (marker == Marker.APP1) {
+				case Marker.APP1:	// possibly Exif or Xmp data found
 					is_metadata = ReadAPP1Segment (data_size);
+					break;
 
-				// Comment segment found
-				} else if (marker == Marker.COM) {
+				case Marker.COM:	// Comment segment found
 					is_metadata = ReadCOMSegment (data_size);
-
+					break;
 				}
 
 				// if metadata was read in current segment
