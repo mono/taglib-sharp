@@ -4,8 +4,10 @@
 // Author:
 //   Ruben Vermeersch (ruben@savanne.be)
 //   Mike Gemuende (mike@gemuende.de)
+//   Stephane Delcroix (stephane@delcroix.org)
 //
 // Copyright (C) 2009 Ruben Vermeersch
+// Copyright (c) 2009 Stephane Delcroix
 //
 // This library is free software; you can redistribute it and/or modify
 // it  under the terms of the GNU Lesser General Public License version
@@ -84,6 +86,16 @@ namespace TagLib.Jpeg
 		///   to know how much bytes have to be overwritten.
 		/// </summary>
 		private long metadata_length = 0;
+
+		/// <summary>
+		///    The image width, as parsed from the Frame
+		/// </summary>
+		ushort width;
+
+		/// <summary>
+		///    The image height, as parsed from the Frame
+		/// </summary>
+		ushort height;
 
 #endregion
 
@@ -252,8 +264,11 @@ namespace TagLib.Jpeg
 		/// </returns>
 		private Properties ExtractProperties ()
 		{
-			// FIXME: extract properties
+			if (width > 0 && height > 0)
+				return new Properties (TimeSpan.Zero, new Codec (width, height));
+
 			return null;
+
 		}
 
 		/// <summary>
@@ -346,6 +361,16 @@ namespace TagLib.Jpeg
 
 				case Marker.COM:	// Comment segment found
 					is_metadata = ReadCOMSegment (data_size);
+					break;
+
+				case Marker.SOF0:
+				case Marker.SOF1:
+				case Marker.SOF2:
+				case Marker.SOF3:
+				case Marker.SOF9:
+				case Marker.SOF10:
+				case Marker.SOF11:
+					is_metadata = ReadSOFSegment (data_size, marker);
 					break;
 				}
 
@@ -592,6 +617,26 @@ namespace TagLib.Jpeg
 			data.Add (com_data);
 
 			return data;
+		}
+
+		/// <summary>
+		///    Reads and parse a SOF segment
+		/// </summary>
+		/// <param name="length">
+		///    The length of the segment that will be read.
+		/// </param>
+		/// <param name="marker">
+		///    The SOFx marker.
+		/// </param>
+		bool ReadSOFSegment (int length, Marker marker)
+		{
+			byte p = ReadBlock (1)[0];	//precision
+
+			//FIXME: according to specs, height could be 0 here, and should be retrieved from the DNL marker
+			height = ReadBlock (2).ToUShort ();
+			width = ReadBlock (2).ToUShort ();
+
+			return false;
 		}
 
 #endregion
