@@ -49,6 +49,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Jpeg/File.cs \
 	$(srcdir)/TagLib/Jpeg/JpegCommentTag.cs \
 	$(srcdir)/TagLib/Jpeg/Marker.cs \
+	$(srcdir)/TagLib/Jpeg/Table.cs \
 	$(srcdir)/TagLib/Mpeg/XingHeader.cs \
 	$(srcdir)/TagLib/Mpeg/VBRIHeader.cs \
 	$(srcdir)/TagLib/Mpeg/File.cs \
