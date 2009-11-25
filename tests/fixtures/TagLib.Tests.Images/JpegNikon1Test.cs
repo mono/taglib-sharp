@@ -145,6 +145,7 @@ namespace TagLib.Tests.Images
 		{
 			Assert.AreEqual (2000, file.Properties.PhotoWidth);
 			Assert.AreEqual (3008, file.Properties.PhotoHeight);
+			Assert.AreEqual (96, file.Properties.PhotoQuality);
 		}
 	}
 }

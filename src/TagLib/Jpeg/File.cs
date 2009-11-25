@@ -97,6 +97,10 @@ namespace TagLib.Jpeg
 		/// </summary>
 		ushort height;
 
+		/// <summary>
+		///    Quality of the image, stored as we parse the file
+		/// </summary>
+		int quality;
 #endregion
 
 #region Constructors
@@ -265,7 +269,7 @@ namespace TagLib.Jpeg
 		private Properties ExtractProperties ()
 		{
 			if (width > 0 && height > 0)
-				return new Properties (TimeSpan.Zero, new Codec (width, height));
+				return new Properties (TimeSpan.Zero, new Codec (width, height, quality));
 
 			return null;
 
@@ -371,6 +375,10 @@ namespace TagLib.Jpeg
 				case Marker.SOF10:
 				case Marker.SOF11:
 					is_metadata = ReadSOFSegment (data_size, marker);
+					break;
+
+				case Marker.DQT:	// Quantization table(s), use it to guess quality
+					is_metadata = ReadDQTSegment (data_size);
 					break;
 				}
 
@@ -636,6 +644,63 @@ namespace TagLib.Jpeg
 			height = ReadBlock (2).ToUShort ();
 			width = ReadBlock (2).ToUShort ();
 
+			return false;
+		}
+
+		/// <summary>
+		///    Reads the DQT Segment, and Guesstimate the image quality from it
+		/// </summary>
+		/// <param name="length">
+		///    The length of the segment that will be read
+		/// </param>
+		bool ReadDQTSegment (int length)
+		{
+			// See CCITT Rec. T.81 (1992 E), B.2.4.1 (p39) for DQT syntax
+			while (length > 0) {
+
+				byte pqtq = ReadBlock (1)[0]; length --;
+				byte pq = (byte)(pqtq >> 4);	//0 indicates 8-bit Qk, 1 indicates 16-bit Qk
+				byte tq = (byte)(pqtq & 0x0f);	//table index;
+				int [] table = null;
+				switch (tq) {
+				case 0:
+					table = Table.StandardLuminanceQuantization;
+					break;
+				case 1:
+					table = Table.StandardChrominanceQuantization;
+					break;
+				}
+
+				bool allones = true; //check for all-ones tables (q=100)
+				double cumsf = 0.0;
+				//double cumsf2 = 0.0;
+				for (int row = 0; row < 8; row ++) {
+					for (int col = 0; col < 8; col++) {
+						ushort val = ReadBlock (pq == 1 ? 2 : 1).ToUShort (); length -= (pq + 1);
+						if (table != null) {
+							double x = 100.0 * (double)val / (double)table [row*8+col]; //Scaling factor in percent
+							cumsf += x;
+							//cumsf2 += x*x;
+							allones = allones && (val == 1);
+						}
+					}
+				}
+
+				if (table != null) {
+					double local_q;
+					cumsf /= 64.0;		// mean scale factor
+					//cumfs2 /= 64.0;
+					//double variance = cumsf2 - (cumsf * cumsf);
+
+					if (allones)
+						local_q = 100.0;
+					else if (cumsf <= 100.0)
+						local_q = (200.0 - cumsf) / 2.0;
+					else
+						local_q = 5000.0 / cumsf;
+					quality = Math.Max (quality, (int)local_q);
+				}
+			}
 			return false;
 		}
 

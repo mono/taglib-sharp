@@ -452,6 +452,32 @@ namespace TagLib {
 			}
 		}
 
+		/// <summary>
+		///    Gets the (format specific) quality indicator of the photo
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="int" /> value indicating the quality. A value
+		///    0 means that there was no quality indicator for the format
+		///    or the file.
+		public int PhotoQuality {
+			get {
+				foreach (ICodec codec in codecs) {
+					if (codec == null ||
+						(codec.MediaTypes & MediaTypes.Photo) == 0)
+						continue;
+
+					IPhotoCodec photo = codec as IPhotoCodec;
+
+					if (photo != null && photo.PhotoQuality != 0)
+						return photo.PhotoQuality;
+				}
+
+				return 0;
+			}
+		}
+
+
 		#endregion
 	}
 }

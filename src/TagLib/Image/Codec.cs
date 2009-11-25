@@ -82,6 +82,16 @@ namespace TagLib.Image
 		public int PhotoHeight { get; protected set; }
 
 		/// <summary>
+		///    Gets the (format specific) quality indicator of the photo
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="int" /> value indicating the quality. A value
+		///    0 means that there was no quality indicator for the format
+		///    or the file.
+		public int PhotoQuality { get; protected set; }
+
+		/// <summary>
 		///    Constructs a new <see cref="Codec" /> with the given width
 		///    and height.
 		/// </summary>
@@ -94,10 +104,31 @@ namespace TagLib.Image
 		/// <returns>
 		///    A new <see cref="Codec" /> instance.
 		/// </returns>
-		public Codec (int width, int height)
+		public Codec (int width, int height) : this (width, height, 0)
+		{
+		}
+
+		/// <summary>
+		///    Constructs a new <see cref="Codec" /> with the given width
+		///    and height.
+		/// </summary>
+		/// <param name="width">
+		///    The width of the photo.
+		/// </param>
+		/// <param name="height">
+		///    The height of the photo.
+		/// </param>
+		/// <param name="quality">
+		///    The quality indicator for the photo, if the format supports it.
+		/// </param>
+		/// <returns>
+		///    A new <see cref="Codec" /> instance.
+		/// </returns>
+		public Codec (int width, int height, int quality)
 		{
 			PhotoWidth = width;
 			PhotoHeight = height;
+			PhotoQuality = quality;
 		}
 	}
 }

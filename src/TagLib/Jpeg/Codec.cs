@@ -56,7 +56,7 @@ namespace TagLib.Jpeg
 		/// <returns>
 		///    A new <see cref="Codec" /> instance.
 		/// </returns>
-		public Codec (int width, int height)
-			: base (width, height) {}
+		public Codec (int width, int height, int quality)
+			: base (width, height, quality) {}
 	}
 }
