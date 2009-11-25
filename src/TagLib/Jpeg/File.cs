@@ -262,7 +262,7 @@ namespace TagLib.Jpeg
 		private void ValidateHeader ()
 		{
 			ByteVector segment = ReadBlock (2);
-			if (segment.ToUInt () != 0xFFD8)
+			if (segment.ToUShort () != 0xFFD8)
 				throw new CorruptFileException ("Expected SOI marker at the start of the file.");
 		}
 
@@ -273,9 +273,9 @@ namespace TagLib.Jpeg
 		///    to 0xFF in every case.
 		/// </summary>
 		/// <returns>
-		///    A <see cref="System.Byte"/> with the second byte of the segment marker.
+		///    A <see cref="TagLib.Jpeg.Marker"/> with the second byte of the segment marker.
 		/// </returns>
-		private byte ReadSegmentMarker ()
+		private Marker ReadSegmentMarker ()
 		{
 			if (Tell + 2 >= Length)
 				throw new Exception ("Marker size exceeds file size");
@@ -285,7 +285,7 @@ namespace TagLib.Jpeg
 			if ( ! segment_header.StartsWith (0xFF))
 				throw new Exception ("Start of Segment expected at " + (Tell - 2));
 
-			return segment_header[1];
+			return (Marker)segment_header[1];
 		}
 
 
@@ -317,10 +317,10 @@ namespace TagLib.Jpeg
 		/// </summary>
 		private void ReadMetadata ()
 		{
-			byte marker = ReadSegmentMarker ();
+			Marker marker = ReadSegmentMarker ();
 
-			// loop while marker is not EOF and not the data segment
-			while (marker != 0xD9 && marker != 0xDA) {
+			// loop while marker is not EOI and not the data segment
+			while (marker != Marker.EOI && marker != Marker.SOS) {
 
 				long position = Tell;
 				ushort segment_size = ReadSegmentSize ();
@@ -335,15 +335,15 @@ namespace TagLib.Jpeg
 				bool is_metadata = false;
 
 				// possibly JFIF header
-				if (marker == 0xE0) {
+				if (marker == Marker.APP0) {
 					is_metadata = ValidateJFIFHeader (data_size);
 
 				// possibly Exif or Xmp data found
-				} else if (marker == 0xE1) {
+				} else if (marker == Marker.APP1) {
 					is_metadata = ReadAPP1Segment (data_size);
 
 				// Comment segment found
-				} else if (marker == 0xFE) {
+				} else if (marker == Marker.COM) {
 					is_metadata = ReadCOMSegment (data_size);
 
 				}
