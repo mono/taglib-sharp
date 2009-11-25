@@ -26,6 +26,7 @@ namespace TagLib.Tests.Images
 		[Test]
 		public void JpegRead () {
 			CheckTags (file);
+			CheckProperties (file);
 		}
 
 		[Test]
@@ -49,6 +50,7 @@ namespace TagLib.Tests.Images
 			//CheckTags (tmp);
 			CheckExif (tmp);
 			CheckMakerNote (tmp);
+			CheckProperties (tmp);
 		}
 
 		[Test]
@@ -137,6 +139,12 @@ namespace TagLib.Tests.Images
 				Assert.AreEqual (78.0d/10.0d, (double) values[0]);
 				Assert.AreEqual (78.0d/10.0d, (double) values[1]);
 			}
+		}
+
+		public void CheckProperties (File file)
+		{
+			Assert.AreEqual (2000, file.Properties.PhotoWidth);
+			Assert.AreEqual (3008, file.Properties.PhotoHeight);
 		}
 	}
 }
