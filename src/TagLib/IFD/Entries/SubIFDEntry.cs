@@ -36,7 +36,8 @@ namespace TagLib.IFD.Entries
 		NikonMakernote2,
 		NikonMakernote3,
 		OlympusMakernote1,
-		OlympusMakernote2
+		OlympusMakernote2,
+		SonyMakernote
 	}
 
 
