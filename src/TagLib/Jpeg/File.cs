@@ -7,6 +7,7 @@
 //   Stephane Delcroix (stephane@delcroix.org)
 //
 // Copyright (C) 2009 Ruben Vermeersch
+// Copyright (C) 2009 Mike Gemuende
 // Copyright (c) 2009 Stephane Delcroix
 //
 // This library is free software; you can redistribute it and/or modify
