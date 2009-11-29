@@ -23,8 +23,19 @@
 
 namespace TagLib.Xmp
 {
+	/// <summary>
+	///    A visitor that walks the XMP node tree. This can be used to
+	///    perform cleanups of XMP data. See the Visitor pattern for
+	///    more info if you don't know how to use this.
+	/// </summary>
 	public interface XmpNodeVisitor
 	{
+		/// <summary>
+		///    Visit an <see cref="XmpNode" />.
+		/// </summary>
+		/// <param name="node">
+		///    The <see cref="XmpNode" /> that is being visited.
+		/// </param>
 		void Visit (XmpNode node);
 	}
 }

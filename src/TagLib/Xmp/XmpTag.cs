@@ -29,6 +29,9 @@ using TagLib.Image;
 
 namespace TagLib.Xmp
 {
+	/// <summary>
+	///    Holds XMP (Extensible Metadata Platform) metadata.
+	/// </summary>
 	public class XmpTag : ImageTag
 	{
 #region Parsing speedup
