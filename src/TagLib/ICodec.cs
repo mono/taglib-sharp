@@ -233,6 +233,7 @@ namespace TagLib {
 		///    A <see cref="int" /> value indicating the quality. A value
 		///    0 means that there was no quality indicator for the format
 		///    or the file.
+		/// </value>
 		int PhotoQuality {get;}
 	}
 }
