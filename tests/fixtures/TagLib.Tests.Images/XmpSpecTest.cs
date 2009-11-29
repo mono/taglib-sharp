@@ -287,6 +287,17 @@ namespace TagLib.Tests.Images
 
 		private delegate void XmpValidator (XmpTag tag);
 
+		/// <summary>
+		///    This makes every test do the following:
+		///		 * Parse the string and validate if all expected data is there.
+		///		 * Render back into a string, parse that new string and revalidate.
+
+		///	   It's important to note that I'm testing for semantical idempotency:
+		///	   data that was in will stay in. The representation might change though.
+		///    This is okay, nearly all XMP libraries do this. Doing the reparse and
+		///    revalidate ensures that whatever it generated is valid XMP and
+		///    contains the same information.
+		/// </summary>
 		private void TestXmp (string metadata, XmpValidator validator) {
 			var tag = TestParse (metadata, validator);
 			TestRender (tag, validator);
