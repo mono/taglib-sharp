@@ -59,7 +59,7 @@ namespace TagLib.Tests.Images
 					<rdf:RDF xmlns:rdf=""http://www.w3.org/1999/02/22-rdf-syntax-ns#"">
 						<rdf:Description rdf:about="""" xmlns:xmpTPg=""http://ns.adobe.com/xap/1.0/t/pg/"">
 							<xmpTPg:MaxPageSize>
-								<rdf:Description xmlns:stDim=""http:ns.adobe.com/xap/1.0/sType/Dimensions#"">
+								<rdf:Description xmlns:stDim=""http://ns.adobe.com/xap/1.0/sType/Dimensions#"">
 									<stDim:w>4</stDim:w>
 									<stDim:h>3</stDim:h>
 									<stDim:unit>inch</stDim:unit>
@@ -79,7 +79,7 @@ namespace TagLib.Tests.Images
 				@"<x:xmpmeta xmlns:x=""adobe:ns:meta/"">
 					<rdf:RDF xmlns:rdf=""http://www.w3.org/1999/02/22-rdf-syntax-ns#"">
 						<rdf:Description rdf:about="""" xmlns:xmpTPg=""http://ns.adobe.com/xap/1.0/t/pg/"">
-							<xmpTPg:MaxPageSize rdf:parseType=""Resource"" xmlns:stDim=""http:ns.adobe.com/xap/1.0/sType/Dimensions#"">
+							<xmpTPg:MaxPageSize rdf:parseType=""Resource"" xmlns:stDim=""http://ns.adobe.com/xap/1.0/sType/Dimensions#"">
 								<stDim:w>4</stDim:w>
 								<stDim:h>3</stDim:h>
 								<stDim:unit>inch</stDim:unit>
@@ -95,7 +95,7 @@ namespace TagLib.Tests.Images
 			var tree = tag.NodeTree;
 
 			var PG_NS = "http://ns.adobe.com/xap/1.0/t/pg/";
-			var DIM_NS = "http:ns.adobe.com/xap/1.0/sType/Dimensions#";
+			var DIM_NS = "http://ns.adobe.com/xap/1.0/sType/Dimensions#";
 
 			Assert.IsTrue (tree != null);
 			Assert.AreEqual (1, tree.Children.Count);
