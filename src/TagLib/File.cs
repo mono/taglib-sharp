@@ -884,10 +884,10 @@ namespace TagLib {
 			
 			// These variables are used to keep track of a partial
 			// match that happens at the end of a buffer.
-			
+
 			/*
 			int previous_partial_match = -1;
-			int before_previous_partial_match = -1;
+			int after_previous_partial_match = -1;
 			*/
 			
 			// Save the location of the current read pointer.  We
@@ -898,22 +898,18 @@ namespace TagLib {
 			
 			// Start the search at the offset.
 			
-			long buffer_offset;
+			long buffer_offset = Length - startPosition;
+			int read_size = buffer_size;
 			
-			if (startPosition == 0)
-				Seek (-1 * buffer_size,
-					System.IO.SeekOrigin.End);
-			else
-				Seek (startPosition - 1 * buffer_size,
-					System.IO.SeekOrigin.Begin);
-			
-			buffer_offset = file_stream.Position;
+			read_size = (int) Math.Min (buffer_offset, buffer_size);
+			buffer_offset -= read_size;
+			file_stream.Position = buffer_offset;
 			
 			// See the notes in find() for an explanation of this
 			// algorithm.
 			
-			for (buffer = ReadBlock(buffer_size); buffer.Count > 0;
-				buffer = ReadBlock (buffer_size)) {
+			for (buffer = ReadBlock (read_size); buffer.Count > 0;
+				buffer = ReadBlock (read_size)) {
 				
 				// TODO: (1) previous partial match
 				
@@ -931,8 +927,11 @@ namespace TagLib {
 				}
 				
 				// TODO: (3) partial match
+
 				
-				buffer_offset -= buffer_size;
+				read_size = (int) Math.Min (buffer_offset, buffer_size);
+				buffer_offset -= read_size;
+
 				file_stream.Position = buffer_offset;
 			}
 			
