@@ -238,7 +238,9 @@ namespace TagLib.Xmp
 				parent.Type = XmpNodeType.Alt;
 			} else if (node.Is (RDF_NS, BAG_URI)) {
 				parent.Type = XmpNodeType.Bag;
-			} else if (!node.Is (RDF_NS, DESCRIPTION_URI)) {
+			} else if (node.Is (RDF_NS, DESCRIPTION_URI)) {
+				parent.Type = XmpNodeType.Struct;
+			} else {
 				throw new Exception ("Unknown nodeelement found! Perhaps an unimplemented collection?");
 			}
 
@@ -265,17 +267,19 @@ namespace TagLib.Xmp
 		//		parseTypeOtherPropertyElt | emptyPropertyElt
 		private void ParsePropertyElement (XmpNode parent, XmlNode node)
 		{
-			if (node.Attributes.Count > 3) {
+			int count = 0;
+			bool has_other = false;
+			foreach (XmlAttribute attr in node.Attributes) {
+				if (!attr.In (XMLNS_NS))
+					count++;
+
+				if (!attr.Is (XML_NS, LANG_URI) && !attr.Is (RDF_NS, ID_URI) && !attr.In (XMLNS_NS))
+					has_other = true;
+			}
+
+			if (count > 3) {
 				ParseEmptyPropertyElement (parent, node);
 			} else {
-				bool has_other = false;
-				foreach (XmlAttribute attr in node.Attributes) {
-					if (attr.Is (XML_NS, LANG_URI) || attr.Is (RDF_NS, ID_URI) || attr.In (XMLNS_NS))
-						continue;
-					has_other = true;
-					break;
-				}
-
 				if (!has_other) {
 					if (!node.HasChildNodes) {
 						ParseEmptyPropertyElement (parent, node);
@@ -370,6 +374,7 @@ namespace TagLib.Xmp
 				throw new CorruptFileException ("Invalid property");
 
 			XmpNode new_node = new XmpNode (node.NamespaceURI, node.LocalName);
+			new_node.Type = XmpNodeType.Struct;
 
 			foreach (XmlNode attr in node.Attributes) {
 				if (attr.Is (XML_NS, LANG_URI))
@@ -413,6 +418,8 @@ namespace TagLib.Xmp
 			foreach (XmlAttribute a in node.Attributes) {
 				if (a.Is(RDF_NS, ID_URI) || a.Is(RDF_NS, NODE_ID_URI)) {
 					continue;
+				} else if (a.In (XMLNS_NS)) {
+					continue;
 				} else if (a.Is (XML_NS, LANG_URI)) {
 					new_node.AddQualifier (new XmpNode (XML_NS, LANG_URI, a.InnerText));
 				}
@@ -426,6 +433,8 @@ namespace TagLib.Xmp
 		{
 			XmpNode t = new XmpNode (node.NamespaceURI, node.LocalName, value);
 			foreach (XmlAttribute attr in node.Attributes) {
+				if (attr.In (XMLNS_NS))
+					continue;
 				t.AddQualifier (new XmpNode (attr.NamespaceURI, attr.LocalName, attr.InnerText));
 			}
 			return t;

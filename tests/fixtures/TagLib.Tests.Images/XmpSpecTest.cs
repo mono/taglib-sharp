@@ -101,7 +101,7 @@ namespace TagLib.Tests.Images
 			Assert.AreEqual (1, tree.Children.Count);
 
 			var node = tree.Children[0];
-			Assert.AreEqual (XmpNodeType.Simple, node.Type);
+			Assert.AreEqual (XmpNodeType.Struct, node.Type);
 			Assert.AreEqual (PG_NS, node.Namespace);
 			Assert.AreEqual ("MaxPageSize", node.Name);
 			Assert.AreEqual (3, node.Children.Count);

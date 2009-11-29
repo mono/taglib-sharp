@@ -37,6 +37,11 @@ namespace TagLib.Xmp
 		Simple,
 
 		/// <summary>
+		///    Structured value node.
+		/// </summary>
+		Struct,
+
+		/// <summary>
 		///    Ordered array.
 		/// </summary>
 		Seq,

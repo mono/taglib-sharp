@@ -101,6 +101,9 @@ namespace TagLib.Xmp
 			return qualifiers [ns][name];
 		}
 
+		/// <summary>
+		///    Print a debug output of the node.
+		/// </summary>
 		public void Dump ()
 		{
 			Dump ("");
@@ -136,21 +139,101 @@ namespace TagLib.Xmp
 			}
 		}
 
+		/// <summary>
+		///    Is this a node that we can transform into an attribute of the
+		///    parent node? Yes if it has no qualifiers or children, nor is
+		///    it part of a list.
+		/// </summary>
+		private bool IsReallySimpleType {
+			get {
+				return Type == XmpNodeType.Simple && (children == null || children.Count == 0)
+					&& QualifierCount == 0 && (Name != XmpTag.LI_URI || Namespace != XmpTag.RDF_NS);
+			}
+		}
+
+		/// <summary>
+		///    Is this the root node of the tree?
+		/// </summary>
+		private bool IsRootNode {
+			get { return Name == String.Empty && Namespace == String.Empty; }
+		}
+
 		public void RenderInto (XmlNode parent)
 		{
-			if (Name == String.Empty && Namespace == String.Empty) {
-				// Root node
-				foreach (var child in children)
-					child.RenderInto (parent);
-			} else if (QualifierCount == 0 && Type == XmpNodeType.Simple) {
-				// Simple values can be added as attributes of the parent node.
+			if (IsRootNode) {
+				AddAllChildrenTo (parent);
+
+			} else if (IsReallySimpleType && parent.Attributes.GetNamedItem (XmpTag.PARSE_TYPE_URI, XmpTag.RDF_NS) == null) {
+				// Simple values can be added as attributes of the parent node. Not allowed when the parent has an rdf:parseType.
 				XmlAttribute attr = XmpTag.CreateAttribute (parent.OwnerDocument, Name, Namespace);
 				attr.Value = Value;
 				parent.Attributes.Append (attr);
+
+			} else if (Type == XmpNodeType.Simple || Type == XmpNodeType.Struct) {
+				var node = XmpTag.CreateNode (parent.OwnerDocument, Name, Namespace);
+				node.InnerText = Value;
+
+				if (Type == XmpNodeType.Struct) {
+					// Structured types are always handled as a parseType=Resource node. This way, IsReallySimpleType will
+					// not match for child nodes, which makes sure they are added as extra nodes to this node. Does the
+					// trick well, unit tests that prove this are in XmpSpecTest.
+					XmlAttribute attr = XmpTag.CreateAttribute (parent.OwnerDocument, XmpTag.PARSE_TYPE_URI, XmpTag.RDF_NS);
+					attr.Value = "Resource";
+					node.Attributes.Append (attr);
+				}
+
+				AddAllQualifiersTo (node);
+				AddAllChildrenTo (node);
+				parent.AppendChild (node);
+
+			} else if (Type == XmpNodeType.Bag) {
+				var node = XmpTag.CreateNode (parent.OwnerDocument, Name, Namespace);
+				// TODO: Add all qualifiers.
+				if (QualifierCount > 0)
+					throw new NotImplementedException ();
+				var bag = XmpTag.CreateNode (parent.OwnerDocument, XmpTag.BAG_URI, XmpTag.RDF_NS);
+				foreach (var child in children)
+					child.RenderInto (bag);
+				node.AppendChild (bag);
+				parent.AppendChild (node);
+
+			} else if (Type == XmpNodeType.Alt) {
+				var node = XmpTag.CreateNode (parent.OwnerDocument, Name, Namespace);
+				// TODO: Add all qualifiers.
+				if (QualifierCount > 0)
+					throw new NotImplementedException ();
+				var bag = XmpTag.CreateNode (parent.OwnerDocument, XmpTag.ALT_URI, XmpTag.RDF_NS);
+				foreach (var child in children)
+					child.RenderInto (bag);
+				node.AppendChild (bag);
+				parent.AppendChild (node);
+
 			} else {
+				// Probably some combination of things we don't fully cover yet.
+				Dump ();
 				throw new NotImplementedException ();
 			}
+		}
 
+		private void AddAllQualifiersTo (XmlNode xml)
+		{
+			if (qualifiers == null)
+				return;
+			foreach (var collection in qualifiers.Values) {
+				foreach (XmpNode node in collection.Values) {
+					XmlAttribute attr = XmpTag.CreateAttribute (xml.OwnerDocument, node.Name, node.Namespace);
+					attr.Value = node.Value;
+					xml.Attributes.Append (attr);
+				}
+			}
+		}
+
+		private void AddAllChildrenTo (XmlNode parent)
+		{
+			if (children == null)
+				return;
+			foreach (var child in children)
+				child.RenderInto (parent);
 		}
 	}
 }
