@@ -79,6 +79,11 @@ namespace TagLib.Xmp
 		/// </summary>
 		public static readonly string XMLNS_NS = "http://www.w3.org/2000/xmlns/";
 
+		/// <summary>
+		///    XMP TPg (XMP Paged-Text) namespace
+		/// </summary>
+		public static readonly string XMPTG_NS = "http://ns.adobe.com/xap/1.0/t/pg/";
+
 		internal static readonly string ABOUT_URI = "about";
 		internal static readonly string ABOUT_EACH_URI = "aboutEach";
 		internal static readonly string ABOUT_EACH_PREFIX_URI = "aboutEachPrefix";
@@ -112,6 +117,7 @@ namespace TagLib.Xmp
 			AddNamespacePrefix ("xmp", XAP_NS);
 			AddNamespacePrefix ("xml", XML_NS);
 			AddNamespacePrefix ("xmlns", XMLNS_NS);
+			AddNamespacePrefix ("xmpTPg", XMPTG_NS);
 
 			// Attribute names
 			NameTable.Add (ABOUT_URI);
