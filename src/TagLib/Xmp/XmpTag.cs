@@ -103,11 +103,15 @@ namespace TagLib.Xmp
 			// This allows for fast string comparison using operator==
 			NameTable = new NameTable ();
 			// Namespaces
-			NameTable.Add (ADOBE_X_NS);
-			NameTable.Add (EXIF_NS);
-			NameTable.Add (RDF_NS);
-			NameTable.Add (XML_NS);
-			NameTable.Add (XMLNS_NS);
+			AddNamespacePrefix ("x", ADOBE_X_NS);
+			AddNamespacePrefix ("crs", CRS_NS);
+			AddNamespacePrefix ("dc", DC_NS);
+			AddNamespacePrefix ("exif", EXIF_NS);
+			AddNamespacePrefix ("rdf", RDF_NS);
+			AddNamespacePrefix ("tiff", TIFF_NS);
+			AddNamespacePrefix ("xmp", XAP_NS);
+			AddNamespacePrefix ("xml", XML_NS);
+			AddNamespacePrefix ("xmlns", XMLNS_NS);
 
 			// Attribute names
 			NameTable.Add (ABOUT_URI);
@@ -127,6 +131,16 @@ namespace TagLib.Xmp
 			NameTable.Add (RESOURCE_URI);
 			NameTable.Add (SEQ_URI);
 			NameTable.Add (VALUE_URI);
+		}
+
+		private static Dictionary<string, string> NamespacePrefixes = new Dictionary<string, string>();
+
+		private static int anon_ns_count = 0;
+
+		static void AddNamespacePrefix (string prefix, string ns)
+		{
+			NameTable.Add (ns);
+			NamespacePrefixes.Add (ns, prefix);
 		}
 
 #endregion
@@ -450,6 +464,39 @@ namespace TagLib.Xmp
 				return null;
 			return nodes [ns][name];
 
+		}
+
+		public string Render ()
+		{
+			XmlDocument doc = new XmlDocument (NameTable);
+			var meta = CreateNode (doc, "xmpmeta", ADOBE_X_NS);
+			var rdf = CreateNode (doc, "RDF", RDF_NS);
+			var description = CreateNode (doc, "Description", RDF_NS);
+			NodeTree.RenderInto (description);
+			doc.AppendChild (meta);
+			meta.AppendChild (rdf);
+			rdf.AppendChild (description);
+			return doc.OuterXml;
+		}
+
+		internal static XmlNode CreateNode (XmlDocument doc, string name, string ns)
+		{
+			if (!NamespacePrefixes.ContainsKey (ns)) {
+				NamespacePrefixes.Add (ns, String.Format ("ns{0}", ++anon_ns_count));
+				Console.WriteLine ("TAGLIB# DEBUG: Added {0} prefix for {1} namespace (XMP)", NamespacePrefixes [ns], ns);
+			}
+
+			return doc.CreateElement (NamespacePrefixes [ns], name, ns);
+		}
+
+		internal static XmlAttribute CreateAttribute (XmlDocument doc, string name, string ns)
+		{
+			if (!NamespacePrefixes.ContainsKey (ns)) {
+				NamespacePrefixes.Add (ns, String.Format ("ns{0}", ++anon_ns_count));
+				Console.WriteLine ("TAGLIB# DEBUG: Added {0} prefix for {1} namespace (XMP)", NamespacePrefixes [ns], ns);
+			}
+
+			return doc.CreateAttribute (NamespacePrefixes [ns], name, ns);
 		}
 
 #endregion

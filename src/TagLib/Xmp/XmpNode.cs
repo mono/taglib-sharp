@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace TagLib.Xmp
 {
@@ -43,6 +44,18 @@ namespace TagLib.Xmp
 		}
 		public string Value { get; set; }
 		public XmpNodeType Type { get; internal set; }
+
+		public int QualifierCount {
+			get {
+				if (qualifiers == null)
+					return 0;
+				int count = 0;
+				foreach (var collection in qualifiers.Values) {
+					count += collection == null ? 0 : collection.Count;
+				}
+				return count;
+			}
+		}
 
 		public XmpNode (string ns, string name)
 		{
@@ -121,6 +134,23 @@ namespace TagLib.Xmp
 					child.Accept (visitor);
 				}
 			}
+		}
+
+		public void RenderInto (XmlNode parent)
+		{
+			if (Name == String.Empty && Namespace == String.Empty) {
+				// Root node
+				foreach (var child in children)
+					child.RenderInto (parent);
+			} else if (QualifierCount == 0 && Type == XmpNodeType.Simple) {
+				// Simple values can be added as attributes of the parent node.
+				XmlAttribute attr = XmpTag.CreateAttribute (parent.OwnerDocument, Name, Namespace);
+				attr.Value = Value;
+				parent.Attributes.Append (attr);
+			} else {
+				throw new NotImplementedException ();
+			}
+
 		}
 	}
 }

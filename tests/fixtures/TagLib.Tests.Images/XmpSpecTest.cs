@@ -310,7 +310,10 @@ namespace TagLib.Tests.Images
 		}
 
 		private void TestRender (XmpTag tag, XmpValidator validator) {
-			//Assert.Fail ("Not yet!");
+			string xmp = tag.Render ();
+
+			var parsed_tag = new XmpTag (xmp);
+			validator (parsed_tag);
 		}
 	}
 }
