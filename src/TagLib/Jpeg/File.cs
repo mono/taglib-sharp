@@ -56,6 +56,14 @@ namespace TagLib.Jpeg
 		/// </summary>
 		private static readonly string EXIF_IDENTIFIER = "Exif\0\0";
 
+		/// <summary>
+		///    Standard (empty) JFIF header to add, if no one is contained
+		/// </summary>
+		private static readonly byte [] BASIC_JFIF_HEADER = new byte [] {
+			0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0x00,
+			0x01, 0x01, 0x01, 0x00, 0x48, 0x00, 0x48, 0x00, 0x00
+		};
+
 #region Private Fields
 
 		/// <summary>
@@ -89,6 +97,12 @@ namespace TagLib.Jpeg
 		private long metadata_length = 0;
 
 		/// <summary>
+		///    For now, we do not allow to change the jfif header. As long as this is
+		///    the case, the header is kept as it is.
+		/// </summary>
+		private ByteVector jfif_header = null;
+
+		/// <summary>
 		///    The image width, as parsed from the Frame
 		/// </summary>
 		ushort width;
@@ -102,6 +116,7 @@ namespace TagLib.Jpeg
 		///    Quality of the image, stored as we parse the file
 		/// </summary>
 		int quality;
+
 #endregion
 
 #region Constructors
@@ -357,7 +372,7 @@ namespace TagLib.Jpeg
 
 				switch (marker) {
 				case Marker.APP0:	// possibly JFIF header
-					is_metadata = ValidateJFIFHeader (data_size);
+					is_metadata = ReadJFIFHeader (data_size);
 					break;
 
 				case Marker.APP1:	// possibly Exif or Xmp data found
@@ -396,14 +411,20 @@ namespace TagLib.Jpeg
 		}
 
 		/// <summary>
-		///    Validates the JFIF header at current position
+		///    Reads a JFIF header at current position
 		/// </summary>
-		private bool ValidateJFIFHeader (ushort length)
+		private bool ReadJFIFHeader (ushort length)
 		{
+			// JFIF header should be contain as first segment
 			if (Tell != 6)
 				return false;
 
 			if (ReadBlock (5).ToString ().Equals ("JFIF\0")) {
+
+				// store the JFIF header as it is
+				Seek (2, SeekOrigin.Begin);
+				jfif_header = ReadBlock (length + 2 + 2);
+
 				return true;
 			}
 
@@ -501,13 +522,14 @@ namespace TagLib.Jpeg
 		/// </summary>
 		private void WriteMetadata ()
 		{
-			// Start with ByteVector containing the JFIF Header
-			ByteVector data =
-				new ByteVector (new byte[] {
-					0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0x00,
-					0x01, 0x01, 0x01, 0x00, 0x48, 0x00, 0x48, 0x00, 0x00});
+			ByteVector data = new ByteVector ();
 
 			// Add segments to write in order
+			if (jfif_header != null)
+				data.Add (jfif_header);
+			else
+				data.Add (BASIC_JFIF_HEADER);
+
 			data.Add (RenderExifSegment ());
 			data.Add (RenderXMPSegment ());
 			data.Add (RenderCOMSegment ());
