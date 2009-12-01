@@ -29,10 +29,32 @@ namespace TagLib.IFD
 	/// </summary>
 	public interface IFDEntry
 	{
+		/// <value>
+		///    The ID of the tag, the current instance belongs to
+		/// </value>
 		ushort Tag {
 			get;
 		}
 
+		/// <summary>
+		///    Renders the current instance to a <see cref="ByteVector"/>
+		/// </summary>
+		/// <param name="is_bigendian">
+		///    A <see cref="System.Boolean"/> indicating the endianess for rendering.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="System.UInt32"/> with the offset, the data is stored.
+		/// </param>
+		/// <param name="type">
+		///    A <see cref="System.UInt16"/> the ID of the type, which is rendered
+		/// </param>
+		/// <param name="count">
+		///    A <see cref="System.UInt32"/> with the count of the values which are
+		///    rendered.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> with the rendered data.
+		/// </returns>
 		ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count);
 	}
 

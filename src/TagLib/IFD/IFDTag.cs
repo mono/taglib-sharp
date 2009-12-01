@@ -107,7 +107,7 @@ namespace TagLib.IFD
 					var entry = Structure.GetEntry (0, IFDEntryTag.ExifIFD) as SubIFDEntry;
 					if (entry == null) {
 						exif_ifd = new IFDStructure ();
-						entry = new SubIFDEntry ((ushort) IFDEntryTag.ExifIFD, (ushort) IFDEntryType.Long, 1, exif_ifd, SubIFDType.Exif);
+						entry = new SubIFDEntry ((ushort) IFDEntryTag.ExifIFD, (ushort) IFDEntryType.Long, 1, exif_ifd);
 						Structure.SetEntry (0, entry);
 					}
 
@@ -132,7 +132,7 @@ namespace TagLib.IFD
 					var entry = Structure.GetEntry (0, IFDEntryTag.GPSIFD) as SubIFDEntry;
 					if (entry == null) {
 						gps_ifd = new IFDStructure ();
-						entry = new SubIFDEntry ((ushort) IFDEntryTag.GPSIFD, (ushort) IFDEntryType.Long, 1, gps_ifd, SubIFDType.GPS);
+						entry = new SubIFDEntry ((ushort) IFDEntryTag.GPSIFD, (ushort) IFDEntryType.Long, 1, gps_ifd);
 						Structure.SetEntry (0, entry);
 					}
 

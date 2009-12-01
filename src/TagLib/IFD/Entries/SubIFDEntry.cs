@@ -24,105 +24,44 @@
 
 namespace TagLib.IFD.Entries
 {
-
-	public enum SubIFDType {
-		Exif,
-		Interoperability,
-		GPS,
-		CanonMakernote,
-		PanasonicMakernote,
-		PentaxMakernote,
-		NikonMakernote1,
-		NikonMakernote2,
-		NikonMakernote3,
-		OlympusMakernote1,
-		OlympusMakernote2,
-		SonyMakernote
-	}
-
-
 	/// <summary>
 	///    Contains a Sub IFD.
 	/// </summary>
 	public class SubIFDEntry : IFDEntry
 	{
 		public ushort Tag { get; private set; }
+
 		public ushort Type { get; private set; }
 		public uint Count { get; private set; }
-		public SubIFDType SubIFDType { get; private set; }
 
+		/// <value>
+		///    The structure of the sub-ifd which is stored by the current
+		///    instance
+		/// </value>
 		public IFDStructure Structure { get; private set; }
 
-		public SubIFDEntry (ushort tag, ushort type, uint count, IFDStructure structure, SubIFDType sub_ifd_type)
+		/// <summary>
+		///    Construcor.
+		/// </summary>
+		/// <param name="tag">
+		///    A <see cref="System.UInt16"/> with the tag ID of the entry this instance
+		///    represents
+		/// </param>
+		/// <param name="structure">
+		///    A <see cref="IFDStructure"/> to be stored
+		/// </param>
+		public SubIFDEntry (ushort tag, ushort type, uint count, IFDStructure structure)
 		{
 			Tag = tag;
 			Type = type;
 			Count = count;
 			Structure = structure;
-			SubIFDType = sub_ifd_type;
 		}
 
 		public ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
 		{
 			type = (ushort) Type;
-
-			if (SubIFDType == SubIFDType.PanasonicMakernote) {
-				var renderer = new IFDRenderer (is_bigendian, Structure, offset + 12);
-				ByteVector data = renderer.Render ();
-				data.Insert (0, "Panasonic\0\0\0");
-
-				count = (uint) data.Count;
-
-				return data;
-			}
-
-			if (SubIFDType == SubIFDType.NikonMakernote3) {
-				var renderer = new IFDRenderer (is_bigendian, Structure, 8);
-				ByteVector data = renderer.Render ();
-
-				ByteVector header = "Nikon\0";
-				header.Add (new byte[] {2, 0, 0, 0});
-				header.Add (is_bigendian ? "MM" : "II");
-				header.Add (ByteVector.FromUShort (42, is_bigendian));
-				header.Add (new byte[] {0, 0, 0, 8});
-
-				data.Insert (0, header);
-
-				count = (uint) data.Count;
-
-				return data;
-			}
-
-			if (SubIFDType == SubIFDType.OlympusMakernote1) {
-				var renderer = new IFDRenderer (is_bigendian, Structure, offset + 8);
-				ByteVector data = renderer.Render ();
-
-				data.Insert (0, new byte [] {0x01, 0x00});
-				data.Insert (0, "OLYMP\0");
-
-				count = (uint) data.Count;
-
-				return data;
-			}
-
-			if (SubIFDType == SubIFDType.OlympusMakernote2) {
-				var renderer = new IFDRenderer (is_bigendian, Structure, 12);
-				ByteVector data = renderer.Render ();
-
-				data.Insert (0, new byte [] {0x03, 0x00});
-				data.Insert (0, "OLYMPUS\0II");
-
-				count = (uint) data.Count;
-
-				return data;
-			}
-
-			/*if (SubIFDType == SubIFDType.PentaxMakernote) {
-				var renderer = new IFDRenderer (is_bigendian, Structure, offset + 6);
-				ByteVector data = renderer.Render ();
-				data.Insert (0, "AOC\0");
-
-			}*/
+			count = 1;
 
 			// Don't render empty SubIFDEntry
 			/*int sum = 0;

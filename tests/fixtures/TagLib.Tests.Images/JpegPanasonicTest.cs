@@ -94,10 +94,10 @@ namespace TagLib.Tests.Images
 			Assert.IsNotNull (tag, "Tiff Tag not contained");
 
 			var makernote_ifd =
-				tag.ExifIFD.GetEntry (0, (ushort) ExifEntryTag.MakerNote) as SubIFDEntry;
+				tag.ExifIFD.GetEntry (0, (ushort) ExifEntryTag.MakerNote) as MakernoteIFDEntry;
 
 			Assert.IsNotNull (makernote_ifd, "Makernote SubIFD not contained");
-			Assert.AreEqual (SubIFDType.PanasonicMakernote, makernote_ifd.SubIFDType);
+			Assert.AreEqual (MakernoteType.Panasonic, makernote_ifd.MakernoteType);
 
 			var structure = makernote_ifd.Structure;
 			Assert.IsNotNull (structure, "Makernote IFD Structure not contained");

@@ -90,6 +90,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/IFD/Entries/ByteVectorIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/LongArrayIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/LongIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/MakernoteIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/RationalArrayIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/RationalIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/Rational.cs \

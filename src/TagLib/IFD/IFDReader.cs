@@ -580,84 +580,83 @@ namespace TagLib.IFD
 			long makernote_offset = base_offset + offset;
 			IFDStructure ifd_structure = new IFDStructure ();
 
+			// This is the minimum size a makernote should have
+			// The shortest header is PENTAX_HEADER (4)
+			// + IFD entry count (2)
+			// + at least one IFD etry (12)
+			// + next IFD pointer (4)
+			// = 22 ....
+			// we use this number to read a header which is big used
+			// to identify the makernote types
+			int header_size = 18;
+
 			if (file.Length < makernote_offset)
 			    throw new Exception ("offset to makernote is beyond file size");
 
-			if (file.Length < makernote_offset + PANASONIC_HEADER.Length)
-				throw new Exception ("offset to makernote is beyond file size");
+			if (file.Length < makernote_offset + header_size)
+				throw new Exception ("data is to short to contain a maker note ifd");
 
-
+			// read header
 			file.Seek (makernote_offset, SeekOrigin.Begin);
-			if (file.ReadBlock (PANASONIC_HEADER.Length).ToString () == PANASONIC_HEADER) {
+			ByteVector header = file.ReadBlock (header_size);
+
+			if (header.StartsWith (PANASONIC_HEADER)) {
 				IFDReader reader =
 					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset + 12);
 
 				reader.ReadIFD (base_offset, offset + 12);
-				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.PanasonicMakernote);
+				return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Panasonic, PANASONIC_HEADER, 12, true, null);
 			}
 
-			file.Seek (makernote_offset, SeekOrigin.Begin);
-			if (file.ReadBlock (PENTAX_HEADER.Length).ToString () == PENTAX_HEADER) {
+			if (header.StartsWith (PENTAX_HEADER)) {
 				IFDReader reader =
 					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset + 6);
 
 				reader.ReadIFD (base_offset, offset + 6);
-				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.PentaxMakernote);
+				return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Pentax, header.Mid (0, 6), 6, true, null);
 			}
 
-			file.Seek (makernote_offset, SeekOrigin.Begin);
-			if (file.ReadBlock (NIKON_HEADER.Length).ToString () == NIKON_HEADER) {
-
-				ByteVector header = file.ReadBlock (18);
-				ByteVector endian_bytes = header.Mid (4, 2);
-
-				if (endian_bytes.ToString () == "II" || endian_bytes.ToString () == "MM") {
-
-					bool makernote_endian = endian_bytes.ToString ().Equals ("MM");
-					ushort magic = header.Mid (6, 2).ToUShort (is_bigendian);
-
-					if (magic == 42) {
-						IFDReader reader =
-							new IFDReader (file, makernote_endian, ifd_structure, makernote_offset + NIKON_HEADER.Length + 4, 8);
-
-						reader.Read ();
-						return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.NikonMakernote3);
-					}
-				}
-			}
-
-			file.Seek (makernote_offset, SeekOrigin.Begin);
-			if (file.ReadBlock (OLYMPUS1_HEADER.Length).ToString () == OLYMPUS1_HEADER) {
-
+			if (header.StartsWith (OLYMPUS1_HEADER)) {
 				IFDReader reader =
 					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset + 8);
 
 				reader.Read ();
-				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.OlympusMakernote1);
-
+				return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Olympus1, header.Mid (0, 8), 8, true, null);
 			}
 
-			file.Seek (makernote_offset, SeekOrigin.Begin);
-			if (file.ReadBlock (OLYMPUS2_HEADER.Length).ToString () == OLYMPUS2_HEADER) {
-
+			if (header.StartsWith (OLYMPUS2_HEADER)) {
 				IFDReader reader =
 					new IFDReader (file, is_bigendian, ifd_structure, makernote_offset, 12);
 
 				reader.Read ();
-				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.OlympusMakernote2);
-
+				return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Olympus2, header.Mid (0, 12), 12, false, null);
 			}
 
-			// A maker note may be a Sub IFD, but it may also be in an arbitrary
-			// format. We try to parse a Sub IFD, if this fails, go ahead to read
-			// it as an Undefined Entry below.
-			file.Seek (makernote_offset, SeekOrigin.Begin);
+			if (header.StartsWith (NIKON_HEADER)) {
+
+				ByteVector endian_bytes = header.Mid (10, 2);
+
+				if (endian_bytes.ToString () == "II" || endian_bytes.ToString () == "MM") {
+
+					bool makernote_endian = endian_bytes.ToString ().Equals ("MM");
+					ushort magic = header.Mid (12, 2).ToUShort (is_bigendian);
+
+					if (magic == 42) {
+						IFDReader reader =
+							new IFDReader (file, makernote_endian, ifd_structure, makernote_offset + 10, 8);
+
+						reader.Read ();
+						return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Nikon3, header.Mid (0, 18), 8, false, makernote_endian);
+					}
+				}
+			}
+
 			try {
 				IFDReader reader =
 					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset);
 
 				reader.Read ();
-				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.CanonMakernote);
+				return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Canon);
 			} catch {
 				return null;
 			}
@@ -698,27 +697,23 @@ namespace TagLib.IFD
 			IFDStructure ifd_structure = new IFDStructure ();
 			IFDReader reader = new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset);
 
-			if (tag == (ushort) IFDEntryTag.ExifIFD) {
-				reader.Read ();
-				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.Exif);
-			}
-
-			if (tag == (ushort) IFDEntryTag.InteroperabilityIFD) {
-				reader.Read ();
-				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.Interoperability);
-			}
-
-			if (tag == (ushort) IFDEntryTag.GPSIFD) {
-				reader.Read ();
-				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.GPS);
-			}
-
+			// Sub IFDs are either identified by the IFD-type ...
 			if (type == (ushort) IFDEntryType.IFD) {
 				reader.Read ();
-				return new SubIFDEntry (tag, type, count, ifd_structure, SubIFDType.Interoperability);
+				return new SubIFDEntry (tag, type, (uint) ifd_structure.Directories.Length, ifd_structure);
 			}
 
-			return null;
+			// ... or by one of the following tags
+			switch (tag) {
+			case (ushort) IFDEntryTag.ExifIFD:
+			case (ushort) IFDEntryTag.InteroperabilityIFD:
+			case (ushort) IFDEntryTag.GPSIFD:
+				reader.Read ();
+				return new SubIFDEntry (tag, (ushort) IFDEntryType.Long, 1, ifd_structure);
+
+			default:
+				return null;
+			}
 		}
 
 #endregion

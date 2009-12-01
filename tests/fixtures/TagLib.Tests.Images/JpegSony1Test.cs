@@ -126,10 +126,10 @@ namespace TagLib.Tests.Images
 			Assert.IsNotNull (tag, "tag");
 
 			var makernote_ifd =
-				tag.ExifIFD.GetEntry (0, (ushort) ExifEntryTag.MakerNote) as SubIFDEntry;
+				tag.ExifIFD.GetEntry (0, (ushort) ExifEntryTag.MakerNote) as MakernoteIFDEntry;
 
 			Assert.IsNotNull (makernote_ifd, "makernote ifd");
-			Assert.AreEqual (SubIFDType.SonyMakernote, makernote_ifd.SubIFDType, "makernote type");
+			Assert.AreEqual (MakernoteType.Sony, makernote_ifd.MakernoteType);
 
 			var structure = makernote_ifd.Structure;
 			Assert.IsNotNull (structure, "structure");
