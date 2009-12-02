@@ -41,7 +41,7 @@ namespace TagLib.Tests.Images
 		public void ExifExceed ()
 		{
 			File tmp = Utils.CreateTmpFile (sample_file, tmp_file) as File;
-			CheckTags (tmp, contained_types);
+			CheckTags (tmp);
 
 			var exif_tag = tmp.GetTag (TagTypes.TiffIFD) as IFDTag;
 
@@ -50,23 +50,14 @@ namespace TagLib.Tests.Images
 			// ensure data is big enough
 			exif_tag.Comment = CreateDataString (max_segment_size);
 
-			tmp.Save ();
-
-			// tags on disk should now differ
-			Assert.AreEqual (contained_types & ~TagTypes.TiffIFD, tmp.TagTypesOnDisk, "tag types on disk");
-
-
-			// reload file and check tags
-			// since TiffIFD should not be written, it should now not be contained anymore
-			tmp = File.Create (tmp_file);
-			CheckTags (tmp, contained_types & ~TagTypes.TiffIFD);
+			Assert.IsFalse (SaveFile (tmp), "file with exceed exif segment saved");
 		}
 
 		[Test]
 		public void XmpExceed ()
 		{
 			File tmp = Utils.CreateTmpFile (sample_file, tmp_file) as File;
-			CheckTags (tmp, contained_types);
+			CheckTags (tmp);
 
 			var xmp_tag = tmp.GetTag (TagTypes.XMP) as XmpTag;
 
@@ -75,23 +66,14 @@ namespace TagLib.Tests.Images
 			// ensure data is big enough
 			xmp_tag.Comment = CreateDataString (max_segment_size);
 
-			tmp.Save ();
-
-			// tags on disk should now differ
-			Assert.AreEqual (contained_types & ~TagTypes.XMP, tmp.TagTypesOnDisk, "tag types on disk");
-
-
-			// reload file and check tags
-			// since XMP should not be written, it should now not be contained anymore
-			tmp = File.Create (tmp_file);
-			CheckTags (tmp, contained_types & ~TagTypes.XMP);
+			Assert.IsFalse (SaveFile (tmp), "file with exceed xmp segment saved");
 		}
 
 		[Test]
 		public void JpegCommentExceed ()
 		{
 			File tmp = Utils.CreateTmpFile (sample_file, tmp_file) as File;
-			CheckTags (tmp, contained_types);
+			CheckTags (tmp);
 
 			var com_tag = tmp.GetTag (TagTypes.JpegComment) as JpegCommentTag;
 
@@ -100,23 +82,25 @@ namespace TagLib.Tests.Images
 			// ensure data is big enough
 			com_tag.Comment = CreateDataString (max_segment_size);
 
-			tmp.Save ();
-
-			// tags on disk should now differ
-			Assert.AreEqual (contained_types & ~TagTypes.JpegComment, tmp.TagTypesOnDisk, "tag types on disk");
-
-
-			// reload file and check tags
-			// since XMP should not be written, it should now not be contained anymore
-			tmp = File.Create (tmp_file);
-			CheckTags (tmp, contained_types & ~TagTypes.JpegComment);
+			Assert.IsFalse (SaveFile (tmp), "file with exceed comment segment saved");
 		}
 
-		public void CheckTags (File file, TagTypes types) {
+		private void CheckTags (File file) {
 			Assert.IsTrue (file is Jpeg.File, "not a Jpeg file");
 
-			Assert.AreEqual (types, file.TagTypes);
-			Assert.AreEqual (types, file.TagTypesOnDisk);
+			Assert.AreEqual (contained_types, file.TagTypes);
+			Assert.AreEqual (contained_types, file.TagTypesOnDisk);
+		}
+
+		private bool SaveFile (File file)
+		{
+			try {
+				file.Save ();
+			} catch (Exception e) {
+				return false;
+			}
+
+			return true;
 		}
 	}
 }

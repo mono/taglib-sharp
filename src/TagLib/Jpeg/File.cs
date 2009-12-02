@@ -621,9 +621,8 @@ namespace TagLib.Jpeg
 			uint segment_size = (uint) (first_ifd_offset + exif_data.Count + 2 + 6);
 
 			// do not render data segments, which cannot fit into the possible segment size
-			// FIXME: since the segment is not rendered, the TagTypesOnDisk will be wrong
 			if (segment_size > ushort.MaxValue)
-				return null;
+				throw new Exception ("Exif Segment is too big to render");
 
 			// Create whole segment
 			ByteVector data = new ByteVector (new byte [] { 0xFF, (byte) Marker.APP1 });
@@ -660,9 +659,8 @@ namespace TagLib.Jpeg
 			uint segment_size = (uint) (2 + xmp_data.Count);
 
 			// do not render data segments, which cannot fit into the possible segment size
-			// FIXME: since the segment is not rendered, the TagTypesOnDisk will be wrong
 			if (segment_size > ushort.MaxValue)
-				return null;
+				throw new Exception ("XMP Segment is too big to render");
 
 			// Create whole segment
 			ByteVector data = new ByteVector (new byte [] { 0xFF, (byte) Marker.APP1 });
@@ -718,9 +716,8 @@ namespace TagLib.Jpeg
 			uint segment_size = (uint) (2 + com_data.Count);
 
 			// do not render data segments, which cannot fit into the possible segment size
-			// FIXME: since the segment is not rendered, the TagTypesOnDisk will be wrong
 			if (segment_size > ushort.MaxValue)
-				return null;
+				throw new Exception ("Comment Segment is too big to render");
 
 			// create segment
 			ByteVector data = new ByteVector (new byte [] { 0xFF, (byte) Marker.COM });
