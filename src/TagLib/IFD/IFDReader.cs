@@ -73,6 +73,9 @@ namespace TagLib.IFD
 		/// </summary>
 		protected readonly uint ifd_offset;
 
+
+		protected readonly uint max_offset;
+
 #endregion
 
 #region Constructors
@@ -100,13 +103,18 @@ namespace TagLib.IFD
 		///     A <see cref="System.UInt32"/> value with the beginning of the IFD relative to
 		///     <paramref name="base_offset"/>.
 		/// </param>
-		public IFDReader (File file, bool is_bigendian, IFDStructure structure, long base_offset, uint ifd_offset)
+		/// <param name="max_offset">
+		/// 	A <see cref="System.UInt32"/> value with maximal possible offset. This is to limit
+		///     the size of the possible data;
+		/// </param>
+		public IFDReader (File file, bool is_bigendian, IFDStructure structure, long base_offset, uint ifd_offset, uint max_offset)
 		{
 			this.file = file;
 			this.is_bigendian = is_bigendian;
 			this.structure = structure;
 			this.base_offset = base_offset;
 			this.ifd_offset = ifd_offset;
+			this.max_offset = max_offset;
 		}
 
 #endregion
@@ -120,7 +128,7 @@ namespace TagLib.IFD
 		{
 			uint next_offset = ifd_offset;
 			do {
-				next_offset = ReadIFD (base_offset, next_offset);
+				next_offset = ReadIFD (base_offset, next_offset, max_offset);
 			} while (next_offset > 0);
 		}
 
@@ -144,7 +152,7 @@ namespace TagLib.IFD
 		///    A <see cref="System.UInt32"/> with the offset of the next IFD, the
 		///    offset is also relative to <paramref name="base_offset"/>
 		/// </returns>
-		private uint ReadIFD (long base_offset, uint offset)
+		private uint ReadIFD (long base_offset, uint offset, uint max_offset)
 		{
 			if (base_offset + offset > file.Length)
 				throw new Exception (String.Format ("Invalid IFD offset {0}, length: {1}", offset, file.Length));
@@ -153,6 +161,9 @@ namespace TagLib.IFD
 
 			file.Seek (base_offset + offset, SeekOrigin.Begin);
 			ushort entry_count = ReadUShort ();
+
+			if (file.Tell + 12 * entry_count > base_offset + max_offset)
+				throw new Exception (String.Format ("Size of entries exceeds possible data size"));
 
 			ByteVector entry_datas = file.ReadBlock (12 * entry_count);
 			uint next_offset = ReadUInt ();
@@ -165,7 +176,7 @@ namespace TagLib.IFD
 				uint value_count = entry_data.Mid (4, 4).ToUInt (is_bigendian);
 				ByteVector offset_data = entry_data.Mid (8, 4);
 
-				IFDEntry entry = CreateIFDEntry (entry_tag, type, value_count, base_offset, offset_data);
+				IFDEntry entry = CreateIFDEntry (entry_tag, type, value_count, base_offset, offset_data, max_offset);
 
 				if (entry == null)
 					continue;
@@ -209,7 +220,7 @@ namespace TagLib.IFD
 		/// <returns>
 		///    A <see cref="IFDEntry"/> with the given parameter.
 		/// </returns>
-		private IFDEntry CreateIFDEntry (ushort tag, ushort type, uint count, long base_offset, ByteVector offset_data)
+		private IFDEntry CreateIFDEntry (ushort tag, ushort type, uint count, long base_offset, ByteVector offset_data, uint max_offset)
 		{
 			uint offset = offset_data.ToUInt (is_bigendian);
 
@@ -277,6 +288,10 @@ namespace TagLib.IFD
 					return new ByteVectorIFDEntry (tag, offset_data.Mid (0, (int)count));
 			}
 
+
+			// FIXME: create correct type.
+			if (offset > max_offset)
+				return new UndefinedIFDEntry (tag, new ByteVector ());
 
 			// then handle data referenced by the offset
 			file.Seek (base_offset + offset, SeekOrigin.Begin);
@@ -604,23 +619,23 @@ namespace TagLib.IFD
 
 			if (header.StartsWith (PANASONIC_HEADER)) {
 				IFDReader reader =
-					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset + 12);
+					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset + 12, max_offset);
 
-				reader.ReadIFD (base_offset, offset + 12);
+				reader.ReadIFD (base_offset, offset + 12, max_offset);
 				return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Panasonic, PANASONIC_HEADER, 12, true, null);
 			}
 
 			if (header.StartsWith (PENTAX_HEADER)) {
 				IFDReader reader =
-					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset + 6);
+					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset + 6, max_offset);
 
-				reader.ReadIFD (base_offset, offset + 6);
+				reader.ReadIFD (base_offset, offset + 6, max_offset);
 				return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Pentax, header.Mid (0, 6), 6, true, null);
 			}
 
 			if (header.StartsWith (OLYMPUS1_HEADER)) {
 				IFDReader reader =
-					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset + 8);
+					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset + 8, max_offset);
 
 				reader.Read ();
 				return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Olympus1, header.Mid (0, 8), 8, true, null);
@@ -628,7 +643,7 @@ namespace TagLib.IFD
 
 			if (header.StartsWith (OLYMPUS2_HEADER)) {
 				IFDReader reader =
-					new IFDReader (file, is_bigendian, ifd_structure, makernote_offset, 12);
+					new IFDReader (file, is_bigendian, ifd_structure, makernote_offset, 12, count);
 
 				reader.Read ();
 				return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Olympus2, header.Mid (0, 12), 12, false, null);
@@ -636,9 +651,9 @@ namespace TagLib.IFD
 
 			if (header.StartsWith (SONY_HEADER)) {
 				IFDReader reader =
-					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset + 12);
+					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset + 12, max_offset);
 
-				reader.ReadIFD (base_offset, offset + 12);
+				reader.ReadIFD (base_offset, offset + 12, max_offset);
 				return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Sony, SONY_HEADER, 12, true, null);
 			}
 
@@ -653,7 +668,7 @@ namespace TagLib.IFD
 
 					if (magic == 42) {
 						IFDReader reader =
-							new IFDReader (file, makernote_endian, ifd_structure, makernote_offset + 10, 8);
+							new IFDReader (file, makernote_endian, ifd_structure, makernote_offset + 10, 8, count - 10);
 
 						reader.Read ();
 						return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Nikon3, header.Mid (0, 18), 8, false, makernote_endian);
@@ -663,7 +678,7 @@ namespace TagLib.IFD
 
 			try {
 				IFDReader reader =
-					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset);
+					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset, max_offset);
 
 				reader.Read ();
 				return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Canon);
@@ -705,7 +720,7 @@ namespace TagLib.IFD
 				return ParseMakernote (tag, type, count, base_offset, offset);
 
 			IFDStructure ifd_structure = new IFDStructure ();
-			IFDReader reader = new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset);
+			IFDReader reader = new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset, max_offset);
 
 			// Sub IFDs are either identified by the IFD-type ...
 			if (type == (ushort) IFDEntryType.IFD) {

@@ -222,7 +222,7 @@ namespace TagLib.Tiff
 				uint offset = ReadFirstIFDOffset ();
 
 				var ifd_tag = new IFDTag ();
-				var reader = new IFDReader (this, is_bigendian, ifd_tag.Structure, 0, offset);
+				var reader = new IFDReader (this, is_bigendian, ifd_tag.Structure, 0, offset, (uint) Length);
 				reader.Read ();
 				ImageTag.AddTag (ifd_tag);
 

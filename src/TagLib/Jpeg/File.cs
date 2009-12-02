@@ -493,7 +493,7 @@ namespace TagLib.Jpeg
 					uint ifd_offset = data.Mid (10, 4).ToUInt (is_bigendian);
 
 					var exif = new IFDTag ();
-					var reader = new IFDReader (this, is_bigendian, exif.Structure, position + 6, ifd_offset);
+					var reader = new IFDReader (this, is_bigendian, exif.Structure, position + 6, ifd_offset, (uint) (length - 6));
 					reader.Read ();
 					ImageTag.AddTag (exif);
 					exif_position = position;
