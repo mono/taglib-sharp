@@ -1,25 +1,3 @@
-//
-//  JpegSony1Test.cs
-//
-//  Author:
-//       Paul Lange (palango@gmx.de)
-//
-//  Copyright (c) 2009 Paul Lange
-//
-//  This library is free software; you can redistribute it and/or modify
-//  it under the terms of the GNU Lesser General Public License as
-//  published by the Free Software Foundation; either version 2.1 of the
-//  License, or (at your option) any later version.
-//
-//  This library is distributed in the hope that it will be useful, but
-//  WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-//  Lesser General Public License for more details.
-//
-//  You should have received a copy of the GNU Lesser General Public
-//  License along with this library; if not, write to the Free Software
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-
 using System;
 using NUnit.Framework;
 using TagLib;
@@ -31,10 +9,10 @@ using TagLib.Xmp;
 namespace TagLib.Tests.Images
 {
 	[TestFixture]
-	public class JpegSony1Test
+	public class JpegSony2Test
 	{
-		private static string sample_file = "samples/sample_sony1.jpg";
-		private static string tmp_file = "samples/tmpwrite_sony1.jpg";
+		private static string sample_file = "samples/sample_sony2.jpg";
+		private static string tmp_file = "samples/tmpwrite_sony2.jpg";
 
 		private TagTypes contained_types = TagTypes.TiffIFD;
 
@@ -74,7 +52,6 @@ namespace TagLib.Tests.Images
 
 			CheckTags (tmp);
 			CheckExif (tmp);
-			// not supported for Sony so far
 			CheckMakerNote (tmp);
 		}
 
@@ -120,16 +97,14 @@ namespace TagLib.Tests.Images
 			Assert.IsNotNull (exif_ifd, "Exif IFD");
 
 			Assert.AreEqual ("SONY ", tag.Make);
-			Assert.AreEqual ("DSLR-A200", tag.Model);
+			Assert.AreEqual ("DSLR-A700", tag.Model);
 			Assert.AreEqual (400, tag.ISOSpeedRatings, "ISOSpeedRatings");
-			Assert.AreEqual (1.0d/60.0d, tag.ExposureTime);
+			Assert.AreEqual (1.0d/125.0d, tag.ExposureTime);
 			Assert.AreEqual (5.6d, tag.FNumber);
-			Assert.AreEqual (35.0d, tag.FocalLength);
-			Assert.AreEqual (52, tag.FocalLengthIn35mmFilm);
-			Assert.AreEqual (new DateTime (2009, 11, 21, 12, 39, 39), tag.DateTime);
-			Assert.AreEqual (new DateTime (2009, 11, 21, 12, 39, 39), tag.DateTimeDigitized);
-			Assert.AreEqual (new DateTime (2009, 11, 21, 12, 39, 39), tag.DateTimeOriginal);
-			Assert.AreEqual (Image.ImageOrientation.TopLeft, tag.Orientation);
+			Assert.AreEqual (70.0d, tag.FocalLength);
+			Assert.AreEqual (new DateTime (2009, 11, 06, 20, 56, 07), tag.DateTime);
+			Assert.AreEqual (new DateTime (2009, 11, 06, 20, 56, 07), tag.DateTimeDigitized);
+			Assert.AreEqual (new DateTime (2009, 11, 06, 20, 56, 07), tag.DateTimeOriginal);
 		}
 
 		public void CheckMakerNote (File file)
@@ -150,19 +125,24 @@ namespace TagLib.Tests.Images
 			{
 				var entry = structure.GetEntry (0, 0x0102) as LongIFDEntry;
 				Assert.IsNotNull (entry, "entry 0x0102");
-				Assert.AreEqual (2, entry.Value);
+				Assert.AreEqual (5, entry.Value);
+			}
+			{
+				var entry = structure.GetEntry (0, 0x0104) as SRationalIFDEntry;
+				Assert.IsNotNull (entry, "entry 0x0115");
+				Assert.AreEqual (0.0d, (double) entry.Value);
 			}
 			//0x0115: white balance
 			{
 				var entry = structure.GetEntry (0, 0x0115) as LongIFDEntry;
 				Assert.IsNotNull (entry, "entry 0x0115");
-				Assert.AreEqual (0, entry.Value);
+				Assert.AreEqual (80, entry.Value);
 			}
 			//0xb026: image stabilizer
 			{
 				var entry = structure.GetEntry (0, 0xb026) as LongIFDEntry;
 				Assert.IsNotNull (entry, "entry 0xb026");
-				Assert.AreEqual (0, entry.Value);
+				Assert.AreEqual (1, entry.Value);
 			}
 		}
 	}

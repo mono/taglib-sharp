@@ -36,11 +36,12 @@ namespace TagLib.IFD
 
 #region Private Fields
 
-		private static string PANASONIC_HEADER = "Panasonic\0\0\0";
-		private static string PENTAX_HEADER = "AOC\0";
-		private static string NIKON_HEADER = "Nikon\0";
-		private static string OLYMPUS1_HEADER = "OLYMP\0";
-		private static string OLYMPUS2_HEADER = "OLYMPUS\0";
+		private static readonly string PANASONIC_HEADER = "Panasonic\0\0\0";
+		private static readonly string PENTAX_HEADER = "AOC\0";
+		private static readonly string NIKON_HEADER = "Nikon\0";
+		private static readonly string OLYMPUS1_HEADER = "OLYMP\0";
+		private static readonly string OLYMPUS2_HEADER = "OLYMPUS\0";
+		private static readonly string SONY_HEADER = "SONY DSC \0\0\0";
 
 
 		/// <summary>
@@ -631,6 +632,14 @@ namespace TagLib.IFD
 
 				reader.Read ();
 				return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Olympus2, header.Mid (0, 12), 12, false, null);
+			}
+
+			if (header.StartsWith (SONY_HEADER)) {
+				IFDReader reader =
+					new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset + 12);
+
+				reader.ReadIFD (base_offset, offset + 12);
+				return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Sony, SONY_HEADER, 12, true, null);
 			}
 
 			if (header.StartsWith (NIKON_HEADER)) {
