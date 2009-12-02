@@ -40,6 +40,11 @@ namespace TagLib.Tests.Images
 		}
 
 		[Test]
+		public void PropertiesRead () {
+			CheckProperties (file);
+		}
+
+		[Test]
 		public void Rewrite () {
 			File tmp = Utils.CreateTmpFile (sample_file, tmp_file);
 			tmp.Save ();
@@ -49,6 +54,7 @@ namespace TagLib.Tests.Images
 			CheckTags (tmp);
 			CheckExif (tmp);
 			CheckMakerNote (tmp);
+			CheckProperties (tmp);
 		}
 
 		[Test]
@@ -115,6 +121,13 @@ namespace TagLib.Tests.Images
 			var structure = makernote_ifd.Structure;
 			Assert.IsNotNull (structure, "Makernote IFD Structure not contained");
 			/* TODO Check some Markenote entries */
+		}
+
+		public void CheckProperties (File file)
+		{
+			Assert.AreEqual (19, file.Properties.PhotoWidth);
+			Assert.AreEqual (41, file.Properties.PhotoHeight);
+			Assert.AreEqual (90, file.Properties.PhotoQuality);
 		}
 	}
 }

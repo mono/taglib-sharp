@@ -39,6 +39,11 @@ namespace TagLib.Tests.Images
 		}
 
 		[Test]
+		public void PropertiesRead () {
+			CheckProperties (file);
+		}
+
+		[Test]
 		public void Rewrite () {
 			File tmp = Utils.CreateTmpFile (sample_file, tmp_file);
 			tmp.Save ();
@@ -48,6 +53,7 @@ namespace TagLib.Tests.Images
 			CheckTags (tmp);
 			CheckExif (tmp);
 			CheckMakerNote (tmp);
+			CheckProperties (tmp);
 		}
 
 		[Test]
@@ -148,6 +154,13 @@ namespace TagLib.Tests.Images
 				Assert.AreEqual (78.0d/10.0d, (double) values[0]);
 				Assert.AreEqual (78.0d/10.0d, (double) values[1]);
 			}*/
+		}
+
+		public void CheckProperties (File file)
+		{
+			Assert.AreEqual (3648, file.Properties.PhotoWidth);
+			Assert.AreEqual (2736, file.Properties.PhotoHeight);
+			Assert.AreEqual (96, file.Properties.PhotoQuality);
 		}
 	}
 }

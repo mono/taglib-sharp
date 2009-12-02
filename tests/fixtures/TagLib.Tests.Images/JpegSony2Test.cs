@@ -53,6 +53,7 @@ namespace TagLib.Tests.Images
 			CheckTags (tmp);
 			CheckExif (tmp);
 			CheckMakerNote (tmp);
+			CheckProperties (tmp);
 		}
 
 		[Test]
@@ -144,6 +145,13 @@ namespace TagLib.Tests.Images
 				Assert.IsNotNull (entry, "entry 0xb026");
 				Assert.AreEqual (1, entry.Value);
 			}
+		}
+
+		public void CheckProperties (File file)
+		{
+			Assert.AreEqual (4272, file.Properties.PhotoWidth);
+			Assert.AreEqual (2848, file.Properties.PhotoHeight);
+			Assert.AreEqual (91, file.Properties.PhotoQuality);
 		}
 	}
 }

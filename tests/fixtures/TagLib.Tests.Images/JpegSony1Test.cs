@@ -74,8 +74,8 @@ namespace TagLib.Tests.Images
 
 			CheckTags (tmp);
 			CheckExif (tmp);
-			// not supported for Sony so far
 			CheckMakerNote (tmp);
+			CheckProperties (tmp);
 		}
 
 		[Test]
@@ -164,6 +164,13 @@ namespace TagLib.Tests.Images
 				Assert.IsNotNull (entry, "entry 0xb026");
 				Assert.AreEqual (0, entry.Value);
 			}
+		}
+
+		public void CheckProperties (File file)
+		{
+			Assert.AreEqual (3872, file.Properties.PhotoWidth);
+			Assert.AreEqual (2592, file.Properties.PhotoHeight);
+			Assert.AreEqual (91, file.Properties.PhotoQuality);
 		}
 	}
 }

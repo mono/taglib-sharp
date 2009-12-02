@@ -44,6 +44,11 @@ namespace TagLib.Tests.Images
 		}
 
 		[Test]
+		public void PropertiesRead () {
+			CheckProperties (file);
+		}
+
+		[Test]
 		public void Rewrite () {
 			File tmp = Utils.CreateTmpFile (sample_file, tmp_file);
 			tmp.Save ();
@@ -54,6 +59,7 @@ namespace TagLib.Tests.Images
 			CheckExif (tmp);
 			CheckMakerNote (tmp);
 			CheckXMP (tmp);
+			CheckProperties (tmp);
 		}
 
 		[Test]
@@ -152,6 +158,13 @@ namespace TagLib.Tests.Images
 			Assert.AreEqual ("OLYMPUS CORPORATION", tag.Make);
 			Assert.AreEqual ("C5060WZ", tag.Model);
 			Assert.AreEqual ("Adobe Photoshop Elements 4.0", tag.Software);
+		}
+
+		public void CheckProperties (File file)
+		{
+			Assert.AreEqual (1280, file.Properties.PhotoWidth);
+			Assert.AreEqual (958, file.Properties.PhotoHeight);
+			Assert.AreEqual (69, file.Properties.PhotoQuality);
 		}
 	}
 }

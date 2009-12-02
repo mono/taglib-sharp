@@ -34,6 +34,10 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual (contained_types, file.TagTypes);
 			Assert.AreEqual (contained_types, file.TagTypesOnDisk);
 
+			Assert.IsNotNull (file.Properties, "properties");
+			Assert.AreEqual (7, file.Properties.PhotoHeight);
+			Assert.AreEqual (10, file.Properties.PhotoWidth);
+			Assert.AreEqual (90, file.Properties.PhotoQuality);
 
 			JpegCommentTag tag = file.GetTag (TagTypes.JpegComment) as JpegCommentTag;
 			Assert.IsFalse (tag == null);
@@ -83,22 +87,28 @@ namespace TagLib.Tests.FileFormats
 			var file = new Jpeg.File (sample_file);
 			Assert.IsNotNull (file.ImageTag, "ImageTag");
 			Assert.AreEqual (contained_types, file.TagTypes);
+
+			Assert.IsNotNull (file.Properties, "properties");
 		}
 
 		[Test]
 		public void TestConstructor2 ()
 		{
-			var file = new Jpeg.File (sample_file, ReadStyle.Average);
+			var file = new Jpeg.File (sample_file, ReadStyle.None);
 			Assert.IsNotNull (file.ImageTag, "ImageTag");
 			Assert.AreEqual (contained_types, file.TagTypes);
+
+			Assert.IsNull (file.Properties, "properties");
 		}
 
 		[Test]
 		public void TestConstructor3 ()
 		{
-			var file = new Jpeg.File (new File.LocalFileAbstraction (sample_file), ReadStyle.Average);
+			var file = new Jpeg.File (new File.LocalFileAbstraction (sample_file), ReadStyle.None);
 			Assert.IsNotNull (file.ImageTag, "ImageTag");
 			Assert.AreEqual (contained_types, file.TagTypes);
+
+			Assert.IsNull (file.Properties, "properties");
 		}
 
 		private void TestBagNode (XmpTag tag, string ns, string name, string[] values)
