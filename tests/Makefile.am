@@ -37,6 +37,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/JpegOlympus2Test.cs \
 	fixtures/TagLib.Tests.Images/JpegOlympus3Test.cs \
 	fixtures/TagLib.Tests.Images/JpegPanasonicTest.cs \
+	fixtures/TagLib.Tests.Images/JpegSegmentSizeTest.cs \
 	fixtures/TagLib.Tests.Images/JpegTangledTest.cs \
 	fixtures/TagLib.Tests.Images/TiffXmpTest.cs \
 	fixtures/TagLib.Tests.Images/Utils.cs \
