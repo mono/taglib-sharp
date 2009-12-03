@@ -57,6 +57,7 @@ public class ParsePhotoApp
 		Console.WriteLine("FNumber:         " +  image.ImageTag.FNumber);
 		Console.WriteLine("ISOSpeedRatings: " +  image.ImageTag.ISOSpeedRatings);
 		Console.WriteLine("FocalLength:     " +  image.ImageTag.FocalLength);
+		Console.WriteLine("FocalLength35mm: " +  image.ImageTag.FocalLengthIn35mmFilm);
 		Console.WriteLine("Make:            " +  image.ImageTag.Make);
 		Console.WriteLine("Model:           " +  image.ImageTag.Model);
 

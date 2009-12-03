@@ -476,6 +476,19 @@ namespace TagLib.IFD
 		}
 
 		/// <summary>
+		///    Gets the focal length the image, the current instance belongs
+		///    to, was taken with assuming a 35mm film camera.
+		/// </summary>
+		/// <value>
+		///    A <see cref="System.Nullable"/> with the focal length in 35mm equivalent in millimeters.
+		/// </value>
+		public override uint? FocalLengthIn35mmFilm {
+			get {
+				return ExifIFD.GetLongValue (0, (ushort) ExifEntryTag.FocalLengthIn35mmFilm);
+			}
+		}
+
+		/// <summary>
 		///    Gets the manufacture of the recording equipment the image, the
 		///    current instance belongs to, was taken with.
 		/// </summary>

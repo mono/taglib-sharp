@@ -457,6 +457,26 @@ namespace TagLib.Image
 		}
 
 		/// <summary>
+		///    Gets the focal length the image, the current instance belongs
+		///    to, was taken with assuming a 35mm film camera.
+		/// </summary>
+		/// <value>
+		///    A <see cref="System.Nullable"/> with the focal length in 35mm equivalent in millimeters.
+		/// </value>
+		public override uint? FocalLengthIn35mmFilm {
+			get {
+				foreach (ImageTag tag in AllTags) {
+					uint? value = tag.FocalLengthIn35mmFilm;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+		}
+
+		/// <summary>
 		///    Gets the manufacture of the recording equipment the image, the
 		///    current instance belongs to, was taken with.
 		/// </summary>

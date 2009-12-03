@@ -180,6 +180,17 @@ namespace TagLib.Image
 		}
 
 		/// <summary>
+		///    Gets the focal length the image, the current instance belongs
+		///    to, was taken with assuming a 35mm film camera.
+		/// </summary>
+		/// <value>
+		///    A <see cref="System.Nullable"/> with the focal length in 35mm equivalent in millimeters.
+		/// </value>
+		public virtual uint? FocalLengthIn35mmFilm {
+			get { return null; }
+		}
+
+		/// <summary>
 		///    Gets the manufacture of the recording equipment the image, the
 		///    current instance belongs to, was taken with.
 		/// </summary>
