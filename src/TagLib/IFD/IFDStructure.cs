@@ -389,6 +389,25 @@ namespace TagLib.IFD
 		}
 
 		/// <summary>
+		///    Adds a <see cref="Entries.LongIFDEntry"/> to the directory with tag
+		///    given by <paramref name="entry_tag"/> and value given by <paramref name="value"/>
+		/// </summary>
+		/// <param name="directory">
+		///    A <see cref="System.Int32"/> with the number of the directory
+		///    to add the entry to.
+		/// </param>
+		/// <param name="entry_tag">
+		///    A <see cref="System.UInt16"/> with the tag of the entry
+		/// </param>
+		/// <param name="value">
+		///    A <see cref="System.UInt32"/> with the value to add.
+		/// </param>
+		public void SetLongValue (int directory, ushort entry_tag, uint value)
+		{
+			SetEntry (directory, new LongIFDEntry (entry_tag, value));
+		}
+
+		/// <summary>
 		///    Adds a <see cref="Entries.RationalIFDEntry"/> to the directory with tag
 		///    given by <paramref name="entry_tag"/> and value given by <paramref name="value"/>
 		/// </summary>

@@ -256,7 +256,6 @@ namespace TagLib.IFD
 			}
 		}
 
-
 		/// <summary>
 		///    The time of digitization.
 		/// </summary>
@@ -485,6 +484,28 @@ namespace TagLib.IFD
 		public override uint? FocalLengthIn35mmFilm {
 			get {
 				return ExifIFD.GetLongValue (0, (ushort) ExifEntryTag.FocalLengthIn35mmFilm);
+			}
+		}
+
+		/// <summary>
+		///    Gets or sets the orientation of the image described
+		///    by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="uint" /> containing the orientation of the
+		///    image
+		/// </value>
+		public override uint? Orientation {
+			get {
+				return Structure.GetLongValue (0, (ushort) IFDEntryTag.Orientation);
+			}
+			set {
+				if (value == null) {
+					Structure.RemoveTag (0, (ushort) IFDEntryTag.Orientation);
+					return;
+				}
+
+				Structure.SetLongValue (0, (ushort) IFDEntryTag.Orientation, value.Value);
 			}
 		}
 

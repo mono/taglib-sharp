@@ -259,16 +259,16 @@ namespace TagLib.Image
 		///    A <see cref="uint" /> containing the orienatation of the
 		///    image
 		/// </value>
-		public override uint Orientation {
+		public override uint? Orientation {
 			get {
 				foreach (ImageTag tag in AllTags) {
-					uint value = tag.Orientation;
+					uint? value = tag.Orientation;
 
-					if (value != 0)
+					if (value != null)
 						return value;
 				}
 
-				return 0;
+				return null;
 			}
 			set {
 				foreach (ImageTag tag in AllTags)
