@@ -476,7 +476,7 @@ namespace TagLib.IFD
 
 		/// <summary>
 		///    Gets the focal length the image, the current instance belongs
-		///    to, was taken with assuming a 35mm film camera.
+		///    to, was taken with, assuming a 35mm film camera.
 		/// </summary>
 		/// <value>
 		///    A <see cref="System.Nullable"/> with the focal length in 35mm equivalent in millimeters.
@@ -492,7 +492,7 @@ namespace TagLib.IFD
 		///    by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="uint" /> containing the orientation of the
+		///    A <see cref="System.Nullable" /> containing the orientation of the
 		///    image
 		/// </value>
 		public override uint? Orientation {

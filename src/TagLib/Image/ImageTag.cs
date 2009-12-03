@@ -181,7 +181,7 @@ namespace TagLib.Image
 
 		/// <summary>
 		///    Gets the focal length the image, the current instance belongs
-		///    to, was taken with assuming a 35mm film camera.
+		///    to, was taken with, assuming a 35mm film camera.
 		/// </summary>
 		/// <value>
 		///    A <see cref="System.Nullable"/> with the focal length in 35mm equivalent in millimeters.
