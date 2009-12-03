@@ -113,9 +113,11 @@ namespace TagLib.Tests.Images
 			Assert.AreEqual (1.0d/60.0d, tag.ExposureTime);
 			Assert.AreEqual (5.6d, tag.FNumber);
 			Assert.AreEqual (35.0d, tag.FocalLength);
+			Assert.AreEqual (52, tag.FocalLengthIn35mmFilm);
 			Assert.AreEqual (new DateTime (2009, 11, 21, 12, 39, 39), tag.DateTime);
 			Assert.AreEqual (new DateTime (2009, 11, 21, 12, 39, 39), tag.DateTimeDigitized);
 			Assert.AreEqual (new DateTime (2009, 11, 21, 12, 39, 39), tag.DateTimeOriginal);
+			Assert.AreEqual (1, tag.Orientation);
 		}
 
 		public void CheckMakerNote (File file)
