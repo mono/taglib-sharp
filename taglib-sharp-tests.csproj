@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1A28B7F1-2B7F-40D1-81E5-ADF2606B895B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>tests</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="nunit-console2 tests.dll" workingdir="${TargetDir}" externalConsole="true" pauseExternalConsole="true" />
+      </CustomCommands>
+    </CustomCommands>
+    <AssemblyName>tests</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AssemblyName>TagLib# Tests</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="nunit.framework, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="tests\fixtures\TagLib.Tests.Collections\ByteVectorCollectionTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Collections\ByteVectorTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Collections\StringCollectionTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\AacFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\AiffFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\AsfFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\AviFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\FlacFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\Id3BothFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\Id3V1FormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\Id3V2FormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\IFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\JpegFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\M4aFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\MpcFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\OggFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\StandardTests.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.FileFormats\TiffFormatTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\AddImageMetadataTests.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\JpegCanonZoombrowserTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\JpegEmptyTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\JpegNikon1Test.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\JpegNikon2Test.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\JpegNikon3Test.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\JpegNikon4Test.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\JpegOlympus1Test.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\JpegOlympus2Test.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\JpegOlympus3Test.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\JpegPanasonicTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\JpegSony1Test.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\JpegTangledTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\TiffXmpTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\Utils.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\XapTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\XmpCrashTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Images\XmpSpecTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.Performance\PerformanceTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\ApeTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\AsfTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\DivXTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\Id3V1Test.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\Id3V2Test.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\InfoTagTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\MovieIdTagTest.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\Mpeg4Test.cs" />
+    <Compile Include="tests\fixtures\TagLib.Tests.TaggingFormats\XiphTest.cs" />
+    <Compile Include="tests\fixtures\Helpers.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties InternalTargetFrameworkVersion="3.5" />
+    </MonoDevelop>
+  </ProjectExtensions>
+  <ItemGroup>
+    <ProjectReference Include="taglib-sharp.csproj">
+      <Project>{4CC18776-125E-4318-9D24-D60110AD9697}</Project>
+      <Name>taglib-sharp</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
