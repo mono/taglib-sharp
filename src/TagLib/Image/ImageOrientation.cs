@@ -2,6 +2,10 @@ using System;
 
 namespace TagLib.Image
 {
+	/// <summary>
+	/// Describes the orientation of an image.
+	/// Values are from http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/EXIF.html
+	/// </summary>
 	public enum ImageOrientation : uint
 	{
 		Unknown = 0,
