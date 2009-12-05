@@ -492,20 +492,20 @@ namespace TagLib.IFD
 		///    by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="System.Nullable" /> containing the orientation of the
+		///    A <see cref="TagLib.Image.ImageOrientation" /> containing the orientation of the
 		///    image
 		/// </value>
-		public override uint? Orientation {
+		public override ImageOrientation Orientation {
 			get {
-				return Structure.GetLongValue (0, (ushort) IFDEntryTag.Orientation);
+				return (ImageOrientation) Structure.GetLongValue (0, (ushort) IFDEntryTag.Orientation);
 			}
 			set {
-				if (value == null) {
+				if (value == ImageOrientation.Unknown) {
 					Structure.RemoveTag (0, (ushort) IFDEntryTag.Orientation);
 					return;
 				}
 
-				Structure.SetLongValue (0, (ushort) IFDEntryTag.Orientation, value.Value);
+				Structure.SetLongValue (0, (ushort) IFDEntryTag.Orientation, (uint) value);
 			}
 		}
 

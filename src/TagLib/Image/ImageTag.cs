@@ -75,11 +75,11 @@ namespace TagLib.Image
 		///    by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="System.Nullable" /> containing the orientation of the
+		///    A <see cref="TagLib.Image.ImageOrientation" /> containing the orientation of the
 		///    image
 		/// </value>
-		public virtual uint? Orientation {
-			get { return null; }
+		public virtual ImageOrientation Orientation {
+			get { return ImageOrientation.Unknown; }
 			set {}
 		}
 

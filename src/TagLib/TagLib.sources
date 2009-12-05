@@ -45,6 +45,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Image/CombinedImageTag.cs \
 	$(srcdir)/TagLib/Image/File.cs \
 	$(srcdir)/TagLib/Image/ImageTag.cs \
+	$(srcdir)/TagLib/Image/ImageOrientation.cs \
 	$(srcdir)/TagLib/Jpeg/Codec.cs \
 	$(srcdir)/TagLib/Jpeg/File.cs \
 	$(srcdir)/TagLib/Jpeg/JpegCommentTag.cs \

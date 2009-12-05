@@ -256,19 +256,19 @@ namespace TagLib.Image
 		///    by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="System.Nullable" /> containing the orienatation of the
+		///    A <see cref="TagLib.Image.ImageOrientation" /> containing the orienatation of the
 		///    image
 		/// </value>
-		public override uint? Orientation {
+		public override ImageOrientation Orientation {
 			get {
 				foreach (ImageTag tag in AllTags) {
-					uint? value = tag.Orientation;
+					ImageOrientation value = tag.Orientation;
 
-					if (value != null)
+					if (value != ImageOrientation.Unknown)
 						return value;
 				}
 
-				return null;
+				return ImageOrientation.Unknown;
 			}
 			set {
 				foreach (ImageTag tag in AllTags)
