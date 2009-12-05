@@ -5,6 +5,7 @@
 // Author:
 //   Ruben Vermeersch (ruben@savanne.be)
 //   Mike Gemuende (mike@gemuende.de)
+//   Paul Lange (palango@gmx.de)
 //
 // Copyright (C) 2009 Ruben Vermeersch
 //

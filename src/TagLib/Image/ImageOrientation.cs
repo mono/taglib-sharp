@@ -44,13 +44,44 @@ namespace TagLib.Image
 	/// </summary>
 	public enum ImageOrientation : uint
 	{
+		/// <summary>
+		/// No need to do any transformations.
+		/// </summary>
 		TopLeft = 1,
+
+		/// <summary>
+		/// Mirror image vertically.
+		/// </summary>
 		TopRight = 2,
+
+		/// <summary>
+		/// Rotate image 180 degrees.
+		/// </summary>
 		BottomRight = 3,
+
+		/// <summary>
+		/// Mirror image horizontally
+		/// </summary>
 		BottomLeft = 4,
+
+		/// <summary>
+		/// Mirror image horizontally and rotate 90 degrees clockwise.
+		/// </summary>
 		LeftTop = 5,
+
+		/// <summary>
+		/// Rotate image 90 degrees clockwise.
+		/// </summary>
 		RightTop = 6,
+
+		/// <summary>
+		/// Mirror image vertically and rotate 90 degrees clockwise.
+		/// </summary>
 		RightBottom = 7,
+
+		/// <summary>
+		/// Rotate image 270 degrees clockwise.
+		/// </summary>
 		LeftBottom = 8
 	}
 }
