@@ -4,6 +4,7 @@
 //
 // Author:
 //   Mike Gemuende (mike@gemuende.de)
+//   Paul Lange (palango@gmx.de)
 //
 // Copyright (C) 2009 Mike Gemuende
 //
@@ -264,11 +265,11 @@ namespace TagLib.Image
 				foreach (ImageTag tag in AllTags) {
 					ImageOrientation value = tag.Orientation;
 
-					if (value != ImageOrientation.Unknown)
+					if ((uint) value >= 1U && (uint) value <= 8U)
 						return value;
 				}
 
-				return ImageOrientation.Unknown;
+				return 0;
 			}
 			set {
 				foreach (ImageTag tag in AllTags)

@@ -117,7 +117,7 @@ namespace TagLib.Tests.Images
 			Assert.AreEqual (new DateTime (2009, 11, 21, 12, 39, 39), tag.DateTime);
 			Assert.AreEqual (new DateTime (2009, 11, 21, 12, 39, 39), tag.DateTimeDigitized);
 			Assert.AreEqual (new DateTime (2009, 11, 21, 12, 39, 39), tag.DateTimeOriginal);
-			Assert.AreEqual (Image.ImageOrientation.Horizontal, tag.Orientation);
+			Assert.AreEqual (Image.ImageOrientation.TopLeft, tag.Orientation);
 		}
 
 		public void CheckMakerNote (File file)

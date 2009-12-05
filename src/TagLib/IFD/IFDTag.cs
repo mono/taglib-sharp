@@ -5,6 +5,7 @@
 // Author:
 //   Ruben Vermeersch (ruben@savanne.be)
 //   Mike Gemuende (mike@gemuende.de)
+//   Paul Lange (palango@gmx.de)
 //
 // Copyright (C) 2009 Ruben Vermeersch
 //
@@ -500,7 +501,7 @@ namespace TagLib.IFD
 				return (ImageOrientation) Structure.GetLongValue (0, (ushort) IFDEntryTag.Orientation);
 			}
 			set {
-				if (value == ImageOrientation.Unknown) {
+				if ((uint) value < 1U || (uint) value > 8U) {
 					Structure.RemoveTag (0, (ushort) IFDEntryTag.Orientation);
 					return;
 				}

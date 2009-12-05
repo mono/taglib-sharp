@@ -4,6 +4,7 @@
 //
 // Author:
 //   Mike Gemuende (mike@gemuende.de)
+//   Paul Lange (palango@gmx.de)
 //
 // Copyright (C) 2009 Mike Gemuende
 //
@@ -79,7 +80,7 @@ namespace TagLib.Image
 		///    image
 		/// </value>
 		public virtual ImageOrientation Orientation {
-			get { return ImageOrientation.Unknown; }
+			get { return 0; }
 			set {}
 		}
 
