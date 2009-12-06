@@ -1,5 +1,5 @@
 //
-// File.cs: Enum for the orientation of an image
+// ImageOrientation.cs: Enum for the orientation of an image
 //
 // Author:
 //   Paul Lange (palango@gmx.de)
