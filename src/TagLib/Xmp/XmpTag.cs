@@ -162,6 +162,12 @@ namespace TagLib.Xmp
 
 #region Constructors
 
+		public XmpTag ()
+		{
+			NodeTree = new XmpNode (String.Empty, String.Empty);
+			nodes = new Dictionary<string, Dictionary<string, XmpNode>> ();
+		}
+
 		public XmpTag (string data)
 		{
 			XmlDocument doc = new XmlDocument (NameTable);
@@ -446,6 +452,59 @@ namespace TagLib.Xmp
 			return t;
 		}
 
+		private XmpNode NewNode (string ns, string name)
+		{
+			Dictionary <string, XmpNode> ns_nodes = null;
+
+			if (!nodes.ContainsKey (ns)) {
+				ns_nodes = new Dictionary <string, XmpNode> ();
+				nodes.Add (ns, ns_nodes);
+
+			} else
+				ns_nodes = nodes [ns];
+
+			if (ns_nodes.ContainsKey (name)) {
+				foreach (XmpNode child_node in NodeTree.Children) {
+					if (child_node.Namespace == ns && child_node.Name == name) {
+						NodeTree.RemoveChild (child_node);
+						break;
+					}
+				}
+
+				ns_nodes.Remove (name);
+			}
+
+			XmpNode node = new XmpNode (ns, name);
+			ns_nodes.Add (name, node);
+
+			NodeTree.AddChild (node);
+
+			return node;
+		}
+
+		private XmpNode NewNode (string ns, string name, XmpNodeType type)
+		{
+			XmpNode node = NewNode (ns, name);
+			node.Type = type;
+
+			return node;
+		}
+
+		private void RemoveNode (string ns, string name)
+		{
+			if (!nodes.ContainsKey (ns))
+				return;
+
+			foreach (XmpNode node in NodeTree.Children) {
+				if (node.Namespace == ns && node.Name == name) {
+					NodeTree.RemoveChild (node);
+					break;
+				}
+			}
+
+			nodes[ns].Remove (name);
+		}
+
 #endregion
 
 #region Public Properties
@@ -480,6 +539,20 @@ namespace TagLib.Xmp
 			throw new NotImplementedException ();
 		}
 
+		/// <summary>
+		///    Finds the node associated with the namespace <paramref name="ns"/> and the name
+		///    <paramref name="name"/>.
+		/// </summary>
+		/// <param name="ns">
+		///    A <see cref="System.String"/> with the namespace of the node.
+		/// </param>
+		/// <param name="name">
+		///    A <see cref="System.String"/> with the name of the node.
+		/// </param>
+		/// <returns>
+		///    A <see cref="XmpNode"/> with the found node, or <see langword="null"/>
+		///    if no node was found.
+		/// </returns>
 		public XmpNode FindNode (string ns, string name)
 		{
 			if (!nodes.ContainsKey (ns))
@@ -490,6 +563,205 @@ namespace TagLib.Xmp
 
 		}
 
+		/// <summary>
+		///    Returns the text of the node associated with the namespace
+		///    <param name="ns"/> and the name <paramref name="name"/>.
+		/// </summary>
+		/// <param name="ns">
+		///    A <see cref="System.String"/> with the namespace of the node.
+		/// </param>
+		/// <param name="name">
+		///    A <see cref="System.String"/> with the name of the node.
+		/// </param>
+		/// <returns>
+		///    A <see cref="System.String"/> with the text of the node, or
+		///    <see langword="null"/> if no such node exists, or if it is not
+		///    a text node.
+		/// </returns>
+		public string GetTextNode (string ns, string name)
+		{
+			var node = FindNode (ns, name);
+
+			if (node == null || node.Type != XmpNodeType.Simple)
+				return null;
+
+			return node.Value;
+		}
+
+		/// <summary>
+		///    Creates a new text node associated with the namespace
+		///    <paramref name="ns"/> and the name <paramref name="name"/>.
+		/// </summary>
+		/// <param name="ns">
+		///    A <see cref="System.String"/> with the namespace of the node.
+		/// </param>
+		/// <param name="name">
+		///    A <see cref="System.String"/> with the name of the node.
+		/// </param>
+		/// <param name="value">
+		///    A <see cref="System.String"/> with the value for the new node.
+		///    If <see langword="null"/> is given, a possibly existing node will
+		///    be deleted.
+		/// </param>
+		public void SetTextNode (string ns, string name, string value)
+		{
+			if (value == null) {
+				RemoveNode (ns, name);
+				return;
+			}
+
+			var node = NewNode (ns, name);
+			node.Value = value;
+		}
+
+		/// <summary>
+		///    Searches for a node holding language alternatives. The return value
+		///    is the value of the default language stored by the node. The node is
+		///    identified by the namespace <paramref name="ns"/> and the name
+		///    <paramref name="name"/>. If the default language is not set, an arbitrary
+		///    one is chosen.
+		///    It is also tried to return the value a simple text node, if no
+		///    associated alt-node exists.
+		/// </summary>
+		/// <param name="ns">
+		///    A <see cref="System.String"/> with the namespace of the node.
+		/// </param>
+		/// <param name="name">
+		///    A <see cref="System.String"/> with the name of the node.
+		/// </param>
+		/// <returns>
+		///    A <see cref="System.String"/> with the value stored as default language
+		///    for the referenced node.
+		/// </returns>
+		public string GetLangAltNode (string ns, string name)
+		{
+			var node = FindNode (ns, name);
+
+			if (node == null)
+				return null;
+
+			if (node.Type == XmpNodeType.Simple)
+				return node.Value;
+
+			if (node.Type != XmpNodeType.Alt)
+				return null;
+
+			var children = node.Children;
+			foreach (XmpNode child_node in children) {
+				var qualifier = child_node.GetQualifier (XML_NS, "lang");
+				if (qualifier != null && qualifier.Value == "x-default")
+					return child_node.Value;
+			}
+
+			if (children.Count > 0 && children[0].Type == XmpNodeType.Simple)
+				return children[0].Value;
+
+			return null;
+		}
+
+		/// <summary>
+		///    Stores a the given <paramref name="value"/> as the default language
+		///    value for the alt-node associated with the namespace
+		///    <paramref name="ns"/> and the name <paramref name="name"/>.
+		///    All other alternatives set, are deleted by this method.
+		/// </summary>
+		/// <param name="ns">
+		///    A <see cref="System.String"/> with the namespace of the node.
+		/// </param>
+		/// <param name="name">
+		///    A <see cref="System.String"/> with the name of the node.
+		/// </param>
+		/// <param name="value">
+		///    A <see cref="System.String"/> with the value for the default language
+		///    to set. If <see langword="null"/> is given, a possibly existing node
+		///    will be deleted.
+		/// </param>
+		public void SetLangAltNode (string ns, string name, string value)
+		{
+			if (value == null) {
+				RemoveNode (ns, name);
+				return;
+			}
+
+			var node = NewNode (ns, name, XmpNodeType.Alt);
+
+			var child_node = new XmpNode (RDF_NS, LI_URI, value);
+			child_node.AddQualifier (new XmpNode (XML_NS, "lang", "x-default"));
+
+			node.AddChild (child_node);
+		}
+
+		/// <summary>
+		///    The method returns an array of <see cref="System.String"/> values
+		///    which are the stored text of the child nodes of the node associated
+		///    with the namespace <paramref name="ns"/> and the name <paramref name="name"/>.
+		/// </summary>
+		/// <param name="ns">
+		///    A <see cref="System.String"/> with the namespace of the node.
+		/// </param>
+		/// <param name="name">
+		///    A <see cref="System.String"/> with the name of the node.
+		/// </param>
+		/// <returns>
+		///    A <see cref="System.String[]"/> with the text stored in the child nodes.
+		/// </returns>
+		public string[] GetCollectionNode (string ns, string name)
+		{
+			var node = FindNode (ns, name);
+
+			if (node == null)
+				return null;
+
+			List<string> items = new List<string> ();
+
+			foreach (XmpNode child in node.Children) {
+
+				string item = child.Value;
+				if (item != null)
+					items.Add (item);
+			}
+
+			return items.ToArray ();
+		}
+
+		/// <summary>
+		///    Sets a <see cref="System.String[]"/> as texts to the children of the
+		///    node associated with the namespace <paramref name="ns"/> and the name
+		///    <paramref name="name"/>.
+		/// </summary>
+		/// <param name="ns">
+		///    A <see cref="System.String"/> with the namespace of the node.
+		/// </param>
+		/// <param name="name">
+		///    A <see cref="System.String"/> with the name of the node.
+		/// </param>
+		/// <param name="values">
+		///    A <see cref="System.String[]"/> with the values to set for the children.
+		/// </param>
+		/// <param name="type">
+		///    A <see cref="XmpNodeType"/> with the type of the parent node.
+		/// </param>
+		public void SetCollectionNode (string ns, string name, string [] values, XmpNodeType type)
+		{
+			if (type == XmpNodeType.Simple || type == XmpNodeType.Alt)
+				throw new ArgumentException ("type");
+
+			if (values == null) {
+				RemoveNode (ns, name);
+				return;
+			}
+
+			var node = NewNode (ns, name, type);
+			foreach (string value in values)
+				node.AddChild (new XmpNode (RDF_NS, LI_URI, value));
+		}
+
+		/// <summary>
+		///    Renders the current instance to an XMP <see cref="System.String"/>.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="System.String"/> with the XMP structure.
+		/// </returns>
 		public string Render ()
 		{
 			XmlDocument doc = new XmlDocument (NameTable);
@@ -556,17 +828,16 @@ namespace TagLib.Xmp
 #region Metadata fields
 
 		/// <summary>
-		///    Gets the manufacture of the recording equipment the image, the
-		///    current instance belongs to, was taken with.
+		///    Gets or sets the comment for the image described
+		///    by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string" /> with the manufacture name.
+		///    A <see cref="string" /> containing the comment of the
+		///    current instace.
 		/// </value>
-		public override string Make {
-			get {
-				var node = FindNode (XmpTag.TIFF_NS, "Make");
-				return node == null ? null : node.Value;
-			}
+		public override string Comment {
+			get { return GetLangAltNode (DC_NS, "description"); }
+			set { SetLangAltNode (DC_NS, "description", value); }
 		}
 
 		/// <summary>
@@ -578,24 +849,183 @@ namespace TagLib.Xmp
 		///    current instace.
 		/// </value>
 		public override string[] Keywords {
+			get { return GetCollectionNode (DC_NS, "subject") ?? new string [] {}; }
+			set { SetCollectionNode (DC_NS, "subject", value, XmpNodeType.Bag); }
+		}
+
+		/// <summary>
+		///    Gets or sets the rating for the image described
+		///    by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="System.Nullable"/> containing the rating of the
+		///    current instace.
+		/// </value>
+		public override uint? Rating {
 			get {
-				var node = FindNode (XmpTag.DC_NS, "subject");
+				uint val;
 
-				if (node == null)
-					return new string [] {};
+				if (UInt32.TryParse (GetTextNode (XAP_NS, "Rating"), out val))
+					return val;
 
-				List<string> keywords = new List<string> ();
-
-				foreach (XmpNode child in node.Children) {
-					string keyword = child.Value;
-					if (keyword != null)
-						keywords.Add (keyword);
-				}
-
-				return keywords.ToArray ();
+				return null;
 			}
 			set {
+				SetTextNode (XAP_NS, "Rating", value != null ? value.ToString () : null);
 			}
+		}
+
+		/// <summary>
+		///    Gets or sets the time when the image, the current instance
+		///    belongs to, was taken.
+		/// </summary>
+		/// <value>
+		///    A <see cref="System.Nullable"/> with the time the image was taken.
+		/// </value>
+		public override DateTime? DateTime {
+			get {
+				// TODO: use correct parsing
+				try {
+					return System.DateTime.Parse (GetTextNode (XAP_NS, "CreateDate"));
+				} catch {}
+
+				return null;
+			}
+			set {
+				// TODO: write correct format
+				SetTextNode (XAP_NS, "CreateDate", value != null ? value.ToString () : null);
+			}
+		}
+
+		/// <summary>
+		///    Gets or sets the orientation of the image described
+		///    by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="TagLib.Image.ImageOrientation" /> containing the orientation of the
+		///    image
+		/// </value>
+		public override ImageOrientation Orientation {
+			get { return 0; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets or sets the software the image, the current instance
+		///    belongs to, was created with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the name of the
+		///    software the current instace was created with.
+		/// </value>
+		public override string Software {
+			get { return GetTextNode (XAP_NS, "CreatorTool"); }
+			set { SetTextNode (XAP_NS, "CreatorTool", value); }
+		}
+
+		/// <summary>
+		///    Gets or sets the latitude of the GPS coordinate the current
+		///    image was taken.
+		/// </summary>
+		/// <value>
+		///    A <see cref="System.Nullable"/> with the latitude ranging from -90.0
+		///    to +90.0 degrees.
+		/// </value>
+		public override double? Latitude {
+			get { return null; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets or sets the longitude of the GPS coordinate the current
+		///    image was taken.
+		/// </summary>
+		/// <value>
+		///    A <see cref="System.Nullable"/> with the longitude ranging from -180.0
+		///    to +180.0 degrees.
+		/// </value>
+		public override double? Longitude {
+			get { return null; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets or sets the altitude of the GPS coordinate the current
+		///    image was taken. The unit is meter.
+		/// </summary>
+		/// <value>
+		///    A <see cref="System.Nullable"/> with the altitude. A positive value
+		///    is above sea level, a negative one below sea level. The unit is meter.
+		/// </value>
+		public override double? Altitude {
+			get { return null; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets the exposure time the image, the current instance belongs
+		///    to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="System.Nullable"/> with the exposure time in seconds.
+		/// </value>
+		public override double? ExposureTime {
+			get { return null; }
+		}
+
+		/// <summary>
+		///    Gets the FNumber the image, the current instance belongs
+		///    to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="System.Nullable"/> with the FNumber.
+		/// </value>
+		public override double? FNumber {
+			get { return null; }
+		}
+
+		/// <summary>
+		///    Gets the ISO speed the image, the current instance belongs
+		///    to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="System.Nullable"/> with the ISO speed as defined in ISO 12232.
+		/// </value>
+		public override uint? ISOSpeedRatings {
+			get { return null; }
+		}
+
+		/// <summary>
+		///    Gets the focal length the image, the current instance belongs
+		///    to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="System.Nullable"/> with the focal length in millimeters.
+		/// </value>
+		public override double? FocalLength {
+			get { return null; }
+		}
+
+		/// <summary>
+		///    Gets the manufacture of the recording equipment the image, the
+		///    current instance belongs to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> with the manufacture name.
+		/// </value>
+		public override string Make {
+			get { return GetTextNode (TIFF_NS, "Make"); }
+		}
+
+		/// <summary>
+		///    Gets the model name of the recording equipment the image, the
+		///    current instance belongs to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> with the model name.
+		/// </value>
+		public override string Model {
+			get { return GetTextNode (TIFF_NS, "Model"); }
 		}
 
 #endregion

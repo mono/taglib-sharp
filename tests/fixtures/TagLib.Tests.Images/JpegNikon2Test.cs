@@ -39,16 +39,21 @@ namespace TagLib.Tests.Images
 		}
 
 		[Test]
+		public void XMPRead () {
+			CheckXMP (file);
+		}
+
+		[Test]
 		public void Rewrite () {
 			File tmp = Utils.CreateTmpFile (sample_file, tmp_file);
 			tmp.Save ();
 
 			tmp = File.Create (tmp_file);
 
-			// did not run at the moment, since XMP writing is not implemented
-			//CheckTags (tmp);
+			CheckTags (tmp);
 			CheckExif (tmp);
 			CheckMakerNote (tmp);
+			CheckXMP (tmp);
 		}
 
 		[Test]
@@ -61,6 +66,18 @@ namespace TagLib.Tests.Images
 		public void AddGPS ()
 		{
 			AddImageMetadataTests.AddGPSTest (sample_file, tmp_file, true);
+		}
+
+		[Test]
+		public void AddXMP1 ()
+		{
+			AddImageMetadataTests.AddXMPTest1 (sample_file, tmp_file, true);
+		}
+
+		[Test]
+		public void AddXMP2 ()
+		{
+			AddImageMetadataTests.AddXMPTest2 (sample_file, tmp_file, true);
 		}
 
 		public void CheckTags (File file) {
@@ -137,6 +154,24 @@ namespace TagLib.Tests.Images
 				Assert.AreEqual (78.0d/10.0d, (double) values[0]);
 				Assert.AreEqual (78.0d/10.0d, (double) values[1]);
 			}
+		}
+
+		public void CheckXMP (File file)
+		{
+			string [] keywords = new string[] {
+				"Nikon D70s",
+				"Food",
+				"2007",
+				"2006",
+				"Neujahr",
+				"Sylvester"
+			};
+
+			var tag = file.GetTag (TagTypes.XMP) as XmpTag;
+
+			Assert.IsNotNull (tag, "tag");
+
+			Assert.AreEqual (keywords, tag.Keywords);
 		}
 	}
 }

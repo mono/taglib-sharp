@@ -29,22 +29,63 @@ namespace TagLib.Xmp
 {
 	public class XmpNode
 	{
-		private List<XmpNode> children;
-		private Dictionary<string, Dictionary<string, XmpNode>> qualifiers;
-		string name = String.Empty;
 
+#region Private Fields
+
+		/// <value>
+		///    The children of the current node
+		/// </value>
+		private List<XmpNode> children;
+
+		/// <value>
+		///    The qualifiers of the current node
+		/// </value>
+		private Dictionary<string, Dictionary<string, XmpNode>> qualifiers;
+
+		/// <value>
+		///    The name of the current node
+		/// </value>
+		private string name;
+
+#endregion
+
+#region Properties
+
+		/// <value>
+		///    The namespace the current instance belongs to
+		/// </value>
 		public string Namespace { get; private set; }
+
+		/// <value>
+		///    The name of the current node instance
+		/// </value>
 		public string Name {
 			get { return name; }
 			internal set {
-				if (name != String.Empty)
+				if (name != null)
 					throw new Exception ("Cannot change named node");
+
+				if (value == null)
+					throw new ArgumentException ("value");
+
 				name = value;
 			}
 		}
+
+		/// <value>
+		///    The text value of the current node
+		/// </value>
 		public string Value { get; set; }
+
+		/// <value>
+		///    The type of the current node
+		/// </value>
 		public XmpNodeType Type { get; internal set; }
 
+
+		/// <value>
+		///    The number of qualifiers of the current instance
+		/// </value>
 		public int QualifierCount {
 			get {
 				if (qualifiers == null)
@@ -57,6 +98,27 @@ namespace TagLib.Xmp
 			}
 		}
 
+		/// <value>
+		///    The children of the current instance.
+		/// </value>
+		public List<XmpNode> Children {
+			// TODO: do not return a list, because it can be modified elsewhere
+			get { return children ?? new List<XmpNode> (); }
+		}
+
+#endregion
+
+#region Constructors
+
+		/// <summary>
+		///    Constructor.
+		/// </summary>
+		/// <param name="ns">
+		///    A <see cref="System.String"/> with the namespace of the new instance.
+		/// </param>
+		/// <param name="name">
+		///    A <see cref="System.String"/> with the name of the new instance.
+		/// </param>
 		public XmpNode (string ns, string name)
 		{
 			Namespace = ns;
@@ -65,31 +127,91 @@ namespace TagLib.Xmp
 			Value = String.Empty;
 		}
 
+		/// <summary>
+		///    Constructor.
+		/// </summary>
+		/// <param name="ns">
+		///    A <see cref="System.String"/> with the namespace of the new instance.
+		/// </param>
+		/// <param name="name">
+		///    A <see cref="System.String"/> with the name of the new instance.
+		/// </param>
+		/// <param name="value">
+		///    A <see cref="System.String"/> with the txt value of the new instance.
+		/// </param>
 		public XmpNode (string ns, string name, string value) : this (ns, name)
 		{
 			Value = value;
 		}
 
-		public List<XmpNode> Children {
-			get { return children ?? new List<XmpNode> (); }
-		}
+#endregion
 
+#region Public Methods
+
+		/// <summary>
+		///    Adds a node as child of the current node
+		/// </summary>
+		/// <param name="node">
+		///    A <see cref="XmpNode"/> to be add as child
+		/// </param>
 		public void AddChild (XmpNode node)
 		{
+			if (node == null || node == this)
+				throw new ArgumentException ("node");
+
 			if (children == null)
 				children = new List<XmpNode> ();
+
 			children.Add (node);
 		}
 
+		/// <summary>
+		///    Removes the given node as child of the current instance
+		/// </summary>
+		/// <param name="node">
+		///    A <see cref="XmpNode"/> to remove as child
+		/// </param>
+		public void RemoveChild (XmpNode node)
+		{
+			if (children == null)
+				return;
+
+			children.Remove (node);
+		}
+
+		/// <summary>
+		///    Adds a node as qualifier of the current instance
+		/// </summary>
+		/// <param name="node">
+		///    A <see cref="XmpNode"/> to add as qualifier
+		/// </param>
 		public void AddQualifier (XmpNode node)
 		{
+			if (node == null || node == this)
+				throw new ArgumentException ("node");
+
 			if (qualifiers == null)
 				qualifiers = new Dictionary<string, Dictionary<string, XmpNode>> ();
+
 			if (!qualifiers.ContainsKey (node.Namespace))
 				qualifiers [node.Namespace] = new Dictionary<string, XmpNode> ();
+
 			qualifiers [node.Namespace][node.Name] = node;
 		}
 
+		/// <summary>
+		///    Returns the qualifier associated with the given namespace <paramref name="ns"/>
+		///    and name <paramref name="name"/>
+		/// </summary>
+		/// <param name="ns">
+		///    A <see cref="System.String"/> with the namespace of the qualifier
+		/// </param>
+		/// <param name="name">
+		///    A <see cref="System.String"/> with the name of the qualifier
+		/// </param>
+		/// <returns>
+		///    A <see cref="XmpNode"/> with the qualifier
+		/// </returns>
 		public XmpNode GetQualifier (string ns, string name)
 		{
 			if (qualifiers == null)
@@ -109,29 +231,18 @@ namespace TagLib.Xmp
 			Dump ("");
 		}
 
-		internal void Dump (string prefix) {
-			Console.WriteLine ("{0}{1}{2} ({4}) = \"{3}\"", prefix, Namespace, Name, Value, Type);
-			if (qualifiers != null) {
-				Console.WriteLine ("{0}Qualifiers:", prefix);
-
-				foreach (string ns in qualifiers.Keys) {
-					foreach (string name in qualifiers [ns].Keys) {
-						qualifiers [ns][name].Dump (prefix+"  ->  ");
-					}
-				}
-			}
-			if (children != null) {
-				Console.WriteLine ("{0}Children:", prefix);
-
-				foreach (XmpNode child in children) {
-					child.Dump (prefix+"  ->  ");
-				}
-			}
-		}
-
+		/// <summary>
+		///    Calls the Visitor for this node and every child node.
+		/// </summary>
+		/// <param name="visitor">
+		///    A <see cref="XmpNodeVisitor"/> to access the node and the children.
+		/// </param>
 		public void Accept (XmpNodeVisitor visitor)
 		{
 			visitor.Visit (this);
+
+			// TODO: what is with the qualifiers ?
+			// either add them to be also visited, or add a comment
 			if (children != null) {
 				foreach (XmpNode child in children) {
 					child.Accept (visitor);
@@ -140,24 +251,12 @@ namespace TagLib.Xmp
 		}
 
 		/// <summary>
-		///    Is this a node that we can transform into an attribute of the
-		///    parent node? Yes if it has no qualifiers or children, nor is
-		///    it part of a list.
+		///    Renders the current instance as child of the given node to the
+		///    given <see cref="XmlNode"/>
 		/// </summary>
-		private bool IsReallySimpleType {
-			get {
-				return Type == XmpNodeType.Simple && (children == null || children.Count == 0)
-					&& QualifierCount == 0 && (Name != XmpTag.LI_URI || Namespace != XmpTag.RDF_NS);
-			}
-		}
-
-		/// <summary>
-		///    Is this the root node of the tree?
-		/// </summary>
-		private bool IsRootNode {
-			get { return Name == String.Empty && Namespace == String.Empty; }
-		}
-
+		/// <param name="parent">
+		///    A <see cref="XmlNode"/> to render the current instance as child of.
+		/// </param>
 		public void RenderInto (XmlNode parent)
 		{
 			if (IsRootNode) {
@@ -208,11 +307,70 @@ namespace TagLib.Xmp
 				node.AppendChild (bag);
 				parent.AppendChild (node);
 
+			} else if (Type == XmpNodeType.Seq) {
+				var node = XmpTag.CreateNode (parent.OwnerDocument, Name, Namespace);
+				// TODO: Add all qualifiers.
+				if (QualifierCount > 0)
+					throw new NotImplementedException ();
+				var bag = XmpTag.CreateNode (parent.OwnerDocument, XmpTag.SEQ_URI, XmpTag.RDF_NS);
+				foreach (var child in children)
+					child.RenderInto (bag);
+				node.AppendChild (bag);
+				parent.AppendChild (node);
+
 			} else {
 				// Probably some combination of things we don't fully cover yet.
 				Dump ();
 				throw new NotImplementedException ();
 			}
+		}
+
+
+#endregion
+
+#region Internal Methods
+
+		internal void Dump (string prefix) {
+			Console.WriteLine ("{0}{1}{2} ({4}) = \"{3}\"", prefix, Namespace, Name, Value, Type);
+			if (qualifiers != null) {
+				Console.WriteLine ("{0}Qualifiers:", prefix);
+
+				foreach (string ns in qualifiers.Keys) {
+					foreach (string name in qualifiers [ns].Keys) {
+						qualifiers [ns][name].Dump (prefix+"  ->  ");
+					}
+				}
+			}
+			if (children != null) {
+				Console.WriteLine ("{0}Children:", prefix);
+
+				foreach (XmpNode child in children) {
+					child.Dump (prefix+"  ->  ");
+				}
+			}
+		}
+
+#endregion
+
+#region Private Methods
+
+		/// <summary>
+		///    Is this a node that we can transform into an attribute of the
+		///    parent node? Yes if it has no qualifiers or children, nor is
+		///    it part of a list.
+		/// </summary>
+		private bool IsReallySimpleType {
+			get {
+				return Type == XmpNodeType.Simple && (children == null || children.Count == 0)
+					&& QualifierCount == 0 && (Name != XmpTag.LI_URI || Namespace != XmpTag.RDF_NS);
+			}
+		}
+
+		/// <summary>
+		///    Is this the root node of the tree?
+		/// </summary>
+		private bool IsRootNode {
+			get { return Name == String.Empty && Namespace == String.Empty; }
 		}
 
 		private void AddAllQualifiersTo (XmlNode xml)
@@ -235,5 +393,8 @@ namespace TagLib.Xmp
 			foreach (var child in children)
 				child.RenderInto (parent);
 		}
+#endregion
+
+
 	}
 }

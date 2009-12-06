@@ -509,7 +509,7 @@ namespace TagLib.Jpeg
 
 			// Add segments to write in order
 			data.Add (RenderExifSegment ());
-			//data.Add (RenderXMPSegment ());
+			data.Add (RenderXMPSegment ());
 			data.Add (RenderCOMSegment ());
 
 			// delete metdata not contained in the metadata block
@@ -582,7 +582,20 @@ namespace TagLib.Jpeg
 		/// </returns>
 		private ByteVector RenderXMPSegment ()
 		{
-			throw new NotImplementedException ();
+			// Check, if XmpTag is contained
+			XmpTag xmp = GetTag (TagTypes.XMP) as XmpTag;
+			if (xmp == null)
+				return null;
+
+			ByteVector xmp_data = XmpTag.XAP_NS + "\0";
+			xmp_data.Add (xmp.Render ());
+
+			// Create whole segment
+			ByteVector data = new ByteVector (new byte [] { 0xFF, 0xE1 });
+			data.Add (ByteVector.FromUShort ((ushort) (xmp_data.Count + 2)));
+			data.Add (xmp_data);
+
+			return data;
 		}
 
 

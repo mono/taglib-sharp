@@ -53,5 +53,17 @@ namespace TagLib.Tests.Images
 		{
 			AddImageMetadataTests.AddGPSTest (sample_file, tmp_file, false);
 		}
+
+		[Test]
+		public void AddXMP1 ()
+		{
+			AddImageMetadataTests.AddXMPTest1 (sample_file, tmp_file, false);
+		}
+
+		[Test]
+		public void AddXMP2 ()
+		{
+			AddImageMetadataTests.AddXMPTest2 (sample_file, tmp_file, false);
+		}
 	}
 }

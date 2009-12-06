@@ -26,6 +26,7 @@ using System.Collections.Generic;
 
 using TagLib.Jpeg;
 using TagLib.IFD;
+using TagLib.Xmp;
 
 namespace TagLib.Image
 {
@@ -156,10 +157,19 @@ namespace TagLib.Image
 				return null;
 
 			ImageTag new_tag = null;
-			if (type == TagTypes.JpegComment)
+			switch (type) {
+			case TagTypes.JpegComment:
 				new_tag = new JpegCommentTag ();
-			if (type == TagTypes.TiffIFD)
+				break;
+
+			case TagTypes.TiffIFD:
 				new_tag = new IFDTag ();
+				break;
+
+			case TagTypes.XMP:
+				new_tag = new XmpTag ();
+				break;
+			}
 
 			if (new_tag != null) {
 				ImageTag.AddTag (new_tag);

@@ -45,8 +45,7 @@ namespace TagLib.Tests.Images
 
 			tmp = File.Create (tmp_file);
 
-			// did not run at the moment, since XMP writing is not implemented
-			//CheckTags (tmp);
+			CheckTags (tmp);
 			CheckExif (tmp);
 			CheckMakerNote (tmp);
 		}
@@ -61,6 +60,18 @@ namespace TagLib.Tests.Images
 		public void AddGPS ()
 		{
 			AddImageMetadataTests.AddGPSTest (sample_file, tmp_file, true);
+		}
+
+		[Test]
+		public void AddXMP1 ()
+		{
+			AddImageMetadataTests.AddXMPTest1 (sample_file, tmp_file, false);
+		}
+
+		[Test]
+		public void AddXMP2 ()
+		{
+			AddImageMetadataTests.AddXMPTest2 (sample_file, tmp_file, false);
 		}
 
 		public void CheckTags (File file) {

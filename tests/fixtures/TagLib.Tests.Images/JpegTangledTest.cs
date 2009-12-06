@@ -82,15 +82,11 @@ namespace TagLib.Tests.Images
 
 				tmp = File.Create (GetTmpFilename (i));
 
-				// did not run at the moment, since XMP writing is not implemented
-				//CheckTags (tmp);
-
 				if ((TagTypes.TiffIFD & contained_types[i]) != 0)
 					CheckExif (tmp, i);
 
-				// did not run at the moment, since XMP writing is not implemented
-				//if ((TagTypes.XMP & contained_types[i]) != 0)
-				//	CheckXmp (tmp, i);
+				if ((TagTypes.XMP & contained_types[i]) != 0)
+					CheckXmp (tmp, i);
 
 				if ((TagTypes.JpegComment & contained_types[i]) != 0)
 					CheckJpegComment (tmp, i);
@@ -115,6 +111,24 @@ namespace TagLib.Tests.Images
 				                                  (TagTypes.TiffIFD & contained_types[i]) != 0);
 		}
 
+		[Test]
+		public void AddXMP1 ()
+		{
+			for (int i = 0; i < count; i++)
+				AddImageMetadataTests.AddXMPTest1 (GetSampleFilename (i),
+				                                  GetTmpFilename (i),
+				                                  (TagTypes.XMP & contained_types[i]) != 0);
+		}
+
+		[Test]
+		public void AddXMP2 ()
+		{
+			for (int i = 0; i < count; i++)
+				AddImageMetadataTests.AddXMPTest2 (GetSampleFilename (i),
+				                                  GetTmpFilename (i),
+				                                  (TagTypes.XMP & contained_types[i]) != 0);
+		}
+
 		public void CheckTags (File file, int i) {
 			Assert.IsTrue (file is Jpeg.File, String.Format ("not a Jpeg file: index {0}", i));
 
@@ -133,6 +147,10 @@ namespace TagLib.Tests.Images
 		}
 
 		public void CheckXmp (File file, int i) {
+			var tag = file.GetTag (TagTypes.XMP) as XmpTag;
+			Assert.IsNotNull (tag, String.Format ("XMP Tag not contained: index {0}", i));
+
+			Assert.AreEqual ("test description", tag.Comment);
 		}
 
 		public void CheckJpegComment (File file, int i) {
