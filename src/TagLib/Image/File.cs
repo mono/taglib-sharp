@@ -52,7 +52,7 @@ namespace TagLib.Image
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
-		public File (string path) : base (path)
+		protected File (string path) : base (path)
 		{
 		}
 
@@ -153,7 +153,7 @@ namespace TagLib.Image
 					return tag;
 			}
 
-			if (!create)
+			if (!create || (type & ImageTag.AllowedTypes) == 0)
 				return null;
 
 			ImageTag new_tag = null;

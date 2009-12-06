@@ -77,6 +77,30 @@ namespace TagLib.Tests.FileFormats
 			TestAltNode (tag, XmpTag.DC_NS, "description", new string[] {"Sample Image"});
 		}
 
+		[Test]
+		public void TestConstructor1 ()
+		{
+			var file = new Jpeg.File (sample_file);
+			Assert.IsNotNull (file.ImageTag, "ImageTag");
+			Assert.AreEqual (contained_types, file.TagTypes);
+		}
+
+		[Test]
+		public void TestConstructor2 ()
+		{
+			var file = new Jpeg.File (sample_file, ReadStyle.Average);
+			Assert.IsNotNull (file.ImageTag, "ImageTag");
+			Assert.AreEqual (contained_types, file.TagTypes);
+		}
+
+		[Test]
+		public void TestConstructor3 ()
+		{
+			var file = new Jpeg.File (new File.LocalFileAbstraction (sample_file), ReadStyle.Average);
+			Assert.IsNotNull (file.ImageTag, "ImageTag");
+			Assert.AreEqual (contained_types, file.TagTypes);
+		}
+
 		private void TestBagNode (XmpTag tag, string ns, string name, string[] values)
 		{
 			var node = tag.FindNode (ns, name);

@@ -85,7 +85,7 @@ namespace TagLib.Jpeg
 		///    Always <see cref="TagTypes.JpegComment" />.
 		/// </value>
 		public override TagTypes TagTypes {
-			get {return TagTypes.JpegComment;}
+			get { return TagTypes.JpegComment; }
 		}
 
 		/// <summary>
@@ -93,7 +93,7 @@ namespace TagLib.Jpeg
 		/// </summary>
 		public override void Clear ()
 		{
-			throw new NotImplementedException ();
+			Value = null;
 		}
 
 #endregion

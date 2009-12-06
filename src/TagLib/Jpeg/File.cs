@@ -60,9 +60,17 @@ namespace TagLib.Jpeg
 		///    Standard (empty) JFIF header to add, if no one is contained
 		/// </summary>
 		private static readonly byte [] BASIC_JFIF_HEADER = new byte [] {
-			0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0x00,
-			0x01, 0x01, 0x01, 0x00, 0x48, 0x00, 0x48, 0x00, 0x00
+			// segment maker
+			0xFF, (byte) Marker.APP0,
+
+			// segment size
+			0x00, 0x10,
+
+			// segment data
+			0x4A, 0x46, 0x49, 0x46, 0x00, 0x01, 0x01,
+			0x01, 0x00, 0x48, 0x00, 0x48, 0x00, 0x00
 		};
+
 
 #region Private Fields
 
@@ -72,29 +80,36 @@ namespace TagLib.Jpeg
 		private Properties properties;
 
 		/// <summary>
+		///    Stores the size of the metadata block at the beginning of the file.
+		///    The value is used to know which data block should be overwritten when
+		///    metadata is saved.
+		/// </summary>
+		/// <remarks>
+		///    If some metadata is not contained at the beginning of the file,
+		///    <see cref="exif_position"/>, <see cref="xmp_position"/> and
+		///    <see cref="comment_position"/> stores the offset to the metdata segments.
+		///    Those segments are deleted when metadata is saved and the metdata is
+		///    completely written at the beginning of the file.
+		/// </remarks>
+		private long metadata_length = 0;
+
+		/// <summary>
 		///    Contains the position of the Exif segment, if it is not contained in
-		///    metadata segment, to delete it.
+		///    metadata segment, to delete it. <see cref="metadata_length"/>
 		/// </summary>
 		private long exif_position = 0;
 
 		/// <summary>
 		///    Contains the position of the Xmp segment, if it is not contained in
-		///    metadata segment, to delete it.
+		///    metadata segment, to delete it. <see cref="metadata_length"/>
 		/// </summary>
 		private long xmp_position = 0;
 
 		/// <summary>
 		///    Contains the position of the Comment segment, if it is not contained in
-		///    metadata segment, to delete it.
+		///    metadata segment, to delete it. <see cref="metadata_length"/>
 		/// </summary>
 		private long comment_position = 0;
-
-		/// <summary>
-		///   We store the size of a block at the beginning of the file, which contains
-		///   the whole metadata we handle. We write this block back at once, so we need
-		///   to know how much bytes have to be overwritten.
-		/// </summary>
-		private long metadata_length = 0;
 
 		/// <summary>
 		///    For now, we do not allow to change the jfif header. As long as this is
@@ -156,7 +171,7 @@ namespace TagLib.Jpeg
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
-		public File (string path) : base (path)
+		public File (string path) : this (path, ReadStyle.Average)
 		{
 		}
 
@@ -181,15 +196,7 @@ namespace TagLib.Jpeg
 		public File (File.IFileAbstraction abstraction,
 		             ReadStyle propertiesStyle) : base (abstraction)
 		{
-			ImageTag = new CombinedImageTag (TagTypes.XMP | TagTypes.TiffIFD | TagTypes.JpegComment);
-
-			Mode = AccessMode.Read;
-			try {
-				Read (propertiesStyle);
-				TagTypesOnDisk = TagTypes;
-			} finally {
-				Mode = AccessMode.Closed;
-			}
+			Read (propertiesStyle);
 		}
 
 		/// <summary>
@@ -204,7 +211,8 @@ namespace TagLib.Jpeg
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		protected File (IFileAbstraction abstraction) : base (abstraction)
+		protected File (IFileAbstraction abstraction)
+			: this (abstraction, ReadStyle.Average)
 		{
 		}
 
@@ -250,7 +258,7 @@ namespace TagLib.Jpeg
 #region Private Methods
 
 		/// <summary>
-		///    Reads the file with a specified read style.
+		///    Reads the information from file with a specified read style.
 		/// </summary>
 		/// <param name="propertiesStyle">
 		///    A <see cref="ReadStyle" /> value specifying at what level
@@ -261,13 +269,16 @@ namespace TagLib.Jpeg
 		{
 			Mode = AccessMode.Read;
 			try {
+				ImageTag = new CombinedImageTag (TagTypes.XMP | TagTypes.TiffIFD | TagTypes.JpegComment);
+
 				ValidateHeader ();
 				ReadMetadata ();
 
-				if (propertiesStyle == ReadStyle.None)
-					return;
+				TagTypesOnDisk = TagTypes;
 
-				properties = ExtractProperties ();
+				if (propertiesStyle != ReadStyle.None)
+					properties = ExtractProperties ();
+
 			} finally {
 				Mode = AccessMode.Closed;
 			}
@@ -312,13 +323,13 @@ namespace TagLib.Jpeg
 		/// </returns>
 		private Marker ReadSegmentMarker ()
 		{
-			if (Tell + 2 >= Length)
-				throw new Exception ("Marker size exceeds file size");
-
 			ByteVector segment_header = ReadBlock (2);
 
-			if ( ! segment_header.StartsWith (0xFF))
-				throw new Exception ("Start of Segment expected at " + (Tell - 2));
+			if (segment_header.Count != 2)
+				throw new CorruptFileException ("Could not read enough bytes for segment maker");
+
+			if (segment_header[0] != 0xFF)
+				throw new CorruptFileException ("Start of Segment expected at " + (Tell - 2));
 
 			return (Marker)segment_header[1];
 		}
@@ -334,13 +345,20 @@ namespace TagLib.Jpeg
 		{
 			long position = Tell;
 
-			if (Tell + 2 >= Length)
-				throw new Exception ("Segment length-description size exceeds file size");
+			ByteVector segment_size_bytes = ReadBlock (2);
 
-			ushort segment_size = ReadBlock (2).ToUShort ();
+			if (segment_size_bytes.Count != 2)
+				throw new CorruptFileException ("Could not read enough bytes to determine segment size");
+
+			ushort segment_size = segment_size_bytes.ToUShort ();
+
+			// the size itself must be contained in the segment size
+			// so the smallest (theoretically) possible number of bytes if 2
+			if (segment_size < 2)
+				throw new CorruptFileException (String.Format ("Invalid segment size ({0} bytes)", segment_size));
 
 			if (position + segment_size >= Length)
-				throw new Exception ("Segment size exceeds file size");
+				throw new CorruptFileException ("Segment size exceeds file size");
 
 			return segment_size;
 		}
@@ -352,22 +370,26 @@ namespace TagLib.Jpeg
 		/// </summary>
 		private void ReadMetadata ()
 		{
+			bool advance_metdata = true;
+
 			// loop while marker is not EOI and not the data segment
 			while (true) {
 				Marker marker = ReadSegmentMarker ();
+
+				// we stop parsing when the end of file (EOI) or the begin of the
+				// data segment is reached (SOS)
+				// the second case is a trade-off between tolerant and fast parsing
 				if (marker == Marker.EOI || marker == Marker.SOS)
 					break;
 
 				long position = Tell;
 				ushort segment_size = ReadSegmentSize ();
 
-				if (segment_size <= 2)
-					throw new CorruptFileException ("Segment size must be greater than 2");
-
-				// segment size contains 2 bytes of the size itself, so
-				// pure data size is this
+				// segment size contains 2 bytes of the size itself, so the
+				// pure data size is this (and the cast is save)
 				ushort data_size = (ushort) (segment_size - 2);
 
+				// stores, if metadata was read
 				bool is_metadata = false;
 
 				switch (marker) {
@@ -398,12 +420,13 @@ namespace TagLib.Jpeg
 					break;
 				}
 
-				// if metadata was read in current segment
-				// and all previous segments are metadata segments
-				// (or the JFIF header), then add current segment to
-				// metadata-block
-				if (is_metadata && metadata_length == position - 2 - 2)
-					metadata_length = position + segment_size - 2;
+				// if metadata was read in current segment and all previous segments
+				// are metadata segments (or the JFIF header), then we add current
+				// segment to metadata-block
+				if (is_metadata && advance_metdata)
+					metadata_length += 2 + segment_size; // marker size + segment_size
+				else
+					advance_metdata = false;
 
 				// set position to next segment and start with next segment marker
 				Seek (position + segment_size, SeekOrigin.Begin);
@@ -415,7 +438,8 @@ namespace TagLib.Jpeg
 		/// </summary>
 		private bool ReadJFIFHeader (ushort length)
 		{
-			// JFIF header should be contain as first segment
+			// JFIF header should be contained as first segment
+			// SOI marker + APP0 Marker + segment size = 6 bytes
 			if (Tell != 6)
 				return false;
 
@@ -442,20 +466,23 @@ namespace TagLib.Jpeg
 			long position = Tell;
 			ByteVector data = null;
 
+			// for an Exif segment, the data block consists of 14 bytes of:
+			//    * 6 bytes Exif identifier string
+			//    * 2 bytes bigendian indication MM (or II)
+			//    * 2 bytes Tiff magic number (42)
+			//    * 4 bytes offset of the first IFD in this segment
+			//
+			//    the last two points are alreay encoded according to
+			//    big- or littleendian
+			int exif_header_length = 14;
+
 			// could be an Exif segment
-			if (exif_position == 0 && length >= 14) {
+			if (exif_position == 0 && length >= exif_header_length) {
 
-				// for an Exif segment, the data block consists of:
-				//    * 6 bytes Exif identifier string
-				//    * 2 bytes bigendian indication MM (or II)
-				//    * 2 bytes Tiff magic number (42)
-				//    * 4 bytes offset of the first IFD in this segment
-				//
-				//    the last two points are alreay encoded according to
-				//    big- or littleendian
-				data = ReadBlock (14);
+				data = ReadBlock (exif_header_length);
 
-				if (data.Mid (0, 6).ToString ().Equals (EXIF_IDENTIFIER)) {
+				if (data.Count == exif_header_length
+				    && data.Mid (0, 6).ToString ().Equals (EXIF_IDENTIFIER)) {
 
 					bool is_bigendian = data.Mid (6, 2).ToString ().Equals ("MM");
 
@@ -475,19 +502,21 @@ namespace TagLib.Jpeg
 				}
 			}
 
+			int xmp_header_length = XmpTag.XAP_NS.Length + 1;
+
 			// could be an Xmp segment
-			if (xmp_position == 0
-			    && length >= XmpTag.XAP_NS.Length + 1) {
+			if (xmp_position == 0 && length >= xmp_header_length) {
 
 				// if already data is read for determining the Exif segment,
 				// just read the remaining bytes.
+				// NOTE: that (exif_header_length < xmp_header_length) holds
 				if (data == null)
-					data = ReadBlock (XmpTag.XAP_NS.Length + 1);
+					data = ReadBlock (xmp_header_length);
 				else
-					data.Add (ReadBlock (XmpTag.XAP_NS.Length + 1 - 14));
+					data.Add (ReadBlock (xmp_header_length - exif_header_length));
 
 				if (data.ToString ().Equals (XmpTag.XAP_NS + "\0")) {
-					ByteVector xmp_data = ReadBlock (length - XmpTag.XAP_NS.Length - 1);
+					ByteVector xmp_data = ReadBlock (length - xmp_header_length);
 
 					ImageTag.AddTag (new XmpTag (xmp_data.ToString ()));
 					xmp_position = position;
@@ -522,9 +551,12 @@ namespace TagLib.Jpeg
 		/// </summary>
 		private void WriteMetadata ()
 		{
+			// first render all metadata segments to a ByteVector before the
+			// file is touched ...
 			ByteVector data = new ByteVector ();
 
-			// Add segments to write in order
+			// existing jfif header is retained, otherwise a standard one
+			// is created
 			if (jfif_header != null)
 				data.Add (jfif_header);
 			else
@@ -534,16 +566,22 @@ namespace TagLib.Jpeg
 			data.Add (RenderXMPSegment ());
 			data.Add (RenderCOMSegment ());
 
-			// delete metdata not contained in the metadata block
-			// not the efficentest way, but it probably is never really called
+			// ... then delete the metadata which is not contained in the
+			// metadata block at the beginning of the file
+			// not the efficentest way, but probably it is never really called
 			long[] metadata_positions = {comment_position, xmp_position, exif_position};
 
 			// start with greatest offset, because this do not affect the smaller ones
 			Array.Sort<long> (metadata_positions);
 			for (int i = metadata_positions.Length - 1; i >= 0; i--) {
 				long metadata_position = metadata_positions[i];
+
+				// delete data which is not contained in the metdata segment
+				// at the beginning of the file
 				if (2 + metadata_length < metadata_position)
 					DeleteSegment (metadata_position - 4);
+				else
+					break;
 			}
 
 			// reset it, to not delete it the next time the metadata is saved
@@ -568,21 +606,28 @@ namespace TagLib.Jpeg
 		private ByteVector RenderExifSegment ()
 		{
 			// Check, if IFD0 is contained
-			IFDTag exif = GetTag (TagTypes.TiffIFD) as IFDTag;
+			IFDTag exif = ImageTag.Exif;
 			if (exif == null)
 				return null;
 
 			// first IFD starts at 8
 			uint first_ifd_offset = 8;
 
-			// Render IFD0, we use bigendian every time, since no other parts of the file
-			// are affected by this
+			// Render IFD0
+			// FIXME: store endianess and use it here
 			var renderer = new IFDRenderer (true, exif.Structure, first_ifd_offset);
 			ByteVector exif_data = renderer.Render ();
 
+			uint segment_size = (uint) (first_ifd_offset + exif_data.Count + 2 + 6);
+
+			// do not render data segments, which cannot fit into the possible segment size
+			// FIXME: since the segment is not rendered, the TagTypesOnDisk will be wrong
+			if (segment_size > ushort.MaxValue)
+				return null;
+
 			// Create whole segment
-			ByteVector data = new ByteVector (new byte [] { 0xFF, 0xE1 });
-			data.Add (ByteVector.FromUShort ((ushort) (first_ifd_offset + exif_data.Count + 2 + 6)));
+			ByteVector data = new ByteVector (new byte [] { 0xFF, (byte) Marker.APP1 });
+			data.Add (ByteVector.FromUShort ((ushort) segment_size));
 			data.Add ("Exif\0\0");
 			data.Add (ByteVector.FromString ("MM", StringType.Latin1));
 			data.Add (ByteVector.FromUShort (42));
@@ -605,16 +650,23 @@ namespace TagLib.Jpeg
 		private ByteVector RenderXMPSegment ()
 		{
 			// Check, if XmpTag is contained
-			XmpTag xmp = GetTag (TagTypes.XMP) as XmpTag;
+			XmpTag xmp = ImageTag.Xmp;
 			if (xmp == null)
 				return null;
 
 			ByteVector xmp_data = XmpTag.XAP_NS + "\0";
 			xmp_data.Add (xmp.Render ());
 
+			uint segment_size = (uint) (2 + xmp_data.Count);
+
+			// do not render data segments, which cannot fit into the possible segment size
+			// FIXME: since the segment is not rendered, the TagTypesOnDisk will be wrong
+			if (segment_size > ushort.MaxValue)
+				return null;
+
 			// Create whole segment
-			ByteVector data = new ByteVector (new byte [] { 0xFF, 0xE1 });
-			data.Add (ByteVector.FromUShort ((ushort) (xmp_data.Count + 2)));
+			ByteVector data = new ByteVector (new byte [] { 0xFF, (byte) Marker.APP1 });
+			data.Add (ByteVector.FromUShort ((ushort) segment_size));
 			data.Add (xmp_data);
 
 			return data;
@@ -633,7 +685,15 @@ namespace TagLib.Jpeg
 				return false;
 
 			comment_position = Tell;
-			ImageTag.AddTag (new JpegCommentTag (ReadBlock (length - 1).ToString ()));
+
+			JpegCommentTag com_tag;
+
+			if (length == 0)
+				com_tag = new JpegCommentTag ();
+			else
+				com_tag = new JpegCommentTag (ReadBlock (length - 1).ToString ());
+
+			ImageTag.AddTag (com_tag);
 			return true;
 		}
 
@@ -647,16 +707,24 @@ namespace TagLib.Jpeg
 		private ByteVector RenderCOMSegment ()
 		{
 			// check, if Comment is contained
-			JpegCommentTag com_tag = (GetTag (TagTypes.JpegComment) as JpegCommentTag);
+			JpegCommentTag com_tag = GetTag (TagTypes.JpegComment) as JpegCommentTag;
 			if (com_tag == null)
 				return null;
 
 			// create comment data
-			ByteVector com_data = ByteVector.FromString (com_tag.Value + "\0", StringType.Latin1);
+			ByteVector com_data =
+				ByteVector.FromString (com_tag.Value + "\0", StringType.Latin1);
+
+			uint segment_size = (uint) (2 + com_data.Count);
+
+			// do not render data segments, which cannot fit into the possible segment size
+			// FIXME: since the segment is not rendered, the TagTypesOnDisk will be wrong
+			if (segment_size > ushort.MaxValue)
+				return null;
 
 			// create segment
-			ByteVector data = new ByteVector (new byte [] { 0xFF, 0xFE });
-			data.Add (ByteVector.FromUShort ((ushort) (com_data.Count + 2)));
+			ByteVector data = new ByteVector (new byte [] { 0xFF, (byte) Marker.COM });
+			data.Add (ByteVector.FromUShort ((ushort) segment_size));
 
 			data.Add (com_data);
 

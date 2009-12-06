@@ -40,19 +40,23 @@ namespace TagLib.Image
 		/// <summary>
 		///    Direct access to the Exif (IFD) tag (if any)
 		/// </summary>
-		public ImageTag Exif { get; private set; }
+		public IFDTag Exif { get; private set; }
 
 		/// <summary>
 		///    Direct access to the Xmp tag (if any)
 		/// </summary>
-		public ImageTag Xmp { get; private set; }
+		public XmpTag Xmp { get; private set; }
 
 		/// <summary>
 		///    Other image tags available in this tag.
 		/// </summary>
 		public List<ImageTag> OtherTags { get; private set; }
 
-		private TagTypes allowed_types;
+		//// <summary>
+		///    Stores the types of the tags, which are allowed for
+		///    the current instance.
+		/// </summary>
+		internal TagTypes AllowedTypes { get; private set; }
 
 		/// <summary>
 		///    Returns all image tags in this tag, with XMP
@@ -91,7 +95,7 @@ namespace TagLib.Image
 		/// </param>
 		public CombinedImageTag (TagTypes allowed_types)
 		{
-			this.allowed_types = allowed_types;
+			AllowedTypes = allowed_types;
 			OtherTags = new List<ImageTag> ();
 		}
 
@@ -101,13 +105,13 @@ namespace TagLib.Image
 
 		internal void AddTag (ImageTag tag)
 		{
-			if ((tag.TagTypes & allowed_types) != tag.TagTypes)
-				throw new Exception (String.Format ("Attempted to add {0} to an image, but the only allowed types are {1}", tag.TagTypes, allowed_types));
+			if ((tag.TagTypes & AllowedTypes) != tag.TagTypes)
+				throw new Exception (String.Format ("Attempted to add {0} to an image, but the only allowed types are {1}", tag.TagTypes, AllowedTypes));
 
 			if (tag is IFDTag)
-				Exif = tag;
+				Exif = tag as IFDTag;
 			else if (tag is XmpTag)
-				Xmp = tag;
+				Xmp = tag as XmpTag;
 			else
 				OtherTags.Add (tag);
 
@@ -134,12 +138,7 @@ namespace TagLib.Image
 			get {
 				TagTypes types = TagTypes.None;
 
-				if (Exif != null)
-					types |= Exif.TagTypes;
-				if (Xmp != null)
-					types |= Xmp.TagTypes;
-
-				foreach (ImageTag tag in OtherTags)
+				foreach (ImageTag tag in AllTags)
 					types |= tag.TagTypes;
 
 				return types;
