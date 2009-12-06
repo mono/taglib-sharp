@@ -54,6 +54,9 @@ namespace TagLib.Jpeg
 		/// <param name="height">
 		///    The height of the photo.
 		/// </param>
+		/// <param name="quality">
+		///    The quality of the photo.
+		/// </param>
 		/// <returns>
 		///    A new <see cref="Codec" /> instance.
 		/// </returns>

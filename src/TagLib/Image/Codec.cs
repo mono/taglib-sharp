@@ -32,6 +32,8 @@ namespace TagLib.Image
 	/// </summary>
 	public abstract class Codec : IPhotoCodec
 	{
+#region Properties
+
 		/// <summary>
 		///    Gets the duration of the media represented by the current
 		///    instance.
@@ -90,7 +92,12 @@ namespace TagLib.Image
 		///    A <see cref="int" /> value indicating the quality. A value
 		///    0 means that there was no quality indicator for the format
 		///    or the file.
+		/// </value>
 		public int PhotoQuality { get; protected set; }
+
+#endregion
+
+#region Constructors
 
 		/// <summary>
 		///    Constructs a new <see cref="Codec" /> with the given width
@@ -131,5 +138,8 @@ namespace TagLib.Image
 			PhotoHeight = height;
 			PhotoQuality = quality;
 		}
+
+#endregion
+
 	}
 }

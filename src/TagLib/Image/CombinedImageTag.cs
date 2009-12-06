@@ -32,6 +32,9 @@ using TagLib.Xmp;
 namespace TagLib.Image
 {
 
+	/// <summary>
+	///    Combines some <see cref="ImageTag"/> instance to behave as one.
+	/// </summary>
 	public class CombinedImageTag : ImageTag
 	{
 
@@ -52,7 +55,7 @@ namespace TagLib.Image
 		/// </summary>
 		public List<ImageTag> OtherTags { get; private set; }
 
-		//// <summary>
+		/// <summary>
 		///    Stores the types of the tags, which are allowed for
 		///    the current instance.
 		/// </summary>
@@ -134,6 +137,14 @@ namespace TagLib.Image
 
 #region Public Properties
 
+		/// <summary>
+		///    Gets the tag types contained in the current instance.
+		/// </summary>
+		/// <value>
+		///    A bitwise combined <see cref="TagLib.TagTypes" />
+		///    containing the tag types contained in the current
+		///    instance.
+		/// </value>
 		public override TagTypes TagTypes {
 			get {
 				TagTypes types = TagTypes.None;

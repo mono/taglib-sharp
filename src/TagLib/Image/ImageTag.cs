@@ -28,6 +28,10 @@ using System;
 namespace TagLib.Image
 {
 
+	/// <summary>
+	///    A class to abstract the image tags. It extends the <see cref="Tag"/>
+	///    class and adds some image specific propties.
+	/// </summary>
 	public abstract class ImageTag : Tag
 	{
 

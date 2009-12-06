@@ -35,7 +35,7 @@ namespace TagLib.Jpeg
 #region Constructors
 
 		/// <summary>
-		///    Constructs a new <see cref="JpegComment" />.
+		///    Constructor.
 		/// </summary>
 		/// <param name="value">
 		///    The value of the comment.
@@ -46,7 +46,7 @@ namespace TagLib.Jpeg
 		}
 
 		/// <summary>
-		///    Constructs a new <see cref="JpegComment" />.
+		///    Constructor. Creates a new empty comment.
 		/// </summary>
 		public JpegCommentTag () {
 			Value = null;
@@ -57,7 +57,7 @@ namespace TagLib.Jpeg
 #region Public Properties
 
 		/// <summary>
-		///    The value of this <see cref="JpegComment" />.
+		///    The value of the comment represented by the current instance.
 		/// </summary>
 		public string Value { get; set; }
 
