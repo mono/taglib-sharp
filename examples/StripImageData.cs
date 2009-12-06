@@ -20,19 +20,65 @@ public class StripImageData
 		ImageFile file = new ImageFile (args [0]);
 
 		file.Mode = File.AccessMode.Write;
-		long sos = file.RFind (new byte [] {0xFF, 0xDA});
 
-		if (sos == -1) {
+		long greatest_segment_position = 0;
+		long greatest_segment_length = 0;
+
+		// collect data segments
+		while (true) {
+
+			long sos = file.Find (new byte [] {0xFF, 0xDA}, file.Tell);
+
+			if (sos == -1)
+				break;
+
+			file.Seek (sos);
+
+			long segment_length = SkipDataSegment (file);
+
+			if (segment_length > greatest_segment_length) {
+				greatest_segment_length = segment_length;
+				greatest_segment_position = sos;
+			}
+		}
+
+		if (greatest_segment_length == 0)
+		{
 			Console.Out.WriteLine ("doesn't look like an jpeg file");
 			return;
 		}
 
-		file.RemoveBlock (sos, file.Length - sos);
-		file.Seek (sos);
+		System.Console.WriteLine ("Stripping data segment at {0}", greatest_segment_position);
+
+		file.RemoveBlock (greatest_segment_position, greatest_segment_length);
+		file.Seek (greatest_segment_position);
 		file.WriteBlock (image_data);
 		file.Mode = File.AccessMode.Closed;
 	}
 
+	private static long SkipDataSegment (ImageFile file)
+	{
+		long position = file.Tell;
+
+		// skip sos maker
+		if (file.ReadBlock (2).ToUInt () != 0xFFDA)
+			throw new Exception (String.Format ("Not a data segment at position: {0}", position));
+
+		while (true) {
+			if (0xFF == (byte) file.ReadBlock (1)[0]) {
+				byte maker = (byte) file.ReadBlock (1)[0];
+
+				if (maker != 0x00 && (maker <= 0xD0 || maker >= 0xD7))
+					break;
+			}
+		}
+
+		long length = file.Tell - position - 2;
+
+		System.Console.WriteLine ("Data segment of length {0} found at {1}", length, position);
+
+		return length;
+	}
 
 	private class ImageFile : File {
 
