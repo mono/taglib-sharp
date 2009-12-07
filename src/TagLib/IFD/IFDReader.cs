@@ -34,7 +34,7 @@ namespace TagLib.IFD
 	/// </summary>
 	public class IFDReader {
 
-#region Private Fields
+#region Private Constants
 
 		private static readonly string PANASONIC_HEADER = "Panasonic\0\0\0";
 		private static readonly string PENTAX_HEADER = "AOC\0";
@@ -43,6 +43,9 @@ namespace TagLib.IFD
 		private static readonly string OLYMPUS2_HEADER = "OLYMPUS\0";
 		private static readonly string SONY_HEADER = "SONY DSC \0\0\0";
 
+#endregion
+
+#region Protected Fields
 
 		/// <summary>
 		///    The <see cref="File" /> where this IFD is found in.
@@ -73,7 +76,10 @@ namespace TagLib.IFD
 		/// </summary>
 		protected readonly uint ifd_offset;
 
-
+		/// <summary>
+		///    A <see cref="System.UInt32"/> with the maximal offset, which should occur in the
+		///    IFD. Greater offsets, would reference beyond the considered data.
+		/// </summary>
 		protected readonly uint max_offset;
 
 #endregion
@@ -148,6 +154,10 @@ namespace TagLib.IFD
 		///    A <see cref="System.UInt32"/> with the offset of the IFD relative to
 		///    <paramref name="base_offset"/>
 		/// </param>
+		/// <param name="max_offset">
+		///    A <see cref="System.UInt32"/> with the maximal offset to consider for
+		///    the IFD.
+		/// </param>
 		/// <returns>
 		///    A <see cref="System.UInt32"/> with the offset of the next IFD, the
 		///    offset is also relative to <paramref name="base_offset"/>
@@ -216,6 +226,10 @@ namespace TagLib.IFD
 		///    of the offset of the entry. Since this field isn't interpreted as
 		///    an offset if the data can be directly stored in the 4 byte, we
 		///    pass the <see cref="ByteVector"/> to easier interpret it.
+		/// </param>
+		/// <param name="max_offset">
+		///    A <see cref="System.UInt32"/> with the maximal offset to consider for
+		///    the IFD.
 		/// </param>
 		/// <returns>
 		///    A <see cref="IFDEntry"/> with the given parameter.

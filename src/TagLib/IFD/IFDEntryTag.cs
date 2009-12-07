@@ -26,18 +26,12 @@
 namespace TagLib.IFD
 {
 	/// <summary>
-	///    In TIFF, each entry has an associated key (the tag), which indicates
-	///    the meaning of the value. This can be any of the following, but
-	///    other values exist as well (mostly in proprietary RAW formats).
-	/// </summary>
-	/// <remarks>
-	///    These mostly come from the TIFF specification:
+	///    Entry tags occuring in a Tiff IFD, or IFD0 for Jpegs. They are mostly
+	///    defined by the TIFF specification:
 	///    http://partners.adobe.com/public/developer/en/tiff/TIFF6.pdf
-	///    And the excellent TIFF documentation at awaresystems.be:
+	///    The complete overview can be obtained at:
 	///    http://www.awaresystems.be/imaging/tiff.html
-	///
-	//     Not all values are present yet, they can be added when needed.
-	/// </remarks>
+	/// </summary>
 	public enum IFDEntryTag : ushort
 	{
 
@@ -1057,7 +1051,11 @@ namespace TagLib.IFD
 	}
 
 
-
+	/// <summary>
+	///    Entry tags occuring in the Exif IFD
+	///    The complete overview can be obtained at:
+	///    http://www.awaresystems.be/imaging/tiff.html
+	/// </summary>
 	public enum ExifEntryTag : ushort
 	{
 
@@ -1399,7 +1397,11 @@ namespace TagLib.IFD
 	}
 
 
-
+	/// <summary>
+	///    Entry tags occuring in the GPS IFD
+	///    The complete overview can be obtained at:
+	///    http://www.awaresystems.be/imaging/tiff.html
+	/// </summary>
 	public enum GPSEntryTag : ushort
 	{
 
@@ -1591,7 +1593,11 @@ namespace TagLib.IFD
 	}
 
 
-
+	/// <summary>
+	///    Entry tags occuring in the Interoperability IFD
+	///    The complete overview can be obtained at:
+	///    http://www.awaresystems.be/imaging/tiff.html
+	/// </summary>
 	public enum IOPEntryTag : ushort
 	{
 

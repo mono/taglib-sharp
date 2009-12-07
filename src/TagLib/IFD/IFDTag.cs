@@ -39,6 +39,9 @@ namespace TagLib.IFD
 	/// </summary>
 	public class IFDTag : ImageTag
 	{
+
+#region Constant Values
+
 		/// <summary>
 		///   Marker for an ASCII-encoded UserComment tag.
 		/// </summary>
@@ -59,9 +62,9 @@ namespace TagLib.IFD
 		/// </summary>
 		public static readonly ByteVector COMMENT_UNDEFINED_CODE = new byte[] {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
-#region Private Fields
+#endregion
 
-		public IFDStructure Structure { get; private set; }
+#region Private Fields
 
 		/// <summary>
 		///    A reference to the Exif IFD (which can be found by following the
@@ -79,20 +82,12 @@ namespace TagLib.IFD
 
 #endregion
 
-#region Constructors
-
-		/// <summary>
-		///    Constructor. Creates an empty IFD tag. Can be populated manually, or via
-		///    <see cref="IFDReader"/>.
-		/// </summary>
-		public IFDTag ()
-		{
-			Structure = new IFDStructure ();
-		}
-
-#endregion
-
 #region Public Properties
+
+		/// <value>
+		///    The IFD structure referenced by the current instance
+		/// </value>
+		public IFDStructure Structure { get; private set; }
 
 		/// <summary>
 		///    The Exif IFD. Will create one if the file doesn't alread have it.
@@ -152,6 +147,19 @@ namespace TagLib.IFD
 		/// </value>
 		public override TagTypes TagTypes {
 			get { return TagTypes.TiffIFD; }
+		}
+
+#endregion
+
+#region Constructors
+
+		/// <summary>
+		///    Constructor. Creates an empty IFD tag. Can be populated manually, or via
+		///    <see cref="IFDReader"/>.
+		/// </summary>
+		public IFDTag ()
+		{
+			Structure = new IFDStructure ();
 		}
 
 #endregion

@@ -28,6 +28,9 @@ using System;
 namespace TagLib.IFD.Entries
 {
 
+	/// <summary>
+	///    Representation of a signed rational value
+	/// </summary>
 	public struct SRational : IFormattable
 	{
 #region Private Fields
@@ -88,22 +91,54 @@ namespace TagLib.IFD.Entries
 			return new SRational (den_sign * (Numerator / gcd), Math.Abs (Denominator) / gcd);
 		}
 
-		public string ToString(string format, IFormatProvider provider) {
+		/// <summary>
+		///    Formatprovider to allow formatting of a value. <see cref="IFormattable"/>
+		/// </summary>
+		/// <param name="format">
+		///    A <see cref="System.String"/>. <see cref="IFormattable"/>
+		/// </param>
+		/// <param name="provider">
+		///    A <see cref="IFormatProvider"/>. <see cref="IFormattable"/>
+		/// </param>
+		/// <returns>
+		///    A <see cref="System.String"/> formated according to the given parameter
+		/// </returns>
+		public string ToString (string format, IFormatProvider provider) {
 
 			SRational reduced = Reduce ();
 
 			return String.Format ("{0}/{1}", reduced.Numerator, reduced.Denominator);
 		}
 
+		/// <summary>
+		///    Converts the value to a <see cref="System.String"/>.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="System.String"/> with the current value.
+		/// </returns>
+		public override string ToString ()
+		{
+			return String.Format ("{0}", this);
+		}
+
 #endregion
 
 #region Public Properties
 
+		/// <value>
+		///    The numerator of the rational value
+		/// </value>
 		public int Numerator {
 			get { return numerator; }
 			set { numerator = value; }
 		}
 
+		/// <value>
+		///    The denominator of the rational value
+		/// </value>
+		/// <remarks>
+		///    Cannot be 0.
+		/// </remarks>
 		public int Denominator {
 			get { return denominator; }
 			set {

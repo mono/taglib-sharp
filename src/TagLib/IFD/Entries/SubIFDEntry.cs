@@ -30,9 +30,22 @@ namespace TagLib.IFD.Entries
 	/// </summary>
 	public class SubIFDEntry : IFDEntry
 	{
+
+#region Properties
+
+		/// <value>
+		///    The ID of the tag, the current instance belongs to
+		/// </value>
 		public ushort Tag { get; private set; }
 
+		/// <value>
+		///    The type of the IFD entry.
+		/// </value>
 		public ushort Type { get; private set; }
+
+		/// <value>
+		///    The count of the IFD entry.
+		/// </value>
 		public uint Count { get; private set; }
 
 		/// <value>
@@ -48,6 +61,12 @@ namespace TagLib.IFD.Entries
 		///    A <see cref="System.UInt16"/> with the tag ID of the entry this instance
 		///    represents
 		/// </param>
+		/// <param name="type">
+		///    A <see cref="System.UInt16"/> with the type of the IFD entry.
+		/// </param>
+		/// <param name="count">
+		///    A <see cref="System.UInt32"/> with the count of the IFD entry.
+		/// </param>
 		/// <param name="structure">
 		///    A <see cref="IFDStructure"/> to be stored
 		/// </param>
@@ -59,6 +78,29 @@ namespace TagLib.IFD.Entries
 			Structure = structure;
 		}
 
+#endregion
+
+#region Public Methods
+
+		/// <summary>
+		///    Renders the current instance to a <see cref="ByteVector"/>
+		/// </summary>
+		/// <param name="is_bigendian">
+		///    A <see cref="System.Boolean"/> indicating the endianess for rendering.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="System.UInt32"/> with the offset, the data is stored.
+		/// </param>
+		/// <param name="type">
+		///    A <see cref="System.UInt16"/> the ID of the type, which is rendered
+		/// </param>
+		/// <param name="count">
+		///    A <see cref="System.UInt32"/> with the count of the values which are
+		///    rendered.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> with the rendered data.
+		/// </returns>
 		public ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
 		{
 			type = (ushort) Type;
@@ -75,5 +117,8 @@ namespace TagLib.IFD.Entries
 			count = Count;
 			return new IFDRenderer (is_bigendian, Structure, offset).Render ();
 		}
+
+#endregion
+
 	}
 }
