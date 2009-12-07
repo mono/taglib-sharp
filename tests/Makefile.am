@@ -40,6 +40,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/JpegPanasonicTest.cs \
 	fixtures/TagLib.Tests.Images/JpegSegmentSizeTest.cs \
 	fixtures/TagLib.Tests.Images/JpegTangledTest.cs \
+	fixtures/TagLib.Tests.Images/RationalTest.cs \
 	fixtures/TagLib.Tests.Images/TiffXmpTest.cs \
 	fixtures/TagLib.Tests.Images/Utils.cs \
 	fixtures/TagLib.Tests.Images/XapTest.cs \
