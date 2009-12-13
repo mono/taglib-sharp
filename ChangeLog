@@ -1,3 +1,9 @@
+2009-12-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/TagLib/Mpeg4/BoxTypes.cs:
+	* src/TagLib/Mpeg4/BoxFactory.cs: Support the 'alis' handler code/track
+	type, found in the wild in an iTunes-ripped .m4a file (BGO #584193)
+
 2009-09-30  Aaron Bockover  <abockover@novell.com>
 
 	* NEWS: Update for 2.0.3.3 release

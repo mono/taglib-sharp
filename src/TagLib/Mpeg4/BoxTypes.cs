@@ -88,5 +88,8 @@ namespace TagLib.Mpeg4 {
 		// Handler types.
 		public static readonly ReadOnlyByteVector Soun = "soun";
 		public static readonly ReadOnlyByteVector Vide = "vide";
+
+		// Another handler type, found in wild in audio file ripped using iTunes
+		public static readonly ReadOnlyByteVector Alis = "alis";
 	}
 }
