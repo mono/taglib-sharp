@@ -775,23 +775,29 @@ namespace TagLib.Xmp
 			return doc.OuterXml;
 		}
 
-		internal static XmlNode CreateNode (XmlDocument doc, string name, string ns)
+		/// <summary>
+		///    Make sure there's a suitable prefix mapped for the given namespace URI.
+		/// </summary>
+		/// <param name="ns">
+		///    A <see cref="System.String"/> with the namespace that will be rendered.
+		/// </param>
+		static void EnsureNamespacePrefix (string ns)
 		{
 			if (!NamespacePrefixes.ContainsKey (ns)) {
 				NamespacePrefixes.Add (ns, String.Format ("ns{0}", ++anon_ns_count));
 				Console.WriteLine ("TAGLIB# DEBUG: Added {0} prefix for {1} namespace (XMP)", NamespacePrefixes [ns], ns);
 			}
+		}
 
+		internal static XmlNode CreateNode (XmlDocument doc, string name, string ns)
+		{
+			EnsureNamespacePrefix (ns);
 			return doc.CreateElement (NamespacePrefixes [ns], name, ns);
 		}
 
 		internal static XmlAttribute CreateAttribute (XmlDocument doc, string name, string ns)
 		{
-			if (!NamespacePrefixes.ContainsKey (ns)) {
-				NamespacePrefixes.Add (ns, String.Format ("ns{0}", ++anon_ns_count));
-				Console.WriteLine ("TAGLIB# DEBUG: Added {0} prefix for {1} namespace (XMP)", NamespacePrefixes [ns], ns);
-			}
-
+			EnsureNamespacePrefix (ns);
 			return doc.CreateAttribute (NamespacePrefixes [ns], name, ns);
 		}
 
