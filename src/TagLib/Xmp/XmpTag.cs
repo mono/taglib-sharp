@@ -58,6 +58,11 @@ namespace TagLib.Xmp
 		public static readonly string EXIF_NS = "http://ns.adobe.com/exif/1.0/";
 
 		/// <summary>
+		///    Microsoft Photo namespace
+		/// </summary>
+		public static readonly string MS_PHOTO_NS = "http://ns.microsoft.com/photo/1.0/";
+
+		/// <summary>
 		///    RDF namespace
 		/// </summary>
 		public static readonly string RDF_NS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
@@ -120,6 +125,7 @@ namespace TagLib.Xmp
 			AddNamespacePrefix ("crs", CRS_NS);
 			AddNamespacePrefix ("dc", DC_NS);
 			AddNamespacePrefix ("exif", EXIF_NS);
+			AddNamespacePrefix ("MicrosoftPhoto", MS_PHOTO_NS);
 			AddNamespacePrefix ("rdf", RDF_NS);
 			AddNamespacePrefix ("stDim", STDIM_NS);
 			AddNamespacePrefix ("tiff", TIFF_NS);

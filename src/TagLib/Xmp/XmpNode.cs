@@ -121,6 +121,12 @@ namespace TagLib.Xmp
 		/// </param>
 		public XmpNode (string ns, string name)
 		{
+			// Namespaces in XMP need to end with / or #. Broken files are known
+			// to be floating around (we have one with MicrosoftPhoto in our tree).
+			// Correcting below.
+			if (ns != String.Empty && ns != XmpTag.XML_NS && !ns.EndsWith ("/") && !ns.EndsWith ("#"))
+				ns = String.Format ("{0}/", ns);
+
 			Namespace = ns;
 			Name = name;
 			Type = XmpNodeType.Simple;
