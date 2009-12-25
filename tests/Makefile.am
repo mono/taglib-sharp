@@ -46,6 +46,14 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/XapTest.cs \
 	fixtures/TagLib.Tests.Images/XmpCrashTest.cs \
 	fixtures/TagLib.Tests.Images/XmpSpecTest.cs \
+	fixtures/TagLib.Tests.Images/Validators/ImageTest.cs \
+	fixtures/TagLib.Tests.Images/Validators/IMetadataInvariantValidator.cs \
+	fixtures/TagLib.Tests.Images/Validators/IMetadataModificationValidator.cs \
+	fixtures/TagLib.Tests.Images/Validators/CommentModificationValidator.cs \
+	fixtures/TagLib.Tests.Images/Validators/KeywordsModificationValidator.cs \
+	fixtures/TagLib.Tests.Images/Validators/NoModificationValidator.cs \
+	fixtures/TagLib.Tests.Images/Validators/TagCommentModificationValidator.cs \
+	fixtures/TagLib.Tests.Images/Validators/TagKeywordsModificationValidator.cs \
 	fixtures/TagLib.Tests.Performance/PerformanceTest.cs \
 	fixtures/TagLib.Tests.TaggingFormats/ApeTest.cs \
 	fixtures/TagLib.Tests.TaggingFormats/AsfTest.cs \
