@@ -45,6 +45,7 @@ namespace TagLib.Tests.Images
 
 			Assert.AreEqual ("Canon", tag.Make);
 			Assert.AreEqual ("Canon EOS 400D DIGITAL", tag.Model);
+			Assert.AreEqual (Image.ImageOrientation.TopLeft, tag.Orientation);
 			Assert.AreEqual (400, tag.ISOSpeedRatings);
 			Assert.AreEqual (1.0d/200.0d, tag.ExposureTime);
 			Assert.AreEqual (6.3d, tag.FNumber);
