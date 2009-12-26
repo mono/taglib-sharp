@@ -58,9 +58,19 @@ namespace TagLib.Xmp
 		public static readonly string EXIF_NS = "http://ns.adobe.com/exif/1.0/";
 
 		/// <summary>
+		///    JOB namespace
+		/// </summary>
+		public static readonly string JOB_NS = "http://ns.adobe.com/xap/1.0/sType/Job#";
+
+		/// <summary>
 		///    Microsoft Photo namespace
 		/// </summary>
 		public static readonly string MS_PHOTO_NS = "http://ns.microsoft.com/photo/1.0/";
+
+		/// <summary>
+		///    Photoshop namespace
+		/// </summary>
+		public static readonly string PHOTOSHOP_NS = "http://ns.adobe.com/photoshop/1.0/";
 
 		/// <summary>
 		///    RDF namespace
@@ -81,6 +91,21 @@ namespace TagLib.Xmp
 		///    XAP (XMP's previous name) namespace
 		/// </summary>
 		public static readonly string XAP_NS = "http://ns.adobe.com/xap/1.0/";
+
+		/// <summary>
+		///    XAP bj namespace
+		/// </summary>
+		public static readonly string XAP_BJ_NS = "http://ns.adobe.com/xap/1.0/bj/";
+
+		/// <summary>
+		///    XAP mm namespace
+		/// </summary>
+		public static readonly string XAP_MM_NS = "http://ns.adobe.com/xap/1.0/mm/";
+
+		/// <summary>
+		///    XAP rights namespace
+		/// </summary>
+		public static readonly string XAP_RIGHTS_NS = "http://ns.adobe.com/xap/1.0/rights/";
 
 		/// <summary>
 		///    XML namespace
@@ -121,15 +146,21 @@ namespace TagLib.Xmp
 			// This allows for fast string comparison using operator==
 			NameTable = new NameTable ();
 			// Namespaces
+			AddNamespacePrefix ("", ""); // Needed for the about attribute, which can be unqualified.
 			AddNamespacePrefix ("x", ADOBE_X_NS);
 			AddNamespacePrefix ("crs", CRS_NS);
 			AddNamespacePrefix ("dc", DC_NS);
 			AddNamespacePrefix ("exif", EXIF_NS);
+			AddNamespacePrefix ("stJob", JOB_NS);
 			AddNamespacePrefix ("MicrosoftPhoto", MS_PHOTO_NS);
+			AddNamespacePrefix ("photoshop", PHOTOSHOP_NS);
 			AddNamespacePrefix ("rdf", RDF_NS);
 			AddNamespacePrefix ("stDim", STDIM_NS);
 			AddNamespacePrefix ("tiff", TIFF_NS);
 			AddNamespacePrefix ("xmp", XAP_NS);
+			AddNamespacePrefix ("xapBJ", XAP_BJ_NS);
+			AddNamespacePrefix ("xapMM", XAP_MM_NS);
+			AddNamespacePrefix ("xapRights", XAP_RIGHTS_NS);
 			AddNamespacePrefix ("xml", XML_NS);
 			AddNamespacePrefix ("xmlns", XMLNS_NS);
 			AddNamespacePrefix ("xmpTPg", XMPTG_NS);
