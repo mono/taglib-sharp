@@ -59,11 +59,15 @@ public class GenerateTestFixtureApp
 				type = "SubIFD";
 			if (tag_label.Equals ("GPSTag"))
 				type = "SubIFD";
+			if (tag_label.Equals ("JPEGInterchangeFormat"))
+				type = "ThumbnailDataIFD";
 
 			Write ("// {1}.0x{0:X4} ({2}/{3}/{4}) \"{5}\"", tag, ifd, tag_label, type, length, val);
 
-			if (ifd.Equals ("Image") || ifd.Equals ("Thumbnail")) {
+			if (ifd.Equals ("Image")) {
 				EmitTestIFDEntryOpen ("structure", 0, tag, ifd);
+			} else if (ifd.Equals ("Thumbnail")) {
+				EmitTestIFDEntryOpen ("structure", 1, tag, ifd);
 			} else if (ifd.Equals ("Photo")) {
 				EmitTestIFDEntryOpen ("exif_structure", 0, tag, ifd);
 			} else if (IsPartOfMakernote (ifd)) {
@@ -102,6 +106,8 @@ public class GenerateTestFixtureApp
 				EmitTestIFDByteEntry (val);
 			} else if (type.Equals ("SubIFD")) {
 				EmitTestIFDSubIFDEntry (val);
+			} else if (type.Equals ("ThumbnailDataIFD")) {
+				EmitTestIFDThumbnailDataIFDEntry (val);
 			} else if (type.Equals ("MakerNote")) {
 				EmitTestIFDMakerNoteIFDEntry (val);
 			} else if (type.Equals ("Undefined")) {
@@ -403,6 +409,11 @@ public class GenerateTestFixtureApp
 	static void EmitTestIFDSubIFDEntry (string val)
 	{
 		Write ("Assert.IsNotNull (entry as SubIFDEntry, \"Entry is not a sub IFD!\");");
+	}
+
+	static void EmitTestIFDThumbnailDataIFDEntry (string val)
+	{
+		Write ("Assert.IsNotNull (entry as ThumbnailDataIFDEntry, \"Entry is not a thumbnail IFD!\");");
 	}
 
 	static void EmitTestIFDMakerNoteIFDEntry (string val)
