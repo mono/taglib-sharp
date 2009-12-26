@@ -186,6 +186,27 @@ namespace TagLib.Xmp
 		}
 
 		/// <summary>
+		///    Get a named child from the current node
+		/// </summary>
+		/// <param name="ns">
+		///    The namespace of the child node.
+		/// </param>
+		/// <param name="name">
+		///    The name of the child node.
+		/// </param>
+		/// <returns>
+		///    A <see cref="XmpNode"/> with the given name and namespace.
+		/// </returns>
+		public XmpNode GetChild (string ns, string name)
+		{
+			foreach (var node in children) {
+				if (node.Namespace.Equals (ns) && node.Name.Equals (name))
+					return node;
+			}
+			return null;
+		}
+
+		/// <summary>
 		///    Adds a node as qualifier of the current instance
 		/// </summary>
 		/// <param name="node">

@@ -10,17 +10,24 @@ using GLib;
 using System;
 using System.Collections.Generic;
 using TagLib.IFD;
+using TagLib.Xmp;
 
 public class GenerateTestFixtureApp
 {
 	public static void Main (string [] args)
 	{
-        if(args.Length != 2) {
-            Console.Error.WriteLine ("USAGE: mono GenerateTestFixture.exe NAME PATH");
-            return;
-        }
+		if(args.Length != 2) {
+			Console.Error.WriteLine ("USAGE: mono GenerateTestFixture.exe NAME PATH");
+			return;
+		}
 
-		GenerateIFDFixture (args[0], args[1]);
+		string name = args[0];
+		string path = args[1];
+
+		EmitHeader (name, path);
+		GenerateIFDFixture (name, path);
+		GenerateXMPFixture (name, path);
+		EmitFooter ();
 	}
 
 	static void GenerateIFDFixture (string name, string path)
@@ -34,7 +41,7 @@ public class GenerateTestFixtureApp
 			return;
 		}
 
-		EmitHeader (name, path);
+		Write ("//  ---------- Start of IFD tests ----------");
 
 		foreach (string line in output.Split ('\n')) {
 			string[] parts = line.Split (new char[] {' '}, 6, StringSplitOptions.RemoveEmptyEntries);
@@ -121,7 +128,143 @@ public class GenerateTestFixtureApp
 			EmitTestIFDEntryClose ();
 		}
 
-		EmitFooter ();
+		Write ();
+		Write ("//  ---------- End of IFD tests ----------");
+		Write ();
+	}
+
+	static Dictionary<string, string> xmp_prefixes = new Dictionary<string, string> ();
+
+	static void GenerateXMPFixture (string name, string path)
+	{
+		// First run exiv2 on it.
+		string output, err;
+		int code;
+		var result = GLib.Process.SpawnCommandLineSync (String.Format ("exiv2 pr -b -p x {0}", path), out output, out err, out code);
+		if (!result) {
+			Console.Error.WriteLine ("Invoking exiv2 failed, do you have it installed?");
+			return;
+		}
+
+		Write ();
+		Write ("//  ---------- Start of XMP tests ----------");
+		Write ();
+
+		Write ("XmpTag xmp = file.GetTag (TagTypes.XMP) as XmpTag;");
+
+		// Build prefix lookup dictionary.
+		Type t = typeof(XmpTag);
+		foreach (var member in t.GetMembers()) {
+			if (!member.Name.EndsWith ("_NS"))
+				continue;
+			string val = (member as System.Reflection.FieldInfo).GetValue (null) as string;
+			string prefix = XmpTag.NamespacePrefixes [val];
+			xmp_prefixes [prefix] = member.Name;
+		}
+
+		foreach (string line in output.Split ('\n')) {
+			string[] parts = line.Split (new char[] {' '}, 4, StringSplitOptions.RemoveEmptyEntries);
+			if (parts.Length == 0)
+				continue;
+			string label = parts[0];
+			string type = parts[1];
+			uint length = uint.Parse (parts[2]);
+			string val = parts.Length == 4 ? parts[3] : String.Empty;
+
+			EmitXmpTest (label, type, length, val);
+		}
+
+		Write ();
+		Write ("//  ---------- End of XMP tests ----------");
+		Write ();
+	}
+
+	static void EmitXmpTest (string label, string type, uint length, string val)
+	{
+		if (label.Equals ("Xmp.xmpMM.InstanceID"))
+			return; // Continue this, exiv2 makes it up from the about attr
+
+		var node_path = label.Split ('/');
+		Write ("// {0} ({1}/{2}) \"{3}\"", label, type, length, val);
+		Write ("{");
+		Write ("var node = xmp.NodeTree;");
+
+		// Navigate to the correct node.
+		foreach (var node in node_path) {
+			var parts = node.Split ('.');
+			var partscolon = node.Split (':');
+			if (parts.Length == 3) {
+				// Plain node
+				int index = 0;
+				string name = parts[2];
+				if (parts[2].EndsWith("]")) {
+					int index_start = parts[2].LastIndexOf ("[");
+					string index_str = parts[2].Substring (index_start+1, parts[2].Length-index_start-2);
+					index = int.Parse (index_str);
+					name = parts[2].Substring (0, index_start);
+				}
+				string ns = GetXmpNs (parts[1]);
+				Write ("node = node.GetChild ({0}, \"{1}\");", ns, name);
+				Write ("Assert.IsNotNull (node);");
+
+				if (index > 0) {
+					Write ("node = node.Children [{0}];", index - 1);
+					Write ("Assert.IsNotNull (node);");
+				}
+			} else if (partscolon.Length == 2) {
+				string ns = GetXmpNs (partscolon[0]);
+				string name = partscolon[1];
+				Write ("node = node.GetChild ({0}, \"{1}\");", ns, name);
+				Write ("Assert.IsNotNull (node);");
+			} else {
+				throw new Exception ("Can't navigate to "+node);
+			}
+		}
+
+		if (length > 0 && type.Equals ("XmpText")) {
+			Write ("Assert.AreEqual (\"{0}\", node.Value);", val);
+			Write ("Assert.AreEqual (XmpNodeType.Simple, node.Type);");
+		} else if (type.Equals ("XmpBag") && length == 1) {
+			Write ("Assert.AreEqual (XmpNodeType.Bag, node.Type);");
+			Write ("Assert.AreEqual (\"\", node.Value);");
+			Write ("Assert.AreEqual ({0}, node.Children.Count);", length);
+			Write ("Assert.AreEqual (\"{0}\", node.Children [0].Value);", val);
+		} else if (type.Equals ("LangAlt") && length == 1) {
+			var langparts = val.Split (new char [] {' '}, 2);
+			string lang = langparts[0].Substring (langparts[0].IndexOf ('"')+1, langparts [0].Length - langparts[0].IndexOf ('"')-2);
+			Write ("Assert.AreEqual (\"{0}\", node.Children [0].GetQualifier (XmpTag.XML_NS, \"lang\").Value);", lang);
+			Write ("Assert.AreEqual (\"{0}\", node.Children [0].Value);", langparts[1]);
+		} else if (type.Equals ("XmpSeq") && length == 1) {
+			Write ("Assert.AreEqual (XmpNodeType.Seq, node.Type);");
+			Write ("Assert.AreEqual (\"\", node.Value);");
+			Write ("Assert.AreEqual ({0}, node.Children.Count);", length);
+			Write ("Assert.AreEqual (\"{0}\", node.Children [0].Value);", val);
+		} else if (type.Equals ("XmpText") && length == 0 && val.StartsWith ("type=")) {
+			if (val.Equals ("type=\"Bag\"")) {
+				Write ("Assert.AreEqual (XmpNodeType.Bag, node.Type);");
+			} else if (val.Equals ("type=\"Struct\"")) {
+				Write ("Assert.AreEqual (XmpNodeType.Struct, node.Type);");
+			} else {
+				throw new Exception ("Unknown type");
+			}
+		} else {
+			throw new Exception ("Can't test this");
+		}
+		Write ("}");
+	}
+
+	static string GetXmpNs (string prefix)
+	{
+		string result;
+		if (prefix.Equals ("xmpBJ"))
+			prefix = "xapBJ";
+		if (prefix.Equals ("xmpMM"))
+			prefix = "xapMM";
+		if (prefix.Equals ("xmpRights"))
+			prefix = "xapRights";
+		if (xmp_prefixes.TryGetValue (prefix, out result))
+			return String.Format ("XmpTag.{0}", result);
+		throw new Exception ("Unknown namespace prefix: "+prefix);
 	}
 
 	static bool IsPartOfMakernote (string ifd) {
@@ -145,6 +288,7 @@ public class GenerateTestFixtureApp
 		Write ("using NUnit.Framework;");
 		Write ("using TagLib.IFD;");
 		Write ("using TagLib.IFD.Entries;");
+		Write ("using TagLib.Xmp;");
 		Write ("using TagLib.Tests.Images.Validators;");
 		Write ();
 		Write ("namespace TagLib.Tests.Images");

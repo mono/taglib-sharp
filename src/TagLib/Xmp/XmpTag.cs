@@ -185,7 +185,7 @@ namespace TagLib.Xmp
 			NameTable.Add (VALUE_URI);
 		}
 
-		private static Dictionary<string, string> NamespacePrefixes = new Dictionary<string, string>();
+		public static Dictionary<string, string> NamespacePrefixes = new Dictionary<string, string>();
 
 		private static int anon_ns_count = 0;
 
