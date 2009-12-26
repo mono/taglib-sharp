@@ -16,6 +16,7 @@ namespace TagLib.Tests.Images
 		public void TestModifications () {
 			ImageTest.Run ("sample_canon_zoombrowser.jpg",
 				new JpegCanonZoombrowserInvariantValidator (),
+				new NoModificationValidator (),
 				new CommentModificationValidator ("%test comment%"),
 				new TagCommentModificationValidator ("%test comment%", TagTypes.TiffIFD, true),
 				new TagCommentModificationValidator ("%test comment%", TagTypes.XMP, false),
