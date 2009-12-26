@@ -104,6 +104,8 @@ public class GenerateTestFixtureApp
 				EmitTestIFDSLongEntry (val);
 			} else if (type.Equals ("Byte") && length == 1) {
 				EmitTestIFDByteEntry (val);
+			} else if (type.Equals ("Byte") && length > 1) {
+				EmitTestIFDByteArrayEntry (val);
 			} else if (type.Equals ("SubIFD")) {
 				EmitTestIFDSubIFDEntry (val);
 			} else if (type.Equals ("ThumbnailDataIFD")) {
@@ -392,6 +394,14 @@ public class GenerateTestFixtureApp
 	{
 		Write ("Assert.IsNotNull (entry as ByteIFDEntry, \"Entry is not a byte!\");");
 		Write ("Assert.AreEqual ({0}, (entry as ByteIFDEntry).Value);", val);
+	}
+
+	static void EmitTestIFDByteArrayEntry (string val)
+	{
+		Write ("Assert.IsNotNull (entry as ByteVectorIFDEntry, \"Entry is not a byte array!\");");
+		Write ("var bytes = new byte [] {{ {0} }};", String.Join (", ", val.Trim ().Split(' ')));
+		Write ("var parsed_bytes = (entry as ByteVectorIFDEntry).Data.Data;");
+		Write ("Assert.AreEqual (bytes, parsed_bytes);");
 	}
 
 	static void EmitTestIFDUndefinedEntry (string val)
