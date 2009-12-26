@@ -57,6 +57,8 @@ public class GenerateTestFixtureApp
 			}
 			if (tag_label.Equals ("InteroperabilityTag"))
 				type = "SubIFD";
+			if (tag_label.Equals ("GPSTag"))
+				type = "SubIFD";
 
 			Write ("// {1}.0x{0:X4} ({2}/{3}/{4}) \"{5}\"", tag, ifd, tag_label, type, length, val);
 
@@ -70,6 +72,8 @@ public class GenerateTestFixtureApp
 				EmitTestIFDEntryOpen ("nikonpreview_structure", 0, tag, ifd);
 			} else if (ifd.Equals ("Iop")) {
 				EmitTestIFDEntryOpen ("iop_structure", 0, tag, ifd);
+			} else if (ifd.Equals ("GPSInfo")) {
+				EmitTestIFDEntryOpen ("gps_structure", 0, tag, ifd);
 			} else {
 				throw new Exception ("Unknown IFD");
 			}
@@ -175,6 +179,7 @@ public class GenerateTestFixtureApp
 	static bool makernote_is_nikon3 = false;
 	static bool nikonpreview_emitted = false;
 	static bool iop_emitted = false;
+	static bool gps_emitted = false;
 
 	static void EnsureIFD (string ifd) {
 		if (ifd.Equals ("Image")) {
@@ -277,6 +282,18 @@ public class GenerateTestFixtureApp
 			Write ("var iop_structure = iop.Structure;");
 			Write ();
 			iop_emitted = true;
+		}
+
+		if (ifd.Equals ("GPSInfo")) {
+			if (gps_emitted)
+				return;
+			EnsureIFD ("Image");
+			Write ();
+			Write ("var gps = structure.GetEntry (0, (ushort) IFDEntryTag.GPSIFD) as SubIFDEntry;");
+			Write ("Assert.IsNotNull (gps, \"GPS tag not found\");");
+			Write ("var gps_structure = gps.Structure;");
+			Write ();
+			gps_emitted = true;
 		}
 	}
 
