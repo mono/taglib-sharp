@@ -183,6 +183,8 @@ public class GenerateTestFixtureApp
 	{
 		if (label.Equals ("Xmp.xmpMM.InstanceID"))
 			return; // Continue this, exiv2 makes it up from the about attr
+		if (label.Equals ("Xmp.tiff.Orientation"))
+			return; // exiv2 destroys this value
 
 		var node_path = label.Split ('/');
 		Write ("// {0} ({1}/{2}) \"{3}\"", label, type, length, val);
@@ -262,6 +264,8 @@ public class GenerateTestFixtureApp
 			prefix = "xapMM";
 		if (prefix.Equals ("xmpRights"))
 			prefix = "xapRights";
+		if (prefix.Equals ("MicrosoftPhoto_1_")) // We correct this invalid namespace internally
+			prefix = "MicrosoftPhoto";
 		if (xmp_prefixes.TryGetValue (prefix, out result))
 			return String.Format ("XmpTag.{0}", result);
 		throw new Exception ("Unknown namespace prefix: "+prefix);
