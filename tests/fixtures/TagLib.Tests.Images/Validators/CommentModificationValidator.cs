@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 
 namespace TagLib.Tests.Images.Validators
@@ -10,6 +11,8 @@ namespace TagLib.Tests.Images.Validators
 	{
 		string orig_comment;
 		readonly string test_comment = "This is a TagLib# &Test?Comment%$@_ ";
+
+		public CommentModificationValidator () : this (String.Empty) { }
 
 		public CommentModificationValidator (string orig_comment)
 		{
