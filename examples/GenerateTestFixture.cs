@@ -90,11 +90,16 @@ public class GenerateTestFixtureApp
 				EmitTestIFDEntryOpen ("iop_structure", 0, tag, ifd);
 			} else if (ifd.Equals ("GPSInfo")) {
 				EmitTestIFDEntryOpen ("gps_structure", 0, tag, ifd);
+			} else if (ifd.Equals ("CanonCs")) {
+				EmitTestIFDEntryOpen ("makernote_structure", 0, 0x0001, ifd); // TODO enum name
 			} else {
 				throw new Exception ("Unknown IFD");
 			}
 
-			if (type.Equals ("Ascii")) {
+			if (ifd.Equals ("CanonCs")) {
+				// This is a made-up directory by exiv2
+				EmitTestIFDIndexedShortEntry (tag, val);
+			} else if (type.Equals ("Ascii")) {
 				EmitTestIFDStringEntry (val);
 			} else if (type.Equals ("Short") && length == 1) {
 				EmitTestIFDShortEntry (val);
@@ -280,7 +285,6 @@ public class GenerateTestFixtureApp
 	static bool IsPartOfMakernote (string ifd) {
 		return ifd.Equals ("MakerNote") ||
 			   ifd.Equals ("Canon") ||
-			   ifd.Equals ("CanonCs") ||
 			   ifd.Equals ("CanonSi") ||
 			   ifd.Equals ("Nikon1") ||
 			   ifd.Equals ("Nikon2") ||
@@ -585,6 +589,14 @@ public class GenerateTestFixtureApp
 		Write ("Assert.IsNotNull (entry as MakernoteIFDEntry, \"Entry is not a makernote IFD!\");");
 	}
 
+	static void EmitTestIFDIndexedShortEntry (int index, string val)
+	{
+		Write ("Assert.IsNotNull (entry as ShortArrayIFDEntry, \"Entry is not a short array!\");");
+		var parts = val.Trim ().Split (' ');
+		Write ("Assert.IsTrue ({0} <= (entry as ShortArrayIFDEntry).Values.Length);", index + parts.Length);
+		for (int i = 0; i < parts.Length; i++)
+			Write ("Assert.AreEqual ({0}, (entry as ShortArrayIFDEntry).Values [{1}]);", parts [i], index + i);
+	}
 #region IFD tag names lookup
 
 	static Dictionary<string, Dictionary<ushort, string>> tag_names = null;
