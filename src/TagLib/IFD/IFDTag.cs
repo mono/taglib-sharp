@@ -40,30 +40,6 @@ namespace TagLib.IFD
 	public class IFDTag : ImageTag
 	{
 
-#region Constant Values
-
-		/// <summary>
-		///   Marker for an ASCII-encoded UserComment tag.
-		/// </summary>
-		public static readonly ByteVector COMMENT_ASCII_CODE = new byte[] {0x41, 0x53, 0x43, 0x49, 0x49, 0x00, 0x00, 0x00};
-
-		/// <summary>
-		///   Marker for a JIS-encoded UserComment tag.
-		/// </summary>
-		public static readonly ByteVector COMMENT_JIS_CODE = new byte[] {0x4A, 0x49, 0x53, 0x00, 0x00, 0x00, 0x00, 0x00};
-
-		/// <summary>
-		///   Marker for a UNICODE-encoded UserComment tag.
-		/// </summary>
-		public static readonly ByteVector COMMENT_UNICODE_CODE = new byte[] {0x55, 0x4E, 0x49, 0x43, 0x4F, 0x44, 0x45, 0x00};
-
-		/// <summary>
-		///   Marker for a UserComment tag with undefined encoding.
-		/// </summary>
-		public static readonly ByteVector COMMENT_UNDEFINED_CODE = new byte[] {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-
-#endregion
-
 #region Private Fields
 
 		/// <summary>
@@ -188,36 +164,14 @@ namespace TagLib.IFD
 		/// </value>
 		public override string Comment {
 			get {
-				var comment_entry =
-					ExifIFD.GetEntry (0, (ushort) ExifEntryTag.UserComment) as UndefinedIFDEntry;
+				var comment_entry = ExifIFD.GetEntry (0, (ushort) ExifEntryTag.UserComment) as UserCommentIFDEntry;
 
 				if (comment_entry == null) {
 					var description = Structure.GetEntry (0, IFDEntryTag.ImageDescription) as StringIFDEntry;
 					return description == null ? null : description.Value;
 				}
 
-				ByteVector data = comment_entry.Data;
-
-				if (data.StartsWith (COMMENT_ASCII_CODE))
-					return data.ToString (StringType.Latin1, COMMENT_ASCII_CODE.Count, data.Count - COMMENT_ASCII_CODE.Count);
-
-				if (data.StartsWith (COMMENT_UNICODE_CODE))
-					return data.ToString (StringType.UTF8, COMMENT_UNICODE_CODE.Count, data.Count - COMMENT_UNICODE_CODE.Count);
-
-				// Some programs like e.g. CanonZoomBrowser inserts just the first 0x00-byte
-				// followed by 7-bytes of trash.
-				if (data.StartsWith ((byte) 0x00) && data.Count >= 8) {
-
-					// And CanonZoomBrowser fills some trailing bytes of the comment field
-					// with '\0'. So we return only the characters before the first '\0'.
-					int term = data.Find ("\0", 8);
-					if (term != -1)
-						return data.ToString (StringType.Latin1, 8, term - 8);
-
-					return data.ToString (StringType.Latin1, 8, data.Count - 8);
-				}
-
-				throw new NotImplementedException ("UserComment with other encoding than Latin1 or Unicode");
+				return comment_entry.Value;
 			}
 			set {
 				if (value == null) {
@@ -225,11 +179,7 @@ namespace TagLib.IFD
 					Structure.RemoveTag (0, (ushort) IFDEntryTag.ImageDescription);
 				}
 
-				ByteVector data = new ByteVector ();
-				data.Add (COMMENT_UNICODE_CODE);
-				data.Add (ByteVector.FromString (value, StringType.UTF8));
-
-				ExifIFD.SetEntry (0, new UndefinedIFDEntry ((ushort) ExifEntryTag.UserComment, data));
+				ExifIFD.SetEntry (0, new UserCommentIFDEntry ((ushort) ExifEntryTag.UserComment, value));
 				Structure.SetEntry (0, new StringIFDEntry ((ushort) IFDEntryTag.ImageDescription, value));
 			}
 		}

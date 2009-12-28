@@ -70,6 +70,8 @@ public class GenerateTestFixtureApp
 				type = "ThumbnailDataIFD";
 			if (tag_label.Equals ("Preview") && ifd.Equals ("Nikon3"))
 				type = "SubIFD";
+			if (tag_label.Equals ("UserComment") && ifd.Equals ("Photo"))
+				type = "UserComment";
 
 			if (ifd.Equals ("MakerNote"))
 				continue; // Exiv2 makes these up.
@@ -131,6 +133,8 @@ public class GenerateTestFixtureApp
 				EmitTestIFDThumbnailDataIFDEntry (val);
 			} else if (type.Equals ("MakerNote")) {
 				EmitTestIFDMakerNoteIFDEntry (val);
+			} else if (type.Equals ("UserComment")) {
+				EmitTestIFDUserCommentIFDEntry (val);
 			} else if (type.Equals ("Undefined")) {
 				EmitTestIFDUndefinedEntry (val);
 			} else {
@@ -582,13 +586,9 @@ public class GenerateTestFixtureApp
 	static void EmitTestIFDUndefinedEntry (string val)
 	{
 		Write ("Assert.IsNotNull (entry as UndefinedIFDEntry, \"Entry is not an undefined IFD entry!\");");
-		if (val.StartsWith ("charset=\"Ascii\"")) {
-			Write ("Assert.AreEqual (\"{0}\", (entry as UndefinedIFDEntry).Data.ToString());", val.Replace("\"", "\\\""));
-		} else {
-			Write ("var bytes = new byte [] {{ {0} }};", String.Join (", ", val.Trim ().Split(' ')));
-			Write ("var parsed_bytes = (entry as UndefinedIFDEntry).Data.Data;");
-			Write ("Assert.AreEqual (bytes, parsed_bytes);");
-		}
+		Write ("var bytes = new byte [] {{ {0} }};", String.Join (", ", val.Trim ().Split(' ')));
+		Write ("var parsed_bytes = (entry as UndefinedIFDEntry).Data.Data;");
+		Write ("Assert.AreEqual (bytes, parsed_bytes);");
 	}
 
 	static void EmitTestIFDSubIFDEntry (string val)
@@ -604,6 +604,14 @@ public class GenerateTestFixtureApp
 	static void EmitTestIFDMakerNoteIFDEntry (string val)
 	{
 		Write ("Assert.IsNotNull (entry as MakernoteIFDEntry, \"Entry is not a makernote IFD!\");");
+	}
+
+	static void EmitTestIFDUserCommentIFDEntry (string val)
+	{
+		Write ("Assert.IsNotNull (entry as UserCommentIFDEntry, \"Entry is not a user comment!\");");
+		if (val.StartsWith ("charset=\"Ascii\""))
+			val = val.Substring (15).Trim ();
+		Write ("Assert.AreEqual (\"{0}\", (entry as UserCommentIFDEntry).Value.Trim ());", val);
 	}
 
 	static void EmitTestIFDIndexedShortEntry (int index, string val)

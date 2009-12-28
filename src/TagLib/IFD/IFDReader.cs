@@ -375,6 +375,12 @@ namespace TagLib.IFD
 					return new StringIFDEntry (tag, data);
 				}
 
+				if (tag == (ushort) ExifEntryTag.UserComment) {
+					ByteVector data = file.ReadBlock ((int) count);
+
+					return new UserCommentIFDEntry (tag, data);
+				}
+
 				if (type == (ushort) IFDEntryType.Undefined) {
 					ByteVector data = file.ReadBlock ((int) count);
 
