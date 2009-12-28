@@ -602,9 +602,10 @@ public class GenerateTestFixtureApp
 		tag_names = new Dictionary<string, Dictionary<ushort, string>> ();
 
 		IndexTagType ("Image", typeof (IFDEntryTag), "IFDEntryTag");
+		IndexTagType ("Thumbnail", typeof (IFDEntryTag), "IFDEntryTag"); // IFD1, for thumbnails
 		IndexTagType ("Photo", typeof (ExifEntryTag), "ExifEntryTag");
 		IndexTagType ("Image", typeof (ExifEntryTag), "ExifEntryTag"); // Also put exif into Image, for DNG
-		IndexTagType ("Gps", typeof (GPSEntryTag), "GPSEntryTag");
+		IndexTagType ("GPSInfo", typeof (GPSEntryTag), "GPSEntryTag");
 		IndexTagType ("Iop", typeof (IOPEntryTag), "IOPEntryTag");
 	}
 
