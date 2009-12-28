@@ -68,6 +68,11 @@ public class GenerateTestFixtureApp
 				type = "SubIFD";
 			if (tag_label.Equals ("JPEGInterchangeFormat"))
 				type = "ThumbnailDataIFD";
+			if (tag_label.Equals ("Preview") && ifd.Equals ("Nikon3"))
+				type = "SubIFD";
+
+			if (ifd.Equals ("MakerNote"))
+				continue; // Exiv2 makes these up.
 
 			Write ("// {1}.0x{0:X4} ({2}/{3}/{4}) \"{5}\"", tag, ifd, tag_label, type, length, val);
 
