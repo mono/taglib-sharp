@@ -226,6 +226,7 @@ public class GenerateTestFixtureApp
 		if (length > 0 && type.Equals ("XmpText")) {
 			Write ("Assert.AreEqual (\"{0}\", node.Value);", val);
 			Write ("Assert.AreEqual (XmpNodeType.Simple, node.Type);");
+			Write ("Assert.AreEqual (0, node.Children.Count);");
 		} else if (type.Equals ("XmpBag") && length == 1) {
 			Write ("Assert.AreEqual (XmpNodeType.Bag, node.Type);");
 			Write ("Assert.AreEqual (\"\", node.Value);");
