@@ -35,24 +35,24 @@ public class GenerateTestFixtureApp
 		// First run exiv2 on it.
 		string output, err;
 		int code;
-		var result = GLib.Process.SpawnCommandLineSync (String.Format ("exiv2 pr -b -p v {0}", path), out output, out err, out code);
+		var result = GLib.Process.SpawnCommandLineSync (String.Format ("./listData e {0}", path), out output, out err, out code);
 		if (!result) {
-			Console.Error.WriteLine ("Invoking exiv2 failed, do you have it installed?");
+			Console.Error.WriteLine ("Invoking listData failed, are you running from the examples folder?");
 			return;
 		}
 
 		Write ("//  ---------- Start of IFD tests ----------");
 
 		foreach (string line in output.Split ('\n')) {
-			string[] parts = line.Split (new char[] {' '}, 6, StringSplitOptions.RemoveEmptyEntries);
-			if (parts.Length == 0)
+			string[] parts = line.Split (new char[] {'\t'}, 5);
+			if (parts.Length == 0 || line.Trim ().Equals (String.Empty))
 				continue;
-			ushort tag = ushort.Parse (parts[0].Substring(2), System.Globalization.NumberStyles.HexNumber);
-			string ifd = parts[1];
-			string tag_label = parts[2];
+			string tag_label = parts[0];
+			ushort tag = ushort.Parse (parts[1].Substring(2), System.Globalization.NumberStyles.HexNumber);
+			string ifd = parts[2];
 			string type = parts[3];
 			uint length = uint.Parse (parts[4]);
-			string val = parts.Length == 6 ? parts[5] : String.Empty;
+			string val = ExtractKey (path, String.Format ("Exif.{0}.{1}", ifd, tag_label));
 
 			EnsureIFD (ifd);
 
@@ -152,11 +152,14 @@ public class GenerateTestFixtureApp
 		// First run exiv2 on it.
 		string output, err;
 		int code;
-		var result = GLib.Process.SpawnCommandLineSync (String.Format ("exiv2 pr -b -p x {0}", path), out output, out err, out code);
+		var result = GLib.Process.SpawnCommandLineSync (String.Format ("./listData x {0}", path), out output, out err, out code);
 		if (!result) {
 			Console.Error.WriteLine ("Invoking exiv2 failed, do you have it installed?");
 			return;
 		}
+
+		if (output.Trim ().Equals (""))
+			return;
 
 		Write ();
 		Write ("//  ---------- Start of XMP tests ----------");
@@ -175,13 +178,13 @@ public class GenerateTestFixtureApp
 		}
 
 		foreach (string line in output.Split ('\n')) {
-			string[] parts = line.Split (new char[] {' '}, 4, StringSplitOptions.RemoveEmptyEntries);
-			if (parts.Length == 0)
+			string[] parts = line.Split (new char[] {'\t'}, 3);
+			if (parts.Length == 0 || line.Trim ().Equals (String.Empty))
 				continue;
 			string label = parts[0];
 			string type = parts[1];
 			uint length = uint.Parse (parts[2]);
-			string val = parts.Length == 4 ? parts[3] : String.Empty;
+			string val = ExtractKey (path, label).Trim ();
 
 			EmitXmpTest (label, type, length, val);
 		}
@@ -266,6 +269,19 @@ public class GenerateTestFixtureApp
 			throw new Exception ("Can't test this");
 		}
 		Write ("}");
+	}
+
+	static string ExtractKey (string file, string key)
+	{
+		string output, err;
+		int code;
+		var result = GLib.Process.SpawnCommandLineSync (String.Format ("./extractKey {0} {1}", file, key), out output, out err, out code);
+		if (!result) {
+			Console.Error.WriteLine ("Invoking extractKey failed, are you running from the examples folder?");
+			return String.Empty;
+		}
+
+		return output;
 	}
 
 	static string GetXmpNs (string prefix)

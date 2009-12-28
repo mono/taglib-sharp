@@ -11,7 +11,9 @@ EXAMPLES_BUILD = taglib-sharp.dll $(SET_PICTURES).exe $(LIST_TYPES).exe $(BATCH_
 
 if HAVE_GNOME_SHARP
 EXAMPLES_BUILD += $(READ_FROM_URI).exe
+if HAVE_EXIV2
 EXAMPLES_BUILD += $(GENERATE_TEST_FIXTURE).exe
+endif
 endif
 
 all: $(EXAMPLES_BUILD)
@@ -23,8 +25,16 @@ if HAVE_GNOME_SHARP
 $(READ_FROM_URI).exe: $(READ_FROM_URI).cs
 	$(MCS) -out:$@ -debug $(REFERENCES) $(GNOME_SHARP_LIBS) $<
 
-$(GENERATE_TEST_FIXTURE).exe: $(GENERATE_TEST_FIXTURE).cs
+if HAVE_EXIV2
+$(GENERATE_TEST_FIXTURE).exe: $(GENERATE_TEST_FIXTURE).cs listData extractKey
 	$(MCS) -out:$@ -debug $(REFERENCES) $(GNOME_SHARP_LIBS) $<
+
+listData: listData.cpp
+	g++ -o $@ $(EXIV2_LIBS) $<
+
+extractKey: extractKey.cpp
+	g++ -o $@ $(EXIV2_LIBS) $<
+endif
 endif
 
 $(SET_PICTURES).exe: $(SET_PICTURES).cs

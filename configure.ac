@@ -91,6 +91,14 @@ else
 	AM_CONDITIONAL(HAVE_GNOME_SHARP, false)
 fi
 
+PKG_CHECK_MODULES(EXIV2, exiv2, have_exiv2=yes, have_exiv2=no)
+if test "x$have_exiv2" = "xyes"; then
+	AC_SUBST(EXIV2_LIBS)
+	AM_CONDITIONAL(HAVE_EXIV2, true)
+else
+	AM_CONDITIONAL(HAVE_EXIV2, false)
+fi
+
 PKG_CHECK_MODULES(MONO_NUNIT, mono-nunit >= 1.0, do_tests="yes", do_tests="no") AC_SUBST(MONO_NUNIT_LIBS)
 AM_CONDITIONAL(ENABLE_TESTS, test "x$do_tests" = "xyes")
 if test "x$do_tests" = "xno"; then
