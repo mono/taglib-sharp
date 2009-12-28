@@ -474,7 +474,7 @@ public class GenerateTestFixtureApp
 	static void EmitTestIFDStringEntry (string val)
 	{
 		Write ("Assert.IsNotNull (entry as StringIFDEntry, \"Entry is not a string!\");");
-		Write ("Assert.AreEqual (\"{0}\", (entry as StringIFDEntry).Value);", val);
+		Write ("Assert.AreEqual (\"{0}\", (entry as StringIFDEntry).Value{1});", val, val == String.Empty ? ".Trim ()" : "");
 	}
 
 	static void EmitTestIFDShortEntry (string val)
