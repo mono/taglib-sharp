@@ -92,12 +92,14 @@ public class GenerateTestFixtureApp
 				EmitTestIFDEntryOpen ("gps_structure", 0, tag, ifd);
 			} else if (ifd.Equals ("CanonCs")) {
 				EmitTestIFDEntryOpen ("makernote_structure", 0, 0x0001, ifd); // TODO enum name
+			} else if (ifd.Equals ("CanonSi")) {
+				EmitTestIFDEntryOpen ("makernote_structure", 0, 0x0004, ifd); // TODO enum name
 			} else {
 				throw new Exception ("Unknown IFD");
 			}
 
-			if (ifd.Equals ("CanonCs")) {
-				// This is a made-up directory by exiv2
+			if (ifd.Equals ("CanonCs") || ifd.Equals ("CanonSi")) {
+				// This are a made-up directory by exiv2
 				EmitTestIFDIndexedShortEntry (tag, val);
 			} else if (type.Equals ("Ascii")) {
 				EmitTestIFDStringEntry (val);
@@ -285,7 +287,6 @@ public class GenerateTestFixtureApp
 	static bool IsPartOfMakernote (string ifd) {
 		return ifd.Equals ("MakerNote") ||
 			   ifd.Equals ("Canon") ||
-			   ifd.Equals ("CanonSi") ||
 			   ifd.Equals ("Nikon1") ||
 			   ifd.Equals ("Nikon2") ||
 			   ifd.Equals ("Nikon3");
