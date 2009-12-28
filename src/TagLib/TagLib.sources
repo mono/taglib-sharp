@@ -115,6 +115,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/IFD/IFDStructure.cs \
 	$(srcdir)/TagLib/IFD/IFDReader.cs \
 	$(srcdir)/TagLib/IFD/IFDRenderer.cs \
+	$(srcdir)/TagLib/IFD/Makernotes/Nikon3MakernoteReader.cs \
 	$(srcdir)/TagLib/Mpeg4/AppleTag.cs \
 	$(srcdir)/TagLib/Mpeg4/Box.cs \
 	$(srcdir)/TagLib/Mpeg4/BoxFactory.cs \

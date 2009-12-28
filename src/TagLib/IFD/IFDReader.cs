@@ -26,6 +26,7 @@
 using System;
 using System.IO;
 using TagLib.IFD.Entries;
+using TagLib.IFD.Makernotes;
 
 namespace TagLib.IFD
 {
@@ -681,8 +682,7 @@ namespace TagLib.IFD
 					ushort magic = header.Mid (12, 2).ToUShort (is_bigendian);
 
 					if (magic == 42) {
-						IFDReader reader =
-							new IFDReader (file, makernote_endian, ifd_structure, makernote_offset + 10, 8, count - 10);
+						var reader = new Nikon3MakernoteReader (file, makernote_endian, ifd_structure, makernote_offset + 10, 8, count - 10);
 
 						reader.Read ();
 						return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Nikon3, header.Mid (0, 18), 8, false, makernote_endian);
@@ -734,7 +734,7 @@ namespace TagLib.IFD
 				return ParseMakernote (tag, type, count, base_offset, offset);
 
 			IFDStructure ifd_structure = new IFDStructure ();
-			IFDReader reader = new IFDReader (file, is_bigendian, ifd_structure, base_offset, offset, max_offset);
+			IFDReader reader = CreateSubIFDReader (file, is_bigendian, ifd_structure, base_offset, offset, max_offset);
 
 			// Sub IFDs are either identified by the IFD-type ...
 			if (type == (ushort) IFDEntryType.IFD) {
@@ -753,6 +753,38 @@ namespace TagLib.IFD
 			default:
 				return null;
 			}
+		}
+
+		/// <summary>
+		///    Create a reader for Sub IFD entries.
+		/// </summary>
+		/// <param name="file">
+		///    A <see cref="File"/> to read from.
+		/// </param>
+		/// <param name="is_bigendian">
+		///     A <see cref="System.Boolean"/>, it must be true, if the data of the IFD should be
+		///     read as bigendian, otherwise false.
+		/// </param>
+		/// <param name="structure">
+		///    A <see cref="IFDStructure"/> that will be populated.
+		/// </param>
+		/// <param name="base_offset">
+		///    A <see cref="System.Int64"/> with the base offset which every offsets in the
+		///    IFD are relative to.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="System.UInt32"/> with the offset of the entry.
+		/// </param>
+		/// <param name="max_offset">
+		///    A <see cref="System.UInt32"/> with the maximal offset to consider for
+		///    the IFD.
+		/// </param>
+		/// <returns>
+		///    A <see cref="IFDReader"/> which can be used to read the specified sub IFD.
+		/// </returns>
+		protected virtual IFDReader CreateSubIFDReader (File file, bool is_bigendian, IFDStructure structure, long base_offset, uint offset, uint max_offset)
+		{
+			return new IFDReader (file, is_bigendian, structure, base_offset, offset, max_offset);
 		}
 
 #endregion
