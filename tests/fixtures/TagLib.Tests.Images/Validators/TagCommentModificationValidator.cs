@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 
 namespace TagLib.Tests.Images.Validators
@@ -10,6 +11,8 @@ namespace TagLib.Tests.Images.Validators
 	{
 		bool tag_present;
 		TagTypes type;
+
+		public TagCommentModificationValidator (TagTypes type, bool tag_present) : this (String.Empty, type, tag_present) { }
 
 		public TagCommentModificationValidator (string orig_comment, TagTypes type, bool tag_present) : base (orig_comment)
 		{
