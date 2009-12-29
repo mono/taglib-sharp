@@ -93,14 +93,16 @@ public class GenerateTestFixtureApp
 			} else if (ifd.Equals ("GPSInfo")) {
 				EmitTestIFDEntryOpen ("gps_structure", 0, tag, ifd);
 			} else if (ifd.Equals ("CanonCs")) {
-				EmitTestIFDEntryOpen ("makernote_structure", 0, 0x0001, ifd); // TODO enum name
+				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort) CanonMakerNoteEntryTag.CameraSettings, ifd);
 			} else if (ifd.Equals ("CanonSi")) {
-				EmitTestIFDEntryOpen ("makernote_structure", 0, 0x0004, ifd); // TODO enum name
+				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort) CanonMakerNoteEntryTag.ShotInfo, ifd);
+			} else if (ifd.Equals ("CanonCf")) {
+				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort) CanonMakerNoteEntryTag.CustomFunctions, ifd);
 			} else {
 				throw new Exception ("Unknown IFD");
 			}
 
-			if (ifd.Equals ("CanonCs") || ifd.Equals ("CanonSi")) {
+			if (ifd.Equals ("CanonCs") || ifd.Equals ("CanonSi") || ifd.Equals ("CanonCf")) {
 				// This are a made-up directory by exiv2
 				EmitTestIFDIndexedShortEntry (tag, val);
 			} else if (type.Equals ("Ascii")) {
@@ -463,8 +465,7 @@ public class GenerateTestFixtureApp
 				return;
 			EnsureIFD ("Photo");
 			Write ();
-			// TODO: The tag below has no enum member yet
-			Write ("var iop = exif_structure.GetEntry (0, 0xA005) as SubIFDEntry;");
+			Write ("var iop = exif_structure.GetEntry (0, (ushort) IFDEntryTag.InteroperabilityIFD) as SubIFDEntry;");
 			Write ("Assert.IsNotNull (iop, \"Iop tag not found\");");
 			Write ("var iop_structure = iop.Structure;");
 			Write ();
@@ -646,10 +647,15 @@ public class GenerateTestFixtureApp
 
 		IndexTagType ("Image", typeof (IFDEntryTag), "IFDEntryTag");
 		IndexTagType ("Thumbnail", typeof (IFDEntryTag), "IFDEntryTag"); // IFD1, for thumbnails
+		IndexTagType ("Photo", typeof (IFDEntryTag), "IFDEntryTag");
 		IndexTagType ("Photo", typeof (ExifEntryTag), "ExifEntryTag");
 		IndexTagType ("Image", typeof (ExifEntryTag), "ExifEntryTag"); // Also put exif into Image, for DNG
 		IndexTagType ("GPSInfo", typeof (GPSEntryTag), "GPSEntryTag");
 		IndexTagType ("Iop", typeof (IOPEntryTag), "IOPEntryTag");
+		IndexTagType ("Canon", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
+		IndexTagType ("CanonCs", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
+		IndexTagType ("CanonSi", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
+		IndexTagType ("CanonCf", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
 	}
 
 	static void IndexTagType (string ifd, Type t, string typename)
