@@ -8,13 +8,13 @@ using TagLib.Tests.Images.Validators;
 namespace TagLib.Tests.Images
 {
 	[TestFixture]
-	public class XapTest2
+	public class XapTest
 	{
 		[Test]
 		public void Test ()
 		{
 			ImageTest.Run ("sample_xap.jpg",
-				new XapTest2InvariantValidator (),
+				new XapTestInvariantValidator (),
 				new NoModificationValidator (),
 				new CommentModificationValidator ("Communications"),
 				new TagCommentModificationValidator ("Communications", TagTypes.TiffIFD, true),
@@ -25,7 +25,7 @@ namespace TagLib.Tests.Images
 		}
 	}
 
-	public class XapTest2InvariantValidator : IMetadataInvariantValidator
+	public class XapTestInvariantValidator : IMetadataInvariantValidator
 	{
 		public void ValidateMetadataInvariants (Image.File file)
 		{
