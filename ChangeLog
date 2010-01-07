@@ -1,5 +1,10 @@
 2010-01-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* NEWS:
+	* configure.ac: Bump to 2.0.3.4 for upcoming release.
+
+2010-01-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/TagLib/Id3v2/Tag.cs:
 	* src/TagLib/Id3v2/FrameHeader.cs: Fix multiple issues with converting
 	release data metadata.  Was converting (renaming) TDAT to TDRC, but
