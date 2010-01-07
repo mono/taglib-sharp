@@ -35,7 +35,10 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual("Aiff Title", file.Tag.Title);
 			Assert.AreEqual(5, file.Tag.Track);
 			Assert.AreEqual(10, file.Tag.TrackCount);
-			Assert.AreEqual(2009, file.Tag.Year);
+
+			// sample.aif contains a TDAT (and no TYER) with 2009 in it, but TDAT
+			// is supposed to contain MMDD - so the following should not be equal
+			Assert.AreNotEqual(2009, file.Tag.Year);
 		}
 
 		[Test]

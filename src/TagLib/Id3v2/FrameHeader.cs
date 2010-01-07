@@ -1,12 +1,14 @@
 //
 // FrameHeader.cs:
 //
-// Author:
+// Authors:
 //   Brian Nickel (brian.nickel@gmail.com)
+//   Gabriel BUrt (gabriel.burt@gmail.com)
 //
 // Original Source:
 //   id3v2frame.cpp from TagLib
 //
+// Copyright (C) 2010 Novell, Inc.
 // Copyright (C) 2005-2007 Brian Nickel
 // Copyright (C) 2002,2003 Scott Wheeler (Original Implementation)
 //
@@ -433,7 +435,8 @@ namespace TagLib.Id3v2 {
 				{ "TCO", "TCON" },
 				{ "TCP", "TCMP" },
 				{ "TCR", "TCOP" },
-				{ "TDA", "TDRC" },
+				{ "TDA", "TDAT" },
+				{ "TIM", "TIME" },
 				{ "TDY", "TDLY" },
 				{ "TEN", "TENC" },
 				{ "TFT", "TFLT" },
@@ -453,7 +456,6 @@ namespace TagLib.Id3v2 {
 				{ "TPA", "TPOS" },
 				{ "TPB", "TPUB" },
 				{ "TRC", "TSRC" },
-				{ "TRD", "TDRC" },
 				{ "TRK", "TRCK" },
 				{ "TSS", "TSSE" },
 				{ "TT1", "TIT1" },

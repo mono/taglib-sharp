@@ -1,12 +1,14 @@
 //
 // Tag.cs: Provide support for reading and writing ID3v2 tags.
 //
-// Author:
+// Authors:
 //   Brian Nickel (brian.nickel@gmail.com)
+//   Gabriel BUrt (gabriel.burt@gmail.com)
 //
 // Original Source:
 //   id3v2tag.cpp from TagLib
 //
+// Copyright (C) 2010 Novell, Inc.
 // Copyright (C) 2005-2007 Brian Nickel
 // Copyright (C) 2002,2003 Scott Wheeler (Original Implementation)
 //
@@ -854,6 +856,7 @@ namespace TagLib.Id3v2 {
 			// for post-processing, so check for them as they are
 			// loaded.
 			TextInformationFrame tdrc = null;
+			TextInformationFrame tyer = null;
 			TextInformationFrame tdat = null;
 			TextInformationFrame time = null;
 			
@@ -879,7 +882,7 @@ namespace TagLib.Id3v2 {
 				
 				if(frame == null)
 					break;
-				
+
 				// Only add frames that contain data.
 				if (frame.Size == 0)
 					continue;
@@ -897,6 +900,9 @@ namespace TagLib.Id3v2 {
 				if (tdrc == null &&
 					frame.FrameId.Equals (FrameType.TDRC)) {
 					tdrc = frame as TextInformationFrame;
+				} else if (tyer == null &&
+					frame.FrameId.Equals (FrameType.TYER)) {
+					tyer = frame as TextInformationFrame;
 				} else if (tdat == null &&
 					frame.FrameId.Equals (FrameType.TDAT)) {
 					tdat = frame as TextInformationFrame;
@@ -905,52 +911,44 @@ namespace TagLib.Id3v2 {
 					time = frame as TextInformationFrame;
 				}
 			}
-			
-			// Post-processing: Combine the three frames into one
-			// TDRC frame.
-			if (tdrc == null || tdat == null) {
-				if (tdat != null)
-					RemoveFrames (FrameType.TDAT);
-				
-				if (time != null)
-					RemoveFrames (FrameType.TIME);
-				
+
+			// Try to fill out the date/time of the TDRC frame.  Can't do that if no TDRC
+			// frame exists, or if there is no TDAT frame, or if TDRC already has the date.
+			if (tdrc == null || tdat == null || tdrc.ToString ().Length > 4) {
 				return;
 			}
-			
-			StringBuilder tdrc_text = new StringBuilder (
-				tdrc.ToString ());
-			
-			string tdat_text = tdat.ToString ();
-			
-			if (tdrc_text.Length != 4 || tdat_text.Length != 4) {
+
+			string year = tdrc.ToString ();
+			if (year.Length != 4)
+				return;
+
+			// Start with the year already in TDRC, then add the TDAT and TIME if available
+			StringBuilder tdrc_text = new StringBuilder ();
+			tdrc_text.Append (year);
+
+			// Add the date
+			if (tdat != null) {
+				string tdat_text = tdat.ToString ();
+				if (tdat_text.Length == 4) {
+					tdrc_text.Append ("-").Append (tdat_text, 0, 2)
+						.Append ("-").Append (tdat_text, 2, 2);
+
+					// Add the time
+					if (time != null) {
+						string time_text = time.ToString ();
+							
+						if (time_text.Length == 4)
+							tdrc_text.Append ("T").Append (time_text, 0, 2)
+								.Append (":").Append (time_text, 2, 2);
+
+						RemoveFrames (FrameType.TIME);
+					}
+				}
+
 				RemoveFrames (FrameType.TDAT);
-				
-				if (time != null)
-					RemoveFrames (FrameType.TIME);
-				
-				return;
 			}
-			
-			tdrc_text.Append ("-").Append (tdat_text, 0, 2)
-				.Append ("-").Append (tdat_text, 2, 2);
-			
-			RemoveFrames (FrameType.TDAT);
-			
-			if (time == null) {
-				tdrc.Text = new string [] {tdrc_text.ToString ()};
-				return;
-			}
-			
-			string time_text = time.ToString ();
-				
-			if (time_text.Length == 4)
-				tdrc_text.Append ("T").Append (time_text, 0, 2)
-					.Append (":").Append (time_text, 2, 2);
-					
-			tdrc.Text = new string [] {tdrc_text.ToString ()};
-			
-			RemoveFrames (FrameType.TIME);
+
+			tdrc.Text = new string [] { tdrc_text.ToString () };
 		}
 		
 #endregion

@@ -1,3 +1,15 @@
+2010-01-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/TagLib/Id3v2/Tag.cs:
+	* src/TagLib/Id3v2/FrameHeader.cs: Fix multiple issues with converting
+	release data metadata.  Was converting (renaming) TDAT to TDRC, but
+	that's mapping MMDD onto YYYY which doesn't make sense.  Now it will
+	map only TYER to TDRC, and then append the TDAT and TIME info to the TDRC
+	if they exist.  Fixes BGO #606283
+
+	* tests/fixtures/TagLib.Tests.FileFormats/AiffFormatTest.cs: Fix test that
+	depended on the incorrect behavior above.
+
 2009-12-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/TagLib/Mpeg4/BoxTypes.cs:
