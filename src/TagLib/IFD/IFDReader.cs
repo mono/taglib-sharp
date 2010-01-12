@@ -129,7 +129,7 @@ namespace TagLib.IFD
 #region Public Methods
 
 		/// <summary>
-		///    Read an IFD at the given offsets from a file.
+		///    Reads IFDs beginning at the given offsets from a file.
 		/// </summary>
 		public void Read ()
 		{
@@ -137,6 +137,25 @@ namespace TagLib.IFD
 			do {
 				next_offset = ReadIFD (base_offset, next_offset, max_offset);
 			} while (next_offset > 0);
+		}
+
+		/// <summary>
+		///    Tries to read at most the given number of IFDs from file. The methos is
+		///    usefull if next-ifd pointer should be ignored.
+		/// </summary>
+		/// <param name="count">
+		///     A <see cref="System.UInt32"/> with the maximal number of IFDs to read
+		/// </param>
+		public void Read (uint count)
+		{
+			uint next_offset = ifd_offset;
+
+			for (int i = 0; i < count; i++) {
+				next_offset = ReadIFD (base_offset, next_offset, max_offset);
+
+				if (next_offset == 0)
+					return;
+			}
 		}
 
 #endregion
@@ -688,7 +707,12 @@ namespace TagLib.IFD
 					ushort magic = header.Mid (12, 2).ToUShort (is_bigendian);
 
 					if (magic == 42) {
-						var reader = new Nikon3MakernoteReader (file, makernote_endian, ifd_structure, makernote_offset + 10, 8, count - 10);
+
+						// TODO: the max_offset value is not correct here. However, some nikon files have offsets to a sub-ifd
+						// (preview image) which are not stored with the other makernote data. Therfore, we keep the max_offset
+						// for now. (It is just an upper bound for some checks. So if it is too big, it doesn't matter)
+						var reader =
+							new Nikon3MakernoteReader (file, makernote_endian, ifd_structure, makernote_offset + 10, 8, max_offset - offset - 10);
 
 						reader.Read ();
 						return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Nikon3, header.Mid (0, 18), 8, false, makernote_endian);

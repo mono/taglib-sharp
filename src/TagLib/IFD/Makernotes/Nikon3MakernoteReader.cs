@@ -22,6 +22,8 @@
 // USA
 //
 
+using TagLib.IFD.Entries;
+
 namespace TagLib.IFD.Makernotes
 {
 	/// <summary>
@@ -91,8 +93,22 @@ namespace TagLib.IFD.Makernotes
 		/// </returns>
 		protected override IFDEntry ParseIFDEntry (ushort tag, ushort type, uint count, long base_offset, uint offset)
 		{
-			if (tag == 0x0011) // TODO: enum members
+			// SubIFD with Preview Image
+			// The entry itself is usually a long
+			if (tag == 0x0011) {
+
+				// TODO: enum members
+				// TODO: handle JPEGInterchangeFormat and JPEGInterchangeFormatLength correctly
+
 				type = (ushort) IFDEntryType.IFD;
+
+				IFDStructure ifd_structure = new IFDStructure ();
+				IFDReader reader =
+					CreateSubIFDReader (file, is_bigendian, ifd_structure, base_offset, offset, max_offset);
+
+				reader.Read (1);
+				return new SubIFDEntry (tag, type, (uint) ifd_structure.Directories.Length, ifd_structure);
+			}
 			return base.ParseIFDEntry (tag, type, count, base_offset, offset);
 		}
 
