@@ -1,3 +1,9 @@
+2010-01-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
+	* tests/fixtures/TagLib.Tests.TaggingFormats/Id3V2Test.cs: Patch from
+	Alexander Kojevnikov fixing IndexOutOfRangeException (BGO #607376)
+
 2010-01-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* NEWS:

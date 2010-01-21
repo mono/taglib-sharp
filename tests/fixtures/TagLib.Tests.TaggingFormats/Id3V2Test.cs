@@ -191,7 +191,17 @@ namespace TagLib.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
+		[Test]
+		public void TestComment4Bytes ()
+		{
+			// Comment data found in the wild, see bgo#607376
+			var data = new byte[] { 67, 79, 77, 77, 0, 0, 0, 4, 0, 0, 0, 203, 0, 255 };
+			var frame = new CommentsFrame (data, 3);
+			Assert.IsEmpty (frame.Description);
+			Assert.IsEmpty (frame.Text);
+		}
+
 		[Test]
 		public void TestGenres ()
 		{

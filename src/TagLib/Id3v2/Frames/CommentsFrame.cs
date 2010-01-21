@@ -471,7 +471,11 @@ namespace TagLib.Id3v2 {
 			// in case of a misformatted [{desc}\0{value}\0].
 			string [] split = data.ToStrings (encoding, 4, 3);
 			
-			if (split.Length == 1) {
+			if (split.Length == 0) {
+				// No data in the frame.
+				description = String.Empty;
+				text        = String.Empty;
+			} else if (split.Length == 1) {
 				// Bad comment frame. Assume that it lacks a
 				// description.
 				description = String.Empty;
