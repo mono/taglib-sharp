@@ -94,17 +94,22 @@ namespace TagLib.IFD.Makernotes
 		/// </returns>
 		protected override IFDEntry ParseIFDEntry (ushort tag, ushort type, uint count, long base_offset, uint offset)
 		{
-			// SubIFD with Preview Image
-			// The entry itself is usually a long
 			if (tag == (ushort) Nikon3MakerNoteEntryTag.Preview) {
-
+				// SubIFD with Preview Image
+				// The entry itself is usually a long
 				// TODO: handle JPEGInterchangeFormat and JPEGInterchangeFormatLength correctly
+
+				// The preview field contains a long with an offset to an IFD
+				// that contains the preview image. We need to be careful
+				// though: this IFD does not contain a valid next-offset
+				// pointer. For this reason, we only read the first IFD and
+				// ignore the rest (which is preview image data, directly
+				// starting after the IFD entries).
 
 				type = (ushort) IFDEntryType.IFD;
 
 				IFDStructure ifd_structure = new IFDStructure ();
-				IFDReader reader =
-					CreateSubIFDReader (file, is_bigendian, ifd_structure, base_offset, offset, max_offset);
+				IFDReader reader = CreateSubIFDReader (file, is_bigendian, ifd_structure, base_offset, offset, max_offset);
 
 				reader.Read (1);
 				return new SubIFDEntry (tag, type, (uint) ifd_structure.Directories.Length, ifd_structure);
