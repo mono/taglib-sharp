@@ -6,6 +6,12 @@ namespace TagLib.Tests.Images.Validators
 {
 	public class ImageTest
 	{
+		static ImageTest () {
+			// Initialize GDK
+			var args = Environment.GetCommandLineArgs ();
+			Global.InitCheck (ref args);
+		}
+
 		byte [] pre_bytes;
 		byte [] post_bytes;
 
