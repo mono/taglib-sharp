@@ -181,7 +181,7 @@ namespace TagLib.Image
 						return value;
 				}
 
-				return null;
+				return String.Empty;
 			}
 			set {
 				foreach (ImageTag tag in AllTags)

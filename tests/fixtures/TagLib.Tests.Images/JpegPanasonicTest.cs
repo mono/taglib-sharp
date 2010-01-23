@@ -17,7 +17,7 @@ namespace TagLib.Tests.Images
 			ImageTest.Run ("sample_panasonic.jpg",
 				new JpegPanasonicTestInvariantValidator (),
 				NoModificationValidator.Instance,
-				new CommentModificationValidator (null),
+				new CommentModificationValidator (),
 				new TagCommentModificationValidator ("", TagTypes.TiffIFD, true),
 				// Interestingly, this file contains an empty XMP packet
 				new TagCommentModificationValidator (null, TagTypes.XMP, true),
