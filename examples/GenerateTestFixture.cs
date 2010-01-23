@@ -454,8 +454,7 @@ public class GenerateTestFixtureApp
 				return;
 			EnsureIFD ("Nikon3");
 			Write ();
-			// TODO: The tag below has no enum member yet
-			Write ("var nikonpreview = makernote_structure.GetEntry (0, 0x0011) as SubIFDEntry;");
+			Write ("var nikonpreview = makernote_structure.GetEntry (0, (ushort) Nikon3MakerNoteEntryTag.Preview) as SubIFDEntry;");
 			Write ("Assert.IsNotNull (nikonpreview, \"Nikon preview tag not found\");");
 			Write ("var nikonpreview_structure = nikonpreview.Structure;");
 			Write ();
@@ -658,6 +657,7 @@ public class GenerateTestFixtureApp
 		IndexTagType ("CanonCs", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
 		IndexTagType ("CanonSi", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
 		IndexTagType ("CanonCf", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
+		IndexTagType ("Nikon3", typeof (Nikon3MakerNoteEntryTag), "Nikon3MakerNoteEntryTag");
 	}
 
 	static void IndexTagType (string ifd, Type t, string typename)
