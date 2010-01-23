@@ -32,6 +32,6 @@ namespace TagLib.IFD.Tags
 		/// <summary>
 		///    Offset to an IFD containing a preview image. (Hex: 0x0011)
 		/// </summary>
-		Preview                                             = 16,
+		Preview                                             = 17,
 	}
 }
