@@ -72,7 +72,7 @@ TAGLIB_ASM = ../src/taglib-sharp.dll
 
 if ENABLE_TESTS
 test: $(ASSEMBLY) $(TAGLIB_ASM)
-	MONO_PATH="../src" $(NUNIT_CMD) -noshadow $(ASSEMBLY)
+	MONO_PATH="../src" COMPARE_LARGE_FILES="$(COMPARE_LARGE_FILES)" $(NUNIT_CMD) -noshadow $(ASSEMBLY)
 endif
 
 CLEANFILES = $(ASSEMBLY) TestResult.xml *.mdb *.dll *.exe

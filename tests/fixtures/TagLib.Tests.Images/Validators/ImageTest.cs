@@ -15,6 +15,12 @@ namespace TagLib.Tests.Images.Validators
 		byte [] pre_bytes;
 		byte [] post_bytes;
 
+		public static bool CompareLargeImages {
+			get {
+				return Environment.GetEnvironmentVariable ("COMPARE_LARGE_FILES") == "1";
+			}
+		}
+
 		public bool CompareImageData {
 			get; set;
 		}
