@@ -27,6 +27,7 @@ using System;
 using System.IO;
 using TagLib.IFD.Entries;
 using TagLib.IFD.Makernotes;
+using TagLib.IFD.Tags;
 
 namespace TagLib.IFD
 {

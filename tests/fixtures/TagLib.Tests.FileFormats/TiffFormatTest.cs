@@ -5,6 +5,7 @@ using TagLib;
 using TagLib.Tiff;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
+using TagLib.IFD.Tags;
 using TagLib.Xmp;
 
 namespace TagLib.Tests.FileFormats

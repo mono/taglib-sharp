@@ -31,6 +31,7 @@ using System.IO;
 
 using TagLib.Image;
 using TagLib.IFD.Entries;
+using TagLib.IFD.Tags;
 
 namespace TagLib.IFD
 {

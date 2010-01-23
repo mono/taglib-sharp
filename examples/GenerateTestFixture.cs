@@ -10,6 +10,7 @@ using GLib;
 using System;
 using System.Collections.Generic;
 using TagLib.IFD;
+using TagLib.IFD.Tags;
 using TagLib.Xmp;
 
 public class GenerateTestFixtureApp
@@ -325,6 +326,7 @@ public class GenerateTestFixtureApp
 		Write ("using NUnit.Framework;");
 		Write ("using TagLib.IFD;");
 		Write ("using TagLib.IFD.Entries;");
+		Write ("using TagLib.IFD.Tags;");
 		Write ("using TagLib.Xmp;");
 		Write ("using TagLib.Tests.Images.Validators;");
 		Write ();

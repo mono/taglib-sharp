@@ -28,6 +28,7 @@
 using System;
 using System.Collections.Generic;
 using TagLib.IFD.Entries;
+using TagLib.IFD.Tags;
 
 namespace TagLib.IFD
 {

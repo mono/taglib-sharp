@@ -28,6 +28,7 @@ using System.IO;
 using TagLib.Image;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
+using TagLib.IFD.Tags;
 using TagLib.Xmp;
 
 namespace TagLib.Tiff

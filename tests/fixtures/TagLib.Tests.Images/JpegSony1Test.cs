@@ -25,6 +25,7 @@ using NUnit.Framework;
 using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
+using TagLib.IFD.Tags;
 using TagLib.Jpeg;
 using TagLib.Xmp;
 

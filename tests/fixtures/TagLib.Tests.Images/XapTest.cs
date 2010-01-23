@@ -2,6 +2,7 @@ using System;
 using NUnit.Framework;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
+using TagLib.IFD.Tags;
 using TagLib.Xmp;
 using TagLib.Tests.Images.Validators;
 
