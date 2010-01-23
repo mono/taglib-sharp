@@ -66,7 +66,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.TaggingFormats/XiphTest.cs
 
 $(ASSEMBLY): $(ASSEMBLY_CSFILES)
-	$(MCS) $(MCS_FLAGS) $(NUNIT_FLAGS) -out:$@ -target:library -r:$(top_builddir)/src/taglib-sharp.dll $(ASSEMBLY_CSFILES)
+	$(MCS) $(MCS_FLAGS) $(NUNIT_FLAGS) $(GNOME_SHARP_LIBS) -out:$@ -target:library -r:$(top_builddir)/src/taglib-sharp.dll $(ASSEMBLY_CSFILES)
 
 TAGLIB_ASM = ../src/taglib-sharp.dll
 

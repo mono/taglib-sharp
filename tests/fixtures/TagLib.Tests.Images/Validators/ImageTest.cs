@@ -1,3 +1,4 @@
+using Gdk;
 using System;
 using NUnit.Framework;
 
@@ -5,16 +6,35 @@ namespace TagLib.Tests.Images.Validators
 {
 	public class ImageTest
 	{
-		public static void Run (string filename, IMetadataInvariantValidator invariant)
-		{
-			Run (filename, invariant, NoModificationValidator.Instance);
+		byte [] pre_bytes;
+		byte [] post_bytes;
+
+		public bool CompareImageData {
+			get; set;
 		}
 
+		public static void Run (string filename, IMetadataInvariantValidator invariant)
+		{
+			Run (filename, true, invariant);
+		}
+
+		public static void Run (string filename, bool compare_image_data, IMetadataInvariantValidator invariant)
+		{
+			Run (filename, compare_image_data, invariant, NoModificationValidator.Instance);
+		}
+
+
 		public static void Run (string filename, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
+		{
+			Run (filename, true, invariant, modifications);
+		}
+
+		public static void Run (string filename, bool compare_image_data, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
 		{
 			foreach (var modification in modifications) {
 				ImageTest test = new ImageTest () {
 					ImageFileName = filename,
+					CompareImageData = compare_image_data,
 					InvariantValidator = invariant,
 					ModificationValidator = modification
 				};
@@ -40,6 +60,8 @@ namespace TagLib.Tests.Images.Validators
 		{
 			var file = ReadFile (ImageFileName);
 			InvariantValidator.ValidateMetadataInvariants (file);
+			if (CompareImageData)
+				pre_bytes = ReadImageData (file);
 		}
 
 		/// <summary>
@@ -64,12 +86,46 @@ namespace TagLib.Tests.Images.Validators
 			var tmp = ReadFile (TempImageFileName);
 			InvariantValidator.ValidateMetadataInvariants (tmp);
 			ModificationValidator.ValidatePostModification (tmp);
+			if (CompareImageData) {
+				post_bytes = ReadImageData (tmp);
+				ValidateImageData ();
+			}
 		}
 
 		Image.File ReadFile (string filename)
 		{
 			var full_filename = String.Format ("samples/{0}", filename);
 			return File.Create (full_filename) as Image.File;
+		}
+
+		/// <summary>
+		///    Only files we can actually render are supported, for most types
+		///    this just means adding the type here. RAW files need extra
+		///    attention.
+		/// </summary>
+		bool IsSupportedImageFile (Image.File file)
+		{
+			return file is Jpeg.File;
+		}
+
+		byte[] ReadImageData (Image.File file)
+		{
+			if (!IsSupportedImageFile (file))
+				Assert.Fail("Unsupported type for data reading: "+file);
+
+			file.Mode = File.AccessMode.Read;
+			ByteVector v = file.ReadBlock ((int) file.Length);
+			byte [] result = null;
+			using (Pixbuf buf = new Pixbuf(v.Data))
+				result = buf.SaveToBuffer("png");
+			file.Mode = File.AccessMode.Closed;
+			return result;
+		}
+
+		void ValidateImageData ()
+		{
+			string label = String.Format ("Image data mismatch for {0}/{1}", ImageFileName, ModificationValidator);
+			Assert.AreEqual (pre_bytes, post_bytes, label);
 		}
 
 		void CreateTmpFile ()
