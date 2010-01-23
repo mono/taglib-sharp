@@ -25,10 +25,16 @@ namespace TagLib.IFD.Tags
 {
 	/// <summary>
 	///    Nikon format 3 makernote tags.
-	///    Based on http://www.exiv2.org/tags-nikon.html
+	///    Based on http://www.exiv2.org/tags-nikon.html and
+	///    http://park2.wakwak.com/~tsuruzoh/Computer/Digicams/exif-e.html
 	/// </summary>
 	public enum Nikon3MakerNoteEntryTag : ushort
 	{
+		/// <summary>
+		///    Makernote version. (Hex: 0x0001)
+		/// </summary>
+		Version                                             = 1,
+
 		/// <summary>
 		///    Offset to an IFD containing a preview image. (Hex: 0x0011)
 		/// </summary>
