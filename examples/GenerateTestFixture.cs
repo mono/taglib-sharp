@@ -312,7 +312,8 @@ public class GenerateTestFixtureApp
 			   ifd.Equals ("Canon") ||
 			   ifd.Equals ("Nikon1") ||
 			   ifd.Equals ("Nikon2") ||
-			   ifd.Equals ("Nikon3");
+			   ifd.Equals ("Nikon3") ||
+			   ifd.Equals ("Panasonic");
 	}
 
 	static void EmitHeader (string name, string path)
@@ -368,6 +369,7 @@ public class GenerateTestFixtureApp
 	static bool makernote_is_nikon1 = false;
 	static bool makernote_is_nikon2 = false;
 	static bool makernote_is_nikon3 = false;
+	static bool makernote_is_panasonic = false;
 	static bool nikonpreview_emitted = false;
 	static bool iop_emitted = false;
 	static bool gps_emitted = false;
@@ -459,6 +461,16 @@ public class GenerateTestFixtureApp
 			Write ("var nikonpreview_structure = nikonpreview.Structure;");
 			Write ();
 			nikonpreview_emitted = true;
+		}
+
+		if (ifd.Equals ("Panasonic")) {
+			if (makernote_is_panasonic)
+				return;
+			EnsureIFD ("MakerNote");
+			Write ();
+			Write ("Assert.AreEqual (MakernoteType.Panasonic, makernote.MakernoteType);");
+			Write ();
+			makernote_is_panasonic = true;
 		}
 
 		if (ifd.Equals ("Iop")) {
@@ -658,6 +670,7 @@ public class GenerateTestFixtureApp
 		IndexTagType ("CanonSi", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
 		IndexTagType ("CanonCf", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
 		IndexTagType ("Nikon3", typeof (Nikon3MakerNoteEntryTag), "Nikon3MakerNoteEntryTag");
+		IndexTagType ("Panasonic", typeof (PanasonicMakerNoteEntryTag), "PanasonicMakerNoteEntryTag");
 	}
 
 	static void IndexTagType (string ifd, Type t, string typename)
