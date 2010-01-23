@@ -26,7 +26,6 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.FileFormats/TiffFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/StandardTests.cs \
 	fixtures/TagLib.Tests.Images/AddImageMetadataTests.cs \
-	fixtures/TagLib.Tests.Images/JpegEmptyTest.cs \
 	fixtures/TagLib.Tests.Images/JpegCanonZoombrowserTest.cs \
 	fixtures/TagLib.Tests.Images/JpegNikon1Test.cs \
 	fixtures/TagLib.Tests.Images/JpegNikon2Test.cs \
@@ -34,6 +33,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/JpegNikon4Test.cs \
 	fixtures/TagLib.Tests.Images/JpegSony1Test.cs \
 	fixtures/TagLib.Tests.Images/JpegSony2Test.cs \
+	fixtures/TagLib.Tests.Images/JpegNoMetadataTest.cs \
 	fixtures/TagLib.Tests.Images/JpegOlympus1Test.cs \
 	fixtures/TagLib.Tests.Images/JpegOlympus2Test.cs \
 	fixtures/TagLib.Tests.Images/JpegOlympus3Test.cs \
