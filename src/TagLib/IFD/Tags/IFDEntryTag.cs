@@ -594,6 +594,16 @@ namespace TagLib.IFD.Tags
 		XMP                                                = 700,
 
 		/// <summary>
+		///     Rating tag used by Windows (Hex: 0x4746)
+		/// </summary>
+		Rating                                             = 18246,
+
+		/// <summary>
+		///     Rating tag used by Windows, value in percent (Hex: 0x4749)
+		/// </summary>
+		RatingPercent                                      = 18249,
+
+		/// <summary>
 		///     OPI-related. (Hex: 0x800D)
 		///     http://www.awaresystems.be/imaging/tiff/tifftags/imageid.html
 		/// </summary>
