@@ -121,6 +121,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/IFD/Tags/GPSEntryTag.cs \
 	$(srcdir)/TagLib/IFD/Tags/IFDEntryTag.cs \
 	$(srcdir)/TagLib/IFD/Tags/IOPEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/Nikon3MakerNoteEntryTag.cs \
 	$(srcdir)/TagLib/Mpeg4/AppleTag.cs \
 	$(srcdir)/TagLib/Mpeg4/Box.cs \
 	$(srcdir)/TagLib/Mpeg4/BoxFactory.cs \

@@ -23,6 +23,7 @@
 //
 
 using TagLib.IFD.Entries;
+using TagLib.IFD.Tags;
 
 namespace TagLib.IFD.Makernotes
 {
@@ -95,9 +96,8 @@ namespace TagLib.IFD.Makernotes
 		{
 			// SubIFD with Preview Image
 			// The entry itself is usually a long
-			if (tag == 0x0011) {
+			if (tag == (ushort) Nikon3MakerNoteEntryTag.Preview) {
 
-				// TODO: enum members
 				// TODO: handle JPEGInterchangeFormat and JPEGInterchangeFormatLength correctly
 
 				type = (ushort) IFDEntryType.IFD;
