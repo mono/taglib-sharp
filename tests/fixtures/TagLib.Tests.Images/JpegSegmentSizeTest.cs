@@ -96,7 +96,7 @@ namespace TagLib.Tests.Images
 		{
 			try {
 				file.Save ();
-			} catch (Exception e) {
+			} catch (Exception) {
 				return false;
 			}
 
