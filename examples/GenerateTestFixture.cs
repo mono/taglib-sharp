@@ -341,7 +341,7 @@ public class GenerateTestFixtureApp
 		Write ("ImageTest.Run (\"{0}\",", filename);
 		level++;
 		Write ("new {0}InvariantValidator (),", name);
-		Write ("new NoModificationValidator ()");
+		Write ("NoModificationValidator.Instance");
 		level--;
 		Write (");");
 		Write ("}");
