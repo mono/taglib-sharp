@@ -129,33 +129,37 @@ namespace TagLib.IFD
 #region Public Methods
 
 		/// <summary>
-		///    Reads IFDs beginning at the given offsets from a file.
+		///    Read all IFD segments from the file.
 		/// </summary>
 		public void Read ()
 		{
-			uint next_offset = ifd_offset;
-			do {
-				next_offset = ReadIFD (base_offset, next_offset, max_offset);
-			} while (next_offset > 0);
+			Read (-1);
 		}
 
 		/// <summary>
-		///    Tries to read at most the given number of IFDs from file. The methos is
-		///    usefull if next-ifd pointer should be ignored.
+		///    Read IFD segments from the file.
 		/// </summary>
+		/// <para>
+		///    The number of IFDs that may be read can be restricted using the count
+		///    parameter. This might be needed for fiels that have invalid next-ifd
+		///    pointers (such as some IFDs in the Nikon Makernote). This condition is
+		///    tested in the Nikon2 unit test, which contains such a file.
+		/// </para>
 		/// <param name="count">
-		///     A <see cref="System.UInt32"/> with the maximal number of IFDs to read
+		///     A <see cref="System.Int32"/> with the maximal number of IFDs to read.
+		///     Passing -1 means unlimited.
 		/// </param>
-		public void Read (uint count)
+		public void Read (int count)
 		{
+			if (count == 0)
+				return;
+
 			uint next_offset = ifd_offset;
+			int i = 0;
 
-			for (int i = 0; i < count; i++) {
+			do {
 				next_offset = ReadIFD (base_offset, next_offset, max_offset);
-
-				if (next_offset == 0)
-					return;
-			}
+			} while (next_offset > 0 && (count == -1 || ++i < count));
 		}
 
 #endregion
