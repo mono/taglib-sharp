@@ -1,11 +1,19 @@
+Version 2.0.3.5
+NOT YET RELEASED
+
+TagLib# bugs are now tracked at http://bugzilla.gnome.org.
+
+--------------------------------------------------------------------------------
+
 Version 2.0.3.4
-Not Yet Released
+January 26, 2010
 
 TagLib# bugs are now tracked at http://bugzilla.gnome.org.
 
 Get releases from http://download.banshee-project.org/taglib-sharp/
 
 Fixes and Features in this release include:
+  * Fix IndexOutOfRangeException (bgo#607376)
   * Fix issue with converting/parsing year (bgo#606283)
   * Support the 'alis' handler code/track type (bgo#584193)
 

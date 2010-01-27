@@ -1,3 +1,12 @@
+2010-01-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* configure.ac:
+	* NEWS: Bump to 2.0.3.5 in prep for next release
+
+2010-01-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* NEWS: Update for release
+
 2010-01-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/TagLib/Id3v2/Frames/CommentsFrame.cs:
