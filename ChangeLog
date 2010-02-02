@@ -1,3 +1,12 @@
+2010-02-01  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/TagLib/NonContainer/EndTag.cs:
+	* src/TagLib/NonContainer/StartTag.cs:
+	* tests/fixtures/TagLib.Tests.FileFormats/Id3BothFormatTest.cs: Patch and
+	unit tests from Helmut Wahrmann (with assistance from Alexander
+	Kojevnikov) fixing bug with removing some/all tag-types from a file (BGO
+	#574653)
+
 2010-01-26  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* configure.ac:

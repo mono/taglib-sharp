@@ -185,18 +185,11 @@ namespace TagLib.NonContainer {
 		/// </remarks>
 		public void RemoveTags (TagTypes types)
 		{
-			for (int i = Tags.Length - 1; i >= 0; i --) {
-				TagLib.Tag t = Tags [i];
-				
-				if ((types & TagTypes.Id3v2) != TagTypes.None &&
-					!(t is TagLib.Id3v2.Tag))
-					continue;
-				
-				if ((types & TagTypes.Ape) != TagTypes.None &&
-					!(t is TagLib.Ape.Tag))
-					continue;
-				
-				RemoveTag (t);
+			for (int i = Tags.Length - 1; i >= 0; i--) {
+				var tag = Tags[i];
+				if (types == TagTypes.AllTags || (tag.TagTypes & types) == tag.TagTypes) {
+					RemoveTag (tag);
+				}
 			}
 		}
 		

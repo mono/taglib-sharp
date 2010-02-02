@@ -69,5 +69,33 @@ namespace TagLib.Tests.FileFormats
         {
             StandardTests.TestCorruptionResistance ("samples/corrupt/a.mp3");
         }
+
+        [Test]
+        public void TestRemoveTags ()
+        {
+            const string file_name = @"samples/remove_tags.mp3";
+            ByteVector.UseBrokenLatin1Behavior = true;
+            var file = File.Create (file_name);
+            Assert.AreEqual (TagTypes.Id3v1 | TagTypes.Id3v2 | TagTypes.Ape, file.TagTypesOnDisk);
+
+            file.RemoveTags (TagTypes.Id3v1);
+            Assert.AreEqual (TagTypes.Id3v2 | TagTypes.Ape, file.TagTypes);
+
+            file = File.Create (file_name);
+            file.RemoveTags(TagTypes.Id3v2);
+            Assert.AreEqual (TagTypes.Id3v1 | TagTypes.Ape, file.TagTypes);
+
+            file = File.Create (file_name);
+            file.RemoveTags(TagTypes.Ape);
+            Assert.AreEqual (TagTypes.Id3v1 | TagTypes.Id3v2, file.TagTypes);
+
+            file = File.Create (file_name);
+            file.RemoveTags (TagTypes.Xiph);
+            Assert.AreEqual (TagTypes.Id3v1 | TagTypes.Id3v2 | TagTypes.Ape, file.TagTypes);
+
+            file = File.Create (file_name);
+            file.RemoveTags (TagTypes.AllTags);
+            Assert.AreEqual (TagTypes.None, file.TagTypes);
+        }
     }
 }
