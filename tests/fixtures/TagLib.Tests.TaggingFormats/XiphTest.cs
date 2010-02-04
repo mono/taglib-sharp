@@ -750,7 +750,32 @@ namespace TagLib.Tests.TaggingFormats
 				Assert.IsNull (t.MusicBrainzReleaseCountry, "Value Cleared (Null): " + m);
 			});
 		}
-		
+
+		[Test]
+		public void TestIsCompilation ()
+		{
+			var tag = new Ogg.XiphComment ();
+
+			TagTestWithSave (ref tag, delegate (Ogg.XiphComment t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsFalse (t.IsCompilation, "Initial (False): " + m);
+			});
+
+			tag.IsCompilation = true;
+
+			TagTestWithSave (ref tag, delegate (Ogg.XiphComment t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.IsTrue (t.IsCompilation, "Value Set (True): " + m);
+			});
+
+			tag.IsCompilation = false;
+
+			TagTestWithSave (ref tag, delegate (Ogg.XiphComment t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsFalse (t.IsCompilation, "Value Cleared (False): " + m);
+			});
+		}
+
 		[Test]
 		public void TestClear ()
 		{

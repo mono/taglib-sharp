@@ -1,3 +1,10 @@
+2010-02-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/TagLib/Ogg/XiphComment.cs:
+	* tests/fixtures/TagLib.Tests.TaggingFormats/XiphTest.cs: Patch and unit
+	tests from Alexander Kojevnikov adding support for COMPILATION to
+	Vorbis/XiphComments (eg for ogg and flac files) (BGO #586336)
+
 2010-02-01  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/TagLib/NonContainer/EndTag.cs:

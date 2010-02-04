@@ -1142,7 +1142,38 @@ namespace TagLib.Ogg
 				SetField ("COVERART", covers);
 			}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets whether or not the album described by the
+		///    current instance is a compilation.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value indicating whether or not the
+		///    album described by the current instance is a compilation.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "COMPILATION" field.
+		/// </remarks>
+		public bool IsCompilation {
+			get {
+				string text;
+				int value;
+
+				if ((text = GetFirstField ("COMPILATION")) !=
+					null && int.TryParse (text, out value)) {
+						return value == 1;
+				}
+				return false;
+			}
+			set {
+				if (value) {
+					SetField ("COMPILATION", "1");
+				} else {
+					RemoveField ("COMPILATION");
+				}
+			}
+		}
+
 		/// <summary>
 		///    Gets whether or not the current instance is empty.
 		/// </summary>
