@@ -104,6 +104,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/IFD/Entries/SShortIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/SRational.cs \
 	$(srcdir)/TagLib/IFD/Entries/StringIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/StripOffsetsIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/SubIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/ThumbnailDataIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/UserCommentIFDEntry.cs \

@@ -635,6 +635,38 @@ namespace TagLib.IFD
 					directory.Add (offset_tag, new ThumbnailDataIFDEntry (offset_tag, data));
 				}
 			}
+
+
+			// create a StripOffsetIFDEntry if necessary
+			ushort strip_offsets_tag = (ushort) IFDEntryTag.StripOffsets;
+			ushort strip_byte_counts_tag = (ushort) IFDEntryTag.StripByteCounts;
+			if (directory.ContainsKey (strip_offsets_tag) && directory.ContainsKey (strip_byte_counts_tag)) {
+
+				uint [] strip_offsets = null;
+				uint [] strip_byte_counts = null;
+
+				var strip_offsets_entry = directory [strip_offsets_tag];
+				var strip_byte_counts_entry = directory [strip_byte_counts_tag];
+
+				if (strip_offsets_entry is LongIFDEntry)
+					strip_offsets = new uint[] {(strip_offsets_entry as LongIFDEntry).Value};
+				else if (strip_offsets_entry is LongArrayIFDEntry)
+					strip_offsets = (strip_offsets_entry as LongArrayIFDEntry).Values;
+
+				if (strip_offsets == null)
+					return;
+
+				if (strip_byte_counts_entry is LongIFDEntry)
+					strip_byte_counts = new uint[] {(strip_byte_counts_entry as LongIFDEntry).Value};
+				else if (strip_byte_counts_entry is LongArrayIFDEntry)
+					strip_byte_counts = (strip_byte_counts_entry as LongArrayIFDEntry).Values;
+
+				if (strip_byte_counts == null)
+					return;
+
+				directory.Remove (strip_offsets_tag);
+				directory.Add (strip_offsets_tag, new StripOffsetsIFDEntry (strip_offsets_tag, strip_offsets, strip_byte_counts, file));
+			}
 		}
 
 		private IFDEntry ParseMakernote (ushort tag, ushort type, uint count, long base_offset, uint offset)

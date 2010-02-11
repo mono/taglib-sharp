@@ -172,13 +172,67 @@ namespace TagLib.Tiff
 		/// </summary>
 		public override void Save ()
 		{
-			throw new NotImplementedException ();
+			Mode = AccessMode.Write;
+			try {
+				WriteFile ();
+
+				TagTypesOnDisk = TagTypes;
+			} finally {
+				Mode = AccessMode.Closed;
+			}
 		}
 
 #endregion
 
 #region Private Methods
 
+		/// <summary>
+		///    Render the whole file and write it back.
+		/// </summary>
+		private void WriteFile ()
+		{
+			// Check, if IFD0 is contained
+			IFDTag exif = ImageTag.Exif;
+			if (exif == null)
+				throw new Exception ("Tiff file without tags");
+
+			UpdateTags (exif);
+
+			// first IFD starts at 8
+			uint first_ifd_offset = 8;
+
+			ByteVector data = new ByteVector ();
+
+			if (is_bigendian)
+				data.Add ("MM");
+			else
+				data.Add ("II");
+
+			data.Add (ByteVector.FromUShort (42, is_bigendian));
+			data.Add (ByteVector.FromUInt (first_ifd_offset, is_bigendian));
+
+			var renderer = new IFDRenderer (is_bigendian, exif.Structure, first_ifd_offset);
+
+			data.Add (renderer.Render ());
+
+			Insert (data, 0, Length);
+		}
+
+		/// <summary>
+		///    Update the XMP stored in the Tiff IFD
+		/// </summary>
+		/// <param name="exif">
+		///    A <see cref="IFDTag"/> The Tiff IFD to update the entries
+		/// </param>
+		private void UpdateTags (IFDTag exif)
+		{
+			// update the XMP entry
+			exif.Structure.RemoveTag (0, (ushort) IFDEntryTag.XMP);
+
+			XmpTag xmp = ImageTag.Xmp;
+			if (xmp != null)
+				exif.Structure.AddEntry (0, new ByteVectorIFDEntry ((ushort) IFDEntryTag.XMP, xmp.Render ()));
+		}
 
 		/// <summary>
 		///    Starts parsing the TIFF header of the file from beginning
@@ -256,14 +310,10 @@ namespace TagLib.Tiff
 			int width = 0, height = 0;
 
 			IFDTag tag = GetTag (TagTypes.TiffIFD) as IFDTag;
+			IFDStructure structure = tag.Structure;
 
-			IFDEntry width_entry = tag.Structure.GetEntry (0, (ushort) IFDEntryTag.ImageWidth);
-			if (width_entry != null)
-				width = (width_entry as ShortIFDEntry).Value;
-
-			IFDEntry height_entry = tag.Structure.GetEntry (0, (ushort) IFDEntryTag.ImageLength);
-			if (height_entry != null)
-				height = (height_entry as ShortIFDEntry).Value;
+			width = (int) (structure.GetLongValue (0, (ushort) IFDEntryTag.ImageWidth) ?? 0);
+			height = (int) (structure.GetLongValue (0, (ushort) IFDEntryTag.ImageLength) ?? 0);
 
 			if (width > 0 && height > 0) {
 				return new Properties (TimeSpan.Zero, new Codec (width, height));
