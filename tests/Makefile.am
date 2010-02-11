@@ -26,8 +26,11 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.FileFormats/StandardTests.cs \
 	fixtures/TagLib.Tests.FileFormats/TiffFormatTest.cs \
 	fixtures/TagLib.Tests.Images/AddImageMetadataTests.cs \
+	fixtures/TagLib.Tests.Images/JpegCanonBibble5Test.cs \
 	fixtures/TagLib.Tests.Images/JpegCanonZoombrowserTest.cs \
+	fixtures/TagLib.Tests.Images/JpegNikon1Bibble5Test.cs \
 	fixtures/TagLib.Tests.Images/JpegNikon1Test.cs \
+	fixtures/TagLib.Tests.Images/JpegNikon2Bibble5Test.cs \
 	fixtures/TagLib.Tests.Images/JpegNikon2Test.cs \
 	fixtures/TagLib.Tests.Images/JpegNikon3Test.cs \
 	fixtures/TagLib.Tests.Images/JpegNikon4Test.cs \
@@ -41,6 +44,19 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/JpegSony2Test.cs \
 	fixtures/TagLib.Tests.Images/JpegTangledTest.cs \
 	fixtures/TagLib.Tests.Images/RationalTest.cs \
+	fixtures/TagLib.Tests.Images/TiffCanonBibble516BitTest.cs \
+	fixtures/TagLib.Tests.Images/TiffCanonBibble58BitTest.cs \
+	fixtures/TagLib.Tests.Images/TiffCanonDpp16BitTest.cs \
+	fixtures/TagLib.Tests.Images/TiffCanonDpp8BitTest.cs \
+	fixtures/TagLib.Tests.Images/TiffGimp1Test.cs \
+	fixtures/TagLib.Tests.Images/TiffNikon1Bibble516BitTest.cs \
+	fixtures/TagLib.Tests.Images/TiffNikon1Bibble58BitTest.cs \
+	fixtures/TagLib.Tests.Images/TiffNikon1ViewNX16BitTest.cs \
+	fixtures/TagLib.Tests.Images/TiffNikon1ViewNX8BitTest.cs \
+	fixtures/TagLib.Tests.Images/TiffNikon2Bibble516BitTest.cs \
+	fixtures/TagLib.Tests.Images/TiffNikon2Bibble58BitTest.cs \
+	fixtures/TagLib.Tests.Images/TiffNikon2ViewNX16BitTest.cs \
+	fixtures/TagLib.Tests.Images/TiffNikon2ViewNX8BitTest.cs \
 	fixtures/TagLib.Tests.Images/TiffXmpTest.cs \
 	fixtures/TagLib.Tests.Images/Utils.cs \
 	fixtures/TagLib.Tests.Images/Validators/CommentModificationValidator.cs \
