@@ -9,6 +9,7 @@
 using GLib;
 using System;
 using System.Collections.Generic;
+using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Tags;
 using TagLib.Xmp;
@@ -73,6 +74,12 @@ public class GenerateTestFixtureApp
 				type = "SubIFD";
 			if (tag_label.Equals ("UserComment") && ifd.Equals ("Photo"))
 				type = "UserComment";
+			if (tag_label.Equals ("StripOffsets"))
+				type = "StripOffsets";
+			if (tag_label.Equals ("IPTCNAA"))
+				type = "IPTCNAA";
+			if (tag_label.Equals ("XMLPacket"))
+				type = "XMLPacket";
 
 			if (ifd.Equals ("MakerNote"))
 				continue; // Exiv2 makes these up.
@@ -114,6 +121,8 @@ public class GenerateTestFixtureApp
 				EmitTestIFDShortArrayEntry (val);
 			} else if (type.Equals ("SShort") && length == 1) {
 				EmitTestIFDSShortEntry (val);
+			} else if (type.Equals ("SShort") && length > 1) {
+				EmitTestIFDSShortArrayEntry (val);
 			} else if (type.Equals ("Rational") && length == 1) {
 				EmitTestIFDRationalEntry (val);
 			} else if (type.Equals ("Rational") && length > 1) {
@@ -140,8 +149,14 @@ public class GenerateTestFixtureApp
 				EmitTestIFDUserCommentIFDEntry (val);
 			} else if (type.Equals ("Undefined")) {
 				EmitTestIFDUndefinedEntry (val);
+			} else if (type.Equals ("StripOffsets")) {
+				EmitTestIFDStripOffsetsEntry (val);
+			} else if (type.Equals ("IPTCNAA")) {
+				EmitTestIFDIPTCNAAEntry (val);
+			} else if (type.Equals ("XMLPacket")) {
+				EmitTestIFDXMLPacketEntry (val);
 			} else {
-				throw new Exception ("Unknown type");
+				throw new Exception ("Unknown type: " + type);
 			}
 
 			EmitTestIFDEntryClose ();
@@ -264,6 +279,13 @@ public class GenerateTestFixtureApp
 			Write ("Assert.AreEqual (\"\", node.Value);");
 			Write ("Assert.AreEqual ({0}, node.Children.Count);", length);
 			Write ("Assert.AreEqual (\"{0}\", node.Children [0].Value);", val);
+		} else if (type.Equals ("XmpSeq") && length > 1) {
+			string [] vals = val.Split (',');
+			Write ("Assert.AreEqual (XmpNodeType.Seq, node.Type);");
+			Write ("Assert.AreEqual (\"\", node.Value);");
+			Write ("Assert.AreEqual ({0}, node.Children.Count);", length);
+			for (int i = 0; i < length; i++)
+				Write ("Assert.AreEqual (\"{0}\", node.Children [{1}].Value);", vals[i].Trim (), i);
 		} else if (type.Equals ("XmpText") && length == 0 && val.StartsWith ("type=")) {
 			if (val.Equals ("type=\"Bag\"")) {
 				Write ("Assert.AreEqual (XmpNodeType.Bag, node.Type);");
@@ -273,7 +295,7 @@ public class GenerateTestFixtureApp
 				throw new Exception ("Unknown type");
 			}
 		} else {
-			throw new Exception ("Can't test this");
+			throw new Exception (String.Format ("Can't test this (type: {0}, length: {1})", type, length));
 		}
 		Write ("}");
 	}
@@ -535,6 +557,13 @@ public class GenerateTestFixtureApp
 		Write ("Assert.AreEqual ({0}, (entry as ShortArrayIFDEntry).Values);", val);
 	}
 
+	static void EmitTestIFDSShortArrayEntry (string val)
+	{
+		val = String.Format ("new short [] {{ {0} }}", String.Join (", ", val.Split(' ')));
+		Write ("Assert.IsNotNull (entry as SShortArrayIFDEntry, \"Entry is not a signed short array!\");");
+		Write ("Assert.AreEqual ({0}, (entry as SShortArrayIFDEntry).Values);", val);
+	}
+
 	static void EmitTestIFDRationalEntry (string val)
 	{
 		Write ("Assert.IsNotNull (entry as RationalIFDEntry, \"Entry is not a rational!\");");
@@ -597,6 +626,16 @@ public class GenerateTestFixtureApp
 		Write ("Assert.AreEqual (bytes, parsed_bytes);");
 	}
 
+	static void EmitTestIFDIPTCNAAEntry (string val)
+	{
+		Write ("Assert.IsNotNull (entry as ByteVectorIFDEntry, \"Entry is not a byte array!\");");
+	}
+
+	static void EmitTestIFDXMLPacketEntry (string val)
+	{
+		Write ("Assert.IsNotNull (entry as ByteVectorIFDEntry, \"Entry is not a byte array!\");");
+	}
+
 	static void EmitTestIFDUndefinedEntry (string val)
 	{
 		Write ("Assert.IsNotNull (entry as UndefinedIFDEntry, \"Entry is not an undefined IFD entry!\");");
@@ -628,6 +667,16 @@ public class GenerateTestFixtureApp
 		Write ("Assert.AreEqual (\"{0}\", (entry as UserCommentIFDEntry).Value.Trim ());", val);
 	}
 
+	static void EmitTestIFDStripOffsetsEntry (string val)
+	{
+		// The offsets may change after writing. Therfore we cannot compare them directly.
+		string offset_count = String.Format ("{0}", val.Split(' ').Length);
+		//val = String.Format ("new long [] {{ {0} }}", String.Join (", ", val.Split(' ')));
+		Write ("Assert.IsNotNull (entry as StripOffsetsIFDEntry, \"Entry is not a strip offsets entry!\");");
+		//Write ("Assert.AreEqual ({0}, (entry as StripOffsetsIFDEntry).Values);", val);
+		Write ("Assert.AreEqual ({0}, (entry as StripOffsetsIFDEntry).Values.Length);", offset_count);
+	}
+
 	static void EmitTestIFDIndexedShortEntry (int index, string val)
 	{
 		Write ("Assert.IsNotNull (entry as ShortArrayIFDEntry, \"Entry is not a short array!\");");
@@ -636,6 +685,7 @@ public class GenerateTestFixtureApp
 		for (int i = 0; i < parts.Length; i++)
 			Write ("Assert.AreEqual ({0}, (entry as ShortArrayIFDEntry).Values [{1}]);", parts [i], index + i);
 	}
+
 #region IFD tag names lookup
 
 	static Dictionary<string, Dictionary<ushort, string>> tag_names = null;
@@ -670,6 +720,7 @@ public class GenerateTestFixtureApp
 		IndexTagType ("CanonSi", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
 		IndexTagType ("CanonCf", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
 		IndexTagType ("Nikon3", typeof (Nikon3MakerNoteEntryTag), "Nikon3MakerNoteEntryTag");
+		IndexTagType ("NikonPreview", typeof (NikonPreviewMakerNoteEntryTag), "NikonPreviewMakerNoteEntryTag");
 		IndexTagType ("Panasonic", typeof (PanasonicMakerNoteEntryTag), "PanasonicMakerNoteEntryTag");
 	}
 
