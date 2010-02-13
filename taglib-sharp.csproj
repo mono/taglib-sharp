@@ -7,7 +7,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4CC18776-125E-4318-9D24-D60110AD9697}</ProjectGuid>
-    <SignAssembly>True</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>taglib-sharp.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
@@ -22,6 +22,7 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
+    <ReleaseVersion>2.0.3.3</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -210,7 +211,6 @@
     <Compile Include="src\TagLib\IFD\Entries\UndefinedIFDEntry.cs" />
     <Compile Include="src\TagLib\IFD\IFDDirectory.cs" />
     <Compile Include="src\TagLib\IFD\IFDEntry.cs" />
-    <Compile Include="src\TagLib\IFD\IFDEntryTag.cs" />
     <Compile Include="src\TagLib\IFD\IFDEntryType.cs" />
     <Compile Include="src\TagLib\IFD\IFDReader.cs" />
     <Compile Include="src\TagLib\IFD\IFDRenderer.cs" />
@@ -235,23 +235,24 @@
     <Compile Include="src\TagLib\IFD\Entries\SShortArrayIFDEntry.cs" />
     <Compile Include="src\TagLib\IFD\Entries\SShortIFDEntry.cs" />
     <Compile Include="src\TagLib\Jpeg\Table.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\MakernoteIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\UserCommentIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Makernotes\Nikon3MakernoteReader.cs" />
+    <Compile Include="src\TagLib\IFD\Tags\CanonMakerNoteEntryTag.cs" />
+    <Compile Include="src\TagLib\IFD\Tags\ExifEntryTag.cs" />
+    <Compile Include="src\TagLib\IFD\Tags\GPSEntryTag.cs" />
+    <Compile Include="src\TagLib\IFD\Tags\IFDEntryTag.cs" />
+    <Compile Include="src\TagLib\IFD\Tags\IOPEntryTag.cs" />
+    <Compile Include="src\TagLib\IFD\Tags\Nikon3MakerNoteEntryTag.cs" />
+    <Compile Include="src\TagLib\IFD\Tags\PanasonicMakerNoteEntryTag.cs" />
+    <Compile Include="src\TagLib\Image\ImageOrientation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\" />
     <Folder Include="src\TagLib\" />
-    <Folder Include="src\TagLib\" />
-    <Folder Include="src\TagLib\" />
-    <Folder Include="src\TagLib\" />
-    <Folder Include="src\TagLib\" />
-    <Folder Include="src\TagLib\" />
     <Folder Include="src\TagLib\Id3v2\" />
-    <Folder Include="src\TagLib\" />
-    <Folder Include="src\TagLib\" />
-    <Folder Include="src\TagLib\" />
     <Folder Include="src\TagLib\Mpeg4\" />
-    <Folder Include="src\TagLib\" />
     <Folder Include="src\TagLib\Ogg\" />
-    <Folder Include="src\TagLib\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -264,7 +265,9 @@
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
-      <Properties InternalTargetFrameworkVersion="3.5" />
+      <Properties InternalTargetFrameworkVersion="3.5">
+        <Deployment.LinuxDeployData generatePcFile="false" />
+      </Properties>
     </MonoDevelop>
   </ProjectExtensions>
 </Project>

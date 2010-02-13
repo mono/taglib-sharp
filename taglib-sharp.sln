@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taglib-sharp", "src\taglib-sharp.csproj", "{6B143A39-C7B2-4743-9917-92262C60E9A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{E19B7237-4AB1-4700-AEAB-E52B301EC942}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetPictures", "examples\SetPictures.csproj", "{0C4645BE-7413-43FC-8856-1ECF1A790FF8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadFromUri", "examples\ReadFromUri.csproj", "{AB35577D-31CB-4848-AC41-13F00A5171A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{4D1C6110-D6F2-496E-BD7E-E45B7217D458}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,25 +11,27 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0C4645BE-7413-43FC-8856-1ECF1A790FF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C4645BE-7413-43FC-8856-1ECF1A790FF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C4645BE-7413-43FC-8856-1ECF1A790FF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C4645BE-7413-43FC-8856-1ECF1A790FF8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6B143A39-C7B2-4743-9917-92262C60E9A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B143A39-C7B2-4743-9917-92262C60E9A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6B143A39-C7B2-4743-9917-92262C60E9A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B143A39-C7B2-4743-9917-92262C60E9A6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AB35577D-31CB-4848-AC41-13F00A5171A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB35577D-31CB-4848-AC41-13F00A5171A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB35577D-31CB-4848-AC41-13F00A5171A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB35577D-31CB-4848-AC41-13F00A5171A6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E19B7237-4AB1-4700-AEAB-E52B301EC942}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E19B7237-4AB1-4700-AEAB-E52B301EC942}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E19B7237-4AB1-4700-AEAB-E52B301EC942}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E19B7237-4AB1-4700-AEAB-E52B301EC942}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CC18776-125E-4318-9D24-D60110AD9697}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CC18776-125E-4318-9D24-D60110AD9697}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CC18776-125E-4318-9D24-D60110AD9697}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CC18776-125E-4318-9D24-D60110AD9697}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D1C6110-D6F2-496E-BD7E-E45B7217D458}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D1C6110-D6F2-496E-BD7E-E45B7217D458}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D1C6110-D6F2-496E-BD7E-E45B7217D458}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D1C6110-D6F2-496E-BD7E-E45B7217D458}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = tests\tests.csproj
-		name = taglib-sharp
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.inheritsSet = null
+		$1.scope = application/x-mdp
+		$0.StandardHeader = $2
+		$2.inheritsSet = LGPLv2License
+		$0.DotNetNamingPolicy = $3
+		$3.DirectoryNamespaceAssociation = None
+		$3.ResourceNamePolicy = FileFormatDefault
+		version = 2.0.3.3
+		outputpath = build
 	EndGlobalSection
 EndGlobal

@@ -23,37 +23,37 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.FileFormats/M4aFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/MpcFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/OggFormatTest.cs \
-	fixtures/TagLib.Tests.FileFormats/TiffFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/StandardTests.cs \
+	fixtures/TagLib.Tests.FileFormats/TiffFormatTest.cs \
 	fixtures/TagLib.Tests.Images/AddImageMetadataTests.cs \
 	fixtures/TagLib.Tests.Images/JpegCanonZoombrowserTest.cs \
 	fixtures/TagLib.Tests.Images/JpegNikon1Test.cs \
 	fixtures/TagLib.Tests.Images/JpegNikon2Test.cs \
 	fixtures/TagLib.Tests.Images/JpegNikon3Test.cs \
 	fixtures/TagLib.Tests.Images/JpegNikon4Test.cs \
-	fixtures/TagLib.Tests.Images/JpegSony1Test.cs \
-	fixtures/TagLib.Tests.Images/JpegSony2Test.cs \
 	fixtures/TagLib.Tests.Images/JpegNoMetadataTest.cs \
 	fixtures/TagLib.Tests.Images/JpegOlympus1Test.cs \
 	fixtures/TagLib.Tests.Images/JpegOlympus2Test.cs \
 	fixtures/TagLib.Tests.Images/JpegOlympus3Test.cs \
 	fixtures/TagLib.Tests.Images/JpegPanasonicTest.cs \
 	fixtures/TagLib.Tests.Images/JpegSegmentSizeTest.cs \
+	fixtures/TagLib.Tests.Images/JpegSony1Test.cs \
+	fixtures/TagLib.Tests.Images/JpegSony2Test.cs \
 	fixtures/TagLib.Tests.Images/JpegTangledTest.cs \
 	fixtures/TagLib.Tests.Images/RationalTest.cs \
 	fixtures/TagLib.Tests.Images/TiffXmpTest.cs \
 	fixtures/TagLib.Tests.Images/Utils.cs \
-	fixtures/TagLib.Tests.Images/XapTest.cs \
-	fixtures/TagLib.Tests.Images/XmpCrashTest.cs \
-	fixtures/TagLib.Tests.Images/XmpSpecTest.cs \
+	fixtures/TagLib.Tests.Images/Validators/CommentModificationValidator.cs \
 	fixtures/TagLib.Tests.Images/Validators/ImageTest.cs \
 	fixtures/TagLib.Tests.Images/Validators/IMetadataInvariantValidator.cs \
 	fixtures/TagLib.Tests.Images/Validators/IMetadataModificationValidator.cs \
-	fixtures/TagLib.Tests.Images/Validators/CommentModificationValidator.cs \
 	fixtures/TagLib.Tests.Images/Validators/KeywordsModificationValidator.cs \
 	fixtures/TagLib.Tests.Images/Validators/NoModificationValidator.cs \
 	fixtures/TagLib.Tests.Images/Validators/TagCommentModificationValidator.cs \
 	fixtures/TagLib.Tests.Images/Validators/TagKeywordsModificationValidator.cs \
+	fixtures/TagLib.Tests.Images/XapTest.cs \
+	fixtures/TagLib.Tests.Images/XmpCrashTest.cs \
+	fixtures/TagLib.Tests.Images/XmpSpecTest.cs \
 	fixtures/TagLib.Tests.Performance/PerformanceTest.cs \
 	fixtures/TagLib.Tests.TaggingFormats/ApeTest.cs \
 	fixtures/TagLib.Tests.TaggingFormats/AsfTest.cs \
@@ -70,8 +70,10 @@ $(ASSEMBLY): $(ASSEMBLY_CSFILES)
 
 TAGLIB_ASM = ../src/taglib-sharp.dll
 
+build: $(ASSEMBLY) $(TAGLIB_ASM)
+
 if ENABLE_TESTS
-test: $(ASSEMBLY) $(TAGLIB_ASM)
+test: build
 	MONO_PATH="../src" COMPARE_LARGE_FILES="$(COMPARE_LARGE_FILES)" $(NUNIT_CMD) -noshadow $(ASSEMBLY)
 endif
 
