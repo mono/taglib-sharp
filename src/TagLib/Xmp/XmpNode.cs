@@ -27,6 +27,10 @@ using System.Xml;
 
 namespace TagLib.Xmp
 {
+	/// <summary>
+	///    An <see cref="XmpNode"/> represents a node in the XMP document.
+	///    This is any valid XMP element.
+	/// </summary>
 	public class XmpNode
 	{
 

@@ -739,7 +739,9 @@ namespace TagLib.Jpeg
 		/// </param>
 		bool ReadSOFSegment (int length, Marker marker)
 		{
+#pragma warning disable 219 // Assigned, never read
 			byte p = ReadBlock (1)[0];	//precision
+#pragma warning restore 219
 
 			//FIXME: according to specs, height could be 0 here, and should be retrieved from the DNL marker
 			height = ReadBlock (2).ToUShort ();

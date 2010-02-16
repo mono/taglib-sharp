@@ -7,7 +7,6 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4CC18776-125E-4318-9D24-D60110AD9697}</ProjectGuid>
-    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>taglib-sharp.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>

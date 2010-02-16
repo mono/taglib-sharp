@@ -185,9 +185,9 @@ namespace TagLib.Xmp
 			NameTable.Add (VALUE_URI);
 		}
 
-		public static Dictionary<string, string> NamespacePrefixes = new Dictionary<string, string>();
+		static Dictionary<string, string> NamespacePrefixes = new Dictionary<string, string>();
 
-		private static int anon_ns_count = 0;
+		static int anon_ns_count = 0;
 
 		static void AddNamespacePrefix (string prefix, string ns)
 		{
@@ -199,12 +199,22 @@ namespace TagLib.Xmp
 
 #region Constructors
 
+		/// <summary>
+		///    Construct a new empty <see cref="XmpTag"/>.
+		/// </summary>
 		public XmpTag ()
 		{
 			NodeTree = new XmpNode (String.Empty, String.Empty);
 			nodes = new Dictionary<string, Dictionary<string, XmpNode>> ();
 		}
 
+		/// <summary>
+		///    Construct a new <see cref="XmpTag"/>, using the data parsed from the given string.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="System.String"/> containing an XMP packet. This should be a valid
+		///    XMP block.
+		/// </param>
 		public XmpTag (string data)
 		{
 			XmlDocument doc = new XmlDocument (NameTable);
