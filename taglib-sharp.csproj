@@ -266,6 +266,15 @@
     <MonoDevelop>
       <Properties InternalTargetFrameworkVersion="3.5">
         <Deployment.LinuxDeployData generatePcFile="false" />
+        <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="src/Makefile.am" IsAutotoolsProject="true" RelativeConfigureInPath="..">
+          <BuildFilesVar />
+          <DeployFilesVar />
+          <ResourcesVar />
+          <OthersVar />
+          <GacRefVar />
+          <AsmRefVar />
+          <ProjectRefVar />
+        </MonoDevelop.Autotools.MakefileInfo>
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
