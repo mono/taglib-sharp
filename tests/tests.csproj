@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>tests</RootNamespace>
     <AssemblyName>tests</AssemblyName>
-    <ReleaseVersion>2.0.3.3</ReleaseVersion>
+    <ReleaseVersion>2.0.3.5</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -114,6 +114,7 @@
     <ProjectReference Include="..\taglib-sharp.csproj">
       <Project>{4CC18776-125E-4318-9D24-D60110AD9697}</Project>
       <Name>taglib-sharp</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
 </Project>

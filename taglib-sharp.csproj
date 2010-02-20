@@ -21,7 +21,8 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ReleaseVersion>2.0.3.3</ReleaseVersion>
+    <ReleaseVersion>2.0.3.5</ReleaseVersion>
+    <BaseDirectory>src</BaseDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -266,7 +267,7 @@
     <MonoDevelop>
       <Properties InternalTargetFrameworkVersion="3.5">
         <Deployment.LinuxDeployData generatePcFile="false" />
-        <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="src/Makefile.am" IsAutotoolsProject="true" RelativeConfigureInPath="..">
+        <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile.am" IsAutotoolsProject="true" RelativeConfigureInPath="..">
           <BuildFilesVar />
           <DeployFilesVar />
           <ResourcesVar />

@@ -31,7 +31,7 @@ Global
 		$0.DotNetNamingPolicy = $3
 		$3.DirectoryNamespaceAssociation = None
 		$3.ResourceNamePolicy = FileFormatDefault
-		version = 2.0.3.3
+		version = 2.0.3.5
 		outputpath = build
 	EndGlobalSection
 EndGlobal
