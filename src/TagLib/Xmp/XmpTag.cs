@@ -185,7 +185,10 @@ namespace TagLib.Xmp
 			NameTable.Add (VALUE_URI);
 		}
 
-		static Dictionary<string, string> NamespacePrefixes = new Dictionary<string, string>();
+		/// <summary>
+		///    Mapping between full namespaces and their short prefix. Needs to be public for the unit test generator.
+		/// </summary>
+		public static Dictionary<string, string> NamespacePrefixes = new Dictionary<string, string>();
 
 		static int anon_ns_count = 0;
 
