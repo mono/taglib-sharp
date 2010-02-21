@@ -275,6 +275,35 @@ namespace TagLib {
 		}
 		
 		/// <summary>
+		///    Gets the number of bits per sample in the audio
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="int" /> value containing the number of bits
+		///    per sample in the audio represented by the current
+		///    instance.
+		/// </value>
+		/// <remarks>
+		///    This value is equal to the first non-zero quantization.
+		/// </remarks>
+		public int BitsPerSample {
+			get {
+				foreach (ICodec codec in codecs) {
+					if (codec == null ||
+						(codec.MediaTypes & MediaTypes.Audio) == 0)
+						continue;
+
+					ILosslessAudioCodec lossless = codec as ILosslessAudioCodec;
+
+					if (lossless != null && lossless.BitsPerSample != 0)
+						return lossless.BitsPerSample;
+				}
+
+				return 0;
+			}
+		}
+
+		/// <summary>
 		///    Gets the number of channels in the audio represented by
 		///    the current instance.
 		/// </summary>

@@ -67,7 +67,7 @@ namespace TagLib.Ape {
 	///    This struct implements <see cref="IAudioCodec" /> to provide
 	///    support for reading Monkey's Audio APE stream properties.
 	/// </summary>
-	public struct StreamHeader : IAudioCodec
+	public struct StreamHeader : IAudioCodec, ILosslessAudioCodec
 	{
 		#region Private Fields
 		

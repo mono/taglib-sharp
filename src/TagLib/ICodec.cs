@@ -136,7 +136,25 @@ namespace TagLib {
 		/// </value>
 		int AudioChannels {get;}
 	}
-	
+
+	/// <summary>
+	///    This interface provides information specific
+	///    to lossless audio codecs.
+	/// </summary>
+	public interface ILosslessAudioCodec
+	{
+		/// <summary>
+		///    Gets the number of bits per sample in the audio
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="int" /> value containing the number of bits
+		///    per sample in the audio represented by the current
+		///    instance.
+		/// </value>
+		int BitsPerSample {get;}
+	}
+
 	/// <summary>
 	///    This interface inherits <see cref="ICodec" /> to provide
 	///    information about a video codec.

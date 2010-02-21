@@ -34,7 +34,7 @@ namespace TagLib.Flac
 	///    This structure implements <see cref="IAudioCodec" /> and provides
 	///    information about a Flac audio stream.
 	/// </summary>
-	public struct StreamHeader : IAudioCodec
+	public struct StreamHeader : IAudioCodec, ILosslessAudioCodec
 	{
 #region Private Properties
 		
@@ -177,10 +177,24 @@ namespace TagLib.Flac
 		///    A <see cref="int" /> value containing the sample width of
 		///    the audio represented by the current instance.
 		/// </value>
+		[Obsolete ("This property is depreciated, use BitsPerSample instead")]
 		public int AudioSampleWidth {
+			get {return BitsPerSample;}
+		}
+
+		/// <summary>
+		///    Gets the number of bits per sample in the audio
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="int" /> value containing the number of bits
+		///    per sample in the audio represented by the current
+		///    instance.
+		/// </value>
+		public int BitsPerSample {
 			get {return (int) (((flags >> 4) & 31) + 1);}
 		}
-		
+
 		/// <summary>
 		///    Gets a text description of the media represented by the
 		///    current instance.

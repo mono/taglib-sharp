@@ -31,7 +31,7 @@ namespace TagLib.Aiff
 	///    This struct implements <see cref="IAudioCodec" /> to provide
 	///    support for reading Apple's AIFF stream properties.
 	/// </summary>
-	public struct StreamHeader : IAudioCodec
+	public struct StreamHeader : IAudioCodec, ILosslessAudioCodec
 	{
 		#region Private Fields
 

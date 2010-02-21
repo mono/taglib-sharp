@@ -1,3 +1,14 @@
+2010-02-21  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/TagLib/Riff/WaveFormatEx.cs:
+	* src/TagLib/ICodec.cs:
+	* src/TagLib/Properties.cs:
+	* src/TagLib/Flac/StreamHeader.cs:
+	* src/TagLib/Ape/StreamHeader.cs:
+	* src/TagLib/Aiff/StreamHeader.cs:
+	* src/TagLib/WavPack/StreamHeader.cs: Patch from Alexander Kojevnikov
+	adding BitsPerSample property to TagLib.Properties (BGO #610585)
+
 2010-02-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/TagLib/Ogg/XiphComment.cs:
