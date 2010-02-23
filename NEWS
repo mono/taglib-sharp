@@ -1,7 +1,15 @@
 Version 2.0.3.5
-NOT YET RELEASED
+February 23, 2010
 
 TagLib# bugs are now tracked at http://bugzilla.gnome.org.
+
+Fixes and Features in this release include:
+  * Add BitsPerSample property (bgo#610585)
+  * Support COMPILATION in ogg (bgo#586336)
+  * Fix removing some/all tag-types (bgo#574653)
+
+Contributors to this release:
+  Alexander Kojevnikov, Helmut Wahrmann
 
 --------------------------------------------------------------------------------
 
