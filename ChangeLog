@@ -1,5 +1,10 @@
 2010-02-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* configure.ac:
+	* NEWS: Update for 2.0.3.6 release
+
+2010-02-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/TagLib/Riff/WaveFormatEx.cs: Fix API break in 2.0.3.5.
 
 2010-02-23  Gabriel Burt  <gabriel.burt@gmail.com>
