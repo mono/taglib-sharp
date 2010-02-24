@@ -174,13 +174,19 @@ namespace TagLib.Riff {
 		///    A <see cref="ushort" /> value containing the bits per
 		///    sample of the audio.
 		/// </returns>
-		public int BitsPerSample {
+		public ushort BitsPerSample {
 			get {return bits_per_sample;}
 		}
 		
 #endregion
+
+#region ILosslessAudioCodec
 		
+		int ILosslessAudioCodec.BitsPerSample {
+			get {return bits_per_sample;}
+		}
 		
+#endregion
 		
 #region IAudioCodec
 		
