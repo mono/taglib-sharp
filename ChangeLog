@@ -1,3 +1,17 @@
+2010-03-02  Andrés G. Aragoneses  <knocte@gmail.com>
+
+	* tests/tests.mdp:
+	* taglib-sharp.mds:
+	* taglib-sharp.sln:
+	* tests/tests.csproj:
+	* src/taglib-sharp.mdp:
+	* src/taglib-sharp.csproj:
+	* examples/ReadFromUri.mdp:
+	* examples/SetPictures.mdp:
+	* examples/ReadFromUri.csproj:
+	* examples/SetPictures.csproj: Projects/solution format migration,
+	deleting deprecated MD1.0 format.
+
 2010-02-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* configure.ac:
