@@ -72,16 +72,6 @@ namespace TagLib.Aac
 		private int audiobitrate;
 
 		/// <summary>
-		///    Contains the number of frames in the audio stream
-		/// </summary>
-		private int audionumberofframes;
-
-		/// <summary>
-		///    Contains the number of samples in the audio stream
-		/// </summary>
-		private int audionumberofsamples;
-
-		/// <summary>
 		///    Contains the samplerate of the audio stream
 		/// </summary>
 		private int audiosamplerate;
@@ -115,8 +105,6 @@ namespace TagLib.Aac
 			this.audiochannels = 0;
 			this.audiobitrate = 0;
 			this.audiosamplerate = 0;
-			this.audionumberofsamples = 0;
-			this.audionumberofframes = 0;
 		}
 
 		/// <summary>
@@ -152,8 +140,6 @@ namespace TagLib.Aac
 			this.audiochannels = channels;
 			this.audiobitrate = bitrate;
 			this.audiosamplerate = samplerate;
-			this.audionumberofsamples = numberofsamples;
-			this.audionumberofframes = numberofframes;
 		}
 
 		#endregion
@@ -346,19 +332,19 @@ namespace TagLib.Aac
 							BitStream bits = new BitStream(buffer.Mid(i, 7).Data);
 
 							// 12 bits sync header 
-							int sync = bits.ReadInt32(12);
+							bits.ReadInt32(12);
 
 							// 1 bit mpeg 2/4
-							int id = bits.ReadInt32(1);
+							bits.ReadInt32(1);
 
 							// 2 bits layer
-							int layer = bits.ReadInt32(2);
+							bits.ReadInt32(2);
 
 							// 1 bit protection absent  
-							int protectionabsent = bits.ReadInt32(1);
+							bits.ReadInt32(1);
 						  
 							// 2 bits profile object type
-							int pot = bits.ReadInt32(2);
+							bits.ReadInt32(2);
 
 							// 4 bits sampling frequency index                            
 							int samplerateindex = bits.ReadInt32(4);
@@ -375,7 +361,7 @@ namespace TagLib.Aac
 								return false;                            
 
 							// 4 copyright bits
-							int copyrights = bits.ReadInt32(4);
+							bits.ReadInt32(4);
 
 							// 13 bits frame length
 							long framelength = bits.ReadInt32(13); // double check framelength
@@ -383,7 +369,7 @@ namespace TagLib.Aac
 								return false;
 
 							// 11 bits buffer fullness
-							int bufferfullness = bits.ReadInt32(11);
+							bits.ReadInt32(11);
 
 							// 2 bits number of raw data blocks in frame
 							int numberofframes = bits.ReadInt32(2) + 1;

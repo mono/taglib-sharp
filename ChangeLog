@@ -1,5 +1,10 @@
 2010-03-02  Andrés G. Aragoneses  <knocte@gmail.com>
 
+	* src/TagLib/Aac/AudioHeader.cs: Fix all warnings not related
+	to XML documentation.
+
+2010-03-02  Andrés G. Aragoneses  <knocte@gmail.com>
+
 	* tests/tests.mdp:
 	* taglib-sharp.mds:
 	* taglib-sharp.sln:
