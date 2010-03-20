@@ -1,3 +1,8 @@
+2010-03-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* configure.ac:
+	* NEWS: Update for 2.0.3.7 release
+
 2010-03-20  Alexander Kojevnikov <alexander@kojevnikov.com>
 
 	* configure.ac:

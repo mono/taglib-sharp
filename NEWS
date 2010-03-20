@@ -1,3 +1,23 @@
+Version 2.0.3.7
+March 20, 2010
+
+TagLib# bugs are now tracked at http://bugzilla.gnome.org.
+
+Fixes and Features in this release include:
+  * Solution/projects migrated to VS format
+  * Fix ID3v2 unsyncing (bgo#593138)
+  * Fix ID3v2.3 exetended header size calculation (bgo#604488)
+  * Make TagLib.File IDisposable (closes any open streams)
+  * Don't throw an exception if RVA2 data is partially incorrect
+  * Fall back to nunit-console is nunit-console2 not found (bgo#593673)
+  * Add build check for `al` tool (bgo#575303)
+
+Contributors to this release:
+  Alexander Kojevnikov, Andrés G. Aragoneses, Bertrand Lorentz,
+  Eamon Nerbonne, Ruben Vermeersch
+
+--------------------------------------------------------------------------------
+
 Version 2.0.3.6
 February 24, 2010
 

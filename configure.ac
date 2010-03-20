@@ -1,4 +1,4 @@
-AC_INIT([taglib-sharp], [2.0.3.6])
+AC_INIT([taglib-sharp], [2.0.3.7])
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar])
 AM_MAINTAINER_MODE
 
