@@ -5,14 +5,23 @@ metadata in media files.  It is API stable, with only API additions
  * Bugs:     http://bugzilla.gnome.org/browse.cgi?product=taglib-sharp
  * Tarballs: http://download.banshee-project.org/taglib-sharp/
  * IRC:      Several TagLib# developers are often in #banshee on irc.gnome.org
+ * Svn:      svn://anonsvn.mono-project.com/source/trunk/taglib-sharp
+             http://anonsvn.mono-project.com/viewvc/trunk/taglib-sharp/
 
 TagLib# is free/open source software, released under the LGPL.
 We welcome contributions!  Please try to match our coding style,
 and include unit tests with any patches.  Patches can be submitted
 by filing a bug and attaching the diff to it.
 
-To Build:
+To Build From Subversion:
+svn co svn://anonsvn.mono-project.com/source/trunk/taglib-sharp
+cd taglib-sharp
 ./autogen.sh && make
+
+To Build From Tarball:
+./configure && make
+
+You can also build from MonoDevelop or Visual Studio using taglib-sharp.sln
 
 To Test:
 make test
