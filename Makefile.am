@@ -12,7 +12,7 @@ EXTRA_DIST =             \
    $(pkgconfig_in_files) \
    taglib-sharp.snk \
    taglib-sharp.csproj \
-   taglib-sharp.mds
+   taglib-sharp.sln
 
 DISTCLEANFILES = taglib-sharp.pc
 
