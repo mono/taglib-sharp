@@ -484,8 +484,7 @@ namespace TagLib.Id3v2 {
 				int bytes = BitsToBytes (data [pos++]);
 				
 				if (data.Count < pos + bytes)
-					throw new CorruptFileException (
-						"Insufficient peak data.");
+					break;
 				
 				channels [type].PeakVolumeIndex = data.Mid (pos,
 					bytes).ToULong ();

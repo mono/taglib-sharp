@@ -1207,7 +1207,18 @@ namespace TagLib.Tests.TaggingFormats
 			
 			}}}}}}}}}
 		}
-		
+
+		[Test]
+		public void TestRelativeVolumeFrameWithBrokenPeakVolume ()
+		{
+			// RVA2 data found in the wild
+			var data = new byte[] { 82, 86, 65, 50, 0, 0, 0, 12, 0, 0, 97, 108, 98, 117, 109, 0, 1, 255, 0, 200, 15, 116 };
+			var frame = new RelativeVolumeFrame (data, 4);
+			Assert.AreEqual ("album", frame.Identification);
+			Assert.AreEqual (-256, frame.GetVolumeAdjustmentIndex (ChannelType.MasterVolume));
+			Assert.AreEqual (0, frame.GetPeakVolumeIndex (ChannelType.MasterVolume));
+		}
+
 		[Test]
 		public void TestSynchronisedLyricsFrame ()
 		{

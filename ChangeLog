@@ -1,5 +1,11 @@
 2010-03-20  Alexander Kojevnikov <alexander@kojevnikov.com>
 
+	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
+	* tests/fixtures/TagLib.Tests.TaggingFormats/Id3V2Test.cs:
+	Don't throw an exception if RVA2 data is partially incorrect
+
+2010-03-20  Alexander Kojevnikov <alexander@kojevnikov.com>
+
 	* Makefile.am:
 	* src/Makefile.am: Fix `make distcheck`
 
