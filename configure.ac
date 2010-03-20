@@ -91,7 +91,7 @@ AM_CONDITIONAL(ENABLE_TESTS, test "x$do_tests" = "xyes")
 if test "x$do_tests" = "xno"; then
 	AC_MSG_WARN([Could not find mono-nunit: tests will not be available.])
 else
-	AC_PATH_PROG(NUNIT_CMD, nunit-console2, no)
+	AC_PATH_PROG(NUNIT_CMD, nunit-console2, nunit-console)
 	AC_SUBST(NUNIT_CMD)
 fi
 

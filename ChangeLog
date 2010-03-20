@@ -1,5 +1,10 @@
 2010-03-20  Alexander Kojevnikov <alexander@kojevnikov.com>
 
+	* configure.ac: Patch from Ruben Vermeersch adding a fall back
+	to nunit-console if nunit-console2 is not found (bgo#593673)
+
+2010-03-20  Alexander Kojevnikov <alexander@kojevnikov.com>
+
 	* src/TagLib/Id3v2/Frames/RelativeVolumeFrame.cs:
 	* tests/fixtures/TagLib.Tests.TaggingFormats/Id3V2Test.cs:
 	Don't throw an exception if RVA2 data is partially incorrect
