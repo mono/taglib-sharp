@@ -1,5 +1,14 @@
 2010-03-20  Alexander Kojevnikov <alexander@kojevnikov.com>
 
+	* src:
+	* docs:
+	* tests:
+	* tests/samples:
+	* .gitignore:
+	* examples: Add svn:ignore and .gitignore
+
+2010-03-20  Alexander Kojevnikov <alexander@kojevnikov.com>
+
 	* src/TagLib/Id3v2/Tag.cs:
 	* tests/Makefile.am:
 	* tests/fixtures/TagLib.Tests.FileFormats/Id3V24FormatTest.cs:
