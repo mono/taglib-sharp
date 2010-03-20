@@ -557,7 +557,9 @@ namespace TagLib.Id3v2 {
 			
 			bool has_footer = (header.Flags &
 				HeaderFlags.FooterPresent) != 0;
-			
+			bool unsynchAtFrameLevel = (header.Flags & HeaderFlags.Unsynchronisation) != 0 && Version >= 4;
+			bool unsynchAtTagLevel = (header.Flags & HeaderFlags.Unsynchronisation) != 0 && Version < 4;
+
 			header.MajorVersion = has_footer ? (byte) 4 : Version;
 			
 			ByteVector tag_data = new ByteVector ();
@@ -568,6 +570,9 @@ namespace TagLib.Id3v2 {
 			// Loop through the frames rendering them and adding
 			// them to the tag_data.
 			foreach (Frame frame in frame_list) {
+				if (unsynchAtFrameLevel)
+					frame.Flags |= FrameFlags.Unsynchronisation;
+
 				if ((frame.Flags &
 					FrameFlags.TagAlterPreservation) != 0)
 					continue;
@@ -580,7 +585,7 @@ namespace TagLib.Id3v2 {
 			}
 			
 			// Add unsyncronization bytes if necessary.
-			if ((header.Flags & HeaderFlags.Unsynchronisation) != 0)
+			if (unsynchAtTagLevel)
 				SynchData.UnsynchByteVector (tag_data);
 			
 			// Compute the amount of padding, and append that to
@@ -829,10 +834,10 @@ namespace TagLib.Id3v2 {
 			if (data == null)
 				throw new ArgumentNullException ("data");
 
-			// If the entire tag is marked as unsynchronized,
-			// resynchronize it.
-			
-			if ((header.Flags & HeaderFlags.Unsynchronisation) != 0)
+			// If the entire tag is marked as unsynchronized, and this tag
+			// is version id3v2.3 or lower, resynchronize it.
+			bool fullTagUnsynch =  (header.MajorVersion < 4) && ((header.Flags & HeaderFlags.Unsynchronisation) != 0);
+			if (fullTagUnsynch)
 				SynchData.ResynchByteVector (data);
 			
 			int frame_data_position = 0;
@@ -875,7 +880,7 @@ namespace TagLib.Id3v2 {
 					frame = FrameFactory.CreateFrame (data,
 						ref frame_data_position,
 						header.MajorVersion,
-                        (header.Flags & HeaderFlags.Unsynchronisation) != 0);
+						fullTagUnsynch);
 				} catch (NotImplementedException) {
 					continue;
 				}

@@ -1,3 +1,12 @@
+2010-03-20  Alexander Kojevnikov <alexander@kojevnikov.com>
+
+	* src/TagLib/Id3v2/Tag.cs:
+	* tests/Makefile.am:
+	* tests/fixtures/TagLib.Tests.FileFormats/Id3V24FormatTest.cs:
+	* tests/samples/sample_v2_4_unsynch.mp3:
+	* tests/tests.csproj: Patch and unit tests from Eamon Nerbonne
+	fixing ID3v2 unsyncing (bgo#593138)
+	
 2010-03-02  Andrés G. Aragoneses  <knocte@gmail.com>
 
 	* src/TagLib/Aac/AudioHeader.cs: Fix all warnings not related
