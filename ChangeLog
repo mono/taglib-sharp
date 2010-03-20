@@ -1,5 +1,11 @@
 2010-03-20  Alexander Kojevnikov <alexander@kojevnikov.com>
 
+	* configure.ac:
+	* src/Makefile.am: Patch from Bertrand Lorentz adding a check
+	for the `al` tool (bgo#575303)
+
+2010-03-20  Alexander Kojevnikov <alexander@kojevnikov.com>
+
 	* configure.ac: Patch from Ruben Vermeersch adding a fall back
 	to nunit-console if nunit-console2 is not found (bgo#593673)
 

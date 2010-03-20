@@ -28,7 +28,7 @@ $(ASSEMBLY): $(TAGLIB_CSFILES) $(taglib_generated_sources) taglib-sharp.snk
 	$(CSC) /target:library $(LIBFLAGS) $(DOCFLAGS) /define:SIGN /out:$@ $(TAGLIB_CSFILES) $(taglib_generated_sources)
 
 policy.%.$(ASSEMBLY_NAME).dll: policy.%.$(ASSEMBLY_NAME).config
-	$(AL) al /link:$< /out:$@ /keyfile:taglib-sharp.snk
+	$(AL) /link:$< /out:$@ /keyfile:taglib-sharp.snk
 
 all: $(ASSEMBLY) $(POLICIES)
 

@@ -43,6 +43,11 @@ fi
 AC_SUBST(MCS_FLAGS)
 AC_SUBST(MONO_FLAGS)
 
+AC_PATH_PROG(AL, al)
+if test "x$AL" = "x"; then
+	AC_MSG_ERROR([No al tool found. You need to install mono])
+fi
+
 dnl GAC
 AC_PATH_PROG(GACUTIL, gacutil)
 if test x$GACUTIL = x; then
