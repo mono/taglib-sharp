@@ -290,7 +290,10 @@ public class GenerateTestFixtureApp
 			if (val.Equals ("type=\"Bag\"")) {
 				Write ("Assert.AreEqual (XmpNodeType.Bag, node.Type);");
 			} else if (val.Equals ("type=\"Struct\"")) {
-				Write ("Assert.AreEqual (XmpNodeType.Struct, node.Type);");
+				// We disagree with exiv2 on the meaning of Struct. In Taglib#,
+				// struct is meant to denote parseType=Resource types only, not
+				// the shorthand equivalent. Also see XmpNode.RenderInto()
+				//Write ("Assert.AreEqual (XmpNodeType.Struct, node.Type);");
 			} else {
 				throw new Exception ("Unknown type");
 			}

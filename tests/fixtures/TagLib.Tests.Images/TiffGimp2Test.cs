@@ -433,7 +433,7 @@ namespace TagLib.Tests.Images
 				var node = xmp.NodeTree;
 				node = node.GetChild (XmpTag.EXIF_NS, "Flash");
 				Assert.IsNotNull (node);
-				Assert.AreEqual (XmpNodeType.Struct, node.Type);
+				Assert.AreEqual (XmpNodeType.Simple, node.Type);
 			}
 			// Xmp.exif.Flash/exif:Fired (XmpText/5) "False"
 			{
