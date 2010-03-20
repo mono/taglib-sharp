@@ -72,7 +72,7 @@ namespace TagLib {
 	///    variants, as it automatically detects the appropriate class from
 	///    the file extension or provided mime-type.</para>
 	/// </remarks>
-	public abstract class File
+	public abstract class File : IDisposable
 	{
 		#region Enums
 		
@@ -446,6 +446,11 @@ namespace TagLib {
 		
 		
 		#region Public Methods
+
+		public void Dispose ()
+		{
+			Mode = AccessMode.Closed;
+		}
 		
 		/// <summary>
 		///    Saves the changes made in the current instance to the
