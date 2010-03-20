@@ -10,6 +10,7 @@ namespace TagLib.Tests.FileFormats
         private static string sample_file = "samples/sample_v2_only.mp3";
         private static string corrupt_file = "samples/corrupt/null_title_v2.mp3";
         private static string tmp_file = "samples/tmpwrite_v2_only.mp3";
+        private static string ext_header_file = "samples/sample_v2_3_ext_header.mp3";
         private File file;
         
         [TestFixtureSetUp]
@@ -60,6 +61,14 @@ namespace TagLib.Tests.FileFormats
         [Test]
         public void TestCorruptionResistance()
         {
+        }
+
+        [Test]
+        public void TestExtendedHeaderSize()
+        {
+            // bgo#604488
+            var file = File.Create (ext_header_file);
+            Assert.AreEqual ("Title v2", file.Tag.Title);
         }
     }
 }

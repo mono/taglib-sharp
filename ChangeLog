@@ -1,5 +1,12 @@
 2010-03-20  Alexander Kojevnikov <alexander@kojevnikov.com>
 
+	* src/TagLib/Id3v2/ExtendedHeader.cs:
+	* tests/fixtures/TagLib.Tests.FileFormats/Id3V2FormatTest.cs:
+	* tests/samples/sample_v2_3_ext_header.mp3: Fix ID3v2.3 extended
+	header size calculation (bgo#604488)
+
+2010-03-20  Alexander Kojevnikov <alexander@kojevnikov.com>
+
 	* src:
 	* docs:
 	* tests:

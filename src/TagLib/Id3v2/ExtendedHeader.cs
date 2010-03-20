@@ -93,7 +93,7 @@ namespace TagLib.Id3v2
 			if (data == null)
 				throw new ArgumentNullException ("data");
 			
-			size = SynchData.ToUInt (data.Mid (0, 4));
+			size = (version == 3 ? 4u : 0u) + SynchData.ToUInt (data.Mid (0, 4));
 		}
 		
 #region ICloneable
