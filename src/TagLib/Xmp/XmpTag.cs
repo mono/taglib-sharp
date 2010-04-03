@@ -58,6 +58,11 @@ namespace TagLib.Xmp
 		public static readonly string EXIF_NS = "http://ns.adobe.com/exif/1.0/";
 
 		/// <summary>
+		///    Exif aux namespace
+		/// </summary>
+		public static readonly string EXIF_AUX_NS = "http://ns.adobe.com/exif/1.0/aux/";
+
+		/// <summary>
 		///    JOB namespace
 		/// </summary>
 		public static readonly string JOB_NS = "http://ns.adobe.com/xap/1.0/sType/Job#";
@@ -151,6 +156,7 @@ namespace TagLib.Xmp
 			AddNamespacePrefix ("crs", CRS_NS);
 			AddNamespacePrefix ("dc", DC_NS);
 			AddNamespacePrefix ("exif", EXIF_NS);
+			AddNamespacePrefix ("aux", EXIF_AUX_NS);
 			AddNamespacePrefix ("stJob", JOB_NS);
 			AddNamespacePrefix ("MicrosoftPhoto", MS_PHOTO_NS);
 			AddNamespacePrefix ("photoshop", PHOTOSHOP_NS);
