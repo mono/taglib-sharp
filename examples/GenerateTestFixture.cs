@@ -284,8 +284,14 @@ public class GenerateTestFixtureApp
 			Write ("Assert.AreEqual (XmpNodeType.Seq, node.Type);");
 			Write ("Assert.AreEqual (\"\", node.Value);");
 			Write ("Assert.AreEqual ({0}, node.Children.Count);", length);
-			for (int i = 0; i < length; i++)
-				Write ("Assert.AreEqual (\"{0}\", node.Children [{1}].Value);", vals[i].Trim (), i);
+			var per_iter = vals.Length / length;
+			for (int i = 0; i < length; i++) {
+				var builder = new List<string> ();
+				for (int j = 0; j < per_iter; j++) {
+					builder.Add (vals[per_iter*i + j].Trim ());
+				}
+				Write ("Assert.AreEqual (\"{0}\", node.Children [{1}].Value);", String.Join (", ", builder.ToArray ()), i);
+			}
 		} else if (type.Equals ("XmpText") && length == 0 && val.StartsWith ("type=")) {
 			if (val.Equals ("type=\"Bag\"")) {
 				Write ("Assert.AreEqual (XmpNodeType.Bag, node.Type);");
