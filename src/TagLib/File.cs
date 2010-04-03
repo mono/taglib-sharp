@@ -447,6 +447,10 @@ namespace TagLib {
 		
 		#region Public Methods
 
+		/// <summary>
+		///    Dispose the current file. Equivalent to setting the
+		///    mode to closed
+		/// </summary>
 		public void Dispose ()
 		{
 			Mode = AccessMode.Closed;
