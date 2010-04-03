@@ -28,12 +28,7 @@ using System.IO;
 namespace TagLib.IFD.Entries
 {
 	/// <summary>
-	///    Contains the data of a Thumbnail. Since the thumbnail is
-	///    referenced by two long entries (offset to the data and length)
-	///    we need to take care of this special case.
-	///    This entry acts as the offset-entry but holds also the
-	///    thumbail data. When rendering the entry, we have to render the
-	///    data but write a long entry.
+	///    Contains the offsets to the image data strips.
 	/// </summary>
 	public class StripOffsetsIFDEntry : ArrayIFDEntry<uint>
 	{
@@ -52,19 +47,10 @@ namespace TagLib.IFD.Entries
 
 #endregion
 
-#region Properties
-
-		/// <value>
-		///    The ID of the tag, the current instance belongs to
-		/// </value>
-		public ushort Tag { get; private set; }
-
-#endregion
-
 #region Constructors
 
 		/// <summary>
-		///    Construcor.
+		///    Constructor.
 		/// </summary>
 		/// <param name="tag">
 		///    A <see cref="System.UInt16"/> with the tag ID of the entry this instance
@@ -72,6 +58,12 @@ namespace TagLib.IFD.Entries
 		/// </param>
 		/// <param name="values">
 		///    A <see cref="System.UInt32[]"/> with the strip offsets.
+		/// </param>
+		/// <param name="byte_counts">
+		///    The length of the strips.
+		/// </param>
+		/// <param name="file">
+		///    The file from which the strips will be read.
 		/// </param>
 		public StripOffsetsIFDEntry (ushort tag, uint[] values, uint[] byte_counts, File file) : base (tag)
 		{
