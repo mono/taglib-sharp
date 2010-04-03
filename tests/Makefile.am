@@ -42,6 +42,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/JpegSony1Test.cs \
 	fixtures/TagLib.Tests.Images/JpegSony2Test.cs \
 	fixtures/TagLib.Tests.Images/JpegTangledTest.cs \
+	fixtures/TagLib.Tests.Images/NullOrientationTest.cs \
 	fixtures/TagLib.Tests.Images/RationalTest.cs \
 	fixtures/TagLib.Tests.Images/TiffCanonBibble516BitTest.cs \
 	fixtures/TagLib.Tests.Images/TiffCanonBibble58BitTest.cs \

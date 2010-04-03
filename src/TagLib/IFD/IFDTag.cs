@@ -458,7 +458,7 @@ namespace TagLib.IFD
 		/// </value>
 		public override ImageOrientation Orientation {
 			get {
-				return (ImageOrientation) Structure.GetLongValue (0, (ushort) IFDEntryTag.Orientation);
+				return (ImageOrientation) (Structure.GetLongValue (0, (ushort) IFDEntryTag.Orientation) ?? 1);
 			}
 			set {
 				if ((uint) value < 1U || (uint) value > 8U) {
