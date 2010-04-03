@@ -27,3 +27,4 @@ src/*.dll
 src/*.snk
 tests/*.dll
 tests/*.xml
+test-results
