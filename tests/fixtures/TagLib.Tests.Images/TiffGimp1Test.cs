@@ -18,6 +18,7 @@ namespace TagLib.Tests.Images
 		public void Test ()
 		{
 			ImageTest.Run ("sample_gimp_lzw.tiff",
+				ImageTest.CompareLargeImages,
 				new TiffGimp1TestInvariantValidator (),
 				NoModificationValidator.Instance
 			);

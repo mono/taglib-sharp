@@ -18,6 +18,7 @@ namespace TagLib.Tests.Images
 		public void Test ()
 		{
 			ImageTest.Run ("sample_nikon2_viewnx_16bit.tiff",
+				ImageTest.CompareLargeImages,
 				new TiffNikon2ViewNX16BitTestInvariantValidator (),
 				NoModificationValidator.Instance,
 				new CommentModificationValidator ("                                    "),
