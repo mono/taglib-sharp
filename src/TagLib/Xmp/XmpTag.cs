@@ -145,11 +145,25 @@ namespace TagLib.Xmp
 		internal static readonly string SEQ_URI = "Seq";
 		internal static readonly string VALUE_URI = "value";
 
-		static readonly NameTable NameTable;
+		// This allows for fast string comparison using operator==
+		static readonly NameTable NameTable = new NameTable ();
+		static bool initialized = false;
 
-		static XmpTag () {
-			// This allows for fast string comparison using operator==
-			NameTable = new NameTable ();
+		void Initialize ()
+		{
+			if (initialized)
+				return;
+
+			lock (NameTable) {
+				if (initialized)
+					return;
+				PrepareNamespaces ();
+				initialized = true;
+			}
+		}
+
+		void PrepareNamespaces ()
+		{
 			// Namespaces
 			AddNamespacePrefix ("", ""); // Needed for the about attribute, which can be unqualified.
 			AddNamespacePrefix ("x", ADOBE_X_NS);
@@ -213,6 +227,7 @@ namespace TagLib.Xmp
 		/// </summary>
 		public XmpTag ()
 		{
+			Initialize ();
 			NodeTree = new XmpNode (String.Empty, String.Empty);
 			nodes = new Dictionary<string, Dictionary<string, XmpNode>> ();
 		}
@@ -226,6 +241,7 @@ namespace TagLib.Xmp
 		/// </param>
 		public XmpTag (string data)
 		{
+			Initialize ();
 			XmlDocument doc = new XmlDocument (NameTable);
 			doc.LoadXml (data);
 
