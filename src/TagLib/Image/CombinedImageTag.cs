@@ -519,7 +519,6 @@ namespace TagLib.Image
 				foreach (ImageTag tag in AllTags) {
 					string value = tag.Model;
 
-					if (value != null)
 					if (!string.IsNullOrEmpty(value))
 						return value;
 				}
