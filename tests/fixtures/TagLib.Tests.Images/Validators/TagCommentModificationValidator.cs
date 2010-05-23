@@ -20,6 +20,13 @@ namespace TagLib.Tests.Images.Validators
 			this.tag_present = tag_present;
 		}
 
+		public TagCommentModificationValidator (string orig_comment, string test_comment, TagTypes type, bool tag_present)
+			: base (orig_comment, test_comment)
+		{
+			this.type = type;
+			this.tag_present = tag_present;
+		}
+
 		/// <summary>
 		///    Check if the original comment is found.
 		/// </summary>

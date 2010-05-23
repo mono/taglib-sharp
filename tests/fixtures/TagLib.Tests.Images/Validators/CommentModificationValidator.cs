@@ -10,13 +10,19 @@ namespace TagLib.Tests.Images.Validators
 	public class CommentModificationValidator : IMetadataModificationValidator
 	{
 		string orig_comment;
-		readonly string test_comment = "This is a TagLib# &Test?Comment%$@_ ";
+		string test_comment = "This is a TagLib# &Test?Comment%$@_ ";
 
 		public CommentModificationValidator () : this (String.Empty) { }
 
 		public CommentModificationValidator (string orig_comment)
 		{
 			this.orig_comment = orig_comment;
+		}
+
+		public CommentModificationValidator (string orig_comment, string test_comment)
+			: this (orig_comment)
+		{
+			this.test_comment = test_comment;
 		}
 
 		/// <summary>
