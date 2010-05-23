@@ -25,6 +25,12 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.FileFormats/OggFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/StandardTests.cs \
 	fixtures/TagLib.Tests.Images/AddImageMetadataTests.cs \
+	fixtures/TagLib.Tests.Images/GifExiftoolLongCommentTest.cs \
+	fixtures/TagLib.Tests.Images/GifExiftoolTangled1Test.cs \
+	fixtures/TagLib.Tests.Images/GifExiftoolTangled2Test.cs \
+	fixtures/TagLib.Tests.Images/GifExiftoolTangled3Test.cs \
+	fixtures/TagLib.Tests.Images/GifExiftoolTest.cs \
+	fixtures/TagLib.Tests.Images/GifGimpTest.cs \
 	fixtures/TagLib.Tests.Images/JpegCanonBibble5Test.cs \
 	fixtures/TagLib.Tests.Images/JpegCanonZoombrowserTest.cs \
 	fixtures/TagLib.Tests.Images/JpegNikon1Bibble5Test.cs \
