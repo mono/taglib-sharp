@@ -395,7 +395,6 @@ namespace TagLib.Gif
 
 				case 0x3B:
 					return;
-					break;
 
 				default:
 					throw new CorruptFileException (
