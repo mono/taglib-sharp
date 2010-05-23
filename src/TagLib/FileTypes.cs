@@ -63,6 +63,7 @@ namespace TagLib {
 			typeof(TagLib.Ape.File),
 			typeof(TagLib.Asf.File),
 			typeof(TagLib.Flac.File),
+			typeof(TagLib.Gif.File),
 			typeof(TagLib.MusePack.File),
 			typeof(TagLib.Mpeg4.File),
 			typeof(TagLib.Mpeg.File),

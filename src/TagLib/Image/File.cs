@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 
 using TagLib.Jpeg;
+using TagLib.Gif;
 using TagLib.IFD;
 using TagLib.Xmp;
 
@@ -160,6 +161,10 @@ namespace TagLib.Image
 			switch (type) {
 			case TagTypes.JpegComment:
 				new_tag = new JpegCommentTag ();
+				break;
+
+			case TagTypes.GifComment:
+				new_tag = new GifCommentTag ();
 				break;
 
 			case TagTypes.TiffIFD:
