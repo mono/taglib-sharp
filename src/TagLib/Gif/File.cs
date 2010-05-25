@@ -32,9 +32,13 @@ using TagLib.Xmp;
 namespace TagLib.Gif
 {
 
+	/// <summary>
+	///    This class extends <see cref="TagLib.Image.ImageBlockFile" /> to provide tagging
+	///    and property support for Gif files.
+	/// </summary>
 	[SupportedMimeType("taglib/gif", "gif")]
 	[SupportedMimeType("image/gif")]
-	public class File : TagLib.Image.File
+	public class File : TagLib.Image.ImageBlockFile
 	{
 
 #region GIF specific constants
@@ -127,30 +131,6 @@ namespace TagLib.Gif
 		///    The start of the first block in file after the header.
 		/// </summary>
 		private long start_of_blocks = -1;
-
-		/// <summary>
-		///    The start of the xmp block, if there is one. This value is used
-		///    to overwrite the block when metadata is saved.
-		/// </summary>
-		private long xmp_block_start = -1;
-
-		/// <summary>
-		///    The length of the xmp block, if there is one. This value is used
-		///    to overwrite the block when metadata is saved.
-		/// </summary>
-		private int xmp_block_length = 0;
-
-		/// <summary>
-		///    The start of the comment block, if there is one. This value is used
-		///    to overwrite the block when metadata is saved.
-		/// </summary>
-		private long comment_block_start = -1;
-
-		/// <summary>
-		///    The length of the comment block, if there is one. This value is used
-		///    to overwrite the block when metadata is saved.
-		/// </summary>
-		private int comment_block_length = 0;
 
 #endregion
 
@@ -497,8 +477,7 @@ namespace TagLib.Gif
 				ImageTag.AddTag (new XmpTag (xmp_data.ToString (StringType.UTF8)));
 
 				// 2 bytes where read before
-				xmp_block_start = position - 2;
-				xmp_block_length = 14 + data_length + XMP_MAGIC_TRAILER.Length;
+				AddMetadataBlock (position - 2, 14 + data_length + XMP_MAGIC_TRAILER.Length);
 
 				// set position behind the XMP block
 				Seek (xmp_trailer_start + XMP_MAGIC_TRAILER.Length, SeekOrigin.Begin);
@@ -535,8 +514,7 @@ namespace TagLib.Gif
 				ImageTag.AddTag (new GifCommentTag (comment));
 
 				// 2 bytes where read before
-				comment_block_start = position - 2;
-				comment_block_length =  (int) (Tell - comment_block_start);
+				AddMetadataBlock (position - 2, Tell - position + 2);
 			}
 		}
 
@@ -695,72 +673,12 @@ namespace TagLib.Gif
 				Insert (VERSION_89A, 3, VERSION_89A.Length);
 			}
 
-			// We store the metadata at the beginning of the file starting from the first block.
-			// Therefore, we can overwrite those metadata blocks which are still at this place and
-			// we delete the ones which are placed somewhere.
-			int metadata_length = 0;
-
-			// first, deetermine the length of metadata blocks stored at the beginning
-			if (xmp_block_start == start_of_blocks) {
-				if (xmp_block_start + xmp_block_length == comment_block_start)
-					metadata_length = xmp_block_length + comment_block_length;
-				else
-					metadata_length = xmp_block_length;
-			} else if (comment_block_start == start_of_blocks) {
-				if (comment_block_start + comment_block_length == xmp_block_start)
-					metadata_length = xmp_block_length + comment_block_length;
-				else
-					metadata_length = comment_block_length;
-			}
-
-			// second, delete block which are somwhere in the file
-			if ((xmp_block_start > comment_block_start) && (xmp_block_start > start_of_blocks + metadata_length)) {
-
-				// delete XMP Block
-				Insert (new ByteVector (), xmp_block_start, xmp_block_length);
-
-				// and delete Comment Block, if necessary
-				if (comment_block_start > start_of_blocks + metadata_length)
-					Insert (new ByteVector (), comment_block_start, comment_block_length);
-
-			} else if ((comment_block_start > xmp_block_start) && (comment_block_start > start_of_blocks + metadata_length)) {
-
-				// delete Comment Block
-				Insert (new ByteVector (), comment_block_start, comment_block_length);
-
-				// and delete XMP Block, if necessary
-				if (xmp_block_start > start_of_blocks + metadata_length)
-					Insert (new ByteVector (), xmp_block_start, xmp_block_length);
-			}
-
 			// now, only metadata is stored at the beginning of the file, and we can overwrite it.
 			ByteVector metadata_blocks = new ByteVector ();
 			metadata_blocks.Add (comment_block);
 			metadata_blocks.Add (xmp_block);
 
-			Insert (metadata_blocks, start_of_blocks, metadata_length);
-
-			if (comment_block == null) {
-				comment_block_start = -1;
-				comment_block_length = 0;
-			} else {
-				comment_block_start = start_of_blocks;
-				comment_block_length = comment_block.Count;
-			}
-
-			if (xmp_block == null) {
-				xmp_block_start = -1;
-				xmp_block_length = 0;
-			} else {
-
-				xmp_block_length = xmp_block.Count;
-
-				if (comment_block == null)
-					xmp_block_start = start_of_blocks;
-				else
-					xmp_block_start = comment_block_start + comment_block_length;
-
-			}
+			SaveMetadata (metadata_blocks, start_of_blocks);
 		}
 
 

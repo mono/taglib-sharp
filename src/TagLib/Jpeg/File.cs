@@ -38,7 +38,7 @@ namespace TagLib.Jpeg
 {
 
 	/// <summary>
-	///    This class extends <see cref="TagLib.File" /> to provide tagging
+	///    This class extends <see cref="TagLib.Image.ImageBlockFile" /> to provide tagging
 	///    and properties support for Jpeg files.
 	/// </summary>
 	[SupportedMimeType("taglib/jpg", "jpg")]
@@ -48,7 +48,7 @@ namespace TagLib.Jpeg
 	[SupportedMimeType("taglib/jfif", "jfif")]
 	[SupportedMimeType("taglib/jfi", "jfi")]
 	[SupportedMimeType("image/jpeg")]
-	public class File : TagLib.Image.File
+	public class File : TagLib.Image.ImageBlockFile
 	{
 
 		/// <summary>
@@ -78,38 +78,6 @@ namespace TagLib.Jpeg
 		///    Contains the media properties.
 		/// </summary>
 		private Properties properties;
-
-		/// <summary>
-		///    Stores the size of the metadata block at the beginning of the file.
-		///    The value is used to know which data block should be overwritten when
-		///    metadata is saved.
-		/// </summary>
-		/// <remarks>
-		///    If some metadata is not contained at the beginning of the file,
-		///    <see cref="exif_position"/>, <see cref="xmp_position"/> and
-		///    <see cref="comment_position"/> stores the offset to the metdata segments.
-		///    Those segments are deleted when metadata is saved and the metdata is
-		///    completely written at the beginning of the file.
-		/// </remarks>
-		private long metadata_length = 0;
-
-		/// <summary>
-		///    Contains the position of the Exif segment, if it is not contained in
-		///    metadata segment, to delete it. <see cref="metadata_length"/>
-		/// </summary>
-		private long exif_position = 0;
-
-		/// <summary>
-		///    Contains the position of the Xmp segment, if it is not contained in
-		///    metadata segment, to delete it. <see cref="metadata_length"/>
-		/// </summary>
-		private long xmp_position = 0;
-
-		/// <summary>
-		///    Contains the position of the Comment segment, if it is not contained in
-		///    metadata segment, to delete it. <see cref="metadata_length"/>
-		/// </summary>
-		private long comment_position = 0;
 
 		/// <summary>
 		///    For now, we do not allow to change the jfif header. As long as this is
@@ -370,8 +338,6 @@ namespace TagLib.Jpeg
 		/// </summary>
 		private void ReadMetadata ()
 		{
-			bool advance_metdata = true;
-
 			// loop while marker is not EOI and not the data segment
 			while (true) {
 				Marker marker = ReadSegmentMarker ();
@@ -389,20 +355,17 @@ namespace TagLib.Jpeg
 				// pure data size is this (and the cast is save)
 				ushort data_size = (ushort) (segment_size - 2);
 
-				// stores, if metadata was read
-				bool is_metadata = false;
-
 				switch (marker) {
 				case Marker.APP0:	// possibly JFIF header
-					is_metadata = ReadJFIFHeader (data_size);
+					ReadJFIFHeader (data_size);
 					break;
 
 				case Marker.APP1:	// possibly Exif or Xmp data found
-					is_metadata = ReadAPP1Segment (data_size);
+					ReadAPP1Segment (data_size);
 					break;
 
 				case Marker.COM:	// Comment segment found
-					is_metadata = ReadCOMSegment (data_size);
+					ReadCOMSegment (data_size);
 					break;
 
 				case Marker.SOF0:
@@ -412,21 +375,13 @@ namespace TagLib.Jpeg
 				case Marker.SOF9:
 				case Marker.SOF10:
 				case Marker.SOF11:
-					is_metadata = ReadSOFSegment (data_size, marker);
+					ReadSOFSegment (data_size, marker);
 					break;
 
 				case Marker.DQT:	// Quantization table(s), use it to guess quality
-					is_metadata = ReadDQTSegment (data_size);
+					ReadDQTSegment (data_size);
 					break;
 				}
-
-				// if metadata was read in current segment and all previous segments
-				// are metadata segments (or the JFIF header), then we add current
-				// segment to metadata-block
-				if (is_metadata && advance_metdata)
-					metadata_length += 2 + segment_size; // marker size + segment_size
-				else
-					advance_metdata = false;
 
 				// set position to next segment and start with next segment marker
 				Seek (position + segment_size, SeekOrigin.Begin);
@@ -436,12 +391,12 @@ namespace TagLib.Jpeg
 		/// <summary>
 		///    Reads a JFIF header at current position
 		/// </summary>
-		private bool ReadJFIFHeader (ushort length)
+		private void ReadJFIFHeader (ushort length)
 		{
 			// JFIF header should be contained as first segment
 			// SOI marker + APP0 Marker + segment size = 6 bytes
 			if (Tell != 6)
-				return false;
+				return;
 
 			if (ReadBlock (5).ToString ().Equals ("JFIF\0")) {
 
@@ -449,10 +404,9 @@ namespace TagLib.Jpeg
 				Seek (2, SeekOrigin.Begin);
 				jfif_header = ReadBlock (length + 2 + 2);
 
-				return true;
+				AddMetadataBlock (2, length + 2 + 2);
 			}
 
-			return false;
 		}
 
 		/// <summary>
@@ -461,7 +415,7 @@ namespace TagLib.Jpeg
 		/// <param name="length">
 		///    The length of the segment that will be read.
 		/// </param>
-		private bool ReadAPP1Segment (ushort length)
+		private void ReadAPP1Segment (ushort length)
 		{
 			long position = Tell;
 			ByteVector data = null;
@@ -477,7 +431,7 @@ namespace TagLib.Jpeg
 			int exif_header_length = 14;
 
 			// could be an Exif segment
-			if (exif_position == 0 && length >= exif_header_length) {
+			if ((ImageTag.TagTypes & TagLib.TagTypes.TiffIFD) == 0x00 && length >= exif_header_length) {
 
 				data = ReadBlock (exif_header_length);
 
@@ -496,16 +450,17 @@ namespace TagLib.Jpeg
 					var reader = new IFDReader (this, is_bigendian, exif.Structure, position + 6, ifd_offset, (uint) (length - 6));
 					reader.Read ();
 					ImageTag.AddTag (exif);
-					exif_position = position;
 
-					return true;
+					AddMetadataBlock (position - 4, length + 4);
+
+					return;
 				}
 			}
 
 			int xmp_header_length = XmpTag.XAP_NS.Length + 1;
 
 			// could be an Xmp segment
-			if (xmp_position == 0 && length >= xmp_header_length) {
+			if ((ImageTag.TagTypes & TagLib.TagTypes.XMP) == 0x00 && length >= xmp_header_length) {
 
 				// if already data is read for determining the Exif segment,
 				// just read the remaining bytes.
@@ -519,31 +474,12 @@ namespace TagLib.Jpeg
 					ByteVector xmp_data = ReadBlock (length - xmp_header_length);
 
 					ImageTag.AddTag (new XmpTag (xmp_data.ToString ()));
-					xmp_position = position;
 
-					return true;
+					AddMetadataBlock (position - 4, length + 4);
 				}
 			}
-
-			return false;
 		}
 
-		/// <summary>
-		///    Deletes a Segment starting at given position
-		/// </summary>
-		/// <param name="start">
-		///    A <see cref="System.Int64"/> with the position of the first byte
-		///    of the segment marker (0xFF)
-		/// </param>
-		private void DeleteSegment (long start)
-		{
-			Seek (start, SeekOrigin.Begin);
-
-			ReadSegmentMarker ();
-			ushort length = ReadSegmentSize ();
-
-			Insert (new ByteVector (), start, length + 2);
-		}
 
 		/// <summary>
 		///    Writes the metadata back to file. All metadata is stored in the first segments
@@ -566,34 +502,7 @@ namespace TagLib.Jpeg
 			data.Add (RenderXMPSegment ());
 			data.Add (RenderCOMSegment ());
 
-			// ... then delete the metadata which is not contained in the
-			// metadata block at the beginning of the file
-			// not the efficentest way, but probably it is never really called
-			long[] metadata_positions = {comment_position, xmp_position, exif_position};
-
-			// start with greatest offset, because this do not affect the smaller ones
-			Array.Sort<long> (metadata_positions);
-			for (int i = metadata_positions.Length - 1; i >= 0; i--) {
-				long metadata_position = metadata_positions[i];
-
-				// delete data which is not contained in the metdata segment
-				// at the beginning of the file
-				if (2 + metadata_length < metadata_position)
-					DeleteSegment (metadata_position - 4);
-				else
-					break;
-			}
-
-			// reset it, to not delete it the next time the metadata is saved
-			comment_position = 0;
-			xmp_position = 0;
-			exif_position = 0;
-
-			// Insert metadata block at the beginning of the file by overwriting
-			// all segments at the beginning already containing metadata
-			Insert (data, 2, metadata_length);
-
-			metadata_length = data.Count;
+			SaveMetadata (data, 2);
 		}
 
 		/// <summary>
@@ -677,12 +586,12 @@ namespace TagLib.Jpeg
 		/// <param name="length">
 		///    The length of the segment that will be read.
 		/// </param>
-		private bool ReadCOMSegment (int length)
+		private void ReadCOMSegment (int length)
 		{
-			if (comment_position != 0)
-				return false;
+			if ((ImageTag.TagTypes & TagLib.TagTypes.JpegComment) != 0x00)
+				return;
 
-			comment_position = Tell;
+			long position = Tell;
 
 			JpegCommentTag com_tag;
 
@@ -700,7 +609,7 @@ namespace TagLib.Jpeg
 			}
 
 			ImageTag.AddTag (com_tag);
-			return true;
+			AddMetadataBlock (position - 4, length + 4);
 		}
 
 		/// <summary>
@@ -745,7 +654,7 @@ namespace TagLib.Jpeg
 		/// <param name="marker">
 		///    The SOFx marker.
 		/// </param>
-		bool ReadSOFSegment (int length, Marker marker)
+		void ReadSOFSegment (int length, Marker marker)
 		{
 #pragma warning disable 219 // Assigned, never read
 			byte p = ReadBlock (1)[0];	//precision
@@ -754,8 +663,6 @@ namespace TagLib.Jpeg
 			//FIXME: according to specs, height could be 0 here, and should be retrieved from the DNL marker
 			height = ReadBlock (2).ToUShort ();
 			width = ReadBlock (2).ToUShort ();
-
-			return false;
 		}
 
 		/// <summary>
@@ -764,7 +671,7 @@ namespace TagLib.Jpeg
 		/// <param name="length">
 		///    The length of the segment that will be read
 		/// </param>
-		bool ReadDQTSegment (int length)
+		void ReadDQTSegment (int length)
 		{
 			// See CCITT Rec. T.81 (1992 E), B.2.4.1 (p39) for DQT syntax
 			while (length > 0) {
@@ -812,7 +719,6 @@ namespace TagLib.Jpeg
 					quality = Math.Max (quality, (int)local_q);
 				}
 			}
-			return false;
 		}
 
 #endregion
