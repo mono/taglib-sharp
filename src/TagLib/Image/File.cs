@@ -105,6 +105,22 @@ namespace TagLib.Image
 #region Public Methods
 
 		/// <summary>
+		///    The method creates all tags which are allowed for the current
+		///    instance of the image file. This method can be used to ensure,
+		///    that all tags are in place and properties can be safely used
+		///    to set values.
+		/// </summary>
+		public void EnsureAvailableTags ()
+		{
+			List<ImageTag> allowed_types = new List<ImageTag> ();
+
+			foreach (TagTypes type in Enum.GetValues (typeof (TagTypes))) {
+				if ((type & ImageTag.AllowedTypes) != 0x00)
+					GetTag (type, true);
+			}
+		}
+
+		/// <summary>
 		///    Removes a set of tag types from the current instance.
 		/// </summary>
 		/// <param name="types">
