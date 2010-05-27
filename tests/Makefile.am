@@ -72,8 +72,10 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/Validators/KeywordsModificationValidator.cs \
 	fixtures/TagLib.Tests.Images/Validators/NoModificationValidator.cs \
 	fixtures/TagLib.Tests.Images/Validators/RemoveMetadataValidator.cs \
+	fixtures/TagLib.Tests.Images/Validators/PropertyModificationValidator.cs \
 	fixtures/TagLib.Tests.Images/Validators/TagCommentModificationValidator.cs \
 	fixtures/TagLib.Tests.Images/Validators/TagKeywordsModificationValidator.cs \
+	fixtures/TagLib.Tests.Images/Validators/TagPropertyModificationValidator.cs \
 	fixtures/TagLib.Tests.Images/XapTest.cs \
 	fixtures/TagLib.Tests.Images/XmpCrashTest.cs \
 	fixtures/TagLib.Tests.Images/XmpSpecTest.cs \
