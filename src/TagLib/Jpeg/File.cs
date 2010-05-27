@@ -686,10 +686,18 @@ namespace TagLib.Jpeg
 
 			JpegCommentTag com_tag;
 
-			if (length == 0)
-				com_tag = new JpegCommentTag ();
-			else
-				com_tag = new JpegCommentTag (ReadBlock (length - 1).ToString ());
+			if (length == 0) {
+				 com_tag = new JpegCommentTag ();
+			} else {
+				ByteVector data = ReadBlock (length);
+
+				int terminator = data.Find ("\0", 0);
+
+				if (terminator < 0)
+					com_tag = new JpegCommentTag (data.ToString ());
+				else
+					com_tag = new JpegCommentTag (data.Mid (0, terminator).ToString ());
+			}
 
 			ImageTag.AddTag (com_tag);
 			return true;
