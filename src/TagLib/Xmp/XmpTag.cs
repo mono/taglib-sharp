@@ -26,6 +26,8 @@ using System.Collections.Generic;
 using System.Xml;
 
 using TagLib.Image;
+using TagLib.IFD.Entries;
+
 
 namespace TagLib.Xmp
 {
@@ -829,6 +831,84 @@ namespace TagLib.Xmp
 		}
 
 		/// <summary>
+		///    Returns the rational value of the node associated with the namespace
+		///    <param name="ns"/> and the name <paramref name="name"/>.
+		/// </summary>
+		/// <param name="ns">
+		///    A <see cref="System.String"/> with the namespace of the node.
+		/// </param>
+		/// <param name="name">
+		///    A <see cref="System.String"/> with the name of the node.
+		/// </param>
+		/// <returns>
+		///    A <see cref="System.Nullable<double>"/> with the read value, or
+		///    <see langword="null"/> if no such node exists, or if it is in wrong
+		///    format.
+		/// </returns>
+		/// <remarks>
+		///    Rational nodes only used in EXIF schema.
+		/// </remarks>
+		public double? GetRationalNode (string ns, string name)
+		{
+			var text = GetTextNode (ns, name);
+
+			if (text == null)
+				return null;
+
+			// format is expected to be e.g. "1/200" ...
+			string [] values = text.Split ('/');
+
+			if (values.Length != 2) {
+
+				// but we also try to parse a double value directly.
+				double result;
+				if (Double.TryParse (text, out result))
+					return result;
+
+				return null;
+			}
+
+			double nom, den;
+			if (Double.TryParse (values[0], out nom) && Double.TryParse (values[1], out den)) {
+				if (den != 0.0)
+					return ((double) nom) / ((double) den);
+			}
+
+			return null;
+		}
+
+
+		/// <summary>
+		///    Returns the unsigned integer value of the node associated with the
+		///    namespace <param name="ns"/> and the name <paramref name="name"/>.
+		/// </summary>
+		/// <param name="ns">
+		///    A <see cref="System.String"/> with the namespace of the node.
+		/// </param>
+		/// <param name="name">
+		///    A <see cref="System.String"/> with the name of the node.
+		/// </param>
+		/// <returns>
+		///    A <see cref="System.Nullable<System.UInt32>"/> with the read value, or
+		///    <see langword="null"/> if no such node exists, or if it is in wrong
+		///    format.
+		/// </returns>
+		public uint? GetUIntNode (string ns, string name)
+		{
+			var text = GetTextNode (ns, name);
+
+			if (text == null)
+				return null;
+
+			uint result;
+
+			if (UInt32.TryParse (text, out result))
+				return result;
+
+			return null;
+		}
+
+		/// <summary>
 		///    Renders the current instance to an XMP <see cref="System.String"/>.
 		/// </summary>
 		/// <returns>
@@ -914,8 +994,19 @@ namespace TagLib.Xmp
 		///    current instace.
 		/// </value>
 		public override string Comment {
-			get { return GetLangAltNode (DC_NS, "description"); }
-			set { SetLangAltNode (DC_NS, "description", value); }
+			get {
+				string comment = GetLangAltNode (DC_NS, "description");
+
+				if (comment != null)
+					return comment;
+
+				comment = GetLangAltNode (EXIF_NS, "UserComment");
+				return comment;
+			}
+			set {
+				SetLangAltNode (DC_NS, "description", value);
+				SetLangAltNode (EXIF_NS, "UserComment", value);
+			}
 		}
 
 		/// <summary>
@@ -940,16 +1031,8 @@ namespace TagLib.Xmp
 		///    current instace.
 		/// </value>
 		public override uint? Rating {
-			get {
-				uint val;
-
-				if (UInt32.TryParse (GetTextNode (XAP_NS, "Rating"), out val))
-					return val;
-
-				return null;
-			}
-			set {
-				SetTextNode (XAP_NS, "Rating", value != null ? value.ToString () : null);
+			get { return GetUIntNode (XAP_NS, "Rating"); }
+			set { SetTextNode (XAP_NS, "Rating", value != null ? value.ToString () : null);
 			}
 		}
 
@@ -984,8 +1067,22 @@ namespace TagLib.Xmp
 		///    image
 		/// </value>
 		public override ImageOrientation Orientation {
-			get { return 0; }
-			set {}
+			get {
+				var orientation = GetUIntNode (TIFF_NS, "Orientation");
+
+				if (orientation.HasValue)
+					return (ImageOrientation) orientation;
+
+				return ImageOrientation.TopLeft;
+			}
+			set {
+				if ((uint) value < 1U || (uint) value > 8U) {
+					RemoveNode (TIFF_NS, "Orientation");
+					return;
+				}
+
+				SetTextNode (TIFF_NS, "Orientation", String.Format ("{0}", (ushort) value));
+			}
 		}
 
 		/// <summary>
@@ -1048,7 +1145,7 @@ namespace TagLib.Xmp
 		///    A <see cref="System.Nullable"/> with the exposure time in seconds.
 		/// </value>
 		public override double? ExposureTime {
-			get { return null; }
+			get { return GetRationalNode (EXIF_NS, "ExposureTimeExposureTime"); }
 		}
 
 		/// <summary>
@@ -1059,7 +1156,7 @@ namespace TagLib.Xmp
 		///    A <see cref="System.Nullable"/> with the FNumber.
 		/// </value>
 		public override double? FNumber {
-			get { return null; }
+			get { return GetRationalNode (EXIF_NS, "FNumber"); }
 		}
 
 		/// <summary>
@@ -1070,7 +1167,17 @@ namespace TagLib.Xmp
 		///    A <see cref="System.Nullable"/> with the ISO speed as defined in ISO 12232.
 		/// </value>
 		public override uint? ISOSpeedRatings {
-			get { return null; }
+			get {
+				string[] values = GetCollectionNode (EXIF_NS, "ISOSpeedRatings");
+
+				if (values != null && values.Length > 0) {
+					uint result;
+					if (UInt32.TryParse (values[0], out result))
+						return result;
+				}
+
+				return null;
+			}
 		}
 
 		/// <summary>
@@ -1081,7 +1188,7 @@ namespace TagLib.Xmp
 		///    A <see cref="System.Nullable"/> with the focal length in millimeters.
 		/// </value>
 		public override double? FocalLength {
-			get { return null; }
+			get { return GetRationalNode (EXIF_NS, "FocalLength"); }
 		}
 
 		/// <summary>
@@ -1104,6 +1211,56 @@ namespace TagLib.Xmp
 		/// </value>
 		public override string Model {
 			get { return GetTextNode (TIFF_NS, "Model"); }
+		}
+
+		/// <summary>
+		///    Gets or sets the creator of the image.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> with the name of the creator.
+		/// </value>
+		public override string Creator {
+			get {
+				string [] values = GetCollectionNode (DC_NS, "creator");
+				if (values != null && values.Length > 0)
+					return values [0];
+
+				return null;
+			}
+			set {
+				if (value == null)
+					RemoveNode (DC_NS, "creator");
+
+				SetCollectionNode (DC_NS, "creator", new string [] { value }, XmpNodeType.Seq);
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the title for the media described by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the title for
+		///    the media described by the current instance or <see
+		///    langword="null" /> if no value is present.
+		/// </value>
+		public override string Title {
+			get { return GetLangAltNode (DC_NS, "title"); }
+			set { SetLangAltNode (DC_NS, "title", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the copyright information for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the copyright
+		///    information for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		public override string Copyright {
+			get { return GetLangAltNode (DC_NS, "rights"); }
+			set { SetLangAltNode (DC_NS, "rights", value); }
 		}
 
 #endregion

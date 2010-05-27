@@ -84,7 +84,7 @@ namespace TagLib.Image
 		///    image
 		/// </value>
 		public virtual ImageOrientation Orientation {
-			get { return 0; }
+			get { return ImageOrientation.TopLeft; }
 			set {}
 		}
 
@@ -216,6 +216,18 @@ namespace TagLib.Image
 		public virtual string Model {
 			get { return null; }
 		}
+
+		/// <summary>
+		///    Gets or sets the creator of the image.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> with the name of the creator.
+		/// </value>
+		public virtual string Creator {
+			get { return null; }
+			set {}
+		}
+
 #endregion
 
 	}

@@ -178,10 +178,66 @@ namespace TagLib.IFD
 				if (value == null) {
 					ExifIFD.RemoveTag (0, (ushort) ExifEntryTag.UserComment);
 					Structure.RemoveTag (0, (ushort) IFDEntryTag.ImageDescription);
+					return;
 				}
 
 				ExifIFD.SetEntry (0, new UserCommentIFDEntry ((ushort) ExifEntryTag.UserComment, value));
 				Structure.SetEntry (0, new StringIFDEntry ((ushort) IFDEntryTag.ImageDescription, value));
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the copyright information for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the copyright
+		///    information for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		public override string Copyright {
+			get {
+				return Structure.GetStringValue (0, (ushort) IFDEntryTag.Copyright);
+			}
+			set {
+				if (value == null) {
+					Structure.RemoveTag (0, (ushort) IFDEntryTag.Copyright);
+					return;
+				}
+
+				Structure.SetEntry (0, new StringIFDEntry ((ushort) IFDEntryTag.Copyright, value));
+			}
+		}
+
+		/// <summary>
+		///    Gets or sets the creator of the image.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> with the name of the creator.
+		/// </value>
+		public override string Creator {
+			get {
+				return Structure.GetStringValue (0, (ushort) IFDEntryTag.Artist);
+			}
+			set {
+				Structure.SetStringValue (0, (ushort) IFDEntryTag.Artist, value);
+			}
+		}
+
+		/// <summary>
+		///    Gets or sets the software the image, the current instance
+		///    belongs to, was created with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the name of the
+		///    software the current instace was created with.
+		/// </value>
+		public override string Software {
+			get {
+				return Structure.GetStringValue (0, (ushort) IFDEntryTag.Software);
+			}
+			set {
+				Structure.SetStringValue (0, (ushort) IFDEntryTag.Software, value);
 			}
 		}
 
@@ -458,7 +514,12 @@ namespace TagLib.IFD
 		/// </value>
 		public override ImageOrientation Orientation {
 			get {
-				return (ImageOrientation) (Structure.GetLongValue (0, (ushort) IFDEntryTag.Orientation) ?? 1);
+				var orientation = Structure.GetLongValue (0, (ushort) IFDEntryTag.Orientation);
+
+				if (orientation.HasValue)
+					return (ImageOrientation) orientation;
+
+				return ImageOrientation.TopLeft;
 			}
 			set {
 				if ((uint) value < 1U || (uint) value > 8U) {

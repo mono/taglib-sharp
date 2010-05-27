@@ -135,7 +135,7 @@ namespace TagLib.Image
 
 #endregion
 
-#region Public Properties
+#region Public Methods (Tag)
 
 		/// <summary>
 		///    Gets the tag types contained in the current instance.
@@ -165,29 +165,9 @@ namespace TagLib.Image
 				tag.Clear ();
 		}
 
-		/// <summary>
-		///    Gets or sets the comment for the image described
-		///    by the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="string" /> containing the comment of the
-		///    current instace.
-		/// </value>
-		public override string Comment {
-			get {
-				foreach (ImageTag tag in AllTags) {
-					string value = tag.Comment;
-					if (!string.IsNullOrEmpty (value))
-						return value;
-				}
+#endregion
 
-				return String.Empty;
-			}
-			set {
-				foreach (ImageTag tag in AllTags)
-					tag.Comment = value;
-			}
-		}
+#region Public Properties (ImageTag)
 
 		/// <summary>
 		///    Gets or sets the keywords for the image described
@@ -279,7 +259,7 @@ namespace TagLib.Image
 						return value;
 				}
 
-				return 0;
+				return ImageOrientation.TopLeft;
 			}
 			set {
 				foreach (ImageTag tag in AllTags)
@@ -526,6 +506,113 @@ namespace TagLib.Image
 				return null;
 			}
 		}
+
+		/// <summary>
+		///    Gets or sets the creator of the image.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> with the name of the creator.
+		/// </value>
+		public override string Creator {
+			get {
+				foreach (ImageTag tag in AllTags) {
+					string value = tag.Creator;
+
+					if (! string.IsNullOrEmpty (value))
+						return value;
+				}
+
+				return null;
+			}
+			set {
+				foreach (ImageTag tag in AllTags)
+					tag.Creator = value;
+			}
+		}
+
+#endregion
+
+#region Public Properties (Tag)
+
+
+		/// <summary>
+		///    Gets and sets the title for the media described by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the title for
+		///    the media described by the current instance or <see
+		///    langword="null" /> if no value is present.
+		/// </value>
+		public override string Title {
+			get {
+				foreach (ImageTag tag in AllTags) {
+					string value = tag.Title;
+
+					if (! string.IsNullOrEmpty (value))
+						return value;
+				}
+
+				return null;
+			}
+			set {
+				foreach (ImageTag tag in AllTags)
+					tag.Title = value;
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets a user comment on the media represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing user comments
+		///    on the media represented by the current instance or <see
+		///    langword="null" /> if no value is present.
+		/// </value>
+		public override string Comment {
+			get {
+				foreach (ImageTag tag in AllTags) {
+					string value = tag.Comment;
+
+					if (! string.IsNullOrEmpty (value))
+						return value;
+				}
+
+				return String.Empty;
+			}
+			set {
+				foreach (ImageTag tag in AllTags)
+					tag.Comment = value;
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the copyright information for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the copyright
+		///    information for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		public override string Copyright {
+			get {
+				foreach (ImageTag tag in AllTags) {
+					string value = tag.Copyright;
+
+					if (! string.IsNullOrEmpty (value))
+						return value;
+				}
+
+				return null;
+			}
+			set {
+				foreach (ImageTag tag in AllTags)
+					tag.Copyright = value;
+			}
+		}
+
 #endregion
 
 	}
