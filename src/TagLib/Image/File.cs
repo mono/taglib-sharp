@@ -28,6 +28,7 @@ using TagLib.Jpeg;
 using TagLib.Gif;
 using TagLib.IFD;
 using TagLib.Xmp;
+using TagLib.Png;
 
 namespace TagLib.Image
 {
@@ -179,6 +180,10 @@ namespace TagLib.Image
 
 			case TagTypes.GifComment:
 				new_tag = new GifCommentTag ();
+				break;
+
+			case TagTypes.Png:
+				new_tag = new PngTag ();
 				break;
 
 			case TagTypes.TiffIFD:

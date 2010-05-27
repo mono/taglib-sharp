@@ -111,6 +111,11 @@ namespace TagLib {
 		GifComment = 0x00002000,
 
 		/// <summary>
+		///    native PNG keywords
+		/// </summary>
+		Png = 0x00004000,
+
+		/// <summary>
 		///    All tag types.
 		/// </summary>
 		AllTags      = 0xFFFFFFFF
