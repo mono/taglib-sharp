@@ -155,6 +155,17 @@ namespace TagLib.Png
 		}
 
 		/// <summary>
+		///    Gets or sets the creator of the image.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> with the name of the creator.
+		/// </value>
+		public override string Creator {
+			get { return GetKeyword (AUTHOR); }
+			set { SetKeyword (AUTHOR, value); }
+		}
+
+		/// <summary>
 		///    Gets and sets the copyright information for the media
 		///    represented by the current instance.
 		/// </summary>

@@ -117,7 +117,7 @@ namespace TagLib.Tests.Images.Validators
 		/// </summary>
 		bool IsSupportedImageFile (Image.File file)
 		{
-			return (file is Jpeg.File) || (file is Tiff.File) || (file is Gif.File);
+			return (file is Jpeg.File) || (file is Tiff.File) || (file is Gif.File) || (file is Png.File);
 		}
 
 		byte[] ReadImageData (Image.File file)
