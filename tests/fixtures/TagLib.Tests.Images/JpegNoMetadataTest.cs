@@ -18,7 +18,6 @@ namespace TagLib.Tests.Images
 				new JpegNoMetadataTestInvariantValidator (),
 				NoModificationValidator.Instance,
 				new NoModificationValidator (),
-				new CommentModificationValidator (),
 				new TagCommentModificationValidator (TagTypes.TiffIFD, false),
 				new TagCommentModificationValidator (TagTypes.XMP, false),
 				new TagKeywordsModificationValidator (TagTypes.XMP, false)
