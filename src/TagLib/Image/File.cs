@@ -112,8 +112,6 @@ namespace TagLib.Image
 		/// </summary>
 		public void EnsureAvailableTags ()
 		{
-			List<ImageTag> allowed_types = new List<ImageTag> ();
-
 			foreach (TagTypes type in Enum.GetValues (typeof (TagTypes))) {
 				if ((type & ImageTag.AllowedTypes) != 0x00)
 					GetTag (type, true);
