@@ -32,11 +32,11 @@ namespace TagLib.Image
 	/// <summary>
 	///    Some image file formats are organized as a sequence of mostly
 	///    independent data blocks whose order can be changed. Metadata is
-	///    stored in some of those blocks and when metdata is saved, often the
+	///    stored in some of those blocks and when metadata is saved, often the
 	///    same task remains: Delete some blocks which contain metadata and
 	///    overwrite some blocks with other metadata.
 	///    This class extends <see cref="TagLib.Image.File" /> to provide this
-	///    functionality. Blocks can be marked as metadata and when metdata is
+	///    functionality. Blocks can be marked as metadata and when metadata is
 	///    saved their space is used or they are deleted.
 	/// </summary>
 	public abstract class ImageBlockFile : TagLib.Image.File
@@ -171,7 +171,7 @@ namespace TagLib.Image
 
 
 		/// <summary>
-		///    Adds a range to be treat as metadata.
+		///    Adds a range to be treated as metadata.
 		/// </summary>
 		/// <param name="start">
 		///    A <see cref="System.Int64"/> with the start index of the metadata block
