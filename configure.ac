@@ -83,6 +83,20 @@ else
 	AM_CONDITIONAL(BUILD_DOCS, false)
 fi
 
+# checking for ICSharpCode.SharpZipLib.dll
+AC_MSG_CHECKING([for Mono 2.0 GAC for ICSharpCode.SharpZipLib.dll])
+if test \
+	-e "$($PKG_CONFIG --variable=libdir mono)/mono/2.0/ICSharpCode.SharpZipLib.dll" -o \
+	-e "$($PKG_CONFIG --variable=prefix mono)/lib/mono/2.0/ICSharpCode.SharpZipLib.dll"; \
+	then \
+	AC_MSG_RESULT([found])
+	AM_CONDITIONAL(HAVE_SHARPZIPLIB, true)
+else
+	AC_MSG_RESULT([not found])
+	AM_CONDITIONAL(HAVE_SHARPZIPLIB, false)
+fi
+
+
 PKG_CHECK_MODULES(GNOME_SHARP, gnome-sharp-2.0, have_gnome_sharp=yes, have_gnome_sharp=no)
 if test "x$have_gnome_sharp" = "xyes"; then
 	AC_SUBST(GNOME_SHARP_LIBS)

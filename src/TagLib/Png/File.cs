@@ -568,25 +568,32 @@ namespace TagLib.Png
 			int terminator_index;
 			string keyword = ReadKeyword (data, 0, out terminator_index);
 
+			if (terminator_index + 2 >= data_length)
+				throw new CorruptFileException ("Compression Flag and Compression Method byte expected");
+
 			byte compression_flag = data[terminator_index + 1];
 			byte compression_method = data[terminator_index + 2];
 
 			string language = ReadTerminatedString (data, terminator_index + 3, out terminator_index);
 			string translated_keyword = ReadTerminatedString (data, terminator_index + 1, out terminator_index);
 
-			string value = data.Mid (terminator_index + 1).ToString ();
+			ByteVector txt_data = data.Mid (terminator_index + 1);
 
-			// TODO: also handle compressed data
-			if (compression_flag == 0x00) {
+			if (compression_flag != 0x00) {
+				txt_data = Decompress (compression_method, txt_data);
 
-				PngTag png_tag = GetTag (TagTypes.Png, true) as PngTag;
-
-				if (png_tag.GetKeyword (keyword) == null)
-					png_tag.SetKeyword (keyword, value);
-
-				AddMetadataBlock (position - 8, data_length + 8 + 4);
-
+				// ignore unknown compression methods
+				if (txt_data == null)
+					return;
 			}
+
+			string value = txt_data.ToString ();
+			PngTag png_tag = GetTag (TagTypes.Png, true) as PngTag;
+
+			if (png_tag.GetKeyword (keyword) == null)
+				png_tag.SetKeyword (keyword, value);
+
+			AddMetadataBlock (position - 8, data_length + 8 + 4);
 		}
 
 
@@ -643,6 +650,8 @@ namespace TagLib.Png
 		/// </remarks>
 		private void ReadzTXtChunk (int data_length)
 		{
+			long position = Tell;
+
 			// zTXt Chunk
 			//
 			// N Bytes     Keyword
@@ -656,29 +665,28 @@ namespace TagLib.Png
 
 			CheckCRC (zTXt_CHUNK_TYPE, data, ReadCRC ());
 
+			int terminator_index;
+			string keyword = ReadKeyword (data, 0, out terminator_index);
 
-			// TODO: Decompression must be implemented. System.IO.Compression.Deflate
-			//       seems to not produce the expected results.
-			/*int keyword_terminator = data.Find ("\0", 0);
-
-			if (keyword_terminator < 0)
-				throw new CorruptFileException ("Cannot find Keyword Separator");
-
-			string keyword = data.Mid (0, keyword_terminator).ToString ();
-
-			if (keyword_terminator + 1 >= data_length)
+			if (terminator_index + 1 >= data_length)
 				throw new CorruptFileException ("Compression Method byte expected");
 
-			byte compression_method = data [keyword_terminator + 1];
+			byte compression_method = data[terminator_index + 1];
 
-			// There is currently just one compression method specified
-			if (compression_method != 0x00)
-				throw new CorruptFileException (
-					String.Format ("Unknown Compression Method {0:X2}", compression_method));
+			ByteVector plain_data = Decompress (compression_method, data.Mid (terminator_index + 2));
 
-			ByteVector compressed_data = data.Mid (keyword_terminator + 2);
-			// TODO: Decompress Data
-			*/
+			// ignore unknown compression methods
+			if (plain_data == null)
+				return;
+
+			string value = plain_data.ToString ();
+
+			PngTag png_tag = GetTag (TagTypes.Png, true) as PngTag;
+
+			if (png_tag.GetKeyword (keyword) == null)
+				png_tag.SetKeyword (keyword, value);
+
+			AddMetadataBlock (position - 8, data_length + 8 + 4);
 		}
 
 
@@ -858,6 +866,43 @@ namespace TagLib.Png
 						c = c >> 1;
 				}
 				crc_table[i] = c;
+			}
+		}
+
+
+		private static ByteVector Inflate (ByteVector data)
+		{
+#if HAVE_SHARPZIPLIB
+			using (System.IO.MemoryStream out_stream = new System.IO.MemoryStream ()) {
+
+				ICSharpCode.SharpZipLib.Zip.Compression.Inflater inflater =
+					new ICSharpCode.SharpZipLib.Zip.Compression.Inflater ();
+
+				inflater.SetInput (data.Data);
+
+				byte [] buffer = new byte [1024];
+				int written_bytes;
+
+				while ((written_bytes = inflater.Inflate (buffer)) > 0)
+					out_stream.Write (buffer, 0, written_bytes);
+
+				return new ByteVector (out_stream.ToArray ());
+			}
+#else
+			return null;
+#endif
+		}
+
+
+		private static ByteVector Decompress (byte compression_method, ByteVector compressed_data)
+		{
+			// there is currently just one compression method specified
+			// for PNG.
+			switch (compression_method) {
+			case 0:
+				return Inflate (compressed_data);
+			default:
+				return null;
 			}
 		}
 
