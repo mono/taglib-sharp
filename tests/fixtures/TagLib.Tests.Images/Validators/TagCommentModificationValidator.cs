@@ -10,7 +10,7 @@ namespace TagLib.Tests.Images.Validators
 	public class TagCommentModificationValidator : TagPropertyModificationValidator<string>
 	{
 		public TagCommentModificationValidator (TagTypes type, bool tag_present)
-			: this (String.Empty, type, tag_present)
+			: this (null, type, tag_present)
 		{}
 
 		public TagCommentModificationValidator (string orig_comment, TagTypes type, bool tag_present)

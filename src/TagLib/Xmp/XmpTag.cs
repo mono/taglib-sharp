@@ -36,6 +36,10 @@ namespace TagLib.Xmp
 	/// </summary>
 	public class XmpTag : ImageTag
 	{
+		static XmpTag () {
+			Initialize ();
+		}
+
 #region Parsing speedup
 		private Dictionary<string, Dictionary<string, XmpNode>> nodes;
 
@@ -156,7 +160,7 @@ namespace TagLib.Xmp
 		static readonly NameTable NameTable = new NameTable ();
 		static bool initialized = false;
 
-		void Initialize ()
+		static void Initialize ()
 		{
 			if (initialized)
 				return;
@@ -169,7 +173,7 @@ namespace TagLib.Xmp
 			}
 		}
 
-		void PrepareNamespaces ()
+		static void PrepareNamespaces ()
 		{
 			// Namespaces
 			AddNamespacePrefix ("", ""); // Needed for the about attribute, which can be unqualified.
