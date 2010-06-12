@@ -80,6 +80,11 @@ namespace TagLib.Xmp
 		public static readonly string PHOTOSHOP_NS = "http://ns.adobe.com/photoshop/1.0/";
 
 		/// <summary>
+		///    Prism namespace
+		/// </summary>
+		public static readonly string PRISM_NS = "http://prismstandard.org/namespaces/basic/2.1/";
+
+		/// <summary>
 		///    RDF namespace
 		/// </summary>
 		public static readonly string RDF_NS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
@@ -176,6 +181,7 @@ namespace TagLib.Xmp
 			AddNamespacePrefix ("stJob", JOB_NS);
 			AddNamespacePrefix ("MicrosoftPhoto", MS_PHOTO_NS);
 			AddNamespacePrefix ("photoshop", PHOTOSHOP_NS);
+			AddNamespacePrefix ("prism", PRISM_NS);
 			AddNamespacePrefix ("rdf", RDF_NS);
 			AddNamespacePrefix ("stDim", STDIM_NS);
 			AddNamespacePrefix ("tiff", TIFF_NS);
