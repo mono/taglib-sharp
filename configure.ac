@@ -122,7 +122,7 @@ else
 	AC_SUBST(NUNIT_CMD)
 fi
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 taglib-sharp.pc
 src/Makefile
@@ -131,7 +131,15 @@ src/policy.2.0.taglib-sharp.config
 examples/Makefile
 docs/Makefile
 docs/Package.en.xml
-tests/Makefile
 ])
+
+# Test suite is not shipped, only builds from git.
+if test -d tests; then
+	AC_CONFIG_FILES([tests/Makefile])
+	AM_CONDITIONAL(IN_DIST, false)
+else
+	AM_CONDITIONAL(IN_DIST, true)
+fi
+AC_OUTPUT
 
 echo "TagLib# ($ASSEMBLY_NAME-$ASSEMBLY_VERSION) is ready to be compiled."

@@ -1,8 +1,16 @@
 SUBDIRS = \
    src    \
    examples \
-   docs \
-   tests
+   docs
+
+if !IN_DIST
+SUBDIRS += tests
+endif
+
+DIST_SUBDIRS = \
+   src    \
+   examples \
+   docs
 
 pkgconfig_in_files = taglib-sharp.pc.in
 pkgconfigdir = $(datadir)/pkgconfig
