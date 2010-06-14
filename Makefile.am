@@ -39,8 +39,10 @@ MAINTAINERCLEANFILES = \
 	config.guess \
 	mkinstalldirs
 
+if !IN_DIST
 test:
 	pushd tests; make test; popd;
+endif
 
 distwin: all
 	mkdir -p $(srcdir)/$(WINDIR)
