@@ -61,6 +61,11 @@ public class ParsePhotoApp
 		Console.WriteLine("Make:            " +  image.ImageTag.Make);
 		Console.WriteLine("Model:           " +  image.ImageTag.Model);
 
+		if (image.Properties != null) {
+			Console.WriteLine("Width   :        " +  image.Properties.PhotoWidth);
+			Console.WriteLine("Height  :        " +  image.Properties.PhotoHeight);
+		}
+
 		Console.WriteLine (String.Empty);
 		Console.WriteLine ("---------------------------------------");
 	}
