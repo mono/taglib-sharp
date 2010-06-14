@@ -24,6 +24,8 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Asf/PaddingObject.cs \
 	$(srcdir)/TagLib/Asf/ContentDescriptor.cs \
 	$(srcdir)/TagLib/Asf/DescriptionRecord.cs \
+	$(srcdir)/TagLib/Cr2/Codec.cs \
+	$(srcdir)/TagLib/Cr2/File.cs \
 	$(srcdir)/TagLib/Mpc/StreamHeader.cs \
 	$(srcdir)/TagLib/Mpc/File.cs \
 	$(srcdir)/TagLib/Ogg/GroupedComment.cs \
