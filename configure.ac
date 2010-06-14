@@ -122,6 +122,15 @@ else
 	AC_SUBST(NUNIT_CMD)
 fi
 
+AC_ARG_ENABLE(raw-tests, AC_HELP_STRING([--enable-raw-tests], [Enable RAW image files NUnit tests]),
+		enable_raw_tests=$enableval, enable_raw_tests="no")
+if test "x$enable_raw_tests" = "xno"; then
+	AC_MSG_WARN([RAW image file tests disabled.])
+	AM_CONDITIONAL(ENABLE_RAW_TESTS, false)
+else
+	AM_CONDITIONAL(ENABLE_RAW_TESTS, true)
+fi
+
 AC_CONFIG_FILES([
 Makefile
 taglib-sharp.pc

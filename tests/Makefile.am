@@ -94,6 +94,8 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.TaggingFormats/Mpeg4Test.cs \
 	fixtures/TagLib.Tests.TaggingFormats/XiphTest.cs
 
+RAW_CSFILES =
+
 
 if HAVE_SHARPZIPLIB
     SHARPZIPLIB_FLAGS = -r:ICSharpCode.SharpZipLib.dll -define:HAVE_SHARPZIPLIB
@@ -105,7 +107,17 @@ $(ASSEMBLY): $(ASSEMBLY_CSFILES)
 
 TAGLIB_ASM = ../src/taglib-sharp.dll
 
-build: $(ASSEMBLY) $(TAGLIB_ASM)
+if ENABLE_RAW_TESTS
+update: $(RAW_CSFILES)
+	@echo "Updating RAW repository (this may take a very long time)"
+	pushd $(top_srcdir); git submodule update --init; popd
+
+ASSEMBLY_CSFILES += $(RAW_CSFILES)
+else
+update:
+endif
+
+build: update $(ASSEMBLY) $(TAGLIB_ASM)
 
 if ENABLE_TESTS
 test: build
