@@ -34,13 +34,13 @@ using TagLib.Xmp;
 namespace TagLib.Tiff
 {
 	/// <summary>
-	///    This class extends <see cref="TagLib.File" /> to provide tagging
+	///    This class extends <see cref="TagLib.Tiff.BaseTiffFile" /> to provide tagging
 	///    and properties support for Tiff files.
 	/// </summary>
 	[SupportedMimeType("taglib/tiff", "tiff")]
 	[SupportedMimeType("taglib/tif", "tif")]
 	[SupportedMimeType("image/tiff")]
-	public class File : TagLib.Image.File
+	public class File : BaseTiffFile
 	{
 #region Private Fields
 
@@ -48,11 +48,6 @@ namespace TagLib.Tiff
 		///    Contains the media properties.
 		/// </summary>
 		private Properties properties;
-
-		/// <summary>
-		///    Whether or not the file is big-endian.
-		/// </summary>
-		private bool is_bigendian;
 
 #endregion
 
@@ -200,18 +195,9 @@ namespace TagLib.Tiff
 
 			// first IFD starts at 8
 			uint first_ifd_offset = 8;
+			ByteVector data = RenderHeader (first_ifd_offset);
 
-			ByteVector data = new ByteVector ();
-
-			if (is_bigendian)
-				data.Add ("MM");
-			else
-				data.Add ("II");
-
-			data.Add (ByteVector.FromUShort (42, is_bigendian));
-			data.Add (ByteVector.FromUInt (first_ifd_offset, is_bigendian));
-
-			var renderer = new IFDRenderer (is_bigendian, exif.Structure, first_ifd_offset);
+			var renderer = new IFDRenderer (IsBigEndian, exif.Structure, first_ifd_offset);
 
 			data.Add (renderer.Render ());
 
@@ -235,34 +221,6 @@ namespace TagLib.Tiff
 		}
 
 		/// <summary>
-		///    Starts parsing the TIFF header of the file from beginning
-		///    and sets <see cref="is_bigendian"/> according to the header.
-		///    The method returns the offset to the first IFD.
-		/// </summary>
-		/// <returns>
-		///    A <see cref="System.UInt32"/> representing the offset to first
-		///    IFD of this file.
-		/// </returns>
-		private uint ReadFirstIFDOffset ()
-		{
-			// 2 + 2 + 4 (Byte Order + TIFF Magic Number + Offset)
-			int tiff_header_size = 8;
-
-			Seek (0, SeekOrigin.Begin);
-
-			ByteVector header = ReadBlock (tiff_header_size);
-
-			is_bigendian = header.Mid (0, 2).ToString ().Equals ("MM");
-
-			ushort magic = header.Mid (2, 2).ToUShort (is_bigendian);
-			if (magic != 42)
-				throw new Exception (String.Format ("Invalid TIFF magic: {0}", magic));
-
-			return header.Mid (4, 4).ToUInt (is_bigendian);
-		}
-
-
-		/// <summary>
 		///    Reads the file with a specified read style.
 		/// </summary>
 		/// <param name="propertiesStyle">
@@ -274,15 +232,11 @@ namespace TagLib.Tiff
 		{
 			Mode = AccessMode.Read;
 			try {
-				uint offset = ReadFirstIFDOffset ();
-
-				var ifd_tag = new IFDTag ();
-				var reader = new IFDReader (this, is_bigendian, ifd_tag.Structure, 0, offset, (uint) Length);
-				reader.Read ();
-				ImageTag.AddTag (ifd_tag);
+				uint first_ifd_offset = ReadHeader ();
+				ReadIFD (first_ifd_offset);
 
 				// Find XMP data
-				var xmp_entry = ifd_tag.Structure.GetEntry (0, (ushort) IFDEntryTag.XMP) as ByteVectorIFDEntry;
+				var xmp_entry = ImageTag.Exif.Structure.GetEntry (0, (ushort) IFDEntryTag.XMP) as ByteVectorIFDEntry;
 				if (xmp_entry != null) {
 					ImageTag.AddTag (new XmpTag (xmp_entry.Data.ToString ()));
 				}

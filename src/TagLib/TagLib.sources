@@ -168,6 +168,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Riff/List.cs \
 	$(srcdir)/TagLib/Riff/ListTag.cs \
 	$(srcdir)/TagLib/Riff/MovieIdTag.cs \
+	$(srcdir)/TagLib/Tiff/BaseTiffFile.cs \
 	$(srcdir)/TagLib/Tiff/Codec.cs \
 	$(srcdir)/TagLib/Tiff/File.cs \
 	$(srcdir)/TagLib/WavPack/File.cs \
