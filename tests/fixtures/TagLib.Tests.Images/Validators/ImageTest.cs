@@ -25,38 +25,54 @@ namespace TagLib.Tests.Images.Validators
 			get; set;
 		}
 
-		public static void Run (string filename, IMetadataInvariantValidator invariant)
-		{
-			Run (filename, true, invariant);
-		}
-
-		public static void Run (string filename, bool compare_image_data, IMetadataInvariantValidator invariant)
-		{
-			Run (filename, compare_image_data, invariant, NoModificationValidator.Instance);
-		}
-
-
 		public static void Run (string filename, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
 		{
 			Run (filename, true, invariant, modifications);
 		}
 
+		public static void Run (string directory, string filename, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
+		{
+			Run (directory, filename, true, invariant, modifications);
+		}
+
 		public static void Run (string filename, bool compare_image_data, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
 		{
-			foreach (var modification in modifications) {
+			Run ("samples", filename, compare_image_data, invariant, modifications);
+		}
+
+		public static void Run (string directory, string filename, bool compare_image_data, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
+		{
+			if (modifications.Length == 0) {
 				ImageTest test = new ImageTest () {
-					ImageFileName = filename,
-					CompareImageData = compare_image_data,
-					InvariantValidator = invariant,
-					ModificationValidator = modification
-				};
-				test.TestImage ();
+						ImageFileName = filename,
+						ImageDirectory = directory,
+						TempDirectory = directory,
+						CompareImageData = compare_image_data,
+						InvariantValidator = invariant,
+						ModificationValidator = null
+					};
+					test.TestImage ();
+			} else {
+				foreach (var modification in modifications) {
+					ImageTest test = new ImageTest () {
+						ImageFileName = filename,
+						ImageDirectory = directory,
+						TempDirectory = directory,
+						CompareImageData = compare_image_data,
+						InvariantValidator = invariant,
+						ModificationValidator = modification
+					};
+					test.TestImage ();
+				}
 			}
 		}
 
 		void TestImage ()
 		{
-			ParseUnmodifiedFile ();
+			var file = ParseUnmodifiedFile ();
+
+			if (file.Writeable && ModificationValidator == null)
+				throw new Exception ("Wrong usage of test. A writeable file must be tested at least with a NoModificationValidator");
 
 			if (ModificationValidator == null)
 				return;
@@ -68,12 +84,14 @@ namespace TagLib.Tests.Images.Validators
 		/// <summary>
 		///    Parse the unmodified file.
 		/// </summary>
-		void ParseUnmodifiedFile ()
+		TagLib.Image.File ParseUnmodifiedFile ()
 		{
-			var file = ReadFile (ImageFileName);
+			var file = ReadFile (ImageFile);
 			InvariantValidator.ValidateMetadataInvariants (file);
 			if (CompareImageData)
 				pre_bytes = ReadImageData (file);
+
+			return file;
 		}
 
 		/// <summary>
@@ -82,7 +100,7 @@ namespace TagLib.Tests.Images.Validators
 		void ModifyFile ()
 		{
 			CreateTmpFile ();
-			var tmp = ReadFile (TempImageFileName);
+			var tmp = ReadFile (TempImageFile);
 			InvariantValidator.ValidateMetadataInvariants (tmp);
 			ModificationValidator.ValidatePreModification (tmp);
 			ModificationValidator.ModifyMetadata (tmp);
@@ -95,7 +113,7 @@ namespace TagLib.Tests.Images.Validators
 		/// </summary>
 		void ParseModifiedFile ()
 		{
-			var tmp = ReadFile (TempImageFileName);
+			var tmp = ReadFile (TempImageFile);
 			InvariantValidator.ValidateMetadataInvariants (tmp);
 			ModificationValidator.ValidatePostModification (tmp);
 			if (CompareImageData) {
@@ -104,10 +122,9 @@ namespace TagLib.Tests.Images.Validators
 			}
 		}
 
-		Image.File ReadFile (string filename)
+		Image.File ReadFile (string path)
 		{
-			var full_filename = String.Format ("samples/{0}", filename);
-			return File.Create (full_filename) as Image.File;
+			return File.Create (path) as Image.File;
 		}
 
 		/// <summary>
@@ -142,11 +159,9 @@ namespace TagLib.Tests.Images.Validators
 
 		void CreateTmpFile ()
 		{
-			var orig = String.Format ("samples/{0}", ImageFileName);
-			var tmp = String.Format ("samples/{0}", TempImageFileName);
-			if (System.IO.File.Exists (tmp))
-				System.IO.File.Delete (tmp);
-			System.IO.File.Copy (orig, tmp);
+			if (System.IO.File.Exists (TempImageFile))
+				System.IO.File.Delete (TempImageFile);
+			System.IO.File.Copy (ImageFile, TempImageFile);
 		}
 
 		/// <summary>
@@ -158,6 +173,22 @@ namespace TagLib.Tests.Images.Validators
 
 		string TempImageFileName {
 			get { return String.Format ("tmpwrite_{0}", ImageFileName); }
+		}
+
+		string ImageDirectory {
+			get; set;
+		}
+
+		string TempDirectory {
+			get; set;
+		}
+
+		string ImageFile {
+			get { return String.Format ("{0}/{1}", ImageDirectory, ImageFileName); }
+		}
+
+		string TempImageFile {
+			get { return String.Format ("{0}/{1}", TempDirectory, TempImageFileName); }
 		}
 
 		/// <summary>
