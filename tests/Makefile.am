@@ -94,8 +94,8 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.TaggingFormats/Mpeg4Test.cs \
 	fixtures/TagLib.Tests.TaggingFormats/XiphTest.cs
 
-RAW_CSFILES =
-
+RAW_CSFILES = \
+	fixtures/TagLib.Tests.Images/Cr2Canon400d1Test.cs
 
 if HAVE_SHARPZIPLIB
     SHARPZIPLIB_FLAGS = -r:ICSharpCode.SharpZipLib.dll -define:HAVE_SHARPZIPLIB
