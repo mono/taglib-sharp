@@ -90,6 +90,10 @@ public class GenerateTestFixtureApp
 				EmitTestIFDEntryOpen ("structure", 0, tag, ifd);
 			} else if (ifd.Equals ("Thumbnail")) {
 				EmitTestIFDEntryOpen ("structure", 1, tag, ifd);
+			} else if (ifd.Equals ("Image2")) {
+				EmitTestIFDEntryOpen ("structure", 2, tag, ifd);
+			} else if (ifd.Equals ("Image3")) {
+				EmitTestIFDEntryOpen ("structure", 3, tag, ifd);
 			} else if (ifd.Equals ("Photo")) {
 				EmitTestIFDEntryOpen ("exif_structure", 0, tag, ifd);
 			} else if (IsPartOfMakernote (ifd)) {
@@ -106,13 +110,28 @@ public class GenerateTestFixtureApp
 				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort) CanonMakerNoteEntryTag.ShotInfo, ifd);
 			} else if (ifd.Equals ("CanonCf")) {
 				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort) CanonMakerNoteEntryTag.CustomFunctions, ifd);
+			} else if (ifd.Equals ("CanonPi")) {
+				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort) CanonMakerNoteEntryTag.PictureInfo, ifd);
+			} else if (ifd.Equals ("CanonFi")) {
+				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort) 0x93, ifd);
 			} else {
-				throw new Exception ("Unknown IFD");
+				throw new Exception (String.Format ("Unknown IFD: {0}", ifd));
 			}
 
-			if (ifd.Equals ("CanonCs") || ifd.Equals ("CanonSi") || ifd.Equals ("CanonCf")) {
+			if (ifd.Equals ("CanonCs") || ifd.Equals ("CanonSi") || ifd.Equals ("CanonCf") || ifd.Equals ("CanonPi")) {
 				// This are a made-up directory by exiv2
 				EmitTestIFDIndexedShortEntry (tag, val);
+			} else if (ifd.Equals ("CanonFi")) {
+				// This are a made-up directory by exiv2
+				// And the fist both entries are combined to a long by exiv2.
+				if (tag == 0x0001) {
+					string val1 = ((ushort) UInt32.Parse (val)).ToString ();
+					string val2 = ((ushort) (UInt32.Parse (val) >> 16)).ToString ();
+					EmitTestIFDIndexedShortEntry (tag, val1);
+					EmitTestIFDIndexedShortEntry (tag + 1, val2);
+				} else {
+					EmitTestIFDIndexedShortEntry (tag, val);
+				}
 			} else if (type.Equals ("Ascii")) {
 				EmitTestIFDStringEntry (val);
 			} else if (type.Equals ("Short") && length == 1) {
