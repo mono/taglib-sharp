@@ -239,7 +239,6 @@ namespace TagLib.Xmp
 		/// </summary>
 		public XmpTag ()
 		{
-			Initialize ();
 			NodeTree = new XmpNode (String.Empty, String.Empty);
 			nodes = new Dictionary<string, Dictionary<string, XmpNode>> ();
 		}
@@ -253,7 +252,6 @@ namespace TagLib.Xmp
 		/// </param>
 		public XmpTag (string data)
 		{
-			Initialize ();
 			XmlDocument doc = new XmlDocument (NameTable);
 			doc.LoadXml (data);
 
@@ -268,9 +266,7 @@ namespace TagLib.Xmp
 				throw new CorruptFileException ();
 
 			NodeTree = ParseRDF (node);
-			NodeTree.Accept (new NodeIndexVisitor (this));
-			//NodeTree.Dump ();
-			//Console.WriteLine (node.OuterXml);
+			AcceptVisitors ();
 		}
 
 #endregion
@@ -589,6 +585,16 @@ namespace TagLib.Xmp
 			nodes[ns].Remove (name);
 		}
 
+		/// <summary>
+		/// Accept visitors to touch up the node tree.
+		/// </summary>
+		private void AcceptVisitors ()
+		{
+			NodeTree.Accept (new NodeIndexVisitor (this));
+			//NodeTree.Dump ();
+			//Console.WriteLine (node.OuterXml);
+		}
+
 #endregion
 
 #region Public Properties
@@ -614,6 +620,19 @@ namespace TagLib.Xmp
 #endregion
 
 #region Public Methods
+
+		/// <summary>
+		///	   Replace the current tag with the given one.
+		///	</summary>
+		/// <param name="tag">
+		///    The tag from which the data should be copied.
+		/// </param>
+		public void ReplaceFrom (XmpTag tag)
+		{
+			NodeTree = tag.NodeTree;
+			nodes = new Dictionary<string, Dictionary<string, XmpNode>> ();
+			AcceptVisitors ();
+		}
 
 		/// <summary>
 		///    Clears the values stored in the current instance.
