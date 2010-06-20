@@ -8,7 +8,9 @@
 
 using GLib;
 using System;
+using System.Text;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Tags;
@@ -16,6 +18,8 @@ using TagLib.Xmp;
 
 public class GenerateTestFixtureApp
 {
+    private static MD5 md5 = MD5.Create ();
+
 	public static void Main (string [] args)
 	{
 		if(args.Length != 2) {
@@ -84,7 +88,7 @@ public class GenerateTestFixtureApp
 			if (ifd.Equals ("MakerNote"))
 				continue; // Exiv2 makes these up.
 
-			Write ("// {1}.0x{0:X4} ({2}/{3}/{4}) \"{5}\"", tag, ifd, tag_label, type, length, val);
+			Write ("// {1}.0x{0:X4} ({2}/{3}/{4}) \"{5}\"", tag, ifd, tag_label, type, length, length > 512 ? "(Value ommitted)" : val);
 
 			if (ifd.Equals ("Image")) {
 				EmitTestIFDEntryOpen ("structure", 0, tag, ifd);
@@ -648,10 +652,7 @@ public class GenerateTestFixtureApp
 
 	static void EmitTestIFDByteArrayEntry (string val)
 	{
-		Write ("Assert.IsNotNull (entry as ByteVectorIFDEntry, \"Entry is not a byte array!\");");
-		Write ("var bytes = new byte [] {{ {0} }};", String.Join (", ", val.Trim ().Split(' ')));
-		Write ("var parsed_bytes = (entry as ByteVectorIFDEntry).Data.Data;");
-		Write ("Assert.AreEqual (bytes, parsed_bytes);");
+		EmitByteArrayComparison (val, "ByteVectorIFDEntry", "a byte array");
 	}
 
 	static void EmitTestIFDIPTCNAAEntry (string val)
@@ -666,10 +667,35 @@ public class GenerateTestFixtureApp
 
 	static void EmitTestIFDUndefinedEntry (string val)
 	{
-		Write ("Assert.IsNotNull (entry as UndefinedIFDEntry, \"Entry is not an undefined IFD entry!\");");
-		Write ("var bytes = new byte [] {{ {0} }};", String.Join (", ", val.Trim ().Split(' ')));
-		Write ("var parsed_bytes = (entry as UndefinedIFDEntry).Data.Data;");
-		Write ("Assert.AreEqual (bytes, parsed_bytes);");
+		EmitByteArrayComparison (val, "UndefinedIFDEntry", "an undefined IFD entry");
+	}
+
+	static void EmitByteArrayComparison (string val, string type, string type_desc)
+	{
+		Write ("Assert.IsNotNull (entry as {0}, \"Entry is not {1}!\");", type, type_desc);
+		Write ("var parsed_bytes = (entry as {0}).Data.Data;", type);
+		var parts = val.Trim ().Split(' ');
+		if (parts.Length < 512) {
+			Write ("var bytes = new byte [] {{ {0} }};", String.Join (", ", parts));
+			Write ("Assert.AreEqual (bytes, parsed_bytes);");
+		} else {
+			// Starting with 512 byte items, we compare based on an MD5 hash, should be faster and reduces
+			// the size of the test fixtures.
+			byte [] data = new byte [parts.Length];
+			for (int i = 0; i < parts.Length; i++) {
+				data [i] = Byte.Parse (parts [i]);
+			}
+			var hash = md5.ComputeHash (data);
+
+			StringBuilder shash = new StringBuilder ();
+			for (int i = 0; i < hash.Length; i++) {
+				shash.Append (hash[i].ToString ("x2"));
+			}
+
+			Write ("var parsed_hash = Utils.Md5Encode (parsed_bytes);");
+			Write ("Assert.AreEqual (\"{0}\", parsed_hash);", shash.ToString ());
+			Write ("Assert.AreEqual ({0}, parsed_bytes.Length);", parts.Length);
+		}
 	}
 
 	static void EmitTestIFDSubIFDEntry (string val)
