@@ -763,6 +763,8 @@ public class GenerateTestFixtureApp
 		tag_names = new Dictionary<string, Dictionary<ushort, string>> ();
 
 		IndexTagType ("Image", typeof (IFDEntryTag), "IFDEntryTag");
+		IndexTagType ("Image2", typeof (IFDEntryTag), "IFDEntryTag");
+		IndexTagType ("Image3", typeof (IFDEntryTag), "IFDEntryTag");
 		IndexTagType ("Thumbnail", typeof (IFDEntryTag), "IFDEntryTag"); // IFD1, for thumbnails
 		IndexTagType ("Photo", typeof (IFDEntryTag), "IFDEntryTag");
 		IndexTagType ("Photo", typeof (ExifEntryTag), "ExifEntryTag");
@@ -773,6 +775,10 @@ public class GenerateTestFixtureApp
 		IndexTagType ("CanonCs", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
 		IndexTagType ("CanonSi", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
 		IndexTagType ("CanonCf", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
+		IndexTagType ("CanonFi", typeof (CanonFileInfoEntryTag), "CanonFileInfoEntryTag");
+		IndexTagType ("CanonFi", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
+		IndexTagType ("CanonPi", typeof (CanonPictureInfoEntryTag), "CanonPictureInfoEntryTag");
+		IndexTagType ("CanonPi", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
 		IndexTagType ("Nikon3", typeof (Nikon3MakerNoteEntryTag), "Nikon3MakerNoteEntryTag");
 		IndexTagType ("NikonPreview", typeof (NikonPreviewMakerNoteEntryTag), "NikonPreviewMakerNoteEntryTag");
 		IndexTagType ("Panasonic", typeof (PanasonicMakerNoteEntryTag), "PanasonicMakerNoteEntryTag");

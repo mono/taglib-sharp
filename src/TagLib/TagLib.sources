@@ -126,7 +126,9 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/IFD/IFDReader.cs \
 	$(srcdir)/TagLib/IFD/IFDRenderer.cs \
 	$(srcdir)/TagLib/IFD/Makernotes/Nikon3MakernoteReader.cs \
+	$(srcdir)/TagLib/IFD/Tags/CanonFileInfoEntryTag.cs \
 	$(srcdir)/TagLib/IFD/Tags/CanonMakerNoteEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/CanonPictureInfoEntryTag.cs \
 	$(srcdir)/TagLib/IFD/Tags/ExifEntryTag.cs \
 	$(srcdir)/TagLib/IFD/Tags/GPSEntryTag.cs \
 	$(srcdir)/TagLib/IFD/Tags/IFDEntryTag.cs \
