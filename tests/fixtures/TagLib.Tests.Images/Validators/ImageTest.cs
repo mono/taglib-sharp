@@ -12,8 +12,8 @@ namespace TagLib.Tests.Images.Validators
 			Global.InitCheck (ref args);
 		}
 
-		byte [] pre_bytes;
-		byte [] post_bytes;
+		string pre_hash;
+		string post_hash;
 
 		public static bool CompareLargeImages {
 			get {
@@ -89,7 +89,7 @@ namespace TagLib.Tests.Images.Validators
 			var file = ReadFile (ImageFile);
 			InvariantValidator.ValidateMetadataInvariants (file);
 			if (CompareImageData)
-				pre_bytes = ReadImageData (file);
+				pre_hash = ReadImageData (file);
 
 			return file;
 		}
@@ -117,7 +117,7 @@ namespace TagLib.Tests.Images.Validators
 			InvariantValidator.ValidateMetadataInvariants (tmp);
 			ModificationValidator.ValidatePostModification (tmp);
 			if (CompareImageData) {
-				post_bytes = ReadImageData (tmp);
+				post_hash = ReadImageData (tmp);
 				ValidateImageData ();
 			}
 		}
@@ -137,7 +137,7 @@ namespace TagLib.Tests.Images.Validators
 			return (file is Jpeg.File) || (file is Tiff.File) || (file is Gif.File) || (file is Png.File);
 		}
 
-		byte[] ReadImageData (Image.File file)
+		string ReadImageData (Image.File file)
 		{
 			if (!IsSupportedImageFile (file))
 				Assert.Fail("Unsupported type for data reading: "+file);
@@ -148,13 +148,13 @@ namespace TagLib.Tests.Images.Validators
 			using (Pixbuf buf = new Pixbuf(v.Data))
 				result = buf.SaveToBuffer("png");
 			file.Mode = File.AccessMode.Closed;
-			return result;
+			return Utils.Md5Encode (result);
 		}
 
 		void ValidateImageData ()
 		{
 			string label = String.Format ("Image data mismatch for {0}/{1}", ImageFileName, ModificationValidator);
-			Assert.AreEqual (pre_bytes, post_bytes, label);
+			Assert.AreEqual (pre_hash, post_hash, label);
 		}
 
 		void CreateTmpFile ()
