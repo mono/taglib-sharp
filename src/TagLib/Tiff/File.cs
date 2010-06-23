@@ -228,7 +228,7 @@ namespace TagLib.Tiff
 		///    of accuracy to read the media properties, or <see
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
-		private void Read (ReadStyle propertiesStyle)
+		protected void Read (ReadStyle propertiesStyle)
 		{
 			Mode = AccessMode.Read;
 			try {

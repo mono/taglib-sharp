@@ -66,6 +66,8 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Mpeg/AudioFile.cs \
 	$(srcdir)/TagLib/Mpeg/AudioHeader.cs \
 	$(srcdir)/TagLib/Mpeg/VideoHeader.cs \
+	$(srcdir)/TagLib/Nef/Codec.cs \
+	$(srcdir)/TagLib/Nef/File.cs \
 	$(srcdir)/TagLib/NonContainer/EndTag.cs \
 	$(srcdir)/TagLib/NonContainer/File.cs \
 	$(srcdir)/TagLib/NonContainer/StartTag.cs \
