@@ -27,7 +27,7 @@ namespace TagLib.Cr2
 {
 
 	/// <summary>
-	///    A Png photo codec. Contains basic photo details.
+	///    A Canon RAW photo codec. Contains basic photo details.
 	/// </summary>
 	public class Codec : Image.Codec
 	{
