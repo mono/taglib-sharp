@@ -115,7 +115,7 @@ namespace TagLib {
 		public static void Register (Type type)
 		{
 			Attribute [] attrs = Attribute.GetCustomAttributes (type,
-				typeof(SupportedMimeType));
+				typeof(SupportedMimeType), false);
 			
 			if(attrs == null || attrs.Length == 0)
 				return;
