@@ -36,6 +36,9 @@ public class GenerateTestFixtureApp
 		EmitFooter ();
 	}
 
+	static Dictionary<string, int> sub_ifds = new Dictionary<string, int> ();
+	static Dictionary<string, bool> sub_ifds_emitted = new Dictionary<string, bool> ();
+
 	static void GenerateIFDFixture (string name, string path)
 	{
 		// First run exiv2 on it.
@@ -59,6 +62,14 @@ public class GenerateTestFixtureApp
 			string type = parts[3];
 			uint length = uint.Parse (parts[4]);
 			string val = ExtractKey (path, String.Format ("Exif.{0}.{1}", ifd, tag_label));
+
+			if (tag_label == "SubIFDs") {
+				for (int i = 0; i < val.Split (' ').Length; i++) {
+					var sub_ifd = String.Format ("SubImage{0}", sub_ifds.Count + 1);
+					sub_ifds.Add (sub_ifd, sub_ifds.Count);
+				}
+				continue;
+			}
 
 			EnsureIFD (ifd);
 
@@ -118,6 +129,8 @@ public class GenerateTestFixtureApp
 				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort) CanonMakerNoteEntryTag.PictureInfo, ifd);
 			} else if (ifd.Equals ("CanonFi")) {
 				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort) 0x93, ifd);
+			} else if (sub_ifds.ContainsKey (ifd)) {
+				EmitTestIFDEntryOpen (String.Format ("{0}_structure", ifd), 0, tag, ifd);
 			} else {
 				throw new Exception (String.Format ("Unknown IFD: {0}", ifd));
 			}
@@ -550,6 +563,14 @@ public class GenerateTestFixtureApp
 			Write ();
 			gps_emitted = true;
 		}
+
+		if (sub_ifds.ContainsKey (ifd) && !sub_ifds_emitted.ContainsKey (ifd)) {
+			Write ();
+			Write ("var {0}_structure = (structure.GetEntry (0, (ushort) IFDEntryTag.SubIFDs) as SubIFDArrayEntry).Entries [{1}];", ifd, sub_ifds[ifd]);
+			Write ("Assert.IsNotNull ({0}_structure, \"{0} structure not found\");", ifd);
+			Write ();
+			sub_ifds_emitted.Add (ifd, true);
+		}
 	}
 
 	static void EmitTestIFDEntryOpen (string src, int ifd, ushort tag, string ifd_label)
@@ -765,6 +786,8 @@ public class GenerateTestFixtureApp
 		IndexTagType ("Image", typeof (IFDEntryTag), "IFDEntryTag");
 		IndexTagType ("Image2", typeof (IFDEntryTag), "IFDEntryTag");
 		IndexTagType ("Image3", typeof (IFDEntryTag), "IFDEntryTag");
+		IndexTagType ("SubImage1", typeof (IFDEntryTag), "IFDEntryTag");
+		IndexTagType ("SubImage2", typeof (IFDEntryTag), "IFDEntryTag");
 		IndexTagType ("Thumbnail", typeof (IFDEntryTag), "IFDEntryTag"); // IFD1, for thumbnails
 		IndexTagType ("Photo", typeof (IFDEntryTag), "IFDEntryTag");
 		IndexTagType ("Photo", typeof (ExifEntryTag), "ExifEntryTag");

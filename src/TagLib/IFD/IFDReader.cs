@@ -25,6 +25,7 @@
 
 using System;
 using System.IO;
+using System.Collections.Generic;
 using TagLib.IFD.Entries;
 using TagLib.IFD.Makernotes;
 using TagLib.IFD.Tags;
@@ -799,6 +800,26 @@ namespace TagLib.IFD
 		{
 			if (tag == (ushort) ExifEntryTag.MakerNote)
 				return ParseMakernote (tag, type, count, base_offset, offset);
+
+			if (tag == (ushort) IFDEntryTag.SubIFDs) {
+				if (count < 2)
+					throw new NotImplementedException ("Seeking is probably wrong in this case");
+
+				var entries = new List<IFDStructure> ();
+
+				file.Seek (base_offset + offset, SeekOrigin.Begin);
+				uint [] data = ReadUIntArray (count);
+
+				foreach (var sub_offset in data) {
+					var sub_structure = new IFDStructure ();
+					var sub_reader = CreateSubIFDReader (file, is_bigendian, sub_structure, base_offset, sub_offset, max_offset);
+					sub_reader.Read ();
+
+					entries.Add (sub_structure);
+				}
+				return new SubIFDArrayEntry (tag, entries);
+			}
+
 
 			IFDStructure ifd_structure = new IFDStructure ();
 			IFDReader reader = CreateSubIFDReader (file, is_bigendian, ifd_structure, base_offset, offset, max_offset);
