@@ -118,9 +118,8 @@ namespace TagLib.Nef
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle) : base (abstraction)
+		             ReadStyle propertiesStyle) : base (abstraction, propertiesStyle)
 		{
-			Read (propertiesStyle);
 		}
 
 		/// <summary>

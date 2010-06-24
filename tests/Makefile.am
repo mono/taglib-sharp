@@ -26,6 +26,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.FileFormats/OggFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/StandardTests.cs \
 	fixtures/TagLib.Tests.Images/AddImageMetadataTests.cs \
+	fixtures/TagLib.Tests.Images/Fracture1.cs \
 	fixtures/TagLib.Tests.Images/GifExiftoolLongCommentTest.cs \
 	fixtures/TagLib.Tests.Images/GifExiftoolTangled1Test.cs \
 	fixtures/TagLib.Tests.Images/GifExiftoolTangled2Test.cs \
@@ -51,6 +52,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/JpegSony2Test.cs \
 	fixtures/TagLib.Tests.Images/JpegTangledTest.cs \
 	fixtures/TagLib.Tests.Images/NullOrientationTest.cs \
+	fixtures/TagLib.Tests.Images/NefNikonD90Test.cs \
 	fixtures/TagLib.Tests.Images/RationalTest.cs \
 	fixtures/TagLib.Tests.Images/PngGimpTest.cs \
 	fixtures/TagLib.Tests.Images/PngGimpPngcrushTest.cs \

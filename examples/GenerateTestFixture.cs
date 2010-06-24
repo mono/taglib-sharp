@@ -18,7 +18,7 @@ using TagLib.Xmp;
 
 public class GenerateTestFixtureApp
 {
-    private static MD5 md5 = MD5.Create ();
+	private static MD5 md5 = MD5.Create ();
 
 	public static void Main (string [] args)
 	{
@@ -61,6 +61,11 @@ public class GenerateTestFixtureApp
 			string ifd = parts[2];
 			string type = parts[3];
 			uint length = uint.Parse (parts[4]);
+
+			if (ifd == "NikonSi02xx" || ifd == "NikonVr" || ifd == "NikonPc" || ifd == "NikonWt" || ifd == "NikonIi" || ifd == "NikonLd3") {
+				continue; // Exiv2 makes these up.
+			}
+
 			string val = ExtractKey (path, String.Format ("Exif.{0}.{1}", ifd, tag_label));
 
 			if (tag_label == "SubIFDs") {

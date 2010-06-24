@@ -137,7 +137,13 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/IFD/Tags/IFDEntryTag.cs \
 	$(srcdir)/TagLib/IFD/Tags/IOPEntryTag.cs \
 	$(srcdir)/TagLib/IFD/Tags/Nikon3MakerNoteEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/NikonLensData3EntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/NikonIsoInfoEntryTag.cs \
 	$(srcdir)/TagLib/IFD/Tags/NikonPreviewMakerNoteEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/NikonPictureControlEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/NikonShotInfoEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/NikonVibrationReductionEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/NikonWorldTimeEntryTag.cs \
 	$(srcdir)/TagLib/IFD/Tags/PanasonicMakerNoteEntryTag.cs \
 	$(srcdir)/TagLib/Mpeg4/AppleTag.cs \
 	$(srcdir)/TagLib/Mpeg4/Box.cs \
