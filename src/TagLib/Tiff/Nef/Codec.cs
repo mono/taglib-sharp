@@ -25,7 +25,7 @@
 
 using System;
 
-namespace TagLib.Nef
+namespace TagLib.Tiff.Nef
 {
 
 	/// <summary>

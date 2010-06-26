@@ -1,10 +1,10 @@
 //
-// File.cs: Provides tagging for Nikon NEF files
+// File.cs: Provides tagging for Canon CR2 files
 //
 // Author:
-//   Ruben Vermeersch (ruben@savanne.be)
+//   Mike Gemuende (mike@gemuende.be)
 //
-// Copyright (C) 2010 Ruben Vermeersch
+// Copyright (C) 2010 Mike Gemuende
 //
 // This library is free software; you can redistribute it and/or modify
 // it  under the terms of the GNU Lesser General Public License version
@@ -29,20 +29,41 @@ using TagLib.Image;
 using TagLib.IFD;
 using TagLib.IFD.Tags;
 
-namespace TagLib.Nef
+namespace TagLib.Tiff.Cr2
 {
 
 	/// <summary>
-	///    This class extends <see cref="TagLib.Tiff.File" /> to provide tagging
-	///    for NEF image files.
+	///    This class extends <see cref="TagLib.Tiff.BaseTiffFile" /> to provide tagging
+	///    for CR2 image files.
 	/// </summary>
-	[SupportedMimeType("taglib/nef", "nef")]
-	[SupportedMimeType("image/nef")]
-	[SupportedMimeType("image/x-nikon-nef")]
-	public class File : TagLib.Tiff.File
+	[SupportedMimeType("taglib/cr2", "cr2")]
+	[SupportedMimeType("image/cr2")]
+	[SupportedMimeType("image/x-canon-cr")]
+	public class File : TagLib.Tiff.BaseTiffFile
 	{
+#region private fields
+
+		/// <summary>
+		///    The Properties of the image
+		/// </summary>
+		private Properties properties;
+
+#endregion
 
 #region public Properties
+
+		/// <summary>
+		///    Gets the media properties of the file represented by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="TagLib.Properties" /> object containing the
+		///    media properties of the file represented by the current
+		///    instance.
+		/// </value>
+		public override TagLib.Properties Properties {
+			get { return properties; }
+		}
 
 		/// <summary>
 		///    Indicates if tags can be written back to the current file or not
@@ -118,8 +139,9 @@ namespace TagLib.Nef
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle) : base (abstraction, propertiesStyle)
+		             ReadStyle propertiesStyle) : base (abstraction)
 		{
+			Read (propertiesStyle);
 		}
 
 		/// <summary>
@@ -153,6 +175,112 @@ namespace TagLib.Nef
 		}
 
 #endregion
+
+#region private methods
+
+		/// <summary>
+		///    Reads the information from file with a specified read style.
+		/// </summary>
+		/// <param name="propertiesStyle">
+		///    A <see cref="ReadStyle" /> value specifying at what level
+		///    of accuracy to read the media properties, or <see
+		///    cref="ReadStyle.None" /> to ignore the properties.
+		/// </param>
+		private void Read (ReadStyle propertiesStyle)
+		{
+			Mode = AccessMode.Read;
+			try {
+				ImageTag = new CombinedImageTag (TagTypes.TiffIFD);
+
+				ReadFile ();
+
+				TagTypesOnDisk = TagTypes;
+
+				if (propertiesStyle != ReadStyle.None)
+					properties = ExtractProperties ();
+
+			} finally {
+				Mode = AccessMode.Closed;
+			}
+		}
+
+		/// <summary>
+		///    Parses the CR2 file
+		/// </summary>
+		private void ReadFile ()
+		{
+			// A CR2 file starts with a Tiff header followed by a CR2 header
+			uint first_ifd_offset = ReadHeader ();
+			uint raw_ifd_offset = ReadAdditionalCR2Header ();
+
+			ReadIFD (first_ifd_offset, 3);
+			ReadIFD (raw_ifd_offset, 1);
+		}
+
+		/// <summary>
+		///   Reads and validates the CR2 header started at the current position.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="System.UInt32"/> with the offset to the IFD with the RAW data.
+		/// </returns>
+		private uint ReadAdditionalCR2Header ()
+		{
+			// CR2 Header
+			//
+			// CR2 Information:
+			//
+			// 2 bytes         CR2 Magic word (CR)
+			// 1 byte          CR2 major version (2)
+			// 1 byte          CR2 minor version (0)
+			// 4 bytes         Offset to RAW IFD
+			//
+
+			ByteVector header = ReadBlock (8);
+
+			if (header.Count != 8)
+				throw new CorruptFileException ("Unexpected end of CR2 header");
+
+			if (header.Mid (0, 2).ToString () != "CR")
+				throw new CorruptFileException("CR2 Magic (CR) expected");
+
+			byte major_version = header [2];
+			byte minor_version = header [3];
+
+			if (major_version != 2 || minor_version != 0)
+				throw new UnsupportedFormatException ("Only major version 2 and minor version 0 are supported");
+
+			uint raw_ifd_offset = header.Mid (4, 4).ToUInt (IsBigEndian);
+
+			return raw_ifd_offset;
+		}
+
+		/// <summary>
+		///    Attempts to extract the media properties of the main
+		///    photo.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="Properties" /> object with a best effort guess
+		///    at the right values. When no guess at all can be made,
+		///    <see langword="null" /> is returned.
+		/// </returns>
+		private Properties ExtractProperties ()
+		{
+			int width = 0, height = 0;
+
+			IFDTag tag = GetTag (TagTypes.TiffIFD) as IFDTag;
+
+			width = (int) (tag.ExifIFD.GetLongValue (0, (ushort) ExifEntryTag.PixelXDimension) ?? 0);
+			height = (int) (tag.ExifIFD.GetLongValue (0, (ushort) ExifEntryTag.PixelYDimension) ?? 0);
+
+			if (width > 0 && height > 0) {
+				return new Properties (TimeSpan.Zero, new Codec (width, height));
+			}
+
+			return null;
+		}
+
+#endregion
+
 
 	}
 }

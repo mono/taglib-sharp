@@ -24,8 +24,6 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Asf/PaddingObject.cs \
 	$(srcdir)/TagLib/Asf/ContentDescriptor.cs \
 	$(srcdir)/TagLib/Asf/DescriptionRecord.cs \
-	$(srcdir)/TagLib/Cr2/Codec.cs \
-	$(srcdir)/TagLib/Cr2/File.cs \
 	$(srcdir)/TagLib/Mpc/StreamHeader.cs \
 	$(srcdir)/TagLib/Mpc/File.cs \
 	$(srcdir)/TagLib/Ogg/GroupedComment.cs \
@@ -66,8 +64,6 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Mpeg/AudioFile.cs \
 	$(srcdir)/TagLib/Mpeg/AudioHeader.cs \
 	$(srcdir)/TagLib/Mpeg/VideoHeader.cs \
-	$(srcdir)/TagLib/Nef/Codec.cs \
-	$(srcdir)/TagLib/Nef/File.cs \
 	$(srcdir)/TagLib/NonContainer/EndTag.cs \
 	$(srcdir)/TagLib/NonContainer/File.cs \
 	$(srcdir)/TagLib/NonContainer/StartTag.cs \
@@ -184,6 +180,10 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Tiff/BaseTiffFile.cs \
 	$(srcdir)/TagLib/Tiff/Codec.cs \
 	$(srcdir)/TagLib/Tiff/File.cs \
+	$(srcdir)/TagLib/Tiff/Cr2/Codec.cs \
+	$(srcdir)/TagLib/Tiff/Cr2/File.cs \
+	$(srcdir)/TagLib/Tiff/Nef/Codec.cs \
+	$(srcdir)/TagLib/Tiff/Nef/File.cs \
 	$(srcdir)/TagLib/WavPack/File.cs \
 	$(srcdir)/TagLib/WavPack/StreamHeader.cs \
 	$(srcdir)/TagLib/Xmp/XmlNodeExtensions.cs \

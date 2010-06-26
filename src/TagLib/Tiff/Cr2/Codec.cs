@@ -23,7 +23,7 @@
 
 using System;
 
-namespace TagLib.Cr2
+namespace TagLib.Tiff.Cr2
 {
 
 	/// <summary>
