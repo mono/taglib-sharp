@@ -273,7 +273,7 @@ namespace TagLib.Tiff.Cr2
 			height = (int) (tag.ExifIFD.GetLongValue (0, (ushort) ExifEntryTag.PixelYDimension) ?? 0);
 
 			if (width > 0 && height > 0) {
-				return new Properties (TimeSpan.Zero, new Codec (width, height));
+				return new Properties (TimeSpan.Zero, new Codec (width, height, "Canon RAW File"));
 			}
 
 			return null;

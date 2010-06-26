@@ -270,10 +270,21 @@ namespace TagLib.Tiff
 			height = (int) (structure.GetLongValue (0, (ushort) IFDEntryTag.ImageLength) ?? 0);
 
 			if (width > 0 && height > 0) {
-				return new Properties (TimeSpan.Zero, new Codec (width, height));
+				return new Properties (TimeSpan.Zero, CreateCodec (width, height));
 			}
 
 			return null;
+		}
+
+		/// <summary>
+		///    Create a codec that describes the photo properties.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="Codec" /> object.
+		/// </returns>
+		protected virtual Codec CreateCodec (int width, int height)
+		{
+			return new Codec (width, height);
 		}
 
 #endregion

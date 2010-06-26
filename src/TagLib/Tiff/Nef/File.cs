@@ -154,5 +154,17 @@ namespace TagLib.Tiff.Nef
 
 #endregion
 
+		/// <summary>
+		///    Create a codec that describes the photo properties.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="Codec" /> object.
+		/// </returns>
+		protected override Codec CreateCodec (int width, int height)
+		{
+			return new Codec (width, height, "Nikon Raw File");
+		}
+
+
 	}
 }

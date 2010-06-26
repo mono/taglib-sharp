@@ -64,6 +64,7 @@ public class ParsePhotoApp
 		if (image.Properties != null) {
 			Console.WriteLine("Width   :        " +  image.Properties.PhotoWidth);
 			Console.WriteLine("Height  :        " +  image.Properties.PhotoHeight);
+			Console.WriteLine("Type    :        " +  image.Properties.Description);
 		}
 
 		Console.WriteLine (String.Empty);

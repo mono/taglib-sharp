@@ -180,9 +180,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Tiff/BaseTiffFile.cs \
 	$(srcdir)/TagLib/Tiff/Codec.cs \
 	$(srcdir)/TagLib/Tiff/File.cs \
-	$(srcdir)/TagLib/Tiff/Cr2/Codec.cs \
 	$(srcdir)/TagLib/Tiff/Cr2/File.cs \
-	$(srcdir)/TagLib/Tiff/Nef/Codec.cs \
 	$(srcdir)/TagLib/Tiff/Nef/File.cs \
 	$(srcdir)/TagLib/WavPack/File.cs \
 	$(srcdir)/TagLib/WavPack/StreamHeader.cs \
