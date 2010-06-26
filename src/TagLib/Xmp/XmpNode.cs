@@ -322,7 +322,7 @@ namespace TagLib.Xmp
 				if (QualifierCount > 0)
 					throw new NotImplementedException ();
 				var bag = XmpTag.CreateNode (parent.OwnerDocument, XmpTag.BAG_URI, XmpTag.RDF_NS);
-				foreach (var child in children)
+				foreach (var child in Children)
 					child.RenderInto (bag);
 				node.AppendChild (bag);
 				parent.AppendChild (node);
@@ -333,7 +333,7 @@ namespace TagLib.Xmp
 				if (QualifierCount > 0)
 					throw new NotImplementedException ();
 				var bag = XmpTag.CreateNode (parent.OwnerDocument, XmpTag.ALT_URI, XmpTag.RDF_NS);
-				foreach (var child in children)
+				foreach (var child in Children)
 					child.RenderInto (bag);
 				node.AppendChild (bag);
 				parent.AppendChild (node);
@@ -344,7 +344,7 @@ namespace TagLib.Xmp
 				if (QualifierCount > 0)
 					throw new NotImplementedException ();
 				var bag = XmpTag.CreateNode (parent.OwnerDocument, XmpTag.SEQ_URI, XmpTag.RDF_NS);
-				foreach (var child in children)
+				foreach (var child in Children)
 					child.RenderInto (bag);
 				node.AppendChild (bag);
 				parent.AppendChild (node);
