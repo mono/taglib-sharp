@@ -52,6 +52,16 @@ namespace TagLib.Tiff
 
 #endregion
 
+#region Protected Properties
+
+		/// <summary>
+		///    The identifier used to recognize the file. This is 42 for most TIFF files.
+		/// </summary>
+		protected ushort Magic {
+			get; set;
+		}
+
+#endregion
 
 #region Constructors
 
@@ -69,6 +79,7 @@ namespace TagLib.Tiff
 		/// </exception>
 		protected BaseTiffFile (string path) : base (path)
 		{
+			Magic = 42;
 		}
 
 		/// <summary>
@@ -85,6 +96,7 @@ namespace TagLib.Tiff
 		/// </exception>
 		protected BaseTiffFile (IFileAbstraction abstraction) : base (abstraction)
 		{
+			Magic = 42;
 		}
 
 #endregion
@@ -107,7 +119,7 @@ namespace TagLib.Tiff
 			// TIFF header:
 			//
 			// 2 bytes         Indicating the endianess (II or MM)
-			// 2 bytes         Tiff Magic word (42)
+			// 2 bytes         Tiff Magic word (usually 42)
 			// 4 bytes         Offset to first IFD
 
 			ByteVector header = ReadBlock (8);
@@ -125,8 +137,8 @@ namespace TagLib.Tiff
 				throw new CorruptFileException ("Unknown Byte Order");
 			}
 
-			if (header.Mid (2, 2).ToUShort (IsBigEndian) != 42)
-				throw new CorruptFileException ("TIFF Magic (42) expected");
+			if (header.Mid (2, 2).ToUShort (IsBigEndian) != Magic)
+				throw new CorruptFileException (String.Format ("TIFF Magic ({0}) expected", Magic));
 
 			uint first_ifd_offset = header.Mid (4, 4).ToUInt (IsBigEndian);
 
@@ -160,11 +172,43 @@ namespace TagLib.Tiff
 		protected void ReadIFD (uint offset, int ifd_count)
 		{
 			var ifd_tag = GetTag (TagTypes.TiffIFD, true) as IFDTag;
-			var reader = new IFDReader (this, IsBigEndian, ifd_tag.Structure, 0, offset, (uint) Length);
+			var reader = CreateIFDReader (this, IsBigEndian, ifd_tag.Structure, 0, offset, (uint) Length);
 
 			reader.Read (ifd_count);
 		}
 
+		/// <summary>
+		///    Creates an IFD reader to parse the file.
+		/// </summary>
+		/// <param name="file">
+		///    A <see cref="File"/> to read from.
+		/// </param>
+		/// <param name="is_bigendian">
+		///     A <see cref="System.Boolean"/>, it must be true, if the data of the IFD should be
+		///     read as bigendian, otherwise false.
+		/// </param>
+		/// <param name="structure">
+		///    A <see cref="IFDStructure"/> that will be populated.
+		/// </param>
+		/// <param name="base_offset">
+		///     A <see cref="System.Int64"/> value describing the base were the IFD offsets
+		///     refer to. E.g. in Jpegs the IFD are located in an Segment and the offsets
+		///     inside the IFD refer from the beginning of this segment. So <paramref
+		///     name="base_offset"/> must contain the beginning of the segment.
+		/// </param>
+		/// <param name="ifd_offset">
+		///     A <see cref="System.UInt32"/> value with the beginning of the IFD relative to
+		///     <paramref name="base_offset"/>.
+		/// </param>
+		/// <param name="max_offset">
+		/// 	A <see cref="System.UInt32"/> value with maximal possible offset. This is to limit
+		///     the size of the possible data;
+		/// </param>
+		protected virtual IFDReader CreateIFDReader (BaseTiffFile file, bool is_bigendian, IFDStructure structure, long base_offset, uint ifd_offset, uint max_offset)
+		{
+			return new IFDReader (file, is_bigendian, structure, base_offset, ifd_offset, max_offset);
+
+		}
 
 		/// <summary>
 		///    Renders a TIFF header with the given offset to the first IFD.
@@ -186,7 +230,7 @@ namespace TagLib.Tiff
 			else
 				data.Add ("II");
 
-			data.Add (ByteVector.FromUShort (42, IsBigEndian));
+			data.Add (ByteVector.FromUShort (Magic, IsBigEndian));
 			data.Add (ByteVector.FromUInt (first_ifd_offset, IsBigEndian));
 
 			return data;

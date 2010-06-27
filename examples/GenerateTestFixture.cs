@@ -134,6 +134,8 @@ public class GenerateTestFixtureApp
 				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort) CanonMakerNoteEntryTag.PictureInfo, ifd);
 			} else if (ifd.Equals ("CanonFi")) {
 				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort) 0x93, ifd);
+			} else if (ifd.Equals ("PanasonicRaw")) {
+				EmitTestIFDEntryOpen ("pana_structure", 0, tag, ifd);
 			} else if (sub_ifds.ContainsKey (ifd)) {
 				EmitTestIFDEntryOpen (String.Format ("{0}_structure", ifd), 0, tag, ifd);
 			} else {
@@ -437,6 +439,8 @@ public class GenerateTestFixtureApp
 		Write ("}"); // Namespace
 	}
 
+	static bool is_panasonic_raw = false;
+
 	static bool structure_emitted = false;
 	static bool exif_emitted = false;
 	static bool makernote_emitted = false;
@@ -450,7 +454,24 @@ public class GenerateTestFixtureApp
 	static bool gps_emitted = false;
 
 	static void EnsureIFD (string ifd) {
-		if (ifd.Equals ("Image")) {
+		if (ifd.Equals ("PanasonicRaw")) {
+			if (is_panasonic_raw)
+				return;
+
+			Write ();
+			Write ("var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;");
+			Write ("Assert.IsNotNull (tag, \"IFD tag not found\");");
+			Write ();
+			Write ("var pana_structure = tag.Structure;");
+			Write ();
+			Write ("var jpg_entry = pana_structure.GetEntry (0, (ushort) 0x002e);");
+			Write ("Console.WriteLine (jpg_entry); // FIXME");
+			Write ("var structure = tag.Structure; // FIXME");
+
+			is_panasonic_raw = true;
+		}
+
+		if (ifd.Equals ("Image") && !is_panasonic_raw) {
 			if (structure_emitted)
 				return;
 			Write ();
@@ -827,6 +848,7 @@ public class GenerateTestFixtureApp
 		IndexTagType ("Nikon3", typeof (Nikon3MakerNoteEntryTag), "Nikon3MakerNoteEntryTag");
 		IndexTagType ("NikonPreview", typeof (NikonPreviewMakerNoteEntryTag), "NikonPreviewMakerNoteEntryTag");
 		IndexTagType ("Panasonic", typeof (PanasonicMakerNoteEntryTag), "PanasonicMakerNoteEntryTag");
+		IndexTagType ("PanasonicRaw", typeof (IFDEntryTag), "IFDEntryTag");
 	}
 
 	static void IndexTagType (string ifd, Type t, string typename)

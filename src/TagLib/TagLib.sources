@@ -187,6 +187,9 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Tiff/Cr2/File.cs \
 	$(srcdir)/TagLib/Tiff/Dng/File.cs \
 	$(srcdir)/TagLib/Tiff/Nef/File.cs \
+	$(srcdir)/TagLib/Tiff/Rw2/File.cs \
+	$(srcdir)/TagLib/Tiff/Rw2/IFDReader.cs \
+	$(srcdir)/TagLib/Tiff/Rw2/IFDTag.cs \
 	$(srcdir)/TagLib/WavPack/File.cs \
 	$(srcdir)/TagLib/WavPack/StreamHeader.cs \
 	$(srcdir)/TagLib/Xmp/XmlNodeExtensions.cs \

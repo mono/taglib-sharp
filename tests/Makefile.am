@@ -52,7 +52,6 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/JpegSony2Test.cs \
 	fixtures/TagLib.Tests.Images/JpegTangledTest.cs \
 	fixtures/TagLib.Tests.Images/NullOrientationTest.cs \
-	fixtures/TagLib.Tests.Images/NefNikonD90Test.cs \
 	fixtures/TagLib.Tests.Images/RationalTest.cs \
 	fixtures/TagLib.Tests.Images/PngGimpTest.cs \
 	fixtures/TagLib.Tests.Images/PngGimpPngcrushTest.cs \
@@ -97,9 +96,11 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.TaggingFormats/XiphTest.cs
 
 RAW_CSFILES = \
-	fixtures/TagLib.Tests.Images/Cr2Canon400d1Test.cs \
 	fixtures/TagLib.Tests.Images/ArwSonyA700Test.cs \
-	fixtures/TagLib.Tests.Images/DngLeicaM8Test.cs
+	fixtures/TagLib.Tests.Images/Cr2Canon400d1Test.cs \
+	fixtures/TagLib.Tests.Images/DngLeicaM8Test.cs \
+	fixtures/TagLib.Tests.Images/NefNikonD90Test.cs \
+	fixtures/TagLib.Tests.Images/Rw2PanasonicG1Test.cs
 
 if HAVE_SHARPZIPLIB
     SHARPZIPLIB_FLAGS = -r:ICSharpCode.SharpZipLib.dll -define:HAVE_SHARPZIPLIB

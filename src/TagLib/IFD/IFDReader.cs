@@ -277,6 +277,8 @@ namespace TagLib.IFD
 		{
 			uint offset = offset_data.ToUInt (is_bigendian);
 
+			Console.WriteLine ("Parsing {0}/{1} at {2}/{4:X}, data: {3}", tag, type, base_offset, "", offset);
+
 			// Fix the type for the IPTC tag.
 			// From http://www.awaresystems.be/imaging/tiff/tifftags/iptc.html
 			// "Often times, the datatype is incorrectly specified as LONG. "
@@ -439,7 +441,7 @@ namespace TagLib.IFD
 				return null;
 
 			// TODO: We should ignore unreadable values, erroring for now until we have sufficient coverage.
-			throw new NotImplementedException (String.Format ("Unknown type/count {0}/{1}", type, count));
+			throw new NotImplementedException (String.Format ("Unknown type/count {0}/{1} ({2})", type, count, offset));
 		}
 
 		/// <summary>
@@ -859,6 +861,7 @@ namespace TagLib.IFD
 			case (ushort) IFDEntryTag.ExifIFD:
 			case (ushort) IFDEntryTag.InteroperabilityIFD:
 			case (ushort) IFDEntryTag.GPSIFD:
+				Console.WriteLine ("Sub: {0}/{1:X}", base_offset, offset);
 				reader.Read ();
 				return new SubIFDEntry (tag, (ushort) IFDEntryType.Long, 1, ifd_structure);
 
