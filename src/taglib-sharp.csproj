@@ -250,6 +250,9 @@
     <Compile Include="TagLib\Tiff\BaseTiffFile.cs" />
     <Compile Include="TagLib\Tiff\Codec.cs" />
     <Compile Include="TagLib\Tiff\File.cs" />
+    <Compile Include="TagLib\Tiff\Rw2\File.cs" />
+    <Compile Include="TagLib\Tiff\Rw2\IFDReader.cs" />
+    <Compile Include="TagLib\Tiff\Rw2\IFDTag.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TagLib\NonContainer\" />
