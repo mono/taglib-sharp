@@ -26,6 +26,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.FileFormats/OggFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/StandardTests.cs \
 	fixtures/TagLib.Tests.Images/AddImageMetadataTests.cs \
+	fixtures/TagLib.Tests.Images/CopyFromTest.cs \
 	fixtures/TagLib.Tests.Images/GifExiftoolLongCommentTest.cs \
 	fixtures/TagLib.Tests.Images/GifExiftoolTangled1Test.cs \
 	fixtures/TagLib.Tests.Images/GifExiftoolTangled2Test.cs \
@@ -122,7 +123,7 @@ build: update $(ASSEMBLY) $(TAGLIB_ASM)
 
 if ENABLE_TESTS
 test: build
-	MONO_PATH="../src" COMPARE_LARGE_FILES="$(COMPARE_LARGE_FILES)" $(NUNIT_CMD) -noshadow $(ASSEMBLY)
+	MONO_PATH="../src" COMPARE_LARGE_FILES="$(COMPARE_LARGE_FILES)" $(NUNIT_CMD) -noshadow $(ASSEMBLY) $(ARGS)
 endif
 
 CLEANFILES = $(ASSEMBLY) TestResult.xml *.mdb *.dll *.exe

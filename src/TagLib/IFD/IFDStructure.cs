@@ -99,7 +99,9 @@ namespace TagLib.IFD
 		/// </param>
 		public void RemoveTag (int directory, ushort tag)
 		{
-			directories [directory].Remove (tag);
+			if (ContainsTag (directory, tag)) {
+				directories [directory].Remove (tag);
+			}
 		}
 
 		/// <summary>

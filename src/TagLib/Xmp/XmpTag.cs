@@ -906,6 +906,51 @@ namespace TagLib.Xmp
 			return null;
 		}
 
+		/// <summary>
+		///    Creates a new rational node with the namespace
+		///    <param name="ns"/> and the name <paramref name="name"/>.
+		/// </summary>
+		/// <param name="ns">
+		///    A <see cref="System.String"/> with the namespace of the node.
+		/// </param>
+		/// <param name="name">
+		///    A <see cref="System.String"/> with the name of the node.
+		/// </param>
+		/// <param name="value">
+		///    A <see cref="System.Double"/> with the value of the node.
+		/// </param>
+		public void SetRationalNode (string ns, string name, double value)
+		{
+
+			string fraction = DecimalToFraction (value, (long) Math.Pow (10, 10));
+			SetTextNode (ns, name, fraction);
+		}
+
+		// Based on http://www.ics.uci.edu/~eppstein/numth/frap.c
+		private string DecimalToFraction (double value, long max_denominator) {
+			var m = new long [2, 2];
+			m[0, 0] = m[1, 1] = 1;
+			m[1, 0] = m[0, 1] = 0;
+
+			double x = value;
+			long ai;
+
+			while (m[1, 0] *  (ai = (long)x) + m[1, 1] <= max_denominator) {
+				long t = m[0, 0] * ai + m[0, 1];
+				m[0, 1] = m[0, 0];
+				m[0, 0] = t;
+				t = m[1, 0] * ai + m[1, 1];
+				m[1, 1] = m[1, 0];
+				m[1, 0] = t;
+				if (x == (double)ai) break;     // AF: division by zero
+				x = 1 / (x - (double) ai);
+				if (x > (double) 0x7FFFFFFF) break;  // AF: representation failure
+
+			}
+
+			return String.Format ("{0}/{1}", m[0, 0], m[1, 0]);
+		}
+
 
 		/// <summary>
 		///    Returns the unsigned integer value of the node associated with the
@@ -1175,6 +1220,7 @@ namespace TagLib.Xmp
 		/// </value>
 		public override double? ExposureTime {
 			get { return GetRationalNode (EXIF_NS, "ExposureTimeExposureTime"); }
+			set { SetRationalNode (EXIF_NS, "ExposureTimeExposureTime", (double) value); }
 		}
 
 		/// <summary>
@@ -1186,6 +1232,7 @@ namespace TagLib.Xmp
 		/// </value>
 		public override double? FNumber {
 			get { return GetRationalNode (EXIF_NS, "FNumber"); }
+				set { SetRationalNode (EXIF_NS, "FNumber", (double) value); }
 		}
 
 		/// <summary>
@@ -1207,6 +1254,9 @@ namespace TagLib.Xmp
 
 				return null;
 			}
+			set {
+				SetCollectionNode (EXIF_NS, "ISOSpeedRatings", new string [] { value.ToString () }, XmpNodeType.Seq);
+			}
 		}
 
 		/// <summary>
@@ -1218,6 +1268,19 @@ namespace TagLib.Xmp
 		/// </value>
 		public override double? FocalLength {
 			get { return GetRationalNode (EXIF_NS, "FocalLength"); }
+			set { SetRationalNode (EXIF_NS, "FocalLength", (double) value); }
+		}
+
+		/// <summary>
+		///    Gets the focal length the image, the current instance belongs
+		///    to, was taken with, assuming a 35mm film camera.
+		/// </summary>
+		/// <value>
+		///    A <see cref="System.Nullable"/> with the focal length in 35mm equivalent in millimeters.
+		/// </value>
+		public override uint? FocalLengthIn35mmFilm {
+			get { return GetUIntNode (EXIF_NS, "FocalLengthIn35mmFilm"); }
+			set { SetTextNode (EXIF_NS, "FocalLengthIn35mmFilm", value.HasValue ? value.Value.ToString () : String.Empty); }
 		}
 
 		/// <summary>
@@ -1229,6 +1292,7 @@ namespace TagLib.Xmp
 		/// </value>
 		public override string Make {
 			get { return GetTextNode (TIFF_NS, "Make"); }
+			set { SetTextNode (TIFF_NS, "Make", value); }
 		}
 
 		/// <summary>
@@ -1240,6 +1304,7 @@ namespace TagLib.Xmp
 		/// </value>
 		public override string Model {
 			get { return GetTextNode (TIFF_NS, "Model"); }
+			set { SetTextNode (TIFF_NS, "Model", value); }
 		}
 
 		/// <summary>

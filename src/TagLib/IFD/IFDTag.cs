@@ -450,6 +450,9 @@ namespace TagLib.IFD
 			get {
 				return ExifIFD.GetRationalValue (0, (ushort) ExifEntryTag.ExposureTime);
 			}
+			set {
+				ExifIFD.SetRationalValue (0, (ushort) ExifEntryTag.ExposureTime, (double) value);
+			}
 		}
 
 		/// <summary>
@@ -462,6 +465,9 @@ namespace TagLib.IFD
 		public override double? FNumber {
 			get {
 				return ExifIFD.GetRationalValue (0, (ushort) ExifEntryTag.FNumber);
+			}
+			set {
+				ExifIFD.SetRationalValue (0, (ushort) ExifEntryTag.FNumber, (double) value);
 			}
 		}
 
@@ -476,6 +482,9 @@ namespace TagLib.IFD
 			get {
 				return ExifIFD.GetLongValue (0, (ushort) ExifEntryTag.ISOSpeedRatings);
 			}
+			set {
+				ExifIFD.SetLongValue (0, (ushort) ExifEntryTag.ISOSpeedRatings, (uint) value);
+			}
 		}
 
 		/// <summary>
@@ -489,6 +498,9 @@ namespace TagLib.IFD
 			get {
 				return ExifIFD.GetRationalValue (0, (ushort) ExifEntryTag.FocalLength);
 			}
+			set {
+				ExifIFD.SetRationalValue (0, (ushort) ExifEntryTag.FocalLength, (double) value);
+			}
 		}
 
 		/// <summary>
@@ -501,6 +513,13 @@ namespace TagLib.IFD
 		public override uint? FocalLengthIn35mmFilm {
 			get {
 				return ExifIFD.GetLongValue (0, (ushort) ExifEntryTag.FocalLengthIn35mmFilm);
+			}
+			set {
+				if (value.HasValue) {
+					ExifIFD.SetLongValue (0, (ushort) ExifEntryTag.FocalLengthIn35mmFilm, (uint) value);
+				} else {
+					ExifIFD.RemoveTag (0, (ushort) ExifEntryTag.FocalLengthIn35mmFilm);
+				}
 			}
 		}
 
@@ -542,6 +561,9 @@ namespace TagLib.IFD
 			get {
 				return Structure.GetStringValue (0, (ushort) IFDEntryTag.Make);
 			}
+			set {
+				Structure.SetStringValue (0, (ushort) IFDEntryTag.Make, value);
+			}
 		}
 
 		/// <summary>
@@ -554,6 +576,9 @@ namespace TagLib.IFD
 		public override string Model {
 			get {
 				return Structure.GetStringValue (0, (ushort) IFDEntryTag.Model);
+			}
+			set {
+				Structure.SetStringValue (0, (ushort) IFDEntryTag.Model, value);
 			}
 		}
 

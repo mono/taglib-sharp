@@ -385,6 +385,10 @@ namespace TagLib.Image
 
 				return null;
 			}
+			set {
+				foreach (ImageTag tag in AllTags)
+					tag.ExposureTime = value;
+			}
 		}
 
 		/// <summary>
@@ -404,6 +408,10 @@ namespace TagLib.Image
 				}
 
 				return null;
+			}
+			set {
+				foreach (ImageTag tag in AllTags)
+					tag.FNumber = value;
 			}
 		}
 
@@ -425,6 +433,10 @@ namespace TagLib.Image
 
 				return null;
 			}
+			set {
+				foreach (ImageTag tag in AllTags)
+					tag.ISOSpeedRatings = value;
+			}
 		}
 
 		/// <summary>
@@ -444,6 +456,10 @@ namespace TagLib.Image
 				}
 
 				return null;
+			}
+			set {
+				foreach (ImageTag tag in AllTags)
+					tag.FocalLength = value;
 			}
 		}
 
@@ -465,6 +481,10 @@ namespace TagLib.Image
 
 				return null;
 			}
+			set {
+				foreach (ImageTag tag in AllTags)
+					tag.FocalLengthIn35mmFilm = value;
+			}
 		}
 
 		/// <summary>
@@ -485,6 +505,10 @@ namespace TagLib.Image
 
 				return null;
 			}
+			set {
+				foreach (ImageTag tag in AllTags)
+					tag.Make = value;
+			}
 		}
 
 		/// <summary>
@@ -504,6 +528,10 @@ namespace TagLib.Image
 				}
 
 				return null;
+			}
+			set {
+				foreach (ImageTag tag in AllTags)
+					tag.Model = value;
 			}
 		}
 

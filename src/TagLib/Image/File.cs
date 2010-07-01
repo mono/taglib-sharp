@@ -125,7 +125,7 @@ namespace TagLib.Image
 		public void EnsureAvailableTags ()
 		{
 			foreach (TagTypes type in Enum.GetValues (typeof (TagTypes))) {
-				if ((type & ImageTag.AllowedTypes) != 0x00)
+				if ((type & ImageTag.AllowedTypes) != 0x00 && type != TagTypes.AllTags)
 					GetTag (type, true);
 			}
 		}
@@ -212,6 +212,26 @@ namespace TagLib.Image
 			}
 
 			throw new NotImplementedException (String.Format ("Adding tag of type {0} not supported!", type));
+		}
+
+		/// <summary>
+		/// 	Copies metadata from the given file..
+		/// </summary>
+		/// <param name='file'>
+		/// 	File to copy metadata from.
+		/// </param>
+		public void CopyFrom (TagLib.Image.File file)
+		{
+			EnsureAvailableTags ();
+			var from_tag = file.ImageTag;
+			var to_tag = ImageTag;
+			foreach (var prop in typeof (TagLib.Image.ImageTag).GetProperties ()) {
+				if (!prop.CanWrite || prop.Name == "TagTypes")
+					continue;
+
+				var value = prop.GetValue (from_tag, null);
+				prop.SetValue (to_tag, value, null);
+			}
 		}
 
 #endregion

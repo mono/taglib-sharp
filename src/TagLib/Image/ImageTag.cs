@@ -149,6 +149,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual double? ExposureTime {
 			get { return null; }
+			set {}
 		}
 
 		/// <summary>
@@ -160,6 +161,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual double? FNumber {
 			get { return null; }
+			set {}
 		}
 
 		/// <summary>
@@ -171,6 +173,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual uint? ISOSpeedRatings {
 			get { return null; }
+			set {}
 		}
 
 		/// <summary>
@@ -182,6 +185,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual double? FocalLength {
 			get { return null; }
+			set {}
 		}
 
 		/// <summary>
@@ -193,6 +197,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual uint? FocalLengthIn35mmFilm {
 			get { return null; }
+			set {}
 		}
 
 		/// <summary>
@@ -204,6 +209,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual string Make {
 			get { return null; }
+			set {}
 		}
 
 		/// <summary>
@@ -215,6 +221,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual string Model {
 			get { return null; }
+			set {}
 		}
 
 		/// <summary>
