@@ -870,7 +870,7 @@ namespace TagLib.Xmp
 		///    A <see cref="System.String"/> with the name of the node.
 		/// </param>
 		/// <returns>
-		///    A <see cref="System.Nullable<double>"/> with the read value, or
+		///    A double? with the read value, or
 		///    <see langword="null"/> if no such node exists, or if it is in wrong
 		///    format.
 		/// </returns>
@@ -918,7 +918,7 @@ namespace TagLib.Xmp
 		///    A <see cref="System.String"/> with the name of the node.
 		/// </param>
 		/// <returns>
-		///    A <see cref="System.Nullable<System.UInt32>"/> with the read value, or
+		///    A uint? with the read value, or
 		///    <see langword="null"/> if no such node exists, or if it is in wrong
 		///    format.
 		/// </returns>
