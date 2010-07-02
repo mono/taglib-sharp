@@ -32,6 +32,8 @@ namespace TagLib.Image.NoMetadata
 	///    sidecar purposes.
 	/// </summary>
 	[SupportedMimeType("taglib/bmp", "bmp")]
+	[SupportedMimeType("image/x-MS-bmp")]
+	[SupportedMimeType("image/x-bmp")]
 	public class File : TagLib.Image.File
 	{
 
