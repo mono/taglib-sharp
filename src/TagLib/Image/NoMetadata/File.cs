@@ -31,6 +31,7 @@ namespace TagLib.Image.NoMetadata
 	///    obviously can't write to them, but you can populate an XMP tag, for
 	///    sidecar purposes.
 	/// </summary>
+	[SupportedMimeType("taglib/bmp", "bmp")]
 	public class File : TagLib.Image.File
 	{
 
