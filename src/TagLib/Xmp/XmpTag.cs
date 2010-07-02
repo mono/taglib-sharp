@@ -1220,7 +1220,7 @@ namespace TagLib.Xmp
 		/// </value>
 		public override double? ExposureTime {
 			get { return GetRationalNode (EXIF_NS, "ExposureTimeExposureTime"); }
-			set { SetRationalNode (EXIF_NS, "ExposureTimeExposureTime", (double) value); }
+			set { SetRationalNode (EXIF_NS, "ExposureTimeExposureTime", value.HasValue ? (double) value : 0); }
 		}
 
 		/// <summary>
@@ -1232,7 +1232,7 @@ namespace TagLib.Xmp
 		/// </value>
 		public override double? FNumber {
 			get { return GetRationalNode (EXIF_NS, "FNumber"); }
-				set { SetRationalNode (EXIF_NS, "FNumber", (double) value); }
+				set { SetRationalNode (EXIF_NS, "FNumber", value.HasValue ? (double) value : 0); }
 		}
 
 		/// <summary>
@@ -1268,7 +1268,7 @@ namespace TagLib.Xmp
 		/// </value>
 		public override double? FocalLength {
 			get { return GetRationalNode (EXIF_NS, "FocalLength"); }
-			set { SetRationalNode (EXIF_NS, "FocalLength", (double) value); }
+			set { SetRationalNode (EXIF_NS, "FocalLength", value.HasValue ? (double) value : 0); }
 		}
 
 		/// <summary>
