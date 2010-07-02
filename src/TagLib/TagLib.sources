@@ -53,6 +53,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Image/ImageBlockFile.cs \
 	$(srcdir)/TagLib/Image/ImageTag.cs \
 	$(srcdir)/TagLib/Image/ImageOrientation.cs \
+	$(srcdir)/TagLib/Image/NoMetadata/File.cs \
 	$(srcdir)/TagLib/Jpeg/Codec.cs \
 	$(srcdir)/TagLib/Jpeg/File.cs \
 	$(srcdir)/TagLib/Jpeg/JpegCommentTag.cs \
