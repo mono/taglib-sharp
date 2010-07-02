@@ -34,6 +34,14 @@ namespace TagLib.Image.NoMetadata
 	[SupportedMimeType("taglib/bmp", "bmp")]
 	[SupportedMimeType("image/x-MS-bmp")]
 	[SupportedMimeType("image/x-bmp")]
+	[SupportedMimeType("taglib/ppm", "ppm")]
+	[SupportedMimeType("taglib/pgm", "pgm")]
+	[SupportedMimeType("taglib/pbm", "pbm")]
+	[SupportedMimeType("taglib/pnm", "pnm")]
+	[SupportedMimeType("image/x-portable-pixmap")]
+	[SupportedMimeType("image/x-portable-graymap")]
+	[SupportedMimeType("image/x-portable-bitmap")]
+	[SupportedMimeType("image/x-portable-anymap")]
 	public class File : TagLib.Image.File
 	{
 
