@@ -24,6 +24,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using TagLib.IFD.Entries;
 
 namespace TagLib.IFD
@@ -134,7 +135,7 @@ namespace TagLib.IFD
 				throw new Exception (String.Format ("Directory has too much entries: {0}", directory.Count));
 
 			// Remove empty SUB ifds.
-			var tags = directory.Keys;
+			var tags = new List<ushort> (directory.Keys);
 			foreach (var tag in tags) {
 				var entry = directory [tag];
 				if (entry is SubIFDEntry && (entry as SubIFDEntry).ChildCount == 0) {
