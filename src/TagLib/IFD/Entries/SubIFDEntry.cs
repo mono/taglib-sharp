@@ -107,12 +107,11 @@ namespace TagLib.IFD.Entries
 			count = 1;
 
 			// Don't render empty SubIFDEntry
-			/*int sum = 0;
-			foreach (var directory in sub_ifd.Structure.Directories)
+			int sum = 0;
+			foreach (var directory in Structure.Directories)
 				sum += directory.Count;
 			if (sum == 0)
-				return;
-			*/
+				return null;
 
 			count = Count;
 			return new IFDRenderer (is_bigendian, Structure, offset).Render ();

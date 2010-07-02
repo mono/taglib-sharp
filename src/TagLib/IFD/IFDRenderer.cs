@@ -224,6 +224,9 @@ namespace TagLib.IFD
 			uint count;
 			ByteVector data = entry.Render (is_bigendian, offset, out type, out count);
 
+			if (data == null)
+				return;
+
 			// store data in offset, if it is smaller than 4 byte
 			if (data.Count <= 4) {
 
