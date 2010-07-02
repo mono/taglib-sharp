@@ -133,6 +133,15 @@ namespace TagLib.IFD
 			if (directory.Count > (int)UInt16.MaxValue)
 				throw new Exception (String.Format ("Directory has too much entries: {0}", directory.Count));
 
+			// Remove empty SUB ifds.
+			var tags = directory.Keys;
+			foreach (var tag in tags) {
+				var entry = directory [tag];
+				if (entry is SubIFDEntry && (entry as SubIFDEntry).ChildCount == 0) {
+					directory.Remove (tag);
+				}
+			}
+
 			ushort entry_count = (ushort) directory.Count;
 
 			// ifd_offset + size of entry_count + entries + next ifd offset

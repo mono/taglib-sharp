@@ -54,6 +54,18 @@ namespace TagLib.IFD.Entries
 		/// </value>
 		public IFDStructure Structure { get; private set; }
 
+		/// <value>
+		///    The number of entries in the entire IFD.
+		/// </value>
+		public int ChildCount {
+			get {
+				int sum = 0;
+				foreach (var directory in Structure.Directories)
+					sum += directory.Count;
+				return sum;
+			}
+		}
+
 		/// <summary>
 		///    Construcor.
 		/// </summary>
@@ -105,14 +117,6 @@ namespace TagLib.IFD.Entries
 		{
 			type = (ushort) Type;
 			count = 1;
-
-			// Don't render empty SubIFDEntry
-			/*int sum = 0;
-			foreach (var directory in sub_ifd.Structure.Directories)
-				sum += directory.Count;
-			if (sum == 0)
-				return;
-			*/
 
 			count = Count;
 			return new IFDRenderer (is_bigendian, Structure, offset).Render ();
