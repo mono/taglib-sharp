@@ -170,6 +170,8 @@ public class GenerateTestFixtureApp
 				EmitTestIFDRationalArrayEntry (val);
 			} else if (type.Equals ("SRational") && length == 1) {
 				EmitTestIFDSRationalEntry (val);
+			} else if (type.Equals ("SRational") && length > 1) {
+				EmitTestIFDSRationalArrayEntry (val);
 			} else if (type.Equals ("Long") && length == 1) {
 				EmitTestIFDLongEntry (val);
 			} else if (type.Equals ("Long") && length > 1) {
@@ -650,6 +652,19 @@ public class GenerateTestFixtureApp
 		string[] parts = val.Split('/');
 		Write ("Assert.AreEqual ({0}, (entry as SRationalIFDEntry).Value.Numerator);", parts [0]);
 		Write ("Assert.AreEqual ({0}, (entry as SRationalIFDEntry).Value.Denominator);", parts [1]);
+	}
+
+	static void EmitTestIFDSRationalArrayEntry (string val)
+	{
+		var parts = val.Split(' ');
+		Write ("Assert.IsNotNull (entry as SRationalArrayIFDEntry, \"Entry is not a srational array!\");");
+		Write ("var parts = (entry as SRationalArrayIFDEntry).Values;");
+		Write ("Assert.AreEqual ({0}, parts.Length);", parts.Length);
+		for (int i = 0; i < parts.Length; i++) {
+			var pieces = parts[i].Split('/');
+			Write ("Assert.AreEqual ({0}, parts[{1}].Numerator);", pieces[0], i);
+			Write ("Assert.AreEqual ({0}, parts[{1}].Denominator);", pieces[1], i);
+		}
 	}
 
 	static void EmitTestIFDLongEntry (string val)

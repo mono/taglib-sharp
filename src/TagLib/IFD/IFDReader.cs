@@ -85,7 +85,20 @@ namespace TagLib.IFD
 		/// </summary>
 		protected readonly uint max_offset;
 
+		/// <summary>
+		///    Whether or not the makernote should be parsed.
+		/// </summary>
+		protected bool parse_makernote = true;
+
 #endregion
+
+		/// <summary>
+		///    Whether or not the makernote should be parsed.
+		/// </summary>
+		internal bool ParseMakernote {
+			get { return parse_makernote; }
+			set { parse_makernote = value; }
+		}
 
 #region Constructors
 
@@ -364,6 +377,15 @@ namespace TagLib.IFD
 						entries[i] = ReadRational ();
 
 					return new RationalArrayIFDEntry (tag, entries);
+				}
+
+				if (type == (ushort) IFDEntryType.SRational) {
+					SRational[] entries = new SRational [count];
+
+					for (int i = 0; i < count; i++)
+						entries[i] = ReadSRational ();
+
+					return new SRationalArrayIFDEntry (tag, entries);
 				}
 			}
 
@@ -798,7 +820,7 @@ namespace TagLib.IFD
 		/// </returns>
 		protected virtual IFDEntry ParseIFDEntry (ushort tag, ushort type, uint count, long base_offset, uint offset)
 		{
-			if (tag == (ushort) ExifEntryTag.MakerNote)
+			if (tag == (ushort) ExifEntryTag.MakerNote && parse_makernote)
 				return ParseMakernote (tag, type, count, base_offset, offset);
 
 			if (tag == (ushort) IFDEntryTag.SubIFDs) {

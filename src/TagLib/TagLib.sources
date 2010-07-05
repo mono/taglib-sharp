@@ -107,6 +107,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/IFD/Entries/ShortIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/SLongArrayIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/SLongIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/SRationalArrayIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/SRationalIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/SShortArrayIFDEntry.cs \
 	$(srcdir)/TagLib/IFD/Entries/SShortIFDEntry.cs \
@@ -184,6 +185,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Tiff/File.cs \
 	$(srcdir)/TagLib/Tiff/Arw/File.cs \
 	$(srcdir)/TagLib/Tiff/Cr2/File.cs \
+	$(srcdir)/TagLib/Tiff/Dng/File.cs \
 	$(srcdir)/TagLib/Tiff/Nef/File.cs \
 	$(srcdir)/TagLib/WavPack/File.cs \
 	$(srcdir)/TagLib/WavPack/StreamHeader.cs \

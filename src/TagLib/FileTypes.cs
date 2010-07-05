@@ -75,6 +75,7 @@ namespace TagLib {
 			typeof(TagLib.Riff.File),
 			typeof(TagLib.Tiff.Arw.File),
 			typeof(TagLib.Tiff.Cr2.File),
+			typeof(TagLib.Tiff.Dng.File),
 			typeof(TagLib.Tiff.File),
 			typeof(TagLib.Tiff.Nef.File),
 			typeof(TagLib.WavPack.File)
