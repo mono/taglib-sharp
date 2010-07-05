@@ -382,6 +382,7 @@ public class GenerateTestFixtureApp
 	static bool IsPartOfMakernote (string ifd) {
 		return ifd.Equals ("MakerNote") ||
 			   ifd.Equals ("Canon") ||
+			   ifd.Equals ("Sony") ||
 			   ifd.Equals ("Nikon1") ||
 			   ifd.Equals ("Nikon2") ||
 			   ifd.Equals ("Nikon3") ||
@@ -807,6 +808,7 @@ public class GenerateTestFixtureApp
 		IndexTagType ("CanonFi", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
 		IndexTagType ("CanonPi", typeof (CanonPictureInfoEntryTag), "CanonPictureInfoEntryTag");
 		IndexTagType ("CanonPi", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
+		IndexTagType ("Sony", typeof (SonyMakerNoteEntryTag), "SonyMakerNoteEntryTag");
 		IndexTagType ("Nikon3", typeof (Nikon3MakerNoteEntryTag), "Nikon3MakerNoteEntryTag");
 		IndexTagType ("NikonPreview", typeof (NikonPreviewMakerNoteEntryTag), "NikonPreviewMakerNoteEntryTag");
 		IndexTagType ("Panasonic", typeof (PanasonicMakerNoteEntryTag), "PanasonicMakerNoteEntryTag");

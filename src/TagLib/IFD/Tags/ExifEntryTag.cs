@@ -32,6 +32,19 @@ namespace TagLib.IFD.Tags
 	/// </summary>
 	public enum ExifEntryTag : ushort
 	{
+		/// <summary>
+		///     Contains two values representing the minimum rows and columns
+		///     to define the repeating patterns of the color filter array.
+		///     (Hex: 0x828D)
+		/// </summary>
+		CFARepeatPatternDim                                = 33421,
+
+		/// <summary>
+		///     Contains two values representing the minimum rows and columns
+		///     to define the repeating patterns of the color filter array.
+		///     (Hex: 0x828E)
+		/// </summary>
+		CFAPattern                                         = 33422,
 
 		/// <summary>
 		///     Exposure time, given in seconds. (Hex: 0x829A)
@@ -289,7 +302,7 @@ namespace TagLib.IFD.Tags
 		///     Indicates the color filter array (CFA) geometric pattern of the image sensor when a one-chip color area sensor is used. (Hex: 0xA302)
 		///     http://www.awaresystems.be/imaging/tiff/tifftags/privateifd/exif/cfapattern.html
 		/// </summary>
-		CFAPattern                                         = 41730,
+		CFAPattern2                                        = 41730,
 
 		/// <summary>
 		///     Indicates the use of special processing on image data, such as rendering geared to output. (Hex: 0xA401)

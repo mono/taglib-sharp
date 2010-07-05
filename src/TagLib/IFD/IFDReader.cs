@@ -802,13 +802,15 @@ namespace TagLib.IFD
 				return ParseMakernote (tag, type, count, base_offset, offset);
 
 			if (tag == (ushort) IFDEntryTag.SubIFDs) {
-				if (count < 2)
-					throw new NotImplementedException ("Seeking is probably wrong in this case");
-
 				var entries = new List<IFDStructure> ();
 
-				file.Seek (base_offset + offset, SeekOrigin.Begin);
-				uint [] data = ReadUIntArray (count);
+				uint [] data;
+				if (count >= 2) {
+					file.Seek (base_offset + offset, SeekOrigin.Begin);
+					data = ReadUIntArray (count);
+				} else {
+					data = new uint [] { offset };
+				}
 
 				foreach (var sub_offset in data) {
 					var sub_structure = new IFDStructure ();

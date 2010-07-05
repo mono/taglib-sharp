@@ -737,7 +737,7 @@ namespace TagLib.Tests.Images
 			}
 			// Photo.0xA302 (CFAPattern/Undefined/8) "0 2 0 2 2 1 1 0 "
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.CFAPattern);
+				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.CFAPattern2);
 				Assert.IsNotNull (entry, "Entry 0xA302 missing in IFD 0");
 				Assert.IsNotNull (entry as UndefinedIFDEntry, "Entry is not an undefined IFD entry!");
 				var bytes = new byte [] { 0, 2, 0, 2, 2, 1, 1, 0 };

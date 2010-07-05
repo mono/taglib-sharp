@@ -142,6 +142,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/IFD/Tags/NikonVibrationReductionEntryTag.cs \
 	$(srcdir)/TagLib/IFD/Tags/NikonWorldTimeEntryTag.cs \
 	$(srcdir)/TagLib/IFD/Tags/PanasonicMakerNoteEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/SonyMakerNoteEntryTag.cs \
 	$(srcdir)/TagLib/Mpeg4/AppleTag.cs \
 	$(srcdir)/TagLib/Mpeg4/Box.cs \
 	$(srcdir)/TagLib/Mpeg4/BoxFactory.cs \
@@ -181,6 +182,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Tiff/BaseTiffFile.cs \
 	$(srcdir)/TagLib/Tiff/Codec.cs \
 	$(srcdir)/TagLib/Tiff/File.cs \
+	$(srcdir)/TagLib/Tiff/Arw/File.cs \
 	$(srcdir)/TagLib/Tiff/Cr2/File.cs \
 	$(srcdir)/TagLib/Tiff/Nef/File.cs \
 	$(srcdir)/TagLib/WavPack/File.cs \

@@ -73,6 +73,7 @@ namespace TagLib {
 			typeof(TagLib.Ogg.File),
 			typeof(TagLib.Png.File),
 			typeof(TagLib.Riff.File),
+			typeof(TagLib.Tiff.Arw.File),
 			typeof(TagLib.Tiff.Cr2.File),
 			typeof(TagLib.Tiff.File),
 			typeof(TagLib.Tiff.Nef.File),
