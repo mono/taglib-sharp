@@ -95,7 +95,7 @@ namespace TagLib.IFD
 		/// <summary>
 		///    Whether or not the makernote should be parsed.
 		/// </summary>
-		internal bool ParseMakernote {
+		internal bool ShouldParseMakernote {
 			get { return parse_makernote; }
 			set { parse_makernote = value; }
 		}
