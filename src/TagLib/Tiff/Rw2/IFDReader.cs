@@ -21,6 +21,7 @@
 // USA
 //
 
+using System.IO;
 using TagLib.IFD;
 
 namespace TagLib.Tiff.Rw2
@@ -94,16 +95,46 @@ namespace TagLib.Tiff.Rw2
 			if (tag == 0x002e && !seen_jpgfromraw) {
 				// FIXME: JpgFromRaw
 
-//				type = (ushort) IFDEntryType.IFD;
-//				offset += 20; // JPEG header.
-//				base_offset = (long) offset;
-//				offset = 0;
+				file.Seek (base_offset + offset, SeekOrigin.Begin);
+				var data = file.ReadBlock ((int) count);
+				var mem_stream = new MemoryStream (data.Data);
+				var res = new StreamJPGAbstraction (mem_stream);
+				(file as Rw2.File).JpgFromRaw = new Jpeg.File (res, ReadStyle.Average);
+
 				seen_jpgfromraw = true;
+				return null;
 			}
 
 			return base.ParseIFDEntry (tag, type, count, base_offset, offset);
 		}
 
 		private bool seen_jpgfromraw = false;
+	}
+
+	class StreamJPGAbstraction : File.IFileAbstraction
+	{
+		readonly Stream stream;
+
+		public StreamJPGAbstraction (Stream stream)
+		{
+			this.stream = stream;
+		}
+
+		public string Name {
+			get { return "JpgFromRaw.jpg"; }
+		}
+
+		public void CloseStream (System.IO.Stream stream)
+		{
+			stream.Close ();
+		}
+
+		public System.IO.Stream ReadStream  {
+			get { return stream; }
+		}
+
+		public System.IO.Stream WriteStream  {
+			get { return stream; }
+		}
 	}
 }

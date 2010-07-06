@@ -464,9 +464,11 @@ public class GenerateTestFixtureApp
 			Write ();
 			Write ("var pana_structure = tag.Structure;");
 			Write ();
-			Write ("var jpg_entry = pana_structure.GetEntry (0, (ushort) 0x002e);");
-			Write ("Console.WriteLine (jpg_entry); // FIXME");
-			Write ("var structure = tag.Structure; // FIXME");
+			Write ("var jpg_file = (file as TagLib.Tiff.Rw2.File).JpgFromRaw;");
+			Write ("Assert.IsNotNull (tag, \"JpgFromRaw not found!\");");
+			Write ("var jpg_tag = jpg_file.GetTag (TagTypes.TiffIFD) as IFDTag;");
+			Write ("Assert.IsNotNull (tag, \"Jpg has no Exif tag!\");");
+			Write ("var structure = jpg_tag.Structure;");
 
 			is_panasonic_raw = true;
 		}

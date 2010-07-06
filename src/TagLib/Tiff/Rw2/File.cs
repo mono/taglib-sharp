@@ -76,6 +76,13 @@ namespace TagLib.Tiff.Rw2
 			get { return false; }
 		}
 
+		/// <summary>
+		///     The JPEG file that's embedded in the RAW file.
+		/// </summary>
+		public Jpeg.File JpgFromRaw {
+			get;
+			internal set;
+		}
 
 #endregion
 

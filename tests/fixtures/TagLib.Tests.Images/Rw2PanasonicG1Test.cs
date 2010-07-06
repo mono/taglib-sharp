@@ -36,9 +36,11 @@ namespace TagLib.Tests.Images
 
 			var pana_structure = tag.Structure;
 
-			var jpg_entry = pana_structure.GetEntry (0, (ushort) 0x002e);
-			Console.WriteLine (jpg_entry); // FIXME
-			var structure = tag.Structure; // FIXME
+			var jpg_file = (file as TagLib.Tiff.Rw2.File).JpgFromRaw;
+			Assert.IsNotNull (tag, "JpgFromRaw not found!");
+			var jpg_tag = jpg_file.GetTag (TagTypes.TiffIFD) as IFDTag;
+			Assert.IsNotNull (tag, "Jpg has no Exif tag!");
+			var structure = jpg_tag.Structure;
 			// PanasonicRaw.0x0001 (Version/Undefined/4) "48 51 49 48"
 			{
 				// TODO: Unknown IFD tag: PanasonicRaw / 0x0001
