@@ -1219,8 +1219,8 @@ namespace TagLib.Xmp
 		///    A <see cref="System.Nullable"/> with the exposure time in seconds.
 		/// </value>
 		public override double? ExposureTime {
-			get { return GetRationalNode (EXIF_NS, "ExposureTimeExposureTime"); }
-			set { SetRationalNode (EXIF_NS, "ExposureTimeExposureTime", value.HasValue ? (double) value : 0); }
+			get { return GetRationalNode (EXIF_NS, "ExposureTime"); }
+			set { SetRationalNode (EXIF_NS, "ExposureTime", value.HasValue ? (double) value : 0); }
 		}
 
 		/// <summary>
@@ -1230,9 +1230,19 @@ namespace TagLib.Xmp
 		/// <value>
 		///    A <see cref="System.Nullable"/> with the FNumber.
 		/// </value>
+		/// <remarks>
+		///    Bibble wrongly tends to put this into tiff:FNumber so we
+		///    use that as a fallback and correct it if needed.
+		/// </remarks>
 		public override double? FNumber {
-			get { return GetRationalNode (EXIF_NS, "FNumber"); }
-				set { SetRationalNode (EXIF_NS, "FNumber", value.HasValue ? (double) value : 0); }
+			get {
+				return GetRationalNode (EXIF_NS, "FNumber") ??
+					GetRationalNode (TIFF_NS, "FNumber");
+			}
+			set {
+				SetTextNode (TIFF_NS, "FNumber", null); // Remove wrong value
+				SetRationalNode (EXIF_NS, "FNumber", value.HasValue ? (double) value : 0);
+			}
 		}
 
 		/// <summary>
@@ -1242,6 +1252,9 @@ namespace TagLib.Xmp
 		/// <value>
 		///    A <see cref="System.Nullable"/> with the ISO speed as defined in ISO 12232.
 		/// </value>
+		/// <remarks>
+		///    Bibble writes ISOSpeedRating instead of ISOSpeedRatings.
+		/// </remarks>
 		public override uint? ISOSpeedRatings {
 			get {
 				string[] values = GetCollectionNode (EXIF_NS, "ISOSpeedRatings");
@@ -1252,9 +1265,11 @@ namespace TagLib.Xmp
 						return result;
 				}
 
-				return null;
+				// Bibble fallback.
+				return GetUIntNode (EXIF_NS, "ISOSpeedRating");
 			}
 			set {
+				SetCollectionNode (EXIF_NS, "ISOSpeedRating", null, XmpNodeType.Seq);
 				SetCollectionNode (EXIF_NS, "ISOSpeedRatings", new string [] { value.ToString () }, XmpNodeType.Seq);
 			}
 		}

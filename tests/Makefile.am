@@ -99,6 +99,7 @@ RAW_CSFILES = \
 	fixtures/TagLib.Tests.Images/ArwSonyA700Test.cs \
 	fixtures/TagLib.Tests.Images/Cr2Canon400d1Test.cs \
 	fixtures/TagLib.Tests.Images/DngLeicaM8Test.cs \
+	fixtures/TagLib.Tests.Images/ImageTagTests.cs \
 	fixtures/TagLib.Tests.Images/NefNikonD90Test.cs \
 	fixtures/TagLib.Tests.Images/Rw2PanasonicG1Test.cs
 
