@@ -37,5 +37,33 @@ namespace TagLib.Tests.Images
             Assert.AreEqual ("Canon EOS 400D DIGITAL", tag.Model, "Model");
             Assert.AreEqual (null, tag.Creator, "Creator");
         }
+
+        [Test]
+        public void TestXMPImageTag2 ()
+        {
+            var file = TagLib.File.Create ("samples/sample_gimp_exiftool.jpg") as TagLib.Image.File;
+            Assert.IsNotNull (file);
+
+            var tag = file.GetTag (TagTypes.XMP) as TagLib.Image.ImageTag;
+            Assert.IsNotNull (tag);
+
+            Assert.AreEqual ("This is an image Comment", tag.Comment, "Comment");
+            Assert.AreEqual (new string [] { "keyword 1", "keyword 2" }, tag.Keywords, "Keywords");
+            Assert.AreEqual (5, tag.Rating, "Rating");
+            Assert.AreEqual (null, tag.DateTime, "DateTime");
+            Assert.AreEqual (ImageOrientation.TopLeft, tag.Orientation, "Orientation");
+            Assert.AreEqual (null, tag.Software, "Software");
+            Assert.AreEqual (null, tag.Latitude, "Latitude");
+            Assert.AreEqual (null, tag.Longitude, "Longitude");
+            Assert.AreEqual (null, tag.Altitude, "Altitude");
+            Assert.AreEqual (null, tag.ExposureTime, "ExposureTime");
+            Assert.AreEqual (null, tag.FNumber, "FNumber");
+            Assert.AreEqual (null, tag.ISOSpeedRatings, "ISOSpeedRatings");
+            Assert.AreEqual (null, tag.FocalLength, "FocalLength");
+            Assert.AreEqual (null, tag.FocalLengthIn35mmFilm, "FocalLengthIn35mmFilm");
+            Assert.AreEqual (null, tag.Make, "Make");
+            Assert.AreEqual (null, tag.Model, "Model");
+            Assert.AreEqual ("Isaac Newton", tag.Creator, "Creator");
+        }
     }
 }
