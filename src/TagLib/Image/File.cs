@@ -101,17 +101,6 @@ namespace TagLib.Image
 			protected set { image_tag = value; }
 		}
 
-		/// <summary>
-		///    Indicates if tags can be written back to the current file or not
-		/// </summary>
-		/// <value>
-		///    A <see cref="bool" /> which is true if tags can be written to the
-		///    current file, otherwise false.
-		/// </value>
-		public virtual bool Writeable {
-			get { return true; }
-		}
-
 #endregion
 
 #region Public Methods

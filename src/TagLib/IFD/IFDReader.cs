@@ -288,6 +288,12 @@ namespace TagLib.IFD
 			if (ifd_entry != null)
 				return ifd_entry;
 
+			if (count > 0x10000000) {
+				// Some Nikon files are known to exhibit this corruption (or "feature").
+				file.PossiblyCorrupt = true;
+				return null;
+			}
+
 			// then handle the values stored in the offset data itself
 			if (count == 1) {
 				if (type == (ushort) IFDEntryType.Byte)

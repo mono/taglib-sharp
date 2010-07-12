@@ -197,6 +197,12 @@ namespace TagLib {
 		///    the file ends.
 		/// </summary>
 		private long invariant_end_position = -1;
+
+		/// <summary>
+		///    Whether or not this file might be corrupt.
+		/// </summary>
+		private bool possibly_corrupt = false;
+
 		#endregion
 		
 		
@@ -441,6 +447,35 @@ namespace TagLib {
 			}
 		}
 		
+		/// <summary>
+		///    Indicates if tags can be written back to the current file or not
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> which is true if tags can be written to the
+		///    current file, otherwise false.
+		/// </value>
+		public virtual bool Writeable {
+			get { return !PossiblyCorrupt; }
+		}
+
+		/// <summary>
+		///   Indicates whether or not this file may be corrupt.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if possibly corrupt; otherwise, <c>false</c>.
+		/// </value>
+		/// <remarks>
+		///    Files with unknown corruptions should not be written.
+		/// </remarks>
+		public virtual bool PossiblyCorrupt {
+			get { return possibly_corrupt; }
+			set {
+				if (value != true)
+					throw new ArgumentException ("Can only switch this flag on");
+				possibly_corrupt = value;
+			}
+		}
+
 		#endregion
 		
 		

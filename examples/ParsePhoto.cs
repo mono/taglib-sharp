@@ -67,7 +67,9 @@ public class ParsePhotoApp
 			Console.WriteLine("Type            : " +  image.Properties.Description);
 		}
 
-		Console.WriteLine (String.Empty);
+		Console.WriteLine ();
+		Console.WriteLine("Writable?       : " +  image.Writeable.ToString ());
+		Console.WriteLine("Corrupt?        : " +  image.PossiblyCorrupt.ToString ());
 		Console.WriteLine ("---------------------------------------");
 	}
 }
