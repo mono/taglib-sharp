@@ -44,6 +44,9 @@ namespace TagLib.Image.NoMetadata
 	[SupportedMimeType("image/x-portable-anymap")]
 	[SupportedMimeType("taglib/pcx", "pcx")]
 	[SupportedMimeType("image/x-pcx")]
+	[SupportedMimeType("taglib/svg", "svg")]
+	[SupportedMimeType("taglib/svgz", "svgz")]
+	[SupportedMimeType("image/svg+xml")]
 	public class File : TagLib.Image.File
 	{
 
