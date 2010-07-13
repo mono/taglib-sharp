@@ -134,6 +134,7 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/IFD/Tags/GPSEntryTag.cs \
 	$(srcdir)/TagLib/IFD/Tags/IFDEntryTag.cs \
 	$(srcdir)/TagLib/IFD/Tags/IOPEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/OlympusMakerNoteEntryTag.cs \
 	$(srcdir)/TagLib/IFD/Tags/Nikon3MakerNoteEntryTag.cs \
 	$(srcdir)/TagLib/IFD/Tags/NikonLensData3EntryTag.cs \
 	$(srcdir)/TagLib/IFD/Tags/NikonIsoInfoEntryTag.cs \

@@ -390,7 +390,8 @@ public class GenerateTestFixtureApp
 			   ifd.Equals ("Nikon1") ||
 			   ifd.Equals ("Nikon2") ||
 			   ifd.Equals ("Nikon3") ||
-			   ifd.Equals ("Panasonic");
+			   ifd.Equals ("Panasonic") ||
+			   ifd.Equals ("Olympus");
 	}
 
 	static void EmitHeader (string name, string path)
@@ -847,6 +848,7 @@ public class GenerateTestFixtureApp
 		IndexTagType ("CanonPi", typeof (CanonPictureInfoEntryTag), "CanonPictureInfoEntryTag");
 		IndexTagType ("CanonPi", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
 		IndexTagType ("Sony", typeof (SonyMakerNoteEntryTag), "SonyMakerNoteEntryTag");
+		IndexTagType ("Olympus", typeof (OlympusMakerNoteEntryTag), "OlympusMakerNoteEntryTag");
 		IndexTagType ("Nikon3", typeof (Nikon3MakerNoteEntryTag), "Nikon3MakerNoteEntryTag");
 		IndexTagType ("NikonPreview", typeof (NikonPreviewMakerNoteEntryTag), "NikonPreviewMakerNoteEntryTag");
 		IndexTagType ("Panasonic", typeof (PanasonicMakerNoteEntryTag), "PanasonicMakerNoteEntryTag");
