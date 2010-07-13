@@ -172,14 +172,69 @@ namespace TagLib.IFD
 			uint next_offset = ifd_offset;
 			int i = 0;
 
+			StartIFDLoopDetect ();
 			do {
+				if (DetectIFDLoop (base_offset + next_offset)) {
+					file.PossiblyCorrupt = true; // IFD loop
+					break;
+				}
 				next_offset = ReadIFD (base_offset, next_offset, max_offset);
 			} while (next_offset > 0 && (count == -1 || ++i < count));
+
+			StopIFDLoopDetect ();
 		}
 
 #endregion
 
 #region Private Methods
+
+		/// <summary>
+		///    Add to the reference count for the IFD loop detection.
+		/// </summary>
+		private void StartIFDLoopDetect ()
+		{
+			if (!ifd_offsets.ContainsKey (file)) {
+				ifd_offsets[file] = new List<long> ();
+				ifd_loopdetect_refs[file] = 1;
+			} else {
+				ifd_loopdetect_refs[file]++;
+			}
+		}
+
+		/// <summary>
+		///    Attempts to detect whether or not this file has an endless IFD loop.
+		/// </summary>
+		/// <param name="offset">
+		///    A <see cref="System.UInt32"/> with the offset at which the next IFD
+		///    can be found.
+		/// </param>
+		/// <returns>
+		///    True if we have gone into a loop, false otherwise.
+		/// </returns>
+		private bool DetectIFDLoop (long offset)
+		{
+			if (offset == 0)
+				return false;
+			if (ifd_offsets[file].Contains (offset))
+				return true;
+			ifd_offsets[file].Add (offset);
+			return false;
+		}
+
+		/// <summary>
+		///    End the IFD loop detection, cleanup if we're the last.
+		/// </summary>
+		private void StopIFDLoopDetect ()
+		{
+			ifd_loopdetect_refs[file]--;
+			if (ifd_loopdetect_refs[file] == 0) {
+				ifd_offsets.Remove (file);
+				ifd_loopdetect_refs.Remove (file);
+			}
+		}
+
+		private static Dictionary<File, List<long>> ifd_offsets = new Dictionary<File, List<long>> ();
+		private static Dictionary<File, int> ifd_loopdetect_refs = new Dictionary<File, int> ();
 
 		/// <summary>
 		///    Reads an IFD from file at position <paramref name="offset"/> relative

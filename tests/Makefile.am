@@ -58,6 +58,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/RationalTest.cs \
 	fixtures/TagLib.Tests.Images/PngGimpTest.cs \
 	fixtures/TagLib.Tests.Images/PngGimpPngcrushTest.cs \
+	fixtures/TagLib.Tests.Images/RecursiveIFDTest.cs \
 	fixtures/TagLib.Tests.Images/TiffCanonBibble516BitTest.cs \
 	fixtures/TagLib.Tests.Images/TiffCanonBibble58BitTest.cs \
 	fixtures/TagLib.Tests.Images/TiffCanonDpp16BitTest.cs \
