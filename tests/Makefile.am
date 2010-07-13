@@ -27,6 +27,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.FileFormats/StandardTests.cs \
 	fixtures/TagLib.Tests.Images/AddImageMetadataTests.cs \
 	fixtures/TagLib.Tests.Images/CopyFromTest.cs \
+	fixtures/TagLib.Tests.Images/EmptyCommentTest.cs \
 	fixtures/TagLib.Tests.Images/GifExiftoolLongCommentTest.cs \
 	fixtures/TagLib.Tests.Images/GifExiftoolTangled1Test.cs \
 	fixtures/TagLib.Tests.Images/GifExiftoolTangled2Test.cs \
