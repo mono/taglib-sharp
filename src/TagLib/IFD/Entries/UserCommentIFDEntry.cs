@@ -113,6 +113,12 @@ namespace TagLib.IFD.Entries
 				return;
 			}
 
+			var trimmed = data.ToString ().Trim ();
+			if (trimmed.Length == 0 || trimmed == "\0") {
+				Value = String.Empty;
+				return;
+			}
+
 			// Some programs like e.g. CanonZoomBrowser inserts just the first 0x00-byte
 			// followed by 7-bytes of trash.
 			if (data.StartsWith ((byte) 0x00) && data.Count >= 8) {
