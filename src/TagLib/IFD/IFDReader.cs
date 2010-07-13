@@ -211,8 +211,11 @@ namespace TagLib.IFD
 			file.Seek (base_offset + offset, SeekOrigin.Begin);
 			ushort entry_count = ReadUShort ();
 
-			if (file.Tell + 12 * entry_count > base_offset + max_offset)
-				throw new Exception (String.Format ("Size of entries exceeds possible data size"));
+			if (file.Tell + 12 * entry_count > base_offset + max_offset) {
+				// Size of entries exceeds possible data size
+				file.PossiblyCorrupt = true;
+				return 0;
+			}
 
 			ByteVector entry_datas = file.ReadBlock (12 * entry_count);
 			uint next_offset = ReadUInt ();

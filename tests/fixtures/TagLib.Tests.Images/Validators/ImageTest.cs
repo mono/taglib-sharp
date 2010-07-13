@@ -105,6 +105,8 @@ namespace TagLib.Tests.Images.Validators
 			ModificationValidator.ValidatePreModification (tmp);
 			ModificationValidator.ModifyMetadata (tmp);
 			ModificationValidator.ValidatePostModification (tmp);
+			Assert.IsTrue (tmp.Writeable, "File should be writeable");
+			Assert.IsFalse (tmp.PossiblyCorrupt, "Corrupt files should never be written");
 			tmp.Save ();
 		}
 
