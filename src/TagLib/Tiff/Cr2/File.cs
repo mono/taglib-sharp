@@ -38,7 +38,7 @@ namespace TagLib.Tiff.Cr2
 	/// </summary>
 	[SupportedMimeType("taglib/cr2", "cr2")]
 	[SupportedMimeType("image/cr2")]
-	[SupportedMimeType("image/x-canon-cr")]
+	[SupportedMimeType("image/x-canon-cr2")]
 	public class File : TagLib.Tiff.BaseTiffFile
 	{
 #region private fields
