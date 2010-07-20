@@ -24,8 +24,8 @@ namespace TagLib.Tests.Images
 			Assert.AreEqual (new string [] {}, file2.ImageTag.Keywords);
 			Assert.AreEqual (null, file1.ImageTag.Rating);
 			Assert.AreEqual (0, file2.ImageTag.Rating);
-			Assert.AreEqual ("8/9/2009 7:12:44 PM", file1.ImageTag.DateTime.ToString ());
-			Assert.AreEqual ("2/15/2007 5:07:48 PM", file2.ImageTag.DateTime.ToString ());
+			Assert.AreEqual (new DateTime (2009, 8, 9, 19, 12, 44), (DateTime) file1.ImageTag.DateTime);
+			Assert.AreEqual (new DateTime (2007, 2, 15, 17, 7, 48), (DateTime) file2.ImageTag.DateTime);
 			Assert.AreEqual (ImageOrientation.TopLeft, file1.ImageTag.Orientation);
 			Assert.AreEqual (ImageOrientation.TopLeft, file2.ImageTag.Orientation);
 			Assert.AreEqual ("Digital Photo Professional", file1.ImageTag.Software);
@@ -65,8 +65,8 @@ namespace TagLib.Tests.Images
 			Assert.AreEqual (new string [] {}, file2.ImageTag.Keywords);
 			Assert.AreEqual (null, file1.ImageTag.Rating);
 			Assert.AreEqual (null, file2.ImageTag.Rating);
-			Assert.AreEqual ("8/9/2009 7:12:44 PM", file1.ImageTag.DateTime.ToString ());
-			Assert.AreEqual ("8/9/2009 7:12:44 PM", file2.ImageTag.DateTime.ToString ());
+			Assert.AreEqual (new DateTime (2009, 8, 9, 19, 12, 44), (DateTime) file1.ImageTag.DateTime);
+			Assert.AreEqual (new DateTime (2009, 8, 9, 19, 12, 44), (DateTime) file2.ImageTag.DateTime);
 			Assert.AreEqual (ImageOrientation.TopLeft, file1.ImageTag.Orientation);
 			Assert.AreEqual (ImageOrientation.TopLeft, file2.ImageTag.Orientation);
 			Assert.AreEqual ("Digital Photo Professional", file1.ImageTag.Software);
