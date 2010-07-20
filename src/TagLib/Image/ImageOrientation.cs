@@ -45,6 +45,11 @@ namespace TagLib.Image
 	public enum ImageOrientation : uint
 	{
 		/// <summary>
+		/// No value is known.
+		/// </summary>
+		None = 0,
+
+		/// <summary>
 		/// No need to do any transformations.
 		/// </summary>
 		TopLeft = 1,

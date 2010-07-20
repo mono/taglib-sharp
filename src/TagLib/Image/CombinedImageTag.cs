@@ -259,7 +259,7 @@ namespace TagLib.Image
 						return value;
 				}
 
-				return ImageOrientation.TopLeft;
+				return ImageOrientation.None;
 			}
 			set {
 				foreach (ImageTag tag in AllTags)

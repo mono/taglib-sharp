@@ -84,7 +84,7 @@ namespace TagLib.Image
 		///    image
 		/// </value>
 		public virtual ImageOrientation Orientation {
-			get { return ImageOrientation.TopLeft; }
+			get { return ImageOrientation.None; }
 			set {}
 		}
 

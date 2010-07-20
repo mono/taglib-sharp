@@ -30,7 +30,7 @@ namespace TagLib.Tests.Images
 
             // This file doesn't have an orientation tag, we had a bug that causes
             // an exception when looking it up. Test it here.
-            Assert.AreEqual (ImageOrientation.TopLeft, file.ImageTag.Orientation);
+            Assert.AreEqual (ImageOrientation.None, file.ImageTag.Orientation);
 
 			//  ---------- Start of IFD tests ----------
 

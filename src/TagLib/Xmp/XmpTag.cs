@@ -1147,7 +1147,7 @@ namespace TagLib.Xmp
 				if (orientation.HasValue)
 					return (ImageOrientation) orientation;
 
-				return ImageOrientation.TopLeft;
+				return ImageOrientation.None;
 			}
 			set {
 				if ((uint) value < 1U || (uint) value > 8U) {
