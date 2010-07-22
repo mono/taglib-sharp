@@ -23,7 +23,7 @@ namespace TagLib.Tests.Images
             Assert.AreEqual (new string [] {}, tag.Keywords, "Keywords");
             Assert.AreEqual (0, tag.Rating, "Rating");
             Assert.AreEqual (null, tag.DateTime, "DateTime");
-            Assert.AreEqual (ImageOrientation.TopLeft, tag.Orientation, "Orientation");
+            Assert.AreEqual (ImageOrientation.None, tag.Orientation, "Orientation");
             Assert.AreEqual (null, tag.Software, "Software");
             Assert.AreEqual (null, tag.Latitude, "Latitude");
             Assert.AreEqual (null, tag.Longitude, "Longitude");
@@ -51,7 +51,7 @@ namespace TagLib.Tests.Images
             Assert.AreEqual (new string [] { "keyword 1", "keyword 2" }, tag.Keywords, "Keywords");
             Assert.AreEqual (5, tag.Rating, "Rating");
             Assert.AreEqual (null, tag.DateTime, "DateTime");
-            Assert.AreEqual (ImageOrientation.TopLeft, tag.Orientation, "Orientation");
+            Assert.AreEqual (ImageOrientation.None, tag.Orientation, "Orientation");
             Assert.AreEqual (null, tag.Software, "Software");
             Assert.AreEqual (null, tag.Latitude, "Latitude");
             Assert.AreEqual (null, tag.Longitude, "Longitude");
