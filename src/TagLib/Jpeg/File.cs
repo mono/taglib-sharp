@@ -328,7 +328,14 @@ namespace TagLib.Jpeg
 			if (segment_size < 2)
 				throw new CorruptFileException (String.Format ("Invalid segment size ({0} bytes)", segment_size));
 
-			if (position + segment_size >= Length)
+			long length = 0;
+			try {
+				length = Length;
+			} catch (Exception) {
+				// Probably not supported by stream.
+			}
+
+			if (length > 0 && position + segment_size >= length)
 				throw new CorruptFileException ("Segment size exceeds file size");
 
 			return segment_size;
