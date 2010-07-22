@@ -258,8 +258,11 @@ namespace TagLib.IFD
 		/// </returns>
 		private uint ReadIFD (long base_offset, uint offset, uint max_offset)
 		{
-			if (base_offset + offset > file.Length)
-				throw new Exception (String.Format ("Invalid IFD offset {0}, length: {1}", offset, file.Length));
+			if (base_offset + offset > file.Length) {
+				// Invalid IFD offset
+				file.PossiblyCorrupt = true;
+				return 0;
+			}
 
 			var directory = new IFDDirectory ();
 
