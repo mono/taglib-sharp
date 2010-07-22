@@ -574,8 +574,8 @@ namespace TagLib.Png
 			byte compression_flag = data[terminator_index + 1];
 			byte compression_method = data[terminator_index + 2];
 
-			string language = ReadTerminatedString (data, terminator_index + 3, out terminator_index);
-			string translated_keyword = ReadTerminatedString (data, terminator_index + 1, out terminator_index);
+			//string language = ReadTerminatedString (data, terminator_index + 3, out terminator_index);
+			//string translated_keyword = ReadTerminatedString (data, terminator_index + 1, out terminator_index);
 
 			ByteVector txt_data = data.Mid (terminator_index + 1);
 
