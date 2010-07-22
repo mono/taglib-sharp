@@ -505,6 +505,12 @@ namespace TagLib.IFD
 			if (type == (ushort) IFDEntryType.Float)
 				return null;
 
+			if (type == 0) {
+				// Invalid type
+				file.PossiblyCorrupt = true;
+				return null;
+			}
+
 			// TODO: We should ignore unreadable values, erroring for now until we have sufficient coverage.
 			throw new NotImplementedException (String.Format ("Unknown type/count {0}/{1} ({2})", type, count, offset));
 		}

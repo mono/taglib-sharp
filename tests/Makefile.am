@@ -34,6 +34,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/GifExiftoolTangled3Test.cs \
 	fixtures/TagLib.Tests.Images/GifExiftoolTest.cs \
 	fixtures/TagLib.Tests.Images/GifGimpTest.cs \
+	fixtures/TagLib.Tests.Images/InvalidIFDEntryTypeTest.cs \
 	fixtures/TagLib.Tests.Images/InvalidIFDOffsetTest.cs \
 	fixtures/TagLib.Tests.Images/JpegBGO624097Test.cs \
 	fixtures/TagLib.Tests.Images/JpegCanonBibble5Test.cs \
