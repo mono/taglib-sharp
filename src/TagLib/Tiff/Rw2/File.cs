@@ -298,8 +298,8 @@ namespace TagLib.Tiff.Rw2
 			IFDTag tag = GetTag (TagTypes.TiffIFD) as IFDTag;
 			IFDStructure structure = tag.Structure;
 
-			width = (int) (structure.GetLongValue (0, (ushort) IFDEntryTag.ImageWidth) ?? 0);
-			height = (int) (structure.GetLongValue (0, (ushort) IFDEntryTag.ImageLength) ?? 0);
+			width = (int) (structure.GetLongValue (0, 0x07) ?? 0);
+			height = (int) (structure.GetLongValue (0, 0x06) ?? 0);
 
 			if (width > 0 && height > 0) {
 				return new Properties (TimeSpan.Zero, new Codec (width, height, "Panasonic RAW File"));

@@ -51,6 +51,11 @@ namespace TagLib.Tests.Images
 			Assert.AreEqual ("DMC-G1", imagetag.Model, "Model");
 			Assert.AreEqual (null, imagetag.Creator, "Creator");
 
+			var properties = file.Properties;
+			Assert.IsNotNull (properties);
+			Assert.AreEqual (4008, properties.PhotoWidth, "PhotoWidth");
+			Assert.AreEqual (3004, properties.PhotoHeight, "PhotoHeight");
+
 			//  ---------- End of ImageTag tests ----------
 
 			//  ---------- Start of IFD tests ----------
