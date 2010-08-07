@@ -13,7 +13,6 @@ namespace TagLib.Tests.FileFormats
     public class JpegFormatTest
     {
 		private static string sample_file = "samples/sample.jpg";
-        private static string tmp_file = "samples/tmpwrite.jpg";
 		private Image.File file;
 
 		private TagTypes contained_types =
