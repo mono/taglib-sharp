@@ -26,6 +26,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.FileFormats/OggFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/StandardTests.cs \
 	fixtures/TagLib.Tests.Images/AddImageMetadataTests.cs \
+	fixtures/TagLib.Tests.Images/BGO493530Test.cs \
 	fixtures/TagLib.Tests.Images/CopyFromTest.cs \
 	fixtures/TagLib.Tests.Images/EmptyCommentTest.cs \
 	fixtures/TagLib.Tests.Images/GifExiftoolLongCommentTest.cs \

@@ -401,8 +401,15 @@ namespace TagLib.IFD
 				if (type == (ushort) IFDEntryType.Undefined)
 					return new UndefinedIFDEntry (tag, offset_data.Mid (0, (int)count));
 
-				if (type == (ushort) IFDEntryType.Ascii)
-					return new StringIFDEntry (tag, offset_data.Mid (0, (int)count - 1).ToString ());
+				if (type == (ushort) IFDEntryType.Ascii) {
+					string data = offset_data.Mid (0, (int)count).ToString ();
+					int term = data.IndexOf ('\0');
+
+					if (term > -1)
+						data = data.Substring (0, term);
+
+					return new StringIFDEntry (tag, data);
+				}
 
 				if (type == (ushort) IFDEntryType.Byte)
 					return new ByteVectorIFDEntry (tag, offset_data.Mid (0, (int)count));
@@ -682,14 +689,13 @@ namespace TagLib.IFD
 		/// </remarks>
 		private string ReadAsciiString (int count)
 		{
-			// The last character is \0
-			string str = file.ReadBlock (count - 1).ToString ();
+			string str = file.ReadBlock (count).ToString ();
 			int term = str.IndexOf ('\0');
 
-			if (term == -1)
-				return str;
-			else
-				return str.Substring (0, term);
+			if (term > -1)
+				str = str.Substring (0, term);
+
+			return str;
 		}
 
 		/// <summary>
