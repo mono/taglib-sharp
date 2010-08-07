@@ -172,16 +172,18 @@ namespace TagLib.IFD
 			uint next_offset = ifd_offset;
 			int i = 0;
 
-			StartIFDLoopDetect ();
-			do {
-				if (DetectIFDLoop (base_offset + next_offset)) {
-					file.PossiblyCorrupt = true; // IFD loop
-					break;
-				}
-				next_offset = ReadIFD (base_offset, next_offset, max_offset);
-			} while (next_offset > 0 && (count == -1 || ++i < count));
+			lock (file) {
+				StartIFDLoopDetect ();
+				do {
+					if (DetectIFDLoop (base_offset + next_offset)) {
+						file.PossiblyCorrupt = true; // IFD loop
+						break;
+					}
+					next_offset = ReadIFD (base_offset, next_offset, max_offset);
+				} while (next_offset > 0 && (count == -1 || ++i < count));
 
-			StopIFDLoopDetect ();
+				StopIFDLoopDetect ();
+			}
 		}
 
 #endregion
