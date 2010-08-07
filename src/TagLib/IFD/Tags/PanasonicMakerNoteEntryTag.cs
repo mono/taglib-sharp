@@ -60,6 +60,11 @@ namespace TagLib.IFD.Tags
 		AFMode                                              = 15,
 
 		/// <summary>
+		///    ISO Speed. (Hex: 0X0017)
+		/// </summary>
+		ISO                                                 = 23,
+
+		/// <summary>
 		///    Image stabilization. (Hex: 0X001A)
 		/// </summary>
 		ImageStabilization                                  = 26,

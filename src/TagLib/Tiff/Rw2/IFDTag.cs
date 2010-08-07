@@ -21,6 +21,8 @@
 // USA
 //
 
+using TagLib.IFD.Tags;
+
 namespace TagLib.Tiff.Rw2
 {
 	/// <summary>
@@ -28,6 +30,50 @@ namespace TagLib.Tiff.Rw2
 	/// </summary>
 	public class IFDTag : TagLib.IFD.IFDTag
 	{
+		private File file;
 
+		internal IFDTag (File file) : base ()
+		{
+			this.file = file;
+		}
+
+		/// <summary>
+		///    Gets the ISO speed the image, the current instance belongs
+		///    to, was taken with.
+		/// </summary>
+		/// <value>
+		///    A <see cref="System.Nullable"/> with the ISO speed as defined in ISO 12232.
+		/// </value>
+		/// <remarks>
+		///    <para>Panasonic stores these in a somewhat unstandard location.</para>
+		/// </remarks>
+		public override uint? ISOSpeedRatings {
+			// TODO: The value in JPGFromRAW should probably be used as well.
+			get {
+				return Structure.GetLongValue (0, (ushort) PanasonicMakerNoteEntryTag.ISO);
+			}
+			set {
+				Structure.SetLongValue (0, (ushort) PanasonicMakerNoteEntryTag.ISO, value.HasValue ? (uint) value : 0);
+			}
+		}
+
+		/// <summary>
+		///    Gets the focal length the image, the current instance belongs
+		///    to, was taken with, assuming a 35mm film camera.
+		/// </summary>
+		/// <value>
+		///    A <see cref="System.Nullable"/> with the focal length in 35mm equivalent in millimeters.
+		/// </value>
+		/// <remarks>
+		///    <para>Panasonic stores these in a somewhat unstandard location.</para>
+		/// </remarks>
+		public override uint? FocalLengthIn35mmFilm {
+			get {
+				return (file.JpgFromRaw.GetTag (TagTypes.TiffIFD, true) as Image.ImageTag).FocalLengthIn35mmFilm;
+			}
+			set {
+				(file.JpgFromRaw.GetTag (TagTypes.TiffIFD, true) as Image.ImageTag).FocalLengthIn35mmFilm = value;
+			}
+		}
 	}
 }

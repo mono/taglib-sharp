@@ -214,7 +214,7 @@ namespace TagLib.Tiff.Rw2
 			if (type != TagTypes.TiffIFD)
 				return base.GetTag (type, create);
 
-			ImageTag new_tag = new IFDTag ();
+			ImageTag new_tag = new IFDTag (this);
 			ImageTag.AddTag (new_tag);
 			return new_tag;
 		}

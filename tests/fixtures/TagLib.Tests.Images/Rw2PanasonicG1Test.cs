@@ -29,6 +29,30 @@ namespace TagLib.Tests.Images
 		public void ValidateMetadataInvariants (Image.File file)
 		{
 			Assert.IsNotNull (file);
+
+			//  ---------- Start of ImageTag tests ----------
+
+			var imagetag = file.ImageTag;
+			Assert.IsNotNull (imagetag);
+			Assert.AreEqual (String.Empty, imagetag.Comment, "Comment");
+			Assert.AreEqual (new string [] {}, imagetag.Keywords, "Keywords");
+			Assert.AreEqual (null, imagetag.Rating, "Rating");
+			Assert.AreEqual (Image.ImageOrientation.TopLeft, imagetag.Orientation, "Orientation");
+			Assert.AreEqual (null, imagetag.Software, "Software");
+			Assert.AreEqual (null, imagetag.Latitude, "Latitude");
+			Assert.AreEqual (null, imagetag.Longitude, "Longitude");
+			Assert.AreEqual (null, imagetag.Altitude, "Altitude");
+			Assert.AreEqual (0.0025, imagetag.ExposureTime, "ExposureTime");
+			Assert.AreEqual (6.3, imagetag.FNumber, "FNumber");
+			Assert.AreEqual (100, imagetag.ISOSpeedRatings, "ISOSpeedRatings");
+			Assert.AreEqual (14, imagetag.FocalLength, "FocalLength");
+			Assert.AreEqual (28, imagetag.FocalLengthIn35mmFilm, "FocalLengthIn35mmFilm");
+			Assert.AreEqual ("Panasonic", imagetag.Make, "Make");
+			Assert.AreEqual ("DMC-G1", imagetag.Model, "Model");
+			Assert.AreEqual (null, imagetag.Creator, "Creator");
+
+			//  ---------- End of ImageTag tests ----------
+
 			//  ---------- Start of IFD tests ----------
 
 			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
