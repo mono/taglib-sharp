@@ -104,12 +104,12 @@ namespace TagLib.IFD.Entries
 			Tag = tag;
 
 			if (data.StartsWith (COMMENT_ASCII_CODE)) {
-				Value = data.ToString (StringType.Latin1, COMMENT_ASCII_CODE.Count, data.Count - COMMENT_ASCII_CODE.Count);
+				Value = TrimNull (data.ToString (StringType.Latin1, COMMENT_ASCII_CODE.Count, data.Count - COMMENT_ASCII_CODE.Count));
 				return;
 			}
 
 			if (data.StartsWith (COMMENT_UNICODE_CODE)) {
-				Value = data.ToString (StringType.UTF8, COMMENT_UNICODE_CODE.Count, data.Count - COMMENT_UNICODE_CODE.Count);
+				Value = TrimNull (data.ToString (StringType.UTF8, COMMENT_UNICODE_CODE.Count, data.Count - COMMENT_UNICODE_CODE.Count));
 				return;
 			}
 
@@ -140,6 +140,14 @@ namespace TagLib.IFD.Entries
 			}
 
 			throw new NotImplementedException ("UserComment with other encoding than Latin1 or Unicode");
+		}
+
+		private string TrimNull (string value)
+		{
+			int term = value.IndexOf ('\0');
+			if (term > -1)
+				value = value.Substring (0, term);
+			return value;
 		}
 
 #endregion
