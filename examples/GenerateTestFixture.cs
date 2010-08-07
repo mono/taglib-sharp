@@ -184,6 +184,8 @@ public class GenerateTestFixtureApp
 				EmitTestIFDByteEntry (val);
 			} else if (type.Equals ("Byte") && length > 1) {
 				EmitTestIFDByteArrayEntry (val);
+			} else if (type.Equals ("SByte") && length == 1) {
+				EmitTestIFDSByteEntry (val);
 			} else if (type.Equals ("SubIFD")) {
 				EmitTestIFDSubIFDEntry (val);
 			} else if (type.Equals ("ThumbnailDataIFD")) {
@@ -391,7 +393,8 @@ public class GenerateTestFixtureApp
 			   ifd.Equals ("Nikon2") ||
 			   ifd.Equals ("Nikon3") ||
 			   ifd.Equals ("Panasonic") ||
-			   ifd.Equals ("Olympus");
+			   ifd.Equals ("Olympus") ||
+			   ifd.Equals ("Pentax");
 	}
 
 	static void EmitHeader (string name, string path)
@@ -721,6 +724,12 @@ public class GenerateTestFixtureApp
 		EmitByteArrayComparison (val, "ByteVectorIFDEntry", "a byte array");
 	}
 
+	static void EmitTestIFDSByteEntry (string val)
+	{
+		Write ("Assert.IsNotNull (entry as SByteIFDEntry, \"Entry is not a signed byte!\");");
+		Write ("Assert.AreEqual ({0}, (entry as SByteIFDEntry).Value);", val);
+	}
+
 	static void EmitTestIFDIPTCNAAEntry (string val)
 	{
 		Write ("Assert.IsNotNull (entry as ByteVectorIFDEntry, \"Entry is not a byte array!\");");
@@ -849,6 +858,7 @@ public class GenerateTestFixtureApp
 		IndexTagType ("CanonPi", typeof (CanonMakerNoteEntryTag), "CanonMakerNoteEntryTag");
 		IndexTagType ("Sony", typeof (SonyMakerNoteEntryTag), "SonyMakerNoteEntryTag");
 		IndexTagType ("Olympus", typeof (OlympusMakerNoteEntryTag), "OlympusMakerNoteEntryTag");
+		IndexTagType ("Pentax", typeof (PentaxMakerNoteEntryTag), "PentaxMakerNoteEntryTag");
 		IndexTagType ("Nikon3", typeof (Nikon3MakerNoteEntryTag), "Nikon3MakerNoteEntryTag");
 		IndexTagType ("NikonPreview", typeof (NikonPreviewMakerNoteEntryTag), "NikonPreviewMakerNoteEntryTag");
 		IndexTagType ("Panasonic", typeof (PanasonicMakerNoteEntryTag), "PanasonicMakerNoteEntryTag");

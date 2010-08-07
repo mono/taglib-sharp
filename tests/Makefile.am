@@ -108,6 +108,7 @@ RAW_CSFILES = \
 	fixtures/TagLib.Tests.Images/DngLeicaM8Test.cs \
 	fixtures/TagLib.Tests.Images/ImageTagTests.cs \
 	fixtures/TagLib.Tests.Images/NefNikonD90Test.cs \
+	fixtures/TagLib.Tests.Images/PefPentaxKd10Test.cs \
 	fixtures/TagLib.Tests.Images/Rw2PanasonicG1Test.cs
 
 if HAVE_SHARPZIPLIB

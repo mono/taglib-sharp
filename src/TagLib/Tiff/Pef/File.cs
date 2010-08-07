@@ -1,5 +1,5 @@
 //
-// File.cs: Provides tagging for Nikon NEF files
+// File.cs: Provides tagging for Pentax CR2 files
 //
 // Author:
 //   Ruben Vermeersch (ruben@savanne.be)
@@ -29,16 +29,16 @@ using TagLib.Image;
 using TagLib.IFD;
 using TagLib.IFD.Tags;
 
-namespace TagLib.Tiff.Nef
+namespace TagLib.Tiff.Pef
 {
 
 	/// <summary>
-	///    This class extends <see cref="TagLib.Tiff.File" /> to provide tagging
-	///    for NEF image files.
+	///    This class extends <see cref="TagLib.Tiff.BaseTiffFile" /> to provide tagging
+	///    for PEF image files.
 	/// </summary>
-	[SupportedMimeType("taglib/nef", "nef")]
-	[SupportedMimeType("image/nef")]
-	[SupportedMimeType("image/x-nikon-nef")]
+	[SupportedMimeType("taglib/pef", "pef")]
+	[SupportedMimeType("image/pef")]
+	[SupportedMimeType("image/x-pentax-pef")]
 	public class File : TagLib.Tiff.File
 	{
 
@@ -162,7 +162,7 @@ namespace TagLib.Tiff.Nef
 		/// </returns>
 		protected override Codec CreateCodec (int width, int height)
 		{
-			return new Codec (width, height, "Nikon Raw File");
+			return new Codec (width, height, "Pentax Raw File");
 		}
 
 	}
