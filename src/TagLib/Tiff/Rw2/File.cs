@@ -38,6 +38,8 @@ namespace TagLib.Tiff.Rw2
 	/// </summary>
 	[SupportedMimeType("taglib/rw2", "rw2")]
 	[SupportedMimeType("image/rw2")]
+	[SupportedMimeType("taglib/raw", "raw")]
+	[SupportedMimeType("image/raw")]
 	[SupportedMimeType("image/x-raw")]
 	public class File : TagLib.Tiff.BaseTiffFile
 	{
@@ -301,8 +303,13 @@ namespace TagLib.Tiff.Rw2
 			width = (int) (structure.GetLongValue (0, 0x07) ?? 0);
 			height = (int) (structure.GetLongValue (0, 0x06) ?? 0);
 
+			var vendor = ImageTag.Make;
+			if (vendor == "LEICA")
+				vendor = "Leica";
+			var desc = String.Format ("{0} RAW File", vendor);
+
 			if (width > 0 && height > 0) {
-				return new Properties (TimeSpan.Zero, new Codec (width, height, "Panasonic RAW File"));
+				return new Properties (TimeSpan.Zero, new Codec (width, height, desc));
 			}
 
 			return null;

@@ -69,7 +69,13 @@ namespace TagLib.Tiff.Rw2
 		/// </remarks>
 		public override uint? FocalLengthIn35mmFilm {
 			get {
-				return (file.JpgFromRaw.GetTag (TagTypes.TiffIFD, true) as Image.ImageTag).FocalLengthIn35mmFilm;
+				var jpg = file.JpgFromRaw;
+				if (jpg == null)
+					return base.FocalLengthIn35mmFilm;
+				var tag = jpg.GetTag (TagTypes.TiffIFD, true) as Image.ImageTag;
+				if (tag == null)
+					return base.FocalLengthIn35mmFilm;
+				return tag.FocalLengthIn35mmFilm ?? base.FocalLengthIn35mmFilm;
 			}
 			set {
 				(file.JpgFromRaw.GetTag (TagTypes.TiffIFD, true) as Image.ImageTag).FocalLengthIn35mmFilm = value;
