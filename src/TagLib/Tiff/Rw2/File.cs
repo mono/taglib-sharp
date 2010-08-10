@@ -41,6 +41,7 @@ namespace TagLib.Tiff.Rw2
 	[SupportedMimeType("taglib/raw", "raw")]
 	[SupportedMimeType("image/raw")]
 	[SupportedMimeType("image/x-raw")]
+	[SupportedMimeType("image/x-panasonic-raw")]
 	public class File : TagLib.Tiff.BaseTiffFile
 	{
 #region private fields
