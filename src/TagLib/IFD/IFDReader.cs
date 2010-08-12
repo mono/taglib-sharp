@@ -514,7 +514,7 @@ namespace TagLib.IFD
 			if (type == (ushort) IFDEntryType.Float)
 				return null;
 
-			if (type == 0) {
+			if (type == 0 || type > 12) {
 				// Invalid type
 				file.PossiblyCorrupt = true;
 				return null;

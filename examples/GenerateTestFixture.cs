@@ -54,7 +54,7 @@ public class GenerateTestFixtureApp
 
 		foreach (string line in output.Split ('\n')) {
 			string[] parts = line.Split (new char[] {'\t'}, 5);
-			if (parts.Length == 0 || line.Trim ().Equals (String.Empty))
+			if (parts.Length == 0 || line.Trim ().Equals (String.Empty) || parts.Length != 5)
 				continue;
 			string tag_label = parts[0];
 			ushort tag = ushort.Parse (parts[1].Substring(2), System.Globalization.NumberStyles.HexNumber);
