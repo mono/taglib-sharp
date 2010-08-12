@@ -45,6 +45,7 @@ namespace TagLib.IFD
 		private static readonly string OLYMPUS1_HEADER = "OLYMP\0";
 		private static readonly string OLYMPUS2_HEADER = "OLYMPUS\0";
 		private static readonly string SONY_HEADER = "SONY DSC \0\0\0";
+		private static readonly string LEICA_HEADER = "LEICA\0\0\0";
 
 #endregion
 
@@ -859,6 +860,13 @@ namespace TagLib.IFD
 						return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Nikon3, header.Mid (0, 18), 8, false, makernote_endian);
 					}
 				}
+			}
+
+			if (header.StartsWith (LEICA_HEADER)) {
+				IFDReader reader = new IFDReader (file, is_bigendian, ifd_structure, makernote_offset, 8, count);
+
+				reader.Read ();
+				return new MakernoteIFDEntry (tag, ifd_structure, MakernoteType.Leica, header.Mid (0, 8), 10, false, null);
 			}
 
 			try {

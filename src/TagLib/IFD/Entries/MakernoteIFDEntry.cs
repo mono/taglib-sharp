@@ -52,6 +52,12 @@ namespace TagLib.IFD.Entries
 		Panasonic,
 
 		/// <summary>
+		///    Leica makernote.
+		///    "LEICA\0\0\0" prefix and IFD starting at offset 10.
+		/// </summary>
+		Leica,
+
+		/// <summary>
 		///    Pentax makernote.
 		///    "AOC\0" + 2 unknown bytes as prefix. The IFD starts at
 		///    offset 6.
