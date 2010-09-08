@@ -1,3 +1,14 @@
+2010-09-08  Alexander Kojevnikov  <alexander@kojevnikov.com>
+
+	* src/TagLib/Mpeg4/Boxes/IsoUserDataBox.cs:
+	* src/TagLib/Mpeg4/File.cs:
+	* src/TagLib/Mpeg4/FileParser.cs:
+	* tests/Makefile.am:
+	* tests/fixtures/TagLib.Tests.FileFormats/M4vFormatTest.cs:
+	* tests/samples/sample.m4v:
+	* tests/tests.csproj: Patch from Colin Turner fixing mpeg4 file
+	parsing of udta boxes (bgo#575842)
+
 2010-03-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* README: Add svn info
