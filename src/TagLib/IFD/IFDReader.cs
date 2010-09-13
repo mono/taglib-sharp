@@ -261,7 +261,15 @@ namespace TagLib.IFD
 		/// </returns>
 		private uint ReadIFD (long base_offset, uint offset, uint max_offset)
 		{
-			if (base_offset + offset > file.Length) {
+			long length = 0;
+			try {
+				length = file.Length;
+			} catch (Exception) {
+				// Use a safety-value of 4 gigabyte.
+				length = 1073741824L * 4;
+			}
+
+			if (base_offset + offset > length) {
 				// Invalid IFD offset
 				file.PossiblyCorrupt = true;
 				return 0;
