@@ -62,8 +62,10 @@ namespace TagLib.IFD.Entries
 		/// </param>
 		public Rational (uint numerator, uint denominator)
 		{
-			Numerator = numerator;
-			Denominator = denominator;
+			if (denominator == 0)
+				throw new ArgumentException ("denominator");
+			this.numerator = numerator;
+			this.denominator = denominator;
 		}
 
 #endregion
