@@ -177,7 +177,7 @@ namespace TagLib.IFD
 				StartIFDLoopDetect ();
 				do {
 					if (DetectIFDLoop (base_offset + next_offset)) {
-						file.PossiblyCorrupt = true; // IFD loop
+						file.MarkAsCorrupt ("IFD loop detected");
 						break;
 					}
 					next_offset = ReadIFD (base_offset, next_offset, max_offset);
@@ -270,8 +270,7 @@ namespace TagLib.IFD
 			}
 
 			if (base_offset + offset > length) {
-				// Invalid IFD offset
-				file.PossiblyCorrupt = true;
+				file.MarkAsCorrupt ("Invalid IFD offset");
 				return 0;
 			}
 
@@ -281,8 +280,7 @@ namespace TagLib.IFD
 			ushort entry_count = ReadUShort ();
 
 			if (file.Tell + 12 * entry_count > base_offset + max_offset) {
-				// Size of entries exceeds possible data size
-				file.PossiblyCorrupt = true;
+				file.MarkAsCorrupt ("Size of entries exceeds possible data size");
 				return 0;
 			}
 
@@ -362,7 +360,7 @@ namespace TagLib.IFD
 
 			if (count > 0x10000000) {
 				// Some Nikon files are known to exhibit this corruption (or "feature").
-				file.PossiblyCorrupt = true;
+				file.MarkAsCorrupt ("Impossibly large item count");
 				return null;
 			}
 
@@ -525,7 +523,7 @@ namespace TagLib.IFD
 
 			if (type == 0 || type > 12) {
 				// Invalid type
-				file.PossiblyCorrupt = true;
+				file.MarkAsCorrupt ("Invalid item type");
 				return null;
 			}
 

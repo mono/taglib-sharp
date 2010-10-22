@@ -199,9 +199,9 @@ namespace TagLib {
 		private long invariant_end_position = -1;
 
 		/// <summary>
-		///    Whether or not this file might be corrupt.
+		///    The reasons (if any) why this file is marked as corrupt.
 		/// </summary>
-		private bool possibly_corrupt = false;
+		private List<string> corruption_reasons = null;
 
 		#endregion
 		
@@ -467,12 +467,16 @@ namespace TagLib {
 		/// <remarks>
 		///    Files with unknown corruptions should not be written.
 		/// </remarks>
-		public virtual bool PossiblyCorrupt {
-			get { return possibly_corrupt; }
-			set {
-				if (value != true)
-					throw new ArgumentException ("Can only switch this flag on");
-				possibly_corrupt = value;
+		public bool PossiblyCorrupt {
+			get { return corruption_reasons != null; }
+		}
+
+		/// <summary>
+		///   The reasons for which this file is marked as corrupt.
+		/// </summary>
+		public IEnumerable<string> CorruptionReasons {
+			get {
+				return corruption_reasons;
 			}
 		}
 
@@ -481,6 +485,19 @@ namespace TagLib {
 		
 		
 		#region Public Methods
+
+		/// <summary>
+		///	   Mark the file as corrupt.
+		/// </summary>
+		/// <param name="reason">
+		///    The reason why this file is considered to be corrupt.
+		/// </param>
+		public void MarkAsCorrupt (string reason)
+		{
+			if (corruption_reasons == null)
+				corruption_reasons = new List<string> ();
+			corruption_reasons.Add (reason);
+		}
 
 		/// <summary>
 		///    Dispose the current file. Equivalent to setting the

@@ -70,6 +70,13 @@ public class ParsePhotoApp
 		Console.WriteLine ();
 		Console.WriteLine("Writable?       : " +  image.Writeable.ToString ());
 		Console.WriteLine("Corrupt?        : " +  image.PossiblyCorrupt.ToString ());
+
+		if (image.PossiblyCorrupt) {
+			foreach (string reason in image.CorruptionReasons) {
+				Console.WriteLine ("    * " + reason);
+			}
+		}
+
 		Console.WriteLine ("---------------------------------------");
 	}
 }
