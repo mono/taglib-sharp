@@ -474,7 +474,7 @@ namespace TagLib.Gif
 				int data_length = (int) (xmp_trailer_start - data_start);
 
 				ByteVector xmp_data = ReadBlock (data_length);
-				ImageTag.AddTag (new XmpTag (xmp_data.ToString (StringType.UTF8)));
+				ImageTag.AddTag (new XmpTag (xmp_data.ToString (StringType.UTF8), this));
 
 				// 2 bytes where read before
 				AddMetadataBlock (position - 2, 14 + data_length + XMP_MAGIC_TRAILER.Length);

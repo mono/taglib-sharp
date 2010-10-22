@@ -483,7 +483,7 @@ namespace TagLib.Jpeg
 				if (data.ToString ().Equals (XmpTag.XAP_NS + "\0")) {
 					ByteVector xmp_data = ReadBlock (length - xmp_header_length);
 
-					ImageTag.AddTag (new XmpTag (xmp_data.ToString ()));
+					ImageTag.AddTag (new XmpTag (xmp_data.ToString (), this));
 
 					AddMetadataBlock (position - 4, length + 4);
 				}

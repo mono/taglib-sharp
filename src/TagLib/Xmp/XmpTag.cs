@@ -250,7 +250,10 @@ namespace TagLib.Xmp
 		///    A <see cref="System.String"/> containing an XMP packet. This should be a valid
 		///    XMP block.
 		/// </param>
-		public XmpTag (string data)
+		/// <param name="file">
+		///    The file that's currently being parsed, used for reporting corruptions.
+		/// </param>
+		public XmpTag (string data, TagLib.File file)
 		{
 			XmlDocument doc = new XmlDocument (NameTable);
 			doc.LoadXml (data);
@@ -265,7 +268,7 @@ namespace TagLib.Xmp
 			if (node == null)
 				throw new CorruptFileException ();
 
-			NodeTree = ParseRDF (node);
+			NodeTree = ParseRDF (node, file);
 			AcceptVisitors ();
 		}
 
@@ -277,7 +280,7 @@ namespace TagLib.Xmp
 		//		start-element ( URI == rdf:RDF, attributes == set() )
 		//		nodeElementList
 		//		end-element()
-		private XmpNode ParseRDF (XmlNode rdf_node)
+		private XmpNode ParseRDF (XmlNode rdf_node, TagLib.File file)
 		{
 			XmpNode top = new XmpNode (String.Empty, String.Empty);
 			foreach (XmlNode node in rdf_node.ChildNodes) {
@@ -294,7 +297,8 @@ namespace TagLib.Xmp
 					continue;
 				}
 
-				throw new CorruptFileException ("Cannot have anything other than rdf:Description at the top level");
+				file.MarkAsCorrupt ("Cannot have anything other than rdf:Description at the top level");
+				return top;
 			}
 			ParseNodeElementList (top, rdf_node);
 			return top;

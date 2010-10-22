@@ -558,7 +558,7 @@ namespace TagLib.Png
 
 			// handle XMP, which has a fixed header
 			if (data.StartsWith (XMP_CHUNK_HEADER)) {
-				ImageTag.AddTag (new XmpTag (data.Mid (XMP_CHUNK_HEADER.Length).ToString (StringType.UTF8)));
+				ImageTag.AddTag (new XmpTag (data.Mid (XMP_CHUNK_HEADER.Length).ToString (StringType.UTF8), this));
 
 				AddMetadataBlock (position - 8, data_length + 8 + 4);
 
