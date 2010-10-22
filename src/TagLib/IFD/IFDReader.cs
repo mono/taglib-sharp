@@ -508,7 +508,7 @@ namespace TagLib.IFD
 				if (tag == (ushort) ExifEntryTag.UserComment) {
 					ByteVector data = file.ReadBlock ((int) count);
 
-					return new UserCommentIFDEntry (tag, data);
+					return new UserCommentIFDEntry (tag, data, file);
 				}
 
 				if (type == (ushort) IFDEntryType.Undefined) {

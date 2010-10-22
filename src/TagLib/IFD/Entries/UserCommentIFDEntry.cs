@@ -51,6 +51,11 @@ namespace TagLib.IFD.Entries
 		public static readonly ByteVector COMMENT_UNICODE_CODE = new byte[] {0x55, 0x4E, 0x49, 0x43, 0x4F, 0x44, 0x45, 0x00};
 
 		/// <summary>
+		///   Corrupt marker that seems to be resembling unicode.
+		/// </summary>
+		public static readonly ByteVector COMMENT_BAD_UNICODE_CODE = new byte[] {0x55, 0x6E, 0x69, 0x63, 0x6F, 0x64, 0x65, 0x00};
+
+		/// <summary>
 		///   Marker for a UserComment tag with undefined encoding.
 		/// </summary>
 		public static readonly ByteVector COMMENT_UNDEFINED_CODE = new byte[] {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
@@ -99,7 +104,10 @@ namespace TagLib.IFD.Entries
 		/// <param name="data">
 		///    A <see cref="ByteVector"/> to be stored
 		/// </param>
-		public UserCommentIFDEntry (ushort tag, ByteVector data)
+		/// <param name="file">
+		///    The file that's currently being parsed, used for reporting corruptions.
+		/// </param>
+		public UserCommentIFDEntry (ushort tag, ByteVector data, TagLib.File file)
 		{
 			Tag = tag;
 
@@ -139,7 +147,18 @@ namespace TagLib.IFD.Entries
 				return;
 			}
 
-			throw new NotImplementedException ("UserComment with other encoding than Latin1 or Unicode");
+			// Try to parse anyway
+			int offset = 0;
+			int length = data.Count - offset;
+
+			// Corruption that starts with a Unicode header and a count byte.
+			if (data.StartsWith (COMMENT_BAD_UNICODE_CODE)) {
+				offset = COMMENT_BAD_UNICODE_CODE.Count;
+				length = data.Count - offset;
+			}
+
+			file.MarkAsCorrupt ("UserComment with other encoding than Latin1 or Unicode");
+			Value = TrimNull (data.ToString (StringType.UTF8, offset, length));
 		}
 
 		private string TrimNull (string value)
