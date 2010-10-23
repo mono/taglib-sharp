@@ -26,6 +26,12 @@ namespace TagLib.Tests.Images
 		public void ValidateMetadataInvariants (Image.File file)
 		{
 			Assert.IsNotNull (file);
+
+			var properties = file.Properties;
+			Assert.IsNotNull (properties);
+			Assert.AreEqual (3920, properties.PhotoWidth, "PhotoWidth");
+			Assert.AreEqual (2638, properties.PhotoHeight, "PhotoHeight");
+
 			//  ---------- Start of IFD tests ----------
 
 			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
