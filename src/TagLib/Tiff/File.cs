@@ -259,7 +259,7 @@ namespace TagLib.Tiff
 		///    at the right values. When no guess at all can be made,
 		///    <see langword="null" /> is returned.
 		/// </returns>
-		private Properties ExtractProperties ()
+		protected virtual Properties ExtractProperties ()
 		{
 			int width = 0, height = 0;
 

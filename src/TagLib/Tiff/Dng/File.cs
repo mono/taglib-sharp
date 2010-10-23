@@ -28,6 +28,7 @@ using TagLib;
 using TagLib.Image;
 using TagLib.IFD;
 using TagLib.IFD.Tags;
+using TagLib.IFD.Entries;
 
 namespace TagLib.Tiff.Dng
 {
@@ -153,6 +154,45 @@ namespace TagLib.Tiff.Dng
 		}
 
 #endregion
+
+		/// <summary>
+		///    Attempts to extract the media properties of the main
+		///    photo.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="Properties" /> object with a best effort guess
+		///    at the right values. When no guess at all can be made,
+		///    <see langword="null" /> is returned.
+		/// </returns>
+		protected override Properties ExtractProperties ()
+		{
+			int width = 0, height = 0;
+
+			IFDTag tag = GetTag (TagTypes.TiffIFD) as IFDTag;
+			IFDStructure structure = tag.Structure;
+
+			// DNG uses SubIFDs for images, the one with SubfileType = 0 is the RAW data.
+			var sub_ifds = structure.GetEntry (0, (ushort) IFDEntryTag.SubIFDs) as SubIFDArrayEntry;
+			if (sub_ifds == null) {
+				return base.ExtractProperties ();
+			}
+
+			foreach (var entry in sub_ifds.Entries) {
+				var type = entry.GetLongValue (0, (ushort) IFDEntryTag.NewSubfileType);
+				if (type == 0) {
+					width = (int) (entry.GetLongValue (0, (ushort) IFDEntryTag.ImageWidth) ?? 0);
+					height = (int) (entry.GetLongValue (0, (ushort) IFDEntryTag.ImageLength) ?? 0);
+					break; // No need to iterate the other SubIFDs
+				}
+			}
+
+			if (width > 0 && height > 0) {
+				return new Properties (TimeSpan.Zero, CreateCodec (width, height));
+			}
+
+			// Fall back to normal detection.
+			return base.ExtractProperties ();
+		}
 
 		/// <summary>
 		///    Create a codec that describes the photo properties.
