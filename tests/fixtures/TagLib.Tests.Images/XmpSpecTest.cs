@@ -305,7 +305,7 @@ namespace TagLib.Tests.Images
 		}
 
 		private XmpTag TestParse (string metadata, XmpValidator validator) {
-			var tag = new XmpTag (metadata);
+			var tag = new XmpTag (metadata, null);
 			validator (tag);
 			return tag;
 		}
@@ -313,7 +313,7 @@ namespace TagLib.Tests.Images
 		private void TestRender (XmpTag tag, XmpValidator validator) {
 			string xmp = tag.Render ();
 
-			var parsed_tag = new XmpTag (xmp);
+			var parsed_tag = new XmpTag (xmp, null);
 			validator (parsed_tag);
 		}
 	}
