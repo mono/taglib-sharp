@@ -1,8 +1,16 @@
 SUBDIRS = \
    src    \
    examples \
-   docs \
-   tests
+   docs
+
+if !IN_DIST
+SUBDIRS += tests
+endif
+
+DIST_SUBDIRS = \
+   src    \
+   examples \
+   docs
 
 pkgconfig_in_files = taglib-sharp.pc.in
 pkgconfigdir = $(datadir)/pkgconfig
@@ -31,8 +39,10 @@ MAINTAINERCLEANFILES = \
 	config.guess \
 	mkinstalldirs
 
+if !IN_DIST
 test:
 	pushd tests; make test; popd;
+endif
 
 distwin: all
 	mkdir -p $(srcdir)/$(WINDIR)

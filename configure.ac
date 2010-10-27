@@ -83,12 +83,34 @@ else
 	AM_CONDITIONAL(BUILD_DOCS, false)
 fi
 
+# checking for ICSharpCode.SharpZipLib.dll
+AC_MSG_CHECKING([for Mono 2.0 GAC for ICSharpCode.SharpZipLib.dll])
+if test \
+	-e "$($PKG_CONFIG --variable=libdir mono)/mono/2.0/ICSharpCode.SharpZipLib.dll" -o \
+	-e "$($PKG_CONFIG --variable=prefix mono)/lib/mono/2.0/ICSharpCode.SharpZipLib.dll"; \
+	then \
+	AC_MSG_RESULT([found])
+	AM_CONDITIONAL(HAVE_SHARPZIPLIB, true)
+else
+	AC_MSG_RESULT([not found])
+	AM_CONDITIONAL(HAVE_SHARPZIPLIB, false)
+fi
+
+
 PKG_CHECK_MODULES(GNOME_SHARP, gnome-sharp-2.0, have_gnome_sharp=yes, have_gnome_sharp=no)
 if test "x$have_gnome_sharp" = "xyes"; then
 	AC_SUBST(GNOME_SHARP_LIBS)
 	AM_CONDITIONAL(HAVE_GNOME_SHARP, true)
 else
 	AM_CONDITIONAL(HAVE_GNOME_SHARP, false)
+fi
+
+PKG_CHECK_MODULES(EXIV2, exiv2, have_exiv2=yes, have_exiv2=no)
+if test "x$have_exiv2" = "xyes"; then
+	AC_SUBST(EXIV2_LIBS)
+	AM_CONDITIONAL(HAVE_EXIV2, true)
+else
+	AM_CONDITIONAL(HAVE_EXIV2, false)
 fi
 
 PKG_CHECK_MODULES(MONO_NUNIT, mono-nunit >= 1.0, do_tests="yes", do_tests="no") AC_SUBST(MONO_NUNIT_LIBS)
@@ -100,7 +122,16 @@ else
 	AC_SUBST(NUNIT_CMD)
 fi
 
-AC_OUTPUT([
+AC_ARG_ENABLE(raw-tests, AC_HELP_STRING([--enable-raw-tests], [Enable RAW image files NUnit tests]),
+		enable_raw_tests=$enableval, enable_raw_tests="no")
+if test "x$enable_raw_tests" = "xno"; then
+	AC_MSG_WARN([RAW image file tests disabled.])
+	AM_CONDITIONAL(ENABLE_RAW_TESTS, false)
+else
+	AM_CONDITIONAL(ENABLE_RAW_TESTS, true)
+fi
+
+AC_CONFIG_FILES([
 Makefile
 taglib-sharp.pc
 src/Makefile
@@ -109,7 +140,15 @@ src/policy.2.0.taglib-sharp.config
 examples/Makefile
 docs/Makefile
 docs/Package.en.xml
-tests/Makefile
 ])
+
+# Test suite is not shipped, only builds from git.
+if test -d tests; then
+	AC_CONFIG_FILES([tests/Makefile])
+	AM_CONDITIONAL(IN_DIST, false)
+else
+	AM_CONDITIONAL(IN_DIST, true)
+fi
+AC_OUTPUT
 
 echo "TagLib# ($ASSEMBLY_NAME-$ASSEMBLY_VERSION) is ready to be compiled."

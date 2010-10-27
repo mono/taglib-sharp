@@ -91,6 +91,31 @@ namespace TagLib {
 		FlacMetadata = 0x00000200,
 		
 		/// <summary>
+		///    TIFF IFD Tag
+		/// </summary>
+		TiffIFD = 0x00000400,
+
+		/// <summary>
+		///    XMP Tag
+		/// </summary>
+		XMP = 0x00000800,
+
+		/// <summary>
+		///    Jpeg Comment Tag
+		/// </summary>
+		JpegComment = 0x00001000,
+
+		/// <summary>
+		///    Gif Comment Tag
+		/// </summary>
+		GifComment = 0x00002000,
+
+		/// <summary>
+		///    native PNG keywords
+		/// </summary>
+		Png = 0x00004000,
+
+		/// <summary>
 		///    All tag types.
 		/// </summary>
 		AllTags      = 0xFFFFFFFF

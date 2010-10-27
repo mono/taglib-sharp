@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <RootNamespace>TagLib</RootNamespace>
@@ -6,7 +7,6 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4CC18776-125E-4318-9D24-D60110AD9697}</ProjectGuid>
-    <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>taglib-sharp.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
@@ -19,6 +19,10 @@
     <FileAlignment>4096</FileAlignment>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ReleaseVersion>2.0.3.5</ReleaseVersion>
+    <BaseDirectory>src</BaseDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -36,10 +40,24 @@
     <DebugType>None</DebugType>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <OutputPath>src</OutputPath>
+    <GenerateDocumentation>true</GenerateDocumentation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\AssemblyInfo.cs" />
@@ -174,25 +192,91 @@
     <Compile Include="src\TagLib\UnsupportedFormatException.cs" />
     <Compile Include="src\TagLib\WavPack\File.cs" />
     <Compile Include="src\TagLib\WavPack\StreamHeader.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\ByteIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\ByteVectorIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\LongArrayIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\LongIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\Rational.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\RationalArrayIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\RationalIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\SByteIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\ShortArrayIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\ShortIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\SLongIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\SRational.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\SRationalIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\StringIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\SubIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\ThumbnailDataIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\UndefinedIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\IFDDirectory.cs" />
+    <Compile Include="src\TagLib\IFD\IFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\IFDEntryType.cs" />
+    <Compile Include="src\TagLib\IFD\IFDReader.cs" />
+    <Compile Include="src\TagLib\IFD\IFDRenderer.cs" />
+    <Compile Include="src\TagLib\IFD\IFDStructure.cs" />
+    <Compile Include="src\TagLib\IFD\IFDTag.cs" />
+    <Compile Include="src\TagLib\Image\Codec.cs" />
+    <Compile Include="src\TagLib\Image\CombinedImageTag.cs" />
+    <Compile Include="src\TagLib\Image\File.cs" />
+    <Compile Include="src\TagLib\Image\ImageTag.cs" />
+    <Compile Include="src\TagLib\Jpeg\Codec.cs" />
+    <Compile Include="src\TagLib\Jpeg\File.cs" />
+    <Compile Include="src\TagLib\Jpeg\JpegCommentTag.cs" />
+    <Compile Include="src\TagLib\Jpeg\Marker.cs" />
+    <Compile Include="src\TagLib\Tiff\Codec.cs" />
+    <Compile Include="src\TagLib\Tiff\File.cs" />
+    <Compile Include="src\TagLib\Xmp\XmlNodeExtensions.cs" />
+    <Compile Include="src\TagLib\Xmp\XmpNode.cs" />
+    <Compile Include="src\TagLib\Xmp\XmpNodeVisitor.cs" />
+    <Compile Include="src\TagLib\Xmp\XmpTag.cs" />
+    <Compile Include="src\TagLib\Xmp\XmpNodeType.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\SLongArrayIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\SShortArrayIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\SShortIFDEntry.cs" />
+    <Compile Include="src\TagLib\Jpeg\Table.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\MakernoteIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Entries\UserCommentIFDEntry.cs" />
+    <Compile Include="src\TagLib\IFD\Makernotes\Nikon3MakernoteReader.cs" />
+    <Compile Include="src\TagLib\IFD\Tags\CanonMakerNoteEntryTag.cs" />
+    <Compile Include="src\TagLib\IFD\Tags\ExifEntryTag.cs" />
+    <Compile Include="src\TagLib\IFD\Tags\GPSEntryTag.cs" />
+    <Compile Include="src\TagLib\IFD\Tags\IFDEntryTag.cs" />
+    <Compile Include="src\TagLib\IFD\Tags\IOPEntryTag.cs" />
+    <Compile Include="src\TagLib\IFD\Tags\Nikon3MakerNoteEntryTag.cs" />
+    <Compile Include="src\TagLib\IFD\Tags\PanasonicMakerNoteEntryTag.cs" />
+    <Compile Include="src\TagLib\Image\ImageOrientation.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src" />
-    <Folder Include="src\TagLib" />
-    <Folder Include="src\TagLib\Aiff" />
-    <Folder Include="src\TagLib\Ape" />
-    <Folder Include="src\TagLib\Asf" />
-    <Folder Include="src\TagLib\Flac" />
-    <Folder Include="src\TagLib\Id3v1" />
-    <Folder Include="src\TagLib\Id3v2" />
-    <Folder Include="src\TagLib\Id3v2\Frames" />
-    <Folder Include="src\TagLib\Mpc" />
-    <Folder Include="src\TagLib\Mpeg" />
-    <Folder Include="src\TagLib\Mpeg4" />
-    <Folder Include="src\TagLib\Mpeg4\Boxes" />
-    <Folder Include="src\TagLib\Ogg" />
-    <Folder Include="src\TagLib\Ogg\Codecs" />
-    <Folder Include="src\TagLib\Riff" />
-    <Content Include="taglib-sharp.snk" />
+    <Folder Include="src\" />
+    <Folder Include="src\TagLib\" />
+    <Folder Include="src\TagLib\Id3v2\" />
+    <Folder Include="src\TagLib\Mpeg4\" />
+    <Folder Include="src\TagLib\Ogg\" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="AUTHORS">
+      <Visible>False</Visible>
+    </None>
+    <None Include="COPYING">
+      <Visible>False</Visible>
+    </None>
+  </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties InternalTargetFrameworkVersion="3.5">
+        <Deployment.LinuxDeployData generatePcFile="false" />
+        <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile.am" IsAutotoolsProject="true" RelativeConfigureInPath="..">
+          <BuildFilesVar />
+          <DeployFilesVar />
+          <ResourcesVar />
+          <OthersVar />
+          <GacRefVar />
+          <AsmRefVar />
+          <ProjectRefVar />
+        </MonoDevelop.Autotools.MakefileInfo>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
 </Project>

@@ -197,6 +197,12 @@ namespace TagLib {
 		///    the file ends.
 		/// </summary>
 		private long invariant_end_position = -1;
+
+		/// <summary>
+		///    The reasons (if any) why this file is marked as corrupt.
+		/// </summary>
+		private List<string> corruption_reasons = null;
+
 		#endregion
 		
 		
@@ -441,12 +447,62 @@ namespace TagLib {
 			}
 		}
 		
+		/// <summary>
+		///    Indicates if tags can be written back to the current file or not
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> which is true if tags can be written to the
+		///    current file, otherwise false.
+		/// </value>
+		public virtual bool Writeable {
+			get { return !PossiblyCorrupt; }
+		}
+
+		/// <summary>
+		///   Indicates whether or not this file may be corrupt.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if possibly corrupt; otherwise, <c>false</c>.
+		/// </value>
+		/// <remarks>
+		///    Files with unknown corruptions should not be written.
+		/// </remarks>
+		public bool PossiblyCorrupt {
+			get { return corruption_reasons != null; }
+		}
+
+		/// <summary>
+		///   The reasons for which this file is marked as corrupt.
+		/// </summary>
+		public IEnumerable<string> CorruptionReasons {
+			get {
+				return corruption_reasons;
+			}
+		}
+
 		#endregion
 		
 		
 		
 		#region Public Methods
 
+		/// <summary>
+		///	   Mark the file as corrupt.
+		/// </summary>
+		/// <param name="reason">
+		///    The reason why this file is considered to be corrupt.
+		/// </param>
+		public void MarkAsCorrupt (string reason)
+		{
+			if (corruption_reasons == null)
+				corruption_reasons = new List<string> ();
+			corruption_reasons.Add (reason);
+		}
+
+		/// <summary>
+		///    Dispose the current file. Equivalent to setting the
+		///    mode to closed
+		/// </summary>
 		public void Dispose ()
 		{
 			Mode = AccessMode.Closed;
@@ -884,10 +940,10 @@ namespace TagLib {
 			
 			// These variables are used to keep track of a partial
 			// match that happens at the end of a buffer.
-			
+
 			/*
 			int previous_partial_match = -1;
-			int before_previous_partial_match = -1;
+			int after_previous_partial_match = -1;
 			*/
 			
 			// Save the location of the current read pointer.  We
@@ -898,22 +954,18 @@ namespace TagLib {
 			
 			// Start the search at the offset.
 			
-			long buffer_offset;
+			long buffer_offset = Length - startPosition;
+			int read_size = buffer_size;
 			
-			if (startPosition == 0)
-				Seek (-1 * buffer_size,
-					System.IO.SeekOrigin.End);
-			else
-				Seek (startPosition - 1 * buffer_size,
-					System.IO.SeekOrigin.Begin);
-			
-			buffer_offset = file_stream.Position;
+			read_size = (int) Math.Min (buffer_offset, buffer_size);
+			buffer_offset -= read_size;
+			file_stream.Position = buffer_offset;
 			
 			// See the notes in find() for an explanation of this
 			// algorithm.
 			
-			for (buffer = ReadBlock(buffer_size); buffer.Count > 0;
-				buffer = ReadBlock (buffer_size)) {
+			for (buffer = ReadBlock (read_size); buffer.Count > 0;
+				buffer = ReadBlock (read_size)) {
 				
 				// TODO: (1) previous partial match
 				
@@ -931,8 +983,11 @@ namespace TagLib {
 				}
 				
 				// TODO: (3) partial match
+
 				
-				buffer_offset -= buffer_size;
+				read_size = (int) Math.Min (buffer_offset, buffer_size);
+				buffer_offset -= read_size;
+
 				file_stream.Position = buffer_offset;
 			}
 			

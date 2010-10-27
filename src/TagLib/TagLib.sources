@@ -36,11 +36,29 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Ogg/XiphComment.cs \
 	$(srcdir)/TagLib/Ogg/PageHeader.cs \
 	$(srcdir)/TagLib/Ogg/File.cs \
+	$(srcdir)/TagLib/Png/Codec.cs \
+	$(srcdir)/TagLib/Png/File.cs \
+	$(srcdir)/TagLib/Png/PngTag.cs \
 	$(srcdir)/TagLib/Flac/Block.cs \
 	$(srcdir)/TagLib/Flac/BlockHeader.cs \
 	$(srcdir)/TagLib/Flac/StreamHeader.cs \
 	$(srcdir)/TagLib/Flac/Picture.cs \
 	$(srcdir)/TagLib/Flac/File.cs \
+	$(srcdir)/TagLib/Gif/Codec.cs \
+	$(srcdir)/TagLib/Gif/File.cs \
+	$(srcdir)/TagLib/Gif/GifCommentTag.cs \
+	$(srcdir)/TagLib/Image/Codec.cs \
+	$(srcdir)/TagLib/Image/CombinedImageTag.cs \
+	$(srcdir)/TagLib/Image/File.cs \
+	$(srcdir)/TagLib/Image/ImageBlockFile.cs \
+	$(srcdir)/TagLib/Image/ImageTag.cs \
+	$(srcdir)/TagLib/Image/ImageOrientation.cs \
+	$(srcdir)/TagLib/Image/NoMetadata/File.cs \
+	$(srcdir)/TagLib/Jpeg/Codec.cs \
+	$(srcdir)/TagLib/Jpeg/File.cs \
+	$(srcdir)/TagLib/Jpeg/JpegCommentTag.cs \
+	$(srcdir)/TagLib/Jpeg/Marker.cs \
+	$(srcdir)/TagLib/Jpeg/Table.cs \
 	$(srcdir)/TagLib/Mpeg/XingHeader.cs \
 	$(srcdir)/TagLib/Mpeg/VBRIHeader.cs \
 	$(srcdir)/TagLib/Mpeg/File.cs \
@@ -76,6 +94,58 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Id3v2/SynchData.cs \
 	$(srcdir)/TagLib/Id3v2/Header.cs \
 	$(srcdir)/TagLib/Id3v2/Footer.cs \
+	$(srcdir)/TagLib/IFD/Entries/ByteIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/ByteVectorIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/LongArrayIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/LongIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/MakernoteIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/RationalArrayIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/RationalIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/Rational.cs \
+	$(srcdir)/TagLib/IFD/Entries/SByteIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/ShortArrayIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/ShortIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/SLongArrayIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/SLongIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/SRationalArrayIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/SRationalIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/SShortArrayIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/SShortIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/SRational.cs \
+	$(srcdir)/TagLib/IFD/Entries/StringIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/StripOffsetsIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/SubIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/SubIFDArrayEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/ThumbnailDataIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/UserCommentIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/Entries/UndefinedIFDEntry.cs \
+	$(srcdir)/TagLib/IFD/IFDEntry.cs \
+	$(srcdir)/TagLib/IFD/IFDEntryType.cs \
+	$(srcdir)/TagLib/IFD/IFDTag.cs \
+	$(srcdir)/TagLib/IFD/IFDDirectory.cs \
+	$(srcdir)/TagLib/IFD/IFDStructure.cs \
+	$(srcdir)/TagLib/IFD/IFDReader.cs \
+	$(srcdir)/TagLib/IFD/IFDRenderer.cs \
+	$(srcdir)/TagLib/IFD/Makernotes/Nikon3MakernoteReader.cs \
+	$(srcdir)/TagLib/IFD/Tags/CanonFileInfoEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/CanonMakerNoteEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/CanonPictureInfoEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/ExifEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/GPSEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/IFDEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/IOPEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/PentaxMakerNoteEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/OlympusMakerNoteEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/Nikon3MakerNoteEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/NikonLensData3EntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/NikonIsoInfoEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/NikonPreviewMakerNoteEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/NikonPictureControlEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/NikonShotInfoEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/NikonVibrationReductionEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/NikonWorldTimeEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/PanasonicMakerNoteEntryTag.cs \
+	$(srcdir)/TagLib/IFD/Tags/SonyMakerNoteEntryTag.cs \
 	$(srcdir)/TagLib/Mpeg4/AppleTag.cs \
 	$(srcdir)/TagLib/Mpeg4/Box.cs \
 	$(srcdir)/TagLib/Mpeg4/BoxFactory.cs \
@@ -112,8 +182,24 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Riff/List.cs \
 	$(srcdir)/TagLib/Riff/ListTag.cs \
 	$(srcdir)/TagLib/Riff/MovieIdTag.cs \
+	$(srcdir)/TagLib/Tiff/BaseTiffFile.cs \
+	$(srcdir)/TagLib/Tiff/Codec.cs \
+	$(srcdir)/TagLib/Tiff/File.cs \
+	$(srcdir)/TagLib/Tiff/Arw/File.cs \
+	$(srcdir)/TagLib/Tiff/Cr2/File.cs \
+	$(srcdir)/TagLib/Tiff/Dng/File.cs \
+	$(srcdir)/TagLib/Tiff/Nef/File.cs \
+	$(srcdir)/TagLib/Tiff/Pef/File.cs \
+	$(srcdir)/TagLib/Tiff/Rw2/File.cs \
+	$(srcdir)/TagLib/Tiff/Rw2/IFDReader.cs \
+	$(srcdir)/TagLib/Tiff/Rw2/IFDTag.cs \
 	$(srcdir)/TagLib/WavPack/File.cs \
 	$(srcdir)/TagLib/WavPack/StreamHeader.cs \
+	$(srcdir)/TagLib/Xmp/XmlNodeExtensions.cs \
+	$(srcdir)/TagLib/Xmp/XmpTag.cs \
+	$(srcdir)/TagLib/Xmp/XmpNode.cs \
+	$(srcdir)/TagLib/Xmp/XmpNodeType.cs \
+	$(srcdir)/TagLib/Xmp/XmpNodeVisitor.cs \
 	$(srcdir)/TagLib/ICodec.cs \
 	$(srcdir)/TagLib/Tag.cs \
 	$(srcdir)/TagLib/ReadOnlyByteVector.cs \

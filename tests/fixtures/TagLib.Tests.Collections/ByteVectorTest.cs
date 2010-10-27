@@ -71,6 +71,17 @@ namespace TagLib.Tests.Collections
             Assert.IsFalse(a.Count == TestVector.Count);
         }
         
+		[Test]
+        public void Int()
+        {
+            Assert.AreEqual(Int32.MaxValue, ByteVector.FromInt(Int32.MaxValue).ToInt());
+            Assert.AreEqual(Int32.MinValue, ByteVector.FromInt(Int32.MinValue).ToInt());
+            Assert.AreEqual(0, ByteVector.FromInt(0).ToInt());
+            Assert.AreEqual(30292, ByteVector.FromInt(30292).ToInt());
+			Assert.AreEqual(-30292, ByteVector.FromInt(-30292).ToInt());
+			Assert.AreEqual(-1, ByteVector.FromInt(-1).ToInt());
+        }
+
         [Test]
         public void UInt()
         {
@@ -134,7 +145,7 @@ namespace TagLib.Tests.Collections
                 1, 255, 254, 73, 0, 68, 0, 51, 0, 71, 0, 58, 0, 32, 0, 50, 0, 55, 0, 0, 0);
 
             var encoding = (StringType) vector [0];
-            var language = vector.ToString (StringType.Latin1, 1, 3);
+            //var language = vector.ToString (StringType.Latin1, 1, 3);
             var split = vector.ToStrings (encoding, 4, 3);
             Assert.AreEqual (2, split.Length);
         }

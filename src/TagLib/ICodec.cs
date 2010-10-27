@@ -53,7 +53,12 @@ namespace TagLib {
 		/// <summary>
 		///    Video is present.
 		/// </summary>
-		Video = 2
+		Video = 2,
+
+		/// <summary>
+		///    A Photo is present.
+		/// </summary>
+		Photo = 3,
 	}
 	
 	/// <summary>
@@ -186,5 +191,49 @@ namespace TagLib {
 		///    video represented by the current instance.
 		/// </value>
 		int VideoHeight {get;}
+	}
+
+	/// <summary>
+	///    This interface inherits <see cref="ICodec" /> to provide
+	///    information about a photo.
+	/// </summary>
+	/// <remarks>
+	///    <para>When dealing with a <see cref="ICodec" />, if <see
+	///    cref="ICodec.MediaTypes" /> contains <see cref="MediaTypes.Photo"
+	///    />, it is safe to assume that the object also inherits <see
+	///    cref="IPhotoCodec" /> and can be recast without issue.</para>
+	/// </remarks>
+	public interface IPhotoCodec : ICodec
+	{
+		/// <summary>
+		///    Gets the width of the photo represented by the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="int" /> value containing the width of the
+		///    photo represented by the current instance.
+		/// </value>
+		int PhotoWidth  {get;}
+
+		/// <summary>
+		///    Gets the height of the photo represented by the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="int" /> value containing the height of the
+		///    photo represented by the current instance.
+		/// </value>
+		int PhotoHeight {get;}
+
+		/// <summary>
+		///    Gets the (format specific) quality indicator of the photo
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="int" /> value indicating the quality. A value
+		///    0 means that there was no quality indicator for the format
+		///    or the file.
+		/// </value>
+		int PhotoQuality {get;}
 	}
 }
