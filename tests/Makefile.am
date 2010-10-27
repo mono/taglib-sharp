@@ -29,6 +29,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/BadCommentMarkerTest.cs \
 	fixtures/TagLib.Tests.Images/BGO493530Test.cs \
 	fixtures/TagLib.Tests.Images/BGO625367Test.cs \
+	fixtures/TagLib.Tests.Images/BGO631333Test.cs \
 	fixtures/TagLib.Tests.Images/CopyFromTest.cs \
 	fixtures/TagLib.Tests.Images/EmptyCommentTest.cs \
 	fixtures/TagLib.Tests.Images/GifExiftoolLongCommentTest.cs \

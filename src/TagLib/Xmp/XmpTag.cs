@@ -504,7 +504,6 @@ namespace TagLib.Xmp
 			var simple_prop_val = rdf_value ?? rdf_resource ?? null;
 			if (simple_prop_val != null) {
 				string value = simple_prop_val.InnerText;
-				node.Attributes.Remove (simple_prop_val); // This one isn't a qualifier.
 				parent.AddChild (CreateTextPropertyWithQualifiers (node, value));
 				return;
 			}
@@ -531,6 +530,8 @@ namespace TagLib.Xmp
 			foreach (XmlAttribute attr in node.Attributes) {
 				if (attr.In (XMLNS_NS))
 					continue;
+				if (attr.Is (RDF_NS, VALUE_URI) || attr.Is (RDF_NS, RESOURCE_URI))
+					continue; // These aren't qualifiers
 				t.AddQualifier (new XmpNode (attr.NamespaceURI, attr.LocalName, attr.InnerText));
 			}
 			return t;
