@@ -492,7 +492,7 @@ namespace TagLib {
 		/// <param name="reason">
 		///    The reason why this file is considered to be corrupt.
 		/// </param>
-		public void MarkAsCorrupt (string reason)
+		internal void MarkAsCorrupt (string reason)
 		{
 			if (corruption_reasons == null)
 				corruption_reasons = new List<string> ();
