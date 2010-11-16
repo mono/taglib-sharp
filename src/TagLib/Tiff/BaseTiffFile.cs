@@ -171,8 +171,15 @@ namespace TagLib.Tiff
 		/// </param>
 		protected void ReadIFD (uint offset, int ifd_count)
 		{
+			long length = 0;
+			try {
+				length = Length;
+			} catch (Exception) {
+				// Use a safety-value of 4 gigabyte.
+				length = 1073741824L * 4;
+			}
 			var ifd_tag = GetTag (TagTypes.TiffIFD, true) as IFDTag;
-			var reader = CreateIFDReader (this, IsBigEndian, ifd_tag.Structure, 0, offset, (uint) Length);
+			var reader = CreateIFDReader (this, IsBigEndian, ifd_tag.Structure, 0, offset, (uint) length);
 
 			reader.Read (ifd_count);
 		}
