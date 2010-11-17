@@ -931,6 +931,13 @@ namespace TagLib.IFD
 
 				uint [] data;
 				if (count >= 2) {
+
+					// This is impossible right?
+					if (base_offset + offset > file.Length) {
+						file.MarkAsCorrupt ("Length of SubIFD is too long");
+						return null;
+					}
+
 					file.Seek (base_offset + offset, SeekOrigin.Begin);
 					data = ReadUIntArray (count);
 				} else {
