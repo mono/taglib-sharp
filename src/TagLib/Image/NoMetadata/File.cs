@@ -48,7 +48,6 @@ namespace TagLib.Image.NoMetadata
 	[SupportedMimeType("taglib/svgz", "svgz")]
 	[SupportedMimeType("image/svg+xml")]
 	[SupportedMimeType("taglib/kdc", "kdc")]    // FIXME: Not supported yet!
-	[SupportedMimeType("taglib/rw2", "rw2")]    // FIXME: Not supported yet!
 	[SupportedMimeType("taglib/orf", "orf")]    // FIXME: Not supported yet!
 	[SupportedMimeType("taglib/srf", "srf")]    // FIXME: Not supported yet!
 	[SupportedMimeType("taglib/crw", "crw")]    // FIXME: Not supported yet!
