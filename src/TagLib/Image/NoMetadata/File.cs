@@ -47,6 +47,14 @@ namespace TagLib.Image.NoMetadata
 	[SupportedMimeType("taglib/svg", "svg")]
 	[SupportedMimeType("taglib/svgz", "svgz")]
 	[SupportedMimeType("image/svg+xml")]
+	[SupportedMimeType("taglib/kdc", "kdc")]    // FIXME: Not supported yet!
+	[SupportedMimeType("taglib/rw2", "rw2")]    // FIXME: Not supported yet!
+	[SupportedMimeType("taglib/orf", "orf")]    // FIXME: Not supported yet!
+	[SupportedMimeType("taglib/srf", "srf")]    // FIXME: Not supported yet!
+	[SupportedMimeType("taglib/crw", "crw")]    // FIXME: Not supported yet!
+	[SupportedMimeType("taglib/mrw", "mrw")]    // FIXME: Not supported yet!
+	[SupportedMimeType("taglib/raf", "raf")]    // FIXME: Not supported yet!
+	[SupportedMimeType("taglib/x3f", "x3f")]    // FIXME: Not supported yet!
 	public class File : TagLib.Image.File
 	{
 
