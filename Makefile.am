@@ -41,7 +41,7 @@ MAINTAINERCLEANFILES = \
 
 if !IN_DIST
 test:
-	pushd tests; make test; popd;
+	cd tests; make test; cd ..;
 endif
 
 distwin: all
