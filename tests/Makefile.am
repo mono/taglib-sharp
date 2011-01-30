@@ -62,9 +62,9 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/JpegSony2Test.cs \
 	fixtures/TagLib.Tests.Images/JpegTangledTest.cs \
 	fixtures/TagLib.Tests.Images/NullOrientationTest.cs \
-	fixtures/TagLib.Tests.Images/RationalTest.cs \
-	fixtures/TagLib.Tests.Images/PngGimpTest.cs \
 	fixtures/TagLib.Tests.Images/PngGimpPngcrushTest.cs \
+	fixtures/TagLib.Tests.Images/PngGimpTest.cs \
+	fixtures/TagLib.Tests.Images/RationalTest.cs \
 	fixtures/TagLib.Tests.Images/RecursiveIFDTest.cs \
 	fixtures/TagLib.Tests.Images/TiffCanonBibble516BitTest.cs \
 	fixtures/TagLib.Tests.Images/TiffCanonBibble58BitTest.cs \
@@ -87,8 +87,8 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/Validators/IMetadataModificationValidator.cs \
 	fixtures/TagLib.Tests.Images/Validators/KeywordsModificationValidator.cs \
 	fixtures/TagLib.Tests.Images/Validators/NoModificationValidator.cs \
-	fixtures/TagLib.Tests.Images/Validators/RemoveMetadataValidator.cs \
 	fixtures/TagLib.Tests.Images/Validators/PropertyModificationValidator.cs \
+	fixtures/TagLib.Tests.Images/Validators/RemoveMetadataValidator.cs \
 	fixtures/TagLib.Tests.Images/Validators/TagCommentModificationValidator.cs \
 	fixtures/TagLib.Tests.Images/Validators/TagKeywordsModificationValidator.cs \
 	fixtures/TagLib.Tests.Images/Validators/TagPropertyModificationValidator.cs \
