@@ -666,8 +666,17 @@ namespace TagLib {
 			Mode = AccessMode.Read;
 			
 			byte [] buffer = new byte [length];
-			int count = file_stream.Read (buffer, 0, length);
-			return new ByteVector (buffer, count);
+
+			int count = 0, read = 0, needed = length;
+
+			do {
+				count = file_stream.Read (buffer, read, needed);
+
+				read += count;
+				needed -= count;
+			} while(needed > 0 && count != 0);
+
+			return new ByteVector (buffer, read);
 		}
 		
 		/// <summary>
