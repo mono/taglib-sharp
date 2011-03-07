@@ -674,7 +674,7 @@ namespace TagLib {
 
 				read += count;
 				needed -= count;
-			} while(needed != 0 && count != 0);
+			} while(needed > 0 && count != 0);
 			
 			return new ByteVector (buffer, read);
 		}
