@@ -87,6 +87,15 @@
     <Compile Include="TagLib\Id3v2\Header.cs" />
     <Compile Include="TagLib\Id3v2\SynchData.cs" />
     <Compile Include="TagLib\Id3v2\Tag.cs" />
+    <Compile Include="TagLib\Matroska\AudioTrack.cs" />
+    <Compile Include="TagLib\Matroska\SubtitleTrack.cs" />
+    <Compile Include="TagLib\Matroska\Tag.cs" />
+    <Compile Include="TagLib\Matroska\Track.cs" />
+    <Compile Include="TagLib\Matroska\MatroskaIDs.cs" />
+    <Compile Include="TagLib\Matroska\EBMLIDs.cs" />
+    <Compile Include="TagLib\Matroska\EBMLElement.cs" />
+    <Compile Include="TagLib\Matroska\File.cs" />
+    <Compile Include="TagLib\Matroska\VideoTrack.cs" />
     <Compile Include="TagLib\Mpc\File.cs" />
     <Compile Include="TagLib\Mpc\StreamHeader.cs" />
     <Compile Include="TagLib\Mpeg\File.cs" />

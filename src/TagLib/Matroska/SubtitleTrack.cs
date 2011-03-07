@@ -1,0 +1,81 @@
+﻿//
+// SubtitleTrack.cs:
+//
+// Author:
+//   Julien Moutte <julien@fluendo.com>
+//
+// Copyright (C) 2011 FLUENDO S.A.
+//
+// This library is free software; you can redistribute it and/or modify
+// it  under the terms of the GNU Lesser General Public License version
+// 2.1 as published by the Free Software Foundation.
+//
+// This library is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
+// USA
+//
+
+using System.Collections.Generic;
+using System;
+
+namespace TagLib.Matroska
+{
+    public class SubtitleTrack : Track
+    {
+        #region Private fields
+
+        private List<EBMLElement> unknown_elems = new List<EBMLElement> ();
+
+        #endregion
+
+        #region Constructors
+
+        public SubtitleTrack (File _file, EBMLElement element)
+            : base (_file, element)
+        {
+            // Here we handle the unknown elements we know, and store the rest
+            foreach (EBMLElement elem in base.UnknownElements) {
+                MatroskaID matroska_id = (MatroskaID) elem.ID;
+
+                switch (matroska_id) {
+                    default:
+                        unknown_elems.Add (elem);
+                        break;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Public fields
+
+        public new List<EBMLElement> UnknownElements
+        {
+            get { return unknown_elems; }
+        }
+
+        #endregion
+
+        #region Public methods
+
+        #endregion
+
+        #region ICodec
+
+        public override MediaTypes MediaTypes
+        {
+            get
+            {
+                return MediaTypes.Text;
+            }
+        }
+
+        #endregion
+    }
+}
