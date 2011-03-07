@@ -670,7 +670,7 @@ namespace TagLib {
 			int count = 0, read = 0, needed = length; 
 			
 			do {
-			    count = file_stream.Read (buffer, read, needed);
+				count = file_stream.Read (buffer, read, needed);
 
 				read += count;
 				needed -= count;
