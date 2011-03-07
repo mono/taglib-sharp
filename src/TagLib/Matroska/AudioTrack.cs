@@ -33,9 +33,11 @@ namespace TagLib.Matroska
     {
         #region Private fields
 
+#pragma warning disable 414 // Assigned, never used
         private double rate;
         private uint channels;
         private uint depth;
+#pragma warning restore 414
 
         private List<EBMLElement> unknown_elems = new List<EBMLElement> ();
 

@@ -89,7 +89,9 @@ namespace TagLib.Matroska
 
         private TimeSpan duration;
 
+#pragma warning disable 414 // Assigned, never used
         private string title;
+#pragma warning restore 414
 
         private List<Track> tracks = new List<Track> ();
 
@@ -438,7 +440,9 @@ namespace TagLib.Matroska
         private void ReadSimpleTag (EBMLElement element)
         {
             ulong i = 0;
+#pragma warning disable 219 // Assigned, never read
             string tag_name = null, tag_language = null, tag_string = null;
+#pragma warning restore 219
 
             while (i < element.DataSize) {
                 EBMLElement child = new EBMLElement (this, element.DataOffset + i);

@@ -33,6 +33,7 @@ namespace TagLib.Matroska
     {
         #region Private fields
 
+#pragma warning disable 414 // Assigned, never used
         private uint track_number;
         private uint track_uid;
         private string track_codec_id;
@@ -42,6 +43,7 @@ namespace TagLib.Matroska
         private bool track_enabled;
         private bool track_default;
         private ByteVector codec_data;
+#pragma warning restore 414
 
         private List<EBMLElement> unknown_elems = new List<EBMLElement> ();
 

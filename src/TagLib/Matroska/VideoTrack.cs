@@ -52,6 +52,7 @@ namespace TagLib.Matroska
     {
         #region Private fields
 
+#pragma warning disable 414 // Assigned, never used
         private uint width;
         private uint height;
         private uint disp_width;
@@ -60,6 +61,7 @@ namespace TagLib.Matroska
         private bool interlaced;
         private VideoAspectRatioType ratio_type;
         private ByteVector fourcc;
+#pragma warning restore 414
 
         private List<EBMLElement> unknown_elems = new List<EBMLElement> ();
 
