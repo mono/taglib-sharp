@@ -27,6 +27,9 @@ using System.Text;
 
 namespace TagLib.Matroska
 {
+    /// <summary>
+    /// Describes a Matroska Tag.
+    /// </summary>
     public class Tag : TagLib.Tag
     {
         #region Private fields

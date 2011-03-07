@@ -26,6 +26,9 @@ using System;
 
 namespace TagLib.Matroska
 {
+    /// <summary>
+    /// Describes a Matroska Subtitle Track.
+    /// </summary>
     public class SubtitleTrack : Track
     {
         #region Private fields
@@ -36,6 +39,14 @@ namespace TagLib.Matroska
 
         #region Constructors
 
+        /// <summary>
+        /// Constructs a <see cref="SubtitleTrack" /> parsing from provided
+        /// file data.
+        /// Parsing will be done reading from _file at position references by 
+        /// parent element's data section.
+        /// </summary>
+        /// <param name="_file"><see cref="File" /> instance to read from.</param>
+        /// <param name="element">Parent <see cref="EBMLElement" />.</param>
         public SubtitleTrack (File _file, EBMLElement element)
             : base (_file, element)
         {
@@ -55,6 +66,9 @@ namespace TagLib.Matroska
 
         #region Public fields
 
+        /// <summary>
+        /// List of unknown elements encountered while parsing.
+        /// </summary>
         public new List<EBMLElement> UnknownElements
         {
             get { return unknown_elems; }
@@ -68,6 +82,9 @@ namespace TagLib.Matroska
 
         #region ICodec
 
+        /// <summary>
+        /// This type of track only has text media type.
+        /// </summary>
         public override MediaTypes MediaTypes
         {
             get

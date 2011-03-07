@@ -26,14 +26,38 @@ using System;
 
 namespace TagLib.Matroska
 {
+    /// <summary>
+    /// Enumeration listing supported Matroska track types.
+    /// </summary>
     public enum TrackType
     {
+        /// <summary>
+        /// Video track type.
+        /// </summary>
         Video = 0x1,
+        /// <summary>
+        /// Audio track type.
+        /// </summary>
         Audio = 0x2,
+        /// <summary>
+        /// Complex track type.
+        /// </summary>
         Complex = 0x3,
+        /// <summary>
+        /// Logo track type.
+        /// </summary>
         Logo = 0x10,
+        /// <summary>
+        /// Subtitle track type.
+        /// </summary>
         Subtitle = 0x11,
+        /// <summary>
+        /// Buttons track type.
+        /// </summary>
         Buttons = 0x12,
+        /// <summary>
+        /// Control track type.
+        /// </summary>
         Control = 0x20
     }
 
@@ -272,8 +296,6 @@ namespace TagLib.Matroska
         }
 
         #endregion
-
-
 
         #region Private Methods
 

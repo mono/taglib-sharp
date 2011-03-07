@@ -26,6 +26,9 @@ using System;
 
 namespace TagLib.Matroska
 {
+    /// <summary>
+    /// Describes a generic EBML Element.
+    /// </summary>
     public class EBMLElement
     {
         #region Private Fields
@@ -40,6 +43,12 @@ namespace TagLib.Matroska
 
         #region Constructors
 
+        /// <summary>
+        /// Constructs a <see cref="EBMLElement" /> parsing from provided
+        /// file data.
+        /// </summary>
+        /// <param name="_file"><see cref="File" /> instance to read from.</param>
+        /// <param name="position">Position to start reading from.</param>
         public EBMLElement (Matroska.File _file, ulong position)
         {
             if (_file == null)
@@ -111,26 +120,41 @@ namespace TagLib.Matroska
 
         #region Public Properties
 
+        /// <summary>
+        /// EBML Element Identifier.
+        /// </summary>
         public uint ID
         {
             get { return ebml_id; }
         }
 
+        /// <summary>
+        /// EBML Element size in bytes.
+        /// </summary>
         public ulong Size
         {
             get { return (data_offset - offset) + ebml_size; }
         }
 
+        /// <summary>
+        /// EBML Element data size in bytes.
+        /// </summary>
         public ulong DataSize
         {
             get { return ebml_size; }
         }
 
+        /// <summary>
+        /// EBML Element data offset in bytes.
+        /// </summary>
         public ulong DataOffset
         {
             get { return data_offset; }
         }
 
+        /// <summary>
+        /// EBML Element offset in bytes.
+        /// </summary>
         public ulong Offset
         {
             get { return offset; }
@@ -140,6 +164,10 @@ namespace TagLib.Matroska
 
         #region Public Methods
 
+        /// <summary>
+        /// Reads a string from EBML Element's data section.
+        /// </summary>
+        /// <returns>a string object containing the parsed value.</returns>
         public string ReadString ()
         {
             if (file == null) {
@@ -153,6 +181,10 @@ namespace TagLib.Matroska
             return vector.ToString ();
         }
 
+        /// <summary>
+        /// Reads a boolean from EBML Element's data section.
+        /// </summary>
+        /// <returns>a bool containing the parsed value.</returns>
         public bool ReadBool ()
         {
             if (file == null) {
@@ -169,6 +201,10 @@ namespace TagLib.Matroska
                 return false;
         }
 
+        /// <summary>
+        /// Reads a double from EBML Element's data section.
+        /// </summary>
+        /// <returns>a double containing the parsed value.</returns>
         public double ReadDouble ()
         {
             if (file == null) {
@@ -195,6 +231,10 @@ namespace TagLib.Matroska
             return result;
         }
 
+        /// <summary>
+        /// Reads an unsigned 32 bits integer from EBML Element's data section.
+        /// </summary>
+        /// <returns>a uint containing the parsed value.</returns>
         public uint ReadUInt ()
         {
             if (file == null) {
@@ -208,6 +248,10 @@ namespace TagLib.Matroska
             return vector.ToUInt ();
         }
 
+        /// <summary>
+        /// Reads a bytes vector from EBML Element's data section.
+        /// </summary>
+        /// <returns>a <see cref="ByteVector" /> containing the parsed value.</returns>
         public ByteVector ReadBytes ()
         {
             if (file == null) {

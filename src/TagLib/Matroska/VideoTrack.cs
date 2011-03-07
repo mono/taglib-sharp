@@ -26,13 +26,28 @@ using System;
 
 namespace TagLib.Matroska
 {
+    /// <summary>
+    /// Enumeration describing supported Video Aspect Ratio types.
+    /// </summary>
     public enum VideoAspectRatioType
     {
+        /// <summary>
+        /// Free Aspect Ratio.
+        /// </summary>
         AspectRatioModeFree = 0x0,
+        /// <summary>
+        /// Keep Aspect Ratio.
+        /// </summary>
         AspectRatioModeKeep = 0x1,
+        /// <summary>
+        /// Fixed Aspect Ratio.
+        /// </summary>
         AspectRatioModeFixed = 0x2
     }
 
+    /// <summary>
+    /// Describes a Matroska Video Track.
+    /// </summary>
     public class VideoTrack : Track, IVideoCodec
     {
         #region Private fields
@@ -52,6 +67,14 @@ namespace TagLib.Matroska
 
         #region Constructors
 
+        /// <summary>
+        /// Constructs a <see cref="VideoTrack" /> parsing from provided
+        /// file data.
+        /// Parsing will be done reading from _file at position references by 
+        /// parent element's data section.
+        /// </summary>
+        /// <param name="_file"><see cref="File" /> instance to read from.</param>
+        /// <param name="element">Parent <see cref="EBMLElement" />.</param>
         public VideoTrack (File _file, EBMLElement element)
             : base (_file, element)
         {
@@ -116,6 +139,9 @@ namespace TagLib.Matroska
 
         #region Public fields
 
+        /// <summary>
+        /// List of unknown elements encountered while parsing.
+        /// </summary>
         public new List<EBMLElement> UnknownElements
         {
             get { return unknown_elems; }
@@ -129,6 +155,9 @@ namespace TagLib.Matroska
 
         #region ICodec
 
+        /// <summary>
+        /// This type of track only has video media type.
+        /// </summary>
         public override MediaTypes MediaTypes
         {
             get { return MediaTypes.Video; }
@@ -138,11 +167,17 @@ namespace TagLib.Matroska
 
         #region IVideoCodec
 
+        /// <summary>
+        /// Describes video track width in pixels.
+        /// </summary>
         public int VideoWidth
         {
             get { return (int) width; }
         }
 
+        /// <summary>
+        /// Describes video track height in pixels.
+        /// </summary>
         public int VideoHeight
         {
             get { return (int) height; }

@@ -26,6 +26,9 @@ using System;
 
 namespace TagLib.Matroska
 {
+    /// <summary>
+    /// Describes a Matroska Track.
+    /// </summary>
     public class Track : ICodec
     {
         #region Private fields
@@ -46,6 +49,14 @@ namespace TagLib.Matroska
 
         #region Constructors
 
+        /// <summary>
+        /// Constructs a <see cref="Track" /> parsing from provided 
+        /// file data.
+        /// Parsing will be done reading from _file at position references by 
+        /// parent element's data section.
+        /// </summary>
+        /// <param name="_file"><see cref="File" /> instance to read from.</param>
+        /// <param name="element">Parent <see cref="EBMLElement" />.</param>
         public Track (File _file, EBMLElement element)
         {
             ulong i = 0;
@@ -96,6 +107,9 @@ namespace TagLib.Matroska
 
         #region Public fields
 
+        /// <summary>
+        /// List of unknown elements encountered while parsing.
+        /// </summary>
         public List<EBMLElement> UnknownElements
         {
             get { return unknown_elems; }
@@ -109,16 +123,25 @@ namespace TagLib.Matroska
 
         #region ICodec
 
+        /// <summary>
+        /// Describes track duration.
+        /// </summary>
         public virtual TimeSpan Duration
         {
             get { return TimeSpan.Zero; }
         }
 
+        /// <summary>
+        /// Describes track media types.
+        /// </summary>
         public virtual MediaTypes MediaTypes
         {
             get { return MediaTypes.None; }
         }
 
+        /// <summary>
+        /// Track description.
+        /// </summary>
         public virtual string Description
         {
             get { return String.Format ("{0} {1}", track_codec_name, track_language); }
