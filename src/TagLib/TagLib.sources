@@ -59,6 +59,15 @@ TAGLIB_CSFILES = \
 	$(srcdir)/TagLib/Jpeg/JpegCommentTag.cs \
 	$(srcdir)/TagLib/Jpeg/Marker.cs \
 	$(srcdir)/TagLib/Jpeg/Table.cs \
+	$(srcdir)/TagLib/Matroska/AudioTrack.cs \
+	$(srcdir)/TagLib/Matroska/EBMLElement.cs \
+	$(srcdir)/TagLib/Matroska/EBMLIDs.cs \
+	$(srcdir)/TagLib/Matroska/File.cs \
+	$(srcdir)/TagLib/Matroska/MatroskaIDs.cs \
+	$(srcdir)/TagLib/Matroska/SubtitleTrack.cs \
+	$(srcdir)/TagLib/Matroska/Tag.cs \
+	$(srcdir)/TagLib/Matroska/Track.cs \
+	$(srcdir)/TagLib/Matroska/VideoTrack.cs \
 	$(srcdir)/TagLib/Mpeg/XingHeader.cs \
 	$(srcdir)/TagLib/Mpeg/VBRIHeader.cs \
 	$(srcdir)/TagLib/Mpeg/File.cs \
