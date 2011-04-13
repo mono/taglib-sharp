@@ -295,14 +295,6 @@ namespace TagLib.IFD
 				uint value_count = entry_data.Mid (4, 4).ToUInt (is_bigendian);
 				ByteVector offset_data = entry_data.Mid (8, 4);
 
-                // Even if the value count represents a single bytes it's impossible
-                // for the count plus the base offset to be bigger than the entire file,
-                // ignore this entry and keep going
-                if (value_count + base_offset > max_offset) {
-                    file.MarkAsCorrupt("Value count + base offset is greater than the maximum possible offset");
-                    continue;
-                }
-
 				IFDEntry entry = CreateIFDEntry (entry_tag, type, value_count, base_offset, offset_data, max_offset);
 
 				if (entry == null)
