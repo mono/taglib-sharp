@@ -1,3 +1,21 @@
+Version 2.0.4.0
+April 13, 2011
+
+Fixes and Features in this release include:
+  * Support for Photo metadata
+    + read/write for EXIF, XMP, PNG, JPEG, TIFF
+	+ read support for many RAW formats
+	+ see examples/ParsePhoto.cs
+  * Support for Matroska metadata reading (eg WebM and .mkv)
+  * Fix File.ReadBlock for slow connections (bgo#639817)
+
+Contributors to this release:
+  Alexander Kojevnikov, Colin Turner, Gabriel Burt, Jeroen Asselman,
+  Julien Moutte, Marek Habersack, Mike Gemünde, Paul Lange,
+  Ruben Vermeersch, Stephane Delcroix, Tim Howard
+
+--------------------------------------------------------------------------------
+
 Version 2.0.3.7
 March 20, 2010
 

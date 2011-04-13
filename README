@@ -1,9 +1,11 @@
 TagLib# (aka taglib-sharp) is a library for reading and writing
-metadata in media files.  It is API stable, with only API additions
-(not changes or removals) occuring in the 2.0 series.
+metadata in media files, including video, audio, and photo formats.
+
+It is API stable, with only API additions (not changes or removals)
+occuring in the 2.0 series.
 
  * Bugs:     http://bugzilla.gnome.org/browse.cgi?product=taglib-sharp
- * Tarballs: http://download.banshee-project.org/taglib-sharp/
+ * Tarballs: http://download.banshee.fm/taglib-sharp/
  * IRC:      Several TagLib# developers are often in #banshee on irc.gnome.org
  * Git:      http://github.com/mono/taglib-sharp
              git://github.com/mono/taglib-sharp.git
