@@ -57,8 +57,8 @@ distwin: all
 	zip -9 -r $(srcdir)/$(WINDIR).zip $(srcdir)/$(WINDIR)
 	rm -rf $(srcdir)/$(WINDIR)
 
-UPLOAD_HOST = "$$BANSHEE_USER@download.banshee.fm"
-UPLOAD_PATH = "download.banshee.fm/taglib-sharp"
+UPLOAD_HOST = "$$BANSHEE_USER@banshee.fm"
+UPLOAD_PATH = "web/download.banshee.fm/taglib-sharp"
 push-release: distcheck distwin
 	[[ -z "$$BANSHEE_USER" ]] && { echo "Set BANSHEE_USER"; exit 1; } || true
 	[[ -z "$$MONO_USER" ]] && { echo "Set MONO_USER"; exit 1; } || true
