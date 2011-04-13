@@ -71,7 +71,6 @@
     <Compile Include="TagLib\ByteVectorList.cs" />
     <Compile Include="TagLib\CombinedTag.cs" />
     <Compile Include="TagLib\CorruptFileException.cs" />
-    <Compile Include="TagLib\Debugger.cs" />
     <Compile Include="TagLib\File.cs" />
     <Compile Include="TagLib\FileTypes.cs" />
     <Compile Include="TagLib\Flac\Block.cs" />
@@ -168,7 +167,6 @@
     <Compile Include="TagLib\Image\ImageOrientation.cs" />
     <Compile Include="TagLib\Image\ImageTag.cs" />
     <Compile Include="TagLib\Image\NoMetadata\File.cs" />
-    <Compile Include="TagLib\IntList.cs" />
     <Compile Include="TagLib\Jpeg\Codec.cs" />
     <Compile Include="TagLib\Jpeg\File.cs" />
     <Compile Include="TagLib\Jpeg\JpegCommentTag.cs" />
