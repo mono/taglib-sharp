@@ -112,8 +112,8 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <ProjectReference Include="..\taglib-sharp.csproj">
-      <Project>{4CC18776-125E-4318-9D24-D60110AD9697}</Project>
+    <ProjectReference Include="..\src\taglib-sharp.csproj">
+      <Project>{6B143A39-C7B2-4743-9917-92262C60E9A6}</Project>
       <Name>taglib-sharp</Name>
       <Private>False</Private>
     </ProjectReference>
