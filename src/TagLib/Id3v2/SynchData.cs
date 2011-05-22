@@ -133,12 +133,22 @@ namespace TagLib.Id3v2 {
 		/// </exception>
 		public static void ResynchByteVector (ByteVector data)
 		{
-			if (data == null)
+			if (data == null) {
 				throw new ArgumentNullException ("data");
-			
-			for (int i = data.Count - 2; i >= 0; i --)
-				if (data [i] == 0xFF && data [i+1] == 0)
-					data.RemoveAt (i+1);
+			}
+
+			int i = 0, j = 0;
+			while (i < data.Count - 1) {
+				if (i != j) {
+					data[j] = data[i];
+				}
+				i += data[i] == 0xFF && data[i + 1] == 0 ? 2 : 1;
+				j++;
+			}
+			if (i < data.Count) {
+				data[j++] = data[i++];
+			}
+			data.Resize (j);
 		}
 	}
 }
