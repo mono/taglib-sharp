@@ -240,7 +240,9 @@ namespace TagLib.Id3v2
 			if (index < 0)
 				throw new CorruptFileException (
 					"Popularimeter frame does not contain a text delimiter");
-			
+			if (index + 2 > data.Count)
+				throw new CorruptFileException("Popularimeter is too short");
+
 			user = data.ToString (StringType.Latin1, 0, index);
 			rating = data [index + 1];
 			play_count = data.Mid (index + 2).ToULong ();
