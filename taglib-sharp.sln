@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taglib-sharp", "src\taglib-sharp.csproj", "{6B143A39-C7B2-4743-9917-92262C60E9A6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{4D1C6110-D6F2-496E-BD7E-E45B7217D458}"
@@ -19,6 +19,9 @@ Global
 		{4D1C6110-D6F2-496E-BD7E-E45B7217D458}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D1C6110-D6F2-496E-BD7E-E45B7217D458}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D1C6110-D6F2-496E-BD7E-E45B7217D458}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = tests\tests.csproj

@@ -1,0 +1,16 @@
+glob:_ReSharper.*
+glob:*.ReSharper.user
+glob:obj
+glob:*.csproj.user
+glob:src/taglib-sharp.dll
+glob:src/taglib-sharp.pdb
+glob:*.suo
+glob:tests/TestResult.xml
+glob:tests/nunit.framework.dll
+glob:tests/nunit.framework.xml
+glob:tests/samples/tmpwrite*
+glob:tests/taglib-sharp.dll
+glob:tests/taglib-sharp.pdb
+glob:tests/tests.dll
+glob:tests/tests.pdb
+glob:tests/tests.dll.VisualState.xml

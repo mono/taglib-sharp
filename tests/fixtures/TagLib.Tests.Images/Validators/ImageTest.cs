@@ -1,6 +1,7 @@
-using Gdk;
+//using Gdk;
 using System;
 using NUnit.Framework;
+using tests.fixtures.TagLib.Tests.Images.Validators;
 
 namespace TagLib.Tests.Images.Validators
 {
@@ -9,7 +10,9 @@ namespace TagLib.Tests.Images.Validators
 		static ImageTest () {
 			// Initialize GDK
 			var args = Environment.GetCommandLineArgs ();
+#if !MSCLR
 			Global.InitCheck (ref args);
+#endif
 		}
 
 		string pre_hash;
