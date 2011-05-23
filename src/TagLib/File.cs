@@ -1502,18 +1502,16 @@ namespace TagLib {
 			
 			Type file_type = FileTypes.AvailableTypes[mimetype];
 			
-		//	try 
-			{
+			try {
 				File file = (File) Activator.CreateInstance(
 					file_type,
 					new object [] {abstraction, propertiesStyle});
 				
 				file.MimeType = mimetype;
 				return file;
-			} 
-			//catch (System.Reflection.TargetInvocationException e) {
-			//	throw e.InnerException;
-			//}
+			} catch (System.Reflection.TargetInvocationException e) {
+				throw e.InnerException;
+			}
 		}
 		
 		/// <summary>
