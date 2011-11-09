@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TagLib.Mpeg4 {
 	/// <summary>
@@ -446,15 +447,13 @@ namespace TagLib.Mpeg4 {
 			if (udta_boxes.Count == 1)
 				return udta_boxes[0];	//Single udta - just return it
 
-			foreach (IsoUserDataBox udtaBox in udta_boxes) {
-				if (udtaBox.GetChild (BoxType.Meta)
-					!= null && udtaBox.GetChild (BoxType.Meta
-					).GetChild (BoxType.Ilst) != null)
+            // multiple udta : pick out the shallowest node which has an ILst tag
+		    var udtaBox = udta_boxes
+                .Where(box => box.GetChildRecursively(BoxType.Ilst) != null)
+                .OrderBy(box => box.ParentTree.Length)
+                .FirstOrDefault();
 
-					return udtaBox;
-			}
-
-			return null;
+			return udtaBox;
 		}
 
 		/// <summary>
