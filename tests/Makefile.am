@@ -41,6 +41,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/GifGimpTest.cs \
 	fixtures/TagLib.Tests.Images/InvalidIFDEntryTypeTest.cs \
 	fixtures/TagLib.Tests.Images/InvalidIFDOffsetTest.cs \
+	fixtures/TagLib.Tests.Images/IptcTest.cs \
 	fixtures/TagLib.Tests.Images/JpegBGO624097Test.cs \
 	fixtures/TagLib.Tests.Images/JpegCanonBibble5Test.cs \
 	fixtures/TagLib.Tests.Images/JpegCanonZoombrowserTest.cs \

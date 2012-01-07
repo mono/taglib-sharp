@@ -116,6 +116,11 @@ namespace TagLib {
 		Png = 0x00004000,
 
 		/// <summary>
+		/// IPTC-IIM tag
+		/// </summary>
+		IPTCIIM = 0x00008000,
+
+		/// <summary>
 		///    All tag types.
 		/// </summary>
 		AllTags      = 0xFFFFFFFF
