@@ -270,6 +270,8 @@
     <Compile Include="TagLib\Xmp\XmpTag.cs" />
     <Compile Include="TagLib\Mpeg4\Boxes\TextBox.cs" />
     <Compile Include="TagLib\Mpeg4\Boxes\UrlBox.cs" />
+    <Compile Include="TagLib\IIM\IIMTag.cs" />
+    <Compile Include="TagLib\IIM\IIMReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TagLib\NonContainer\" />
@@ -278,6 +280,7 @@
     <Folder Include="TagLib\Id3v2\" />
     <Folder Include="TagLib\Mpeg4\" />
     <Folder Include="TagLib\Ogg\" />
+    <Folder Include="TagLib\IIM\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

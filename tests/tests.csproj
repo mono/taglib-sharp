@@ -146,6 +146,7 @@
     <Compile Include="fixtures\TagLib.Tests.Images\Validators\PropertyModificationValidator.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\Validators\RemoveMetadataValidator.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\Validators\TagPropertyModificationValidator.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\IptcTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

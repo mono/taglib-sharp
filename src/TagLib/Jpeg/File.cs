@@ -57,6 +57,11 @@ namespace TagLib.Jpeg
 		private static readonly string EXIF_IDENTIFIER = "Exif\0\0";
 
 		/// <summary>
+		/// The magic strings used to identifiy an IPTC-IIM section
+		/// </summary>
+		private static readonly string IPTC_IIM_IDENTIFIER = "Photoshop 3.0\u00008BIM\u0004\u0004";
+
+		/// <summary>
 		///    Standard (empty) JFIF header to add, if no one is contained
 		/// </summary>
 		private static readonly byte [] BASIC_JFIF_HEADER = new byte [] {
@@ -206,6 +211,21 @@ namespace TagLib.Jpeg
 #region Public Methods
 
 		/// <summary>
+		///  Gets a tag of a specified type from the current instance, optionally creating a
+		/// new tag if possible.
+		/// </summary>
+		public override TagLib.Tag GetTag (TagLib.TagTypes type, bool create)
+		{
+			if (type == TagTypes.XMP) {
+				foreach (Tag tag in ImageTag.AllTags) {
+					if ((tag.TagTypes & type) == type || (tag.TagTypes & TagTypes.IPTCIIM) != 0)
+						return tag;
+				}
+			}
+			return base.GetTag (type, create);
+		}
+
+		/// <summary>
 		///    Saves the changes made in the current instance to the
 		///    file it represents.
 		/// </summary>
@@ -240,7 +260,7 @@ namespace TagLib.Jpeg
 		{
 			Mode = AccessMode.Read;
 			try {
-				ImageTag = new CombinedImageTag (TagTypes.XMP | TagTypes.TiffIFD | TagTypes.JpegComment);
+				ImageTag = new CombinedImageTag (TagTypes.XMP | TagTypes.TiffIFD | TagTypes.JpegComment | TagTypes.IPTCIIM);
 
 				ValidateHeader ();
 				ReadMetadata ();
@@ -374,6 +394,10 @@ namespace TagLib.Jpeg
 					ReadAPP1Segment (data_size);
 					break;
 
+				case Marker.APP13: // possibly IPTC-IIM
+					ReadAPP13Segment (data_size);
+					break;
+
 				case Marker.COM:	// Comment segment found
 					ReadCOMSegment (data_size);
 					break;
@@ -490,6 +514,55 @@ namespace TagLib.Jpeg
 			}
 		}
 
+		/// <summary>
+		///    Reads an APP13 segment to find IPTC-IIM metadata.
+		/// </summary>
+		/// <param name="length">
+		///    The length of the segment that will be read.
+		/// </param>
+		/// <remarks>More info and specs for IPTC-IIM:
+		/// - Guidelines for Handling Image Metadata (http://www.metadataworkinggroup.org/specs/)
+		/// - IPTC Standard Photo Metadata (July 2010) (http://www.iptc.org/std/photometadata/specification/IPTC-PhotoMetadata-201007_1.pdf)
+		/// - Extracting IPTC header information from JPEG images (http://www.codeproject.com/KB/graphics/iptc.aspx?fid=2301&df=90&mpp=25&noise=3&prof=False&sort=Position&view=Quick&fr=51#xx0xx)
+		/// - Reading IPTC APP14 Segment Header Information from JPEG Images (http://www.codeproject.com/KB/graphics/ReadingIPTCAPP14.aspx?q=iptc)
+		/// </remarks>
+		private void ReadAPP13Segment (ushort length)
+		{
+			// TODO: if both IPTC-IIM and XMP metadata is contained in a file, we should read
+			// a IPTC-IIM checksum and compare that with the checksum built over the IIM block.
+			// Depending on the result we should prefer the information from XMP or IIM.
+			// Right now we always prefer XMP.
+
+			var data = ReadBlock (length);
+
+			// The APP13 segment consists of:
+			// - the string "Photoshop 3.0\u0000"
+			// - followed by "8BIM"
+			// - and then the section type "\u0004\u0004".
+			// There might be multiple 8BIM sections with different types, but we're following
+			// YAGNI for now and only deal with the one we're interested in (and hope that it's
+			// the first one).
+			var iptc_iim_length = IPTC_IIM_IDENTIFIER.Length;
+			if (length < iptc_iim_length || data.Mid (0, iptc_iim_length) != IPTC_IIM_IDENTIFIER)
+				return;
+
+			// PS6 introduced a new header with variable length text
+			var headerInfoLen = data.Mid (iptc_iim_length, 1).ToUShort();
+			int lenToSkip;
+			if (headerInfoLen > 0) {
+				// PS6 header: 1 byte headerinfolen + headerinfo + 2 bytes 00 padding (?) + 2 bytes length
+				lenToSkip = 1 + headerInfoLen + 4;
+			} else {
+				//old style: 4 bytes 00 padding (?) + 2 bytes length
+				lenToSkip = 6;
+			}
+			data.RemoveRange (0, iptc_iim_length + lenToSkip);
+
+			var reader = new IIM.IIMReader (data);
+			var tag = reader.Process ();
+			if (tag != null)
+				ImageTag.AddTag (tag);
+		}
 
 		/// <summary>
 		///    Writes the metadata back to file. All metadata is stored in the first segments
