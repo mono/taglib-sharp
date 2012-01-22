@@ -120,6 +120,11 @@ if test "x$do_tests" = "xno"; then
 else
 	AC_PATH_PROG(NUNIT_CMD, nunit-console2, nunit-console)
 	AC_SUBST(NUNIT_CMD)
+
+	AC_PATH_PROG(GIT, git)
+	if test x$GIT = x; then
+		AC_MSG_ERROR(You need git installed to run automated tests)
+	fi
 fi
 
 AC_ARG_ENABLE(raw-tests, AC_HELP_STRING([--enable-raw-tests], [Enable RAW image files NUnit tests]),
