@@ -4,6 +4,7 @@ NUNIT_FLAGS = @MONO_NUNIT_LIBS@
 ASSEMBLY_NAME = tests
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 ASSEMBLY_CSFILES =  \
+	AssemblyInfo.cs \
 	fixtures/Helpers.cs \
 	fixtures/TagLib.Tests.Collections/ByteVectorCollectionTest.cs \
 	fixtures/TagLib.Tests.Collections/ByteVectorTest.cs \
@@ -27,11 +28,15 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.FileFormats/OggFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/StandardTests.cs \
 	fixtures/TagLib.Tests.Images/AddImageMetadataTests.cs \
+	fixtures/TagLib.Tests.Images/ArwSonyA700Test.cs \
 	fixtures/TagLib.Tests.Images/BadCommentMarkerTest.cs \
 	fixtures/TagLib.Tests.Images/BGO493530Test.cs \
 	fixtures/TagLib.Tests.Images/BGO625367Test.cs \
 	fixtures/TagLib.Tests.Images/BGO631333Test.cs \
+	fixtures/TagLib.Tests.Images/BGO633972Test.cs \
 	fixtures/TagLib.Tests.Images/CopyFromTest.cs \
+	fixtures/TagLib.Tests.Images/Cr2Canon400d1Test.cs \
+	fixtures/TagLib.Tests.Images/DngLeicaM8Test.cs \
 	fixtures/TagLib.Tests.Images/EmptyCommentTest.cs \
 	fixtures/TagLib.Tests.Images/GifExiftoolLongCommentTest.cs \
 	fixtures/TagLib.Tests.Images/GifExiftoolTangled1Test.cs \
@@ -39,6 +44,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/GifExiftoolTangled3Test.cs \
 	fixtures/TagLib.Tests.Images/GifExiftoolTest.cs \
 	fixtures/TagLib.Tests.Images/GifGimpTest.cs \
+	fixtures/TagLib.Tests.Images/ImageTagTests.cs \
 	fixtures/TagLib.Tests.Images/InvalidIFDEntryTypeTest.cs \
 	fixtures/TagLib.Tests.Images/InvalidIFDOffsetTest.cs \
 	fixtures/TagLib.Tests.Images/JpegBGO624097Test.cs \
@@ -61,11 +67,15 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.Images/JpegSony1Test.cs \
 	fixtures/TagLib.Tests.Images/JpegSony2Test.cs \
 	fixtures/TagLib.Tests.Images/JpegTangledTest.cs \
+	fixtures/TagLib.Tests.Images/NefNikonD90Test.cs \
 	fixtures/TagLib.Tests.Images/NullOrientationTest.cs \
+	fixtures/TagLib.Tests.Images/PefPentaxKd10Test.cs \
 	fixtures/TagLib.Tests.Images/PngGimpPngcrushTest.cs \
 	fixtures/TagLib.Tests.Images/PngGimpTest.cs \
 	fixtures/TagLib.Tests.Images/RationalTest.cs \
+	fixtures/TagLib.Tests.Images/RawLeicaDigilux2Test.cs \
 	fixtures/TagLib.Tests.Images/RecursiveIFDTest.cs \
+	fixtures/TagLib.Tests.Images/Rw2PanasonicG1Test.cs \
 	fixtures/TagLib.Tests.Images/TiffCanonBibble516BitTest.cs \
 	fixtures/TagLib.Tests.Images/TiffCanonBibble58BitTest.cs \
 	fixtures/TagLib.Tests.Images/TiffCanonDpp16BitTest.cs \
