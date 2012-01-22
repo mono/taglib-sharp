@@ -150,9 +150,12 @@ endif
 build: update $(ASSEMBLY) $(TAGLIB_ASM)
 
 if ENABLE_TESTS
-test: build
+test: gitsubmodule build
 	MONO_PATH="../src" COMPARE_LARGE_FILES="$(COMPARE_LARGE_FILES)" $(NUNIT_CMD) -noshadow $(ASSEMBLY) $(ARGS)
 endif
+
+gitsubmodule:
+	cd .. && $(GIT) submodule update --init && cd -
 
 CLEANFILES = $(ASSEMBLY) TestResult.xml *.mdb *.dll *.exe
 DISTCLEANFILES = *.pidb
