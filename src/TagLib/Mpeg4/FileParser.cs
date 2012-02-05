@@ -157,6 +157,10 @@ namespace TagLib.Mpeg4 {
 			get {return udta_boxes.ToArray ();}
 		}
 		
+		public IsoUserDataBox UserDataBox {
+			get {return UserDataBoxes.Length == 0 ? null : UserDataBoxes[0];}
+		}
+
 		/// <summary>
 		///    Gets the audio sample entry read by the current instance.
 		/// </summary>
