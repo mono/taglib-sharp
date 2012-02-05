@@ -13,6 +13,7 @@ AC_SUBST(ASSEMBLY_VERSION)
 AC_SUBST(ASSEMBLY_NAME)
 
 AC_PROG_INSTALL
+AC_PROG_GREP
 
 MONODOC_REQUIRED=1.1.9
 
@@ -84,10 +85,8 @@ else
 fi
 
 # checking for ICSharpCode.SharpZipLib.dll
-AC_MSG_CHECKING([for Mono 2.0 GAC for ICSharpCode.SharpZipLib.dll])
-if test \
-	-e "$($PKG_CONFIG --variable=libdir mono)/mono/2.0/ICSharpCode.SharpZipLib.dll" -o \
-	-e "$($PKG_CONFIG --variable=prefix mono)/lib/mono/2.0/ICSharpCode.SharpZipLib.dll"; \
+AC_MSG_CHECKING([Mono GAC for ICSharpCode.SharpZipLib.dll])
+if $GACUTIL -l | $GREP -q ICSharpCode.SharpZipLib; \
 	then \
 	AC_MSG_RESULT([found])
 	AM_CONDITIONAL(HAVE_SHARPZIPLIB, true)
