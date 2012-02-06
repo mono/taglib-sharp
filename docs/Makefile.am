@@ -10,7 +10,7 @@ all: XmlInjector.exe
 XmlInjector.exe: XmlInjector.cs
 	$(MCS) -out:$@ -r:System.Xml $<
 
-monodocdir = $(DESTDIR)$(DOCDIR)
+monodocdir = $(DOCDIR)
 monodoc_DATA = \
 	taglib-sharp-docs.zip \
 	taglib-sharp-docs.tree \
@@ -54,7 +54,7 @@ EXTRA_DIST = \
 	taglib-sharp-docs.source \
 	XmlInjector.cs \
 	Package.en.xml.in
-	
+
 DISTCLEANFILES = \
 	taglib-sharp-docs.zip \
 	taglib-sharp-docs.tree
