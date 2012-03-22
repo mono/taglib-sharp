@@ -243,34 +243,13 @@ namespace TagLib.Mpeg {
 		{
 			this.duration = TimeSpan.Zero;
 			stream_length = 0;
-			
-			if (data.Count < 4)
-				throw new CorruptFileException (
-					"Insufficient header length.");
-			
-			if (data [0] != 0xFF)
-				throw new CorruptFileException (
-					"First byte did not match MPEG synch.");
-			
-			// Checking bits from high to low:
-			//
-			// First 3 bits MUST be set. Bits 4 and 5 can
-			// be 00, 10, or 11 but not 01. One or more of
-			// bits 6 and 7 must be set. Bit 8 can be
-			// anything.
-			if ((data [1] & 0xE6) <= 0xE0 || (data [1] & 0x18) == 0x08)
-				throw new CorruptFileException (
-					"Second byte did not match MPEG synch.");
+
+			string error = GetHeaderError(data);
+			if (error != null) {
+				throw new CorruptFileException (error);
+			}
 			
 			flags = data.ToUInt ();
-			
-			if (((flags >> 12) & 0x0F) == 0x0F)
-				throw new CorruptFileException (
-					"Header uses invalid bitrate index.");
-			
-			if (((flags >> 10) & 0x03) == 0x03)
-				throw new CorruptFileException (
-					"Invalid sample rate.");
 
 			xing_header = XingHeader.Unknown;
 			
@@ -732,14 +711,18 @@ namespace TagLib.Mpeg {
 				for (int i = 0; i < buffer.Count - 3 &&
 					(length < 0 || position + i < end); i++)
 					if (buffer [i] == 0xFF &&
-						buffer [i + 1] > 0xE0)
-						try {
-							header = new AudioHeader (
-								buffer.Mid (i, 4),
-								file, position + i);
-							return true;
-						} catch (CorruptFileException) {
+						buffer [i + 1] > 0xE0) {
+						ByteVector data = buffer.Mid(i, 4);
+						if (GetHeaderError(data) == null) {
+							try {
+								header = new AudioHeader(
+									data,
+									file, position + i);
+								return true;
+							} catch (CorruptFileException) {
+							}
 						}
+					}
 				
 				position += File.BufferSize;
 			} while (buffer.Count > 3 && (length < 0 || position < end));
@@ -778,6 +761,34 @@ namespace TagLib.Mpeg {
 		                         TagLib.File file, long position)
 		{
 			return Find (out header, file, position, -1);
+		}
+
+		private static string GetHeaderError(ByteVector data)
+		{
+			if (data.Count < 4)
+				return "Insufficient header length.";
+
+			if (data [0] != 0xFF)
+				return "First byte did not match MPEG synch.";
+
+			// Checking bits from high to low:
+			//
+			// First 3 bits MUST be set. Bits 4 and 5 can
+			// be 00, 10, or 11 but not 01. One or more of
+			// bits 6 and 7 must be set. Bit 8 can be
+			// anything.
+			if ((data [1] & 0xE6) <= 0xE0 || (data [1] & 0x18) == 0x08)
+				return "Second byte did not match MPEG synch.";
+
+			uint flags = data.ToUInt ();
+
+			if (((flags >> 12) & 0x0F) == 0x0F)
+				return "Header uses invalid bitrate index.";
+
+			if (((flags >> 10) & 0x03) == 0x03)
+				return "Invalid sample rate.";
+
+			return null;
 		}
 		
 		#endregion
