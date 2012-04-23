@@ -264,19 +264,15 @@ namespace TagLib.NonContainer {
 			long end = start;
 			TagTypes type = ReadTagInfo (ref end);
 			TagLib.Tag tag = null;
-			
-			try {
-				switch (type)
-				{
-				case TagTypes.Ape:
-					tag = new TagLib.Ape.Tag (file, start);
-					break;
-				case TagTypes.Id3v2:
-					tag = new TagLib.Id3v2.Tag (file, start);
-					break;
-				}
-			} catch (CorruptFileException e) {
-                Console.Error.WriteLine ("taglib-sharp caught exception creating tag: {0}", e);
+
+			switch (type)
+			{
+			case TagTypes.Ape:
+				tag = new TagLib.Ape.Tag (file, start);
+				break;
+			case TagTypes.Id3v2:
+				tag = new TagLib.Id3v2.Tag (file, start);
+				break;
 			}
 
 			start = end;

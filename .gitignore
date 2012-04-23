@@ -13,7 +13,6 @@ configure
 *.config
 install-sh
 missing
-src/AssemblyInfo.cs
 *.pc
 *.zip
 tests/samples/tmp*
@@ -29,3 +28,7 @@ tests/*.dll
 tests/*.xml
 test-results
 .*.swp
+[oO]bj
+*.user
+*.pdb
+*.suo
