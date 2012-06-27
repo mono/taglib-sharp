@@ -853,7 +853,7 @@ namespace TagLib {
 				throw new ArgumentNullException ("pattern");
 			
 			Mode = AccessMode.Read;
-			
+
 			if (pattern.Count > buffer_size)
 				return -1;
 			
