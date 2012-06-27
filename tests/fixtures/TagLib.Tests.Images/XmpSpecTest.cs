@@ -169,6 +169,25 @@ namespace TagLib.Tests.Images
 			});
 		}
 
+
+		// I spent some time trying to track this bug down and have to just move on
+		// to something else.  Here are the things that I found.
+		// SPEC: http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/xmp/pdfs/cs6/XMPSpecificationPart1.pdf
+		// Date: April 2012
+		// ISO: ISO 16684-1:2011(E)
+		// On page 9 figure 5 - Qualifiers example
+		//		It looks like the parser currently generates an extra node for "li" and "William Gilbert" 
+		//		instead of creating just one node.  So, the tree ends up having an extra node on
+		//		each side for "li". creator -> li -> "William Gilbert" -> "lyricist" instead of
+		//		creator -> "William Gilbert" -> "lyricist" as shown in the diagram.
+		//
+		// It also looks like qualifiers are not detected or added correctly to the nodes.
+		//
+		// The parsing diagram mentioned below I think is really in Annex C, RDF parsing information
+		// on page 35
+
+		// An extra note: The parser goes through the xml and turns the code into a tree structure
+		// made up of XmpNode objects.
 		[Test]
 		[Ignore("Known failure, needs fixing")]
 		public void QualifierTest ()
