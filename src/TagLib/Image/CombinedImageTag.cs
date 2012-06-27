@@ -114,7 +114,30 @@ namespace TagLib.Image
 			if (tag is IFDTag)
 				Exif = tag as IFDTag;
 			else if (tag is XmpTag)
-				Xmp = tag as XmpTag;
+			{
+				// we treat a IPTC-IIM tag as a XMP tag. However, we prefer the real XMP tag.
+				// See comments in Jpeg/File.cs for what we should do to deal with this properly.
+				if (Xmp != null && (tag is IIM.IIMTag || Xmp is IIM.IIMTag)) {
+					var iimTag = tag as IIM.IIMTag;
+					if (iimTag == null) {
+						iimTag = Xmp as IIM.IIMTag;
+						Xmp = tag as XmpTag;
+					}
+
+					if (string.IsNullOrEmpty (Xmp.Title))
+						Xmp.Title = iimTag.Title;
+					if (string.IsNullOrEmpty (Xmp.Creator))
+						Xmp.Creator = iimTag.Creator;
+					if (string.IsNullOrEmpty (Xmp.Copyright))
+						Xmp.Copyright = iimTag.Copyright;
+					if (string.IsNullOrEmpty (Xmp.Comment))
+						Xmp.Comment = iimTag.Comment;
+					if (Xmp.Keywords == null)
+						Xmp.Keywords = iimTag.Keywords;
+				} else {
+					Xmp = tag as XmpTag;
+				}
+			}
 			else
 				OtherTags.Add (tag);
 
