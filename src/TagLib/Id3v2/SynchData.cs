@@ -131,14 +131,19 @@ namespace TagLib.Id3v2 {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="data" /> is <see langword="null" />.
 		/// </exception>
-		public static void ResynchByteVector (ByteVector data)
+		public static void ResynchByteVector(ByteVector data)
 		{
 			if (data == null)
-				throw new ArgumentNullException ("data");
-			
-			for (int i = data.Count - 2; i >= 0; i --)
-				if (data [i] == 0xFF && data [i+1] == 0)
-					data.RemoveAt (i+1);
+				throw new ArgumentNullException("data");
+			//ByteVector dataCopy = new ByteVector(data);
+			int readI = 0, writeI=0;
+			while (readI < data.Count - 1) {
+				if (readI != writeI) data[writeI] = data[readI];
+				readI += data[readI] == 0xFF && data[readI + 1] == 0 ? 2 : 1;
+				writeI++;
+			}
+			if (readI < data.Count) data[writeI++] = data[readI++];
+			data.Resize(writeI);
 		}
 	}
 }

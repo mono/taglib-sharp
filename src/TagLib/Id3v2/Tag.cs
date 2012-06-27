@@ -875,14 +875,18 @@ namespace TagLib.Id3v2 {
 					break;
 				
 				Frame frame = null;
-				
+
 				try {
-					frame = FrameFactory.CreateFrame (data,
+					frame = FrameFactory.CreateFrame(data,
 						ref frame_data_position,
 						header.MajorVersion,
 						fullTagUnsynch);
 				} catch (NotImplementedException) {
 					continue;
+				} catch (CorruptFileException) {
+					continue;
+				} catch (Exception) {
+					throw;
 				}
 				
 				if(frame == null)

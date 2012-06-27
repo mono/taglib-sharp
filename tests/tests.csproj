@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,15 +10,37 @@
     <RootNamespace>tests</RootNamespace>
     <AssemblyName>tests</AssemblyName>
     <ReleaseVersion>2.0.3.5</ReleaseVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>.</OutputPath>
-    <DefineConstants>DEBUG</DefineConstants>
+    <DefineConstants>DEBUG;MSCLR</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -26,18 +48,21 @@
     <OutputPath>.</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\docs-trunk\programs\Support Tools\nunit\framework\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="nunit.core, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
-    <Reference Include="nunit.framework, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
-    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="fixtures\Helpers.cs" />
     <Compile Include="fixtures\TagLib.Tests.Collections\ByteVectorCollectionTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.Collections\ByteVectorTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.Collections\FileTest.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Collections\ImageBlockFileTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.Collections\StringCollectionTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\AacFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\AiffFormatTest.cs" />
@@ -46,16 +71,26 @@
     <Compile Include="fixtures\TagLib.Tests.FileFormats\FlacFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\Id3BothFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\Id3V1FormatTest.cs" />
+    <Compile Include="fixtures\TagLib.Tests.FileFormats\Id3V24FormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\Id3V2FormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\IFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\JpegFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\M4aFormatTest.cs" />
-	<Compile Include="fixtures\TagLib.Tests.FileFormats\M4vFormatTest.cs" />
+    <Compile Include="fixtures\TagLib.Tests.FileFormats\M4vFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\MpcFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\OggFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\StandardTests.cs" />
-    <Compile Include="fixtures\TagLib.Tests.FileFormats\TiffFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\AddImageMetadataTests.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\BadCommentMarkerTest.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\BGO493530Test.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\BGO625367Test.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\BGO631333Test.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\CopyFromTest.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\ImageTagTests.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\InvalidIFDEntryTypeTest.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\InvalidIFDOffsetTest.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\JpegBGO624097Test.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\JpegCanonBibble5Test.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\JpegCanonZoombrowserTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\JpegNikon1Test.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\JpegNikon2Test.cs" />
@@ -65,13 +100,20 @@
     <Compile Include="fixtures\TagLib.Tests.Images\JpegOlympus1Test.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\JpegOlympus2Test.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\JpegOlympus3Test.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\JpegOlympusCorruptMNTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\JpegPanasonicTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\JpegSegmentSizeTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\JpegSony1Test.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\JpegSony2Test.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\JpegTangledTest.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\NullOrientationTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\RationalTest.cs" />
-    <Compile Include="fixtures\TagLib.Tests.Images\TiffXmpTest.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\RecursiveIFDTest.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\TiffGimp1Test.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\TiffGimp2Test.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\TiffNikon1ViewNX16BitTest.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\TiffNikon1ViewNX8BitTest.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\TiffNikon2ViewNX16BitTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\Utils.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\Validators\CommentModificationValidator.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\Validators\ImageTest.cs" />
@@ -79,8 +121,12 @@
     <Compile Include="fixtures\TagLib.Tests.Images\Validators\IMetadataModificationValidator.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\Validators\KeywordsModificationValidator.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\Validators\NoModificationValidator.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\Validators\Pixbuf.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\Validators\PropertyModificationValidator.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\Validators\RemoveMetadataValidator.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\Validators\TagCommentModificationValidator.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\Validators\TagKeywordsModificationValidator.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\Validators\TagPropertyModificationValidator.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\XapTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\XmpCrashTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\XmpSpecTest.cs" />
@@ -112,10 +158,26 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\src\taglib-sharp.csproj">
       <Project>{6B143A39-C7B2-4743-9917-92262C60E9A6}</Project>
       <Name>taglib-sharp</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
 </Project>
