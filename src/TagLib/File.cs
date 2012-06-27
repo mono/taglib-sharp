@@ -744,119 +744,34 @@ namespace TagLib {
 			// starts at.
 			
 			long buffer_offset = startPosition;
-			ByteVector buffer;
-			
-			// These variables are used to keep track of a partial
-			// match that happens at the end of a buffer.
-			
-			int previous_partial_match = -1;
-			int before_previous_partial_match = -1;
-			
-			// Save the location of the current read pointer.  We
-			// will restore the position using Seek() before all
-			// returns.
-			
 			long original_position = file_stream.Position;
-			
-			// Start the search at the offset.
-			
-			file_stream.Position = startPosition;
-			
-			// This loop is the crux of the find method.  There are
-			// three cases that we want to account for:
-			//
-			// (1) The previously searched buffer contained a
-			//     partial match of the search pattern and we want
-			//     to see if the next one starts with the remainder
-			//     of that pattern.
-			//
-			// (2) The search pattern is wholly contained within the
-			//     current buffer.
-			//
-			// (3) The current buffer ends with a partial match of
-			//     the pattern.  We will note this for use in the 
-			//     next iteration, where we will check for the rest 
-			//     of the pattern.
-			//
-			// All three of these are done in two steps.  First we
-			// check for the pattern and do things appropriately if
-			// a match (or partial match) is found.  We then check 
-			// for "before".  The order is important because it 
-			// gives priority to "real" matches.
-			
-			for (buffer = ReadBlock (buffer_size); 
-				buffer.Count > 0;
-				buffer = ReadBlock(buffer_size)) {
-				
-				// (1) previous partial match
-				
-				if (previous_partial_match >= 0 &&
-					buffer_size > previous_partial_match) {
-					int pattern_offset = buffer_size -
-						previous_partial_match;
-					
-					if (buffer.ContainsAt (pattern, 0,
-						pattern_offset)) {
-						
-						file_stream.Position =
-							original_position;
-						
-						return buffer_offset -
-							buffer_size +
-							previous_partial_match;
+
+			try {
+				// Start the search at the offset.
+				file_stream.Position = startPosition;
+				for (var buffer = ReadBlock (buffer_size); buffer.Count > 0; buffer = ReadBlock(buffer_size)) {
+					var location = buffer.Find (pattern);
+					if (before != null) {
+						var beforeLocation = buffer.Find (before);
+						if (beforeLocation < location)
+							return -1;
 					}
+
+					if (location >= 0)
+						return buffer_offset + location;
+
+					// Ensure that we always rewind the stream a little so we never have a partial
+					// match where our data exists between the end of read A and the start of read B.
+					buffer_offset += buffer_size - pattern.Count;
+					if (before != null && before.Count > pattern.Count)
+						buffer_offset -= before.Count - pattern.Count;
+					file_stream.Position = buffer_offset;
 				}
 				
-				if (before != null &&
-					before_previous_partial_match >= 0 &&
-					buffer_size >
-					before_previous_partial_match) {
-					
-					int before_offset = buffer_size -
-						before_previous_partial_match;
-					
-					if (buffer.ContainsAt (before, 0,
-						before_offset)) {
-						
-						file_stream.Position =
-							original_position;
-						
-						return -1;
-					}
-				}
-				
-				// (2) pattern contained in current buffer
-				
-				long location = buffer.Find (pattern);
-				
-				if (location >= 0) {
-					file_stream.Position = original_position;
-					return buffer_offset + location;
-				}
-				
-				if (before != null && buffer.Find (before) >= 0) {
-					file_stream.Position = original_position;
-					return -1;
-				}
-				
-				// (3) partial match
-				
-				previous_partial_match =
-					buffer.EndsWithPartialMatch (pattern);
-				
-				if (before != null)
-					before_previous_partial_match =
-						buffer.EndsWithPartialMatch (
-							before);
-				
-				buffer_offset += buffer_size;
+				return -1;
+			} finally {
+				file_stream.Position = original_position;
 			}
-			
-			// Since we hit the end of the file, reset the status
-			// before continuing.
-			
-			file_stream.Position = original_position;
-			return -1;
 		}
 		
 		/// <summary>
@@ -991,11 +906,10 @@ namespace TagLib {
 					return -1;
 				}
 				
-				// TODO: (3) partial match
-
-				
 				read_size = (int) Math.Min (buffer_offset, buffer_size);
 				buffer_offset -= read_size;
+				if (read_size + pattern.Count > buffer_size)
+					buffer_offset += pattern.Count;
 
 				file_stream.Position = buffer_offset;
 			}
@@ -1079,7 +993,7 @@ namespace TagLib {
 				throw new ArgumentNullException ("data");
 			
 			Mode = AccessMode.Write;
-			
+
 			if (data.Count == replace) {
 				file_stream.Position = start;
 				WriteBlock (data);

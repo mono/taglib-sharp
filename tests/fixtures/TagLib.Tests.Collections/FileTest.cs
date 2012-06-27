@@ -31,7 +31,6 @@ namespace TagLib.Tests.Collections
 		}
 
 		[Test]
-		[Ignore("Known failure, needs fixing")]
 		public void RFind ()
 		{
 			// file1
@@ -96,7 +95,6 @@ namespace TagLib.Tests.Collections
 		}
 
 		[Test]
-		[Ignore("Known failure, needs fixing")]
 		public void Find ()
 		{
 			// file1
@@ -154,9 +152,6 @@ namespace TagLib.Tests.Collections
 
 			Assert.AreEqual (buffer_cross2, file3.Find (Pattern1, buffer_cross1 + 1));
 
-			// The following test should fail for the current implementation of Find().
-			// The partial match stored during the iteration in the algorithm takes care
-			// about a wrong partial match and does not consider the smaller, right one.
 			long buffer_cross3 = File.BufferSize - 1;
 			file3.Insert (Pattern3, buffer_cross3 - 1, Pattern3.Length);
 			file3.Insert (Pattern3, buffer_cross3, Pattern3.Length);
