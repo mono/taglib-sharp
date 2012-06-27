@@ -183,7 +183,11 @@ namespace TagLib.Mpeg4 {
 		public override TagLib.Properties Properties {
 			get {return properties;}
 		}
-		
+
+		protected List<IsoUserDataBox> UdtaBoxes {
+			get { return udta_boxes; }
+		}
+
 		#endregion
 		
 		

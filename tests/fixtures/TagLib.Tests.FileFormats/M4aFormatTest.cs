@@ -1,14 +1,32 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using NUnit.Framework;
+
 using TagLib;
+using TagLib.Mpeg4;
 
 namespace TagLib.Tests.FileFormats
 {   
     [TestFixture]
     public class M4aFormatTest : IFormatTest
     {
+        class Mpeg4TestFile : TagLib.Mpeg4.File
+        {
+            public Mpeg4TestFile (string path)
+                :base (path)
+            {
+
+            }
+
+            public new List<IsoUserDataBox>  UdtaBoxes {
+                get { return base.UdtaBoxes; }
+            }
+        }
+
         private static string sample_file = "samples/sample.m4a";
         private static string tmp_file = "samples/tmpwrite.m4a";
+        private static string aac_broken_tags = "samples/bgo_658920.m4a";
         private File file;
         
         [TestFixtureSetUp]
@@ -16,7 +34,22 @@ namespace TagLib.Tests.FileFormats
         {
             file = File.Create(sample_file);
         }
-    
+        
+        [Test]
+        public void ReadAppleAacTags ()
+        {
+            var file = new Mpeg4TestFile (aac_broken_tags);
+            Assert.AreEqual (2, file.UdtaBoxes.Count, "#1");
+
+            var first = file.UdtaBoxes [0];
+            Assert.AreEqual (1, first.Children.Count (), "#2");
+
+            Assert.IsInstanceOfType (typeof (AppleAdditionalInfoBox), first.Children.First ());
+            var child = (AppleAdditionalInfoBox) first.Children.First ();
+            Assert.AreEqual ((ReadOnlyByteVector)"name", child.BoxType, "#3");
+            Assert.AreEqual (0 , child.Data.Count, "#4");
+        }
+
         [Test]
         public void ReadAudioProperties()
         {
