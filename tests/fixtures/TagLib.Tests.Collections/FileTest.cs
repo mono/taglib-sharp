@@ -10,7 +10,6 @@ namespace TagLib.Tests.Collections
 	{
 		private static readonly string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		private static readonly string Pattern1 = "efg";
-		private static readonly string Pattern2 = "abbbbb";
 		private static readonly string Pattern3 = "bbbbba";
 
 		// length1 is smaller than the used buffer size

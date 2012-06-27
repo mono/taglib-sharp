@@ -221,12 +221,12 @@ namespace TagLib.Tests.Collections
 			}
 		}
 
-		public void AddMetadataBlock (long start, long length)
+		public new void AddMetadataBlock (long start, long length)
 		{
 			base.AddMetadataBlock (start, length);
 		}
 
-		public void SaveMetadata (ByteVector data, long start)
+		public new void SaveMetadata (ByteVector data, long start)
 		{
 			base.SaveMetadata (data, start);
 		}
