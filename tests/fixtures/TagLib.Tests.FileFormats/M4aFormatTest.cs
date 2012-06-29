@@ -34,7 +34,16 @@ namespace TagLib.Tests.FileFormats
         {
             file = File.Create(sample_file);
         }
-        
+
+		[Test]
+		public void AppleTags_MoreTests ()
+		{
+			// This tests that a 'text' atom inside an 'stsd' atom is parsed correctly
+			// We just ensure that this does not throw an exception. I don't know how to
+			// verify the content is correct.
+			File.Create ("samples/apple_tags.m4a");
+		}
+
         [Test]
         public void ReadAppleAacTags ()
         {

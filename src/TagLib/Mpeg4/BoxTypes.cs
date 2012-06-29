@@ -77,10 +77,12 @@ namespace TagLib.Mpeg4 {
 		public static readonly ReadOnlyByteVector Stbl = "stbl";
 		public static readonly ReadOnlyByteVector Stco = "stco";
 		public static readonly ReadOnlyByteVector Stsd = "stsd";
+		public static readonly ReadOnlyByteVector Text = "text";
 		public static readonly ReadOnlyByteVector Tmpo = "tmpo";
 		public static readonly ReadOnlyByteVector Trak = "trak";
 		public static readonly ReadOnlyByteVector Trkn = "trkn";
 		public static readonly ReadOnlyByteVector Udta = "udta";
+		public static readonly ReadOnlyByteVector Url = AppleTag.FixId ("url");
 		public static readonly ReadOnlyByteVector Uuid = "uuid";
 		public static readonly ReadOnlyByteVector Wrt  = AppleTag.FixId ("wrt");
 		public static readonly ReadOnlyByteVector DASH = "----";

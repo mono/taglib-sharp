@@ -11,6 +11,7 @@
     <ApplicationIcon>.</ApplicationIcon>
     <AssemblyName>taglib-sharp</AssemblyName>
     <ReleaseVersion>2.0.4.0</ReleaseVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -267,6 +268,8 @@
     <Compile Include="TagLib\Xmp\XmpNodeType.cs" />
     <Compile Include="TagLib\Xmp\XmpNodeVisitor.cs" />
     <Compile Include="TagLib\Xmp\XmpTag.cs" />
+    <Compile Include="TagLib\Mpeg4\Boxes\TextBox.cs" />
+    <Compile Include="TagLib\Mpeg4\Boxes\UrlBox.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TagLib\NonContainer\" />

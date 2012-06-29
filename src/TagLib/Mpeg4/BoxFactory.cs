@@ -67,17 +67,18 @@ namespace TagLib.Mpeg4 {
 			if (parent.BoxType == BoxType.Stsd &&
 				parent.Box is IsoSampleDescriptionBox &&
 				index < (parent.Box as IsoSampleDescriptionBox).EntryCount) {
-				if (handler != null &&
-					handler.HandlerType == BoxType.Soun)
-					return new IsoAudioSampleEntry (header,
-						file, handler);
+				if (handler != null && handler.HandlerType == BoxType.Soun)
+					return new IsoAudioSampleEntry (header, file, handler);
 				else if (handler != null && handler.HandlerType == BoxType.Vide)
-					return new IsoVisualSampleEntry (header,
-						file, handler);
-				else if (handler != null && handler.HandlerType == BoxType.Alis)
-					return new IsoAudioSampleEntry (header,
-						file, handler);
-				else
+					return new IsoVisualSampleEntry (header, file, handler);
+				else if (handler != null && handler.HandlerType == BoxType.Alis) {
+					if (header.BoxType == BoxType.Text)
+						return new TextBox (header, file, handler);
+					else if (header.BoxType == BoxType.Url)
+						return new UrlBox (header, file, handler);
+					// This could be anything, so just parse it
+					return new UnknownBox (header, file, handler);
+				} else
 					return new IsoSampleEntry (header,
 						file, handler);
 			}
