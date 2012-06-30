@@ -804,7 +804,10 @@ namespace TagLib.IFD
 			}
 
 			if (makernote_offset > length)
-			    throw new Exception ("offset to makernote is beyond file size");
+            {
+                file.MarkAsCorrupt("offset to makernote is beyond file size");
+                return null;
+            }
 
 			if (makernote_offset + header_size > length)
 				throw new Exception ("data is to short to contain a maker note ifd");
