@@ -32,6 +32,19 @@ Global
 		$0.DotNetNamingPolicy = $3
 		$3.DirectoryNamespaceAssociation = None
 		$3.ResourceNamePolicy = FileFormatDefault
+		$0.TextStylePolicy = $4
+		$4.inheritsSet = null
+		$4.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $5
+		$5.inheritsSet = Mono
+		$5.inheritsScope = text/x-csharp
+		$5.scope = text/x-csharp
+		$0.TextStylePolicy = $6
+		$6.FileWidth = 120
+		$6.TabWidth = 4
+		$6.inheritsSet = Mono
+		$6.inheritsScope = text/plain
+		$6.scope = text/plain
 		version = 2.0.4.0
 		outputpath = build
 	EndGlobalSection
