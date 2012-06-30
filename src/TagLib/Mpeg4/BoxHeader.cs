@@ -149,6 +149,10 @@ namespace TagLib.Mpeg4 {
 				extended_type = data.Mid (offset, 16);
 			} else
 				extended_type = null;
+
+			if (box_size > (ulong) (file.Length - position)) {
+				throw new CorruptFileException ("Box header specified a size of {0} bytes but only {1} bytes left in the file");
+			}
 		}
 		
 		/// <summary>

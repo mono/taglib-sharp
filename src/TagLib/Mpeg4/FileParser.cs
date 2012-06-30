@@ -313,9 +313,13 @@ namespace TagLib.Mpeg4 {
 		/// </summary>
 		public void ParseBoxHeaders ()
 		{
-			ResetFields ();
-			ParseBoxHeaders (first_header.TotalBoxSize,
-				file.Length, null);
+			try {
+				ResetFields ();
+				ParseBoxHeaders (first_header.TotalBoxSize,
+				                 file.Length, null);
+			} catch (CorruptFileException e) {
+				file.MarkAsCorrupt (e.Message);
+			}
 		}
 		
 		/// <summary>
@@ -324,8 +328,12 @@ namespace TagLib.Mpeg4 {
 		/// </summary>
 		public void ParseTag ()
 		{
-			ResetFields ();
-			ParseTag (first_header.TotalBoxSize, file.Length, null);
+			try {
+				ResetFields ();
+				ParseTag (first_header.TotalBoxSize, file.Length, null);
+			} catch (CorruptFileException e) {
+				file.MarkAsCorrupt (e.Message);
+			}
 		}
 		
 		/// <summary>
@@ -334,9 +342,13 @@ namespace TagLib.Mpeg4 {
 		/// </summary>
 		public void ParseTagAndProperties ()
 		{
-			ResetFields ();
-			ParseTagAndProperties (first_header.TotalBoxSize,
-				file.Length, null, null);
+			try {
+				ResetFields ();
+				ParseTagAndProperties (first_header.TotalBoxSize,
+				                       file.Length, null, null);
+			} catch (CorruptFileException e) {
+				file.MarkAsCorrupt (e.Message);
+			}
 		}
 		
 		/// <summary>
@@ -345,9 +357,13 @@ namespace TagLib.Mpeg4 {
 		/// </summary>
 		public void ParseChunkOffsets ()
 		{
-			ResetFields ();
-			ParseChunkOffsets (first_header.TotalBoxSize,
-				file.Length);
+			try {
+				ResetFields ();
+				ParseChunkOffsets (first_header.TotalBoxSize,
+				                   file.Length);
+			} catch (CorruptFileException e) {
+				file.MarkAsCorrupt (e.Message);
+			}
 		}
 		
 		#endregion

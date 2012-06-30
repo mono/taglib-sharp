@@ -44,6 +44,16 @@ namespace TagLib.Tests.FileFormats
 			File.Create ("samples/apple_tags.m4a");
 		}
 
+		
+		[Test]
+		public void bgo_676934 ()
+		{
+			// This file contains an atom which says its 800MB in size
+			var file = File.Create ("samples/bgo_676934.m4a");
+			Assert.IsTrue (file.CorruptionReasons.Any (), "#1");
+		}
+
+
         [Test]
         public void ReadAppleAacTags ()
         {
