@@ -808,8 +808,10 @@ namespace TagLib.IFD
 				return null;
 			}
 
-			if (makernote_offset + header_size > length)
-				throw new Exception ("data is to short to contain a maker note ifd");
+			if (makernote_offset + header_size > length) {
+				file.MarkAsCorrupt ("data is to short to contain a maker note ifd");
+				return null;
+			}
 
 			// read header
 			file.Seek (makernote_offset, SeekOrigin.Begin);
