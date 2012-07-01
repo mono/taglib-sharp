@@ -1,3 +1,26 @@
+Version 2.0.5.0
+July 1, 2012
+
+Fixes and Features in this release include:
+  * Fix a freeze on some mp3 files where header was at the end of file
+  * Properly implement partial matching for File.Find and File.RFind
+  * [Mpeg4] Fix parsing of some apple tags (bgo#658920)
+  * Add partial support for IPTC-IIM
+  * Fix nested UDTA boxes
+  * [Mpeg4] Attempt to handle corrupt tags a little better (bgo#676934)
+  * Mark the file as corrupt instead of throwing exception (bgo#643477)
+  * StartTag.ReadTag should not silence exceptions
+  * Check for short popularimeter tags
+  * On corrupt Id3v2 frame, skip just that frame (bgo#650674)
+  * Use O(N) rather than O(N^2) deunsynchronization algorithm
+
+Contributors to this release:
+  Alan McGovern, Alexander Kojevnikov, Anton Drachev, Chow Loong Jin,
+  Eamon Nerbonne, Eberhard Beilharz, Jakub 'Fiołek' Fijałkowski,
+  Samuel D. Jack, Stephen Shaw, Tim Howard
+
+--------------------------------------------------------------------------------
+
 Version 2.0.4.0
 April 13, 2011
 
