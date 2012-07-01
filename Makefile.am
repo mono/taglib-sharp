@@ -61,7 +61,6 @@ UPLOAD_HOST = "$$BANSHEE_USER@banshee.fm"
 UPLOAD_PATH = "web/download.banshee.fm/taglib-sharp"
 push-release: distcheck distwin
 	[[ -z "$$BANSHEE_USER" ]] && { echo "Set BANSHEE_USER"; exit 1; } || true
-	[[ -z "$$MONO_USER" ]] && { echo "Set MONO_USER"; exit 1; } || true
 	mkdir -p release
 	mv $(WINDIR).zip release
 	mv $(PACKAGE)-$(VERSION).tar.* release
