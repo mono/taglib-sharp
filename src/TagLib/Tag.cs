@@ -121,6 +121,11 @@ namespace TagLib {
 		IPTCIIM = 0x00008000,
 
 		/// <summary>
+		///    Audible Metadata Blocks Tag
+		/// </summary>
+		AudibleMetadata = 0x00000400,
+		
+		/// <summary>
 		///    All tag types.
 		/// </summary>
 		AllTags      = 0xFFFFFFFF

@@ -272,6 +272,8 @@
     <Compile Include="TagLib\Mpeg4\Boxes\UrlBox.cs" />
     <Compile Include="TagLib\IIM\IIMTag.cs" />
     <Compile Include="TagLib\IIM\IIMReader.cs" />
+    <Compile Include="TagLib\Audible\File.cs" />
+    <Compile Include="TagLib\Audible\Tag.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TagLib\NonContainer\" />
@@ -281,6 +283,7 @@
     <Folder Include="TagLib\Mpeg4\" />
     <Folder Include="TagLib\Ogg\" />
     <Folder Include="TagLib\IIM\" />
+    <Folder Include="TagLib\Audible\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

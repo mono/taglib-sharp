@@ -26,7 +26,7 @@ using System;
 
 namespace TagLib.Mpeg4 {
 	/// <summary>
-	///    This class extends <see cref="FullBox" /> to provide an
+	///    This class extends <see cref="Box" /> to provide an
 	///    implementation of an Apple AdditionalInfoBox.
 	/// </summary>
 	public class AppleAdditionalInfoBox : Box
