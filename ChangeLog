@@ -1,3 +1,26 @@
+commit 3be76517089d5f13f57d3b0d9032f206618243de
+Author: Alan McGovern <alan.mcgovern@gmail.com>
+Date:   Mon Jul 2 12:51:57 2012 -0400
+
+    [Audible] Commit the initial support for Audible files
+    
+    Only .aa files are supported. Parsing for .aax is not yet implemented.
+    Patch was contributed by Guy Taylor and fixes bug:
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=601543
+
+commit dff85c0e44fba553e124980a70d5d2584c67c1a7
+Author: Alexander Kojevnikov <alexander@kojevnikov.com>
+Date:   Sun Jul 1 14:43:22 2012 -0400
+
+    build: Don't need the MONO_USER
+
+commit 9543df0375ea20f78184a7f379a7c8953e5c807c
+Author: Alexander Kojevnikov <alexander@kojevnikov.com>
+Date:   Sun Jul 1 10:16:49 2012 -0400
+
+    build: Prepare for 2.0.5.0 release
+
 commit be743939588613cdff187abaac0b534cd470c2e7
 Author: Eamon Nerbonne <eamon@nerbonne.org>
 Date:   Sun May 22 16:58:39 2011 +0200

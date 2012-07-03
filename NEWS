@@ -1,3 +1,15 @@
+Version 2.1.0.0
+July 3, 2012
+
+Fixes and Features in this release include:
+  * Bump the version number because of an ABI break in 363f8ae
+  * Initial support for Audible files (bgo#601543)
+
+Contributors to this release:
+  Alan McGovern, Alexander Kojevnikov, Guy Taylor
+
+--------------------------------------------------------------------------------
+
 Version 2.0.5.0
 July 1, 2012
 
