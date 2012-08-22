@@ -31,6 +31,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.Serialization;
 
 namespace TagLib {
 	
@@ -1424,6 +1425,7 @@ namespace TagLib {
 				file.MimeType = mimetype;
 				return file;
 			} catch (System.Reflection.TargetInvocationException e) {
+                PrepareExceptionForRethrow(e.InnerException);
 				throw e.InnerException;
 			}
 		}
@@ -1468,7 +1470,22 @@ namespace TagLib {
 			file_stream.SetLength (length);
 			Mode = old_mode;
 		}
-		
+
+        /// <summary>
+        /// Causes the original strack trace of the exception to be preserved when it is rethrown
+        /// </summary>
+        /// <param name="ex"></param>
+		private static void PrepareExceptionForRethrow(Exception ex)
+		{
+            var ctx = new StreamingContext(StreamingContextStates.CrossAppDomain);
+            var mgr = new ObjectManager(null, ctx);
+            var si = new SerializationInfo(ex.GetType(), new FormatterConverter());
+
+            ex.GetObjectData(si, ctx);
+            mgr.RegisterObject(ex, 1, si); // prepare for SetObjectData
+            mgr.DoFixups(); // ObjectManager calls SetObjectData
+		}
+
 		#endregion
 		
 		
