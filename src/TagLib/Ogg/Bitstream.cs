@@ -104,11 +104,16 @@ namespace TagLib.Ogg
 		/// <summary>
 		///    Reads the next logical page in the stream.
 		/// </summary>
-		/// <param name="page">
-		///    The next logical <see cref="Page" /> object in the
-		///    stream.
-		/// </param>
-		/// <returns>
+        /// <param name="page">
+        ///    The next logical <see cref="Page" /> object in the
+        ///    stream.
+        /// </param>
+        /// <param name="packet_continued">
+        ///    A <see cref="bool"/> value specifying whether the first 
+        ///    packet of this page is assumed to be continued from the 
+        ///    previous packet regardless of the "continued packet" flag.
+        /// </param>
+        /// <returns>
 		///    <see langword="true" /> if the codec has read all the
 		///    necessary packets for the stream and does not need to be
 		///    called again, typically once the Xiph comment has been
@@ -117,7 +122,7 @@ namespace TagLib.Ogg
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="page" /> is <see langword="null" />.
 		/// </exception>
-		public bool ReadPage (Page page)
+		public bool ReadPage (Page page, bool packet_continued)
 		{
 			if (page == null)
 				throw new ArgumentNullException ("page");
@@ -125,23 +130,21 @@ namespace TagLib.Ogg
 			ByteVector[] packets = page.Packets;
 			
 			for (int i = 0; i < packets.Length; i ++) {
-				if ((page.Header.Flags &
-					PageFlags.FirstPacketContinued) == 0 &&
-					previous_packet != null) {
+                bool continued = packet_continued
+                    || ((page.Header.Flags & PageFlags.FirstPacketContinued) != 0);
+
+				if (!continued && previous_packet != null) {
 					if (ReadPacket (previous_packet))
 						return true;
 					previous_packet = null;
 				}
-				
 				
 				ByteVector packet = packets [i];
 				
 				// If we're at the first packet of the page, and
 				// we're continuing an old packet, combine the
 				// old with the new.
-				if (i == 0 && (page.Header.Flags &
-					PageFlags.FirstPacketContinued) != 0 &&
-					previous_packet != null) {
+				if (i == 0 && continued && previous_packet != null) {
 					previous_packet.Add (packet);
 					packet = previous_packet;
 				}

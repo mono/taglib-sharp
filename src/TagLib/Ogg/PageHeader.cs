@@ -55,7 +55,13 @@ namespace TagLib.Ogg
 		/// <summary>
 		///    The page is the last page of the stream.
 		/// </summary>
-		LastPageOfStream = 4
+		LastPageOfStream = 4,
+
+        /// <summary>
+        ///    The last packet of the page is continued into the
+        ///    next page.
+        /// </summary>
+        LastPacketCompleted = 128
 	}
 	
 	/// <summary>
@@ -230,9 +236,11 @@ namespace TagLib.Ogg
 					packet_size = 0;
 				}
 			}
-			
-			if (packet_size > 0)
-				packet_sizes.Add (packet_size);
+
+            if (packet_size > 0)
+                packet_sizes.Add(packet_size);
+            else
+                flags |= PageFlags.LastPacketCompleted;
 		}
 		
 		/// <summary>

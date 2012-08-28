@@ -375,7 +375,7 @@ namespace TagLib.Ogg
 			List<Bitstream> active_streams = new List<Bitstream> ();
 			
 			long position = 0;
-			
+            bool last_packet_completed = false;
 			do {
 				Bitstream stream = null;
 				Page page = new Page (this, position);
@@ -393,13 +393,15 @@ namespace TagLib.Ogg
 						page.Header.StreamSerialNumber];
 				
 				if (active_streams.Contains (stream)
-					&& stream.ReadPage (page))
+					&& stream.ReadPage (page, !last_packet_completed))
 					active_streams.Remove (stream);
 				
 				if (pages != null)
 					pages.Add (page);
 				
 				position += page.Size;
+                last_packet_completed 
+                    = ((page.Header.Flags & PageFlags.LastPacketCompleted) != 0);
 			} while (active_streams.Count > 0);
 			
 			end = position;
