@@ -128,9 +128,28 @@ namespace TagLib.Riff
 		}
 		
 #endregion
-		
-		
-		
+
+
+
+#region Public Properties
+
+        /// <summary>
+        ///    Gets or sets the <see cref="StringType"/> value used for parsing 
+        ///    and rendering the contents of this tag.
+        /// </summary>
+        /// <remarks>
+        ///    The value must be StringType.Latin1 or StringType.UTF8. 
+        /// </remarks>
+        public StringType StringType
+        {
+            get {return fields.StringType;}
+            set {fields.StringType = value;}
+        }
+
+#endregion
+	
+	
+
 #region Public Methods
 		
 		/// <summary>

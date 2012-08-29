@@ -37,6 +37,18 @@ namespace TagLib.Riff {
 	[ComVisible(false)]
 	public class List : Dictionary <ByteVector,ByteVectorCollection>
 	{
+#region Private Fields
+
+        /// <summary>
+        ///    Contains the <see cref="StringType"/> value used for parsing 
+        ///    and rendering the contents of this list.
+        /// </summary>
+        private StringType string_type = StringType.UTF8;
+
+#endregion
+
+
+
 #region Constructors
 		
 		/// <summary>
@@ -130,8 +142,32 @@ namespace TagLib.Riff {
 		{
 		}
 #endregion
-		
-		
+
+
+#region Public Properties
+
+        /// <summary>
+        ///    Gets or sets the <see cref="StringType"/> value used for parsing 
+        ///    and rendering the contents of this list.
+        /// </summary>
+        /// <remarks>
+        ///    The value must be StringType.Latin1 or StringType.UTF8. 
+        /// </remarks>
+        public StringType StringType
+        {
+            get { return string_type; }
+            set
+            {
+                if (value != StringType.Latin1 || value != StringType.UTF8)
+                    throw new ArgumentException("Must be Latin1 or UTF8.", "value");
+
+                string_type = value;
+            }
+        }
+
+#endregion
+
+
 		
 #region Public Methods
 		
@@ -280,7 +316,7 @@ namespace TagLib.Riff {
 					length --;
 				
 				result [i] = data
-					.ToString (StringType.UTF8, 0, length);
+					.ToString (string_type, 0, length);
 			}
 			
 			return result;
@@ -500,7 +536,7 @@ namespace TagLib.Riff {
 					continue;
 				
 				ByteVector data = ByteVector.FromString (value,
-					StringType.UTF8);
+					string_type);
 				data.Add (0);
 				l.Add (data);
 			}

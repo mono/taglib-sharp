@@ -14,278 +14,363 @@ namespace TagLib.Tests.TaggingFormats
 			"B123456789", "C123456789", "D123456789", "E123456789"};
 		private static string [] val_gnre = new string [] {"Rap",
 			"Jazz", "Non-Genre", "Blues"};
-		
+
 		[Test]
 		public void TestTitle ()
 		{
-			Riff.InfoTag tag = new Riff.InfoTag ();
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.Title, "Initial (Null): " + m);
-			});
-			
-			tag.Title = val_sing;
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.Title, "Value Set (!Null): " + m);
-			});
-			
-			tag.Title = string.Empty;
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.Title, "Value Cleared (Null): " + m);
-			});
+            for (int i = 0; i < 2; ++i)
+            {
+                Riff.InfoTag tag = new Riff.InfoTag();
+                if (i == 1)
+                    tag.StringType = StringType.Latin1;
 
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+                    Assert.IsNull(t.Title, "Initial (Null): " + m);
+                });
+
+                tag.Title = val_sing;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+                    Assert.AreEqual(val_sing, t.Title, "Value Set (!Null): " + m);
+                });
+
+                tag.Title = string.Empty;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+                    Assert.IsNull(t.Title, "Value Cleared (Null): " + m);
+                });
+            }
 		}
 		
 		[Test]
 		public void TestPerformers ()
 		{
-			Riff.InfoTag tag = new Riff.InfoTag ();
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Performers.Length, "Initial (Zero): " + m);
-			});
-			
-			tag.Performers = val_mult;
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_mult.Length, t.Performers.Length, "Value Set: " + m);
-				for (int i = 0; i < val_mult.Length; i ++) {
-					Assert.AreEqual (val_mult [i], t.Performers [i], "Value Set: " + m);
-				}
-			});
-			
-			tag.Performers = new string [0];
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Performers.Length, "Value Cleared (Zero): " + m);
-			});
+            for (int i = 0; i < 2; ++i)
+            {
+                Riff.InfoTag tag = new Riff.InfoTag();
+                if (i == 1)
+                    tag.StringType = StringType.Latin1;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+                    Assert.AreEqual(0, t.Performers.Length, "Initial (Zero): " + m);
+                });
+
+                tag.Performers = val_mult;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+                    Assert.AreEqual(val_mult.Length, t.Performers.Length, "Value Set: " + m);
+                    for (int i = 0; i < val_mult.Length; i++)
+                    {
+                        Assert.AreEqual(val_mult[ i ], t.Performers[ i ], "Value Set: " + m);
+                    }
+                });
+
+                tag.Performers = new string[ 0 ];
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+                    Assert.AreEqual(0, t.Performers.Length, "Value Cleared (Zero): " + m);
+                });
+            }
 		}
 		
 		[Test]
 		public void TestAlbumArtists ()
 		{
-			Riff.InfoTag tag = new Riff.InfoTag ();
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, t.AlbumArtists.Length, "Initial (Zero): " + m);
-			});
-			
-			tag.AlbumArtists = val_mult;
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_mult.Length, t.AlbumArtists.Length, "Value Set: " + m);
-				for (int i = 0; i < val_mult.Length; i ++) {
-					Assert.AreEqual (val_mult [i], t.AlbumArtists [i], "Value Set: " + m);
-				}
-			});
-			
-			tag.AlbumArtists = new string [0];
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.AlbumArtists.Length, "Value Cleared (Zero): " + m);
-			});
+            for (int i = 0; i < 2; ++i)
+            {
+                Riff.InfoTag tag = new Riff.InfoTag();
+                if (i == 1)
+                    tag.StringType = StringType.Latin1;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+                    Assert.AreEqual(0, t.AlbumArtists.Length, "Initial (Zero): " + m);
+                });
+
+                tag.AlbumArtists = val_mult;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+                    Assert.AreEqual(val_mult.Length, t.AlbumArtists.Length, "Value Set: " + m);
+                    for (int i = 0; i < val_mult.Length; i++)
+                    {
+                        Assert.AreEqual(val_mult[ i ], t.AlbumArtists[ i ], "Value Set: " + m);
+                    }
+                });
+
+                tag.AlbumArtists = new string[ 0 ];
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+                    Assert.AreEqual(0, t.AlbumArtists.Length, "Value Cleared (Zero): " + m);
+                });
+            }
 		}
 		
 		[Test]
 		public void TestComposers ()
 		{
-			Riff.InfoTag tag = new Riff.InfoTag ();
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Composers.Length, "Initial (Zero): " + m);
-			});
-			
-			tag.Composers = val_mult;
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_mult.Length, t.Composers.Length, "Value Set: " + m);
-				for (int i = 0; i < val_mult.Length; i ++) {
-					Assert.AreEqual (val_mult [i], t.Composers [i], "Value Set: " + m);
-				}
-			});
-			
-			tag.Composers = new string [0];
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Composers.Length, "Value Cleared (Zero): " + m);
-			});
+            for (int i = 0; i < 2; ++i)
+            {
+                Riff.InfoTag tag = new Riff.InfoTag();
+                if (i == 1)
+                    tag.StringType = StringType.Latin1;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+                    Assert.AreEqual(0, t.Composers.Length, "Initial (Zero): " + m);
+                });
+
+                tag.Composers = val_mult;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+                    Assert.AreEqual(val_mult.Length, t.Composers.Length, "Value Set: " + m);
+                    for (int i = 0; i < val_mult.Length; i++)
+                    {
+                        Assert.AreEqual(val_mult[ i ], t.Composers[ i ], "Value Set: " + m);
+                    }
+                });
+
+                tag.Composers = new string[ 0 ];
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+                    Assert.AreEqual(0, t.Composers.Length, "Value Cleared (Zero): " + m);
+                });
+            }
 		}
 		
 		[Test]
 		public void TestComment ()
 		{
-			Riff.InfoTag tag = new Riff.InfoTag ();
+            for (int i = 0; i < 2; ++i)
+            {
+                Riff.InfoTag tag = new Riff.InfoTag();
+                if (i == 1)
+                    tag.StringType = StringType.Latin1;
 
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.Comment, "Initial (Null): " + m);
-			});
-			
-			tag.Comment = val_sing;
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.Comment, "Value Set (!Null): " + m);
-			});
-			
-			tag.Comment = string.Empty;
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+                    Assert.IsNull(t.Comment, "Initial (Null): " + m);
+                });
 
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.Comment, "Value Cleared (Null): " + m);
-			});
+                tag.Comment = val_sing;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+                    Assert.AreEqual(val_sing, t.Comment, "Value Set (!Null): " + m);
+                });
+
+                tag.Comment = string.Empty;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+                    Assert.IsNull(t.Comment, "Value Cleared (Null): " + m);
+                });
+            }
 		}
 		
 		[Test]
 		public void TestGenres ()
 		{
-			Riff.InfoTag tag = new Riff.InfoTag ();
+            for (int i = 0; i < 2; ++i)
+            {
+                Riff.InfoTag tag = new Riff.InfoTag();
+                if (i == 1)
+                    tag.StringType = StringType.Latin1;
 
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Genres.Length, "Initial (Zero): " + m);
-			});
-			
-			tag.Genres = val_gnre;
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_gnre.Length, t.Genres.Length, "Value Set: " + m);
-				for (int i = 0; i < val_gnre.Length; i ++) {
-					Assert.AreEqual (val_gnre [i], t.Genres [i], "Value Set: " + m);
-				}
-			});
-			
-			tag.Genres = val_mult;
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_mult.Length, t.Genres.Length, "Value Set: " + m);
-				for (int i = 0; i < val_mult.Length; i ++) {
-					Assert.AreEqual (val_mult [i], t.Genres [i], "Value Set: " + m);
-				}
-			});
-			
-			tag.Genres = new string [0];
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+                    Assert.AreEqual(0, t.Genres.Length, "Initial (Zero): " + m);
+                });
 
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Genres.Length, "Value Cleared (Zero): " + m);
-			});
+                tag.Genres = val_gnre;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+                    Assert.AreEqual(val_gnre.Length, t.Genres.Length, "Value Set: " + m);
+                    for (int i = 0; i < val_gnre.Length; i++)
+                    {
+                        Assert.AreEqual(val_gnre[ i ], t.Genres[ i ], "Value Set: " + m);
+                    }
+                });
+
+                tag.Genres = val_mult;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+                    Assert.AreEqual(val_mult.Length, t.Genres.Length, "Value Set: " + m);
+                    for (int i = 0; i < val_mult.Length; i++)
+                    {
+                        Assert.AreEqual(val_mult[ i ], t.Genres[ i ], "Value Set: " + m);
+                    }
+                });
+
+                tag.Genres = new string[ 0 ];
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+                    Assert.AreEqual(0, t.Genres.Length, "Value Cleared (Zero): " + m);
+                });
+            }
 		}
 		
 		[Test]
 		public void TestYear ()
 		{
-			Riff.InfoTag tag = new Riff.InfoTag ();
+            for (int i = 0; i < 2; ++i)
+            {
+                Riff.InfoTag tag = new Riff.InfoTag();
+                if (i == 1)
+                    tag.StringType = StringType.Latin1;
 
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, tag.Year, "Initial (Zero): " + m);
-			});
-			
-			tag.Year = 1999;
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (1999, tag.Year, "Value Set: " + m);
-			});
-			
-			tag.Year = 0;
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+                    Assert.AreEqual(0, tag.Year, "Initial (Zero): " + m);
+                });
 
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Year, "Value Cleared (Zero): " + m);
-			});
+                tag.Year = 1999;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+                    Assert.AreEqual(1999, tag.Year, "Value Set: " + m);
+                });
+
+                tag.Year = 0;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+                    Assert.AreEqual(0, t.Year, "Value Cleared (Zero): " + m);
+                });
+            }
 		}
-		
-		[Test]
-		public void TestTrack ()
-		{
-			Riff.InfoTag tag = new Riff.InfoTag ();
 
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, tag.Track, "Initial (Zero): " + m);
-			});
-			
-			tag.Track = 199;
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (199, tag.Track, "Value Set: " + m);
-			});
-			
-			tag.Track = 0;
+        [Test]
+        public void TestTrack()
+        {
+            for (int i = 0; i < 2; ++i)
+            {
+                Riff.InfoTag tag = new Riff.InfoTag();
+                if (i == 1)
+                    tag.StringType = StringType.Latin1;
 
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Track, "Value Cleared (Zero): " + m);
-			});
-		}
-		
-		[Test]
-		public void TestTrackCount ()
-		{
-			Riff.InfoTag tag = new Riff.InfoTag ();
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+                    Assert.AreEqual(0, tag.Track, "Initial (Zero): " + m);
+                });
 
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, tag.TrackCount, "Initial (Zero): " + m);
-			});
-			
-			tag.TrackCount = 199;
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (199, tag.TrackCount, "Value Set: " + m);
-			});
-			
-			tag.TrackCount = 0;
+                tag.Track = 199;
 
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.TrackCount, "Value Cleared (Zero): " + m);
-			});
-		}
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+                    Assert.AreEqual(199, tag.Track, "Value Set: " + m);
+                });
+
+                tag.Track = 0;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+                    Assert.AreEqual(0, t.Track, "Value Cleared (Zero): " + m);
+                });
+            }
+        }
+
+        [Test]
+        public void TestTrackCount()
+        {
+            for (int i = 0; i < 2; ++i)
+            {
+                Riff.InfoTag tag = new Riff.InfoTag();
+                if (i == 1)
+                    tag.StringType = StringType.Latin1;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+                    Assert.AreEqual(0, tag.TrackCount, "Initial (Zero): " + m);
+                });
+
+                tag.TrackCount = 199;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+                    Assert.AreEqual(199, tag.TrackCount, "Value Set: " + m);
+                });
+
+                tag.TrackCount = 0;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+                    Assert.AreEqual(0, t.TrackCount, "Value Cleared (Zero): " + m);
+                });
+            }
+        }
 		
 		[Test]
 		public void TestCopyright ()
 		{
-			Riff.InfoTag tag = new Riff.InfoTag ();
+            for (int i = 0; i < 2; ++i)
+            {
+                Riff.InfoTag tag = new Riff.InfoTag();
+                if (i == 1)
+                    tag.StringType = StringType.Latin1;
 
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.Copyright, "Initial (Null): " + m);
-			});
-			
-			tag.Copyright = val_sing;
-			
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.Copyright, "Value Set (!Null): " + m);
-			});
-			
-			tag.Copyright = string.Empty;
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+                    Assert.IsNull(t.Copyright, "Initial (Null): " + m);
+                });
 
-			TagTestWithSave (ref tag, delegate (Riff.InfoTag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.Copyright, "Value Cleared (Null): " + m);
-			});
+                tag.Copyright = val_sing;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+                    Assert.AreEqual(val_sing, t.Copyright, "Value Set (!Null): " + m);
+                });
+
+                tag.Copyright = string.Empty;
+
+                TagTestWithSave(ref tag, delegate(Riff.InfoTag t, string m)
+                {
+                    Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+                    Assert.IsNull(t.Copyright, "Value Cleared (Null): " + m);
+                });
+            }
 		}
         	
 		[Test]
