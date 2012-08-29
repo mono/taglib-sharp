@@ -1,8 +1,11 @@
 using NUnit.Framework;
 using TagLib;
+using TagLib.Riff;
 
 namespace TaglibSharp.Tests.TaggingFormats
 {
+	// NOTE: If StringType == UTF8 (default) then don't set it during the test.
+	//       We want to make sure that default still works as expected
 	[TestFixture]
 	public class InfoTagTest
 	{
@@ -15,10 +18,15 @@ namespace TaglibSharp.Tests.TaggingFormats
 		static readonly string[] val_gnre = {"Rap",
 			"Jazz", "Non-Genre", "Blues"};
 
-		[Test]
-		public void TestTitle ()
+		[TestCase (StringType.Latin1)]
+		[TestCase (StringType.UTF8)]
+		public void TestTitle (StringType stringType)
 		{
-			var tag = new TagLib.Riff.InfoTag ();
+			InfoTag tag;
+			if (stringType == StringType.UTF8)
+				tag = new TagLib.Riff.InfoTag ();
+			else
+				tag = new TagLib.Riff.InfoTag { StringType = stringType };
 
 			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
@@ -40,10 +48,15 @@ namespace TaglibSharp.Tests.TaggingFormats
 			});
 		}
 
-		[Test]
-		public void TestDescription ()
+		[TestCase (StringType.Latin1)]
+		[TestCase (StringType.UTF8)]
+		public void TestDescription (StringType stringType)
 		{
-			var tag = new TagLib.Riff.InfoTag ();
+			InfoTag tag;
+			if (stringType == StringType.UTF8)
+				tag = new TagLib.Riff.InfoTag ();
+			else
+				tag = new TagLib.Riff.InfoTag { StringType = stringType };
 
 			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
@@ -65,10 +78,15 @@ namespace TaglibSharp.Tests.TaggingFormats
 			});
 		}
 
-		[Test]
-		public void TestAlbum ()
+		[TestCase (StringType.Latin1)]
+		[TestCase (StringType.UTF8)]
+		public void TestAlbum (StringType stringType)
 		{
-			var tag = new TagLib.Riff.InfoTag ();
+			InfoTag tag;
+			if (stringType == StringType.UTF8)
+				tag = new TagLib.Riff.InfoTag ();
+			else
+				tag = new TagLib.Riff.InfoTag { StringType = stringType };
 
 			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
@@ -91,10 +109,15 @@ namespace TaglibSharp.Tests.TaggingFormats
 		}
 
 
-		[Test]
-		public void TestConductor ()
+		[TestCase (StringType.Latin1)]
+		[TestCase (StringType.UTF8)]
+		public void TestConductor (StringType stringType)
 		{
-			var tag = new TagLib.Riff.InfoTag ();
+			InfoTag tag;
+			if (stringType == StringType.UTF8)
+				tag = new TagLib.Riff.InfoTag ();
+			else
+				tag = new TagLib.Riff.InfoTag { StringType = stringType };
 
 			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
@@ -117,10 +140,15 @@ namespace TaglibSharp.Tests.TaggingFormats
 		}
 
 
-		[Test]
-		public void TestPerformers ()
+		[TestCase (StringType.Latin1)]
+		[TestCase (StringType.UTF8)]
+		public void TestPerformers (StringType stringType)
 		{
-			var tag = new TagLib.Riff.InfoTag ();
+			InfoTag tag;
+			if (stringType == StringType.UTF8)
+				tag = new TagLib.Riff.InfoTag ();
+			else
+				tag = new TagLib.Riff.InfoTag { StringType = stringType };
 
 			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
@@ -145,10 +173,15 @@ namespace TaglibSharp.Tests.TaggingFormats
 			});
 		}
 
-		[Test]
-		public void TestAlbumArtists ()
+		[TestCase (StringType.Latin1)]
+		[TestCase (StringType.UTF8)]
+		public void TestAlbumArtists (StringType stringType)
 		{
-			var tag = new TagLib.Riff.InfoTag ();
+			InfoTag tag;
+			if (stringType == StringType.UTF8)
+				tag = new TagLib.Riff.InfoTag ();
+			else
+				tag = new TagLib.Riff.InfoTag { StringType = stringType };
 
 			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
@@ -173,10 +206,15 @@ namespace TaglibSharp.Tests.TaggingFormats
 			});
 		}
 
-		[Test]
-		public void TestComposers ()
+		[TestCase (StringType.Latin1)]
+		[TestCase (StringType.UTF8)]
+		public void TestComposers (StringType stringType)
 		{
-			var tag = new TagLib.Riff.InfoTag ();
+			InfoTag tag;
+			if (stringType == StringType.UTF8)
+				tag = new TagLib.Riff.InfoTag ();
+			else
+				tag = new TagLib.Riff.InfoTag { StringType = stringType };
 
 			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
@@ -201,10 +239,15 @@ namespace TaglibSharp.Tests.TaggingFormats
 			});
 		}
 
-		[Test]
-		public void TestComment ()
+		[TestCase (StringType.Latin1)]
+		[TestCase (StringType.UTF8)]
+		public void TestComments (StringType stringType)
 		{
-			var tag = new TagLib.Riff.InfoTag ();
+			InfoTag tag;
+			if (stringType == StringType.UTF8)
+				tag = new TagLib.Riff.InfoTag ();
+			else
+				tag = new TagLib.Riff.InfoTag { StringType = stringType };
 
 			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
@@ -226,10 +269,15 @@ namespace TaglibSharp.Tests.TaggingFormats
 			});
 		}
 
-		[Test]
-		public void TestGenres ()
+		[TestCase (StringType.Latin1)]
+		[TestCase (StringType.UTF8)]
+		public void TestGenres (StringType stringType)
 		{
-			var tag = new TagLib.Riff.InfoTag ();
+			InfoTag tag;
+			if (stringType == StringType.UTF8)
+				tag = new TagLib.Riff.InfoTag ();
+			else
+				tag = new TagLib.Riff.InfoTag { StringType = stringType };
 
 			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
@@ -264,10 +312,15 @@ namespace TaglibSharp.Tests.TaggingFormats
 			});
 		}
 
-		[Test]
-		public void TestYear ()
+		[TestCase (StringType.Latin1)]
+		[TestCase (StringType.UTF8)]
+		public void TestYear (StringType stringType)
 		{
-			var tag = new TagLib.Riff.InfoTag ();
+			InfoTag tag;
+			if (stringType == StringType.UTF8)
+				tag = new TagLib.Riff.InfoTag ();
+			else
+				tag = new TagLib.Riff.InfoTag { StringType = stringType };
 
 			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
@@ -289,10 +342,15 @@ namespace TaglibSharp.Tests.TaggingFormats
 			});
 		}
 
-		[Test]
-		public void TestTrack ()
+		[TestCase (StringType.Latin1)]
+		[TestCase (StringType.UTF8)]
+		public void TestTrack (StringType stringType)
 		{
-			var tag = new TagLib.Riff.InfoTag ();
+			InfoTag tag;
+			if (stringType == StringType.UTF8)
+				tag = new TagLib.Riff.InfoTag ();
+			else
+				tag = new TagLib.Riff.InfoTag { StringType = stringType };
 
 			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
@@ -314,10 +372,15 @@ namespace TaglibSharp.Tests.TaggingFormats
 			});
 		}
 
-		[Test]
-		public void TestTrackCount ()
+		[TestCase (StringType.Latin1)]
+		[TestCase (StringType.UTF8)]
+		public void TestTrackCount (StringType stringType)
 		{
-			var tag = new TagLib.Riff.InfoTag ();
+			InfoTag tag;
+			if (stringType == StringType.UTF8)
+				tag = new TagLib.Riff.InfoTag ();
+			else
+				tag = new TagLib.Riff.InfoTag { StringType = stringType };
 
 			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
@@ -339,10 +402,15 @@ namespace TaglibSharp.Tests.TaggingFormats
 			});
 		}
 
-		[Test]
-		public void TestCopyright ()
+		[TestCase (StringType.Latin1)]
+		[TestCase (StringType.UTF8)]
+		public void TestCopyright (StringType stringType)
 		{
-			var tag = new TagLib.Riff.InfoTag ();
+			InfoTag tag;
+			if (stringType == StringType.UTF8)
+				tag = new TagLib.Riff.InfoTag ();
+			else
+				tag = new TagLib.Riff.InfoTag { StringType = stringType };
 
 			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
