@@ -1508,7 +1508,7 @@ namespace TagLib {
 						return value;
 				}
 				
-				return double.IsNaN;
+				return double.NaN;
 			}
 			
 			set {
