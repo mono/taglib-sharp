@@ -1930,10 +1930,13 @@ namespace TagLib.Id3v2 {
 				string text = GetUserTextAsString ("REPLAYGAIN_TRACK_GAIN", false);
 				double value;
 
-				if (text == null || !text.EndsWith (" dB")) {
+				if (text == null) {
 					return double.NaN;
 				}
-				text = text.Substring (0, text.Length - 3);
+				if (text.ToLower(CultureInfo.InvariantCulture).EndsWith("db")) {
+					text = text.Substring (0, text.Length - 2).Trim();
+				}
+				
 				if (double.TryParse (text, NumberStyles.Float,
 					CultureInfo.InvariantCulture, out value)) {
 					return value;
@@ -2000,10 +2003,13 @@ namespace TagLib.Id3v2 {
 				string text = GetUserTextAsString ("REPLAYGAIN_ALBUM_GAIN", false);
 				double value;
 
-				if (text == null || !text.EndsWith(" dB")) {
+				if (text == null) {
 					return double.NaN;
 				}
-				text = text.Substring (0, text.Length - 3);
+				if (text.ToLower(CultureInfo.InvariantCulture).EndsWith("db")) {
+					text = text.Substring (0, text.Length - 2).Trim();
+				}
+				
 				if (double.TryParse (text, NumberStyles.Float,
 					CultureInfo.InvariantCulture, out value)) {
 					return value;

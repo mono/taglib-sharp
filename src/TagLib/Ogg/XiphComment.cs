@@ -1190,11 +1190,14 @@ namespace TagLib.Ogg
 			get {
 				string text = GetFirstField ("REPLAYGAIN_TRACK_GAIN");
 				double value;
-
-				if (text == null || !text.EndsWith (" dB")) {
+				
+				if (text == null) {
 					return double.NaN;
 				}
-				text = text.Substring (0, text.Length - 3);
+				if (text.ToLower(CultureInfo.InvariantCulture).EndsWith("db")) {
+					text = text.Substring (0, text.Length - 2).Trim();
+				}
+				
 				if (double.TryParse (text, NumberStyles.Float,
 					CultureInfo.InvariantCulture, out value)) {
 					return value;
@@ -1263,10 +1266,13 @@ namespace TagLib.Ogg
 				string text = GetFirstField ("REPLAYGAIN_ALBUM_GAIN");
 				double value;
 
-				if (text == null || !text.EndsWith(" dB")) {
+				if (text == null) {
 					return double.NaN;
 				}
-				text = text.Substring (0, text.Length - 3);
+				if (text.ToLower(CultureInfo.InvariantCulture).EndsWith("db")) {
+					text = text.Substring (0, text.Length - 2).Trim();
+				}
+				
 				if (double.TryParse (text, NumberStyles.Float,
 					CultureInfo.InvariantCulture, out value)) {
 					return value;
