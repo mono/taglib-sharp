@@ -48,5 +48,50 @@ namespace TagLib.Tests.FileFormats
         public void TestCorruptionResistance ()
         {
         }
+
+        [Test]
+        public void ReplayGainTest()
+        {
+            string inFile = "samples/sample_replaygain.mp3";
+            string tempFile = "samples/tmpwrite_sample_replaygain.mp3";
+
+            File rgFile = File.Create(inFile);
+            Assert.AreEqual(2.22d, rgFile.Tag.ReplayGainTrackGain);
+            Assert.AreEqual(0.418785d, rgFile.Tag.ReplayGainTrackPeak);
+            Assert.AreEqual(2.32d, rgFile.Tag.ReplayGainAlbumGain);
+            Assert.AreEqual(0.518785d, rgFile.Tag.ReplayGainAlbumPeak);
+            rgFile.Dispose();
+
+            System.IO.File.Copy(inFile, tempFile, true);
+
+            rgFile = File.Create(tempFile);
+            rgFile.Tag.ReplayGainTrackGain = -1;
+            rgFile.Tag.ReplayGainTrackPeak = 1;
+            rgFile.Tag.ReplayGainAlbumGain = 2;
+            rgFile.Tag.ReplayGainAlbumPeak = 0;
+            rgFile.Save();
+            rgFile.Dispose();
+
+            rgFile = File.Create(tempFile);
+            Assert.AreEqual(-1d, rgFile.Tag.ReplayGainTrackGain);
+            Assert.AreEqual(1d, rgFile.Tag.ReplayGainTrackPeak);
+            Assert.AreEqual(2d, rgFile.Tag.ReplayGainAlbumGain);
+            Assert.AreEqual(0d, rgFile.Tag.ReplayGainAlbumPeak);
+            rgFile.Tag.ReplayGainTrackGain = double.NaN;
+            rgFile.Tag.ReplayGainTrackPeak = double.NaN;
+            rgFile.Tag.ReplayGainAlbumGain = double.NaN;
+            rgFile.Tag.ReplayGainAlbumPeak = double.NaN;
+            rgFile.Save();
+            rgFile.Dispose();
+            
+            rgFile = File.Create(tempFile);
+            Assert.AreEqual(double.NaN, rgFile.Tag.ReplayGainTrackGain);
+            Assert.AreEqual(double.NaN, rgFile.Tag.ReplayGainTrackPeak);
+            Assert.AreEqual(double.NaN, rgFile.Tag.ReplayGainAlbumGain);
+            Assert.AreEqual(double.NaN, rgFile.Tag.ReplayGainAlbumPeak);
+            rgFile.Dispose();
+
+            System.IO.File.Delete(tempFile);
+        }
     }
 }

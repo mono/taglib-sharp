@@ -1480,7 +1480,155 @@ namespace TagLib {
 						tag.Pictures = value;
 			}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets the ReplayGain track gain in dB.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value in dB for the track gain as
+		///    per the ReplayGain specification.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-zero value is
+		///    returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.ReplayGainTrackGain" />
+		public override double ReplayGainTrackGain {
+			get {
+				foreach (Tag tag in tags) {
+					if (tag == null)
+						continue;
+					
+					double value = tag.ReplayGainTrackGain;
+					
+					if (!double.IsNaN (value))
+						return value;
+				}
+				
+				return double.NaN;
+			}
+			
+			set {
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.ReplayGainTrackGain = value;
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the ReplayGain track peak sample.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value for the track peak as per the
+		///    ReplayGain specification.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-zero value is
+		///    returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.ReplayGainTrackPeak" />
+		public override double ReplayGainTrackPeak {
+			get {
+				foreach (Tag tag in tags) {
+					if (tag == null)
+						continue;
+					
+					double value = tag.ReplayGainTrackPeak;
+					
+					if (!double.IsNaN (value))
+						return value;
+				}
+				
+				return double.NaN;
+			}
+			
+			set {
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.ReplayGainTrackPeak = value;
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the ReplayGain album gain in dB.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value in dB for the album gain as
+		///    per the ReplayGain specification.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-zero value is
+		///    returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.ReplayGainAlbumGain" />
+		public override double ReplayGainAlbumGain {
+			get {
+				foreach (Tag tag in tags) {
+					if (tag == null)
+						continue;
+					
+					double value = tag.ReplayGainAlbumGain;
+					
+					if (!double.IsNaN (value))
+						return value;
+				}
+				
+				return double.NaN;
+			}
+			
+			set {
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.ReplayGainAlbumGain = value;
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the ReplayGain album peak sample.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value for the album peak as per the
+		///    ReplayGain specification.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-zero value is
+		///    returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.ReplayGainAlbumPeak" />
+		public override double ReplayGainAlbumPeak {
+			get {
+				foreach (Tag tag in tags) {
+					if (tag == null)
+						continue;
+					
+					double value = tag.ReplayGainAlbumPeak;
+					
+					if (!double.IsNaN (value))
+						return value;
+				}
+				
+				return double.NaN;
+			}
+			
+			set {
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.ReplayGainAlbumPeak = value;
+			}
+		}
+
 		/// <summary>
 		///    Gets whether or not the current instance is empty.
 		/// </summary>
