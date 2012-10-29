@@ -148,6 +148,7 @@
     <Compile Include="fixtures\TagLib.Tests.Images\Validators\TagPropertyModificationValidator.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\IptcTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\AudibleFormat.cs" />
+    <Compile Include="fixtures\TagLib.Tests.Images\XmlNullEndedTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

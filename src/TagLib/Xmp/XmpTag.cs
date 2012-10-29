@@ -255,6 +255,12 @@ namespace TagLib.Xmp
 		/// </param>
 		public XmpTag (string data, TagLib.File file)
 		{
+			// For some cameras, we have XMP data ending with the null value.
+			// This is fine with Mono, but with Microsoft .NET it will throw
+			// an XmlException. See also XmpNullValuesTest.cs.
+			if (data[data.Length-1] == '\0')
+				data = data.Substring(0, data.Length-1);
+			
 			XmlDocument doc = new XmlDocument (NameTable);
 			doc.LoadXml (data);
 
