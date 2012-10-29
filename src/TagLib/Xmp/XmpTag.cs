@@ -255,6 +255,7 @@ namespace TagLib.Xmp
 		/// </param>
 		public XmpTag (string data, TagLib.File file)
 		{
+			data=data.Replace("\0",""); /*As I checked, the null values caused it to fail to create working xml values./*/
 			XmlDocument doc = new XmlDocument (NameTable);
 			doc.LoadXml (data);
 
