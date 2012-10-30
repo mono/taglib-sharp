@@ -834,6 +834,54 @@ namespace TagLib {
 		}
 
 		/// <summary>
+		///    Gets and sets the ReplayGain track gain in dB.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value in dB for the track gain as
+		///    per the ReplayGain specification.
+		/// </value>
+		public virtual double ReplayGainTrackGain {
+			get { return double.NaN; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets and sets the ReplayGain track peak sample.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value for the track peak as per the
+		///    ReplayGain specification.
+		/// </value>
+		public virtual double ReplayGainTrackPeak {
+			get { return double.NaN; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets and sets the ReplayGain album gain in dB.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value in dB for the album gain as
+		///    per the ReplayGain specification.
+		/// </value>
+		public virtual double ReplayGainAlbumGain {
+			get { return double.NaN; }
+			set {}
+		}
+
+		/// <summary>
+		///    Gets and sets the ReplayGain album peak sample.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value for the album peak as per the
+		///    ReplayGain specification.
+		/// </value>
+		public virtual double ReplayGainAlbumPeak {
+			get { return double.NaN; }
+			set {}
+		}
+
+		/// <summary>
 		///    Gets and sets a collection of pictures associated with
 		///    the media represented by the current instance.
 		/// </summary>

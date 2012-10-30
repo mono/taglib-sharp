@@ -1048,21 +1048,51 @@ namespace TagLib.Id3v2 {
 		}
 
 		/// <summary>
-		/// Gets a TXXX frame via reference of the description field
+		/// Gets a TXXX frame via reference of the description field, optionally searching for the
+		/// frame in a case-sensitive manner.
 		/// </summary>
 		/// <param name="description">String containing the description field</param>
 		/// <returns>UserTextInformationFrame (TXXX) that corresponds to the description</returns>
-		private string GetUserTextAsString (string description){
+		private string GetUserTextAsString (string description, bool caseSensitive) {
 
 			//Gets the TXXX frame, frame will be null if nonexistant
 			UserTextInformationFrame frame = UserTextInformationFrame.Get (
-				this, description, false);
+				this, description, Tag.DefaultEncoding, false, caseSensitive);
 
 			//TXXX frames support multivalue strings, join them up and return
 			//only the text from the frame.
 			string result = frame == null ? null : string.Join (";",frame.Text);
 			return string.IsNullOrEmpty (result) ? null : result;
 
+		}
+
+		/// <summary>
+		/// Gets a TXXX frame via reference of the description field.
+		/// </summary>
+		/// <param name="description">String containing the description field</param>
+		/// <returns>UserTextInformationFrame (TXXX) that corresponds to the description</returns>
+		private string GetUserTextAsString (string description) {
+			return GetUserTextAsString (description, true);
+		}
+
+		/// <summary>
+		/// Creates and/or sets a UserTextInformationFrame (TXXX)  with the given
+		/// description and text, optionally searching for the frame in a case-sensitive manner.
+		/// </summary>
+		/// <param name="description">String containing the Description field for the
+		/// TXXX frame</param>
+		/// <param name="text">String containing the Text field for the TXXX frame</param>
+		private void SetUserTextAsString(string description, string text, bool caseSensitive) {
+			//Get the TXXX frame, create a new one if needed
+			UserTextInformationFrame frame = UserTextInformationFrame.Get(
+				this, description, Tag.DefaultEncoding, true, caseSensitive);
+
+			if (!string.IsNullOrEmpty(text)) {
+				frame.Text = text.Split(';');
+			} else {
+				//Text string is null or empty, delete the frame, prevent empties
+				RemoveFrame(frame);
+			}
 		}
 
 		/// <summary>
@@ -1073,19 +1103,7 @@ namespace TagLib.Id3v2 {
 		/// TXXX frame</param>
 		/// <param name="text">String containing the Text field for the TXXX frame</param>
 		private void SetUserTextAsString(string description, string text) {
-
-			//Get the TXXX frame, create a new one if needed
-			UserTextInformationFrame frame = UserTextInformationFrame.Get(
-				this, description, true);
-
-			if (!string.IsNullOrEmpty(text)) {
-				frame.Text = text.Split(';');
-			}
-			else {
-			//Text string is null or empty, delete the frame, prevent empties
-				RemoveFrame(frame);
-			}
-
+			SetUserTextAsString (description, text, true);
 		}
 
 		/// <summary>
@@ -1894,6 +1912,152 @@ namespace TagLib.Id3v2 {
 		public override string MusicBrainzReleaseCountry {
 			get {return GetUserTextAsString ("MusicBrainz Album Release Country");}
 			set {SetUserTextAsString ("MusicBrainz Album Release Country",value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the ReplayGain track gain in dB.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value in dB for the track gain as
+		///    per the ReplayGain specification.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TXXX:REPLAYGAIN_TRACK_GAIN" frame.
+		///    http://wiki.hydrogenaudio.org/index.php?title=ReplayGain_specification#ID3v2
+		/// </remarks>
+		public override double ReplayGainTrackGain {
+			get {
+				string text = GetUserTextAsString ("REPLAYGAIN_TRACK_GAIN", false);
+				double value;
+
+				if (text == null) {
+					return double.NaN;
+				}
+				if (text.ToLower(CultureInfo.InvariantCulture).EndsWith("db")) {
+					text = text.Substring (0, text.Length - 2).Trim();
+				}
+				
+				if (double.TryParse (text, NumberStyles.Float,
+					CultureInfo.InvariantCulture, out value)) {
+					return value;
+				}
+				return double.NaN;
+			}
+			set {
+				if (double.IsNaN (value)) {
+					SetUserTextAsString ("REPLAYGAIN_TRACK_GAIN", null, false);
+				} else {
+					string text = value.ToString("0.00 dB",
+						CultureInfo.InvariantCulture);
+					SetUserTextAsString ("REPLAYGAIN_TRACK_GAIN", text, false);
+				}
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the ReplayGain track peak sample.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value for the track peak as per the
+		///    ReplayGain specification.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TXXX:REPLAYGAIN_TRACK_PEAK" frame.
+		///    http://wiki.hydrogenaudio.org/index.php?title=ReplayGain_specification#ID3v2
+		/// </remarks>
+		public override double ReplayGainTrackPeak {
+			get {
+				string text;
+				double value;
+
+				if ((text = GetUserTextAsString ("REPLAYGAIN_TRACK_PEAK", false)) !=
+					null && double.TryParse (text, NumberStyles.Float,
+						CultureInfo.InvariantCulture, out value)) {
+						return value;
+				}
+				return double.NaN;
+			}
+			set {
+				if (double.IsNaN (value)) {
+					SetUserTextAsString ("REPLAYGAIN_TRACK_PEAK", null, false);
+				} else {
+					string text = value.ToString ("0.000000", CultureInfo.InvariantCulture);
+					SetUserTextAsString ("REPLAYGAIN_TRACK_PEAK", text, false);
+				}
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the ReplayGain album gain in dB.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value in dB for the album gain as
+		///    per the ReplayGain specification.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TXXX:REPLAYGAIN_ALBUM_GAIN" frame.
+		///    http://wiki.hydrogenaudio.org/index.php?title=ReplayGain_specification#ID3v2
+		/// </remarks>
+		public override double ReplayGainAlbumGain {
+			get {
+				string text = GetUserTextAsString ("REPLAYGAIN_ALBUM_GAIN", false);
+				double value;
+
+				if (text == null) {
+					return double.NaN;
+				}
+				if (text.ToLower(CultureInfo.InvariantCulture).EndsWith("db")) {
+					text = text.Substring (0, text.Length - 2).Trim();
+				}
+				
+				if (double.TryParse (text, NumberStyles.Float,
+					CultureInfo.InvariantCulture, out value)) {
+					return value;
+				}
+				return double.NaN;
+			}
+			set {
+				if (double.IsNaN (value)) {
+					SetUserTextAsString ("REPLAYGAIN_ALBUM_GAIN", null, false);
+				} else {
+					string text = value.ToString ("0.00 dB",
+						CultureInfo.InvariantCulture);
+					SetUserTextAsString ("REPLAYGAIN_ALBUM_GAIN", text, false);
+				}
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the ReplayGain album peak sample.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value for the album peak as per the
+		///    ReplayGain specification.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TXXX:REPLAYGAIN_ALBUM_PEAK" frame.
+		///    http://wiki.hydrogenaudio.org/index.php?title=ReplayGain_specification#ID3v2
+		/// </remarks>
+		public override double ReplayGainAlbumPeak {
+			get {
+				string text;
+				double value;
+
+				if ((text = GetUserTextAsString ("REPLAYGAIN_ALBUM_PEAK", false)) !=
+					null && double.TryParse (text, NumberStyles.Float,
+						CultureInfo.InvariantCulture, out value)) {
+						return value;
+				}
+				return double.NaN;
+			}
+			set {
+				if (double.IsNaN (value)) {
+					SetUserTextAsString ("REPLAYGAIN_ALBUM_PEAK", null, false);
+				} else {
+					string text = value.ToString("0.000000", CultureInfo.InvariantCulture);
+					SetUserTextAsString ("REPLAYGAIN_ALBUM_PEAK", text, false);
+				}
+			}
 		}
 		
 		/// <summary>
