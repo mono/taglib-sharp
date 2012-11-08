@@ -46,6 +46,7 @@ namespace TagLib.Tests.FileFormats
         public void TestCorruptionResistance()
         {
             StandardTests.TestCorruptionResistance ("samples/corrupt/a.ogg");
+            StandardTests.TestCorruptionResistance ("samples/corrupt/missing_flag.ogg");
         }
     }
 }
