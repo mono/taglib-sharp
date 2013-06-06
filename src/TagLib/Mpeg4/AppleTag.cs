@@ -1254,8 +1254,8 @@ namespace TagLib.Mpeg4 {
 		///    http://musicbrainz.org/doc/PicardTagMapping
 		/// </remarks>
 		public override string MusicBrainzTrackId {
-		    get { return GetDashBox("com.apple.iTunes","MusicIP PUID");}
-		    set {SetDashBox("com.apple.iTunes", "MusicIP PUID", value);}
+		    get {return GetDashBox("com.apple.iTunes","MusicBrainz Track Id");}
+		    set {SetDashBox("com.apple.iTunes", "MusicBrainz Track Id", value);}
 		}
 
 		/// <summary>

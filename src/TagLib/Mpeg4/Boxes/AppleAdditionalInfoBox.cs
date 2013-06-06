@@ -109,7 +109,7 @@ namespace TagLib.Mpeg4 {
 		///    contained in the current instance.
 		/// </value>
 		public string Text {
-			get {return Data.ToString (StringType.Latin1);}
+			get {return Data.ToString (StringType.Latin1).TrimStart ('\0');}
 			set {
 				Data = ByteVector.FromString (value,
 					StringType.Latin1);
