@@ -54,6 +54,15 @@ namespace TagLib.Tests.FileFormats
 		}
 
 
+		[Test]
+		public void bgo_701689 ()
+		{
+			// This file contains a musicbrainz track id "883821fc-9bbc-4e04-be79-b4b12c4c4a4e"
+			// This case also handles bgo #701690 as a proper value for the tag must be returned
+			var file = File.Create ("samples/bgo_701689.m4a");
+			Assert.AreEqual ("883821fc-9bbc-4e04-be79-b4b12c4c4a4e", file.Tag.MusicBrainzTrackId, "#1");
+		}
+
         [Test]
         public void ReadAppleAacTags ()
         {
