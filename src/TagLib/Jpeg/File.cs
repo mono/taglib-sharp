@@ -222,6 +222,12 @@ namespace TagLib.Jpeg
 						return tag;
 				}
 			}
+			if (type == TagTypes.IPTCIIM && create)
+			  {
+			    // FIXME: don't know how to create IPTCIIM tags
+			    return base.GetTag (type, false);
+			  }
+
 			return base.GetTag (type, create);
 		}
 
