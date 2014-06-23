@@ -84,18 +84,6 @@ else
 	AM_CONDITIONAL(BUILD_DOCS, false)
 fi
 
-# checking for ICSharpCode.SharpZipLib.dll
-AC_MSG_CHECKING([Mono GAC for ICSharpCode.SharpZipLib.dll])
-if $GACUTIL -l | $GREP -q ICSharpCode.SharpZipLib; \
-	then \
-	AC_MSG_RESULT([found])
-	AM_CONDITIONAL(HAVE_SHARPZIPLIB, true)
-else
-	AC_MSG_RESULT([not found])
-	AM_CONDITIONAL(HAVE_SHARPZIPLIB, false)
-fi
-
-
 PKG_CHECK_MODULES(GNOME_SHARP, gnome-sharp-2.0, have_gnome_sharp=yes, have_gnome_sharp=no)
 if test "x$have_gnome_sharp" = "xyes"; then
 	AC_SUBST(GNOME_SHARP_LIBS)
