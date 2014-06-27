@@ -28,6 +28,7 @@ using System.IO.Compression;
 
 using TagLib.Image;
 using TagLib.Xmp;
+using System.Text;
 
 namespace TagLib.Png
 {
@@ -119,6 +120,25 @@ namespace TagLib.Png
 		Properties properties;
 
 		#endregion
+
+		private class RawProfile
+		{
+			public RawProfile ()
+			{
+				Data = new List<string> ();
+			}
+
+			public string Name { get; set; }
+
+			public string LengthText { get; set; }
+
+			public List<string> Data { get; set; }
+
+			public override string ToString ()
+			{
+				return "\n" + Name + "\n" + LengthText + "\n" + string.Join ("\n", Data.ToArray ());
+			}
+		}
 
 		#region public Properties
 
@@ -634,6 +654,30 @@ namespace TagLib.Png
 			AddMetadataBlock (position - 8, data_length + 8 + 4);
 		}
 
+		private static RawProfile ProcessRawProfile (string value)
+		{
+			// ImageMagick formats 'raw profiles' as
+			// '\n<name>\n<length>(%8lu)\n<hex payload>\n'.
+			var parts = value.Split (new[] { '\n' });
+			if (parts.Length < 4)
+				return null;
+			var profile = new RawProfile ();
+			profile.Name = parts [1];
+			profile.LengthText = parts [2];
+
+			for (int i = 3; i < parts.Length; i++) {
+				var buffer = new Byte[parts [i].Length];
+				int iBuffer = 0;
+				for (int j = 0; j < parts [i].Length - 1; j += 2) {
+					var subString = parts [i].Substring (j, 2);
+					buffer [iBuffer++] = Convert.ToByte (subString, 16);
+				}
+				// raw profile data often has many trailing nulls in most lines, which must be removed
+				// for XML processing as XMP data. Are there other raw profiles that need them?
+				profile.Data.Add (Encoding.UTF8.GetString (buffer).Trim (new char[] {'\0'}));
+			}
+			return profile;
+		}
 
 		/// <summary>
 		///    Reads an zTXt Chunk from file. The current position must be set
@@ -679,12 +723,21 @@ namespace TagLib.Png
 				return;
 
 			string value = plain_data.ToString ();
+			RawProfile rawProfile = null;
+			if (keyword.StartsWith ("Raw profile type")) {
+				rawProfile = ProcessRawProfile (value);
+				value = rawProfile.ToString ();
+			}
 
-			var png_tag = GetTag (TagTypes.Png, true) as PngTag;
+			// handle XMP, which has a fixed header
+			if (keyword == "xmp" || rawProfile != null && string.Compare (rawProfile.Name, "xmp", StringComparison.InvariantCultureIgnoreCase) == 0) {
+				ImageTag.AddTag (new XmpTag (string.Join("", rawProfile.Data.ToArray()), this));
+			} else {
+				var png_tag = GetTag (TagTypes.Png, true) as PngTag;
 
-			if (png_tag.GetKeyword (keyword) == null)
-				png_tag.SetKeyword (keyword, value);
-
+				if (png_tag.GetKeyword (keyword) == null)
+					png_tag.SetKeyword (keyword, value);
+			}
 			AddMetadataBlock (position - 8, data_length + 8 + 4);
 		}
 
