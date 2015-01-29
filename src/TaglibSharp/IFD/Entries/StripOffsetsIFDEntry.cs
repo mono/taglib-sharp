@@ -100,6 +100,13 @@ namespace TagLib.IFD.Entries
 		/// </returns>
 		public override ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
 		{
+#if FOR_SOME_REASON_WE_WANT_TO_EMBED_THE_IMAGE_IN_THE_METADATA
+			// Following is the original code. The author seems to think the strip contents must be copied.
+			// This doesn't work for large images, since the image data will be too big for metadata.
+			// Even if it works, I think it will duplicate the image data and double the file size,
+			// and the offsets may well be wrong, because I think they are really supposed to be relative
+			// to the main image data block.
+
 			// The StripOffsets are an array of offsets, where the image data can be found.
 			// We store the offsets and behind the offsets the image data is stored. Therfore,
 			// the ByteVector data first collects the image data and the offsets itself are
@@ -143,6 +150,28 @@ namespace TagLib.IFD.Entries
 			count = (uint)Values.Length;
 
 			return data;
+#else
+			// This version is copied from LongArrayIFDEntry.
+			// It will simply write out the original offsets.
+			// I think that's OK, they seem to be relative to the main image data block, NOT
+			// relative to the tag block as assumed by the code above.
+			// (The byte lengths entry is not modified by the code that creates this
+			// StripOffsetsIFDEntry, so that should still get written out independently.)
+			// This version seems to work to the extent that we can save tag data in big images that
+			// start out with strip offsets, without throwing "Exif Segment is too big to render"
+			// in TagLib.Jpeg.file.RenderExifSegment. And the resulting file seems valid.
+			// However, I haven't been able to actually find an EXIF tag in the resulting
+			// file, even though when I step through the code it seems to write one.
+			// Wish I had time to debug further and make a unit test, but this is all I have time for.
+			type = (ushort) IFDEntryType.Long;
+			count = (uint) Values.Length;
+
+			ByteVector data = new ByteVector ();
+			foreach (uint value in Values)
+				data.Add (ByteVector.FromUInt (value, is_bigendian));
+
+			return data;
+#endif
 		}
 
 		#endregion
