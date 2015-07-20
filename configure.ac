@@ -24,7 +24,7 @@ DISTCHECK_CONFIGURE_FLAGS="--disable-docs"
 AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
 
 dnl Check for Mono
-AC_PATH_PROG(MCS, gmcs)
+AC_PATH_PROG(MCS, mcs)
 if test x$MCS = x; then
 	AC_MSG_ERROR(You need mcs)
 fi
