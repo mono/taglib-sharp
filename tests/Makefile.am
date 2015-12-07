@@ -25,6 +25,7 @@ ASSEMBLY_CSFILES =  \
 	fixtures/TagLib.Tests.FileFormats/M4vFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/MpcFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/OggFormatTest.cs \
+	fixtures/TagLib.Tests.FileFormats/OpusFormatTest.cs \
 	fixtures/TagLib.Tests.FileFormats/StandardTests.cs \
 	fixtures/TagLib.Tests.Images/AddImageMetadataTests.cs \
 	fixtures/TagLib.Tests.Images/BadCommentMarkerTest.cs \

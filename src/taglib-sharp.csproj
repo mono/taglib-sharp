@@ -239,6 +239,7 @@
     <Compile Include="TagLib\Ogg\XiphComment.cs" />
     <Compile Include="TagLib\Ogg\Codecs\Theora.cs" />
     <Compile Include="TagLib\Ogg\Codecs\Vorbis.cs" />
+    <Compile Include="TagLib\Ogg\Codecs\Opus.cs" />
     <Compile Include="TagLib\Png\Codec.cs" />
     <Compile Include="TagLib\Png\File.cs" />
     <Compile Include="TagLib\Png\PngTag.cs" />

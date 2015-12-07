@@ -136,6 +136,10 @@ namespace TagLib.Ogg
 			if (c != null)
 				return c;
 			
+			c = Codecs.Opus.FromPacket (packet);
+			if (c != null)
+				return c;
+
 			throw new UnsupportedFormatException ("Unknown codec.");
 		}
 		
