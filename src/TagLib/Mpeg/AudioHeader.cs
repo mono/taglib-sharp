@@ -592,7 +592,7 @@ namespace TagLib.Mpeg {
 		///    current instance.
 		/// </value>
 		public ChannelMode ChannelMode {
-			get {return (ChannelMode) ((flags >> 14) & 0x03);}
+			get {return (ChannelMode) ((flags >> 6) & 0x03);}
 		}
 		
 		/// <summary>
