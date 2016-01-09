@@ -1,3 +1,0 @@
-[submodule "tests/raw-samples"]
-	path = tests/raw-samples
-	url = git://gitorious.org/taglib-sharp/raw-samples.git
