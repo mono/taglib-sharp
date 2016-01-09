@@ -1,0 +1,15 @@
+sudo: required
+dist: trusty
+language: csharp
+mono:
+  - latest
+solution: taglib-sharp.sln
+
+install:
+  - sudo apt-get update -qq > /dev/null
+  - sudo apt-get install -qq nunit nunit-console > /dev/null
+
+script:
+  - ./autogen.sh
+  - xbuild taglib-sharp.sln
+  - nunit-console tests/tests.dll
