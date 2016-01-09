@@ -118,13 +118,9 @@ RAW_CSFILES = \
 	fixtures/TagLib.Tests.Images/RawLeicaDigilux2Test.cs \
 	fixtures/TagLib.Tests.Images/Rw2PanasonicG1Test.cs
 
-if HAVE_SHARPZIPLIB
-    SHARPZIPLIB_FLAGS = -r:ICSharpCode.SharpZipLib.dll -define:HAVE_SHARPZIPLIB
-endif
-
 
 $(ASSEMBLY): $(ASSEMBLY_CSFILES)
-	$(MCS) $(MCS_FLAGS) $(NUNIT_FLAGS) $(GNOME_SHARP_LIBS) $(SHARPZIPLIB_FLAGS) -out:$@ -target:library -r:$(top_builddir)/src/taglib-sharp.dll $(ASSEMBLY_CSFILES)
+	$(MCS) $(MCS_FLAGS) $(NUNIT_FLAGS) $(GNOME_SHARP_LIBS) -out:$@ -target:library -r:$(top_builddir)/src/taglib-sharp.dll $(ASSEMBLY_CSFILES)
 
 TAGLIB_ASM = ../src/taglib-sharp.dll
 

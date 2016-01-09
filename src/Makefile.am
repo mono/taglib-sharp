@@ -10,10 +10,6 @@ DOCFILE =
 DOCFLAGS =
 endif
 
-if HAVE_SHARPZIPLIB
-    SHARPZIPLIB_FLAGS = -r:ICSharpCode.SharpZipLib.dll -define:HAVE_SHARPZIPLIB
-endif
-
 CSC = $(MCS) $(MCS_FLAGS) $(CSFLAGS)
 
 include $(srcdir)/TagLib/TagLib.sources
@@ -28,7 +24,7 @@ taglib_policy_configs = $(POLICIES:.dll=.config)
 taglib_policy_configs_in = $(POLICIES:.dll=.config.in)
 
 $(ASSEMBLY): $(TAGLIB_CSFILES) $(taglib_generated_sources) taglib-sharp.snk
-	$(CSC) /target:library $(LIBFLAGS) $(SHARPZIPLIB_FLAGS) $(DOCFLAGS) /define:SIGN /out:$@ $(TAGLIB_CSFILES) $(taglib_generated_sources)
+	$(CSC) /target:library $(LIBFLAGS) $(DOCFLAGS) /define:SIGN /out:$@ $(TAGLIB_CSFILES) $(taglib_generated_sources)
 
 policy.%.$(ASSEMBLY_NAME).dll: policy.%.$(ASSEMBLY_NAME).config
 	$(AL) /link:$< /out:$@ /keyfile:taglib-sharp.snk

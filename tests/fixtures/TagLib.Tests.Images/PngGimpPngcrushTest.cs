@@ -20,14 +20,10 @@ namespace TagLib.Tests.Images
 
 				new PropertyModificationValidator<string> ("Comment", "Modified with pngcrush", "$% ¬ Test Comment äö "),
 				new PropertyModificationValidator<string> ("Creator", "Isaac Newton", "Albert Einstein"),
-#if HAVE_SHARPZIPLIB
 				new PropertyModificationValidator<string> ("Title", "Sunrise", "Eclipse"),
-#endif
 				new TagPropertyModificationValidator<string> ("Comment", "Modified with pngcrush", "$% ¬ Test Comment äö ", TagTypes.Png, true),
 				new TagPropertyModificationValidator<string> ("Creator", "Isaac Newton", "Albert Einstein", TagTypes.Png, true),
-#if HAVE_SHARPZIPLIB
 				new TagPropertyModificationValidator<string> ("Title", "Sunrise", "Eclipse", TagTypes.Png, true),
-#endif
 				new TagPropertyModificationValidator<string> ("Comment", null, "$% ¬ Test Comment äö ", TagTypes.XMP, false),
 				new TagPropertyModificationValidator<string> ("Creator", null, "Albert Einstein", TagTypes.XMP, false),
 				new TagPropertyModificationValidator<string> ("Title", null, "Eclipse", TagTypes.XMP, false),
