@@ -12,4 +12,4 @@ install:
 script:
   - ./autogen.sh
   - xbuild taglib-sharp.sln
-  - nunit-console tests/tests.dll
+  - nunit-console --labels=All tests/tests.dll
