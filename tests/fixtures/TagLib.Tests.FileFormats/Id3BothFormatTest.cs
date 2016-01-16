@@ -10,7 +10,7 @@ namespace TagLib.Tests.FileFormats
         private static string tmp_file = "samples/tmpwrite_both.mp3";
         private File file;
         
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Init()
         {
             file = File.Create(sample_file);

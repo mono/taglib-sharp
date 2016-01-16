@@ -29,7 +29,7 @@ namespace TagLib.Tests.FileFormats
         private static string aac_broken_tags = "samples/bgo_658920.m4a";
         private File file;
         
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Init()
         {
             file = File.Create(sample_file);
@@ -72,7 +72,7 @@ namespace TagLib.Tests.FileFormats
             var first = file.UdtaBoxes [0];
             Assert.AreEqual (1, first.Children.Count (), "#2");
 
-            Assert.IsInstanceOfType (typeof (AppleAdditionalInfoBox), first.Children.First ());
+            Assert.IsInstanceOf<AppleAdditionalInfoBox>(first.Children.First ());
             var child = (AppleAdditionalInfoBox) first.Children.First ();
             Assert.AreEqual ((ReadOnlyByteVector)"name", child.BoxType, "#3");
             Assert.AreEqual (0 , child.Data.Count, "#4");

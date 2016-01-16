@@ -150,7 +150,7 @@ namespace TagLib.Audible
 				}
 				while (data.Count >= 4);
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				//
 			}
