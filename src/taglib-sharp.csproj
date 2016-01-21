@@ -81,6 +81,8 @@
     <Compile Include="TagLib\Asf\UnknownObject.cs" />
     <Compile Include="TagLib\Audible\File.cs" />
     <Compile Include="TagLib\Audible\Tag.cs" />
+	<Compile Include="TagLib\Dsf\File.cs" />
+	<Compile Include="TagLib\Dsf\StreamHeader.cs" />
     <Compile Include="TagLib\Flac\Block.cs" />
     <Compile Include="TagLib\Flac\BlockHeader.cs" />
     <Compile Include="TagLib\Flac\File.cs" />
