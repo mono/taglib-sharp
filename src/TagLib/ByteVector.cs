@@ -1120,15 +1120,17 @@ namespace TagLib {
 		/// </returns>
 		public int ToInt (bool mostSignificantByteFirst)
 		{
-			int ret = 0;
+			int sum = 0;
 			int last = Count > 4 ? 3 : Count - 1;
 
 			for (int i = 0; i <= last; i++) {
 				int offset = mostSignificantByteFirst ? last-i : i;
-				ret |= (int) this[i] << (offset * 8);
+				unchecked {
+					sum |= (int) this[i] << (offset * 8);
+				}
 			}
 
-			return ret;
+			return sum;
 		}
 
 		/// <summary>
@@ -1183,7 +1185,48 @@ namespace TagLib {
 		{
 			return ToUInt (true);
 		}
-		
+
+		/// <summary>
+		///    Converts an first two bytes of the current instance to a
+		///    <see cref="short" /> value.
+		/// </summary>
+		/// <param name="mostSignificantByteFirst">
+		///    <see langword="true" /> if the most significant byte
+		///    appears first (big endian format), or <see
+		///    langword="false" /> if the least significant byte appears
+		///    first (little endian format).
+		/// </param>
+		/// <returns>
+		///    A <see cref="short"/> value containing the value read
+		///    from the current instance.
+		/// </returns>
+		public short ToShort (bool mostSignificantByteFirst)
+		{
+			short sum = 0;
+			int last = Count > 2 ? 1 : Count - 1;
+			for (int i = 0; i <= last; i++) {
+				int offset = mostSignificantByteFirst ? last-i : i;
+				unchecked {
+					sum |= (short)(this[i] << (offset * 8));
+				}
+			}
+
+			return sum;
+		}
+
+		/// <summary>
+		///    Converts an first two bytes of the current instance to
+		///    a <see cref="short" /> value using big-endian format.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="short"/> value containing the value read
+		///    from the current instance.
+		/// </returns>
+		public short ToShort ()
+		{
+			return ToShort (true);
+		}
+
 		/// <summary>
 		///    Converts an first two bytes of the current instance to a
 		///    <see cref="ushort" /> value.
@@ -1222,7 +1265,47 @@ namespace TagLib {
 		{
 			return ToUShort (true);
 		}
-		
+
+		/// <summary>
+		///    Converts an first eight bytes of the current instance to
+		///    a <see cref="long" /> value.
+		/// </summary>
+		/// <param name="mostSignificantByteFirst">
+		///    <see langword="true" /> if the most significant byte
+		///    appears first (big endian format), or <see
+		///    langword="false" /> if the least significant byte appears
+		///    first (little endian format).
+		/// </param>
+		/// <returns>
+		///    A <see cref="long"/> value containing the value read
+		///    from the current instance.
+		/// </returns>
+		public long ToLong (bool mostSignificantByteFirst)
+		{
+			long sum = 0;
+			int last = Count > 8 ? 7 : Count - 1;
+			for(int i = 0; i <= last; i++) {
+				int offset = mostSignificantByteFirst ? last-i : i;
+				unchecked {
+					sum |= (long) this[i] << (offset * 8);
+				}
+			}
+			return sum;
+		}
+
+		/// <summary>
+		///    Converts an first eight bytes of the current instance to
+		///    a <see cref="long" /> value using big-endian format.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="long"/> value containing the value read
+		///    from the current instance.
+		/// </returns>
+		public long ToLong ()
+		{
+			return ToLong (true);
+		}
+
 		/// <summary>
 		///    Converts an first eight bytes of the current instance to
 		///    a <see cref="ulong" /> value.
@@ -1867,6 +1950,49 @@ namespace TagLib {
 		{
 			return FromUInt(value, true);
 		}
+
+		/// <summary>
+		///    Converts a value into a data representation.
+		/// </summary>
+		/// <param name="value">
+		///    A <see cref="short"/> value to convert into bytes.
+		/// </param>
+		/// <param name="mostSignificantByteFirst">
+		///    <see langword="true" /> if the most significant byte is
+		///    to appear first (big endian format), or <see
+		///    langword="false" /> if the least significant byte is to
+		///    appear first (little endian format).
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the encoded
+		///    representation of <paramref name="value" />.
+		/// </returns>
+		public static ByteVector FromShort (short value,
+		                                    bool mostSignificantByteFirst)
+		{
+			ByteVector vector = new ByteVector();
+			for(int i = 0; i < 2; i++) {
+				int offset = mostSignificantByteFirst ? 1-i : i;
+				vector.Add ((byte)(value >> (offset * 8) & 0xFF));
+			}
+
+			return vector;
+		}
+
+		/// <summary>
+		///    Converts a value into a big-endian data representation.
+		/// </summary>
+		/// <param name="value">
+		///    A <see cref="short"/> value to convert into bytes.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the encoded
+		///    representation of <paramref name="value" />.
+		/// </returns>
+		public static ByteVector FromShort(short value)
+		{
+			return FromShort (value, true);
+		}
 		
 		/// <summary>
 		///    Converts an unsigned value into a data representation.
@@ -1910,6 +2036,48 @@ namespace TagLib {
 		public static ByteVector FromUShort(ushort value)
 		{
 			return FromUShort (value, true);
+		}
+
+		/// <summary>
+		///    Converts a value into a data representation.
+		/// </summary>
+		/// <param name="value">
+		///    A <see cref="long"/> value to convert into bytes.
+		/// </param>
+		/// <param name="mostSignificantByteFirst">
+		///    <see langword="true" /> if the most significant byte is
+		///    to appear first (big endian format), or <see
+		///    langword="false" /> if the least significant byte is to
+		///    appear first (little endian format).
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the encoded
+		///    representation of <paramref name="value" />.
+		/// </returns>
+		public static ByteVector FromLong (long value,
+		                                   bool mostSignificantByteFirst)
+		{
+			ByteVector vector = new ByteVector();
+			for(int i = 0; i < 8; i++) {
+				int offset = mostSignificantByteFirst ? 7-i : i;
+				vector.Add ((byte)(value >> (offset * 8) & 0xFF));
+			}
+			return vector;
+		}
+
+		/// <summary>
+		///    Converts a value into a big-endian data representation.
+		/// </summary>
+		/// <param name="value">
+		///    A <see cref="long"/> value to convert into bytes.
+		/// </param>
+		/// <returns>
+		///    A <see cref="ByteVector"/> object containing the encoded
+		///    representation of <paramref name="value" />.
+		/// </returns>
+		public static ByteVector FromLong(long value)
+		{
+			return FromLong(value, true);
 		}
 		
 		/// <summary>
