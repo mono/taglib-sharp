@@ -77,8 +77,8 @@ namespace TagLib.IFD.Entries
 			count = (uint) Values.Length;
 
 			ByteVector data = new ByteVector ();
-			foreach (ushort value in Values)
-				data.Add (ByteVector.FromUShort ((ushort) value, is_bigendian));
+			foreach (var value in Values)
+				data.Add (ByteVector.FromShort (value, is_bigendian));
 
 			return data;
 		}
