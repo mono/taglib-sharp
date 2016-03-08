@@ -207,7 +207,7 @@ namespace TagLib.Id3v2 {
 		///    specified frame, or <see langword="null" /> if no value
 		///    was found.
 		/// </returns>
-		private string GetTextAsString (ByteVector ident)
+		public string GetTextAsString (ByteVector ident)
 		{
 			TextInformationFrame frame = TextInformationFrame.Get (
 				this, ident, false);
