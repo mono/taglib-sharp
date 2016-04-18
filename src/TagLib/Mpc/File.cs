@@ -7,6 +7,7 @@
 // Original Source:
 //   mpcfile.cpp from TagLib
 //
+// Copyright (C) 2016 Helmut Wahrmann: SV8 Support based on Taglib imnplementation
 // Copyright (C) 2005-2007 Brian Nickel
 // Copyright (C) 2004 by Allan Sandfeld Jensen (Original Implementation)
 // 
@@ -44,17 +45,6 @@ namespace TagLib.MusePack {
 	[SupportedMimeType("audio/x-musepack")]
 	public class File : TagLib.NonContainer.File
 	{
-		#region Private Fields
-		
-		/// <summary>
-		///    Contains the block with the audio header.
-		/// </summary>
-		private ByteVector header_block = null;
-		
-		#endregion
-		
-		
-		
 		#region Constructors
 		
 		/// <summary>
@@ -198,31 +188,6 @@ namespace TagLib.MusePack {
 		#region Protected Methods
 		
 		/// <summary>
-		///    Reads format specific information at the start of the
-		///    file.
-		/// </summary>
-		/// <param name="start">
-		///    A <see cref="long" /> value containing the seek position
-		///    at which the tags end and the media data begins.
-		/// </param>
-		/// <param name="propertiesStyle">
-		///    A <see cref="ReadStyle" /> value specifying at what level
-		///    of accuracy to read the media properties, or <see
-		///    cref="ReadStyle.None" /> to ignore the properties.
-		/// </param>
-		protected override void ReadStart (long start,
-		                                   ReadStyle propertiesStyle)
-		{
-			if (header_block != null &&
-				propertiesStyle == ReadStyle.None)
-				return;
-				
-			Seek (start);
-			header_block = ReadBlock (
-				(int) StreamHeader.Size);
-		}
-		
-		/// <summary>
 		///    Reads format specific information at the end of the
 		///    file.
 		/// </summary>
@@ -268,7 +233,7 @@ namespace TagLib.MusePack {
 		                                              long end,
 		                                              ReadStyle propertiesStyle)
 		{
-			StreamHeader header = new StreamHeader (header_block,
+			StreamHeader header = new StreamHeader (this,
 				end - start);
 			return new Properties (TimeSpan.Zero, header);
 		}

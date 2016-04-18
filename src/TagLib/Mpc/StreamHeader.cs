@@ -7,6 +7,7 @@
 // Original Source:
 //   mpcproperties.cpp from TagLib
 //
+// Copyright (C) 2016 Helmut Wahrmann: SV8 Support based on Taglib imnplementation
 // Copyright (C) 2006-2007 Brian Nickel
 // Copyright (C) 2004 by Allan Sandfeld Jensen (Original Implementation)
 //
@@ -26,6 +27,7 @@
 //
 
 using System;
+using System.IO;
 
 namespace TagLib.MusePack {
 	/// <summary>
@@ -69,6 +71,16 @@ namespace TagLib.MusePack {
 		/// </summary>
 		private uint frames;
 		
+		/// <summary>
+		///	   Contains the number of channels in the stream.
+		/// </summary>
+		private int channels;
+
+		/// <summary>
+		///    Contains the count of frames in the stream. 
+		/// </summary>
+		private ulong framecount;
+
 		#endregion
 		
 		
@@ -76,17 +88,25 @@ namespace TagLib.MusePack {
 		#region Public Static Fields
 		
 		/// <summary>
-		///    The size of a MusePack header.
+		///    The size of a MusePack SV7 header.
 		/// </summary>
-		public const uint Size = 56;
+		public const uint SizeSV7 = 56;
 		
 		/// <summary>
-		///    The identifier used to recognize a WavPack file.
+		///    The identifier used to recognize a Musepack SV7 file.
 		/// </summary>
 		/// <value>
 		///    "MP+"
 		/// </value>
-		public static readonly ReadOnlyByteVector FileIdentifier = "MP+";
+		public static readonly ReadOnlyByteVector FileIdentifierSv7 = "MP+";
+
+		/// <summary>
+		///    The identifier used to recognize a Musepack SV8 file.
+		/// </summary>
+		/// <value>
+		///    "MPCK"
+		/// </value>
+		public static readonly ReadOnlyByteVector FileIdentifierSv8 = "MPCK";
 		
 		#endregion
 		
@@ -112,40 +132,171 @@ namespace TagLib.MusePack {
 		/// </exception>
 		/// <exception cref="CorruptFileException">
 		///    <paramref name="data" /> does not begin with <see
-		///    cref="FileIdentifier" /> or is less than <see cref="Size"
-		///    /> bytes long.
+		///    cref="FileIdentifierSv7" />  or with <see 
+		///    cref="FileIdentifierSv8" /> or is less than 
+		///    <see cref="Size" /> bytes long.
 		/// </exception>
-		public StreamHeader (ByteVector data, long streamLength)
+		public StreamHeader (File file, long streamLength)
 		{
-			if (data == null)
-				throw new ArgumentNullException ("data");
+			if (file == null)
+				throw new ArgumentNullException ("file");
 			
-			if (!data.StartsWith (FileIdentifier))
-				throw new CorruptFileException (
+			// Assign default values, to be able to call methods
+			// in the constructor
+			stream_length = streamLength;
+			version = 7;
+			header_data = 0;
+			frames = 0;
+			sample_rate = 0;
+			channels = 2;
+			framecount = 0;
+
+			file.Seek(0);
+			ByteVector magic = file.ReadBlock(4);
+			if (magic.StartsWith(FileIdentifierSv7))
+				// SV7 Format has a fixed Header size
+				ReadSv7Properties(magic + file.ReadBlock((int)SizeSV7 - 4)); 
+			else if (magic.StartsWith(FileIdentifierSv8))
+				// for SV8 the properties need to be read from
+				// packet information inside the file 
+				ReadSv8Properties(file);
+			else
+				throw new CorruptFileException(
 					"Data does not begin with identifier.");
+		}
+
+		#endregion
+
+
 			
-			if (data.Count < Size)
-				throw new CorruptFileException (
+		#region Private Methods
+
+
+		private void ReadSv7Properties(ByteVector data)
+		{
+			if (data.Count < SizeSV7)
+				throw new CorruptFileException(
 					"Insufficient data in stream header");
 			
-			stream_length = streamLength;
-			version = data [3] & 15;
+			version = data[3] & 15;
+			channels = 2;
 			
-			if (version >= 7) {
-				frames = data.Mid (4, 4).ToUInt (false);
-				uint flags = data.Mid (8, 4).ToUInt (false);
-				sample_rate = sftable [(int) (((flags >> 17) &
+			if (version == 7)
+			{
+				frames = data.Mid(4, 4).ToUInt(false);
+				uint flags = data.Mid(8, 4).ToUInt(false);
+				sample_rate = sftable[(int)(((flags >> 17) &
 					1) * 2 + ((flags >> 16) & 1))];
 				header_data = 0;
-			} else {
-				header_data = data.Mid (0, 4).ToUInt (false);
-				version = (int) ((header_data >> 11) & 0x03ff);
+			}
+			else {
+				header_data = data.Mid(0, 4).ToUInt(false);
+				version = (int)((header_data >> 11) & 0x03ff);
 				sample_rate = 44100;
-				frames = data.Mid (4,
-					version >= 5 ? 4 : 2).ToUInt (false);
+				frames = data.Mid(4,
+					version >= 5 ? 4 : 2).ToUInt(false);
 			}
 		}
 		
+
+		private void ReadSv8Properties(File file)
+		{
+			bool foundSH = false;
+
+			while (!foundSH)
+			{
+				ByteVector packetType = file.ReadBlock(2);
+
+				uint packetSizeLength = 0;
+				bool eof = false;
+
+				ulong packetSize = ReadSize(file, ref packetSizeLength, ref eof);
+				if (eof)
+				{
+					break;
+				}
+
+				ulong payloadSize = packetSize - 2 - packetSizeLength;
+				ByteVector data = file.ReadBlock((int)payloadSize);
+				
+				if (packetType == "SH")
+				{
+					foundSH = true;
+
+					if (payloadSize <= 5)
+					{
+						break;
+					}
+
+					int pos = 4;
+					version = data[pos];
+					pos += 1;
+					frames = (uint)ReadSize(data, ref pos);
+					if (pos > (uint)payloadSize - 3)
+					{
+						break;
+					}
+
+					ulong beginSilence = ReadSize(data, ref pos);
+					if (pos > (uint)payloadSize - 2)
+					{
+						break;
+					}
+
+					ushort flags = data.Mid(pos, 1).ToUShort(true);
+
+					sample_rate = sftable[(flags >> 13) & 0x07];
+					channels = ((flags >> 4) & 0x0F) + 1;
+
+					framecount = frames - beginSilence;
+				}
+				else if (packetType == "SE")
+				{
+					break;
+				}
+				else
+				{
+					file.Seek((int)payloadSize, SeekOrigin.Current);
+				}
+			}
+		}
+
+		private ulong ReadSize(File file, ref uint packetSizeLength, ref bool eof)
+		{
+			uint tmp;
+			ulong size = 0;
+
+			do
+			{
+				ByteVector b = file.ReadBlock(1);
+				if (b.IsEmpty)
+				{
+					eof = true;
+					break;
+				}
+
+				tmp = b.ToUInt();
+				size = (size << 7) | (tmp & 0x7F);
+				packetSizeLength++;
+			} while ((tmp & 0x80) == 1);
+
+			return size;
+		}
+
+		private ulong ReadSize(ByteVector data, ref int pos)
+		{
+			uint tmp;
+			ulong size = 0;
+
+			do
+			{
+				tmp = data[pos++];
+				size = (size << 7) | (tmp & 0x7F);
+			} while ((tmp & 0x80) == 0x80 && pos < data.Count);
+			return size;
+		}
+
+
 		#endregion
 		
 		
@@ -166,9 +317,16 @@ namespace TagLib.MusePack {
 				if (sample_rate <= 0 && stream_length <= 0)
 					return TimeSpan.Zero;
 				
-				return TimeSpan.FromSeconds (
-					(double) (frames * 1152 - 576) /
+				if (version <= 7)
+				{
+					return TimeSpan.FromSeconds(
+						(double) (frames*1152 - 576)/
 					(double) sample_rate + 0.5);
+			}
+
+				return TimeSpan.FromMilliseconds(
+						(double)(framecount * 1000.0) /
+						(double)sample_rate + 0.5);
 			}
 		}
 		
@@ -210,9 +368,14 @@ namespace TagLib.MusePack {
 				if (header_data != 0)
 					return (int) ((header_data >> 23) & 0x01ff);
 				
+				if (version <= 7)
+				{ 
 				return (int) (Duration > TimeSpan.Zero ?
 					((stream_length * 8L) /
 					Duration.TotalSeconds) / 1000 : 0);
+			}
+
+				return (int) (stream_length * 8 / Duration.TotalMilliseconds + 0.5);
 			}
 		}
 		
@@ -238,7 +401,7 @@ namespace TagLib.MusePack {
 		///    instance.
 		/// </value>
 		public int AudioChannels {
-			get {return 2;}
+			get {return channels;}
 		}
 		
 		/// <summary>
