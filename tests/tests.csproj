@@ -62,6 +62,7 @@
     <Compile Include="fixtures\TagLib.Tests.FileFormats\JpegFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\M4aFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\M4vFormatTest.cs" />
+    <Compile Include="fixtures\TagLib.Tests.FileFormats\MpcV8FormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\MpcFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\OggFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\OpusFormatTest.cs" />
