@@ -413,10 +413,10 @@ namespace TagLib.IFD
 				var altitude = gps_ifd.GetRationalValue (0, (ushort) GPSEntryTag.GPSAltitude);
 				var ref_entry = gps_ifd.GetByteValue (0, (ushort) GPSEntryTag.GPSAltitudeRef);
 
-				if (altitude == null || ref_entry == null)
+				if (altitude == null)
 					return null;
 
-				if (ref_entry.Value == 1)
+				if (ref_entry != null && ref_entry.Value == 1)
 					altitude *= -1.0d;
 
 				return altitude;
