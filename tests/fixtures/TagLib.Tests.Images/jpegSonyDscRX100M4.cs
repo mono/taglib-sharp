@@ -33,7 +33,7 @@ namespace TagLib.Tests.Images
 						bool isSuccess = true;
 						try
 						{
-						File.Create ("samples/sample_sony_DSC-RX100M4.jpg");
+							File.Create ("samples/sample_sony_DSC-RX100M4.jpg");
 						}
 						catch(ArithmeticException e) {
 								// Old versions of TagLib were throwing an ArithmeticException on reading in Sony DSC RX100M4 images
