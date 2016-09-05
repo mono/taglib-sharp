@@ -41,7 +41,7 @@ namespace TagLib.IFD.Entries
 		/// <value>
 		///    The value which is stored by the current instance
 		/// </value>
-		public short Value { get; private set; }
+		public ushort Value { get; private set; }
 
 #endregion
 
@@ -57,7 +57,7 @@ namespace TagLib.IFD.Entries
 		/// <param name="value">
 		///    A <see cref="System.Int16"/> to be stored
 		/// </param>
-		public SShortIFDEntry (ushort tag, short value)
+		public SShortIFDEntry (ushort tag, ushort value)
 		{
 			Tag = tag;
 			Value = value;
