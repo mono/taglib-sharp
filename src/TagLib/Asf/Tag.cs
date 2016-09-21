@@ -1325,7 +1325,7 @@ namespace TagLib.Asf {
 		{
 			get
 			{
-				string text = GetDescriptorString("REPLAYGAIN_TRACK_GAIN");
+				string text = GetDescriptorString("ReplayGain/Track");
 				double value;
 
 				if (text == null)
@@ -1348,13 +1348,13 @@ namespace TagLib.Asf {
 			{
 				if (double.IsNaN(value))
 				{
-					RemoveDescriptors("REPLAYGAIN_TRACK_GAIN");
+					RemoveDescriptors("ReplayGain/Track");
 				}
 				else
 				{
 					string text = value.ToString("0.00 dB",
 						CultureInfo.InvariantCulture);
-					SetDescriptorString("REPLAYGAIN_TRACK_GAIN", text);
+					SetDescriptorString(text, "ReplayGain/Track");
 				}
 			}
 		}
@@ -1378,7 +1378,7 @@ namespace TagLib.Asf {
 				string text;
 				double value;
 
-				if ((text = GetDescriptorString("REPLAYGAIN_TRACK_PEAK")) !=
+				if ((text = GetDescriptorString("ReplayGain/Track Peak")) !=
 					null && double.TryParse(text, NumberStyles.Float,
 						CultureInfo.InvariantCulture, out value))
 				{
@@ -1390,12 +1390,12 @@ namespace TagLib.Asf {
 			{
 				if (double.IsNaN(value))
 				{
-					RemoveDescriptors("REPLAYGAIN_TRACK_PEAK");
+					RemoveDescriptors("ReplayGain/Track Peak");
 				}
 				else
 				{
 					string text = value.ToString("0.000000", CultureInfo.InvariantCulture);
-					SetDescriptorString("REPLAYGAIN_TRACK_PEAK", text);
+					SetDescriptorString(text, "ReplayGain/Track Peak");
 				}
 			}
 		}
@@ -1416,7 +1416,7 @@ namespace TagLib.Asf {
 		{
 			get
 			{
-				string text = GetDescriptorString("REPLAYGAIN_ALBUM_GAIN");
+				string text = GetDescriptorString("ReplayGain/Album");
 				double value;
 
 				if (text == null)
@@ -1439,13 +1439,13 @@ namespace TagLib.Asf {
 			{
 				if (double.IsNaN(value))
 				{
-					RemoveDescriptors("REPLAYGAIN_ALBUM_GAIN");
+					RemoveDescriptors("ReplayGain/Album");
 				}
 				else
 				{
 					string text = value.ToString("0.00 dB",
 						CultureInfo.InvariantCulture);
-					SetDescriptorString("REPLAYGAIN_ALBUM_GAIN", text);
+					SetDescriptorString(text, "ReplayGain/Album");
 				}
 			}
 		}
@@ -1469,7 +1469,7 @@ namespace TagLib.Asf {
 				string text;
 				double value;
 
-				if ((text = GetDescriptorString("REPLAYGAIN_ALBUM_PEAK")) !=
+				if ((text = GetDescriptorString("ReplayGain/Album Peak")) !=
 					null && double.TryParse(text, NumberStyles.Float,
 						CultureInfo.InvariantCulture, out value))
 				{
@@ -1481,12 +1481,12 @@ namespace TagLib.Asf {
 			{
 				if (double.IsNaN(value))
 				{
-					RemoveDescriptors("REPLAYGAIN_ALBUM_PEAK");
+					RemoveDescriptors("ReplayGain/Album Peak");
 				}
 				else
 				{
 					string text = value.ToString("0.000000", CultureInfo.InvariantCulture);
-					SetDescriptorString("REPLAYGAIN_ALBUM_PEAK", text);
+					SetDescriptorString(text, "ReplayGain/Album Peak");
 				}
 			}
 		}
