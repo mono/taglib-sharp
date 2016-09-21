@@ -48,6 +48,12 @@ namespace TagLib.Tests.FileFormats
 		}
 
 		[Test]
+		public void WriteExtendedTags()
+		{
+			ExtendedTests.WriteExtendedTags(sample_file, tmp_file);
+		}
+
+		[Test]
 		public void TestCorruptionResistance()
 		{
 			StandardTests.TestCorruptionResistance(corrupt_file);

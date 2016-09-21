@@ -42,7 +42,13 @@ namespace TagLib.Tests.FileFormats
             StandardTests.WriteStandardTags (sample_file, tmp_file);
         }
 
-        [Test]
+				[Test]
+				public void WriteExtendedTags()
+				{
+					ExtendedTests.WriteExtendedTags(sample_file, tmp_file);
+				}
+
+				[Test]
         public void TestCorruptionResistance()
         {
             StandardTests.TestCorruptionResistance ("samples/corrupt/a.opus");
