@@ -72,7 +72,7 @@ namespace TagLib.Tests.FileFormats
             var first = file.UdtaBoxes [0];
             Assert.AreEqual (1, first.Children.Count (), "#2");
 
-            //Assert.IsInstanceOfType (typeof (AppleAdditionalInfoBox), first.Children.First ());
+            Assert.IsInstanceOfType (typeof (AppleAdditionalInfoBox), first.Children.First ());
             var child = (AppleAdditionalInfoBox) first.Children.First ();
             Assert.AreEqual ((ReadOnlyByteVector)"name", child.BoxType, "#3");
             Assert.AreEqual (0 , child.Data.Count, "#4");

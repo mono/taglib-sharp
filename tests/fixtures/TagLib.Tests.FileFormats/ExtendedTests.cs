@@ -21,8 +21,8 @@ namespace TagLib.Tests.FileFormats
                 tmp = File.Create (tmp_file);
                 CheckTags (tmp.Tag);
             } finally {
-//                if (System.IO.File.Exists (tmp_file))
-//                    System.IO.File.Delete (tmp_file);
+                if (System.IO.File.Exists (tmp_file))
+                    System.IO.File.Delete (tmp_file);
             }
         }
         

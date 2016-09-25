@@ -45,13 +45,13 @@ namespace TagLib.Tests.FileFormats
             StandardTests.WriteStandardTags (sample_file, tmp_file);
         }
 
-				[Test]
-				public void WriteExtendedTags()
-				{
-					ExtendedTests.WriteExtendedTags(sample_file, tmp_file);
-				}
+		[Test]
+		public void WriteExtendedTags()
+		{
+			ExtendedTests.WriteExtendedTags(sample_file, tmp_file);
+		}
 
-				[Test] // http://bugzilla.gnome.org/show_bug.cgi?id=558123
+		[Test] // http://bugzilla.gnome.org/show_bug.cgi?id=558123
         public void TestTruncateOnNull ()
         {
             if (System.IO.File.Exists (tmp_file)) {
