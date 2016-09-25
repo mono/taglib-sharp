@@ -250,6 +250,11 @@ namespace TagLib.Id3v2
 				return new PrivateFrame (data, position, header,
 					version);
 			
+			// Url Link (frames 4.3.1)
+			if (header.FrameId[0] == (byte)'W')
+				return new UrlLinkFrame(data, position,
+					header, version);
+
 			return new UnknownFrame (data, position, header,
 				version);
 		}
