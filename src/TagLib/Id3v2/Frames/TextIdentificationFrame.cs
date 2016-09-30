@@ -402,7 +402,7 @@ namespace TagLib.Id3v2 {
 		/// <summary>
 		///    Contains the Encoding of the raw_data
 		/// </summary>
-    	private StringType raw_encoding = StringType.Latin1;
+		private StringType raw_encoding = StringType.Latin1;
 
 		#endregion
 		
