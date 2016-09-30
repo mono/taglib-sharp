@@ -1208,6 +1208,154 @@ namespace TagLib.Ogg
 			set {if (tags.Count > 0) tags [0].MusicBrainzReleaseCountry = value;}
 		}
 
+    /// <summary>
+    ///    Gets and sets the ReplayGain Track Value of the media represented by
+    ///    the current instance.
+    /// </summary>
+    /// <value>
+    ///    A <see cref="double" /> containing the ReplayGain Track Value of the
+    ///    media represented by the current instance or an empty
+    ///    array if no value is present.
+    /// </value>
+    /// <remarks>
+    ///    <para>When getting the value, the child tags are looped
+    ///    through in order and the first non-<see langword="null" />
+    ///    and non-empty value is returned.</para>
+    ///    <para>When setting the value, it is stored in the first
+    ///    comment.</para>
+    /// </remarks>
+    /// <seealso cref="Tag.ReplayGainTrackGain" />
+    public override double ReplayGainTrackGain
+    {
+      get
+      {
+        foreach (XiphComment tag in tags)
+        {
+          if (tag == null)
+            continue;
+
+          double value = tag.ReplayGainTrackGain;
+
+          if (!double.IsNaN(value))
+            return value;
+        }
+
+				return double.NaN;
+      }
+      set { if (tags.Count > 0) tags[0].ReplayGainTrackGain = value; }
+    }
+
+    /// <summary>
+    ///    Gets and sets the ReplayGain Peak Value of the media represented by
+    ///    the current instance.
+    /// </summary>
+    /// <value>
+    ///    A <see cref="double" /> containing the ReplayGain Peak Value of the
+    ///    media represented by the current instance or an empty
+    ///    array if no value is present.
+    /// </value>
+    /// <remarks>
+    ///    <para>When getting the value, the child tags are looped
+    ///    through in order and the first non-<see langword="null" />
+    ///    and non-empty value is returned.</para>
+    ///    <para>When setting the value, it is stored in the first
+    ///    comment.</para>
+    /// </remarks>
+    /// <seealso cref="Tag.ReplayGainTrackPeak" />
+    public override double ReplayGainTrackPeak
+    {
+      get
+      {
+        foreach (XiphComment tag in tags)
+        {
+          if (tag == null)
+            continue;
+
+          double value = tag.ReplayGainTrackPeak;
+
+          if (!double.IsNaN(value))
+            return value;
+        }
+
+        return double.NaN;
+      }
+      set { if (tags.Count > 0) tags[0].ReplayGainTrackPeak = value; }
+    }
+
+    /// <summary>
+    ///    Gets and sets the ReplayGain Album Value of the media represented by
+    ///    the current instance.
+    /// </summary>
+    /// <value>
+    ///    A <see cref="double" /> containing the ReplayGain Album Value of the
+    ///    media represented by the current instance or an empty
+    ///    array if no value is present.
+    /// </value>
+    /// <remarks>
+    ///    <para>When getting the value, the child tags are looped
+    ///    through in order and the first non-<see langword="null" />
+    ///    and non-empty value is returned.</para>
+    ///    <para>When setting the value, it is stored in the first
+    ///    comment.</para>
+    /// </remarks>
+    /// <seealso cref="Tag.ReplayGainAlbumGain" />
+    public override double ReplayGainAlbumGain
+    {
+      get
+      {
+        foreach (XiphComment tag in tags)
+        {
+          if (tag == null)
+            continue;
+
+          double value = tag.ReplayGainAlbumGain;
+
+          if (!double.IsNaN(value))
+            return value;
+        }
+
+        return double.NaN;
+      }
+      set { if (tags.Count > 0) tags[0].ReplayGainAlbumGain = value; }
+    }
+
+    /// <summary>
+    ///    Gets and sets the ReplayGain Album Peak Value of the media represented by
+    ///    the current instance.
+    /// </summary>
+    /// <value>
+    ///    A <see cref="double" /> containing the ReplayGain Album Peak Value of the
+    ///    media represented by the current instance or an empty
+    ///    array if no value is present.
+    /// </value>
+    /// <remarks>
+    ///    <para>When getting the value, the child tags are looped
+    ///    through in order and the first non-<see langword="null" />
+    ///    and non-empty value is returned.</para>
+    ///    <para>When setting the value, it is stored in the first
+    ///    comment.</para>
+    /// </remarks>
+    /// <seealso cref="Tag.ReplayGainAlbumPeak" />
+    public override double ReplayGainAlbumPeak
+    {
+      get
+      {
+        foreach (XiphComment tag in tags)
+        {
+          if (tag == null)
+            continue;
+
+          double value = tag.ReplayGainAlbumPeak;
+
+          if (!double.IsNaN(value))
+            return value;
+        }
+
+        return double.NaN;
+      }
+      set { if (tags.Count > 0) tags[0].ReplayGainAlbumPeak = value; }
+    }
+
 		/// <summary>
 		///    Gets and sets a collection of pictures associated with
 		///    the media represented by the current instance.
