@@ -152,7 +152,6 @@ namespace TagLib.Id3v2
 	public UrlLinkFrame(ByteVector ident)
 	  : base(ident, 4)
 	{
-	  this.encoding = encoding;
 	}
 
 	/// <summary>
@@ -342,22 +341,22 @@ namespace TagLib.Id3v2
 	///    <see langword="null" />.
 	/// </exception>
 	/// <exception cref="ArgumentException">
-	///    <paramref name="type" /> is not exactly four bytes long.
+	///    <paramref name="ident" /> is not exactly four bytes long.
 	/// </exception>
 	public static UrlLinkFrame Get(Tag tag,
 											ByteVector ident,
 											bool create)
 	{
 	  if (tag == null)
-		throw new ArgumentNullException("tag");
+		throw new ArgumentNullException(nameof(tag));
 
 	  if (ident == null)
-		throw new ArgumentNullException("ident");
+		throw new ArgumentNullException(nameof(ident));
 
 	  if (ident.Count != 4)
 		throw new ArgumentException(
 		  "Identifier must be four bytes long.",
-		  "ident");
+		  nameof(ident));
 
 	  foreach (UrlLinkFrame frame in
 		tag.GetFrames<UrlLinkFrame>(ident))
