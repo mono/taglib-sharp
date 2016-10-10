@@ -170,6 +170,7 @@
     <Compile Include="TagLib\Id3v2\Frames\UniqueFileIdentifierFrame.cs" />
     <Compile Include="TagLib\Id3v2\Frames\UnknownFrame.cs" />
     <Compile Include="TagLib\Id3v2\Frames\UnsynchronisedLyricsFrame.cs" />
+    <Compile Include="TagLib\Id3v2\Frames\UrlLinkFrame.cs" />
     <Compile Include="TagLib\Image\Codec.cs" />
     <Compile Include="TagLib\Image\CombinedImageTag.cs" />
     <Compile Include="TagLib\Image\File.cs" />

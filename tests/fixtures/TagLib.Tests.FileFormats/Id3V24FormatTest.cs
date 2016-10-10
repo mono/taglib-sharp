@@ -93,5 +93,40 @@ namespace TagLib.Tests.FileFormats
 
             System.IO.File.Delete(tempFile);
         }
-    }
+
+		[Test]
+		public void URLLinkFrameTest()
+		{
+			string tempFile = "samples/tmpwrite_urllink_v2_4_unsynch.mp3";
+
+			System.IO.File.Copy(sample24unsynchronization_file, tempFile, true);
+
+			File urlLinkFile = File.Create(tempFile);
+			var id3v2tag = urlLinkFile.GetTag(TagTypes.Id3v2) as TagLib.Id3v2.Tag;
+			id3v2tag.SetTextFrame("WCOM", "www.commercial.com");
+			id3v2tag.SetTextFrame("WCOP", "www.copyright.com");
+			id3v2tag.SetTextFrame("WOAF", "www.official-audio.com");
+			id3v2tag.SetTextFrame("WOAR", "www.official-artist.com");
+			id3v2tag.SetTextFrame("WOAS", "www.official-audio-source.com");
+			id3v2tag.SetTextFrame("WORS", "www.official-internet-radio.com");
+			id3v2tag.SetTextFrame("WPAY", "www.payment.com");
+			id3v2tag.SetTextFrame("WPUB", "www.official-publisher.com");
+			urlLinkFile.Save();
+			urlLinkFile.Dispose();
+
+			urlLinkFile = File.Create(tempFile);
+			id3v2tag = urlLinkFile.GetTag(TagTypes.Id3v2) as TagLib.Id3v2.Tag;
+			Assert.AreEqual("www.commercial.com", id3v2tag.GetTextAsString("WCOM"));
+			Assert.AreEqual("www.copyright.com", id3v2tag.GetTextAsString("WCOP"));
+			Assert.AreEqual("www.official-audio.com", id3v2tag.GetTextAsString("WOAF"));
+			Assert.AreEqual("www.official-artist.com", id3v2tag.GetTextAsString("WOAR"));
+			Assert.AreEqual("www.official-audio-source.com", id3v2tag.GetTextAsString("WOAS"));
+			Assert.AreEqual("www.official-internet-radio.com", id3v2tag.GetTextAsString("WORS"));
+			Assert.AreEqual("www.payment.com", id3v2tag.GetTextAsString("WPAY"));
+			Assert.AreEqual("www.official-publisher.com", id3v2tag.GetTextAsString("WPUB"));
+			urlLinkFile.Dispose();
+
+			System.IO.File.Delete(tempFile);
+		}
+	}
 }
