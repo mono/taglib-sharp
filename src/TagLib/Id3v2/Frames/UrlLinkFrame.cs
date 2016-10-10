@@ -348,15 +348,15 @@ namespace TagLib.Id3v2
 											bool create)
 	{
 	  if (tag == null)
-		throw new ArgumentNullException(nameof(tag));
+		throw new ArgumentNullException("tag");
 
 	  if (ident == null)
-		throw new ArgumentNullException(nameof(ident));
+		throw new ArgumentNullException("ident");
 
 	  if (ident.Count != 4)
 		throw new ArgumentException(
 		  "Identifier must be four bytes long.",
-		  nameof(ident));
+		  "ident");
 
 	  foreach (UrlLinkFrame frame in
 		tag.GetFrames<UrlLinkFrame>(ident))
