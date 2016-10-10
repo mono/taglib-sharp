@@ -209,8 +209,14 @@ namespace TagLib.Id3v2 {
 		/// </returns>
 		public string GetTextAsString (ByteVector ident)
 		{
-			TextInformationFrame frame = TextInformationFrame.Get (
-				this, ident, false);
+			Frame frame;
+			// Handle URL LInk frames differently
+			if (ident[0] == 'W')
+				frame = UrlLinkFrame.Get(
+					this, ident, false);
+			else
+				frame = TextInformationFrame.Get (
+					this, ident, false);
 			
 			string result = frame == null ? null : frame.ToString ();
 			return string.IsNullOrEmpty (result) ? null : result;
@@ -464,6 +470,17 @@ namespace TagLib.Id3v2 {
 				return;
 			}
 			
+			// Handle URL LInk frames differently
+			if (ident[0] == 'W')
+			{
+				UrlLinkFrame urlFrame = 
+					UrlLinkFrame.Get(this, ident, true);
+
+				urlFrame.Text = text;
+				urlFrame.TextEncoding = DefaultEncoding;
+				return;
+			}
+
 			TextInformationFrame frame =
 				TextInformationFrame.Get (this, ident, true);
 			
@@ -2057,7 +2074,7 @@ namespace TagLib.Id3v2 {
 				}
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets a collection of pictures associated with
 		///    the media represented by the current instance.

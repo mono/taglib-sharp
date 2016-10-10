@@ -81,5 +81,14 @@ namespace TagLib.Id3v2 {
 		public static readonly ReadOnlyByteVector UFID = "UFID";
 		public static readonly ReadOnlyByteVector USER = "USER";
 		public static readonly ReadOnlyByteVector USLT = "USLT";
+		public static readonly ReadOnlyByteVector WCOM = "WCOM";
+		public static readonly ReadOnlyByteVector WCOP = "WCOP";
+		public static readonly ReadOnlyByteVector WOAF = "WOAF";
+		public static readonly ReadOnlyByteVector WOAR = "WOAR";
+		public static readonly ReadOnlyByteVector WOAS = "WOAS";
+		public static readonly ReadOnlyByteVector WORS = "WORS";
+		public static readonly ReadOnlyByteVector WPAY = "WPAY";
+		public static readonly ReadOnlyByteVector WPUB = "WPUB";
+		public static readonly ReadOnlyByteVector WXXX = "WXXX";
 	}
 }
