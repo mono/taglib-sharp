@@ -29,3 +29,4 @@ tests/*.dll
 tests/*.xml
 test-results
 .*.swp
+*.suo
