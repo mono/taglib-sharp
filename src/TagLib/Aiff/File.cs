@@ -93,6 +93,14 @@ namespace TagLib.Aiff
 		/// </value>
 		public static readonly ReadOnlyByteVector ID3Identifier = "ID3 ";
 
+		/// <summary>
+		///    The identifier used to recognize a AIFF Form type.
+		/// </summary>
+		/// <value>
+		///    "AIFF"
+		/// </value>
+		public static readonly ReadOnlyByteVector AIFFFormType = "AIFF";
+
 		#endregion
 
 		#region Public Constructors
@@ -366,6 +374,58 @@ namespace TagLib.Aiff
 		#region Private Methods
 
 		/// <summary>
+		///    Search the file for a chunk whose name is given by
+		///    the chunkName parameter, starting from startPos.
+		///    Note that startPos must be a valid position for a
+		///    chunk, or else finding will fail.
+		/// </summary>
+		/// <param name="chunkName">Name of the chunk to search for</param>
+		/// <param name="startPos">Position for starting the search</param>
+		/// <returns>
+		///    Position of the chunk in the stream, or -1
+		///    if no chunk was found.
+		/// </returns>
+		private long FindChunk(ByteVector chunkName, long startPos)
+		{
+			long initialPos = Tell;
+
+			try
+			{
+				// Start at the given position
+				Seek(startPos);
+
+				// While not eof
+				while (Tell < Length)
+				{
+					// Read 4-byte chunk name
+					ByteVector chunkHeader = ReadBlock(4);
+
+					if (chunkHeader == chunkName)
+					{
+						// We found a matching chunk, return the position
+						// of the header start
+						return Tell - 4;
+					}
+					else
+					{
+						// This chunk is not the one we are looking for
+						// Continue the search, seeking over the chunk
+						uint chunkSize = ReadBlock(4).ToUInt();
+						// Seek forward "chunkSize" bytes
+						Seek(chunkSize, System.IO.SeekOrigin.Current);
+					}
+				}
+
+				// We did not find the chunk
+				return -1;
+			}
+			finally
+			{
+				Seek(initialPos);
+			}
+		}
+
+		/// <summary>
 		///    Reads the contents of the current instance determining
 		///    the size of the riff data, the area the tagging is in,
 		///    and optionally reading in the tags and media properties.
@@ -409,11 +469,18 @@ namespace TagLib.Aiff
 			tag_start = -1;
 			tag_end = -1;
 
+			// Check formType
+			if (ReadBlock(4) != AIFFFormType)
+				throw new CorruptFileException(
+					"File form type is not AIFF");
+
+			long formBlockChunksPosition = Tell;
+
 			// Get the properties of the file
 			if (header_block == null &&
 			    style != ReadStyle.None)
 			{
-				long common_chunk_pos = Find(CommIdentifier, 0);
+				long common_chunk_pos = FindChunk(CommIdentifier, formBlockChunksPosition);
 
 				if (common_chunk_pos == -1)
 				{
@@ -428,22 +495,13 @@ namespace TagLib.Aiff
 				properties = new Properties(TimeSpan.Zero, header);
 			}
 
-			// Now we search for the ID3 chunk.
-			// Normally it appears after the Sound data chunk. But as the order of
-			// chunks is free, it might be the case that the ID3 chunk appears before 
-			// the sound data chunk.
-			// So we search first for the Sound data chunk and see, if an ID3 chunk appears before
-			long id3_chunk_pos = -1;
-			long sound_chunk_pos = Find(SoundIdentifier, 0, ID3Identifier);
-			if (sound_chunk_pos == -1)
-			{
-				// The ID3 chunk appears before the Sound chunk
-				id3_chunk_pos = Find(ID3Identifier, 0);
-			}
+			// Search for the ID3 chunk
+			long id3_chunk_pos = FindChunk(ID3Identifier, formBlockChunksPosition);
 
-			// Now let's look for the Sound chunk again
-			// Since a previous return value of -1 does mean, that the ID3 chunk was found first
-			sound_chunk_pos = Find(SoundIdentifier, 0);
+			// Search for the sound chunk
+			long sound_chunk_pos = FindChunk(SoundIdentifier, formBlockChunksPosition);
+
+			// Ensure there is a sound chunk for the file to be valid
 			if (sound_chunk_pos == -1)
 			{
 				throw new CorruptFileException(
@@ -452,14 +510,8 @@ namespace TagLib.Aiff
 
 			// Get the length of the Sound chunk and use this as a start value to look for the ID3 chunk
 			Seek(sound_chunk_pos + 4);
-			ulong sound_chunk_length = ReadBlock(4).ToULong(true);
-			long start_search_pos = (long) sound_chunk_length + sound_chunk_pos + 4;
 
-			if (id3_chunk_pos == -1)
-			{
-				id3_chunk_pos = Find(ID3Identifier, start_search_pos);
-			}
-
+			// Read the id3 chunk
 			if (id3_chunk_pos > -1)
 			{
 				if (read_tags && tag == null)
