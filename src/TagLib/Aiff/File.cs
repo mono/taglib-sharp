@@ -93,6 +93,10 @@ namespace TagLib.Aiff
 		/// </value>
 		public static readonly ReadOnlyByteVector ID3Identifier = "ID3 ";
 
+        /// <summary>
+        ///    The identifier used to confirm that data within an AIFF ID3 chunk is really an ID3 tag.
+        /// </summary>
+        public static readonly ReadOnlyByteVector ID3TagHeader = new ReadOnlyByteVector(new byte[] {0x49, 0x44, 0x33});
 		#endregion
 
 		#region Public Constructors
@@ -438,7 +442,7 @@ namespace TagLib.Aiff
 			if (sound_chunk_pos == -1)
 			{
 				// The ID3 chunk appears before the Sound chunk
-				id3_chunk_pos = Find(ID3Identifier, 0);
+                                id3_chunk_pos = FindId3Chunk(0);
 			}
 
 			// Now let's look for the Sound chunk again
@@ -457,7 +461,7 @@ namespace TagLib.Aiff
 
 			if (id3_chunk_pos == -1)
 			{
-				id3_chunk_pos = Find(ID3Identifier, start_search_pos);
+				id3_chunk_pos = FindId3Chunk(start_search_pos);
 			}
 
 			if (id3_chunk_pos > -1)
@@ -478,5 +482,38 @@ namespace TagLib.Aiff
 		}
 
 		#endregion
+
+	    private long FindId3Chunk(long searchStartPos)
+	    {
+	        var searchPosition = searchStartPos;
+
+	        while (true)
+	        {
+                var chunkHeaderPosition = Find(ID3Identifier, searchPosition);
+	            if (chunkHeaderPosition < 0)
+	            {
+	                return chunkHeaderPosition;
+	            }
+
+                // a true ID3 block will have the ID3 header repeated 8 bytes after the chunk header
+                var id3HeaderPosition = Find(ID3TagHeader, chunkHeaderPosition + 8);
+	            if (id3HeaderPosition < 0)
+	            {
+	                return -1;
+	            }
+
+	            if (id3HeaderPosition == chunkHeaderPosition + 8)
+	            {
+                    return chunkHeaderPosition;
+	            }
+
+                // continue the search starting with the last position that matched
+                searchPosition = chunkHeaderPosition + 4;
+
+	            // if no true ID3 chunk is found, Find will return -1, and the loop will exit
+	        }
+	    }
 	}
+
+
 }
