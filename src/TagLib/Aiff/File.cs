@@ -33,6 +33,7 @@ namespace TagLib.Aiff
 	///    using the AIFF file format.
 	/// </summary>
 	[SupportedMimeType("taglib/aif", "aif")]
+	[SupportedMimeType("taglib/aiff", "aiff")]
 	[SupportedMimeType("audio/x-aiff")]
 	[SupportedMimeType("audio/aiff")]
 	[SupportedMimeType("sound/aiff")]
