@@ -7,7 +7,7 @@ solution: taglib-sharp.sln
 
 install:
   - sudo apt-get update -qq > /dev/null
-  - sudo apt-get install -qq nunit nunit-console > /dev/null
+  - nuget restore taglib-sharp.sln
 
 script:
   - ./autogen.sh
