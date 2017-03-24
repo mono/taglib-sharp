@@ -38,7 +38,7 @@ namespace TagLib.Tests.Images
 			return String.Format (tmp_file, i + 1);
 		}
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void Init () {
 			files = new File[count];
 
