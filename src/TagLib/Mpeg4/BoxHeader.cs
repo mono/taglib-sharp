@@ -135,8 +135,8 @@ namespace TagLib.Mpeg4 {
 						"Not enough data in box header.");
 				
 				header_size += 8;
-				box_size = data.Mid (offset, 8).ToULong ();
 				offset += 8;
+				box_size = data.Mid (offset, 8).ToULong ();
 			}
 			
 			// UUID has a special header with 16 extra bytes.
