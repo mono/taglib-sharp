@@ -31,3 +31,5 @@ tests/*.xml
 test-results
 .*.swp
 packages
+.vs/*
+!packages.config
