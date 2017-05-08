@@ -33,3 +33,4 @@ test-results
 packages
 .vs/*
 !packages.config
+.DS_Store
