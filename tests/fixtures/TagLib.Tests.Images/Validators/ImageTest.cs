@@ -1,4 +1,6 @@
+#if ! WIN32
 using Gdk;
+#endif
 using System;
 using NUnit.Framework;
 
@@ -9,7 +11,9 @@ namespace TagLib.Tests.Images.Validators
 		static ImageTest () {
 			// Initialize GDK
 			var args = Environment.GetCommandLineArgs ();
-			Global.InitCheck (ref args);
+#if !WIN32
+            Global.InitCheck (ref args);
+#endif
 		}
 
 		string pre_hash;
@@ -147,8 +151,10 @@ namespace TagLib.Tests.Images.Validators
 			file.Mode = File.AccessMode.Read;
 			ByteVector v = file.ReadBlock ((int) file.Length);
 			byte [] result = null;
+#if !WIN32
 			using (Pixbuf buf = new Pixbuf(v.Data))
 				result = buf.SaveToBuffer("png");
+#endif
 			file.Mode = File.AccessMode.Closed;
 			return Utils.Md5Encode (result);
 		}
