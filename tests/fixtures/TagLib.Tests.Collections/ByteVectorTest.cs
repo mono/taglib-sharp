@@ -112,7 +112,7 @@ namespace TagLib.Tests.Collections
         [Test]
         public void FromUri()
         {
-            ByteVector vector = ByteVector.FromPath("samples/vector.bin");
+            ByteVector vector = ByteVector.FromPath(Debugger.Samples + "vector.bin");
             Assert.AreEqual(3282169185, vector.Checksum);
             Assert.AreEqual("1aaa46c484d70c7c80510a5f99e7805d", MD5Hash(vector.Data));
         }

@@ -8,7 +8,7 @@ namespace TagLib.Tests.FileFormats
 	[TestFixture]
 	public class AudibleFormatTest
 	{
-		private static string BaseDirectory = "samples/audible";
+		private static string BaseDirectory = Debugger.Samples + "audible";
 
 		[Test]
 		public void First ()

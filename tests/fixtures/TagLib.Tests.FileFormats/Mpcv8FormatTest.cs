@@ -7,8 +7,8 @@ namespace TagLib.Tests.FileFormats
     [TestFixture]
     public class MpcV8FormatTest : IFormatTest
     {
-        private static string sample_file = "samples/sample_v8.mpc";
-        private static string tmp_file = "samples/tmpwrite_v8.mpc";
+        private static string sample_file = Debugger.Samples + "sample_v8.mpc";
+        private static string tmp_file = Debugger.Samples + "tmpwrite_v8.mpc";
         private File file;
         
 		[OneTimeSetUp]
@@ -45,7 +45,7 @@ namespace TagLib.Tests.FileFormats
         [Test]
         public void TestCorruptionResistance()
         {
-            StandardTests.TestCorruptionResistance ("samples/corrupt/a.mpc");
+            StandardTests.TestCorruptionResistance (Debugger.Samples + "corrupt/a.mpc");
         }
     }
 }

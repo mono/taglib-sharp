@@ -7,8 +7,8 @@ namespace TagLib.Tests.FileFormats
     [TestFixture]
     public class OpusFormatTest : IFormatTest
     {
-        private static string sample_file = "samples/sample.opus";
-        private static string tmp_file = "samples/tmpwrite.opus";
+        private static string sample_file = Debugger.Samples + "sample.opus";
+        private static string tmp_file = Debugger.Samples + "tmpwrite.opus";
         private File file;
 
         [OneTimeSetUp]
@@ -51,7 +51,7 @@ namespace TagLib.Tests.FileFormats
 				[Test]
         public void TestCorruptionResistance()
         {
-            StandardTests.TestCorruptionResistance ("samples/corrupt/a.opus");
+            StandardTests.TestCorruptionResistance (Debugger.Samples + "corrupt/a.opus");
         }
     }
 }

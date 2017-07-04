@@ -7,10 +7,10 @@ namespace TagLib.Tests.FileFormats
     [TestFixture]
     public class Id3V2FormatTest : IFormatTest
     {
-        private static string sample_file = "samples/sample_v2_only.mp3";
-        private static string corrupt_file = "samples/corrupt/null_title_v2.mp3";
-        private static string tmp_file = "samples/tmpwrite_v2_only.mp3";
-        private static string ext_header_file = "samples/sample_v2_3_ext_header.mp3";
+        private static string sample_file = Debugger.Samples + "sample_v2_only.mp3";
+        private static string corrupt_file = Debugger.Samples + "corrupt/null_title_v2.mp3";
+        private static string tmp_file = Debugger.Samples + "tmpwrite_v2_only.mp3";
+        private static string ext_header_file = Debugger.Samples + "sample_v2_3_ext_header.mp3";
         private File file;
         
         [OneTimeSetUp]
@@ -80,7 +80,7 @@ namespace TagLib.Tests.FileFormats
 		[Test]
 		public void URLLinkFrameTest()
 		{
-			string tempFile = "samples/tmpwrite_sample_v2_only.mp3";
+			string tempFile = Debugger.Samples + "tmpwrite_sample_v2_only.mp3";
 
 			System.IO.File.Copy(sample_file, tempFile, true);
 

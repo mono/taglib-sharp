@@ -12,7 +12,7 @@ namespace TagLib.Tests.FileFormats
     [TestFixture]
     public class JpegFormatTest
     {
-		private static string sample_file = "samples/sample.jpg";
+		private static string sample_file = Debugger.Samples + "sample.jpg";
 		private Image.File file;
 
 		private TagTypes contained_types =

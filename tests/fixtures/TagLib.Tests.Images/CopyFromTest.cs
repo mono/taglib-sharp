@@ -10,9 +10,9 @@ namespace TagLib.Tests.Images
 	{
 		[Test]
 		public void TestJPGtoTIFF () {
-			var file1 = TagLib.File.Create ("samples/sample_canon_zoombrowser.jpg") as TagLib.Image.File;
+			var file1 = TagLib.File.Create (Debugger.Samples + "sample_canon_zoombrowser.jpg") as TagLib.Image.File;
 			Assert.IsNotNull (file1);
-			var file2 = TagLib.File.Create ("samples/sample_nikon1_bibble5_16bit.tiff") as TagLib.Image.File;
+			var file2 = TagLib.File.Create (Debugger.Samples + "sample_nikon1_bibble5_16bit.tiff") as TagLib.Image.File;
 			Assert.IsNotNull (file2);
 
 			// Verify initial values

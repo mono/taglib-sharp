@@ -7,9 +7,9 @@ namespace TagLib.Tests.FileFormats
 	[TestFixture]
 	public class AiffFormatTest : IFormatTest
 	{
-		private static string sample_file = "samples/sample.aif";
-		private static string corrupt_file = "samples/corrupta.aif";
-		private static string tmp_file = "samples/tmpwrite.aif";
+		private static string sample_file = Debugger.Samples + "sample.aif";
+		private static string corrupt_file = Debugger.Samples + "corrupta.aif";
+		private static string tmp_file = Debugger.Samples + "tmpwrite.aif";
 		private File file;
 
 		[OneTimeSetUp]

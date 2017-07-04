@@ -7,8 +7,8 @@ namespace TagLib.Tests.FileFormats
     [TestFixture]
     public class Id3V1FormatTest : IFormatTest
     {
-        private static string sample_file = "samples/sample_v1_only.mp3";
-        private static string tmp_file = "samples/tmpwrite_v1_only.mp3";
+        private static string sample_file = Debugger.Samples + "sample_v1_only.mp3";
+        private static string tmp_file = Debugger.Samples + "tmpwrite_v1_only.mp3";
         private File file;
         
         [OneTimeSetUp]

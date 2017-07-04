@@ -24,9 +24,9 @@ namespace TagLib.Tests.FileFormats
             }
         }
 
-        private static string sample_file = "samples/sample.m4a";
-        private static string tmp_file = "samples/tmpwrite.m4a";
-        private static string aac_broken_tags = "samples/bgo_658920.m4a";
+        private static string sample_file = Debugger.Samples + "sample.m4a";
+        private static string tmp_file = Debugger.Samples + "tmpwrite.m4a";
+        private static string aac_broken_tags = Debugger.Samples + "bgo_658920.m4a";
         private File file;
         
         [OneTimeSetUp]
@@ -41,7 +41,7 @@ namespace TagLib.Tests.FileFormats
 			// This tests that a 'text' atom inside an 'stsd' atom is parsed correctly
 			// We just ensure that this does not throw an exception. I don't know how to
 			// verify the content is correct.
-			File.Create ("samples/apple_tags.m4a");
+			File.Create (Debugger.Samples + "apple_tags.m4a");
 		}
 
 		
@@ -49,7 +49,7 @@ namespace TagLib.Tests.FileFormats
 		public void bgo_676934 ()
 		{
 			// This file contains an atom which says its 800MB in size
-			var file = File.Create ("samples/bgo_676934.m4a");
+			var file = File.Create (Debugger.Samples + "bgo_676934.m4a");
 			Assert.IsTrue (file.CorruptionReasons.Any (), "#1");
 		}
 
@@ -59,7 +59,7 @@ namespace TagLib.Tests.FileFormats
 		{
 			// This file contains a musicbrainz track id "883821fc-9bbc-4e04-be79-b4b12c4c4a4e"
 			// This case also handles bgo #701690 as a proper value for the tag must be returned
-			var file = File.Create ("samples/bgo_701689.m4a");
+			var file = File.Create (Debugger.Samples + "bgo_701689.m4a");
 			Assert.AreEqual ("883821fc-9bbc-4e04-be79-b4b12c4c4a4e", file.Tag.MusicBrainzTrackId, "#1");
 		}
 
@@ -112,7 +112,7 @@ namespace TagLib.Tests.FileFormats
 				[Test]
         public void TestCorruptionResistance()
         {
-            StandardTests.TestCorruptionResistance ("samples/corrupt/a.m4a");
+            StandardTests.TestCorruptionResistance (Debugger.Samples + "corrupt/a.m4a");
         }
     }
 }

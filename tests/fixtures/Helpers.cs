@@ -1,11 +1,19 @@
 using System;
-using TagLib;
+using System.IO;
 
 namespace TagLib.Tests
 {
 	public class Debugger
 	{
-		public static void DumpHex (ByteVector data)
+
+#if WIN32
+        public static readonly string Samples = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(Debugger)).Location) + @"..\..\..\samples\";
+#else
+        public const string Samples = @"samples/";
+#endif
+
+
+        public static void DumpHex (ByteVector data)
 		{
 			DumpHex (data.Data);
 		}
