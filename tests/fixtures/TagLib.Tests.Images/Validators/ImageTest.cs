@@ -41,7 +41,7 @@ namespace TagLib.Tests.Images.Validators
 
 		public static void Run (string filename, bool compare_image_data, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
 		{
-			Run ("samples", filename, compare_image_data, invariant, modifications);
+			Run (Debugger.Samples, filename, compare_image_data, invariant, modifications);
 		}
 
 		public static void Run (string directory, string filename, bool compare_image_data, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)

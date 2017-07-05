@@ -204,7 +204,7 @@ namespace TagLib.Tests.TaggingFormats
 			tag.BeatsPerMinute = 234;
 			tag.Conductor = "I";
 			tag.Copyright = "J";
-			tag.Pictures = new Picture [] {new Picture ("../examples/covers/sample_a.png")};
+			tag.Pictures = new Picture [] {new Picture (Debugger.Covers + "sample_a.png") };
 			
 			Assert.IsFalse (tag.IsEmpty, "Should be full.");
 			tag.Clear ();
