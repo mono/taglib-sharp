@@ -444,7 +444,39 @@ namespace TagLib.Matroska
         /// <summary>
         /// Indicate a Matroska Tag Binary EBML element.
         /// </summary>
-        MatroskaTagBinary = 0x4485
+        MatroskaTagBinary = 0x4485,
+
+        /* in the Attachments master */
+
+        /// <summary>
+        /// Indicate a Matroska attached file.
+        /// </summary>
+        MatroskaAttachedFile = 0x61A7,
+
+        /// <summary>
+        /// Indicate a Matroska human-friendly name for the attached file.
+        /// </summary>
+        MatroskaFileDescription = 0x467E,
+
+        /// <summary>
+        /// Indicate a Matroska Filename of the attached file.
+        /// </summary>
+        MatroskaFileName = 0x466E,
+
+        /// <summary>
+        /// Indicate a Matroska MIME type of the file. 
+        /// </summary>
+        MatroskaFileMimeType = 0x4660,
+
+        /// <summary>
+        /// Indicate a Matroska data of the file. 
+        /// </summary>
+        MatroskaFileData = 0x465C,
+
+        /// <summary>
+        /// Indicate a Matroska Unique ID representing the file, as random as possible.
+        /// </summary>
+        MatroskaFileUID = 0x46AE
 
     }
 }

@@ -40,6 +40,7 @@ namespace TagLib.Matroska
         private string comments;
         private string genres;
         private string copyright;
+        private IPicture[] pictures = new Picture[0];
 
         #endregion
 
@@ -644,12 +645,20 @@ namespace TagLib.Matroska
         {
             get
             {
-                List<IPicture> l = new List<IPicture> ();
-
-
-                return l.ToArray ();
+                return pictures;
             }
-            set { }
+            set
+            {
+                if (value==null && pictures.Length>0)
+                {
+                    pictures = new Picture[0];
+                }
+                else
+                {
+                    pictures = value;
+                }
+                    
+            }
         }
 
         /// <summary>

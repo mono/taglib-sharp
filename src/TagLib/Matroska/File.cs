@@ -3,6 +3,7 @@
 //
 // Author:
 //   Julien Moutte <julien@fluendo.com>
+//   Sebastien Mouy <starwer@laposte.net>
 //
 // Copyright (C) 2011 FLUENDO S.A.
 //
@@ -23,6 +24,7 @@
 
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace TagLib.Matroska
 {
@@ -384,6 +386,9 @@ namespace TagLib.Matroska
                     case MatroskaID.MatroskaTags:
                         ReadTags (child);
                         break;
+                    case MatroskaID.MatroskaAttachments:
+                        ReadAttachments(child);
+                        break;
                     case MatroskaID.MatroskaCluster:
                         // Get out of here when we reach the clusters for now.
                         return;
@@ -415,6 +420,7 @@ namespace TagLib.Matroska
                 i += child.Size;
             }
         }
+
 
         private void ReadTag (EBMLElement element)
         {
@@ -478,6 +484,80 @@ namespace TagLib.Matroska
             else if (tag_name == "COMMENTS") {
                 tag.Comment = tag_string;
             }
+        }
+
+        private void ReadAttachments(EBMLElement element)
+        {
+            ulong i = 0;
+
+            while (i < element.DataSize)
+            {
+                EBMLElement child = new EBMLElement(this, element.DataOffset + i);
+
+                MatroskaID matroska_id = (MatroskaID)child.ID;
+
+                switch (matroska_id)
+                {
+                    case MatroskaID.MatroskaAttachedFile:
+                        ReadAttachedFile(child);
+                        break;
+                    default:
+                        break;
+                }
+
+                i += child.Size;
+            }
+        }
+
+        private void ReadAttachedFile(EBMLElement element)
+        {
+            ulong i = 0;
+#pragma warning disable 219 // Assigned, never read
+            string file_name = null, file_mime = null, file_desc = null;
+            ByteVector file_data = null;
+#pragma warning restore 219
+
+            while (i < element.DataSize)
+            {
+                EBMLElement child = new EBMLElement(this, element.DataOffset + i);
+
+                MatroskaID matroska_id = (MatroskaID)child.ID;
+
+                switch (matroska_id)
+                {
+                    case MatroskaID.MatroskaFileName:
+                        file_name = child.ReadString();
+                        break;
+                    case MatroskaID.MatroskaFileMimeType:
+                        file_mime = child.ReadString();
+                        break;
+                    case MatroskaID.MatroskaFileDescription:
+                        file_desc = child.ReadString();
+                        break;
+                    case MatroskaID.MatroskaFileData:
+                        file_data = child.ReadBytes();
+                        break;
+                    default:
+                        break;
+                }
+
+                i += child.Size;
+            }
+
+            if (file_mime != null && file_name!=null && file_data!=null && file_mime.StartsWith("image/"))
+            {
+                List<IPicture> pictures = tag.Pictures.ToList();
+
+                var pic = new Picture(file_data);
+                pic.Description = file_name;
+                pic.MimeType = file_mime;
+                //pic.Description = file_desc;
+                pic.Type = PictureType.FrontCover;
+
+                pictures.Add(pic);
+                tag.Pictures = pictures.ToArray();
+            }
+
         }
 
         private void ReadSegmentInfo (EBMLElement element)
