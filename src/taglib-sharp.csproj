@@ -35,6 +35,9 @@
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>taglib-sharp.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="TagLib\ByteVector.cs" />
@@ -81,8 +84,8 @@
     <Compile Include="TagLib\Asf\UnknownObject.cs" />
     <Compile Include="TagLib\Audible\File.cs" />
     <Compile Include="TagLib\Audible\Tag.cs" />
-	<Compile Include="TagLib\Dsf\File.cs" />
-	<Compile Include="TagLib\Dsf\StreamHeader.cs" />
+    <Compile Include="TagLib\Dsf\File.cs" />
+    <Compile Include="TagLib\Dsf\StreamHeader.cs" />
     <Compile Include="TagLib\Flac\Block.cs" />
     <Compile Include="TagLib\Flac\BlockHeader.cs" />
     <Compile Include="TagLib\Flac\File.cs" />
@@ -281,10 +284,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="TagLib\" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="taglib-sharp.snk" />
     <None Include="TagLib\TagLib.sources" />
   </ItemGroup>
 </Project>
