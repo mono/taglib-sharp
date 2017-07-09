@@ -26,6 +26,7 @@ namespace debug
 
             foreach (var fname in args) {
                 var fpath = Samples + fname;
+                var tpath = Samples + "tmpwrite" + Path.GetExtension(fname);
 
                 log("+ File  : " + fpath);
                 if(!File.Exists(fpath))
@@ -34,10 +35,18 @@ namespace debug
                     continue;
                 }
 
+                File.Copy(fpath, tpath, true);
 
-                var file = TagLib.File.Create(fpath);
+                var file = TagLib.File.Create(tpath);
 
                 log("  Title : " + file.Tag.Title);
+                file.Tag.Title = "Test Video";
+                file.Save();
+                log("  Title : " + file.Tag.Title);
+
+                // Now read it again
+                var rfile = TagLib.File.Create(tpath);
+                log("  Title : " + rfile.Tag.Title);
 
                 log("");
             }

@@ -34,10 +34,11 @@ namespace TagLib.Matroska
     {
         #region Private fields
 
-        private string title;
-        private string author;
-        private string album;
-        private string comments;
+        /// <summary>
+        /// List all available Tag, standard or custom
+        /// </summary>
+        public Dictionary<string,string> Custom = new Dictionary<string, string>();
+
         private string genres;
         private string copyright;
         private IPicture[] pictures = new Picture[0];
@@ -77,8 +78,8 @@ namespace TagLib.Matroska
         /// </remarks>
         public override string Title
         {
-            get { return title; }
-            set { title = value; }
+            get { string val = null; Custom.TryGetValue("TITLE", out val); return val; }
+            set { Custom["TITLE"] = value; }
         }
 
         /// <summary>
@@ -117,8 +118,11 @@ namespace TagLib.Matroska
         /// </remarks>
         public override string [] Performers
         {
-            get { return new string [] { author }; }
-            set { author = string.Join ("; ", value); }
+            get {
+                string val = null;
+                return Custom.TryGetValue("AUTHOR", out val) ? null : val.Split(';');
+            }
+            set { Custom["AUTHOR"] = string.Join("; ", value); }
         }
 
         /// <summary>
@@ -214,14 +218,8 @@ namespace TagLib.Matroska
         /// </remarks>
         public override string Album
         {
-            get
-            {
-                return album;
-            }
-            set
-            {
-                album = value;
-            }
+            get { string val = null; Custom.TryGetValue("ALBUM", out val); return val; }
+            set { Custom["ALBUM"] = value; }
         }
 
         /// <summary>
@@ -256,8 +254,8 @@ namespace TagLib.Matroska
         /// </remarks>
         public override string Comment
         {
-            get { return comments; }
-            set { comments = value; }
+            get { string val = null; Custom.TryGetValue("COMMENTS", out val); return val; }
+            set { Custom["COMMENTS"] = value; }
         }
 
         /// <summary>
