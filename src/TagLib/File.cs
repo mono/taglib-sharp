@@ -1597,7 +1597,7 @@ namespace TagLib {
 		
 		/// <summary>
 		///    This interface provides abstracted access to a file. It
-		//     premits access to non-standard file systems and data
+		///    premits access to non-standard file systems and data
 		///    retrieval methods.
 		/// </summary>
 		/// <remarks>

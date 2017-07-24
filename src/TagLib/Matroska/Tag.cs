@@ -23,6 +23,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace TagLib.Matroska
@@ -32,35 +34,171 @@ namespace TagLib.Matroska
     /// </summary>
     public class Tag : TagLib.Tag
     {
-        #region Private fields
+        #region Private fields/Properties
+
+        // Cross reference to file is required to retrieve whether this is a video/audio content
+        private File _file;
+
+        // Store the pictures
+        private IPicture[] pictures = new Picture[0];
 
         /// <summary>
-        /// List all available Tag, standard or custom
+        /// Define if this represent a video content (true), or an audio content (false)
         /// </summary>
-        public Dictionary<string,string> Custom = new Dictionary<string, string>();
+        private bool IsVideo
+        {
+            get { return _file == null || _file.MimeType != "taglib/mka"; }
+        }
 
-        private string genres;
-        private string copyright;
-        private IPicture[] pictures = new Picture[0];
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="file">the file it belongs to.</param>
+        public Tag(File file)
+        {
+            _file = file;
+        }
+
         #endregion
 
+
+        #region Private methods
+
+        /// <summary>
+        /// Retrieve a Tag list
+        /// </summary>
+        /// <param name="key">Tag name</param>
+        /// <returns>Array of values</returns>
+        private string[] TagGet(string key)
+        {
+            string[] ret = null;
+            List<string> list;
+            if (Custom.TryGetValue(key, out list))
+            {
+                if (list != null)
+                {
+                    ret = list.ToArray();
+                }
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// Retrieve a Tag value
+        /// </summary>
+        /// <param name="key">Tag name</param>
+        /// <param name="index">value index to retrieve (if several tags of same name)</param>
+        /// <returns>Tag value</returns>
+        private string TagGet(string key, int index)
+        {
+            string ret = null;
+            List<string> list;
+            if (Custom.TryGetValue(key, out list))
+            {
+                var idx = list.Count;
+                if (list != null && idx > 0)
+                {
+                    idx--;
+                    ret = list[idx];
+                }
+            }
+            return ret;
+        }
+
+
+        /// <summary>
+        /// Set a Tag value
+        /// </summary>
+        /// <param name="key">Tag Name</param>
+        /// <param name="value">value to be set</param>
+        /// <param name="index">index of the value index to set (if several tags of same name)</param>
+        private void TagSet(string key, string value, int index = 0)
+        {
+            List<string> list = null;
+
+            if (Custom.ContainsKey(key)) list = Custom[key];
+            if (list == null) Custom[key] = list = new List<string>(1);
+
+            if (index >= list.Count)
+                list.Add(value);
+            else
+                list[index] = value;
+        }
+
+        /// <summary>
+        /// Set a Tag list
+        /// </summary>
+        /// <param name="key">Tag Name</param>
+        /// <param name="values">Array of values</param>
+        private void TagSet(string key, string[] values)
+        {
+            Custom[key] = values.ToList();
+        }
+
+
+        /// <summary>
+        /// Retrieve a Tag value as unsigned integer
+        /// </summary>
+        /// <param name="key">Tag name</param>
+        /// <param name="index">value index to retrieve (default: 0)</param>
+        /// <returns>Tag value as unsigned integer</returns>
+        private uint TagGetUint(string key, int index = 0)
+        {
+            uint ret = 0;
+            string val = TagGet(key, index);
+
+            if (val != null)
+            {
+                uint.TryParse(val, NumberStyles.Any, CultureInfo.InvariantCulture, out ret);
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// Set a Tag value as unsigned integer
+        /// </summary>
+        /// <param name="key">Tag Name</param>
+        /// <param name="value">unsigned integer value to be set</param>
+        /// <param name="format">Format for string convertion to be used (default: null)</param>
+        /// <param name="index">index of the value index to set (default: 0)</param>
+        private void TagSetUint(string key, uint value, string format = null, int index = 0)
+        {
+            TagSet(key, value.ToString(format, CultureInfo.InvariantCulture));
+        }
+
+
+        #endregion
+
+
         #region Taglib.Tag
+
+        /// <summary>
+        /// List all available Tag, standard or custom (must never be null)
+        /// </summary>
+        public Dictionary<string, List<string>> Custom = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+
+
+        /// <summary>
+        ///    Gets the Matroska Target Type Value this Tag represents.
+        /// </summary>
+        public uint TargetType = 0;
 
 
         /// <summary>
         ///    Gets the tag types contained in the current instance.
         /// </summary>
         /// <value>
-        ///    Always <see cref="TagTypes.Id3v2" />.
+        ///    Always <see cref="TagTypes.Matroska" />.
         /// </value>
         public override TagTypes TagTypes
         {
-            get { return TagTypes.Id3v2; }
+            get { return TagTypes.Matroska; }
         }
 
         /// <summary>
@@ -78,8 +216,8 @@ namespace TagLib.Matroska
         /// </remarks>
         public override string Title
         {
-            get { string val = null; Custom.TryGetValue("TITLE", out val); return val; }
-            set { Custom["TITLE"] = value; }
+            get { return TagGet("TITLE", 0); }
+            set { TagSet("TITLE", value); }
         }
 
         /// <summary>
@@ -113,16 +251,13 @@ namespace TagLib.Matroska
         ///    present.
         /// </value>
         /// <remarks>
-        ///    This property is implemented using the author stored in
+        ///    This property is implemented using the ACTOR/PERFORMER stored in
         ///    the MKV Tag element.
         /// </remarks>
         public override string [] Performers
         {
-            get {
-                string val = null;
-                return Custom.TryGetValue("AUTHOR", out val) ? null : val.Split(';');
-            }
-            set { Custom["AUTHOR"] = string.Join("; ", value); }
+            get { return TagGet(IsVideo ? "ACTOR" : "PERFORMER"); }
+            set { TagSet(IsVideo ? "ACTOR" : "PERFORMER", value); }
         }
 
         /// <summary>
@@ -155,13 +290,13 @@ namespace TagLib.Matroska
         ///    collection containing the media described by the current
         ///    instance or an empty array if no value is present.
         /// </value>
+        /// <remarks>
+        ///    This property is implemented using the "ARTIST" Tag.
+        /// </remarks>
         public override string [] AlbumArtists
         {
-            get
-            {
-                return new string [] {};
-            }
-            set {}
+            get { return TagGet("ARTIST"); }
+            set { TagSet("ARTIST", value); }
         }
 
         /// <summary>
@@ -195,13 +330,13 @@ namespace TagLib.Matroska
         ///    media represented by the current instance or an empty
         ///    array if no value is present.
         /// </value>
+        /// <remarks>
+        ///    This property is implemented using the "COMPOSER" Tag.
+        /// </remarks>
         public override string [] Composers
         {
-            get
-            {
-                return new string [] { };
-            }
-            set { }
+            get { return TagGet("COMPOSER"); }
+            set { TagSet("COMPOSER", value); }
         }
 
         /// <summary>
@@ -218,8 +353,8 @@ namespace TagLib.Matroska
         /// </remarks>
         public override string Album
         {
-            get { string val = null; Custom.TryGetValue("ALBUM", out val); return val; }
-            set { Custom["ALBUM"] = value; }
+            get { return TagGet("ALBUM", 0); }
+            set { TagSet("ALBUM", value); }
         }
 
         /// <summary>
@@ -250,12 +385,12 @@ namespace TagLib.Matroska
         ///    langword="null" /> if no value is present.
         /// </value>
         /// <remarks>
-        ///    This property is implemented using the "COMMENTS" Tag.
+        ///    This property is implemented using the "COMMENT" Tag.
         /// </remarks>
         public override string Comment
         {
-            get { string val = null; Custom.TryGetValue("COMMENTS", out val); return val; }
-            set { Custom["COMMENTS"] = value; }
+            get { return TagGet("COMMENT", 0); }
+            set { TagSet("COMMENT", value); }
         }
 
         /// <summary>
@@ -274,7 +409,7 @@ namespace TagLib.Matroska
         {
             get
             {
-                string value = genres;
+                string value = TagGet("GENRE", 0);
 
                 if (value == null || value.Trim ().Length == 0)
                     return new string [] { };
@@ -299,7 +434,7 @@ namespace TagLib.Matroska
             }
             set
             {
-                genres = String.Join ("; ", value);
+                TagSet("GENRE", String.Join ("; ", value));
             }
         }
 
@@ -314,11 +449,8 @@ namespace TagLib.Matroska
         /// </value>
         public override uint Year
         {
-            get
-            {
-                return 0;
-            }
-            set { }
+            get { return TagGetUint("YEAR"); }
+            set { TagSetUint("YEAR", value); }
         }
 
         /// <summary>
@@ -332,11 +464,8 @@ namespace TagLib.Matroska
         /// </value>
         public override uint Track
         {
-            get
-            {
-                return 0;
-            }
-            set { }
+            get { return TagGetUint("PART_NUMBER"); }
+            set { TagSetUint("PART_NUMBER", value, "00"); }
         }
 
         /// <summary>
@@ -350,11 +479,8 @@ namespace TagLib.Matroska
         /// </value>
         public override uint TrackCount
         {
-            get
-            {
-                return 0;
-            }
-            set { }
+            get { return TagGetUint("TOTAL_PARTS"); }
+            set { TagSetUint("TOTAL_PARTS", value); }
         }
 
         /// <summary>
@@ -368,11 +494,8 @@ namespace TagLib.Matroska
         /// </value>
         public override uint Disc
         {
-            get
-            {
-                return 0;
-            }
-            set { }
+            get { return TagGetUint("DISC"); }
+            set { TagSetUint("DISC", value); }
         }
 
         /// <summary>
@@ -386,11 +509,8 @@ namespace TagLib.Matroska
         /// </value>
         public override uint DiscCount
         {
-            get
-            {
-                return 0;
-            }
-            set { }
+            get { return TagGetUint("DISC_COUNT"); }
+            set { TagSetUint("DISC_COUNT", value); }
         }
 
         /// <summary>
@@ -404,8 +524,8 @@ namespace TagLib.Matroska
         /// </value>
         public override string Lyrics
         {
-            get { return null; }
-            set { }
+            get { return TagGet("LYRICS", 0); }
+            set { TagSet("LYRICS", value); }
         }
 
         /// <summary>
@@ -419,11 +539,10 @@ namespace TagLib.Matroska
         /// </value>
         public override string Grouping
         {
-            get
-            {
-                return null;
-            }
-            set {}
+            // Non standard Tag. Not the standard way in Matroska world. 
+            // Normally, we should retrieve the Tag of TargetType 20, which is referenced by this file and gets its TITLE field (or something like this)
+            get { return TagGet("GROUPING", 0); }
+            set { TagSet("GROUPING", value); }
         }
 
         /// <summary>
@@ -437,11 +556,8 @@ namespace TagLib.Matroska
         /// </value>
         public override uint BeatsPerMinute
         {
-            get
-            {
-                return 0;
-            }
-            set { }
+            get { return TagGetUint("BPM"); }
+            set { TagSetUint("BPM", value); }
         }
 
         /// <summary>
@@ -455,8 +571,8 @@ namespace TagLib.Matroska
         /// </value>
         public override string Conductor
         {
-            get { return null; }
-            set { }
+            get { return TagGet(IsVideo ? "DIRECTOR" : "CONDUCTOR", 0); }
+            set { TagSet(IsVideo ? "DIRECTOR" : "CONDUCTOR", value); }
         }
 
         /// <summary>
@@ -473,8 +589,8 @@ namespace TagLib.Matroska
         /// </remarks>
         public override string Copyright
         {
-            get { return copyright; }
-            set { copyright = value; }
+            get { return TagGet("COPYRIGHT", 0); }
+            set { TagSet("COPYRIGHT", value); }
         }
 
         /// <summary>
@@ -655,7 +771,6 @@ namespace TagLib.Matroska
                 {
                     pictures = value;
                 }
-                    
             }
         }
 
@@ -670,7 +785,7 @@ namespace TagLib.Matroska
         {
             get
             {
-                return false;
+                return Custom.Count == 0;
             }
         }
 
@@ -679,7 +794,8 @@ namespace TagLib.Matroska
         /// </summary>
         public override void Clear ()
         {
-            
+            TargetType = 0;
+            Custom.Clear();
         }
 
         #endregion

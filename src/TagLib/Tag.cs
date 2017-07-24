@@ -123,12 +123,17 @@ namespace TagLib {
 		/// <summary>
 		///    Audible Metadata Blocks Tag
 		/// </summary>
-		AudibleMetadata = 0x00000400,
-		
-		/// <summary>
-		///    All tag types.
-		/// </summary>
-		AllTags      = 0xFFFFFFFF
+		AudibleMetadata = 0x00010000,
+
+        /// <summary>
+        /// Matroska native tag
+        /// </summary>
+        Matroska = 0x00020000,
+        
+        /// <summary>
+        ///    All tag types.
+        /// </summary>
+        AllTags = 0xFFFFFFFF
 	}
 	
 	/// <summary>

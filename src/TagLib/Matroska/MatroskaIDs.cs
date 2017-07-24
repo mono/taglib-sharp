@@ -180,6 +180,11 @@ namespace TagLib.Matroska
         MatroskaTrackVideo = 0xE0,
 
         /// <summary>
+        /// Indicate a Matroska Void EBML element.
+        /// </summary>
+        MatroskaVoid = 0xEC,
+
+        /// <summary>
         /// Indicate a Matroska Track Encoding EBML element.
         /// </summary>
         MatroskaContentEncodings = 0x6D80,
@@ -373,6 +378,24 @@ namespace TagLib.Matroska
         /// </summary>
         MatroskaVideoGammaValue = 0x2FB523,
 
+        /* in the Matroska Seek Head master */
+
+        /// <summary>
+        /// Indicate a Matroska Seek Entry (Master).
+        /// </summary>
+        MatroskaSeek = 0x4DBB,
+
+        /// <summary>
+        /// Indicate a Matroska Seek ID (Binary).
+        /// </summary>
+        MatroskaSeekID = 0x53AB,
+
+        /// <summary>
+        /// Indicate a Matroska Seek Position (uint).
+        /// </summary>
+        MatroskaSeekPosition = 0x53AC,
+
+
         /* IDs in the TrackAudio master */
 
         /// <summary>
@@ -445,6 +468,39 @@ namespace TagLib.Matroska
         /// Indicate a Matroska Tag Binary EBML element.
         /// </summary>
         MatroskaTagBinary = 0x4485,
+
+        /* in the Targets master */
+
+        /// <summary>
+        /// Indicate a Matroska Target Type Value  EBML element (UINT).
+        /// </summary>
+        MatroskaTargetTypeValue = 0x68CA,
+
+        /// <summary>
+        /// Indicate a Matroska Target Type EBML element (string).
+        /// </summary>
+        MatroskaTargetType = 0x63CA,
+
+        /// <summary>
+        /// Indicate a Matroska Target Tag Track UID EBML element (UINT).
+        /// </summary>
+        MatroskaTagTrackUID = 0x63C5,
+
+        /// <summary>
+        /// Indicate a Matroska Target Tag Edition UID EBML element (UINT).
+        /// </summary>
+        MatroskaTagEditionUID = 0x63C9,
+
+        /// <summary>
+        /// Indicate a Matroska Target Tag Chapter UID EBML element (UINT).
+        /// </summary>
+        MatroskaTagChapterUID = 0x63C4,
+
+        /// <summary>
+        /// Indicate a Matroska Target Tag Attachment UID EBML element (UINT).
+        /// </summary>
+        MatroskaTagAttachmentUID = 0x63C6,
+
 
         /* in the Attachments master */
 

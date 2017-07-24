@@ -35,8 +35,8 @@ namespace TagLib.Matroska
 
 #pragma warning disable 414 // Assigned, never used
         private double rate;
-        private uint channels;
-        private uint depth;
+        private ulong channels;
+        private ulong depth;
 #pragma warning restore 414
 
         private List<EBMLElement> unknown_elems = new List<EBMLElement> ();
@@ -73,10 +73,10 @@ namespace TagLib.Matroska
 
                         switch (matroska_id) {
                             case MatroskaID.MatroskaAudioChannels:
-                                channels = child.ReadUInt ();
+                                channels = child.ReadULong ();
                                 break;
                             case MatroskaID.MatroskaAudioBitDepth:
-                                depth = child.ReadUInt ();
+                                depth = child.ReadULong ();
                                 break;
                             case MatroskaID.MatroskaAudioSamplingFreq:
                                 rate = child.ReadDouble ();

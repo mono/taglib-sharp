@@ -53,10 +53,10 @@ namespace TagLib.Matroska
         #region Private fields
 
 #pragma warning disable 414 // Assigned, never used
-        private uint width;
-        private uint height;
-        private uint disp_width;
-        private uint disp_height;
+        private ulong width;
+        private ulong height;
+        private ulong disp_width;
+        private ulong disp_height;
         private double framerate;
         private bool interlaced;
         private VideoAspectRatioType ratio_type;
@@ -96,16 +96,16 @@ namespace TagLib.Matroska
 
                         switch (matroska_id) {
                             case MatroskaID.MatroskaVideoDisplayWidth:
-                                disp_width = child.ReadUInt ();
+                                disp_width = child.ReadULong ();
                                 break;
                             case MatroskaID.MatroskaVideoDisplayHeight:
-                                disp_height = child.ReadUInt ();
+                                disp_height = child.ReadULong ();
                                 break;
                             case MatroskaID.MatroskaVideoPixelWidth:
-                                width = child.ReadUInt ();
+                                width = child.ReadULong ();
                                 break;
                             case MatroskaID.MatroskaVideoPixelHeight:
-                                height = child.ReadUInt ();
+                                height = child.ReadULong ();
                                 break;
                             case MatroskaID.MatroskaVideoFrameRate:
                                 framerate = child.ReadDouble ();
@@ -114,7 +114,7 @@ namespace TagLib.Matroska
                                 interlaced = child.ReadBool ();
                                 break;
                             case MatroskaID.MatroskaVideoAspectRatioType:
-                                ratio_type = (VideoAspectRatioType) child.ReadUInt ();
+                                ratio_type = (VideoAspectRatioType) child.ReadULong ();
                                 break;
                             case MatroskaID.MatroskaVideoColourSpace:
                                 fourcc = child.ReadBytes ();
@@ -128,7 +128,7 @@ namespace TagLib.Matroska
                     }
                 }
                 else if (matroska_id == MatroskaID.MatroskaTrackDefaultDuration) {
-                    uint tmp = elem.ReadUInt ();
+                    ulong tmp = elem.ReadULong ();
                     framerate = 1000000000.0 / (double) tmp;
                 }
                 else {

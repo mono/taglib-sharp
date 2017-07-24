@@ -31,7 +31,33 @@ namespace TagLib.Tests.FileFormats
 //                    System.IO.File.Delete (tmp_file);
             }
         }
-        
+
+
+        public static void RemoveStandardTags(string sample_file, string tmp_file, TagTypes types = TagTypes.AllTags)
+        {
+            if (System.IO.File.Exists(tmp_file))
+                System.IO.File.Delete(tmp_file);
+
+            try
+            {
+                System.IO.File.Copy(sample_file, tmp_file);
+
+                File tmp = File.Create(tmp_file);
+                tmp.RemoveTags(types);
+
+                tmp.Save();
+
+                tmp = File.Create(tmp_file);
+                CheckNoTags(tmp.Tag);
+            }
+            finally
+            {
+                //                if (System.IO.File.Exists (tmp_file))
+                //                    System.IO.File.Delete (tmp_file);
+            }
+        }
+
+
         public static void SetTags (Tag tag)
         {
             tag.Album = "TEST album";
@@ -73,7 +99,35 @@ namespace TagLib.Tests.FileFormats
             Assert.AreEqual (99, tag.TrackCount);
             Assert.AreEqual (1999, tag.Year);
         }
-        
+
+
+        public static void CheckNoTags(Tag tag)
+        {
+            Assert.IsNull(tag.Album);
+            Assert.IsNull(tag.JoinedAlbumArtists);
+            Assert.IsNull(tag.Comment);
+            Assert.IsNull(tag.Conductor);
+            Assert.IsNull(tag.Copyright);
+            Assert.IsNull(tag.Grouping);
+            Assert.IsNull(tag.Lyrics);
+
+            Assert.AreEqual(0, tag.BeatsPerMinute);
+            Assert.AreEqual(0, tag.Disc);
+            Assert.AreEqual(0, tag.DiscCount);
+            Assert.AreEqual(0, tag.Track);
+            Assert.AreEqual(0, tag.TrackCount);
+            Assert.AreEqual(0, tag.Year);
+
+            Assert.IsTrue(string.IsNullOrEmpty(tag.JoinedComposers));
+            Assert.IsTrue(string.IsNullOrEmpty(tag.JoinedGenres));
+            Assert.IsTrue(string.IsNullOrEmpty(tag.JoinedPerformers));
+
+            Assert.IsNull(tag.Title);
+
+            Assert.IsTrue(tag.IsEmpty);
+        }
+
+
         public static void TestCorruptionResistance (string path)
         {
             try {

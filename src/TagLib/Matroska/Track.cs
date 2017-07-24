@@ -34,8 +34,8 @@ namespace TagLib.Matroska
         #region Private fields
 
 #pragma warning disable 414 // Assigned, never used
-        private uint track_number;
-        private uint track_uid;
+        private ulong track_number;
+        private ulong track_uid;
         private string track_codec_id;
         private string track_codec_name;
         private string track_name;
@@ -70,10 +70,10 @@ namespace TagLib.Matroska
 
                 switch (matroska_id) {
                     case MatroskaID.MatroskaTrackNumber:
-                        track_number = child.ReadUInt ();
+                        track_number = child.ReadULong ();
                         break;
                     case MatroskaID.MatroskaTrackUID:
-                        track_uid = child.ReadUInt ();
+                        track_uid = child.ReadULong ();
                         break;
                     case MatroskaID.MatroskaCodecID:
                         track_codec_id = child.ReadString ();

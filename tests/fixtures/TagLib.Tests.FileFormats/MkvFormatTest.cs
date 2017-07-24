@@ -27,21 +27,27 @@ namespace TagLib.Tests.FileFormats
         [Test]
         public void ReadTags()
         {
-            Assert.AreEqual("Avi album", file.Tag.Album);
-            Assert.AreEqual("Dan Drake", file.Tag.FirstAlbumArtist);
-            Assert.AreEqual("AVI artist", file.Tag.FirstPerformer);
-            Assert.AreEqual("AVI comment", file.Tag.Comment);
-            Assert.AreEqual("Brit Pop", file.Tag.FirstGenre);
-            Assert.AreEqual("AVI title", file.Tag.Title);
-            Assert.AreEqual(5, file.Tag.Track);
-            Assert.AreEqual(2005, file.Tag.Year);
+            Assert.AreEqual("Lime", file.Tag.FirstPerformer);
+            Assert.AreEqual("no comments", file.Tag.Comment);
+            Assert.AreEqual("Test", file.Tag.FirstGenre);
+            Assert.AreEqual("Turning Lime", file.Tag.Title);
+            Assert.AreEqual(2017, file.Tag.Year);
+            Assert.AreEqual("Starwer", file.Tag.FirstComposer);
+            Assert.AreEqual("Starwer", file.Tag.Conductor);
+            Assert.AreEqual("Starwer 2017", file.Tag.Copyright);
+
+            // Specific Matroska Tag test
+            var mkvTag = (Matroska.Tag)file.GetTag(TagTypes.Matroska);
+            Assert.AreEqual("This is a test Video showing a lime moving on a table", mkvTag.Custom["SUMMARY"][0]);
         }
 
         [Test]
         public void ReadPictures()
         {
             var pics = file.Tag.Pictures;
-            Assert.AreEqual("cover", pics[0].Description);
+            Assert.AreEqual("cover.png", pics[0].Description);
+            Assert.AreEqual(PictureType.FrontCover, pics[0].Type);
+            Assert.AreEqual("image/png", pics[0].MimeType);
         }
 
 
@@ -50,7 +56,13 @@ namespace TagLib.Tests.FileFormats
         {
             StandardTests.WriteStandardTags (sample_file, tmp_file);
         }
-        
+
+        [Test]
+        public void RemoveStandardTags()
+        {
+            StandardTests.RemoveStandardTags(sample_file, tmp_file);
+        }
+
         [Test]
         public void TestCorruptionResistance()
         {
