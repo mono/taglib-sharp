@@ -38,7 +38,7 @@ namespace TagLib.Tests.FileFormats
 
             // Specific Matroska Tag test
             var mkvTag = (Matroska.Tag)file.GetTag(TagTypes.Matroska);
-            Assert.AreEqual("This is a test Video showing a lime moving on a table", mkvTag.Custom["SUMMARY"][0]);
+            Assert.AreEqual("This is a test Video showing a lime moving on a table", mkvTag.SimpleTag["SUMMARY"][0]);
         }
 
         [Test]

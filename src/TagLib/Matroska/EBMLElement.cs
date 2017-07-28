@@ -3,6 +3,7 @@
 //
 // Author:
 //   Julien Moutte <julien@fluendo.com>
+//   Sebastien Mouy <starwer@laposte.net>
 //
 // Copyright (C) 2011 FLUENDO S.A.
 //

@@ -69,31 +69,31 @@ namespace TagLib.Matroska
                 MatroskaID matroska_id = (MatroskaID) child.ID;
 
                 switch (matroska_id) {
-                    case MatroskaID.MatroskaTrackNumber:
+                    case MatroskaID.TrackNumber:
                         track_number = child.ReadULong ();
                         break;
-                    case MatroskaID.MatroskaTrackUID:
+                    case MatroskaID.TrackUID:
                         track_uid = child.ReadULong ();
                         break;
-                    case MatroskaID.MatroskaCodecID:
+                    case MatroskaID.CodecID:
                         track_codec_id = child.ReadString ();
                         break;
-                    case MatroskaID.MatroskaCodecName:
+                    case MatroskaID.CodecName:
                         track_codec_name = child.ReadString ();
                         break;
-                    case MatroskaID.MatroskaTrackName:
+                    case MatroskaID.TrackName:
                         track_name = child.ReadString ();
                         break;
-                    case MatroskaID.MatroskaTrackLanguage:
+                    case MatroskaID.TrackLanguage:
                         track_language = child.ReadString ();
                         break;
-                    case MatroskaID.MatroskaTrackFlagEnabled:
+                    case MatroskaID.TrackFlagEnabled:
                         track_enabled = child.ReadBool ();
                         break;
-                    case MatroskaID.MatroskaTrackFlagDefault:
+                    case MatroskaID.TrackFlagDefault:
                         track_default = child.ReadBool ();
                         break;
-                    case MatroskaID.MatroskaCodecPrivate:
+                    case MatroskaID.CodecPrivate:
                         codec_data = child.ReadBytes ();
                         break;
                     default:

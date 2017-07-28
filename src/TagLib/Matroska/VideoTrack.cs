@@ -86,7 +86,7 @@ namespace TagLib.Matroska
             foreach (EBMLElement elem in base.UnknownElements) {
                 matroska_id = (MatroskaID) elem.ID;
 
-                if (matroska_id == MatroskaID.MatroskaTrackVideo) {
+                if (matroska_id == MatroskaID.TrackVideo) {
                     ulong i = 0;
 
                     while (i < elem.DataSize) {
@@ -95,28 +95,28 @@ namespace TagLib.Matroska
                         matroska_id = (MatroskaID) child.ID;
 
                         switch (matroska_id) {
-                            case MatroskaID.MatroskaVideoDisplayWidth:
+                            case MatroskaID.VideoDisplayWidth:
                                 disp_width = child.ReadULong ();
                                 break;
-                            case MatroskaID.MatroskaVideoDisplayHeight:
+                            case MatroskaID.VideoDisplayHeight:
                                 disp_height = child.ReadULong ();
                                 break;
-                            case MatroskaID.MatroskaVideoPixelWidth:
+                            case MatroskaID.VideoPixelWidth:
                                 width = child.ReadULong ();
                                 break;
-                            case MatroskaID.MatroskaVideoPixelHeight:
+                            case MatroskaID.VideoPixelHeight:
                                 height = child.ReadULong ();
                                 break;
-                            case MatroskaID.MatroskaVideoFrameRate:
+                            case MatroskaID.VideoFrameRate:
                                 framerate = child.ReadDouble ();
                                 break;
-                            case MatroskaID.MatroskaVideoFlagInterlaced:
+                            case MatroskaID.VideoFlagInterlaced:
                                 interlaced = child.ReadBool ();
                                 break;
-                            case MatroskaID.MatroskaVideoAspectRatioType:
+                            case MatroskaID.VideoAspectRatioType:
                                 ratio_type = (VideoAspectRatioType) child.ReadULong ();
                                 break;
-                            case MatroskaID.MatroskaVideoColourSpace:
+                            case MatroskaID.VideoColourSpace:
                                 fourcc = child.ReadBytes ();
                                 break;
                             default:
@@ -127,7 +127,7 @@ namespace TagLib.Matroska
                         i += child.Size;
                     }
                 }
-                else if (matroska_id == MatroskaID.MatroskaTrackDefaultDuration) {
+                else if (matroska_id == MatroskaID.TrackDefaultDuration) {
                     ulong tmp = elem.ReadULong ();
                     framerate = 1000000000.0 / (double) tmp;
                 }

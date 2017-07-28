@@ -5,7 +5,9 @@ namespace debug
 {
     class Program
     {
-        public static readonly string Samples = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(Program)).Location) + @"\..\..\..\tests\samples\";
+        public static readonly string Samples = 
+            Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(Program)).Location) 
+            + @"\..\..\..\tests\samples\";
 
         /// <summary>
         /// Ouput message on the console and on the Visual Studio Output
@@ -43,6 +45,12 @@ namespace debug
                 var tag = file.Tag;
                 var pics = file.Tag.Pictures;
 
+                //var mtag = (TagLib.Matroska.Tag)file.GetTag(TagLib.TagTypes.Matroska);
+                //mtag.SimpleTag.Remove("YEAR");
+                //tag.Year = 2017;
+                //file.Save();
+
+
                 log("    Picture            : " + pics[0].Description);
 
 
@@ -56,21 +64,21 @@ namespace debug
 
                 log("  Write : " + tag.Title);
                 tag.Album = "TEST album";
-                tag.AlbumArtists = new string[] { "TEST artist 1", "TEST artist 2" };
+                tag.AlbumArtists = new string[] { "TEST album artist 1", "TEST album artist 2" };
                 tag.BeatsPerMinute = 120;
                 tag.Comment = "TEST comment";
                 tag.Composers = new string[] { "TEST composer 1", "TEST composer 2" };
                 tag.Conductor = "TEST conductor";
                 tag.Copyright = "TEST copyright";
-                tag.Disc = 100;
-                tag.DiscCount = 101;
+                tag.Disc = 1;
+                tag.DiscCount = 2;
                 tag.Genres = new string[] { "TEST genre 1", "TEST genre 2" };
                 tag.Grouping = "TEST grouping";
                 tag.Lyrics = "TEST lyrics 1\r\nTEST lyrics 2";
                 tag.Performers = new string[] { "TEST performer 1", "TEST performer 2" };
                 tag.Title = "TEST title";
-                tag.Track = 98;
-                tag.TrackCount = 99;
+                tag.Track = 5;
+                tag.TrackCount = 10;
                 tag.Year = 1999;
 
                 file.Save();

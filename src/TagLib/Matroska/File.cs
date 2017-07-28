@@ -79,7 +79,7 @@ namespace TagLib.Matroska
         /// <summary>
         ///   Contains the tags for the file.
         /// </summary>
-        private Matroska.Tag tag;
+        private Matroska.Tags tags;
 
         /// <summary>
         ///    Contains the media properties.
@@ -92,12 +92,7 @@ namespace TagLib.Matroska
 
         private List<Track> tracks = new List<Track> ();
 
-        /// <summary>
-        /// Contains the tags to be written (still)
-        /// </summary>
-        private Dictionary<string, List<string>> writeTags;
-
-        private bool removeTags;
+        private bool updateTags = false;
 
         #endregion
 
@@ -167,9 +162,8 @@ namespace TagLib.Matroska
                      ReadStyle propertiesStyle)
             : base (abstraction)
         {
-            tag = new Matroska.Tag(this);
+            tags = new Matroska.Tags(this);
 
-            removeTags = false;
             Mode = AccessMode.Read;
 
             try {
@@ -187,6 +181,8 @@ namespace TagLib.Matroska
             }
 
             properties = new Properties (duration, codecs);
+
+            updateTags = true;
         }
 
         /// <summary>
@@ -222,15 +218,7 @@ namespace TagLib.Matroska
         {
             Mode = AccessMode.Write;
             try {
-                // Create a list of tags to create by cloning Dictionary / list
-                writeTags = new Dictionary<string, List<string>>(tag.Custom.Count);
-                foreach (var tag in tag.Custom)
-                {
-                    // Make sure tag ID is in upper-case
-                    writeTags[tag.Key.ToUpper()] = new List<string>(tag.Value);
-                }
                 ReadWrite(ReadStyle.None);
-                removeTags = false;
             }
             finally {
                 Mode = AccessMode.Closed;
@@ -252,8 +240,7 @@ namespace TagLib.Matroska
         {
             if((types & TagTypes.Matroska) !=0)
             {
-                tag.Clear();
-                removeTags = true; // enable erasing all tags
+                tags.Clear();
             }
         }
 
@@ -279,7 +266,7 @@ namespace TagLib.Matroska
                                            bool create)
         {
             TagLib.Tag ret = null;
-            if (type == TagTypes.Matroska) ret = tag;
+            if (type == TagTypes.Matroska) ret = Tag;
             return ret;
         }
 
@@ -299,7 +286,27 @@ namespace TagLib.Matroska
         /// </value>
         public override TagLib.Tag Tag
         {
-            get { return tag; }
+            get
+            {
+                if(updateTags)
+                {
+                    var retag = tags.ToArray();
+                    foreach (var tag in retag)
+                    {
+                        // This will force the default TagetTypeValue to get a proper value according to the medium type (audio/video)
+                        if (tag.TargetTypeValue == 0) tags.Add(tag);
+                    }
+                    updateTags = false;
+                }
+
+                // Add Empty Tag representing the Medium to avoid null object
+                if (tags.Medium == null)
+                {
+                    new Matroska.Tag(tags); 
+                }
+
+                return tags.Medium;
+            }
         }
 
         /// <summary>
@@ -326,67 +333,22 @@ namespace TagLib.Matroska
         /// <summary>
         /// Add a Tag
         /// </summary>
-        /// <param name="key">Tag name</param>
-        /// <param name="value">Tag value</param>
-        private void TagPush(string key, string value)
+        /// <param name="tag">Tag Object</param>
+        /// <param name="key">TagName value</param>
+        /// <param name="value">TagString value</param>
+        private void TagPush(Tag tag, string key, string value)
         {
             List<string> list = null;
 
-            if(tag.Custom.ContainsKey(key))
-                list = tag.Custom[key];
+            if(tag.SimpleTag.ContainsKey(key))
+                list = tag.SimpleTag[key];
 
             if (list == null)
-                tag.Custom[key] = list = new List<string>(1);
+                tag.SimpleTag[key] = list = new List<string>(1);
 
             list.Add(value);
         }
-
-        /// <summary>
-        /// Get and remove a Tag from the list of tags to be written.
-        /// </summary>
-        /// <param name="key">Tag name,  or take first element if null (default)</param>
-        /// <returns>Tag value</returns>
-        private string TagPop(string key)
-        {
-            string ret = null;
-            List<string> list;
-
-            if (writeTags.TryGetValue(key, out list))
-            {
-                if (list != null)
-                {
-                    if (list.Count > 0)
-                    {
-                        ret = list[0];
-                        list.RemoveAt(0);
-                    }
-
-                    if (list.Count == 0)
-                    {
-                        writeTags.Remove(key);
-                    }
-                }
-            }
-
-            return ret;
-        }
-
-        private string TagPop(out string key)
-        {
-            string ret;
-            if (writeTags.Count == 0)
-            {
-                key = null;
-                ret = null;
-            }
-            else
-            {
-                key = writeTags.First().Key;
-                ret = TagPop(key);
-            }
-            return ret;
-        }
-
+        
 
         /// <summary>
         ///    Reads (and Write, if file Mode is Write) the file with a specified read style.
@@ -415,7 +377,7 @@ namespace TagLib.Matroska
                         break;
                 }
                 switch (matroska_id) {
-                    case MatroskaID.MatroskaSegment:
+                    case MatroskaID.Segment:
                         ret += ReadWriteSegment(element, propertiesStyle);
                         break;
                     default:
@@ -468,7 +430,7 @@ namespace TagLib.Matroska
                 bool seek = true;
 
                 switch (matroska_id) {
-                    case MatroskaID.MatroskaSeekHead:
+                    case MatroskaID.SeekHead:
                         if (ebml_seek == null && i == 0)
                         {
                             ebml_seek = child;
@@ -481,26 +443,26 @@ namespace TagLib.Matroska
                         }
                         seek = false;
                         break;
-                    case MatroskaID.MatroskaTracks:
+                    case MatroskaID.Tracks:
                         if(propertiesStyle != ReadStyle.None) ReadTracks (child);
                         break;
-                    case MatroskaID.MatroskaSegmentInfo:
+                    case MatroskaID.SegmentInfo:
                         ret += ReadWriteSegmentInfo(child);
                         break;
-                    case MatroskaID.MatroskaTags:
-                        if (Mode == AccessMode.Write && removeTags)
+                    case MatroskaID.Tags:
+                        if (Mode == AccessMode.Write)
                         {
                             ret += child.Remove(); // Remove all Tags
                             continue;
                         }
-                        ret += ReadWriteTags(child);
+                        ReadTags(child);
                         break;
-                    case MatroskaID.MatroskaAttachments:
+                    case MatroskaID.Attachments:
                         ret += ReadWriteAttachments(child);
                         break;
-                    case MatroskaID.MatroskaCluster:
+                    case MatroskaID.Cluster:
                         break;
-                    case MatroskaID.MatroskaVoid:
+                    case MatroskaID.Void:
                         if (ebml_seek_end == i) ebml_seek_end += child.Size; // take on void
                         seek = false;
                         break;
@@ -517,11 +479,11 @@ namespace TagLib.Matroska
             {
                 i += element.DataOffset;
 
-                // Create EBML Tags
-                if (writeTags != null && writeTags.Count > 0)
+                // Create EBML Tags if Tag available
+                if (tags.Count > 0 && (tags.Count>1 || !tags[0].IsEmpty))
                 {
-                    var ebml_tags = new EBMLElement(this, i, MatroskaID.MatroskaTags);
-                    ReadWriteTags(ebml_tags);
+                    var ebml_tags = new EBMLElement(this, i, MatroskaID.Tags);
+                    WriteTags(ebml_tags);
                     ret += (long)ebml_tags.Size;
                     i += ebml_tags.Size;
                     segm_list.Add(ebml_tags);
@@ -550,7 +512,7 @@ namespace TagLib.Matroska
 
             // Replace old SeekHead by new one
             if(oldsize>0) RemoveBlock((long)position, oldsize);
-            var element = new EBMLElement(this, position, MatroskaID.MatroskaSeekHead);
+            var element = new EBMLElement(this, position, MatroskaID.SeekHead);
             position = element.DataOffset;
 
 
@@ -559,14 +521,14 @@ namespace TagLib.Matroska
             {
                 ulong i = position;
 
-                var seekEntry = new EBMLElement(this, i, MatroskaID.MatroskaSeek);
+                var seekEntry = new EBMLElement(this, i, MatroskaID.Seek);
                 i += seekEntry.Size;
 
-                var seekId = new EBMLElement(this, i, MatroskaID.MatroskaSeekID);
+                var seekId = new EBMLElement(this, i, MatroskaID.SeekID);
                 seekId.WriteData(segm.ID);
                 i += seekId.Size;
 
-                var seekPosition = new EBMLElement(this, i, MatroskaID.MatroskaSeekPosition);
+                var seekPosition = new EBMLElement(this, i, MatroskaID.SeekPosition);
                 seekPosition.WriteData((ulong)((long)segm.Offset + offset));
                 i += seekPosition.Size;
 
@@ -590,7 +552,7 @@ namespace TagLib.Matroska
         {
             if (size<2) throw new UnsupportedFormatException("Invalid size for WriteVoid");
 
-            var element = new EBMLElement(this, position, MatroskaID.MatroskaVoid);
+            var element = new EBMLElement(this, position, MatroskaID.Void);
             element.DataSize = (ulong)size;
             element.DataSize = 0;
             element.WriteData(new ByteVector(size - (int)element.Size));
@@ -614,10 +576,10 @@ namespace TagLib.Matroska
 
                 switch (matroska_id)
                 {
-                    case MatroskaID.MatroskaSeekID:
+                    case MatroskaID.SeekID:
                         ebml_id = child;
                         break;
-                    case MatroskaID.MatroskaSeekPosition:
+                    case MatroskaID.SeekPosition:
                         ebml_position = child;
                         break;
                     default:
@@ -661,21 +623,48 @@ namespace TagLib.Matroska
         }
 
 
-
-
-        private long ReadWriteTags (EBMLElement element)
+        private void ReadTags (EBMLElement element)
         {
-            long ret = 0;
             ulong i = 0;
 
-            while (i < (ulong)((long)element.DataSize + ret)) {
+            while (i < (ulong)((long)element.DataSize)) {
                 EBMLElement child = new EBMLElement (this, element.DataOffset + i);
 
                 MatroskaID matroska_id = (MatroskaID) child.ID;
 
                 switch (matroska_id) {
-                    case MatroskaID.MatroskaTag:
-                        ret += ReadWriteTag(child);
+                    case MatroskaID.Tag:
+                        ReadTag(child);
+                        break;
+                    default:
+                        break;
+                }
+
+                i += child.Size;
+            }
+        }
+
+
+        private void ReadTag(EBMLElement element)
+        {
+            ulong i = 0;
+
+            // Create new Tag
+            var tag = new Matroska.Tag(tags);
+
+            while (i < (ulong)((long)element.DataSize))
+            {
+                EBMLElement child = new EBMLElement(this, element.DataOffset + i);
+
+                MatroskaID matroska_id = (MatroskaID)child.ID;
+
+                switch (matroska_id)
+                {
+                    case MatroskaID.Targets:
+                        ReadTargets(child, tag);
+                        break;
+                    case MatroskaID.SimpleTag:
+                        ReadSimpleTag(child, tag);
                         break;
                     default:
                         break;
@@ -684,180 +673,18 @@ namespace TagLib.Matroska
                 i += child.Size;
             }
 
-            if (Mode == AccessMode.Write)
-            {
-                // Create new EBML Tag
-                if(writeTags != null && writeTags.Count>0)
-                {
-                    i += element.DataOffset;
-
-                    // Create new EBML Tag
-                    var ebml_tag = new EBMLElement(this, i, MatroskaID.MatroskaTag);
-                    i += ebml_tag.Size;
-
-                    // Insert mandatory EBML Targets (empty: default, i.e. 50)
-                    var ebml_targets = new EBMLElement(this, i, MatroskaID.MatroskaTargets, "");
-                    i += ebml_targets.Size;
-
-                    ebml_tag.DataSize = ebml_targets.Size;
-                    ReadWriteTag(ebml_tag);
-                    ret += (long)ebml_tag.Size;
-                }
-
-                // Update Element EBML data-size
-                ret = element.ResizeData(ret);
-            }
-
-            return ret;
         }
 
 
-        private long ReadWriteTag (EBMLElement element)
+        private void ReadTargets(EBMLElement element, Tag tag)
         {
-            long ret = 0;
             ulong i = 0;
-            bool thisMedium = true;
 
-            // TODO: Handle all TargetTypes properly
-
-            while (i < (ulong)((long)element.DataSize + ret)) {
-                EBMLElement child = new EBMLElement (this, element.DataOffset + i);
-
-                MatroskaID matroska_id = (MatroskaID) child.ID;
-
-                switch (matroska_id) {
-                    case MatroskaID.MatroskaTargets:
-                        thisMedium = ReadTargets(child);
-                        // Read-Write global tags only. We assume that the Targets *always* preeceeds the SimpleTag
-                        if (!thisMedium) return ret; // Skip this Tag
-                        break;
-                    case MatroskaID.MatroskaSimpleTag:
-                        ret += ReadWriteSimpleTag(child);
-                        break;
-                    default:
-                        break;
-                }
-
-                i += child.Size;
-            }
-
-            if (Mode == AccessMode.Write && thisMedium)
-            {
-                // Add remaining Simple tags to write
-                if (writeTags != null && writeTags.Count > 0)
-                {
-                    i += element.DataOffset;
-
-                    string value, key;
-                    while ((value = TagPop(out key)) != null) {
-
-                        var ebml_Simpletag = new EBMLElement(this, i, MatroskaID.MatroskaSimpleTag);
-                        i += ebml_Simpletag.Size;
-
-                        var ebml_tagName = new EBMLElement(this, i, MatroskaID.MatroskaTagName, key);
-                        i += ebml_tagName.Size;
-                        var ebml_tagLanguage = new EBMLElement(this, i, MatroskaID.MatroskaTagLanguage, "und");
-                        i += ebml_tagLanguage.Size;
-                        var ebml_tagDefault = new EBMLElement(this, i, MatroskaID.MatroskaTagDefault, (ulong)1);
-                        i += ebml_tagDefault.Size;
-                        var ebml_tagString = new EBMLElement(this, i, MatroskaID.MatroskaTagString, value);
-                        i += ebml_tagString.Size;
-
-                        ebml_Simpletag.DataSize = ebml_tagName.Size + ebml_tagString.Size + ebml_tagLanguage.Size + ebml_tagDefault.Size;
-                        i = ebml_Simpletag.Offset + ebml_Simpletag.Size;
-                        ret += (long)ebml_Simpletag.Size;
-                    }
-
-                    writeTags = null;
-                }
-
-                // Update Element EBML data-size
-                ret = element.ResizeData(ret);
-            }
-
-            return ret;
-        }
-
-        private long ReadWriteSimpleTag (EBMLElement element)
-        {
-            long ret = 0;
-            ulong i = 0;
-#pragma warning disable 219 // Assigned, never read
-            string tag_name = null, tag_language = null, tag_string = null;
-#pragma warning restore 219
-            bool isBinary = false;
-
-            // For overwritting EBML string/binary (mutex)
-            EBMLElement ebml_string = null;
-
-            while (i < (ulong)((long)element.DataSize + ret)) {
-                EBMLElement child = new EBMLElement (this, element.DataOffset + i);
-
-                MatroskaID matroska_id = (MatroskaID) child.ID;
-
-                switch (matroska_id) {
-                    case MatroskaID.MatroskaTagName:
-                        tag_name = child.ReadString ();
-                        break;
-                    case MatroskaID.MatroskaTagLanguage:
-                        tag_language = child.ReadString ();
-                        break;
-                    case MatroskaID.MatroskaTagString:
-                        ebml_string = child;
-                        tag_string = child.ReadString ();
-                        break;
-                    case MatroskaID.MatroskaTagBinary:
-                        if(ebml_string==null) ebml_string = child;
-                        isBinary = true;
-                        break;
-                    default:
-                        break;
-                }
-
-                i += child.Size;
-            }
-
-            if (Mode == AccessMode.Write)
-            {
-                string val;
-                if ((val = TagPop(tag_name)) != null) {
-
-                    if (ebml_string == null)
-                    {
-                        // Create the missing EBML string at the end for the current element
-                        ebml_string = new EBMLElement(this, element.Offset + element.Size, MatroskaID.MatroskaTagString, val);
-                        ret += (long)ebml_string.Size;
-                    }
-                    else if (tag_string != val)
-                    {
-                        // Replace existing string inside the EBML string
-                        if(isBinary) ebml_string.ID = (uint)MatroskaID.MatroskaTagString;
-                        ret += ebml_string.WriteData(val);
-                    }
-
-                    // Update Element EBML data-size
-                    ret = element.ResizeData(ret);
-                }
-                else if (!isBinary) // Preserve Binary Tag
-                {
-                    // Remove EBML Tag
-                    ret += element.Remove();
-                }
-            }
-            else if (!isBinary) // Binary Tag not handled
-            {
-                TagPush(tag_name, tag_string);
-            }
-
-            return ret;
-        }
-
-        private bool ReadTargets(EBMLElement element)
-        {
-            bool subselection = false;
-            bool ret = false;
-            uint target = 0;
-            ulong i = 0;
+            string targetType = null;
+            var TrackUID = new List<ulong>();
+            var EditionUID = new List<ulong>();
+            var ChapterUID = new List<ulong>();
+            var AttachmentUID = new List<ulong>();
 
             while (i < element.DataSize)
             {
@@ -867,14 +694,23 @@ namespace TagLib.Matroska
 
                 switch (matroska_id)
                 {
-                    case MatroskaID.MatroskaTargetTypeValue:
-                        target = (uint)child.ReadULong();
+                    case MatroskaID.TargetTypeValue:
+                        tag.TargetTypeValue = (ushort)child.ReadULong();
                         break;
-                    case MatroskaID.MatroskaTagTrackUID:
-                    case MatroskaID.MatroskaTagEditionUID:
-                    case MatroskaID.MatroskaTagChapterUID:
-                    case MatroskaID.MatroskaTagAttachmentUID:
-                        subselection = true;
+                    case MatroskaID.TargetType:
+                        targetType = child.ReadString();
+                        break;
+                    case MatroskaID.TagTrackUID:
+                        TrackUID.Add(child.ReadULong());
+                        break;
+                    case MatroskaID.TagEditionUID:
+                        EditionUID.Add(child.ReadULong());
+                        break;
+                    case MatroskaID.TagChapterUID:
+                        ChapterUID.Add(child.ReadULong());
+                        break;
+                    case MatroskaID.TagAttachmentUID:
+                        AttachmentUID.Add(child.ReadULong());
                         break;
                     default:
                         break;
@@ -883,22 +719,195 @@ namespace TagLib.Matroska
                 i += child.Size;
             }
 
-            // Lower level not targeting subselection is the Tag representing the file
-            if (!subselection)
+            tag.TargetType = targetType;
+            if (TrackUID.Count > 0) tag.TrackUID = TrackUID.ToArray();
+            if (EditionUID.Count > 0) tag.EditionUID = EditionUID.ToArray();
+            if (ChapterUID.Count > 0) tag.ChapterUID = ChapterUID.ToArray();
+            if (AttachmentUID.Count > 0) tag.AttachmentUID = AttachmentUID.ToArray();
+
+        }
+
+
+        private void ReadSimpleTag(EBMLElement element, Tag tag)
+        {
+            ulong i = 0;
+#pragma warning disable 219 // Assigned, never read
+            string tag_name = null, tag_language = null, tag_string = null;
+#pragma warning restore 219
+            bool isBinary = false;
+
+            // For overwritting EBML string/binary (mutex)
+            EBMLElement ebml_string = null;
+
+            while (i < (ulong)((long)element.DataSize))
             {
-                if (Mode == AccessMode.Write)
+                EBMLElement child = new EBMLElement(this, element.DataOffset + i);
+
+                MatroskaID matroska_id = (MatroskaID)child.ID;
+
+                switch (matroska_id)
                 {
-                    ret = target == tag.TargetType;
+                    case MatroskaID.TagName:
+                        tag_name = child.ReadString();
+                        break;
+                    case MatroskaID.TagLanguage:
+                        tag_language = child.ReadString();
+                        break;
+                    case MatroskaID.TagString:
+                        ebml_string = child;
+                        tag_string = child.ReadString();
+                        break;
+                    case MatroskaID.TagBinary:
+                        if (ebml_string == null) ebml_string = child;
+                        isBinary = true;
+                        break;
+                    case MatroskaID.SimpleTag:
+                        // TODO: SimpleTag recursion
+                        break;
+                    default:
+                        break;
                 }
-                else if(target < tag.TargetType || tag.TargetType == 0)
+
+                i += child.Size;
+            }
+
+            if (!isBinary) // Binary Tag not handled
+            {
+                TagPush(tag, tag_name, tag_string);
+            }
+
+        }
+
+        private void WriteTags(EBMLElement element)
+        {
+            ulong i = element.DataOffset;
+
+            foreach (var tag in tags)
+            {
+                // Create new EBML Tag
+                var ebml_tag = new EBMLElement(this, i, MatroskaID.Tag);
+
+                // Write Tag content
+                WriteTag(ebml_tag, tag);
+
+                i += ebml_tag.Size;
+            }
+
+            // Update Tags EBML data-size
+            element.DataSize = i - element.DataOffset;
+
+        }
+
+
+        private void WriteTag(EBMLElement element, Tag tag)
+        {
+            ulong i = element.DataOffset;
+
+            // Write Targets
+            var ebml_targets = new EBMLElement(this, i, MatroskaID.Targets);
+            WriteTargets(ebml_targets, tag);
+            i += ebml_targets.Size;
+
+            // Extract the SimpleTag from the Tag object
+            foreach( var stagList in tag.SimpleTag)
+            {
+                string key = stagList.Key;
+                foreach (var stag in stagList.Value)
                 {
-                    tag.TargetType = target;
-                    ret = true;
+                    var ebml_Simpletag = new EBMLElement(this, i, MatroskaID.SimpleTag);
+                    WriteSimpleTag(ebml_Simpletag, key, stag);
+                    i += ebml_Simpletag.Size;
                 }
             }
 
-            return ret;
+            // Update Tag EBML data-size
+            element.DataSize = i - element.DataOffset;
         }
+
+
+        private void WriteSimpleTag (EBMLElement element, string key, string value)
+        {
+            ulong i = element.DataOffset;
+
+            // Write SimpleTag content
+            var ebml_tagName = new EBMLElement(this, i, MatroskaID.TagName, key);
+            i += ebml_tagName.Size;
+
+            var ebml_tagLanguage = new EBMLElement(this, i, MatroskaID.TagLanguage, "und");
+            i += ebml_tagLanguage.Size;
+
+            var ebml_tagDefault = new EBMLElement(this, i, MatroskaID.TagDefault, (ulong)1);
+            i += ebml_tagDefault.Size;
+
+            var ebml_tagString = new EBMLElement(this, i, MatroskaID.TagString, value);
+            i += ebml_tagString.Size;
+
+            // TODO: SimpleTag Recursion
+
+
+            // Update Tag EBML data-size
+            element.DataSize = i - element.DataOffset;
+        }
+
+
+        private void WriteTargets(EBMLElement element, Tag tag)
+        {
+            ulong i = element.DataOffset;
+
+            // Write Targets content
+
+            if (tag.TargetTypeValue > 0) 
+            {
+                var ebml_targetTypeValue = new EBMLElement(this, i, MatroskaID.TargetTypeValue, tag.TargetTypeValue);
+                i += ebml_targetTypeValue.Size;
+            }
+
+            if (tag.TargetType != null)
+            {
+                var ebml_targetType = new EBMLElement(this, i, MatroskaID.TargetType, tag.TargetType);
+                i += ebml_targetType.Size;
+            }
+
+            if (tag.TrackUID != null)
+            {
+                foreach (var value in tag.TrackUID)
+                {
+                    var ebml_targetUID = new EBMLElement(this, i, MatroskaID.TagTrackUID, value);
+                    i += ebml_targetUID.Size;
+                }
+            }
+
+            if (tag.EditionUID != null)
+            {
+                foreach (var value in tag.EditionUID)
+                {
+                    var ebml_targetUID = new EBMLElement(this, i, MatroskaID.TagEditionUID, value);
+                    i += ebml_targetUID.Size;
+                }
+            }
+
+            if (tag.ChapterUID != null)
+            {
+                foreach (var value in tag.ChapterUID)
+                {
+                    var ebml_targetUID = new EBMLElement(this, i, MatroskaID.TagChapterUID, value);
+                    i += ebml_targetUID.Size;
+                }
+            }
+
+            if (tag.AttachmentUID != null)
+            {
+                foreach (var value in tag.AttachmentUID)
+                {
+                    var ebml_targetUID = new EBMLElement(this, i, MatroskaID.TagAttachmentUID, value);
+                    i += ebml_targetUID.Size;
+                }
+            }
+
+            // Update Tag EBML data-size
+            element.DataSize = i - element.DataOffset;
+        }
+
 
 
         private long ReadWriteAttachments(EBMLElement element)
@@ -914,7 +923,7 @@ namespace TagLib.Matroska
 
                 switch (matroska_id)
                 {
-                    case MatroskaID.MatroskaAttachedFile:
+                    case MatroskaID.AttachedFile:
                         ReadAttachedFile(child);
                         break;
                     default:
@@ -943,16 +952,16 @@ namespace TagLib.Matroska
 
                 switch (matroska_id)
                 {
-                    case MatroskaID.MatroskaFileName:
+                    case MatroskaID.FileName:
                         file_name = child.ReadString();
                         break;
-                    case MatroskaID.MatroskaFileMimeType:
+                    case MatroskaID.FileMimeType:
                         file_mime = child.ReadString();
                         break;
-                    case MatroskaID.MatroskaFileDescription:
+                    case MatroskaID.FileDescription:
                         file_desc = child.ReadString();
                         break;
-                    case MatroskaID.MatroskaFileData:
+                    case MatroskaID.FileData:
                         file_data = child.ReadBytes();
                         break;
                     default:
@@ -964,7 +973,7 @@ namespace TagLib.Matroska
 
             if (file_mime != null && file_name!=null && file_data!=null && file_mime.StartsWith("image/"))
             {
-                List<IPicture> pictures = tag.Pictures.ToList();
+                List<IPicture> pictures = tags.Pictures.ToList();
 
                 var pic = new Picture(file_data);
                 pic.Description = file_name;
@@ -988,7 +997,7 @@ namespace TagLib.Matroska
                 }
 
                 pictures.Add(pic);
-                tag.Pictures = pictures.ToArray();
+                tags.Pictures = pictures.ToArray();
             }
 
         }
@@ -998,7 +1007,6 @@ namespace TagLib.Matroska
             long ret = 0;
             ulong i = 0;
 
-            const string tag_name = "TITLE";
             string tag_string = null;
             EBMLElement ebml_string = null;
 
@@ -1011,21 +1019,21 @@ namespace TagLib.Matroska
 
                 switch (matroska_id)
                 {
-                    case MatroskaID.MatroskaDuration:
+                    case MatroskaID.Duration:
                         duration_unscaled = (UInt64)child.ReadDouble();
                         if (time_scale > 0)
                         {
                             duration = TimeSpan.FromSeconds(duration_unscaled * time_scale / 1000000000);
                         }
                         break;
-                    case MatroskaID.MatroskaTimeCodeScale:
+                    case MatroskaID.TimeCodeScale:
                         time_scale = child.ReadULong();
                         if (duration_unscaled > 0)
                         {
                             duration = TimeSpan.FromSeconds(duration_unscaled * time_scale / 1000000000);
                         }
                         break;
-                    case MatroskaID.MatroskaTitle:
+                    case MatroskaID.Title:
                         ebml_string = child;
                         tag_string = child.ReadString();
                         break;
@@ -1038,19 +1046,20 @@ namespace TagLib.Matroska
 
             if (Mode == AccessMode.Write)
             {
-                string val;
-                if ((val = TagPop(tag_name)) != null)
+                // Write SegmentInfo Title
+                string title = tags.Title;
+                if (title != null)
                 {
                     if (ebml_string == null)
                     {
                         // Create the missing EBML string at the end for the current element
-                        ebml_string = new EBMLElement(this, element.Offset + element.Size, MatroskaID.MatroskaTitle, val);
+                        ebml_string = new EBMLElement(this, element.Offset + element.Size, MatroskaID.Title, title);
                         ret += (long)ebml_string.Size;
                     }
-                    else if (tag_string != val)
+                    else if (tag_string != title)
                     {
                         // Replace existing string inside the EBML string
-                        ret += ebml_string.WriteData(val);
+                        ret += ebml_string.WriteData(title);
                     }
                 }
                 else if (ebml_string != null)
@@ -1063,7 +1072,7 @@ namespace TagLib.Matroska
             }
             else
             {
-                if (tag_string != null) TagPush(tag_name, tag_string);
+                tags.Title = tag_string;
             }
 
             return ret;
@@ -1079,7 +1088,7 @@ namespace TagLib.Matroska
                 MatroskaID matroska_id = (MatroskaID) child.ID;
 
                 switch (matroska_id) {
-                    case MatroskaID.MatroskaTrackEntry:
+                    case MatroskaID.TrackEntry:
                         ReadTrackEntry (child);
                         break;
                     default:
@@ -1100,7 +1109,7 @@ namespace TagLib.Matroska
                 MatroskaID matroska_id = (MatroskaID) child.ID;
 
                 switch (matroska_id) {
-                    case MatroskaID.MatroskaTrackType: {
+                    case MatroskaID.TrackType: {
                             TrackType track_type = (TrackType) child.ReadULong ();
 
                             switch (track_type) {

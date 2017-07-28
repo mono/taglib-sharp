@@ -63,7 +63,7 @@ namespace TagLib.Matroska
 
                 matroska_id = (MatroskaID) elem.ID;
 
-                if (matroska_id == MatroskaID.MatroskaTrackAudio) {
+                if (matroska_id == MatroskaID.TrackAudio) {
                     ulong i = 0;
 
                     while (i < elem.DataSize) {
@@ -72,13 +72,13 @@ namespace TagLib.Matroska
                         matroska_id = (MatroskaID) child.ID;
 
                         switch (matroska_id) {
-                            case MatroskaID.MatroskaAudioChannels:
+                            case MatroskaID.AudioChannels:
                                 channels = child.ReadULong ();
                                 break;
-                            case MatroskaID.MatroskaAudioBitDepth:
+                            case MatroskaID.AudioBitDepth:
                                 depth = child.ReadULong ();
                                 break;
-                            case MatroskaID.MatroskaAudioSamplingFreq:
+                            case MatroskaID.AudioSamplingFreq:
                                 rate = child.ReadDouble ();
                                 break;
                             default:
