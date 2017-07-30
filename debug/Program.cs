@@ -45,8 +45,8 @@ namespace debug
                 var tag = file.Tag;
                 var pics = file.Tag.Pictures;
 
-                //var mtag = (TagLib.Matroska.Tag)file.GetTag(TagLib.TagTypes.Matroska);
-                //mtag.SimpleTag.Remove("YEAR");
+                var mtag = (TagLib.Matroska.Tag)file.GetTag(TagLib.TagTypes.Matroska);
+                mtag.PerformersRole = new string[] { "TEST role 1", "TEST role 2" };
                 //tag.Year = 2017;
                 //file.Save();
 
@@ -54,15 +54,22 @@ namespace debug
                 log("    Picture            : " + pics[0].Description);
 
 
-                log("  Erase : " + tag.Title);
-
-                file.RemoveTags(TagLib.TagTypes.Matroska);
-                file.Save();
+                //log("  Erase : " + tag.Title);
+                //file.RemoveTags(TagLib.TagTypes.Matroska);
+                //file.Save();
 
                 log("    IsEmpty            : " + tag.IsEmpty);
 
 
                 log("  Write : " + tag.Title);
+
+                tag.TitleSort = "title, TEST";
+                tag.AlbumSort = "album, TEST";
+                tag.PerformersSort = new string[] { "performer 1, TEST", "performer 2, TEST" };
+                tag.ComposersSort = new string[] { "composer 1, TEST", "composer 2, TEST" };
+                tag.AlbumArtistsSort = new string[] { "album artist 1, TEST", "album artist 2, TEST" };
+
+
                 tag.Album = "TEST album";
                 tag.AlbumArtists = new string[] { "TEST album artist 1", "TEST album artist 2" };
                 tag.BeatsPerMinute = 120;
@@ -81,6 +88,8 @@ namespace debug
                 tag.TrackCount = 10;
                 tag.Year = 1999;
 
+
+
                 file.Save();
 
 
@@ -89,6 +98,7 @@ namespace debug
                 // Now read it again
                 file = TagLib.File.Create(tpath);
                 tag = file.Tag;
+                mtag = (TagLib.Matroska.Tag)file.GetTag(TagLib.TagTypes.Matroska);
 
                 log("  Read  : " + tag.Title);
 
@@ -109,6 +119,15 @@ namespace debug
                 log("    Track              : " + tag.Track);
                 log("    TrackCount         : " + tag.TrackCount);
                 log("    Year               : " + tag.Year);
+
+                log("    TitleSort          : " + tag.TitleSort);
+                log("    AlbumSort          : " + tag.AlbumSort);
+                log("    PerformersSort     : " + tag.JoinedPerformersSort);
+                log("    ComposersSort      : " + string.Join("; ", tag.ComposersSort));
+                log("    AlbumArtistsSort   : " + string.Join("; ", tag.AlbumArtistsSort));
+
+
+                log("    PerformersRole     : " + string.Join("; ", mtag.PerformersRole));
 
                 log("  Done  : " + tag.Title);
             }

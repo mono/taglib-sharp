@@ -738,7 +738,7 @@ namespace TagLib.Matroska
                         stag.Value = child.ReadBytes();
                         break;
                     case MatroskaID.SimpleTag:
-                        ReadSimpleTag(element, null, stag);
+                        ReadSimpleTag(child, null, stag);
                         break;
                     default:
                         break;

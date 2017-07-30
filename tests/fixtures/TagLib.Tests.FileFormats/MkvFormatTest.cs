@@ -57,6 +57,66 @@ namespace TagLib.Tests.FileFormats
             StandardTests.WriteStandardTags (sample_file, tmp_file);
         }
 
+
+        [Test]
+        public void WriteMediumTags()
+        {
+            StandardTests.WriteStandardTags(sample_file, tmp_file, StandardTests.TestTagLevel.Medium);
+        }
+
+
+        [Test]
+        public void SpecificTags()
+        {
+            if (System.IO.File.Exists(tmp_file))
+                System.IO.File.Delete(tmp_file);
+            File file = null;
+            try
+            {
+                System.IO.File.Copy(sample_file, tmp_file);
+                file = File.Create(tmp_file);
+            }
+            finally {}
+
+            // Write Matroska-specific tags 
+            Assert.NotNull(file);
+
+            var mtag = (TagLib.Matroska.Tag)file.GetTag(TagLib.TagTypes.Matroska);
+            Assert.NotNull(mtag);
+
+            mtag.PerformersRole = new string[] { "TEST role 1", "TEST role 2" };
+            mtag.Set("CHOREGRAPHER", null, "TEST choregrapher");
+
+            // Retrieve Matroska 'Tags' structure
+            var mtags = mtag.Tags;
+
+            // Add a Matroska 'Tag' structure in the 'Tags' structure
+            var album = new Matroska.Tag(mtags, 70);
+
+            // Add a Matroska 'SimpleTag' (TagName: 'ARRANGER') in the 'Tag' structure
+            album.Set("ARRANGER", null, "TEST arranger");
+
+            // Add a Matroska 'SimpleTag' (TagName: 'TITLE') in the 'Tag' structure
+            album.Set("TITLE", null, "TEST Album title"); // This should map to the standard Album tag
+
+
+            file.Save();
+
+            // Read back the Matroska-specific tags 
+            file = File.Create(tmp_file);
+            Assert.NotNull(mtag);
+
+            mtag = (TagLib.Matroska.Tag)file.GetTag(TagLib.TagTypes.Matroska);
+            Assert.NotNull(mtag);
+
+            Assert.AreEqual("TEST role 1; TEST role 2", string.Join("; ", mtag.PerformersRole));
+            Assert.AreEqual("TEST choregrapher", mtag.Get("CHOREGRAPHER", null)[0]);
+            Assert.AreEqual("TEST arranger", mtags.Album.Get("ARRANGER", null)[0]);
+            Assert.AreEqual("TEST Album title", mtag.Album);
+        }
+
+
+
         [Test]
         public void RemoveStandardTags()
         {

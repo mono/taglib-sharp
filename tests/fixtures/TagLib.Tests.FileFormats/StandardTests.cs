@@ -6,13 +6,22 @@ namespace TagLib.Tests.FileFormats
 {   
     public static class StandardTests
     {
+
+        public enum TestTagLevel
+        {
+            Normal,
+            Medium
+        }
+
+
+
         public static void ReadAudioProperties (File file)
         {
             Assert.AreEqual(44100, file.Properties.AudioSampleRate);
             Assert.AreEqual(5, file.Properties.Duration.Seconds);
         }
         
-        public static void WriteStandardTags (string sample_file, string tmp_file)
+        public static void WriteStandardTags (string sample_file, string tmp_file, TestTagLevel level = TestTagLevel.Normal)
         {
             if (System.IO.File.Exists (tmp_file))
                 System.IO.File.Delete (tmp_file);
@@ -21,17 +30,16 @@ namespace TagLib.Tests.FileFormats
                 System.IO.File.Copy(sample_file, tmp_file);
                 
                 File tmp = File.Create (tmp_file);
-                SetTags (tmp.Tag);
+                SetTags (tmp.Tag, level);
                 tmp.Save ();
                 
                 tmp = File.Create (tmp_file);
-                CheckTags (tmp.Tag);
+                CheckTags (tmp.Tag, level);
             } finally {
 //                if (System.IO.File.Exists (tmp_file))
 //                    System.IO.File.Delete (tmp_file);
             }
         }
-
 
         public static void RemoveStandardTags(string sample_file, string tmp_file, TagTypes types = TagTypes.AllTags)
         {
@@ -58,8 +66,17 @@ namespace TagLib.Tests.FileFormats
         }
 
 
-        public static void SetTags (Tag tag)
+        public static void SetTags (Tag tag, TestTagLevel level = TestTagLevel.Normal)
         {
+            if (level >= TestTagLevel.Medium)
+            {
+                tag.TitleSort = "title sort, TEST";
+                tag.AlbumSort = "album sort, TEST";
+                tag.PerformersSort = new string[] { "performer sort 1, TEST", "performer sort 2, TEST" };
+                tag.ComposersSort = new string[] { "composer sort 1, TEST", "composer sort 2, TEST" };
+                tag.AlbumArtistsSort = new string[] { "album artist sort 1, TEST", "album artist sort 2, TEST" };
+            }
+
             tag.Album = "TEST album";
             tag.AlbumArtists = new string [] {"TEST artist 1", "TEST artist 2"};
             tag.BeatsPerMinute = 120;
@@ -77,10 +94,20 @@ namespace TagLib.Tests.FileFormats
             tag.Track = 98;
             tag.TrackCount = 99;
             tag.Year = 1999;
+
         }
-        
-        public static void CheckTags (Tag tag)
+
+        public static void CheckTags (Tag tag, TestTagLevel level = TestTagLevel.Normal)
         {
+            if (level >= TestTagLevel.Medium)
+            {
+                Assert.AreEqual("title sort, TEST", tag.TitleSort);
+                Assert.AreEqual("album sort, TEST", tag.AlbumSort);
+                Assert.AreEqual("performer sort 1, TEST; performer sort 2, TEST", tag.JoinedPerformersSort);
+                Assert.AreEqual("composer sort 1, TEST; composer sort 2, TEST", string.Join("; ", tag.ComposersSort));
+                Assert.AreEqual("album artist sort 1, TEST; album artist sort 2, TEST", string.Join("; ", tag.AlbumArtistsSort));
+            }
+
             Assert.AreEqual ("TEST album", tag.Album);
             Assert.AreEqual ("TEST artist 1; TEST artist 2", tag.JoinedAlbumArtists);
             Assert.AreEqual (120, tag.BeatsPerMinute);
@@ -98,6 +125,7 @@ namespace TagLib.Tests.FileFormats
             Assert.AreEqual (98, tag.Track);
             Assert.AreEqual (99, tag.TrackCount);
             Assert.AreEqual (1999, tag.Year);
+
         }
 
 

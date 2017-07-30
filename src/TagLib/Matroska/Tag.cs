@@ -112,13 +112,43 @@ namespace TagLib.Matroska
         /// Remove a Tag
         /// </summary>
         /// <param name="key">Tag Name</param>
-        public void Remove(string key)
+        /// <param name="subkey">Nested SimpleTag to find (if non null) Tag name</param>
+        public void Remove(string key, string subkey = null)
         {
             List<SimpleTag> list = null;
             if (SimpleTags.TryGetValue(key, out list))
             {
-                if (list != null) list.Clear();
-                SimpleTags.Remove(key);
+                if (list != null)
+                {
+                    if (subkey != null)
+                    {
+                        foreach (var stag in list)
+                        {
+                            if (stag.SimpleTags != null)
+                            {
+                                List<SimpleTag> slist = null;
+                                stag.SimpleTags.TryGetValue(subkey, out slist);
+                                if (slist != null)
+                                {
+                                    if (list.Count > 1)
+                                    {
+                                        if(slist.Count>0) slist.RemoveAt(0);
+                                    }
+                                    else
+                                    {
+                                        slist.Clear();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        list.Clear();
+                    }
+                }
+
+                if (subkey == null) SimpleTags.Remove(key);
             }
         }
 
@@ -127,26 +157,62 @@ namespace TagLib.Matroska
         /// Set a Tag value. A null value removes the Tag.
         /// </summary>
         /// <param name="key">Tag Name</param>
-        /// <param name="value">value to be set</param>
-        public void Set(string key, string value)
+        /// <param name="subkey">Nested SimpleTag to find (if non null) Tag name</param>
+        /// <param name="value">value to be set. A list can be passed for a subtag by separating the values by ';'</param>
+        public void Set(string key, string subkey, string value)
         {
             if (value == null)
             {
-                Remove(key);
+                Remove(key, subkey);
                 return;
             }
 
-            var stag = new SimpleTag(value);
-
             List<SimpleTag> list = null;
-            if (SimpleTags.TryGetValue(key, out list) && list != null)
+
+            SimpleTags.TryGetValue(key, out list);
+
+            if (list == null)
+                SimpleTags[key] = list = new List<SimpleTag>(1); 
+
+            if (list.Count == 0)
+                list.Add(new SimpleTag());
+
+            if (subkey == null)
             {
-                list.Clear();
-                list.Add(stag);
+                list[0].Value = value;
             }
             else
             {
-                SimpleTags[key] = new List<SimpleTag>() { stag };
+                if (list[0].SimpleTags == null)
+                    list[0].SimpleTags = new Dictionary<string, List<SimpleTag>>(StringComparer.OrdinalIgnoreCase);
+
+                List<SimpleTag> slist = null;
+                list[0].SimpleTags.TryGetValue(subkey, out slist);
+
+                if (slist == null)
+                    slist = new List<SimpleTag>(1);
+
+                list[0].SimpleTags[subkey] = slist;
+
+                if (slist.Count == 0)
+                    slist.Add(new SimpleTag());
+
+                // Sub-values
+                var svalues = value.Split(';');
+                int j;
+                for (j = 0; j < svalues.Length; j++)
+                {
+                    SimpleTag subtag;
+                    if (j >= slist.Count)
+                        slist.Add(subtag = new SimpleTag());
+                    else
+                        subtag = slist[j];
+
+                    subtag.Value = svalues[j];
+                }
+
+                if (j < slist.Count)
+                    slist.RemoveRange(j, slist.Count - j);
             }
 
         }
@@ -155,68 +221,148 @@ namespace TagLib.Matroska
         /// Set a Tag value as unsigned integer. Please note that a value zero removes the Tag.
         /// </summary>
         /// <param name="key">Tag Name</param>
+        /// <param name="subkey">Nested SimpleTag to find (if non null) Tag name</param>
         /// <param name="value">unsigned integer value to be set</param>
         /// <param name="format">Format for string convertion to be used (default: null)</param>
-        public void Set(string key, uint value, string format = null)
+        public void Set(string key, string subkey, uint value, string format = null)
         {
             if (value == 0)
             {
-                Remove(key);
+                Remove(key, subkey);
                 return;
             }
 
-            Set(key, value.ToString(format, CultureInfo.InvariantCulture));
+            Set(key, subkey, value.ToString(format, CultureInfo.InvariantCulture));
         }
 
         /// <summary>
-        /// Set a Tag list. A null value removes the Tag.
+        /// Create or overwrite the actual tags of a given name/sub-name by new values. 
         /// </summary>
         /// <param name="key">Tag Name</param>
-        /// <param name="values">Array of values</param>
-        public void Set(string key, string[] values)
+        /// <param name="subkey">Nested SimpleTag to find (if non null) Tag name</param>
+        /// <param name="values">Array of values. for each subtag value, a list can be passed by separating the values by ';'</param>
+        public void Set(string key, string subkey, string[] values)
         {
             if (values == null)
             {
-                Remove(key);
+                Remove(key, subkey);
                 return;
             }
 
-            List<SimpleTag> list;
-            if (SimpleTags.TryGetValue(key, out list) && list != null)
+            List<SimpleTag> list = null;
+
+            SimpleTags.TryGetValue(key, out list);
+
+            if (list == null)
+                SimpleTags[key] = list = new List<SimpleTag>(1);
+
+            int i;
+            for (i = 0; i < values.Length; i++)
             {
-                list.Clear();
-            }
-            else
-            {
-                SimpleTags[key] = list = new List<SimpleTag>(values.Length);
+                SimpleTag stag;
+                if (i >= list.Count)
+                    list.Add(stag = new SimpleTag());
+                else
+                    stag = list[i];
+
+                if (subkey == null)
+                {
+                    stag.Value = values[i];
+                }
+                else
+                {
+                    if (stag.SimpleTags == null)
+                        stag.SimpleTags = new Dictionary<string, List<SimpleTag>>(StringComparer.OrdinalIgnoreCase);
+
+                    List<SimpleTag> slist = null;
+                    stag.SimpleTags.TryGetValue(subkey, out slist);
+
+                    if (slist == null)
+                        slist = new List<SimpleTag>(1);
+
+                    stag.SimpleTags[subkey] = slist;
+
+                    // Sub-values
+                    var svalues = values[i].Split(';');
+                    int j;
+                    for (j = 0; j < svalues.Length; j++)
+                    {
+                        SimpleTag subtag;
+                        if (j >= slist.Count)
+                            slist.Add(subtag = new SimpleTag());
+                        else
+                            subtag = slist[j];
+
+                        subtag.Value = svalues[j];
+                    }
+
+                    if (j < slist.Count)
+                        slist.RemoveRange(j, slist.Count - j);
+                }
             }
 
-            foreach (var value in values)
-            {
-                list.Add(new SimpleTag(value));
-            }
 
+            if(subkey == null && i < list.Count)
+                list.RemoveRange(i, list.Count - i);
         }
 
-        
+        /// <summary>
+        /// Retrieve a list of SimpleTag sahring the same TagName (key).
+        /// </summary>
+        /// <param name="key">Tag name</param>
+        /// <param name="subkey">Nested SimpleTag to find (if non null) Tag name</param>
+        /// <param name="recu">Also search in parent Tag if true (default: true)</param>
+        /// <returns>Array of values</returns>
+        public List<SimpleTag> GetSimpleTags(string key, string subkey = null, bool recu = true)
+        {
+            List<SimpleTag> mtags;
 
+            if ((!SimpleTags.TryGetValue(key, out mtags) || mtags == null) && recu)
+            {
+                Tag tag = this;
+                while ((tag = tag.Parent) != null && !tag.SimpleTags.TryGetValue(key, out mtags)) ;
+            }
+
+            // Handle Nested SimpleTags
+            if (subkey != null && mtags != null)
+            {
+                var subtags = new List<SimpleTag>(mtags.Count);
+
+                foreach (var stag in mtags)
+                {
+                    if (stag.SimpleTags != null)
+                    {
+                        List<SimpleTag> list = null;
+                        stag.SimpleTags.TryGetValue(subkey, out list);
+                        if(mtags.Count>1)
+                        {
+                            subtags.Add(list?[0]);
+                        }
+                        else
+                        {
+                            subtags = list;
+                        }
+                    }
+                }
+
+                return subtags;
+            }
+
+            return mtags;
+        }
 
         /// <summary>
         /// Retrieve a Tag list
         /// </summary>
         /// <param name="key">Tag name</param>
+        /// <param name="subkey">Nested SimpleTag to find (if non null) Tag name</param>
         /// <param name="recu">Also search in parent Tag if true (default: true)</param>
         /// <returns>Array of values</returns>
-        public string[] Get(string key, bool recu = true)
+        public string[] Get(string key, string subkey = null, bool recu = true)
         {
             string[] ret = null;
-            List<SimpleTag> list;
 
-            if (!SimpleTags.TryGetValue(key, out list) && recu)
-            {
-                Tag tag = this;
-                while ((tag = tag.Parent) != null && !tag.SimpleTags.TryGetValue(key, out list)) ;
-            }
+            List<SimpleTag> list = GetSimpleTags(key, subkey, recu);
 
             if (list != null)
             {
@@ -234,23 +380,15 @@ namespace TagLib.Matroska
         /// Retrieve a Tag value as string
         /// </summary>
         /// <param name="key">Tag name</param>
+        /// <param name="subkey">Nested SimpleTag to find (if non null) Tag name</param>
         /// <param name="recu">Also search in parent Tag if true (default: true)</param>
         /// <returns>Tag value</returns>
-        private string GetString(string key, bool recu = true)
+        private string GetString(string key, string subkey = null, bool recu = true)
         {
             string ret = null;
-            List<SimpleTag> list;
 
-            if (!SimpleTags.TryGetValue(key, out list) && recu)
-            {
-                Tag tag = this;
-                while ((tag = tag.Parent) != null && !tag.SimpleTags.TryGetValue(key, out list)) ;
-            }
-
-            if (list != null)
-            {
-                ret = list[0];
-            }
+            List<SimpleTag> list = GetSimpleTags(key, subkey, recu);
+            if (list != null && list.Count>0) ret = list[0];
 
             return ret;
         }
@@ -260,12 +398,13 @@ namespace TagLib.Matroska
         /// Retrieve a Tag value as unsigned integer
         /// </summary>
         /// <param name="key">Tag name</param>
+        /// <param name="subkey">Nested SimpleTag to find (if non null) Tag name</param>
         /// <param name="recu">Also search in parent Tag if true (default: false)</param>
         /// <returns>Tag value as unsigned integer</returns>
-        private uint GetUint(string key, bool recu = false)
+        private uint GetUint(string key, string subkey = null, bool recu = false)
         {
             uint ret = 0;
-            string val = GetString(key, recu);
+            string val = GetString(key, subkey, recu);
 
             if (val != null)
             {
@@ -398,7 +537,7 @@ namespace TagLib.Matroska
             }
             set
             {
-                Set("TITLE", value);
+                Set("TITLE", null, value);
                 if (Tags?.Medium == this) Tags.Title = value;
             }
         }
@@ -413,19 +552,13 @@ namespace TagLib.Matroska
         ///    instance or null if no value is present.
         /// </value>
         /// <remarks>
-        ///    This property is implemented using the "WM/TitleSortOrder"
-        ///    field.
-        ///    http://msdn.microsoft.com/en-us/library/aa386866(VS.85).aspx
+        ///    This property is implemented using the nested Matroska 
+        ///    SimpleTag "SORT_WITH" inside the "TITLE" SimpleTag.
         /// </remarks>
         public override string TitleSort
         {
-            get
-            {
-                return null;
-            }
-            set
-            {
-            }
+            get { return GetString("TITLE", "SORT_WITH"); }
+            set { Set("TITLE", "SORT_WITH", value); }
         }
 
         /// <summary>
@@ -445,7 +578,7 @@ namespace TagLib.Matroska
         public override string [] Performers
         {
             get { return Get(IsVideo ? "ACTOR" : "PERFORMER"); }
-            set { Set(IsVideo ? "ACTOR" : "PERFORMER", value); }
+            set { Set(IsVideo ? "ACTOR" : "PERFORMER", null, value); }
         }
 
         /// <summary>
@@ -458,14 +591,40 @@ namespace TagLib.Matroska
         ///    described by the current instance, or an empty array if
         ///    no value is present. 
         /// </value>
+        /// <remarks>
+        ///    This property is implemented using the nested Matroska 
+        ///    SimpleTag "SORT_WITH" inside the "ACTOR" or "PERFORMER" SimpleTag.
+        /// </remarks>
         public override string [] PerformersSort
         {
-            get
-            {
-                return new string [] {};
-            }
-            set { }
+            get { return Get(IsVideo ? "ACTOR" : "PERFORMER", "SORT_WITH"); }
+            set { Set(IsVideo ? "ACTOR" : "PERFORMER", "SORT_WITH", value); }
         }
+
+
+        /// <summary>
+        ///    Gets and sets the role of the performers or artists
+        ///    who performed in the media described by the current instance.
+        ///    For an movie, this represents a character of an actor.
+        ///    For a music, this may represent the instrument of the artist.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="string[]" /> containing the roles for
+        ///    the performers or artists who performed in the media
+        ///    described by the current instance, or an empty array if
+        ///    no value is present. 
+        /// </value>
+        /// <remarks>
+        ///    This property is implemented using the nested Matroska 
+        ///    SimpleTag "CHARACTER" or "INSTRUMENTS" inside the 
+        ///    "ACTOR" or "PERFORMER" SimpleTag.
+        /// </remarks>
+        public string[] PerformersRole
+        {
+            get { return Get(IsVideo ? "ACTOR" : "PERFORMER", IsVideo ? "CHARACTER" : "INSTRUMENTS"); }
+            set { Set(IsVideo ? "ACTOR" : "PERFORMER", IsVideo ? "CHARACTER" : "INSTRUMENTS", value); }
+        }
+
 
         /// <summary>
         ///    Gets and sets the band or artist who is credited in the
@@ -484,7 +643,7 @@ namespace TagLib.Matroska
         public override string [] AlbumArtists
         {
             get { return TagsAlbum(false)?.Get("ARTIST"); }
-            set { TagsAlbum(true)?.Set("ARTIST", value); }
+            set { TagsAlbum(true)?.Set("ARTIST", null, value); }
         }
 
         /// <summary>
@@ -500,13 +659,15 @@ namespace TagLib.Matroska
         ///    described by the current instance or an empty array if
         ///    no value is present.
         /// </value>
+        /// <remarks>
+        ///    This property is implemented using the nested Matroska 
+        ///    SimpleTag "SORT_WITH" inside the "ARTIST" SimpleTag.
+        /// </remarks>
+
         public override string [] AlbumArtistsSort
         {
-            get
-            {
-                return new string [] { };
-            }
-            set { }
+            get { return TagsAlbum(false)?.Get("ARTIST", "SORT_WITH"); }
+            set { TagsAlbum(true)?.Set("ARTIST", "SORT_WITH", value); }
         }
 
         /// <summary>
@@ -524,8 +685,39 @@ namespace TagLib.Matroska
         public override string [] Composers
         {
             get { return Get("COMPOSER"); }
-            set { Set("COMPOSER", value); }
+            set { Set("COMPOSER", null, value); }
         }
+
+
+        /// <summary>
+        ///    Gets and sets the sort names for the composers of the 
+        ///    media represented by the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="string[]" /> containing the sort names
+        ///    for the composers of the media represented by the 
+        ///    current instance or an empty array if no value is present.
+        /// </value>
+        /// <remarks>
+        ///    <para>This field is typically optional but aids in the
+        ///    sorting of compilations or albums with multiple Composers.
+        ///    </para>
+        ///    <para>As this value is to be used as a sorting key, it
+        ///    should be used with less variation than <see
+        ///    cref="Composers" />. Where performers can be broken into
+        ///    muliple artist it is best to stick with a single composer.
+        ///    For example, "McCartney, Paul".</para>
+        /// </remarks>
+        /// <remarks>
+        ///    This property is implemented using the nested Matroska 
+        ///    SimpleTag "SORT_WITH" inside the "COMPOSER" SimpleTag.
+        /// </remarks>
+        public override string[] ComposersSort
+        {
+            get { return Get("COMPOSER", "SORT_WITH"); }
+            set { Set("COMPOSER", "SORT_WITH", value); }
+        }
+
 
         /// <summary>
         ///    Gets and sets the album of the media represented by the
@@ -542,7 +734,7 @@ namespace TagLib.Matroska
         public override string Album
         {
             get { return TagsAlbum(false)?.GetString("TITLE"); }
-            set { TagsAlbum(true)?.Set("TITLE", value); }
+            set { TagsAlbum(true)?.Set("TITLE", null, value); }
         }
 
         /// <summary>
@@ -554,13 +746,14 @@ namespace TagLib.Matroska
         ///    the Album Title of the media described by the current
         ///    instance or null if no value is present.
         /// </value>
+        /// <remarks>
+        ///    This property is implemented using the nested Matroska 
+        ///    SimpleTag "SORT_WITH" inside the "TITLE" SimpleTag.
+        /// </remarks>
         public override string AlbumSort
         {
-            get
-            {
-                return null;
-            }
-            set { }
+            get { return TagsAlbum(false)?.GetString("TITLE", "SORT_WITH"); }
+            set { TagsAlbum(true)?.Set("TITLE", "SORT_WITH", value); }
         }
 
         /// <summary>
@@ -578,7 +771,7 @@ namespace TagLib.Matroska
         public override string Comment
         {
             get { return GetString("COMMENT"); }
-            set { Set("COMMENT", value); }
+            set { Set("COMMENT", null, value); }
         }
 
         /// <summary>
@@ -622,7 +815,7 @@ namespace TagLib.Matroska
             }
             set
             {
-                Set("GENRE", String.Join ("; ", value));
+                Set("GENRE", null, String.Join ("; ", value));
             }
         }
 
@@ -655,7 +848,7 @@ namespace TagLib.Matroska
 
                 return ret;
             }
-            set { Set("DATE_RECORDED", value); }
+            set { Set("DATE_RECORDED", null, value); }
         }
 
         /// <summary>
@@ -670,7 +863,7 @@ namespace TagLib.Matroska
         public override uint Track
         {
             get { return GetUint("PART_NUMBER"); }
-            set { Set("PART_NUMBER", value, "00"); }
+            set { Set("PART_NUMBER", null, value, "00"); }
         }
 
         /// <summary>
@@ -685,7 +878,7 @@ namespace TagLib.Matroska
         public override uint TrackCount
         {
             get { return TagsGet(false, (ushort)(TargetTypeValue + 10))?.GetUint("TOTAL_PARTS") ?? 0; }
-            set { TagsGet(true, (ushort)(TargetTypeValue + 10))?.Set("TOTAL_PARTS", value); }
+            set { TagsGet(true, (ushort)(TargetTypeValue + 10))?.Set("TOTAL_PARTS", null, value); }
         }
 
         /// <summary>
@@ -700,7 +893,7 @@ namespace TagLib.Matroska
         public override uint Disc
         {
             get { return TagsGet(false, 40)?.GetUint("PART_NUMBER") ?? 0; }
-            set { TagsGet(true, 40)?.Set("PART_NUMBER", value); }
+            set { TagsGet(true, 40)?.Set("PART_NUMBER", null, value); }
         }
 
         /// <summary>
@@ -715,7 +908,7 @@ namespace TagLib.Matroska
         public override uint DiscCount
         {
             get { return TagsGet(false, 50)?.GetUint("TOTAL_PARTS") ?? 0; }
-            set { TagsGet(true, 50)?.Set("TOTAL_PARTS", value); }
+            set { TagsGet(true, 50)?.Set("TOTAL_PARTS", null, value); }
         }
 
         /// <summary>
@@ -730,7 +923,7 @@ namespace TagLib.Matroska
         public override string Lyrics
         {
             get { return GetString("LYRICS"); }
-            set { Set("LYRICS", value); }
+            set { Set("LYRICS", null, value); }
         }
 
         /// <summary>
@@ -745,7 +938,7 @@ namespace TagLib.Matroska
         public override string Grouping
         {
             get { return TagsAlbum(false)?.GetString("GROUPING"); }
-            set { TagsAlbum(true)?.Set("GROUPING", value); }
+            set { TagsAlbum(true)?.Set("GROUPING", null, value); }
         }
 
         /// <summary>
@@ -759,8 +952,8 @@ namespace TagLib.Matroska
         /// </value>
         public override uint BeatsPerMinute
         {
-            get { return GetUint("BPM", true); }
-            set { Set("BPM", value); }
+            get { return GetUint("BPM", null, true); }
+            set { Set("BPM", null, value); }
         }
 
         /// <summary>
@@ -775,7 +968,7 @@ namespace TagLib.Matroska
         public override string Conductor
         {
             get { return GetString(IsVideo ? "DIRECTOR" : "CONDUCTOR"); }
-            set { Set(IsVideo ? "DIRECTOR" : "CONDUCTOR", value); }
+            set { Set(IsVideo ? "DIRECTOR" : "CONDUCTOR", null, value); }
         }
 
         /// <summary>
@@ -793,7 +986,7 @@ namespace TagLib.Matroska
         public override string Copyright
         {
             get { return GetString("COPYRIGHT"); }
-            set { Set("COPYRIGHT", value); }
+            set { Set("COPYRIGHT", null, value); }
         }
 
         /// <summary>
