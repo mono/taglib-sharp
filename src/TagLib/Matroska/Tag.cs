@@ -31,7 +31,8 @@ using System.Text;
 namespace TagLib.Matroska
 {
     /// <summary>
-    /// Describes a Matroska Tag, containing SimpleTag 
+    /// Describes a Matroska Tag.
+    /// A <see cref="Tag"/> object may contain several <see cref="SimpleTag"/>.
     /// </summary>
     public class Tag : TagLib.Tag
     {
@@ -48,6 +49,7 @@ namespace TagLib.Matroska
 
         #endregion
 
+
         #region Constructors
 
         /// <summary>
@@ -60,24 +62,6 @@ namespace TagLib.Matroska
             if (targetTypeValue != 0) TargetTypeValue = targetTypeValue;
             Tags = tags;
             if(tags != null) tags.Add(this);
-        }
-
-
-        /// <summary>
-        /// Shallo Copy Constructor
-        /// </summary>
-        /// <param name="tag">the Tag object to duplicate.</param>
-        /// <param name="tags">the Tags this Tag should be added to.</param>
-        public Tag(Tag tag, Tags tags = null) : this(tags)
-        {
-            TargetTypeValue = tag.TargetTypeValue;
-
-            // Duplicate SimpleTag (shallow copy)
-            foreach (var stag in tag.SimpleTag)
-            {
-                // Make sure tag ID is in upper-case
-                SimpleTag[stag.Key.ToUpper()] = new List<string>(stag.Value);
-            }
         }
 
 
@@ -125,50 +109,96 @@ namespace TagLib.Matroska
 
 
         /// <summary>
-        /// Set a Tag value
+        /// Remove a Tag
+        /// </summary>
+        /// <param name="key">Tag Name</param>
+        public void Remove(string key)
+        {
+            List<SimpleTag> list = null;
+            if (SimpleTags.TryGetValue(key, out list))
+            {
+                if (list != null) list.Clear();
+                SimpleTags.Remove(key);
+            }
+        }
+
+
+        /// <summary>
+        /// Set a Tag value. A null value removes the Tag.
         /// </summary>
         /// <param name="key">Tag Name</param>
         /// <param name="value">value to be set</param>
-        /// <param name="index">index of the value index to set (if several tags of same name)</param>
-        private void TagSet(string key, string value, int index = 0)
+        public void Set(string key, string value)
         {
-            List<string> list = null;
-
-            if (!SimpleTag.TryGetValue(key, out list))
+            if (value == null)
             {
-                SimpleTag[key] = list = new List<string>(1);
+                Remove(key);
+                return;
             }
 
-            if (index >= list.Count)
-                list.Add(value);
+            var stag = new SimpleTag(value);
+
+            List<SimpleTag> list = null;
+            if (SimpleTags.TryGetValue(key, out list) && list != null)
+            {
+                list.Clear();
+                list.Add(stag);
+            }
             else
-                list[index] = value;
+            {
+                SimpleTags[key] = new List<SimpleTag>() { stag };
+            }
+
         }
 
         /// <summary>
-        /// Set a Tag list
-        /// </summary>
-        /// <param name="key">Tag Name</param>
-        /// <param name="values">Array of values</param>
-        private void TagSet(string key, string[] values)
-        {
-            SimpleTag[key] = values.ToList();
-        }
-
-        /// <summary>
-        /// Set a Tag value as unsigned integer
+        /// Set a Tag value as unsigned integer. Please note that a value zero removes the Tag.
         /// </summary>
         /// <param name="key">Tag Name</param>
         /// <param name="value">unsigned integer value to be set</param>
         /// <param name="format">Format for string convertion to be used (default: null)</param>
-        /// <param name="index">index of the value index to set (default: 0)</param>
-        private void TagSetUint(string key, uint value, string format = null, int index = 0)
+        public void Set(string key, uint value, string format = null)
         {
-            TagSet(key, value.ToString(format, CultureInfo.InvariantCulture));
+            if (value == 0)
+            {
+                Remove(key);
+                return;
+            }
+
+            Set(key, value.ToString(format, CultureInfo.InvariantCulture));
         }
 
+        /// <summary>
+        /// Set a Tag list. A null value removes the Tag.
+        /// </summary>
+        /// <param name="key">Tag Name</param>
+        /// <param name="values">Array of values</param>
+        public void Set(string key, string[] values)
+        {
+            if (values == null)
+            {
+                Remove(key);
+                return;
+            }
 
+            List<SimpleTag> list;
+            if (SimpleTags.TryGetValue(key, out list) && list != null)
+            {
+                list.Clear();
+            }
+            else
+            {
+                SimpleTags[key] = list = new List<SimpleTag>(values.Length);
+            }
 
+            foreach (var value in values)
+            {
+                list.Add(new SimpleTag(value));
+            }
+
+        }
+
+        
 
 
         /// <summary>
@@ -177,20 +207,24 @@ namespace TagLib.Matroska
         /// <param name="key">Tag name</param>
         /// <param name="recu">Also search in parent Tag if true (default: true)</param>
         /// <returns>Array of values</returns>
-        private string[] Get(string key, bool recu = true)
+        public string[] Get(string key, bool recu = true)
         {
             string[] ret = null;
-            List<string> list;
+            List<SimpleTag> list;
 
-            if (!SimpleTag.TryGetValue(key, out list) && recu)
+            if (!SimpleTags.TryGetValue(key, out list) && recu)
             {
                 Tag tag = this;
-                while ((tag = tag.Parent) != null && !tag.SimpleTag.TryGetValue(key, out list)) ;
+                while ((tag = tag.Parent) != null && !tag.SimpleTags.TryGetValue(key, out list)) ;
             }
 
             if (list != null)
             {
-                ret = list.ToArray();
+                ret = new string[list.Count];
+                for (int i=0; i < list.Count; i++)
+                {
+                    ret[i] = list[i];
+                }
             }
 
             return ret;
@@ -200,26 +234,22 @@ namespace TagLib.Matroska
         /// Retrieve a Tag value as string
         /// </summary>
         /// <param name="key">Tag name</param>
-        /// <param name="index">value index to retrieve  (default: 0)</param>
         /// <param name="recu">Also search in parent Tag if true (default: true)</param>
         /// <returns>Tag value</returns>
-        private string GetString(string key, int index = 0, bool recu = true)
+        private string GetString(string key, bool recu = true)
         {
             string ret = null;
-            List<string> list;
+            List<SimpleTag> list;
 
-            if (!SimpleTag.TryGetValue(key, out list) && recu)
+            if (!SimpleTags.TryGetValue(key, out list) && recu)
             {
                 Tag tag = this;
-                while ((tag = tag.Parent) != null && !tag.SimpleTag.TryGetValue(key, out list)) ;
+                while ((tag = tag.Parent) != null && !tag.SimpleTags.TryGetValue(key, out list)) ;
             }
 
             if (list != null)
             {
-                if (index < list.Count)
-                {
-                    ret = list[index];
-                }
+                ret = list[0];
             }
 
             return ret;
@@ -230,13 +260,12 @@ namespace TagLib.Matroska
         /// Retrieve a Tag value as unsigned integer
         /// </summary>
         /// <param name="key">Tag name</param>
-        /// <param name="index">value index to retrieve (default: 0)</param>
         /// <param name="recu">Also search in parent Tag if true (default: false)</param>
         /// <returns>Tag value as unsigned integer</returns>
-        private uint GetUint(string key, int index = 0, bool recu = false)
+        private uint GetUint(string key, bool recu = false)
         {
             uint ret = 0;
-            string val = GetString(key, index, recu);
+            string val = GetString(key, recu);
 
             if (val != null)
             {
@@ -250,7 +279,7 @@ namespace TagLib.Matroska
         #endregion
 
 
-        #region Taglib.Tag
+        #region Properties
 
         /// <summary>
         /// Retrieve a list of Matroska Tags 
@@ -332,7 +361,7 @@ namespace TagLib.Matroska
         /// <summary>
         /// List SimpleTag contained in the current Tag (must never be null)
         /// </summary>
-        public Dictionary<string, List<string>> SimpleTag = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+        public Dictionary<string, List<SimpleTag>> SimpleTags = new Dictionary<string, List<SimpleTag>>(StringComparer.OrdinalIgnoreCase);
 
 
 
@@ -369,7 +398,7 @@ namespace TagLib.Matroska
             }
             set
             {
-                TagSet("TITLE", value);
+                Set("TITLE", value);
                 if (Tags?.Medium == this) Tags.Title = value;
             }
         }
@@ -390,8 +419,13 @@ namespace TagLib.Matroska
         /// </remarks>
         public override string TitleSort
         {
-            get { return null; }
-            set { }
+            get
+            {
+                return null;
+            }
+            set
+            {
+            }
         }
 
         /// <summary>
@@ -411,7 +445,7 @@ namespace TagLib.Matroska
         public override string [] Performers
         {
             get { return Get(IsVideo ? "ACTOR" : "PERFORMER"); }
-            set { TagSet(IsVideo ? "ACTOR" : "PERFORMER", value); }
+            set { Set(IsVideo ? "ACTOR" : "PERFORMER", value); }
         }
 
         /// <summary>
@@ -450,7 +484,7 @@ namespace TagLib.Matroska
         public override string [] AlbumArtists
         {
             get { return TagsAlbum(false)?.Get("ARTIST"); }
-            set { TagsAlbum(true)?.TagSet("ARTIST", value); }
+            set { TagsAlbum(true)?.Set("ARTIST", value); }
         }
 
         /// <summary>
@@ -490,7 +524,7 @@ namespace TagLib.Matroska
         public override string [] Composers
         {
             get { return Get("COMPOSER"); }
-            set { TagSet("COMPOSER", value); }
+            set { Set("COMPOSER", value); }
         }
 
         /// <summary>
@@ -508,7 +542,7 @@ namespace TagLib.Matroska
         public override string Album
         {
             get { return TagsAlbum(false)?.GetString("TITLE"); }
-            set { TagsAlbum(true)?.TagSet("TITLE", value); }
+            set { TagsAlbum(true)?.Set("TITLE", value); }
         }
 
         /// <summary>
@@ -544,7 +578,7 @@ namespace TagLib.Matroska
         public override string Comment
         {
             get { return GetString("COMMENT"); }
-            set { TagSet("COMMENT", value); }
+            set { Set("COMMENT", value); }
         }
 
         /// <summary>
@@ -588,7 +622,7 @@ namespace TagLib.Matroska
             }
             set
             {
-                TagSet("GENRE", String.Join ("; ", value));
+                Set("GENRE", String.Join ("; ", value));
             }
         }
 
@@ -621,7 +655,7 @@ namespace TagLib.Matroska
 
                 return ret;
             }
-            set { TagSetUint("DATE_RECORDED", value); }
+            set { Set("DATE_RECORDED", value); }
         }
 
         /// <summary>
@@ -636,7 +670,7 @@ namespace TagLib.Matroska
         public override uint Track
         {
             get { return GetUint("PART_NUMBER"); }
-            set { TagSetUint("PART_NUMBER", value, "00"); }
+            set { Set("PART_NUMBER", value, "00"); }
         }
 
         /// <summary>
@@ -651,7 +685,7 @@ namespace TagLib.Matroska
         public override uint TrackCount
         {
             get { return TagsGet(false, (ushort)(TargetTypeValue + 10))?.GetUint("TOTAL_PARTS") ?? 0; }
-            set { TagsGet(true, (ushort)(TargetTypeValue + 10))?.TagSetUint("TOTAL_PARTS", value); }
+            set { TagsGet(true, (ushort)(TargetTypeValue + 10))?.Set("TOTAL_PARTS", value); }
         }
 
         /// <summary>
@@ -666,7 +700,7 @@ namespace TagLib.Matroska
         public override uint Disc
         {
             get { return TagsGet(false, 40)?.GetUint("PART_NUMBER") ?? 0; }
-            set { TagsGet(true, 40)?.TagSetUint("PART_NUMBER", value); }
+            set { TagsGet(true, 40)?.Set("PART_NUMBER", value); }
         }
 
         /// <summary>
@@ -681,7 +715,7 @@ namespace TagLib.Matroska
         public override uint DiscCount
         {
             get { return TagsGet(false, 50)?.GetUint("TOTAL_PARTS") ?? 0; }
-            set { TagsGet(true, 50)?.TagSetUint("TOTAL_PARTS", value); }
+            set { TagsGet(true, 50)?.Set("TOTAL_PARTS", value); }
         }
 
         /// <summary>
@@ -696,7 +730,7 @@ namespace TagLib.Matroska
         public override string Lyrics
         {
             get { return GetString("LYRICS"); }
-            set { TagSet("LYRICS", value); }
+            set { Set("LYRICS", value); }
         }
 
         /// <summary>
@@ -711,7 +745,7 @@ namespace TagLib.Matroska
         public override string Grouping
         {
             get { return TagsAlbum(false)?.GetString("GROUPING"); }
-            set { TagsAlbum(true)?.TagSet("GROUPING", value); }
+            set { TagsAlbum(true)?.Set("GROUPING", value); }
         }
 
         /// <summary>
@@ -725,8 +759,8 @@ namespace TagLib.Matroska
         /// </value>
         public override uint BeatsPerMinute
         {
-            get { return GetUint("BPM", 0, true); }
-            set { TagSetUint("BPM", value); }
+            get { return GetUint("BPM", true); }
+            set { Set("BPM", value); }
         }
 
         /// <summary>
@@ -741,7 +775,7 @@ namespace TagLib.Matroska
         public override string Conductor
         {
             get { return GetString(IsVideo ? "DIRECTOR" : "CONDUCTOR"); }
-            set { TagSet(IsVideo ? "DIRECTOR" : "CONDUCTOR", value); }
+            set { Set(IsVideo ? "DIRECTOR" : "CONDUCTOR", value); }
         }
 
         /// <summary>
@@ -759,7 +793,7 @@ namespace TagLib.Matroska
         public override string Copyright
         {
             get { return GetString("COPYRIGHT"); }
-            set { TagSet("COPYRIGHT", value); }
+            set { Set("COPYRIGHT", value); }
         }
 
         /// <summary>
@@ -947,7 +981,7 @@ namespace TagLib.Matroska
         {
             get
             {
-                return SimpleTag.Count == 0;
+                return SimpleTags.Count == 0;
             }
         }
 
@@ -956,7 +990,7 @@ namespace TagLib.Matroska
         /// </summary>
         public override void Clear ()
         {
-            SimpleTag.Clear();
+            SimpleTags.Clear();
         }
 
         #endregion

@@ -96,8 +96,7 @@ namespace TagLib.Matroska
 
         #endregion
 
-
-
+        
         #region Constructors
 
         /// <summary>
@@ -205,8 +204,7 @@ namespace TagLib.Matroska
 
         #endregion
 
-
-
+        
         #region Public Methods
 
 
@@ -273,7 +271,6 @@ namespace TagLib.Matroska
         #endregion
 
 
-
         #region Public Properties
 
         /// <summary>
@@ -328,27 +325,8 @@ namespace TagLib.Matroska
 
         #endregion
 
+
         #region Private Methods
-
-        /// <summary>
-        /// Add a Tag
-        /// </summary>
-        /// <param name="tag">Tag Object</param>
-        /// <param name="key">TagName value</param>
-        /// <param name="value">TagString value</param>
-        private void TagPush(Tag tag, string key, string value)
-        {
-            List<string> list = null;
-
-            if(tag.SimpleTag.ContainsKey(key))
-                list = tag.SimpleTag[key];
-
-            if (list == null)
-                tag.SimpleTag[key] = list = new List<string>(1);
-
-            list.Add(value);
-        }
-        
 
         /// <summary>
         ///    Reads (and Write, if file Mode is Write) the file with a specified read style.
@@ -728,16 +706,11 @@ namespace TagLib.Matroska
         }
 
 
-        private void ReadSimpleTag(EBMLElement element, Tag tag)
+        private void ReadSimpleTag(EBMLElement element, Tag tag, SimpleTag simpletag = null)
         {
             ulong i = 0;
-#pragma warning disable 219 // Assigned, never read
-            string tag_name = null, tag_language = null, tag_string = null;
-#pragma warning restore 219
-            bool isBinary = false;
-
-            // For overwritting EBML string/binary (mutex)
-            EBMLElement ebml_string = null;
+            string key = null;
+            var stag = new SimpleTag();
 
             while (i < (ulong)((long)element.DataSize))
             {
@@ -748,21 +721,24 @@ namespace TagLib.Matroska
                 switch (matroska_id)
                 {
                     case MatroskaID.TagName:
-                        tag_name = child.ReadString();
+                        key = child.ReadString();
                         break;
                     case MatroskaID.TagLanguage:
-                        tag_language = child.ReadString();
+                        stag.TagLanguage = child.ReadString();
+                        break;
+                    case MatroskaID.TagDefault:
+                        stag.TagDefault = child.ReadULong() != 0;
                         break;
                     case MatroskaID.TagString:
-                        ebml_string = child;
-                        tag_string = child.ReadString();
+                        stag.TagBinary = false;
+                        stag.Value = child.ReadBytes();
                         break;
                     case MatroskaID.TagBinary:
-                        if (ebml_string == null) ebml_string = child;
-                        isBinary = true;
+                        stag.TagBinary = true;
+                        stag.Value = child.ReadBytes();
                         break;
                     case MatroskaID.SimpleTag:
-                        // TODO: SimpleTag recursion
+                        ReadSimpleTag(element, null, stag);
                         break;
                     default:
                         break;
@@ -771,9 +747,35 @@ namespace TagLib.Matroska
                 i += child.Size;
             }
 
-            if (!isBinary) // Binary Tag not handled
+            // Add the SimpleTag reference to its parent
+            if (key != null) 
             {
-                TagPush(tag, tag_name, tag_string);
+                key = key.ToUpper();
+
+                List<SimpleTag> list = null;
+
+                if (tag != null)
+                {
+                    if (tag.SimpleTags == null)
+                        tag.SimpleTags = new Dictionary<string, List<SimpleTag>>(StringComparer.OrdinalIgnoreCase);
+                    else
+                        tag.SimpleTags.TryGetValue(key, out list);
+
+                    if (list == null)
+                        tag.SimpleTags[key] = list = new List<SimpleTag>(6);
+                }
+                else
+                {
+                    if (simpletag.SimpleTags == null)
+                        simpletag.SimpleTags = new Dictionary<string, List<SimpleTag>>(StringComparer.OrdinalIgnoreCase);
+                    else
+                        simpletag.SimpleTags.TryGetValue(key, out list);
+
+                    if (list == null)
+                        simpletag.SimpleTags[key] = list = new List<SimpleTag>(1);
+                }
+
+                list.Add(stag);
             }
 
         }
@@ -808,8 +810,8 @@ namespace TagLib.Matroska
             WriteTargets(ebml_targets, tag);
             i += ebml_targets.Size;
 
-            // Extract the SimpleTag from the Tag object
-            foreach( var stagList in tag.SimpleTag)
+            // Extract/Write the SimpleTag from the Tag object
+            foreach( var stagList in tag.SimpleTags)
             {
                 string key = stagList.Key;
                 foreach (var stag in stagList.Value)
@@ -825,25 +827,38 @@ namespace TagLib.Matroska
         }
 
 
-        private void WriteSimpleTag (EBMLElement element, string key, string value)
+        private void WriteSimpleTag (EBMLElement element, string key, SimpleTag value)
         {
             ulong i = element.DataOffset;
+
+            key = key.ToUpper();
 
             // Write SimpleTag content
             var ebml_tagName = new EBMLElement(this, i, MatroskaID.TagName, key);
             i += ebml_tagName.Size;
 
-            var ebml_tagLanguage = new EBMLElement(this, i, MatroskaID.TagLanguage, "und");
+            var ebml_tagLanguage = new EBMLElement(this, i, MatroskaID.TagLanguage, value.TagLanguage);
             i += ebml_tagLanguage.Size;
 
-            var ebml_tagDefault = new EBMLElement(this, i, MatroskaID.TagDefault, (ulong)1);
+            var ebml_tagDefault = new EBMLElement(this, i, MatroskaID.TagDefault, value.TagDefault ? (ulong)1 : 0);
             i += ebml_tagDefault.Size;
 
-            var ebml_tagString = new EBMLElement(this, i, MatroskaID.TagString, value);
-            i += ebml_tagString.Size;
+            var ebml_tagValue = new EBMLElement(this, i, value.TagBinary ? MatroskaID.TagBinary : MatroskaID.TagString, value);
+            i += ebml_tagValue.Size;
 
-            // TODO: SimpleTag Recursion
-
+            // Nested SimpleTag (Recursion)
+            if(value.SimpleTags != null)
+            {
+                foreach (var stagList in value.SimpleTags)
+                {
+                    foreach (var stag in stagList.Value)
+                    {
+                        var ebml_Simpletag = new EBMLElement(this, i, MatroskaID.SimpleTag);
+                        WriteSimpleTag(ebml_Simpletag, stagList.Key, stag);
+                        i += ebml_Simpletag.Size;
+                    }
+                }
+            }
 
             // Update Tag EBML data-size
             element.DataSize = i - element.DataOffset;
@@ -1146,8 +1161,5 @@ namespace TagLib.Matroska
 
         #endregion
 
-        #region Private Properties
-
-        #endregion
     }
 }

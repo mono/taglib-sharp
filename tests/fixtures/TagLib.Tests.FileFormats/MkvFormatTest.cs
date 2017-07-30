@@ -37,8 +37,8 @@ namespace TagLib.Tests.FileFormats
             Assert.AreEqual("Starwer 2017", file.Tag.Copyright);
 
             // Specific Matroska Tag test
-            var mkvTag = (Matroska.Tag)file.GetTag(TagTypes.Matroska);
-            Assert.AreEqual("This is a test Video showing a lime moving on a table", mkvTag.SimpleTag["SUMMARY"][0]);
+            var mkvTag = (TagLib.Matroska.Tag)file.GetTag(TagTypes.Matroska);
+            Assert.AreEqual("This is a test Video showing a lime moving on a table", mkvTag.SimpleTags["SUMMARY"][0]);
         }
 
         [Test]

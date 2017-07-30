@@ -43,6 +43,7 @@ namespace TagLib.Matroska
 
         #endregion
 
+
         #region Constructors
 
         /// <summary>
@@ -53,30 +54,6 @@ namespace TagLib.Matroska
         {
             _file = file;
         }
-
-
-        /// <summary>
-        /// Shallow Copy Constructor
-        /// </summary>
-        /// <param name="tags">the Tags object to duplicate.</param>
-        public Tags(Tags tags) : this(tags._file)
-        {
-            Title = tags.Title;
-
-            // Duplicate Tags
-            foreach (Tag tag in tags)
-            {
-                var ntag = new Tag(tag, this);
-            }
-
-            // Duplicate picture (shallow copy)
-            pictures = new Picture[tags.Pictures.Length];
-            for (int i = 0; i < pictures.Length; i++)
-            {
-                pictures[i] = tags.Pictures[i];
-            }
-        }
-
 
 
         #endregion
@@ -160,8 +137,7 @@ namespace TagLib.Matroska
 
 
         #endregion
-
-
+        
 
         #region Methods
 
