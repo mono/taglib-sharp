@@ -49,6 +49,7 @@
     <Compile Include="TagLib\Genres.cs" />
     <Compile Include="TagLib\ICodec.cs" />
     <Compile Include="TagLib\ListBase.cs" />
+    <Compile Include="TagLib\Matroska\Attachment.cs" />
     <Compile Include="TagLib\Matroska\SimpleTag.cs" />
     <Compile Include="TagLib\Matroska\Tags.cs" />
     <Compile Include="TagLib\Picture.cs" />

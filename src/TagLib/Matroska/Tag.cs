@@ -43,7 +43,17 @@ namespace TagLib.Matroska
         /// </summary>
         private bool IsVideo
         {
-            get { return Tags == null || Tags.IsVideo; }
+            get
+            {
+                if (TargetSubElement)
+                {
+                    return ChapterUID != null || TrackUID == null;
+                }
+                else
+                {
+                    return Tags == null || Tags.IsVideo;
+                }
+            }
         }
 
 
@@ -443,6 +453,19 @@ namespace TagLib.Matroska
             }
         }
 
+
+        /// <summary>
+        /// Get if the Tag represents a sub-element (track, chapter, attachment...) or the medium itself (false).
+        /// </summary>
+        public bool TargetSubElement
+        {
+            get
+            {
+                return TrackUID != null || EditionUID != null || ChapterUID != null || AttachmentUID != null;
+            }
+        }
+
+
         /// <summary>
         ///    Gets the Matroska Target Type Value of this Tag.
         /// </summary>
@@ -482,12 +505,12 @@ namespace TagLib.Matroska
         public ulong[] TrackUID = null;
 
         /// <summary>
-        /// Array ofunique IDs to identify the EditionEntry(s) the tags belong to. If the value is 0 at this level, the tags apply to all editions in the Segment.
+        /// Array of unique IDs to identify the EditionEntry(s) the tags belong to. If the value is 0 at this level, the tags apply to all editions in the Segment.
         /// </summary>
         public ulong[] EditionUID = null;
 
         /// <summary>
-        ///  Array ofunique IDs to identify the Chapter(s) the tags belong to. If the value is 0 at this level, the tags apply to all chapters in the Segment. 
+        ///  Array of unique IDs to identify the Chapter(s) the tags belong to. If the value is 0 at this level, the tags apply to all chapters in the Segment. 
         /// </summary>
         public ulong[] ChapterUID = null;
 
@@ -1155,11 +1178,36 @@ namespace TagLib.Matroska
         {
             get
             {
-                return Tags?.Pictures;
+                return Tags?.Attachments;
             }
+
             set
             {
-                Tags.Pictures = value;
+                if (value == null)
+                {
+                    Tags.Attachments = null;
+                }
+                else if (value is Attachment[])
+                {
+                    Tags.Attachments = (Attachment[])value;
+                }
+                else
+                {
+                    var attach = new Attachment[value.Length]; 
+                    for (int i = 0; i < attach.Length; i++)
+                    {
+                        if (value[i] is Attachment)
+                        {
+                            attach[i] = value[i] as Attachment;
+                        }
+                        else
+                        {
+                            attach[i] = new Attachment(value[i]);
+                        }
+                    }
+
+                    Tags.Attachments = attach;
+                }
             }
         }
 

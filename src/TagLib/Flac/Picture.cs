@@ -42,11 +42,16 @@ namespace TagLib.Flac
 		///    Contains the mime-type.
 		/// </summary>
 		private string mime_type;
-		
-		/// <summary>
-		///    Contains the description.
-		/// </summary>
-		private string description;
+
+        /// <summary>
+        ///    Contains the filename.
+        /// </summary>
+        private string filename;
+        
+        /// <summary>
+        ///    Contains the description.
+        /// </summary>
+        private string description;
 		
 		/// <summary>
 		///    Contains the width.
@@ -159,6 +164,7 @@ namespace TagLib.Flac
 			
 			type = picture.Type;
 			mime_type = picture.MimeType;
+            filename = picture.Filename;
 			description = picture.Description;
 			picture_data = picture.Data;
 			
@@ -247,16 +253,30 @@ namespace TagLib.Flac
 			get {return type;}
 			set {type = value;}
 		}
-		
-		/// <summary>
-		///    Gets and sets a description of the picture stored in the
-		///    current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="string" /> object containing a description
-		///    of the picture stored in the current instance.
-		/// </value>
-		public string Description {
+
+        /// <summary>
+        ///    Gets and sets a filename of the picture stored in the
+        ///    current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="string" /> object containing a fielname, with
+        ///    extension, of the picture stored in the current instance.
+        /// </value>
+        public string Filename
+        {
+            get { return filename; }
+            set { filename = value; }
+        }
+
+        /// <summary>
+        ///    Gets and sets a description of the picture stored in the
+        ///    current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="string" /> object containing a description
+        ///    of the picture stored in the current instance.
+        /// </value>
+        public string Description {
 			get {return description;}
 			set {description = value;}
 		}

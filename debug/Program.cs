@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 
+/// <summary>
+/// Stub program to debug some scenarios. Modify it as you need, this is not meant to be reuseable program.
+/// </summary>
 namespace debug
 {
     class Program
@@ -47,16 +50,13 @@ namespace debug
 
                 var mtag = (TagLib.Matroska.Tag)file.GetTag(TagLib.TagTypes.Matroska);
                 mtag.PerformersRole = new string[] { "TEST role 1", "TEST role 2" };
-                //tag.Year = 2017;
-                //file.Save();
-
 
                 log("    Picture            : " + pics[0].Description);
 
 
-                //log("  Erase : " + tag.Title);
-                //file.RemoveTags(TagLib.TagTypes.Matroska);
-                //file.Save();
+                log("  Erase : " + tag.Title);
+                file.RemoveTags(TagLib.TagTypes.Matroska);
+                file.Save();
 
                 log("    IsEmpty            : " + tag.IsEmpty);
 
@@ -88,7 +88,10 @@ namespace debug
                 tag.TrackCount = 10;
                 tag.Year = 1999;
 
-
+                // Insert new picture
+                Array.Resize(ref pics, 2);
+                pics[1] = new TagLib.Picture(Samples + "sample_sony2.jpg");
+                file.Tag.Pictures = pics;
 
                 file.Save();
 

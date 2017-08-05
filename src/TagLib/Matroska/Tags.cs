@@ -35,11 +35,8 @@ namespace TagLib.Matroska
     {
         #region Private fields/Properties
 
-        // Cross reference to file is required to retrieve whether this is a video/audio content
-        private File _file;
-
-        // Store the pictures
-        private IPicture[] pictures = new Picture[0];
+        // Store the Attachments
+        private Attachment[] attachments = new Attachment[0];
 
         #endregion
 
@@ -49,10 +46,8 @@ namespace TagLib.Matroska
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="file">the file it belongs to.</param>
-        public Tags(File file)
+        public Tags()
         {
-            _file = file;
         }
 
 
@@ -207,10 +202,7 @@ namespace TagLib.Matroska
         /// <summary>
         /// Define if this represent a video content (true), or an audio content (false)
         /// </summary>
-        public bool IsVideo
-        {
-            get { return _file == null || _file.MimeType != "taglib/mka"; }
-        }
+        public bool IsVideo = false;
 
 
         /// <summary>
@@ -237,7 +229,7 @@ namespace TagLib.Matroska
                     ret = this[i];
                     if (ret.TargetTypeValue != 40 || !vid) // Avoid CD/DVD
                     {
-                        if (ret.TrackUID == null && ret.EditionUID == null && ret.ChapterUID == null && ret.AttachmentUID == null) break;
+                        if (!ret.TargetSubElement) break;
                     }
                 }
                 
@@ -260,31 +252,31 @@ namespace TagLib.Matroska
             }
         }
 
-        
+
         /// <summary>
-        ///    Gets and sets a collection of pictures associated with
+        ///    Gets and sets a collection of Attachments associated with
         ///    the media represented by the current instance.
         /// </summary>
         /// <value>
-        ///    A <see cref="IPicture[]" /> containing a collection of
-        ///    pictures associated with the media represented by the
+        ///    A <see cref="Attachment[]" /> containing a collection of
+        ///    attachments associated with the media represented by the
         ///    current instance or an empty array if none are present.
         /// </value>
-        public IPicture [] Pictures
+        public Attachment [] Attachments
         {
             get
             {
-                return pictures;
+                return attachments;
             }
             set
             {
-                if (value==null && pictures.Length>0)
+                if (value==null)
                 {
-                    pictures = new Picture[0];
+                    if(attachments.Length > 0)  attachments = new Attachment[0];
                 }
                 else
                 {
-                    pictures = value;
+                    attachments = value;
                 }
             }
         }
