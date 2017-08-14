@@ -145,7 +145,7 @@ namespace TagLib.Matroska
         ///    specified read style.
         /// </summary>
         /// <param name="abstraction">
-        ///    A <see cref="IFileAbstraction" /> object to use when
+        ///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
         ///    reading from and writing to the file.
         /// </param>
         /// <param name="propertiesStyle">
@@ -161,7 +161,7 @@ namespace TagLib.Matroska
                      ReadStyle propertiesStyle)
             : base (abstraction)
         {
-            tags = new Matroska.Tags();
+            tags = new Matroska.Tags(tracks);
 
             Mode = AccessMode.Read;
 
@@ -190,7 +190,7 @@ namespace TagLib.Matroska
         ///    average read style.
         /// </summary>
         /// <param name="abstraction">
-        ///    A <see cref="IFileAbstraction" /> object to use when
+        ///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
         ///    reading from and writing to the file.
         /// </param>
         /// <exception cref="ArgumentNullException">
@@ -338,7 +338,6 @@ namespace TagLib.Matroska
         /// </param>
         private void ReadWrite (ReadStyle propertiesStyle)
         {
-            long ret = 0;
             ulong offset = 0;
 
             while (offset < (ulong) Length) {
@@ -356,7 +355,7 @@ namespace TagLib.Matroska
                 }
                 switch (matroska_id) {
                     case MatroskaID.Segment:
-                        ret += ReadWriteSegment(element, propertiesStyle);
+                        ReadWriteSegment(element, propertiesStyle);
                         break;
                     default:
                         break;
@@ -393,7 +392,7 @@ namespace TagLib.Matroska
             }
         }
 
-        private long ReadWriteSegment (EBMLElement element, ReadStyle propertiesStyle)
+        private void ReadWriteSegment (EBMLElement element, ReadStyle propertiesStyle)
         {
             long ret = 0;
             ulong i = 0;
@@ -462,16 +461,6 @@ namespace TagLib.Matroska
             {
                 i += element.DataOffset;
 
-                // Create EBML Tags if Tag available
-                if (tags.Count > 0 && (tags.Count>1 || !tags[0].IsEmpty))
-                {
-                    var ebml_tags = new EBMLElement(this, i, MatroskaID.Tags);
-                    WriteTags(ebml_tags);
-                    ret += (long)ebml_tags.Size;
-                    i += ebml_tags.Size;
-                    segm_list.Add(ebml_tags);
-                }
-
                 // Create EBML Attachments
                 if (tags.Attachments.Length > 0)
                 {
@@ -482,14 +471,62 @@ namespace TagLib.Matroska
                     segm_list.Add(ebml_attach);
                 }
 
+                // Create EBML Tags if Tag available
+                if (tags.Count > 0 && (tags.Count>1 || !tags[0].IsEmpty))
+                {
+                    var ebml_tags = new EBMLElement(this, i, MatroskaID.Tags);
+                    WriteTags(ebml_tags);
+                    ret += (long)ebml_tags.Size;
+                    i += ebml_tags.Size;
+                    segm_list.Add(ebml_tags);
+                }
+
                 // Generate the SeekHead
                 ret += WriteSeekHead(element.DataOffset, (long)ebml_seek_end, segm_list);
 
                 // Update Element EBML data-size
                 ret = element.ResizeData(ret);
             }
+            else
+            {
+                // Resolve the stub UIDElement to their real object (if available)
+                foreach (var tag in tags)
+                {
+                    if (tag.Elements != null) {
+                        for (int k = 0; k < tag.Elements.Count; k++)
+                        {
+                            var stub = tag.Elements[k];
 
-            return ret;
+                            // Attachments
+                            if (tags.Attachments != null)
+                            {
+                                foreach (var obj in tags.Attachments)
+                                {
+                                    if (stub.UID == obj.UID && stub.UIDType == obj.UIDType)
+                                        tag.Elements[k] = obj;
+                                }
+                            }
+
+
+                            // Tracks
+                            if (tracks != null)
+                            {
+                                foreach (var tobj in tracks)
+                                {
+                                    var obj = tobj as IUIDElement;
+                                    if (obj != null)
+                                    {
+                                        if (stub.UID == obj.UID && stub.UIDType == obj.UIDType)
+                                            tag.Elements[k] = tobj;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+            }
         }
 
 
@@ -539,7 +576,7 @@ namespace TagLib.Matroska
         }
 
 
-        private long WriteVoid(ulong position, int size)
+        private void WriteVoid(ulong position, int size)
         {
             if (size<2) throw new UnsupportedFormatException("Invalid size for WriteVoid");
 
@@ -547,8 +584,6 @@ namespace TagLib.Matroska
             element.DataSize = (ulong)size;
             element.DataSize = 0;
             element.WriteData(new ByteVector(size - (int)element.Size));
-
-            return size;
         }
 
 
@@ -672,10 +707,7 @@ namespace TagLib.Matroska
             ulong i = 0;
 
             string targetType = null;
-            var TrackUID = new List<ulong>();
-            var EditionUID = new List<ulong>();
-            var ChapterUID = new List<ulong>();
-            var AttachmentUID = new List<ulong>();
+            var uids = new List<UIDElement>();
 
             while (i < element.DataSize)
             {
@@ -692,16 +724,12 @@ namespace TagLib.Matroska
                         targetType = child.ReadString();
                         break;
                     case MatroskaID.TagTrackUID:
-                        TrackUID.Add(child.ReadULong());
-                        break;
                     case MatroskaID.TagEditionUID:
-                        EditionUID.Add(child.ReadULong());
-                        break;
                     case MatroskaID.TagChapterUID:
-                        ChapterUID.Add(child.ReadULong());
-                        break;
                     case MatroskaID.TagAttachmentUID:
-                        AttachmentUID.Add(child.ReadULong());
+                        var uid = child.ReadULong();
+                        // Value 0 => apply to all
+                        if (uid != 0) uids.Add( new UIDElement(matroska_id, uid) );
                         break;
                     default:
                         break;
@@ -711,11 +739,11 @@ namespace TagLib.Matroska
             }
 
             tag.TargetType = targetType;
-            if (TrackUID.Count > 0) tag.TrackUID = TrackUID.ToArray();
-            if (EditionUID.Count > 0) tag.EditionUID = EditionUID.ToArray();
-            if (ChapterUID.Count > 0) tag.ChapterUID = ChapterUID.ToArray();
-            if (AttachmentUID.Count > 0) tag.AttachmentUID = AttachmentUID.ToArray();
-
+            if (uids.Count > 0)
+            {
+                tag.Elements = new List<IUIDElement>(uids.Count);
+                tag.Elements.AddRange(uids);
+            }
         }
 
 
@@ -898,42 +926,15 @@ namespace TagLib.Matroska
                 i += ebml_targetType.Size;
             }
 
-            if (tag.TrackUID != null)
+            if (tag.Elements != null)
             {
-                foreach (var value in tag.TrackUID)
+                foreach (var value in tag.Elements)
                 {
-                    var ebml_targetUID = new EBMLElement(this, i, MatroskaID.TagTrackUID, value);
+                    var ebml_targetUID = new EBMLElement(this, i, value.UIDType, value.UID);
                     i += ebml_targetUID.Size;
                 }
             }
-
-            if (tag.EditionUID != null)
-            {
-                foreach (var value in tag.EditionUID)
-                {
-                    var ebml_targetUID = new EBMLElement(this, i, MatroskaID.TagEditionUID, value);
-                    i += ebml_targetUID.Size;
-                }
-            }
-
-            if (tag.ChapterUID != null)
-            {
-                foreach (var value in tag.ChapterUID)
-                {
-                    var ebml_targetUID = new EBMLElement(this, i, MatroskaID.TagChapterUID, value);
-                    i += ebml_targetUID.Size;
-                }
-            }
-
-            if (tag.AttachmentUID != null)
-            {
-                foreach (var value in tag.AttachmentUID)
-                {
-                    var ebml_targetUID = new EBMLElement(this, i, MatroskaID.TagAttachmentUID, value);
-                    i += ebml_targetUID.Size;
-                }
-            }
-
+            
             // Update Tag EBML data-size
             element.DataSize = i - element.DataOffset;
         }
@@ -1075,7 +1076,7 @@ namespace TagLib.Matroska
 
             // Write AttachedFile content
 
-            if (!string.IsNullOrEmpty(attach.Description))
+            if (!string.IsNullOrEmpty(attach.Description) && attach.Description != attach.Filename)
             {
                 var ebml_obj = new EBMLElement(this, i, MatroskaID.FileDescription, attach.Description);
                 i += ebml_obj.Size;

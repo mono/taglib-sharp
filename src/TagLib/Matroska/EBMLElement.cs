@@ -338,7 +338,7 @@ namespace TagLib.Matroska
 
         #region Public Methods
 
-        
+
         /// <summary>
         /// Reads a string from EBML Element's data section (UTF-8).
         /// </summary>
@@ -353,7 +353,7 @@ namespace TagLib.Matroska
 
             ByteVector vector = file.ReadBlock ((int) ebml_size);
 
-            return vector.ToString ();
+            return vector.ToString(StringType.UTF8);
         }
 
         /// <summary>

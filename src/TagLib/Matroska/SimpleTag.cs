@@ -124,12 +124,12 @@ namespace TagLib.Matroska
         #region Implicit Conversions
 
         /// <summary>
-        /// Convert a SimpleTag to a String
+        /// Convert a SimpleTag to a String in the Default encoding
         /// </summary>
         /// <param name="v"></param>
         public static implicit operator string(SimpleTag v)
         {
-            return v.ToString();
+            return v?.ToString(StringType.UTF8);
         }
 
         #endregion

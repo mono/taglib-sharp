@@ -40,10 +40,34 @@ namespace TagLib.Tests.FileFormats
             Assert.AreEqual("Starwer", file.Tag.FirstComposer);
             Assert.AreEqual("Starwer", file.Tag.Conductor);
             Assert.AreEqual("Starwer 2017", file.Tag.Copyright);
+        }
 
+
+        [Test]
+        public void ReadSpecificTags()
+        {
             // Specific Matroska Tag test
             var mkvTag = (TagLib.Matroska.Tag)file.GetTag(TagTypes.Matroska);
             Assert.AreEqual("This is a test Video showing a lime moving on a table", mkvTag.SimpleTags["SUMMARY"][0]);
+
+            var tracks = mkvTag.Tags.Tracks;
+            Assert.AreEqual(MediaTypes.Video, tracks[0].MediaTypes);
+            Assert.AreEqual(MediaTypes.Audio, tracks[1].MediaTypes);
+
+            var videotag = mkvTag.Tags.Get(tracks[0]);
+            Assert.IsNull(videotag);
+
+            var audiotag = mkvTag.Tags.Get(tracks[1]);
+
+            Assert.AreEqual("The Noise", audiotag.Title);
+            Assert.AreEqual("Useless background noise", audiotag.SimpleTags["DESCRIPTION"][0]);
+            Assert.AreEqual("und", audiotag.SimpleTags["DESCRIPTION"][0].TagLanguage);
+            Assert.AreEqual(true, audiotag.SimpleTags["DESCRIPTION"][0].TagDefault);
+
+            // Recursive read
+            Assert.AreEqual("Starwer", audiotag.FirstComposer);
+            Assert.AreEqual("Starwer 2017", audiotag.Copyright);
+
         }
 
 
@@ -128,7 +152,7 @@ namespace TagLib.Tests.FileFormats
 
 
         [Test]
-        public void SpecificTags()
+        public void WriteSpecificTags()
         {
             if (System.IO.File.Exists(tmp_file))
                 System.IO.File.Delete(tmp_file);
@@ -160,6 +184,24 @@ namespace TagLib.Tests.FileFormats
             // Add a Matroska 'SimpleTag' (TagName: 'TITLE') in the 'Tag' structure
             album.Set("TITLE", null, "TEST Album title"); // This should map to the standard Album tag
 
+            // Get tracks
+            var tracks = mtag.Tags.Tracks;
+
+            // Create video tags
+            var videotag = new Matroska.Tag(mtag.Tags, 30, tracks[0]);
+            videotag.Title = "The Video test";
+            videotag.Set("DESCRIPTION", null, "Video track Tag test");
+            videotag.SimpleTags["DESCRIPTION"][0].TagLanguage = "en";
+            videotag.SimpleTags["DESCRIPTION"][0].TagDefault = false;
+
+            // Add another description in another language (and check encoding correctness at the same time)
+            videotag.SimpleTags["DESCRIPTION"].Add(new Matroska.SimpleTag("Test de piste vidéo"));
+            videotag.SimpleTags["DESCRIPTION"][1].TagLanguage = "fr";
+
+            // Remove Audio tags
+            var audiotag = mtag.Tags.Get(tracks[1]);
+            Assert.NotNull(audiotag);
+            audiotag.Clear();
 
             file.Save();
 
@@ -174,8 +216,31 @@ namespace TagLib.Tests.FileFormats
             Assert.AreEqual("TEST choregrapher", mtag.Get("CHOREGRAPHER", null)[0]);
             Assert.AreEqual("TEST arranger", mtags.Album.Get("ARRANGER", null)[0]);
             Assert.AreEqual("TEST Album title", mtag.Album);
-        }
 
+            // Get tracks
+            tracks = mtag.Tags.Tracks;
+            Assert.NotNull(tracks);
+
+            // Test Video Track Tag
+            videotag = mtag.Tags.Get(tracks[0]);
+            Assert.NotNull(videotag);
+            Assert.AreEqual("The Video test", videotag.Title);
+            Assert.AreEqual("Video track Tag test", videotag.SimpleTags["DESCRIPTION"][0]);
+            Assert.AreEqual("en", videotag.SimpleTags["DESCRIPTION"][0].TagLanguage);
+            Assert.AreEqual(false, videotag.SimpleTags["DESCRIPTION"][0].TagDefault);
+
+            // implicit or explicit conversion from TagLib.Matroska.SimpleTag to string is required to ensure a proper encoding
+            Assert.AreEqual("Test de piste vidéo", videotag.SimpleTags["DESCRIPTION"][1].ToString());
+            Assert.AreEqual("fr", videotag.SimpleTags["DESCRIPTION"][1].TagLanguage);
+            Assert.AreEqual(true, videotag.SimpleTags["DESCRIPTION"][1].TagDefault);
+
+            // Test Audio Track Tag
+            audiotag = mtag.Tags.Get(tracks[1]);
+            Assert.IsNull(audiotag);
+
+            Assert.AreEqual("TEST Album title", mtag.Album);
+
+        }
 
         [Test]
         public void RemoveStandardTags()

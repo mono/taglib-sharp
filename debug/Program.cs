@@ -53,9 +53,15 @@ namespace debug
 
                 log("    Picture            : " + pics[0].Description);
 
+                var tracks = mtag.Tags.Tracks;
+                var audiotag = mtag.Tags.Get(tracks[1]);
 
-                log("  Erase : " + tag.Title);
-                file.RemoveTags(TagLib.TagTypes.Matroska);
+                //audiotag.Clear();
+                //audiotag.Title = "The Noise";
+                //audiotag.Set("DESCRIPTION", null, "Useless background noise");
+
+                //log("  Erase : " + tag.Title);
+                //file.RemoveTags(TagLib.TagTypes.Matroska);
                 file.Save();
 
                 log("    IsEmpty            : " + tag.IsEmpty);

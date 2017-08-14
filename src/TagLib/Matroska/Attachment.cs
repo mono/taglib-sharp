@@ -33,7 +33,7 @@ namespace TagLib.Matroska
     /// Describes a Matroska Attachment. 
     /// Attachments may be pictures, but also any other content type.
     /// </summary>
-    public class Attachment : Picture
+    public class Attachment : Picture, IUIDElement
     {
         #region Constructors
 
@@ -67,7 +67,7 @@ namespace TagLib.Matroska
         ///    specified file abstraction.
         /// </summary>
         /// <param name="abstraction">
-        ///    A <see cref="File.IFileAbstraction"/> object containing
+        ///    A <see cref="TagLib.File.IFileAbstraction"/> object containing
         ///    abstraction of the file to read.
         /// </param>
         /// <exception cref="ArgumentNullException">
@@ -110,53 +110,24 @@ namespace TagLib.Matroska
 
 
         #endregion
-
-
-        #region Property
+        
+        #region IUIDElement Boilerplate
 
         /// <summary>
-        /// Unique ID representing the file, as random as possible (setting zero will generate automatically a new one).
+        /// Unique ID representing the element, as random as possible (setting zero will generate automatically a new one).
         /// </summary>
         public ulong UID
         {
             get { return _UID; }
-            set
-            {
-                while (value == 0)
-                {
-                    value = ((ulong)random.Next()) << 32;
-                    value |= (uint)random.Next();
-                }
-                _UID = value;
-            }
+            set { _UID = UIDElement.GenUID(value); }
         }
-        private ulong _UID = (ulong)random.Next();
-
-        ///// <summary>
-        ///// Get the Tag representing this attachment
-        ///// </summary>
-        //public Tag Tag
-        //{
-        //    get
-        //    {
-        //        // Lazy declaration
-        //        if (_Tag == null)
-        //        {
-        //            _Tag = new Tag();
-        //            _Tag.AttachmentUID = new ulong[] { UID };
-        //        }
-
-        //        return _Tag;
-        //    }
-        //}
-        //private Tag _Tag = null;
-
-        #endregion
+        private ulong _UID = UIDElement.GenUID();
 
 
-        #region Statics
-
-        private static Random random = new Random();
+        /// <summary>
+        /// Get the Tag type the UID should be represented by, or 0 if undefined
+        /// </summary>
+        public MatroskaID UIDType { get { return MatroskaID.TagAttachmentUID; } }
 
         #endregion
 

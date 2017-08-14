@@ -45,9 +45,13 @@ namespace TagLib.Matroska
         {
             get
             {
-                if (TargetSubElement)
+                if (Elements != null)
                 {
-                    return ChapterUID != null || TrackUID == null;
+                    foreach (var uid in Elements)
+                    {
+                        if (uid is VideoTrack || uid is SubtitleTrack) return true;
+                    }
+                    return false;
                 }
                 else
                 {
@@ -65,11 +69,13 @@ namespace TagLib.Matroska
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="tags">the Tags this Tag should be added to.</param>
+        /// <param name="tags">The Tags object this Tag should be added to.</param>
         /// <param name="targetTypeValue">the Target Type ValueTags this Tag represents.</param>
-        public Tag(Tags tags = null, ushort targetTypeValue = 0)
+        /// <param name="element">The UID element that should be represented by this tag.</param>
+        public Tag(Tags tags = null, ushort targetTypeValue = 0, IUIDElement element = null)
         {
             if (targetTypeValue != 0) TargetTypeValue = targetTypeValue;
+            if (element != null) Elements = new List<IUIDElement>() { element };
             Tags = tags;
             if(tags != null) tags.Add(this);
         }
@@ -317,7 +323,7 @@ namespace TagLib.Matroska
         }
 
         /// <summary>
-        /// Retrieve a list of SimpleTag sahring the same TagName (key).
+        /// Retrieve a list of SimpleTag sharing the same TagName (key).
         /// </summary>
         /// <param name="key">Tag name</param>
         /// <param name="subkey">Nested SimpleTag to find (if non null) Tag name</param>
@@ -437,31 +443,60 @@ namespace TagLib.Matroska
 
 
         /// <summary>
-        /// Retrieve the parent Tag, of higher TargetTypeValue (if any, null if none)
+        /// Retrieve the parent Tag, of higher TargetTypeValue (if any, null if none).
+        /// This will only match the tag applying to the  same target as the current tag, or to more elements.
         /// </summary>
         public Tag Parent
         {
             get
             {
                 Tag ret = null;
+
                 if (Tags != null)
                 {
                     int i = Tags.IndexOf(this);
-                    if (i > 0) ret = Tags[i - 1];
+                    while (i > 0)
+                    {
+                        i--;
+                        ret = Tags[i];
+
+                        bool match = true;
+
+                        if (ret.Elements != null)
+                        {
+                            if (Elements == null)
+                            {
+                                match = false;
+                                break;
+                            }
+                            else
+                            { 
+                                // All UID in the reference should be found also in the parent
+                                foreach (var refUid in Elements)
+                                {
+                                    bool submatch = false;
+                                    foreach (var uid in ret.Elements)
+                                    {
+                                        if (uid == refUid)
+                                        {
+                                            submatch = true;
+                                            break;
+                                        }
+                                    }
+
+                                    match = match && submatch;
+                                }
+                            }
+                        }
+
+                        if (match)
+                        {
+                            return ret;
+                        }
+                    }
                 }
-                return ret;
-            }
-        }
 
-
-        /// <summary>
-        /// Get if the Tag represents a sub-element (track, chapter, attachment...) or the medium itself (false).
-        /// </summary>
-        public bool TargetSubElement
-        {
-            get
-            {
-                return TrackUID != null || EditionUID != null || ChapterUID != null || AttachmentUID != null;
+                return null;
             }
         }
 
@@ -500,24 +535,9 @@ namespace TagLib.Matroska
         public string TargetType = null;
 
         /// <summary>
-        /// Array of unique IDs to identify the Track(s) the tags belong to. If the value is 0 at this level, the tags apply to all tracks in the Segment.
+        /// Array of UID elements the tag applies to. If null, the tag apply to all elements.
         /// </summary>
-        public ulong[] TrackUID = null;
-
-        /// <summary>
-        /// Array of unique IDs to identify the EditionEntry(s) the tags belong to. If the value is 0 at this level, the tags apply to all editions in the Segment.
-        /// </summary>
-        public ulong[] EditionUID = null;
-
-        /// <summary>
-        ///  Array of unique IDs to identify the Chapter(s) the tags belong to. If the value is 0 at this level, the tags apply to all chapters in the Segment. 
-        /// </summary>
-        public ulong[] ChapterUID = null;
-
-        /// <summary>
-        /// Array of unique IDs to identify the Attachment(s) the tags belong to. If the value is 0 at this level, the tags apply to all the attachments in the Segment.
-        /// </summary>
-        public ulong[] AttachmentUID = null;
+        public List<IUIDElement> Elements = null;
 
 
         /// <summary>

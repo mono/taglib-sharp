@@ -46,8 +46,10 @@ namespace TagLib.Matroska
         /// <summary>
         /// Constructor
         /// </summary>
-        public Tags()
+        /// <param name="tracks">List of Matroska tracks</param>
+        public Tags(List<Track> tracks)
         {
+            _Tracks = tracks;
         }
 
 
@@ -61,7 +63,7 @@ namespace TagLib.Matroska
         /// index doesn't keep this list sorted by descending TargetTypeValue
         /// </summary>
         /// <param name="index">index at which the Tag element should be preferably inserted</param>
-        /// <param name="tag">Tag element to be inserted t the Tag list</param>
+        /// <param name="tag">Tag element to be inserted in the Tag list</param>
         protected override void InsertItem(int index, Tag tag)
         {
             if (tag == null) throw new ArgumentNullException("Can't add a null Matroska.Tag to a Matroska.Tags object");
@@ -80,7 +82,9 @@ namespace TagLib.Matroska
             {
                 for (index = this.Count - 1; index >= 0; index--)
                 {
-                    if (this[index].TargetTypeValue >= tag.TargetTypeValue)
+                    if (this[index].TargetTypeValue > tag.TargetTypeValue)
+                        break;
+                    if (this[index].TargetTypeValue == tag.TargetTypeValue && (this[index].Elements == null || tag.Elements != null))
                         break;
                 }
 
@@ -160,7 +164,7 @@ namespace TagLib.Matroska
 
 
         /// <summary>
-        /// Find first Tag of a given given TargetTypeValue
+        /// Find the first Tag of a given TargetTypeValue
         /// </summary>
         /// <param name="targetTypeValue">TargetTypeValue to find</param>
         /// <param name="medium">null: any kind, true: represent the current medium, false: represent a sub-element</param>
@@ -179,7 +183,7 @@ namespace TagLib.Matroska
                     ret = this[i];
                     if (medium != null)
                     {
-                        bool isMedium = (ret.TrackUID == null && ret.EditionUID == null && ret.ChapterUID == null && ret.AttachmentUID == null);
+                        bool isMedium = (ret.Elements == null);
                         if (medium == isMedium) break;
                     }
                     else
@@ -191,6 +195,38 @@ namespace TagLib.Matroska
 
             return i >= 0 ? ret : null;
         }
+
+        /// <summary>
+        ///  Find the first Tag applying to an object (Matroska UID), matching a TargetTypeValue
+        /// </summary>
+        /// <param name="UIDelement">Matroska Track, Edition, Chapter or Attachment (element having an UID)</param>
+        /// <param name="targetTypeValue">TargetTypeValue to match (default: match any)</param>
+        /// <returns>the first matching Tag representing the UID, or null if not found.</returns>
+        public Tag Get(IUIDElement UIDelement, ushort targetTypeValue = 0)
+        {
+            Tag ret = null;
+            int i;
+
+            ulong UID = UIDelement.UID;
+
+            for (i = this.Count - 1; i >= 0; i--)
+            {
+                if (targetTypeValue == 0 || targetTypeValue == this[i].TargetTypeValue)
+                {
+                    ret = this[i];
+                    if (ret.Elements != null)
+                    {
+                        foreach (var uid in ret.Elements)
+                        {
+                            if (uid.UID == UID) return ret; // found
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
 
 
         #endregion
@@ -229,7 +265,7 @@ namespace TagLib.Matroska
                     ret = this[i];
                     if (ret.TargetTypeValue != 40 || !vid) // Avoid CD/DVD
                     {
-                        if (!ret.TargetSubElement) break;
+                        if (ret.Elements == null) break;
                     }
                 }
                 
@@ -280,6 +316,16 @@ namespace TagLib.Matroska
                 }
             }
         }
+
+        /// <summary>
+        /// Get direct access to the Matroska Tracks. 
+        /// </summary>
+        public ReadOnlyCollection<Track> Tracks
+        {
+            get { return _Tracks.AsReadOnly(); }
+        }
+        private List<Track> _Tracks = null;
+
 
         #endregion
     }

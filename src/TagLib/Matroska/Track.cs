@@ -29,13 +29,12 @@ namespace TagLib.Matroska
     /// <summary>
     /// Describes a Matroska Track.
     /// </summary>
-    public class Track : ICodec
+    public class Track : ICodec, IUIDElement
     {
         #region Private fields
 
 #pragma warning disable 414 // Assigned, never used
         private ulong track_number;
-        private ulong track_uid;
         private string track_codec_id;
         private string track_codec_name;
         private string track_name;
@@ -73,7 +72,7 @@ namespace TagLib.Matroska
                         track_number = child.ReadULong ();
                         break;
                     case MatroskaID.TrackUID:
-                        track_uid = child.ReadULong ();
+                        _UID = child.ReadULong ();
                         break;
                     case MatroskaID.CodecID:
                         track_codec_id = child.ReadString ();
@@ -150,5 +149,26 @@ namespace TagLib.Matroska
         }
 
         #endregion
+
+        #region IUIDElement Boilerplate
+
+        /// <summary>
+        /// Unique ID representing the element, as random as possible (setting zero will generate automatically a new one).
+        /// </summary>
+        public ulong UID
+        {
+            get { return _UID; }
+            set { _UID = UIDElement.GenUID(value); }
+        }
+        private ulong _UID = UIDElement.GenUID();
+
+        /// <summary>
+        /// Get the Tag type the UID should be represented by, or 0 if undefined
+        /// </summary>
+        public MatroskaID UIDType { get { return MatroskaID.TagTrackUID; } }
+
+        #endregion
+
+
     }
 }

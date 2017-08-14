@@ -63,34 +63,42 @@ namespace TagLib.Matroska
 
                 matroska_id = (MatroskaID) elem.ID;
 
-                if (matroska_id == MatroskaID.TrackAudio) {
-                    ulong i = 0;
 
-                    while (i < elem.DataSize) {
-                        EBMLElement child = new EBMLElement (_file, elem.DataOffset + i);
+                switch (matroska_id)
+                {
+                    case MatroskaID.TrackAudio:
+                        {
+                            ulong i = 0;
 
-                        matroska_id = (MatroskaID) child.ID;
+                            while (i < elem.DataSize) {
+                                EBMLElement child = new EBMLElement (_file, elem.DataOffset + i);
 
-                        switch (matroska_id) {
-                            case MatroskaID.AudioChannels:
-                                channels = child.ReadULong ();
-                                break;
-                            case MatroskaID.AudioBitDepth:
-                                depth = child.ReadULong ();
-                                break;
-                            case MatroskaID.AudioSamplingFreq:
-                                rate = child.ReadDouble ();
-                                break;
-                            default:
-                                unknown_elems.Add (child);
-                                break;
+                                matroska_id = (MatroskaID) child.ID;
+
+                                switch (matroska_id) {
+                                    case MatroskaID.AudioChannels:
+                                        channels = child.ReadULong ();
+                                        break;
+                                    case MatroskaID.AudioBitDepth:
+                                        depth = child.ReadULong ();
+                                        break;
+                                    case MatroskaID.AudioSamplingFreq:
+                                        rate = child.ReadDouble ();
+                                        break;
+                                    default:
+                                        unknown_elems.Add (child);
+                                        break;
+                                }
+
+                                i += child.Size;
+                            }
+
+                            break;
                         }
 
-                        i += child.Size;
-                    }
-                }
-                else {
-                    unknown_elems.Add (elem);
+                    default: 
+                        unknown_elems.Add (elem);
+                        break;
                 }
             }
         }
@@ -152,5 +160,6 @@ namespace TagLib.Matroska
         }
 
         #endregion
+
     }
 }

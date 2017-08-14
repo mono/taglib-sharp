@@ -23,24 +23,27 @@ cd taglib-sharp
 To Build From Tarball:
 ./configure && make
 
-You can also build from MonoDevelop or Visual Studio using taglib-sharp.sln
-
 To Test:
 make test
 
+You can also build from MonoDevelop or Visual Studio using taglib-sharp.sln
 
-To Test from Visual Studio (Windows):
+
+To Test/Run from Visual Studio (Windows):
  
- Using Nunit 3 Test Adapter:
+ Running regression by using Nunit 3 Test Adapter:
   1. Go to menu: Tools > Extensions and Updates > Online
   2. Search: Nunit 3 Test Adapter
-  3. Download and install
+  3. Download and install it
   4. Open from menu: Test > Windows > Test Explorer
-  5. You can run your tests from this panel (not using the "Start" button)
- 
+  5. You can run your tests from this panel (*not* using the "Start" button)
+  6. You can debug your tests from this panel: 
+     6.1. Double click on a test. Set some breakpoints in the test in the editor panel.
+     6.2. right-click on the same test, select "Debug Selected tests". 
+
  To test some scenarios and take advantage of the debugger:
   1. Make the "debug" project the Startup project 
-    (Right-click on the project, select: "Set as StartUp Project"
+    (Right-click on the project, select: "Set as StartUp Project")
   2. Just modify the "Program.cs" 
-  3. Hit the "Start" button
+  3. Set some breakpoints and hit the "Start" button
     

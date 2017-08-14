@@ -14,7 +14,7 @@ namespace TagLib.Tests.Images.Validators
 #if !WIN32
             Global.InitCheck (ref args);
 #endif
-		}
+        }
 
 		string pre_hash;
 		string post_hash;
@@ -154,8 +154,10 @@ namespace TagLib.Tests.Images.Validators
 #if !WIN32
 			using (Pixbuf buf = new Pixbuf(v.Data))
 				result = buf.SaveToBuffer("png");
+#else
+            throw new Exception("Test not supported (yet) in Windows, because of its dependency to GDK");
 #endif
-			file.Mode = File.AccessMode.Closed;
+            file.Mode = File.AccessMode.Closed;
 			return Utils.Md5Encode (result);
 		}
 
