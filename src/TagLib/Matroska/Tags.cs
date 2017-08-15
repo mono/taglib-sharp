@@ -136,43 +136,29 @@ namespace TagLib.Matroska
 
 
         #endregion
-        
+
 
         #region Methods
 
         /// <summary>
-        /// Create a TargetType from a given TargetTypeValue, depending on the media-type
-        /// </summary>
-        /// <param name="targetTypeValue">TargetTypeValue to be converted to text</param>
-        /// <returns>Textual description of the TargetTypeValue</returns>
-        public string MakeTargetType(ushort targetTypeValue)
-        {
-            string ret = null;
-
-            switch (targetTypeValue)
-            {
-                case 70: ret = "COLLECTION"; break;
-                case 60: ret = IsVideo ? "SEASON" : "VOLUME"; break;
-                case 50: ret = IsVideo ? "MOVIE" : "ALBUM"; break;
-                case 40: ret = "PART"; break;
-                case 30: ret = IsVideo ? "CHAPTER" : "TRACK"; break;
-                case 20: ret = IsVideo ? "SCENE" : "MOVEMENT"; break;
-                case 10: ret = IsVideo ? "SHOT" : null; break;
-            }
-            return ret;
-        }
-
-
-        /// <summary>
         /// Find the first Tag of a given TargetTypeValue
         /// </summary>
-        /// <param name="targetTypeValue">TargetTypeValue to find</param>
+        /// <param name="targetType">TargetTypeValue to find</param>
         /// <param name="medium">null: any kind, true: represent the current medium, false: represent a sub-element</param>
         /// <returns>the Tag if match found, null otherwise</returns>
-        public Tag Get(ushort targetTypeValue, bool? medium = true)
+        public Tag Get(TargetType targetType, bool? medium = true)
         {
             Tag ret = null;
             int i;
+
+
+            // Coerce: Valid values are: 10 20 30 40 50 60 70
+            ushort targetTypeValue = (ushort)targetType;
+            targetTypeValue = (ushort)
+                 (targetTypeValue > 70 ? 70
+                : targetTypeValue < 10 ? 10
+                : ((targetTypeValue + 5) / 10) * 10
+                );
 
             // Find first match of the given targetValue
             // List is sorted in descending TargetTypeValue
@@ -283,7 +269,7 @@ namespace TagLib.Matroska
         {
             get
             {
-                ushort targetValue = IsVideo ? (ushort)70 : (ushort)50;
+                TargetType targetValue = IsVideo ? TargetType.COLLECTION : TargetType.ALBUM;
                 return Get(targetValue, true);
             }
         }

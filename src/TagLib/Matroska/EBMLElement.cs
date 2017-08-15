@@ -22,7 +22,6 @@
 // USA
 //
 
-using System.Collections.Generic;
 using System;
 
 namespace TagLib.Matroska

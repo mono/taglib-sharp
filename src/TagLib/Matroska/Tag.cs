@@ -25,8 +25,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 
 namespace TagLib.Matroska
 {
@@ -72,9 +70,9 @@ namespace TagLib.Matroska
         /// <param name="tags">The Tags object this Tag should be added to.</param>
         /// <param name="targetTypeValue">the Target Type ValueTags this Tag represents.</param>
         /// <param name="element">The UID element that should be represented by this tag.</param>
-        public Tag(Tags tags = null, ushort targetTypeValue = 0, IUIDElement element = null)
+        public Tag(Tags tags = null, TargetType targetTypeValue = 0, IUIDElement element = null)
         {
-            if (targetTypeValue != 0) TargetTypeValue = targetTypeValue;
+            if (targetTypeValue != 0) TargetType = targetTypeValue;
             if (element != null) Elements = new List<IUIDElement>() { element };
             Tags = tags;
             if(tags != null) tags.Add(this);
@@ -86,18 +84,41 @@ namespace TagLib.Matroska
 
         #region Methods
 
+
+        /// <summary>
+        /// Create a TargetType from a given TargetTypeValue, depending on the media-type
+        /// </summary>
+        /// <param name="targetTypeValue">TargetTypeValue to be converted to TargetType (text)</param>
+        /// <returns>Representation of the TargetTypeValue</returns>
+        public TargetType MakeTargetType(ushort targetTypeValue)
+        {
+            TargetType ret = 0;
+
+            switch (targetTypeValue)
+            {
+                case 70: ret = TargetType.COLLECTION; break;
+                case 60: ret = IsVideo ? TargetType.SEASON : TargetType.VOLUME; break;
+                case 50: ret = IsVideo ? TargetType.MOVIE : TargetType.ALBUM; break;
+                case 40: ret = TargetType.PART; break;
+                case 30: ret = IsVideo ? TargetType.CHAPTER : TargetType.TRACK; break;
+                case 20: ret = IsVideo ? TargetType.SCENE : TargetType.MOVEMENT; break;
+                case 10: ret = TargetType.SHOT; break;
+            }
+            return ret;
+        }
+
         /// <summary>
         /// Return a Tag of a certain Target type.  
         /// </summary>
         /// <param name="create">Create one if it doesn't exist yet.</param>
-        /// <param name="targetTypeValue">Target Type Value of the .</param>
+        /// <param name="targetType">Target Type Value.</param>
         /// <returns>the Tag representing the collection</returns>
-        private Tag TagsGet(bool create, ushort targetTypeValue)
+        private Tag TagsGet(bool create, TargetType targetType)
         {
-            Tag ret = Tags?.Get(targetTypeValue, true);
+            Tag ret = Tags?.Get(targetType, true);
             if (ret == null && create)
             {
-                ret = new Tag(Tags, targetTypeValue);
+                ret = new Tag(Tags, targetType);
             }
             return ret;
         }
@@ -116,8 +137,8 @@ namespace TagLib.Matroska
                 ret = Tags.Album;
                 if (ret == null && create)
                 {
-                    var targetTypeValue = Tags.IsVideo ? (ushort)70 : (ushort)50;
-                    ret = new Tag(Tags, targetTypeValue);
+                    var targetType = Tags.IsVideo ? TargetType.COLLECTION  : TargetType.ALBUM;
+                    ret = new Tag(Tags, targetType);
                 }
             }
             return ret;
@@ -503,36 +524,42 @@ namespace TagLib.Matroska
 
         /// <summary>
         ///    Gets the Matroska Target Type Value of this Tag.
+        ///    This value can be change with the <see cref="TargetType"/> property. 
         /// </summary>
         public ushort TargetTypeValue
         {
             get
             {
-                return _TargetTypeValue;
+                ushort ret = (ushort)TargetType;
+
+                // Coerce: Valid values are: 0 10 20 30 40 50 60 70
+                ret = (ushort) (ret > 70 ? 70 : ((ret + 5) / 10) * 10);
+
+                return ret;
+            }
+        }
+
+        /// <summary>
+        /// Get or set the Matroska Target Type of this Tag.
+        /// </summary>
+        public TargetType TargetType
+        {
+            get
+            {
+                return _TargetType;
             }
             set
             {
-                // Coerce: Valid values are: 10 20 30 40 50 60 70
-                _TargetTypeValue = (ushort)
-                    ( value > 70 ? 70
-                    : value < 10 ? 10
-                    : ((value + 5) / 10) * 10
-                    );
+                _TargetType = value;
 
                 // Make sure the List keeps ordered
                 if (Tags != null)
                 {
-                    if(TargetType == null)  Tags.MakeTargetType(_TargetTypeValue);
                     Tags.Add(this);
                 }
             }
         }
-        private ushort _TargetTypeValue = 0;
-
-        /// <summary>
-        ///    Gets the Matroska Target Type (informational name) of this Tag.
-        /// </summary>
-        public string TargetType = null;
+        private TargetType _TargetType = 0;
 
         /// <summary>
         /// Array of UID elements the tag applies to. If null, the tag apply to all elements.
@@ -920,8 +947,8 @@ namespace TagLib.Matroska
         /// </value>
         public override uint TrackCount
         {
-            get { return TagsGet(false, (ushort)(TargetTypeValue + 10))?.GetUint("TOTAL_PARTS") ?? 0; }
-            set { TagsGet(true, (ushort)(TargetTypeValue + 10))?.Set("TOTAL_PARTS", null, value); }
+            get { return TagsGet(false, MakeTargetType((ushort)(TargetTypeValue + 10)))?.GetUint("TOTAL_PARTS") ?? 0; }
+            set { TagsGet(true, MakeTargetType((ushort)(TargetTypeValue + 10)))?.Set("TOTAL_PARTS", null, value); }
         }
 
         /// <summary>
@@ -935,8 +962,8 @@ namespace TagLib.Matroska
         /// </value>
         public override uint Disc
         {
-            get { return TagsGet(false, 40)?.GetUint("PART_NUMBER") ?? 0; }
-            set { TagsGet(true, 40)?.Set("PART_NUMBER", null, value); }
+            get { return TagsGet(false, TargetType.PART)?.GetUint("PART_NUMBER") ?? 0; }
+            set { TagsGet(true, TargetType.PART)?.Set("PART_NUMBER", null, value); }
         }
 
         /// <summary>
@@ -950,8 +977,8 @@ namespace TagLib.Matroska
         /// </value>
         public override uint DiscCount
         {
-            get { return TagsGet(false, 50)?.GetUint("TOTAL_PARTS") ?? 0; }
-            set { TagsGet(true, 50)?.Set("TOTAL_PARTS", null, value); }
+            get { return TagsGet(false, TargetType.ALBUM)?.GetUint("TOTAL_PARTS") ?? 0; }
+            set { TagsGet(true, IsVideo ? TargetType.MOVIE : TargetType.ALBUM)?.Set("TOTAL_PARTS", null, value); }
         }
 
         /// <summary>

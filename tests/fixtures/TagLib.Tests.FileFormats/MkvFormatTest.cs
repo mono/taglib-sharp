@@ -1,6 +1,5 @@
 using System;
 using NUnit.Framework;
-using TagLib;
 
 namespace TagLib.Tests.FileFormats
 {   
@@ -151,6 +150,10 @@ namespace TagLib.Tests.FileFormats
         }
 
 
+        /// <summary>
+        /// Use advanced Matroska-specific features.
+        /// Matroska Tag Documentation: <see cref="https://www.matroska.org/technical/specs/tagging/index.html"/>.
+        /// </summary>
         [Test]
         public void WriteSpecificTags()
         {
@@ -175,20 +178,20 @@ namespace TagLib.Tests.FileFormats
             // Retrieve Matroska 'Tags' structure
             var mtags = mtag.Tags;
 
-            // Add a Matroska 'Tag' structure in the 'Tags' structure
-            var album = new Matroska.Tag(mtags, 70);
+            // Add a new Matroska 'Tag' structure, representing a collection, in the 'Tags' structure
+            var collectag = new Matroska.Tag(mtags, Matroska.TargetType.COLLECTION);
 
             // Add a Matroska 'SimpleTag' (TagName: 'ARRANGER') in the 'Tag' structure
-            album.Set("ARRANGER", null, "TEST arranger");
+            collectag.Set("ARRANGER", null, "TEST arranger");
 
             // Add a Matroska 'SimpleTag' (TagName: 'TITLE') in the 'Tag' structure
-            album.Set("TITLE", null, "TEST Album title"); // This should map to the standard Album tag
+            collectag.Set("TITLE", null, "TEST Album title"); // This should map to the standard TagLib Album tag
 
             // Get tracks
             var tracks = mtag.Tags.Tracks;
 
             // Create video tags
-            var videotag = new Matroska.Tag(mtag.Tags, 30, tracks[0]);
+            var videotag = new Matroska.Tag(mtag.Tags, Matroska.TargetType.CHAPTER, tracks[0]);
             videotag.Title = "The Video test";
             videotag.Set("DESCRIPTION", null, "Video track Tag test");
             videotag.SimpleTags["DESCRIPTION"][0].TagLanguage = "en";
@@ -203,6 +206,7 @@ namespace TagLib.Tests.FileFormats
             Assert.NotNull(audiotag);
             audiotag.Clear();
 
+            // Eventually save the changes
             file.Save();
 
             // Read back the Matroska-specific tags 
@@ -224,6 +228,8 @@ namespace TagLib.Tests.FileFormats
             // Test Video Track Tag
             videotag = mtag.Tags.Get(tracks[0]);
             Assert.NotNull(videotag);
+            Assert.AreEqual(Matroska.TargetType.CHAPTER, videotag.TargetType);
+            Assert.AreEqual(30, videotag.TargetTypeValue);
             Assert.AreEqual("The Video test", videotag.Title);
             Assert.AreEqual("Video track Tag test", videotag.SimpleTags["DESCRIPTION"][0]);
             Assert.AreEqual("en", videotag.SimpleTags["DESCRIPTION"][0].TagLanguage);

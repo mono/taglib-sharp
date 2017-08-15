@@ -53,6 +53,7 @@
     <Compile Include="TagLib\Matroska\IUIDElement.cs" />
     <Compile Include="TagLib\Matroska\SimpleTag.cs" />
     <Compile Include="TagLib\Matroska\Tags.cs" />
+    <Compile Include="TagLib\Matroska\TargetType.cs" />
     <Compile Include="TagLib\Picture.cs" />
     <Compile Include="TagLib\Properties.cs" />
     <Compile Include="TagLib\ReadOnlyByteVector.cs" />

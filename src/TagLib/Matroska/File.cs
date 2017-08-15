@@ -706,6 +706,7 @@ namespace TagLib.Matroska
         {
             ulong i = 0;
 
+            ushort targetTypeValue = 0;
             string targetType = null;
             var uids = new List<UIDElement>();
 
@@ -718,7 +719,7 @@ namespace TagLib.Matroska
                 switch (matroska_id)
                 {
                     case MatroskaID.TargetTypeValue:
-                        tag.TargetTypeValue = (ushort)child.ReadULong();
+                        targetTypeValue = (ushort)child.ReadULong();
                         break;
                     case MatroskaID.TargetType:
                         targetType = child.ReadString();
@@ -738,7 +739,16 @@ namespace TagLib.Matroska
                 i += child.Size;
             }
 
-            tag.TargetType = targetType;
+            if(targetTypeValue != 0)
+            {
+                if(targetType != null)
+                {
+                    tag.TargetType = (TargetType) Enum.Parse(typeof(TargetType), targetType.ToUpper());
+                }
+
+                if (targetTypeValue != tag.TargetTypeValue) tag.TargetType = tag.MakeTargetType(targetTypeValue);
+            }
+
             if (uids.Count > 0)
             {
                 tag.Elements = new List<IUIDElement>(uids.Count);
@@ -914,15 +924,12 @@ namespace TagLib.Matroska
 
             // Write Targets content
 
-            if (tag.TargetTypeValue > 0) 
+            if (tag.TargetTypeValue != 0) 
             {
                 var ebml_targetTypeValue = new EBMLElement(this, i, MatroskaID.TargetTypeValue, tag.TargetTypeValue);
                 i += ebml_targetTypeValue.Size;
-            }
 
-            if (tag.TargetType != null)
-            {
-                var ebml_targetType = new EBMLElement(this, i, MatroskaID.TargetType, tag.TargetType);
+                var ebml_targetType = new EBMLElement(this, i, MatroskaID.TargetType, tag.TargetType.ToString());
                 i += ebml_targetType.Size;
             }
 
