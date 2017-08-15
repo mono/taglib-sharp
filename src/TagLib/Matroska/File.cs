@@ -837,7 +837,26 @@ namespace TagLib.Matroska
 
             foreach (var tag in tags)
             {
-                if (tag.SimpleTags != null && tag.SimpleTags.Count > 0)
+                // Detect Tag targetting dead links (because attachment has been removed)
+                bool notdeadlink = true;
+                if (tag.Elements != null)
+                {
+                    notdeadlink = false;
+                    foreach (var elm in tag.Elements)
+                    {
+                        var att = elm as Attachment;
+                        if (att != null)
+                        {
+                            if(tags.Attachments.Contains(att)) notdeadlink = true;
+                        }
+                        else
+                        {
+                            notdeadlink = true;
+                        }
+                    }
+                }
+
+                if (tag.SimpleTags != null && tag.SimpleTags.Count > 0 && notdeadlink)
                 {
                     // Create new EBML Tag
                     var ebml_tag = new EBMLElement(this, i, MatroskaID.Tag);
