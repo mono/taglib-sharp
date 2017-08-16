@@ -1,23 +1,17 @@
 using System;
 using System.Reflection;
 using NUnit.Framework;
+using Gdk;
 
 namespace TagLib.Tests.Images.Validators
 {
 	public class ImageTest
 	{
-        private static Assembly Gdk = null;
 
         static ImageTest() {
+            // Initialize GDK 
             var args = Environment.GetCommandLineArgs();
-
-            // Initialize GDK, if exist (it will not find it in Window, but it will compile)
-            if (System.IO.File.Exists("gdk-sharp.dll")) {
-
-                Gdk = Assembly.LoadFile("gdk-sharp.dll");
-                var method = Gdk.GetType("Global").GetMethod("InitCheck");
-                method.Invoke(null, args);
-            }
+            Global.InitCheck(ref args);
         }
 
         string pre_hash;
@@ -155,23 +149,8 @@ namespace TagLib.Tests.Images.Validators
 			file.Mode = File.AccessMode.Read;
 			ByteVector v = file.ReadBlock ((int) file.Length);
 			byte [] result = null;
-
-            // This enable OS independence, as the call to Gdk is dynamic
-            if (Gdk != null)
-            {
-                Type pixbuf = Gdk.GetType("Pixbuf");
-                ConstructorInfo ctor = pixbuf.GetConstructor(new[] { typeof(byte[]) });
-                using (IDisposable buf = (IDisposable)ctor.Invoke(new object[] { v.Data }))
-                {
-                    result = (byte[])pixbuf.GetMethod("SaveToBuffer").Invoke(buf, new object[] { "png" });
-                }
-
-            }
-            else
-            {
-                throw new Exception("Test not supported (yet) in Windows, because of its dependency to GDK");
-            }
-
+            using (Pixbuf buf = new Pixbuf(v.Data))
+                result = buf.SaveToBuffer("png");
             file.Mode = File.AccessMode.Closed;
 			return Utils.Md5Encode (result);
 		}
