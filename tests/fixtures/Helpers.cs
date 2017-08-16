@@ -6,12 +6,12 @@ namespace TagLib.Tests
 	public class Debugger
 	{
 
-#if WIN32
-        public static readonly string Samples = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(Debugger)).Location) + @"..\..\..\samples\";
-        public static readonly string Covers = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(Debugger)).Location) + @"..\..\..\..\examples\covers\";
-#else
+#if __MonoCS__
         public const string Samples = @"samples/";
         public const string Covers = @"../examples/covers/";
+#else
+        public static readonly string Samples = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(Debugger)).Location) + @"..\samples\";
+        public static readonly string Covers = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(Debugger)).Location) + @"..\..\examples\covers\";
 #endif
 
 

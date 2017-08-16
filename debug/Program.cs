@@ -45,6 +45,31 @@ namespace debug
                 var file = TagLib.File.Create(tpath);
                 log("  Type  : " + file.MimeType);
 
+                log("  rboy1 test start  : " + file.MimeType);
+
+                var MKVTag = (TagLib.Matroska.Tag)file.GetTag(TagLib.TagTypes.Matroska);
+                MKVTag.Title = "my Title";
+                MKVTag.Set("SUBTITLE", null, "my SubTitle");
+                MKVTag.Set("DESCRIPTION", null, "my Description");
+                MKVTag.Set("TVCHANNEL", null, "my Network");
+                MKVTag.Set("LAW_RATING", null, "my Rating");
+                MKVTag.Set("ACTOR", null, "my MediaCredits");
+                MKVTag.Set("GENRE", null, "my Genres");
+                MKVTag.Set("SEASON", null, "my Season");
+                MKVTag.Set("EPISODE", null, "my Episode");
+
+                var BannerFile = Samples + "sample_invalidifdoffset.jpg";
+                TagLib.Picture VideoPicture = new TagLib.Picture(BannerFile);
+                MKVTag.Pictures = new TagLib.Picture[] { VideoPicture };
+
+                log("  rboy1 test save  : " + file.MimeType);
+                file.Save();
+
+                log("  rboy1 test read  : " + file.MimeType);
+                TagLib.File TagFile = TagLib.File.Create(tpath);
+
+                log("  rboy1 test end  : " + file.MimeType);
+
                 var tag = file.Tag;
                 var pics = file.Tag.Pictures;
 

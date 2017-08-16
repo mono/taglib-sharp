@@ -1,4 +1,4 @@
-#if ! WIN32
+#if __MonoCS__
 using Gdk;
 #endif
 using System;
@@ -11,12 +11,12 @@ namespace TagLib.Tests.Images.Validators
 		static ImageTest () {
 			// Initialize GDK
 			var args = Environment.GetCommandLineArgs ();
-#if !WIN32
+#if __MonoCS__
             Global.InitCheck (ref args);
 #endif
         }
 
-		string pre_hash;
+        string pre_hash;
 		string post_hash;
 
 		public static bool CompareLargeImages {
@@ -151,7 +151,7 @@ namespace TagLib.Tests.Images.Validators
 			file.Mode = File.AccessMode.Read;
 			ByteVector v = file.ReadBlock ((int) file.Length);
 			byte [] result = null;
-#if !WIN32
+#if __MonoCS__
 			using (Pixbuf buf = new Pixbuf(v.Data))
 				result = buf.SaveToBuffer("png");
 #else

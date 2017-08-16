@@ -443,6 +443,7 @@ namespace TagLib.Matroska
                         ReadAttachments(child);
                         break;
                     case MatroskaID.Cluster:
+                        seek = false;
                         break;
                     case MatroskaID.Void:
                         if (ebml_seek_end == i) ebml_seek_end += child.Size; // take on void
