@@ -12,9 +12,9 @@ namespace TagLib.Tests.Images.Validators
             var args = Environment.GetCommandLineArgs();
 
             // Initialize GDK, if exist (it will not find it in Window, but it will compile)
-            if (System.IO.File.Exists("gdk.dll")) {
+            if (System.IO.File.Exists("gdk-sharp.dll")) {
 
-                Gdk = Assembly.LoadFile("gdk.dll");
+                Gdk = Assembly.LoadFile("gdk-sharp.dll");
                 var method = Gdk.GetType("Global").GetMethod("InitCheck");
                 method.Invoke(null, args);
             }
