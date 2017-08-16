@@ -115,7 +115,7 @@ namespace TagLib.Matroska
         /// <returns>the Tag representing the collection</returns>
         private Tag TagsGet(bool create, TargetType targetType)
         {
-            Tag ret = Tags?.Get(targetType, true);
+            Tag ret = Tags != null ? Tags.Get(targetType, true) : null;
             if (ret == null && create)
             {
                 ret = new Tag(Tags, targetType);
@@ -602,13 +602,13 @@ namespace TagLib.Matroska
             get
             {
                 var ret = GetString("TITLE");
-                if (ret == null && Tags?.Medium == this) ret = Tags.Title;
+                if (ret == null && Tags != null && Tags.Medium == this) ret = Tags.Title;
                 return ret;
             }
             set
             {
                 Set("TITLE", null, value);
-                if (Tags?.Medium == this) Tags.Title = value;
+                if (Tags != null && Tags.Medium == this) Tags.Title = value;
             }
         }
 
@@ -712,8 +712,16 @@ namespace TagLib.Matroska
         /// </remarks>
         public override string [] AlbumArtists
         {
-            get { return TagsAlbum(false)?.Get("ARTIST"); }
-            set { TagsAlbum(true)?.Set("ARTIST", null, value); }
+            get
+            {
+                var tag = TagsAlbum(false);
+                return tag != null ? tag.Get("ARTIST") : null;
+            }
+            set
+            {
+                var tag = TagsAlbum(true);
+                if (tag != null ) tag.Set("ARTIST", null, value);
+            }
         }
 
         /// <summary>
@@ -736,8 +744,16 @@ namespace TagLib.Matroska
 
         public override string [] AlbumArtistsSort
         {
-            get { return TagsAlbum(false)?.Get("ARTIST", "SORT_WITH"); }
-            set { TagsAlbum(true)?.Set("ARTIST", "SORT_WITH", value); }
+            get
+            {
+                var tag = TagsAlbum(false);
+                return tag != null ? tag.Get("ARTIST", "SORT_WITH") : null;
+            }
+            set
+            {
+                var tag = TagsAlbum(true);
+                if (tag != null) tag.Set("ARTIST", "SORT_WITH", value);
+            }
         }
 
         /// <summary>
@@ -803,8 +819,16 @@ namespace TagLib.Matroska
         /// </remarks>
         public override string Album
         {
-            get { return TagsAlbum(false)?.GetString("TITLE"); }
-            set { TagsAlbum(true)?.Set("TITLE", null, value); }
+            get
+            {
+                var tag = TagsAlbum(false);
+                return tag != null ? tag.GetString("TITLE") : null;
+            }
+            set
+            {
+                var tag = TagsAlbum(true);
+                if (tag != null) tag.Set("TITLE", null, value);
+            }
         }
 
         /// <summary>
@@ -822,8 +846,16 @@ namespace TagLib.Matroska
         /// </remarks>
         public override string AlbumSort
         {
-            get { return TagsAlbum(false)?.GetString("TITLE", "SORT_WITH"); }
-            set { TagsAlbum(true)?.Set("TITLE", "SORT_WITH", value); }
+            get
+            {
+                var tag = TagsAlbum(false);
+                return tag != null ? tag.GetString("TITLE", "SORT_WITH") : null;
+            }
+            set
+            {
+                var tag = TagsAlbum(true);
+                if (tag != null) tag.Set("TITLE", "SORT_WITH", value);
+            }
         }
 
         /// <summary>
@@ -883,9 +915,10 @@ namespace TagLib.Matroska
 
                 return result;
             }
+
             set
             {
-                Set("GENRE", null, String.Join ("; ", value));
+                Set("GENRE", null, value != null ? String.Join ("; ", value) : null);
             }
         }
 
@@ -918,6 +951,7 @@ namespace TagLib.Matroska
 
                 return ret;
             }
+
             set { Set("DATE_RECORDED", null, value); }
         }
 
@@ -947,8 +981,16 @@ namespace TagLib.Matroska
         /// </value>
         public override uint TrackCount
         {
-            get { return TagsGet(false, MakeTargetType((ushort)(TargetTypeValue + 10)))?.GetUint("TOTAL_PARTS") ?? 0; }
-            set { TagsGet(true, MakeTargetType((ushort)(TargetTypeValue + 10)))?.Set("TOTAL_PARTS", null, value); }
+            get
+            {
+                var tag = TagsGet(false, MakeTargetType((ushort)(TargetTypeValue + 10)));
+                return tag != null ? tag.GetUint("TOTAL_PARTS") : 0;
+            }
+            set
+            {
+                var tag = TagsGet(true, MakeTargetType((ushort)(TargetTypeValue + 10)));
+                if (tag != null) tag.Set("TOTAL_PARTS", null, value);
+            }
         }
 
         /// <summary>
@@ -962,8 +1004,16 @@ namespace TagLib.Matroska
         /// </value>
         public override uint Disc
         {
-            get { return TagsGet(false, TargetType.PART)?.GetUint("PART_NUMBER") ?? 0; }
-            set { TagsGet(true, TargetType.PART)?.Set("PART_NUMBER", null, value); }
+            get
+            {
+                var tag = TagsGet(false, TargetType.PART);
+                return tag != null ? tag.GetUint("PART_NUMBER") : 0;
+            }
+            set
+            {
+                var tag = TagsGet(true, TargetType.PART);
+                if (tag != null) tag.Set("PART_NUMBER", null, value);
+            }
         }
 
         /// <summary>
@@ -977,8 +1027,16 @@ namespace TagLib.Matroska
         /// </value>
         public override uint DiscCount
         {
-            get { return TagsGet(false, TargetType.ALBUM)?.GetUint("TOTAL_PARTS") ?? 0; }
-            set { TagsGet(true, IsVideo ? TargetType.MOVIE : TargetType.ALBUM)?.Set("TOTAL_PARTS", null, value); }
+            get
+            {
+                var tag = TagsGet(false, TargetType.ALBUM);
+                return tag != null ? tag.GetUint("TOTAL_PARTS") : 0;
+            }
+            set
+            {
+                var tag = TagsGet(true, IsVideo ? TargetType.MOVIE : TargetType.ALBUM);
+                if (tag != null) tag.Set("TOTAL_PARTS", null, value);
+            }
         }
 
         /// <summary>
@@ -1007,8 +1065,16 @@ namespace TagLib.Matroska
         /// </value>
         public override string Grouping
         {
-            get { return TagsAlbum(false)?.GetString("GROUPING"); }
-            set { TagsAlbum(true)?.Set("GROUPING", null, value); }
+            get
+            {
+                var tag = TagsAlbum(false);
+                return tag != null ? tag.GetString("GROUPING") : null;
+            }
+            set
+            {
+                var tag = TagsAlbum(true);
+                if (tag != null) tag.Set("GROUPING", null, value);
+            }
         }
 
         /// <summary>
@@ -1225,7 +1291,7 @@ namespace TagLib.Matroska
         {
             get
             {
-                return Tags?.Attachments;
+                return Tags != null ? Tags.Attachments : null;
             }
 
             set

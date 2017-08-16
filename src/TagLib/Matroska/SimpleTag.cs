@@ -128,7 +128,7 @@ namespace TagLib.Matroska
         /// <param name="v"></param>
         public static implicit operator string(SimpleTag v)
         {
-            return v?.ToString(StringType.UTF8);
+            return v != null ? v.ToString(StringType.UTF8) : null;
         }
 
         #endregion
