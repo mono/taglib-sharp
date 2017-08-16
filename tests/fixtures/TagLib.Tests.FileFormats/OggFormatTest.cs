@@ -7,8 +7,8 @@ namespace TagLib.Tests.FileFormats
     [TestFixture]
     public class OggFormatTest : IFormatTest
     {
-        private static string sample_file = Debugger.Samples + "sample.ogg";
-        private static string tmp_file = Debugger.Samples + "tmpwrite.ogg";
+        private static string sample_file = TestPath.Samples + "sample.ogg";
+        private static string tmp_file = TestPath.Samples + "tmpwrite.ogg";
         private File file;
         
         [OneTimeSetUp]
@@ -51,7 +51,7 @@ namespace TagLib.Tests.FileFormats
 				[Test]
         public void TestCorruptionResistance()
         {
-            StandardTests.TestCorruptionResistance (Debugger.Samples + "corrupt/a.ogg");
+            StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/a.ogg");
         }
     }
 }

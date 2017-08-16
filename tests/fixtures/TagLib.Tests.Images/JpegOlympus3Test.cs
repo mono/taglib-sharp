@@ -12,8 +12,8 @@ namespace TagLib.Tests.Images
 	[TestFixture]
 	public class JpegOlympus3Test
 	{
-		private static string sample_file = Debugger.Samples + "sample_olympus3.jpg";
-		private static string tmp_file = Debugger.Samples + "tmpwrite_olympus3.jpg";
+		private static string sample_file = TestPath.Samples + "sample_olympus3.jpg";
+		private static string tmp_file = TestPath.Samples + "tmpwrite_olympus3.jpg";
 
 		private TagTypes contained_types = TagTypes.TiffIFD;
 

@@ -14,8 +14,8 @@ namespace TagLib.Tests.Images
 	{
 		private static int count = 6;
 
-		private static string sample_file = Debugger.Samples + "sample_tangled{0}.jpg";
-		private static string tmp_file = Debugger.Samples + "tmpwrite_tangled{0}.jpg";
+		private static string sample_file = TestPath.Samples + "sample_tangled{0}.jpg";
+		private static string tmp_file = TestPath.Samples + "tmpwrite_tangled{0}.jpg";
 
 		private static TagTypes[] contained_types = new TagTypes[] {
 				TagTypes.JpegComment | TagTypes.TiffIFD | TagTypes.XMP,

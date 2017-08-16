@@ -18,7 +18,7 @@ namespace TagLib.Tests.Performance
                     for(int i = 0; i < iterations; i++) {
                         CodeTimer timer = new CodeTimer();
                         using(timer) {
-                            File.Create(Debugger.Samples + "sample.m4a");
+                            File.Create(TestPath.Samples + "sample.m4a");
                         }
                         total_time += timer.ElapsedTime.TotalSeconds;
                     }
@@ -39,7 +39,7 @@ namespace TagLib.Tests.Performance
                     for(int i = 0; i < iterations; i++) {
                         CodeTimer timer = new CodeTimer();
                         using(timer) {
-                            File.Create(Debugger.Samples + "sample.ogg");
+                            File.Create(TestPath.Samples + "sample.ogg");
                         }
                         total_time += timer.ElapsedTime.TotalSeconds;
                     }

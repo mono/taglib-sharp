@@ -3,17 +3,21 @@ using System.IO;
 
 namespace TagLib.Tests
 {
-	public class Debugger
-	{
+    public class TestPath
+    {
+        #region OS-Independent Path composition
 
-#if __MonoCS__
-        public const string Samples = @"samples/";
-        public const string Covers = @"../examples/covers/";
-#else
-        public static readonly string Samples = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(Debugger)).Location) + @"..\samples\";
-        public static readonly string Covers = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(Debugger)).Location) + @"..\..\examples\covers\";
-#endif
+        public static readonly string TestsDir = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(Debugger)).Location);
+        public static readonly string Samples = Path.Combine(TestsDir, "samples", " ").TrimEnd();
+        public static readonly string Covers = Path.Combine(TestsDir, "..", "examples", "covers", " ").TrimEnd();
 
+        #endregion
+    }
+
+
+
+    public class Debugger
+    {
 
         public static void DumpHex (ByteVector data)
 		{

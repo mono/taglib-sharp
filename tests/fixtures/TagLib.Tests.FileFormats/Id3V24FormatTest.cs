@@ -7,8 +7,8 @@ namespace TagLib.Tests.FileFormats
     [TestFixture]
     public class Id3V24FormatTest : IFormatTest
     {
-        private readonly string sample24unsynchronization_file = Debugger.Samples + "sample_v2_4_unsynch.mp3";
-        private readonly string tmp_file = Debugger.Samples + "tmpwrite_v2_4_unsynch.mp3";
+        private readonly string sample24unsynchronization_file = TestPath.Samples + "sample_v2_4_unsynch.mp3";
+        private readonly string tmp_file = TestPath.Samples + "tmpwrite_v2_4_unsynch.mp3";
         private File file;
 
         [OneTimeSetUp]
@@ -52,8 +52,8 @@ namespace TagLib.Tests.FileFormats
         [Test]
         public void ReplayGainTest()
         {
-            string inFile = Debugger.Samples + "sample_replaygain.mp3";
-            string tempFile = Debugger.Samples + "tmpwrite_sample_replaygain.mp3";
+            string inFile = TestPath.Samples + "sample_replaygain.mp3";
+            string tempFile = TestPath.Samples + "tmpwrite_sample_replaygain.mp3";
 
             File rgFile = File.Create(inFile);
             Assert.AreEqual(2.22d, rgFile.Tag.ReplayGainTrackGain);
@@ -97,7 +97,7 @@ namespace TagLib.Tests.FileFormats
         [Test]
         public void URLLinkFrameTest()
         {
-            string tempFile = Debugger.Samples + "tmpwrite_urllink_v2_4_unsynch.mp3";
+            string tempFile = TestPath.Samples + "tmpwrite_urllink_v2_4_unsynch.mp3";
 
             System.IO.File.Copy(sample24unsynchronization_file, tempFile, true);
 

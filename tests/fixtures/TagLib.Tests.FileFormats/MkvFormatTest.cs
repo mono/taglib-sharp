@@ -6,10 +6,10 @@ namespace TagLib.Tests.FileFormats
     [TestFixture]
     public class MkvFormatTest : IFormatTest
     {
-        private static string sample_file = Debugger.Samples + "Turning Lime.mkv";
-        private static string sample_picture = Debugger.Samples + "sample_gimp.gif";
-        private static string sample_other = Debugger.Samples + "apple_tags.m4a";
-        private static string tmp_file = Debugger.Samples + "tmpwrite.mkv";
+        private static string sample_file = TestPath.Samples + "Turning Lime.mkv";
+        private static string sample_picture = TestPath.Samples + "sample_gimp.gif";
+        private static string sample_other = TestPath.Samples + "apple_tags.m4a";
+        private static string tmp_file = TestPath.Samples + "tmpwrite.mkv";
         private File file;
         
 
@@ -257,7 +257,7 @@ namespace TagLib.Tests.FileFormats
         [Test]
         public void TestCorruptionResistance()
         {
-            StandardTests.TestCorruptionResistance (Debugger.Samples + "corrupt/a.mkv");
+            StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/a.mkv");
         }
     }
 }

@@ -12,7 +12,7 @@ namespace TagLib.Tests.Images
     [TestFixture]
     public class XmpNullEndedTest
     {
-		private static string sample_file = Debugger.Samples + "sample_xmpnullended.jpg";
+		private static string sample_file = TestPath.Samples + "sample_xmpnullended.jpg";
 
 		[Test]
 		public void ParseXmp ()

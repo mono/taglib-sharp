@@ -469,12 +469,12 @@ namespace TagLib.Tests.TaggingFormats
 			Ape.Tag tag = new Ape.Tag ();
 			
 			Picture [] pictures = new Picture [] {
-				new Picture (Debugger.Covers + "sample_a.png"),
-				new Picture (Debugger.Covers + "sample_a.jpg"),
-				new Picture (Debugger.Covers + "sample_b.png"),
-				new Picture (Debugger.Covers + "sample_b.jpg"),
-				new Picture (Debugger.Covers + "sample_c.png"),
-				new Picture (Debugger.Covers + "sample_c.jpg")
+				new Picture (TestPath.Covers + "sample_a.png"),
+				new Picture (TestPath.Covers + "sample_a.jpg"),
+				new Picture (TestPath.Covers + "sample_b.png"),
+				new Picture (TestPath.Covers + "sample_b.jpg"),
+				new Picture (TestPath.Covers + "sample_c.png"),
+				new Picture (TestPath.Covers + "sample_c.jpg")
 			};
 			
 			for (int i = 0; i < 6; i ++)
@@ -781,7 +781,7 @@ namespace TagLib.Tests.TaggingFormats
 			tag.BeatsPerMinute = 234;
 			tag.Conductor = "I";
 			tag.Copyright = "J";
-			tag.Pictures = new Picture [] {new Picture (Debugger.Covers + "sample_a.png") };
+			tag.Pictures = new Picture [] {new Picture (TestPath.Covers + "sample_a.png") };
 			
 			Assert.IsFalse (tag.IsEmpty, "Should be full.");
 			tag.Clear ();

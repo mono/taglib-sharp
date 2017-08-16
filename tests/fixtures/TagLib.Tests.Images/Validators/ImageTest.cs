@@ -1,19 +1,23 @@
-#if __MonoCS__
-using Gdk;
-#endif
 using System;
+using System.Reflection;
 using NUnit.Framework;
 
 namespace TagLib.Tests.Images.Validators
 {
 	public class ImageTest
 	{
-		static ImageTest () {
-			// Initialize GDK
-			var args = Environment.GetCommandLineArgs ();
-#if __MonoCS__
-            Global.InitCheck (ref args);
-#endif
+        private static Assembly Gdk = null;
+
+        static ImageTest() {
+            var args = Environment.GetCommandLineArgs();
+
+            // Initialize GDK, if exist (it will not find it in Window, but it will compile)
+            if (System.IO.File.Exists("gdk.dll")) {
+
+                Gdk = Assembly.LoadFile("gdk.dll");
+                var method = Gdk.GetType("Global").GetMethod("InitCheck");
+                method.Invoke(null, args);
+            }
         }
 
         string pre_hash;
@@ -41,7 +45,7 @@ namespace TagLib.Tests.Images.Validators
 
 		public static void Run (string filename, bool compare_image_data, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
 		{
-			Run (Debugger.Samples, filename, compare_image_data, invariant, modifications);
+			Run (TestPath.Samples, filename, compare_image_data, invariant, modifications);
 		}
 
 		public static void Run (string directory, string filename, bool compare_image_data, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
@@ -151,12 +155,23 @@ namespace TagLib.Tests.Images.Validators
 			file.Mode = File.AccessMode.Read;
 			ByteVector v = file.ReadBlock ((int) file.Length);
 			byte [] result = null;
-#if __MonoCS__
-			using (Pixbuf buf = new Pixbuf(v.Data))
-				result = buf.SaveToBuffer("png");
-#else
-            throw new Exception("Test not supported (yet) in Windows, because of its dependency to GDK");
-#endif
+
+            // This enable OS independence, as the call to Gdk is dynamic
+            if (Gdk != null)
+            {
+                Type pixbuf = Gdk.GetType("Pixbuf");
+                ConstructorInfo ctor = pixbuf.GetConstructor(new[] { typeof(byte[]) });
+                using (IDisposable buf = (IDisposable)ctor.Invoke(new object[] { v.Data }))
+                {
+                    result = (byte[])pixbuf.GetMethod("SaveToBuffer").Invoke(buf, new object[] { "png" });
+                }
+
+            }
+            else
+            {
+                throw new Exception("Test not supported (yet) in Windows, because of its dependency to GDK");
+            }
+
             file.Mode = File.AccessMode.Closed;
 			return Utils.Md5Encode (result);
 		}

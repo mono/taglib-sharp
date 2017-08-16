@@ -12,8 +12,8 @@ namespace TagLib.Tests.Images
 	[TestFixture]
 	public class JpegNikon2Test
 	{
-		private static string sample_file = Debugger.Samples + "sample_nikon2.jpg";
-		private static string tmp_file = Debugger.Samples + "tmpwrite_nikon2.jpg";
+		private static string sample_file = TestPath.Samples + "sample_nikon2.jpg";
+		private static string tmp_file = TestPath.Samples + "tmpwrite_nikon2.jpg";
 
 		private TagTypes contained_types = TagTypes.TiffIFD | TagTypes.XMP;
 

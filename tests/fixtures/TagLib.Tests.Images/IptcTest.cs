@@ -36,7 +36,7 @@ namespace TagLib.Tests.Images
 		[Test]
 		public void Iim_Keywords ()
 		{
-			var file = File.Create (Debugger.Samples + "sample_iptc1.jpg");
+			var file = File.Create (TestPath.Samples + "sample_iptc1.jpg");
 			var tag = file.GetTag (TagTypes.XMP) as XmpTag;
 
 			Assert.IsNotNull (tag, "tag");
@@ -47,7 +47,7 @@ namespace TagLib.Tests.Images
 		[Test]
 		public void Iim_AllInfo ()
 		{
-			var file = File.Create (Debugger.Samples + "sample_iptc2.jpg");
+			var file = File.Create (TestPath.Samples + "sample_iptc2.jpg");
 			var tag = file.GetTag (TagTypes.XMP) as XmpTag;
 
 			Assert.IsNotNull (tag, "tag");
@@ -61,7 +61,7 @@ namespace TagLib.Tests.Images
 		[Test]
 		public void IimAndXmp ()
 		{
-			var file = File.Create (Debugger.Samples + "sample_iptc3.jpg");
+			var file = File.Create (TestPath.Samples + "sample_iptc3.jpg");
 			var tag = file.GetTag (TagTypes.XMP) as XmpTag;
 
 			Assert.IsNotNull (tag, "tag");

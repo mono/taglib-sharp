@@ -7,8 +7,8 @@ namespace TagLib.Tests.FileFormats
     [TestFixture]
     public class FlacFormatTest : IFormatTest
     {
-        private static string sample_file = Debugger.Samples + "sample.flac";
-        private static string tmp_file = Debugger.Samples + "tmpwrite.flac";
+        private static string sample_file = TestPath.Samples + "sample.flac";
+        private static string tmp_file = TestPath.Samples + "tmpwrite.flac";
         private File file;
         
         [OneTimeSetUp]
@@ -55,14 +55,14 @@ namespace TagLib.Tests.FileFormats
         [Test]
         public void TestCorruptionResistance()
         {
-            StandardTests.TestCorruptionResistance (Debugger.Samples + "corrupt/a.flac");
+            StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/a.flac");
         }
 
         [Test]
         public void ReplayGainTest()
         {
-            string inFile = Debugger.Samples + "sample_replaygain.flac";
-            string tempFile = Debugger.Samples + "tmpwrite_sample_replaygain.flac";
+            string inFile = TestPath.Samples + "sample_replaygain.flac";
+            string tempFile = TestPath.Samples + "tmpwrite_sample_replaygain.flac";
 
             File rgFile = File.Create(inFile);
             Assert.AreEqual(1.8d, rgFile.Tag.ReplayGainTrackGain);

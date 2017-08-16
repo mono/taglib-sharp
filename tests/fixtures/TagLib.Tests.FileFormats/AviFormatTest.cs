@@ -7,8 +7,8 @@ namespace TagLib.Tests.FileFormats
     [TestFixture]
     public class AviFormatTest : IFormatTest
     {
-        private static string sample_file = Debugger.Samples + "sample.avi";
-        private static string tmp_file = Debugger.Samples + "tmpwrite.avi";
+        private static string sample_file = TestPath.Samples + "sample.avi";
+        private static string tmp_file = TestPath.Samples + "tmpwrite.avi";
         private File file;
         
         [OneTimeSetUp]
@@ -45,7 +45,7 @@ namespace TagLib.Tests.FileFormats
         [Test]
         public void TestCorruptionResistance()
         {
-            StandardTests.TestCorruptionResistance (Debugger.Samples + "corrupt/a.avi");
+            StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/a.avi");
         }
     }
 }

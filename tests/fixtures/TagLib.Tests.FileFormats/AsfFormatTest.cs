@@ -7,8 +7,8 @@ namespace TagLib.Tests.FileFormats
     [TestFixture]
     public class AsfFormatTest : IFormatTest
     {
-        private static string sample_file = Debugger.Samples + "sample.wma";
-        private static string tmp_file = Debugger.Samples + "tmpwrite.wma";
+        private static string sample_file = TestPath.Samples + "sample.wma";
+        private static string tmp_file = TestPath.Samples + "tmpwrite.wma";
         private File file;
         
         [OneTimeSetUp]
@@ -51,7 +51,7 @@ namespace TagLib.Tests.FileFormats
 		[Test]
         public void TestCorruptionResistance()
         {
-            StandardTests.TestCorruptionResistance (Debugger.Samples + "corrupt/a.wma");
+            StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/a.wma");
         }
     }
 }
