@@ -207,7 +207,7 @@ namespace TagLib {
 		///    the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the performers or
+		///    A <see cref="T:string[]" /> containing the performers or
 		///    artists who performed in the media described by the
 		///    current instance or an empty array if no value is
 		///    present.
@@ -235,7 +235,7 @@ namespace TagLib {
 		///    who performed in the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names for
+		///    A <see cref="T:string[]" /> containing the sort names for
 		///    the performers or artists who performed in the media
 		///    described by the current instance, or an empty array if
 		///    no value is present. 
@@ -258,7 +258,7 @@ namespace TagLib {
 		///    media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the band or artist
+		///    A <see cref="T:string[]" /> containing the band or artist
 		///    who is credited in the creation of the entire album or
 		///    collection containing the media described by the current
 		///    instance or an empty array if no value is present.
@@ -289,7 +289,7 @@ namespace TagLib {
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names
+		///    A <see cref="T:string[]" /> containing the sort names
 		///    for the band or artist who is credited in the creation
 		///    of the entire album or collection containing the media
 		///    described by the current instance or an empty array if
@@ -319,7 +319,7 @@ namespace TagLib {
 		///    the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the composers of the
+		///    A <see cref="T:string[]" /> containing the composers of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -338,7 +338,7 @@ namespace TagLib {
 		///    media represented by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names
+		///    A <see cref="T:string[]" /> containing the sort names
 		///    for the composers of the media represented by the 
 		///    current instance or an empty array if no value is present.
 		/// </value>
@@ -386,7 +386,7 @@ namespace TagLib {
 		///    media represented by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names
+		///    A <see cref="T:string[]" /> containing the sort names
 		///    for the Album Title of the media represented by the 
 		///    current instance or an empty array if no value is present.
 		/// </value>
@@ -430,7 +430,7 @@ namespace TagLib {
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the genres of the
+		///    A <see cref="T:string[]" /> containing the genres of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -891,7 +891,7 @@ namespace TagLib {
 		///    the media represented by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IPicture[]" /> containing a collection of
+		///    A <see cref="T:IPicture[]" /> containing a collection of
 		///    pictures associated with the media represented by the
 		///    current instance or an empty array if none are present.
 		/// </value>
@@ -1158,7 +1158,7 @@ namespace TagLib {
 		///    Gets the first string in an array.
 		/// </summary>
 		/// <param name="group">
-		///    A <see cref="string[]" /> to get the first string from.
+		///    A <see cref="T:string[]" /> to get the first string from.
 		/// </param>
 		/// <returns>
 		///    The first <see cref="string" /> object contained in
@@ -1176,7 +1176,7 @@ namespace TagLib {
 		///    separated, string.
 		/// </summary>
 		/// <param name="group">
-		///    A <see cref="string[]" /> containing values to combine.
+		///    A <see cref="T:string[]" /> containing values to combine.
 		/// </param>
 		/// <returns>
 		///    A semicolon separated <see cref="string" /> object
@@ -1376,7 +1376,7 @@ namespace TagLib {
 		///    <see langword="null" /> or is empty.
 		/// </summary>
 		/// <param name="value">
-		///    A <see cref="string[]" /> to check the contents of.
+		///    A <see cref="T:string[]" /> to check the contents of.
 		/// </param>
 		/// <returns>
 		///    <see langword="true" /> if the array is <see

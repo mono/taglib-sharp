@@ -146,29 +146,29 @@ namespace TagLib.Asf {
 		public MetadataLibraryObject MetadataLibraryObject {
 			get {return metadata_library;}
 		}
-		
-		#endregion
-		
-		
-		
-		#region Public Methods
-		
-		/// <summary>
-		///    Gets the string contained in a specific descriptor in the
-		///    current instance.
-		/// </summary>
-		/// <param name="names">
-		///    A <see cref="string[]" /> containing the names of the
-		///    descriptors to look for the value in.
-		/// </param>
-		/// <exception cref="ArgumentNullException">
-		///    <paramref name="names" /> is <see langword="null" />.
-		/// </exception>
-		/// <returns>
-		///    A <see cref="string" /> object containing the contents of
-		///    the first descriptor found in the current instance.
-		/// </returns>
-		public string GetDescriptorString (params string [] names)
+
+        #endregion
+
+
+
+        #region Public Methods
+
+        /// <summary>
+        ///    Gets the string contained in a specific descriptor in the
+        ///    current instance.
+        /// </summary>
+        /// <param name="names">
+        ///    A <see cref="T:string[]" /> containing the names of the
+        ///    descriptors to look for the value in.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///    <paramref name="names" /> is <see langword="null" />.
+        /// </exception>
+        /// <returns>
+        ///    A <see cref="string" /> object containing the contents of
+        ///    the first descriptor found in the current instance.
+        /// </returns>
+        public string GetDescriptorString (params string [] names)
 		{
 			if (names == null)
 				throw new ArgumentNullException ("names");
@@ -190,7 +190,7 @@ namespace TagLib.Asf {
 		///    the current instance.
 		/// </summary>
 		/// <param name="names">
-		///    A <see cref="string[]" /> containing the names of the
+		///    A <see cref="T:string[]" /> containing the names of the
 		///    descriptors to look for the value in.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
@@ -218,7 +218,7 @@ namespace TagLib.Asf {
 		///    store, or <see langword="null" /> to clear the value.
 		/// </param>
 		/// <param name="names">
-		///    A <see cref="string[]" /> containing the names in which
+		///    A <see cref="T:string[]" /> containing the names in which
 		///    the value would be expected. For example, "WM/AlbumTitle"
 		///    and "Album".
 		/// </param>
@@ -253,11 +253,11 @@ namespace TagLib.Asf {
 		///    current instance.
 		/// </summary>
 		/// <param name="value">
-		///    A <see cref="string[]" /> containing the value to store,
+		///    A <see cref="T:string[]" /> containing the value to store,
 		///    or <see langword="null" /> to clear the value.
 		/// </param>
 		/// <param name="names">
-		///    A <see cref="string[]" /> containing the names in which
+		///    A <see cref="T:string[]" /> containing the names in which
 		///    the value would be expected. For example, "WM/AlbumTitle"
 		///    and "Album".
 		/// </param>
@@ -301,7 +301,7 @@ namespace TagLib.Asf {
 		///    from the current instance.
 		/// </summary>
 		/// <param name="names">
-		///    A <see cref="string[]" /> containing the names of the
+		///    A <see cref="T:string[]" /> containing the names of the
 		///    descriptors to be retrieved.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
@@ -329,7 +329,7 @@ namespace TagLib.Asf {
 		///    descriptors to be added.
 		/// </param>
 		/// <param name="descriptors">
-		///    A <see cref="ContentDescriptor[]" /> containing
+		///    A <see cref="T:ContentDescriptor[]" /> containing
 		///    descriptors to add to the new instance.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
@@ -463,7 +463,7 @@ namespace TagLib.Asf {
 		///    split.
 		/// </param>
 		/// <returns>
-		///    A <see cref="string[]" /> containing the split text.
+		///    A <see cref="T:string[]" /> containing the split text.
 		/// </returns>
 		private static string [] SplitAndClean (string s)
 		{
@@ -565,7 +565,7 @@ namespace TagLib.Asf {
 		///    the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the performers or
+		///    A <see cref="T:string[]" /> containing the performers or
 		///    artists who performed in the media described by the
 		///    current instance or an empty array if no value is
 		///    present.
@@ -584,7 +584,7 @@ namespace TagLib.Asf {
 		///    who performed in the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names for
+		///    A <see cref="T:string[]" /> containing the sort names for
 		///    the performers or artists who performed in the media
 		///    described by the current instance, or an empty array if
 		///    no value is present. 
@@ -608,7 +608,7 @@ namespace TagLib.Asf {
 		///    media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the band or artist
+		///    A <see cref="T:string[]" /> containing the band or artist
 		///    who is credited in the creation of the entire album or
 		///    collection containing the media described by the current
 		///    instance or an empty array if no value is present.
@@ -635,7 +635,7 @@ namespace TagLib.Asf {
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names
+		///    A <see cref="T:string[]" /> containing the sort names
 		///    for the band or artist who is credited in the creation
 		///    of the entire album or collection containing the media
 		///    described by the current instance or an empty array if
@@ -660,7 +660,7 @@ namespace TagLib.Asf {
 		///    the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the composers of the
+		///    A <see cref="T:string[]" /> containing the composers of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -749,7 +749,7 @@ namespace TagLib.Asf {
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the genres of the
+		///    A <see cref="T:string[]" /> containing the genres of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -1496,7 +1496,7 @@ namespace TagLib.Asf {
 		///    the media represented by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IPicture[]" /> containing a collection of
+		///    A <see cref="T:IPicture[]" /> containing a collection of
 		///    pictures associated with the media represented by the
 		///    current instance or an empty array if none are present.
 		/// </value>

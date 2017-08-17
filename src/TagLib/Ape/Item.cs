@@ -162,7 +162,7 @@ namespace TagLib.Ape {
 		///    for the current instance.
 		/// </param>
 		/// <param name="value">
-		///    A <see cref="string[]" /> containing the values to store
+		///    A <see cref="T:string[]" /> containing the values to store
 		///    in the new instance.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
@@ -375,7 +375,7 @@ namespace TagLib.Ape {
 		///    cref="string" /> array.
 		/// </summary>
 		/// <returns>
-		///    A <see cref="string[]" /> containing the text stored in
+		///    A <see cref="T:string[]" /> containing the text stored in
 		///    the current instance, or an empty array if the item
 		///    contains binary data.
 		/// </returns>

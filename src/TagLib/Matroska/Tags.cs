@@ -280,7 +280,7 @@ namespace TagLib.Matroska
         ///    the media represented by the current instance.
         /// </summary>
         /// <value>
-        ///    A <see cref="Attachment[]" /> containing a collection of
+        ///    A <see cref="T:Attachment[]" /> containing a collection of
         ///    attachments associated with the media represented by the
         ///    current instance or an empty array if none are present.
         /// </value>

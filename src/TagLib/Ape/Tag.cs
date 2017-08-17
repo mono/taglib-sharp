@@ -299,7 +299,7 @@ namespace TagLib.Ape {
 		///    />/<paramref name="count" />".
 		/// </remarks>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="ident" /> is <see langword="null" />.
+		///    <paramref name="key" /> is <see langword="null" />.
 		/// </exception>
 		public void SetValue (string key, uint number, uint count)
 		{
@@ -378,7 +378,7 @@ namespace TagLib.Ape {
 		}
 		
 		/// <summary>
-		///    Adds the contents of a <see cref="string[]" /> to the
+		///    Adds the contents of a <see cref="T:string[]" /> to the
 		///    value stored in a specified item.
 		/// </summary>
 		/// <param name="key">
@@ -386,7 +386,7 @@ namespace TagLib.Ape {
 		///    item to store the value in.
 		/// </param>
 		/// <param name="value">
-		///    A <see cref="string[]" /> containing the text to add.
+		///    A <see cref="T:string[]" /> containing the text to add.
 		/// </param>
 		/// <remarks>
 		///    If <paramref name="value" /> is <see langword="null" />
@@ -421,7 +421,7 @@ namespace TagLib.Ape {
 		}
 		
 		/// <summary>
-		///    Stores the contents of a <see cref="string[]" /> in a
+		///    Stores the contents of a <see cref="T:string[]" /> in a
 		///    specified item.
 		/// </summary>
 		/// <param name="key">
@@ -429,7 +429,7 @@ namespace TagLib.Ape {
 		///    item to store the value in.
 		/// </param>
 		/// <param name="value">
-		///    A <see cref="string[]" /> containing the text to store.
+		///    A <see cref="T:string[]" /> containing the text to store.
 		/// </param>
 		/// <remarks>
 		///    If <paramref name="value" /> is <see langword="null" />
@@ -718,7 +718,7 @@ namespace TagLib.Ape {
 		///    item to get the value from.
 		/// </param>
 		/// <returns>
-		///    A <see cref="string[]" /> containing the text of the
+		///    A <see cref="T:string[]" /> containing the text of the
 		///    specified frame, or an empty array if no values were
 		///    found.
 		/// </returns>
@@ -851,7 +851,7 @@ namespace TagLib.Ape {
 		///    the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the performers or
+		///    A <see cref="T:string[]" /> containing the performers or
 		///    artists who performed in the media described by the
 		///    current instance or an empty array if no value is
 		///    present.
@@ -889,7 +889,7 @@ namespace TagLib.Ape {
 		///    media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the band or artist
+		///    A <see cref="T:string[]" /> containing the band or artist
 		///    who is credited in the creation of the entire album or
 		///    collection containing the media described by the current
 		///    instance or an empty array if no value is present.
@@ -941,7 +941,7 @@ namespace TagLib.Ape {
 		///    the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the composers of the
+		///    A <see cref="T:string[]" /> containing the composers of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -1030,7 +1030,7 @@ namespace TagLib.Ape {
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the genres of the
+		///    A <see cref="T:string[]" /> containing the genres of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -1605,7 +1605,7 @@ namespace TagLib.Ape {
 		///    the media represented by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IPicture[]" /> containing a collection of
+		///    A <see cref="T:IPicture[]" /> containing a collection of
 		///    pictures associated with the media represented by the
 		///    current instance or an empty array if none are present.
 		/// </value>

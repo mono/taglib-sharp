@@ -68,7 +68,7 @@ namespace TagLib {
 		///    cref="ByteVectorCollection" /> with specified contents.
 		/// </summary>
 		/// <param name="list">
-		///   A <see cref="ByteVector[]" /> containing objects to add to
+		///   A <see cref="T:ByteVector[]" /> containing objects to add to
 		///   the current instance.
 		/// </param>
 		public ByteVectorCollection (params ByteVector[] list)
@@ -161,7 +161,7 @@ namespace TagLib {
 		///    A <see cref="int" /> specifying the byte align to use
 		///    when splitting. In order to split when a pattern is
 		///    encountered, the index at which it is found must be
-		//     divisible by <paramref name="byteAlign" />.
+		///    divisible by <paramref name="byteAlign" />.
 		/// </param>
 		/// <param name="max">
 		///    A <see cref="int" /> value specifying the maximum number
@@ -232,7 +232,7 @@ namespace TagLib {
 		///    A <see cref="int" /> specifying the byte align to use
 		///    when splitting. In order to split when a pattern is
 		///    encountered, the index at which it is found must be
-		//     divisible by <paramref name="byteAlign" />.
+		///     divisible by <paramref name="byteAlign" />.
 		/// </param>
 		/// <returns>
 		///    A <see cref="ByteVectorCollection" /> object containing

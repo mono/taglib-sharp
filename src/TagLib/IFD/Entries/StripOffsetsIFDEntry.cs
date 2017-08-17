@@ -45,27 +45,27 @@ namespace TagLib.IFD.Entries
 		/// </value>
 		private File file;
 
-#endregion
+        #endregion
 
-#region Constructors
+        #region Constructors
 
-		/// <summary>
-		///    Constructor.
-		/// </summary>
-		/// <param name="tag">
-		///    A <see cref="System.UInt16"/> with the tag ID of the entry this instance
-		///    represents
-		/// </param>
-		/// <param name="values">
-		///    A <see cref="System.UInt32[]"/> with the strip offsets.
-		/// </param>
-		/// <param name="byte_counts">
-		///    The length of the strips.
-		/// </param>
-		/// <param name="file">
-		///    The file from which the strips will be read.
-		/// </param>
-		public StripOffsetsIFDEntry (ushort tag, uint[] values, uint[] byte_counts, File file) : base (tag)
+        /// <summary>
+        ///    Constructor.
+        /// </summary>
+        /// <param name="tag">
+        ///    A <see cref="System.UInt16"/> with the tag ID of the entry this instance
+        ///    represents
+        /// </param>
+        /// <param name="values">
+        ///    A <see cref="T:System.UInt32[]"/> with the strip offsets.
+        /// </param>
+        /// <param name="byte_counts">
+        ///    The length of the strips.
+        /// </param>
+        /// <param name="file">
+        ///    The file from which the strips will be read.
+        /// </param>
+        public StripOffsetsIFDEntry (ushort tag, uint[] values, uint[] byte_counts, File file) : base (tag)
 		{
 			Values = values;
 			this.byte_counts = byte_counts;

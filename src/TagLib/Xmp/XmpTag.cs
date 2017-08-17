@@ -679,7 +679,7 @@ namespace TagLib.Xmp
 
 		/// <summary>
 		///    Returns the text of the node associated with the namespace
-		///    <param name="ns"/> and the name <paramref name="name"/>.
+		///    <paramref name="ns"/> and the name <paramref name="name"/>.
 		/// </summary>
 		/// <param name="ns">
 		///    A <see cref="System.String"/> with the namespace of the node.
@@ -805,21 +805,21 @@ namespace TagLib.Xmp
 			node.AddChild (child_node);
 		}
 
-		/// <summary>
-		///    The method returns an array of <see cref="System.String"/> values
-		///    which are the stored text of the child nodes of the node associated
-		///    with the namespace <paramref name="ns"/> and the name <paramref name="name"/>.
-		/// </summary>
-		/// <param name="ns">
-		///    A <see cref="System.String"/> with the namespace of the node.
-		/// </param>
-		/// <param name="name">
-		///    A <see cref="System.String"/> with the name of the node.
-		/// </param>
-		/// <returns>
-		///    A <see cref="System.String[]"/> with the text stored in the child nodes.
-		/// </returns>
-		public string[] GetCollectionNode (string ns, string name)
+        /// <summary>
+        ///    The method returns an array of <see cref="System.String"/> values
+        ///    which are the stored text of the child nodes of the node associated
+        ///    with the namespace <paramref name="ns"/> and the name <paramref name="name"/>.
+        /// </summary>
+        /// <param name="ns">
+        ///    A <see cref="System.String"/> with the namespace of the node.
+        /// </param>
+        /// <param name="name">
+        ///    A <see cref="System.String"/> with the name of the node.
+        /// </param>
+        /// <returns>
+        ///    A <see cref="T:System.String[]"/> with the text stored in the child nodes.
+        /// </returns>
+        public string[] GetCollectionNode (string ns, string name)
 		{
 			var node = FindNode (ns, name);
 
@@ -838,24 +838,24 @@ namespace TagLib.Xmp
 			return items.ToArray ();
 		}
 
-		/// <summary>
-		///    Sets a <see cref="System.String[]"/> as texts to the children of the
-		///    node associated with the namespace <paramref name="ns"/> and the name
-		///    <paramref name="name"/>.
-		/// </summary>
-		/// <param name="ns">
-		///    A <see cref="System.String"/> with the namespace of the node.
-		/// </param>
-		/// <param name="name">
-		///    A <see cref="System.String"/> with the name of the node.
-		/// </param>
-		/// <param name="values">
-		///    A <see cref="System.String[]"/> with the values to set for the children.
-		/// </param>
-		/// <param name="type">
-		///    A <see cref="XmpNodeType"/> with the type of the parent node.
-		/// </param>
-		public void SetCollectionNode (string ns, string name, string [] values, XmpNodeType type)
+        /// <summary>
+        ///    Sets a <see cref="T:System.String[]"/> as texts to the children of the
+        ///    node associated with the namespace <paramref name="ns"/> and the name
+        ///    <paramref name="name"/>.
+        /// </summary>
+        /// <param name="ns">
+        ///    A <see cref="System.String"/> with the namespace of the node.
+        /// </param>
+        /// <param name="name">
+        ///    A <see cref="System.String"/> with the name of the node.
+        /// </param>
+        /// <param name="values">
+        ///    A <see cref="T:System.String[]"/> with the values to set for the children.
+        /// </param>
+        /// <param name="type">
+        ///    A <see cref="XmpNodeType"/> with the type of the parent node.
+        /// </param>
+        public void SetCollectionNode (string ns, string name, string [] values, XmpNodeType type)
 		{
 			if (type == XmpNodeType.Simple || type == XmpNodeType.Alt)
 				throw new ArgumentException ("type");
@@ -872,7 +872,7 @@ namespace TagLib.Xmp
 
 		/// <summary>
 		///    Returns the rational value of the node associated with the namespace
-		///    <param name="ns"/> and the name <paramref name="name"/>.
+		///    <paramref name="ns"/> and the name <paramref name="name"/>.
 		/// </summary>
 		/// <param name="ns">
 		///    A <see cref="System.String"/> with the namespace of the node.
@@ -919,7 +919,7 @@ namespace TagLib.Xmp
 
 		/// <summary>
 		///    Creates a new rational node with the namespace
-		///    <param name="ns"/> and the name <paramref name="name"/>.
+		///    <paramref name="ns"/> and the name <paramref name="name"/>.
 		/// </summary>
 		/// <param name="ns">
 		///    A <see cref="System.String"/> with the namespace of the node.
@@ -965,7 +965,7 @@ namespace TagLib.Xmp
 
 		/// <summary>
 		///    Returns the unsigned integer value of the node associated with the
-		///    namespace <param name="ns"/> and the name <paramref name="name"/>.
+		///    namespace <paramref name="ns"/> and the name <paramref name="name"/>.
 		/// </summary>
 		/// <param name="ns">
 		///    A <see cref="System.String"/> with the namespace of the node.
@@ -1099,7 +1099,7 @@ namespace TagLib.Xmp
 		///    by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the keywords of the
+		///    A <see cref="T:string[]" /> containing the keywords of the
 		///    current instace.
 		/// </value>
 		public override string[] Keywords {

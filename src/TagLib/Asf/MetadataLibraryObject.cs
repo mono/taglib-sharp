@@ -173,29 +173,29 @@ namespace TagLib.Asf {
 					records.RemoveAt (i);
 			}
 		}
-		
-		/// <summary>
-		///    Gets all records with a given language, stream, and any
-		///    of a collection of names from the current instance.
-		/// </summary>
-		/// <param name="languageListIndex">
-		///    A <see cref="ushort" /> value containing the language
-		///    list index of the records to be retrieved.
-		/// </param>
-		/// <param name="streamNumber">
-		///    A <see cref="ushort" /> value containing the stream
-		///    number of the records to be retrieved.
-		/// </param>
-		/// <param name="names">
-		///    A <see cref="string[]" /> containing the names of the
-		///    records to be retrieved.
-		/// </param>
-		/// <returns>
-		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating
-		///    through the <see cref="DescriptionRecord" /> objects
-		///    retrieved from the current instance.
-		/// </returns>
-		public IEnumerable<DescriptionRecord> GetRecords (ushort languageListIndex,
+
+        /// <summary>
+        ///    Gets all records with a given language, stream, and any
+        ///    of a collection of names from the current instance.
+        /// </summary>
+        /// <param name="languageListIndex">
+        ///    A <see cref="ushort" /> value containing the language
+        ///    list index of the records to be retrieved.
+        /// </param>
+        /// <param name="streamNumber">
+        ///    A <see cref="ushort" /> value containing the stream
+        ///    number of the records to be retrieved.
+        /// </param>
+        /// <param name="names">
+        ///    A <see cref="T:string[]" /> containing the names of the
+        ///    records to be retrieved.
+        /// </param>
+        /// <returns>
+        ///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating
+        ///    through the <see cref="DescriptionRecord" /> objects
+        ///    retrieved from the current instance.
+        /// </returns>
+        public IEnumerable<DescriptionRecord> GetRecords (ushort languageListIndex,
 		                                                  ushort streamNumber,
 		                                                  params string [] names)
 		{
@@ -239,7 +239,7 @@ namespace TagLib.Asf {
 		///    records to be added.
 		/// </param>
 		/// <param name="records">
-		///    A <see cref="DescriptionRecord[]" /> containing records
+		///    A <see cref="T:DescriptionRecord[]" /> containing records
 		///    to add to the new instance.
 		/// </param>
 		/// <remarks>

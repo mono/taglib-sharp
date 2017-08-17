@@ -111,7 +111,7 @@ namespace TagLib {
 		///    before any standard resolution operations.
 		/// </summary>
 		/// <param name="abstraction">
-		///    A <see cref="IFileAbstraction" /> object representing the
+		///    A <see cref="TagLib.File.IFileAbstraction" /> object representing the
 		///    file to be read.
 		/// </param>
 		/// <param name="mimetype">
@@ -252,7 +252,7 @@ namespace TagLib {
 		///    cref="File" /> for a specified file abstraction.
 		/// </summary>
 		/// <param name="abstraction">
-		///    A <see cref="IFileAbstraction" /> object to use when
+		///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
 		///    reading from and writing to the file.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
@@ -331,7 +331,7 @@ namespace TagLib {
 		/// </summary>
 		/// <value>
 		///    A <see cref="string" /> object containing the name of the
-		///    file as stored in the <see cref="IFileAbstraction" />
+		///    file as stored in the <see cref="TagLib.File.IFileAbstraction" />
 		///    object used to create it or the path if created with a
 		///    local path.
 		/// </value>
@@ -1228,7 +1228,7 @@ namespace TagLib {
 		///    style.
 		/// </summary>
 		/// <param name="abstraction">
-		///    A <see cref="IFileAbstraction" /> object to use when
+		///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
 		///    reading to and writing from the current instance.
 		/// </param>
 		/// <returns>
@@ -1286,7 +1286,7 @@ namespace TagLib {
 		///    the mime-type from the file's extension.
 		/// </summary>
 		/// <param name="abstraction">
-		///    A <see cref="IFileAbstraction" /> object to use when
+		///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
 		///    reading to and writing from the current instance.
 		/// </param>
 		/// <param name="propertiesStyle">
@@ -1324,7 +1324,7 @@ namespace TagLib {
 		///    A <see cref="string" /> object containing the mime-type
 		///    to use when selecting the appropriate class to use, or
 		///    <see langword="null" /> if the extension in <paramref
-		///    name="abstraction" /> is to be used.
+		///    name="path" /> is to be used.
 		/// </param>
 		/// <param name="propertiesStyle">
 		///    A <see cref="ReadStyle" /> value specifying the level of
@@ -1356,7 +1356,7 @@ namespace TagLib {
 		///    style.
 		/// </summary>
 		/// <param name="abstraction">
-		///    A <see cref="IFileAbstraction" /> object to use when
+		///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
 		///    reading to and writing from the current instance.
 		/// </param>
 		/// <param name="mimetype">
@@ -1493,7 +1493,7 @@ namespace TagLib {
 		#region Classes
 		
 		/// <summary>
-		///    This class implements <see cref="IFileAbstraction" />
+		///    This class implements <see cref="TagLib.File.IFileAbstraction" />
 		///    to provide support for accessing the local/standard file
 		///    system.
 		/// </summary>

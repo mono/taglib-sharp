@@ -140,21 +140,21 @@ namespace TagLib.Riff
 			}
 			set {SetValue ("INAM", value);}
 		}
-		
-		/// <summary>
-		///    Gets and sets the performers or artists who performed in
-		///    the media described by the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="string[]" /> containing the performers or
-		///    artists who performed in the media described by the
-		///    current instance or an empty array if no value is
-		///    present.
-		/// </value>
-		/// <remarks>
-		///    This property is implemented using the "ISTR" item.
-		/// </remarks>
-		public override string [] Performers {
+
+        /// <summary>
+        ///    Gets and sets the performers or artists who performed in
+        ///    the media described by the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="T:string[]" /> containing the performers or
+        ///    artists who performed in the media described by the
+        ///    current instance or an empty array if no value is
+        ///    present.
+        /// </value>
+        /// <remarks>
+        ///    This property is implemented using the "ISTR" item.
+        /// </remarks>
+        public override string [] Performers {
 			get {return GetValuesAsStrings ("ISTR");}
 			set {SetValue ("ISTR", value);}
 		}
@@ -165,7 +165,7 @@ namespace TagLib.Riff
 		///    media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the band or artist
+		///    A <see cref="T:string[]" /> containing the band or artist
 		///    who is credited in the creation of the entire album or
 		///    collection containing the media described by the current
 		///    instance or an empty array if no value is present.
@@ -183,7 +183,7 @@ namespace TagLib.Riff
 		///    the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the composers of the
+		///    A <see cref="T:string[]" /> containing the composers of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -223,7 +223,7 @@ namespace TagLib.Riff
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the genres of the
+		///    A <see cref="T:string[]" /> containing the genres of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>

@@ -237,19 +237,19 @@ namespace TagLib {
 			"Thriller",
 			"Western"
 		};
-		
-		/// <summary>
-		///    Gets a list of standard audio generes.
-		/// </summary>
-		/// <value>
-		///    A <see cref="string[]" /> containing standard audio
-		///    genres.
-		/// </value>
-		/// <remarks>
-		///    The genres are stored in the same order and with the same
-		///    values as in the ID3v1 format.
-		/// </remarks>
-		public static string [] Audio {
+
+        /// <summary>
+        ///    Gets a list of standard audio generes.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="T:string[]" /> containing standard audio
+        ///    genres.
+        /// </value>
+        /// <remarks>
+        ///    The genres are stored in the same order and with the same
+        ///    values as in the ID3v1 format.
+        /// </remarks>
+        public static string [] Audio {
 			get {return (string []) audio.Clone ();}
 		}
 		
@@ -257,7 +257,7 @@ namespace TagLib {
 		///    Gets a list of standard video generes.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing standard video
+		///    A <see cref="T:string[]" /> containing standard video
 		///    genres.
 		/// </value>
 		/// <remarks>

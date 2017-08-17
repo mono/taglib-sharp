@@ -31,19 +31,19 @@ namespace TagLib.IFD.Entries
 	public class ShortArrayIFDEntry : ArrayIFDEntry<ushort>
 	{
 
-#region Constructors
+        #region Constructors
 
-		/// <summary>
-		///    Construcor.
-		/// </summary>
-		/// <param name="tag">
-		///    A <see cref="System.UInt16"/> with the tag ID of the entry this instance
-		///    represents
-		/// </param>
-		/// <param name="values">
-		///    A <see cref="System.UInt16[]"/> to be stored
-		/// </param>
-		public ShortArrayIFDEntry (ushort tag, ushort [] values) : base (tag)
+        /// <summary>
+        ///    Construcor.
+        /// </summary>
+        /// <param name="tag">
+        ///    A <see cref="System.UInt16"/> with the tag ID of the entry this instance
+        ///    represents
+        /// </param>
+        /// <param name="values">
+        ///    A <see cref="T:System.UInt16[]"/> to be stored
+        /// </param>
+        public ShortArrayIFDEntry (ushort tag, ushort [] values) : base (tag)
 		{
 			Values = values;
 		}

@@ -125,36 +125,36 @@ namespace TagLib.Ogg
 		{
 			codec.SetCommentPacket (packets, comment);
 		}
-		
-		/// <summary>
-		///    Repaginates the pages passed into the current instance to
-		///    handle changes made to the Xiph comment.
-		/// </summary>
-		/// <returns>
-		///    A <see cref="Page[]" /> containing the new page
-		///    collection.
-		/// </returns>
-		[Obsolete("Use Paginator.Paginate(out int)")]
+
+        /// <summary>
+        ///    Repaginates the pages passed into the current instance to
+        ///    handle changes made to the Xiph comment.
+        /// </summary>
+        /// <returns>
+        ///    A <see cref="T:Page[]" /> containing the new page
+        ///    collection.
+        /// </returns>
+        [Obsolete("Use Paginator.Paginate(out int)")]
 		public Page [] Paginate ()
 		{
 			int dummy;
 			return Paginate (out dummy);
 		}
-		
-		/// <summary>
-		///    Repaginates the pages passed into the current instance to
-		///    handle changes made to the Xiph comment.
-		/// </summary>
-		/// <param name="change">
-		///    A <see cref="int" /> value reference containing the
-		///    the difference between the number of pages returned and
-		///    the number of pages that were added to the class.
-		/// </param>
-		/// <returns>
-		///    A <see cref="Page[]" /> containing the new page
-		///    collection.
-		/// </returns>
-		public Page [] Paginate (out int change)
+
+        /// <summary>
+        ///    Repaginates the pages passed into the current instance to
+        ///    handle changes made to the Xiph comment.
+        /// </summary>
+        /// <param name="change">
+        ///    A <see cref="int" /> value reference containing the
+        ///    the difference between the number of pages returned and
+        ///    the number of pages that were added to the class.
+        /// </param>
+        /// <returns>
+        ///    A <see cref="T:Page[]" /> containing the new page
+        ///    collection.
+        /// </returns>
+        public Page [] Paginate (out int change)
 		{
 			// Ogg Pagination: Welcome to sucksville!
 			// If you don't understand this, you're not alone.

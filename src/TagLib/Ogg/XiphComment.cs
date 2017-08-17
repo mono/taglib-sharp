@@ -91,28 +91,28 @@ namespace TagLib.Ogg
 
 			Parse (data);
 		}
-		
-#endregion
-		
-		
-		
-#region Public Methods
-		
-		/// <summary>
-		///    Gets the field data for a given field identifier.
-		/// </summary>
-		/// <param name="key">
-		///    A <see cref="string"/> object containing the field
-		///    identifier.
-		/// </param>
-		/// <returns>
-		///    A <see cref="string[]"/> containing the field data or an
-		///    empty array if the field was not found.
-		/// </returns>
-		/// <exception cref="ArgumentNullException">
-		///    <paramref name="key" /> is <see langword="null" />.
-		/// </exception>
-		public string [] GetField (string key)
+
+        #endregion
+
+
+
+        #region Public Methods
+
+        /// <summary>
+        ///    Gets the field data for a given field identifier.
+        /// </summary>
+        /// <param name="key">
+        ///    A <see cref="string"/> object containing the field
+        ///    identifier.
+        /// </param>
+        /// <returns>
+        ///    A <see cref="T:string[]"/> containing the field data or an
+        ///    empty array if the field was not found.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///    <paramref name="key" /> is <see langword="null" />.
+        /// </exception>
+        public string [] GetField (string key)
 		{
 			if (key == null)
 				throw new ArgumentNullException ("key");
@@ -175,14 +175,14 @@ namespace TagLib.Ogg
 		
 		/// <summary>
 		///    Sets the contents of a specified field to the contents of
-		///    a <see cref="string[]" />.
+		///    a <see cref="T:string[]" />.
 		/// </summary>
 		/// <param name="key">
 		///    A <see cref="string"/> object containing the field
 		///    identifier.
 		/// </param>
 		/// <param name="values">
-		///    A <see cref="string[]"/> containing the values to store
+		///    A <see cref="T:string[]"/> containing the values to store
 		///    in the current instance.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
@@ -486,7 +486,7 @@ namespace TagLib.Ogg
 		///    the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the performers or
+		///    A <see cref="T:string[]" /> containing the performers or
 		///    artists who performed in the media described by the
 		///    current instance or an empty array if no value is
 		///    present.
@@ -504,7 +504,7 @@ namespace TagLib.Ogg
 		///    who performed in the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names for
+		///    A <see cref="T:string[]" /> containing the sort names for
 		///    the performers or artists who performed in the media
 		///    described by the current instance, or an empty array if
 		///    no value is present. 
@@ -524,7 +524,7 @@ namespace TagLib.Ogg
 		///    media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the band or artist
+		///    A <see cref="T:string[]" /> containing the band or artist
 		///    who is credited in the creation of the entire album or
 		///    collection containing the media described by the current
 		///    instance or an empty array if no value is present.
@@ -558,7 +558,7 @@ namespace TagLib.Ogg
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names
+		///    A <see cref="T:string[]" /> containing the sort names
 		///    for the band or artist who is credited in the creation
 		///    of the entire album or collection containing the media
 		///    described by the current instance or an empty array if
@@ -579,7 +579,7 @@ namespace TagLib.Ogg
 		///    the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the composers of the
+		///    A <see cref="T:string[]" /> containing the composers of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -596,7 +596,7 @@ namespace TagLib.Ogg
 		///    the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names
+		///    A <see cref="T:string[]" /> containing the sort names
 		///    for the composer of the media described by the current
 		///    instance or an empty array if no value is present.
 		/// </value>
@@ -677,7 +677,7 @@ namespace TagLib.Ogg
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the genres of the
+		///    A <see cref="T:string[]" /> containing the genres of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -1115,7 +1115,7 @@ namespace TagLib.Ogg
 		///    the media represented by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IPicture[]" /> containing a collection of
+		///    A <see cref="T:IPicture[]" /> containing a collection of
 		///    pictures associated with the media represented by the
 		///    current instance or an empty array if none are present.
 		/// </value>

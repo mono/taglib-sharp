@@ -184,7 +184,7 @@ namespace TagLib.Png
 		///    specified read style.
 		/// </summary>
 		/// <param name="abstraction">
-		///    A <see cref="IFileAbstraction" /> object to use when
+		///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
 		///    reading from and writing to the file.
 		/// </param>
 		/// <param name="propertiesStyle">
@@ -207,7 +207,7 @@ namespace TagLib.Png
 		///    cref="File" /> for a specified file abstraction.
 		/// </summary>
 		/// <param name="abstraction">
-		///    A <see cref="IFileAbstraction" /> object to use when
+		///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
 		///    reading from and writing to the file.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
@@ -817,7 +817,7 @@ namespace TagLib.Png
 		///    Computes a 32bit CRC for the given data.
 		/// </summary>
 		/// <param name="datas">
-		///    A <see cref="ByteVector[]"/> with data to compute
+		///    A <see cref="T:ByteVector[]"/> with data to compute
 		///    the CRC for.
 		/// </param>
 		/// <returns>

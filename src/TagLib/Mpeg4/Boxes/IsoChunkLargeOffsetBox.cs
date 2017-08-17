@@ -108,15 +108,15 @@ namespace TagLib.Mpeg4 {
 				return output;
 			}
 		}
-		
-		/// <summary>
-		///    Gets the offset table contained in the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="ulong[]" /> containing the offset table
-		///    contained in the current instance.
-		/// </value>
-		public ulong [] Offsets {
+
+        /// <summary>
+        ///    Gets the offset table contained in the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="T:ulong[]" /> containing the offset table
+        ///    contained in the current instance.
+        /// </value>
+        public ulong [] Offsets {
 			get {return offsets;}
 		}
 		
@@ -145,7 +145,7 @@ namespace TagLib.Mpeg4 {
 		///    offset is before this point, it won't be updated.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <param name="file" /> is <see langword="null" />.
+		///    <see param="file" /> is <see langword="null" />.
 		/// </exception>
 		public void Overwrite (File file, long sizeDifference,
 		                       long after)

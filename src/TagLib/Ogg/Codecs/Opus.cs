@@ -23,6 +23,7 @@
 //
 
 using System;
+using static TagLib.Ogg.Codec;
 
 namespace TagLib.Ogg.Codecs
 {

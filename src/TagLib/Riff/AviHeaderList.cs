@@ -122,7 +122,7 @@ namespace TagLib.Riff
 		///    Gets the codecs contained in the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="ICodec[]" /> containing the codecs contained
+		///    A <see cref="T:ICodec[]" /> containing the codecs contained
 		///    in the current instance.
 		/// </value>
 		public ICodec [] Codecs {

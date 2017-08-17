@@ -34,7 +34,7 @@ namespace TagLib.Ape {
 	/// <remarks>
 	///    A <see cref="TagLib.Ape.Tag" /> will be added automatically to
 	///    any file that doesn't contain one. This change does not effect
-	///    the physical file until <see cref="Save" /> is called and can be
+	///    the physical file until <see cref="TagLib.File.Save" /> is called and can be
 	///    reversed using the following method:
 	///    <code>file.RemoveTags (file.TagTypes &amp; ~file.TagTypesOnDisk);</code>
 	/// </remarks>
@@ -102,7 +102,7 @@ namespace TagLib.Ape {
 		///    specified read style.
 		/// </summary>
 		/// <param name="abstraction">
-		///    A <see cref="IFileAbstraction" /> object to use when
+		///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
 		///    reading from and writing to the file.
 		/// </param>
 		/// <param name="propertiesStyle">
@@ -119,21 +119,21 @@ namespace TagLib.Ape {
 			: base (abstraction, propertiesStyle)
 		{
 		}
-		
-		/// <summary>
-		///    Constructs and initializes a new instance of <see
-		///    cref="File" /> for a specified file abstraction with an
-		///    average read style.
-		/// </summary>
-		/// <param name="abstraction">
-		///    A <see cref="IFileAbstraction" /> object to use when
-		///    reading from and writing to the file.
-		/// </param>
-		/// <exception cref="ArgumentNullException">
-		///    <paramref name="abstraction" /> is <see langword="null"
-		///    />.
-		/// </exception>
-		public File (File.IFileAbstraction abstraction)
+
+        /// <summary>
+        ///    Constructs and initializes a new instance of <see
+        ///    cref="File" /> for a specified file abstraction with an
+        ///    average read style.
+        /// </summary>
+        /// <param name="abstraction">
+        ///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
+        ///    reading from and writing to the file.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///    <paramref name="abstraction" /> is <see langword="null"
+        ///    />.
+        /// </exception>
+        public File (File.IFileAbstraction abstraction)
 			: base (abstraction)
 		{
 		}
