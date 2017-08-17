@@ -93,6 +93,11 @@ namespace TagLib.Matroska
         EPISODE = 54,
 
         /// <summary>
+        /// Represent the default TargetType (an empty Targets), i.e. targets everything in the segment.
+        /// </summary>
+        DEFAULT = 55,
+
+        /// <summary>
         /// Audio/Video: when an album or episode has different logical parts
         /// </summary>
         PART = 40,

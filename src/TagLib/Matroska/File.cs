@@ -944,7 +944,7 @@ namespace TagLib.Matroska
 
             // Write Targets content
 
-            if (tag.TargetTypeValue != 0) 
+            if (tag.TargetType != TargetType.DEFAULT) 
             {
                 var ebml_targetTypeValue = new EBMLElement(this, i, MatroskaID.TargetTypeValue, tag.TargetTypeValue);
                 i += ebml_targetTypeValue.Size;

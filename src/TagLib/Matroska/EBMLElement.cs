@@ -144,6 +144,10 @@ namespace TagLib.Matroska
             // Write EBML ID field
             ID = (uint)ebmlid;
 
+            // Force creation of DataSize
+            ebml_size = 1;
+            DataSize = 0;
+
         }
 
         /// <summary>

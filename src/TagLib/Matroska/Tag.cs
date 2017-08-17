@@ -533,7 +533,7 @@ namespace TagLib.Matroska
                 ushort ret = (ushort)TargetType;
 
                 // Coerce: Valid values are: 0 10 20 30 40 50 60 70
-                ret = (ushort) (ret > 70 ? 70 : ((ret + 5) / 10) * 10);
+                ret = (ushort) (ret > 70 ? 70 : (ret / 10) * 10);
 
                 return ret;
             }
@@ -559,7 +559,7 @@ namespace TagLib.Matroska
                 }
             }
         }
-        private TargetType _TargetType = 0;
+        private TargetType _TargetType = TargetType.DEFAULT;
 
         /// <summary>
         /// Array of UID elements the tag applies to. If null, the tag apply to all elements.

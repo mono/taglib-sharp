@@ -157,7 +157,7 @@ namespace TagLib.Matroska
             targetTypeValue = (ushort)
                  (targetTypeValue > 70 ? 70
                 : targetTypeValue < 10 ? 10
-                : ((targetTypeValue + 5) / 10) * 10
+                : (targetTypeValue / 10) * 10
                 );
 
             // Find first match of the given targetValue
@@ -243,6 +243,16 @@ namespace TagLib.Matroska
             {
                 Tag ret = null;
                 bool vid = IsVideo;
+
+                // Try to find a default TargetType
+                for (int i = this.Count - 1; i >= 0; i--)
+                {
+                    ret = this[i];
+                    if (ret.TargetType == TargetType.DEFAULT) // Avoid CD/DVD
+                    {
+                        if (ret.Elements == null) return ret;
+                    }
+                }
 
                 // Lower level without UID is the Tag representing the file
                 // List is sorted in descending TargetTypeValue
