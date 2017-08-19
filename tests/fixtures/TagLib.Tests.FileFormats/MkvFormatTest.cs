@@ -98,12 +98,16 @@ namespace TagLib.Tests.FileFormats
             Assert.AreEqual(1, pics.Length);
 
             // Insert new picture
-            Array.Resize(ref pics, 3);
+            Array.Resize(ref pics, 4);
             pics[0].Description = "TEST description 0";
             pics[1] = new Picture(sample_picture);
+            pics[1].Type = PictureType.BackCover;
             pics[1].Description = "TEST description 1";
             pics[2] = new Picture(sample_other);
             pics[2].Description = "TEST description 2";
+            pics[3] = new Picture(sample_picture);
+            pics[3].Type = PictureType.Other;
+            pics[3].Description = "TEST description 3";
             file.Tag.Pictures = pics;
 
             file.Save();
@@ -113,7 +117,7 @@ namespace TagLib.Tests.FileFormats
             Assert.NotNull(file);
             pics = file.Tag.Pictures;
 
-            Assert.AreEqual(3, pics.Length);
+            Assert.AreEqual(4, pics.Length);
 
             Assert.AreEqual("cover.png", pics[0].Filename);
             Assert.AreEqual("TEST description 0", pics[0].Description);
@@ -121,10 +125,11 @@ namespace TagLib.Tests.FileFormats
             Assert.AreEqual(PictureType.FrontCover, pics[0].Type);
             Assert.AreEqual(17307, pics[0].Data.Count);
 
-            Assert.AreEqual("sample_gimp.gif", pics[1].Filename);
+            // Filename has been changed to keep the PictureType information
+            Assert.AreEqual(PictureType.BackCover, pics[1].Type);
+            Assert.AreEqual("BackCover.gif", pics[1].Filename);
             Assert.AreEqual("TEST description 1", pics[1].Description);
             Assert.AreEqual("image/gif", pics[1].MimeType);
-            Assert.AreEqual(PictureType.Other, pics[1].Type);
             Assert.AreEqual(73, pics[1].Data.Count);
 
             Assert.AreEqual("apple_tags.m4a", pics[2].Filename);
@@ -133,6 +138,11 @@ namespace TagLib.Tests.FileFormats
             Assert.AreEqual(PictureType.NotAPicture, pics[2].Type);
             Assert.AreEqual(102400, pics[2].Data.Count);
 
+            Assert.AreEqual(PictureType.Other, pics[3].Type);
+            Assert.AreEqual("sample_gimp.gif", pics[3].Filename);
+            Assert.AreEqual("TEST description 3", pics[3].Description);
+            Assert.AreEqual("image/gif", pics[3].MimeType);
+            Assert.AreEqual(73, pics[3].Data.Count);
         }
 
 

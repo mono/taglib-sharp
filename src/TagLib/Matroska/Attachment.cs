@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,6 +60,7 @@ namespace TagLib.Matroska
         /// </exception>
         public Attachment(string path) : base (path)
         {
+            SetTypeFromFilename();
         }
 
         /// <summary>
@@ -76,6 +78,7 @@ namespace TagLib.Matroska
         /// </exception>
         public Attachment(File.IFileAbstraction abstraction) : base(abstraction)
         {
+            SetTypeFromFilename();
         }
 
         /// <summary>
@@ -110,7 +113,83 @@ namespace TagLib.Matroska
 
 
         #endregion
-        
+
+
+        #region Methods
+
+        /// <summary>
+        /// Derive the Picture-type from the the file-name. 
+        /// It change the <see cref="P:Type"/> from the <see cref="P:Filename"/>.
+        /// </summary>
+        public void SetTypeFromFilename()
+        {
+            if (MimeType != null && !MimeType.StartsWith("image/"))
+            {
+                Type = PictureType.NotAPicture;
+                return;
+            }
+
+            if (Filename == null)
+            {
+                Type = PictureType.Other;
+                return;
+            }
+
+            PictureType type = PictureType.Other;
+            string fname = Filename.ToLower();
+
+            foreach (var ptype in Enum.GetNames(typeof(PictureType)))
+            {
+                if (fname.Contains(ptype.ToLower()))
+                {
+                    type = (PictureType)Enum.Parse(typeof(PictureType), ptype);
+                    break;
+                }
+            }
+
+            if (type == PictureType.Other && ((fname.Contains("cover") || fname.Contains("poster"))))
+            {
+                type = PictureType.FrontCover;
+            }
+
+            Type = type;
+        }
+
+        /// <summary>
+        /// Derive thefile-name from the the Piture type. 
+        /// It change the <see cref="P:Filename"/> from the <see cref="P:Type"/> if required, 
+        /// but not if the filename already matches the type.
+        /// </summary>
+        /// <returns>true if <see cref="P:Filename"/> changed</returns>
+        public bool SetFilenameFromType()
+        {
+            PictureType type = Type;
+
+            if (! string.IsNullOrEmpty(Filename))
+            {
+                SetTypeFromFilename();
+
+                // Filename already matches the type, so do not change it
+                if (type == Type) return false;
+
+                // restore the type
+                Type = type;
+            }
+
+            // Derive extension from file or MimeType
+            string ext = null;
+            if (Filename != null) ext = Path.GetExtension(Filename);
+            if (ext == null && MimeType != null && MimeType.StartsWith("image/") ) ext = "." + MimeType.Substring(6);
+            if (ext == null || ext.Length<2) ext = "";
+
+            // Change the filename
+            Filename = type.ToString() + ext;
+            return true;
+        }
+
+        #endregion
+
+
         #region IUIDElement Boilerplate
 
         /// <summary>

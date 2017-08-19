@@ -1043,32 +1043,8 @@ namespace TagLib.Matroska
                 attach.MimeType = file_mime;
                 attach.UID = file_uid;
 
-                if (file_mime.StartsWith("image/"))
-                {
-
-                    // Set picture type from its name
-                    string fname = file_name.ToLower();
-                    attach.Type = PictureType.Other;
-                    foreach (var ptype in Enum.GetNames(typeof(PictureType)))
-                    {
-                        if (fname.Contains(ptype.ToLower()))
-                        {
-                            attach.Type = (PictureType)Enum.Parse(typeof(PictureType), ptype);
-                            break;
-                        }
-                    }
-
-                    if (attach.Type == PictureType.Other && (fname.Contains("cover") || fname.Contains("poster")))
-                    {
-                        attach.Type = PictureType.FrontCover;
-                    }
-
-                }
-                else
-                {
-                    attach.Type = PictureType.NotAPicture;
-                }
-
+                // Set picture type from its name
+                attach.SetTypeFromFilename();
 
                 attachments[attachments.Length - 1] = attach;
                 tags.Attachments = attachments;
@@ -1085,6 +1061,9 @@ namespace TagLib.Matroska
                 // Write AttachedFile content
                 if (attach != null && attach.Data != null && attach.Data.Count > 0)
                 {
+                    // Try to keep the type info in the filename (more important than the Filename)
+                    attach.SetFilenameFromType();
+
                     // Create new EBML AttachedFile
                     var ebml_attach = new EBMLElement(this, i, MatroskaID.AttachedFile);
                     WriteAttachedFile(ebml_attach, attach);
