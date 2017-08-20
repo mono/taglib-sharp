@@ -28,7 +28,7 @@ using System;
 namespace TagLib.Matroska
 {
     /// <summary>
-    /// Read a Matroska EBML element from a file.
+    /// Read a Matroska EBML element from a file, but also provides basic modification of an EBML element directly on the file (write).
     /// </summary>
     /// <remarks>
     ///  This was intitialy called <see cref="EBMLelement"/>, but this was in fact a file-reader.
@@ -50,7 +50,7 @@ namespace TagLib.Matroska
         #region Constructors
 
         /// <summary>
-        /// Constructs a <see cref="EBMLreader" /> parsing from provided
+        /// Constructs a <see cref="EBMLreader" /> reading from provided
         /// file data.
         /// </summary>
         /// <param name="_file"><see cref="File" /> instance to read from.</param>
@@ -130,72 +130,22 @@ namespace TagLib.Matroska
 
 
         /// <summary>
-        /// Insert a new <see cref="EBMLreader" /> in the file with no Data nor DataSize.
+        /// Create a new <see cref="EBMLreader" /> with arbitrary attributes, 
+        /// without reading its information on the file.
         /// </summary>
-        /// <param name="_file">instance to write the EBML to.</param>
-        /// <param name="position">Position to insert (writing) to.</param>
-        /// <param name="ebmlid">EBML ID of the element to be created</param>
-        public EBMLreader(Matroska.File _file, ulong position, MatroskaID ebmlid, bool create = true)
+        /// <param name="_file">instance to the EBML to be associated with the element.</param>
+        /// <param name="position">Position in the file.</param>
+        /// <param name="ebmlid">EBML ID of the element</param>
+        public EBMLreader(Matroska.File _file, ulong position, MatroskaID ebmlid)
         {
-            if (_file == null)
-                throw new ArgumentNullException("file");
-
-            if (_file.Mode != TagLib.File.AccessMode.Write)
-                throw new CorruptFileException("File is not open for Write");
-
-            if (position > (ulong)(_file.Length))
-                throw new ArgumentOutOfRangeException("position");
-
             // Keep a reference to the file
             file = _file;
 
             // Initialize attributes
             offset = position;
             data_offset = offset;
-
-            if (create)
-            {
-
-                // Write EBML ID field
-                ID = (uint)ebmlid;
-
-                // Force creation of DataSize
-                ebml_size = 1;
-                DataSize = 0;
-            }
-            else
-            {
-                ebml_id = (uint)ebmlid;
-            }
-
+            ebml_id = (uint)ebmlid;
         }
-
-        /// <summary>
-        /// Insert a new <see cref="EBMLreader" />  in the file.
-        /// </summary>
-        /// <param name="_file">instance to write the EBML to.</param>
-        /// <param name="position">Position to insert (writing) to.</param>
-        /// <param name="ebmlid">EBML ID of the element to be created</param>
-        /// <param name="data">EBML data of the element to be created. null will not create any DataSize field.</param>
-        public EBMLreader(Matroska.File _file, ulong position, MatroskaID ebmlid, ByteVector data) : this(_file, position, ebmlid)
-        {
-            // Write the data
-            if (data != null) WriteData(data);
-        }
-
-
-        /// <summary>
-        /// Insert a new <see cref="EBMLreader" />  in the file.
-        /// </summary>
-        /// <param name="_file">instance to write the EBML to.</param>
-        /// <param name="position">Position to insert (writing) to.</param>
-        /// <param name="ebmlid">EBML ID of the element to be created</param>
-        /// <param name="value">EBML data as an unsigned long integer value.</param>
-        public EBMLreader(Matroska.File _file, ulong position, MatroskaID ebmlid, ulong value) : this(_file, position, ebmlid)
-        {
-            WriteData(value);
-        }
-
 
         #endregion
 
@@ -206,60 +156,6 @@ namespace TagLib.Matroska
         /// </summary>
         public uint ID
         {
-            set
-            {
-                if (value != ebml_id)
-                {
-                    // Figure out the ID size in bytes
-                    uint mask = 0xFF00, id_length = 1;
-                    if (ebml_id == 0)
-                    {
-                        id_length = 0;
-                    }
-                    else
-                    {
-                        while (id_length <= 4 && (ebml_id & mask) != 0)
-                        {
-                            id_length++;
-                            mask <<= 8;
-                        }
-                        if (id_length > 4)
-                        {
-                            throw new CorruptFileException("invalid EBML id size");
-                        }
-                    }
-
-                    // Figure out the new ID size in bytes
-                    mask = 0xFF00;
-                    uint new_length = 1;
-                    while (new_length <= 4 && (value & mask) != 0)
-                    {
-                        new_length++;
-                        mask <<= 8;
-                    }
-                    if (new_length > 4)
-                    {
-                        throw new CorruptFileException("invalid EBML id");
-                    }
-
-                    // Construct the new ID field
-                    ByteVector vector = new ByteVector((int)new_length);
-                    mask = (uint)value;
-                    for (int i = (int)new_length - 1; i >= 0; i--)
-                    {
-                        vector[i] = (byte)(mask & 0xFF);
-                        mask >>= 8;
-                    }
-
-                    // Write data-size field to file
-                    file.Insert(vector, (long)offset, (long)id_length);
-
-                    // Update fields
-                    data_offset = data_offset + new_length - id_length;
-                    ebml_id = value;
-
-                }
-            }
             get { return ebml_id; }
         }
 
@@ -276,69 +172,7 @@ namespace TagLib.Matroska
         /// </summary>
         public ulong DataSize
         {
-            set
-            {
-                if (value != ebml_size)
-                {
-                    // Figure out the ID size in bytes
-                    uint mask = 0xFF00, id_length = 1;
-                    while (id_length <= 4 && (ebml_id & mask) != 0)
-                    {
-                        id_length++;
-                        mask <<= 8;
-                    }
-                    if (id_length > 4)
-                    {
-                        throw new CorruptFileException("invalid EBML id size");
-                    }
-
-                    ulong size_length = data_offset - offset - id_length;
-
-                    // Figure out the required data-size size in bytes
-                    ulong newsize_length = 1;
-                    if (value == 0x7F)
-                    {
-                        // Special case: Avoid element-size reserved word of 0xFF (all ones)
-                        newsize_length = 2;
-                    }
-                    else
-                    {
-                        mask = 0x3F80;
-                        while (newsize_length <= 8 && (value & mask) != 0)
-                        {
-                            newsize_length++;
-                            mask <<= 7;
-                        }
-                    }
-
-                    // Lazy change
-                    if (newsize_length < size_length) newsize_length = size_length;
-
-                    if (size_length > 8)
-                    {
-                        throw new CorruptFileException("invalid EBML element size");
-                    }
-
-                    // Construct the data-size field
-                    ByteVector vector = new ByteVector((int)newsize_length);
-                    mask = (uint)value;
-                    for (int i = (int)newsize_length - 1; i >= 0; i--)
-                    {
-                        vector[i] = (byte)(mask & 0xFF);
-                        mask >>= 8;
-                    }
-                    // Set the marker bit
-                    vector[0] |= (byte)(0x100 >> (int)newsize_length);
-
-                    // Write data-size field to file
-                    file.Insert(vector, (long)offset + id_length, (long)size_length);
-
-                    // Update fields
-                    data_offset = data_offset + newsize_length - size_length;
-                    ebml_size = value;
-                }
-            }
-            get { return ebml_size; }
+           get { return ebml_size; }
         }
 
         /// <summary>
@@ -359,103 +193,10 @@ namespace TagLib.Matroska
 
         #endregion
 
-        #region Public Methods
-
-
-        /// <summary>
-        /// Reads a string from EBML Element's data section (UTF-8).
-        /// </summary>
-        /// <returns>a string object containing the parsed value.</returns>
-        public string ReadString()
-        {
-            if (file == null)
-            {
-                return null;
-            }
-
-            file.Seek((long)data_offset);
-
-            ByteVector vector = file.ReadBlock((int)ebml_size);
-
-            return vector.ToString(StringType.UTF8);
-        }
+        #region Public Methods for Reading
 
         /// <summary>
-        /// Reads a boolean from EBML Element's data section.
-        /// </summary>
-        /// <returns>a bool containing the parsed value.</returns>
-        public bool ReadBool()
-        {
-            if (file == null)
-            {
-                return false;
-            }
-
-            file.Seek((long)data_offset);
-
-            ByteVector vector = file.ReadBlock((int)ebml_size);
-
-            if (vector.ToUInt() > 0)
-                return true;
-            else
-                return false;
-        }
-
-        /// <summary>
-        /// Reads a double from EBML Element's data section.
-        /// </summary>
-        /// <returns>a double containing the parsed value.</returns>
-        public double ReadDouble()
-        {
-            if (file == null)
-            {
-                return 0;
-            }
-
-            if (ebml_size != 4 && ebml_size != 8)
-            {
-                throw new UnsupportedFormatException("Can not read a Double with sizes differing from 4 or 8");
-            }
-
-            file.Seek((long)data_offset);
-
-            ByteVector vector = file.ReadBlock((int)ebml_size);
-
-            double result = 0.0;
-
-            if (ebml_size == 4)
-            {
-                result = (double)vector.ToFloat();
-            }
-            else if (ebml_size == 8)
-            {
-                result = vector.ToDouble();
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Reads an unsigned integer (any size from 1 to 8 bytes) from EBML Element's data section.
-        /// </summary>
-        /// <returns>a ulong containing the parsed value.</returns>
-        public ulong ReadULong()
-        {
-            if (file == null)
-            {
-                return 0;
-            }
-
-            file.Seek((long)data_offset);
-
-            ByteVector vector = file.ReadBlock((int)ebml_size);
-
-            return vector.ToULong();
-        }
-
-
-        /// <summary>
-        /// Reads a bytes vector from EBML Element's data section.
+        /// Reads a vector of bytes (raw data) from EBML Element's data section.
         /// </summary>
         /// <returns>a <see cref="ByteVector" /> containing the parsed value.</returns>
         public ByteVector ReadBytes()
@@ -472,8 +213,61 @@ namespace TagLib.Matroska
             return vector;
         }
 
+        /// <summary>
+        /// Reads a string from EBML Element's data section (UTF-8).
+        /// </summary>
+        /// <returns>a string object containing the parsed value.</returns>
+        public string ReadString()
+        {
+            if (file == null ) return null;
+            ByteVector vector = ReadBytes();
+            var ebml = new EBMLelement((MatroskaID)ebml_id, vector);
+            return ebml.GetString();
+
+        }
+
+        /// <summary>
+        /// Reads a boolean from EBML Element's data section.
+        /// </summary>
+        /// <returns>a bool containing the parsed value.</returns>
+        public bool ReadBool()
+        {
+            if (file == null || ebml_size == 0) return false;
+            ByteVector vector = ReadBytes();
+            var ebml = new EBMLelement((MatroskaID)ebml_id, vector);
+            return ebml.GetBool();
+
+        }
+
+        /// <summary>
+        /// Reads a double from EBML Element's data section.
+        /// </summary>
+        /// <returns>a double containing the parsed value.</returns>
+        public double ReadDouble()
+        {
+            if (file == null || ebml_size == 0) return 0;
+            ByteVector vector = ReadBytes();
+            var ebml = new EBMLelement((MatroskaID) ebml_id, vector);
+            return ebml.GetDouble();
+        }
+
+        /// <summary>
+        /// Reads an unsigned integer (any size from 1 to 8 bytes) from EBML Element's data section.
+        /// </summary>
+        /// <returns>a ulong containing the parsed value.</returns>
+        public ulong ReadULong()
+        {
+            if (file == null || ebml_size == 0) return 0;
+            ByteVector vector = ReadBytes();
+            var ebml = new EBMLelement((MatroskaID)ebml_id, vector);
+            return ebml.GetULong();
+        }
 
 
+        #endregion
+
+        #region Public Methods for Writing
+        
         /// <summary>
         /// Write data to the EBML file
         /// </summary>
@@ -487,7 +281,7 @@ namespace TagLib.Matroska
             if (data == null)
             {
                 // Remove EBML Data field
-                DataSize = 0;
+                WriteDataSize(0);
                 if (old_size > 0) file.RemoveBlock((long)data_offset, old_size);
             }
             else
@@ -496,32 +290,12 @@ namespace TagLib.Matroska
                 if (ebml_size == 0 && data.Count == 0) ebml_size = 1;
 
                 // Write EBML Data field
-                DataSize = (ulong)data.Count;
+                WriteDataSize((ulong)data.Count);
                 file.Insert(data, (long)data_offset, old_size);
             }
 
             ret += (long)Size;
             return ret;
-        }
-
-        /// <summary>
-        /// Write an unsigned integer (any size from 1 to 8 bytes) to the EBML file
-        /// </summary>
-        /// <param name="data">unsigned long number to write</param>
-        /// <returns>Size difference compare to previous EBML size</returns>
-        public long WriteData(ulong data)
-        {
-            const ulong mask = 0xffffffff00000000;
-            bool isLong = (data & mask) != 0;
-
-            ByteVector vector = new ByteVector(isLong ? 8 : 4);
-            for (int i = vector.Count - 1; i >= 0; i--)
-            {
-                vector[i] = (byte)(data & 0xff);
-                data >>= 8;
-            }
-
-            return WriteData(vector);
         }
 
 
@@ -530,18 +304,85 @@ namespace TagLib.Matroska
         /// </summary>
         /// <param name="offset">offset size (positive or negative) to be added to the DataSize</param>
         /// <returns>Size difference compare to previous EBML size</returns>
-        public long ResizeData(long offset)
+        public long WriteDataResize(long offset)
         {
             long ret = 0;
 
             if (offset != 0)
             {
                 ret -= (long)Size;
-                DataSize = (ulong)((long)DataSize + offset);
+                WriteDataSize((ulong)((long)DataSize + offset));
                 ret += (long)Size;
             }
 
             return ret;
+        }
+
+        /// <summary>
+        /// Write a new value for the <see cref="DataSize"/> to the EBML file
+        /// </summary>
+        /// <param name="value">New value of the <see cref="DataSize"/> </param>
+        public void WriteDataSize(ulong value)
+        {
+            if (value != ebml_size)
+            {
+                // Figure out the ID size in bytes
+                uint mask = 0xFF00, id_length = 1;
+                while (id_length <= 4 && (ebml_id & mask) != 0)
+                {
+                    id_length++;
+                    mask <<= 8;
+                }
+                if (id_length > 4)
+                {
+                    throw new CorruptFileException("invalid EBML id size");
+                }
+
+                ulong size_length = data_offset - offset - id_length;
+
+                // Figure out the required data-size size in bytes
+                ulong newsize_length = 1;
+                if (value == 0x7F)
+                {
+                    // Special case: Avoid element-size reserved word of 0xFF (all ones)
+                    newsize_length = 2;
+                }
+                else
+                {
+                    mask = 0x3F80;
+                    while (newsize_length <= 8 && (value & mask) != 0)
+                    {
+                        newsize_length++;
+                        mask <<= 7;
+                    }
+                }
+
+                // Lazy change
+                if (newsize_length < size_length) newsize_length = size_length;
+
+                if (size_length > 8)
+                {
+                    throw new CorruptFileException("invalid EBML element size");
+                }
+
+                // Construct the data-size field
+                ByteVector vector = new ByteVector((int)newsize_length);
+                mask = (uint)value;
+                for (int i = (int)newsize_length - 1; i >= 0; i--)
+                {
+                    vector[i] = (byte)(mask & 0xFF);
+                    mask >>= 8;
+                }
+                // Set the marker bit
+                vector[0] |= (byte)(0x100 >> (int)newsize_length);
+
+                // Write data-size field to file
+                file.Insert(vector, (long)offset + id_length, (long)size_length);
+
+                // Update fields
+                data_offset = data_offset + newsize_length - size_length;
+                ebml_size = value;
+            }
         }
 
 

@@ -108,7 +108,7 @@ namespace TagLib.Matroska
             get
             {
                 long size_length = DataSize;
-                return IDSize + EBMLByteSize(size_length) + size_length;
+                return IDSize + EBMLByteSize((ulong)size_length) + size_length;
             }
         }
 
@@ -143,7 +143,7 @@ namespace TagLib.Matroska
         /// </summary>
         public long DataSizeSize
         {
-            get { return EBMLByteSize(DataSize);  }
+            get { return EBMLByteSize((ulong)DataSize);  }
         }
 
 
@@ -220,14 +220,14 @@ namespace TagLib.Matroska
 
         #endregion
 
-        #region Private functions
+        #region Class functions
 
         /// <summary>
-        /// Get the byte-size required to encode qn EBML value with the leading 1. 
+        /// Get the byte-size required to encode an EBML value with the leading 1. 
         /// </summary>
         /// <param name="value">Encoded value</param>
         /// <returns>size in bytes</returns>
-        private long EBMLByteSize(long value)
+        public static long EBMLByteSize(ulong value)
         {
             // Figure out the required data-size size in bytes
             long size_length = 1;

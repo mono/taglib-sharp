@@ -467,7 +467,7 @@ namespace TagLib.Matroska
                 {
                     var ebml_attach = CreateAttachments();
                     ebml_attach.Write(this, (long)i);
-                    segm_list.Add( new EBMLreader(this, i, ebml_attach.ID, false) );
+                    segm_list.Add( new EBMLreader(this, i, ebml_attach.ID) );
 
                     woffset += ebml_attach.Size;
                     i += (ulong)ebml_attach.Size;
@@ -479,7 +479,7 @@ namespace TagLib.Matroska
                 {
                     var ebml_tags = CreateTags();
                     ebml_tags.Write(this, (long)i);
-                    segm_list.Add(new EBMLreader(this, i, ebml_tags.ID, false));
+                    segm_list.Add(new EBMLreader(this, i, ebml_tags.ID));
 
                     woffset += (long)ebml_tags.Size;
                     i += (ulong)ebml_tags.Size;
@@ -509,7 +509,7 @@ namespace TagLib.Matroska
                 woffset += posOffset;
 
                 // Update Element EBML data-size
-                woffset = element.ResizeData(woffset);
+                woffset = element.WriteDataResize(woffset);
             }
             else
             {
@@ -603,7 +603,7 @@ namespace TagLib.Matroska
 
 
                     // Update Element EBML data-size
-                    ret = element.ResizeData(ret);
+                    ret = element.WriteDataResize(ret);
                 }
                 else
                 {
@@ -667,8 +667,9 @@ namespace TagLib.Matroska
                     if (ebml_string == null)
                     {
                         // Create the missing EBML string at the end for the current element
-                        ebml_string = new EBMLreader(this, element.Offset + element.Size, MatroskaID.Title, title);
-                        ret += (long)ebml_string.Size;
+                        var eblm_new = new EBMLelement(MatroskaID.Title, title);
+                        eblm_new.Write(this, (long)(element.Offset + element.Size));
+                        ret += eblm_new.Size;
                     }
                     else if (tag_string != title)
                     {
@@ -682,7 +683,7 @@ namespace TagLib.Matroska
                 }
 
                 // Update Element EBML data-size
-                ret = element.ResizeData(ret);
+                ret = element.WriteDataResize(ret);
             }
             else
             {
