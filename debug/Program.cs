@@ -44,7 +44,7 @@ namespace debug
 
                 var file = TagLib.File.Create(tpath);
                 log("  Type  : " + file.MimeType);
-
+                /*
                 log("  rboy1 test start  : " + file.MimeType);
 
                 var MKVTag = (TagLib.Matroska.Tag)file.GetTag(TagLib.TagTypes.Matroska);
@@ -64,7 +64,7 @@ namespace debug
 
                 log("  rboy1 test save  : " + file.MimeType);
                 file.Save();
-
+                */
                 log("  rboy1 test read  : " + file.MimeType);
                 TagLib.File TagFile = TagLib.File.Create(tpath);
 
@@ -87,10 +87,7 @@ namespace debug
 
                 //log("  Erase : " + tag.Title);
                 //file.RemoveTags(TagLib.TagTypes.Matroska);
-                file.Save();
-
-                log("    IsEmpty            : " + tag.IsEmpty);
-
+                //file.Save();
 
                 log("  Write : " + tag.Title);
 

@@ -63,7 +63,7 @@ namespace TagLib.Matroska
         private ByteVector fourcc;
 #pragma warning restore 414
 
-        private List<EBMLElement> unknown_elems = new List<EBMLElement> ();
+        private List<EBMLreader> unknown_elems = new List<EBMLreader> ();
 
         #endregion
 
@@ -76,14 +76,14 @@ namespace TagLib.Matroska
         /// parent element's data section.
         /// </summary>
         /// <param name="_file"><see cref="File" /> instance to read from.</param>
-        /// <param name="element">Parent <see cref="EBMLElement" />.</param>
-        public VideoTrack (File _file, EBMLElement element)
+        /// <param name="element">Parent <see cref="EBMLreader" />.</param>
+        public VideoTrack (File _file, EBMLreader element)
             : base (_file, element)
         {
             MatroskaID matroska_id;
 
             // Here we handle the unknown elements we know, and store the rest
-            foreach (EBMLElement elem in base.UnknownElements) {
+            foreach (EBMLreader elem in base.UnknownElements) {
                 matroska_id = (MatroskaID) elem.ID;
 
 
@@ -95,7 +95,7 @@ namespace TagLib.Matroska
 
                             while (i < elem.DataSize)
                             {
-                                EBMLElement child = new EBMLElement(_file, elem.DataOffset + i);
+                                EBMLreader child = new EBMLreader(_file, elem.DataOffset + i);
 
                                 matroska_id = (MatroskaID)child.ID;
 
@@ -155,7 +155,7 @@ namespace TagLib.Matroska
         /// <summary>
         /// List of unknown elements encountered while parsing.
         /// </summary>
-        public new List<EBMLElement> UnknownElements
+        public new List<EBMLreader> UnknownElements
         {
             get { return unknown_elems; }
         }

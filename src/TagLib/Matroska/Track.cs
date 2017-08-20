@@ -44,7 +44,7 @@ namespace TagLib.Matroska
         private ByteVector codec_data;
 #pragma warning restore 414
 
-        private List<EBMLElement> unknown_elems = new List<EBMLElement> ();
+        private List<EBMLreader> unknown_elems = new List<EBMLreader> ();
 
         #endregion
 
@@ -57,13 +57,13 @@ namespace TagLib.Matroska
         /// parent element's data section.
         /// </summary>
         /// <param name="_file"><see cref="File" /> instance to read from.</param>
-        /// <param name="element">Parent <see cref="EBMLElement" />.</param>
-        public Track (File _file, EBMLElement element)
+        /// <param name="element">Parent <see cref="EBMLreader" />.</param>
+        public Track (File _file, EBMLreader element)
         {
             ulong i = 0;
 
             while (i < element.DataSize) {
-                EBMLElement child = new EBMLElement (_file, element.DataOffset + i);
+                EBMLreader child = new EBMLreader (_file, element.DataOffset + i);
 
                 MatroskaID matroska_id = (MatroskaID) child.ID;
 
@@ -111,7 +111,7 @@ namespace TagLib.Matroska
         /// <summary>
         /// List of unknown elements encountered while parsing.
         /// </summary>
-        public List<EBMLElement> UnknownElements
+        public List<EBMLreader> UnknownElements
         {
             get { return unknown_elems; }
         }
