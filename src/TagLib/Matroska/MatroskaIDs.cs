@@ -27,7 +27,7 @@ namespace TagLib.Matroska
     /// <summary>
     /// Public enumeration listing Matroska specific EBML Identifiers.
     /// </summary>
-    public enum MatroskaID
+    public enum MatroskaID : uint
     {
         /// <summary>
         /// Indicates a Matroska Segment EBML element.

@@ -40,6 +40,12 @@ namespace debug
                     continue;
                 }
 
+                log("  read  : " + fpath);
+                var rfile = TagLib.File.Create(fpath);
+                log("  Type  : " + rfile.MimeType);
+
+                continue;
+
                 File.Copy(fpath, tpath, true);
 
                 var file = TagLib.File.Create(tpath);

@@ -338,10 +338,21 @@ namespace TagLib.Matroska
         /// </param>
         private void ReadWrite (ReadStyle propertiesStyle)
         {
-            ulong offset = 0;
+            ulong offset = ReadLeadText();
 
+            bool hasSegment = false;
             while (offset < (ulong) Length) {
-                EBMLreader element = new EBMLreader (this, offset);
+                EBMLreader element;
+                try
+                {
+                    element = new EBMLreader(this, offset);
+                }
+                catch(Exception ex)
+                {
+                    // Sometimes, the file have zero padding at the end
+                    if (hasSegment) break; // Avoid crash 
+                    throw ex;
+                }
 
                 EBMLID ebml_id = (EBMLID) element.ID;
                 MatroskaID matroska_id = (MatroskaID) element.ID;
@@ -356,6 +367,7 @@ namespace TagLib.Matroska
                 switch (matroska_id) {
                     case MatroskaID.Segment:
                         ReadWriteSegment(element, propertiesStyle);
+                        hasSegment = true;
                         break;
                     default:
                         break;
@@ -365,151 +377,81 @@ namespace TagLib.Matroska
             }
         }
 
-        private void ReadHeader (EBMLreader element)
-        {
-            string doctype = null;
-            ulong i = 0;
-
-            while (i < element.DataSize) {
-                EBMLreader child = new EBMLreader (this, element.DataOffset + i);
-
-                EBMLID ebml_id = (EBMLID) child.ID;
-
-                switch (ebml_id) {
-                    case EBMLID.EBMLDocType:
-                        doctype = child.ReadString ();
-                        break;
-                    default:
-                        break;
-                }
-
-                i += child.Size;
-            }
-
-            // Check DocType
-            if (String.IsNullOrEmpty (doctype) || (doctype != "matroska" && doctype != "webm")) {
-                throw new UnsupportedFormatException ("DocType is not matroska or webm");
-            }
-        }
-
         private void ReadWriteSegment (EBMLreader element, ReadStyle propertiesStyle)
         {
-            long woffset = 0;
-            ulong i = 0;
-            var segm_list = new List<EBMLreader>(8);
-            EBMLreader ebml_seek = null; // find first SeekHead
-            ulong seek_reserved = 0;
+            // First make reference of all EBML elements at level 1 (top) in the Segment
 
-            while (i < (ulong)((long)element.DataSize + woffset)) {
-                EBMLreader child = new EBMLreader (this, element.DataOffset + i);
+            var segm_list = ReadSegments(element, true); // Try to get it from SeekHead (way faster)
 
-                MatroskaID matroska_id = (MatroskaID) child.ID;
-                bool seek = true;
+            // Now process (read and prepare to write) the referenced elements we care about
 
-                switch (matroska_id) {
+            EBMLelement ebml_sinfo = null;
+            if (Mode == AccessMode.Write) ebml_sinfo = new EBMLelement(MatroskaID.SegmentInfo);
+
+            bool valid = true;
+
+            foreach (EBMLreader child in segm_list)
+            {
+                // the child here may be Abstract if it has been retrieved in the SeekHead,
+                // so child.Read() must be used to retrieve the full EBML header
+
+                MatroskaID matroska_id = (MatroskaID)child.ID;
+                switch (matroska_id)
+                {
                     case MatroskaID.SeekHead:
-                        if (ebml_seek == null && i == 0)
-                        {
-                            ebml_seek = child;
-                            seek_reserved = i + child.Size;
-                        }
-                        else if (Mode == AccessMode.Write)
-                        {
-                            woffset += child.Remove(); // Remove all other SeekHeads
-                            continue;
-                        }
-                        seek = false;
+                        valid = child.Read();
+                        if (Mode == AccessMode.Write) child.SetVoid();
                         break;
-                    case MatroskaID.Tracks:
-                        if(propertiesStyle != ReadStyle.None) ReadTracks (child);
-                        break;
+
                     case MatroskaID.SegmentInfo:
-                        woffset += ReadWriteSegmentInfo(child);
+                        if (valid = child.Read()) ReadCreateSegmentInfo(child, ebml_sinfo);
+                        if (Mode == AccessMode.Write) child.SetVoid();
                         break;
+
+                    case MatroskaID.Tracks:
+                        if (Mode != AccessMode.Write && propertiesStyle != ReadStyle.None)
+                        {
+                            if (valid = child.Read()) ReadTracks(child);
+                        }
+                        break;
+
                     case MatroskaID.Tags:
-                        if (Mode == AccessMode.Write)
-                        {
-                            woffset += child.Remove(); // Remove all Tags
-                            continue;
-                        }
-                        ReadTags(child);
+                        valid = child.Read();
+                        if (Mode == AccessMode.Write) child.SetVoid();
+                        else if (valid) ReadTags(child);
                         break;
+
                     case MatroskaID.Attachments:
-                        if (Mode == AccessMode.Write)
-                        {
-                            woffset += child.Remove(); // Remove all Tags
-                            continue;
-                        }
-                        ReadAttachments(child);
+                        valid = child.Read();
+                        if (Mode == AccessMode.Write) child.SetVoid();
+                        else if (valid) ReadAttachments(child);
                         break;
-                    case MatroskaID.Cluster:
-                        seek = false;
-                        break;
-                    case MatroskaID.Void:
-                        if (seek_reserved == i) seek_reserved += child.Size; // take on void
-                        seek = false;
-                        break;
+
                     default:
                         break;
                 }
 
-                if(seek) segm_list.Add(child);
-
-                i += child.Size;
+                if (!valid) break;
             }
 
-            if (Mode == AccessMode.Write)
+            // Detect invalid SeekHead
+            if (!valid)
             {
-                i += element.DataOffset;
-
-                // Write EBML Attachments
-                if (tags.Attachments.Length > 0)
+                // Retry the ReadWriteSegment without using SeekHead
+                if (Mode != AccessMode.Write)
                 {
-                    var ebml_attach = CreateAttachments();
-                    ebml_attach.Write(this, (long)i);
-                    segm_list.Add( new EBMLreader(this, i, ebml_attach.ID) );
-
-                    woffset += ebml_attach.Size;
-                    i += (ulong)ebml_attach.Size;
-
+                    tracks.Clear();
+                    tags.Clear();
                 }
 
-                // Write EBML Tags if Tag available
-                if (tags.Count > 0 && (tags.Count>1 || !tags[0].IsEmpty))
-                {
-                    var ebml_tags = CreateTags();
-                    ebml_tags.Write(this, (long)i);
-                    segm_list.Add(new EBMLreader(this, i, ebml_tags.ID));
+                segm_list = ReadSegments(element, false); // Now avoid reading SeekHead
+                ReadWriteSegment(element, propertiesStyle);
 
-                    woffset += (long)ebml_tags.Size;
-                    i += (ulong)ebml_tags.Size;
-                }
-
-                // Write the SeekHead
-
-                var ebml_seeknew = CreateSeekHead(segm_list);
-
-                long posOffset;
-
-                if (ebml_seeknew.Size > (long)seek_reserved)
-                {
-                    posOffset = ebml_seeknew.Size - (long)seek_reserved;
-                }
-                else
-                {
-                    // Complete the reserved area with void
-                    long voidSize = (long)seek_reserved - ebml_seeknew.Size;
-                    var ebml_void = CreateVoid((int)voidSize);
-                    ebml_void.Write(this, (long)element.DataOffset + ebml_seeknew.Size, voidSize);
-                    posOffset = ebml_void.Size - voidSize;
-                }
-
-                UpdateSeekHead(ebml_seeknew, posOffset - (long)element.DataOffset);
-                ebml_seeknew.Write(this, (long)element.DataOffset, (long)seek_reserved);
-                woffset += posOffset;
-
-                // Update Element EBML data-size
-                woffset = element.WriteDataResize(woffset);
+            }
+            else if (Mode == AccessMode.Write)
+            {
+                // Do the real writing
+                WriteSegment(element, ebml_sinfo, segm_list);
             }
             else
             {
@@ -554,105 +496,48 @@ namespace TagLib.Matroska
         }
 
 
-        private long ReadWriteSeek(EBMLreader element, long offset = 0, List<EBMLreader> segm_list = null)
+        private void ReadCreateSegmentInfo(EBMLreader element, EBMLelement ebml_sinfo)
         {
-            long ret = 0;
-            ulong i = 0;
-            EBMLreader ebml_id = null;
-            EBMLreader ebml_position = null;
 
-            while (i < (ulong)((long)element.DataSize + ret))
+            EBMLelement ebml_title = null;
+
+            ulong i = 0;
+            while (i < element.DataSize)
             {
                 EBMLreader child = new EBMLreader(this, element.DataOffset + i);
-
                 MatroskaID matroska_id = (MatroskaID)child.ID;
 
-                switch (matroska_id)
+                if (Mode == AccessMode.Write)
                 {
-                    case MatroskaID.SeekID:
-                        ebml_id = child;
-                        break;
-                    case MatroskaID.SeekPosition:
-                        ebml_position = child;
-                        break;
-                    default:
-                        break;
-                }
-
-                i += child.Size;
-            }
-
-            if (Mode == AccessMode.Write)
-            {
-                i += element.DataOffset;
-
-                if(ebml_id != null && ebml_position != null)
-                {
-                    // Valid
-                    ulong target_id = ebml_id.ReadULong();
-                    for(int idx=0; idx< segm_list.Count; idx++)
-                    {
-                        var ebml = segm_list[idx];
-                        if (target_id == ebml.ID)
-                        {
-                            long position = (long) ebml.Offset + offset;
-                            segm_list.RemoveAt(idx);
-                            idx--;
-                        }
-                    }
-
-
-                    // Update Element EBML data-size
-                    ret = element.WriteDataResize(ret);
+                    // Store raw data to represent the SegmentInfo content
+                    var ebml = new EBMLelement(matroska_id, child.ReadBytes());
+                    ebml_sinfo.Children.Add(ebml);
+                    if (matroska_id == MatroskaID.Title) ebml_title = ebml;
                 }
                 else
                 {
-                    // Invalid
-                    RemoveBlock((long)i, (long)element.Size);
-                }
-            }
-
-            return ret;
-        }
-
-
-        private long ReadWriteSegmentInfo(EBMLreader element)
-        {
-            long ret = 0;
-            ulong i = 0;
-
-            string tag_string = null;
-            EBMLreader ebml_string = null;
-
-
-            while (i < (ulong)((long)element.DataSize + ret))
-            {
-                EBMLreader child = new EBMLreader(this, element.DataOffset + i);
-
-                MatroskaID matroska_id = (MatroskaID)child.ID;
-
-                switch (matroska_id)
-                {
-                    case MatroskaID.Duration:
-                        duration_unscaled = child.ReadDouble();
-                        if (time_scale > 0)
-                        {
-                            duration = TimeSpan.FromMilliseconds(duration_unscaled * time_scale / 1000000);
-                        }
-                        break;
-                    case MatroskaID.TimeCodeScale:
-                        time_scale = child.ReadULong();
-                        if (duration_unscaled > 0)
-                        {
-                            duration = TimeSpan.FromMilliseconds(duration_unscaled * time_scale / 1000000);
-                        }
-                        break;
-                    case MatroskaID.Title:
-                        ebml_string = child;
-                        tag_string = child.ReadString();
-                        break;
-                    default:
-                        break;
+                    switch (matroska_id)
+                    {
+                        case MatroskaID.Duration:
+                            duration_unscaled = child.ReadDouble();
+                            if (time_scale > 0)
+                            {
+                                duration = TimeSpan.FromMilliseconds(duration_unscaled * time_scale / 1000000);
+                            }
+                            break;
+                        case MatroskaID.TimeCodeScale:
+                            time_scale = child.ReadULong();
+                            if (duration_unscaled > 0)
+                            {
+                                duration = TimeSpan.FromMilliseconds(duration_unscaled * time_scale / 1000000);
+                            }
+                            break;
+                        case MatroskaID.Title:
+                            tags.Title = child.ReadString();
+                            break;
+                        default:
+                            break;
+                    }
                 }
 
                 i += child.Size;
@@ -664,39 +549,218 @@ namespace TagLib.Matroska
                 string title = tags.Title;
                 if (title != null)
                 {
-                    if (ebml_string == null)
+                    if (ebml_title == null)
                     {
                         // Create the missing EBML string at the end for the current element
-                        var eblm_new = new EBMLelement(MatroskaID.Title, title);
-                        eblm_new.Write(this, (long)(element.Offset + element.Size));
-                        ret += eblm_new.Size;
+                        ebml_title = new EBMLelement(MatroskaID.Title, title);
+                        ebml_sinfo.Children.Add(ebml_title);
                     }
-                    else if (tag_string != title)
+                    else if (ebml_title.GetString() != title)
                     {
                         // Replace existing string inside the EBML string
-                        ret += ebml_string.WriteData(title);
+                        ebml_title.SetData(title);
                     }
                 }
-                else if (ebml_string != null)
+                else if (ebml_title != null)
                 {
-                    ret += ebml_string.Remove();
+                    // Remove title
+                    ebml_sinfo.Children.Remove(ebml_title);
                 }
-
-                // Update Element EBML data-size
-                ret = element.WriteDataResize(ret);
             }
-            else
-            {
-                tags.Title = tag_string;
-            }
-
-            return ret;
         }
 
         #endregion
 
 
         #region Private Methods Read
+
+        private ulong ReadLeadText()
+        {
+            ulong offset = 0;
+
+            // look up the 0x1A start byte
+            const int buffer_size = 64;
+            ByteVector leadtxt;
+            int idx;
+            do
+            {
+                Seek((long)offset);
+                leadtxt = ReadBlock(buffer_size);
+                idx = leadtxt.IndexOf((byte)0x1A);
+                offset += buffer_size;
+            } while (idx < 0 && offset < (ulong)Length);
+
+            if (idx < 0)
+                throw new Exception("Invalid Matroska file, missing data 0x1A.");
+
+            offset = (offset + (ulong)idx) - buffer_size;
+
+            return offset;
+        }
+
+
+        private void ReadHeader(EBMLreader element)
+        {
+            string doctype = null;
+            ulong i = 0;
+
+            while (i < element.DataSize)
+            {
+                EBMLreader child = new EBMLreader(this, element.DataOffset + i);
+
+                EBMLID ebml_id = (EBMLID)child.ID;
+
+                switch (ebml_id)
+                {
+                    case EBMLID.EBMLDocType:
+                        doctype = child.ReadString();
+                        break;
+                    default:
+                        break;
+                }
+
+                i += child.Size;
+            }
+
+            // Check DocType
+            if (String.IsNullOrEmpty(doctype) || (doctype != "matroska" && doctype != "webm"))
+            {
+                throw new UnsupportedFormatException("DocType is not matroska or webm");
+            }
+        }
+
+
+        private List<EBMLreader> ReadSegments(EBMLreader element, bool allowSeekHead)
+        {
+            var segm_list = new List<EBMLreader>(10);
+
+            bool foundCues = false; // find first Cues
+
+            ulong i = 0;
+
+            while (i < element.DataSize)
+            {
+                EBMLreader child = new EBMLreader(this, element.DataOffset + i);
+
+                MatroskaID matroska_id = (MatroskaID)child.ID;
+                bool refInSeekHead = false;
+
+                switch (matroska_id)
+                {
+                    case MatroskaID.SeekHead:
+                        if (allowSeekHead)
+                        {
+                            // Take only the first SeekHead into account
+                            var ebml_seek = new List<EBMLreader>(10) { child };
+                            ReadSeekHead(child, ebml_seek);
+                            if (ebml_seek.Count > 0)
+                            {
+                                // Always reference the first element
+                                if (ebml_seek[0].Offset > element.DataOffset)
+                                    ebml_seek.Insert(0, segm_list[0]);
+
+                                segm_list = ebml_seek;
+                                i = element.DataSize; // Exit the loop: we got what we need
+                            }
+                        }
+                        else
+                        {
+                            refInSeekHead = true;
+                        }
+                        break;
+
+                    case MatroskaID.Void: // extend SeekHead space to following void
+                        if (Mode == AccessMode.Write) refInSeekHead = true; // This will serve optimization
+                        break;
+
+                    case MatroskaID.Cues: // reference first Cues only
+                        refInSeekHead = !foundCues;
+                        foundCues = true;
+                        break;
+
+                    case MatroskaID.Cluster: // Never reference Clusters (too many)
+                        break;
+
+                    // Reference the following elements
+                    case MatroskaID.Tracks:
+                    case MatroskaID.SegmentInfo:
+                    case MatroskaID.Tags:
+                    case MatroskaID.Attachments:
+                    default:
+                        refInSeekHead = true;
+                        break;
+                }
+
+                i += child.Size;
+
+                if (refInSeekHead || i==0) segm_list.Add(child);
+            }
+
+            return segm_list;
+        }
+
+
+
+        private List<EBMLreader> ReadSeekHead(EBMLreader element, List<EBMLreader> segm_list)
+        {
+            MatroskaID ebml_id = 0;
+            ulong ebml_position = 0;
+
+            ulong i = 0;
+            while (i < element.DataSize)
+            {
+                EBMLreader ebml_seek = new EBMLreader(this, element.DataOffset + i);
+                MatroskaID matroska_id = (MatroskaID)ebml_seek.ID;
+
+                if (matroska_id != MatroskaID.Seek) return null; // corrupted SeekHead
+
+                ulong j = 0;
+                while (j < ebml_seek.DataSize)
+                {
+                    EBMLreader child = new EBMLreader(this, ebml_seek.DataOffset + j);
+                    matroska_id = (MatroskaID)child.ID;
+
+                    switch (matroska_id)
+                    {
+                        case MatroskaID.SeekID:
+                            ebml_id = (MatroskaID)child.ReadULong();
+                            break;
+                        case MatroskaID.SeekPosition:
+                            ebml_position = child.ReadULong() + element.Offset;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    j += child.Size;
+                }
+
+                if (ebml_id > 0 && ebml_position > 0)
+                {
+                    // Create abstract EBML representation of the segment EBML
+                    var ebml = new EBMLreader(this, ebml_position, ebml_id);
+
+                    // Sort the seek-entries by increasing position order
+                    int k;
+                    for (k = segm_list.Count - 1; k >= 0; k--)
+                    {
+                        if (ebml_position > segm_list[k].Offset) break;
+                    }
+                    segm_list.Insert(k + 1, ebml);
+
+                    // Chained SeekHead recursive read
+                    if (ebml_id == MatroskaID.SeekHead)
+                    {
+                        if (!ebml.Read()) return null; // Corrupted
+                        ReadSeekHead(ebml, segm_list);
+                    }
+                }
+
+                i += ebml_seek.Size;
+            }
+
+            return segm_list;
+        }
 
 
         private void ReadTags (EBMLreader element)
@@ -1037,7 +1101,312 @@ namespace TagLib.Matroska
         #endregion
 
 
-        #region Private Methods Create
+        #region Private Methods Write/Create
+
+        /// <summary>
+        /// Central point for the Writing, after the master elements of the EBML Segment have been referenced.
+        /// </summary>
+        /// <param name="ebml_segm">EBML Segment containing the EBML to be written</param>
+        /// <param name="ebml_sinfo">EBML SegmentInfo</param>
+        /// <param name="segm_list">description of the mapping of EBML level 1 in the EBML Segment, ordered</param>
+        private void WriteSegment(EBMLreader ebml_segm, EBMLelement ebml_sinfo, List<EBMLreader> segm_list)
+        {
+            // Organize the Voids (free space map)
+            UpdateSegmentsMergeVoids(ebml_segm, segm_list);
+
+            // Create all master elements
+            var ebml_alloc = new List<EBMLelement>(3);
+
+            if (tags.Attachments.Length > 0)
+                ebml_alloc.Add( CreateAttachments() );
+
+            if (tags.Count > 0 && (tags.Count > 1 || !tags[0].IsEmpty))
+                ebml_alloc.Add( CreateTags() );
+
+            // Reoder: biggest first in ebml_alloc to optimize space in Voids
+            if (ebml_alloc.Count==2 && ebml_alloc[0].Size < ebml_alloc[1].Size)
+            {
+                var swap = ebml_alloc[0];
+                ebml_alloc[0] = ebml_alloc[1];
+                ebml_alloc[1] = swap;
+            }
+
+            // Always put the EBML SegmentInfo first (optimize the reading of the Matroska, penalty is in writing time)
+            if (ebml_sinfo != null && ebml_sinfo.Children.Count > 0)
+                ebml_alloc.Insert(0, ebml_sinfo);
+
+            // Set position to the end of the Segment (but this is cosmetic... this offset should not be used)
+            long pos = (long)(ebml_segm.Offset + ebml_segm.Size);
+
+            // Create draft EBML abstract to create a stub SeekHead and estimate the required size
+            foreach (var ebml in ebml_alloc)
+                segm_list.Add(new EBMLreader(this, (ulong)pos, ebml.ID));
+
+            // SeekHead Stub (to estimate its size)
+            var ebml_seek = CreateSeekHead(segm_list);
+
+            // Remove the newly created elements from the Segment list. (it was only there for estimation).
+            // These will be  added later (with correct size and offset this time)
+            segm_list.RemoveRange(segm_list.Count - ebml_alloc.Count, ebml_alloc.Count);
+
+            // Now that all object are more-or-less created and referenced, and mapping is known (segm_list)
+            // we can estimate the sizes and how to arrange the EBML to write these to the Voids
+
+            // Estimate size of element that should be at the begining of the Segment, plus margin.
+            // Make sure there is a Void at the begining and big enough to contain the reserved space.
+            long reserved = WriteReservedEBML(ebml_segm, segm_list, ebml_seek.Size); 
+
+            // Write created master EBMLs (excepted the SeekHead)
+            foreach (var ebml in ebml_alloc)
+            {
+                WriteEBML(ebml, ebml_segm, segm_list, reserved);
+            }
+
+            // Claim size back on the last Void if bigger than required
+            var last = segm_list.Last();
+            if (last.ID == MatroskaID.Void && last.Offset + last.Size >= ebml_segm.Offset + ebml_segm.Size)
+            {
+                segm_list.RemoveAt(segm_list.Count - 1);
+                ebml_segm.DataSize -= last.Size;
+                last.Remove();
+            }
+
+            // Update Segment EBML data-size, resize to 8 (take space on the first reserved Void)
+            var poffset = ebml_segm.WriteDataSize();
+
+            // Adapt first Void dimensions to the space that has been taken by the WriteDataSize 
+            if (poffset != 0)
+                segm_list[0] = new EBMLreader(this, ebml_segm.DataOffset, MatroskaID.Void, (ulong)((long)segm_list[0].Size - poffset) );
+
+            // Re-create SeekHead, with correct values this time, and write it in the first (reserved) Void
+            ebml_seek = CreateSeekHead(segm_list, -(long)ebml_segm.DataOffset);
+            WriteEBML(ebml_seek, ebml_segm, segm_list, 0);
+
+            // Finalize (Write) the remaining abstract EBML Voids
+            foreach (var ebml in segm_list)
+            {
+                if (ebml.ID == MatroskaID.Void && ebml.Abstract)
+                {
+                    ebml.WriteVoid();
+                }
+            }
+
+        }
+
+
+        /// <summary>
+        /// Make sure there is a Void at the begining of a Segment EBML, big enough to contain the reserved (leading) space.
+        /// This is the longest part of the Write if space must be reserved.
+        /// </summary>
+        /// <param name="ebml_segm">EBML Segment containing the EBML to be written</param>
+        /// <param name="segm_list">description of the mapping of EBML level 1 in the EBML Segment, ordered</param>
+        /// <param name="minSize">Size to be reserved. A Margin will be added to it.</param>
+        /// <returns></returns>
+        private long WriteReservedEBML(EBMLreader ebml_segm, List<EBMLreader> segm_list, long minSize)
+        {
+            long margin = 40;
+            long reserved = minSize + margin;
+
+            long woffset = 0;
+            long pos = (long)ebml_segm.Offset;
+
+            // This is the longest part of the Write if space must be reserved. Reserve a bigger margin
+            // then to make sure it is the first and last time that this happens on this file.
+            if (segm_list[0].Offset != ebml_segm.DataOffset || segm_list[0].ID != MatroskaID.Void)
+            {
+                margin *= 3;
+                reserved += margin;
+                Insert(reserved, pos);
+                woffset += reserved;
+                segm_list.Insert(0, new EBMLreader(this, (ulong)pos, MatroskaID.Void, (ulong)reserved));
+            }
+            else if (segm_list[0].Size < (ulong)reserved)
+            {
+                margin *= 3;
+                reserved += margin;
+                Insert(reserved - (long)segm_list[0].Size, pos + (long)segm_list[0].Size);
+                woffset += reserved - (long)segm_list[0].Size;
+                segm_list[0] = new EBMLreader(this, (ulong)pos, MatroskaID.Void, (ulong)reserved);
+            }
+
+            if (woffset != 0)
+            {
+                // Update the Segment Data-Size
+                ebml_segm.Size = (ulong)((long)ebml_segm.Size + woffset);
+
+                // Shift all addresses up
+                for (int i = 0; i < segm_list.Count; i++)
+                    segm_list[i].Offset += (ulong)woffset;
+            }
+
+            return reserved;
+        }
+
+
+
+        /// <summary>
+        /// Write an EMBL in an existing Void or at the end of the
+        /// </summary>
+        /// <param name="element">EBML to write</param>
+        /// <param name="ebml_segm">EBML Segment containing the EBML to be written</param>
+        /// <param name="segm_list">description of the mapping of EBML level 1 in the EBML Segment, ordered</param>
+        /// <param name="reserved">Reserved space at the Segment, do not write there</param>
+        private void WriteEBML(EBMLelement element, EBMLreader ebml_segm, List<EBMLreader> segm_list, long reserved)
+        {
+            long size = element.Size;
+            long position = 0;
+            long reservedBound = (long) ebml_segm.DataOffset + reserved;
+
+            // Search a Void big enough to fit the element in
+            EBMLreader dest = null;
+            int idx;
+            for (idx = 0; idx < segm_list.Count; idx++)
+            {
+                dest = segm_list[idx];
+                if (dest.ID == MatroskaID.Void)
+                {
+                    // Get Size available in the Void (skip the reserved zone)
+                    long dsize = (long)dest.Size;
+                    position = (long)dest.Offset;
+                    if (position < reservedBound)
+                    {
+                        var rsize = reservedBound - position;
+                        dsize -= rsize;
+                        position += rsize;
+                    }
+
+                    // TODO: Support +1 Size
+                    if (dsize == size || dsize > size + 1) break;
+                }
+            }
+
+            if (idx < segm_list.Count)  // found Void big enough
+            {
+                // Set Void before element
+                if (position > (long)dest.Offset)
+                {
+                    var ebml = new EBMLreader(this, dest.Offset, MatroskaID.Void, (ulong)position - dest.Offset);
+                    segm_list.Insert(idx, ebml);
+                    idx++;
+                }
+
+                // Write the element
+                element.Write(this, position, size);
+                segm_list[idx] = new EBMLreader(this, (ulong)position, element.ID, (ulong)size);
+
+                // Set Void after element
+                ulong pos = (ulong)(position + size);
+                ulong voidBound = dest.Offset + dest.Size;
+                if (pos < voidBound)
+                {
+                    idx++;
+                    var ebml = new EBMLreader(this, pos, MatroskaID.Void, voidBound - pos);
+                    segm_list.Insert(idx, ebml);
+                }
+            }
+            else
+            {
+                long segm_dsize = (long)ebml_segm.DataSize;
+                idx = segm_list.Count - 1;
+                var last = segm_list[idx];
+                ulong end = ebml_segm.Offset + ebml_segm.Size;
+                if (last.ID == MatroskaID.Void && last.Offset + last.Size >= end)
+                {
+                    position = (long)last.Offset;
+                    segm_dsize += size - (long)last.Size;
+
+                    // Overwrite and Extend the Void element
+                    element.Write(this, position, (long)last.Size);
+                    segm_list[idx] = new EBMLreader(this, (ulong)position, element.ID, (ulong)size);
+                }
+                else
+                {
+                    // Append new element to the Segment
+                    position = (long)end;
+                    segm_dsize += size;
+
+                    // Write the element
+                    element.Write(this, position);
+                    segm_list.Add( new EBMLreader(this, (ulong)position, element.ID, (ulong)size) );
+                }
+
+                // Update the EBML Segment Data-Size length
+                ebml_segm.DataSize = (ulong)segm_dsize;
+            }
+
+        }
+
+
+        /// <summary>
+        /// This tries to create a sensible map of the Voids between the other master element of the Segment.
+        /// It will try to identify Voids hidden after a meaningful EBML. It will merge contiguous Voids as one.
+        /// </summary>
+        /// <param name="ebml_segm">EBML Segment containing the EBML to be written</param>
+        /// <param name="segm_list">description of the mapping of EBML level 1 in the EBML Segment, ordered</param>
+        private void UpdateSegmentsMergeVoids(EBMLreader ebml_segm, List<EBMLreader> segm_list)
+        {
+            ulong maxbound = ebml_segm.Offset + ebml_segm.Size - 2;
+
+            for (int i = 0; i < segm_list.Count; i++)
+            {
+                var ebml = segm_list[i];
+                if (ebml.Size == 0)
+                {
+                    // Read Abstract to retrieve its size
+                    if (!ebml.Read()) continue; // Avoid problems after invalid read
+                }
+
+                ulong spos = ebml.Offset + ebml.Size;
+                EBMLreader next;
+
+                if (ebml.ID == MatroskaID.Void)
+                {
+                    ulong pos = spos;
+                    int j = i;
+                    next = ebml;
+
+                    // Find next contiguous Void EBMLs
+                    while (pos < maxbound)
+                    {
+                        // Get next contiguous EBML
+                        if (j + 1 < segm_list.Count)
+                        {
+                            next = segm_list[j + 1];
+                            if (next.Offset == pos) j++; // Avoid reading it
+                            else next = new EBMLreader(this, pos);
+                        }
+                        else
+                        {
+                            next = new EBMLreader(this, pos);
+                        }
+
+                        if (next.ID != MatroskaID.Void) break;
+                        pos += next.Size;
+                    }
+
+                    if (pos > spos)
+                    {
+                        segm_list[i] = new EBMLreader(this, ebml.Offset, MatroskaID.Void, pos - ebml.Offset);
+                        if (j != i)
+                        {
+                            if (segm_list[j].ID != MatroskaID.Void) j--;
+                            if (j != i) segm_list.RemoveRange(i + 1, j - i);
+                        }
+                    }
+
+                }
+                else if (i + 1 >= segm_list.Count || spos < segm_list[i + 1].Offset)
+                {
+                    // Next contiguous element is not in the segment list
+
+                    next = new EBMLreader(this, spos);
+                    if (next.ID == MatroskaID.Void)
+                    {
+                        segm_list.Insert(i + 1, next); // Add an unreferenced Void to the list
+                    }
+                }
+            }
+        }
 
 
         private EBMLelement CreateAttachments()
@@ -1223,47 +1592,29 @@ namespace TagLib.Matroska
 
 
 
-        private EBMLelement CreateSeekHead(List<EBMLreader> segm_list = null)
+        private EBMLelement CreateSeekHead(List<EBMLreader> segm_list, long offset = 0)
         {
             var ret = new EBMLelement(MatroskaID.SeekHead);
 
             // Create the Seek Entries
             foreach (var segm in segm_list)
             {
-                var seekEntry = new EBMLelement(MatroskaID.Seek);
-                ret.Children.Add(seekEntry);
+                if (segm.ID != MatroskaID.Void)
+                {
+                    var seekEntry = new EBMLelement(MatroskaID.Seek);
+                    ret.Children.Add(seekEntry);
 
-                // Create SeekEntry Content
-                var seekId = new EBMLelement(MatroskaID.SeekID, segm.ID);
-                seekEntry.Children.Add(seekId);
+                    // Create SeekEntry Content
+                    var seekId = new EBMLelement(MatroskaID.SeekID, (ulong)segm.ID);
+                    seekEntry.Children.Add(seekId);
 
-                var seekPosition = new EBMLelement(MatroskaID.SeekPosition, (ulong)segm.Offset);
-                seekEntry.Children.Add(seekPosition);
+                    var seekPosition = new EBMLelement(MatroskaID.SeekPosition, (ulong)((long)segm.Offset + offset));
+                    seekEntry.Children.Add(seekPosition);
+                }
             }
 
             return ret;
         }
-
-        private void UpdateSeekHead(EBMLelement seekHead, long offset)
-        {
-            // retrieve the Seek Entries
-            foreach (var seekEntry in seekHead.Children)
-            {
-                var seekPosition = seekEntry.Children[1];
-                long position = (long)seekPosition.GetULong() + offset;
-                seekPosition.SetData((ulong)position);
-            }
-
-        }
-
-        private EBMLelement CreateVoid(int size)
-        {
-            var ret = new EBMLelement(MatroskaID.Void, new ByteVector());
-            ret.Data = new ByteVector(size - (int)ret.Size);
-            return ret;
-        }
-
-
 
         #endregion
 

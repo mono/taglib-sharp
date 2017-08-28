@@ -123,16 +123,14 @@ namespace TagLib.Matroska
                 uint ebml_id = (uint)ID;
 
                 // Figure out the ID size in bytes
-                uint mask = 0xFF00, id_length = 1;
-                while (id_length <= 4 && (ebml_id & mask) != 0)
+                long mask = 0xFF000000, id_length = 4;
+                while (id_length > 0 && (ebml_id & mask) == 0)
                 {
-                    id_length++;
-                    mask <<= 8;
+                    id_length--;
+                    mask >>= 8;
                 }
-                if (id_length > 4)
-                {
-                    throw new CorruptFileException("invalid EBML ID size");
-                }
+                if (id_length == 0)
+                    throw new CorruptFileException("invalid EBML ID (zero)");
 
                 return id_length;
             }
@@ -202,11 +200,11 @@ namespace TagLib.Matroska
                 }
 
                 // Construct the data-size field
-                mask = (uint)DataSize;
+                ulong lmask = (ulong)DataSize;
                 for (int i = (int)(id_length + size_length - 1); i >= id_length; i--)
                 {
-                    vector[i] = (byte)(mask & 0xFF);
-                    mask >>= 8;
+                    vector[i] = (byte)(lmask & 0xFF);
+                    lmask >>= 8;
                 }
 
                 // Set the marker bit of the Data-size
@@ -230,7 +228,7 @@ namespace TagLib.Matroska
         public static long EBMLByteSize(ulong value)
         {
             // Figure out the required data-size size in bytes
-            long size_length = 1;
+            long size_length;
             if (value == 0x7F)
             {
                 // Special case: Avoid element-size reserved word of 0xFF (all ones)
@@ -238,11 +236,12 @@ namespace TagLib.Matroska
             }
             else
             {
-                uint mask = 0x3F80;
-                while (size_length <= 8 && (value & mask) != 0)
+                size_length = 8;
+                ulong mask = (ulong)0x7F << (7*7);
+                while (size_length > 1 && (value & mask) == 0)
                 {
-                    size_length++;
-                    mask <<= 7;
+                    size_length--;
+                    mask >>= 7;
                 }
             }
 
@@ -257,11 +256,14 @@ namespace TagLib.Matroska
 
         /// <summary>
         /// Get a string from EBML Element's data section (UTF-8).
+        /// Handle null-termination.
         /// </summary>
         /// <returns>a string object containing the parsed value.</returns>
         public string GetString ()
         {
             if (Data == null)  return null;
+            var idx = Data.IndexOf(0x00); // Detected Null termination
+            if (idx>=0)  return Data.ToString(StringType.UTF8, 0, idx);
             return Data.ToString(StringType.UTF8);
         }
 
@@ -380,9 +382,7 @@ namespace TagLib.Matroska
             if (size > reserved)
             {
                 // Extend reserved size
-                var diff = size - reserved;
-                var dummy = new ByteVector((int)diff);
-                file.Insert(dummy, position + reserved);
+                file.Insert(size - reserved, position + reserved);
                 reserved = size;
             }
 

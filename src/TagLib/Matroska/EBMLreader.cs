@@ -28,7 +28,7 @@ using System;
 namespace TagLib.Matroska
 {
     /// <summary>
-    /// Read a Matroska EBML element from a file, but also provides basic modification of an EBML element directly on the file (write).
+    /// Read a Matroska EBML element from a file, but also provides basic modifications to an EBML element directly on the file (write).
     /// </summary>
     /// <remarks>
     ///  This was intitialy called <see cref="EBMLelement"/>, but this was in fact a file-reader.
@@ -57,86 +57,27 @@ namespace TagLib.Matroska
         /// <param name="position">Position to start reading from.</param>
         public EBMLreader(Matroska.File _file, ulong position)
         {
-            if (_file == null)
-                throw new ArgumentNullException("file");
-
-            if (position >= (ulong)(_file.Length) - 1)
-                throw new ArgumentOutOfRangeException("position");
-
             // Keep a reference to the file
             file = _file;
 
-            file.Seek((long)position);
-
-            // Get the header byte
-            ByteVector vector = file.ReadBlock(1);
-            Byte header_byte = vector[0];
-            // Define a mask
-            Byte mask = 0x80, id_length = 1;
-            // Figure out the size in bytes
-            while (id_length <= 4 && (header_byte & mask) == 0)
-            {
-                id_length++;
-                mask >>= 1;
-            }
-
-            if (id_length > 4)
-            {
-                throw new CorruptFileException("invalid EBML id size");
-            }
-
-            // Now read the rest of the EBML ID
-            if (id_length > 1)
-            {
-                vector.Add(file.ReadBlock(id_length - 1));
-            }
-
-            ebml_id = vector.ToUInt();
-
-            vector.Clear();
-
-            // Get the size length
-            vector = file.ReadBlock(1);
-            header_byte = vector[0];
-            mask = 0x80;
-            Byte size_length = 1;
-
-            // Iterate through various possibilities
-            while (size_length <= 8 && (header_byte & mask) == 0)
-            {
-                size_length++;
-                mask >>= 1;
-            }
-
-            if (size_length > 8)
-            {
-                throw new CorruptFileException("invalid EBML element size");
-            }
-
-            // Clear the marker bit
-            vector[0] &= (Byte)(mask - 1);
-
-            // Now read the rest of the EBML element size
-            if (size_length > 1)
-            {
-                vector.Add(file.ReadBlock(size_length - 1));
-            }
-
-            ebml_size = vector.ToULong();
-
+            // Initialize attributes
             offset = position;
-            data_offset = offset + id_length + size_length;
+            data_offset = position;
+
+            // Actually read the EBML on the file
+            Read();
         }
 
 
         /// <summary>
-        /// Create a new <see cref="EBMLreader" /> with arbitrary attributes, 
+        /// Create a new abstract <see cref="EBMLreader" /> with arbitrary attributes, 
         /// without reading its information on the file.
         /// </summary>
         /// <param name="_file">instance to the EBML to be associated with the element.</param>
         /// <param name="position">Position in the file.</param>
         /// <param name="ebmlid">EBML ID of the element</param>
-        public EBMLreader(Matroska.File _file, ulong position, MatroskaID ebmlid)
+        /// <param name="size">Total size of the EBML, in bytes</param>
+        public EBMLreader(Matroska.File _file, ulong position, MatroskaID ebmlid, ulong size = 0)
         {
             // Keep a reference to the file
             file = _file;
@@ -145,6 +86,7 @@ namespace TagLib.Matroska
             offset = position;
             data_offset = offset;
             ebml_id = (uint)ebmlid;
+            ebml_size = size;
         }
 
         #endregion
@@ -154,16 +96,18 @@ namespace TagLib.Matroska
         /// <summary>
         /// EBML Element Identifier.
         /// </summary>
-        public uint ID
+        public MatroskaID ID
         {
-            get { return ebml_id; }
+            get { return (MatroskaID) ebml_id; }
         }
+
 
         /// <summary>
         /// EBML Element size in bytes.
         /// </summary>
         public ulong Size
         {
+            set { ebml_size = value - (data_offset - offset); }
             get { return (data_offset - offset) + ebml_size; }
         }
 
@@ -172,11 +116,12 @@ namespace TagLib.Matroska
         /// </summary>
         public ulong DataSize
         {
+           set { ebml_size = value; }
            get { return ebml_size; }
         }
 
         /// <summary>
-        /// EBML Element data offset in bytes.
+        /// EBML Element data offset position in file in bytes.
         /// </summary>
         public ulong DataOffset
         {
@@ -184,16 +129,125 @@ namespace TagLib.Matroska
         }
 
         /// <summary>
-        /// EBML Element offset in bytes.
+        /// EBML Element offset position in file in bytes.
         /// </summary>
         public ulong Offset
         {
+            set
+            {
+                data_offset = (ulong)((long)data_offset + ((long)value - (long)offset));
+                offset = value;
+            }
             get { return offset; }
         }
+
+        /// <summary>
+        /// Defines that the EBML element is not read-out from file,
+        /// but is an abstract representation of an element on the disk.
+        /// </summary>
+        public bool Abstract
+        {
+            get { return offset == data_offset; }
+        }
+
 
         #endregion
 
         #region Public Methods for Reading
+
+        /// <summary>
+        /// Read EBML header and data-size if it is an abstract one. 
+        /// It then becomes a non abstract EBML.
+        /// </summary>
+        /// <returns>True if successful.</returns>
+        public bool Read()
+        {
+            if (!Abstract) return true;
+
+            if (file == null)
+                throw new ArgumentNullException("file");
+
+
+            try
+            {
+
+                if (offset >= (ulong)(file.Length) - 1) return false;
+
+                // Prepare for Consitency check
+                uint ebml_id_check = ebml_id;
+                ulong ebml_size_check = Size;
+
+
+                file.Seek((long)offset);
+
+                // Get the header byte
+                ByteVector vector = file.ReadBlock(1);
+                byte header_byte = vector[0];
+                // Define a mask
+                byte mask = 0x80, id_length = 1;
+                // Figure out the size in bytes
+                while (id_length <= 4 && (header_byte & mask) == 0)
+                {
+                    id_length++;
+                    mask >>= 1;
+                }
+                if (id_length > 4) return false;
+
+                // Now read the rest of the EBML ID
+                if (id_length > 1)
+                {
+                    vector.Add(file.ReadBlock(id_length - 1));
+                }
+
+                ebml_id = vector.ToUInt();
+
+                vector.Clear();
+
+                // Get the size length
+                vector = file.ReadBlock(1);
+                header_byte = vector[0];
+                mask = 0x80;
+                Byte size_length = 1;
+
+                // Iterate through various possibilities
+                while (size_length <= 8 && (header_byte & mask) == 0)
+                {
+                    size_length++;
+                    mask >>= 1;
+                }
+
+
+                if (size_length > 8)
+                    size_length = 1; // Special: Empty element (all zero state)
+                else
+                    vector[0] &= (Byte)(mask - 1);  // Clear the marker bit
+
+
+                // Now read the rest of the EBML element size
+                if (size_length > 1)
+                {
+                    vector.Add(file.ReadBlock(size_length - 1));
+                }
+
+                ebml_size = vector.ToULong();
+
+                data_offset = offset + id_length + size_length;
+
+                // Consistency check: Detect descrepencies between read data and abstract data 
+                if (ebml_id_check != 0 && ebml_id_check != ebml_id) return false;
+                if (ebml_size_check != 0 && ebml_size_check != Size) return false;
+
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+
 
         /// <summary>
         /// Reads a vector of bytes (raw data) from EBML Element's data section.
@@ -267,124 +321,86 @@ namespace TagLib.Matroska
         #endregion
 
         #region Public Methods for Writing
+
+        /// <summary>
+        /// Write the <see cref="DataSize"/> to the EBML file.
+        /// Resize the data-size length to 8 bytes.
+        /// This will *not* insert extra bytes, but overwrite next contiguous bytes.
+        /// It will claim the size added on the value of the data-size.
+        /// </summary>
+        /// <returns>Offset created in Writing the new data-size</returns>
+        public long WriteDataSize()
+        {
+            ulong value = ebml_size;
+            const ulong newsize_length = 8;
+
+            // Figure out the ID size in bytes
+            ulong mask = 0xFF000000, id_length = 4;
+            while (id_length > 0 && (ebml_id & mask) == 0)
+            {
+                id_length--;
+                mask >>= 8;
+            }
+            if (id_length == 0)
+                throw new CorruptFileException("invalid EBML ID (zero)");
+
+            // Figure out the Data size length in bytes
+            ulong size_length = data_offset - offset - id_length;
+            if (size_length > 8)
+                throw new CorruptFileException("invalid EBML element size");
+
+            // Construct the data-size field
+            ByteVector vector = new ByteVector((int)newsize_length);
+            mask = value;
+            for (int i = (int)newsize_length - 1; i >= 0; i--)
+            {
+                vector[i] = (byte)(mask & 0xFF);
+                mask >>= 8;
+            }
+            // Set the marker bit
+            vector[0] |= (byte)(0x100 >> (int)newsize_length);
+
+            // Write data-size field to file
+            file.Insert(vector, (long)(offset + id_length), (long)newsize_length);
+
+            // Update fields
+            ulong woffset = newsize_length - size_length;
+            data_offset = data_offset + woffset;
+            ebml_size = value - woffset;
+
+            return (long)woffset;
+        }
+
         
         /// <summary>
-        /// Write data to the EBML file
+        /// Change an EBML element to a Abstract Void element, but do not write to the file.
         /// </summary>
-        /// <param name="data">ByteVector data</param>
-        /// <returns>Size difference compare to previous EBML size</returns>
-        public long WriteData(ByteVector data)
+        /// <remarks>
+        /// To do a real conversion to Void EBML element on the file, use <see cref="WriteVoid()"/>.
+        /// </remarks>
+        public void SetVoid()
         {
-            long ret = -(long)Size;
-            long old_size = (long)DataSize;
+            ulong size = Size;
 
-            if (data == null)
-            {
-                // Remove EBML Data field
-                WriteDataSize(0);
-                if (old_size > 0) file.RemoveBlock((long)data_offset, old_size);
-            }
-            else
-            {
-                // Force DataSize field to be created
-                if (ebml_size == 0 && data.Count == 0) ebml_size = 1;
-
-                // Write EBML Data field
-                WriteDataSize((ulong)data.Count);
-                file.Insert(data, (long)data_offset, old_size);
-            }
-
-            ret += (long)Size;
-            return ret;
+            // Update this object
+            ebml_id = (uint) MatroskaID.Void;
+            data_offset = offset; // This will make it abstract
+            ebml_size = size; // Keep the size unchanged
         }
 
 
         /// <summary>
-        /// Add an offset to the data-size of the EBML
+        /// Change an EBML element to a Void element directly on the file.
         /// </summary>
-        /// <param name="offset">offset size (positive or negative) to be added to the DataSize</param>
-        /// <returns>Size difference compare to previous EBML size</returns>
-        public long WriteDataResize(long offset)
+        public void WriteVoid()
         {
-            long ret = 0;
+            var ebml = WriteVoid(file, offset, Size);
 
-            if (offset != 0)
-            {
-                ret -= (long)Size;
-                WriteDataSize((ulong)((long)DataSize + offset));
-                ret += (long)Size;
-            }
-
-            return ret;
+            // Update this object
+            ebml_id = (uint)ebml.ID;
+            data_offset = ebml.DataOffset;
+            ebml_size = ebml.DataSize;
         }
-
-        /// <summary>
-        /// Write a new value for the <see cref="DataSize"/> to the EBML file
-        /// </summary>
-        /// <param name="value">New value of the <see cref="DataSize"/> </param>
-        public void WriteDataSize(ulong value)
-        {
-            if (value != ebml_size)
-            {
-                // Figure out the ID size in bytes
-                uint mask = 0xFF00, id_length = 1;
-                while (id_length <= 4 && (ebml_id & mask) != 0)
-                {
-                    id_length++;
-                    mask <<= 8;
-                }
-                if (id_length > 4)
-                {
-                    throw new CorruptFileException("invalid EBML id size");
-                }
-
-                ulong size_length = data_offset - offset - id_length;
-
-                // Figure out the required data-size size in bytes
-                ulong newsize_length = 1;
-                if (value == 0x7F)
-                {
-                    // Special case: Avoid element-size reserved word of 0xFF (all ones)
-                    newsize_length = 2;
-                }
-                else
-                {
-                    mask = 0x3F80;
-                    while (newsize_length <= 8 && (value & mask) != 0)
-                    {
-                        newsize_length++;
-                        mask <<= 7;
-                    }
-                }
-
-                // Lazy change
-                if (newsize_length < size_length) newsize_length = size_length;
-
-                if (size_length > 8)
-                {
-                    throw new CorruptFileException("invalid EBML element size");
-                }
-
-                // Construct the data-size field
-                ByteVector vector = new ByteVector((int)newsize_length);
-                mask = (uint)value;
-                for (int i = (int)newsize_length - 1; i >= 0; i--)
-                {
-                    vector[i] = (byte)(mask & 0xFF);
-                    mask >>= 8;
-                }
-                // Set the marker bit
-                vector[0] |= (byte)(0x100 >> (int)newsize_length);
-
-                // Write data-size field to file
-                file.Insert(vector, (long)offset + id_length, (long)size_length);
-
-                // Update fields
-                data_offset = data_offset + newsize_length - size_length;
-                ebml_size = value;
-            }
-        }
-
 
 
         /// <summary>
@@ -398,8 +414,8 @@ namespace TagLib.Matroska
             file.RemoveBlock((long)Offset, (long)Size);
 
             // Invalidate this object
-            data_offset = offset;
             ebml_id = 0;
+            data_offset = offset;
             ebml_size = 0;
             file = null;
 
@@ -409,6 +425,64 @@ namespace TagLib.Matroska
 
         #endregion
 
+        #region Class funtions
 
+        /// <summary>
+        /// Overwrite an area in a file with an EBML Void
+        /// </summary>
+        /// <param name="file">A <see cref="File"/> representing the file to write to.</param>
+        /// <param name="position">The byte-position in the file to write the EBML Void to.</param>
+        /// <param name="size">The reserved size in bytes that the EBML may overwrite from the given position. 
+        /// The size must be at least 2.
+        /// </param>
+        /// <returns>The represention of the generated EBML void element.</returns>
+        public static EBMLreader WriteVoid(Matroska.File file, ulong position, ulong size)
+        {
+            if (size < 2) throw new ArgumentOutOfRangeException("WriteVoid size parameter < 2");
+
+            if (file == null)
+                throw new ArgumentNullException("WriteVoid file");
+
+            if (position + size > (ulong)(file.Length))
+                throw new ArgumentOutOfRangeException("WriteVoid tries to write out of the file");
+
+
+            var ret = new EBMLreader(file, position, MatroskaID.Void);
+
+            ByteVector vector;
+            int datasize;
+
+            if (size<100)
+            {
+                vector = new ByteVector(2);
+                datasize = (int)size - 2;
+                vector[0] = (byte)MatroskaID.Void; // size = 1
+                vector[1] = (byte) (0x80 | datasize); // Marker + data-size
+            }
+            else
+            {
+                vector = new ByteVector(9);
+                datasize = (int)size - 9;
+                vector[0] = (byte)MatroskaID.Void; // size = 1
+                vector[1] = 0x01; // set marker
+
+                // Set data size
+                int mask = datasize;
+                for (int i = 8; i > 1; i--)
+                {
+                    vector[i] = (byte)(mask & 0xFF);
+                    mask >>= 8;
+                }
+            }
+
+            ret.data_offset = position + (ulong)vector.Count;
+            ret.DataSize = (ulong)datasize;
+
+            file.Insert(vector, (long)position, vector.Count);
+
+            return ret;
+        }
+
+        #endregion
     }
 }
