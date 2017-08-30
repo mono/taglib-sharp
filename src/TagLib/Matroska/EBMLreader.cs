@@ -39,18 +39,19 @@ namespace TagLib.Matroska
     {
         #region Private Fields
 
-        private ulong offset = 0;
-        private ulong data_offset = 0;
-        private uint ebml_id = 0;
-        private ulong ebml_size = 0;
-        private Matroska.File file = null;
+        private Matroska.File file;
+        private EBMLreader parent;
+        private ulong offset;
+        private ulong data_offset;
+        private ulong ebml_size;
+        private uint ebml_id;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Constructs a <see cref="EBMLreader" /> reading from provided
+        /// Constructs a root <see cref="EBMLreader" /> instance reading from provided
         /// file data.
         /// </summary>
         /// <param name="_file"><see cref="File" /> instance to read from.</param>
@@ -59,13 +60,43 @@ namespace TagLib.Matroska
         {
             // Keep a reference to the file
             file = _file;
+            parent = null;
 
             // Initialize attributes
             offset = position;
             data_offset = position;
+            ebml_id = 0;
+            ebml_size = 0;
 
             // Actually read the EBML on the file
-            Read();
+            Read(true);
+        }
+
+
+        /// <summary>
+        /// Constructs a child <see cref="EBMLreader" /> reading from provided
+        /// file data.
+        /// </summary>
+        /// <param name="parent">The <see cref="EBMLreader" /> that contains the instance to be created.</param>
+        /// <param name="position">Position to start reading from.</param>
+        public EBMLreader(EBMLreader parent, ulong position)
+        {
+            if (parent == null)
+                throw new ArgumentNullException("file");
+
+            // Keep a reference to the file
+            file = parent.file;
+            this.parent = parent;
+
+            // Initialize attributes
+            offset = position;
+            data_offset = position;
+            ebml_id =  0;
+            ebml_size = 0;
+
+
+            // Actually read the EBML on the file
+            Read(true);
         }
 
 
@@ -73,14 +104,15 @@ namespace TagLib.Matroska
         /// Create a new abstract <see cref="EBMLreader" /> with arbitrary attributes, 
         /// without reading its information on the file.
         /// </summary>
-        /// <param name="_file">instance to the EBML to be associated with the element.</param>
+        /// <param name="parent">The <see cref="EBMLreader" /> that contains the instance to be described.</param>
         /// <param name="position">Position in the file.</param>
         /// <param name="ebmlid">EBML ID of the element</param>
         /// <param name="size">Total size of the EBML, in bytes</param>
-        public EBMLreader(Matroska.File _file, ulong position, MatroskaID ebmlid, ulong size = 0)
+        public EBMLreader(EBMLreader parent, ulong position, MatroskaID ebmlid, ulong size = 0)
         {
             // Keep a reference to the file
-            file = _file;
+            if (parent != null) file = parent.file;
+            this.parent = parent;
 
             // Initialize attributes
             offset = position;
@@ -101,6 +133,13 @@ namespace TagLib.Matroska
             get { return (MatroskaID) ebml_id; }
         }
 
+        /// <summary>
+        /// EBML Parent instance.
+        /// </summary>
+        public EBMLreader Parent
+        {
+            get { return parent; }
+        }
 
         /// <summary>
         /// EBML Element size in bytes.
@@ -159,19 +198,20 @@ namespace TagLib.Matroska
         /// Read EBML header and data-size if it is an abstract one. 
         /// It then becomes a non abstract EBML.
         /// </summary>
+        /// <param name="throwException">Throw exception on invalid EBML read if true (Default: false).</param>
         /// <returns>True if successful.</returns>
-        public bool Read()
+        public bool Read(bool throwException = false)
         {
             if (!Abstract) return true;
 
             if (file == null)
                 throw new ArgumentNullException("file");
 
-
             try
             {
+                var ex = new InvalidOperationException("Invalid EBML format Read");
 
-                if (offset >= (ulong)(file.Length) - 1) return false;
+                if (offset >= (ulong)(file.Length) - 1) throw ex;
 
                 // Prepare for Consitency check
                 uint ebml_id_check = ebml_id;
@@ -191,7 +231,7 @@ namespace TagLib.Matroska
                     id_length++;
                     mask >>= 1;
                 }
-                if (id_length > 4) return false;
+                if (id_length > 4) throw ex;
 
                 // Now read the rest of the EBML ID
                 if (id_length > 1)
@@ -231,17 +271,26 @@ namespace TagLib.Matroska
 
                 ebml_size = vector.ToULong();
 
+                // Special: Auto-size (0xFF byte)
+                if (size_length == 1 && ebml_size == 0x7F)
+                {
+                    // Resolve auto-size to fill in to its containing element
+                    ulong bound = parent == null ? (ulong)file.Length : parent.Offset + parent.Size;
+                    ebml_size = bound - offset - (ulong)(id_length + size_length);
+                }
+
                 data_offset = offset + id_length + size_length;
 
                 // Consistency check: Detect descrepencies between read data and abstract data 
-                if (ebml_id_check != 0 && ebml_id_check != ebml_id) return false;
-                if (ebml_size_check != 0 && ebml_size_check != Size) return false;
+                if (ebml_id_check != 0 && ebml_id_check != ebml_id) throw ex;
+                if (ebml_size_check != 0 && ebml_size_check != Size) throw ex;
 
                 return true;
 
             }
-            catch
+            catch (Exception ex)
             {
+                if (throwException) throw ex;
                 return false;
             }
 
@@ -394,12 +443,47 @@ namespace TagLib.Matroska
         /// </summary>
         public void WriteVoid()
         {
-            var ebml = WriteVoid(file, offset, Size);
+            if (Size < 2) throw new ArgumentOutOfRangeException("WriteVoid size parameter < 2");
+
+            if (file == null)
+                throw new ArgumentNullException("WriteVoid file");
+
+            if (offset + Size > (ulong)(file.Length))
+                throw new ArgumentOutOfRangeException("WriteVoid tries to write out of the file");
+
+
+            ByteVector vector;
+            int datasize;
+
+            if (Size < 100)
+            {
+                vector = new ByteVector(2);
+                datasize = (int)Size - 2;
+                vector[0] = (byte)MatroskaID.Void; // size = 1
+                vector[1] = (byte)(0x80 | datasize); // Marker + data-size
+            }
+            else
+            {
+                vector = new ByteVector(9);
+                datasize = (int)Size - 9;
+                vector[0] = (byte)MatroskaID.Void; // size = 1
+                vector[1] = 0x01; // set marker
+
+                // Set data size
+                int mask = datasize;
+                for (int i = 8; i > 1; i--)
+                {
+                    vector[i] = (byte)(mask & 0xFF);
+                    mask >>= 8;
+                }
+            }
+
+            file.Insert(vector, (long)Offset, vector.Count);
 
             // Update this object
-            ebml_id = (uint)ebml.ID;
-            data_offset = ebml.DataOffset;
-            ebml_size = ebml.DataSize;
+            ebml_id = (uint)MatroskaID.Void;
+            data_offset = Offset + (ulong)vector.Count;
+            DataSize = (ulong)datasize;
         }
 
 
@@ -425,64 +509,5 @@ namespace TagLib.Matroska
 
         #endregion
 
-        #region Class funtions
-
-        /// <summary>
-        /// Overwrite an area in a file with an EBML Void
-        /// </summary>
-        /// <param name="file">A <see cref="File"/> representing the file to write to.</param>
-        /// <param name="position">The byte-position in the file to write the EBML Void to.</param>
-        /// <param name="size">The reserved size in bytes that the EBML may overwrite from the given position. 
-        /// The size must be at least 2.
-        /// </param>
-        /// <returns>The represention of the generated EBML void element.</returns>
-        public static EBMLreader WriteVoid(Matroska.File file, ulong position, ulong size)
-        {
-            if (size < 2) throw new ArgumentOutOfRangeException("WriteVoid size parameter < 2");
-
-            if (file == null)
-                throw new ArgumentNullException("WriteVoid file");
-
-            if (position + size > (ulong)(file.Length))
-                throw new ArgumentOutOfRangeException("WriteVoid tries to write out of the file");
-
-
-            var ret = new EBMLreader(file, position, MatroskaID.Void);
-
-            ByteVector vector;
-            int datasize;
-
-            if (size<100)
-            {
-                vector = new ByteVector(2);
-                datasize = (int)size - 2;
-                vector[0] = (byte)MatroskaID.Void; // size = 1
-                vector[1] = (byte) (0x80 | datasize); // Marker + data-size
-            }
-            else
-            {
-                vector = new ByteVector(9);
-                datasize = (int)size - 9;
-                vector[0] = (byte)MatroskaID.Void; // size = 1
-                vector[1] = 0x01; // set marker
-
-                // Set data size
-                int mask = datasize;
-                for (int i = 8; i > 1; i--)
-                {
-                    vector[i] = (byte)(mask & 0xFF);
-                    mask >>= 8;
-                }
-            }
-
-            ret.data_offset = position + (ulong)vector.Count;
-            ret.DataSize = (ulong)datasize;
-
-            file.Insert(vector, (long)position, vector.Count);
-
-            return ret;
-        }
-
-        #endregion
     }
 }

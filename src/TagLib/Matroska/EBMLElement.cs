@@ -92,13 +92,23 @@ namespace TagLib.Matroska
         public ByteVector Data = null;
 
 
-
         /// <summary>
         /// Get or set the element embedded in the EBML
         /// </summary>
         public List<EBMLelement> Children = null;
 
 
+        /// <summary>
+        /// Get or set whether the EBML should have a size of one byte more 
+        /// than the optimal size.
+        /// </summary>
+        public bool IncSize = false;
+
+
+        #endregion
+
+
+        #region Public Methods
 
         /// <summary>
         /// EBML Element size in bytes.
@@ -141,7 +151,7 @@ namespace TagLib.Matroska
         /// </summary>
         public long DataSizeSize
         {
-            get { return EBMLByteSize((ulong)DataSize);  }
+            get { return EBMLByteSize((ulong)DataSize) + (IncSize ? 1 : 0);  }
         }
 
 
@@ -174,6 +184,33 @@ namespace TagLib.Matroska
                 return ret;
             }
         }
+
+
+        /// <summary>
+        /// Try to increase the size of the EBML by 1 byte.
+        /// </summary>
+        /// <returns>True if successfully increased size, false if failed.</returns>
+        public bool IncrementSize()
+        {
+            // Try to extend current DataSizeSize
+            if ( !IncSize && DataSizeSize < 8)
+            {
+                return IncSize = true;
+            }
+            
+            // Try to extend one of the children
+            if (Children!=null)
+            {
+                foreach (var child in Children)
+                {
+                    if (child.IncrementSize()) return true;
+                }
+            }
+
+            // Failed
+            return false;
+        }
+
 
 
         /// <summary>

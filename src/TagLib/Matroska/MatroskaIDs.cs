@@ -186,6 +186,11 @@ namespace TagLib.Matroska
         Void = 0xEC,
 
         /// <summary>
+        /// Indicate a Matroska Void EBML element.
+        /// </summary>
+        CRC32 = 0xBF,
+
+        /// <summary>
         /// Indicate a Matroska Track Encoding EBML element.
         /// </summary>
         ContentEncodings = 0x6D80,
