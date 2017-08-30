@@ -355,7 +355,7 @@ namespace TagLib.Matroska
                 }
 
                 EBMLID ebml_id = (EBMLID) element.ID;
-                MatroskaID matroska_id = (MatroskaID) element.ID;
+                MatroskaID matroska_id = element.ID;
 
                 switch (ebml_id) {
                     case EBMLID.EBMLHeader:
@@ -395,7 +395,7 @@ namespace TagLib.Matroska
                 // the child here may be Abstract if it has been retrieved in the SeekHead,
                 // so child.Read() must be used to retrieve the full EBML header
 
-                MatroskaID matroska_id = (MatroskaID)child.ID;
+                MatroskaID matroska_id = child.ID;
                 switch (matroska_id)
                 {
                     case MatroskaID.SeekHead:
@@ -652,7 +652,7 @@ namespace TagLib.Matroska
             {
                 EBMLreader child = new EBMLreader(element, element.DataOffset + i);
 
-                MatroskaID matroska_id = (MatroskaID)child.ID;
+                MatroskaID matroska_id = child.ID;
                 bool refInSeekHead = false;
 
                 switch (matroska_id)
@@ -718,7 +718,7 @@ namespace TagLib.Matroska
             while (i < element.DataSize)
             {
                 EBMLreader ebml_seek = new EBMLreader(element, element.DataOffset + i);
-                MatroskaID matroska_id = (MatroskaID)ebml_seek.ID;
+                MatroskaID matroska_id = ebml_seek.ID;
 
                 if (matroska_id != MatroskaID.Seek) return null; // corrupted SeekHead
 
@@ -726,12 +726,12 @@ namespace TagLib.Matroska
                 while (j < ebml_seek.DataSize)
                 {
                     EBMLreader child = new EBMLreader(ebml_seek, ebml_seek.DataOffset + j);
-                    matroska_id = (MatroskaID)child.ID;
+                    matroska_id = child.ID;
 
                     switch (matroska_id)
                     {
                         case MatroskaID.SeekID:
-                            ebml_id = (MatroskaID)child.ReadULong();
+                            ebml_id = (MatroskaID) child.ReadULong();
                             break;
                         case MatroskaID.SeekPosition:
                             ebml_position = child.ReadULong() + element.Offset;
@@ -778,7 +778,7 @@ namespace TagLib.Matroska
             while (i < (ulong)((long)element.DataSize)) {
                 EBMLreader child = new EBMLreader (element, element.DataOffset + i);
 
-                MatroskaID matroska_id = (MatroskaID) child.ID;
+                MatroskaID matroska_id = child.ID;
 
                 switch (matroska_id) {
                     case MatroskaID.Tag:
@@ -804,7 +804,7 @@ namespace TagLib.Matroska
             {
                 EBMLreader child = new EBMLreader(element, element.DataOffset + i);
 
-                MatroskaID matroska_id = (MatroskaID)child.ID;
+                MatroskaID matroska_id = child.ID;
 
                 switch (matroska_id)
                 {
@@ -836,7 +836,7 @@ namespace TagLib.Matroska
             {
                 EBMLreader child = new EBMLreader(element, element.DataOffset + i);
 
-                MatroskaID matroska_id = (MatroskaID)child.ID;
+                MatroskaID matroska_id = child.ID;
 
                 switch (matroska_id)
                 {
@@ -889,7 +889,7 @@ namespace TagLib.Matroska
             {
                 EBMLreader child = new EBMLreader(element, element.DataOffset + i);
 
-                MatroskaID matroska_id = (MatroskaID)child.ID;
+                MatroskaID matroska_id = child.ID;
 
                 switch (matroska_id)
                 {
@@ -962,7 +962,7 @@ namespace TagLib.Matroska
             {
                 EBMLreader child = new EBMLreader(element, element.DataOffset + i);
 
-                MatroskaID matroska_id = (MatroskaID)child.ID;
+                MatroskaID matroska_id = child.ID;
 
                 switch (matroska_id)
                 {
@@ -991,7 +991,7 @@ namespace TagLib.Matroska
             {
                 EBMLreader child = new EBMLreader(element, element.DataOffset + i);
 
-                MatroskaID matroska_id = (MatroskaID)child.ID;
+                MatroskaID matroska_id = child.ID;
 
                 switch (matroska_id)
                 {
@@ -1046,7 +1046,7 @@ namespace TagLib.Matroska
             while (i < element.DataSize) {
                 EBMLreader child = new EBMLreader (element, element.DataOffset + i);
 
-                MatroskaID matroska_id = (MatroskaID) child.ID;
+                MatroskaID matroska_id = child.ID;
 
                 switch (matroska_id) {
                     case MatroskaID.TrackEntry:
@@ -1067,7 +1067,7 @@ namespace TagLib.Matroska
             while (i < element.DataSize) {
                 EBMLreader child = new EBMLreader (element, element.DataOffset + i);
 
-                MatroskaID matroska_id = (MatroskaID) child.ID;
+                MatroskaID matroska_id = child.ID;
 
                 switch (matroska_id) {
                     case MatroskaID.TrackType: {
@@ -1216,11 +1216,11 @@ namespace TagLib.Matroska
             long reserved = minSize + margin;
 
             long woffset = 0;
-            long pos = (long)ebml_segm.Offset;
+            long pos = (long)ebml_segm.DataOffset;
 
             // This is the longest part of the Write if space must be reserved. Reserve a bigger margin
             // then to make sure it is the first and last time that this happens on this file.
-            if (segm_list[0].Offset != ebml_segm.DataOffset || segm_list[0].ID != MatroskaID.Void)
+            if (segm_list[0].Offset != (ulong)pos || segm_list[0].ID != MatroskaID.Void)
             {
                 margin *= 3;
                 reserved += margin;
@@ -1242,8 +1242,8 @@ namespace TagLib.Matroska
                 // Update the Segment Data-Size
                 ebml_segm.Size = (ulong)((long)ebml_segm.Size + woffset);
 
-                // Shift all addresses up
-                for (int i = 0; i < segm_list.Count; i++)
+                // Shift all addresses up but the first one
+                for (int i = 1; i < segm_list.Count; i++)
                     segm_list[i].Offset += (ulong)woffset;
             }
 

@@ -443,7 +443,7 @@ namespace TagLib.Matroska
         /// </summary>
         public void WriteVoid()
         {
-            if (Size < 2) throw new ArgumentOutOfRangeException("WriteVoid size parameter < 2");
+            if (Size < 2) throw new ArgumentOutOfRangeException("WriteVoid Size < 2");
 
             if (file == null)
                 throw new ArgumentNullException("WriteVoid file");
