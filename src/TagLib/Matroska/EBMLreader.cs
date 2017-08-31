@@ -28,7 +28,9 @@ using System;
 namespace TagLib.Matroska
 {
     /// <summary>
-    /// Read a Matroska EBML element from a file, but also provides basic modifications to an EBML element directly on the file (write).
+    /// Read a Matroska EBML element from a file, but also provides basic modifications to an 
+    /// EBML element directly on the file (write). This can also represent an abstract EBML 
+    /// on the file (placeholder).
     /// </summary>
     /// <remarks>
     ///  This was intitialy called <see cref="EBMLelement"/>, but this was in fact a file-reader.
@@ -51,11 +53,11 @@ namespace TagLib.Matroska
         #region Constructors
 
         /// <summary>
-        /// Constructs a root <see cref="EBMLreader" /> instance reading from provided
-        /// file data.
+        /// Constructs a root <see cref="EBMLreader" /> instance, by reading from
+        /// the provided file position.
         /// </summary>
-        /// <param name="_file"><see cref="File" /> instance to read from.</param>
-        /// <param name="position">Position to start reading from.</param>
+        /// <param name="_file"><see cref="File" /> File instance to read from.</param>
+        /// <param name="position">Position in the file to start reading from.</param>
         public EBMLreader(Matroska.File _file, ulong position)
         {
             // Keep a reference to the file
@@ -74,11 +76,11 @@ namespace TagLib.Matroska
 
 
         /// <summary>
-        /// Constructs a child <see cref="EBMLreader" /> reading from provided
-        /// file data.
+        /// Constructs a child <see cref="EBMLreader" /> reading the data from the
+        /// EBML parent at the provided file position.
         /// </summary>
         /// <param name="parent">The <see cref="EBMLreader" /> that contains the instance to be created.</param>
-        /// <param name="position">Position to start reading from.</param>
+        /// <param name="position">Position in the file to start reading from.</param>
         public EBMLreader(EBMLreader parent, ulong position)
         {
             if (parent == null)
@@ -483,7 +485,7 @@ namespace TagLib.Matroska
             // Update this object
             ebml_id = (uint)MatroskaID.Void;
             data_offset = Offset + (ulong)vector.Count;
-            DataSize = (ulong)datasize;
+            ebml_size = (ulong)datasize;
         }
 
 

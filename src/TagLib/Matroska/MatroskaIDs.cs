@@ -186,8 +186,13 @@ namespace TagLib.Matroska
         Void = 0xEC,
 
         /// <summary>
-        /// Indicate a Matroska Void EBML element.
+        /// Indicate a Matroska CRC-32 EBML element.
         /// </summary>
+        /// <remarks>
+        /// The CRC is computed on all the data of the Master-element it's in. 
+        /// The CRC Element should be the first in it's parent master for easier reading. 
+        /// All level 1 Elements should include a CRC-32. The CRC in use is the IEEE CRC32 Little Endian.
+        /// </remarks>
         CRC32 = 0xBF,
 
         /// <summary>

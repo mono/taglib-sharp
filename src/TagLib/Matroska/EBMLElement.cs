@@ -43,7 +43,7 @@ namespace TagLib.Matroska
 
 
         /// <summary>
-        /// Construct <see cref="EBMLelement" /> to contain children elements.
+        /// Construct a <see cref="EBMLelement" /> to contain children elements.
         /// </summary>
         /// <param name="ebmlid">EBML ID of the element to be created.</param>
         public EBMLelement(MatroskaID ebmlid)
@@ -53,7 +53,7 @@ namespace TagLib.Matroska
         }
 
         /// <summary>
-        /// Construct <see cref="EBMLelement" /> to contain data.
+        /// Construct a <see cref="EBMLelement" /> to contain data.
         /// </summary>
         /// <param name="ebmlid">EBML ID of the element to be created.</param>
         /// <param name="data">EBML data of the element to be created.</param>
@@ -118,7 +118,7 @@ namespace TagLib.Matroska
             get
             {
                 long size_length = DataSize;
-                return IDSize + EBMLByteSize((ulong)size_length) + size_length;
+                return IDSize + EBMLByteSize((ulong)size_length) + (IncSize ? 1 : 0) + size_length;
             }
         }
 

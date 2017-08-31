@@ -1143,14 +1143,17 @@ namespace TagLib.Matroska
             if (ebml_sinfo != null && ebml_sinfo.Children.Count > 0)
                 ebml_alloc.Insert(0, ebml_sinfo);
 
-            // Set position to the end of the Segment (but this is cosmetic... this offset should not be used)
+            // Set position to the end of the Segment (just to have a better estimate of worst case address size)
             long pos = (long)(ebml_segm.Offset + ebml_segm.Size);
 
             // Create draft EBML abstract to create a stub SeekHead and estimate the required size
             foreach (var ebml in ebml_alloc)
+            {
                 segm_list.Add(new EBMLreader(ebml_segm, (ulong)pos, ebml.ID));
+                pos += ebml.Size;
+            }
 
-            // SeekHead Stub (to estimate its size)
+            // SeekHead draft (to estimate its size)
             var ebml_seek = CreateSeekHead(segm_list);
 
             // Remove the newly created elements from the Segment list. (it was only there for estimation).
@@ -1240,7 +1243,7 @@ namespace TagLib.Matroska
             if (woffset != 0)
             {
                 // Update the Segment Data-Size
-                ebml_segm.Size = (ulong)((long)ebml_segm.Size + woffset);
+                ebml_segm.DataSize += (ulong) woffset;
 
                 // Shift all addresses up but the first one
                 for (int i = 1; i < segm_list.Count; i++)
@@ -1611,11 +1614,16 @@ namespace TagLib.Matroska
         private EBMLelement CreateSeekHead(List<EBMLreader> segm_list, long offset = 0)
         {
             var ret = new EBMLelement(MatroskaID.SeekHead);
+            bool refCluster = true; // Reference only the first cluster
+
 
             // Create the Seek Entries
             foreach (var segm in segm_list)
             {
-                if (segm.ID != MatroskaID.Void)
+                if ( segm.ID != MatroskaID.Void 
+                    && segm.ID != MatroskaID.CRC32
+                    && (segm.ID != MatroskaID.Cluster || refCluster) 
+                    )
                 {
                     var seekEntry = new EBMLelement(MatroskaID.Seek);
                     ret.Children.Add(seekEntry);
@@ -1626,6 +1634,8 @@ namespace TagLib.Matroska
 
                     var seekPosition = new EBMLelement(MatroskaID.SeekPosition, (ulong)((long)segm.Offset + offset));
                     seekEntry.Children.Add(seekPosition);
+
+                    if (segm.ID == MatroskaID.Cluster) refCluster = false; // don't reference subsequent Clusters
                 }
             }
 
