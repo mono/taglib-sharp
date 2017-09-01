@@ -70,8 +70,8 @@ namespace TagLib.Mpeg4 {
 		///    handler that applies to the new instance.
 		/// </param>
 		public IsoChunkLargeOffsetBox (BoxHeader header,
-		                               TagLib.File file,
-		                               IsoHandlerBox handler)
+									   TagLib.File file,
+									   IsoHandlerBox handler)
 			: base (header, file, handler)
 		{
 			ByteVector box_data = file.ReadBlock (DataSize);
@@ -109,14 +109,14 @@ namespace TagLib.Mpeg4 {
 			}
 		}
 
-        /// <summary>
-        ///    Gets the offset table contained in the current instance.
-        /// </summary>
-        /// <value>
-        ///    A <see cref="T:ulong[]" /> containing the offset table
-        ///    contained in the current instance.
-        /// </value>
-        public ulong [] Offsets {
+		/// <summary>
+		///    Gets the offset table contained in the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="T:ulong[]" /> containing the offset table
+		///    contained in the current instance.
+		/// </value>
+		public ulong [] Offsets {
 			get {return offsets;}
 		}
 		
@@ -148,7 +148,7 @@ namespace TagLib.Mpeg4 {
 		///    <see param="file" /> is <see langword="null" />.
 		/// </exception>
 		public void Overwrite (File file, long sizeDifference,
-		                       long after)
+							   long after)
 		{
 			if (file == null)
 				throw new ArgumentNullException ("file");
@@ -156,7 +156,7 @@ namespace TagLib.Mpeg4 {
 			file.Insert (Render (sizeDifference, after),
 				Header.Position, Size);
 		}
-      
+	  
 		/// <summary>
 		///    Renders the current instance after updating the table for
 		///    a size change.

@@ -133,7 +133,7 @@ namespace TagLib.Flac {
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle)
+					 ReadStyle propertiesStyle)
 			: base (abstraction, propertiesStyle)
 		{
 		}
@@ -353,7 +353,7 @@ namespace TagLib.Flac {
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		protected override void ReadStart (long start,
-		                                   ReadStyle propertiesStyle)
+										   ReadStyle propertiesStyle)
 		{
 			long end;
 			IList<Block> blocks = ReadBlocks (ref start, out end,
@@ -392,7 +392,7 @@ namespace TagLib.Flac {
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		protected override void ReadEnd (long end,
-		                                 ReadStyle propertiesStyle)
+										 ReadStyle propertiesStyle)
 		{
 			tag = new CombinedTag (metadata, base.Tag);
 			GetTag (TagTypes.Xiph, true);
@@ -421,8 +421,8 @@ namespace TagLib.Flac {
 		///    instance.
 		/// </returns>
 		protected override Properties ReadProperties (long start,
-		                                              long end,
-		                                              ReadStyle propertiesStyle)
+													  long end,
+													  ReadStyle propertiesStyle)
 		{
 			StreamHeader header = new StreamHeader (header_block,
 				end - stream_start);
@@ -486,8 +486,8 @@ namespace TagLib.Flac {
 		///    "<c>fLaC</c>" could not be found.
 		/// </exception>
 		private IList<Block> ReadBlocks (ref long start, out long end,
-		                                 BlockMode mode,
-		                                 params BlockType[] types)
+										 BlockMode mode,
+										 params BlockType[] types)
 		{
 			List<Block> blocks = new List<Block> ();
 			

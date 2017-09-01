@@ -69,7 +69,7 @@ namespace TagLib.Mpeg4 {
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		protected FullBox (BoxHeader header, TagLib.File file,
-		                   IsoHandlerBox handler)
+						   IsoHandlerBox handler)
 			: base (header, handler)
 		{
 			if (file == null)

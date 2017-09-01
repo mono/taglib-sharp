@@ -119,18 +119,18 @@ namespace TagLib.NonContainer {
 			get {return start_tag.TagTypes | end_tag.TagTypes;}
 		}
 
-        /// <summary>
-        ///    Gets the tags combined in the current instance.
-        /// </summary>
-        /// <value>
-        ///    A <see cref="T:TagLib.Tag[]" /> containing the tags combined in
-        ///    the current instance.
-        /// </value>
-        /// <remarks>
-        ///    This contains the combined children of <see
-        ///    cref="Tag.StartTag" /> and <see cref="Tag.EndTag" />.
-        /// </remarks>
-        public override TagLib.Tag [] Tags {
+		/// <summary>
+		///    Gets the tags combined in the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="T:TagLib.Tag[]" /> containing the tags combined in
+		///    the current instance.
+		/// </value>
+		/// <remarks>
+		///    This contains the combined children of <see
+		///    cref="Tag.StartTag" /> and <see cref="Tag.EndTag" />.
+		/// </remarks>
+		public override TagLib.Tag [] Tags {
 			get {
 				List<TagLib.Tag> tags = new List<TagLib.Tag> ();
 				tags.AddRange (start_tag.Tags);

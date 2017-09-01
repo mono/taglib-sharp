@@ -257,7 +257,7 @@ namespace TagLib.Dsf
 					return 0;
 
 				return (int) ((stream_length*8L)/
-				              d.TotalSeconds)/1000;
+							  d.TotalSeconds)/1000;
 			}
 		}
 

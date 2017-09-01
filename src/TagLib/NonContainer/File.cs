@@ -134,7 +134,7 @@ namespace TagLib.NonContainer {
 		///    />.
 		/// </exception>
 		protected File (File.IFileAbstraction abstraction,
-		                ReadStyle propertiesStyle)
+						ReadStyle propertiesStyle)
 		: base (abstraction)
 		{
 			Read (propertiesStyle);
@@ -287,7 +287,7 @@ namespace TagLib.NonContainer {
 		///    start of the file.
 		/// </remarks>
 		protected virtual void ReadStart (long start,
-		                                  ReadStyle propertiesStyle)
+										  ReadStyle propertiesStyle)
 		{
 		}
 		
@@ -313,7 +313,7 @@ namespace TagLib.NonContainer {
 		///    end of the file.
 		/// </remarks>
 		protected virtual void ReadEnd (long end,
-		                                ReadStyle propertiesStyle)
+										ReadStyle propertiesStyle)
 		{
 		}
 		
@@ -349,8 +349,8 @@ namespace TagLib.NonContainer {
 		///    processing on already read data.
 		/// </remarks>
 		protected abstract Properties ReadProperties (long start,
-		                                              long end,
-		                                              ReadStyle propertiesStyle);
+													  long end,
+													  ReadStyle propertiesStyle);
 		
 		#endregion
 		

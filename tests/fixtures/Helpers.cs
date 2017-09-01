@@ -3,32 +3,32 @@ using System.IO;
 
 namespace TagLib.Tests
 {
-    public class TestPath
-    {
-        #region OS-Independent Path composition
+	public class TestPath
+	{
+		#region OS-Independent Path composition
 
-        public static readonly string TestsDir = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(Debugger)).Location);
-        public static readonly string Samples = Path.Combine(TestsDir, "samples", " ").TrimEnd();
-        public static readonly string Covers = Path.Combine(TestsDir, "..", "examples", "covers", " ").TrimEnd();
+		public static readonly string TestsDir = Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(Debugger)).Location);
+		public static readonly string Samples = Path.Combine(TestsDir, "samples", " ").TrimEnd();
+		public static readonly string Covers = Path.Combine(TestsDir, "..", "examples", "covers", " ").TrimEnd();
 
-        #endregion
-    }
+		#endregion
+	}
 
 
 
-    public class Debugger
-    {
+	public class Debugger
+	{
 
-        public static void DumpHex (ByteVector data)
+		public static void DumpHex (ByteVector data)
 		{
 			DumpHex (data.Data);
 		}
 		
 		public static void DumpHex (byte [] data)
 		{
-		        int cols = 16;
-		        int rows = data.Length / cols +
-		        	(data.Length % cols != 0 ? 1 : 0);
+				int cols = 16;
+				int rows = data.Length / cols +
+					(data.Length % cols != 0 ? 1 : 0);
 			
 			for (int row = 0; row < rows; row ++) {
 				for (int col = 0; col < cols; col ++) {

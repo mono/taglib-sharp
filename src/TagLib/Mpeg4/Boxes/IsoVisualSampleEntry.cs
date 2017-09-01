@@ -80,7 +80,7 @@ namespace TagLib.Mpeg4 {
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		public IsoVisualSampleEntry (BoxHeader header, TagLib.File file,
-		                             IsoHandlerBox handler)
+									 IsoHandlerBox handler)
 			: base (header, file, handler)
 		{
 			file.Seek (base.DataPosition + 16);

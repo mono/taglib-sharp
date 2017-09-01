@@ -15,7 +15,7 @@ namespace TagLib.Tests.Images
 		public void Test ()
 		{
 			ImageTest.Run ("raw-samples/CR2", "sample_canon_350d_broken.cr2",
-                false,
+				false,
 				new BGO633972TestInvariantValidator ()
 			);
 		}
@@ -26,7 +26,7 @@ namespace TagLib.Tests.Images
 		public void ValidateMetadataInvariants (Image.File file)
 		{
 			Assert.IsNotNull (file);
-            Assert.IsTrue (file.PossiblyCorrupt);
+			Assert.IsTrue (file.PossiblyCorrupt);
 
 			//  ---------- Start of IFD tests ----------
 

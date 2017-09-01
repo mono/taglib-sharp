@@ -64,15 +64,15 @@ namespace TagLib.Id3v2 {
 		/// </summary>
 		private PictureType type = PictureType.Other;
 
-        /// <summary>
-        ///    Contains the filename.
-        /// </summary>
-        private string filename = null;
+		/// <summary>
+		///    Contains the filename.
+		/// </summary>
+		private string filename = null;
 
-        /// <summary>
-        ///    Contains the description.
-        /// </summary>
-        private string description = null;
+		/// <summary>
+		///    Contains the description.
+		/// </summary>
+		private string description = null;
 		
 		/// <summary>
 		///    Contains the picture data.
@@ -187,7 +187,7 @@ namespace TagLib.Id3v2 {
 			
 			mime_type   = picture.MimeType;
 			type        = picture.Type;
-            filename    = picture.Filename; 
+			filename    = picture.Filename; 
 			description = picture.Description;
 			data        = picture.Data;
 		}
@@ -233,9 +233,9 @@ namespace TagLib.Id3v2 {
 		///    raw frame is encoded in.
 		/// </param>
 		protected internal AttachedPictureFrame (ByteVector data,
-		                                         int offset,
-		                                         FrameHeader header,
-		                                         byte version)
+												 int offset,
+												 FrameHeader header,
+												 byte version)
 			: base(header)
 		{
 			SetData (data, offset, version, false);
@@ -303,33 +303,33 @@ namespace TagLib.Id3v2 {
 		}
 
 
-        /// <summary>
-        ///    Gets and sets a filename of the picture stored in the
-        ///    current instance.
-        /// </summary>
-        /// <value>
-        ///    A <see cref="string" /> object containing a fielname, with
-        ///    extension, of the picture stored in the current instance.
-        /// </value>
-        public string Filename
-        {
-            get { return filename; }
-            set { filename = value; }
-        }
+		/// <summary>
+		///    Gets and sets a filename of the picture stored in the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing a fielname, with
+		///    extension, of the picture stored in the current instance.
+		/// </value>
+		public string Filename
+		{
+			get { return filename; }
+			set { filename = value; }
+		}
 
-        /// <summary>
-        ///    Gets and sets the description stored in the current
-        ///    instance.
-        /// </summary>
-        /// <value>
-        ///    A <see cref="string" /> containing the description
-        ///    stored in the current instance.
-        /// </value>
-        /// <remarks>
-        ///    There should only be one frame with a matching
-        ///    description and type per tag.
-        /// </remarks>
-        public string Description {
+		/// <summary>
+		///    Gets and sets the description stored in the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the description
+		///    stored in the current instance.
+		/// </value>
+		/// <remarks>
+		///    There should only be one frame with a matching
+		///    description and type per tag.
+		/// </remarks>
+		public string Description {
 			get {
 				ParseRawData ();
 				if (description != null)
@@ -414,8 +414,8 @@ namespace TagLib.Id3v2 {
 		///    langword="false" />.
 		/// </returns>
 		public static AttachedPictureFrame Get (Tag tag,
-		                                        string description,
-		                                        bool create)
+												string description,
+												bool create)
 		{
 			return Get (tag, description, PictureType.Other, create);
 		}
@@ -442,8 +442,8 @@ namespace TagLib.Id3v2 {
 		///    langword="false" />.
 		/// </returns>
 		public static AttachedPictureFrame Get (Tag tag,
-		                                        PictureType type,
-		                                        bool create)
+												PictureType type,
+												bool create)
 		{
 			return Get (tag, null, type, create);
 		}
@@ -517,9 +517,9 @@ namespace TagLib.Id3v2 {
 		///    </code>
 		/// </example>
 		public static AttachedPictureFrame Get (Tag tag,
-		                                        string description,
-		                                        PictureType type,
-		                                        bool create)
+												string description,
+												PictureType type,
+												bool create)
 		{
 			AttachedPictureFrame apic;
 			foreach (Frame frame in tag.GetFrames (FrameType.APIC)) {
@@ -712,9 +712,9 @@ namespace TagLib.Id3v2 {
 			frame.text_encoding = text_encoding;
 			frame.mime_type = mime_type;
 			frame.type = type;
-            frame.filename = filename;
-            frame.description = description;
-            if (data != null)
+			frame.filename = filename;
+			frame.description = description;
+			if (data != null)
 				frame.data = new ByteVector (data);
 			if (raw_data != null)
 				frame.data = new ByteVector (raw_data);

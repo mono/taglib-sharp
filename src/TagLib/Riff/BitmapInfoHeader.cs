@@ -823,7 +823,7 @@ namespace TagLib.Riff
 		///    langword="false" />.
 		/// </returns>
 		public static bool operator == (BitmapInfoHeader first,
-		                                BitmapInfoHeader second)
+										BitmapInfoHeader second)
 		{
 			return first.Equals (second);
 		}
@@ -844,7 +844,7 @@ namespace TagLib.Riff
 		///    langword="false" />.
 		/// </returns>
 		public static bool operator != (BitmapInfoHeader first,
-		                                BitmapInfoHeader second)
+										BitmapInfoHeader second)
 		{
 			return !first.Equals (second);
 		}

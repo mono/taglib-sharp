@@ -162,7 +162,7 @@ namespace TagLib.Image
 		///    langword="null" /> is returned.
 		/// </returns>
 		public override TagLib.Tag GetTag (TagLib.TagTypes type,
-		                                   bool create)
+										   bool create)
 		{
 			foreach (Tag tag in ImageTag.AllTags) {
 				if ((tag.TagTypes & type) == type)

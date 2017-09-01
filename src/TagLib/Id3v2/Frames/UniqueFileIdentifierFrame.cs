@@ -49,9 +49,9 @@ namespace TagLib.Id3v2
 		private ByteVector identifier = null;
 		
 #endregion
-      
-      
-      
+	  
+	  
+	  
 #region Constructors
 		
 		/// <summary>
@@ -77,7 +77,7 @@ namespace TagLib.Id3v2
 		///    <paramref name="owner" /> is <see langword="null" />.
 		/// </exception>
 		public UniqueFileIdentifierFrame (string owner,
-		                                  ByteVector identifier)
+										  ByteVector identifier)
 			: base (FrameType.UFID, 4)
 		{
 			if (owner == null)
@@ -151,9 +151,9 @@ namespace TagLib.Id3v2
 		///    raw frame is encoded in.
 		/// </param>
 		protected internal UniqueFileIdentifierFrame (ByteVector data,
-		                                              int offset,
-		                                              FrameHeader header,
-		                                              byte version)
+													  int offset,
+													  FrameHeader header,
+													  byte version)
 			: base(header)
 		{
 			SetData (data, offset, version, false);
@@ -221,8 +221,8 @@ namespace TagLib.Id3v2
 		///    <see langword="false" />.
 		/// </returns>
 		public static UniqueFileIdentifierFrame Get (Tag tag,
-		                                             string owner,
-		                                             bool create)
+													 string owner,
+													 bool create)
 		{
 			UniqueFileIdentifierFrame ufid;
 			
@@ -263,7 +263,7 @@ namespace TagLib.Id3v2
 		///    field data is encoded in.
 		/// </param>
 		protected override void ParseFields (ByteVector data,
-		                                     byte version)
+											 byte version)
 		{
 			ByteVectorCollection fields =
 				ByteVectorCollection.Split (data, (byte) 0);

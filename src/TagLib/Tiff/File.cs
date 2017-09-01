@@ -111,7 +111,7 @@ namespace TagLib.Tiff
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle) : base (abstraction)
+					 ReadStyle propertiesStyle) : base (abstraction)
 		{
 			ImageTag = new CombinedImageTag (TagTypes.TiffIFD | TagTypes.XMP);
 

@@ -24,9 +24,9 @@ using TagLib.Mpeg4;
 
 namespace TagLib
 {
-    /// <summary>
-    /// Represent an MP4 text box
-    /// </summary>
+	/// <summary>
+	/// Represent an MP4 text box
+	/// </summary>
 	public class TextBox : Box
 	{
 #region Private Fields
@@ -63,7 +63,7 @@ namespace TagLib
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		public TextBox (BoxHeader header, TagLib.File file,
-		                   IsoHandlerBox handler)
+						   IsoHandlerBox handler)
 			: base (header, handler)
 		{
 			if (file == null)

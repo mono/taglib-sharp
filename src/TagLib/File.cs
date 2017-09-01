@@ -145,8 +145,8 @@ namespace TagLib {
 		///    cref="AddFileTypeResolver" />.</para>
 		/// </remarks>
 		public delegate File FileTypeResolver (IFileAbstraction abstraction,
-		                                       string mimetype,
-		                                       ReadStyle style);
+											   string mimetype,
+											   ReadStyle style);
 		
 		#endregion
 		
@@ -731,7 +731,7 @@ namespace TagLib {
 		///    <paramref name="pattern" /> is <see langword="null" />.
 		/// </exception>
 		public long Find (ByteVector pattern, long startPosition,
-		                  ByteVector before)
+						  ByteVector before)
 		{
 			if (pattern == null)
 				throw new ArgumentNullException ("pattern");
@@ -848,7 +848,7 @@ namespace TagLib {
 		///    <paramref name="pattern" /> is <see langword="null" />.
 		/// </exception>
 		long RFind (ByteVector pattern, long startPosition,
-		            ByteVector after)
+					ByteVector after)
 		{
 			if (pattern == null)
 				throw new ArgumentNullException ("pattern");
@@ -966,37 +966,37 @@ namespace TagLib {
 			return RFind (pattern, 0);
 		}
 
-        /// <summary>
-        ///    Inserts a specifed block of data into the file repesented
-        ///    by the current instance at a specified location,
-        ///    replacing a specified number of bytes.
-        /// </summary>
-        /// <param name="data">
-        ///    A <see cref="ByteVector" /> object containing the data to
-        ///    insert into the file.
-        /// </param>
-        /// <param name="start">
-        ///    A <see cref="long" /> value specifying at which point to
-        ///    insert the data.
-        /// </param>
-        /// <param name="replace">
-        ///    A <see cref="long" /> value specifying the number of
-        ///    bytes to replace. Typically this is the original size of
-        ///    the data block so that a new block will replace the old
-        ///    one.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///    <paramref name="data" /> is <see langword="null" />.
-        /// </exception>
-        public void Insert(ByteVector data, long start, long replace)
-        {
-            if (data == null)
-                throw new ArgumentNullException("data");
+		/// <summary>
+		///    Inserts a specifed block of data into the file repesented
+		///    by the current instance at a specified location,
+		///    replacing a specified number of bytes.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing the data to
+		///    insert into the file.
+		/// </param>
+		/// <param name="start">
+		///    A <see cref="long" /> value specifying at which point to
+		///    insert the data.
+		/// </param>
+		/// <param name="replace">
+		///    A <see cref="long" /> value specifying the number of
+		///    bytes to replace. Typically this is the original size of
+		///    the data block so that a new block will replace the old
+		///    one.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="data" /> is <see langword="null" />.
+		/// </exception>
+		public void Insert(ByteVector data, long start, long replace)
+		{
+			if (data == null)
+				throw new ArgumentNullException("data");
 
-            Insert(data, data.Count, start, replace);
-        }
+			Insert(data, data.Count, start, replace);
+		}
 
-                
+				
 		
 		/// <summary>
 		///    Inserts a specified block of data into the file repesented
@@ -1024,17 +1024,17 @@ namespace TagLib {
 			Insert (data, start, 0);
 		}
 
-        /// <summary>
-        ///   Inserts a specified block-size into the file repesented
-        ///   by the current instance at a specified location. Former
-        ///   data at this location is not overwriten and may then 
-        ///   contain random content.
-        /// </summary>
-        /// <param name="size">
-        ///   A <see cref="long" /> value specifying the size in bytes
-        ///   of the block to be inserted (reserved).
-        /// </param>
-        /// <param name="start">
+		/// <summary>
+		///   Inserts a specified block-size into the file repesented
+		///   by the current instance at a specified location. Former
+		///   data at this location is not overwriten and may then 
+		///   contain random content.
+		/// </summary>
+		/// <param name="size">
+		///   A <see cref="long" /> value specifying the size in bytes
+		///   of the block to be inserted (reserved).
+		/// </param>
+		/// <param name="start">
 		///    A <see cref="long" /> value specifying at which point to
 		///    insert the data.
 		/// </param>
@@ -1042,12 +1042,12 @@ namespace TagLib {
 		///    This method is usefull to reserve some space in the file.
 		///    To insert or replace defined data blocks, use <see
 		///    cref="Insert(ByteVector,long)" /> or 
-        ///    <see cref="Insert(ByteVector,long,long)"/> 
+		///    <see cref="Insert(ByteVector,long,long)"/> 
 		/// </remarks>
-        public void Insert(long size, long start)
-        {
-            Insert(null, size, start, 0);
-        }
+		public void Insert(long size, long start)
+		{
+			Insert(null, size, start, 0);
+		}
 
 
 		/// <summary>
@@ -1206,7 +1206,7 @@ namespace TagLib {
 		///    internal feature of the file crucial to its reading.
 		/// </exception>
 		public static File Create (string path,
-		                           ReadStyle propertiesStyle)
+								   ReadStyle propertiesStyle)
 		{
 			return Create(path, null, propertiesStyle);
 		}
@@ -1238,7 +1238,7 @@ namespace TagLib {
 		///    internal feature of the file crucial to its reading.
 		/// </exception>
 		public static File Create (IFileAbstraction abstraction,
-		                           ReadStyle propertiesStyle)
+								   ReadStyle propertiesStyle)
 		{
 			return Create(abstraction, null, propertiesStyle);
 		}
@@ -1275,7 +1275,7 @@ namespace TagLib {
 		///    internal feature of the file crucial to its reading.
 		/// </exception>
 		public static File Create (string path, string mimetype,
-		                           ReadStyle propertiesStyle)
+								   ReadStyle propertiesStyle)
 		{
 			return Create (new LocalFileAbstraction (path),
 				mimetype, propertiesStyle);
@@ -1314,8 +1314,8 @@ namespace TagLib {
 		///    internal feature of the file crucial to its reading.
 		/// </exception>
 		public static File Create (IFileAbstraction abstraction,
-		                           string mimetype,
-		                           ReadStyle propertiesStyle)
+								   string mimetype,
+								   ReadStyle propertiesStyle)
 		{
 			if(mimetype == null) {
 				string ext = String.Empty;
@@ -1356,7 +1356,7 @@ namespace TagLib {
 				file.MimeType = mimetype;
 				return file;
 			} catch (System.Reflection.TargetInvocationException e) {
-                PrepareExceptionForRethrow(e.InnerException);
+				PrepareExceptionForRethrow(e.InnerException);
 				throw e.InnerException;
 			}
 		}
@@ -1380,171 +1380,171 @@ namespace TagLib {
 				file_type_resolvers.Insert (0, resolver);
 		}
 
-        #endregion
+		#endregion
 
 
 
-        #region Private/Protected Methods
+		#region Private/Protected Methods
 
-        /// <summary>
+		/// <summary>
 		///    Inserts a specified block into the file repesented
 		///    by the current instance at a specified location.
 		/// </summary>
 		/// <param name="data">
 		///    A <see cref="ByteVector" /> object containing the data to
 		///    insert into the file. if null, no data is writen to the
-        ///    file and the block is just inserted without overwriting the 
-        ///    former data at the given location.
+		///    file and the block is just inserted without overwriting the 
+		///    former data at the given location.
 		/// </param>
 		/// <param name="size">
 		///    A <see cref="long" /> value specifying the size of the block
-        ///    to be inserted.
+		///    to be inserted.
 		/// </param>
 		/// <param name="start">
 		///    A <see cref="long" /> value specifying at which point to
 		///    insert the data.
 		/// </param>
-        /// <param name="replace">
-        ///    A <see cref="long" /> value specifying the number of
-        ///    bytes to replace. Typically this is the original size of
-        ///    the data block so that a new block will replace the old
-        ///    one.
-        /// </param>
+		/// <param name="replace">
+		///    A <see cref="long" /> value specifying the number of
+		///    bytes to replace. Typically this is the original size of
+		///    the data block so that a new block will replace the old
+		///    one.
+		/// </param>
 		/// <remarks>
 		///    This method inserts a new block of data into the file. To
 		///    replace an existing block, ie. replacing an existing
 		///    tag with a new one of different size, use <see
 		///    cref="Insert(ByteVector,long,long)" />.
 		/// </remarks>
-        private void Insert(ByteVector data, long size, long start, long replace)
-        {
+		private void Insert(ByteVector data, long size, long start, long replace)
+		{
 
-            Mode = AccessMode.Write;
+			Mode = AccessMode.Write;
 
-            if (size == replace)
-            {
-                if (data != null)
-                {
-                    file_stream.Position = start;
-                    WriteBlock(data);
-                }
-                return;
-            }
-            else if (size < replace)
-            {
-                if (data != null)
-                {
-                    file_stream.Position = start;
-                    WriteBlock(data);
-                }
-                RemoveBlock(start + size, replace - size);
-                return;
-            }
+			if (size == replace)
+			{
+				if (data != null)
+				{
+					file_stream.Position = start;
+					WriteBlock(data);
+				}
+				return;
+			}
+			else if (size < replace)
+			{
+				if (data != null)
+				{
+					file_stream.Position = start;
+					WriteBlock(data);
+				}
+				RemoveBlock(start + size, replace - size);
+				return;
+			}
 
-            // Woohoo!  Faster (about 20%) than id3lib at last. I
-            // had to get hardcore and avoid TagLib's high level API
-            // for rendering just copying parts of the file that
-            // don't contain tag data.
-            //
-            // Now I'll explain the steps in this ugliness:
+			// Woohoo!  Faster (about 20%) than id3lib at last. I
+			// had to get hardcore and avoid TagLib's high level API
+			// for rendering just copying parts of the file that
+			// don't contain tag data.
+			//
+			// Now I'll explain the steps in this ugliness:
 
-            // First, make sure that we're working with a buffer
-            // that is longer or equal than the *difference* in the tag sizes,
-            // and that is a multiple of buffer_size.
-            // We want to avoid overwriting parts that aren't yet in
-            // memory, so this is necessary.
+			// First, make sure that we're working with a buffer
+			// that is longer or equal than the *difference* in the tag sizes,
+			// and that is a multiple of buffer_size.
+			// We want to avoid overwriting parts that aren't yet in
+			// memory, so this is necessary.
 
-            int buffer_length = (int)(size - replace);
-            int modulo = buffer_length % buffer_size;
-            if (modulo != 0) buffer_length += buffer_size - modulo;
+			int buffer_length = (int)(size - replace);
+			int modulo = buffer_length % buffer_size;
+			if (modulo != 0) buffer_length += buffer_size - modulo;
 
 
-            // Set where to start the reading and writing.
+			// Set where to start the reading and writing.
 
-            long read_position = start + replace;
-            long write_position = start;
+			long read_position = start + replace;
+			long write_position = start;
 
-            byte[] buffer;
-            byte[] about_to_overwrite;
+			byte[] buffer;
+			byte[] about_to_overwrite;
 
-            // This is basically a special case of the loop below.  
-            // Here we're just doing the same steps as below, but 
-            // since we aren't using the same buffer size -- instead
-            // we're using the tag size -- this has to be handled as
-            // a special case.  We're also using File::writeBlock()
-            // just for the tag. That's a bit slower than using char
-            // *'s so, we're only doing it here.
+			// This is basically a special case of the loop below.  
+			// Here we're just doing the same steps as below, but 
+			// since we aren't using the same buffer size -- instead
+			// we're using the tag size -- this has to be handled as
+			// a special case.  We're also using File::writeBlock()
+			// just for the tag. That's a bit slower than using char
+			// *'s so, we're only doing it here.
 
-            file_stream.Position = read_position;
-            about_to_overwrite = ReadBlock(buffer_length).Data;
-            read_position += buffer_length;
+			file_stream.Position = read_position;
+			about_to_overwrite = ReadBlock(buffer_length).Data;
+			read_position += buffer_length;
 
-            if (data != null)
-            {
-                file_stream.Position = write_position;
-                WriteBlock(data);
-            }
-            else if (start + size > Length)
-            {
-                file_stream.SetLength(start + size);
-            }
-            write_position += size;
+			if (data != null)
+			{
+				file_stream.Position = write_position;
+				WriteBlock(data);
+			}
+			else if (start + size > Length)
+			{
+				file_stream.SetLength(start + size);
+			}
+			write_position += size;
 
-            buffer = new byte[about_to_overwrite.Length];
-            System.Array.Copy(about_to_overwrite, 0, buffer, 0,
-                about_to_overwrite.Length);
+			buffer = new byte[about_to_overwrite.Length];
+			System.Array.Copy(about_to_overwrite, 0, buffer, 0,
+				about_to_overwrite.Length);
 
-            // Ok, here's the main loop.  We want to loop until the
-            // read fails, which means that we hit the end of the 
-            // file.
+			// Ok, here's the main loop.  We want to loop until the
+			// read fails, which means that we hit the end of the 
+			// file.
 
-            while (buffer_length != 0)
-            {
-                // Seek to the current read position and read
-                // the data that we're about to overwrite. 
-                // Appropriately increment the readPosition.
+			while (buffer_length != 0)
+			{
+				// Seek to the current read position and read
+				// the data that we're about to overwrite. 
+				// Appropriately increment the readPosition.
 
-                file_stream.Position = read_position;
-                int bytes_read = file_stream.Read(
-                    about_to_overwrite, 0, buffer_length <
-                    about_to_overwrite.Length ?
-                        buffer_length :
-                        about_to_overwrite.Length);
-                read_position += buffer_length;
+				file_stream.Position = read_position;
+				int bytes_read = file_stream.Read(
+					about_to_overwrite, 0, buffer_length <
+					about_to_overwrite.Length ?
+						buffer_length :
+						about_to_overwrite.Length);
+				read_position += buffer_length;
 
-                // Seek to the write position and write our
-                // buffer. Increment the writePosition.
+				// Seek to the write position and write our
+				// buffer. Increment the writePosition.
 
-                file_stream.Position = write_position;
-                file_stream.Write(buffer, 0,
-                    buffer_length < buffer.Length ?
-                        buffer_length : buffer.Length);
-                write_position += buffer_length;
+				file_stream.Position = write_position;
+				file_stream.Write(buffer, 0,
+					buffer_length < buffer.Length ?
+						buffer_length : buffer.Length);
+				write_position += buffer_length;
 
-                // Make the current buffer the data that we read
-                // in the beginning.
+				// Make the current buffer the data that we read
+				// in the beginning.
 
-                System.Array.Copy(about_to_overwrite, 0,
-                    buffer, 0, bytes_read);
+				System.Array.Copy(about_to_overwrite, 0,
+					buffer, 0, bytes_read);
 
-                // Again, we need this for the last write.  We
-                // don't want to write garbage at the end of our
-                // file, so we need to set the buffer size to
-                // the amount that we actually read.
+				// Again, we need this for the last write.  We
+				// don't want to write garbage at the end of our
+				// file, so we need to set the buffer size to
+				// the amount that we actually read.
 
-                buffer_length = bytes_read;
-            }
-        }
+				buffer_length = bytes_read;
+			}
+		}
 
-        /// <summary>
-        ///    Resized the current instance to a specified number of
-        ///    bytes.
-        /// </summary>
-        /// <param name="length">
-        ///    A <see cref="long" /> value specifying the number of
-        ///    bytes to resize the file to.
-        /// </param>
-        protected void Truncate (long length)
+		/// <summary>
+		///    Resized the current instance to a specified number of
+		///    bytes.
+		/// </summary>
+		/// <param name="length">
+		///    A <see cref="long" /> value specifying the number of
+		///    bytes to resize the file to.
+		/// </param>
+		protected void Truncate (long length)
 		{
 			AccessMode old_mode = Mode;
 			Mode = AccessMode.Write;
@@ -1552,19 +1552,19 @@ namespace TagLib {
 			Mode = old_mode;
 		}
 
-        /// <summary>
-        /// Causes the original strack trace of the exception to be preserved when it is rethrown
-        /// </summary>
-        /// <param name="ex"></param>
+		/// <summary>
+		/// Causes the original strack trace of the exception to be preserved when it is rethrown
+		/// </summary>
+		/// <param name="ex"></param>
 		private static void PrepareExceptionForRethrow(Exception ex)
 		{
-            var ctx = new StreamingContext(StreamingContextStates.CrossAppDomain);
-            var mgr = new ObjectManager(null, ctx);
-            var si = new SerializationInfo(ex.GetType(), new FormatterConverter());
+			var ctx = new StreamingContext(StreamingContextStates.CrossAppDomain);
+			var mgr = new ObjectManager(null, ctx);
+			var si = new SerializationInfo(ex.GetType(), new FormatterConverter());
 
-            ex.GetObjectData(si, ctx);
-            mgr.RegisterObject(ex, 1, si); // prepare for SetObjectData
-            mgr.DoFixups(); // ObjectManager calls SetObjectData
+			ex.GetObjectData(si, ctx);
+			mgr.RegisterObject(ex, 1, si); // prepare for SetObjectData
+			mgr.DoFixups(); // ObjectManager calls SetObjectData
 		}
 
 		#endregion

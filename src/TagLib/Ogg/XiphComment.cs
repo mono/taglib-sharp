@@ -92,27 +92,27 @@ namespace TagLib.Ogg
 			Parse (data);
 		}
 
-        #endregion
+		#endregion
 
 
 
-        #region Public Methods
+		#region Public Methods
 
-        /// <summary>
-        ///    Gets the field data for a given field identifier.
-        /// </summary>
-        /// <param name="key">
-        ///    A <see cref="string"/> object containing the field
-        ///    identifier.
-        /// </param>
-        /// <returns>
-        ///    A <see cref="T:string[]"/> containing the field data or an
-        ///    empty array if the field was not found.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        ///    <paramref name="key" /> is <see langword="null" />.
-        /// </exception>
-        public string [] GetField (string key)
+		/// <summary>
+		///    Gets the field data for a given field identifier.
+		/// </summary>
+		/// <param name="key">
+		///    A <see cref="string"/> object containing the field
+		///    identifier.
+		/// </param>
+		/// <returns>
+		///    A <see cref="T:string[]"/> containing the field data or an
+		///    empty array if the field was not found.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="key" /> is <see langword="null" />.
+		/// </exception>
+		public string [] GetField (string key)
 		{
 			if (key == null)
 				throw new ArgumentNullException ("key");

@@ -264,7 +264,7 @@ namespace TagLib.Ogg
 		///    of the stream.
 		/// </returns>
 		public abstract TimeSpan GetDuration (long firstGranularPosition,
-		                                      long lastGranularPosition);
+											  long lastGranularPosition);
 		
 		/// <summary>
 		///    Replaces the comment packet in a collection of packets
@@ -284,7 +284,7 @@ namespace TagLib.Ogg
 		///    /> is <see langword="null" />.
 		/// </exception>
 		public abstract void SetCommentPacket (ByteVectorCollection packets,
-		                                       XiphComment comment);
+											   XiphComment comment);
 		
 #endregion
 	}

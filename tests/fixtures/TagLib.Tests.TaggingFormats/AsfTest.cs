@@ -527,7 +527,7 @@ namespace TagLib.Tests.TaggingFormats
 			});
 		}
 		
-        [Test]
+		[Test]
 		public void TestMusicBrainzArtistID ()
 		{
 			MemoryFileAbstraction abst;
@@ -859,8 +859,8 @@ namespace TagLib.Tests.TaggingFormats
 		private delegate void TagTestFunc (Tag tag, string msg);
 		
 		private void TagTestWithSave (ref Asf.File file,
-		                              MemoryFileAbstraction abst,
-		                              TagTestFunc testFunc)
+									  MemoryFileAbstraction abst,
+									  TagTestFunc testFunc)
 		{
 			testFunc (file.Tag, "Before Save");
 			file.Save ();

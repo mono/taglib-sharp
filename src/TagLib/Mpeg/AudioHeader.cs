@@ -205,8 +205,8 @@ namespace TagLib.Mpeg {
 		///    header associated with the new instance.
 		/// </param>
 		private AudioHeader (uint flags, long streamLength,
-		                     XingHeader xingHeader,
-		                     VBRIHeader vbriHeader)
+							 XingHeader xingHeader,
+							 VBRIHeader vbriHeader)
 		{
 			this.flags = flags;
 			this.stream_length = streamLength;
@@ -239,7 +239,7 @@ namespace TagLib.Mpeg {
 		///    bitrate, or has a sample rate of zero.
 		/// </exception>
 		private AudioHeader (ByteVector data, TagLib.File file,
-		                     long position)
+							 long position)
 		{
 			this.duration = TimeSpan.Zero;
 			stream_length = 0;
@@ -686,8 +686,8 @@ namespace TagLib.Mpeg {
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		public static bool Find (out AudioHeader header,
-		                         TagLib.File file, long position,
-		                         int length)
+								 TagLib.File file, long position,
+								 int length)
 		{
 			if (file == null)
 				throw new ArgumentNullException ("file");
@@ -758,7 +758,7 @@ namespace TagLib.Mpeg {
 		///    instead.
 		/// </remarks>
 		public static bool Find (out AudioHeader header,
-		                         TagLib.File file, long position)
+								 TagLib.File file, long position)
 		{
 			return Find (out header, file, position, -1);
 		}

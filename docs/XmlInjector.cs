@@ -89,8 +89,8 @@ public static class XmlInjector
 	}
 	
 	private static bool ReplaceNode (XmlDocument sourceDocument,
-	                                  XmlDocument targetDocument,
-	                                  XmlNode replaceElement)
+									  XmlDocument targetDocument,
+									  XmlNode replaceElement)
 	{
 		string sourcePath = GetAttribute (replaceElement, "Source");
 		string targetPath = GetAttribute (replaceElement, "Target");
@@ -153,7 +153,7 @@ public static class XmlInjector
 	}
 	
 	private static bool RemoveNodes (XmlDocument targetDocument,
-	                                 XmlNode removeElement)
+									 XmlNode removeElement)
 	{
 		string targetPath = GetAttribute (removeElement, "Target");
 		

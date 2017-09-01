@@ -572,7 +572,7 @@ namespace TagLib.Tests.TaggingFormats
 				});
 			}
 		}
-        	
+			
 		[Test]
 		public void TestIsCompilation ()
 		{
@@ -1409,7 +1409,7 @@ namespace TagLib.Tests.TaggingFormats
 		private delegate void TagTestFunc (Id3v2.Tag tag, string msg);
 		
 		private void TagTestWithSave (ref Id3v2.Tag tag,
-		                              TagTestFunc testFunc)
+									  TagTestFunc testFunc)
 		{
 			testFunc (tag, "Before Save");
 			for (byte version = 2; version <= 4; version ++) {
@@ -1432,15 +1432,15 @@ namespace TagLib.Tests.TaggingFormats
 		private delegate void FrameTestFunc (Frame frame, string msg);
 		
 		private delegate void SetEncodingFunc (Frame frame,
-		                                       StringType encoding);
+											   StringType encoding);
 		
 		private delegate Frame CreateFrameFunc (ByteVector data,
-		                                        byte version);
+												byte version);
 		
 		private void FrameTest (Frame frame, byte minVersion,
-		                        SetEncodingFunc setEncFunc,
-		                        CreateFrameFunc createFunc,
-		                        FrameTestFunc testFunc)
+								SetEncodingFunc setEncFunc,
+								CreateFrameFunc createFunc,
+								FrameTestFunc testFunc)
 		{
 			testFunc (frame, "Beginning");
 			for (byte version = minVersion; version <= 4;

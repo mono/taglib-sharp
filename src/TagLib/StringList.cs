@@ -86,7 +86,7 @@ namespace TagLib {
 		///    use when converting the data to strings.
 		/// </param>
 		public StringCollection (ByteVectorCollection vectorList,
-		                         StringType type)
+								 StringType type)
 		{
 			foreach (ByteVector vector in vectorList)
 				Add (vector.ToString (type));
@@ -127,7 +127,7 @@ namespace TagLib {
 		///    is <see langword="null" />.
 		/// </exception>
 		public static StringCollection Split (string value,
-		                                      string pattern)
+											  string pattern)
 		{
 			if (value == null)
 				throw new ArgumentNullException ("value");

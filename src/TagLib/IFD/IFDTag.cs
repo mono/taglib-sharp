@@ -341,7 +341,7 @@ namespace TagLib.IFD
 
 				var entry =
 					new RationalArrayIFDEntry ((ushort) GPSEntryTag.GPSLatitude,
-					                           DegreeToRationals (Math.Abs (angle)));
+											   DegreeToRationals (Math.Abs (angle)));
 				gps_ifd.SetEntry (0, entry);
 			}
 		}
@@ -394,7 +394,7 @@ namespace TagLib.IFD
 
 				var entry =
 					new RationalArrayIFDEntry ((ushort) GPSEntryTag.GPSLongitude,
-					                           DegreeToRationals (Math.Abs (angle)));
+											   DegreeToRationals (Math.Abs (angle)));
 				gps_ifd.SetEntry (0, entry);
 			}
 		}

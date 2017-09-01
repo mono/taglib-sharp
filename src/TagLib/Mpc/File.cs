@@ -104,7 +104,7 @@ namespace TagLib.MusePack {
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle)
+					 ReadStyle propertiesStyle)
 			: base (abstraction, propertiesStyle)
 		{
 		}
@@ -201,7 +201,7 @@ namespace TagLib.MusePack {
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		protected override void ReadEnd (long end,
-		                                 ReadStyle propertiesStyle)
+										 ReadStyle propertiesStyle)
 		{
 			// Make sure we have an APE tag.
 			GetTag (TagTypes.Ape, true);
@@ -230,8 +230,8 @@ namespace TagLib.MusePack {
 		///    instance.
 		/// </returns>
 		protected override Properties ReadProperties (long start,
-		                                              long end,
-		                                              ReadStyle propertiesStyle)
+													  long end,
+													  ReadStyle propertiesStyle)
 		{
 			StreamHeader header = new StreamHeader (this,
 				end - start);

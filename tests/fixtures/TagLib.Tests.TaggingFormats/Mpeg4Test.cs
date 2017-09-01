@@ -526,8 +526,8 @@ namespace TagLib.Tests.TaggingFormats
 				Assert.AreEqual (0, t.Pictures.Length, "Value Cleared (Zero): " + m);
 			});
 		}
-        
-        [Test]
+		
+		[Test]
 		public void TestMusicBrainzArtistID ()
 		{
 			MemoryFileAbstraction abst;
@@ -852,8 +852,8 @@ namespace TagLib.Tests.TaggingFormats
 		private delegate void TagTestFunc (Tag tag, string msg);
 		
 		private void TagTestWithSave (ref Mpeg4.File file,
-		                              MemoryFileAbstraction abst,
-		                              TagTestFunc testFunc)
+									  MemoryFileAbstraction abst,
+									  TagTestFunc testFunc)
 		{
 			testFunc (file.GetTag (TagTypes.Apple), "Before Save");
 			file.Save ();

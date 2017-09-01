@@ -117,7 +117,7 @@ namespace TagLib.Riff
 		/// </exception>
 		public File (string path, ReadStyle propertiesStyle)
 			: this (new File.LocalFileAbstraction (path),
-			        propertiesStyle)
+					propertiesStyle)
 		{
 		}
 
@@ -136,7 +136,7 @@ namespace TagLib.Riff
 		public File (string path) : this (path, ReadStyle.Average)
 		{
 		}
-      
+	  
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified file abstraction and
@@ -156,7 +156,7 @@ namespace TagLib.Riff
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle) : base (abstraction)
+					 ReadStyle propertiesStyle) : base (abstraction)
 		{
 			uint riff_size;
 			long tag_start, tag_end;
@@ -453,8 +453,8 @@ namespace TagLib.Riff
 		///    />.
 		/// </exception>
 		private void Read (bool read_tags, ReadStyle style,
-		                   out uint riff_size, out long tag_start,
-		                   out long tag_end)
+						   out uint riff_size, out long tag_start,
+						   out long tag_end)
 		{
 			Seek (0);
 			if (ReadBlock (4) != FileIdentifier)

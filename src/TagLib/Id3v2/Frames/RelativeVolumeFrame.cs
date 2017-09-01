@@ -161,9 +161,9 @@ namespace TagLib.Id3v2 {
 		///    raw frame is encoded in.
 		/// </param>
 		protected internal RelativeVolumeFrame (ByteVector data,
-		                                        int offset,
-		                                        FrameHeader header,
-		                                        byte version)
+												int offset,
+												FrameHeader header,
+												byte version)
 			: base(header)
 		{
 			SetData (data, offset, version, false);
@@ -258,7 +258,7 @@ namespace TagLib.Id3v2 {
 		/// <seealso cref="GetVolumeAdjustmentIndex"/>
 		/// <seealso cref="SetVolumeAdjustment"/>
 		public void SetVolumeAdjustmentIndex (ChannelType type,
-		                                      short index)
+											  short index)
 		{
 			channels [(int) type].VolumeAdjustmentIndex = index;
 		}
@@ -301,7 +301,7 @@ namespace TagLib.Id3v2 {
 		/// <seealso cref="GetVolumeAdjustment"/>
 		/// <seealso cref="SetVolumeAdjustmentIndex"/>
 		public void SetVolumeAdjustment (ChannelType type,
-		                                 float adjustment)
+										 float adjustment)
 		{
 			channels [(int) type].VolumeAdjustment = adjustment;
 		}
@@ -413,8 +413,8 @@ namespace TagLib.Id3v2 {
 		///    langword="false" />.
 		/// </returns>
 		public static RelativeVolumeFrame Get (Tag tag,
-		                                       string identification,
-		                                       bool create)
+											   string identification,
+											   bool create)
 		{
 			RelativeVolumeFrame rva2;
 			foreach (Frame frame in tag.GetFrames (FrameType.RVA2)) {
@@ -459,7 +459,7 @@ namespace TagLib.Id3v2 {
 		///    <paramref name="data" /> contains less than 5 bytes.
 		/// </exception>
 		protected override void ParseFields (ByteVector data,
-		                                     byte version)
+											 byte version)
 		{
 			int pos = data.Find (ByteVector.TextDelimiter (
 				StringType.Latin1));

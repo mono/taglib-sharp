@@ -109,8 +109,8 @@ namespace TagLib.Mpeg4 {
 		///    Valid data could not be read.
 		/// </exception>
 		public AppleElementaryStreamDescriptor (BoxHeader header,
-		                                        TagLib.File file,
-		                                        IsoHandlerBox handler)
+												TagLib.File file,
+												IsoHandlerBox handler)
 			: base (header, file, handler)
 		{
 			int offset = 0;

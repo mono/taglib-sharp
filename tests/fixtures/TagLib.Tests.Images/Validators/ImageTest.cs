@@ -8,13 +8,13 @@ namespace TagLib.Tests.Images.Validators
 	public class ImageTest
 	{
 
-        static ImageTest() {
-            // Initialize GDK 
-            var args = Environment.GetCommandLineArgs();
-            Global.InitCheck(ref args);
-        }
+		static ImageTest() {
+			// Initialize GDK 
+			var args = Environment.GetCommandLineArgs();
+			Global.InitCheck(ref args);
+		}
 
-        string pre_hash;
+		string pre_hash;
 		string post_hash;
 
 		public static bool CompareLargeImages {
@@ -149,9 +149,9 @@ namespace TagLib.Tests.Images.Validators
 			file.Mode = File.AccessMode.Read;
 			ByteVector v = file.ReadBlock ((int) file.Length);
 			byte [] result = null;
-            using (Pixbuf buf = new Pixbuf(v.Data))
-                result = buf.SaveToBuffer("png");
-            file.Mode = File.AccessMode.Closed;
+			using (Pixbuf buf = new Pixbuf(v.Data))
+				result = buf.SaveToBuffer("png");
+			file.Mode = File.AccessMode.Closed;
 			return Utils.Md5Encode (result);
 		}
 

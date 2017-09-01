@@ -15,7 +15,7 @@ namespace TagLib.Tests.Images
 		public void Test ()
 		{
 			ImageTest.Run ("sample_unicode5.jpg",
-                false,
+				false,
 				new BadCommentMarkerTestInvariantValidator ()
 			);
 		}
@@ -27,7 +27,7 @@ namespace TagLib.Tests.Images
 		{
 			Assert.IsNotNull (file);
 
-            Assert.IsTrue (file.PossiblyCorrupt);
+			Assert.IsTrue (file.PossiblyCorrupt);
 
 			//  ---------- Start of IFD tests ----------
 
@@ -1077,7 +1077,7 @@ namespace TagLib.Tests.Images
 				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.UserComment);
 				Assert.IsNotNull (entry, "Entry 0x9286 missing in IFD 0");
 				Assert.IsNotNull (entry as UserCommentIFDEntry, "Entry is not a user comment!");
-                // Commented, it's corrupt anyway.
+				// Commented, it's corrupt anyway.
 				//Assert.AreEqual ("charset="InvalidCharsetId" 5", (entry as UserCommentIFDEntry).Value.Trim ());
 			}
 			// Photo.0xA000 (FlashpixVersion/Undefined/4) "48 49 48 48 "

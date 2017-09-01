@@ -127,7 +127,7 @@ namespace TagLib.Mpeg {
 		///    />.
 		/// </exception>
 		public AudioFile (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle)
+					 ReadStyle propertiesStyle)
 			: base (abstraction, propertiesStyle)
 		{
 		}
@@ -229,7 +229,7 @@ namespace TagLib.Mpeg {
 		///    corrupt files.
 		/// </remarks>
 		protected override void ReadStart (long start,
-		                                   ReadStyle propertiesStyle)
+										   ReadStyle propertiesStyle)
 		{
 			// Only check the first 16 bytes so we're not stuck
 			// reading a bad file forever.
@@ -254,7 +254,7 @@ namespace TagLib.Mpeg {
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		protected override void ReadEnd (long end,
-		                                 ReadStyle propertiesStyle)
+										 ReadStyle propertiesStyle)
 		{
 			// Make sure we have ID3v1 and ID3v2 tags.
 			GetTag (TagTypes.Id3v1, true);
@@ -284,8 +284,8 @@ namespace TagLib.Mpeg {
 		///    instance.
 		/// </returns>
 		protected override Properties ReadProperties (long start,
-		                                              long end,
-		                                              ReadStyle propertiesStyle)
+													  long end,
+													  ReadStyle propertiesStyle)
 		{
 			first_header.SetStreamLength (end - start);
 			return new Properties (TimeSpan.Zero, first_header);

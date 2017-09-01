@@ -149,7 +149,7 @@ namespace TagLib.Tiff.Rw2
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle) : base (abstraction)
+					 ReadStyle propertiesStyle) : base (abstraction)
 		{
 			Magic = 85; // Panasonic uses 0x55
 			Read (propertiesStyle);
@@ -204,7 +204,7 @@ namespace TagLib.Tiff.Rw2
 		///    langword="null" /> is returned.
 		/// </returns>
 		public override TagLib.Tag GetTag (TagLib.TagTypes type,
-		                                   bool create)
+										   bool create)
 		{
 			TagLib.Tag tag = base.GetTag (type, false);
 			if (tag != null) {

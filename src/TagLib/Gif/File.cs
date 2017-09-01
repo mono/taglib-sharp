@@ -211,7 +211,7 @@ namespace TagLib.Gif
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle) : base (abstraction)
+					 ReadStyle propertiesStyle) : base (abstraction)
 		{
 			Read (propertiesStyle);
 		}
@@ -450,7 +450,7 @@ namespace TagLib.Gif
 
 			// Contains XMP data
 			if (data.Mid (1, 8) == XMP_IDENTIFIER &&
-			    data.Mid (9, 3) == XMP_AUTH_CODE) {
+				data.Mid (9, 3) == XMP_AUTH_CODE) {
 				// XMP Data is not organized in sub-blocks
 
 				// start of xmp data

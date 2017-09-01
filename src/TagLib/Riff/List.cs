@@ -125,7 +125,7 @@ namespace TagLib.Riff {
 		///    /> interface.
 		/// </remarks>
 		protected List (SerializationInfo info,
-		                StreamingContext context)
+						StreamingContext context)
 			: base (info, context)
 		{
 		}
@@ -236,25 +236,25 @@ namespace TagLib.Riff {
 				value : new ByteVectorCollection ();
 		}
 
-        /// <summary>
-        ///    Gets the values for a specified item in the current
-        ///    instance as a <see cref="T:string[]" />.
-        /// </summary>
-        /// <param name="id">
-        ///    A <see cref="ByteVector" /> object containing the ID of
-        ///    the item to set.
-        /// </param>
-        /// <returns>
-        ///    A <see cref="T:string[]" /> containing the values of the
-        ///    specified item.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        ///    <paramref name="id" /> is <see langword="null" />.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        ///    <paramref name="id" /> isn't exactly four bytes long.
-        /// </exception>
-        public string [] GetValuesAsStrings (ByteVector id)
+		/// <summary>
+		///    Gets the values for a specified item in the current
+		///    instance as a <see cref="T:string[]" />.
+		/// </summary>
+		/// <param name="id">
+		///    A <see cref="ByteVector" /> object containing the ID of
+		///    the item to set.
+		/// </param>
+		/// <returns>
+		///    A <see cref="T:string[]" /> containing the values of the
+		///    specified item.
+		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="id" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		///    <paramref name="id" /> isn't exactly four bytes long.
+		/// </exception>
+		public string [] GetValuesAsStrings (ByteVector id)
 		{
 			if (id == null)
 				throw new ArgumentNullException ("id");
@@ -375,7 +375,7 @@ namespace TagLib.Riff {
 		///    <paramref name="id" /> isn't exactly four bytes long.
 		/// </exception>
 		public void SetValue (ByteVector id,
-		                      IEnumerable<ByteVector> values)
+							  IEnumerable<ByteVector> values)
 		{
 			if (id == null)
 				throw new ArgumentNullException ("id");

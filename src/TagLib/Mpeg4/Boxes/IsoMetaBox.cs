@@ -65,7 +65,7 @@ namespace TagLib.Mpeg4 {
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		public IsoMetaBox (BoxHeader header, TagLib.File file,
-		                   IsoHandlerBox handler)
+						   IsoHandlerBox handler)
 			: base (header, file, handler)
 		{
 			children = LoadChildren (file);

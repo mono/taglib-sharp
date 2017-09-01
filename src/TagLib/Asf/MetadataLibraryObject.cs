@@ -162,8 +162,8 @@ namespace TagLib.Asf {
 		///    records to be removed.
 		/// </param>
 		public void RemoveRecords (ushort languageListIndex,
-		                           ushort streamNumber,
-		                           string name)
+								   ushort streamNumber,
+								   string name)
 		{
 			for (int i = records.Count - 1; i >= 0; i --) {
 				DescriptionRecord rec = records [i];
@@ -174,30 +174,30 @@ namespace TagLib.Asf {
 			}
 		}
 
-        /// <summary>
-        ///    Gets all records with a given language, stream, and any
-        ///    of a collection of names from the current instance.
-        /// </summary>
-        /// <param name="languageListIndex">
-        ///    A <see cref="ushort" /> value containing the language
-        ///    list index of the records to be retrieved.
-        /// </param>
-        /// <param name="streamNumber">
-        ///    A <see cref="ushort" /> value containing the stream
-        ///    number of the records to be retrieved.
-        /// </param>
-        /// <param name="names">
-        ///    A <see cref="T:string[]" /> containing the names of the
-        ///    records to be retrieved.
-        /// </param>
-        /// <returns>
-        ///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating
-        ///    through the <see cref="DescriptionRecord" /> objects
-        ///    retrieved from the current instance.
-        /// </returns>
-        public IEnumerable<DescriptionRecord> GetRecords (ushort languageListIndex,
-		                                                  ushort streamNumber,
-		                                                  params string [] names)
+		/// <summary>
+		///    Gets all records with a given language, stream, and any
+		///    of a collection of names from the current instance.
+		/// </summary>
+		/// <param name="languageListIndex">
+		///    A <see cref="ushort" /> value containing the language
+		///    list index of the records to be retrieved.
+		/// </param>
+		/// <param name="streamNumber">
+		///    A <see cref="ushort" /> value containing the stream
+		///    number of the records to be retrieved.
+		/// </param>
+		/// <param name="names">
+		///    A <see cref="T:string[]" /> containing the names of the
+		///    records to be retrieved.
+		/// </param>
+		/// <returns>
+		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating
+		///    through the <see cref="DescriptionRecord" /> objects
+		///    retrieved from the current instance.
+		/// </returns>
+		public IEnumerable<DescriptionRecord> GetRecords (ushort languageListIndex,
+														  ushort streamNumber,
+														  params string [] names)
 		{
 			foreach (DescriptionRecord rec in records) {
 				if (rec.LanguageListIndex != languageListIndex ||
@@ -252,8 +252,8 @@ namespace TagLib.Asf {
 		///    and determining where to position the new object.
 		/// </remarks>
 		public void SetRecords (ushort languageListIndex,
-		                        ushort streamNumber, string name,
-		                        params DescriptionRecord [] records)
+								ushort streamNumber, string name,
+								params DescriptionRecord [] records)
 		{
 			int position = this.records.Count;
 			for (int i = this.records.Count - 1; i >= 0; i --) {

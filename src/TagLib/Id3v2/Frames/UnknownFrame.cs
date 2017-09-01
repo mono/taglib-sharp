@@ -120,8 +120,8 @@ namespace TagLib.Id3v2
 		///    raw frame is encoded in.
 		/// </param>
 		protected internal UnknownFrame (ByteVector data, int offset,
-		                                 FrameHeader header,
-		                                 byte version)
+										 FrameHeader header,
+										 byte version)
 			: base(header)
 		{
 			SetData (data, offset, version, false);
@@ -181,7 +181,7 @@ namespace TagLib.Id3v2
 		///    field data is encoded in.
 		/// </param>
 		protected override void ParseFields (ByteVector data,
-		                                     byte version)
+											 byte version)
 		{
 			field_data = data;
 		}

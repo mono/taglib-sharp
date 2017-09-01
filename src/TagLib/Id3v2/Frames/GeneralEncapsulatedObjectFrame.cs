@@ -98,7 +98,7 @@ namespace TagLib.Id3v2 {
 		///    raw frame is encoded in.
 		/// </param>
 		public GeneralEncapsulatedObjectFrame (ByteVector data,
-		                                       byte version)
+											   byte version)
 			: base (data, version)
 		{
 			SetData (data, 0, version, true);
@@ -126,9 +126,9 @@ namespace TagLib.Id3v2 {
 		///    raw frame is encoded in.
 		/// </param>
 		protected internal GeneralEncapsulatedObjectFrame (ByteVector data,
-		                                                   int offset,
-		                                                   FrameHeader header,
-		                                                   byte version)
+														   int offset,
+														   FrameHeader header,
+														   byte version)
 			: base(header)
 		{
 			SetData (data, offset, version, false);
@@ -289,8 +289,8 @@ namespace TagLib.Id3v2 {
 		///    <see langword="false" />.
 		/// </returns>
 		public static GeneralEncapsulatedObjectFrame Get (Tag tag,
-		                                                  string description,
-		                                                  bool create)
+														  string description,
+														  bool create)
 		{
 			GeneralEncapsulatedObjectFrame geob;
 			foreach (Frame frame in tag.GetFrames (FrameType.GEOB)) {
@@ -336,7 +336,7 @@ namespace TagLib.Id3v2 {
 		///    <paramref name="data" /> contains less than 5 bytes.
 		/// </exception>
 		protected override void ParseFields (ByteVector data,
-		                                     byte version)
+											 byte version)
 		{
 			if (data.Count < 4)
 				throw new CorruptFileException (

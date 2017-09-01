@@ -102,8 +102,8 @@ namespace TagLib.Asf {
 		///    the new instance.
 		/// </param>
 		public DescriptionRecord (ushort languageListIndex,
-		                          ushort streamNumber, string name,
-		                          string value)
+								  ushort streamNumber, string name,
+								  string value)
 		{
 			this.lang_list_index = languageListIndex;
 			this.stream_number = streamNumber;
@@ -133,8 +133,8 @@ namespace TagLib.Asf {
 		///    for the new instance.
 		/// </param>
 		public DescriptionRecord (ushort languageListIndex,
-		                          ushort streamNumber, string name,
-		                          ByteVector value)
+								  ushort streamNumber, string name,
+								  ByteVector value)
 		{
 			this.lang_list_index = languageListIndex;
 			this.stream_number = streamNumber;
@@ -165,8 +165,8 @@ namespace TagLib.Asf {
 		///    for the new instance.
 		/// </param>
 		public DescriptionRecord (ushort languageListIndex,
-		                          ushort streamNumber, string name,
-		                          uint value)
+								  ushort streamNumber, string name,
+								  uint value)
 		{
 			this.lang_list_index = languageListIndex;
 			this.stream_number = streamNumber;
@@ -197,8 +197,8 @@ namespace TagLib.Asf {
 		///    for the new instance.
 		/// </param>
 		public DescriptionRecord (ushort languageListIndex,
-		                          ushort streamNumber, string name,
-		                          ulong value)
+								  ushort streamNumber, string name,
+								  ulong value)
 		{
 			this.lang_list_index = languageListIndex;
 			this.stream_number = streamNumber;
@@ -229,8 +229,8 @@ namespace TagLib.Asf {
 		///    for the new instance.
 		/// </param>
 		public DescriptionRecord (ushort languageListIndex,
-		                          ushort streamNumber, string name,
-		                          ushort value)
+								  ushort streamNumber, string name,
+								  ushort value)
 		{
 			this.lang_list_index = languageListIndex;
 			this.stream_number = streamNumber;
@@ -261,8 +261,8 @@ namespace TagLib.Asf {
 		///    for the new instance.
 		/// </param>
 		public DescriptionRecord (ushort languageListIndex,
-		                          ushort streamNumber, string name,
-		                          bool value)
+								  ushort streamNumber, string name,
+								  bool value)
 		{
 			this.lang_list_index = languageListIndex;
 			this.stream_number = streamNumber;
@@ -293,8 +293,8 @@ namespace TagLib.Asf {
 		///    for the new instance.
 		/// </param>
 		public DescriptionRecord (ushort languageListIndex,
-		                          ushort streamNumber, string name,
-		                          System.Guid value)
+								  ushort streamNumber, string name,
+								  System.Guid value)
 		{
 			this.lang_list_index = languageListIndex;
 			this.stream_number = streamNumber;

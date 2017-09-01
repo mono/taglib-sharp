@@ -206,7 +206,7 @@ namespace TagLib.Mpeg {
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle)
+					 ReadStyle propertiesStyle)
 			: base (abstraction, propertiesStyle)
 		{
 		}
@@ -303,7 +303,7 @@ namespace TagLib.Mpeg {
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		protected override void ReadStart (long start,
-		                                   ReadStyle propertiesStyle)
+										   ReadStyle propertiesStyle)
 		{
 			if (propertiesStyle == ReadStyle.None)
 				return;
@@ -326,7 +326,7 @@ namespace TagLib.Mpeg {
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		protected override void ReadEnd (long end,
-		                                 ReadStyle propertiesStyle)
+										 ReadStyle propertiesStyle)
 		{
 			// Make sure we have ID3v1 and ID3v2 tags.
 			GetTag (TagTypes.Id3v1, true);
@@ -364,8 +364,8 @@ namespace TagLib.Mpeg {
 		///    instance.
 		/// </returns>
 		protected override Properties ReadProperties (long start,
-		                                              long end,
-		                                              ReadStyle propertiesStyle)
+													  long end,
+													  ReadStyle propertiesStyle)
 		{
 			TimeSpan duration = start_time == null ?
 				TimeSpan.Zero : TimeSpan.FromSeconds (

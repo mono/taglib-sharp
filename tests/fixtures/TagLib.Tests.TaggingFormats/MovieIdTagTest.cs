@@ -233,7 +233,7 @@ namespace TagLib.Tests.TaggingFormats
 		private delegate void TagTestFunc (Riff.MovieIdTag tag, string msg);
 		
 		private void TagTestWithSave (ref Riff.MovieIdTag tag,
-		                              TagTestFunc testFunc)
+									  TagTestFunc testFunc)
 		{
 			testFunc (tag, "Before Save");
 			//Extras.DumpHex (tag.Render ().Data);

@@ -141,20 +141,20 @@ namespace TagLib.Riff {
 			set {SetValue ("TITL", value);}
 		}
 
-        /// <summary>
-        ///    Gets and sets the performers or artists who performed in
-        ///    the media described by the current instance.
-        /// </summary>
-        /// <value>
-        ///    A <see cref="T:string[]" /> containing the performers or
-        ///    artists who performed in the media described by the
-        ///    current instance or an empty array if no value is
-        ///    present.
-        /// </value>
-        /// <remarks>
-        ///    This property is implemented using the "IART" item.
-        /// </remarks>
-        public override string [] Performers {
+		/// <summary>
+		///    Gets and sets the performers or artists who performed in
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="T:string[]" /> containing the performers or
+		///    artists who performed in the media described by the
+		///    current instance or an empty array if no value is
+		///    present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "IART" item.
+		/// </remarks>
+		public override string [] Performers {
 			get {return GetValuesAsStrings ("IART");}
 			set {SetValue ("IART", value);}
 		}

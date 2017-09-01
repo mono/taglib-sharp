@@ -124,7 +124,7 @@ namespace TagLib.Aiff
 		/// </exception>
 		public File(string path, ReadStyle propertiesStyle)
 			: this(new File.LocalFileAbstraction(path),
-			       propertiesStyle)
+				   propertiesStyle)
 		{
 		}
 
@@ -164,7 +164,7 @@ namespace TagLib.Aiff
 		///    />.
 		/// </exception>
 		public File(File.IFileAbstraction abstraction,
-		            ReadStyle propertiesStyle)
+					ReadStyle propertiesStyle)
 			: base(abstraction)
 		{
 			Mode = AccessMode.Read;
@@ -173,7 +173,7 @@ namespace TagLib.Aiff
 				uint aiff_size;
 				long tag_start, tag_end;
 				Read(true, propertiesStyle, out aiff_size,
-				     out tag_start, out tag_end);
+					 out tag_start, out tag_end);
 			}
 			finally
 			{
@@ -260,8 +260,8 @@ namespace TagLib.Aiff
 
 						data.Add("ID3 ");
 						data.Add(ByteVector.FromUInt(
-						         	(uint) tag_data.Count,
-						         	true));
+								 	(uint) tag_data.Count,
+								 	true));
 						data.Add(tag_data);
 					}
 				}
@@ -271,7 +271,7 @@ namespace TagLib.Aiff
 				uint aiff_size;
 				long tag_start, tag_end;
 				Read(false, ReadStyle.None, out aiff_size,
-				     out tag_start, out tag_end);
+					 out tag_start, out tag_end);
 
 				// If tagging info cannot be found, place it at
 				// the end of the file.
@@ -285,7 +285,7 @@ namespace TagLib.Aiff
 
 				// If the data size changed update the aiff size.
 				if (data.Count - length != 0 &&
-				    tag_start <= aiff_size)
+					tag_start <= aiff_size)
 				{
 					// Depending, if a Tag has been added or removed, 
 					// the length needs to be adjusted
@@ -299,8 +299,8 @@ namespace TagLib.Aiff
 					}
 
 					Insert(ByteVector.FromUInt((uint)
-					                           (aiff_size + data.Count - length),
-					                           true), 4, 4);
+											   (aiff_size + data.Count - length),
+											   true), 4, 4);
 				}
 				// Update the tag types.
 				TagTypesOnDisk = TagTypes;
@@ -325,7 +325,7 @@ namespace TagLib.Aiff
 		public override void RemoveTags(TagTypes types)
 		{
 			if (types == TagLib.TagTypes.Id3v2 ||
-			    types == TagLib.TagTypes.AllTags)
+				types == TagLib.TagTypes.AllTags)
 			{
 				tag = null;
 			}
@@ -457,8 +457,8 @@ namespace TagLib.Aiff
 		///    />.
 		/// </exception>
 		private void Read(bool read_tags, ReadStyle style,
-		                  out uint aiff_size, out long tag_start,
-		                  out long tag_end)
+						  out uint aiff_size, out long tag_start,
+						  out long tag_end)
 		{
 			Seek(0);
 			if (ReadBlock(4) != FileIdentifier)
@@ -478,7 +478,7 @@ namespace TagLib.Aiff
 
 			// Get the properties of the file
 			if (header_block == null &&
-			    style != ReadStyle.None)
+				style != ReadStyle.None)
 			{
 				long common_chunk_pos = FindChunk(CommIdentifier, formBlockChunksPosition);
 
@@ -517,7 +517,7 @@ namespace TagLib.Aiff
 				if (read_tags && tag == null)
 				{
 					tag = new Id3v2.Tag(this,
-					                    id3_chunk_pos + 8);
+										id3_chunk_pos + 8);
 				}
 
 				// Get the length of the tag out of the ID3 chunk

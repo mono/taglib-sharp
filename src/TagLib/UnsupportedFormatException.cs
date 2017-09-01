@@ -132,7 +132,7 @@ namespace TagLib {
 		///    new exception. For example, previously caught exception.
 		/// </param>
 		public UnsupportedFormatException (string message,
-		                                   Exception innerException)
+										   Exception innerException)
 			: base (message, innerException)
 		{
 		}
@@ -156,7 +156,7 @@ namespace TagLib {
 		///    cref="ISerializable" /> interface.
 		/// </remarks>
 		protected UnsupportedFormatException (SerializationInfo info,
-		                                      StreamingContext context)
+											  StreamingContext context)
 			: base(info, context)
 		{
 		}

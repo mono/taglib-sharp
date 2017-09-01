@@ -118,7 +118,7 @@ namespace TagLib.Tiff.Arw
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle) : base (abstraction, propertiesStyle)
+					 ReadStyle propertiesStyle) : base (abstraction, propertiesStyle)
 		{
 		}
 

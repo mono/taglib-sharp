@@ -75,7 +75,7 @@ namespace TagLib.Riff
 		///    item.
 		/// </param>
 		public virtual void ParseItem (ByteVector id, ByteVector data,
-		                               int start, int length)
+									   int start, int length)
 		{
 		}
 		
@@ -190,7 +190,7 @@ namespace TagLib.Riff
 		///    item.
 		/// </param>
 		public override void ParseItem (ByteVector id, ByteVector data,
-		                                int start, int length)
+										int start, int length)
 		{
 			if (id == "strf")
 				Codec = new WaveFormatEx (data, start);
@@ -236,7 +236,7 @@ namespace TagLib.Riff
 		///    item.
 		/// </param>
 		public override void ParseItem (ByteVector id, ByteVector data,
-		                                int start, int length)
+										int start, int length)
 		{
 			if (id == "strf")
 				Codec = new BitmapInfoHeader (data, start);
