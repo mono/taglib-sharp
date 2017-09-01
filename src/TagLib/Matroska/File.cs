@@ -24,7 +24,6 @@
 
 using System.Collections.Generic;
 using System;
-using System.Linq;
 
 namespace TagLib.Matroska
 {
@@ -287,7 +286,9 @@ namespace TagLib.Matroska
             {
                 if(updateTags)
                 {
-                    var retag = tags.ToArray();
+                    var retag = new Tag[tags.Count];
+                    for (int i = 0; i< tags.Count; i++) retag[i] = tags[i];
+
                     foreach (var tag in retag)
                     {
                         // This will force the default TagetTypeValue to get a proper value according to the medium type (audio/video)
@@ -874,7 +875,8 @@ namespace TagLib.Matroska
             if (uids.Count > 0)
             {
                 tag.Elements = new List<IUIDElement>(uids.Count);
-                tag.Elements.AddRange(uids);
+                // tag.Elements.AddRange(uids); // In .NET 2.0
+                foreach (var item in uids) tag.Elements.Add(item);
             }
         }
 
@@ -1174,7 +1176,7 @@ namespace TagLib.Matroska
             }
 
             // Claim size back on the last Void if bigger than required
-            var last = segm_list.Last();
+            var last = segm_list[segm_list.Count - 1];
             if (last.ID == MatroskaID.Void && last.Offset + last.Size >= ebml_segm.Offset + ebml_segm.Size)
             {
                 segm_list.RemoveAt(segm_list.Count - 1);
@@ -1503,7 +1505,10 @@ namespace TagLib.Matroska
                         var att = elm as Attachment;
                         if (att != null)
                         {
-                            if (tags.Attachments.Contains(att)) notdeadlink = true;
+                            foreach (var item in tags.Attachments)
+                            {
+                                if (item == att) notdeadlink = true;
+                            }
                         }
                         else
                         {

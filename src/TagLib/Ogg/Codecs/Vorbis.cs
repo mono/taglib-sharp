@@ -22,7 +22,6 @@
 //
 
 using System;
-using static TagLib.Ogg.Codec;
 
 namespace TagLib.Ogg.Codecs
 {
@@ -282,7 +281,7 @@ namespace TagLib.Ogg.Codecs
 #region Public Static Methods
 		
 		/// <summary>
-		///    Implements the <see cref="CodecProvider" /> delegate to
+		///    Implements the <see cref="T:CodecProvider" /> delegate to
 		///    provide support for recognizing a Vorbis stream from the
 		///    header packet.
 		/// </summary>
