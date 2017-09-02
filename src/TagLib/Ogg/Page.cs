@@ -245,8 +245,8 @@ namespace TagLib.Ogg
 		///    added.
 		/// </remarks>
 		public static void OverwriteSequenceNumbers (File file,
-													 long position,
-													 IDictionary<uint, int> shiftTable)
+		                                             long position,
+		                                             IDictionary<uint, int> shiftTable)
 		{
 			if (file == null)
 				throw new ArgumentNullException ("file");

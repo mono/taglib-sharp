@@ -287,7 +287,7 @@ namespace TagLib.Tests.TaggingFormats
 				Assert.IsNull (t.Copyright, "Value Cleared (Null): " + m);
 			});
 		}
-			
+        	
 		[Test]
 		public void TestClear ()
 		{
@@ -339,7 +339,7 @@ namespace TagLib.Tests.TaggingFormats
 		private delegate void TagTestFunc (Riff.InfoTag tag, string msg);
 		
 		private void TagTestWithSave (ref Riff.InfoTag tag,
-									  TagTestFunc testFunc)
+		                              TagTestFunc testFunc)
 		{
 			testFunc (tag, "Before Save");
 			//Extras.DumpHex (tag.Render ().Data);

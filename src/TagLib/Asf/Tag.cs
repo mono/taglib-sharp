@@ -147,28 +147,28 @@ namespace TagLib.Asf {
 			get {return metadata_library;}
 		}
 
-		#endregion
+        #endregion
 
 
 
-		#region Public Methods
+        #region Public Methods
 
-		/// <summary>
-		///    Gets the string contained in a specific descriptor in the
-		///    current instance.
-		/// </summary>
-		/// <param name="names">
-		///    A <see cref="T:string[]" /> containing the names of the
-		///    descriptors to look for the value in.
-		/// </param>
-		/// <exception cref="ArgumentNullException">
-		///    <paramref name="names" /> is <see langword="null" />.
-		/// </exception>
-		/// <returns>
-		///    A <see cref="string" /> object containing the contents of
-		///    the first descriptor found in the current instance.
-		/// </returns>
-		public string GetDescriptorString (params string [] names)
+        /// <summary>
+        ///    Gets the string contained in a specific descriptor in the
+        ///    current instance.
+        /// </summary>
+        /// <param name="names">
+        ///    A <see cref="T:string[]" /> containing the names of the
+        ///    descriptors to look for the value in.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///    <paramref name="names" /> is <see langword="null" />.
+        /// </exception>
+        /// <returns>
+        ///    A <see cref="string" /> object containing the contents of
+        ///    the first descriptor found in the current instance.
+        /// </returns>
+        public string GetDescriptorString (params string [] names)
 		{
 			if (names == null)
 				throw new ArgumentNullException ("names");
@@ -230,7 +230,7 @@ namespace TagLib.Asf {
 		///    name="names" /> and the rest will be cleared.
 		/// </remarks>
 		public void SetDescriptorString (string value,
-										 params string [] names)
+		                                 params string [] names)
 		{
 			if (names == null)
 				throw new ArgumentNullException ("names");
@@ -269,7 +269,7 @@ namespace TagLib.Asf {
 		///    name="names" /> and the rest will be cleared.
 		/// </remarks>
 		public void SetDescriptorStrings (string [] value,
-										  params string [] names)
+		                                  params string [] names)
 		{
 			if (names == null)
 				throw new ArgumentNullException ("names");
@@ -344,7 +344,7 @@ namespace TagLib.Asf {
 		///    determining where to position the new objects.
 		/// </remarks>
 		public void SetDescriptors (string name,
-									params ContentDescriptor [] descriptors)
+		                            params ContentDescriptor [] descriptors)
 		{
 			if (name == null)
 				throw new ArgumentNullException ("name");

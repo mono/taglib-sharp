@@ -500,7 +500,7 @@ namespace TagLib.Tests.TaggingFormats
 				Assert.AreEqual (0, t.Pictures.Length, "Value Cleared (Zero): " + m);
 			});
 		}
-		
+        
 		[Test]
 		public void TestMusicBrainzArtistID ()
 		{
@@ -827,7 +827,7 @@ namespace TagLib.Tests.TaggingFormats
 		private delegate void TagTestFunc (Ogg.XiphComment tag, string msg);
 		
 		private void TagTestWithSave (ref Ogg.XiphComment tag,
-									  TagTestFunc testFunc)
+		                              TagTestFunc testFunc)
 		{
 			testFunc (tag, "Before Save");
 			tag = new Ogg.XiphComment (tag.Render (true));

@@ -119,7 +119,7 @@ namespace TagLib.Tiff.Dng
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-					 ReadStyle propertiesStyle) : base (abstraction, propertiesStyle)
+		             ReadStyle propertiesStyle) : base (abstraction, propertiesStyle)
 		{
 		}
 

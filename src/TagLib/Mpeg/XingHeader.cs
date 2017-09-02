@@ -205,7 +205,7 @@ namespace TagLib.Mpeg {
 		///    MPEG audio packet at which the Xing header would appear.
 		/// </returns>
 		public static int XingHeaderOffset (Version version,
-											ChannelMode channelMode)
+		                                    ChannelMode channelMode)
 		{
 			bool single_channel =
 				channelMode == ChannelMode.SingleChannel;

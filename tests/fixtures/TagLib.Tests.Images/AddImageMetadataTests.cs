@@ -8,8 +8,8 @@ using TagLib.Xmp;
 
 namespace TagLib.Tests.Images
 {
-	public static class AddImageMetadataTests
-	{
+    public static class AddImageMetadataTests
+    {
 		public static string test_comment = "This is a TagLib# &Test?Comment%$@_ ";
 		public static readonly DateTime date_time = new DateTime (2009, 10, 15, 12, 12, 59);
 

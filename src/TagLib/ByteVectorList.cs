@@ -182,9 +182,9 @@ namespace TagLib {
 		///    <paramref name="byteAlign" /> is less than 1.
 		/// </exception>
 		public static ByteVectorCollection Split (ByteVector vector,
-												  ByteVector pattern,
-												  int byteAlign,
-												  int max)
+		                                          ByteVector pattern,
+		                                          int byteAlign,
+		                                          int max)
 		{
 			if (vector == null)
 				throw new ArgumentNullException ("vector");
@@ -246,8 +246,8 @@ namespace TagLib {
 		///    <paramref name="byteAlign" /> is less than 1.
 		/// </exception>
 		public static ByteVectorCollection Split (ByteVector vector,
-												  ByteVector pattern,
-												  int byteAlign)
+		                                          ByteVector pattern,
+		                                          int byteAlign)
 		{
 			return Split(vector, pattern, byteAlign, 0);
 		}
@@ -272,7 +272,7 @@ namespace TagLib {
 		///    is <see langword="null" />.
 		/// </exception>
 		public static ByteVectorCollection Split (ByteVector vector,
-												  ByteVector pattern)
+		                                          ByteVector pattern)
 		{
 			return Split(vector, pattern, 1);
 		}

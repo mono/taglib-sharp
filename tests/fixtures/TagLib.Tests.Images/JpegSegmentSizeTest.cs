@@ -8,11 +8,11 @@ using TagLib.Xmp;
 
 namespace TagLib.Tests.Images
 {
-	[TestFixture]
-	public class JpegSegmentSizeTest
-	{
+    [TestFixture]
+    public class JpegSegmentSizeTest
+    {
 		private static string sample_file = TestPath.Samples + "sample.jpg";
-		private static string tmp_file = TestPath.Samples + "tmpwrite_exceed_segment_size.jpg";
+        private static string tmp_file = TestPath.Samples + "tmpwrite_exceed_segment_size.jpg";
 
 		private static int max_segment_size = 0xFFFF;
 

@@ -327,24 +327,24 @@ namespace TagLib.Id3v1
 			}
 		}
 
-		/// <summary>
-		///    Gets and sets the performers or artists who performed in
-		///    the media described by the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="T:string[]" /> containing the performers or
-		///    artists who performed in the media described by the
-		///    current instance or an empty array if no value is
-		///    present.
-		/// </value>
-		/// <remarks>
-		///    When stored on disk, only the first 30 bytes of the
-		///    Latin-1 encoded value will be stored, minus a byte for
-		///    each additionial performer (i.e. two performers will only
-		///    have 29 bytes and three performers will only have 28
-		///    bytes).This may result in lost data.
-		/// </remarks>
-		public override string [] Performers {
+        /// <summary>
+        ///    Gets and sets the performers or artists who performed in
+        ///    the media described by the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="T:string[]" /> containing the performers or
+        ///    artists who performed in the media described by the
+        ///    current instance or an empty array if no value is
+        ///    present.
+        /// </value>
+        /// <remarks>
+        ///    When stored on disk, only the first 30 bytes of the
+        ///    Latin-1 encoded value will be stored, minus a byte for
+        ///    each additionial performer (i.e. two performers will only
+        ///    have 29 bytes and three performers will only have 28
+        ///    bytes).This may result in lost data.
+        /// </remarks>
+        public override string [] Performers {
 			get {
 				return string.IsNullOrEmpty (artist) ?
 					new string [0] : artist.Split (';');
@@ -405,22 +405,22 @@ namespace TagLib.Id3v1
 			}
 		}
 
-		/// <summary>
-		///    Gets and sets the genres of the media represented by the
-		///    current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="T:string[]" /> containing the genres of the
-		///    media represented by the current instance or an empty
-		///    array if no value is present.
-		/// </value>
-		/// <remarks>
-		///    Only first genre will be stored and only if it is an
-		///    exact match for a value appearing in <see
-		///    cref="TagLib.Genres.Audio" />. All other values will
-		///    result in the property being cleared.
-		/// </remarks>
-		public override string [] Genres {
+        /// <summary>
+        ///    Gets and sets the genres of the media represented by the
+        ///    current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="T:string[]" /> containing the genres of the
+        ///    media represented by the current instance or an empty
+        ///    array if no value is present.
+        /// </value>
+        /// <remarks>
+        ///    Only first genre will be stored and only if it is an
+        ///    exact match for a value appearing in <see
+        ///    cref="TagLib.Genres.Audio" />. All other values will
+        ///    result in the property being cleared.
+        /// </remarks>
+        public override string [] Genres {
 			get {
 				string genre_name =
 					TagLib.Genres.IndexToAudio (genre);

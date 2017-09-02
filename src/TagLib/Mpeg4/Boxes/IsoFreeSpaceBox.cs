@@ -61,7 +61,7 @@ namespace TagLib.Mpeg4 {
 		///    handler that applies to the new instance.
 		/// </param>
 		public IsoFreeSpaceBox (BoxHeader header, TagLib.File file,
-								IsoHandlerBox handler)
+		                        IsoHandlerBox handler)
 			: base (header, handler)
 		{
 			padding = DataSize;

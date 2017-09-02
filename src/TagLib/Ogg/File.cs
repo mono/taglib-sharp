@@ -130,7 +130,7 @@ namespace TagLib.Ogg
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-					 ReadStyle propertiesStyle) : base (abstraction)
+		             ReadStyle propertiesStyle) : base (abstraction)
 		{
 			Mode = AccessMode.Read;
 			try {
@@ -271,7 +271,7 @@ namespace TagLib.Ogg
 		///    langword="null" /> is returned.
 		/// </returns>
 		public override TagLib.Tag GetTag (TagLib.TagTypes type,
-										   bool create)
+		                                   bool create)
 		{
 			if (type == TagLib.TagTypes.Xiph)
 				foreach (XiphComment comment in tag.Comments)
@@ -372,7 +372,7 @@ namespace TagLib.Ogg
 		///    <see cref="Bitstream" /> objects as the values.
 		/// </returns>
 		private Dictionary<uint, Bitstream> ReadStreams (List<Page> pages,
-														 out long end)
+		                                                 out long end)
 		{
 			Dictionary<uint, Bitstream> streams =
 				new Dictionary<uint, Bitstream> ();

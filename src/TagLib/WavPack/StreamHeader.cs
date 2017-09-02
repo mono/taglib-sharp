@@ -335,7 +335,7 @@ namespace TagLib.WavPack {
 		///    langword="false" />.
 		/// </returns>
 		public static bool operator == (StreamHeader first,
-										StreamHeader second)
+		                                StreamHeader second)
 		{
 			return first.Equals (second);
 		}
@@ -356,7 +356,7 @@ namespace TagLib.WavPack {
 		///    langword="false" />.
 		/// </returns>
 		public static bool operator != (StreamHeader first,
-										StreamHeader second)
+		                                StreamHeader second)
 		{
 			return !first.Equals (second);
 		}

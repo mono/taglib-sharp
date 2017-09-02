@@ -113,7 +113,7 @@ namespace TagLib.Asf {
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-					 ReadStyle propertiesStyle) : base (abstraction)
+		             ReadStyle propertiesStyle) : base (abstraction)
 		{
 			Read (propertiesStyle);
 		}
@@ -335,7 +335,7 @@ namespace TagLib.Asf {
 		///    current instance.
 		/// </returns>
 		public IEnumerable<Object> ReadObjects (uint count,
-												long position)
+		                                        long position)
 		{
 			for (int i = 0; i < (int) count; i ++) {
 				Object obj = ReadObject (position);

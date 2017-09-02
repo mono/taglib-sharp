@@ -145,8 +145,8 @@ namespace TagLib.Id3v2
 		///    raw frame is encoded in.
 		/// </param>
 		protected internal TermsOfUseFrame (ByteVector data, int offset,
-											FrameHeader header,
-											byte version)
+		                                    FrameHeader header,
+		                                    byte version)
 			: base (header)
 		{
 			SetData (data, offset, version, false);
@@ -255,7 +255,7 @@ namespace TagLib.Id3v2
 		///    langword="false" />.
 		/// </returns>
 		public static TermsOfUseFrame Get (Tag tag, string language,
-										   bool create)
+		                                   bool create)
 		{
 			foreach (Frame f in tag.GetFrames (FrameType.USER)) {
 				TermsOfUseFrame cf = f as TermsOfUseFrame;
@@ -291,7 +291,7 @@ namespace TagLib.Id3v2
 		///    wasn't found.
 		/// </returns>
 		public static TermsOfUseFrame GetPreferred (Tag tag,
-													string language)
+		                                            string language)
 		{
 			TermsOfUseFrame best = null;
 			foreach (Frame f in tag.GetFrames (FrameType.USER)) {
@@ -328,7 +328,7 @@ namespace TagLib.Id3v2
 		///    field data is encoded in.
 		/// </param>
 		protected override void ParseFields (ByteVector data,
-											 byte version)
+		                                     byte version)
 		{
 			if (data.Count < 4)
 				throw new CorruptFileException (

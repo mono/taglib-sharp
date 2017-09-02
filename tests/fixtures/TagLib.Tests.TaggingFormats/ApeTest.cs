@@ -508,7 +508,7 @@ namespace TagLib.Tests.TaggingFormats
 				Assert.AreEqual (0, t.Pictures.Length, "Value Cleared (Zero): " + m);
 			});
 		}
-		
+        
 		[Test]
 		public void TestMusicBrainzArtistID ()
 		{
@@ -810,7 +810,7 @@ namespace TagLib.Tests.TaggingFormats
 		private delegate void TagTestFunc (Ape.Tag tag, string msg);
 		
 		private void TagTestWithSave (ref Ape.Tag tag,
-									  TagTestFunc testFunc)
+		                              TagTestFunc testFunc)
 		{
 			testFunc (tag, "Before Save");
 			tag = new Ape.Tag (tag.Render ());

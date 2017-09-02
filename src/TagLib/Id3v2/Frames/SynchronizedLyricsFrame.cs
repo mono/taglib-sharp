@@ -178,9 +178,9 @@ namespace TagLib.Id3v2
 		///    integrated frame creation.
 		/// </remarks>
 		public SynchronisedLyricsFrame (string description,
-										string language,
-										SynchedTextType type,
-										StringType encoding)
+		                                string language,
+		                                SynchedTextType type,
+		                                StringType encoding)
 			: base (FrameType.SYLT, 4)
 		{
 			this.encoding = encoding;
@@ -212,8 +212,8 @@ namespace TagLib.Id3v2
 		///    integrated frame creation.
 		/// </remarks>
 		public SynchronisedLyricsFrame (string description,
-										string language,
-										SynchedTextType type)
+		                                string language,
+		                                SynchedTextType type)
 			: this (description, language, type,
 				TagLib.Id3v2.Tag.DefaultEncoding)
 		{
@@ -260,9 +260,9 @@ namespace TagLib.Id3v2
 		///    raw frame is encoded in.
 		/// </param>
 		protected internal SynchronisedLyricsFrame (ByteVector data,
-													int offset,
-													FrameHeader header,
-													byte version)
+		                                            int offset,
+		                                            FrameHeader header,
+		                                            byte version)
 			: base (header)
 		{
 			SetData (data, offset, version, false);
@@ -356,15 +356,15 @@ namespace TagLib.Id3v2
 			set {lyrics_type = value;}
 		}
 
-		/// <summary>
-		///    Gets and sets the text contained in the current
-		///    instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="T:SynchedText[]" /> containing the text
-		///    contained in the current instance.
-		/// </value>
-		public SynchedText [] Text {
+        /// <summary>
+        ///    Gets and sets the text contained in the current
+        ///    instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="T:SynchedText[]" /> containing the text
+        ///    contained in the current instance.
+        /// </value>
+        public SynchedText [] Text {
 			get {return text;}
 			set {
 				text = value == null ? new SynchedText [0] :
@@ -408,10 +408,10 @@ namespace TagLib.Id3v2
 		///    <see langword="false" />.
 		/// </returns>
 		public static SynchronisedLyricsFrame Get (Tag tag,
-												   string description,
-												   string language,
-												   SynchedTextType type,
-												   bool create)
+		                                           string description,
+		                                           string language,
+		                                           SynchedTextType type,
+		                                           bool create)
 		{
 			foreach (Frame f in tag) {
 				SynchronisedLyricsFrame lyr =
@@ -480,9 +480,9 @@ namespace TagLib.Id3v2
 		///    </list>
 		/// </remarks>
 		public static SynchronisedLyricsFrame GetPreferred (Tag tag,
-															string description,
-															string language,
-															SynchedTextType type)
+		                                                    string description,
+		                                                    string language,
+		                                                    SynchedTextType type)
 		{
 			// This is weird, so bear with me. The best thing we can
 			// have is something straightforward and in our own
@@ -545,7 +545,7 @@ namespace TagLib.Id3v2
 		///    field data is encoded in.
 		/// </param>
 		protected override void ParseFields (ByteVector data,
-											 byte version)
+		                                     byte version)
 		{
 			if (data.Count < 6)
 				throw new CorruptFileException (

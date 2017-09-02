@@ -44,9 +44,9 @@ namespace TagLib {
 		
 		public static void DumpHex (byte [] data)
 		{
-				int cols = 16;
-				int rows = data.Length / cols +
-					(data.Length % cols != 0 ? 1 : 0);
+		        int cols = 16;
+		        int rows = data.Length / cols +
+		        	(data.Length % cols != 0 ? 1 : 0);
 			
 			for (int row = 0; row < rows; row ++) {
 				for (int col = 0; col < cols; col ++) {

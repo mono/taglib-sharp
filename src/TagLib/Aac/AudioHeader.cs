@@ -301,7 +301,7 @@ namespace TagLib.Aac
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		public static bool Find(out AudioHeader header,
-								TagLib.File file, long position, int length)
+							    TagLib.File file, long position, int length)
 		{
 			if (file == null)
 				throw new ArgumentNullException("file");
@@ -423,7 +423,7 @@ namespace TagLib.Aac
 		///    instead.
 		/// </remarks>
 		public static bool Find(out AudioHeader header,
-								TagLib.File file, long position)
+							    TagLib.File file, long position)
 		{
 			return Find(out header, file, position, -1);
 		}

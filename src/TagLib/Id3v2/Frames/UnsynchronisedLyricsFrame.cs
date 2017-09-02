@@ -91,8 +91,8 @@ namespace TagLib.Id3v2
 		///    integrated frame creation.
 		/// </remarks>
 		public UnsynchronisedLyricsFrame (string description,
-										  string language,
-										  StringType encoding)
+		                                  string language,
+		                                  StringType encoding)
 			: base (FrameType.USLT, 4)
 		{
 			this.encoding    = encoding;
@@ -119,7 +119,7 @@ namespace TagLib.Id3v2
 		///    integrated frame creation.
 		/// </remarks>
 		public UnsynchronisedLyricsFrame (string description,
-										  string language)
+		                                  string language)
 			: this (description, language,
 				TagLib.Id3v2.Tag.DefaultEncoding)
 		{
@@ -185,9 +185,9 @@ namespace TagLib.Id3v2
 		///    raw frame is encoded in.
 		/// </param>
 		protected internal UnsynchronisedLyricsFrame (ByteVector data,
-													  int offset,
-													  FrameHeader header,
-													  byte version)
+		                                              int offset,
+		                                              FrameHeader header,
+		                                              byte version)
 			: base(header)
 		{
 			SetData (data, offset, version, false);
@@ -329,9 +329,9 @@ namespace TagLib.Id3v2
 		///    <see langword="false" />.
 		/// </returns>
 		public static UnsynchronisedLyricsFrame Get (Tag tag,
-													 string description,
-													 string language,
-													 bool create)
+		                                             string description,
+		                                             string language,
+		                                             bool create)
 		{
 			UnsynchronisedLyricsFrame uslt;
 			foreach (Frame frame in tag.GetFrames (FrameType.USLT)) {
@@ -393,8 +393,8 @@ namespace TagLib.Id3v2
 		///    </list>
 		/// </remarks>
 		public static UnsynchronisedLyricsFrame GetPreferred (Tag tag,
-															  string description,
-															  string language)
+		                                                      string description,
+		                                                      string language)
 		{
 			// This is weird, so bear with me. The best thing we can
 			// have is something straightforward and in our own
@@ -454,7 +454,7 @@ namespace TagLib.Id3v2
 		///    field data is encoded in.
 		/// </param>
 		protected override void ParseFields (ByteVector data,
-											 byte version)
+		                                     byte version)
 		{
 			if (data.Count < 4)
 				throw new CorruptFileException (

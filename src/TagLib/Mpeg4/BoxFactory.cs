@@ -57,10 +57,10 @@ namespace TagLib.Mpeg4 {
 		///    A newly created <see cref="Box" /> object.
 		/// </returns>
 		private static Box CreateBox (TagLib.File file,
-									  BoxHeader header,
-									  BoxHeader parent,
-									  IsoHandlerBox handler,
-									  int index)
+		                              BoxHeader header,
+		                              BoxHeader parent,
+		                              IsoHandlerBox handler,
+		                              int index)
 		{
 			// The first few children of an "stsd" are sample
 			// entries.
@@ -164,8 +164,8 @@ namespace TagLib.Mpeg4 {
 		///    A newly created <see cref="Box" /> object.
 		/// </returns>
 		internal static Box CreateBox (TagLib.File file, long position,
-									   BoxHeader parent,
-									   IsoHandlerBox handler, int index)
+		                               BoxHeader parent,
+		                               IsoHandlerBox handler, int index)
 		{
 			BoxHeader header = new BoxHeader (file, position);
 			return CreateBox (file, header, parent, handler, index);
@@ -191,7 +191,7 @@ namespace TagLib.Mpeg4 {
 		///    A newly created <see cref="Box" /> object.
 		/// </returns>
 		public static Box CreateBox (TagLib.File file, long position,
-									 IsoHandlerBox handler)
+		                             IsoHandlerBox handler)
 		{
 			return CreateBox (file, position, BoxHeader.Empty,
 				handler, -1);
@@ -237,7 +237,7 @@ namespace TagLib.Mpeg4 {
 		///    A newly created <see cref="Box" /> object.
 		/// </returns>
 		public static Box CreateBox (TagLib.File file, BoxHeader header,
-									 IsoHandlerBox handler)
+		                             IsoHandlerBox handler)
 		{
 			return CreateBox (file, header, BoxHeader.Empty,
 				handler, -1);

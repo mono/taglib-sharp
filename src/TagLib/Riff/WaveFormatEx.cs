@@ -745,7 +745,7 @@ namespace TagLib.Riff {
 		///    langword="false" />.
 		/// </returns>
 		public static bool operator == (WaveFormatEx first,
-										WaveFormatEx second)
+		                                WaveFormatEx second)
 		{
 			return first.Equals (second);
 		}
@@ -766,7 +766,7 @@ namespace TagLib.Riff {
 		///    langword="false" />.
 		/// </returns>
 		public static bool operator != (WaveFormatEx first,
-										WaveFormatEx second)
+		                                WaveFormatEx second)
 		{
 			return !first.Equals (second);
 		}

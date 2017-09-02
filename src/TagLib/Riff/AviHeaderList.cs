@@ -74,7 +74,7 @@ namespace TagLib.Riff
 		///    is the wrong length.
 		/// </exception>
 		public AviHeaderList (TagLib.File file, long position,
-							  int length)
+		                      int length)
 		{
 			if (file == null)
 				throw new ArgumentNullException ("file");

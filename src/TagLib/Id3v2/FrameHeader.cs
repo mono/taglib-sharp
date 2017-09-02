@@ -365,8 +365,8 @@ namespace TagLib.Id3v2 {
 		#region Private Methods
 		
 		private static ReadOnlyByteVector ConvertId (ByteVector id,
-													 byte version,
-													 bool toVersion)
+		                                             byte version,
+		                                             bool toVersion)
 		{
 			if (version >= 4) {
 				ReadOnlyByteVector outid =

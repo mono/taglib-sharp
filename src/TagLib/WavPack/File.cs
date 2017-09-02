@@ -113,7 +113,7 @@ namespace TagLib.WavPack {
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-					 ReadStyle propertiesStyle)
+		             ReadStyle propertiesStyle)
 			: base (abstraction, propertiesStyle)
 		{
 		}
@@ -210,7 +210,7 @@ namespace TagLib.WavPack {
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		protected override void ReadStart (long start,
-										   ReadStyle propertiesStyle)
+		                                   ReadStyle propertiesStyle)
 		{
 			if (header_block != null &&
 				propertiesStyle == ReadStyle.None)
@@ -235,7 +235,7 @@ namespace TagLib.WavPack {
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		protected override void ReadEnd (long end,
-										 ReadStyle propertiesStyle)
+		                                 ReadStyle propertiesStyle)
 		{
 			// Make sure we have an APE tag.
 			GetTag (TagTypes.Ape, true);
@@ -264,8 +264,8 @@ namespace TagLib.WavPack {
 		///    instance.
 		/// </returns>
 		protected override Properties ReadProperties (long start,
-													  long end,
-													  ReadStyle propertiesStyle)
+		                                              long end,
+		                                              ReadStyle propertiesStyle)
 		{
 			StreamHeader header = new StreamHeader (header_block,
 				end - start);

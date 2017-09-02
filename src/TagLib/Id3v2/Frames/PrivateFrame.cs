@@ -256,8 +256,8 @@ namespace TagLib.Id3v2 {
 		///    raw frame is encoded in.
 		/// </param>
 		protected internal PrivateFrame (ByteVector data, int offset,
-										 FrameHeader header,
-										 byte version) : base(header)
+		                                 FrameHeader header,
+		                                 byte version) : base(header)
 		{
 			SetData (data, offset, version, false);
 		}
@@ -323,7 +323,7 @@ namespace TagLib.Id3v2 {
 		///    langword="false" />.
 		/// </returns>
 		public static PrivateFrame Get (Tag tag, string owner,
-										bool create)
+		                                bool create)
 		{
 			PrivateFrame priv;
 			

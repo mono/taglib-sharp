@@ -167,7 +167,7 @@ namespace TagLib.Jpeg
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-					 ReadStyle propertiesStyle) : base (abstraction)
+		             ReadStyle propertiesStyle) : base (abstraction)
 		{
 			Read (propertiesStyle);
 		}
@@ -224,8 +224,8 @@ namespace TagLib.Jpeg
 			}
 			if (type == TagTypes.IPTCIIM && create)
 			  {
-				// FIXME: don't know how to create IPTCIIM tags
-				return base.GetTag (type, false);
+			    // FIXME: don't know how to create IPTCIIM tags
+			    return base.GetTag (type, false);
 			  }
 
 			return base.GetTag (type, create);
@@ -476,7 +476,7 @@ namespace TagLib.Jpeg
 				data = ReadBlock (exif_header_length);
 
 				if (data.Count == exif_header_length
-					&& data.Mid (0, 6).ToString ().Equals (EXIF_IDENTIFIER)) {
+				    && data.Mid (0, 6).ToString ().Equals (EXIF_IDENTIFIER)) {
 
 					bool is_bigendian = data.Mid (6, 2).ToString ().Equals ("MM");
 
@@ -520,19 +520,19 @@ namespace TagLib.Jpeg
 			}
 		}
 
-		/// <summary>
-		///    Reads an APP13 segment to find IPTC-IIM metadata.
-		/// </summary>
-		/// <param name="length">
-		///    The length of the segment that will be read.
-		/// </param>
-		/// <remarks>More info and specs for IPTC-IIM:
-		/// - Guidelines for Handling Image Metadata (http://www.metadataworkinggroup.org/specs/)
-		/// - IPTC Standard Photo Metadata (July 2010) (http://www.iptc.org/std/photometadata/specification/IPTC-PhotoMetadata-201007_1.pdf)
-		/// - Extracting IPTC header information from JPEG images (http://www.codeproject.com/KB/graphics/iptc.aspx?fid=2301&amp;df=90&amp;mpp=25&amp;noise=3&amp;prof=False&amp;sort=Position&amp;view=Quick&amp;fr=51#xx0xx)
-		/// - Reading IPTC APP14 Segment Header Information from JPEG Images (http://www.codeproject.com/KB/graphics/ReadingIPTCAPP14.aspx?q=iptc)
-		/// </remarks>
-		private void ReadAPP13Segment (ushort length)
+        /// <summary>
+        ///    Reads an APP13 segment to find IPTC-IIM metadata.
+        /// </summary>
+        /// <param name="length">
+        ///    The length of the segment that will be read.
+        /// </param>
+        /// <remarks>More info and specs for IPTC-IIM:
+        /// - Guidelines for Handling Image Metadata (http://www.metadataworkinggroup.org/specs/)
+        /// - IPTC Standard Photo Metadata (July 2010) (http://www.iptc.org/std/photometadata/specification/IPTC-PhotoMetadata-201007_1.pdf)
+        /// - Extracting IPTC header information from JPEG images (http://www.codeproject.com/KB/graphics/iptc.aspx?fid=2301&amp;df=90&amp;mpp=25&amp;noise=3&amp;prof=False&amp;sort=Position&amp;view=Quick&amp;fr=51#xx0xx)
+        /// - Reading IPTC APP14 Segment Header Information from JPEG Images (http://www.codeproject.com/KB/graphics/ReadingIPTCAPP14.aspx?q=iptc)
+        /// </remarks>
+        private void ReadAPP13Segment (ushort length)
 		{
 			// TODO: if both IPTC-IIM and XMP metadata is contained in a file, we should read
 			// a IPTC-IIM checksum and compare that with the checksum built over the IIM block.

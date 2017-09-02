@@ -9,9 +9,9 @@ namespace TagLib.Tests.Images
 	///    xmlns declaration in a somewhat nonstandard location.
 	///    This is valid, so we need to take it into account.
 	/// </summary>
-	[TestFixture]
-	public class XmpCrashTest
-	{
+    [TestFixture]
+    public class XmpCrashTest
+    {
 		private static string sample_file = TestPath.Samples + "sample_xmpcrash.jpg";
 
 		[Test]

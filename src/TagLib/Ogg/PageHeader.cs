@@ -131,7 +131,7 @@ namespace TagLib.Ogg
 		///    that apply to the page described by the new instance.
 		/// </param>
 		public PageHeader (uint streamSerialNumber, uint pageNumber,
-						   PageFlags flags)
+		                   PageFlags flags)
 		{
 			version = 0;
 			this.flags = flags;
@@ -254,7 +254,7 @@ namespace TagLib.Ogg
 		///    use in the new instance.
 		/// </param>
 		public PageHeader (PageHeader original, uint offset,
-						   PageFlags flags)
+		                   PageFlags flags)
 		{
 			version = original.version;
 			this.flags = flags;
@@ -528,7 +528,7 @@ namespace TagLib.Ogg
 		///    langword="false" />.
 		/// </returns>
 		public static bool operator == (PageHeader first,
-										PageHeader second)
+		                                PageHeader second)
 		{
 			return first.Equals (second);
 		}
@@ -549,7 +549,7 @@ namespace TagLib.Ogg
 		///    langword="false" />.
 		/// </returns>
 		public static bool operator != (PageHeader first,
-										PageHeader second)
+		                                PageHeader second)
 		{
 			return !first.Equals (second);
 		}

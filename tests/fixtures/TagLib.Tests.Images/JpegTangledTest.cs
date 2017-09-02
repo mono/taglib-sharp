@@ -99,8 +99,8 @@ namespace TagLib.Tests.Images
 		{
 			for (int i = 0; i < count; i++)
 				AddImageMetadataTests.AddExifTest (GetSampleFilename (i),
-												   GetTmpFilename (i),
-												   (TagTypes.TiffIFD & contained_types[i]) != 0);
+				                                   GetTmpFilename (i),
+				                                   (TagTypes.TiffIFD & contained_types[i]) != 0);
 		}
 
 		[Test]
@@ -108,8 +108,8 @@ namespace TagLib.Tests.Images
 		{
 			for (int i = 0; i < count; i++)
 				AddImageMetadataTests.AddGPSTest (GetSampleFilename (i),
-												  GetTmpFilename (i),
-												  (TagTypes.TiffIFD & contained_types[i]) != 0);
+				                                  GetTmpFilename (i),
+				                                  (TagTypes.TiffIFD & contained_types[i]) != 0);
 		}
 
 		[Test]
@@ -117,8 +117,8 @@ namespace TagLib.Tests.Images
 		{
 			for (int i = 0; i < count; i++)
 				AddImageMetadataTests.AddXMPTest1 (GetSampleFilename (i),
-												  GetTmpFilename (i),
-												  (TagTypes.XMP & contained_types[i]) != 0);
+				                                  GetTmpFilename (i),
+				                                  (TagTypes.XMP & contained_types[i]) != 0);
 		}
 
 		[Test]
@@ -126,8 +126,8 @@ namespace TagLib.Tests.Images
 		{
 			for (int i = 0; i < count; i++)
 				AddImageMetadataTests.AddXMPTest2 (GetSampleFilename (i),
-												  GetTmpFilename (i),
-												  (TagTypes.XMP & contained_types[i]) != 0);
+				                                  GetTmpFilename (i),
+				                                  (TagTypes.XMP & contained_types[i]) != 0);
 		}
 
 		public void CheckTags (File file, int i) {

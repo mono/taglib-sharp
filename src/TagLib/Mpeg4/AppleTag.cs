@@ -180,7 +180,7 @@ namespace TagLib.Mpeg4 {
 		///    matching boxes.
 		/// </returns>
 		public IEnumerable<AppleDataBox> DataBoxes (string mean,
-													string name)
+		                                            string name)
 		{
 			// These children will have a box type of "----"
 			foreach (Box box in ilst_box.Children) {
@@ -213,18 +213,18 @@ namespace TagLib.Mpeg4 {
 			}
 		}
 
-		/// <summary>
-		///    Gets all text values contained in a specified box type.
-		/// </summary>
-		/// <param name="type">
-		///    A <see cref="ByteVector" /> object containing the box
-		///    type to match.
-		/// </param>
-		/// <returns>
-		///    A <see cref="T:string[]" /> containing text from all
-		///    matching boxes.
-		/// </returns>
-		public string [] GetText (ByteVector type) {
+        /// <summary>
+        ///    Gets all text values contained in a specified box type.
+        /// </summary>
+        /// <param name="type">
+        ///    A <see cref="ByteVector" /> object containing the box
+        ///    type to match.
+        /// </param>
+        /// <returns>
+        ///    A <see cref="T:string[]" /> containing text from all
+        ///    matching boxes.
+        /// </returns>
+        public string [] GetText (ByteVector type) {
 			List<string> result = new List<string> ();
 			foreach (AppleDataBox box in DataBoxes (type)) {
 				if (box.Text == null)
@@ -301,7 +301,7 @@ namespace TagLib.Mpeg4 {
 		///    the added boxes.
 		/// </param>
 		public void SetData (ByteVector type, ByteVectorCollection data,
-							 uint flags)
+		                     uint flags)
 		{
 			if (data == null || data.Count == 0) {
 				ClearData (type);
@@ -332,7 +332,7 @@ namespace TagLib.Mpeg4 {
 		///    the added box.
 		/// </param>
 		public void SetData (ByteVector type, ByteVector data,
-							 uint flags)
+		                     uint flags)
 		{
 			if (data == null || data.Count == 0)
 				ClearData (type);
@@ -340,7 +340,7 @@ namespace TagLib.Mpeg4 {
 				SetData (type, new ByteVectorCollection (data),
 					flags);
 		}
-	  
+      
 		/// <summary>
 		///    Sets the text for a specified box type.
 		/// </summary>
@@ -1254,8 +1254,8 @@ namespace TagLib.Mpeg4 {
 		///    http://musicbrainz.org/doc/PicardTagMapping
 		/// </remarks>
 		public override string MusicBrainzTrackId {
-			get {return GetDashBox("com.apple.iTunes","MusicBrainz Track Id");}
-			set {SetDashBox("com.apple.iTunes", "MusicBrainz Track Id", value);}
+		    get {return GetDashBox("com.apple.iTunes","MusicBrainz Track Id");}
+		    set {SetDashBox("com.apple.iTunes", "MusicBrainz Track Id", value);}
 		}
 
 		/// <summary>
@@ -1360,20 +1360,20 @@ namespace TagLib.Mpeg4 {
 			set {SetDashBox("com.apple.iTunes", "MusicBrainz Album Release Country",value);}
 		}
 
-	/// <summary>
-	///    Gets and sets the ReplayGain Track Value of the media represented by
-	///    the current instance.
-	/// </summary>
-	/// <value>
-	///    A <see cref="double" /> containing the ReplayGain Track Value of the
-	///    media represented by the current instance or an empty
-	///    array if no value is present.
-	/// </value>
-	/// <remarks>
-	///    This property is implemented using the "dash"/"----" box type.
-	/// </remarks>
-	public override double ReplayGainTrackGain
-	{
+    /// <summary>
+    ///    Gets and sets the ReplayGain Track Value of the media represented by
+    ///    the current instance.
+    /// </summary>
+    /// <value>
+    ///    A <see cref="double" /> containing the ReplayGain Track Value of the
+    ///    media represented by the current instance or an empty
+    ///    array if no value is present.
+    /// </value>
+    /// <remarks>
+    ///    This property is implemented using the "dash"/"----" box type.
+    /// </remarks>
+    public override double ReplayGainTrackGain
+    {
 			get
 			{
 				string text = GetDashBox("com.apple.iTunes", "REPLAYGAIN_TRACK_GAIN");
@@ -1403,20 +1403,20 @@ namespace TagLib.Mpeg4 {
 			}
 		}
 
-	/// <summary>
-	///    Gets and sets the ReplayGain Peak Value of the media represented by
-	///    the current instance.
-	/// </summary>
-	/// <value>
-	///    A <see cref="double" /> containing the ReplayGain Peak Value of the
-	///    media represented by the current instance or an empty
-	///    array if no value is present.
-	/// </value>
-	/// <remarks>
-	///    This property is implemented using the "dash"/"----" box type.
-	/// </remarks>
-	public override double ReplayGainTrackPeak
-	{
+    /// <summary>
+    ///    Gets and sets the ReplayGain Peak Value of the media represented by
+    ///    the current instance.
+    /// </summary>
+    /// <value>
+    ///    A <see cref="double" /> containing the ReplayGain Peak Value of the
+    ///    media represented by the current instance or an empty
+    ///    array if no value is present.
+    /// </value>
+    /// <remarks>
+    ///    This property is implemented using the "dash"/"----" box type.
+    /// </remarks>
+    public override double ReplayGainTrackPeak
+    {
 			get
 			{
 				string text;
@@ -1437,20 +1437,20 @@ namespace TagLib.Mpeg4 {
 			}
 		}
 
-	/// <summary>
-	///    Gets and sets the ReplayGain Album Value of the media represented by
-	///    the current instance.
-	/// </summary>
-	/// <value>
-	///    A <see cref="double" /> containing the ReplayGain Album Value of the
-	///    media represented by the current instance or an empty
-	///    array if no value is present.
-	/// </value>
-	/// <remarks>
-	///    This property is implemented using the "dash"/"----" box type.
-	/// </remarks>
-	public override double ReplayGainAlbumGain
-	{
+    /// <summary>
+    ///    Gets and sets the ReplayGain Album Value of the media represented by
+    ///    the current instance.
+    /// </summary>
+    /// <value>
+    ///    A <see cref="double" /> containing the ReplayGain Album Value of the
+    ///    media represented by the current instance or an empty
+    ///    array if no value is present.
+    /// </value>
+    /// <remarks>
+    ///    This property is implemented using the "dash"/"----" box type.
+    /// </remarks>
+    public override double ReplayGainAlbumGain
+    {
 			get
 			{
 				string text = GetDashBox("com.apple.iTunes", "REPLAYGAIN_ALBUM_GAIN");
@@ -1480,20 +1480,20 @@ namespace TagLib.Mpeg4 {
 			}
 		}
 
-	/// <summary>
-	///    Gets and sets the ReplayGain Album Peak Value of the media represented by
-	///    the current instance.
-	/// </summary>
-	/// <value>
-	///    A <see cref="double" /> containing the ReplayGain Album Peak Value of the
-	///    media represented by the current instance or an empty
-	///    array if no value is present.
-	/// </value>
-	/// <remarks>
-	///    This property is implemented using the "dash"/"----" box type.
-	/// </remarks>
-	public override double ReplayGainAlbumPeak
-	{
+    /// <summary>
+    ///    Gets and sets the ReplayGain Album Peak Value of the media represented by
+    ///    the current instance.
+    /// </summary>
+    /// <value>
+    ///    A <see cref="double" /> containing the ReplayGain Album Peak Value of the
+    ///    media represented by the current instance or an empty
+    ///    array if no value is present.
+    /// </value>
+    /// <remarks>
+    ///    This property is implemented using the "dash"/"----" box type.
+    /// </remarks>
+    public override double ReplayGainAlbumPeak
+    {
 			get
 			{
 				string text;

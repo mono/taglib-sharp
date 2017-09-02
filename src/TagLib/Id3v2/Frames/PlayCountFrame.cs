@@ -227,8 +227,8 @@ namespace TagLib.Id3v2 {
 		///    raw frame is encoded in.
 		/// </param>
 		protected internal PlayCountFrame (ByteVector data, int offset,
-										   FrameHeader header,
-										   byte version) : base(header)
+		                                   FrameHeader header,
+		                                   byte version) : base(header)
 		{
 			SetData (data, offset, version, false);
 		}

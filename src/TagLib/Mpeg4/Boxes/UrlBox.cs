@@ -24,9 +24,9 @@ using TagLib.Mpeg4;
 
 namespace TagLib
 {
-	/// <summary>
-	/// Represent a MP4 URL box
-	/// </summary>
+    /// <summary>
+    /// Represent a MP4 URL box
+    /// </summary>
 	public class UrlBox : Box
 	{
 		#region Private Fields
@@ -63,7 +63,7 @@ namespace TagLib
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		public UrlBox (BoxHeader header, TagLib.File file,
-						IsoHandlerBox handler)
+		                IsoHandlerBox handler)
 			: base (header, handler)
 		{
 			if (file == null)

@@ -128,7 +128,7 @@ namespace TagLib.Audible
 		///    The file is not the write length.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-					 ReadStyle propertiesStyle) : base (abstraction)
+		             ReadStyle propertiesStyle) : base (abstraction)
 		{			
 			
 			Mode = AccessMode.Read;

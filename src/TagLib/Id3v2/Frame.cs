@@ -341,7 +341,7 @@ namespace TagLib.Id3v2 {
 		///    by <paramref name="version" />.
 		/// </returns>
 		protected static StringType CorrectEncoding (StringType type,
-													 byte version)
+		                                             byte version)
 		{
 			if (Tag.ForceDefaultEncoding)
 				type = Tag.DefaultEncoding;
@@ -371,7 +371,7 @@ namespace TagLib.Id3v2 {
 		///    read the header into current instance.
 		/// </param>
 		protected void SetData (ByteVector data, int offset,
-								byte version, bool readHeader)
+		                        byte version, bool readHeader)
 		{
 			if (readHeader)
 				header = new FrameHeader (data, version);
@@ -392,7 +392,7 @@ namespace TagLib.Id3v2 {
 		///    field data is encoded in.
 		/// </param>
 		protected abstract void ParseFields (ByteVector data,
-											 byte version);
+		                                     byte version);
 		
 		/// <summary>
 		///    Renders the values in the current instance into field
@@ -436,7 +436,7 @@ namespace TagLib.Id3v2 {
 		///    <paramref name="frameData" /> is <see langword="null" />.
 		/// </exception>
 		protected ByteVector FieldData (ByteVector frameData,
-										int offset, byte version)
+		                                int offset, byte version)
 		{
 			if (frameData == null)
 				throw new ArgumentNullException ("frameData");
@@ -474,11 +474,11 @@ namespace TagLib.Id3v2 {
 			ByteVector data = frameData.Mid (data_offset,
 				data_length);
 
-			if ((Flags & FrameFlags.Unsynchronisation) != 0) {
-				int before_length = data.Count;
+            if ((Flags & FrameFlags.Unsynchronisation) != 0) {
+                int before_length = data.Count;
 				SynchData.ResynchByteVector (data);
-				data_length -= (data.Count - before_length);
-			}
+                data_length -= (data.Count - before_length);
+            }
 			
 			// FIXME: Implement encryption.
 			if ((Flags & FrameFlags.Encryption) != 0)

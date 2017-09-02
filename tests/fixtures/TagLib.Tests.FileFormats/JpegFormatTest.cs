@@ -9,9 +9,9 @@ using TagLib.Xmp;
 
 namespace TagLib.Tests.FileFormats
 {
-	[TestFixture]
-	public class JpegFormatTest
-	{
+    [TestFixture]
+    public class JpegFormatTest
+    {
 		private static string sample_file = TestPath.Samples + "sample.jpg";
 		private Image.File file;
 
@@ -20,11 +20,11 @@ namespace TagLib.Tests.FileFormats
 				TagTypes.TiffIFD |
 				TagTypes.XMP;
 
-		[OneTimeSetUp]
-		public void Init()
-		{
-			file = File.Create(sample_file) as Image.File;
-		}
+        [OneTimeSetUp]
+        public void Init()
+        {
+            file = File.Create(sample_file) as Image.File;
+        }
 
 		[Test]
 		public void TestJpegRead()

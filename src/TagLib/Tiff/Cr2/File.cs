@@ -139,7 +139,7 @@ namespace TagLib.Tiff.Cr2
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-					 ReadStyle propertiesStyle) : base (abstraction)
+		             ReadStyle propertiesStyle) : base (abstraction)
 		{
 			Read (propertiesStyle);
 		}

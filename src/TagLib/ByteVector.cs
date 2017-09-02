@@ -218,16 +218,16 @@ namespace TagLib {
 				this.data.AddRange (vector);
 		}
 
-		/// <summary>
-		///    Constructs and initializes a new instance of <see
-		///    cref="ByteVector" /> by copying the values from a
-		///    specified <see cref="T:byte[]" />.
-		/// </summary>
-		/// <param name="data">
-		///    A <see cref="T:byte[]" /> containing the bytes to be stored
-		///    in the new instance.
-		/// </param>
-		public ByteVector (params byte [] data)
+        /// <summary>
+        ///    Constructs and initializes a new instance of <see
+        ///    cref="ByteVector" /> by copying the values from a
+        ///    specified <see cref="T:byte[]" />.
+        /// </summary>
+        /// <param name="data">
+        ///    A <see cref="T:byte[]" /> containing the bytes to be stored
+        ///    in the new instance.
+        /// </param>
+        public ByteVector (params byte [] data)
 		{
 			if (data != null)
 				this.data.AddRange (data);
@@ -758,7 +758,7 @@ namespace TagLib {
 		///    <paramref name="pattern" /> is <see langword="null" />.
 		/// </exception>
 		public bool ContainsAt (ByteVector pattern, int offset, 
-								int patternOffset, int patternLength)
+		                        int patternOffset, int patternLength)
 		{
 			if (pattern == null)
 				throw new ArgumentNullException ("pattern");
@@ -808,7 +808,7 @@ namespace TagLib {
 		///    <paramref name="pattern" /> is <see langword="null" />.
 		/// </exception>
 		public bool ContainsAt (ByteVector pattern, int offset,
-								int patternOffset)
+		                        int patternOffset)
 		{
 			return ContainsAt (pattern, offset, patternOffset,
 				int.MaxValue);
@@ -1344,81 +1344,81 @@ namespace TagLib {
 			return ToULong (true);
 		}
 
-		/// <summary>
-		///    Converts an first four bytes of the current instance to
-		///    a <see cref="float" /> value.
-		/// </summary>
-		/// <param name="mostSignificantByteFirst">
-		///    <see langword="true" /> if the most significant byte
-		///    appears first (big endian format), or <see
-		///    langword="false" /> if the least significant byte appears
-		///    first (little endian format).
-		/// </param>
-		/// <returns>
-		///    A <see cref="float"/> value containing the value read
-		///    from the current instance.
-		/// </returns>
-		public float ToFloat (bool mostSignificantByteFirst)
-		{
-			byte [] bytes = (byte []) Data.Clone ();
+        /// <summary>
+        ///    Converts an first four bytes of the current instance to
+        ///    a <see cref="float" /> value.
+        /// </summary>
+        /// <param name="mostSignificantByteFirst">
+        ///    <see langword="true" /> if the most significant byte
+        ///    appears first (big endian format), or <see
+        ///    langword="false" /> if the least significant byte appears
+        ///    first (little endian format).
+        /// </param>
+        /// <returns>
+        ///    A <see cref="float"/> value containing the value read
+        ///    from the current instance.
+        /// </returns>
+        public float ToFloat (bool mostSignificantByteFirst)
+        {
+            byte [] bytes = (byte []) Data.Clone ();
 
-			if (mostSignificantByteFirst) {
-				Array.Reverse (bytes);
-			}
+            if (mostSignificantByteFirst) {
+                Array.Reverse (bytes);
+            }
 
-			return BitConverter.ToSingle (bytes, 0);
-		}
+            return BitConverter.ToSingle (bytes, 0);
+        }
 
-		/// <summary>
-		///    Converts an first four bytes of the current instance to
-		///    a <see cref="float" /> value using big-endian format.
-		/// </summary>
-		/// <returns>
-		///    A <see cref="float"/> value containing the value read
-		///    from the current instance.
-		/// </returns>
-		public float ToFloat ()
-		{
-			return ToFloat (true);
-		}
+        /// <summary>
+        ///    Converts an first four bytes of the current instance to
+        ///    a <see cref="float" /> value using big-endian format.
+        /// </summary>
+        /// <returns>
+        ///    A <see cref="float"/> value containing the value read
+        ///    from the current instance.
+        /// </returns>
+        public float ToFloat ()
+        {
+            return ToFloat (true);
+        }
 
-		/// <summary>
-		///    Converts an first eight bytes of the current instance to
-		///    a <see cref="double" /> value.
-		/// </summary>
-		/// <param name="mostSignificantByteFirst">
-		///    <see langword="true" /> if the most significant byte
-		///    appears first (big endian format), or <see
-		///    langword="false" /> if the least significant byte appears
-		///    first (little endian format).
-		/// </param>
-		/// <returns>
-		///    A <see cref="double"/> value containing the value read
-		///    from the current instance.
-		/// </returns>
-		public double ToDouble (bool mostSignificantByteFirst)
-		{
-			byte [] bytes = (byte []) Data.Clone ();
+        /// <summary>
+        ///    Converts an first eight bytes of the current instance to
+        ///    a <see cref="double" /> value.
+        /// </summary>
+        /// <param name="mostSignificantByteFirst">
+        ///    <see langword="true" /> if the most significant byte
+        ///    appears first (big endian format), or <see
+        ///    langword="false" /> if the least significant byte appears
+        ///    first (little endian format).
+        /// </param>
+        /// <returns>
+        ///    A <see cref="double"/> value containing the value read
+        ///    from the current instance.
+        /// </returns>
+        public double ToDouble (bool mostSignificantByteFirst)
+        {
+            byte [] bytes = (byte []) Data.Clone ();
 
-			if (mostSignificantByteFirst) {
-				Array.Reverse (bytes);
-			}
+            if (mostSignificantByteFirst) {
+                Array.Reverse (bytes);
+            }
 
-			return BitConverter.ToDouble (bytes, 0);
-		}
+            return BitConverter.ToDouble (bytes, 0);
+        }
 
-		/// <summary>
-		///    Converts an first eight bytes of the current instance to
-		///    a <see cref="double" /> value using big-endian format.
-		/// </summary>
-		/// <returns>
-		///    A <see cref="double"/> value containing the value read
-		///    from the current instance.
-		/// </returns>
-		public double ToDouble ()
-		{
-			return ToDouble (true);
-		}
+        /// <summary>
+        ///    Converts an first eight bytes of the current instance to
+        ///    a <see cref="double" /> value using big-endian format.
+        /// </summary>
+        /// <returns>
+        ///    A <see cref="double"/> value containing the value read
+        ///    from the current instance.
+        /// </returns>
+        public double ToDouble ()
+        {
+            return ToDouble (true);
+        }
 		
 		/// <summary>
 		///    Converts a portion of the current instance to a <see
@@ -1565,7 +1565,7 @@ namespace TagLib {
 		///    A <see cref="T:string[]" /> containing the converted text.
 		/// </returns>
 		public string[] ToStrings (StringType type, int offset,
-								   int count)
+		                           int count)
 		{
 			int chunk = 0;
 			int position = offset;
@@ -1630,7 +1630,7 @@ namespace TagLib {
 		///    data; otherwise, <see langword="false" />.</para>
 		/// </returns>
 		public static bool operator== (ByteVector first,
-									   ByteVector second)
+		                               ByteVector second)
 		{
 			bool fnull = (object) first == null;
 			bool snull = (object) second == null;
@@ -1658,7 +1658,7 @@ namespace TagLib {
 		///    data; otherwise, <see langword="false" />.</para>
 		/// </returns>
 		public static bool operator!= (ByteVector first,
-									   ByteVector second)
+		                               ByteVector second)
 		{
 			return !(first == second);
 		}
@@ -1683,7 +1683,7 @@ namespace TagLib {
 		///    is <see langword="null" />.
 		/// </exception>
 		public static bool operator< (ByteVector first,
-									  ByteVector second)
+		                              ByteVector second)
 		{
 			if (first == null)
 				throw new ArgumentNullException ("first");
@@ -1714,7 +1714,7 @@ namespace TagLib {
 		///    is <see langword="null" />.
 		/// </exception>
 		public static bool operator<= (ByteVector first,
-									   ByteVector second)
+		                               ByteVector second)
 		{
 			if (first == null)
 				throw new ArgumentNullException ("first");
@@ -1745,7 +1745,7 @@ namespace TagLib {
 		///    is <see langword="null" />.
 		/// </exception>
 		public static bool operator> (ByteVector first,
-									  ByteVector second)
+		                              ByteVector second)
 		{
 			if (first == null)
 				throw new ArgumentNullException ("first");
@@ -1776,7 +1776,7 @@ namespace TagLib {
 		///    is <see langword="null" />.
 		/// </exception>
 		public static bool operator>= (ByteVector first,
-									   ByteVector second)
+		                               ByteVector second)
 		{
 			if (first == null)
 				throw new ArgumentNullException ("first");
@@ -1803,7 +1803,7 @@ namespace TagLib {
 		///    contents of <paramref name="second" />.
 		/// </returns>
 		public static ByteVector operator+ (ByteVector first,
-											ByteVector second)
+		                                    ByteVector second)
 		{
 			ByteVector sum = new ByteVector(first);
 			sum.Add(second);
@@ -1857,7 +1857,7 @@ namespace TagLib {
 		{
 			return ByteVector.FromString (value, StringType.UTF8);
 		}
-		
+        
 #endregion
 		
 		
@@ -1881,7 +1881,7 @@ namespace TagLib {
 		///    representation of <paramref name="value" />.
 		/// </returns>
 		public static ByteVector FromInt (int value,
-										   bool mostSignificantByteFirst)
+		                                   bool mostSignificantByteFirst)
 		{
 			ByteVector vector = new ByteVector();
 			for(int i = 0; i < 4; i++) {
@@ -1924,7 +1924,7 @@ namespace TagLib {
 		///    representation of <paramref name="value" />.
 		/// </returns>
 		public static ByteVector FromUInt (uint value,
-										   bool mostSignificantByteFirst)
+		                                   bool mostSignificantByteFirst)
 		{
 			ByteVector vector = new ByteVector();
 			for(int i = 0; i < 4; i++) {
@@ -1968,7 +1968,7 @@ namespace TagLib {
 		///    representation of <paramref name="value" />.
 		/// </returns>
 		public static ByteVector FromShort (short value,
-											bool mostSignificantByteFirst)
+		                                    bool mostSignificantByteFirst)
 		{
 			ByteVector vector = new ByteVector();
 			for(int i = 0; i < 2; i++) {
@@ -2011,7 +2011,7 @@ namespace TagLib {
 		///    representation of <paramref name="value" />.
 		/// </returns>
 		public static ByteVector FromUShort (ushort value,
-											 bool mostSignificantByteFirst)
+		                                     bool mostSignificantByteFirst)
 		{
 			ByteVector vector = new ByteVector();
 			for(int i = 0; i < 2; i++) {
@@ -2055,7 +2055,7 @@ namespace TagLib {
 		///    representation of <paramref name="value" />.
 		/// </returns>
 		public static ByteVector FromLong (long value,
-										   bool mostSignificantByteFirst)
+		                                   bool mostSignificantByteFirst)
 		{
 			ByteVector vector = new ByteVector();
 			for(int i = 0; i < 8; i++) {
@@ -2097,7 +2097,7 @@ namespace TagLib {
 		///    representation of <paramref name="value" />.
 		/// </returns>
 		public static ByteVector FromULong (ulong value,
-											bool mostSignificantByteFirst)
+		                                    bool mostSignificantByteFirst)
 		{
 			ByteVector vector = new ByteVector();
 			for(int i = 0; i < 8; i++) {
@@ -2143,8 +2143,8 @@ namespace TagLib {
 		///    representation of <paramref name="text" />.
 		/// </returns>
 		public static ByteVector FromString (string text,
-											 StringType type,
-											 int length)
+		                                     StringType type,
+		                                     int length)
 		{
 			ByteVector data = new ByteVector ();
 			
@@ -2179,7 +2179,7 @@ namespace TagLib {
 		///    representation of <paramref name="text" />.
 		/// </returns>
 		public static ByteVector FromString(string text,
-											StringType type)
+		                                    StringType type)
 		{
 			return FromString(text, type, Int32.MaxValue);
 		}
@@ -2267,8 +2267,8 @@ namespace TagLib {
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		internal static ByteVector FromPath (string path,
-											 out byte [] firstChunk,
-											 bool copyFirstChunk)
+		                                     out byte [] firstChunk,
+		                                     bool copyFirstChunk)
 		{
 			if (path == null)
 				throw new ArgumentNullException ("path");
@@ -2294,7 +2294,7 @@ namespace TagLib {
 		///    />.
 		/// </exception>
 		public static ByteVector FromFile (File.IFileAbstraction
-										   abstraction)
+		                                   abstraction)
 		{
 			byte [] tmp_out;
 			return FromFile (abstraction, out tmp_out, false);
@@ -2326,9 +2326,9 @@ namespace TagLib {
 		///    />.
 		/// </exception>
 		internal static ByteVector FromFile (File.IFileAbstraction
-											 abstraction,
-											 out byte [] firstChunk,
-											 bool copyFirstChunk)
+		                                     abstraction,
+		                                     out byte [] firstChunk,
+		                                     bool copyFirstChunk)
 		{
 			if (abstraction == null)
 				throw new ArgumentNullException ("abstraction");
@@ -2386,8 +2386,8 @@ namespace TagLib {
 		///    <paramref name="stream" /> is <see langword="null" />.
 		/// </exception>
 		internal static ByteVector FromStream (System.IO.Stream stream,
-											   out byte [] firstChunk,
-											   bool copyFirstChunk)
+		                                       out byte [] firstChunk,
+		                                       bool copyFirstChunk)
 		{
 			ByteVector vector = new ByteVector();
 			byte [] bytes = new byte[4096];
@@ -2476,7 +2476,7 @@ namespace TagLib {
 		///    BOM data, the previously used endian format is used.
 		/// </remarks>
 		private static Encoding StringTypeToEncoding (StringType type,
-													  ByteVector bom)
+		                                              ByteVector bom)
 		{
 			switch(type) {
 			case StringType.UTF16:

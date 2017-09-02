@@ -115,9 +115,9 @@ namespace TagLib.Id3v2
 		///    raw frame is encoded in.
 		/// </param>
 		protected internal PopularimeterFrame (ByteVector data,
-											   int offset,
-											   FrameHeader header,
-											   byte version)
+		                                       int offset,
+		                                       FrameHeader header,
+		                                       byte version)
 			: base (header)
 		{
 			SetData (data, offset, version, false);
@@ -194,7 +194,7 @@ namespace TagLib.Id3v2
 		///    langword="false" />.
 		/// </returns>
 		public static PopularimeterFrame Get (Tag tag, string user,
-											  bool create)
+		                                      bool create)
 		{
 			PopularimeterFrame popm;
 			foreach (Frame frame in tag) {
@@ -231,7 +231,7 @@ namespace TagLib.Id3v2
 		///    field data is encoded in.
 		/// </param>
 		protected override void ParseFields (ByteVector data,
-											 byte version)
+		                                     byte version)
 		{
 			ByteVector delim = ByteVector.TextDelimiter (
 				StringType.Latin1);

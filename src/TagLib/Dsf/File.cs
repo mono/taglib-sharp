@@ -122,7 +122,7 @@ namespace TagLib.Dsf
 		/// </exception>
 		public File(string path, ReadStyle propertiesStyle)
 			: this(new File.LocalFileAbstraction(path),
-				   propertiesStyle)
+			       propertiesStyle)
 		{
 		}
 
@@ -162,14 +162,14 @@ namespace TagLib.Dsf
 		///    />.
 		/// </exception>
 		public File(File.IFileAbstraction abstraction,
-					ReadStyle propertiesStyle)
+		            ReadStyle propertiesStyle)
 			: base(abstraction)
 		{
 			Mode = AccessMode.Read;
 			try
 			{
 				Read(true, propertiesStyle, out dsf_size,
-					 out tag_start, out tag_end);
+				     out tag_start, out tag_end);
 			}
 			finally
 			{
@@ -302,7 +302,7 @@ namespace TagLib.Dsf
 		public override void RemoveTags(TagTypes types)
 		{
 			if (types == TagLib.TagTypes.Id3v2 ||
-				types == TagLib.TagTypes.AllTags)
+			    types == TagLib.TagTypes.AllTags)
 			{
 				tag = null;
 			}

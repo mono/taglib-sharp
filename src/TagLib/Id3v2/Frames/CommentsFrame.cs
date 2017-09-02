@@ -96,7 +96,7 @@ namespace TagLib.Id3v2 {
 		///    integrated frame creation.
 		/// </remarks>
 		public CommentsFrame (string description, string language,
-							  StringType encoding)
+		                      StringType encoding)
 			: base (FrameType.COMM, 4)
 		{
 			this.encoding    = encoding;
@@ -124,7 +124,7 @@ namespace TagLib.Id3v2 {
 		/// </remarks>
 		public CommentsFrame (string description, string language)
 			: this (description, language,
-					TagLib.Id3v2.Tag.DefaultEncoding)
+			        TagLib.Id3v2.Tag.DefaultEncoding)
 		{
 		}
 		
@@ -187,8 +187,8 @@ namespace TagLib.Id3v2 {
 		///    raw frame is encoded in.
 		/// </param>
 		protected internal CommentsFrame (ByteVector data, int offset,
-										  FrameHeader header,
-										  byte version) : base(header)
+		                                  FrameHeader header,
+		                                  byte version) : base(header)
 		{
 			SetData (data, offset, version, false);
 		}
@@ -329,7 +329,7 @@ namespace TagLib.Id3v2 {
 		///    langword="false" />.
 		/// </returns>
 		public static CommentsFrame Get (Tag tag, string description,
-										 string language, bool create)
+		                                 string language, bool create)
 		{
 			CommentsFrame comm;
 			foreach (Frame frame in tag.GetFrames (FrameType.COMM)) {
@@ -390,8 +390,8 @@ namespace TagLib.Id3v2 {
 		///    </list>
 		/// </remarks>
 		public static CommentsFrame GetPreferred (Tag tag,
-												  string description,
-												  string language)
+		                                          string description,
+		                                          string language)
 		{
 			// This is weird, so bear with me. The best thing we can
 			// have is something straightforward and in our own
@@ -457,7 +457,7 @@ namespace TagLib.Id3v2 {
 		///    field data is encoded in.
 		/// </param>
 		protected override void ParseFields (ByteVector data,
-											 byte version)
+		                                     byte version)
 		{
 			if (data.Count < 4)
 				throw new CorruptFileException (

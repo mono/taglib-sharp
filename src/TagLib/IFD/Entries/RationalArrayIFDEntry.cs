@@ -31,19 +31,19 @@ namespace TagLib.IFD.Entries
 	public class RationalArrayIFDEntry : ArrayIFDEntry<Rational>
 	{
 
-		#region Constructors
+        #region Constructors
 
-		/// <summary>
-		///    Construcor.
-		/// </summary>
-		/// <param name="tag">
-		///    A <see cref="System.UInt16"/> with the tag ID of the entry this instance
-		///    represents
-		/// </param>
-		/// <param name="entries">
-		///    A <see cref="T:Rational[]"/> to be stored
-		/// </param>
-		public RationalArrayIFDEntry (ushort tag, Rational [] entries)
+        /// <summary>
+        ///    Construcor.
+        /// </summary>
+        /// <param name="tag">
+        ///    A <see cref="System.UInt16"/> with the tag ID of the entry this instance
+        ///    represents
+        /// </param>
+        /// <param name="entries">
+        ///    A <see cref="T:Rational[]"/> to be stored
+        /// </param>
+        public RationalArrayIFDEntry (ushort tag, Rational [] entries)
 			: base (tag)
 		{
 			Values = entries;

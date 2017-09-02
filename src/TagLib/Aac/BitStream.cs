@@ -37,19 +37,19 @@ namespace TagLib.Aac
 		private BitArray bits;
 		private int bitindex;
 
-		#endregion
+        #endregion
 
 
 
-		#region Constructors
+        #region Constructors
 
-		/// <summary>
-		///    Construct a new <see cref="BitStream"/>.
-		/// </summary>
-		/// <param name="buffer">
-		///    A <see cref="T:System.Byte[]"/>, must be 7 bytes long.
-		/// </param>
-		public BitStream(byte[] buffer)
+        /// <summary>
+        ///    Construct a new <see cref="BitStream"/>.
+        /// </summary>
+        /// <param name="buffer">
+        ///    A <see cref="T:System.Byte[]"/>, must be 7 bytes long.
+        /// </param>
+        public BitStream(byte[] buffer)
 		{
 			Debug.Assert(buffer.Length == 7, "buffer.Length == 7", "buffer size invalid");
 			

@@ -92,23 +92,23 @@ namespace TagLib {
 		{
 		}
 
-		/// <summary>
-		///    Constructs and initializes a new instance of <see
-		///    cref="ReadOnlyByteVector" /> by copying a specified
-		///    number of bytes from an array.
-		/// </summary>
-		/// <param name="data">
-		///    A <see cref="T:byte[]" /> to copy values from.
-		/// </param>
-		/// <param name="length">
-		///    A <see cref="int" /> specifying the number of bytes to
-		///    copy.
-		/// </param>
-		/// <remarks>
-		///    <para>If copying the entire contents of an array, use
-		///    <see cref="ReadOnlyByteVector(byte[])" />.</para>
-		/// </remarks>
-		public ReadOnlyByteVector (byte [] data, int length)
+        /// <summary>
+        ///    Constructs and initializes a new instance of <see
+        ///    cref="ReadOnlyByteVector" /> by copying a specified
+        ///    number of bytes from an array.
+        /// </summary>
+        /// <param name="data">
+        ///    A <see cref="T:byte[]" /> to copy values from.
+        /// </param>
+        /// <param name="length">
+        ///    A <see cref="int" /> specifying the number of bytes to
+        ///    copy.
+        /// </param>
+        /// <remarks>
+        ///    <para>If copying the entire contents of an array, use
+        ///    <see cref="ReadOnlyByteVector(byte[])" />.</para>
+        /// </remarks>
+        public ReadOnlyByteVector (byte [] data, int length)
 			: base (data, length)
 		{
 		}

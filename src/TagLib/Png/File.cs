@@ -197,7 +197,7 @@ namespace TagLib.Png
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-					 ReadStyle propertiesStyle) : base (abstraction)
+		             ReadStyle propertiesStyle) : base (abstraction)
 		{
 			Read (propertiesStyle);
 		}
@@ -809,7 +809,7 @@ namespace TagLib.Png
 			if (computed_crc != crc_data)
 				throw new CorruptFileException (
 					String.Format ("CRC check failed for {0} Chunk (expected: 0x{1:X4}, read: 0x{2:X4}",
-								   chunk_type.ToString (), computed_crc.ToUInt (), crc_data.ToUInt ()));
+					               chunk_type.ToString (), computed_crc.ToUInt (), crc_data.ToUInt ()));
 		}
 
 
@@ -872,20 +872,20 @@ namespace TagLib.Png
 
 		private static ByteVector Inflate (ByteVector data)
 		{
-			using (MemoryStream out_stream = new System.IO.MemoryStream ())
-			using (var input = new MemoryStream (data.Data)) {
-				input.Seek (2, SeekOrigin.Begin); // First 2 bytes are properties deflate does not need (or handle)
-				using (var zipstream = new DeflateStream (input, CompressionMode.Decompress)) {
-					//zipstream.CopyTo (out_stream); Cleaner with .NET 4
-					byte[] buffer = new byte[1024];
-					int written_bytes;
+            using (MemoryStream out_stream = new System.IO.MemoryStream ())
+            using (var input = new MemoryStream (data.Data)) {
+                input.Seek (2, SeekOrigin.Begin); // First 2 bytes are properties deflate does not need (or handle)
+                using (var zipstream = new DeflateStream (input, CompressionMode.Decompress)) {
+                    //zipstream.CopyTo (out_stream); Cleaner with .NET 4
+                    byte[] buffer = new byte[1024];
+                    int written_bytes;
 
-					while ((written_bytes = zipstream.Read (buffer, 0, 1024)) > 0)
-						out_stream.Write (buffer, 0, written_bytes);
+                    while ((written_bytes = zipstream.Read (buffer, 0, 1024)) > 0)
+                        out_stream.Write (buffer, 0, written_bytes);
 
-					return new ByteVector (out_stream.ToArray());
-				}
-			}
+                    return new ByteVector (out_stream.ToArray());
+                }
+            }
 		}
 
 

@@ -56,50 +56,50 @@ namespace TagLib {
 			this.tags = new List<Tag> ();
 		}
 
-		/// <summary>
-		///    Constructs and initializes a new instance of <see
-		///    cref="CombinedTag" /> with a specified collection of
-		///    tags.
-		/// </summary>
-		/// <param name="tags">
-		///    A <see cref="T:Tag[]" /> containing a collection of tags to
-		///    combine in the new instance.
-		/// </param>
-		public CombinedTag (params Tag [] tags)
+        /// <summary>
+        ///    Constructs and initializes a new instance of <see
+        ///    cref="CombinedTag" /> with a specified collection of
+        ///    tags.
+        /// </summary>
+        /// <param name="tags">
+        ///    A <see cref="T:Tag[]" /> containing a collection of tags to
+        ///    combine in the new instance.
+        /// </param>
+        public CombinedTag (params Tag [] tags)
 		{
 			this.tags = new List<Tag> (tags);
 		}
 
-		#endregion
+        #endregion
 
 
 
-		#region Public Properties
+        #region Public Properties
 
-		/// <summary>
-		///    Gets the tags combined in the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="T:Tag[]" /> containing the tags combined in
-		///    the current instance.
-		/// </value>
-		public virtual Tag [] Tags {
+        /// <summary>
+        ///    Gets the tags combined in the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="T:Tag[]" /> containing the tags combined in
+        ///    the current instance.
+        /// </value>
+        public virtual Tag [] Tags {
 			get {return tags.ToArray ();}
 		}
 
-		#endregion
+        #endregion
 
 
 
-		#region Public Methods
+        #region Public Methods
 
-		/// <summary>
-		///    Sets the child tags to combine in the current instance.
-		/// </summary>
-		/// <param name="tags">
-		///    A <see cref="T:Tag[]" /> containing the tags to combine.
-		/// </param>
-		public void SetTags (params Tag [] tags)
+        /// <summary>
+        ///    Sets the child tags to combine in the current instance.
+        /// </summary>
+        /// <param name="tags">
+        ///    A <see cref="T:Tag[]" /> containing the tags to combine.
+        /// </param>
+        public void SetTags (params Tag [] tags)
 		{
 			this.tags.Clear ();
 			this.tags.AddRange (tags);
@@ -235,25 +235,25 @@ namespace TagLib {
 			}
 		}
 
-		/// <summary>
-		///    Gets and sets the performers or artists who performed in
-		///    the media described by the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="T:string[]" /> containing the performers or
-		///    artists who performed in the media described by the
-		///    current instance or an empty array if no value is
-		///    present.
-		/// </value>
-		/// <remarks>
-		///    <para>When getting the value, the child tags are looped
-		///    through in order and the first non-<see langword="null" />
-		///    and non-empty value is returned.</para>
-		///    <para>When setting the value, it is stored in each child
-		///    tag.</para>
-		/// </remarks>
-		/// <seealso cref="Tag.Performers" />
-		public override string [] Performers {
+        /// <summary>
+        ///    Gets and sets the performers or artists who performed in
+        ///    the media described by the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="T:string[]" /> containing the performers or
+        ///    artists who performed in the media described by the
+        ///    current instance or an empty array if no value is
+        ///    present.
+        /// </value>
+        /// <remarks>
+        ///    <para>When getting the value, the child tags are looped
+        ///    through in order and the first non-<see langword="null" />
+        ///    and non-empty value is returned.</para>
+        ///    <para>When setting the value, it is stored in each child
+        ///    tag.</para>
+        /// </remarks>
+        /// <seealso cref="Tag.Performers" />
+        public override string [] Performers {
 			get {
 				foreach (Tag tag in tags) {
 					if (tag == null)

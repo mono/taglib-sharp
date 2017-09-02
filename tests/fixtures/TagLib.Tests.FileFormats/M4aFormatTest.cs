@@ -8,32 +8,32 @@ using TagLib.Mpeg4;
 
 namespace TagLib.Tests.FileFormats
 {   
-	[TestFixture]
-	public class M4aFormatTest : IFormatTest
-	{
-		class Mpeg4TestFile : TagLib.Mpeg4.File
-		{
-			public Mpeg4TestFile (string path)
-				:base (path)
-			{
+    [TestFixture]
+    public class M4aFormatTest : IFormatTest
+    {
+        class Mpeg4TestFile : TagLib.Mpeg4.File
+        {
+            public Mpeg4TestFile (string path)
+                :base (path)
+            {
 
-			}
+            }
 
-			public new List<IsoUserDataBox>  UdtaBoxes {
-				get { return base.UdtaBoxes; }
-			}
-		}
+            public new List<IsoUserDataBox>  UdtaBoxes {
+                get { return base.UdtaBoxes; }
+            }
+        }
 
-		private static string sample_file = TestPath.Samples + "sample.m4a";
-		private static string tmp_file = TestPath.Samples + "tmpwrite.m4a";
-		private static string aac_broken_tags = TestPath.Samples + "bgo_658920.m4a";
-		private File file;
-		
-		[OneTimeSetUp]
-		public void Init()
-		{
-			file = File.Create(sample_file);
-		}
+        private static string sample_file = TestPath.Samples + "sample.m4a";
+        private static string tmp_file = TestPath.Samples + "tmpwrite.m4a";
+        private static string aac_broken_tags = TestPath.Samples + "bgo_658920.m4a";
+        private File file;
+        
+        [OneTimeSetUp]
+        public void Init()
+        {
+            file = File.Create(sample_file);
+        }
 
 		[Test]
 		public void AppleTags_MoreTests ()
@@ -63,45 +63,45 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual ("883821fc-9bbc-4e04-be79-b4b12c4c4a4e", file.Tag.MusicBrainzTrackId, "#1");
 		}
 
-		[Test]
-		public void ReadAppleAacTags ()
-		{
-			var file = new Mpeg4TestFile (aac_broken_tags);
-			Assert.AreEqual (2, file.UdtaBoxes.Count, "#1");
+        [Test]
+        public void ReadAppleAacTags ()
+        {
+            var file = new Mpeg4TestFile (aac_broken_tags);
+            Assert.AreEqual (2, file.UdtaBoxes.Count, "#1");
 
-			var first = file.UdtaBoxes [0];
-			Assert.AreEqual (1, first.Children.Count (), "#2");
+            var first = file.UdtaBoxes [0];
+            Assert.AreEqual (1, first.Children.Count (), "#2");
 
-			Assert.IsInstanceOf<AppleAdditionalInfoBox>(first.Children.First ());
-			var child = (AppleAdditionalInfoBox) first.Children.First ();
-			Assert.AreEqual ((ReadOnlyByteVector)"name", child.BoxType, "#3");
-			Assert.AreEqual (0 , child.Data.Count, "#4");
-		}
+            Assert.IsInstanceOf<AppleAdditionalInfoBox>(first.Children.First ());
+            var child = (AppleAdditionalInfoBox) first.Children.First ();
+            Assert.AreEqual ((ReadOnlyByteVector)"name", child.BoxType, "#3");
+            Assert.AreEqual (0 , child.Data.Count, "#4");
+        }
 
-		[Test]
-		public void ReadAudioProperties()
-		{
-			StandardTests.ReadAudioProperties (file);
-		}
-		
-		[Test]
-		public void ReadTags()
-		{
-			Assert.AreEqual("M4A album", file.Tag.Album);
-			Assert.AreEqual("M4A artist", file.Tag.FirstPerformer);
-			Assert.AreEqual("M4A comment", file.Tag.Comment);
-			Assert.AreEqual("Acid Punk", file.Tag.FirstGenre);
-			Assert.AreEqual("M4A title", file.Tag.Title);
-			Assert.AreEqual(6, file.Tag.Track);
-			//Assert.AreEqual(7, file.Tag.TrackCount);
-			Assert.AreEqual(1234, file.Tag.Year);
-		}       
-		
-		[Test]
-		public void WriteStandardTags ()
-		{
-			StandardTests.WriteStandardTags (sample_file, tmp_file);
-		}
+        [Test]
+        public void ReadAudioProperties()
+        {
+            StandardTests.ReadAudioProperties (file);
+        }
+        
+        [Test]
+        public void ReadTags()
+        {
+            Assert.AreEqual("M4A album", file.Tag.Album);
+            Assert.AreEqual("M4A artist", file.Tag.FirstPerformer);
+            Assert.AreEqual("M4A comment", file.Tag.Comment);
+            Assert.AreEqual("Acid Punk", file.Tag.FirstGenre);
+            Assert.AreEqual("M4A title", file.Tag.Title);
+            Assert.AreEqual(6, file.Tag.Track);
+            //Assert.AreEqual(7, file.Tag.TrackCount);
+            Assert.AreEqual(1234, file.Tag.Year);
+        }       
+        
+        [Test]
+        public void WriteStandardTags ()
+        {
+            StandardTests.WriteStandardTags (sample_file, tmp_file);
+        }
 
 				[Test]
 				public void WriteExtendedTags()
@@ -110,9 +110,9 @@ namespace TagLib.Tests.FileFormats
 				}
 
 				[Test]
-		public void TestCorruptionResistance()
-		{
-			StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/a.m4a");
-		}
-	}
+        public void TestCorruptionResistance()
+        {
+            StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/a.m4a");
+        }
+    }
 }

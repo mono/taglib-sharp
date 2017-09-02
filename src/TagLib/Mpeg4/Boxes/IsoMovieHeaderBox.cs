@@ -95,7 +95,7 @@ namespace TagLib.Mpeg4 {
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		public IsoMovieHeaderBox (BoxHeader header, TagLib.File file,
-								  IsoHandlerBox handler)
+		                          IsoHandlerBox handler)
 			: base (header, file, handler)
 		{
 			if (file == null)

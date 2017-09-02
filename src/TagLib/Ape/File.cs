@@ -115,25 +115,25 @@ namespace TagLib.Ape {
 		///    />.
 		/// </exception>
 		public File (File.IFileAbstraction abstraction,
-					 ReadStyle propertiesStyle)
+		             ReadStyle propertiesStyle)
 			: base (abstraction, propertiesStyle)
 		{
 		}
 
-		/// <summary>
-		///    Constructs and initializes a new instance of <see
-		///    cref="File" /> for a specified file abstraction with an
-		///    average read style.
-		/// </summary>
-		/// <param name="abstraction">
-		///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
-		///    reading from and writing to the file.
-		/// </param>
-		/// <exception cref="ArgumentNullException">
-		///    <paramref name="abstraction" /> is <see langword="null"
-		///    />.
-		/// </exception>
-		public File (File.IFileAbstraction abstraction)
+        /// <summary>
+        ///    Constructs and initializes a new instance of <see
+        ///    cref="File" /> for a specified file abstraction with an
+        ///    average read style.
+        /// </summary>
+        /// <param name="abstraction">
+        ///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
+        ///    reading from and writing to the file.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///    <paramref name="abstraction" /> is <see langword="null"
+        ///    />.
+        /// </exception>
+        public File (File.IFileAbstraction abstraction)
 			: base (abstraction)
 		{
 		}
@@ -213,7 +213,7 @@ namespace TagLib.Ape {
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		protected override void ReadStart (long start,
-										   ReadStyle propertiesStyle)
+		                                   ReadStyle propertiesStyle)
 		{
 			if (header_block != null &&
 				propertiesStyle == ReadStyle.None)
@@ -237,7 +237,7 @@ namespace TagLib.Ape {
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
 		protected override void ReadEnd (long end,
-										 ReadStyle propertiesStyle)
+		                                 ReadStyle propertiesStyle)
 		{
 			// Make sure we have an APE tag.
 			GetTag (TagTypes.Ape, true);
@@ -266,8 +266,8 @@ namespace TagLib.Ape {
 		///    instance.
 		/// </returns>
 		protected override Properties ReadProperties (long start,
-													  long end,
-													  ReadStyle propertiesStyle)
+		                                              long end,
+		                                              ReadStyle propertiesStyle)
 		{
 			StreamHeader header = new StreamHeader (header_block,
 				end - start);

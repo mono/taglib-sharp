@@ -146,7 +146,7 @@ namespace TagLib.Ogg.Codecs
 		///    of the stream.
 		/// </returns>
 		public override TimeSpan GetDuration (long firstGranularPosition,
-											  long lastGranularPosition)
+		                                      long lastGranularPosition)
 		{
 			return TimeSpan.FromSeconds (
 				header.GranuleTime (lastGranularPosition) -
@@ -171,7 +171,7 @@ namespace TagLib.Ogg.Codecs
 		///    /> is <see langword="null" />.
 		/// </exception>
 		public override void SetCommentPacket (ByteVectorCollection packets,
-											   XiphComment comment)
+		                                       XiphComment comment)
 		{
 			if (packets == null)
 				throw new ArgumentNullException ("packets");

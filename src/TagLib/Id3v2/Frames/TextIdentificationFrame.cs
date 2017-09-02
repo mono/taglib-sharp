@@ -424,7 +424,7 @@ namespace TagLib.Id3v2 {
 		///    to use for the new instance.
 		/// </param>
 		public TextInformationFrame (ByteVector ident,
-									 StringType encoding)
+		                             StringType encoding)
 			: base (ident, 4)
 		{
 			this.encoding = encoding;
@@ -486,9 +486,9 @@ namespace TagLib.Id3v2 {
 		///    in which <paramref name="data" /> is encoded.
 		/// </param>
 		protected internal TextInformationFrame (ByteVector data,
-												 int offset,
-												 FrameHeader header,
-												 byte version)
+		                                         int offset,
+		                                         FrameHeader header,
+		                                         byte version)
 			: base (header)
 		{
 			SetData (data, offset, version, false);
@@ -519,32 +519,32 @@ namespace TagLib.Id3v2 {
 			}
 		}
 
-		/// <summary>
-		///    Gets and sets the text contained in the current
-		///    instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="T:string[]" /> containing the text contained
-		///    in the current instance.
-		/// </value>
-		/// <remarks>
-		///    <para>Modifying the contents of the returned value will
-		///    not modify the contents of the current instance. The
-		///    value must be reassigned for the value to change.</para>
-		/// </remarks>
-		/// <example>
-		///    <para>Modifying the values text values of a frame.</para>
-		///    <code> TextInformationFrame frame = TextInformationFrame.Get (myTag, "TPE1", true);
-		/// /* Upper casing all the text: */
-		/// string[] text = frame.Text;
-		/// for (int i = 0; i &lt; text.Length; i++)
-		///	text [i] = text [i].ToUpper ();
-		/// frame.Text = text;
-		///
-		/// /* Replacing the value completely: */
-		/// frame.Text = new string [] {"DJ Jazzy Jeff"};</code>
-		/// </example>
-		public virtual string [] Text {
+        /// <summary>
+        ///    Gets and sets the text contained in the current
+        ///    instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="T:string[]" /> containing the text contained
+        ///    in the current instance.
+        /// </value>
+        /// <remarks>
+        ///    <para>Modifying the contents of the returned value will
+        ///    not modify the contents of the current instance. The
+        ///    value must be reassigned for the value to change.</para>
+        /// </remarks>
+        /// <example>
+        ///    <para>Modifying the values text values of a frame.</para>
+        ///    <code> TextInformationFrame frame = TextInformationFrame.Get (myTag, "TPE1", true);
+        /// /* Upper casing all the text: */
+        /// string[] text = frame.Text;
+        /// for (int i = 0; i &lt; text.Length; i++)
+        ///	text [i] = text [i].ToUpper ();
+        /// frame.Text = text;
+        ///
+        /// /* Replacing the value completely: */
+        /// frame.Text = new string [] {"DJ Jazzy Jeff"};</code>
+        /// </example>
+        public virtual string [] Text {
 			get {
 				ParseRawData ();
 				return (string[]) text_fields.Clone ();
@@ -718,9 +718,9 @@ namespace TagLib.Id3v2 {
 		///    <paramref name="ident" /> is not exactly four bytes long.
 		/// </exception>
 		public static TextInformationFrame Get (Tag tag,
-												ByteVector ident,
-												StringType encoding,
-												bool create)
+		                                        ByteVector ident,
+		                                        StringType encoding,
+		                                        bool create)
 		{
 			if (tag == null)
 				throw new ArgumentNullException ("tag");
@@ -777,8 +777,8 @@ namespace TagLib.Id3v2 {
 		///    <paramref name="ident" /> is not exactly four bytes long.
 		/// </exception>
 		public static TextInformationFrame Get (Tag tag,
-												ByteVector ident,
-												bool create)
+		                                        ByteVector ident,
+		                                        bool create)
 		{
 			return Get (tag, ident, Tag.DefaultEncoding, create);
 		}
@@ -809,7 +809,7 @@ namespace TagLib.Id3v2 {
 		/// </exception>
 		[Obsolete("Use TextInformationFrame.Get(Tag,ByteVector,bool)")]
 		public static TextInformationFrame Get (Tag tag,
-												ByteVector ident)
+		                                        ByteVector ident)
 		{
 			return Get (tag, ident, false);
 		}
@@ -833,7 +833,7 @@ namespace TagLib.Id3v2 {
 		///    field data is encoded in.
 		/// </param>
 		protected override void ParseFields (ByteVector data,
-											 byte version)
+		                                     byte version)
 		{
 			raw_data = data;
 			raw_version = version;
@@ -1067,7 +1067,7 @@ namespace TagLib.Id3v2 {
 		///    integrated frame creation.
 		/// </remarks>
 		public UserTextInformationFrame (string description,
-										 StringType encoding)
+		                                 StringType encoding)
 			: base (FrameType.TXXX, encoding)
 		{
 			base.Text = new string [] {description};
@@ -1134,9 +1134,9 @@ namespace TagLib.Id3v2 {
 		///    raw frame is encoded in.
 		/// </param>
 		protected internal UserTextInformationFrame (ByteVector data,
-													 int offset,
-													 FrameHeader header,
-													 byte version)
+		                                             int offset,
+		                                             FrameHeader header,
+		                                             byte version)
 			: base (data, offset, header, version)
 		{
 		}
@@ -1271,10 +1271,10 @@ namespace TagLib.Id3v2 {
 		///    <see langword="false" />.
 		/// </returns>
 		public static UserTextInformationFrame Get (Tag tag,
-													string description,
-													StringType type,
-													bool create,
-													bool caseSensitive)
+		                                            string description,
+		                                            StringType type,
+		                                            bool create,
+		                                            bool caseSensitive)
 		{
 			if (tag == null)
 				throw new ArgumentNullException ("tag");
@@ -1333,9 +1333,9 @@ namespace TagLib.Id3v2 {
 		///    <see langword="false" />.
 		/// </returns>
 		public static UserTextInformationFrame Get (Tag tag,
-													string description,
-													StringType type,
-													bool create)
+		                                            string description,
+		                                            StringType type,
+		                                            bool create)
 		{
 			return Get (tag, description, type, create, true);
 		}
@@ -1362,8 +1362,8 @@ namespace TagLib.Id3v2 {
 		///    <see langword="false" />.
 		/// </returns>
 		public static UserTextInformationFrame Get (Tag tag,
-													string description,
-													bool create)
+		                                            string description,
+		                                            bool create)
 		{
 			return Get (tag, description, Tag.DefaultEncoding,
 				create);
@@ -1386,7 +1386,7 @@ namespace TagLib.Id3v2 {
 		/// </returns>
 		[Obsolete("Use UserTextInformationFrame.Get(Tag,string,bool)")]
 		public static UserTextInformationFrame Get (Tag tag,
-													string description)
+		                                            string description)
 		{
 			return Get (tag, description, false);
 		}

@@ -115,7 +115,7 @@ namespace TagLib.Riff
 		{
 			if (file == null)
 				throw new System.ArgumentNullException ("file");
-		 
+         
 			if (length < 0)
 				throw new ArgumentOutOfRangeException (
 					"length");
