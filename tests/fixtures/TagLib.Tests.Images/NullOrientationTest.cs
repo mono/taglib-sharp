@@ -28,9 +28,9 @@ namespace TagLib.Tests.Images
 		{
 			Assert.IsNotNull (file);
 
-            // This file doesn't have an orientation tag, we had a bug that causes
-            // an exception when looking it up. Test it here.
-            Assert.AreEqual (ImageOrientation.None, file.ImageTag.Orientation);
+			// This file doesn't have an orientation tag, we had a bug that causes
+			// an exception when looking it up. Test it here.
+			Assert.AreEqual (ImageOrientation.None, file.ImageTag.Orientation);
 
 			//  ---------- Start of IFD tests ----------
 

@@ -999,27 +999,27 @@ namespace TagLib.Id3v2 {
 			tdrc.Text = new string [] { tdrc_text.ToString () };
 		}
 
-        #endregion
+		#endregion
 
 
 
-        #region Private Methods
+		#region Private Methods
 
-        /// <summary>
-        ///    Gets the text values from a specified Text Information
-        ///    Frame.
-        /// </summary>
-        /// <param name="ident">
-        ///    A <see cref="ByteVector" /> object containing the frame
-        ///    identifier of the Text Information Frame to get the value
-        ///    from.
-        /// </param>
-        /// <returns>
-        ///    A <see cref="T:string[]" /> containing the text of the
-        ///    specified frame, or an empty array if no values were
-        ///    found.
-        /// </returns>
-        private string [] GetTextAsArray (ByteVector ident)
+		/// <summary>
+		///    Gets the text values from a specified Text Information
+		///    Frame.
+		/// </summary>
+		/// <param name="ident">
+		///    A <see cref="ByteVector" /> object containing the frame
+		///    identifier of the Text Information Frame to get the value
+		///    from.
+		/// </param>
+		/// <returns>
+		///    A <see cref="T:string[]" /> containing the text of the
+		///    specified frame, or an empty array if no values were
+		///    found.
+		/// </returns>
+		private string [] GetTextAsArray (ByteVector ident)
 		{
 			TextInformationFrame frame = TextInformationFrame.Get (
 				this, ident, false);
@@ -1062,14 +1062,14 @@ namespace TagLib.Id3v2 {
 			return 0;
 		}
 
-        /// <summary>
-        /// Gets a TXXX frame via reference of the description field, optionally searching for the
-        /// frame in a case-sensitive manner.
-        /// </summary>
-        /// <param name="description">String containing the description field</param>
-        /// <param name="caseSensitive">case-sensitive search if true.</param>
-        /// <returns>UserTextInformationFrame (TXXX) that corresponds to the description</returns>
-        private string GetUserTextAsString (string description, bool caseSensitive) {
+		/// <summary>
+		/// Gets a TXXX frame via reference of the description field, optionally searching for the
+		/// frame in a case-sensitive manner.
+		/// </summary>
+		/// <param name="description">String containing the description field</param>
+		/// <param name="caseSensitive">case-sensitive search if true.</param>
+		/// <returns>UserTextInformationFrame (TXXX) that corresponds to the description</returns>
+		private string GetUserTextAsString (string description, bool caseSensitive) {
 
 			//Gets the TXXX frame, frame will be null if nonexistant
 			UserTextInformationFrame frame = UserTextInformationFrame.Get (
@@ -1091,15 +1091,15 @@ namespace TagLib.Id3v2 {
 			return GetUserTextAsString (description, true);
 		}
 
-        /// <summary>
-        /// Creates and/or sets a UserTextInformationFrame (TXXX)  with the given
-        /// description and text, optionally searching for the frame in a case-sensitive manner.
-        /// </summary>
-        /// <param name="description">String containing the Description field for the
-        /// TXXX frame</param>
-        /// <param name="text">String containing the Text field for the TXXX frame</param>
-        /// <param name="caseSensitive">case-sensitive search if true.</param>
-        private void SetUserTextAsString(string description, string text, bool caseSensitive) {
+		/// <summary>
+		/// Creates and/or sets a UserTextInformationFrame (TXXX)  with the given
+		/// description and text, optionally searching for the frame in a case-sensitive manner.
+		/// </summary>
+		/// <param name="description">String containing the Description field for the
+		/// TXXX frame</param>
+		/// <param name="text">String containing the Text field for the TXXX frame</param>
+		/// <param name="caseSensitive">case-sensitive search if true.</param>
+		private void SetUserTextAsString(string description, string text, bool caseSensitive) {
 			//Get the TXXX frame, create a new one if needed
 			UserTextInformationFrame frame = UserTextInformationFrame.Get(
 				this, description, Tag.DefaultEncoding, true, caseSensitive);

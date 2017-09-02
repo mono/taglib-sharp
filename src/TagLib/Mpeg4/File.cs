@@ -185,9 +185,9 @@ namespace TagLib.Mpeg4 {
 			get {return properties;}
 		}
 
-        /// <summary>
-        /// Get the UDTA Boxes
-        /// </summary>
+		/// <summary>
+		/// Get the UDTA Boxes
+		/// </summary>
 		protected List<IsoUserDataBox> UdtaBoxes {
 			get { return udta_boxes; }
 		}

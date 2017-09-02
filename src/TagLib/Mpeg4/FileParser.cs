@@ -157,9 +157,9 @@ namespace TagLib.Mpeg4 {
 			get {return udta_boxes.ToArray ();}
 		}
 		
-        /// <summary>
-        /// Get the User Data Box
-        /// </summary>
+		/// <summary>
+		/// Get the User Data Box
+		/// </summary>
 		public IsoUserDataBox UserDataBox {
 			get {return UserDataBoxes.Length == 0 ? null : UserDataBoxes[0];}
 		}
@@ -433,21 +433,21 @@ namespace TagLib.Mpeg4 {
 			}
 		}
 
-        /// <summary>
-        ///    Parses boxes for a specified range, looking for tags.
-        /// </summary>
-        /// <param name="start">
-        ///    A <see cref="long" /> value specifying the seek position
-        ///    at which to start reading.
-        /// </param>
-        /// <param name="end">
-        ///    A <see cref="long" /> value specifying the seek position
-        ///    at which to stop reading.
-        /// </param>
-        /// <param name="parents">
-        ///    A <see cref="T:List" /> of <see cref="BoxHeader" /> parents.
-        /// </param>
-        private void ParseTag (long start, long end,
+		/// <summary>
+		///    Parses boxes for a specified range, looking for tags.
+		/// </summary>
+		/// <param name="start">
+		///    A <see cref="long" /> value specifying the seek position
+		///    at which to start reading.
+		/// </param>
+		/// <param name="end">
+		///    A <see cref="long" /> value specifying the seek position
+		///    at which to stop reading.
+		/// </param>
+		/// <param name="parents">
+		///    A <see cref="T:List" /> of <see cref="BoxHeader" /> parents.
+		/// </param>
+		private void ParseTag (long start, long end,
 		                              List<BoxHeader> parents)
 		{
 			BoxHeader header;
@@ -487,26 +487,26 @@ namespace TagLib.Mpeg4 {
 			}
 		}
 
-        /// <summary>
-        ///    Parses boxes for a specified range, looking for tags and
-        ///    properties.
-        /// </summary>
-        /// <param name="start">
-        ///    A <see cref="long" /> value specifying the seek position
-        ///    at which to start reading.
-        /// </param>
-        /// <param name="end">
-        ///    A <see cref="long" /> value specifying the seek position
-        ///    at which to stop reading.
-        /// </param>
-        /// <param name="handler">
-        ///    A <see cref="IsoHandlerBox" /> object that applied to the
-        ///    range being searched.
-        /// </param>
-        /// <param name="parents">
-        ///    A <see cref="T:List" /> of <see cref="BoxHeader" /> parents.
-        /// </param>
-        private void ParseTagAndProperties (long start, long end,
+		/// <summary>
+		///    Parses boxes for a specified range, looking for tags and
+		///    properties.
+		/// </summary>
+		/// <param name="start">
+		///    A <see cref="long" /> value specifying the seek position
+		///    at which to start reading.
+		/// </param>
+		/// <param name="end">
+		///    A <see cref="long" /> value specifying the seek position
+		///    at which to stop reading.
+		/// </param>
+		/// <param name="handler">
+		///    A <see cref="IsoHandlerBox" /> object that applied to the
+		///    range being searched.
+		/// </param>
+		/// <param name="parents">
+		///    A <see cref="T:List" /> of <see cref="BoxHeader" /> parents.
+		/// </param>
+		private void ParseTagAndProperties (long start, long end,
 		                                    IsoHandlerBox handler, List<BoxHeader> parents)
 		{
 			BoxHeader header;

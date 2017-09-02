@@ -527,7 +527,7 @@ namespace TagLib.Tests.TaggingFormats
 			});
 		}
 		
-        [Test]
+		[Test]
 		public void TestMusicBrainzArtistID ()
 		{
 			MemoryFileAbstraction abst;

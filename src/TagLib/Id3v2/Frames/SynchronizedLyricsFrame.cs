@@ -356,15 +356,15 @@ namespace TagLib.Id3v2
 			set {lyrics_type = value;}
 		}
 
-        /// <summary>
-        ///    Gets and sets the text contained in the current
-        ///    instance.
-        /// </summary>
-        /// <value>
-        ///    A <see cref="T:SynchedText[]" /> containing the text
-        ///    contained in the current instance.
-        /// </value>
-        public SynchedText [] Text {
+		/// <summary>
+		///    Gets and sets the text contained in the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="T:SynchedText[]" /> containing the text
+		///    contained in the current instance.
+		/// </value>
+		public SynchedText [] Text {
 			get {return text;}
 			set {
 				text = value == null ? new SynchedText [0] :

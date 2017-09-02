@@ -109,14 +109,14 @@ namespace TagLib.Mpeg4 {
 			}
 		}
 
-        /// <summary>
-        ///    Gets the offset table contained in the current instance.
-        /// </summary>
-        /// <value>
-        ///    A <see cref="T:ulong[]" /> containing the offset table
-        ///    contained in the current instance.
-        /// </value>
-        public ulong [] Offsets {
+		/// <summary>
+		///    Gets the offset table contained in the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="T:ulong[]" /> containing the offset table
+		///    contained in the current instance.
+		/// </value>
+		public ulong [] Offsets {
 			get {return offsets;}
 		}
 		
@@ -156,7 +156,7 @@ namespace TagLib.Mpeg4 {
 			file.Insert (Render (sizeDifference, after),
 				Header.Position, Size);
 		}
-      
+  	
 		/// <summary>
 		///    Renders the current instance after updating the table for
 		///    a size change.

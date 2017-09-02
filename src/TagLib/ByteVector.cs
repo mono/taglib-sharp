@@ -218,16 +218,16 @@ namespace TagLib {
 				this.data.AddRange (vector);
 		}
 
-        /// <summary>
-        ///    Constructs and initializes a new instance of <see
-        ///    cref="ByteVector" /> by copying the values from a
-        ///    specified <see cref="T:byte[]" />.
-        /// </summary>
-        /// <param name="data">
-        ///    A <see cref="T:byte[]" /> containing the bytes to be stored
-        ///    in the new instance.
-        /// </param>
-        public ByteVector (params byte [] data)
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="ByteVector" /> by copying the values from a
+		///    specified <see cref="T:byte[]" />.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="T:byte[]" /> containing the bytes to be stored
+		///    in the new instance.
+		/// </param>
+		public ByteVector (params byte [] data)
 		{
 			if (data != null)
 				this.data.AddRange (data);
@@ -1344,81 +1344,81 @@ namespace TagLib {
 			return ToULong (true);
 		}
 
-        /// <summary>
-        ///    Converts an first four bytes of the current instance to
-        ///    a <see cref="float" /> value.
-        /// </summary>
-        /// <param name="mostSignificantByteFirst">
-        ///    <see langword="true" /> if the most significant byte
-        ///    appears first (big endian format), or <see
-        ///    langword="false" /> if the least significant byte appears
-        ///    first (little endian format).
-        /// </param>
-        /// <returns>
-        ///    A <see cref="float"/> value containing the value read
-        ///    from the current instance.
-        /// </returns>
-        public float ToFloat (bool mostSignificantByteFirst)
-        {
-            byte [] bytes = (byte []) Data.Clone ();
+		/// <summary>
+		///    Converts an first four bytes of the current instance to
+		///    a <see cref="float" /> value.
+		/// </summary>
+		/// <param name="mostSignificantByteFirst">
+		///    <see langword="true" /> if the most significant byte
+		///    appears first (big endian format), or <see
+		///    langword="false" /> if the least significant byte appears
+		///    first (little endian format).
+		/// </param>
+		/// <returns>
+		///    A <see cref="float"/> value containing the value read
+		///    from the current instance.
+		/// </returns>
+		public float ToFloat (bool mostSignificantByteFirst)
+		{
+			byte [] bytes = (byte []) Data.Clone ();
 
-            if (mostSignificantByteFirst) {
-                Array.Reverse (bytes);
-            }
+			if (mostSignificantByteFirst) {
+				Array.Reverse (bytes);
+			}
 
-            return BitConverter.ToSingle (bytes, 0);
-        }
+			return BitConverter.ToSingle (bytes, 0);
+		}
 
-        /// <summary>
-        ///    Converts an first four bytes of the current instance to
-        ///    a <see cref="float" /> value using big-endian format.
-        /// </summary>
-        /// <returns>
-        ///    A <see cref="float"/> value containing the value read
-        ///    from the current instance.
-        /// </returns>
-        public float ToFloat ()
-        {
-            return ToFloat (true);
-        }
+		/// <summary>
+		///    Converts an first four bytes of the current instance to
+		///    a <see cref="float" /> value using big-endian format.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="float"/> value containing the value read
+		///    from the current instance.
+		/// </returns>
+		public float ToFloat ()
+		{
+			return ToFloat (true);
+		}
 
-        /// <summary>
-        ///    Converts an first eight bytes of the current instance to
-        ///    a <see cref="double" /> value.
-        /// </summary>
-        /// <param name="mostSignificantByteFirst">
-        ///    <see langword="true" /> if the most significant byte
-        ///    appears first (big endian format), or <see
-        ///    langword="false" /> if the least significant byte appears
-        ///    first (little endian format).
-        /// </param>
-        /// <returns>
-        ///    A <see cref="double"/> value containing the value read
-        ///    from the current instance.
-        /// </returns>
-        public double ToDouble (bool mostSignificantByteFirst)
-        {
-            byte [] bytes = (byte []) Data.Clone ();
+		/// <summary>
+		///    Converts an first eight bytes of the current instance to
+		///    a <see cref="double" /> value.
+		/// </summary>
+		/// <param name="mostSignificantByteFirst">
+		///    <see langword="true" /> if the most significant byte
+		///    appears first (big endian format), or <see
+		///    langword="false" /> if the least significant byte appears
+		///    first (little endian format).
+		/// </param>
+		/// <returns>
+		///    A <see cref="double"/> value containing the value read
+		///    from the current instance.
+		/// </returns>
+		public double ToDouble (bool mostSignificantByteFirst)
+		{
+			byte [] bytes = (byte []) Data.Clone ();
 
-            if (mostSignificantByteFirst) {
-                Array.Reverse (bytes);
-            }
+			if (mostSignificantByteFirst) {
+				Array.Reverse (bytes);
+			}
 
-            return BitConverter.ToDouble (bytes, 0);
-        }
+			return BitConverter.ToDouble (bytes, 0);
+		}
 
-        /// <summary>
-        ///    Converts an first eight bytes of the current instance to
-        ///    a <see cref="double" /> value using big-endian format.
-        /// </summary>
-        /// <returns>
-        ///    A <see cref="double"/> value containing the value read
-        ///    from the current instance.
-        /// </returns>
-        public double ToDouble ()
-        {
-            return ToDouble (true);
-        }
+		/// <summary>
+		///    Converts an first eight bytes of the current instance to
+		///    a <see cref="double" /> value using big-endian format.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="double"/> value containing the value read
+		///    from the current instance.
+		/// </returns>
+		public double ToDouble ()
+		{
+			return ToDouble (true);
+		}
 		
 		/// <summary>
 		///    Converts a portion of the current instance to a <see
@@ -1857,7 +1857,7 @@ namespace TagLib {
 		{
 			return ByteVector.FromString (value, StringType.UTF8);
 		}
-        
+		
 #endregion
 		
 		

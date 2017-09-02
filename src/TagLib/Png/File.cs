@@ -872,20 +872,20 @@ namespace TagLib.Png
 
 		private static ByteVector Inflate (ByteVector data)
 		{
-            using (MemoryStream out_stream = new System.IO.MemoryStream ())
-            using (var input = new MemoryStream (data.Data)) {
-                input.Seek (2, SeekOrigin.Begin); // First 2 bytes are properties deflate does not need (or handle)
-                using (var zipstream = new DeflateStream (input, CompressionMode.Decompress)) {
-                    //zipstream.CopyTo (out_stream); Cleaner with .NET 4
-                    byte[] buffer = new byte[1024];
-                    int written_bytes;
+			using (MemoryStream out_stream = new System.IO.MemoryStream ())
+			using (var input = new MemoryStream (data.Data)) {
+				input.Seek (2, SeekOrigin.Begin); // First 2 bytes are properties deflate does not need (or handle)
+				using (var zipstream = new DeflateStream (input, CompressionMode.Decompress)) {
+					//zipstream.CopyTo (out_stream); Cleaner with .NET 4
+					byte[] buffer = new byte[1024];
+					int written_bytes;
 
-                    while ((written_bytes = zipstream.Read (buffer, 0, 1024)) > 0)
-                        out_stream.Write (buffer, 0, written_bytes);
+					while ((written_bytes = zipstream.Read (buffer, 0, 1024)) > 0)
+						out_stream.Write (buffer, 0, written_bytes);
 
-                    return new ByteVector (out_stream.ToArray());
-                }
-            }
+					return new ByteVector (out_stream.ToArray());
+				}
+			}
 		}
 
 

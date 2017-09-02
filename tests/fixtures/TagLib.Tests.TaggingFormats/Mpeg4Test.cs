@@ -526,8 +526,8 @@ namespace TagLib.Tests.TaggingFormats
 				Assert.AreEqual (0, t.Pictures.Length, "Value Cleared (Zero): " + m);
 			});
 		}
-        
-        [Test]
+		
+		[Test]
 		public void TestMusicBrainzArtistID ()
 		{
 			MemoryFileAbstraction abst;

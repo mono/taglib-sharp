@@ -147,28 +147,28 @@ namespace TagLib.Asf {
 			get {return metadata_library;}
 		}
 
-        #endregion
+		#endregion
 
 
 
-        #region Public Methods
+		#region Public Methods
 
-        /// <summary>
-        ///    Gets the string contained in a specific descriptor in the
-        ///    current instance.
-        /// </summary>
-        /// <param name="names">
-        ///    A <see cref="T:string[]" /> containing the names of the
-        ///    descriptors to look for the value in.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///    <paramref name="names" /> is <see langword="null" />.
-        /// </exception>
-        /// <returns>
-        ///    A <see cref="string" /> object containing the contents of
-        ///    the first descriptor found in the current instance.
-        /// </returns>
-        public string GetDescriptorString (params string [] names)
+		/// <summary>
+		///    Gets the string contained in a specific descriptor in the
+		///    current instance.
+		/// </summary>
+		/// <param name="names">
+		///    A <see cref="T:string[]" /> containing the names of the
+		///    descriptors to look for the value in.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="names" /> is <see langword="null" />.
+		/// </exception>
+		/// <returns>
+		///    A <see cref="string" /> object containing the contents of
+		///    the first descriptor found in the current instance.
+		/// </returns>
+		public string GetDescriptorString (params string [] names)
 		{
 			if (names == null)
 				throw new ArgumentNullException ("names");

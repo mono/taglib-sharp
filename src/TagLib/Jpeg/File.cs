@@ -520,19 +520,19 @@ namespace TagLib.Jpeg
 			}
 		}
 
-        /// <summary>
-        ///    Reads an APP13 segment to find IPTC-IIM metadata.
-        /// </summary>
-        /// <param name="length">
-        ///    The length of the segment that will be read.
-        /// </param>
-        /// <remarks>More info and specs for IPTC-IIM:
-        /// - Guidelines for Handling Image Metadata (http://www.metadataworkinggroup.org/specs/)
-        /// - IPTC Standard Photo Metadata (July 2010) (http://www.iptc.org/std/photometadata/specification/IPTC-PhotoMetadata-201007_1.pdf)
-        /// - Extracting IPTC header information from JPEG images (http://www.codeproject.com/KB/graphics/iptc.aspx?fid=2301&amp;df=90&amp;mpp=25&amp;noise=3&amp;prof=False&amp;sort=Position&amp;view=Quick&amp;fr=51#xx0xx)
-        /// - Reading IPTC APP14 Segment Header Information from JPEG Images (http://www.codeproject.com/KB/graphics/ReadingIPTCAPP14.aspx?q=iptc)
-        /// </remarks>
-        private void ReadAPP13Segment (ushort length)
+		/// <summary>
+		///    Reads an APP13 segment to find IPTC-IIM metadata.
+		/// </summary>
+		/// <param name="length">
+		///    The length of the segment that will be read.
+		/// </param>
+		/// <remarks>More info and specs for IPTC-IIM:
+		/// - Guidelines for Handling Image Metadata (http://www.metadataworkinggroup.org/specs/)
+		/// - IPTC Standard Photo Metadata (July 2010) (http://www.iptc.org/std/photometadata/specification/IPTC-PhotoMetadata-201007_1.pdf)
+		/// - Extracting IPTC header information from JPEG images (http://www.codeproject.com/KB/graphics/iptc.aspx?fid=2301&amp;df=90&amp;mpp=25&amp;noise=3&amp;prof=False&amp;sort=Position&amp;view=Quick&amp;fr=51#xx0xx)
+		/// - Reading IPTC APP14 Segment Header Information from JPEG Images (http://www.codeproject.com/KB/graphics/ReadingIPTCAPP14.aspx?q=iptc)
+		/// </remarks>
+		private void ReadAPP13Segment (ushort length)
 		{
 			// TODO: if both IPTC-IIM and XMP metadata is contained in a file, we should read
 			// a IPTC-IIM checksum and compare that with the checksum built over the IIM block.

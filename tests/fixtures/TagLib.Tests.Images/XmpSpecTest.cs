@@ -8,9 +8,9 @@ namespace TagLib.Tests.Images
 	/// <summary>
 	///    This validates some of the examples in the specification.
 	/// </summary>
-    [TestFixture]
-    public class XmpSpecTest
-    {
+	[TestFixture]
+	public class XmpSpecTest
+	{
 		[Test]
 		public void SimpleTypeTest ()
 		{

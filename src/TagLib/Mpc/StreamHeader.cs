@@ -108,35 +108,35 @@ namespace TagLib.MusePack {
 		/// </value>
 		public static readonly ReadOnlyByteVector FileIdentifierSv8 = "MPCK";
 
-        #endregion
+		#endregion
 
 
 
-        #region Constructors
+		#region Constructors
 
-        /// <summary>
-        ///    Constructs and initializes a new instance of <see
-        ///    cref="StreamHeader" /> for a specified header block and
-        ///    stream length.
-        /// </summary>
-        /// <param name="file">
-        ///    A <see cref="File" /> object containing the stream
-        ///    header data.
-        /// </param>
-        /// <param name="streamLength">
-        ///    A <see cref="long" /> value containing the length of the
-        ///    MusePAck stream in bytes.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        ///    <paramref name="file" /> is <see langword="null" />.
-        /// </exception>
-        /// <exception cref="CorruptFileException">
-        ///    <paramref name="file" /> does not begin with <see
-        ///    cref="FileIdentifierSv7" />  or with <see 
-        ///    cref="FileIdentifierSv8" /> or is less than 
-        ///    <see cref="P:File.Size" /> bytes long.
-        /// </exception>
-        public StreamHeader (File file, long streamLength)
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="StreamHeader" /> for a specified header block and
+		///    stream length.
+		/// </summary>
+		/// <param name="file">
+		///    A <see cref="File" /> object containing the stream
+		///    header data.
+		/// </param>
+		/// <param name="streamLength">
+		///    A <see cref="long" /> value containing the length of the
+		///    MusePAck stream in bytes.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="file" /> is <see langword="null" />.
+		/// </exception>
+		/// <exception cref="CorruptFileException">
+		///    <paramref name="file" /> does not begin with <see
+		///    cref="FileIdentifierSv7" />  or with <see 
+		///    cref="FileIdentifierSv8" /> or is less than 
+		///    <see cref="P:File.Size" /> bytes long.
+		/// </exception>
+		public StreamHeader (File file, long streamLength)
 		{
 			if (file == null)
 				throw new ArgumentNullException ("file");

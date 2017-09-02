@@ -287,7 +287,7 @@ namespace TagLib.Tests.TaggingFormats
 				Assert.IsNull (t.Copyright, "Value Cleared (Null): " + m);
 			});
 		}
-        	
+			
 		[Test]
 		public void TestClear ()
 		{

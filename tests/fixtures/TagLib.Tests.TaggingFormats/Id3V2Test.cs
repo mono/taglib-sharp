@@ -572,7 +572,7 @@ namespace TagLib.Tests.TaggingFormats
 				});
 			}
 		}
-        	
+			
 		[Test]
 		public void TestIsCompilation ()
 		{

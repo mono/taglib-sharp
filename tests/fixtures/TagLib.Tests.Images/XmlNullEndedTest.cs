@@ -9,9 +9,9 @@ namespace TagLib.Tests.Images
 	/// <summary>
 	///    This file contains XMP data ended with null (0x00) value.
 	/// </summary>
-    [TestFixture]
-    public class XmpNullEndedTest
-    {
+	[TestFixture]
+	public class XmpNullEndedTest
+	{
 		private static string sample_file = TestPath.Samples + "sample_xmpnullended.jpg";
 
 		[Test]

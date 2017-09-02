@@ -519,32 +519,32 @@ namespace TagLib.Id3v2 {
 			}
 		}
 
-        /// <summary>
-        ///    Gets and sets the text contained in the current
-        ///    instance.
-        /// </summary>
-        /// <value>
-        ///    A <see cref="T:string[]" /> containing the text contained
-        ///    in the current instance.
-        /// </value>
-        /// <remarks>
-        ///    <para>Modifying the contents of the returned value will
-        ///    not modify the contents of the current instance. The
-        ///    value must be reassigned for the value to change.</para>
-        /// </remarks>
-        /// <example>
-        ///    <para>Modifying the values text values of a frame.</para>
-        ///    <code> TextInformationFrame frame = TextInformationFrame.Get (myTag, "TPE1", true);
-        /// /* Upper casing all the text: */
-        /// string[] text = frame.Text;
-        /// for (int i = 0; i &lt; text.Length; i++)
-        ///	text [i] = text [i].ToUpper ();
-        /// frame.Text = text;
-        ///
-        /// /* Replacing the value completely: */
-        /// frame.Text = new string [] {"DJ Jazzy Jeff"};</code>
-        /// </example>
-        public virtual string [] Text {
+		/// <summary>
+		///    Gets and sets the text contained in the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="T:string[]" /> containing the text contained
+		///    in the current instance.
+		/// </value>
+		/// <remarks>
+		///    <para>Modifying the contents of the returned value will
+		///    not modify the contents of the current instance. The
+		///    value must be reassigned for the value to change.</para>
+		/// </remarks>
+		/// <example>
+		///    <para>Modifying the values text values of a frame.</para>
+		///    <code> TextInformationFrame frame = TextInformationFrame.Get (myTag, "TPE1", true);
+		/// /* Upper casing all the text: */
+		/// string[] text = frame.Text;
+		/// for (int i = 0; i &lt; text.Length; i++)
+		///	text [i] = text [i].ToUpper ();
+		/// frame.Text = text;
+		///
+		/// /* Replacing the value completely: */
+		/// frame.Text = new string [] {"DJ Jazzy Jeff"};</code>
+		/// </example>
+		public virtual string [] Text {
 			get {
 				ParseRawData ();
 				return (string[]) text_fields.Clone ();

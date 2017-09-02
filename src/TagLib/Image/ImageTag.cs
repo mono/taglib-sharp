@@ -35,17 +35,17 @@ namespace TagLib.Image
 	public abstract class ImageTag : Tag
 	{
 
-        #region Public Properties
+		#region Public Properties
 
-        /// <summary>
-        ///    Gets or sets the keywords for the image described
-        ///    by the current instance.
-        /// </summary>
-        /// <value>
-        ///    A <see cref="T:string[]" /> containing the keywords of the
-        ///    current instace.
-        /// </value>
-        public virtual string[] Keywords {
+		/// <summary>
+		///    Gets or sets the keywords for the image described
+		///    by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="T:string[]" /> containing the keywords of the
+		///    current instace.
+		/// </value>
+		public virtual string[] Keywords {
 			get { return new string [] {}; }
 			set {}
 		}

@@ -31,19 +31,19 @@ namespace TagLib.IFD.Entries
 	public class SLongArrayIFDEntry : ArrayIFDEntry<int>
 	{
 
-        #region Constructors
+		#region Constructors
 
-        /// <summary>
-        ///    Construcor.
-        /// </summary>
-        /// <param name="tag">
-        ///    A <see cref="System.UInt16"/> with the tag ID of the entry this instance
-        ///    represents
-        /// </param>
-        /// <param name="values">
-        ///    A <see cref="T:System.Int32[]"/> to be stored
-        /// </param>
-        public SLongArrayIFDEntry (ushort tag, int [] values) : base (tag)
+		/// <summary>
+		///    Construcor.
+		/// </summary>
+		/// <param name="tag">
+		///    A <see cref="System.UInt16"/> with the tag ID of the entry this instance
+		///    represents
+		/// </param>
+		/// <param name="values">
+		///    A <see cref="T:System.Int32[]"/> to be stored
+		/// </param>
+		public SLongArrayIFDEntry (ushort tag, int [] values) : base (tag)
 		{
 			Values = values;
 		}

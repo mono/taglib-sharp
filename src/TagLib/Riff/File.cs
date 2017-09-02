@@ -136,7 +136,7 @@ namespace TagLib.Riff
 		public File (string path) : this (path, ReadStyle.Average)
 		{
 		}
-      
+  	
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified file abstraction and
