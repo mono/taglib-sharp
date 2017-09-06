@@ -34,8 +34,8 @@ namespace TagLib.Tests.Images
 	[TestFixture]
 	public class JpegSony1Test
 	{
-		private static string sample_file = "samples/sample_sony1.jpg";
-		private static string tmp_file = "samples/tmpwrite_sony1.jpg";
+		private static string sample_file = TestPath.Samples + "sample_sony1.jpg";
+		private static string tmp_file = TestPath.Samples + "tmpwrite_sony1.jpg";
 
 		private TagTypes contained_types = TagTypes.TiffIFD;
 

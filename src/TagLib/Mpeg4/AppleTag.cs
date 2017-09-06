@@ -151,7 +151,7 @@ namespace TagLib.Mpeg4 {
 		///    Gets all data boxes that match any of the provided types.
 		/// </summary>
 		/// <param name="types">
-		///    A <see cref="ByteVector[]" /> containing list of box
+		///    A <see cref="T:ByteVector[]" /> containing list of box
 		///    types to match.
 		/// </param>
 		/// <returns>
@@ -212,7 +212,7 @@ namespace TagLib.Mpeg4 {
 				}
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets all text values contained in a specified box type.
 		/// </summary>
@@ -221,7 +221,7 @@ namespace TagLib.Mpeg4 {
 		///    type to match.
 		/// </param>
 		/// <returns>
-		///    A <see cref="string[]" /> containing text from all
+		///    A <see cref="T:string[]" /> containing text from all
 		///    matching boxes.
 		/// </returns>
 		public string [] GetText (ByteVector type) {
@@ -246,7 +246,7 @@ namespace TagLib.Mpeg4 {
 		///    add to the new instance.
 		/// </param>
 		/// <param name="boxes">
-		///    A <see cref="AppleDataBox[]" /> containing boxes to add
+		///    A <see cref="T:AppleDataBox[]" /> containing boxes to add
 		///    for the specified type.
 		/// </param>
 		public void SetData (ByteVector type, AppleDataBox [] boxes)
@@ -340,7 +340,7 @@ namespace TagLib.Mpeg4 {
 				SetData (type, new ByteVectorCollection (data),
 					flags);
 		}
-      
+  	
 		/// <summary>
 		///    Sets the text for a specified box type.
 		/// </summary>
@@ -349,7 +349,7 @@ namespace TagLib.Mpeg4 {
 		///    add to the new instance.
 		/// </param>
 		/// <param name="text">
-		///    A <see cref="string[]" /> containing text to store.
+		///    A <see cref="T:string[]" /> containing text to store.
 		/// </param>
 		public void SetText (ByteVector type, string [] text)
 		{
@@ -635,7 +635,7 @@ namespace TagLib.Mpeg4 {
 		///    the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the performers or
+		///    A <see cref="T:string[]" /> containing the performers or
 		///    artists who performed in the media described by the
 		///    current instance or an empty array if no value is
 		///    present.
@@ -654,7 +654,7 @@ namespace TagLib.Mpeg4 {
 		///    media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the band or artist
+		///    A <see cref="T:string[]" /> containing the band or artist
 		///    who is credited in the creation of the entire album or
 		///    collection containing the media described by the current
 		///    instance or an empty array if no value is present.
@@ -672,7 +672,7 @@ namespace TagLib.Mpeg4 {
 		///    the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the composers of the
+		///    A <see cref="T:string[]" /> containing the composers of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -729,7 +729,7 @@ namespace TagLib.Mpeg4 {
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the genres of the
+		///    A <see cref="T:string[]" /> containing the genres of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -1090,7 +1090,7 @@ namespace TagLib.Mpeg4 {
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names
+		///    A <see cref="T:string[]" /> containing the sort names
 		///    for the band or artist who is credited in the creation
 		///    of the entire album or collection containing the media
 		///    described by the current instance or an empty array if
@@ -1112,7 +1112,7 @@ namespace TagLib.Mpeg4 {
 		///    who performed in the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names for
+		///    A <see cref="T:string[]" /> containing the sort names for
 		///    the performers or artists who performed in the media
 		///    described by the current instance, or an empty array if
 		///    no value is present. 
@@ -1132,7 +1132,7 @@ namespace TagLib.Mpeg4 {
 		///    in the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names for
+		///    A <see cref="T:string[]" /> containing the sort names for
 		///    the Composers in the media described by the current instance,
 		///    or an empty array if no value is present. 
 		/// </value>
@@ -1360,20 +1360,20 @@ namespace TagLib.Mpeg4 {
 			set {SetDashBox("com.apple.iTunes", "MusicBrainz Album Release Country",value);}
 		}
 
-    /// <summary>
-    ///    Gets and sets the ReplayGain Track Value of the media represented by
-    ///    the current instance.
-    /// </summary>
-    /// <value>
-    ///    A <see cref="double" /> containing the ReplayGain Track Value of the
-    ///    media represented by the current instance or an empty
-    ///    array if no value is present.
-    /// </value>
-    /// <remarks>
-    ///    This property is implemented using the "dash"/"----" box type.
-    /// </remarks>
-    public override double ReplayGainTrackGain
-    {
+	/// <summary>
+	///    Gets and sets the ReplayGain Track Value of the media represented by
+	///    the current instance.
+	/// </summary>
+	/// <value>
+	///    A <see cref="double" /> containing the ReplayGain Track Value of the
+	///    media represented by the current instance or an empty
+	///    array if no value is present.
+	/// </value>
+	/// <remarks>
+	///    This property is implemented using the "dash"/"----" box type.
+	/// </remarks>
+	public override double ReplayGainTrackGain
+	{
 			get
 			{
 				string text = GetDashBox("com.apple.iTunes", "REPLAYGAIN_TRACK_GAIN");
@@ -1403,20 +1403,20 @@ namespace TagLib.Mpeg4 {
 			}
 		}
 
-    /// <summary>
-    ///    Gets and sets the ReplayGain Peak Value of the media represented by
-    ///    the current instance.
-    /// </summary>
-    /// <value>
-    ///    A <see cref="double" /> containing the ReplayGain Peak Value of the
-    ///    media represented by the current instance or an empty
-    ///    array if no value is present.
-    /// </value>
-    /// <remarks>
-    ///    This property is implemented using the "dash"/"----" box type.
-    /// </remarks>
-    public override double ReplayGainTrackPeak
-    {
+	/// <summary>
+	///    Gets and sets the ReplayGain Peak Value of the media represented by
+	///    the current instance.
+	/// </summary>
+	/// <value>
+	///    A <see cref="double" /> containing the ReplayGain Peak Value of the
+	///    media represented by the current instance or an empty
+	///    array if no value is present.
+	/// </value>
+	/// <remarks>
+	///    This property is implemented using the "dash"/"----" box type.
+	/// </remarks>
+	public override double ReplayGainTrackPeak
+	{
 			get
 			{
 				string text;
@@ -1437,20 +1437,20 @@ namespace TagLib.Mpeg4 {
 			}
 		}
 
-    /// <summary>
-    ///    Gets and sets the ReplayGain Album Value of the media represented by
-    ///    the current instance.
-    /// </summary>
-    /// <value>
-    ///    A <see cref="double" /> containing the ReplayGain Album Value of the
-    ///    media represented by the current instance or an empty
-    ///    array if no value is present.
-    /// </value>
-    /// <remarks>
-    ///    This property is implemented using the "dash"/"----" box type.
-    /// </remarks>
-    public override double ReplayGainAlbumGain
-    {
+	/// <summary>
+	///    Gets and sets the ReplayGain Album Value of the media represented by
+	///    the current instance.
+	/// </summary>
+	/// <value>
+	///    A <see cref="double" /> containing the ReplayGain Album Value of the
+	///    media represented by the current instance or an empty
+	///    array if no value is present.
+	/// </value>
+	/// <remarks>
+	///    This property is implemented using the "dash"/"----" box type.
+	/// </remarks>
+	public override double ReplayGainAlbumGain
+	{
 			get
 			{
 				string text = GetDashBox("com.apple.iTunes", "REPLAYGAIN_ALBUM_GAIN");
@@ -1480,20 +1480,20 @@ namespace TagLib.Mpeg4 {
 			}
 		}
 
-    /// <summary>
-    ///    Gets and sets the ReplayGain Album Peak Value of the media represented by
-    ///    the current instance.
-    /// </summary>
-    /// <value>
-    ///    A <see cref="double" /> containing the ReplayGain Album Peak Value of the
-    ///    media represented by the current instance or an empty
-    ///    array if no value is present.
-    /// </value>
-    /// <remarks>
-    ///    This property is implemented using the "dash"/"----" box type.
-    /// </remarks>
-    public override double ReplayGainAlbumPeak
-    {
+	/// <summary>
+	///    Gets and sets the ReplayGain Album Peak Value of the media represented by
+	///    the current instance.
+	/// </summary>
+	/// <value>
+	///    A <see cref="double" /> containing the ReplayGain Album Peak Value of the
+	///    media represented by the current instance or an empty
+	///    array if no value is present.
+	/// </value>
+	/// <remarks>
+	///    This property is implemented using the "dash"/"----" box type.
+	/// </remarks>
+	public override double ReplayGainAlbumPeak
+	{
 			get
 			{
 				string text;
@@ -1519,7 +1519,7 @@ namespace TagLib.Mpeg4 {
 		///    the media represented by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IPicture[]" /> containing a collection of
+		///    A <see cref="T:IPicture[]" /> containing a collection of
 		///    pictures associated with the media represented by the
 		///    current instance or an empty array if none are present.
 		/// </value>

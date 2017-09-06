@@ -31,7 +31,7 @@ namespace TagLib.IFD.Entries
 	public class ShortArrayIFDEntry : ArrayIFDEntry<ushort>
 	{
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Construcor.
@@ -41,7 +41,7 @@ namespace TagLib.IFD.Entries
 		///    represents
 		/// </param>
 		/// <param name="values">
-		///    A <see cref="System.UInt16[]"/> to be stored
+		///    A <see cref="T:System.UInt16[]"/> to be stored
 		/// </param>
 		public ShortArrayIFDEntry (ushort tag, ushort [] values) : base (tag)
 		{

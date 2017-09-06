@@ -437,7 +437,7 @@ namespace TagLib.Id3v2 {
 		///    identifier of the frame to set the data for.
 		/// </param>
 		/// <param name="text">
-		///    A <see cref="string[]" /> containing the text to set for
+		///    A <see cref="T:string[]" /> containing the text to set for
 		///    the specified frame, or <see langword="null" /> to unset
 		///    the value.
 		/// </param>
@@ -998,13 +998,13 @@ namespace TagLib.Id3v2 {
 
 			tdrc.Text = new string [] { tdrc_text.ToString () };
 		}
-		
-#endregion
-		
-		
-		
-#region Private Methods
-		
+
+		#endregion
+
+
+
+		#region Private Methods
+
 		/// <summary>
 		///    Gets the text values from a specified Text Information
 		///    Frame.
@@ -1015,7 +1015,7 @@ namespace TagLib.Id3v2 {
 		///    from.
 		/// </param>
 		/// <returns>
-		///    A <see cref="string[]" /> containing the text of the
+		///    A <see cref="T:string[]" /> containing the text of the
 		///    specified frame, or an empty array if no values were
 		///    found.
 		/// </returns>
@@ -1067,6 +1067,7 @@ namespace TagLib.Id3v2 {
 		/// frame in a case-sensitive manner.
 		/// </summary>
 		/// <param name="description">String containing the description field</param>
+		/// <param name="caseSensitive">case-sensitive search if true.</param>
 		/// <returns>UserTextInformationFrame (TXXX) that corresponds to the description</returns>
 		private string GetUserTextAsString (string description, bool caseSensitive) {
 
@@ -1097,6 +1098,7 @@ namespace TagLib.Id3v2 {
 		/// <param name="description">String containing the Description field for the
 		/// TXXX frame</param>
 		/// <param name="text">String containing the Text field for the TXXX frame</param>
+		/// <param name="caseSensitive">case-sensitive search if true.</param>
 		private void SetUserTextAsString(string description, string text, bool caseSensitive) {
 			//Get the TXXX frame, create a new one if needed
 			UserTextInformationFrame frame = UserTextInformationFrame.Get(
@@ -1271,7 +1273,7 @@ namespace TagLib.Id3v2 {
 		///    the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the performers or
+		///    A <see cref="T:string[]" /> containing the performers or
 		///    artists who performed in the media described by the
 		///    current instance or an empty array if no value is
 		///    present.
@@ -1290,7 +1292,7 @@ namespace TagLib.Id3v2 {
 		///    who performed in the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names for
+		///    A <see cref="T:string[]" /> containing the sort names for
 		///    the performers or artists who performed in the media
 		///    described by the current instance, or an empty array if
 		///    no value is present. 
@@ -1310,7 +1312,7 @@ namespace TagLib.Id3v2 {
 		///    containing the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names for
+		///    A <see cref="T:string[]" /> containing the sort names for
 		///    the performers or artists who performed in the media
 		///    described by the current instance, or an empty array if
 		///    no value is present. 
@@ -1330,7 +1332,7 @@ namespace TagLib.Id3v2 {
 		///    media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the band or artist
+		///    A <see cref="T:string[]" /> containing the band or artist
 		///    who is credited in the creation of the entire album or
 		///    collection containing the media described by the current
 		///    instance or an empty array if no value is present.
@@ -1349,7 +1351,7 @@ namespace TagLib.Id3v2 {
 		///    the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the composers of the
+		///    A <see cref="T:string[]" /> containing the composers of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -1367,7 +1369,7 @@ namespace TagLib.Id3v2 {
 		///    media represented by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names for
+		///    A <see cref="T:string[]" /> containing the sort names for
 		///    the performers or artists who performed in the media
 		///    described by the current instance, or an empty array if
 		///    no value is present. 
@@ -1465,7 +1467,7 @@ namespace TagLib.Id3v2 {
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the genres of the
+		///    A <see cref="T:string[]" /> containing the genres of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -2080,7 +2082,7 @@ namespace TagLib.Id3v2 {
 		///    the media represented by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IPicture[]" /> containing a collection of
+		///    A <see cref="T:IPicture[]" /> containing a collection of
 		///    pictures associated with the media represented by the
 		///    current instance or an empty array if none are present.
 		/// </value>

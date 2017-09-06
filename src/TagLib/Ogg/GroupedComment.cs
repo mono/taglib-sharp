@@ -264,7 +264,7 @@ namespace TagLib.Ogg
 		///    who performed in the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names for
+		///    A <see cref="T:string[]" /> containing the sort names for
 		///    the performers or artists who performed in the media
 		///    described by the current instance, or an empty array if
 		///    no value is present. 
@@ -337,7 +337,7 @@ namespace TagLib.Ogg
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names
+		///    A <see cref="T:string[]" /> containing the sort names
 		///    for the band or artist who is credited in the creation
 		///    of the entire album or collection containing the media
 		///    described by the current instance or an empty array if
@@ -402,13 +402,13 @@ namespace TagLib.Ogg
 			}
 			set { if (tags.Count > 0) tags[0].Composers = value; }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the sort names for the composer of
 		///    the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names
+		///    A <see cref="T:string[]" /> containing the sort names
 		///    for the composer of the media described by the current
 		///    instance or an empty array if no value is present.
 		/// </value>
@@ -1208,160 +1208,160 @@ namespace TagLib.Ogg
 			set {if (tags.Count > 0) tags [0].MusicBrainzReleaseCountry = value;}
 		}
 
-    /// <summary>
-    ///    Gets and sets the ReplayGain Track Value of the media represented by
-    ///    the current instance.
-    /// </summary>
-    /// <value>
-    ///    A <see cref="double" /> containing the ReplayGain Track Value of the
-    ///    media represented by the current instance or an empty
-    ///    array if no value is present.
-    /// </value>
-    /// <remarks>
-    ///    <para>When getting the value, the child tags are looped
-    ///    through in order and the first non-<see langword="null" />
-    ///    and non-empty value is returned.</para>
-    ///    <para>When setting the value, it is stored in the first
-    ///    comment.</para>
-    /// </remarks>
-    /// <seealso cref="Tag.ReplayGainTrackGain" />
-    public override double ReplayGainTrackGain
-    {
-      get
-      {
-        foreach (XiphComment tag in tags)
-        {
-          if (tag == null)
-            continue;
+	/// <summary>
+	///    Gets and sets the ReplayGain Track Value of the media represented by
+	///    the current instance.
+	/// </summary>
+	/// <value>
+	///    A <see cref="double" /> containing the ReplayGain Track Value of the
+	///    media represented by the current instance or an empty
+	///    array if no value is present.
+	/// </value>
+	/// <remarks>
+	///    <para>When getting the value, the child tags are looped
+	///    through in order and the first non-<see langword="null" />
+	///    and non-empty value is returned.</para>
+	///    <para>When setting the value, it is stored in the first
+	///    comment.</para>
+	/// </remarks>
+	/// <seealso cref="Tag.ReplayGainTrackGain" />
+	public override double ReplayGainTrackGain
+	{
+  	get
+  	{
+		foreach (XiphComment tag in tags)
+		{
+  		if (tag == null)
+			continue;
 
-          double value = tag.ReplayGainTrackGain;
+  		double value = tag.ReplayGainTrackGain;
 
-          if (!double.IsNaN(value))
-            return value;
-        }
+  		if (!double.IsNaN(value))
+			return value;
+		}
 
 				return double.NaN;
-      }
-      set { if (tags.Count > 0) tags[0].ReplayGainTrackGain = value; }
-    }
+  	}
+  	set { if (tags.Count > 0) tags[0].ReplayGainTrackGain = value; }
+	}
 
-    /// <summary>
-    ///    Gets and sets the ReplayGain Peak Value of the media represented by
-    ///    the current instance.
-    /// </summary>
-    /// <value>
-    ///    A <see cref="double" /> containing the ReplayGain Peak Value of the
-    ///    media represented by the current instance or an empty
-    ///    array if no value is present.
-    /// </value>
-    /// <remarks>
-    ///    <para>When getting the value, the child tags are looped
-    ///    through in order and the first non-<see langword="null" />
-    ///    and non-empty value is returned.</para>
-    ///    <para>When setting the value, it is stored in the first
-    ///    comment.</para>
-    /// </remarks>
-    /// <seealso cref="Tag.ReplayGainTrackPeak" />
-    public override double ReplayGainTrackPeak
-    {
-      get
-      {
-        foreach (XiphComment tag in tags)
-        {
-          if (tag == null)
-            continue;
+	/// <summary>
+	///    Gets and sets the ReplayGain Peak Value of the media represented by
+	///    the current instance.
+	/// </summary>
+	/// <value>
+	///    A <see cref="double" /> containing the ReplayGain Peak Value of the
+	///    media represented by the current instance or an empty
+	///    array if no value is present.
+	/// </value>
+	/// <remarks>
+	///    <para>When getting the value, the child tags are looped
+	///    through in order and the first non-<see langword="null" />
+	///    and non-empty value is returned.</para>
+	///    <para>When setting the value, it is stored in the first
+	///    comment.</para>
+	/// </remarks>
+	/// <seealso cref="Tag.ReplayGainTrackPeak" />
+	public override double ReplayGainTrackPeak
+	{
+  	get
+  	{
+		foreach (XiphComment tag in tags)
+		{
+  		if (tag == null)
+			continue;
 
-          double value = tag.ReplayGainTrackPeak;
+  		double value = tag.ReplayGainTrackPeak;
 
-          if (!double.IsNaN(value))
-            return value;
-        }
+  		if (!double.IsNaN(value))
+			return value;
+		}
 
-        return double.NaN;
-      }
-      set { if (tags.Count > 0) tags[0].ReplayGainTrackPeak = value; }
-    }
+		return double.NaN;
+  	}
+  	set { if (tags.Count > 0) tags[0].ReplayGainTrackPeak = value; }
+	}
 
-    /// <summary>
-    ///    Gets and sets the ReplayGain Album Value of the media represented by
-    ///    the current instance.
-    /// </summary>
-    /// <value>
-    ///    A <see cref="double" /> containing the ReplayGain Album Value of the
-    ///    media represented by the current instance or an empty
-    ///    array if no value is present.
-    /// </value>
-    /// <remarks>
-    ///    <para>When getting the value, the child tags are looped
-    ///    through in order and the first non-<see langword="null" />
-    ///    and non-empty value is returned.</para>
-    ///    <para>When setting the value, it is stored in the first
-    ///    comment.</para>
-    /// </remarks>
-    /// <seealso cref="Tag.ReplayGainAlbumGain" />
-    public override double ReplayGainAlbumGain
-    {
-      get
-      {
-        foreach (XiphComment tag in tags)
-        {
-          if (tag == null)
-            continue;
+	/// <summary>
+	///    Gets and sets the ReplayGain Album Value of the media represented by
+	///    the current instance.
+	/// </summary>
+	/// <value>
+	///    A <see cref="double" /> containing the ReplayGain Album Value of the
+	///    media represented by the current instance or an empty
+	///    array if no value is present.
+	/// </value>
+	/// <remarks>
+	///    <para>When getting the value, the child tags are looped
+	///    through in order and the first non-<see langword="null" />
+	///    and non-empty value is returned.</para>
+	///    <para>When setting the value, it is stored in the first
+	///    comment.</para>
+	/// </remarks>
+	/// <seealso cref="Tag.ReplayGainAlbumGain" />
+	public override double ReplayGainAlbumGain
+	{
+  	get
+  	{
+		foreach (XiphComment tag in tags)
+		{
+  		if (tag == null)
+			continue;
 
-          double value = tag.ReplayGainAlbumGain;
+  		double value = tag.ReplayGainAlbumGain;
 
-          if (!double.IsNaN(value))
-            return value;
-        }
+  		if (!double.IsNaN(value))
+			return value;
+		}
 
-        return double.NaN;
-      }
-      set { if (tags.Count > 0) tags[0].ReplayGainAlbumGain = value; }
-    }
+		return double.NaN;
+  	}
+  	set { if (tags.Count > 0) tags[0].ReplayGainAlbumGain = value; }
+	}
 
-    /// <summary>
-    ///    Gets and sets the ReplayGain Album Peak Value of the media represented by
-    ///    the current instance.
-    /// </summary>
-    /// <value>
-    ///    A <see cref="double" /> containing the ReplayGain Album Peak Value of the
-    ///    media represented by the current instance or an empty
-    ///    array if no value is present.
-    /// </value>
-    /// <remarks>
-    ///    <para>When getting the value, the child tags are looped
-    ///    through in order and the first non-<see langword="null" />
-    ///    and non-empty value is returned.</para>
-    ///    <para>When setting the value, it is stored in the first
-    ///    comment.</para>
-    /// </remarks>
-    /// <seealso cref="Tag.ReplayGainAlbumPeak" />
-    public override double ReplayGainAlbumPeak
-    {
-      get
-      {
-        foreach (XiphComment tag in tags)
-        {
-          if (tag == null)
-            continue;
+	/// <summary>
+	///    Gets and sets the ReplayGain Album Peak Value of the media represented by
+	///    the current instance.
+	/// </summary>
+	/// <value>
+	///    A <see cref="double" /> containing the ReplayGain Album Peak Value of the
+	///    media represented by the current instance or an empty
+	///    array if no value is present.
+	/// </value>
+	/// <remarks>
+	///    <para>When getting the value, the child tags are looped
+	///    through in order and the first non-<see langword="null" />
+	///    and non-empty value is returned.</para>
+	///    <para>When setting the value, it is stored in the first
+	///    comment.</para>
+	/// </remarks>
+	/// <seealso cref="Tag.ReplayGainAlbumPeak" />
+	public override double ReplayGainAlbumPeak
+	{
+  	get
+  	{
+		foreach (XiphComment tag in tags)
+		{
+  		if (tag == null)
+			continue;
 
-          double value = tag.ReplayGainAlbumPeak;
+  		double value = tag.ReplayGainAlbumPeak;
 
-          if (!double.IsNaN(value))
-            return value;
-        }
+  		if (!double.IsNaN(value))
+			return value;
+		}
 
-        return double.NaN;
-      }
-      set { if (tags.Count > 0) tags[0].ReplayGainAlbumPeak = value; }
-    }
+		return double.NaN;
+  	}
+  	set { if (tags.Count > 0) tags[0].ReplayGainAlbumPeak = value; }
+	}
 
 		/// <summary>
 		///    Gets and sets a collection of pictures associated with
 		///    the media represented by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IPicture[]" /> containing a collection of
+		///    A <see cref="T:IPicture[]" /> containing a collection of
 		///    pictures associated with the media represented by the
 		///    current instance or an empty array if none are present.
 		/// </value>

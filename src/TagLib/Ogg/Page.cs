@@ -187,7 +187,7 @@ namespace TagLib.Ogg
 		///    Gets the packets contained in the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="ByteVector[]" /> containing the packets
+		///    A <see cref="T:ByteVector[]" /> containing the packets
 		///    contained in the current instance.
 		/// </value>
 		public ByteVector[] Packets {

@@ -487,12 +487,12 @@ namespace TagLib.Tests.TaggingFormats
 			Mpeg4.File file = CreateFile (out abst);
 			
 			Picture [] pictures = new Picture [] {
-				new Picture ("../examples/covers/sample_a.png"),
-				new Picture ("../examples/covers/sample_a.jpg"),
-				new Picture ("../examples/covers/sample_b.png"),
-				new Picture ("../examples/covers/sample_b.jpg"),
-				new Picture ("../examples/covers/sample_c.png"),
-				new Picture ("../examples/covers/sample_c.jpg")
+				new Picture (TestPath.Covers + "sample_a.png"),
+				new Picture (TestPath.Covers + "sample_a.jpg"),
+				new Picture (TestPath.Covers + "sample_b.png"),
+				new Picture (TestPath.Covers + "sample_b.jpg"),
+				new Picture (TestPath.Covers + "sample_c.png"),
+				new Picture (TestPath.Covers + "sample_c.jpg")
 			};
 			
 			for (int i = 0; i < 6; i ++)
@@ -526,8 +526,8 @@ namespace TagLib.Tests.TaggingFormats
 				Assert.AreEqual (0, t.Pictures.Length, "Value Cleared (Zero): " + m);
 			});
 		}
-        
-        [Test]
+		
+		[Test]
 		public void TestMusicBrainzArtistID ()
 		{
 			MemoryFileAbstraction abst;
@@ -810,7 +810,7 @@ namespace TagLib.Tests.TaggingFormats
 			file.Tag.BeatsPerMinute = 234;
 			file.Tag.Conductor = "I";
 			file.Tag.Copyright = "J";
-			file.Tag.Pictures = new Picture [] {new Picture ("../examples/covers/sample_a.png")};
+			file.Tag.Pictures = new Picture [] {new Picture (TestPath.Covers + "sample_a.png") };
 			
 			Assert.IsFalse (file.Tag.IsEmpty, "Should be full.");
 			file.Tag.Clear ();

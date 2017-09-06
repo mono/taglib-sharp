@@ -291,7 +291,7 @@ namespace TagLib {
 		
 		/// <summary>
 		///    Inserts a single value into the current instance at a
-		//     specified index.
+		///    specified index.
 		/// </summary>
 		/// <param name="index">
 		///    A <see cref="int" /> value specifying the position at

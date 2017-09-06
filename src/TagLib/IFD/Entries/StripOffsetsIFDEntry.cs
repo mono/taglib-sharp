@@ -45,9 +45,9 @@ namespace TagLib.IFD.Entries
 		/// </value>
 		private File file;
 
-#endregion
+		#endregion
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Constructor.
@@ -57,7 +57,7 @@ namespace TagLib.IFD.Entries
 		///    represents
 		/// </param>
 		/// <param name="values">
-		///    A <see cref="System.UInt32[]"/> with the strip offsets.
+		///    A <see cref="T:System.UInt32[]"/> with the strip offsets.
 		/// </param>
 		/// <param name="byte_counts">
 		///    The length of the strips.

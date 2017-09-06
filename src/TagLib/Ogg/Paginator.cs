@@ -125,13 +125,13 @@ namespace TagLib.Ogg
 		{
 			codec.SetCommentPacket (packets, comment);
 		}
-		
+
 		/// <summary>
 		///    Repaginates the pages passed into the current instance to
 		///    handle changes made to the Xiph comment.
 		/// </summary>
 		/// <returns>
-		///    A <see cref="Page[]" /> containing the new page
+		///    A <see cref="T:Page[]" /> containing the new page
 		///    collection.
 		/// </returns>
 		[Obsolete("Use Paginator.Paginate(out int)")]
@@ -140,7 +140,7 @@ namespace TagLib.Ogg
 			int dummy;
 			return Paginate (out dummy);
 		}
-		
+
 		/// <summary>
 		///    Repaginates the pages passed into the current instance to
 		///    handle changes made to the Xiph comment.
@@ -151,7 +151,7 @@ namespace TagLib.Ogg
 		///    the number of pages that were added to the class.
 		/// </param>
 		/// <returns>
-		///    A <see cref="Page[]" /> containing the new page
+		///    A <see cref="T:Page[]" /> containing the new page
 		///    collection.
 		/// </returns>
 		public Page [] Paginate (out int change)

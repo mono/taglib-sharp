@@ -117,7 +117,7 @@ namespace TagLib.Mpeg4 {
 		///    specified read style.
 		/// </summary>
 		/// <param name="abstraction">
-		///    A <see cref="IFileAbstraction" /> object to use when
+		///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
 		///    reading from and writing to the file.
 		/// </param>
 		/// <param name="propertiesStyle">
@@ -142,7 +142,7 @@ namespace TagLib.Mpeg4 {
 		///    average read style.
 		/// </summary>
 		/// <param name="abstraction">
-		///    A <see cref="IFileAbstraction" /> object to use when
+		///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
 		///    reading from and writing to the file.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
@@ -185,6 +185,9 @@ namespace TagLib.Mpeg4 {
 			get {return properties;}
 		}
 
+		/// <summary>
+		/// Get the UDTA Boxes
+		/// </summary>
 		protected List<IsoUserDataBox> UdtaBoxes {
 			get { return udta_boxes; }
 		}

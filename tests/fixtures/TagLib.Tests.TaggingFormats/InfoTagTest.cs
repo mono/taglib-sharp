@@ -287,7 +287,7 @@ namespace TagLib.Tests.TaggingFormats
 				Assert.IsNull (t.Copyright, "Value Cleared (Null): " + m);
 			});
 		}
-        	
+			
 		[Test]
 		public void TestClear ()
 		{
@@ -310,7 +310,7 @@ namespace TagLib.Tests.TaggingFormats
 			tag.BeatsPerMinute = 234;
 			tag.Conductor = "I";
 			tag.Copyright = "J";
-			tag.Pictures = new Picture [] {new Picture ("../examples/covers/sample_a.png")};
+			tag.Pictures = new Picture [] {new Picture (TestPath.Covers + "sample_a.png")};
 			
 			Assert.IsFalse (tag.IsEmpty, "Should be full.");
 			tag.Clear ();

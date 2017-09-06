@@ -355,13 +355,13 @@ namespace TagLib.Id3v2
 			get {return lyrics_type;}
 			set {lyrics_type = value;}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the text contained in the current
 		///    instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="SynchedText[]" /> containing the text
+		///    A <see cref="T:SynchedText[]" /> containing the text
 		///    contained in the current instance.
 		/// </value>
 		public SynchedText [] Text {

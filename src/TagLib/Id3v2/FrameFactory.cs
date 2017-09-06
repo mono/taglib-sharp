@@ -145,11 +145,11 @@ namespace TagLib.Id3v2
 						return null;
 			}
 
-            if (alreadyUnsynched) {
-                // Mark the frame as not Unsynchronozed because the entire
-                // tag has already been Unsynchronized
-                header.Flags &= ~FrameFlags.Unsynchronisation;
-            }
+			if (alreadyUnsynched) {
+				// Mark the frame as not Unsynchronozed because the entire
+				// tag has already been Unsynchronized
+				header.Flags &= ~FrameFlags.Unsynchronisation;
+			}
 			
 			// Windows Media Player may create zero byte frames.
 			// Just send them off as unknown and delete them.

@@ -157,6 +157,9 @@ namespace TagLib.Mpeg4 {
 			get {return udta_boxes.ToArray ();}
 		}
 		
+		/// <summary>
+		/// Get the User Data Box
+		/// </summary>
 		public IsoUserDataBox UserDataBox {
 			get {return UserDataBoxes.Length == 0 ? null : UserDataBoxes[0];}
 		}
@@ -218,7 +221,7 @@ namespace TagLib.Mpeg4 {
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="BoxHeader[]" /> containing the headers for
+		///    A <see cref="T:BoxHeader[]" /> containing the headers for
 		///    the first "<c>moov</c>" box and its parent boxes up to
 		///    the top of the file, in the order they appear, or <see
 		///    langword="null" /> if none is present.
@@ -237,7 +240,7 @@ namespace TagLib.Mpeg4 {
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="BoxHeader[]" /> containing the headers for
+		///    A <see cref="T:BoxHeader[]" /> containing the headers for
 		///    the first "<c>udta</c>" box and its parent boxes up to
 		///    the top of the file, in the order they appear, or <see
 		///    langword="null" /> if none is present.
@@ -254,7 +257,7 @@ namespace TagLib.Mpeg4 {
 		///    Gets all chunk offset boxes read by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="Box[]" /> containing all chunk offset boxes
+		///    A <see cref="T:Box[]" /> containing all chunk offset boxes
 		///    read by the current instance.
 		/// </value>
 		/// <remarks>
@@ -429,7 +432,7 @@ namespace TagLib.Mpeg4 {
 					break;
 			}
 		}
-		
+
 		/// <summary>
 		///    Parses boxes for a specified range, looking for tags.
 		/// </summary>
@@ -440,6 +443,9 @@ namespace TagLib.Mpeg4 {
 		/// <param name="end">
 		///    A <see cref="long" /> value specifying the seek position
 		///    at which to stop reading.
+		/// </param>
+		/// <param name="parents">
+		///    A <see cref="T:List" /> of <see cref="BoxHeader" /> parents.
 		/// </param>
 		private void ParseTag (long start, long end,
 		                              List<BoxHeader> parents)
@@ -480,7 +486,7 @@ namespace TagLib.Mpeg4 {
 					break;
 			}
 		}
-		
+
 		/// <summary>
 		///    Parses boxes for a specified range, looking for tags and
 		///    properties.
@@ -496,6 +502,9 @@ namespace TagLib.Mpeg4 {
 		/// <param name="handler">
 		///    A <see cref="IsoHandlerBox" /> object that applied to the
 		///    range being searched.
+		/// </param>
+		/// <param name="parents">
+		///    A <see cref="T:List" /> of <see cref="BoxHeader" /> parents.
 		/// </param>
 		private void ParseTagAndProperties (long start, long end,
 		                                    IsoHandlerBox handler, List<BoxHeader> parents)

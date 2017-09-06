@@ -91,14 +91,14 @@ namespace TagLib {
 		public ReadOnlyByteVector (ByteVector vector) : base (vector)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="ReadOnlyByteVector" /> by copying a specified
 		///    number of bytes from an array.
 		/// </summary>
 		/// <param name="data">
-		///    A <see cref="byte[]" /> to copy values from.
+		///    A <see cref="T:byte[]" /> to copy values from.
 		/// </param>
 		/// <param name="length">
 		///    A <see cref="int" /> specifying the number of bytes to
@@ -119,7 +119,7 @@ namespace TagLib {
 		///    specified array.
 		/// </summary>
 		/// <param name="data">
-		///    A <see cref="byte[]" /> to copy values from.
+		///    A <see cref="T:byte[]" /> to copy values from.
 		/// </param>
 		/// <remarks>
 		///    <para>To copy only part of the array, use <see
@@ -152,11 +152,11 @@ namespace TagLib {
 		}
 		
 		/// <summary>
-		///    Implicitly converts a <see cref="byte[]" /> to a new
+		///    Implicitly converts a <see cref="T:byte[]" /> to a new
 		///    <see cref="ReadOnlyByteVector" />.
 		/// </summary>
 		/// <param name="value">
-		///    A <see cref="byte[]" /> object to convert.
+		///    A <see cref="T:byte[]" /> object to convert.
 		/// </param>
 		/// <returns>
 		///    A <see cref="ReadOnlyByteVector" /> equivalent to

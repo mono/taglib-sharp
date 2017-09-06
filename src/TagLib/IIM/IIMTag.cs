@@ -27,14 +27,23 @@ using TagLib.IFD.Entries;
 
 namespace TagLib.IIM
 {
+	/// <summary>
+	/// Represents an IIM Tag
+	/// </summary>
 	public class IIMTag: Xmp.XmpTag
 	{
 		private List<string> m_Keywords;
 
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public IIMTag ()
 		{
 		}
 
+		/// <summary>
+		/// Defines the supported TagType
+		/// </summary>
 		public override TagLib.TagTypes TagTypes
 		{
 			get
@@ -43,6 +52,9 @@ namespace TagLib.IIM
 			}
 		}
 
+		/// <summary>
+		/// Clear IIM content
+		/// </summary>
 		public override void Clear ()
 		{
 			Title = null;
@@ -52,11 +64,32 @@ namespace TagLib.IIM
 			Comment = null;
 		}
 
+		/// <summary>
+		/// Get or Set the Title Tag
+		/// </summary>
+
 		public override string Title { get; set; }
+
+		/// <summary>
+		/// Get or Set the Creator Tag
+		/// </summary>
+
 		public override string Creator { get; set; }
+
+		/// <summary>
+		/// Get or Set the Copyright Tag
+		/// </summary>
+
 		public override string Copyright { get; set; }
+
+		/// <summary>
+		/// Get or Set the comment Tag
+		/// </summary>
 		public override string Comment { get; set; }
 
+		/// <summary>
+		/// Get or Set the Keywords Tag
+		/// </summary>
 		public override string[] Keywords
 		{
 			get {

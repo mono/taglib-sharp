@@ -217,14 +217,14 @@ namespace TagLib {
 			if (vector != null)
 				this.data.AddRange (vector);
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="ByteVector" /> by copying the values from a
-		///    specified <see cref="byte[]" />.
+		///    specified <see cref="T:byte[]" />.
 		/// </summary>
 		/// <param name="data">
-		///    A <see cref="byte[]" /> containing the bytes to be stored
+		///    A <see cref="T:byte[]" /> containing the bytes to be stored
 		///    in the new instance.
 		/// </param>
 		public ByteVector (params byte [] data)
@@ -237,10 +237,10 @@ namespace TagLib {
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="ByteVector" /> by copying a specified number of
-		///    values from a specified <see cref="byte[]" />.
+		///    values from a specified <see cref="T:byte[]" />.
 		/// </summary>
 		/// <param name="data">
-		///    A <see cref="byte[]" /> containing the bytes to be stored
+		///    A <see cref="T:byte[]" /> containing the bytes to be stored
 		///    in the new instance.
 		/// </param>
 		/// <param name="length">
@@ -334,7 +334,7 @@ namespace TagLib {
 		///    Gets the data stored in the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="byte[]" /> containing the data stored in the
+		///    A <see cref="T:byte[]" /> containing the data stored in the
 		///    current instance.
 		/// </value>
 		public byte [] Data {
@@ -462,7 +462,7 @@ namespace TagLib {
 		///    to start copying elements from the current instance.
 		/// </param>
 		/// <exception cref="ArgumentOutOfRangeException">
-		///    <paramref name="ndex" /> is less than zero or greater
+		///    <paramref name="index" /> is less than zero or greater
 		///    than or equal to <see cref="Count" />.
 		/// </exception>
 		public ByteVector Mid (int index)
@@ -952,7 +952,7 @@ namespace TagLib {
 		///    instance.
 		/// </summary>
 		/// <param name="data">
-		///    A <see cref="byte[]"/> containing data to add to the end
+		///    A <see cref="T:byte[]"/> containing data to add to the end
 		///    of the current instance.
 		/// </param>
 		/// <exception cref="NotSupportedException">
@@ -1002,7 +1002,7 @@ namespace TagLib {
 		///    to insert the data.
 		/// </param>
 		/// <param name="data">
-		///    A <see cref="byte[]"/> containing data to insert into the
+		///    A <see cref="T:byte[]"/> containing data to insert into the
 		///    current instance.
 		/// </param>
 		/// <exception cref="NotSupportedException">
@@ -1344,81 +1344,81 @@ namespace TagLib {
 			return ToULong (true);
 		}
 
-        /// <summary>
-        ///    Converts an first four bytes of the current instance to
-        ///    a <see cref="float" /> value.
-        /// </summary>
-        /// <param name="mostSignificantByteFirst">
-        ///    <see langword="true" /> if the most significant byte
-        ///    appears first (big endian format), or <see
-        ///    langword="false" /> if the least significant byte appears
-        ///    first (little endian format).
-        /// </param>
-        /// <returns>
-        ///    A <see cref="float"/> value containing the value read
-        ///    from the current instance.
-        /// </returns>
-        public float ToFloat (bool mostSignificantByteFirst)
-        {
-            byte [] bytes = (byte []) Data.Clone ();
+		/// <summary>
+		///    Converts an first four bytes of the current instance to
+		///    a <see cref="float" /> value.
+		/// </summary>
+		/// <param name="mostSignificantByteFirst">
+		///    <see langword="true" /> if the most significant byte
+		///    appears first (big endian format), or <see
+		///    langword="false" /> if the least significant byte appears
+		///    first (little endian format).
+		/// </param>
+		/// <returns>
+		///    A <see cref="float"/> value containing the value read
+		///    from the current instance.
+		/// </returns>
+		public float ToFloat (bool mostSignificantByteFirst)
+		{
+			byte [] bytes = (byte []) Data.Clone ();
 
-            if (mostSignificantByteFirst) {
-                Array.Reverse (bytes);
-            }
+			if (mostSignificantByteFirst) {
+				Array.Reverse (bytes);
+			}
 
-            return BitConverter.ToSingle (bytes, 0);
-        }
+			return BitConverter.ToSingle (bytes, 0);
+		}
 
-        /// <summary>
-        ///    Converts an first four bytes of the current instance to
-        ///    a <see cref="float" /> value using big-endian format.
-        /// </summary>
-        /// <returns>
-        ///    A <see cref="float"/> value containing the value read
-        ///    from the current instance.
-        /// </returns>
-        public float ToFloat ()
-        {
-            return ToFloat (true);
-        }
+		/// <summary>
+		///    Converts an first four bytes of the current instance to
+		///    a <see cref="float" /> value using big-endian format.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="float"/> value containing the value read
+		///    from the current instance.
+		/// </returns>
+		public float ToFloat ()
+		{
+			return ToFloat (true);
+		}
 
-        /// <summary>
-        ///    Converts an first eight bytes of the current instance to
-        ///    a <see cref="double" /> value.
-        /// </summary>
-        /// <param name="mostSignificantByteFirst">
-        ///    <see langword="true" /> if the most significant byte
-        ///    appears first (big endian format), or <see
-        ///    langword="false" /> if the least significant byte appears
-        ///    first (little endian format).
-        /// </param>
-        /// <returns>
-        ///    A <see cref="double"/> value containing the value read
-        ///    from the current instance.
-        /// </returns>
-        public double ToDouble (bool mostSignificantByteFirst)
-        {
-            byte [] bytes = (byte []) Data.Clone ();
+		/// <summary>
+		///    Converts an first eight bytes of the current instance to
+		///    a <see cref="double" /> value.
+		/// </summary>
+		/// <param name="mostSignificantByteFirst">
+		///    <see langword="true" /> if the most significant byte
+		///    appears first (big endian format), or <see
+		///    langword="false" /> if the least significant byte appears
+		///    first (little endian format).
+		/// </param>
+		/// <returns>
+		///    A <see cref="double"/> value containing the value read
+		///    from the current instance.
+		/// </returns>
+		public double ToDouble (bool mostSignificantByteFirst)
+		{
+			byte [] bytes = (byte []) Data.Clone ();
 
-            if (mostSignificantByteFirst) {
-                Array.Reverse (bytes);
-            }
+			if (mostSignificantByteFirst) {
+				Array.Reverse (bytes);
+			}
 
-            return BitConverter.ToDouble (bytes, 0);
-        }
+			return BitConverter.ToDouble (bytes, 0);
+		}
 
-        /// <summary>
-        ///    Converts an first eight bytes of the current instance to
-        ///    a <see cref="double" /> value using big-endian format.
-        /// </summary>
-        /// <returns>
-        ///    A <see cref="double"/> value containing the value read
-        ///    from the current instance.
-        /// </returns>
-        public double ToDouble ()
-        {
-            return ToDouble (true);
-        }
+		/// <summary>
+		///    Converts an first eight bytes of the current instance to
+		///    a <see cref="double" /> value using big-endian format.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="double"/> value containing the value read
+		///    from the current instance.
+		/// </returns>
+		public double ToDouble ()
+		{
+			return ToDouble (true);
+		}
 		
 		/// <summary>
 		///    Converts a portion of the current instance to a <see
@@ -1521,7 +1521,7 @@ namespace TagLib {
 		}
 		
 		/// <summary>
-		///    Converts the current instance into a <see cref="string[]"
+		///    Converts the current instance into a <see cref="T:string[]"
 		///    /> starting at a specified offset and using a specified
 		///    encoding, assuming the values are nil separated.
 		/// </summary>
@@ -1534,7 +1534,7 @@ namespace TagLib {
 		///    current instance at which to start converting.
 		/// </param>
 		/// <returns>
-		///    A <see cref="string[]" /> containing the converted text.
+		///    A <see cref="T:string[]" /> containing the converted text.
 		/// </returns>
 		public string[] ToStrings (StringType type, int offset)
 		{
@@ -1542,7 +1542,7 @@ namespace TagLib {
 		}
 		
 		/// <summary>
-		///    Converts the current instance into a <see cref="string[]"
+		///    Converts the current instance into a <see cref="T:string[]"
 		///    /> starting at a specified offset and using a specified
 		///    encoding, assuming the values are nil separated and
 		///    limiting it to a specified number of items.
@@ -1562,7 +1562,7 @@ namespace TagLib {
 		///    of the data.
 		/// </param>
 		/// <returns>
-		///    A <see cref="string[]" /> containing the converted text.
+		///    A <see cref="T:string[]" /> containing the converted text.
 		/// </returns>
 		public string[] ToStrings (StringType type, int offset,
 		                           int count)
@@ -1827,11 +1827,11 @@ namespace TagLib {
 		}
 
 		/// <summary>
-		///    Converts a <see cref="byte[]" /> to a new <see
+		///    Converts a <see cref="T:byte[]" /> to a new <see
 		///    cref="ByteVector" /> object.
 		/// </summary>
 		/// <param name="value">
-		///    A <see cref="byte[]" /> to convert.
+		///    A <see cref="T:byte[]" /> to convert.
 		/// </param>
 		/// <returns>
 		///    A new instance of <see cref="ByteVector" /> containing
@@ -1857,7 +1857,7 @@ namespace TagLib {
 		{
 			return ByteVector.FromString (value, StringType.UTF8);
 		}
-        
+		
 #endregion
 		
 		
@@ -2251,7 +2251,7 @@ namespace TagLib {
 		///    file to read.
 		/// </param>
 		/// <param name="firstChunk">
-		///    A <see cref="byte[]"/> reference to be filled with the
+		///    A <see cref="T:byte[]"/> reference to be filled with the
 		///    first data chunk from the read file.
 		/// </param>
 		/// <param name="copyFirstChunk">
@@ -2309,7 +2309,7 @@ namespace TagLib {
 		///    abstraction of the file to read.
 		/// </param>
 		/// <param name="firstChunk">
-		///    A <see cref="byte[]"/> reference to be filled with the
+		///    A <see cref="T:byte[]"/> reference to be filled with the
 		///    first data chunk from the read file.
 		/// </param>
 		/// <param name="copyFirstChunk">
@@ -2370,7 +2370,7 @@ namespace TagLib {
 		///    the stream to read.
 		/// </param>
 		/// <param name="firstChunk">
-		///    A <see cref="byte[]"/> reference to be filled with the
+		///    A <see cref="T:byte[]"/> reference to be filled with the
 		///    first data chunk from the read stream.
 		/// </param>
 		/// <param name="copyFirstChunk">
@@ -2698,11 +2698,11 @@ namespace TagLib {
 		}
 		
 		/// <summary>
-		///    Copies the current instance to a <see cref="byte[]"/>
+		///    Copies the current instance to a <see cref="T:byte[]"/>
 		///    starting at a specified index.
 		/// </summary>
 		/// <param name="array">
-		///    A <see cref="byte[]" /> to copy to.
+		///    A <see cref="T:byte[]" /> to copy to.
 		/// </param>
 		/// <param name="arrayIndex">
 		///    A <see cref="int" /> value indicating the index in
@@ -2790,7 +2790,7 @@ namespace TagLib {
 		
 		/// <summary>
 		///    Inserts a single byte into the current instance at a
-		//     specified index.
+		///    specified index.
 		/// </summary>
 		/// <param name="index">
 		///    A <see cref="int" /> value specifying the position at

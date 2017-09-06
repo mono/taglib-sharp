@@ -80,7 +80,7 @@ namespace TagLib {
 		///    to be read from the codecs.
 		/// </param>
 		/// <param name="codecs">
-		///    A <see cref="ICodec[]" /> containing the codecs to be
+		///    A <see cref="T:T:ICodec[]" /> containing the codecs to be
 		///    used in the new instance.
 		/// </param>
 		public Properties (TimeSpan duration, params ICodec[] codecs)

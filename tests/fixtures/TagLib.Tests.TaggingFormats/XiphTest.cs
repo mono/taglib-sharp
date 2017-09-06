@@ -469,12 +469,12 @@ namespace TagLib.Tests.TaggingFormats
 			Ogg.XiphComment tag = new Ogg.XiphComment ();
 			
 			Picture [] pictures = new Picture [] {
-				new Picture ("../examples/covers/sample_a.png"),
-				new Picture ("../examples/covers/sample_a.jpg"),
-				new Picture ("../examples/covers/sample_b.png"),
-				new Picture ("../examples/covers/sample_b.jpg"),
-				new Picture ("../examples/covers/sample_c.png"),
-				new Picture ("../examples/covers/sample_c.jpg")
+				new Picture (TestPath.Covers + "sample_a.png"),
+				new Picture (TestPath.Covers + "sample_a.jpg"),
+				new Picture (TestPath.Covers + "sample_b.png"),
+				new Picture (TestPath.Covers + "sample_b.jpg"),
+				new Picture (TestPath.Covers + "sample_c.png"),
+				new Picture (TestPath.Covers + "sample_c.jpg")
 			};
 			
 			for (int i = 0; i < 6; i ++)
@@ -500,7 +500,7 @@ namespace TagLib.Tests.TaggingFormats
 				Assert.AreEqual (0, t.Pictures.Length, "Value Cleared (Zero): " + m);
 			});
 		}
-        
+		
 		[Test]
 		public void TestMusicBrainzArtistID ()
 		{
@@ -798,7 +798,7 @@ namespace TagLib.Tests.TaggingFormats
 			tag.BeatsPerMinute = 234;
 			tag.Conductor = "I";
 			tag.Copyright = "J";
-			tag.Pictures = new Picture [] {new Picture ("../examples/covers/sample_a.png")};
+			tag.Pictures = new Picture [] {new Picture (TestPath.Covers + "sample_a.png") };
 			
 			Assert.IsFalse (tag.IsEmpty, "Should be full.");
 			tag.Clear ();

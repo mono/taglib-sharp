@@ -31,7 +31,7 @@ namespace TagLib.IFD.Entries
 	public class RationalArrayIFDEntry : ArrayIFDEntry<Rational>
 	{
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Construcor.
@@ -41,7 +41,7 @@ namespace TagLib.IFD.Entries
 		///    represents
 		/// </param>
 		/// <param name="entries">
-		///    A <see cref="Rational[]"/> to be stored
+		///    A <see cref="T:Rational[]"/> to be stored
 		/// </param>
 		public RationalArrayIFDEntry (ushort tag, Rational [] entries)
 			: base (tag)

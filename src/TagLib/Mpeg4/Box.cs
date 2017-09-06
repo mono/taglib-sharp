@@ -560,7 +560,7 @@ namespace TagLib.Mpeg4 {
 		}
 		
 		#endregion
-      
+  	
 		/*
 		#region Internal Methods
 		

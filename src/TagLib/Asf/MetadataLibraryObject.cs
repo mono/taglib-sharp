@@ -173,7 +173,7 @@ namespace TagLib.Asf {
 					records.RemoveAt (i);
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets all records with a given language, stream, and any
 		///    of a collection of names from the current instance.
@@ -187,7 +187,7 @@ namespace TagLib.Asf {
 		///    number of the records to be retrieved.
 		/// </param>
 		/// <param name="names">
-		///    A <see cref="string[]" /> containing the names of the
+		///    A <see cref="T:string[]" /> containing the names of the
 		///    records to be retrieved.
 		/// </param>
 		/// <returns>
@@ -239,7 +239,7 @@ namespace TagLib.Asf {
 		///    records to be added.
 		/// </param>
 		/// <param name="records">
-		///    A <see cref="DescriptionRecord[]" /> containing records
+		///    A <see cref="T:DescriptionRecord[]" /> containing records
 		///    to add to the new instance.
 		/// </param>
 		/// <remarks>

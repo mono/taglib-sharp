@@ -188,16 +188,16 @@ namespace TagLib.Image
 				tag.Clear ();
 		}
 
-#endregion
+		#endregion
 
-#region Public Properties (ImageTag)
+		#region Public Properties (ImageTag)
 
 		/// <summary>
 		///    Gets or sets the keywords for the image described
 		///    by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the keywords of the
+		///    A <see cref="T:string[]" /> containing the keywords of the
 		///    current instace.
 		/// </value>
 		public override string[] Keywords {

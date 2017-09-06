@@ -118,12 +118,12 @@ namespace TagLib.NonContainer {
 		public override TagTypes TagTypes {
 			get {return start_tag.TagTypes | end_tag.TagTypes;}
 		}
-		
+
 		/// <summary>
 		///    Gets the tags combined in the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="Tag[]" /> containing the tags combined in
+		///    A <see cref="T:TagLib.Tag[]" /> containing the tags combined in
 		///    the current instance.
 		/// </value>
 		/// <remarks>

@@ -204,35 +204,35 @@ namespace TagLib.Id3v2
 						SetData (data, offset, version, false);
 				}
 
-				#endregion
+		#endregion
 
-				#region Public Properties
-				/// <summary>
-				///    Gets and sets the text contained in the current
-				///    instance.
-				/// </summary>
-				/// <value>
-				///    A <see cref="string[]" /> containing the text contained
-				///    in the current instance.
-				/// </value>
-				/// <remarks>
-				///    <para>Modifying the contents of the returned value will
-				///    not modify the contents of the current instance. The
-				///    value must be reassigned for the value to change.</para>
-				/// </remarks>
-				/// <example>
-				///    <para>Modifying the values text values of a frame.</para>
-				///    <code>UrlLinkFrame frame = UrlLinkFrame.Get (myTag, "WCOP", true);
-				////* Upper casing all the text: */
-				///string[] text = frame.Text;
-				///for (int i = 0; i &lt; text.Length; i++)
-				///	text [i] = text [i].ToUpper ();
-				///frame.Text = text;
-				///
-				////* Replacing the value completely: */
-				///frame.Text = new string [] {"http://www.somewhere.com"};</code>
-				/// </example>
-				public virtual string [] Text {
+		#region Public Properties
+		/// <summary>
+		///    Gets and sets the text contained in the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="T:string[]" /> containing the text contained
+		///    in the current instance.
+		/// </value>
+		/// <remarks>
+		///    <para>Modifying the contents of the returned value will
+		///    not modify the contents of the current instance. The
+		///    value must be reassigned for the value to change.</para>
+		/// </remarks>
+		/// <example>
+		///    <para>Modifying the values text values of a frame.</para>
+		///    <code> UrlLinkFrame frame = UrlLinkFrame.Get (myTag, "WCOP", true);
+		/// /* Upper casing all the text: */
+		/// string[] text = frame.Text;
+		/// for (int i = 0; i &lt; text.Length; i++)
+		///	text [i] = text [i].ToUpper ();
+		/// frame.Text = text;
+		///
+		/// /* Replacing the value completely: */
+		/// frame.Text = new string [] {"http://www.somewhere.com"};</code>
+		/// </example>
+		public virtual string [] Text {
 						get {
 								ParseRawData ();
 								return (string [])text_fields.Clone ();
@@ -299,46 +299,46 @@ namespace TagLib.Id3v2
 						return base.Render (version);
 				}
 
-				#endregion
+		#endregion
 
-				#region Public Static Methods
+		#region Public Static Methods
 
-				/// <summary>
-				///    Gets a <see cref="UrlLinkFrame" /> object of a
-				///    specified type from a specified tag, optionally creating
-				///    and adding one with a specified encoding if none is
-				///    found.
-				/// </summary>
-				/// <param name="tag">
-				///    A <see cref="Tag" /> object to search for the specified
-				///    tag in.
-				/// </param>
-				/// <param name="ident">
-				///    A <see cref="ByteVector" /> object containing the frame
-				///    identifer to search for.
-				/// </param>
-				/// <param name="create">
-				///    A <see cref="bool" /> value specifying whether or not to
-				///    create a new frame if an existing frame was not found.
-				/// </param>
-				/// <returns>
-				///    A <see cref="UrlLinkFrame" /> object containing
-				///    the frame found in or added to <paramref name="tag" /> or
-				///    <see langword="null" /> if no value was found
-				///    <paramref name="create" /> is <see langword="false" />.
-				/// </returns>
-				/// <remarks>
-				///    To create a frame without having to specify the encoding,
-				///    use <see cref="Get(Tag,ByteVector,bool)" />.
-				/// </remarks>
-				/// <exception cref="ArgumentNullException">
-				///    <paramref name="tag" /> or <paramref name="type" /> is
-				///    <see langword="null" />.
-				/// </exception>
-				/// <exception cref="ArgumentException">
-				///    <paramref name="ident" /> is not exactly four bytes long.
-				/// </exception>
-				public static UrlLinkFrame Get (Tag tag,
+		/// <summary>
+		///    Gets a <see cref="UrlLinkFrame" /> object of a
+		///    specified type from a specified tag, optionally creating
+		///    and adding one with a specified encoding if none is
+		///    found.
+		/// </summary>
+		/// <param name="tag">
+		///    A <see cref="Tag" /> object to search for the specified
+		///    tag in.
+		/// </param>
+		/// <param name="ident">
+		///    A <see cref="ByteVector" /> object containing the frame
+		///    identifer to search for.
+		/// </param>
+		/// <param name="create">
+		///    A <see cref="bool" /> value specifying whether or not to
+		///    create a new frame if an existing frame was not found.
+		/// </param>
+		/// <returns>
+		///    A <see cref="UrlLinkFrame" /> object containing
+		///    the frame found in or added to <paramref name="tag" /> or
+		///    <see langword="null" /> if no value was found
+		///    <paramref name="create" /> is <see langword="false" />.
+		/// </returns>
+		/// <remarks>
+		///    To create a frame without having to specify the encoding,
+		///    use <see cref="Get(Tag,ByteVector,bool)" />.
+		/// </remarks>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="tag" /> or <paramref name="ident" /> is
+		///    <see langword="null" />.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		///    <paramref name="ident" /> is not exactly four bytes long.
+		/// </exception>
+		public static UrlLinkFrame Get (Tag tag,
 				                                ByteVector ident,
 				                                bool create)
 				{
@@ -665,7 +665,7 @@ namespace TagLib.Id3v2
 				///    instance.
 				/// </summary>
 				/// <value>
-				///    A <see cref="string[]" /> containing the text contained
+				///    A <see cref="T:string[]" /> containing the text contained
 				///    in the current instance.
 				/// </value>
 				/// <remarks>

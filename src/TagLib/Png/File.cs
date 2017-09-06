@@ -184,7 +184,7 @@ namespace TagLib.Png
 		///    specified read style.
 		/// </summary>
 		/// <param name="abstraction">
-		///    A <see cref="IFileAbstraction" /> object to use when
+		///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
 		///    reading from and writing to the file.
 		/// </param>
 		/// <param name="propertiesStyle">
@@ -207,7 +207,7 @@ namespace TagLib.Png
 		///    cref="File" /> for a specified file abstraction.
 		/// </summary>
 		/// <param name="abstraction">
-		///    A <see cref="IFileAbstraction" /> object to use when
+		///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
 		///    reading from and writing to the file.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
@@ -817,7 +817,7 @@ namespace TagLib.Png
 		///    Computes a 32bit CRC for the given data.
 		/// </summary>
 		/// <param name="datas">
-		///    A <see cref="ByteVector[]"/> with data to compute
+		///    A <see cref="T:ByteVector[]"/> with data to compute
 		///    the CRC for.
 		/// </param>
 		/// <returns>
@@ -872,20 +872,20 @@ namespace TagLib.Png
 
 		private static ByteVector Inflate (ByteVector data)
 		{
-            using (MemoryStream out_stream = new System.IO.MemoryStream ())
-            using (var input = new MemoryStream (data.Data)) {
-                input.Seek (2, SeekOrigin.Begin); // First 2 bytes are properties deflate does not need (or handle)
-                using (var zipstream = new DeflateStream (input, CompressionMode.Decompress)) {
-                    //zipstream.CopyTo (out_stream); Cleaner with .NET 4
-                    byte[] buffer = new byte[1024];
-                    int written_bytes;
+			using (MemoryStream out_stream = new System.IO.MemoryStream ())
+			using (var input = new MemoryStream (data.Data)) {
+				input.Seek (2, SeekOrigin.Begin); // First 2 bytes are properties deflate does not need (or handle)
+				using (var zipstream = new DeflateStream (input, CompressionMode.Decompress)) {
+					//zipstream.CopyTo (out_stream); Cleaner with .NET 4
+					byte[] buffer = new byte[1024];
+					int written_bytes;
 
-                    while ((written_bytes = zipstream.Read (buffer, 0, 1024)) > 0)
-                        out_stream.Write (buffer, 0, written_bytes);
+					while ((written_bytes = zipstream.Read (buffer, 0, 1024)) > 0)
+						out_stream.Write (buffer, 0, written_bytes);
 
-                    return new ByteVector (out_stream.ToArray());
-                }
-            }
+					return new ByteVector (out_stream.ToArray());
+				}
+			}
 		}
 
 

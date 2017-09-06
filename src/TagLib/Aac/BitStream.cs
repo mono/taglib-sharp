@@ -40,14 +40,14 @@ namespace TagLib.Aac
 		#endregion
 
 
-			
+
 		#region Constructors
 
 		/// <summary>
 		///    Construct a new <see cref="BitStream"/>.
 		/// </summary>
 		/// <param name="buffer">
-		///    A <see cref="System.Byte[]"/>, must be 7 bytes long.
+		///    A <see cref="T:System.Byte[]"/>, must be 7 bytes long.
 		/// </param>
 		public BitStream(byte[] buffer)
 		{

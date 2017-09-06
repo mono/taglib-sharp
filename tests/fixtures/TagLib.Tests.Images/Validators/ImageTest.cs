@@ -1,15 +1,17 @@
-using Gdk;
 using System;
+using System.Reflection;
 using NUnit.Framework;
+using Gdk;
 
 namespace TagLib.Tests.Images.Validators
 {
 	public class ImageTest
 	{
-		static ImageTest () {
-			// Initialize GDK
-			var args = Environment.GetCommandLineArgs ();
-			Global.InitCheck (ref args);
+
+		static ImageTest() {
+			// Initialize GDK 
+			var args = Environment.GetCommandLineArgs();
+			Global.InitCheck(ref args);
 		}
 
 		string pre_hash;
@@ -37,7 +39,7 @@ namespace TagLib.Tests.Images.Validators
 
 		public static void Run (string filename, bool compare_image_data, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
 		{
-			Run ("samples", filename, compare_image_data, invariant, modifications);
+			Run (TestPath.Samples, filename, compare_image_data, invariant, modifications);
 		}
 
 		public static void Run (string directory, string filename, bool compare_image_data, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)

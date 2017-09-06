@@ -55,49 +55,49 @@ namespace TagLib {
 		{
 			this.tags = new List<Tag> ();
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="CombinedTag" /> with a specified collection of
 		///    tags.
 		/// </summary>
 		/// <param name="tags">
-		///    A <see cref="Tag[]" /> containing a collection of tags to
+		///    A <see cref="T:Tag[]" /> containing a collection of tags to
 		///    combine in the new instance.
 		/// </param>
 		public CombinedTag (params Tag [] tags)
 		{
 			this.tags = new List<Tag> (tags);
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the tags combined in the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="Tag[]" /> containing the tags combined in
+		///    A <see cref="T:Tag[]" /> containing the tags combined in
 		///    the current instance.
 		/// </value>
 		public virtual Tag [] Tags {
 			get {return tags.ToArray ();}
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Methods
-		
+
 		/// <summary>
 		///    Sets the child tags to combine in the current instance.
 		/// </summary>
 		/// <param name="tags">
-		///    A <see cref="Tag[]" /> containing the tags to combine.
+		///    A <see cref="T:Tag[]" /> containing the tags to combine.
 		/// </param>
 		public void SetTags (params Tag [] tags)
 		{
@@ -234,13 +234,13 @@ namespace TagLib {
 						tag.Title = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the performers or artists who performed in
 		///    the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the performers or
+		///    A <see cref="T:string[]" /> containing the performers or
 		///    artists who performed in the media described by the
 		///    current instance or an empty array if no value is
 		///    present.
@@ -280,7 +280,7 @@ namespace TagLib {
 		///    who performed in the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names for
+		///    A <see cref="T:string[]" /> containing the sort names for
 		///    the performers or artists who performed in the media
 		///    described by the current instance, or an empty array if
 		///    no value is present.
@@ -322,7 +322,7 @@ namespace TagLib {
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names
+		///    A <see cref="T:string[]" /> containing the sort names
 		///    for the band or artist who is credited in the creation
 		///    of the entire album or collection containing the media
 		///    described by the current instance or an empty array if
@@ -364,7 +364,7 @@ namespace TagLib {
 		///    media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the band or artist
+		///    A <see cref="T:string[]" /> containing the band or artist
 		///    who is credited in the creation of the entire album or
 		///    collection containing the media described by the current
 		///    instance or an empty array if no value is present.
@@ -404,7 +404,7 @@ namespace TagLib {
 		///    the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the composers of the
+		///    A <see cref="T:string[]" /> containing the composers of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -443,7 +443,7 @@ namespace TagLib {
 		///    media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names
+		///    A <see cref="T:string[]" /> containing the sort names
 		///    for the composers of the media described by the 
 		///    current instance or an empty array if no value is present.
 		/// </value>
@@ -638,7 +638,7 @@ namespace TagLib {
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the genres of the
+		///    A <see cref="T:string[]" /> containing the genres of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -1447,7 +1447,7 @@ namespace TagLib {
 		///    the media represented by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IPicture[]" /> containing a collection of
+		///    A <see cref="T:IPicture[]" /> containing a collection of
 		///    pictures associated with the media represented by the
 		///    current instance or an empty array if none are present.
 		/// </value>
