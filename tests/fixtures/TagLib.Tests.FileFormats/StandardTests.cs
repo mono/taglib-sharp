@@ -84,17 +84,20 @@ namespace TagLib.Tests.FileFormats
 			tag.Composers = new string [] {"TEST composer 1", "TEST composer 2"};
 			tag.Conductor = "TEST conductor";
 			tag.Copyright = "TEST copyright";
+			tag.DateTagged = new DateTime(2017, 09, 12, 22, 47, 42);
 			tag.Disc = 100;
 			tag.DiscCount = 101;
 			tag.Genres = new string [] {"TEST genre 1", "TEST genre 2"};
 			tag.Grouping = "TEST grouping";
 			tag.Lyrics = "TEST lyrics 1\r\nTEST lyrics 2";
-			tag.Performers = new string [] {"TEST performer 1", "TEST performer 2"};
+			tag.Performers = new string[] { "TEST performer 1", "TEST performer 2" };
+			tag.PerformersRole = new string[] { "TEST role 1", "TEST role 2" };
 			tag.Title = "TEST title";
+			tag.Subtitle = "TEST subtitle";
+			tag.Description = "TEST description";
 			tag.Track = 98;
 			tag.TrackCount = 99;
 			tag.Year = 1999;
-
 		}
 
 		public static void CheckTags (Tag tag, TestTagLevel level = TestTagLevel.Normal)
@@ -114,14 +117,18 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual ("TEST comment", tag.Comment);
 			Assert.AreEqual ("TEST composer 1; TEST composer 2", tag.JoinedComposers);
 			Assert.AreEqual ("TEST conductor", tag.Conductor);
-			Assert.AreEqual ("TEST copyright", tag.Copyright);
+			Assert.AreEqual("TEST copyright", tag.Copyright);
+			Assert.AreEqual(new DateTime(2017, 09, 12, 22, 47, 42), tag.DateTagged);
 			Assert.AreEqual (100, tag.Disc);
 			Assert.AreEqual (101, tag.DiscCount);
 			Assert.AreEqual ("TEST genre 1; TEST genre 2", tag.JoinedGenres);
 			Assert.AreEqual ("TEST grouping", tag.Grouping);
 			Assert.AreEqual ("TEST lyrics 1\r\nTEST lyrics 2", tag.Lyrics);
 			Assert.AreEqual ("TEST performer 1; TEST performer 2", tag.JoinedPerformers);
-			Assert.AreEqual ("TEST title", tag.Title);
+			Assert.AreEqual("TEST role 1; TEST role 2", string.Join("; ", tag.PerformersRole));
+			Assert.AreEqual("TEST title", tag.Title);
+			Assert.AreEqual("TEST subtitle", tag.Subtitle);
+			Assert.AreEqual("TEST description", tag.Description);
 			Assert.AreEqual (98, tag.Track);
 			Assert.AreEqual (99, tag.TrackCount);
 			Assert.AreEqual (1999, tag.Year);

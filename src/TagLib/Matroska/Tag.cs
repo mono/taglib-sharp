@@ -632,6 +632,49 @@ namespace TagLib.Matroska
 		}
 
 		/// <summary>
+		///    Gets and sets a short description, one-liner. 
+		///    It represents the tagline of the Video/music.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the Matroska 
+		///    SimpleTag "SUBTITLE".
+		/// </remarks>
+		public override string Subtitle
+		{
+			get { return GetString("SUBTITLE"); }
+			set { Set("SUBTITLE", null, value); }
+		}
+
+		/// <summary>
+		///    Gets and sets a short description of the media.
+		///    For a music, this could be the comment that the artist
+		///    made of its artwork. For a video, this should be a 
+		///    short summary of the story/plot, but a spoiler. This
+		///    should give the impression of what to expect in the
+		///    media.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the Matroska 
+		///    SimpleTag "SUMMARY" (note that this is not the
+		///    "DESCRIPTION" tag).
+		/// </remarks>
+		public override string Description
+		{
+			get { return GetString("SUMMARY"); }
+			set { Set("SUMMARY", null, value); }
+		}
+
+		/// <summary>
 		///    Gets and sets the performers or artists who performed in
 		///    the media described by the current instance.
 		/// </summary>
@@ -689,7 +732,7 @@ namespace TagLib.Matroska
 		///    SimpleTag "CHARACTER" or "INSTRUMENTS" inside the 
 		///    "ACTOR" or "PERFORMER" SimpleTag.
 		/// </remarks>
-		public string[] PerformersRole
+		public override string[] PerformersRole
 		{
 			get { return Get(IsVideo ? "ACTOR" : "PERFORMER", IsVideo ? "CHARACTER" : "INSTRUMENTS"); }
 			set { Set(IsVideo ? "ACTOR" : "PERFORMER", IsVideo ? "CHARACTER" : "INSTRUMENTS", value); }
@@ -964,6 +1007,9 @@ namespace TagLib.Matroska
 		///    media represented by the current instance in its
 		///    containing album or zero if not specified.
 		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "PART_NUMBER" Tag.
+		/// </remarks>
 		public override uint Track
 		{
 			get { return GetUint("PART_NUMBER"); }
@@ -979,6 +1025,10 @@ namespace TagLib.Matroska
 		///    the album containing the media represented by the current
 		///    instance or zero if not specified.
 		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TOTAL_PARTS" Tag
+		///    in the parent tag (one level up).
+		/// </remarks>
 		public override uint TrackCount
 		{
 			get
@@ -1002,16 +1052,20 @@ namespace TagLib.Matroska
 		///    containing the media represented by the current instance
 		///    in the boxed set.
 		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "PART_NUMBER" Tag in
+		///    a parent tag (VOLUME for video, PART for audio).
+		/// </remarks>
 		public override uint Disc
 		{
 			get
 			{
-				var tag = TagsGet(false, TargetType.PART);
+				var tag = TagsGet(false, IsVideo ? TargetType.VOLUME : TargetType.PART);
 				return tag != null ? tag.GetUint("PART_NUMBER") : 0;
 			}
 			set
 			{
-				var tag = TagsGet(true, TargetType.PART);
+				var tag = TagsGet(true, IsVideo ? TargetType.VOLUME : TargetType.PART);
 				if (tag != null) tag.Set("PART_NUMBER", null, value);
 			}
 		}
@@ -1025,16 +1079,20 @@ namespace TagLib.Matroska
 		///    the boxed set containing the media represented by the
 		///    current instance or zero if not specified.
 		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TOTAL_PARTS" Tag in
+		///    a parent tag (COLLECTION for video, ALBUM for audio).
+		/// </remarks>
 		public override uint DiscCount
 		{
 			get
 			{
-				var tag = TagsGet(false, TargetType.ALBUM);
+				var tag = TagsGet(false, IsVideo ? TargetType.COLLECTION : TargetType.ALBUM);
 				return tag != null ? tag.GetUint("TOTAL_PARTS") : 0;
 			}
 			set
 			{
-				var tag = TagsGet(true, IsVideo ? TargetType.MOVIE : TargetType.ALBUM);
+				var tag = TagsGet(true, IsVideo ? TargetType.COLLECTION : TargetType.ALBUM);
 				if (tag != null) tag.Set("TOTAL_PARTS", null, value);
 			}
 		}
@@ -1123,6 +1181,44 @@ namespace TagLib.Matroska
 		{
 			get { return GetString("COPYRIGHT"); }
 			set { Set("COPYRIGHT", null, value); }
+		}
+
+
+		/// <summary>
+		///    Gets and sets the date at which the tag has been written.
+		/// </summary>
+		/// <value>
+		///    A nullable <see cref="DateTime" /> object containing the 
+		///    date at which the tag has been written, or <see 
+		///    langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "DATE_TAGGED" Tag.
+		/// </remarks>
+		public override DateTime? DateTagged
+		{
+			get
+			{
+				string value =  GetString("DATE_TAGGED");
+				if (value != null)
+				{
+					DateTime date;
+					if (DateTime.TryParseExact(value, "yyyy-MM-dd HH:mm:ss", null, DateTimeStyles.None, out date))
+					{
+						return date;
+					}
+				}
+				return null;
+			}
+			set
+			{
+				string date = null;
+				if (value != null)
+				{
+					date = string.Format("{0:yyyy-MM-dd HH:mm:ss}", value);
+				}
+				Set("DATE_TAGGED", null, date);
+			}
 		}
 
 		/// <summary>

@@ -201,7 +201,7 @@ namespace TagLib {
 			get {return null;}
 			set {}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the performers or artists who performed in
 		///    the media described by the current instance.
@@ -214,11 +214,12 @@ namespace TagLib {
 		/// </value>
 		/// <remarks>
 		///    <para>This field is most commonly called "Artists" in
-		///    media applications and should be used to represent each
-		///    of the artists appearing in the media. It can be simple
-		///    in theform of "The Beatles", or more complicated in the
-		///    form of "John Lennon, Paul McCartney, George Harrison,
-		///    Pete Best", depending on the preferences of the listener
+		///    Audio media, or "Actor" in Video media, and should be 
+		///    used to represent each artist/actor appearing in the 
+		///    media. It can be simple in the form of "The Beatles"
+		///    or more complicated in the form of "John Lennon,
+		///    Paul McCartney, George Harrison, Pete Best", depending
+		///    on the preferences of the listener/spectator
 		///    and the degree to which they organize their media
 		///    collection.</para>
 		///    <para>As the preference of the user may vary,
@@ -251,7 +252,34 @@ namespace TagLib {
 			get {return new string [] {};}
 			set {}
 		}
-		
+
+
+		/// <summary>
+		///    Gets and sets the Charaters for a video media, or
+		///    instruments played for music media. 
+		///    This should match the <see cref="Performers"/> array (for
+		///    each person correspond one/more role). Several roles for
+		///    the same artist/actor can be made up with semicolons. 
+		///    For example, "Marty McFly; Marty McFly Jr.; Marlene McFly".
+		/// </summary>
+		/// <remarks>
+		///    <para> This is typically usefull for movies, although the
+		///    instrument played by each artist in a music may be of
+		///    relevance.
+		///    </para>
+		///    <para>It is highly important to match each role to the 
+		///    performers. This means that a role may be <see 
+		///    langword="null"/> to keep the match between a
+		///    Performers[i] and PerformersRole[i].
+		///    </para>
+		/// </remarks>
+		public virtual string[] PerformersRole
+		{
+			get { return new string[] { }; }
+			set { }
+		}
+
+
 		/// <summary>
 		///    Gets and sets the band or artist who is credited in the
 		///    creation of the entire album or collection containing the
@@ -359,7 +387,8 @@ namespace TagLib {
 		
 		/// <summary>
 		///    Gets and sets the album of the media represented by the
-		///    current instance.
+		///    current instance. For a video media, this represent the
+		///    collection the video belongs to. 
 		/// </summary>
 		/// <value>
 		///    A <see cref="string" /> object containing the album of
@@ -370,11 +399,13 @@ namespace TagLib {
 		///    <para>This field represents the name of the album the
 		///    media belongs to. In the case of a boxed set, it should
 		///    be the name of the entire set rather than the individual
-		///    disc.</para>
+		///    disc. In case of a Serie, this should be name of the serie,
+		///    rather than the season of a serie.</para>
 		///    <para>For example, "Rubber Soul" (an album by the
 		///    Beatles), "The Sopranos: Complete First Season" (a boxed
-		///    set of TV episodes), or "Back To The Future Trilogy" (a 
-		///    boxed set of movies).</para>
+		///    set of TV episodes), "Back To The Future" (a 
+		///    serie of movies/sequels), or "Game of Thrones" (a serie
+		///    with several seasons).</para>
 		/// </remarks>
 		public virtual string Album {
 			get {return null;}
@@ -386,7 +417,7 @@ namespace TagLib {
 		///    media represented by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="T:string[]" /> containing the sort names
+		///    A <see cref="string" /> containing the sort names
 		///    for the Album Title of the media represented by the 
 		///    current instance or an empty array if no value is present.
 		/// </value>
@@ -399,7 +430,57 @@ namespace TagLib {
 			get {return null;}
 			set {}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets a short description, one-liner. 
+		///    It represents the tagline of the Video/music.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field gives a nice/short precision to 
+		///    the title, which is typically below the title on the
+		///    front cover of a media.
+		///    For example, for "Back to the future", this would be 
+		///    "It's About Time". 
+		///    </para>
+		/// </remarks>
+		public virtual string Subtitle
+		{
+			get { return null; }
+			set { }
+		}
+
+		/// <summary>
+		///    Gets and sets a short description of the media.
+		///    For a music, this could be the comment that the artist
+		///    made of its artwork. For a video, this should be a 
+		///    short summary of the story/plot, but a spoiler. This
+		///    should give the impression of what to expect in the
+		///    media.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This is especially relevant for a movie.
+		///    For example, for "Back to the Future 2", this could be
+		///    "After visiting 2015, Marty McFly must repeat his visit 
+		///    to 1955 to prevent disastrous changes to 1985...without
+		///    interfering with his first trip".
+		///    </para>
+		/// </remarks>
+		public virtual string Description
+		{
+			get { return null; }
+			set { }
+		}
+
 		/// <summary>
 		///    Gets and sets a user comment on the media represented by
 		///    the current instance.
@@ -435,8 +516,9 @@ namespace TagLib {
 		///    array if no value is present.
 		/// </value>
 		/// <remarks>
-		///    <para>This field represents genres that apply to the song
-		///    or album. This is often used for filtering media.</para>
+		///    <para>This field represents genres that apply to the song,
+		///    album or video. This is often used for filtering media.
+		///    </para>
 		///    <para>A list of common audio genres as popularized by
 		///    ID3v1, are stored in <see cref="Genres.Audio" />.
 		///    Additionally, <see cref="Genres.Video" /> contains video
@@ -472,7 +554,8 @@ namespace TagLib {
 		
 		/// <summary>
 		///    Gets and sets the position of the media represented by
-		///    the current instance in its containing album.
+		///    the current instance in its containing album, or season
+		///    (for series).
 		/// </summary>
 		/// <value>
 		///    A <see cref="uint" /> containing the position of the
@@ -483,20 +566,28 @@ namespace TagLib {
 		///    <para>This value should be the same as is listed on the
 		///    album cover and no more than <see cref="TrackCount"
 		///    /> if <see cref="TrackCount" /> is non-zero.</para>
+		///    <para>Most tagging formats store this as a string. To
+		///    help sorting, a two-digit zero-filled value is used 
+		///    in the resulting tag.</para>
+		///    <para>For a serie, this property represents the episode
+		///    in a season of the serie.
+		///    </para>
 		/// </remarks>
 		public virtual uint Track {
 			get {return 0;}
 			set {}
 		}
-		
+
 		/// <summary>
-		///    Gets and sets the number of tracks in the album
-		///    containing the media represented by the current instance.
+		///    Gets and sets the number of tracks in the album, or the
+		///    number of episodes in a serie, of the media represented 
+		///    by the current instance.
 		/// </summary>
 		/// <value>
 		///    A <see cref="uint" /> containing the number of tracks in
-		///    the album containing the media represented by the current
-		///    instance or zero if not specified.
+		///    the album, or the number of episodes in a serie, of the 
+		///    media represented by the current instance or zero if not
+		///    specified.
 		/// </value>
 		/// <remarks>
 		///    <para>If non-zero, this value should be at least equal to
@@ -510,11 +601,12 @@ namespace TagLib {
 		
 		/// <summary>
 		///    Gets and sets the number of the disc containing the media
-		///    represented by the current instance in the boxed set.
+		///    represented by the current instance in the boxed set. For
+		///    a serie, this represents the season number.
 		/// </summary>
 		/// <value>
 		///    A <see cref="uint" /> containing the number of the disc
-		///    containing the media represented by the current instance
+		///    or season of the media represented by the current instance
 		///    in the boxed set.
 		/// </value>
 		/// <remarks>
@@ -530,13 +622,15 @@ namespace TagLib {
 		}
 		
 		/// <summary>
-		///    Gets and sets the number of discs in the boxed set
-		///    containing the media represented by the current instance.
+		///    Gets and sets the number of discs or seasons in the 
+		///    boxed set containing the media represented by the 
+		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="uint" /> containing the number of discs in
-		///    the boxed set containing the media represented by the
-		///    current instance or zero if not specified.
+		///    A <see cref="uint" /> containing the number of discs 
+		///    or seasons in the boxed set containing the media 
+		///    represented by the current instance or zero if not 
+		///    specified.
 		/// </value>
 		/// <remarks>
 		///    <para>If non-zero, this value should be at least equal to
@@ -649,7 +743,23 @@ namespace TagLib {
 			get {return null;}
 			set {}
 		}
-		
+
+
+		/// <summary>
+		///    Gets and sets the date at which the tag has been written.
+		/// </summary>
+		/// <value>
+		///    A nullable <see cref="DateTime" /> object containing the 
+		///    date at which the tag has been written, or <see 
+		///    langword="null" /> if no value present.
+		/// </value>
+		public virtual DateTime? DateTagged
+		{
+			get { return null; }
+			set { }
+		}
+
+
 		/// <summary>
 		///    Gets and sets the MusicBrainz Artist ID of the media represented by
 		///    the current instance.
@@ -1232,6 +1342,22 @@ namespace TagLib {
 		/// </remarks>
 		public abstract void Clear ();
 		
+
+
+		/// <summary>
+		///    Set the Tags that represent the Tagger software 
+		///    (TagLib#) itself.
+		/// </summary>
+		/// <remarks>
+		///    This is typically a method to call just before 
+		///    saving a tag.
+		/// </remarks>
+		public void SetInfoTag()
+		{
+			DateTagged = DateTime.Now;
+		}
+
+
 		/// <summary>
 		///    Copies all standard values from one tag to another,
 		///    optionally overwriting existing values.
@@ -1302,16 +1428,25 @@ namespace TagLib {
 		{
 			if (target == null)
 				throw new ArgumentNullException ("target");
-			
-			if (overwrite || IsNullOrLikeEmpty (target.Title))
+
+			if (overwrite || IsNullOrLikeEmpty(target.Title))
 				target.Title = Title;
-			
+
+			if (overwrite || IsNullOrLikeEmpty(target.Subtitle))
+				target.Subtitle = Subtitle;
+
+			if (overwrite || IsNullOrLikeEmpty(target.Description))
+				target.Description = Description;
+
 			if (overwrite || IsNullOrLikeEmpty (target.AlbumArtists))
 				target.AlbumArtists = AlbumArtists;
 			
 			if (overwrite || IsNullOrLikeEmpty (target.Performers))
 				target.Performers = Performers;
-			
+
+			if (overwrite || IsNullOrLikeEmpty(target.PerformersRole))
+				target.PerformersRole = PerformersRole;
+
 			if (overwrite || IsNullOrLikeEmpty (target.Composers))
 				target.Composers = Composers;
 			
@@ -1350,8 +1485,11 @@ namespace TagLib {
 			
 			if (overwrite || IsNullOrLikeEmpty (target.Copyright))
 				target.Copyright = Copyright;
+
+			if (overwrite || target.DateTagged == null)
+				target.DateTagged = DateTagged;
 		}
-		
+
 		/// <summary>
 		///    Checks if a <see cref="string" /> is <see langword="null"
 		///    /> or contains only whitespace characters.
