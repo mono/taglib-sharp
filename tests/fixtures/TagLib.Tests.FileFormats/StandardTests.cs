@@ -21,17 +21,28 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual(5, file.Properties.Duration.Seconds);
 		}
 		
-		public static void WriteStandardTags (string sample_file, string tmp_file, TestTagLevel level = TestTagLevel.Normal)
+		public static void WriteStandardTags (string sample_file, string tmp_file = null, 
+			TestTagLevel level = TestTagLevel.Normal, TagTypes types = TagTypes.AllTags)
 		{
-			if (System.IO.File.Exists (tmp_file))
+			if (tmp_file == null) tmp_file = sample_file;
+
+			if (sample_file != tmp_file && 
+				System.IO.File.Exists (tmp_file))
 				System.IO.File.Delete (tmp_file);
 			
 			try {
-				System.IO.File.Copy(sample_file, tmp_file);
+				if (sample_file != tmp_file)
+					System.IO.File.Copy(sample_file, tmp_file);
 				
 				File tmp = File.Create (tmp_file);
+
+				if (types != TagTypes.AllTags)
+				{
+					tmp.RemoveTags(~types);
+				}
+
 				SetTags (tmp.Tag, level);
-				tmp.Save ();
+				tmp.Save();
 				
 				tmp = File.Create (tmp_file);
 				CheckTags (tmp.Tag, level);
@@ -55,8 +66,13 @@ namespace TagLib.Tests.FileFormats
 
 				tmp.Save();
 
-				tmp = File.Create(tmp_file);
-				CheckNoTags(tmp.Tag);
+				// Check only if all tags have been removed
+				if (types == TagTypes.AllTags)
+				{
+					tmp = File.Create(tmp_file);
+					CheckNoTags(tmp.Tag);
+
+				}
 			}
 			finally
 			{
@@ -91,7 +107,7 @@ namespace TagLib.Tests.FileFormats
 			tag.Grouping = "TEST grouping";
 			tag.Lyrics = "TEST lyrics 1\r\nTEST lyrics 2";
 			tag.Performers = new string[] { "TEST performer 1", "TEST performer 2" };
-			tag.PerformersRole = new string[] { "TEST role 1", "TEST role 2" };
+			tag.PerformersRole = new string[] { "TEST role 1a; TEST role 1b", "TEST role 2" };
 			tag.Title = "TEST title";
 			tag.Subtitle = "TEST subtitle";
 			tag.Description = "TEST description";
@@ -102,30 +118,19 @@ namespace TagLib.Tests.FileFormats
 
 		public static void CheckTags (Tag tag, TestTagLevel level = TestTagLevel.Normal)
 		{
-			if (level >= TestTagLevel.Medium)
-			{
-				Assert.AreEqual("title sort, TEST", tag.TitleSort);
-				Assert.AreEqual("album sort, TEST", tag.AlbumSort);
-				Assert.AreEqual("performer sort 1, TEST; performer sort 2, TEST", tag.JoinedPerformersSort);
-				Assert.AreEqual("composer sort 1, TEST; composer sort 2, TEST", string.Join("; ", tag.ComposersSort));
-				Assert.AreEqual("album artist sort 1, TEST; album artist sort 2, TEST", string.Join("; ", tag.AlbumArtistsSort));
-			}
 
 			Assert.AreEqual ("TEST album", tag.Album);
 			Assert.AreEqual ("TEST artist 1; TEST artist 2", tag.JoinedAlbumArtists);
-			Assert.AreEqual (120, tag.BeatsPerMinute);
 			Assert.AreEqual ("TEST comment", tag.Comment);
 			Assert.AreEqual ("TEST composer 1; TEST composer 2", tag.JoinedComposers);
 			Assert.AreEqual ("TEST conductor", tag.Conductor);
 			Assert.AreEqual("TEST copyright", tag.Copyright);
-			Assert.AreEqual(new DateTime(2017, 09, 12, 22, 47, 42), tag.DateTagged);
 			Assert.AreEqual (100, tag.Disc);
 			Assert.AreEqual (101, tag.DiscCount);
 			Assert.AreEqual ("TEST genre 1; TEST genre 2", tag.JoinedGenres);
 			Assert.AreEqual ("TEST grouping", tag.Grouping);
 			Assert.AreEqual ("TEST lyrics 1\r\nTEST lyrics 2", tag.Lyrics);
 			Assert.AreEqual ("TEST performer 1; TEST performer 2", tag.JoinedPerformers);
-			Assert.AreEqual("TEST role 1; TEST role 2", string.Join("; ", tag.PerformersRole));
 			Assert.AreEqual("TEST title", tag.Title);
 			Assert.AreEqual("TEST subtitle", tag.Subtitle);
 			Assert.AreEqual("TEST description", tag.Description);
@@ -133,6 +138,17 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual (99, tag.TrackCount);
 			Assert.AreEqual (1999, tag.Year);
 
+			if (level >= TestTagLevel.Medium)
+			{
+				Assert.AreEqual("title sort, TEST", tag.TitleSort);
+				Assert.AreEqual("album sort, TEST", tag.AlbumSort);
+				Assert.AreEqual("performer sort 1, TEST; performer sort 2, TEST", tag.JoinedPerformersSort);
+				Assert.AreEqual("composer sort 1, TEST; composer sort 2, TEST", string.Join("; ", tag.ComposersSort));
+				Assert.AreEqual("album artist sort 1, TEST; album artist sort 2, TEST", string.Join("; ", tag.AlbumArtistsSort));
+				Assert.AreEqual(120, tag.BeatsPerMinute);
+				Assert.AreEqual(new DateTime(2017, 09, 12, 22, 47, 42), tag.DateTagged);
+				Assert.AreEqual("TEST role 1a; TEST role 1b\nTEST role 2", string.Join("\n", tag.PerformersRole));
+			}
 		}
 
 

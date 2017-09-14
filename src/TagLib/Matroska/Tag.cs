@@ -330,7 +330,7 @@ namespace TagLib.Matroska
 						else
 							subtag = slist[j];
 
-						subtag.Value = svalues[j];
+						subtag.Value = svalues[j].Trim();
 					}
 
 					if (j < slist.Count)
@@ -343,70 +343,67 @@ namespace TagLib.Matroska
 				list.RemoveRange(i, list.Count - i);
 		}
 
+
 		/// <summary>
-		/// Retrieve a list of SimpleTag sharing the same TagName (key).
+		/// Retrieve a Tag list. If there are multiple tag inside a SimpleTag (when
+		/// accessing a sub-key), these sub-list are represented as semicolon-separated
+		/// values.
 		/// </summary>
 		/// <param name="key">Tag name</param>
 		/// <param name="subkey">Nested SimpleTag to find (if non null) Tag name</param>
 		/// <param name="recu">Also search in parent Tag if true (default: true)</param>
-		/// <returns>Array of values</returns>
-		public List<SimpleTag> GetSimpleTags(string key, string subkey = null, bool recu = true)
+		/// <returns>Array of values. Nested sub-list are represented by a semicolon-
+		/// separated string 
+		/// </returns>
+		public string[] Get(string key, string subkey = null, bool recu = true)
 		{
-			List<SimpleTag> mtags;
+			string[] ret = null;
 
+			List<SimpleTag> mtags;
 			if ((!SimpleTags.TryGetValue(key, out mtags) || mtags == null) && recu)
 			{
 				Tag tag = this;
 				while ((tag = tag.Parent) != null && !tag.SimpleTags.TryGetValue(key, out mtags)) ;
 			}
 
-			// Handle Nested SimpleTags
 			if (subkey != null && mtags != null)
 			{
-				var subtags = new List<SimpleTag>(mtags.Count);
+				ret = new string[mtags.Count];
 
-				foreach (var stag in mtags)
+				// Handle Nested SimpleTags
+				for (int i = 0; i < mtags.Count; i++)
 				{
+					string str = null;
+
+					var stag = mtags[i];
 					if (stag.SimpleTags != null)
 					{
 						List<SimpleTag> list = null;
 						stag.SimpleTags.TryGetValue(subkey, out list);
-						if (mtags.Count > 1)
+						if (list == null || list.Count==0)
 						{
-							subtags.Add(list != null && list.Count > 0 ? list[0] : null);
+							str = null;
+						}
+						if (mtags.Count == 1)
+						{
+							str = list[0];
 						}
 						else
 						{
-							subtags = list;
+							str = string.Join("; ", list);
 						}
 					}
+
+					ret[i] = str;
 				}
 
-				return subtags;
 			}
-
-			return mtags;
-		}
-
-		/// <summary>
-		/// Retrieve a Tag list
-		/// </summary>
-		/// <param name="key">Tag name</param>
-		/// <param name="subkey">Nested SimpleTag to find (if non null) Tag name</param>
-		/// <param name="recu">Also search in parent Tag if true (default: true)</param>
-		/// <returns>Array of values</returns>
-		public string[] Get(string key, string subkey = null, bool recu = true)
-		{
-			string[] ret = null;
-
-			List<SimpleTag> list = GetSimpleTags(key, subkey, recu);
-
-			if (list != null)
+			else if (mtags != null)
 			{
-				ret = new string[list.Count];
-				for (int i=0; i < list.Count; i++)
+				ret = new string[mtags.Count];
+				for (int i = 0; i < mtags.Count; i++)
 				{
-					ret[i] = list[i];
+					ret[i] = mtags[i];
 				}
 			}
 
@@ -424,8 +421,8 @@ namespace TagLib.Matroska
 		{
 			string ret = null;
 
-			List<SimpleTag> list = GetSimpleTags(key, subkey, recu);
-			if (list != null && list.Count>0) ret = list[0];
+			string[] list = Get(key, subkey, recu);
+			if (list != null && list.Length>0) ret = list[0];
 
 			return ret;
 		}

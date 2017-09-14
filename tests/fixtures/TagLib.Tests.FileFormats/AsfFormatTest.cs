@@ -29,7 +29,7 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual("WMA album", file.Tag.Album);
 			Assert.AreEqual("Dan Drake", file.Tag.FirstAlbumArtist);
 			Assert.AreEqual("WMA artist", file.Tag.FirstPerformer);
-			Assert.AreEqual("WMA comment", file.Tag.Comment);
+			Assert.AreEqual("WMA comment", file.Tag.Description);
 			Assert.AreEqual("Brit Pop", file.Tag.FirstGenre);
 			Assert.AreEqual("WMA title", file.Tag.Title);
 			Assert.AreEqual(5, file.Tag.Track);

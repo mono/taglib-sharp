@@ -629,6 +629,61 @@ namespace TagLib.Mpeg4 {
 				SetText (BoxType.Nam, value);
 			}
 		}
+
+		/// <summary>
+		///    Gets and sets a short description, one-liner. 
+		///    It represents the tagline of the Video/music.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "Subt" data box.
+		///    Should be: ----:com.apple.iTunes:SUBTITLE
+		/// </remarks>
+		public override string Subtitle
+		{
+			get
+			{
+				string[] text = GetText(BoxType.Subt);
+				return text.Length == 0 ? null : text[0];
+			}
+			set
+			{
+				SetText(BoxType.Subt, value);
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets a short description of the media.
+		///    For a music, this could be the comment that the artist
+		///    made of its artwork. For a video, this should be a 
+		///    short summary of the story/plot, but a spoiler. This
+		///    should give the impression of what to expect in the
+		///    media.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "Desc" data box.
+		/// </remarks>
+		public override string Description
+		{
+			get
+			{
+				string[] text = GetText(BoxType.Desc);
+				return text.Length == 0 ? null : text[0];
+			}
+			set
+			{
+				SetText(BoxType.Desc, value);
+			}
+		}
 		
 		/// <summary>
 		///    Gets and sets the performers or artists who performed in
@@ -647,7 +702,48 @@ namespace TagLib.Mpeg4 {
 			get {return GetText (BoxType.Art);}
 			set {SetText (BoxType.Art, value);}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets the Charaters for a video media, or
+		///    instruments played for music media. 
+		///    This should match the <see cref="Performers"/> array (for
+		///    each person correspond one/more role). Several roles for
+		///    the same artist/actor can be made up with semicolons. 
+		///    For example, "Marty McFly; Marty McFly Jr.; Marlene McFly".
+		/// </summary>
+		/// <remarks>
+		///    This property is implemented using the "role" data box.
+		/// </remarks>
+		public override string[] PerformersRole
+		{
+			get
+			{
+				string[] ret =  GetText(BoxType.Role);
+				if (ret == null) return ret;
+
+				// Reformat '/' to ';'
+				for (int i = 0; i < ret.Length; i++)
+				{
+					ret[i] = ret[i].Replace('/', ';').Trim();
+				}
+				return ret;
+			}
+			set
+			{
+				string[] ret = value;
+				if (ret != null)
+				{
+					// Reformat ';' to '/'
+					for (int i = 0; i < ret.Length; i++)
+					{
+						ret[i] = ret[i].Replace(';', '/');
+					}
+				}
+				SetText(BoxType.Role, value);
+			}
+		}
+
+
 		/// <summary>
 		///    Gets and sets the band or artist who is credited in the
 		///    creation of the entire album or collection containing the
@@ -1082,7 +1178,44 @@ namespace TagLib.Mpeg4 {
 			}
 			set {SetText(BoxType.Cprt, value);}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets the date at which the tag has been written.
+		/// </summary>
+		/// <value>
+		///    A nullable <see cref="DateTime" /> object containing the 
+		///    date at which the tag has been written, or <see 
+		///    langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dtag" data box.
+		/// </remarks>
+		public override DateTime? DateTagged
+		{
+			get
+			{
+				string[] text = GetText(BoxType.Dtag);
+				string value = text.Length == 0 ? null : text[0];
+				if (value != null)
+				{
+					DateTime date;
+					if (DateTime.TryParseExact(value, "yyyy-MM-dd HH:mm:ss", null, DateTimeStyles.None, out date))
+					{
+						return date;
+					}
+				}
+				return null;
+			}
+			set
+			{
+				string date = null;
+				if (value != null)
+				{
+					date = string.Format("{0:yyyy-MM-dd HH:mm:ss}", value);
+				}
+				SetText(BoxType.Dtag, date);
+			}
+		}
 		/// <summary>
 		///    Gets and sets the sort names for the band or artist who
 		///    is credited in the creation of the entire album or

@@ -39,9 +39,15 @@ namespace TagLib.Tests.FileFormats
 		[Test]
 		public void WriteStandardTags ()
 		{
-			StandardTests.WriteStandardTags (sample_file, tmp_file);
+			StandardTests.WriteStandardTags (sample_file, tmp_file, StandardTests.TestTagLevel.Medium);
 		}
-		
+
+		[Test]
+		public void WriteStandardTagsID3v2()
+		{
+			StandardTests.WriteStandardTags(sample_file, tmp_file, StandardTests.TestTagLevel.Medium, TagTypes.Id3v2);
+		}
+
 		[Test]
 		public void TestCorruptionResistance()
 		{

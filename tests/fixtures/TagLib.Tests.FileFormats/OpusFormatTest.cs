@@ -28,7 +28,7 @@ namespace TagLib.Tests.FileFormats
 		{
 			Assert.AreEqual("Opus album", file.Tag.Album);
 			Assert.AreEqual("Opus artist", file.Tag.FirstPerformer);
-			Assert.AreEqual("Opus comment", file.Tag.Comment);
+			Assert.AreEqual("Opus comment", file.Tag.Description);
 			Assert.AreEqual("Acid Punk", file.Tag.FirstGenre);
 			Assert.AreEqual("Opus title", file.Tag.Title);
 			Assert.AreEqual(6, file.Tag.Track);

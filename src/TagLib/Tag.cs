@@ -202,6 +202,57 @@ namespace TagLib {
 			set {}
 		}
 
+
+		/// <summary>
+		///    Gets and sets a short description, one-liner. 
+		///    It represents the tagline of the Video/music.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field gives a nice/short precision to 
+		///    the title, which is typically below the title on the
+		///    front cover of a media.
+		///    For example, for "Back to the future", this would be 
+		///    "It's About Time". 
+		///    </para>
+		/// </remarks>
+		public virtual string Subtitle
+		{
+			get { return null; }
+			set { }
+		}
+
+		/// <summary>
+		///    Gets and sets a short description of the media.
+		///    For a music, this could be the comment that the artist
+		///    made of its artwork. For a video, this should be a 
+		///    short summary of the story/plot, but a spoiler. This
+		///    should give the impression of what to expect in the
+		///    media.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This is especially relevant for a movie.
+		///    For example, for "Back to the Future 2", this could be
+		///    "After visiting 2015, Marty McFly must repeat his visit 
+		///    to 1955 to prevent disastrous changes to 1985...without
+		///    interfering with his first trip".
+		///    </para>
+		/// </remarks>
+		public virtual string Description
+		{
+			get { return null; }
+			set { }
+		}
+
 		/// <summary>
 		///    Gets and sets the performers or artists who performed in
 		///    the media described by the current instance.
@@ -429,56 +480,6 @@ namespace TagLib {
 		public virtual string AlbumSort {
 			get {return null;}
 			set {}
-		}
-
-		/// <summary>
-		///    Gets and sets a short description, one-liner. 
-		///    It represents the tagline of the Video/music.
-		/// </summary>
-		/// <value>
-		///    A <see cref="string" /> containing the subtitle
-		///    the media represented by the current instance 
-		///    or an empty array if no value is present.
-		/// </value>
-		/// <remarks>
-		///    <para>This field gives a nice/short precision to 
-		///    the title, which is typically below the title on the
-		///    front cover of a media.
-		///    For example, for "Back to the future", this would be 
-		///    "It's About Time". 
-		///    </para>
-		/// </remarks>
-		public virtual string Subtitle
-		{
-			get { return null; }
-			set { }
-		}
-
-		/// <summary>
-		///    Gets and sets a short description of the media.
-		///    For a music, this could be the comment that the artist
-		///    made of its artwork. For a video, this should be a 
-		///    short summary of the story/plot, but a spoiler. This
-		///    should give the impression of what to expect in the
-		///    media.
-		/// </summary>
-		/// <value>
-		///    A <see cref="string" /> containing the subtitle
-		///    the media represented by the current instance 
-		///    or an empty array if no value is present.
-		/// </value>
-		/// <remarks>
-		///    <para>This is especially relevant for a movie.
-		///    For example, for "Back to the Future 2", this could be
-		///    "After visiting 2015, Marty McFly must repeat his visit 
-		///    to 1955 to prevent disastrous changes to 1985...without
-		///    interfering with his first trip".
-		///    </para>
-		/// </remarks>
-		public virtual string Description
-		{
-			get { return null; }
-			set { }
 		}
 
 		/// <summary>

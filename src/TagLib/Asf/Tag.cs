@@ -536,7 +536,44 @@ namespace TagLib.Asf {
 			get {return description.Title;}
 			set {description.Title = value;}
 		}
-		
+
+
+		/// <summary>
+		///    Gets and sets a short description, one-liner. 
+		///    It represents the tagline of the Video/music.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field gives a nice/short precision to 
+		///    the title, which is typically below the title on the
+		///    front cover of a media.
+		///    For example, for "Back to the future", this would be 
+		///    "It's About Time". 
+		///    </para>
+		/// </remarks>
+		/// <remarks>
+		///    This property is implemented using the "WM/SubTitle"
+		///    field.
+		///    https://msdn.microsoft.com/en-us/library/windows/desktop/dd757997(v=vs.85).aspx
+		/// </remarks>
+		public override string Subtitle
+		{
+			get
+			{
+				return GetDescriptorString("WM/SubTitle");
+			}
+			set
+			{
+				SetDescriptorString(value, "WM/SubTitle");
+			}
+		}
+
+
+
 		/// <summary>
 		///    Gets and sets the sort names for the Track Title of
 		///    the media described by the current instance.
@@ -559,7 +596,31 @@ namespace TagLib.Asf {
 				SetDescriptorString (value, "WM/TitleSortOrder");
 			}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets a short description of the media.
+		///    For a music, this could be the comment that the artist
+		///    made of its artwork. For a video, this should be a 
+		///    short summary of the story/plot, but a spoiler. This
+		///    should give the impression of what to expect in the
+		///    media.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the description stored
+		///    in the ASF Content Description Object.
+		/// </remarks>
+		public override string Description
+		{
+			get { return description.Description; }
+			set { description.Description = value; }
+		}
+
+
 		/// <summary>
 		///    Gets and sets the performers or artists who performed in
 		///    the media described by the current instance.
@@ -725,7 +786,7 @@ namespace TagLib.Asf {
 				SetDescriptorString (value, "WM/AlbumSortOrder");
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets a user comment on the media represented by
 		///    the current instance.
@@ -736,14 +797,17 @@ namespace TagLib.Asf {
 		///    langword="null" /> if no value is present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the description stored
-		///    in the ASF Content Description Object.
+		///    This property is implemented using the "WM/Text" field.
 		/// </remarks>
 		public override string Comment {
-			get {return description.Description;}
-			set {description.Description = value;}
+			get {
+				return GetDescriptorString("WM/Text");
+			}
+			set {
+				SetDescriptorString(value, "WM/Text");
+			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the genres of the media represented by the
 		///    current instance.

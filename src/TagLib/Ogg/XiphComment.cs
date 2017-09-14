@@ -52,12 +52,7 @@ namespace TagLib.Ogg
 		/// </summary>
 		private string vendor_id;
 		
-		/// <summary>
-		///    Contains the field identifier to use for <see
-		///    cref="Comment" />.
-		/// </summary>
-		private string comment_field = "DESCRIPTION";
-		
+
 #endregion
 		
 		
@@ -147,7 +142,7 @@ namespace TagLib.Ogg
 			string [] values = GetField (key);
 			return (values.Length > 0) ? values [0] : null;
 		}
-		
+
 		/// <summary>
 		///    Sets the contents of a specified field to a number.
 		/// </summary>
@@ -158,10 +153,15 @@ namespace TagLib.Ogg
 		/// <param name="number">
 		///    A <see cref="uint" /> value to set the field to.
 		/// </param>
+		/// <param name="format">
+		///    A <see cref="string" /> value representing the format
+		///    to be used to repreesent the <paramref name="number"/>.
+		///    Default: simple decimal number ("0").
+		/// </param>
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="key" /> is <see langword="null" />.
 		/// </exception>
-		public void SetField (string key, uint number)
+		public void SetField (string key, uint number, string format = "0")
 		{
 			if (key == null)
 				throw new ArgumentNullException ("key");
@@ -170,6 +170,7 @@ namespace TagLib.Ogg
 				RemoveField (key);
 			else
 				SetField (key, number.ToString (
+					format,
 					CultureInfo.InvariantCulture));
 		}
 		
@@ -482,6 +483,57 @@ namespace TagLib.Ogg
 		}
 
 		/// <summary>
+		///    Gets and sets a short description, one-liner. 
+		///    It represents the tagline of the Video/music.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field gives a nice/short precision to 
+		///    the title, which is typically below the title on the
+		///    front cover of a media.
+		///    For example, for "Back to the future", this would be 
+		///    "It's About Time". 
+		///    </para>
+		/// </remarks>
+		/// <remarks>
+		///    This property is implemented using the "SUBTITLE"
+		///    non-standard field.
+		/// </remarks>
+		public override string Subtitle
+		{
+			get { return GetFirstField("SUBTITLE"); }
+			set { SetField("SUBTITLE", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets a short description of the media.
+		///    For a music, this could be the comment that the artist
+		///    made of its artwork. For a video, this should be a 
+		///    short summary of the story/plot, but a spoiler. This
+		///    should give the impression of what to expect in the
+		///    media.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "DESCRIPTION"
+		///    field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string Description
+		{
+			get { return GetFirstField("DESCRIPTION"); }
+			set { SetField("DESCRIPTION", value); }
+		}
+		
+		/// <summary>
 		///    Gets and sets the performers or artists who performed in
 		///    the media described by the current instance.
 		/// </summary>
@@ -517,7 +569,36 @@ namespace TagLib.Ogg
 			get {return GetField ("ARTISTSORT");}
 			set {SetField ("ARTISTSORT", value);}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets the Charaters for a video media, or
+		///    instruments played for music media. 
+		///    This should match the <see cref="Performers"/> array (for
+		///    each person correspond one/more role). Several roles for
+		///    the same artist/actor can be made up with semicolons. 
+		///    For example, "Marty McFly; Marty McFly Jr.; Marlene McFly".
+		/// </summary>
+		/// <remarks>
+		///    <para> This is typically usefull for movies, although the
+		///    instrument played by each artist in a music may be of
+		///    relevance.
+		///    </para>
+		///    <para>It is highly important to match each role to the 
+		///    performers. This means that a role may be <see 
+		///    langword="null"/> to keep the match between a
+		///    Performers[i] and PerformersRole[i].
+		///    </para>
+		/// </remarks>
+		/// <remarks>
+		///    This property is implemented using the "ARTISTROLE" 
+		///    non-standard field.
+		/// </remarks>
+		public override string[] PerformersRole
+		{
+			get { return GetField("ARTISTROLE"); }
+			set { SetField("ARTISTROLE", value); }
+		}
+
 		/// <summary>
 		///    Gets and sets the band or artist who is credited in the
 		///    creation of the entire album or collection containing the
@@ -656,22 +737,13 @@ namespace TagLib.Ogg
 		///    langword="null" /> if no value is present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "COMMENT" or
-		///    "DESCRIPTION" field, preferring "DESCRIPTION" but using
-		///    "COMMENT" if that is the field used by the comment.
+		///    This property is implemented using the "COMMENT" field.
 		/// </remarks>
 		public override string Comment {
-			get {
-				string value = GetFirstField (comment_field);
-				if (value != null || comment_field == "COMMENT")
-					return value;
-				
-				comment_field = "COMMENT";
-				return GetFirstField (comment_field);
-			}
-			set {SetField (comment_field, value);}
+			get { return GetFirstField("COMMENT"); }
+			set { SetField("COMMENT", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the genres of the media represented by the
 		///    current instance.
@@ -742,7 +814,7 @@ namespace TagLib.Ogg
 			}
 			set {
 				SetField ("TRACKTOTAL", TrackCount);
-				SetField ("TRACKNUMBER", value);
+				SetField ("TRACKNUMBER", value, "00");
 			}
 		}
 		
@@ -939,7 +1011,50 @@ namespace TagLib.Ogg
 			get {return GetFirstField ("COPYRIGHT");}
 			set {SetField ("COPYRIGHT", value);}
 		}
-		
+
+
+		/// <summary>
+		///    Gets and sets the date at which the tag has been written.
+		/// </summary>
+		/// <value>
+		///    A nullable <see cref="DateTime" /> object containing the 
+		///    date at which the tag has been written, or <see 
+		///    langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "DATETAGGED" 
+		///    non-standard field. It used the the ISO 8601 standard:
+		///    YYYY-MM-DDTHH:MM:SS
+		///    <see url="https://wiki.xiph.org/VorbisComment#Date_and_time"/> 
+		/// </remarks>
+		public override DateTime? DateTagged
+		{
+			get
+			{
+				string value = GetFirstField("DATETAGGED");
+				if (value != null)
+				{
+					value = value.Replace('T', ' ');
+					DateTime date;
+					if (DateTime.TryParseExact(value, "yyyy-MM-dd HH:mm:ss", null, DateTimeStyles.None, out date))
+					{
+						return date;
+					}
+				}
+				return null;
+			}
+			set
+			{
+				string date = null;
+				if (value != null)
+				{
+					date = string.Format("{0:yyyy-MM-dd HH:mm:ss}", value);
+					date = date.Replace(' ', 'T');
+				}
+				SetField("DATETAGGED", date);
+			}
+		}
+
 		/// <summary>
 		///    Gets and sets the MusicBrainz Artist ID for the media
 		///    represented by the current instance.

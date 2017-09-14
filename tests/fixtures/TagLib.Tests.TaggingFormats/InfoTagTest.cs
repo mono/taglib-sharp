@@ -40,7 +40,87 @@ namespace TagLib.Tests.TaggingFormats
 			});
 
 		}
-		
+
+		[Test]
+		public void TestDescription()
+		{
+			Riff.InfoTag tag = new Riff.InfoTag();
+
+			TagTestWithSave(ref tag, delegate (Riff.InfoTag t, string m) {
+				Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull(t.Description, "Initial (Null): " + m);
+			});
+
+			tag.Description = val_sing;
+
+			TagTestWithSave(ref tag, delegate (Riff.InfoTag t, string m) {
+				Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual(val_sing, t.Description, "Value Set (!Null): " + m);
+			});
+
+			tag.Description = string.Empty;
+
+			TagTestWithSave(ref tag, delegate (Riff.InfoTag t, string m) {
+				Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull(t.Description, "Value Cleared (Null): " + m);
+			});
+
+		}
+
+		[Test]
+		public void TestAlbum()
+		{
+			Riff.InfoTag tag = new Riff.InfoTag();
+
+			TagTestWithSave(ref tag, delegate (Riff.InfoTag t, string m) {
+				Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull(t.Album, "Initial (Null): " + m);
+			});
+
+			tag.Album = val_sing;
+
+			TagTestWithSave(ref tag, delegate (Riff.InfoTag t, string m) {
+				Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual(val_sing, t.Album, "Value Set (!Null): " + m);
+			});
+
+			tag.Album = string.Empty;
+
+			TagTestWithSave(ref tag, delegate (Riff.InfoTag t, string m) {
+				Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull(t.Album, "Value Cleared (Null): " + m);
+			});
+
+		}
+
+
+		[Test]
+		public void TestConductor()
+		{
+			Riff.InfoTag tag = new Riff.InfoTag();
+
+			TagTestWithSave(ref tag, delegate (Riff.InfoTag t, string m) {
+				Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull(t.Conductor, "Initial (Null): " + m);
+			});
+
+			tag.Conductor = val_sing;
+
+			TagTestWithSave(ref tag, delegate (Riff.InfoTag t, string m) {
+				Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual(val_sing, t.Conductor, "Value Set (!Null): " + m);
+			});
+
+			tag.Conductor = string.Empty;
+
+			TagTestWithSave(ref tag, delegate (Riff.InfoTag t, string m) {
+				Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull(t.Conductor, "Value Cleared (Null): " + m);
+			});
+
+		}
+
+
 		[Test]
 		public void TestPerformers ()
 		{
