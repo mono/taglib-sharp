@@ -52,6 +52,27 @@ namespace TagLib.Ogg
 		/// </summary>
 		private string vendor_id;
 		
+		/// <summary>
+		///    Contains the field identifier to use for <see
+		///    cref="Comment" />.
+		/// </summary>
+		private string comment_field = "DESCRIPTION";
+		
+		/// <summary>
+		///    Picture instances parsed from the fields.
+		/// </summary>
+		private IPicture[] pictures = null;
+
+		/// <summary>
+		///    true if the picture fields ni <see cref="field_list" />
+		///    should be updated from the <see cref="pictures"/> array.
+		/// </summary>
+		private bool picture_fields_dirty = false;
+
+		/// <summary>
+		///    Name of picture fields as defined in the norm.
+		/// </summary>
+		private static readonly string[] PICTURE_FIELDS = new string[] { "COVERART", "METADATA_BLOCK_PICTURE" };
 
 #endregion
 		
@@ -113,6 +134,8 @@ namespace TagLib.Ogg
 				throw new ArgumentNullException ("key");
 			
 			key = key.ToUpper (CultureInfo.InvariantCulture);
+
+			EnsurePictureFieldsClean(key);
 			
 			if (!field_list.ContainsKey (key))
 				return new string [0];
@@ -138,6 +161,8 @@ namespace TagLib.Ogg
 		{
 			if (key == null)
 				throw new ArgumentNullException ("key");
+
+			EnsurePictureFieldsClean(key);
 			
 			string [] values = GetField (key);
 			return (values.Length > 0) ? values [0] : null;
@@ -212,6 +237,14 @@ namespace TagLib.Ogg
 				field_list [key] = result.ToArray ();
 			else
 				field_list.Add (key, result.ToArray ());
+
+			// If the user is overwriting a picture field, reset
+			// the state in the pictures array
+			if (IsPictureField(key))
+			{
+				picture_fields_dirty = false;
+				pictures = null;
+			}
 		}
 		
 		/// <summary>
@@ -233,6 +266,13 @@ namespace TagLib.Ogg
 			key = key.ToUpper (CultureInfo.InvariantCulture);
 			
 			field_list.Remove (key);
+
+			// See SetField above
+			if (IsPictureField(key))
+			{
+				picture_fields_dirty = false;
+				pictures = null;
+			}
 		}
 		
 		/// <summary>
@@ -250,6 +290,11 @@ namespace TagLib.Ogg
 		public ByteVector Render (bool addFramingBit)
 		{
 			ByteVector data = new ByteVector ();
+
+			// Before storing the fields, ensure the pictures array has
+			// been stored to the field list
+			if (picture_fields_dirty)
+				StorePictures();
 
 			// Add the vendor ID length and the vendor ID.  It's
 			// important to use the length of the data(String::UTF8)
@@ -312,6 +357,22 @@ namespace TagLib.Ogg
 				uint count = 0;
 				foreach (string [] values in field_list.Values)
 					count += (uint) values.Length;
+
+				// If the pictures array is loaded and not in sync
+				// with the underlying fields, adjust the field count
+				if (pictures != null && picture_fields_dirty)
+				{
+					foreach (string fieldName in PICTURE_FIELDS)
+					{
+						string[] value;
+						if (field_list.TryGetValue(fieldName, out value))
+						{
+							count -= (uint) value.Length;
+						}
+					}
+
+					count += (uint) pictures.Length;
+				}
 				
 				return count;
 			}
@@ -350,7 +411,11 @@ namespace TagLib.Ogg
 		{
 			if (data == null)
 				throw new ArgumentNullException ("data");
-			
+
+			// Reset picture state before parsing
+			picture_fields_dirty = false;
+			pictures = null;
+
 			// The first thing in the comment data is the vendor ID
 			// length, followed by a UTF8 string with the vendor ID.
 			int pos = 0;
@@ -410,6 +475,100 @@ namespace TagLib.Ogg
 		
 		
 		
+
+#region Private methods
+
+		/// <summary>
+		///    If needed, update the pictures field from the value of the
+		///    pictures array.
+		/// </summary>
+		/// <param name="fieldName">
+		///    Name of the field being queried by the user.
+		///    If the field name is not a picture field name, no update will take place.
+		/// </param>
+		private void EnsurePictureFieldsClean(string fieldName)
+		{
+			if (IsPictureField(fieldName) && picture_fields_dirty)
+				StorePictures();
+		}
+
+		/// <summary>
+		///    Parses the pictures from the COVERART and METADATA_BLOCK_PICTURE
+		///    fields contained in the <see cref="field_list" /> variable.
+		/// </summary>
+		private void ParsePictures()
+		{
+			string[] coverArtStrings = GetField("COVERART"),
+				blockPictureStrings = GetField("METADATA_BLOCK_PICTURE");
+
+			IPicture[] pictures = new IPicture[coverArtStrings.Length + blockPictureStrings.Length];
+
+			// Read old-format COVERART
+			for (int ii = 0; ii < coverArtStrings.Length; ii++)
+			{
+				ByteVector data = new ByteVector(Convert.FromBase64String(coverArtStrings[ii]));
+				pictures[ii] = new Picture(data);
+			}
+
+			// Read new-format METADATA_BLOCK_PICTURE
+			for (int ii = 0; ii < blockPictureStrings.Length; ii++)
+			{
+				ByteVector data = new ByteVector(Convert.FromBase64String(blockPictureStrings[ii]));
+				pictures[ii + coverArtStrings.Length] = new Flac.Picture(data);
+			}
+
+			this.pictures = pictures;
+			// Pictures array loaded from picture field, reset dirty flag
+			picture_fields_dirty = false;
+		}
+
+		/// <summary>
+		///    Stores the pictures in the pictures array in the
+		///    METADATA_BLOCK_PICTURE field. Conversion to Flac.Picture is done
+		///    as needed.
+		/// </summary>
+		private void StorePictures()
+		{
+			// Remove all picture fields
+			foreach (string pictureField in PICTURE_FIELDS)
+				field_list.Remove(pictureField);
+
+			// Store the pictures array in METADATA_BLOCK_PICTURE
+			if (pictures != null &&
+			    pictures.Length > 0)
+			{
+				string[] flacPictures = new string[pictures.Length];
+
+				for (int i = 0; i < pictures.Length; ++i)
+				{
+					flacPictures[i] = Convert.ToBase64String(new Flac.Picture(pictures[i]).Render().Data);
+				}
+
+				field_list.Add("METADATA_BLOCK_PICTURE", flacPictures);
+			}
+
+			// The picture fields are now up to date with the pictures array
+			picture_fields_dirty = false;
+		}
+
+		/// <summary>
+		///    Returns a value indicating if a field name is a picture field.
+		/// </summary>
+		/// <param name="fieldName">Name of the field</param>
+		/// <returns>
+		///    true if the field represents a field that contains picture art data,
+		///    false otherwise.
+		/// </returns>
+		private static bool IsPictureField(string fieldName)
+		{
+			foreach (string pictureFieldName in PICTURE_FIELDS)
+				if (string.Equals(fieldName, pictureFieldName))
+					return true;
+			return false;
+		}
+
+#endregion
+
 #region IEnumerable
 		
 		/// <summary>
@@ -1238,23 +1397,23 @@ namespace TagLib.Ogg
 		///    <para>This property is implemented using the COVERART
 		///    field.</para>
 		/// </remarks>
-		public override IPicture [] Pictures {
-			get {
-				string[] covers = GetField ("COVERART");
-				IPicture[] pictures = new Picture[covers.Length];
-				for (int ii = 0; ii < covers.Length; ii++) {
-					ByteVector data = new ByteVector (Convert.FromBase64String (covers[ii]));
-					pictures[ii] = new Picture (data);
+		public override IPicture[] Pictures
+		{
+			get
+			{
+				// Load pictures on demand from the fields
+				if (pictures == null)
+				{
+					ParsePictures();
 				}
+				
 				return pictures;
 			}
-			set {
-				string[] covers = new string[value.Length];
-				for (int ii = 0; ii < value.Length; ii++) {
-					IPicture old = value[ii];
-					covers[ii] = Convert.ToBase64String (old.Data.Data);
-				}
-				SetField ("COVERART", covers);
+			set
+			{
+				pictures = value;
+				// The pictures fields are not up to date with the pictures array anymore
+				picture_fields_dirty = true;
 			}
 		}
 
@@ -1448,11 +1607,7 @@ namespace TagLib.Ogg
 		/// </value>
 		public override bool IsEmpty {
 			get {
-				foreach (string [] values in field_list.Values)
-					if (values.Length != 0)
-						return false;
-				
-				return true;
+				return FieldCount == 0;
 			}
 		}
 		
@@ -1462,6 +1617,10 @@ namespace TagLib.Ogg
 		public override void Clear ()
 		{
 			field_list.Clear ();
+
+			// clear pictures
+			pictures = new IPicture[0];
+			picture_fields_dirty = false;
 		}
 		
 #endregion
