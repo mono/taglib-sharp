@@ -11,6 +11,8 @@
     <Authors>Brian Nickel</Authors>
     <AssemblyName>taglib-sharp</AssemblyName>
     <RootNamespace>TagLib</RootNamespace>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\taglib-sharp.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net4|AnyCPU'">

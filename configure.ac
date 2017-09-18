@@ -122,7 +122,6 @@ AC_CONFIG_FILES([
 Makefile
 taglib-sharp.pc
 src/Makefile
-src/AssemblyInfo.cs
 src/policy.2.0.taglib-sharp.config
 examples/Makefile
 docs/Makefile
