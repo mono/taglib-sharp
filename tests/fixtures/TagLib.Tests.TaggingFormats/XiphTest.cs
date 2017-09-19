@@ -499,6 +499,29 @@ namespace TagLib.Tests.TaggingFormats
 				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
 				Assert.AreEqual (0, t.Pictures.Length, "Value Cleared (Zero): " + m);
 			});
+
+			// Test that COVERART fields are parsed in Pictures property
+			string[] pictureStrings = new string[pictures.Length];
+			for (int i = 0; i < 6; ++i)
+				pictureStrings[i] = Convert.ToBase64String(pictures[i].Data.Data);
+			tag.SetField("COVERART", pictureStrings);
+
+			var parsedPictures = tag.Pictures;
+			Assert.IsTrue(!tag.IsEmpty, "Legacy Value Set (IsEmpty)");
+			Assert.AreEqual(6, parsedPictures.Length, "Legacy Value Set (Length)");
+			
+			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+				// COVERART should be preserved
+				Assert.AreEqual(6, t.GetField("COVERART").Length, "Legacy Field Set (Length): " + m);
+			});
+
+			// Setting the pictures array should replace COVERART with METADATA_BLOCK_PICTURE
+			tag.Pictures = pictures;
+
+			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+				Assert.AreEqual(0, t.GetField("COVERART").Length, "Legacy Field Set (Length): " + m);
+				Assert.AreEqual(6, t.GetField("METADATA_BLOCK_PICTURE").Length, "Current Field Set (Length): " + m);
+			});
 		}
 		
 		[Test]
