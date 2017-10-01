@@ -28,7 +28,7 @@ namespace TagLib.Tests.FileFormats
 		{
 			Assert.AreEqual("FLAC album", file.Tag.Album);
 			Assert.AreEqual("FLAC artist", file.Tag.FirstPerformer);
-			Assert.AreEqual("FLAC comment", file.Tag.Comment);
+			Assert.AreEqual("FLAC comment", file.Tag.Description);
 			Assert.AreEqual("Acid Punk", file.Tag.FirstGenre);
 			Assert.AreEqual("FLAC title", file.Tag.Title);
 			Assert.AreEqual(6, file.Tag.Track);

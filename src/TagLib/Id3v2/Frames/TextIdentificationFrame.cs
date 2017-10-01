@@ -884,6 +884,7 @@ namespace TagLib.Id3v2 {
 				
 				if (FrameId == FrameType.TCOM ||
 					FrameId == FrameType.TEXT ||
+					FrameId == FrameType.TMCL ||
 					FrameId == FrameType.TOLY ||
 					FrameId == FrameType.TOPE ||
 					FrameId == FrameType.TPE1 ||

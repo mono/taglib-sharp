@@ -36,6 +36,7 @@ namespace TagLib.Mpeg4 {
 	///    <c>DataBoxes (BoxType.Gen, BoxType.Gnre);</c>, an external user
 	///    could use <c>tag.DataBoxes ("gen", "gnre");</c> with the same
 	///    result.</para>
+	///    <see url="https://picard.musicbrainz.org/docs/mappings/"/> 
 	/// </remarks>
 	internal static class BoxType
 	{
@@ -50,7 +51,9 @@ namespace TagLib.Mpeg4 {
 		public static readonly ReadOnlyByteVector Cprt = "cprt";
 		public static readonly ReadOnlyByteVector Data = "data";
 		public static readonly ReadOnlyByteVector Day  = AppleTag.FixId ("day");
+		public static readonly ReadOnlyByteVector Desc = "desc";
 		public static readonly ReadOnlyByteVector Disk = "disk";
+		public static readonly ReadOnlyByteVector Dtag = "dtag";
 		public static readonly ReadOnlyByteVector Esds = "esds";
 		public static readonly ReadOnlyByteVector Ilst = "ilst";
 		public static readonly ReadOnlyByteVector Free = "free";
@@ -68,6 +71,7 @@ namespace TagLib.Mpeg4 {
 		public static readonly ReadOnlyByteVector Mvhd = "mvhd";
 		public static readonly ReadOnlyByteVector Nam  = AppleTag.FixId ("nam");
 		public static readonly ReadOnlyByteVector Name = "name";
+		public static readonly ReadOnlyByteVector Role = "role";
 		public static readonly ReadOnlyByteVector Skip = "skip";
 		public static readonly ReadOnlyByteVector Soaa = "soaa"; // Album Artist Sort
 		public static readonly ReadOnlyByteVector Soar = "soar"; // Performer Sort
@@ -77,6 +81,7 @@ namespace TagLib.Mpeg4 {
 		public static readonly ReadOnlyByteVector Stbl = "stbl";
 		public static readonly ReadOnlyByteVector Stco = "stco";
 		public static readonly ReadOnlyByteVector Stsd = "stsd";
+		public static readonly ReadOnlyByteVector Subt = "Subt";
 		public static readonly ReadOnlyByteVector Text = "text";
 		public static readonly ReadOnlyByteVector Tmpo = "tmpo";
 		public static readonly ReadOnlyByteVector Trak = "trak";

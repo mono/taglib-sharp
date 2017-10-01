@@ -846,6 +846,63 @@ namespace TagLib.Ape {
 			set { SetValue ("TitleSort", value); }
 		}
 
+
+		/// <summary>
+		///    Gets and sets a short description, one-liner. 
+		///    It represents the tagline of the Video/music.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field gives a nice/short precision to 
+		///    the title, which is typically below the title on the
+		///    front cover of a media.
+		///    For example, for "Back to the future", this would be 
+		///    "It's About Time". 
+		///    </para>
+		/// </remarks>
+		/// <remarks>
+		///    This property is implemented using the "Subtitle" item.
+		/// </remarks>
+		public override string Subtitle
+		{
+			get { return GetItemAsString("Subtitle"); }
+			set { SetValue("Subtitle", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets a short description of the media.
+		///    For a music, this could be the comment that the artist
+		///    made of its artwork. For a video, this should be a 
+		///    short summary of the story/plot, but a spoiler. This
+		///    should give the impression of what to expect in the
+		///    media.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This is especially relevant for a movie.
+		///    For example, for "Back to the Future 2", this could be
+		///    "After visiting 2015, Marty McFly must repeat his visit 
+		///    to 1955 to prevent disastrous changes to 1985...without
+		///    interfering with his first trip".
+		///    </para>
+		/// </remarks>
+		/// <remarks>
+		///    This property is implemented using the "Description" item.
+		/// </remarks>
+		public override string Description
+		{
+			get { return GetItemAsString("Description"); }
+			set { SetValue("Description", value); }
+		}
+		
 		/// <summary>
 		///    Gets and sets the performers or artists who performed in
 		///    the media described by the current instance.
@@ -882,6 +939,44 @@ namespace TagLib.Ape {
 			get { return GetItemAsStrings ("ArtistSort"); }
 			set { SetValue ("ArtistSort", value); }
 		}
+
+
+		/// <summary>
+		///    Gets and sets the Charaters for a video media, or
+		///    instruments played for music media. 
+		///    This should match the <see cref="Performers"/> array (for
+		///    each person correspond one/more role). Several roles for
+		///    the same artist/actor can be made up with semicolons. 
+		///    For example, "Marty McFly; Marty McFly Jr.; Marlene McFly".
+		/// </summary>
+		/// <remarks>
+		///    <para> This is typically usefull for movies, although the
+		///    instrument played by each artist in a music may be of
+		///    relevance.
+		///    </para>
+		///    <para>It is highly important to match each role to the 
+		///    performers. This means that a role may be <see 
+		///    langword="null"/> to keep the match between a
+		///    Performers[i] and PerformersRole[i].
+		///    </para>
+		/// </remarks>
+		/// <remarks>
+		///    This property is implemented using the "TMCL" Text
+		///    Information Frame: The 'Musician credits list' is 
+		///    intended as a mapping between instruments and the 
+		///    musician that played it.Every odd field is an 
+		///    instrument and every even is an artist or a comma 
+		///    delimited list of artists.
+		/// </remarks>
+		/// <remarks>
+		///    This property is implemented using the "PerformersRole" field.
+		/// </remarks>
+		public override string[] PerformersRole
+		{
+			get { return GetItemAsStrings("PerformersRole"); }
+			set { SetValue("PerformersRole", value); }
+		}
+
 
 		/// <summary>
 		///    Gets and sets the band or artist who is credited in the
@@ -1236,6 +1331,44 @@ namespace TagLib.Ape {
 		public override string Copyright {
 			get {return GetItemAsString ("Copyright");}
 			set {SetValue ("Copyright", value);}
+		}
+
+		/// <summary>
+		///    Gets and sets the date at which the tag has been written.
+		/// </summary>
+		/// <value>
+		///    A nullable <see cref="DateTime" /> object containing the 
+		///    date at which the tag has been written, or <see 
+		///    langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "DateTagged" item.
+		///    Format used is: yyyy-MM-dd HH:mm:ss
+		/// </remarks>
+		public override DateTime? DateTagged
+		{
+			get
+			{
+				string value = GetItemAsString("DateTagged");
+				if (value != null)
+				{
+					DateTime date;
+					if (DateTime.TryParseExact(value, "yyyy-MM-dd HH:mm:ss", null, DateTimeStyles.None, out date))
+					{
+						return date;
+					}
+				}
+				return null;
+			}
+			set
+			{
+				string date = null;
+				if (value != null)
+				{
+					date = string.Format("{0:yyyy-MM-dd HH:mm:ss}", value);
+				}
+				SetValue("DateTagged", date);
+			}
 		}
 
 		/// <summary>

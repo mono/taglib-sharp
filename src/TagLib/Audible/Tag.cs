@@ -244,7 +244,7 @@ namespace TagLib.Audible
 		/// Get or Set the Description Tag
 		/// </summary>
 
-		public string Description {
+		public override string Description {
 			get { return getTag ("description"); }
 		}
 

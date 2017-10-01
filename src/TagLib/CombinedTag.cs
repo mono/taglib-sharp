@@ -21,6 +21,7 @@
 // USA
 //
 
+using System;
 using System.Collections.Generic;
 
 namespace TagLib {
@@ -236,6 +237,96 @@ namespace TagLib {
 		}
 
 		/// <summary>
+		///    Gets and sets a short description, one-liner. 
+		///    It represents the tagline of the Video/music.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field gives a nice/short precision to 
+		///    the title, which is typically below the title on the
+		///    front cover of a media.
+		///    For example, for "Back to the future", this would be 
+		///    "It's About Time". 
+		///    </para>
+		/// </remarks>
+		public override string Subtitle
+		{
+			get
+			{
+				foreach (Tag tag in tags)
+				{
+					if (tag == null)
+						continue;
+
+					string value = tag.Subtitle;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+
+			set
+			{
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.Subtitle = value;
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets a short description of the media.
+		///    For a music, this could be the comment that the artist
+		///    made of its artwork. For a video, this should be a 
+		///    short summary of the story/plot, but a spoiler. This
+		///    should give the impression of what to expect in the
+		///    media.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This is especially relevant for a movie.
+		///    For example, for "Back to the Future 2", this could be
+		///    "After visiting 2015, Marty McFly must repeat his visit 
+		///    to 1955 to prevent disastrous changes to 1985...without
+		///    interfering with his first trip".
+		///    </para>
+		/// </remarks>
+		public override string Description
+		{
+			get
+			{
+				foreach (Tag tag in tags)
+				{
+					if (tag == null)
+						continue;
+
+					string value = tag.Description;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+
+			set
+			{
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.Description = value;
+			}
+		}
+
+		/// <summary>
 		///    Gets and sets the performers or artists who performed in
 		///    the media described by the current instance.
 		/// </summary>
@@ -314,7 +405,53 @@ namespace TagLib {
 						tag.PerformersSort = value;
 			}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets the Charaters for a video media, or
+		///    instruments played for music media. 
+		///    This should match the <see cref="Performers"/> array (for
+		///    each person correspond one/more role). Several roles for
+		///    the same artist/actor can be made up with semicolons. 
+		///    For example, "Marty McFly; Marty McFly Jr.; Marlene McFly".
+		/// </summary>
+		/// <remarks>
+		///    <para> This is typically usefull for movies, although the
+		///    instrument played by each artist in a music may be of
+		///    relevance.
+		///    </para>
+		///    <para>It is highly important to match each role to the 
+		///    performers. This means that a role may be <see 
+		///    langword="null"/> to keep the match between a
+		///    Performers[i] and PerformersRole[i].
+		///    </para>
+		/// </remarks>
+		public override string[] PerformersRole
+		{
+			get
+			{
+				foreach (Tag tag in tags)
+				{
+					if (tag == null)
+						continue;
+
+					string[] value = tag.PerformersRole;
+
+					if (value != null && value.Length > 0)
+						return value;
+				}
+
+				return new string[] { };
+			}
+
+			set
+			{
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.PerformersRole = value;
+			}
+		}
+
+
 		/// <summary>
 		///    Gets and sets the sort names for the band or artist who
 		///    is credited in the creation of the entire album or
@@ -515,7 +652,7 @@ namespace TagLib {
 						tag.TitleSort = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the sort names for the Album Title of the 
 		///    media described by the current instance.
@@ -1061,7 +1198,42 @@ namespace TagLib {
 						tag.Copyright = value;
 			}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets the date at which the tag has been written.
+		/// </summary>
+		/// <value>
+		///    A nullable <see cref="DateTime" /> object containing the 
+		///    date at which the tag has been written, or <see 
+		///    langword="null" /> if no value present.
+		/// </value>
+		public override DateTime? DateTagged
+		{
+			get
+			{
+				foreach (Tag tag in tags)
+				{
+					if (tag == null)
+						continue;
+
+					DateTime? value = tag.DateTagged;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+
+			set
+			{
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.DateTagged = value;
+			}
+		}
+
+
 		/// <summary>
 		///    Gets and sets the MusicBrainz Artist ID.
 		/// </summary>

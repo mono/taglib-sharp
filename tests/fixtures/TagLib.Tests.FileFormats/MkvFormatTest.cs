@@ -149,14 +149,7 @@ namespace TagLib.Tests.FileFormats
 		[Test]
 		public void WriteStandardTags ()
 		{
-			StandardTests.WriteStandardTags (sample_file, tmp_file);
-		}
-
-
-		[Test]
-		public void WriteMediumTags()
-		{
-			StandardTests.WriteStandardTags(sample_file, tmp_file, StandardTests.TestTagLevel.Medium);
+			StandardTests.WriteStandardTags (sample_file, tmp_file, StandardTests.TestTagLevel.Medium);
 		}
 
 

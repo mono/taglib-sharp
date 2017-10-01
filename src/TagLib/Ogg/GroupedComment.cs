@@ -21,6 +21,7 @@
 // USA
 //
 
+using System;
 using System.Collections.Generic;
 
 namespace TagLib.Ogg
@@ -223,6 +224,84 @@ namespace TagLib.Ogg
 			}
 			set {if (tags.Count > 0) tags [0].TitleSort = value;}
 		}
+
+		/// <summary>
+		///    Gets and sets a short description, one-liner. 
+		///    It represents the tagline of the Video/music.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are
+		///    looped through in order and the first non-empty value is
+		///    returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.Subtitle" />
+		public override string Subtitle
+		{
+			get
+			{
+				foreach (XiphComment tag in tags)
+				{
+					if (tag == null)
+						continue;
+
+					string value = tag.Subtitle;
+
+					if (value != null && value.Length > 0)
+						return value;
+				}
+
+				return null;
+			}
+			set { if (tags.Count > 0) tags[0].Subtitle = value; }
+		}
+
+		/// <summary>
+		///    Gets and sets a short description of the media.
+		///    For a music, this could be the comment that the artist
+		///    made of its artwork. For a video, this should be a 
+		///    short summary of the story/plot, but a spoiler. This
+		///    should give the impression of what to expect in the
+		///    media.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are
+		///    looped through in order and the first non-empty value is
+		///    returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.Description" />
+		public override string Description
+		{
+			get
+			{
+				foreach (XiphComment tag in tags)
+				{
+					if (tag == null)
+						continue;
+
+					string value = tag.Description;
+
+					if (value != null && value.Length > 0)
+						return value;
+				}
+
+				return null;
+			}
+			set { if (tags.Count > 0) tags[0].Description = value; }
+		}
 		
 		/// <summary>
 		///    Gets and sets the performers or artists who performed in
@@ -293,7 +372,43 @@ namespace TagLib.Ogg
 			}
 			set {if (tags.Count > 0) tags [0].PerformersSort = value;}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets the Charaters for a video media, or
+		///    instruments played for music media. 
+		///    This should match the <see cref="Performers"/> array (for
+		///    each person correspond one/more role). Several roles for
+		///    the same artist/actor can be made up with semicolons. 
+		///    For example, "Marty McFly; Marty McFly Jr.; Marlene McFly".
+		/// </summary>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are
+		///    looped through in order and the first non-empty value is
+		///    returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.PerformersRole" />
+		public override string[] PerformersRole
+		{
+			get
+			{
+				foreach (XiphComment tag in tags)
+				{
+					if (tag == null)
+						continue;
+
+					string[] value = tag.PerformersRole;
+
+					if (value != null && value.Length > 0)
+						return value;
+				}
+
+				return new string[] { };
+			}
+			set { if (tags.Count > 0) tags[0].PerformersRole = value; }
+		}
+
 		/// <summary>
 		///    Gets and sets the band or artist who is credited in the
 		///    creation of the entire album or collection containing the
@@ -877,7 +992,43 @@ namespace TagLib.Ogg
 			}
 			set { if (tags.Count > 0) tags[0].Copyright = value; }
 		}
-		
+
+		/// <summary>
+		///    Gets and sets the date at which the tag has been written.
+		/// </summary>
+		/// <value>
+		///    A nullable <see cref="DateTime" /> object containing the 
+		///    date at which the tag has been written, or <see 
+		///    langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are
+		///    looped through in order and the first non-<see
+		///    langword="null" /> value is returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.DateTagged" />
+		public override DateTime? DateTagged
+		{
+			get
+			{
+				foreach (XiphComment tag in tags)
+				{
+					if (tag == null)
+						continue;
+
+					DateTime? value = tag.DateTagged;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+			set { if (tags.Count > 0) tags[0].DateTagged = value; }
+		}
+
 		/// <summary>
 		///    Gets and sets the MusicBrainz Artist ID.
 		/// </summary>

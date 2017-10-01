@@ -100,16 +100,16 @@ namespace TagLib.Tests.FileFormats
 		[Test]
 		public void WriteStandardTags ()
 		{
-			StandardTests.WriteStandardTags (sample_file, tmp_file);
+			StandardTests.WriteStandardTags (sample_file, tmp_file, StandardTests.TestTagLevel.Medium);
 		}
 
-				[Test]
-				public void WriteExtendedTags()
-				{
-					ExtendedTests.WriteExtendedTags(sample_file, tmp_file);
-				}
+		[Test]
+		public void WriteExtendedTags()
+		{
+			ExtendedTests.WriteExtendedTags(sample_file, tmp_file);
+		}
 
-				[Test]
+		[Test]
 		public void TestCorruptionResistance()
 		{
 			StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/a.m4a");
