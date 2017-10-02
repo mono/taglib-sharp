@@ -238,12 +238,8 @@ namespace TagLib.Ogg
 			else
 				field_list.Add (key, result.ToArray ());
 
-			// If the user is overwriting a picture field, reset
-			// the state in the pictures array
-			if (IsPictureField (key)) {
-				picture_fields_dirty = false;
-				pictures = null;
-			}
+			// Update picture state if this field name is a picture field
+			ResetPicturesState (key);
 		}
 		
 		/// <summary>
@@ -266,13 +262,10 @@ namespace TagLib.Ogg
 			
 			field_list.Remove (key);
 
-			// See SetField above
-			if (IsPictureField (key)) {
-				picture_fields_dirty = false;
-				pictures = null;
-			}
+			// Update picture state if this field name is a picture field
+			ResetPicturesState (key);
 		}
-		
+
 		/// <summary>
 		///    Renders the current instance as a raw Xiph comment,
 		///    optionally adding a framing bit.
@@ -541,6 +534,21 @@ namespace TagLib.Ogg
 
 			// The picture fields are now up to date with the pictures array
 			picture_fields_dirty = false;
+		}
+
+		/// <summary>
+		///    If the given parameter represents a Xiph field containing
+		///    picture information, clear the currently parsed pictures
+		///    array, so it will be loaded from the field value again
+		///    when the Pictures property is accessed.
+		/// </summary>
+		/// <param name="key">Name of the Xiph field being changed</param>
+		private void ResetPicturesState(string key)
+		{
+			if (IsPictureField(key)) {
+				picture_fields_dirty = false;
+				pictures = null;
+			}
 		}
 
 		/// <summary>
