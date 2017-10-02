@@ -1409,7 +1409,15 @@ namespace TagLib.Ogg
 			}
 			set
 			{
-				pictures = value;
+				if (value == null) {
+					// Set pictures to a 0-length array to prevent
+					// re-parsing by the getter on the next access
+					pictures = new IPicture[0];
+				}
+				else {
+					pictures = value;
+				}
+				
 				// The pictures fields are not up to date with the pictures array anymore
 				picture_fields_dirty = true;
 			}

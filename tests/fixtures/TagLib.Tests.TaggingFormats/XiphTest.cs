@@ -522,6 +522,13 @@ namespace TagLib.Tests.TaggingFormats
 				Assert.AreEqual(0, t.GetField("COVERART").Length, "Legacy Field Set (Length): " + m);
 				Assert.AreEqual(6, t.GetField("METADATA_BLOCK_PICTURE").Length, "Current Field Set (Length): " + m);
 			});
+
+			// The user should be able to clear the pictures array
+			tag.Pictures = null;
+
+			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+				Assert.AreEqual(0, t.Pictures.Length, "Pictures Length (null): " + m);
+			});
 		}
 		
 		[Test]
