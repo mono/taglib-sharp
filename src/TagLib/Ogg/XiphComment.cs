@@ -361,9 +361,9 @@ namespace TagLib.Ogg
 				// with the underlying fields, adjust the field count
 				if (pictures != null && picture_fields_dirty) {
 					foreach (string fieldName in PICTURE_FIELDS) {
-						string[] value;
-						if (field_list.TryGetValue (fieldName, out value)) {
-							count -= (uint) value.Length;
+						string[] fieldValue;
+						if (field_list.TryGetValue (fieldName, out fieldValue)) {
+							count -= (uint) fieldValue.Length;
 						}
 					}
 
