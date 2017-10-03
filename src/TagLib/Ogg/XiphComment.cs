@@ -74,6 +74,11 @@ namespace TagLib.Ogg
 		/// </summary>
 		private static readonly string[] PICTURE_FIELDS = new string[] {"COVERART", "METADATA_BLOCK_PICTURE"};
 
+		/// <summary>
+		///    Cached empty pictures array.
+		/// </summary>
+		private static readonly IPicture[] EMPTY_PICTURES = new IPicture[0];
+
 #endregion
 		
 		
@@ -1412,7 +1417,7 @@ namespace TagLib.Ogg
 				if (value == null) {
 					// Set pictures to a 0-length array to prevent
 					// re-parsing by the getter on the next access
-					pictures = new IPicture[0];
+					pictures = EMPTY_PICTURES;
 				}
 				else {
 					pictures = value;
