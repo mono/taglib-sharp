@@ -235,17 +235,17 @@ namespace TagLib.Riff {
 			return TryGetValue (id, out value) ?
 				value : new ByteVectorCollection ();
 		}
-		
+
 		/// <summary>
 		///    Gets the values for a specified item in the current
-		///    instance as a <see cref="string[]" />.
+		///    instance as a <see cref="T:string[]" />.
 		/// </summary>
 		/// <param name="id">
 		///    A <see cref="ByteVector" /> object containing the ID of
 		///    the item to set.
 		/// </param>
 		/// <returns>
-		///    A <see cref="string[]" /> containing the values of the
+		///    A <see cref="T:string[]" /> containing the values of the
 		///    specified item.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
@@ -394,7 +394,7 @@ namespace TagLib.Riff {
 		
 		/// <summary>
 		///    Sets the value for a specified item in the current
-		///    instance to the contents of a <see cref="ByteVector[]"
+		///    instance to the contents of a <see cref="T:ByteVector[]"
 		///    />.
 		/// </summary>
 		/// <param name="id">
@@ -402,7 +402,7 @@ namespace TagLib.Riff {
 		///    the item to set.
 		/// </param>
 		/// <param name="values">
-		///    A <see cref="ByteVector[]" /> containing the values to
+		///    A <see cref="T:ByteVector[]" /> containing the values to
 		///    store in the specified item.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
@@ -513,14 +513,14 @@ namespace TagLib.Riff {
 		
 		/// <summary>
 		///    Sets the value for a specified item in the current
-		///    instance to the contents of a <see cref="string[]" />.
+		///    instance to the contents of a <see cref="T:string[]" />.
 		/// </summary>
 		/// <param name="id">
 		///    A <see cref="ByteVector" /> object containing the ID of
 		///    the item to set.
 		/// </param>
 		/// <param name="values">
-		///    A <see cref="string[]" /> containing the values to store
+		///    A <see cref="T:string[]" /> containing the values to store
 		///    in the specified item.
 		/// </param>
 		/// <exception cref="ArgumentNullException">

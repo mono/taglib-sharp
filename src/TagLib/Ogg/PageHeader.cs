@@ -283,7 +283,7 @@ namespace TagLib.Ogg
 		///    described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="int[]" /> containing the packet sizes.
+		///    A <see cref="T:int[]" /> containing the packet sizes.
 		/// </value>
 		public int [] PacketSizes {
 			get {return packet_sizes.ToArray ();}

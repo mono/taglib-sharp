@@ -24,19 +24,19 @@
 using System;
 
 namespace TagLib.Id3v2 {
-       /// <summary>
-       ///    <see cref="FrameType" /> provides references to different frame
-       ///    types used by the library.
-       /// </summary>
-       /// <remarks>
-       ///    <para>This class is used to severely reduce the number of times
-       ///    these types are created in <see cref="TagLib.Id3v2.Tag" />,
-       ///    greatly improving the speed at which warm files are read. It is,
-       ///    however, not necessary for external users to use this class. While
-       ///    the library may use <c>GetTextAsString (FrameType.TIT2);</c> an
-       ///    external user could use <c>tag.GetTextAsString ("TIT2");</c> with
-       ///    the same result.</para>
-       /// </remarks>
+   	/// <summary>
+   	///    <see cref="FrameType" /> provides references to different frame
+   	///    types used by the library.
+   	/// </summary>
+   	/// <remarks>
+   	///    <para>This class is used to severely reduce the number of times
+   	///    these types are created in <see cref="TagLib.Id3v2.Tag" />,
+   	///    greatly improving the speed at which warm files are read. It is,
+   	///    however, not necessary for external users to use this class. While
+   	///    the library may use <c>GetTextAsString (FrameType.TIT2);</c> an
+   	///    external user could use <c>tag.GetTextAsString ("TIT2");</c> with
+   	///    the same result.</para>
+   	/// </remarks>
 	internal static class FrameType {
 		public static readonly ReadOnlyByteVector APIC = "APIC";
 		public static readonly ReadOnlyByteVector COMM = "COMM";
@@ -57,10 +57,13 @@ namespace TagLib.Id3v2 {
 		public static readonly ReadOnlyByteVector TCMP = "TCMP";
 		public static readonly ReadOnlyByteVector TDRC = "TDRC";
 		public static readonly ReadOnlyByteVector TDAT = "TDAT";
+		public static readonly ReadOnlyByteVector TDTG = "TDTG";
 		public static readonly ReadOnlyByteVector TEXT = "TEXT";
 		public static readonly ReadOnlyByteVector TIT1 = "TIT1";
 		public static readonly ReadOnlyByteVector TIT2 = "TIT2";
+		public static readonly ReadOnlyByteVector TIT3 = "TIT3";
 		public static readonly ReadOnlyByteVector TIME = "TIME";
+		public static readonly ReadOnlyByteVector TMCL = "TMCL";
 		public static readonly ReadOnlyByteVector TOLY = "TOLY";
 		public static readonly ReadOnlyByteVector TOPE = "TOPE";
 		public static readonly ReadOnlyByteVector TPE1 = "TPE1";

@@ -49,9 +49,9 @@ namespace TagLib.Id3v2
 		private ByteVector identifier = null;
 		
 #endregion
-      
-      
-      
+  	
+  	
+  	
 #region Constructors
 		
 		/// <summary>

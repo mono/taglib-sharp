@@ -63,7 +63,7 @@ namespace TagLib {
 		///    specified array.
 		/// </summary>
 		/// <param name="values">
-		///    A <see cref="string[]" /> whose values are to be added to
+		///    A <see cref="T:string[]" /> whose values are to be added to
 		///    the new instance.
 		/// </param>
 		public StringCollection (params string [] values)

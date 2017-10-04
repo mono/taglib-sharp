@@ -107,20 +107,20 @@ namespace TagLib.MusePack {
 		///    "MPCK"
 		/// </value>
 		public static readonly ReadOnlyByteVector FileIdentifierSv8 = "MPCK";
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="StreamHeader" /> for a specified header block and
 		///    stream length.
 		/// </summary>
-		/// <param name="data">
-		///    A <see cref="ByteVector" /> object containing the stream
+		/// <param name="file">
+		///    A <see cref="File" /> object containing the stream
 		///    header data.
 		/// </param>
 		/// <param name="streamLength">
@@ -128,13 +128,13 @@ namespace TagLib.MusePack {
 		///    MusePAck stream in bytes.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		///    <paramref name="data" /> is <see langword="null" />.
+		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		/// <exception cref="CorruptFileException">
-		///    <paramref name="data" /> does not begin with <see
+		///    <paramref name="file" /> does not begin with <see
 		///    cref="FileIdentifierSv7" />  or with <see 
 		///    cref="FileIdentifierSv8" /> or is less than 
-		///    <see cref="Size" /> bytes long.
+		///    <see cref="P:File.Size" /> bytes long.
 		/// </exception>
 		public StreamHeader (File file, long streamLength)
 		{

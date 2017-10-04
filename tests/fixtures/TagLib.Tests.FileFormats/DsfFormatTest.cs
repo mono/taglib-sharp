@@ -7,11 +7,11 @@ namespace TagLib.Tests.FileFormats
 	[TestFixture]
 	public class DsfFormatTest : IFormatTest
 	{
-		private static string sample_file = "samples/sample.dsf";
-		private static string tmp_file = "samples/tmpwrite.dsf";
+		private static string sample_file = TestPath.Samples + "sample.dsf";
+		private static string tmp_file = TestPath.Samples + "tmpwrite.dsf";
 		private File file;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void Init()
 		{
 			file = File.Create(sample_file);
@@ -44,7 +44,7 @@ namespace TagLib.Tests.FileFormats
 		[Test]
 		public void TestCorruptionResistance()
 		{
-			StandardTests.TestCorruptionResistance("samples/corrupt/a.dsf");
+			StandardTests.TestCorruptionResistance(TestPath.Samples + "corrupt/a.dsf");
 		}
 	}
 }

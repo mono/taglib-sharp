@@ -36,12 +36,20 @@ namespace TagLib.IIM
 		private IIMTag Tag { get; set; }
 		private ByteVector Data { get; set; }
 
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="data">Bytes contained in the reader</param>
 		public IIMReader (ByteVector data)
 		{
 			Data = data;
 			Tag = new IIMTag ();
 		}
 
+		/// <summary>
+		/// Proceed with the reading of the IIM
+		/// </summary>
+		/// <returns></returns>
 		public IIMTag Process ()
 		{
 			// now process the IIM segments which all start with 0x1C 0x02 followed by the type

@@ -146,19 +146,19 @@ namespace TagLib.Asf {
 		public MetadataLibraryObject MetadataLibraryObject {
 			get {return metadata_library;}
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Methods
-		
+
 		/// <summary>
 		///    Gets the string contained in a specific descriptor in the
 		///    current instance.
 		/// </summary>
 		/// <param name="names">
-		///    A <see cref="string[]" /> containing the names of the
+		///    A <see cref="T:string[]" /> containing the names of the
 		///    descriptors to look for the value in.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
@@ -190,7 +190,7 @@ namespace TagLib.Asf {
 		///    the current instance.
 		/// </summary>
 		/// <param name="names">
-		///    A <see cref="string[]" /> containing the names of the
+		///    A <see cref="T:string[]" /> containing the names of the
 		///    descriptors to look for the value in.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
@@ -218,7 +218,7 @@ namespace TagLib.Asf {
 		///    store, or <see langword="null" /> to clear the value.
 		/// </param>
 		/// <param name="names">
-		///    A <see cref="string[]" /> containing the names in which
+		///    A <see cref="T:string[]" /> containing the names in which
 		///    the value would be expected. For example, "WM/AlbumTitle"
 		///    and "Album".
 		/// </param>
@@ -253,11 +253,11 @@ namespace TagLib.Asf {
 		///    current instance.
 		/// </summary>
 		/// <param name="value">
-		///    A <see cref="string[]" /> containing the value to store,
+		///    A <see cref="T:string[]" /> containing the value to store,
 		///    or <see langword="null" /> to clear the value.
 		/// </param>
 		/// <param name="names">
-		///    A <see cref="string[]" /> containing the names in which
+		///    A <see cref="T:string[]" /> containing the names in which
 		///    the value would be expected. For example, "WM/AlbumTitle"
 		///    and "Album".
 		/// </param>
@@ -301,7 +301,7 @@ namespace TagLib.Asf {
 		///    from the current instance.
 		/// </summary>
 		/// <param name="names">
-		///    A <see cref="string[]" /> containing the names of the
+		///    A <see cref="T:string[]" /> containing the names of the
 		///    descriptors to be retrieved.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
@@ -329,7 +329,7 @@ namespace TagLib.Asf {
 		///    descriptors to be added.
 		/// </param>
 		/// <param name="descriptors">
-		///    A <see cref="ContentDescriptor[]" /> containing
+		///    A <see cref="T:ContentDescriptor[]" /> containing
 		///    descriptors to add to the new instance.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
@@ -463,7 +463,7 @@ namespace TagLib.Asf {
 		///    split.
 		/// </param>
 		/// <returns>
-		///    A <see cref="string[]" /> containing the split text.
+		///    A <see cref="T:string[]" /> containing the split text.
 		/// </returns>
 		private static string [] SplitAndClean (string s)
 		{
@@ -536,7 +536,44 @@ namespace TagLib.Asf {
 			get {return description.Title;}
 			set {description.Title = value;}
 		}
-		
+
+
+		/// <summary>
+		///    Gets and sets a short description, one-liner. 
+		///    It represents the tagline of the Video/music.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field gives a nice/short precision to 
+		///    the title, which is typically below the title on the
+		///    front cover of a media.
+		///    For example, for "Back to the future", this would be 
+		///    "It's About Time". 
+		///    </para>
+		/// </remarks>
+		/// <remarks>
+		///    This property is implemented using the "WM/SubTitle"
+		///    field.
+		///    https://msdn.microsoft.com/en-us/library/windows/desktop/dd757997(v=vs.85).aspx
+		/// </remarks>
+		public override string Subtitle
+		{
+			get
+			{
+				return GetDescriptorString("WM/SubTitle");
+			}
+			set
+			{
+				SetDescriptorString(value, "WM/SubTitle");
+			}
+		}
+
+
+
 		/// <summary>
 		///    Gets and sets the sort names for the Track Title of
 		///    the media described by the current instance.
@@ -559,13 +596,37 @@ namespace TagLib.Asf {
 				SetDescriptorString (value, "WM/TitleSortOrder");
 			}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets a short description of the media.
+		///    For a music, this could be the comment that the artist
+		///    made of its artwork. For a video, this should be a 
+		///    short summary of the story/plot, but a spoiler. This
+		///    should give the impression of what to expect in the
+		///    media.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the description stored
+		///    in the ASF Content Description Object.
+		/// </remarks>
+		public override string Description
+		{
+			get { return description.Description; }
+			set { description.Description = value; }
+		}
+
+
 		/// <summary>
 		///    Gets and sets the performers or artists who performed in
 		///    the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the performers or
+		///    A <see cref="T:string[]" /> containing the performers or
 		///    artists who performed in the media described by the
 		///    current instance or an empty array if no value is
 		///    present.
@@ -584,7 +645,7 @@ namespace TagLib.Asf {
 		///    who performed in the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names for
+		///    A <see cref="T:string[]" /> containing the sort names for
 		///    the performers or artists who performed in the media
 		///    described by the current instance, or an empty array if
 		///    no value is present. 
@@ -608,7 +669,7 @@ namespace TagLib.Asf {
 		///    media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the band or artist
+		///    A <see cref="T:string[]" /> containing the band or artist
 		///    who is credited in the creation of the entire album or
 		///    collection containing the media described by the current
 		///    instance or an empty array if no value is present.
@@ -635,7 +696,7 @@ namespace TagLib.Asf {
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names
+		///    A <see cref="T:string[]" /> containing the sort names
 		///    for the band or artist who is credited in the creation
 		///    of the entire album or collection containing the media
 		///    described by the current instance or an empty array if
@@ -660,7 +721,7 @@ namespace TagLib.Asf {
 		///    the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the composers of the
+		///    A <see cref="T:string[]" /> containing the composers of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -725,7 +786,7 @@ namespace TagLib.Asf {
 				SetDescriptorString (value, "WM/AlbumSortOrder");
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets a user comment on the media represented by
 		///    the current instance.
@@ -736,20 +797,23 @@ namespace TagLib.Asf {
 		///    langword="null" /> if no value is present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the description stored
-		///    in the ASF Content Description Object.
+		///    This property is implemented using the "WM/Text" field.
 		/// </remarks>
 		public override string Comment {
-			get {return description.Description;}
-			set {description.Description = value;}
+			get {
+				return GetDescriptorString("WM/Text");
+			}
+			set {
+				SetDescriptorString(value, "WM/Text");
+			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the genres of the media represented by the
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the genres of the
+		///    A <see cref="T:string[]" /> containing the genres of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -1496,7 +1560,7 @@ namespace TagLib.Asf {
 		///    the media represented by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IPicture[]" /> containing a collection of
+		///    A <see cref="T:IPicture[]" /> containing a collection of
 		///    pictures associated with the media represented by the
 		///    current instance or an empty array if none are present.
 		/// </value>

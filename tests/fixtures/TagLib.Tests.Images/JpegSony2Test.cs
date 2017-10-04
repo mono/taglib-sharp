@@ -12,14 +12,14 @@ namespace TagLib.Tests.Images
 	[TestFixture]
 	public class JpegSony2Test
 	{
-		private static string sample_file = "samples/sample_sony2.jpg";
-		private static string tmp_file = "samples/tmpwrite_sony2.jpg";
+		private static string sample_file = TestPath.Samples + "sample_sony2.jpg";
+		private static string tmp_file = TestPath.Samples + "tmpwrite_sony2.jpg";
 
 		private TagTypes contained_types = TagTypes.TiffIFD;
 
 		private File file;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void Init ()
 		{
 			file = File.Create (sample_file);

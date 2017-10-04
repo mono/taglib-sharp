@@ -474,11 +474,11 @@ namespace TagLib.Id3v2 {
 			ByteVector data = frameData.Mid (data_offset,
 				data_length);
 
-            if ((Flags & FrameFlags.Unsynchronisation) != 0) {
-                int before_length = data.Count;
+			if ((Flags & FrameFlags.Unsynchronisation) != 0) {
+				int before_length = data.Count;
 				SynchData.ResynchByteVector (data);
-                data_length -= (data.Count - before_length);
-            }
+				data_length -= (data.Count - before_length);
+			}
 			
 			// FIXME: Implement encryption.
 			if ((Flags & FrameFlags.Encryption) != 0)

@@ -24,6 +24,9 @@ using TagLib.Mpeg4;
 
 namespace TagLib
 {
+	/// <summary>
+	/// Represent a MP4 URL box
+	/// </summary>
 	public class UrlBox : Box
 	{
 		#region Private Fields

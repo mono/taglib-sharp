@@ -26,73 +26,75 @@ using System;
 
 namespace TagLib.Matroska
 {
-    /// <summary>
-    /// Describes a Matroska Subtitle Track.
-    /// </summary>
-    public class SubtitleTrack : Track
-    {
-        #region Private fields
+	/// <summary>
+	/// Describes a Matroska Subtitle Track.
+	/// </summary>
+	public class SubtitleTrack : Track
+	{
+		#region Private fields
 
-        private List<EBMLElement> unknown_elems = new List<EBMLElement> ();
+		private List<EBMLreader> unknown_elems = new List<EBMLreader> ();
 
-        #endregion
+		#endregion
 
-        #region Constructors
+		#region Constructors
 
-        /// <summary>
-        /// Constructs a <see cref="SubtitleTrack" /> parsing from provided
-        /// file data.
-        /// Parsing will be done reading from _file at position references by 
-        /// parent element's data section.
-        /// </summary>
-        /// <param name="_file"><see cref="File" /> instance to read from.</param>
-        /// <param name="element">Parent <see cref="EBMLElement" />.</param>
-        public SubtitleTrack (File _file, EBMLElement element)
-            : base (_file, element)
-        {
-            // Here we handle the unknown elements we know, and store the rest
-            foreach (EBMLElement elem in base.UnknownElements) {
-                MatroskaID matroska_id = (MatroskaID) elem.ID;
+		/// <summary>
+		/// Constructs a <see cref="SubtitleTrack" /> parsing from provided
+		/// file data.
+		/// Parsing will be done reading from _file at position references by 
+		/// parent element's data section.
+		/// </summary>
+		/// <param name="_file"><see cref="File" /> instance to read from.</param>
+		/// <param name="element">Parent <see cref="EBMLreader" />.</param>
+		public SubtitleTrack (File _file, EBMLreader element)
+			: base (_file, element)
+		{
+			// Here we handle the unknown elements we know, and store the rest
+			foreach (EBMLreader elem in base.UnknownElements) {
+				MatroskaID matroska_id = (MatroskaID) elem.ID;
 
-                switch (matroska_id) {
-                    default:
-                        unknown_elems.Add (elem);
-                        break;
-                }
-            }
-        }
+				switch (matroska_id) {
+					default:
+						unknown_elems.Add (elem);
+						break;
+				}
+			}
+		}
 
-        #endregion
+		#endregion
 
-        #region Public fields
+		#region Public fields
 
-        /// <summary>
-        /// List of unknown elements encountered while parsing.
-        /// </summary>
-        public new List<EBMLElement> UnknownElements
-        {
-            get { return unknown_elems; }
-        }
+		/// <summary>
+		/// List of unknown elements encountered while parsing.
+		/// </summary>
+		public new List<EBMLreader> UnknownElements
+		{
+			get { return unknown_elems; }
+		}
 
-        #endregion
+		#endregion
 
-        #region Public methods
+		#region Public methods
 
-        #endregion
+		#endregion
 
-        #region ICodec
+		#region ICodec
 
-        /// <summary>
-        /// This type of track only has text media type.
-        /// </summary>
-        public override MediaTypes MediaTypes
-        {
-            get
-            {
-                return MediaTypes.Text;
-            }
-        }
+		/// <summary>
+		/// This type of track only has text media type.
+		/// </summary>
+		public override MediaTypes MediaTypes
+		{
+			get
+			{
+				return MediaTypes.Text;
+			}
+		}
 
-        #endregion
-    }
+		#endregion
+
+
+	}
 }

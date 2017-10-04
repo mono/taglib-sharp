@@ -154,7 +154,7 @@ namespace TagLib.Jpeg
 		///    specified read style.
 		/// </summary>
 		/// <param name="abstraction">
-		///    A <see cref="IFileAbstraction" /> object to use when
+		///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
 		///    reading from and writing to the file.
 		/// </param>
 		/// <param name="propertiesStyle">
@@ -177,7 +177,7 @@ namespace TagLib.Jpeg
 		///    cref="File" /> for a specified file abstraction.
 		/// </summary>
 		/// <param name="abstraction">
-		///    A <see cref="IFileAbstraction" /> object to use when
+		///    A <see cref="TagLib.File.IFileAbstraction" /> object to use when
 		///    reading from and writing to the file.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
@@ -529,7 +529,7 @@ namespace TagLib.Jpeg
 		/// <remarks>More info and specs for IPTC-IIM:
 		/// - Guidelines for Handling Image Metadata (http://www.metadataworkinggroup.org/specs/)
 		/// - IPTC Standard Photo Metadata (July 2010) (http://www.iptc.org/std/photometadata/specification/IPTC-PhotoMetadata-201007_1.pdf)
-		/// - Extracting IPTC header information from JPEG images (http://www.codeproject.com/KB/graphics/iptc.aspx?fid=2301&df=90&mpp=25&noise=3&prof=False&sort=Position&view=Quick&fr=51#xx0xx)
+		/// - Extracting IPTC header information from JPEG images (http://www.codeproject.com/KB/graphics/iptc.aspx?fid=2301&amp;df=90&amp;mpp=25&amp;noise=3&amp;prof=False&amp;sort=Position&amp;view=Quick&amp;fr=51#xx0xx)
 		/// - Reading IPTC APP14 Segment Header Information from JPEG Images (http://www.codeproject.com/KB/graphics/ReadingIPTCAPP14.aspx?q=iptc)
 		/// </remarks>
 		private void ReadAPP13Segment (ushort length)

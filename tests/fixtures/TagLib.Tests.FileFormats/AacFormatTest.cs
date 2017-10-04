@@ -8,11 +8,11 @@ namespace TagLib.Tests.FileFormats
 	[TestFixture]
 	public class AacFormatTest : IFormatTest
 	{
-		private static string sample_file = "samples/sample.aac";
-		private static string tmp_file = "samples/tmpwrite.aac";
+		private static string sample_file = TestPath.Samples + "sample.aac";
+		private static string tmp_file = TestPath.Samples + "tmpwrite.aac";
 		private File file;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void Init()
 		{
 			file = File.Create(sample_file);
@@ -45,7 +45,7 @@ namespace TagLib.Tests.FileFormats
 		[Test]
 		public void TestCorruptionResistance()
 		{
-			StandardTests.TestCorruptionResistance("samples/corrupt/a.aac");
+			StandardTests.TestCorruptionResistance(TestPath.Samples + "corrupt/a.aac");
 		}
 
 		[Test]

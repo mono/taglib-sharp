@@ -419,7 +419,7 @@ namespace TagLib.Aac
 		///    Searching to the end of the file can be very, very slow
 		///    especially for corrupt or non-MPEG files. It is
 		///    recommended to use <see
-		///    cref="Find(AudioHeader,TagLib.File,long,int)" />
+		///    cref="M:AudioHeader.Find(AudioHeader,TagLib.File,long,int)" />
 		///    instead.
 		/// </remarks>
 		public static bool Find(out AudioHeader header,

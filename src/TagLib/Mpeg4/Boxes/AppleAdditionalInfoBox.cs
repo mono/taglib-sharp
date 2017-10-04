@@ -76,9 +76,7 @@ namespace TagLib.Mpeg4 {
 		/// Constructs and initializes a new instance of <see
 		///    cref="AppleAdditionalInfoBox" /> using specified header, version and flags
 		/// </summary>
-		/// <param name="header"></param>
-		/// <param name="version"></param>
-		/// <param name="flags"></param>
+		/// <param name="header">defines the header data</param>
 		public AppleAdditionalInfoBox (ByteVector header) : base (header)
 		{
 		}

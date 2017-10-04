@@ -98,7 +98,13 @@ namespace TagLib.Id3v2 {
 		///    Contains the tag's frames.
 		/// </summary>
 		private List<Frame> frame_list = new List<Frame> ();
-		
+
+
+		/// <summary>
+		/// Store the PerformersRole property
+		/// </summary>
+		private string[] performers_role;
+
 #endregion
 		
 		
@@ -437,7 +443,7 @@ namespace TagLib.Id3v2 {
 		///    identifier of the frame to set the data for.
 		/// </param>
 		/// <param name="text">
-		///    A <see cref="string[]" /> containing the text to set for
+		///    A <see cref="T:string[]" /> containing the text to set for
 		///    the specified frame, or <see langword="null" /> to unset
 		///    the value.
 		/// </param>
@@ -470,7 +476,7 @@ namespace TagLib.Id3v2 {
 				return;
 			}
 			
-			// Handle URL LInk frames differently
+			// Handle URL Link frames differently
 			if (ident[0] == 'W')
 			{
 				UrlLinkFrame urlFrame = 
@@ -515,7 +521,7 @@ namespace TagLib.Id3v2 {
 			else
 				SetTextFrame (ident, text.ToArray ());
 		}
-		
+
 		/// <summary>
 		///    Sets the numeric values for a specified Text Information
 		///    Frame.
@@ -533,6 +539,11 @@ namespace TagLib.Id3v2 {
 		///    <paramref name="number" /> is a part of, or zero if
 		///    <paramref name="number" /> is not part of a set.
 		/// </param>
+		/// <param name="format">
+		///    A <see cref="string" /> value representing the format
+		///    to be used to repreesent the <paramref name="number"/>.
+		///    Default: simple decimal number ("0").
+		/// </param>
 		/// <remarks>
 		///    If both <paramref name="number" /> and <paramref
 		///    name="count" /> are equal to zero, the value will be
@@ -548,7 +559,7 @@ namespace TagLib.Id3v2 {
 		///    <paramref name="ident" /> is not exactly four bytes long.
 		/// </exception>
 		public void SetNumberFrame (ByteVector ident, uint number,
-		                            uint count)
+		                            uint count, string format = "0")
 		{
 			if (ident == null)
 				throw new ArgumentNullException ("ident");
@@ -562,10 +573,10 @@ namespace TagLib.Id3v2 {
 				RemoveFrames (ident);
 			} else if (count != 0) {
 				SetTextFrame (ident, string.Format (
-					CultureInfo.InvariantCulture, "{0}/{1}",
+					CultureInfo.InvariantCulture, "{0:" + format + "}/{1}",
 					number, count));
 			} else {
-				SetTextFrame (ident, number.ToString (
+				SetTextFrame (ident, number.ToString ( format,
 					CultureInfo.InvariantCulture));
 			}
 		}
@@ -588,13 +599,58 @@ namespace TagLib.Id3v2 {
 		/// </remarks>
 		public ByteVector Render ()
 		{
+			// Convert the PerformersRole to the TMCL Tag
+
+			string[] ret = null;
+			if (performers_role != null)
+			{
+				var map = new Dictionary<string, string>();
+				for (int i = 0; i < performers_role.Length; i++)
+				{
+					var insts = performers_role[i];
+					if (string.IsNullOrEmpty(insts))
+						continue;
+
+					var instlist = insts.Split(';');
+					foreach (var iinst in instlist)
+					{
+						var inst = iinst.Trim();
+
+						if (i < Performers.Length)
+						{
+							var perf = Performers[i];
+							if (map.ContainsKey(inst))
+							{
+								map[inst] += ", " + perf;
+							}
+							else
+							{
+								map.Add(inst, perf);
+							}
+						}
+					}
+				}
+
+				// Convert dictionary to array
+				ret = new string[map.Count * 2];
+				int j = 0;
+				foreach (var dict in map)
+				{
+					ret[j++] = dict.Key;
+					ret[j++] = dict.Value;
+				}
+			}
+
+			SetTextFrame(FrameType.TMCL, ret);
+
+
 			// We need to render the "tag data" first so that we
 			// have to correct size to render in the tag's header.
 			// The "tag data" (everything that is included in
 			// Header.TagSize) includes the extended header, frames
 			// and padding, but does not include the tag's header or
 			// footer.
-			
+
 			bool has_footer = (header.Flags &
 				HeaderFlags.FooterPresent) != 0;
 			bool unsynchAtFrameLevel = (header.Flags & HeaderFlags.Unsynchronisation) != 0 && Version >= 4;
@@ -998,13 +1054,13 @@ namespace TagLib.Id3v2 {
 
 			tdrc.Text = new string [] { tdrc_text.ToString () };
 		}
-		
-#endregion
-		
-		
-		
-#region Private Methods
-		
+
+		#endregion
+
+
+
+		#region Private Methods
+
 		/// <summary>
 		///    Gets the text values from a specified Text Information
 		///    Frame.
@@ -1015,7 +1071,7 @@ namespace TagLib.Id3v2 {
 		///    from.
 		/// </param>
 		/// <returns>
-		///    A <see cref="string[]" /> containing the text of the
+		///    A <see cref="T:string[]" /> containing the text of the
 		///    specified frame, or an empty array if no values were
 		///    found.
 		/// </returns>
@@ -1067,6 +1123,7 @@ namespace TagLib.Id3v2 {
 		/// frame in a case-sensitive manner.
 		/// </summary>
 		/// <param name="description">String containing the description field</param>
+		/// <param name="caseSensitive">case-sensitive search if true.</param>
 		/// <returns>UserTextInformationFrame (TXXX) that corresponds to the description</returns>
 		private string GetUserTextAsString (string description, bool caseSensitive) {
 
@@ -1097,6 +1154,7 @@ namespace TagLib.Id3v2 {
 		/// <param name="description">String containing the Description field for the
 		/// TXXX frame</param>
 		/// <param name="text">String containing the Text field for the TXXX frame</param>
+		/// <param name="caseSensitive">case-sensitive search if true.</param>
 		private void SetUserTextAsString(string description, string text, bool caseSensitive) {
 			//Get the TXXX frame, create a new one if needed
 			UserTextInformationFrame frame = UserTextInformationFrame.Get(
@@ -1266,12 +1324,68 @@ namespace TagLib.Id3v2 {
 			set {SetTextFrame (FrameType.TSOT, value);}
 		}
 
+
+		/// <summary>
+		///    Gets and sets a short description, one-liner. 
+		///    It represents the tagline of the Video/music.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field gives a nice/short precision to 
+		///    the title, which is typically below the title on the
+		///    front cover of a media.
+		///    For example, for "Back to the future", this would be 
+		///    "It's About Time". 
+		///    </para>
+		/// </remarks>
+		/// <remarks>
+		///    This property is implemented using the "TIT3" Text
+		///    Information Frame.
+		/// </remarks>
+		public override string Subtitle
+		{
+			get { return GetTextAsString(FrameType.TIT3); }
+			set { SetTextFrame(FrameType.TIT3, value); }
+		}
+
+		/// <summary>
+		///    Gets and sets a short description of the media.
+		///    For a music, this could be the comment that the artist
+		///    made of its artwork. For a video, this should be a 
+		///    short summary of the story/plot, but a spoiler. This
+		///    should give the impression of what to expect in the
+		///    media.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This is especially relevant for a movie.
+		///    For example, for "Back to the Future 2", this could be
+		///    "After visiting 2015, Marty McFly must repeat his visit 
+		///    to 1955 to prevent disastrous changes to 1985...without
+		///    interfering with his first trip".
+		///    </para>
+		/// </remarks>
+		public override string Description
+		{
+			get { return GetUserTextAsString("Description"); }
+			set { SetUserTextAsString("Description", value); }
+		}
+
+
 		/// <summary>
 		///    Gets and sets the performers or artists who performed in
 		///    the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the performers or
+		///    A <see cref="T:string[]" /> containing the performers or
 		///    artists who performed in the media described by the
 		///    current instance or an empty array if no value is
 		///    present.
@@ -1290,7 +1404,7 @@ namespace TagLib.Id3v2 {
 		///    who performed in the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names for
+		///    A <see cref="T:string[]" /> containing the sort names for
 		///    the performers or artists who performed in the media
 		///    described by the current instance, or an empty array if
 		///    no value is present. 
@@ -1305,12 +1419,92 @@ namespace TagLib.Id3v2 {
 		}
 
 		/// <summary>
+		///    Gets and sets the Charaters for a video media, or
+		///    instruments played for music media. 
+		///    This should match the <see cref="Performers"/> array (for
+		///    each person correspond one/more role). Several roles for
+		///    the same artist/actor can be made up with semicolons. 
+		///    For example, "Marty McFly; Marty McFly Jr.; Marlene McFly".
+		/// </summary>
+		/// <remarks>
+		///    <para> This is typically usefull for movies, although the
+		///    instrument played by each artist in a music may be of
+		///    relevance.
+		///    </para>
+		///    <para>It is highly important to match each role to the 
+		///    performers. This means that a role may be <see 
+		///    langword="null"/> to keep the match between a
+		///    Performers[i] and PerformersRole[i].
+		///    </para>
+		/// </remarks>
+		/// <remarks>
+		///    This property is implemented using the "TMCL" Text
+		///    Information Frame: The 'Musician credits list' is 
+		///    intended as a mapping between instruments and the 
+		///    musician that played it.Every odd field is an 
+		///    instrument and every even is an artist or a comma 
+		///    delimited list of artists.
+		/// </remarks>
+		public override string[] PerformersRole
+		{
+			get
+			{
+				if (performers_role != null)
+				{
+					return performers_role;
+				}
+
+				var perfref = Performers;
+				if (Performers == null)
+					return performers_role = new string[0];
+
+				// Map the instruments to the performers
+
+				string[] map = GetTextAsArray(FrameType.TMCL);
+				performers_role = new string[Performers.Length];
+				for (int i = 0; i + 1 < map.Length; i += 2)
+				{
+					string inst = map[i];
+					string perfs = map[i + 1];
+					if ( string.IsNullOrEmpty(inst) 
+						|| string.IsNullOrEmpty(perfs))
+						continue;
+
+					var perflist = perfs.Split(',');
+					foreach (string iperf in perflist)
+					{
+						if (iperf == null) continue;
+						var perf = iperf.Trim();
+						if (string.IsNullOrEmpty(perf)) continue;
+						for (int j = 0; j < perfref.Length; j++)
+						{
+							if (perfref[j] == perf)
+							{
+								performers_role[j] = performers_role[j] == null ? inst :
+									performers_role[j] + "; " + inst;
+							}
+						}
+					}
+				}
+
+				return performers_role;
+			}
+
+			set
+			{
+				performers_role = value == null ? 
+					new string[0] : value;
+			}
+		}
+
+
+		/// <summary>
 		///    Gets and sets the sort names of the band or artist who is 
 		///    credited in the creation of the entire album or collection
 		///    containing the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names for
+		///    A <see cref="T:string[]" /> containing the sort names for
 		///    the performers or artists who performed in the media
 		///    described by the current instance, or an empty array if
 		///    no value is present. 
@@ -1330,7 +1524,7 @@ namespace TagLib.Id3v2 {
 		///    media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the band or artist
+		///    A <see cref="T:string[]" /> containing the band or artist
 		///    who is credited in the creation of the entire album or
 		///    collection containing the media described by the current
 		///    instance or an empty array if no value is present.
@@ -1349,7 +1543,7 @@ namespace TagLib.Id3v2 {
 		///    the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the composers of the
+		///    A <see cref="T:string[]" /> containing the composers of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -1367,7 +1561,7 @@ namespace TagLib.Id3v2 {
 		///    media represented by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the sort names for
+		///    A <see cref="T:string[]" /> containing the sort names for
 		///    the performers or artists who performed in the media
 		///    described by the current instance, or an empty array if
 		///    no value is present. 
@@ -1465,7 +1659,7 @@ namespace TagLib.Id3v2 {
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the genres of the
+		///    A <see cref="T:string[]" /> containing the genres of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -1575,7 +1769,7 @@ namespace TagLib.Id3v2 {
 		/// </remarks>
 		public override uint Track {
 			get {return GetTextAsUInt32 (FrameType.TRCK, 0);}
-			set {SetNumberFrame (FrameType.TRCK, value, TrackCount);}
+			set {SetNumberFrame (FrameType.TRCK, value, TrackCount, "00");}
 		}
 		
 		/// <summary>
@@ -1759,6 +1953,46 @@ namespace TagLib.Id3v2 {
 			set {SetTextFrame (FrameType.TCOP, value);}
 		}
 
+		/// <summary>
+		///    Gets and sets the date at which the tag has been written.
+		/// </summary>
+		/// <value>
+		///    A nullable <see cref="DateTime" /> object containing the 
+		///    date at which the tag has been written, or <see 
+		///    langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TDTG" Timestamp
+		///    Information Frame.
+		/// </remarks>
+		public override DateTime? DateTagged
+		{
+			get
+			{
+				string value = GetTextAsString(FrameType.TDTG);
+				if (value != null)
+				{
+					value = value.Replace('T', ' ');
+					DateTime date;
+					if (DateTime.TryParseExact(value, "yyyy-MM-dd HH:mm:ss", null, DateTimeStyles.None, out date))
+					{
+						return date;
+					}
+				}
+				return null;
+			}
+			set
+			{
+				string date = null;
+				if (value != null)
+				{
+					date = string.Format("{0:yyyy-MM-dd HH:mm:ss}", value);
+					date = date.Replace(' ', 'T');
+				}
+				SetTextFrame(FrameType.TDTG, date);
+			}
+		}
+		
 		/// <summary>
 		///    Gets and sets the MusicBrainz ArtistID
 		/// </summary>
@@ -2080,7 +2314,7 @@ namespace TagLib.Id3v2 {
 		///    the media represented by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="IPicture[]" /> containing a collection of
+		///    A <see cref="T:IPicture[]" /> containing a collection of
 		///    pictures associated with the media represented by the
 		///    current instance or an empty array if none are present.
 		/// </value>

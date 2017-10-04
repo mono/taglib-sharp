@@ -31,7 +31,7 @@ namespace TagLib.IFD.Entries
 	public class SLongArrayIFDEntry : ArrayIFDEntry<int>
 	{
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Construcor.
@@ -41,7 +41,7 @@ namespace TagLib.IFD.Entries
 		///    represents
 		/// </param>
 		/// <param name="values">
-		///    A <see cref="System.Int32[]"/> to be stored
+		///    A <see cref="T:System.Int32[]"/> to be stored
 		/// </param>
 		public SLongArrayIFDEntry (ushort tag, int [] values) : base (tag)
 		{

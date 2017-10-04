@@ -191,7 +191,7 @@ namespace TagLib.Id3v2 {
 		///    contain a value.
 		/// </summary>
 		/// <value>
-		///    A <see cref="ChannelType[]" /> containing the channels
+		///    A <see cref="T:ChannelType[]" /> containing the channels
 		///    which have a value set in the current instance.
 		/// </value>
 		public ChannelType [] Channels {

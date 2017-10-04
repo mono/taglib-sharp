@@ -1,4 +1,4 @@
-﻿//
+//
 //  jpegSonyDscRX100M4.cs
 //
 //  Author:
@@ -33,12 +33,12 @@ namespace TagLib.Tests.Images
 						bool isSuccess = true;
 						try
 						{
-							File.Create ("samples/sample_sony_DSC-RX100M4.jpg");
+							File.Create (TestPath.Samples + "sample_sony_DSC-RX100M4.jpg");
 						}
-						catch(ArithmeticException e) {
+						catch(ArithmeticException) {
 								// Old versions of TagLib were throwing an ArithmeticException on reading in Sony DSC RX100M4 images
 								isSuccess = false;
-						} catch (Exception e) {
+						} catch (Exception) {
 								// All excetions shall make this test fail
 								isSuccess = false;
 						}

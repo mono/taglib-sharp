@@ -343,16 +343,16 @@ namespace TagLib.Mpeg {
 		public int AudioBitrate {
 			get {
 				if (xing_header.TotalSize > 0 &&
-					duration > TimeSpan.Zero)
+					Duration > TimeSpan.Zero)
 					return (int) Math.Round (((
 						(XingHeader.TotalSize * 8L) /
-						duration.TotalSeconds) / 1000.0));
+						Duration.TotalSeconds) / 1000.0));
 
 				if (vbri_header.TotalSize > 0 && 
-					duration > TimeSpan.Zero)
+					Duration > TimeSpan.Zero)
 					return (int)Math.Round(((
 						(VBRIHeader.TotalSize * 8L) /
-						duration.TotalSeconds) / 1000.0));
+						Duration.TotalSeconds) / 1000.0));
 				
 				return bitrates [
 					Version == Version.Version1 ? 0 : 1,
@@ -754,7 +754,7 @@ namespace TagLib.Mpeg {
 		///    Searching to the end of the file can be very, very slow
 		///    especially for corrupt or non-MPEG files. It is
 		///    recommended to use <see
-		///    cref="Find(AudioHeader,TagLib.File,long,int)" />
+		///    cref="M:AudioHeader.Find(AudioHeader,TagLib.File,long,int)" />
 		///    instead.
 		/// </remarks>
 		public static bool Find (out AudioHeader header,

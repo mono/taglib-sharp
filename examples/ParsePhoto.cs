@@ -4,10 +4,10 @@ public class ParsePhotoApp
 {
 	public static void Main (string [] args)
 	{
-        if(args.Length == 0) {
-            Console.Error.WriteLine("USAGE: mono ParsePhoto.exe PATH [...]");
-            return;
-        }
+		if(args.Length == 0) {
+			Console.Error.WriteLine("USAGE: mono ParsePhoto.exe PATH [...]");
+			return;
+		}
 
 		foreach (string path in args)
 			ParsePhoto (path);

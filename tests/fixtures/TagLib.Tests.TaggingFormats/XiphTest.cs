@@ -469,12 +469,12 @@ namespace TagLib.Tests.TaggingFormats
 			Ogg.XiphComment tag = new Ogg.XiphComment ();
 			
 			Picture [] pictures = new Picture [] {
-				new Picture ("../examples/covers/sample_a.png"),
-				new Picture ("../examples/covers/sample_a.jpg"),
-				new Picture ("../examples/covers/sample_b.png"),
-				new Picture ("../examples/covers/sample_b.jpg"),
-				new Picture ("../examples/covers/sample_c.png"),
-				new Picture ("../examples/covers/sample_c.jpg")
+				new Picture (TestPath.Covers + "sample_a.png"),
+				new Picture (TestPath.Covers + "sample_a.jpg"),
+				new Picture (TestPath.Covers + "sample_b.png"),
+				new Picture (TestPath.Covers + "sample_b.jpg"),
+				new Picture (TestPath.Covers + "sample_c.png"),
+				new Picture (TestPath.Covers + "sample_c.jpg")
 			};
 			
 			for (int i = 0; i < 6; i ++)
@@ -499,8 +499,38 @@ namespace TagLib.Tests.TaggingFormats
 				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
 				Assert.AreEqual (0, t.Pictures.Length, "Value Cleared (Zero): " + m);
 			});
+
+			// Test that COVERART fields are parsed in Pictures property
+			string[] pictureStrings = new string[pictures.Length];
+			for (int i = 0; i < 6; ++i)
+				pictureStrings[i] = Convert.ToBase64String(pictures[i].Data.Data);
+			tag.SetField("COVERART", pictureStrings);
+
+			var parsedPictures = tag.Pictures;
+			Assert.IsTrue(!tag.IsEmpty, "Legacy Value Set (IsEmpty)");
+			Assert.AreEqual(6, parsedPictures.Length, "Legacy Value Set (Length)");
+			
+			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+				// COVERART should be preserved
+				Assert.AreEqual(6, t.GetField("COVERART").Length, "Legacy Field Set (Length): " + m);
+			});
+
+			// Setting the pictures array should replace COVERART with METADATA_BLOCK_PICTURE
+			tag.Pictures = pictures;
+
+			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+				Assert.AreEqual(0, t.GetField("COVERART").Length, "Legacy Field Set (Length): " + m);
+				Assert.AreEqual(6, t.GetField("METADATA_BLOCK_PICTURE").Length, "Current Field Set (Length): " + m);
+			});
+
+			// The user should be able to clear the pictures array
+			tag.Pictures = null;
+
+			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+				Assert.AreEqual(0, t.Pictures.Length, "Pictures Length (null): " + m);
+			});
 		}
-        
+		
 		[Test]
 		public void TestMusicBrainzArtistID ()
 		{
@@ -798,7 +828,7 @@ namespace TagLib.Tests.TaggingFormats
 			tag.BeatsPerMinute = 234;
 			tag.Conductor = "I";
 			tag.Copyright = "J";
-			tag.Pictures = new Picture [] {new Picture ("../examples/covers/sample_a.png")};
+			tag.Pictures = new Picture [] {new Picture (TestPath.Covers + "sample_a.png") };
 			
 			Assert.IsFalse (tag.IsEmpty, "Should be full.");
 			tag.Clear ();

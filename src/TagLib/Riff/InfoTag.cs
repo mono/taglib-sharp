@@ -140,13 +140,43 @@ namespace TagLib.Riff
 			}
 			set {SetValue ("INAM", value);}
 		}
-		
+
+		/// <summary>
+		///    Gets and sets a short description of the media.
+		///    For a music, this could be the comment that the artist
+		///    made of its artwork. For a video, this should be a 
+		///    short summary of the story/plot, but a spoiler. This
+		///    should give the impression of what to expect in the
+		///    media.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the subtitle
+		///    the media represented by the current instance 
+		///    or an empty array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ISBJ" item.
+		/// </remarks>
+		public override string Description
+		{
+			get
+			{
+				foreach (string s in GetValuesAsStrings("ISBJ"))
+					if (!string.IsNullOrEmpty(s))
+						return s;
+
+				return null;
+			}
+			set { SetValue("ISBJ", value); }
+		}
+
+
 		/// <summary>
 		///    Gets and sets the performers or artists who performed in
 		///    the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the performers or
+		///    A <see cref="T:string[]" /> containing the performers or
 		///    artists who performed in the media described by the
 		///    current instance or an empty array if no value is
 		///    present.
@@ -165,7 +195,7 @@ namespace TagLib.Riff
 		///    media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the band or artist
+		///    A <see cref="T:string[]" /> containing the band or artist
 		///    who is credited in the creation of the entire album or
 		///    collection containing the media described by the current
 		///    instance or an empty array if no value is present.
@@ -183,7 +213,7 @@ namespace TagLib.Riff
 		///    the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the composers of the
+		///    A <see cref="T:string[]" /> containing the composers of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>
@@ -194,6 +224,60 @@ namespace TagLib.Riff
 			get {return GetValuesAsStrings ("IWRI");}
 			set {SetValue ("IWRI", value);}
 		}
+
+
+		/// <summary>
+		///    Gets and sets the album of the media represented by the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the album of
+		///    the media represented by the current instance or <see
+		///    langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the non-standard
+		///    "DIRC" (Directory) item.
+		/// </remarks>
+		public override string Album
+		{
+			get
+			{
+				foreach (string s in GetValuesAsStrings("DIRC"))
+					if (!string.IsNullOrEmpty(s))
+						return s;
+
+				return null;
+			}
+			set { SetValue("DIRC", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the conductor or director of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the conductor
+		///    or director of the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ICNM" 
+		///    (Cinematographer) non-standard item.
+		/// </remarks>
+		public override string Conductor
+		{
+			get
+			{
+				foreach (string s in GetValuesAsStrings("ICNM"))
+					if (!string.IsNullOrEmpty(s))
+						return s;
+
+				return null;
+			}
+			set { SetValue("ICNM", value); }
+		}
+
 
 		/// <summary>
 		///    Gets and sets a user comment on the media represented by
@@ -223,7 +307,7 @@ namespace TagLib.Riff
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string[]" /> containing the genres of the
+		///    A <see cref="T:string[]" /> containing the genres of the
 		///    media represented by the current instance or an empty
 		///    array if no value is present.
 		/// </value>

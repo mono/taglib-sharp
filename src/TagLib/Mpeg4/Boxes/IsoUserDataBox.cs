@@ -112,7 +112,7 @@ namespace TagLib.Mpeg4 {
 		///    all parent boxes up to the top of the file.
 		/// </summary>
 		/// <value>
-		///    A <see cref="BoxHeader[]" /> containing the headers for
+		///    A <see cref="T:BoxHeader[]" /> containing the headers for
 		///    the current "<c>udta</c>" box and its parent boxes up to
 		///    the top of the file, in the order they appear, or <see
 		///    langword="null" /> if none is present.

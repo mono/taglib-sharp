@@ -160,13 +160,13 @@ namespace TagLib.Asf {
 				if (name == descriptors [i].Name)
 					descriptors.RemoveAt (i);
 		}
-		
+
 		/// <summary>
 		///    Gets all descriptors with any of a collection of names
 		///    from the current instance.
 		/// </summary>
 		/// <param name="names">
-		///    A <see cref="string[]" /> containing the names of the
+		///    A <see cref="T:string[]" /> containing the names of the
 		///    descriptors to be retrieved.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
@@ -216,7 +216,7 @@ namespace TagLib.Asf {
 		///    descriptors to be added.
 		/// </param>
 		/// <param name="descriptors">
-		///    A <see cref="ContentDescriptor[]" /> containing
+		///    A <see cref="T:ContentDescriptor[]" /> containing
 		///    descriptors to add to the new instance.
 		/// </param>
 		/// <exception cref="ArgumentNullException">

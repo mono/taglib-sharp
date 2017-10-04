@@ -73,7 +73,7 @@ namespace TagLib.Audible
 		///    than the size of the file.
 		/// </exception>
 		/// <exception cref="CorruptFileException">
-		///    The file does not contain <see cref="FileIdentifier" />
+		///    The file does not contain FileIdentifier
 		///    at the given position.
 		/// </exception>
 		public Tag (File file, long position)
@@ -94,7 +94,7 @@ namespace TagLib.Audible
 		/// </exception>
 		/// <exception cref="CorruptFileException">
 		///    <paramref name="data" /> is less than 128 bytes or does
-		///    not start with <see cref="FileIdentifier" />.
+		///    not start with FileIdentifier.
 		/// </exception>
 		public Tag (ByteVector data)
 		{
@@ -120,7 +120,7 @@ namespace TagLib.Audible
 		/// </param>
 		/// <exception cref="CorruptFileException">
 		///    <paramref name="data" /> is less than 128 bytes or does
-		///    not start with <see cref="FileIdentifier" />.
+		///    not start with FileIdentifier.
 		/// </exception>
 		private void Parse (ByteVector data)
 		{
@@ -150,7 +150,7 @@ namespace TagLib.Audible
 				}
 				while (data.Count >= 4);
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				//
 			}
@@ -217,11 +217,19 @@ namespace TagLib.Audible
 			get {return TagTypes.AudibleMetadata;}
 		}
 
+		/// <summary>
+		/// Get or Set the Author Tag
+		/// </summary>
+
 		public string Author {
 			get {
 				return getTag ("author");
 			}
 		}
+
+		/// <summary>
+		/// Get or Set the Copyright Tag
+		/// </summary>
 
 		public override string Copyright {
 			get {
@@ -232,10 +240,17 @@ namespace TagLib.Audible
 			}
 		}
 
-		public string Description {
+		/// <summary>
+		/// Get or Set the Description Tag
+		/// </summary>
+
+		public override string Description {
 			get { return getTag ("description"); }
 		}
 
+		/// <summary>
+		/// Get or Set the Narrator Tag
+		/// </summary>
 		public string Narrator {
 			get {
 				return getTag ("narrator");
@@ -273,13 +288,13 @@ namespace TagLib.Audible
 				//	null : album;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the album artist for the media described by the
 		///    current instance.
 		/// </summary>
 		/// <value>
-		///    	A <see cref="string[]" /> object containing a single 
+		///    	A <see cref="T:string[]" /> object containing a single 
 		/// 	artist described by the current instance or <see
 		///    langword="null" /> if no value is present.
 		/// </value>

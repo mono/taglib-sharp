@@ -12,14 +12,14 @@ namespace TagLib.Tests.Images
 	[TestFixture]
 	public class JpegOlympus1Test
 	{
-		private static string sample_file = "samples/sample_olympus1.jpg";
-		private static string tmp_file = "samples/tmpwrite_olympus1.jpg";
+		private static string sample_file = TestPath.Samples + "sample_olympus1.jpg";
+		private static string tmp_file = TestPath.Samples + "tmpwrite_olympus1.jpg";
 
 		private TagTypes contained_types = TagTypes.TiffIFD | TagTypes.XMP;
 
 		private File file;
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void Init () {
 			file = File.Create (sample_file);
 		}

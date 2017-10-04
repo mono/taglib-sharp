@@ -10,6 +10,7 @@ config.status
 configure
 *.exe
 *.mdb
+*.pdb
 *.pidb
 *.config
 install-sh
@@ -29,4 +30,7 @@ tests/*.dll
 tests/*.xml
 test-results
 .*.swp
-*.suo
+packages
+.vs/*
+!packages.config
+.DS_Store
