@@ -621,7 +621,7 @@ namespace TagLib.Riff
 				}
 				
 				// Move to the next item.
-			} while ((position += 8 + size) + 8 < length);
+			} while ((position += 8L + size) + 8 < length);
 			
 			// If we're reading properties, and one were found,
 			// throw an exception. Otherwise, create the Properties
