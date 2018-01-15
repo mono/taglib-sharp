@@ -384,6 +384,7 @@ namespace TagLib.Matroska
 						{
 							str = null;
 						}
+						else
 						if (mtags.Count == 1)
 						{
 							str = list[0];
