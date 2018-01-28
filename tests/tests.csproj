@@ -179,6 +179,7 @@
     <Compile Include="fixtures\TagLib.Tests.FileFormats\AudibleFormat.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\XmlNullEndedTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.Images\jpegSonyDscRX100M4.cs" />
+    <Compile Include="MainWindow.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
