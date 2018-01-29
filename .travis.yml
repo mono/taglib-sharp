@@ -18,6 +18,6 @@ install:
 
 script:
   - ./autogen.sh
-  - xbuild taglib-sharp.sln
+  - msbuild taglib-sharp.sln
   - cd tests
   - mono ../packages/NUnit.ConsoleRunner.3.6.1/tools/nunit3-console.exe --labels=All tests.dll
