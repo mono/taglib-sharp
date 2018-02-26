@@ -48,7 +48,7 @@ distwin: all
 	cp $(srcdir)/NEWS $(srcdir)/$(WINDIR)/NEWS.txt
 	cp $(srcdir)/ChangeLog $(srcdir)/$(WINDIR)/ChangeLog.txt
 	cp $(srcdir)/COPYING $(srcdir)/$(WINDIR)/COPYING.txt
-	cp $(srcdir)/README $(srcdir)/$(WINDIR)/README.txt
+	cp $(srcdir)/README.md $(srcdir)/$(WINDIR)/README.txt
 	cp $(srcdir)/AUTHORS $(srcdir)/$(WINDIR)/AUTHORS.txt
 	if [ -e $(srcdir)/windows-files ];					\
 	  then cp -r $(srcdir)/windows-files/* $(srcdir)/$(WINDIR);		\
