@@ -34,3 +34,4 @@ packages
 .vs/*
 !packages.config
 .DS_Store
+src/taglib-sharp.XML
