@@ -15,13 +15,12 @@
     <AssemblyOriginatorKeyFile>..\taglib-sharp.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net4|AnyCPU'">
-    <DocumentationFile>bin\Debug\net4\taglib-sharp.xml</DocumentationFile>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">
+    <DocumentationFile>bin\Debug\net40\taglib-sharp.xml</DocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net4|AnyCPU'">
-    <DocumentationFile>bin\Release\net4\taglib-sharp.xml</DocumentationFile>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|AnyCPU'">
+    <DocumentationFile>bin\Release\net40\taglib-sharp.xml</DocumentationFile>
   </PropertyGroup>
-
 
 </Project>
