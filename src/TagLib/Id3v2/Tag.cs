@@ -2010,19 +2010,36 @@ namespace TagLib.Id3v2 {
 			set {SetUserTextAsString ("MusicBrainz Artist Id",value);}
 		}
 
-		/// <summary>
-		///    Gets and sets the MusicBrainz ReleaseID
-		/// </summary>
-		/// <value>
-		///    A <see cref="string" /> containing the MusicBrainz
-		///    ReleaseID for the media described by the current 
-		///    instance, or null if no value is present. 
-		/// </value>
-		/// <remarks>
-		///    This property is implemented using the "TXXX:MusicBrainz Album Id" frame.
-		///    http://musicbrainz.org/doc/PicardTagMapping
-		/// </remarks>
-		public override string MusicBrainzReleaseId {
+        /// <summary>
+        ///    Gets and sets the MusicBrainz ReleaseGroupID
+        /// </summary>
+        /// <value>
+        ///    A <see cref="string" /> containing the MusicBrainz
+        ///    ReleaseGroupID for the media described by the current 
+        ///    instance, or null if no value is present. 
+        /// </value>
+        /// <remarks>
+        ///    This property is implemented using the "TXXX:MusicBrainz Release Group Id" frame.
+        ///    http://musicbrainz.org/doc/PicardTagMapping
+        /// </remarks>
+        public override string MusicBrainzReleaseGroupId {
+            get { return GetUserTextAsString("MusicBrainz Release Group Id"); }
+            set { SetUserTextAsString("MusicBrainz Release Group Id", value); }
+        }
+
+        /// <summary>
+        ///    Gets and sets the MusicBrainz ReleaseID
+        /// </summary>
+        /// <value>
+        ///    A <see cref="string" /> containing the MusicBrainz
+        ///    ReleaseID for the media described by the current 
+        ///    instance, or null if no value is present. 
+        /// </value>
+        /// <remarks>
+        ///    This property is implemented using the "TXXX:MusicBrainz Album Id" frame.
+        ///    http://musicbrainz.org/doc/PicardTagMapping
+        /// </remarks>
+        public override string MusicBrainzReleaseId {
 			get {return GetUserTextAsString ("MusicBrainz Album Id");}
 			set {SetUserTextAsString ("MusicBrainz Album Id",value);}
 		}

@@ -656,8 +656,37 @@ namespace TagLib.Tests.TaggingFormats
 				});
 			}
 		}
-		
-		[Test]
+
+        [Test]
+        public void TestMusicBrainzReleaseGroupID()
+        {
+            Id3v2.Tag tag = new Id3v2.Tag();
+            for (byte version = 2; version <= 4; version++)
+            {
+                tag.Version = version;
+
+                TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+                    Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+                    Assert.IsNull(t.MusicBrainzReleaseGroupId, "Initial (Null): " + m);
+                });
+
+                tag.MusicBrainzReleaseGroupId = val_sing;
+
+                TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+                    Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+                    Assert.AreEqual(val_sing, t.MusicBrainzReleaseGroupId, "Value Set (!Null): " + m);
+                });
+
+                tag.MusicBrainzReleaseGroupId = string.Empty;
+
+                TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+                    Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+                    Assert.IsNull(t.MusicBrainzReleaseGroupId, "Value Cleared (Null): " + m);
+                });
+            }
+        }
+
+        [Test]
 		public void TestMusicBrainzReleaseArtistID ()
 		{
 			Id3v2.Tag tag = new Id3v2.Tag ();

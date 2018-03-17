@@ -1340,19 +1340,36 @@ namespace TagLib.Mpeg4 {
 			set {SetDashBox("com.apple.iTunes", "MusicBrainz Artist Id", value);}
 		}
 
-		/// <summary>
-		///    Gets and sets the MusicBrainz ReleaseID
-		/// </summary>
-		/// <value>
-		///    A <see cref="string" /> containing the MusicBrainz
-		///    ReleaseID for the media described by the current 
-		///    instance, or null if no value is present. 
-		/// </value>
-		/// <remarks>
-		///    This property is implemented using the "dash"/"----" box type.
-		///    http://musicbrainz.org/doc/PicardTagMapping
-		/// </remarks>
-		public override string MusicBrainzReleaseId {
+        /// <summary>
+        ///    Gets and sets the MusicBrainz ReleaseGroupID
+        /// </summary>
+        /// <value>
+        ///    A <see cref="string" /> containing the MusicBrainz
+        ///    ReleaseGroupID for the media described by the current 
+        ///    instance, or null if no value is present. 
+        /// </value>
+        /// <remarks>
+        ///    This property is implemented using the "dash"/"----" box type.
+        ///    http://musicbrainz.org/doc/PicardTagMapping
+        /// </remarks>
+        public override string MusicBrainzReleaseGroupId {
+            get { return GetDashBox("com.apple.iTunes", "MusicBrainz Release Group Id"); }
+            set { SetDashBox("com.apple.iTunes", "MusicBrainz Release Group Id", value); }
+        }
+
+        /// <summary>
+        ///    Gets and sets the MusicBrainz ReleaseID
+        /// </summary>
+        /// <value>
+        ///    A <see cref="string" /> containing the MusicBrainz
+        ///    ReleaseID for the media described by the current 
+        ///    instance, or null if no value is present. 
+        /// </value>
+        /// <remarks>
+        ///    This property is implemented using the "dash"/"----" box type.
+        ///    http://musicbrainz.org/doc/PicardTagMapping
+        /// </remarks>
+        public override string MusicBrainzReleaseId {
 			get {return GetDashBox("com.apple.iTunes","MusicBrainz Album Id");}
 			set {SetDashBox("com.apple.iTunes", "MusicBrainz Album Id",value);}
 		}

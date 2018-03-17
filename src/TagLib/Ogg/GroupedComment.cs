@@ -1062,23 +1062,59 @@ namespace TagLib.Ogg
 			set {if (tags.Count > 0) tags [0].MusicBrainzArtistId = value;}
 		}
 
-		/// <summary>
-		///    Gets and sets the MusicBrainz Release ID.
-		/// </summary>
-		/// <value>
-		///    A <see cref="string" /> containing the MusicBrainz
-		///    ReleaseID for the media described by the 
-		///    current instance or null if no value is present.
-		/// </value>
-		/// <remarks>
-		///    <para>When getting the value, the child comments are looped
-		///    through in order and the first non-<see langword="null" />
-		///    and non-empty value is returned.</para>
-		///    <para>When setting the value, it is stored in the first
-		///    comment.</para>
-		/// </remarks>
-		/// <seealso cref="Tag.MusicBrainzReleaseId" />
-		public override string MusicBrainzReleaseId {
+        /// <summary>
+        ///    Gets and sets the MusicBrainz Release Group ID.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="string" /> containing the MusicBrainz
+        ///    ReleaseGroupID for the media described by the 
+        ///    current instance or null if no value is present.
+        /// </value>
+        /// <remarks>
+        ///    <para>When getting the value, the child comments are looped
+        ///    through in order and the first non-<see langword="null" />
+        ///    and non-empty value is returned.</para>
+        ///    <para>When setting the value, it is stored in the first
+        ///    comment.</para>
+        /// </remarks>
+        /// <seealso cref="Tag.MusicBrainzReleaseGroupId" />
+        public override string MusicBrainzReleaseGroupId
+        {
+            get
+            {
+                foreach (XiphComment tag in tags)
+                {
+                    if (tag == null)
+                        continue;
+
+                    string value = tag.MusicBrainzReleaseGroupId;
+
+                    if (value != null && value.Length > 0)
+                        return value;
+                }
+
+                return null;
+            }
+            set { if (tags.Count > 0) tags[0].MusicBrainzReleaseGroupId = value; }
+        }
+
+        /// <summary>
+        ///    Gets and sets the MusicBrainz Release ID.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="string" /> containing the MusicBrainz
+        ///    ReleaseID for the media described by the 
+        ///    current instance or null if no value is present.
+        /// </value>
+        /// <remarks>
+        ///    <para>When getting the value, the child comments are looped
+        ///    through in order and the first non-<see langword="null" />
+        ///    and non-empty value is returned.</para>
+        ///    <para>When setting the value, it is stored in the first
+        ///    comment.</para>
+        /// </remarks>
+        /// <seealso cref="Tag.MusicBrainzReleaseId" />
+        public override string MusicBrainzReleaseId {
 			get {
 				foreach (XiphComment tag in tags) {
 					if (tag == null)
