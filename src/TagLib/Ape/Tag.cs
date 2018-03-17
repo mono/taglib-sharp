@@ -1405,6 +1405,7 @@ namespace TagLib.Ape {
         public override string MusicBrainzReleaseGroupId {
             get { return GetItemAsString("MUSICBRAINZ_RELEASEGROUPID"); }
             set { SetValue("MUSICBRAINZ_RELEASEGROUPID", value); }
+	}
 
         /// <summary>
         ///    Gets and sets the MusicBrainz Release ID of the media
