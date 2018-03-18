@@ -527,7 +527,7 @@ namespace TagLib.Ogg
 
 			// Store the pictures array in METADATA_BLOCK_PICTURE
 			if (pictures != null &&
-			    pictures.Length > 0) {
+				pictures.Length > 0) {
 				string[] flacPictures = new string[pictures.Length];
 
 				for (int i = 0; i < pictures.Length; ++i) {
@@ -1236,36 +1236,36 @@ namespace TagLib.Ogg
 			set {SetField ("MUSICBRAINZ_ARTISTID", value);}
 		}
 
-        /// <summary>
-        ///    Gets and sets the MusicBrainz Release Group ID for the media
-        ///    represented by the current instance.
-        /// </summary>
-        /// <value>
-        ///    A <see cref="string" /> object containing the MusicBrainz
-        ///    ReleaseGroupID for the media represented by the current
-        ///    instance or <see langword="null" /> if no value present.
-        /// </value>
-        /// <remarks>
-        ///    This property is implemented using the "MUSICBRAINZ_RELEASEGROUPID" field.
-        /// </remarks>
-        public override string MusicBrainzReleaseGroupId {
-            get { return GetFirstField("MUSICBRAINZ_RELEASEGROUPID"); }
-            set { SetField("MUSICBRAINZ_RELEASEGROUPID", value); }
-        }
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Group ID for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    ReleaseGroupID for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_RELEASEGROUPID" field.
+		/// </remarks>
+		public override string MusicBrainzReleaseGroupId {
+			get { return GetFirstField("MUSICBRAINZ_RELEASEGROUPID"); }
+			set { SetField("MUSICBRAINZ_RELEASEGROUPID", value); }
+		}
 
-        /// <summary>
-        ///    Gets and sets the MusicBrainz Release ID for the media
-        ///    represented by the current instance.
-        /// </summary>
-        /// <value>
-        ///    A <see cref="string" /> object containing the MusicBrainz
-        ///    ReleaseID for the media represented by the current
-        ///    instance or <see langword="null" /> if no value present.
-        /// </value>
-        /// <remarks>
-        ///    This property is implemented using the "MUSICBRAINZ_ALBUMID" field.
-        /// </remarks>
-        public override string MusicBrainzReleaseId {
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release ID for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    ReleaseID for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_ALBUMID" field.
+		/// </remarks>
+		public override string MusicBrainzReleaseId {
 			get {return GetFirstField ("MUSICBRAINZ_ALBUMID");}
 			set {SetField ("MUSICBRAINZ_ALBUMID", value);}
 		}

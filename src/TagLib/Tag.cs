@@ -779,39 +779,39 @@ namespace TagLib {
 			set {}
 		}
 
-        /// <summary>
-        ///    Gets and sets the MusicBrainz Release Group ID of the media represented by
-        ///    the current instance.
-        /// </summary>
-        /// <value>
-        ///    A <see cref="string" /> containing the MusicBrainz ReleaseGroupID of the
-        ///    media represented by the current instance or an empty
-        ///    array if no value is present.
-        /// </value>
-        /// <remarks>
-        ///    <para>This field represents the MusicBrainz ReleaseGroupID, and is used
-        ///    to uniquely identify a particular Release Group to which this track belongs.</para>
-        /// </remarks>
-        public virtual string MusicBrainzReleaseGroupId
-        {
-            get { return null; }
-            set { }
-        }
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Group ID of the media represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz ReleaseGroupID of the
+		///    media represented by the current instance or an empty
+		///    array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field represents the MusicBrainz ReleaseGroupID, and is used
+		///    to uniquely identify a particular Release Group to which this track belongs.</para>
+		/// </remarks>
+		public virtual string MusicBrainzReleaseGroupId
+		{
+			get { return null; }
+			set { }
+		}
 
-        /// <summary>
-        ///    Gets and sets the MusicBrainz Release ID of the media represented by
-        ///    the current instance.
-        /// </summary>
-        /// <value>
-        ///    A <see cref="string" /> containing the MusicBrainz ReleaseID of the
-        ///    media represented by the current instance or an empty
-        ///    array if no value is present.
-        /// </value>
-        /// <remarks>
-        ///    <para>This field represents the MusicBrainz ReleaseID, and is used
-        ///    to uniquely identify a particular Release to which this track belongs.</para>
-        /// </remarks>
-        public virtual string MusicBrainzReleaseId {
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release ID of the media represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz ReleaseID of the
+		///    media represented by the current instance or an empty
+		///    array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field represents the MusicBrainz ReleaseID, and is used
+		///    to uniquely identify a particular Release to which this track belongs.</para>
+		/// </remarks>
+		public virtual string MusicBrainzReleaseId {
 			get { return null; }
 			set {}
 		}
@@ -1409,7 +1409,7 @@ namespace TagLib {
 		/// </exception>
 		[Obsolete("Use Tag.CopyTo(Tag,bool)")]
 		public static void Duplicate (Tag source, Tag target,
-		                              bool overwrite)
+									  bool overwrite)
 		{
 			if (source == null)
 				throw new ArgumentNullException ("source");

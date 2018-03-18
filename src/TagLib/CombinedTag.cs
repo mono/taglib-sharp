@@ -1272,65 +1272,65 @@ namespace TagLib {
 			}
 		}
 
-        /// <summary>
-        ///    Gets and sets the MusicBrainz Release Group ID.
-        /// </summary>
-        /// <value>
-        ///    A <see cref="string" /> containing the MusicBrainz
-        ///    ReleaseGroupID for the media described by the 
-        ///    current instance or null if no value is present.
-        /// </value>
-        /// <remarks>
-        ///    <para>When getting the value, the child tags are looped
-        ///    through in order and the first non-<see langword="null" />
-        ///    and non-empty value is returned.</para>
-        ///    <para>When setting the value, it is stored in each child
-        ///    tag.</para>
-        /// </remarks>
-        /// <seealso cref="Tag.MusicBrainzReleaseGroupId" />
-        public override string MusicBrainzReleaseGroupId
-        {
-            get
-            {
-                foreach (Tag tag in tags)
-                {
-                    if (tag == null)
-                        continue;
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release Group ID.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ReleaseGroupID for the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.MusicBrainzReleaseGroupId" />
+		public override string MusicBrainzReleaseGroupId
+		{
+			get
+			{
+				foreach (Tag tag in tags)
+				{
+					if (tag == null)
+						continue;
 
-                    string value = tag.MusicBrainzReleaseGroupId;
+					string value = tag.MusicBrainzReleaseGroupId;
 
-                    if (value != null)
-                        return value;
-                }
+					if (value != null)
+						return value;
+				}
 
-                return null;
-            }
+				return null;
+			}
 
-            set
-            {
-                foreach (Tag tag in tags)
-                    if (tag != null)
-                        tag.MusicBrainzReleaseGroupId = value;
-            }
-        }
+			set
+			{
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.MusicBrainzReleaseGroupId = value;
+			}
+		}
 
-        /// <summary>
-        ///    Gets and sets the MusicBrainz Release ID.
-        /// </summary>
-        /// <value>
-        ///    A <see cref="string" /> containing the MusicBrainz
-        ///    ReleaseID for the media described by the 
-        ///    current instance or null if no value is present.
-        /// </value>
-        /// <remarks>
-        ///    <para>When getting the value, the child tags are looped
-        ///    through in order and the first non-<see langword="null" />
-        ///    and non-empty value is returned.</para>
-        ///    <para>When setting the value, it is stored in each child
-        ///    tag.</para>
-        /// </remarks>
-        /// <seealso cref="Tag.MusicBrainzReleaseId" />
-        public override string MusicBrainzReleaseId {
+		/// <summary>
+		///    Gets and sets the MusicBrainz Release ID.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ReleaseID for the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.MusicBrainzReleaseId" />
+		public override string MusicBrainzReleaseId {
 			get {
 				foreach (Tag tag in tags) {
 					if (tag == null)

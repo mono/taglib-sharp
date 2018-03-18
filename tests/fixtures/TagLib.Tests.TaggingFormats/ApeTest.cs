@@ -534,32 +534,32 @@ namespace TagLib.Tests.TaggingFormats
 			});
 		}
 
-        [Test]
-        public void TestMusicBrainzReleaseGroupID()
-        {
-            Ape.Tag tag = new Ape.Tag();
+		[Test]
+		public void TestMusicBrainzReleaseGroupID()
+		{
+			Ape.Tag tag = new Ape.Tag();
 
-            TagTestWithSave(ref tag, delegate (Ape.Tag t, string m) {
-                Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
-                Assert.IsNull(t.MusicBrainzReleaseGroupId, "Initial (Null): " + m);
-            });
+			TagTestWithSave(ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull(t.MusicBrainzReleaseGroupId, "Initial (Null): " + m);
+			});
 
-            tag.MusicBrainzReleaseGroupId = val_sing;
+			tag.MusicBrainzReleaseGroupId = val_sing;
 
-            TagTestWithSave(ref tag, delegate (Ape.Tag t, string m) {
-                Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
-                Assert.AreEqual(val_sing, t.MusicBrainzReleaseGroupId, "Value Set (!Null): " + m);
-            });
+			TagTestWithSave(ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual(val_sing, t.MusicBrainzReleaseGroupId, "Value Set (!Null): " + m);
+			});
 
-            tag.MusicBrainzReleaseGroupId = string.Empty;
+			tag.MusicBrainzReleaseGroupId = string.Empty;
 
-            TagTestWithSave(ref tag, delegate (Ape.Tag t, string m) {
-                Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-                Assert.IsNull(t.MusicBrainzReleaseGroupId, "Value Cleared (Null): " + m);
-            });
-        }
+			TagTestWithSave(ref tag, delegate (Ape.Tag t, string m) {
+				Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull(t.MusicBrainzReleaseGroupId, "Value Cleared (Null): " + m);
+			});
+		}
 
-        [Test]
+		[Test]
 		public void TestMusicBrainzReleaseID ()
 		{
 			Ape.Tag tag = new Ape.Tag ();
@@ -835,7 +835,7 @@ namespace TagLib.Tests.TaggingFormats
 		private delegate void TagTestFunc (Ape.Tag tag, string msg);
 		
 		private void TagTestWithSave (ref Ape.Tag tag,
-		                              TagTestFunc testFunc)
+									  TagTestFunc testFunc)
 		{
 			testFunc (tag, "Before Save");
 			tag = new Ape.Tag (tag.Render ());
