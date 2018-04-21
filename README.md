@@ -9,8 +9,7 @@ occuring in the 2.0 series.
  * Bugs:     <https://bugzilla.gnome.org/page.cgi?id=browse.html&product=taglib-sharp>
  * Tarballs: <http://banshee.fm/download/>
  * IRC:      Several TagLib# developers are often in #banshee on irc.gnome.org
- * Git:      <https://github.com/mono/taglib-sharp>
-             <git://github.com/mono/taglib-sharp.git>
+ * Git:      <https://github.com/mono/taglib-sharp> or <git://github.com/mono/taglib-sharp.git>
 
 TagLib# is free/open source software, released under the LGPL.
 We welcome contributions!  Please try to match our coding style,
@@ -46,7 +45,7 @@ You can also build from MonoDevelop or Visual Studio using taglib-sharp.sln
 Running regression by using Nunit 3 Test Adapter:
  
 1. Ensure NuGet packages have been restored
-        See: https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore
+    1. See: https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore
 2. In Visual Studio, go to menu: Tools > Extensions and Updates > Online
 3. Search: Nunit 3 Test Adapter
 4. Download and install it
