@@ -6,8 +6,8 @@ metadata in media files, including video, audio, and photo formats.
 It is API stable, with only API additions (not changes or removals)
 occuring in the 2.0 series.
 
- * Bugs:     <http://bugzilla.gnome.org/browse.cgi?product=taglib-sharp>
- * Tarballs: <http://download.banshee.fm/taglib-sharp/>
+ * Bugs:     <https://bugzilla.gnome.org/page.cgi?id=browse.html&product=taglib-sharp>
+ * Tarballs: <http://banshee.fm/download/>
  * IRC:      Several TagLib# developers are often in #banshee on irc.gnome.org
  * Git:      <https://github.com/mono/taglib-sharp>
              <git://github.com/mono/taglib-sharp.git>
