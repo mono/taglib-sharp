@@ -45,7 +45,7 @@ You can also build from MonoDevelop or Visual Studio using taglib-sharp.sln
 Running regression by using Nunit 3 Test Adapter:
  
 1. Ensure NuGet packages have been restored
-    1. See: https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore
+    1. See: <https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore>
 2. In Visual Studio, go to menu: Tools > Extensions and Updates > Online
 3. Search: Nunit 3 Test Adapter
 4. Download and install it
