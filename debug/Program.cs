@@ -30,7 +30,7 @@ namespace debug
 			log("");
 
 			// Override command arguments
-//			args = new string[]  { "Unclear Throat (Puisje).mpg" };
+			args = new string[]  { "Turning Lime.mkv" };
 
 			foreach (var fname in args) {
 				var fpath = Samples + fname;
