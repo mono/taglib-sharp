@@ -10,7 +10,7 @@ namespace debug
 	{
 		public static readonly string Samples = 
 			Path.GetDirectoryName(System.Reflection.Assembly.GetAssembly(typeof(Program)).Location) 
-			+ @"\..\..\..\tests\samples\";
+			+ @"\..\..\..\..\tests\samples\";
 
 		/// <summary>
 		/// Ouput message on the console and on the Visual Studio Output
@@ -28,6 +28,9 @@ namespace debug
 			log("--------------------");
 			log("* Start : Samples directory: " + Samples);
 			log("");
+
+			// Override command arguments
+			args = new string[]  { "Turning Lime.mkv" };
 
 			foreach (var fname in args) {
 				var fpath = Samples + fname;
