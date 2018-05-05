@@ -22,4 +22,3 @@ script:
   - msbuild taglib-sharp.sln
   - cd tests
   - mono ../packages/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe --labels=All tests.dll
- 
