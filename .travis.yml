@@ -14,11 +14,11 @@ before_install:
 install:
   - sudo apt-get update -qq > /dev/null
   - mono .nuget/nuget.exe restore taglib-sharp.sln -Verbosity detailed
-  - mono .nuget/nuget.exe install NUnit.Runners -Version 3.2.1 -OutputDirectory packages
+  - mono .nuget/nuget.exe install NUnit.Runners -Version 3.8.0 -OutputDirectory packages
   - dotnet restore
 
 script:
   - ./autogen.sh
   - msbuild taglib-sharp.sln
   - cd tests
-  - mono ../packages/NUnit.ConsoleRunner.3.6.1/tools/nunit3-console.exe --labels=All tests.dll
+  - mono ../packages/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe --labels=All tests.dll
