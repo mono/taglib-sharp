@@ -30,7 +30,7 @@ namespace debug
 			log("");
 
 			// Override command arguments
-			args = new string[]  { "Turning Lime.mkv" };
+			args = new string[]  { "Turning Lime.mpg" };
 
 			foreach (var fname in args) {
 				var fpath = Samples + fname;
