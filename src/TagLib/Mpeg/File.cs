@@ -657,8 +657,6 @@ namespace TagLib.Mpeg {
 			
 			Seek (position);
 
-			// 21 00 07 D2 27
-			// 00100001 00000000 00000111 11010010 00100111
 			if (version == Version.Version1) {
 				ByteVector data = ReadBlock (5);
 				high = (double) ((data [0] >> 3) & 0x01);

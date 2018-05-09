@@ -24,7 +24,7 @@ namespace TagLib.Tests.FileFormats
 		public void ReadAudioProperties()
 		{
 			Assert.AreEqual(44100, file.Properties.AudioSampleRate);
-			Assert.AreEqual(1120, file.Properties.Duration.TotalMilliseconds);
+			Assert.AreEqual(1391, file.Properties.Duration.TotalMilliseconds);
 		}
 
 
