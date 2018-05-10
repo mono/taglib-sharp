@@ -241,14 +241,14 @@ namespace TagLib.Riff
 			try {
 				ByteVector data = new ByteVector ();
 				
-				// Enclose the Id3v2 tag in an "ID32" item and
+				// Enclose the Id3v2 tag in an "id3 " item and
 				// embed it as the first tag.
 				if (id32_tag != null) {
 					ByteVector tag_data = id32_tag.Render ();
 					if (tag_data.Count > 10) {
 						if (tag_data.Count % 2 == 1)
 							tag_data.Add (0);
-						data.Add ("ID32");
+						data.Add("id3 ");
 						data.Add (ByteVector.FromUInt (
 							(uint) tag_data.Count,
 							false));
@@ -580,9 +580,12 @@ namespace TagLib.Riff
 					}
 					break;
 				}
-				
+
 				// "ID32" is a custom box for this format that
 				// contains an ID3v2 tag.
+				// "ID3 " and "id3 " have become standard (de facto)
+				case "id3 ":
+				case "ID3 ":
 				case "ID32":
 					if (read_tags && id32_tag == null)
 						id32_tag = new Id3v2.Tag (this,

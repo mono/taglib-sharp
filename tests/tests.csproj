@@ -59,6 +59,8 @@
     <Compile Include="fixtures\TagLib.Tests.FileFormats\AacFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\AiffFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\AsfFormatTest.cs" />
+    <Compile Include="fixtures\TagLib.Tests.FileFormats\WavFormatTest.cs" />
+    <Compile Include="fixtures\TagLib.Tests.FileFormats\MpgFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\MkvFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\AviFormatTest.cs" />
     <Compile Include="fixtures\TagLib.Tests.FileFormats\DsfFormatTest.cs" />
