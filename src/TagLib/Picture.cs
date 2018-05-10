@@ -282,7 +282,8 @@ namespace TagLib {
 			Data = ByteVector.FromPath (path);
 			filename = System.IO.Path.GetFileName(path);
 			description = filename;
-			FillInMimeFromExt();
+			mime_type = FillInMimeFromExt(filename);
+			type = mime_type.StartsWith("image/") ? PictureType.FrontCover : PictureType.NotAPicture;
 		}
 
 		/// <summary>
@@ -309,7 +310,8 @@ namespace TagLib {
 
 			if (!string.IsNullOrEmpty(filename) && filename.Contains("."))
 			{
-				FillInMimeFromExt();
+				mime_type = FillInMimeFromExt(filename);
+				type = mime_type.StartsWith("image/") ? PictureType.FrontCover : PictureType.NotAPicture;
 			}
 			else
 			{
@@ -534,20 +536,23 @@ namespace TagLib {
 		}
 
 		/// <summary>
-		///    Fills in the mime type of the current instance by reading
-		///    its file-extension. More accurate than <see cref="FillInMimeFromData"/>.
+		///    Gets the mime type of from a file-name (it's extensions). 
+		///    More accurate than <see cref="FillInMimeFromData"/>.
 		///    If the format cannot be identified, it assumed to be a Binary file.
 		/// </summary>
-		private void FillInMimeFromExt()
+		/// <param name="name">
+		///    file name with extension, or just extension of a file
+		/// </param>
+		/// <returns>Mime-type as <see cref="string"/></returns>
+		public static string FillInMimeFromExt(string name)
 		{
 			// Default
-			mime_type = "application/octet-stream";
-			type = PictureType.NotAPicture;
+			string mime_type = "application/octet-stream";
 
 			// Get extension from Filename
-			if (string.IsNullOrEmpty(Filename)) return;
-			var ext = System.IO.Path.GetExtension(filename);
-			if (string.IsNullOrEmpty(ext)) return;
+			if (string.IsNullOrEmpty(name)) return mime_type;
+			var ext = System.IO.Path.GetExtension(name);
+			if (string.IsNullOrEmpty(ext)) return mime_type;
 
 			switch (ext)
 			{
@@ -621,14 +626,11 @@ namespace TagLib {
 				case ".xul": mime_type = "application/vnd.mozilla.xul+xml"; break; // XUL
 				case ".zip": mime_type = "application/zip"; break; // ZIP archive
 				case ".3gp": mime_type = "video/3gpp"; break; // 3GPP audio/video container
-				case "audio/3gpp": mime_type = "video"; break; // if it doesn't contain
 				case ".3g2": mime_type = "video/3gpp2"; break; // 3GPP2 audio/video container
-				case "audio/3gpp2": mime_type = "video"; break; // if it doesn't contain
 				case ".7z": mime_type = "application/x-7z-compressed"; break; // 7-zip archive
 			}
 
-			if(mime_type.StartsWith("image/")) type = PictureType.FrontCover;
-
+			return mime_type;
 		}
 
 
