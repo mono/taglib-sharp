@@ -130,8 +130,8 @@ namespace TagLib.Matroska
 
 			base.ClearItems();
 
-			// Keep Medium Tag reference unchanged
-			Add(medium);
+			// Keep Medium Tag reference unchanged (if any)
+			if (medium != null) Add(medium);
 		}
 
 

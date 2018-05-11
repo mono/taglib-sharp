@@ -1295,7 +1295,7 @@ namespace TagLib {
 		/// </returns>
 		private static string JoinGroup (string [] group)
 		{
-			if (group == null)
+			if (group == null || group.Length == 0)
 				return null;
 			
 			return string.Join ("; ", group);

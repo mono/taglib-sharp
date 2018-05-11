@@ -1,5 +1,5 @@
 AC_INIT([taglib-sharp], [2.1.0.0])
-AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar])
+AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar foreign])
 AM_MAINTAINER_MODE
 
 ASSEMBLY_NAME="$PACKAGE"
@@ -122,7 +122,6 @@ AC_CONFIG_FILES([
 Makefile
 taglib-sharp.pc
 src/Makefile
-src/AssemblyInfo.cs
 src/policy.2.0.taglib-sharp.config
 examples/Makefile
 docs/Makefile

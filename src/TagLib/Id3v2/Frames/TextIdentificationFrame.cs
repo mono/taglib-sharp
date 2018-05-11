@@ -887,6 +887,9 @@ namespace TagLib.Id3v2 {
 					FrameId == FrameType.TMCL ||
 					FrameId == FrameType.TOLY ||
 					FrameId == FrameType.TOPE ||
+					FrameId == FrameType.TSOC ||
+					FrameId == FrameType.TSOP ||
+					FrameId == FrameType.TSO2 ||
 					FrameId == FrameType.TPE1 ||
 					FrameId == FrameType.TPE2 ||
 					FrameId == FrameType.TPE3 ||
