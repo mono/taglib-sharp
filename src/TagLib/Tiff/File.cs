@@ -167,6 +167,9 @@ namespace TagLib.Tiff
 		/// </summary>
 		public override void Save ()
 		{
+			// Boilerplate
+			PreSave();
+
 			Mode = AccessMode.Write;
 			try {
 				WriteFile ();

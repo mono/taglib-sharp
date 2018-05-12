@@ -237,6 +237,9 @@ namespace TagLib.Riff
 		/// </summary>
 		public override void Save ()
 		{
+			// Boilerplate
+			PreSave();
+
 			Mode = AccessMode.Write;
 			try {
 				ByteVector data = new ByteVector ();
@@ -586,7 +589,7 @@ namespace TagLib.Riff
 				case "ID32":
 					if (read_tags && id32_tag == null)
 						id32_tag = new Id3v2.Tag (this,
-							position + 8);
+							position + 8, style);
 					
 					tag_found = true;
 					break;

@@ -139,7 +139,7 @@ namespace TagLib.Id3v2 {
 		///    <paramref name="position" /> is less than zero or greater
 		///    than the size of the file.
 		/// </exception>
-		public Tag (File file, long position)
+		public Tag (File file, long position, ReadStyle style)
 		{
 			if (file == null)
 				throw new ArgumentNullException ("file");
@@ -151,7 +151,7 @@ namespace TagLib.Id3v2 {
 				throw new ArgumentOutOfRangeException (
 					"position");
 			
-			Read (file, position);
+			Read (file, position, style);
 		}
 		
 		/// <summary>
@@ -190,7 +190,7 @@ namespace TagLib.Id3v2 {
 					"Does not contain enough tag data.");
 			
 			Parse (data.Mid ((int) Header.Size,
-				(int) header.TagSize));
+				(int) header.TagSize), null, 0, ReadStyle.None);
 		}
 		
 #endregion
@@ -888,7 +888,7 @@ namespace TagLib.Id3v2 {
 		///    <paramref name="position" /> is less than 0 or greater
 		///    than the size of the file.
 		/// </exception>
-		protected void Read (File file, long position)
+		protected void Read (File file, long position, ReadStyle style)
 		{
 			if (file == null)
 				throw new ArgumentNullException ("file");
@@ -908,8 +908,9 @@ namespace TagLib.Id3v2 {
 			
 			if(header.TagSize == 0)
 				return;
-			
-			Parse (file.ReadBlock ((int) header.TagSize));
+
+			position += Header.Size;
+			Parse (null, file, position, style);
 		}
 		
 		/// <summary>
@@ -925,30 +926,42 @@ namespace TagLib.Id3v2 {
 		///    header has been read from the file, otherwise the data
 		///    cannot be parsed correctly.
 		/// </remarks>
-		protected void Parse (ByteVector data)
+		protected void Parse (ByteVector data, File file, long position, ReadStyle style)
 		{
-			if (data == null)
-				throw new ArgumentNullException ("data");
-
 			// If the entire tag is marked as unsynchronized, and this tag
 			// is version id3v2.3 or lower, resynchronize it.
 			bool fullTagUnsynch =  (header.MajorVersion < 4) && ((header.Flags & HeaderFlags.Unsynchronisation) != 0);
+
+			// Avoid to load all the ID3 tag if PictureLazy enabled and size is 
+			// significant enough (ID3v4 and later only)
+			if (data == null && 
+				(fullTagUnsynch || 
+				header.TagSize<1024 || 
+				!style.HasFlag(ReadStyle.PictureLazy) || 
+				header.Flags.HasFlag(HeaderFlags.ExtendedHeader)))
+			{
+				file.Seek(position);
+				data = file.ReadBlock((int)header.TagSize);
+			}
+
 			if (fullTagUnsynch)
 				SynchData.ResynchByteVector (data);
 			
-			int frame_data_position = 0;
-			int frame_data_length = data.Count;
+			int frame_data_position = data != null ? 0 : (int)position;
+			int frame_data_endposition = (data != null ? data.Count  : (int)header.TagSize) 
+				+ frame_data_position - (int)FrameHeader.Size(header.MajorVersion);
 			
-			// Check for the extended header.
+
+			// Check for the extended header (ID3v2 only)
 			
-			if ((header.Flags & HeaderFlags.ExtendedHeader) != 0) {
+			if (header.Flags.HasFlag(HeaderFlags.ExtendedHeader)) {
 				extended_header = new ExtendedHeader (data,
 					header.MajorVersion);
 				
 				if (extended_header.Size <= data.Count) {
 					frame_data_position += (int)
 						extended_header.Size;
-					frame_data_length -= (int)
+					frame_data_endposition -= (int)
 						extended_header.Size;
 				}
 			}
@@ -961,20 +974,13 @@ namespace TagLib.Id3v2 {
 			TextInformationFrame tdat = null;
 			TextInformationFrame time = null;
 			
-			while (frame_data_position < frame_data_length -
-				FrameHeader.Size (header.MajorVersion)) {
+			while (frame_data_position < frame_data_endposition) {
 				
-				// If the next data is position is 0, assume
-				// that we've hit the padding portion of the
-				// frame data.
-				if(data [frame_data_position] == 0)
-					break;
-
 				Frame frame = null;
 
 				try {
 					frame = FrameFactory.CreateFrame(
-						data,
+						data, file,
 						ref frame_data_position,
 						header.MajorVersion,
 						fullTagUnsynch);

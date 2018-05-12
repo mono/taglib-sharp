@@ -124,14 +124,33 @@ namespace TagLib.Id3v2
 		///    The frame contained in the raw data could not be
 		///    converted to ID3v2 or uses encryption or compression.
 		/// </exception>
-		public static Frame CreateFrame (ByteVector data,
+		public static Frame CreateFrame (ByteVector data, File file,
 		                                 ref int offset, byte version, bool alreadyUnsynched)
 		{
-			int position = offset;
-			
+			int position = 0;
+
+			if ( data == null)
+			{
+				file.Seek(offset);
+				data = file.ReadBlock((int)FrameHeader.Size(version));
+			}
+			else
+			{
+				file = null;
+				position = offset;
+			}
+
+			// If the next data is position is 0, assume
+			// that we've hit the padding portion of the
+			// frame data.
+
+			if (data[position] == 0)
+				return null;
+
 			FrameHeader header = new FrameHeader (data.Mid (position,
 				(int) FrameHeader.Size (version)), version);
-			
+
+			int fileposition = offset + (int)FrameHeader.Size(version);
 			offset += (int) (header.FrameSize + FrameHeader.Size (
 				version));
 			
@@ -174,13 +193,34 @@ namespace TagLib.Id3v2
 				if (frame != null)
 					return frame;
 			}
-			
-			// This is where things get necissarily nasty.  Here we
+
+			// This is where things get necessarily nasty.  Here we
 			// determine which Frame subclass (or if none is found
 			// simply an Frame) based on the frame ID. Since there
 			// are a lot of possibilities, that means a lot of if
 			// blocks.
-			
+
+
+			// Lazy objects loading handling
+
+			if (file != null) {
+
+				// Attached Picture (frames 4.14)
+				if (header.FrameId == FrameType.APIC)
+					return new AttachedPictureFrame(data, position,
+						header, version);
+
+				// General Encapsulated Object (frames 4.15)
+				if (header.FrameId == FrameType.GEOB)
+					return new GeneralEncapsulatedObjectFrame(data,
+						position, header, version);
+
+				// Read remaining part of the frame for the non lazy Frames
+				file.Seek(fileposition);
+				data.Add( file.ReadBlock(offset - fileposition) );
+			}
+
+
 			// Text Identification (frames 4.2)
 			if (header.FrameId == FrameType.TXXX)
 				return new UserTextInformationFrame (data,
@@ -219,19 +259,19 @@ namespace TagLib.Id3v2
 			if (header.FrameId == FrameType.RVA2)
 				return new RelativeVolumeFrame (data, position,
 					header, version);
-			
+
 			// Attached Picture (frames 4.14)
 			if (header.FrameId == FrameType.APIC)
-				return new AttachedPictureFrame (data, position,
+				return new AttachedPictureFrame(data, position,
 					header, version);
-			
+
 			// General Encapsulated Object (frames 4.15)
-			if(header.FrameId == FrameType.GEOB)
-				return new GeneralEncapsulatedObjectFrame (data,
+			if (header.FrameId == FrameType.GEOB)
+				return new GeneralEncapsulatedObjectFrame(data,
 					position, header, version);
-			
+
 			// Play Count (frames 4.16)
-			if(header.FrameId == FrameType.PCNT)
+			if (header.FrameId == FrameType.PCNT)
 				return new PlayCountFrame (data, position,
 					header, version);
 			

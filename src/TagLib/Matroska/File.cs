@@ -206,25 +206,14 @@ namespace TagLib.Matroska
 		
 		#region Public Methods
 
-
 		/// <summary>
 		///    Saves the changes made in the current instance to the
 		///    file it represents.
 		/// </summary>
 		public override void Save ()
 		{
-			// All the PictureLazy must be loaded before opening the file
-			// in Write mode
-			if (Tag?.Pictures != null)
-			{
-				foreach (var pic in Tag.Pictures)
-				{
-					if (pic is PictureLazy lazy)
-					{
-						lazy.Load();
-					}
-				}
-			}
+			// Boilerplate
+			PreSave();
 
 			Mode = AccessMode.Write;
 			try {

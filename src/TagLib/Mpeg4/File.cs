@@ -204,6 +204,9 @@ namespace TagLib.Mpeg4 {
 		/// </summary>
 		public override void Save ()
 		{
+			// Boilerplate
+			PreSave();
+
 			if (udta_boxes.Count == 0) {
 				IsoUserDataBox udtaBox = new IsoUserDataBox ();
 				udta_boxes.Add(udtaBox);

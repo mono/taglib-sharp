@@ -1394,6 +1394,34 @@ namespace TagLib {
 		#region Private/Protected Methods
 
 		/// <summary>
+		///    Prepare to Save the file. Thismust be called at the begining 
+		///    of every File.Save() method.
+		/// </summary>
+		protected void PreSave()
+		{
+			// Check validity
+
+			if (!Writeable)
+				throw new InvalidOperationException("File not writeable.");
+
+			if (PossiblyCorrupt)
+				throw new CorruptFileException("Corrupted file cannot be saved.");
+
+			// All the PictureLazy must be loaded before opening the file
+			// in Write mode
+			if (Tag?.Pictures != null)
+			{
+				foreach (var pic in Tag.Pictures)
+				{
+					if (pic is PictureLazy lazy)
+					{
+						lazy.Load();
+					}
+				}
+			}
+		}
+
+		/// <summary>
 		///    Inserts a specified block into the file repesented
 		///    by the current instance at a specified location.
 		/// </summary>

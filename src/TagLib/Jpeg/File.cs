@@ -237,8 +237,8 @@ namespace TagLib.Jpeg
 		/// </summary>
 		public override void Save ()
 		{
-			if (!Writeable || PossiblyCorrupt)
-				throw new InvalidOperationException ("File not writeable. Corrupt metadata?");
+			// Boilerplate
+			PreSave();
 
 			Mode = AccessMode.Write;
 			try {

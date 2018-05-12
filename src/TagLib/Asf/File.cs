@@ -179,6 +179,9 @@ namespace TagLib.Asf {
 		/// </summary>
 		public override void Save ()
 		{
+			// Boilerplate
+			PreSave();
+
 			Mode = AccessMode.Write;
 			try {
 				HeaderObject header = new HeaderObject (this, 0);

@@ -186,6 +186,9 @@ namespace TagLib.Flac {
 		/// </summary>
 		public override void Save ()
 		{
+			// Boilerplate
+			PreSave();
+
 			Mode = AccessMode.Write;
 			try {
 				// Update the tags at the beginning of the file.
