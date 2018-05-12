@@ -43,6 +43,12 @@ namespace TagLib.Tests.FileFormats
 		}
 
 		[Test]
+		public void WriteStandardPictures()
+		{
+			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.None);
+		}
+
+		[Test]
 		public void WriteExtendedTags()
 		{
 			ExtendedTests.WriteExtendedTags(sample_file, tmp_file);

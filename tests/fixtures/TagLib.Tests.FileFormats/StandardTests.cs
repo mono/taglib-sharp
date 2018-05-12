@@ -118,7 +118,8 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual("image/gif", pics[0].MimeType);
 			Assert.AreEqual(73, pics[0].Data.Count);
 
-			Assert.AreEqual("apple_tags.m4a", pics[1].Filename);
+			if (pics[1].Filename != null)
+				Assert.AreEqual("apple_tags.m4a", pics[1].Filename);
 			Assert.AreEqual("TEST description 2", pics[1].Description);
 			Assert.AreEqual("audio/mp4", pics[1].MimeType);
 			Assert.AreEqual(PictureType.NotAPicture, pics[1].Type);
