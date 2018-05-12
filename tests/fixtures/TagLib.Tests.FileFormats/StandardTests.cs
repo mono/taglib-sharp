@@ -256,7 +256,13 @@ namespace TagLib.Tests.FileFormats
 			Assert.IsNull(tag.Title);
 			Assert.IsNull(tag.Description);
 			Assert.IsNull(tag.DateTagged);
-			Assert.IsNull(tag.PerformersRole);
+			Assert.IsTrue(tag.Performers == null || tag.Performers.Length == 0);
+			Assert.IsTrue(tag.PerformersSort == null || tag.PerformersSort.Length == 0);
+			Assert.IsTrue(tag.PerformersRole == null || tag.PerformersRole.Length == 0);
+			Assert.IsTrue(tag.AlbumArtistsSort == null || tag.AlbumArtistsSort.Length == 0);
+			Assert.IsTrue(tag.AlbumArtists == null || tag.AlbumArtists.Length == 0);
+			Assert.IsTrue(tag.Composers == null || tag.Composers.Length == 0);
+			Assert.IsTrue(tag.ComposersSort == null || tag.ComposersSort.Length == 0);
 
 			Assert.IsTrue(tag.IsEmpty);
 		}
