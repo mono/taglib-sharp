@@ -213,7 +213,7 @@ namespace TagLib.WavPack {
 		                                   ReadStyle propertiesStyle)
 		{
 			if (header_block != null &&
-				propertiesStyle == ReadStyle.None)
+				!propertiesStyle.HasFlag(ReadStyle.Average))
 				return;
 				
 			Seek (start);

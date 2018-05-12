@@ -282,7 +282,7 @@ namespace TagLib {
 			Data = ByteVector.FromPath (path);
 			filename = System.IO.Path.GetFileName(path);
 			description = filename;
-			mime_type = FillInMimeFromExt(filename);
+			mime_type = GetMimeFromExtension(filename);
 			type = mime_type.StartsWith("image/") ? PictureType.FrontCover : PictureType.NotAPicture;
 		}
 
@@ -310,12 +310,23 @@ namespace TagLib {
 
 			if (!string.IsNullOrEmpty(filename) && filename.Contains("."))
 			{
-				mime_type = FillInMimeFromExt(filename);
+				mime_type = GetMimeFromExtension(filename);
 				type = mime_type.StartsWith("image/") ? PictureType.FrontCover : PictureType.NotAPicture;
 			}
 			else
 			{
-				FillInMimeFromData();
+				string ext = GetExtensionFromData(data);
+				MimeType = GetMimeFromExtension(ext);
+				if (ext != null)
+				{
+					type = PictureType.FrontCover;
+					filename = description = "cover" + ext;
+				}
+				else
+				{
+					type = PictureType.NotAPicture;
+					filename = "UnknownType";
+				}
 			}
 		}
 		
@@ -337,7 +348,18 @@ namespace TagLib {
 				throw new ArgumentNullException ("data");
 			
 			Data = new ByteVector (data);
-			FillInMimeFromData ();
+			string ext = GetExtensionFromData(data);
+			MimeType = GetMimeFromExtension(ext);
+			if (ext != null)
+			{
+				type = PictureType.FrontCover;
+				filename = description = "cover" + ext;
+			}
+			else
+			{
+				type = PictureType.NotAPicture;
+				filename = "UnknownType";
+			}
 		}
 
 
@@ -365,7 +387,7 @@ namespace TagLib {
 
 
 
-		#region Public Static Methods
+		#region Legacy Factory methods
 
 		/// <summary>
 		///    Creates a new <see cref="Picture" />, populating it with
@@ -477,62 +499,45 @@ namespace TagLib {
 			get { return data; }
 			set { data = value; }
 		}
-		
+
 		#endregion
-		
-		
-		
-		#region Private Methods
-		
+
+
+
+		#region Public static Methods (class functions)
+
 		/// <summary>
 		///    Fills in the mime type of the current instance by reading
 		///    the first few bytes of the file. If the format cannot be
 		///    identified, it assumed to be a Binary file.
 		/// </summary>
-		private void FillInMimeFromData ()
+		public static string GetExtensionFromData (ByteVector data)
 		{
-			string mimetype = null;
-			string ext = null;
+			string ext = "";
 
 			// No picture, unless it is corrupted, can fit in a file of less than 4 bytes
-			if (Data.Count >= 4)
+			if (data.Count >= 4)
 			{
-				if (Data[1] == 'P' && Data[2] == 'N' && Data[3] == 'G')
+				if (data[1] == 'P' && data[2] == 'N' && data[3] == 'G')
 				{
-					mimetype = "image/png";
-					ext = "png";
+					ext = ".png";
 				}
-				else if (Data[0] == 'G' && Data[1] == 'I' && Data[2] == 'F')
+				else if (data[0] == 'G' && data[1] == 'I' && data[2] == 'F')
 				{
-					mimetype = "image/gif";
-					ext = "gif";
+					ext = ".gif";
 				}
-				else if (Data[0] == 'B' && Data[1] == 'M')
+				else if (data[0] == 'B' && data[1] == 'M')
 				{
-					mimetype = "image/bmp";
-					ext = "bmp";
+					ext = ".bmp";
 				}
-				else if (Data[0] == 0xFF && Data[1] == 0xD8 && Data[2] == 0xFF && Data[3] == 0xE0 )
+				else if (data[0] == 0xFF && data[1] == 0xD8 && data[2] == 0xFF && data[3] == 0xE0 )
 				{
-					mimetype = "image/jpeg";
-					ext = "jpg";
+					ext = ".jpg";
 				}
 
 			}
 
-			if (ext != null)
-			{
-				MimeType = mimetype;
-				type = PictureType.FrontCover;
-				filename = description = "cover." + ext;
-			}
-			else
-			{
-				// Default
-				mimetype = "application/octet-stream";
-				type = PictureType.NotAPicture;
-				filename = "UnknownType";
-			}
+			return ext;
 		}
 
 		/// <summary>
@@ -544,7 +549,7 @@ namespace TagLib {
 		///    file name with extension, or just extension of a file
 		/// </param>
 		/// <returns>Mime-type as <see cref="string"/></returns>
-		public static string FillInMimeFromExt(string name)
+		public static string GetMimeFromExtension(string name)
 		{
 			// Default
 			string mime_type = "application/octet-stream";

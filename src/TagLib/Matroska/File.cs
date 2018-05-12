@@ -213,6 +213,19 @@ namespace TagLib.Matroska
 		/// </summary>
 		public override void Save ()
 		{
+			// All the PictureLazy must be loaded before opening the file
+			// in Write mode
+			if (Tag?.Pictures != null)
+			{
+				foreach (var pic in Tag.Pictures)
+				{
+					if (pic is PictureLazy lazy)
+					{
+						lazy.Load();
+					}
+				}
+			}
+
 			Mode = AccessMode.Write;
 			try {
 				ReadWrite(ReadStyle.None);
@@ -410,7 +423,7 @@ namespace TagLib.Matroska
 						break;
 
 					case MatroskaID.Tracks:
-						if (Mode != AccessMode.Write && propertiesStyle != ReadStyle.None)
+						if (Mode != AccessMode.Write && propertiesStyle.HasFlag(ReadStyle.Average))
 						{
 							if (valid = child.Read()) ReadTracks(child);
 						}
@@ -425,7 +438,7 @@ namespace TagLib.Matroska
 					case MatroskaID.Attachments:
 						valid = child.Read();
 						if (Mode == AccessMode.Write) child.SetVoid();
-						else if (valid) ReadAttachments(child);
+						else if (valid) ReadAttachments(child, propertiesStyle);
 						break;
 
 					case MatroskaID.CRC32: // We don't support it
@@ -977,7 +990,7 @@ namespace TagLib.Matroska
 		}
 
 
-		private void ReadAttachments(EBMLreader element)
+		private void ReadAttachments(EBMLreader element, ReadStyle propertiesStyle)
 		{
 			ulong i = 0;
 
@@ -990,7 +1003,7 @@ namespace TagLib.Matroska
 				switch (matroska_id)
 				{
 					case MatroskaID.AttachedFile:
-						ReadAttachedFile(child);
+						ReadAttachedFile(child, propertiesStyle);
 						break;
 					default:
 						break;
@@ -1001,12 +1014,12 @@ namespace TagLib.Matroska
 		}
 
 
-		private void ReadAttachedFile(EBMLreader element)
+		private void ReadAttachedFile(EBMLreader element, ReadStyle propertiesStyle)
 		{
 			ulong i = 0;
 #pragma warning disable 219 // Assigned, never read
 			string file_name = null, file_mime = null, file_desc = null;
-			ByteVector file_data = null;
+			EBMLreader file_data = null;
 			ulong file_uid = 0;
 #pragma warning restore 219
 
@@ -1028,7 +1041,7 @@ namespace TagLib.Matroska
 						file_desc = child.ReadString();
 						break;
 					case MatroskaID.FileData:
-						file_data = child.ReadBytes();
+						file_data = child;
 						break;
 					case MatroskaID.FileUID:
 						file_uid = child.ReadULong();
@@ -1046,7 +1059,9 @@ namespace TagLib.Matroska
 
 				Array.Resize(ref attachments, tags.Attachments.Length + 1);
 
-				var attach = new Attachment(file_data);
+				var attach = new Attachment(file_abstraction, (long)file_data.DataOffset, (long)file_data.DataSize);
+				if (Mode == AccessMode.Write || !propertiesStyle.HasFlag(ReadStyle.PictureLazy)) attach.Load();
+
 				attach.Filename = file_name;
 				attach.Description = file_desc != null ? file_desc : file_name;
 				attach.MimeType = file_mime;

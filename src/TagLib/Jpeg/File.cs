@@ -273,7 +273,7 @@ namespace TagLib.Jpeg
 
 				TagTypesOnDisk = TagTypes;
 
-				if (propertiesStyle != ReadStyle.None)
+				if (propertiesStyle.HasFlag(ReadStyle.Average))
 					properties = ExtractProperties ();
 
 			} finally {

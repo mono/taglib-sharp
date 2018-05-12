@@ -36,9 +36,9 @@ using System.Runtime.Serialization;
 namespace TagLib {
 	
 	/// <summary>
-	///    Specifies the level of intensity to use when reading the media
-	///    properties.
+	///    Specifies the options to use when reading the media.
 	/// </summary>
+	[Flags]
 	public enum ReadStyle {
 		/// <summary>
 		///    The media properties will not be read.
@@ -51,8 +51,15 @@ namespace TagLib {
 		///    The media properties will be read with average accuracy.
 		/// </summary>
 		Average = 2,
-		
-		// Accurate = 3
+
+		/// <summary>
+		///    Use the <see cref="PictureLazy"/> class in the 
+		///    the property <see cref="Tag.Pictures"/>. 
+		///    This will avoid loading picture content when reading the Tag.
+		///    Picture will be read lazily, when the picture content is 
+		///    accessed.
+		/// </summary>
+		PictureLazy = 4
 	}
 	
 	/// <summary>
@@ -162,7 +169,7 @@ namespace TagLib {
 		/// <summary>
 		///    Contains the internal file abstraction.
 		/// </summary>
-		private IFileAbstraction file_abstraction;
+		protected IFileAbstraction file_abstraction;
 		
 		/// <summary>
 		///    Contains the mime-type of the file as provided by <see

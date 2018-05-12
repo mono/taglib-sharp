@@ -80,6 +80,7 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual(17307, pics[0].Data.Count);
 		}
 
+
 		[Test]
 		public void WritePictures()
 		{
@@ -151,7 +152,19 @@ namespace TagLib.Tests.FileFormats
 		{
 			StandardTests.WriteStandardTags (sample_file, tmp_file, StandardTests.TestTagLevel.Medium);
 		}
+		
 
+		[Test]
+		public void WriteStandardPictures()
+		{
+			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.None);
+		}
+
+		[Test]
+		public void WriteStandardPicturesLazy()
+		{
+			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.PictureLazy);
+		}
 
 		/// <summary>
 		/// Use advanced Matroska-specific features.

@@ -363,7 +363,7 @@ namespace TagLib.Flac {
 			
 			TagTypesOnDisk |= metadata.TagTypes;
 			
-			if (propertiesStyle != ReadStyle.None) {
+			if (propertiesStyle.HasFlag(ReadStyle.Average)) {
 				// Check that the first block is a
 				// METADATA_BLOCK_STREAMINFO.
 				if (blocks.Count == 0 ||

@@ -387,7 +387,7 @@ namespace TagLib.Mpeg4 {
 			try {
 				FileParser parser = new FileParser (this);
 				
-				if (propertiesStyle == ReadStyle.None)
+				if (!propertiesStyle.HasFlag(ReadStyle.Average))
 					parser.ParseTag ();
 				else
 					parser.ParseTagAndProperties ();
@@ -416,7 +416,7 @@ namespace TagLib.Mpeg4 {
 				tag.SetTags (apple_tag);
 				
 				// If we're not reading properties, we're done.
-				if (propertiesStyle == ReadStyle.None) {
+				if (!propertiesStyle.HasFlag(ReadStyle.Average)) {
 					Mode = AccessMode.Closed;
 					return;
 				}
