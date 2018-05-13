@@ -247,13 +247,97 @@ namespace TagLib {
 		///    Contains the picture data.
 		/// </summary>
 		private ByteVector data;
-		
+
 		#endregion
-		
-		
-		
+
+		#region Constants
+
+		/// <summary>
+		///    Look-Up-Table associating a file-extension to 
+		///    a Mime-Type 
+		/// </summary>
+		private static readonly string[] lutExtensionMime = new string[] {
+			"aac", "audio/aac", // AAC audio file
+			"abw", "application/x-abiword", // AbiWord document
+			"arc", "application/octet-stream", // Archive document (multiple files embedded)
+			"avi", "video/x-msvideo", // AVI: Audio Video Interleave
+			"azw", "application/vnd.amazon.ebook", // Amazon Kindle eBook format
+			"bin", "application/octet-stream", // Any kind of binary data
+			"bmp", "image/bmp", // BMP image data
+			"bmp", "image/x-windows-bmp", // BMP image data
+			"bm", "image/bmp", // BMP image data
+			"bz", "application/x-bzip", // BZip archive
+			"bz2", "application/x-bzip2", // BZip2 archive
+			"csh", "application/x-csh", // C-Shell script
+			"css", "text/css", // Cascading Style Sheets (CSS)
+			"csv", "text/csv", // Comma-separated values (CSV)
+			"doc", "application/msword", // Microsoft Word
+			"eot", "application/vnd.ms-fontobject", // MS Embedded OpenType fonts
+			"epub", "application/epub+zip", // Electronic publication (EPUB)
+			"gif", "image/gif", // Graphics Interchange Format (GIF)
+			"htm", "text/html", // HyperText Markup Language (HTML)text / html
+			"html", "text/html", // HyperText Markup Language (HTML)text / html
+			"ico", "image/x-icon", // Icon format
+			"ics", "text/calendar", // iCalendar format
+			"jar", "application/java-archive", // Java Archive (JAR)
+			"jpg", "image/jpeg", // JPEG images
+			"jpeg", "image/jpeg", // JPEG images
+			"js", "application/javascript", // JavaScript (ECMAScript)
+			"json", "application/json", // JSON format
+			"mid", "audio/midi", // Musical Instrument Digital Interface (MIDI)
+			"midi", "audio/midi", // Musical Instrument Digital Interface (MIDI)
+			"mp3", "audio/mpeg",
+			"mp1", "audio/mpeg",
+			"mp2", "audio/mpeg",
+			"mpg", "video/mpeg",
+			"mpeg", "video/mpeg", // MPEG Video
+			"m4a", "audio/mp4",
+			"mp4", "video/mp4",
+			"m4v", "video/mp4",
+			"mpkg", "application/vnd.apple.installer+xml", // Apple Installer Package
+			"odp", "application/vnd.oasis.opendocument.presentation", // OpenDocuemnt presentation document
+			"ods", "application/vnd.oasis.opendocument.spreadsheet", // OpenDocuemnt spreadsheet document
+			"odt", "application/vnd.oasis.opendocument.text", // OpenDocument text document
+			"oga", "audio/ogg", // OGG audio
+			"ogg", "audio/ogg",
+			"ogx", "application/ogg", // OGG
+			"ogv", "video/ogg",
+			"otf", "font/otf", // OpenType font
+			"png", "image/png", // Portable Network Graphics
+			"pdf", "application/pdf", // Adobe Portable Document Format (PDF)
+			"ppt", "application/vnd.ms-powerpoint", // Microsoft PowerPoint
+			"rar", "application/x-rar-compressed", // RAR archive
+			"rtf", "application/rtf", // Rich Text Format (RTF)
+			"sh", "application/x-sh", // Bourne shell script
+			"svg", "image/svg+xml", // Scalable Vector Graphics (SVG)
+			"swf", "application/x-shockwave-flash", // Small web format (SWF) or Adobe Flash document
+			"tar", "application/x-tar", // Tape Archive (TAR)
+			"tif", "image/tiff", //  Tagged Image File Format(TIFF)
+			"tiff", "image/tiff", //  Tagged Image File Format(TIFF)
+			"ts", "video/vnd.dlna.mpeg-tts", // Typescript file
+			"ttf", "font/ttf", // TrueType Font
+			"vsd", "application/vnd.visio", // Microsoft Visio
+			"wav", "audio/x-wav", // Waveform Audio Format
+			"weba", "audio/webm", // WEBM audio
+			"webm", "video/webm", // WEBM video
+			"webp", "image/webp", // WEBP image
+			"woff", "font/woff", // Web Open Font Format (WOFF)
+			"woff2", "font/woff2", // Web Open Font Format (WOFF)
+			"xhtml", "application/xhtml+xml", // XHTML
+			"xls", "application/vnd.ms", // excel application
+			"xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // excel 2007 application
+			"xml", "application/xml", // XML
+			"xul", "application/vnd.mozilla.xul+xml", // XUL
+			"zip", "application/zip", // ZIP archive
+			"3gp", "video/3gpp", // 3GPP audio/video container
+			"3g2", "video/3gpp2", // 3GPP2 audio/video container
+			"7z", "application/x-7z-compressed", // 7-zip archive
+		};
+
+		#endregion
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Picture" /> with no data or values.
@@ -507,13 +591,18 @@ namespace TagLib {
 		#region Public static Methods (class functions)
 
 		/// <summary>
-		///    Fills in the mime type of the current instance by reading
-		///    the first few bytes of the file. If the format cannot be
-		///    identified, it assumed to be a Binary file.
+		///    Retrieve a mime type from raw file data by reading
+		///    the first few bytes of the file. 
+		///    Less accurate than <see cref="GetExtensionFromMime"/>.
 		/// </summary>
+		/// <param name="data">
+		///    file name with extension, or just extension of a file
+		/// </param>
+		/// <returns>File-extension as <see cref="string"/>, or null if 
+		///    not identified</returns>
 		public static string GetExtensionFromData (ByteVector data)
 		{
-			string ext = "";
+			string ext = null;
 
 			// No picture, unless it is corrupted, can fit in a file of less than 4 bytes
 			if (data.Count >= 4)
@@ -541,8 +630,34 @@ namespace TagLib {
 		}
 
 		/// <summary>
-		///    Gets the mime type of from a file-name (it's extensions). 
+		///    Gets the file-extension that fits a mime-type. 
 		///    More accurate than <see cref="GetExtensionFromData"/>.
+		/// </summary>
+		/// <param name="mime">
+		///    Mime-type as <see cref="string"/>.
+		/// </param>
+		/// <returns>File-extension as <see cref="string"/>, or null if 
+		///    not identified</returns>
+		public static string GetExtensionFromMime(string mime)
+		{
+			// Default
+			string ext = null;
+
+			for (int i = 1; i< lutExtensionMime.Length; i += 2)
+			{
+				if (lutExtensionMime[i] == mime)
+				{
+					ext = lutExtensionMime[i - 1];
+					break;
+				}
+			}
+
+			return ext;
+		}
+
+
+		/// <summary>
+		///    Gets the mime type of from a file-name (it's extensions). 
 		///    If the format cannot be identified, it assumed to be a Binary file.
 		/// </summary>
 		/// <param name="name">
@@ -564,86 +679,17 @@ namespace TagLib {
 
 			ext = ext.ToLower();
 
-			switch (ext)
+			for (int i = 0; i < lutExtensionMime.Length; i += 2)
 			{
-				case "aac": mime_type = "audio/aac"; break; // AAC audio file
-				case "abw": mime_type = "application/x-abiword"; break; // AbiWord document
-				case "arc": mime_type = "application/octet-stream"; break; // Archive document (multiple files embedded)
-				case "avi": mime_type = "video/x-msvideo"; break; // AVI: Audio Video Interleave
-				case "azw": mime_type = "application/vnd.amazon.ebook"; break; // Amazon Kindle eBook format
-				case "bin": mime_type = "application/octet-stream"; break; // Any kind of binary data
-				case "bz": mime_type = "application/x-bzip"; break; // BZip archive
-				case "bz2": mime_type = "application/x-bzip2"; break; // BZip2 archive
-				case "csh": mime_type = "application/x-csh"; break; // C-Shell script
-				case "css": mime_type = "text/css"; break; // Cascading Style Sheets (CSS)
-				case "csv": mime_type = "text/csv"; break; // Comma-separated values (CSV)
-				case "doc": mime_type = "application/msword"; break; // Microsoft Word
-				case "eot": mime_type = "application/vnd.ms-fontobject"; break; // MS Embedded OpenType fonts
-				case "epub": mime_type = "application/epub+zip"; break; // Electronic publication (EPUB)
-				case "gif":  mime_type = "image/gif"; break; // Graphics Interchange Format (GIF)
-				case "htm":
-				case "html": mime_type = "text/html"; break; // HyperText Markup Language (HTML)text / html
-				case "ico": mime_type = "image/x-icon"; break; // Icon format
-				case "ics": mime_type = "text/calendar"; break; // iCalendar format
-				case "jar": mime_type = "application/java-archive"; break; // Java Archive (JAR)
-				case "jpeg":
-				case "jpg": mime_type = "image/jpeg"; break; // JPEG images
-				case "js": mime_type = "application/javascript"; break; // JavaScript (ECMAScript)
-				case "json": mime_type = "application/json"; break; // JSON format
-				case "mid":
-				case "midi": mime_type = "audio/midi"; break; // Musical Instrument Digital Interface (MIDI)
-				case "mp1":
-				case "mp2":
-				case "mp3":
-				case "mpg": mime_type = "audio/mpeg"; break;
-				case "mpeg": mime_type = "video/mpeg"; break; // MPEG Video
-				case "m4a": mime_type = "audio/mp4"; break;
-				case "mp4":
-				case "m4v": mime_type = "video/mp4"; break;
-				case "mpkg": mime_type = "application/vnd.apple.installer+xml"; break; // Apple Installer Package
-				case "odp": mime_type = "application/vnd.oasis.opendocument.presentation"; break; // OpenDocuemnt presentation document
-				case "ods": mime_type = "application/vnd.oasis.opendocument.spreadsheet"; break; // OpenDocuemnt spreadsheet document
-				case "odt": mime_type = "application/vnd.oasis.opendocument.text"; break; // OpenDocument text document
-				case "oga": mime_type = "audio/ogg"; break; // OGG audio
-				case "ogg": mime_type = "audio/ogg"; break;
-				case "ogx": mime_type = "application/ogg"; break; // OGG
-				case "ogv": mime_type = "video/ogg"; break;
-				case "otf": mime_type = "font/otf"; break; // OpenType font
-				case "png": mime_type = "image/png"; break; // Portable Network Graphics
-				case "pdf": mime_type = "application/pdf"; break; // Adobe Portable Document Format (PDF)
-				case "ppt": mime_type = "application/vnd.ms-powerpoint"; break; // Microsoft PowerPoint
-				case "rar": mime_type = "application/x-rar-compressed"; break; // RAR archive
-				case "rtf": mime_type = "application/rtf"; break; // Rich Text Format (RTF)
-				case "sh": mime_type = "application/x-sh"; break; // Bourne shell script
-				case "svg": mime_type = "image/svg+xml"; break; // Scalable Vector Graphics (SVG)
-				case "swf": mime_type = "application/x-shockwave-flash"; break; // Small web format (SWF) or Adobe Flash document
-				case "tar": mime_type = "application/x-tar"; break; // Tape Archive (TAR)
-				case "tif":
-				case "tiff": mime_type = "image/tiff"; break; //  Tagged Image File Format(TIFF)
-				case "ts": mime_type = "video/vnd.dlna.mpeg-tts"; break; // Typescript file
-				case "ttf": mime_type = "font/ttf"; break; // TrueType Font
-				case "vsd": mime_type = "application/vnd.visio"; break; // Microsoft Visio
-				case "wav": mime_type = "audio/x-wav"; break; // Waveform Audio Format
-				case "weba": mime_type = "audio/webm"; break; // WEBM audio
-				case "webm": mime_type = "video/webm"; break; // WEBM video
-				case "webp": mime_type = "image/webp"; break; // WEBP image
-				case "woff": mime_type = "font/woff"; break; // Web Open Font Format (WOFF)
-				case "woff2": mime_type = "font/woff2"; break; // Web Open Font Format (WOFF)
-				case "xhtml": mime_type = "application/xhtml+xml"; break; // XHTML
-				case "xls": mime_type = "application/vnd.ms"; break; // excel application
-				case "xlsx": mime_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"; break; // excel 2007 application
-				case "xml": mime_type = "application/xml"; break; // XML
-				case "xul": mime_type = "application/vnd.mozilla.xul+xml"; break; // XUL
-				case "zip": mime_type = "application/zip"; break; // ZIP archive
-				case "3gp": mime_type = "video/3gpp"; break; // 3GPP audio/video container
-				case "3g2": mime_type = "video/3gpp2"; break; // 3GPP2 audio/video container
-				case "7z": mime_type = "application/x-7z-compressed"; break; // 7-zip archive
+				if (lutExtensionMime[i] == ext)
+				{
+					mime_type = lutExtensionMime[i + 1];
+					break;
+				}
 			}
 
 			return mime_type;
 		}
-
-
 
 		#endregion
 	}

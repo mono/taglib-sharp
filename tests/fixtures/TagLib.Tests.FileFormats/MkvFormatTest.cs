@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using static TagLib.Tests.FileFormats.StandardTests;
 
 namespace TagLib.Tests.FileFormats
 {   
@@ -157,13 +158,13 @@ namespace TagLib.Tests.FileFormats
 		[Test]
 		public void WriteStandardPictures()
 		{
-			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.None);
+			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.None, TestTagLevel.High);
 		}
 
 		[Test]
 		public void WriteStandardPicturesLazy()
 		{
-			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.PictureLazy);
+			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.PictureLazy, TestTagLevel.High);
 		}
 
 		/// <summary>

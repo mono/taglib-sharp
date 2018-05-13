@@ -59,15 +59,21 @@ namespace TagLib.Mpeg4 {
 			/// <summary>
 			///    The box contains a raw PNG image.
 			/// </summary>
-			ContainsPngData = 0x0E
+			ContainsPngData = 0x0E,
+
+			/// <summary>
+			///    The box contains a raw BMP image.
+			/// </summary>
+			ContainsBmpData = 0x1B
+
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Private Fields
-		
+
 		/// <summary>
 		///    Contains the box data.
 		/// </summary>

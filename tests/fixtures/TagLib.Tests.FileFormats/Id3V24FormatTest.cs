@@ -7,14 +7,14 @@ namespace TagLib.Tests.FileFormats
 	[TestFixture]
 	public class Id3V24FormatTest : IFormatTest
 	{
-		private readonly string sample24unsynchronization_file = TestPath.Samples + "sample_v2_4_unsynch.mp3";
+		private readonly string sample_file = TestPath.Samples + "sample_v2_4_unsynch.mp3";
 		private readonly string tmp_file = TestPath.Samples + "tmpwrite_v2_4_unsynch.mp3";
 		private File file;
 
 		[OneTimeSetUp]
 		public void Init ()
 		{
-			file = File.Create (sample24unsynchronization_file);
+			file = File.Create (sample_file);
 		}
 
 		[Test]
@@ -42,7 +42,19 @@ namespace TagLib.Tests.FileFormats
 		[Test]
 		public void WriteStandardTags ()
 		{
-			StandardTests.WriteStandardTags (sample24unsynchronization_file, tmp_file);
+			StandardTests.WriteStandardTags (sample_file, tmp_file);
+		}
+
+		[Test]
+		public void WriteStandardPictures()
+		{
+			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.None);
+		}
+
+		[Test]
+		public void WriteStandardPicturesLazy()
+		{
+			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.PictureLazy);
 		}
 
 		public void TestCorruptionResistance ()
@@ -99,7 +111,7 @@ namespace TagLib.Tests.FileFormats
 		{
 			string tempFile = TestPath.Samples + "tmpwrite_urllink_v2_4_unsynch.mp3";
 
-			System.IO.File.Copy(sample24unsynchronization_file, tempFile, true);
+			System.IO.File.Copy(sample_file, tempFile, true);
 
 			File urlLinkFile = File.Create(tempFile);
 			var id3v2tag = urlLinkFile.GetTag(TagTypes.Id3v2) as TagLib.Id3v2.Tag;

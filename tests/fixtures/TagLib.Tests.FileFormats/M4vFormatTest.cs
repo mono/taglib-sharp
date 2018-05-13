@@ -62,7 +62,7 @@ namespace TagLib.Tests.FileFormats
 		}
 
 		[Test]
-		public void WriteStandardTags ()
+		public void WriteAppleTags ()
 		{
 			if (System.IO.File.Exists (tmp_file))
 				System.IO.File.Delete (tmp_file);
@@ -78,6 +78,14 @@ namespace TagLib.Tests.FileFormats
 			tag = (Mpeg4.AppleTag) tmp.GetTag (TagTypes.Apple, false);
 			CheckTags (tag);
 		}
+
+		[Test]
+		[Ignore("PictureLazy not supported yet")]
+		public void WriteStandardPicturesLazy()
+		{
+			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.PictureLazy);
+		}
+
 
 		[Test]
 		public void TestCorruptionResistance ()

@@ -250,9 +250,9 @@ namespace TagLib.Id3v2 {
 		///    raw frame is encoded in.
 		/// </param>
 		protected internal AttachmentFrame (ByteVector data,
-		                                         int offset,
-		                                         FrameHeader header,
-		                                         byte version)
+		                                    int offset,
+		                                    FrameHeader header,
+		                                    byte version)
 			: base(header)
 		{
 			SetData (data, offset, version, false);
@@ -331,7 +331,12 @@ namespace TagLib.Id3v2 {
 					Load();
 				ParseRawData (); return encoding;
 			}
-			set {encoding = value;}
+			set	{
+				if (file != null)
+					Load();
+
+				encoding = value;
+			}
 		}
 		
 		/// <summary>
@@ -353,7 +358,12 @@ namespace TagLib.Id3v2 {
 				
 				return string.Empty;
 			}
-			set {mime_type = value;}
+			set	{
+				if (file != null)
+					Load();
+
+				mime_type = value;
+			}
 		}
 
 		/// <summary>
@@ -375,7 +385,10 @@ namespace TagLib.Id3v2 {
 					Load();
 				ParseRawData(); return type;
 			}
-			set {
+			set	{
+				if (file != null)
+					Load();
+
 				// Change the Frame type depending if this is 
 				// a picture or a general object
 
@@ -405,7 +418,12 @@ namespace TagLib.Id3v2 {
 					Load();
 				return filename;
 			}
-			set { filename = value; }
+			set	{
+				if (file != null)
+					Load();
+
+				filename = value;
+			}
 		}
 
 		/// <summary>
@@ -431,7 +449,12 @@ namespace TagLib.Id3v2 {
 				
 				return string.Empty;
 			}
-			set {description = value;}
+			set	{
+				if (file != null)
+					Load();
+
+				description = value;
+			}
 		}
 		
 		/// <summary>
@@ -450,7 +473,11 @@ namespace TagLib.Id3v2 {
 				ParseRawData();
 				return data != null ? data : new ByteVector ();
 			}
-			set {data = value;}
+			set	{
+				if (file != null)
+					Load();
+
+				data = value;}
 		}
 
 
@@ -459,8 +486,7 @@ namespace TagLib.Id3v2 {
 		/// </summary>
 		public bool IsLoaded
 		{
-			get
-			{
+			get	{
 				return data != null || raw_data != null;
 			}
 		}
@@ -675,12 +701,13 @@ namespace TagLib.Id3v2 {
 			// Load the picture from the stream
 
 			Stream stream = null;
+			ByteVector data = null;
 
 			try
 			{
 				if (stream_size == 0)
 				{
-					raw_data = new ByteVector();
+					data = new ByteVector();
 				}
 				else if (stream_size > 0)
 				{
@@ -698,16 +725,16 @@ namespace TagLib.Id3v2 {
 						needed -= count;
 					} while (needed > 0 && count != 0);
 
-					raw_data = new ByteVector(buffer, read);
+
+					data = new ByteVector(buffer, read);
 				}
 				else
 				{
 					stream = file.ReadStream;
 					stream.Seek(stream_offset, SeekOrigin.Begin);
 
-					raw_data = ByteVector.FromStream(stream);
+					data = ByteVector.FromStream(stream);
 				}
-
 			}
 			finally
 			{
@@ -719,6 +746,9 @@ namespace TagLib.Id3v2 {
 
 				file = null;
 			}
+
+			// Decode the raw data if required, by using FieldData
+			raw_data = FieldData(data, - (int)FrameHeader.Size(raw_version), raw_version);
 
 			// Get the actual data
 			ParseRawData();
@@ -753,7 +783,7 @@ namespace TagLib.Id3v2 {
 			if (data.Count < 5)
 				throw new CorruptFileException (
 					"A picture frame must contain at least 5 bytes.");
-			
+
 			raw_data = data;
 			raw_version = version;
 		}
@@ -777,11 +807,14 @@ namespace TagLib.Id3v2 {
 
 			if (raw_data == null)
 				return;
-			
+
+			data = raw_data;
+			raw_data = null;
+
 			int pos = 0;
 			int offset;
 			
-			encoding = (StringType) raw_data [pos++];
+			encoding = (StringType) data [pos++];
 
 			ByteVector delim = ByteVector.TextDelimiter(encoding);
 
@@ -791,52 +824,52 @@ namespace TagLib.Id3v2 {
 
 				if (raw_version > 2)
 				{
-					offset = raw_data.Find(ByteVector.TextDelimiter(
+					offset = data.Find(ByteVector.TextDelimiter(
 						StringType.Latin1), pos);
 
 					if (offset < pos)
 						return;
 
-					mime_type = raw_data.ToString(
+					mime_type = data.ToString(
 						StringType.Latin1, pos, offset - pos);
 					pos = offset + 1;
 				}
 				else
 				{
-					ByteVector ext = raw_data.Mid(pos, 3);
+					ByteVector ext = data.Mid(pos, 3);
 					mime_type = Picture.GetMimeFromExtension(ext.ToString());
 					pos += 3;
 				}
 
-				Type = (PictureType)raw_data[pos++];
+				Type = (PictureType)data[pos++];
 
-				offset = raw_data.Find(delim, pos, delim.Count);
+				offset = data.Find(delim, pos, delim.Count);
 
 			}
 			else if (header.FrameId == FrameType.GEOB)
 			{
 				// Retrieve an ID3v2 General Encapsulated Object (GEOB)
 
-				offset = raw_data.Find(
+				offset = data.Find(
 					ByteVector.TextDelimiter(StringType.Latin1),
 					pos);
 
 				if (offset < pos)
 					return;
 
-				mime_type = raw_data.ToString(StringType.Latin1, pos,
+				mime_type = data.ToString(StringType.Latin1, pos,
 					offset - pos);
 
 				pos = offset + 1;
-				offset = raw_data.Find(delim, pos, delim.Count);
+				offset = data.Find(delim, pos, delim.Count);
 
 				if (offset < pos)
 					return;
 
-				filename = raw_data.ToString(encoding, pos,
+				filename = data.ToString(encoding, pos,
 					offset - pos);
 				pos = offset + delim.Count;
-				offset = raw_data.Find(delim, pos, delim.Count);
+				offset = data.Find(delim, pos, delim.Count);
 
 				Type = PictureType.NotAPicture;
 			}
@@ -848,15 +881,11 @@ namespace TagLib.Id3v2 {
 			if (offset < pos)
 				return;
 
-			description = raw_data.ToString(encoding, pos,
+			description = data.ToString(encoding, pos,
 				offset - pos);
 			pos = offset + delim.Count;
 
-			raw_data.RemoveRange(0, pos);
-
-			data = raw_data;
-			raw_data = null;
-
+			data.RemoveRange(0, pos);
 		}
 
 		/// <summary>
@@ -891,18 +920,9 @@ namespace TagLib.Id3v2 {
 
 				if (version == 2)
 				{
-					switch (MimeType)
-					{
-						case "image/png":
-							data.Add("PNG");
-							break;
-						case "image/jpeg":
-							data.Add("JPG");
-							break;
-						default:
-							data.Add("XXX");
-							break;
-					}
+					string ext = Picture.GetExtensionFromMime(MimeType);
+					data.Add(ext != null && ext.Length == 3 ? 
+						ext.ToUpper() : "XXX");
 				}
 				else
 				{

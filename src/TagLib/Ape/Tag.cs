@@ -67,7 +67,8 @@ namespace TagLib.Ape {
 			"Cover Art (colored fish)",
 			"Cover Art (illustration)",
 			"Cover Art (band logo)",
-			"Cover Art (publisher logo)"
+			"Cover Art (publisher logo)",
+			"Embedded Object"
 		};
 		
 #endregion
@@ -1749,16 +1750,25 @@ namespace TagLib.Ape {
 		public override IPicture [] Pictures {
 			get {
 				List<IPicture> pictures = new List<IPicture> ();
-				
-				for (int i = 0; i < picture_item_names.Length;
-					i++) {
-					Item item = GetItem (
-						picture_item_names [i]);
-					
+				StringComparison comparison =
+					StringComparison.InvariantCultureIgnoreCase;
+
+				foreach (Item item in items) {
+
 					if (item == null ||
 						item.Type != ItemType.Binary)
 						continue;
+
+					int i;
+					for (i = 0; i < picture_item_names.Length; i++) {
+						if (picture_item_names[i].Equals(item.Key, comparison))
+							break;
+					}
 					
+
+					if (i >= picture_item_names.Length)
+						continue;
+
 					int index = item.Value.Find (
 						ByteVector.TextDelimiter (
 							StringType.UTF8));
@@ -1773,7 +1783,8 @@ namespace TagLib.Ape {
 						.ToString (StringType.UTF8, 0,
 							index);
 					
-					pic.Type = (PictureType) i;
+					pic.Type = i < picture_item_names.Length - 1 ?
+						(PictureType) i : PictureType.NotAPicture;
 					
 					pictures.Add (pic);
 				}
@@ -1791,8 +1802,8 @@ namespace TagLib.Ape {
 					int type = (int) pic.Type;
 					
 					if (type >= picture_item_names.Length)
-						type = 0;
-					
+						type = picture_item_names.Length - 1;
+
 					string name = picture_item_names [type];
 					
 					if (GetItem (name) != null)

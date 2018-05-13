@@ -100,6 +100,17 @@ namespace TagLib.Tests.FileFormats
 			StandardTests.WriteStandardTags (sample_file, tmp_file, StandardTests.TestTagLevel.Medium);
 		}
 
+		[Test]
+		public void WriteStandardPictures()
+		{
+			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.None);
+		}
+
+		[Test]
+		public void WriteStandardPicturesLazy()
+		{
+			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.PictureLazy);
+		}
 
 		[Test]
 		public void RemoveStandardTags()

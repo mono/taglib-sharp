@@ -952,7 +952,8 @@ namespace TagLib.Id3v2 {
 		{
 			// If the entire tag is marked as unsynchronized, and this tag
 			// is version id3v2.3 or lower, resynchronize it.
-			bool fullTagUnsynch =  (header.MajorVersion < 4) && ((header.Flags & HeaderFlags.Unsynchronisation) != 0);
+			bool fullTagUnsynch =  (header.MajorVersion < 4) && 
+				header.Flags.HasFlag(HeaderFlags.Unsynchronisation);
 
 			// Avoid to load all the ID3 tag if PictureLazy enabled and size is 
 			// significant enough (ID3v4 and later only)

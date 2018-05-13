@@ -54,6 +54,18 @@ namespace TagLib.Tests.FileFormats
 		}
 
 		[Test]
+		public void WriteStandardPictures()
+		{
+			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.None);
+		}
+
+		[Test]
+		public void WriteStandardPicturesLazy()
+		{
+			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.PictureLazy);
+		}
+
+		[Test]
 		public void TestCorruptionResistance()
 		{
 			StandardTests.TestCorruptionResistance(corrupt_file);

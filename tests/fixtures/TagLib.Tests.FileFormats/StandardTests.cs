@@ -12,7 +12,8 @@ namespace TagLib.Tests.FileFormats
 		public enum TestTagLevel
 		{
 			Normal,
-			Medium
+			Medium, 
+			High
 		}
 
 		public static void ReadAudioProperties (File file)
@@ -21,10 +22,9 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual(5, file.Properties.Duration.Seconds);
 		}
 		
-		public static void WriteStandardTags (string sample_file, string tmp_file = null, 
+		public static void WriteStandardTags (string sample_file, string tmp_file, 
 			TestTagLevel level = TestTagLevel.Normal, TagTypes types = TagTypes.AllTags)
 		{
-			if (tmp_file == null) tmp_file = sample_file;
 
 			if (sample_file != tmp_file && 
 				System.IO.File.Exists (tmp_file))
@@ -54,10 +54,10 @@ namespace TagLib.Tests.FileFormats
 
 
 
-		public static void WriteStandardPictures(string sample_file, string tmp_file = null, ReadStyle readStyle = ReadStyle.Average)
+		public static void WriteStandardPictures(string sample_file, string tmp_file,
+												 ReadStyle readStyle = ReadStyle.Average,
+												 TestTagLevel level = TestTagLevel.Medium)
 		{
-			if (tmp_file == null) tmp_file = sample_file;
-
 			if (System.IO.File.Exists(tmp_file))
 				System.IO.File.Delete(tmp_file);
 			File file = null;
@@ -72,7 +72,7 @@ namespace TagLib.Tests.FileFormats
 			var pics = file.Tag.Pictures;
 
 			// Raw Picture data references
-			var raws = new ByteVector[3]; 
+			var raws = new ByteVector[3];
 
 			// Insert new picture
 			Array.Resize(ref pics, 3);
@@ -87,6 +87,7 @@ namespace TagLib.Tests.FileFormats
 
 			raws[2] = raws[0];
 			pics[2] = new Picture(sample_picture);
+			pics[2].Filename = "renamed.gif";
 			pics[2].Type = PictureType.Other;
 			pics[2].Description = "TEST description 3";
 			file.Tag.Pictures = pics;
@@ -102,7 +103,7 @@ namespace TagLib.Tests.FileFormats
 
 			// Lazy picture check
 			var isLazy = readStyle.HasFlag(ReadStyle.PictureLazy);
-			for (int i = 0; i< 3; i++)
+			for (int i = 0; i < 3; i++)
 			{
 				if (isLazy)
 				{
@@ -121,25 +122,46 @@ namespace TagLib.Tests.FileFormats
 				}
 			}
 
-			Assert.AreEqual(PictureType.BackCover, pics[0].Type);
 			Assert.AreEqual("TEST description 1", pics[0].Description);
 			Assert.AreEqual("image/gif", pics[0].MimeType);
 			Assert.AreEqual(73, pics[0].Data.Count);
 			Assert.AreEqual(raws[0], pics[0].Data);
 
-			if (pics[1].Filename != null)
-				Assert.AreEqual("apple_tags.m4a", pics[1].Filename);
 			Assert.AreEqual("TEST description 2", pics[1].Description);
-			Assert.AreEqual("audio/mp4", pics[1].MimeType);
-			Assert.AreEqual(PictureType.NotAPicture, pics[1].Type);
 			Assert.AreEqual(102400, pics[1].Data.Count);
 			Assert.AreEqual(raws[1], pics[1].Data);
 
-			Assert.AreEqual(PictureType.Other, pics[2].Type);
 			Assert.AreEqual("TEST description 3", pics[2].Description);
 			Assert.AreEqual("image/gif", pics[2].MimeType);
 			Assert.AreEqual(73, pics[2].Data.Count);
 			Assert.AreEqual(raws[2], pics[2].Data);
+
+			// Types and Mime-Types assumed to be properly supported at Medium level test
+			if (level >= TestTagLevel.Medium)
+			{
+				Assert.AreEqual("audio/mp4", pics[1].MimeType);
+				Assert.AreEqual(PictureType.BackCover, pics[0].Type);
+				Assert.AreEqual(PictureType.NotAPicture, pics[1].Type);
+				Assert.AreEqual(PictureType.Other, pics[2].Type);
+			}
+			else
+			{
+				Assert.AreNotEqual(PictureType.NotAPicture, pics[0].Type);
+				Assert.AreEqual(PictureType.NotAPicture, pics[1].Type);
+				Assert.AreNotEqual(PictureType.NotAPicture, pics[2].Type);
+			}
+
+			// Filename assumed to be properly supported at High level test
+			if (level >= TestTagLevel.High)
+			{
+				Assert.AreEqual("apple_tags.m4a", pics[1].Filename);
+			}
+			else if (level >= TestTagLevel.Medium)
+			{
+				if (pics[1].Filename != null)
+					Assert.AreEqual("apple_tags.m4a", pics[1].Filename);
+			}
+
 		}
 
 
