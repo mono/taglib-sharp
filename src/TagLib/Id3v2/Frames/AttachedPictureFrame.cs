@@ -29,6 +29,7 @@ using System.Collections;
 using System;
 
 using TagLib;
+using System.IO;
 
 namespace TagLib.Id3v2 {
 	/// <summary>
@@ -45,7 +46,7 @@ namespace TagLib.Id3v2 {
 	///    generic way or getting and setting pictures which is preferable
 	///    to format specific code.</para>
 	/// </remarks>
-	public class AttachedPictureFrame : Frame, IPicture
+	public class AttachedPictureFrame : Frame, IPicture, ILazy
 	{
 		#region Private Properties
 		
@@ -98,11 +99,26 @@ namespace TagLib.Id3v2 {
 		///    stored in.
 		/// </summary>
 		private byte raw_version = 0;
-		
+
+		/// <summary>
+		/// Stream where the picture is located
+		/// </summary>
+		private File.IFileAbstraction file;
+
+		/// <summary>
+		/// Offset from where the picture start in the <see cref="file"/>
+		/// </summary>
+		private long stream_offset;
+
+		/// <summary>
+		/// Size of the picture in the <see cref="file"/> (-1 = until end of Stream)
+		/// </summary>
+		private long stream_size = -1;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
@@ -168,7 +184,7 @@ namespace TagLib.Id3v2 {
 		/// 			throw new ApplicationException ("File does not support ID3v2 tags.");
 		///
 		/// 		// Create a picture. Can throw file related exceptions.
-		///		TagLib.Picture picture = TagLib.Picture.CreateFromPath (path);
+		///			TagLib.Picture picture = TagLib.Picture.CreateFromPath (path);
 		///
 		/// 		// Add a new picture frame to the tag.
 		/// 		tag.AddFrame (new AttachedPictureFrame (picture));
@@ -183,15 +199,18 @@ namespace TagLib.Id3v2 {
 			: base(FrameType.APIC, 4)
 		{
 			if (picture == null)
-				throw new ArgumentNullException ("picture");
-			
-			mime_type   = picture.MimeType;
-			type        = picture.Type;
-			filename    = picture.Filename; 
+				throw new ArgumentNullException("picture");
+
+			//if (picture.Type == PictureType.NotAPicture)
+			//	throw new InvalidCastException("Creating an AttachedPictureFrame from a non-picture object");
+
+			mime_type = picture.MimeType;
+			type = picture.Type;
+			filename = picture.Filename;
 			description = picture.Description;
-			data        = picture.Data;
+			data = picture.Data;
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="AttachedPictureFrame" /> by reading its raw data in
@@ -240,13 +259,60 @@ namespace TagLib.Id3v2 {
 		{
 			SetData (data, offset, version, false);
 		}
-		
+
+
+		/// <summary>
+		///    Constructs a new instance of <see
+		///    cref="AttachedPictureFrame" /> from a file.
+		///    The content will be lazily loaded.
+		/// </summary>
+		/// <param name="abstraction">
+		///    A <see cref="File.IFileAbstraction"/> object containing
+		///    abstraction of the file to read.
+		/// </param>
+		/// <param name="offset">
+		///    The position in bytes where the picture is located in the
+		///    <see cref="File.IFileAbstraction"/>.
+		/// </param>
+		/// <param name="size">
+		///    The size in bytes of the picture in the
+		///    <see cref="File.IFileAbstraction"/> (-1 : read all).
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="abstraction" /> is <see langword="null"
+		///    />.
+		/// </exception>
+		/// <param name="header">
+		///    A <see cref="FrameHeader" /> containing the header of the
+		///    frame found at <paramref name="offset" /> in the data.
+		/// </param>
+		/// <param name="version">
+		///    A <see cref="byte" /> indicating the ID3v2 version the
+		///    raw frame is encoded in.
+		/// </param>
+		public AttachedPictureFrame(File.IFileAbstraction abstraction,
+									long offset,
+									long size,
+									FrameHeader header,
+									byte version)
+			: base(header)
+		{
+			if (abstraction == null)
+				throw new ArgumentNullException("abstraction");
+
+			file = abstraction;
+			stream_offset = offset;
+			stream_size = size;
+			raw_version = version;
+		}
+
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets and sets the text encoding to use when storing the
 		///    current instance.
@@ -262,7 +328,11 @@ namespace TagLib.Id3v2 {
 		///    it.
 		/// </remarks>
 		public StringType TextEncoding {
-			get {ParseRawData (); return text_encoding;}
+			get {
+				if (file != null)
+					Load();
+				ParseRawData (); return text_encoding;
+			}
 			set {text_encoding = value;}
 		}
 		
@@ -276,7 +346,10 @@ namespace TagLib.Id3v2 {
 		/// </value>
 		public string MimeType {
 			get {
-				ParseRawData ();
+				if (file != null)
+					Load();
+
+				ParseRawData();
 				if (mime_type != null)
 					return mime_type;
 				
@@ -298,7 +371,11 @@ namespace TagLib.Id3v2 {
 		///    description and type per tag.
 		/// </remarks>
 		public PictureType Type {
-			get {ParseRawData (); return type;}
+			get {
+				if (file != null)
+					Load();
+				ParseRawData(); return type;
+			}
 			set {type = value;}
 		}
 
@@ -313,7 +390,11 @@ namespace TagLib.Id3v2 {
 		/// </value>
 		public string Filename
 		{
-			get { return filename; }
+			get {
+				if (file != null)
+					Load();
+				return filename;
+			}
 			set { filename = value; }
 		}
 
@@ -331,7 +412,10 @@ namespace TagLib.Id3v2 {
 		/// </remarks>
 		public string Description {
 			get {
-				ParseRawData ();
+				if (file != null)
+					Load();
+
+				ParseRawData();
 				if (description != null)
 					return description;
 				
@@ -350,18 +434,33 @@ namespace TagLib.Id3v2 {
 		/// </value>
 		public ByteVector Data {
 			get {
-				ParseRawData ();
+				if (file != null)
+					Load();
+
+				ParseRawData();
 				return data != null ? data : new ByteVector ();
 			}
 			set {data = value;}
 		}
-		
+
+
+		/// <summary>
+		///    Gets an indication whether the object is loaded.
+		/// </summary>
+		public bool IsLoaded
+		{
+			get
+			{
+				return data != null || raw_data != null;
+			}
+		}
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Methods
-		
+
 		/// <summary>
 		///    Gets a string representation of the current instance.
 		/// </summary>
@@ -371,6 +470,9 @@ namespace TagLib.Id3v2 {
 		/// </returns>
 		public override string ToString ()
 		{
+			if (file != null)
+				Load();
+
 			System.Text.StringBuilder builder
 				= new System.Text.StringBuilder ();
 			
@@ -548,13 +650,76 @@ namespace TagLib.Id3v2 {
 			
 			return apic;
 		}
-		
+
+
+
+		/// <summary>
+		/// Load the picture data from the file,
+		/// if not done yet.
+		/// </summary>
+		public void Load()
+		{
+			// Already loaded ?
+			if (file == null) return;
+
+			// Load the picture from the stream
+
+			Stream stream = null;
+
+			try
+			{
+				if (stream_size == 0)
+				{
+					raw_data = new ByteVector();
+				}
+				else if (stream_size > 0)
+				{
+					stream = file.ReadStream;
+					stream.Seek(stream_offset, SeekOrigin.Begin);
+
+					int count = 0, read = 0, needed = (int)stream_size;
+					byte[] buffer = new byte[needed];
+
+					do
+					{
+						count = stream.Read(buffer, read, needed);
+
+						read += count;
+						needed -= count;
+					} while (needed > 0 && count != 0);
+
+					raw_data = new ByteVector(buffer, read);
+				}
+				else
+				{
+					stream = file.ReadStream;
+					stream.Seek(stream_offset, SeekOrigin.Begin);
+
+					raw_data = ByteVector.FromStream(stream);
+				}
+
+			}
+			finally
+			{
+				// Free the resources
+				if (stream != null)
+				{
+					file.CloseStream(stream);
+				}
+
+				file = null;
+			}
+
+			// Get the actual data
+			ParseRawData();
+		}
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Protected Methods
-		
+
 		/// <summary>
 		///    Populates the values in the current instance by parsing
 		///    its field data in a specified version.
@@ -572,6 +737,9 @@ namespace TagLib.Id3v2 {
 		/// </exception>
 		protected override void ParseFields (ByteVector data, byte version)
 		{
+			if (file != null)
+				Load();
+
 			if (data.Count < 5)
 				throw new CorruptFileException (
 					"A picture frame must contain at least 5 bytes.");
@@ -593,6 +761,9 @@ namespace TagLib.Id3v2 {
 		/// </remarks>
 		protected void ParseRawData ()
 		{
+			if (file != null)
+				Load();
+
 			if (raw_data == null)
 				return;
 			
@@ -613,14 +784,7 @@ namespace TagLib.Id3v2 {
 				pos = offset + 1;
 			} else {
 				ByteVector ext = raw_data.Mid (pos, 3);
-				
-				if (ext == "JPG")
-					mime_type = "image/jpeg";
-				else if (ext == "PNG")
-					mime_type = "image/png";
-				else
-					mime_type = "image/unknown";
-				
+				mime_type = Picture.GetMimeFromExtension(ext.ToString());
 				pos += 3;
 			}
 			
@@ -657,6 +821,9 @@ namespace TagLib.Id3v2 {
 		/// </returns>
 		protected override ByteVector RenderFields (byte version)
 		{
+			if (file != null)
+				Load();
+
 			if (raw_data != null && raw_version == version)
 				return raw_data;
 			
@@ -708,6 +875,9 @@ namespace TagLib.Id3v2 {
 		/// </returns>
 		public override Frame Clone ()
 		{
+			if (file != null)
+				Load();
+
 			AttachedPictureFrame frame = new AttachedPictureFrame ();
 			frame.text_encoding = text_encoding;
 			frame.mime_type = mime_type;

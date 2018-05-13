@@ -557,82 +557,87 @@ namespace TagLib {
 			// Get extension from Filename
 			if (string.IsNullOrEmpty(name)) return mime_type;
 			var ext = System.IO.Path.GetExtension(name);
-			if (string.IsNullOrEmpty(ext)) return mime_type;
+			if (string.IsNullOrEmpty(ext))
+				ext = name;
+			else
+				ext = ext.Substring(1);
+
+			ext = ext.ToLower();
 
 			switch (ext)
 			{
-				case ".aac": mime_type = "audio/aac"; break; // AAC audio file
-				case ".abw": mime_type = "application/x-abiword"; break; // AbiWord document
-				case ".arc": mime_type = "application/octet-stream"; break; // Archive document (multiple files embedded)
-				case ".avi": mime_type = "video/x-msvideo"; break; // AVI: Audio Video Interleave
-				case ".azw": mime_type = "application/vnd.amazon.ebook"; break; // Amazon Kindle eBook format
-				case ".bin": mime_type = "application/octet-stream"; break; // Any kind of binary data
-				case ".bz": mime_type = "application/x-bzip"; break; // BZip archive
-				case ".bz2": mime_type = "application/x-bzip2"; break; // BZip2 archive
-				case ".csh": mime_type = "application/x-csh"; break; // C-Shell script
-				case ".css": mime_type = "text/css"; break; // Cascading Style Sheets (CSS)
-				case ".csv": mime_type = "text/csv"; break; // Comma-separated values (CSV)
-				case ".doc": mime_type = "application/msword"; break; // Microsoft Word
-				case ".eot": mime_type = "application/vnd.ms-fontobject"; break; // MS Embedded OpenType fonts
-				case ".epub": mime_type = "application/epub+zip"; break; // Electronic publication (EPUB)
-				case ".gif":  mime_type = "image/gif"; break; // Graphics Interchange Format (GIF)
-				case ".htm":
-				case ".html": mime_type = "text/html"; break; // HyperText Markup Language (HTML)text / html
-				case ".ico": mime_type = "image/x-icon"; break; // Icon format
-				case ".ics": mime_type = "text/calendar"; break; // iCalendar format
-				case ".jar": mime_type = "application/java-archive"; break; // Java Archive (JAR)
-				case ".jpeg":
-				case ".jpg": mime_type = "image/jpeg"; break; // JPEG images
-				case ".js": mime_type = "application/javascript"; break; // JavaScript (ECMAScript)
-				case ".json": mime_type = "application/json"; break; // JSON format
-				case ".mid":
-				case ".midi": mime_type = "audio/midi"; break; // Musical Instrument Digital Interface (MIDI)
-				case ".mp1":
-				case ".mp2":
-				case ".mp3":
-				case ".mpg": mime_type = "audio/mpeg"; break;
-				case ".mpeg": mime_type = "video/mpeg"; break; // MPEG Video
-				case ".m4a": mime_type = "audio/mp4"; break;
-				case ".mp4":
-				case ".m4v": mime_type = "video/mp4"; break;
-				case ".mpkg": mime_type = "application/vnd.apple.installer+xml"; break; // Apple Installer Package
-				case ".odp": mime_type = "application/vnd.oasis.opendocument.presentation"; break; // OpenDocuemnt presentation document
-				case ".ods": mime_type = "application/vnd.oasis.opendocument.spreadsheet"; break; // OpenDocuemnt spreadsheet document
-				case ".odt": mime_type = "application/vnd.oasis.opendocument.text"; break; // OpenDocument text document
-				case ".oga": mime_type = "audio/ogg"; break; // OGG audio
-				case ".ogg": mime_type = "audio/ogg"; break;
-				case ".ogx": mime_type = "application/ogg"; break; // OGG
-				case ".ogv": mime_type = "video/ogg"; break;
-				case ".otf": mime_type = "font/otf"; break; // OpenType font
-				case ".png": mime_type = "image/png"; break; // Portable Network Graphics
-				case ".pdf": mime_type = "application/pdf"; break; // Adobe Portable Document Format (PDF)
-				case ".ppt": mime_type = "application/vnd.ms-powerpoint"; break; // Microsoft PowerPoint
-				case ".rar": mime_type = "application/x-rar-compressed"; break; // RAR archive
-				case ".rtf": mime_type = "application/rtf"; break; // Rich Text Format (RTF)
-				case ".sh": mime_type = "application/x-sh"; break; // Bourne shell script
-				case ".svg": mime_type = "image/svg+xml"; break; // Scalable Vector Graphics (SVG)
-				case ".swf": mime_type = "application/x-shockwave-flash"; break; // Small web format (SWF) or Adobe Flash document
-				case ".tar": mime_type = "application/x-tar"; break; // Tape Archive (TAR)
-				case ".tif":
-				case ".tiff": mime_type = "image/tiff"; break; //  Tagged Image File Format(TIFF)
-				case ".ts": mime_type = "video/vnd.dlna.mpeg-tts"; break; // Typescript file
-				case ".ttf": mime_type = "font/ttf"; break; // TrueType Font
-				case ".vsd": mime_type = "application/vnd.visio"; break; // Microsoft Visio
-				case ".wav": mime_type = "audio/x-wav"; break; // Waveform Audio Format
-				case ".weba": mime_type = "audio/webm"; break; // WEBM audio
-				case ".webm": mime_type = "video/webm"; break; // WEBM video
-				case ".webp": mime_type = "image/webp"; break; // WEBP image
-				case ".woff": mime_type = "font/woff"; break; // Web Open Font Format (WOFF)
-				case ".woff2": mime_type = "font/woff2"; break; // Web Open Font Format (WOFF)
-				case ".xhtml": mime_type = "application/xhtml+xml"; break; // XHTML
-				case ".xls": mime_type = "application/vnd.ms"; break; // excel application
-				case ".xlsx": mime_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"; break; // excel 2007 application
-				case ".xml": mime_type = "application/xml"; break; // XML
-				case ".xul": mime_type = "application/vnd.mozilla.xul+xml"; break; // XUL
-				case ".zip": mime_type = "application/zip"; break; // ZIP archive
-				case ".3gp": mime_type = "video/3gpp"; break; // 3GPP audio/video container
-				case ".3g2": mime_type = "video/3gpp2"; break; // 3GPP2 audio/video container
-				case ".7z": mime_type = "application/x-7z-compressed"; break; // 7-zip archive
+				case "aac": mime_type = "audio/aac"; break; // AAC audio file
+				case "abw": mime_type = "application/x-abiword"; break; // AbiWord document
+				case "arc": mime_type = "application/octet-stream"; break; // Archive document (multiple files embedded)
+				case "avi": mime_type = "video/x-msvideo"; break; // AVI: Audio Video Interleave
+				case "azw": mime_type = "application/vnd.amazon.ebook"; break; // Amazon Kindle eBook format
+				case "bin": mime_type = "application/octet-stream"; break; // Any kind of binary data
+				case "bz": mime_type = "application/x-bzip"; break; // BZip archive
+				case "bz2": mime_type = "application/x-bzip2"; break; // BZip2 archive
+				case "csh": mime_type = "application/x-csh"; break; // C-Shell script
+				case "css": mime_type = "text/css"; break; // Cascading Style Sheets (CSS)
+				case "csv": mime_type = "text/csv"; break; // Comma-separated values (CSV)
+				case "doc": mime_type = "application/msword"; break; // Microsoft Word
+				case "eot": mime_type = "application/vnd.ms-fontobject"; break; // MS Embedded OpenType fonts
+				case "epub": mime_type = "application/epub+zip"; break; // Electronic publication (EPUB)
+				case "gif":  mime_type = "image/gif"; break; // Graphics Interchange Format (GIF)
+				case "htm":
+				case "html": mime_type = "text/html"; break; // HyperText Markup Language (HTML)text / html
+				case "ico": mime_type = "image/x-icon"; break; // Icon format
+				case "ics": mime_type = "text/calendar"; break; // iCalendar format
+				case "jar": mime_type = "application/java-archive"; break; // Java Archive (JAR)
+				case "jpeg":
+				case "jpg": mime_type = "image/jpeg"; break; // JPEG images
+				case "js": mime_type = "application/javascript"; break; // JavaScript (ECMAScript)
+				case "json": mime_type = "application/json"; break; // JSON format
+				case "mid":
+				case "midi": mime_type = "audio/midi"; break; // Musical Instrument Digital Interface (MIDI)
+				case "mp1":
+				case "mp2":
+				case "mp3":
+				case "mpg": mime_type = "audio/mpeg"; break;
+				case "mpeg": mime_type = "video/mpeg"; break; // MPEG Video
+				case "m4a": mime_type = "audio/mp4"; break;
+				case "mp4":
+				case "m4v": mime_type = "video/mp4"; break;
+				case "mpkg": mime_type = "application/vnd.apple.installer+xml"; break; // Apple Installer Package
+				case "odp": mime_type = "application/vnd.oasis.opendocument.presentation"; break; // OpenDocuemnt presentation document
+				case "ods": mime_type = "application/vnd.oasis.opendocument.spreadsheet"; break; // OpenDocuemnt spreadsheet document
+				case "odt": mime_type = "application/vnd.oasis.opendocument.text"; break; // OpenDocument text document
+				case "oga": mime_type = "audio/ogg"; break; // OGG audio
+				case "ogg": mime_type = "audio/ogg"; break;
+				case "ogx": mime_type = "application/ogg"; break; // OGG
+				case "ogv": mime_type = "video/ogg"; break;
+				case "otf": mime_type = "font/otf"; break; // OpenType font
+				case "png": mime_type = "image/png"; break; // Portable Network Graphics
+				case "pdf": mime_type = "application/pdf"; break; // Adobe Portable Document Format (PDF)
+				case "ppt": mime_type = "application/vnd.ms-powerpoint"; break; // Microsoft PowerPoint
+				case "rar": mime_type = "application/x-rar-compressed"; break; // RAR archive
+				case "rtf": mime_type = "application/rtf"; break; // Rich Text Format (RTF)
+				case "sh": mime_type = "application/x-sh"; break; // Bourne shell script
+				case "svg": mime_type = "image/svg+xml"; break; // Scalable Vector Graphics (SVG)
+				case "swf": mime_type = "application/x-shockwave-flash"; break; // Small web format (SWF) or Adobe Flash document
+				case "tar": mime_type = "application/x-tar"; break; // Tape Archive (TAR)
+				case "tif":
+				case "tiff": mime_type = "image/tiff"; break; //  Tagged Image File Format(TIFF)
+				case "ts": mime_type = "video/vnd.dlna.mpeg-tts"; break; // Typescript file
+				case "ttf": mime_type = "font/ttf"; break; // TrueType Font
+				case "vsd": mime_type = "application/vnd.visio"; break; // Microsoft Visio
+				case "wav": mime_type = "audio/x-wav"; break; // Waveform Audio Format
+				case "weba": mime_type = "audio/webm"; break; // WEBM audio
+				case "webm": mime_type = "video/webm"; break; // WEBM video
+				case "webp": mime_type = "image/webp"; break; // WEBP image
+				case "woff": mime_type = "font/woff"; break; // Web Open Font Format (WOFF)
+				case "woff2": mime_type = "font/woff2"; break; // Web Open Font Format (WOFF)
+				case "xhtml": mime_type = "application/xhtml+xml"; break; // XHTML
+				case "xls": mime_type = "application/vnd.ms"; break; // excel application
+				case "xlsx": mime_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"; break; // excel 2007 application
+				case "xml": mime_type = "application/xml"; break; // XML
+				case "xul": mime_type = "application/vnd.mozilla.xul+xml"; break; // XUL
+				case "zip": mime_type = "application/zip"; break; // ZIP archive
+				case "3gp": mime_type = "video/3gpp"; break; // 3GPP audio/video container
+				case "3g2": mime_type = "video/3gpp2"; break; // 3GPP2 audio/video container
+				case "7z": mime_type = "application/x-7z-compressed"; break; // 7-zip archive
 			}
 
 			return mime_type;

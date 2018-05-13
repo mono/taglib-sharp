@@ -56,7 +56,7 @@ namespace TagLib.Id3v2 {
 		/// <summary>
 		///    Contains the original file name.
 		/// </summary>
-		string file_name = null;
+		string filename = null;
 		
 		/// <summary>
 		///    Contains the description.
@@ -103,7 +103,83 @@ namespace TagLib.Id3v2 {
 		{
 			SetData (data, 0, version, true);
 		}
-		
+
+
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="GeneralEncapsulatedObjectFrame" /> by populating it with
+		///    the contents of a <see cref="IPicture" /> object.
+		/// </summary>
+		/// <param name="picture">
+		///    A <see cref="IPicture" /> object containing values to use
+		///    in the new instance.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="picture" /> is <see langword="null" />.
+		/// </exception>
+		/// <remarks>
+		///    <para>When a frame is created, it is not automatically
+		///    added to the tag. Consider using <see
+		///    cref="Get(Tag,string,PictureType,bool)" /> for more
+		///    integrated frame creation.</para>
+		///    <para>Additionally, <see cref="TagLib.Tag.Pictures" />
+		///    provides a generic way or getting and setting
+		///    pictures which is preferable to format specific
+		///    code.</para>
+		/// </remarks>
+		/// <example>
+		///    <para>Add a picture to a file.</para>
+		///    <code lang="C#">
+		/// using TagLib;
+		/// using TagLib.Id3v2;
+		///
+		/// public static class AddId3v2Picture
+		/// {
+		/// 	public static void Main (string [] args)
+		/// 	{
+		/// 		if (args.Length != 2)
+		/// 			throw new ApplicationException (
+		/// 				"USAGE: AddId3v2Picture.exe AUDIO_FILE PICTURE_FILE");
+		///
+		/// 		// Create the file. Can throw file to TagLib# exceptions.
+		/// 		File file = File.Create (args [0]);
+		///
+		/// 		// Get or create the ID3v2 tag.
+		/// 		TagLib.Id3v2.Tag tag = file.GetTag (TagTypes.Id3v2, true) as TagLib.Id3v2.Tag;
+		/// 		if (tag == null)
+		/// 			throw new ApplicationException ("File does not support ID3v2 tags.");
+		///
+		/// 		// Create a picture, even though this file is not a picture.
+		///			TagLib.Picture picture = TagLib.Picture.CreateFromPath (path);
+		///
+		///			// Make sure this object is not considered as a picture
+		///			picture.Type = PictureType.NotAPicture;
+		///
+		/// 		// Add a new picture frame to the tag.
+		/// 		tag.AddFrame (new GeneralEncapsulatedObjectFrame (picture));
+		///
+		/// 		// Save the file.
+		/// 		file.Save ();
+		/// 	}
+		/// }
+		///    </code>
+		/// </example>
+		public GeneralEncapsulatedObjectFrame(IPicture picture)
+			: base(FrameType.GEOB, 4)
+		{
+			if (picture == null)
+				throw new ArgumentNullException("picture");
+
+			if (picture.Type != PictureType.NotAPicture)
+				throw new InvalidCastException("Creating a GeneralEncapsulatedObjectFrame from a picture");
+
+			MimeType = picture.MimeType;
+			filename = picture.Filename;
+			description = picture.Description;
+			data = picture.Data;
+		}
+
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="GeneralEncapsulatedObjectFrame" /> by reading its
@@ -174,7 +250,10 @@ namespace TagLib.Id3v2 {
 				
 				return string.Empty;
 			}
-			set {mime_type = value;}
+			set {
+
+				mime_type = value;
+			}
 		}
 		
 		/// <summary>
@@ -187,12 +266,12 @@ namespace TagLib.Id3v2 {
 		/// </value>
 		public string FileName {
 			get {
-				if (file_name != null)
-					return file_name;
+				if (filename != null)
+					return filename;
 				
 				return string.Empty;
 			}
-			set {file_name = value;}
+			set {filename = value;}
 		}
 		
 		/// <summary>
@@ -364,7 +443,7 @@ namespace TagLib.Id3v2 {
 			if (end < start)
 				return;
 			
-			file_name = data.ToString (encoding, start,
+			filename = data.ToString (encoding, start,
 				end - start);
 			start = end + delim.Count;
 			end = data.Find (delim, start, delim.Count);
@@ -438,7 +517,7 @@ namespace TagLib.Id3v2 {
 				new GeneralEncapsulatedObjectFrame ();
 			frame.encoding = encoding;
 			frame.mime_type = mime_type;
-			frame.file_name = file_name;
+			frame.filename = filename;
 			frame.description = description;
 			if (data != null)
 				frame.data = new ByteVector (data);

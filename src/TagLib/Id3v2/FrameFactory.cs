@@ -207,8 +207,8 @@ namespace TagLib.Id3v2
 
 				// Attached Picture (frames 4.14)
 				if (header.FrameId == FrameType.APIC)
-					return new AttachedPictureFrame(data, position,
-						header, version);
+					return new AttachedPictureFrame(file.FileAbstraction,
+						fileposition, offset - fileposition, header, version);
 
 				// General Encapsulated Object (frames 4.15)
 				if (header.FrameId == FrameType.GEOB)

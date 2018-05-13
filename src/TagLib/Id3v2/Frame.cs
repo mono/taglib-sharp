@@ -39,7 +39,7 @@ namespace TagLib.Id3v2 {
 		/// <summary>
 		///    Contains the frame's header.
 		/// </summary>
-		private FrameHeader header;
+		protected FrameHeader header;
 		
 		/// <summary>
 		///    Contains the frame's grouping ID.

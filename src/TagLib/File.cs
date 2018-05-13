@@ -454,7 +454,15 @@ namespace TagLib {
 				Mode = value;
 			}
 		}
-		
+
+		/// <summary>
+		/// Gets the <see cref="IFileAbstraction"/> representing the file.
+		/// </summary>
+		public IFileAbstraction FileAbstraction
+		{
+			get { return file_abstraction; }
+		}
+
 		/// <summary>
 		///    Indicates if tags can be written back to the current file or not
 		/// </summary>
@@ -1407,13 +1415,13 @@ namespace TagLib {
 			if (PossiblyCorrupt)
 				throw new CorruptFileException("Corrupted file cannot be saved.");
 
-			// All the PictureLazy must be loaded before opening the file
+			// All the Lazy objects must be loaded before opening the file
 			// in Write mode
 			if (Tag?.Pictures != null)
 			{
 				foreach (var pic in Tag.Pictures)
 				{
-					if (pic is PictureLazy lazy)
+					if (pic is ILazy lazy)
 					{
 						lazy.Load();
 					}

@@ -64,20 +64,28 @@ namespace TagLib.Tests.FileFormats
 			try
 			{
 				System.IO.File.Copy(sample_file, tmp_file);
-				file = File.Create(tmp_file);
+				file = File.Create(tmp_file, readStyle);
 			}
 			finally { }
 			Assert.NotNull(file);
 
 			var pics = file.Tag.Pictures;
 
+			// Raw Picture data references
+			var raws = new ByteVector[3]; 
+
 			// Insert new picture
 			Array.Resize(ref pics, 3);
+			raws[0] = ByteVector.FromPath(sample_picture);
 			pics[0] = new Picture(sample_picture);
 			pics[0].Type = PictureType.BackCover;
 			pics[0].Description = "TEST description 1";
+
+			raws[1] = ByteVector.FromPath(sample_other);
 			pics[1] = new Picture(sample_other);
 			pics[1].Description = "TEST description 2";
+
+			raws[2] = raws[0];
 			pics[2] = new Picture(sample_picture);
 			pics[2].Type = PictureType.Other;
 			pics[2].Description = "TEST description 3";
@@ -98,15 +106,15 @@ namespace TagLib.Tests.FileFormats
 			{
 				if (isLazy)
 				{
-					Assert.IsTrue(pics[i] is PictureLazy);
-					if (pics[i] is PictureLazy lazy)
+					Assert.IsTrue(pics[i] is ILazy);
+					if (pics[i] is ILazy lazy)
 					{
 						Assert.IsFalse(lazy.IsLoaded);
 					}
 				}
 				else
 				{
-					if (pics[i] is PictureLazy lazy)
+					if (pics[i] is ILazy lazy)
 					{
 						Assert.IsTrue(lazy.IsLoaded);
 					}
@@ -117,6 +125,7 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual("TEST description 1", pics[0].Description);
 			Assert.AreEqual("image/gif", pics[0].MimeType);
 			Assert.AreEqual(73, pics[0].Data.Count);
+			Assert.AreEqual(raws[0], pics[0].Data);
 
 			if (pics[1].Filename != null)
 				Assert.AreEqual("apple_tags.m4a", pics[1].Filename);
@@ -124,11 +133,13 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual("audio/mp4", pics[1].MimeType);
 			Assert.AreEqual(PictureType.NotAPicture, pics[1].Type);
 			Assert.AreEqual(102400, pics[1].Data.Count);
+			Assert.AreEqual(raws[1], pics[1].Data);
 
 			Assert.AreEqual(PictureType.Other, pics[2].Type);
 			Assert.AreEqual("TEST description 3", pics[2].Description);
 			Assert.AreEqual("image/gif", pics[2].MimeType);
 			Assert.AreEqual(73, pics[2].Data.Count);
+			Assert.AreEqual(raws[2], pics[2].Data);
 		}
 
 
