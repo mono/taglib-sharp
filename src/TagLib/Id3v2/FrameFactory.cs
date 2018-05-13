@@ -206,14 +206,11 @@ namespace TagLib.Id3v2
 			if (file != null) {
 
 				// Attached Picture (frames 4.14)
-				if (header.FrameId == FrameType.APIC)
-					return new AttachedPictureFrame(file.FileAbstraction,
-						fileposition, offset - fileposition, header, version);
-
 				// General Encapsulated Object (frames 4.15)
-				if (header.FrameId == FrameType.GEOB)
-					return new GeneralEncapsulatedObjectFrame(data,
-						position, header, version);
+				if (header.FrameId == FrameType.APIC || 
+					header.FrameId == FrameType.GEOB )
+					return new AttachmentFrame(file.FileAbstraction,
+						fileposition, offset - fileposition, header, version);
 
 				// Read remaining part of the frame for the non lazy Frames
 				file.Seek(fileposition);
@@ -261,14 +258,11 @@ namespace TagLib.Id3v2
 					header, version);
 
 			// Attached Picture (frames 4.14)
-			if (header.FrameId == FrameType.APIC)
-				return new AttachedPictureFrame(data, position,
-					header, version);
-
 			// General Encapsulated Object (frames 4.15)
-			if (header.FrameId == FrameType.GEOB)
-				return new GeneralEncapsulatedObjectFrame(data,
-					position, header, version);
+			if (header.FrameId == FrameType.APIC || 
+				header.FrameId == FrameType.GEOB )
+				return new AttachmentFrame(data, position,
+					header, version);
 
 			// Play Count (frames 4.16)
 			if (header.FrameId == FrameType.PCNT)

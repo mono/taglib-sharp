@@ -3,9 +3,11 @@
 //
 // Author:
 //   Brian Nickel (brian.nickel@gmail.com)
+//   Sebastien Mouy (starwer@laposte.net)
 //
-// Original Source:
+// Original Sources:
 //   attachedpictureframe.cpp from TagLib
+//   generalencapsulatedobjectframe.cpp from TagLib
 //
 // Copyright (C) 2005-2007 Brian Nickel
 // Copyright (C) 2004 Scott Wheeler (Original Implementation)
@@ -25,35 +27,34 @@
 // USA
 //
 
-using System.Collections;
 using System;
-
-using TagLib;
 using System.IO;
 
 namespace TagLib.Id3v2 {
+
 	/// <summary>
 	///    This class extends <see cref="Frame" />, implementing support for
-	///    ID3v2 Attached Picture (APIC) Frames.
+	///    ID3v2 Attached Picture (APIC), ID3v2 General Encapsulated 
+	///    Object (GEOB) and Frames.
 	/// </summary>
 	/// <remarks>
-	///    <para>A <see cref="AttachedPictureFrame" /> is used for storing
-	///    pictures that complement the media, including the album cover,
-	///    the physical medium, leaflets, file icons, etc. Other file and
-	///    object data can be encapulsated via <see
-	///    cref="GeneralEncapsulatedObjectFrame" />.</para>
+	///    <para>A <see cref="AttachmentFrame" /> is used for storing
+	///    any file (picture or other types) that complement. 
+	///    This is typically (but not only limited to) the album cover,
+	///    the physical medium, leaflets, file icons or other files and
+	///    object data.</para>
 	///    <para>Additionally, <see cref="TagLib.Tag.Pictures" /> provides a
-	///    generic way or getting and setting pictures which is preferable
-	///    to format specific code.</para>
+	///    generic way or getting and setting pictures/files which is 
+	///    preferable to format specific code.</para>
 	/// </remarks>
-	public class AttachedPictureFrame : Frame, IPicture, ILazy
+	public class AttachmentFrame : Frame, IPicture, ILazy
 	{
 		#region Private Properties
 		
 		/// <summary>
 		///    Contains the text encoding to use when rendering.
 		/// </summary>
-		private StringType text_encoding = Tag.DefaultEncoding;
+		private StringType encoding = Tag.DefaultEncoding;
 		
 		/// <summary>
 		///    Contains the mime type of <see cref="data" />.
@@ -122,7 +123,7 @@ namespace TagLib.Id3v2 {
 		#region Constructors
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
-		///    cref="AttachedPictureFrame" /> with no contents and the
+		///    cref="AttachmentFrame" /> with no contents and the
 		///    default values.
 		/// </summary>
 		/// <remarks>
@@ -132,16 +133,16 @@ namespace TagLib.Id3v2 {
 		///    integrated frame creation.</para>
 		///    <para>Additionally, <see cref="TagLib.Tag.Pictures" />
 		///    provides a generic way or getting and setting
-		///    pictures which is preferable to format specific
+		///    attachments which is preferable to format specific
 		///    code.</para>
 		/// </remarks>
-		public AttachedPictureFrame () : base (FrameType.APIC, 4)
+		public AttachmentFrame () : base (FrameType.APIC, 4)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
-		///    cref="AttachedPictureFrame" /> by populating it with
+		///    cref="AttachmentFrame" /> by populating it with
 		///    the contents of another <see cref="IPicture" /> object.
 		/// </summary>
 		/// <param name="picture">
@@ -158,7 +159,7 @@ namespace TagLib.Id3v2 {
 		///    integrated frame creation.</para>
 		///    <para>Additionally, <see cref="TagLib.Tag.Pictures" />
 		///    provides a generic way or getting and setting
-		///    pictures which is preferable to format specific
+		///    attachments which is preferable to format specific
 		///    code.</para>
 		/// </remarks>
 		/// <example>
@@ -195,17 +196,14 @@ namespace TagLib.Id3v2 {
 		/// }
 		///    </code>
 		/// </example>
-		public AttachedPictureFrame (IPicture picture)
+		public AttachmentFrame (IPicture picture)
 			: base(FrameType.APIC, 4)
 		{
 			if (picture == null)
 				throw new ArgumentNullException("picture");
 
-			//if (picture.Type == PictureType.NotAPicture)
-			//	throw new InvalidCastException("Creating an AttachedPictureFrame from a non-picture object");
-
+			Type = picture.Type;
 			mime_type = picture.MimeType;
-			type = picture.Type;
 			filename = picture.Filename;
 			description = picture.Description;
 			data = picture.Data;
@@ -213,7 +211,7 @@ namespace TagLib.Id3v2 {
 
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
-		///    cref="AttachedPictureFrame" /> by reading its raw data in
+		///    cref="AttachmentFrame" /> by reading its raw data in
 		///    a specified ID3v2 version.
 		/// </summary>
 		/// <param name="data">
@@ -224,7 +222,7 @@ namespace TagLib.Id3v2 {
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		public AttachedPictureFrame (ByteVector data, byte version)
+		public AttachmentFrame (ByteVector data, byte version)
 			: base (data, version)
 		{
 			SetData (data, 0, version, true);
@@ -232,7 +230,7 @@ namespace TagLib.Id3v2 {
 		
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
-		///    cref="AttachedPictureFrame" /> by reading its raw data
+		///    cref="AttachmentFrame" /> by reading its raw data
 		///    in a specified ID3v2 version.
 		/// </summary>
 		/// <param name="data">
@@ -251,7 +249,7 @@ namespace TagLib.Id3v2 {
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		protected internal AttachedPictureFrame (ByteVector data,
+		protected internal AttachmentFrame (ByteVector data,
 		                                         int offset,
 		                                         FrameHeader header,
 		                                         byte version)
@@ -263,7 +261,7 @@ namespace TagLib.Id3v2 {
 
 		/// <summary>
 		///    Constructs a new instance of <see
-		///    cref="AttachedPictureFrame" /> from a file.
+		///    cref="AttachmentFrame" /> from a file.
 		///    The content will be lazily loaded.
 		/// </summary>
 		/// <param name="abstraction">
@@ -290,7 +288,7 @@ namespace TagLib.Id3v2 {
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		public AttachedPictureFrame(File.IFileAbstraction abstraction,
+		public AttachmentFrame(File.IFileAbstraction abstraction,
 									long offset,
 									long size,
 									FrameHeader header,
@@ -331,9 +329,9 @@ namespace TagLib.Id3v2 {
 			get {
 				if (file != null)
 					Load();
-				ParseRawData (); return text_encoding;
+				ParseRawData (); return encoding;
 			}
-			set {text_encoding = value;}
+			set {encoding = value;}
 		}
 		
 		/// <summary>
@@ -357,18 +355,19 @@ namespace TagLib.Id3v2 {
 			}
 			set {mime_type = value;}
 		}
-		
+
 		/// <summary>
-		///    Gets and sets the picture type stored in the current
+		///    Gets and sets the object type stored in the current
 		///    instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string" /> containing the picture type
+		///    A <see cref="PictureType" /> containing the object type
 		///    stored in the current instance.
 		/// </value>
 		/// <remarks>
-		///    There should only be one frame with a matching
-		///    description and type per tag.
+		///    For a General Object Frame, use: 
+		///    <see cref="PictureType.NotAPicture" />.
+		///    Other types will make it a Picture Frame
 		/// </remarks>
 		public PictureType Type {
 			get {
@@ -376,7 +375,18 @@ namespace TagLib.Id3v2 {
 					Load();
 				ParseRawData(); return type;
 			}
-			set {type = value;}
+			set {
+				// Change the Frame type depending if this is 
+				// a picture or a general object
+
+				var frameid = value == PictureType.NotAPicture ?
+					FrameType.GEOB : FrameType.APIC;
+
+				if (header.FrameId != frameid)
+					header = new FrameHeader(frameid, 4);
+
+				type = value;
+			}
 		}
 
 
@@ -510,14 +520,14 @@ namespace TagLib.Id3v2 {
 		///    and add a new frame to the tag if a match is not found.
 		/// </param>
 		/// <returns>
-		///    A <see cref="AttachedPictureFrame" /> object containing
+		///    A <see cref="AttachmentFrame" /> object containing
 		///    the matching frame, or <see langword="null" /> if a match
 		///    wasn't found and <paramref name="create" /> is <see
 		///    langword="false" />.
 		/// </returns>
-		public static AttachedPictureFrame Get (Tag tag,
-		                                        string description,
-		                                        bool create)
+		public static AttachmentFrame Get (Tag tag,
+		                                    string description,
+		                                    bool create)
 		{
 			return Get (tag, description, PictureType.Other, create);
 		}
@@ -538,20 +548,20 @@ namespace TagLib.Id3v2 {
 		///    and add a new frame to the tag if a match is not found.
 		/// </param>
 		/// <returns>
-		///    A <see cref="AttachedPictureFrame" /> object containing
+		///    A <see cref="AttachmentFrame" /> object containing
 		///    the matching frame, or <see langword="null" /> if a match
 		///    wasn't found and <paramref name="create" /> is <see
 		///    langword="false" />.
 		/// </returns>
-		public static AttachedPictureFrame Get (Tag tag,
-		                                        PictureType type,
-		                                        bool create)
+		public static AttachmentFrame Get (Tag tag,
+		                                    PictureType type,
+		                                    bool create)
 		{
 			return Get (tag, null, type, create);
 		}
 		
 		/// <summary>
-		///    Gets a specified picture frame from the specified tag,
+		///    Gets a specified attachment frame from the specified tag,
 		///    optionally creating it if it does not exist.
 		/// </summary>
 		/// <param name="tag">
@@ -570,7 +580,7 @@ namespace TagLib.Id3v2 {
 		///    and add a new frame to the tag if a match is not found.
 		/// </param>
 		/// <returns>
-		///    A <see cref="AttachedPictureFrame" /> object containing
+		///    A <see cref="AttachmentFrame" /> object containing
 		///    the matching frame, or <see langword="null" /> if a match
 		///    wasn't found and <paramref name="create" /> is <see
 		///    langword="false" />.
@@ -618,37 +628,37 @@ namespace TagLib.Id3v2 {
 		/// }
 		///    </code>
 		/// </example>
-		public static AttachedPictureFrame Get (Tag tag,
-		                                        string description,
-		                                        PictureType type,
-		                                        bool create)
+		public static AttachmentFrame Get (Tag tag,
+		                                    string description,
+		                                    PictureType type,
+		                                    bool create)
 		{
-			AttachedPictureFrame apic;
-			foreach (Frame frame in tag.GetFrames (FrameType.APIC)) {
-				apic = frame as AttachedPictureFrame;
+			AttachmentFrame att;
+			foreach (Frame frame in tag.GetFrames<AttachmentFrame>()) {
+				att = frame as AttachmentFrame;
 				
-				if (apic == null)
+				if (att == null)
 					continue;
 				
-				if (description != null && apic.Description != description)
+				if (description != null && att.Description != description)
 					continue;
 				
-				if (type != PictureType.Other && apic.Type != type)
+				if (type != PictureType.Other && att.Type != type)
 					continue;
 				
-				return apic;
+				return att;
 			}
 			
 			if (!create)
 				return null;
 			
-			apic = new AttachedPictureFrame ();
-			apic.Description = description;
-			apic.Type = type;
+			att = new AttachmentFrame ();
+			att.Description = description;
+			att.Type = type;
 			
-			tag.AddFrame (apic);
+			tag.AddFrame (att);
 			
-			return apic;
+			return att;
 		}
 
 
@@ -747,6 +757,7 @@ namespace TagLib.Id3v2 {
 			raw_data = data;
 			raw_version = version;
 		}
+
 		
 		/// <summary>
 		///    Performs the actual parsing of the raw data.
@@ -770,43 +781,84 @@ namespace TagLib.Id3v2 {
 			int pos = 0;
 			int offset;
 			
-			text_encoding = (StringType) raw_data [pos++];
-			
-			if (raw_version > 2) {
-				offset = raw_data.Find (ByteVector.TextDelimiter (
-					StringType.Latin1), pos);
-				
-				if(offset < pos)
-					return;
-				
-				mime_type = raw_data.ToString (
-					StringType.Latin1, pos, offset - pos);
-				pos = offset + 1;
-			} else {
-				ByteVector ext = raw_data.Mid (pos, 3);
-				mime_type = Picture.GetMimeFromExtension(ext.ToString());
-				pos += 3;
+			encoding = (StringType) raw_data [pos++];
+
+			ByteVector delim = ByteVector.TextDelimiter(encoding);
+
+			if (header.FrameId == FrameType.APIC)
+			{
+				// Retrieve an ID3v2 Attached Picture (APIC)
+
+				if (raw_version > 2)
+				{
+					offset = raw_data.Find(ByteVector.TextDelimiter(
+						StringType.Latin1), pos);
+
+					if (offset < pos)
+						return;
+
+					mime_type = raw_data.ToString(
+						StringType.Latin1, pos, offset - pos);
+					pos = offset + 1;
+				}
+				else
+				{
+					ByteVector ext = raw_data.Mid(pos, 3);
+					mime_type = Picture.GetMimeFromExtension(ext.ToString());
+					pos += 3;
+				}
+
+				Type = (PictureType)raw_data[pos++];
+
+				offset = raw_data.Find(delim, pos, delim.Count);
+
 			}
-			
-			ByteVector delim = ByteVector.TextDelimiter (
-				text_encoding);
-			
-			type = (PictureType) raw_data [pos++];
-			
-			offset = raw_data.Find (delim, pos, delim.Count);
-			
-			if(offset < pos)
+			else if (header.FrameId == FrameType.GEOB)
+			{
+				// Retrieve an ID3v2 General Encapsulated Object (GEOB)
+
+				offset = raw_data.Find(
+					ByteVector.TextDelimiter(StringType.Latin1),
+					pos);
+
+				if (offset < pos)
+					return;
+
+				mime_type = raw_data.ToString(StringType.Latin1, pos,
+					offset - pos);
+
+				pos = offset + 1;
+				offset = raw_data.Find(delim, pos, delim.Count);
+
+				if (offset < pos)
+					return;
+
+				filename = raw_data.ToString(encoding, pos,
+					offset - pos);
+				pos = offset + delim.Count;
+				offset = raw_data.Find(delim, pos, delim.Count);
+
+				Type = PictureType.NotAPicture;
+			}
+			else
+			{
+				throw new InvalidOperationException("Bad Frame type");
+			}
+
+			if (offset < pos)
 				return;
-			
-			description = raw_data.ToString (text_encoding, pos,
+
+			description = raw_data.ToString(encoding, pos,
 				offset - pos);
 			pos = offset + delim.Count;
-			raw_data.RemoveRange (0, pos);
-			this.data = raw_data;
-			
-			this.raw_data = null;
+
+			raw_data.RemoveRange(0, pos);
+
+			data = raw_data;
+			raw_data = null;
+
 		}
-		
+
 		/// <summary>
 		///    Renders the values in the current instance into field
 		///    data for a specified version.
@@ -830,42 +882,77 @@ namespace TagLib.Id3v2 {
 			StringType encoding = CorrectEncoding (TextEncoding,
 				version);
 			ByteVector data = new ByteVector ();
-			
-			data.Add ((byte) encoding);
-			
-			if (version == 2) {
-				switch (MimeType) {
-				case "image/png":
-					data.Add ("PNG");
-					break;
-				case "image/jpeg":
-					data.Add ("JPG");
-					break;
-				default:
-					data.Add ("XXX");
-					break;
+
+			if (header.FrameId == FrameType.APIC)
+			{
+				// Make an ID3v2 Attached Picture (APIC)
+
+				data.Add((byte)encoding);
+
+				if (version == 2)
+				{
+					switch (MimeType)
+					{
+						case "image/png":
+							data.Add("PNG");
+							break;
+						case "image/jpeg":
+							data.Add("JPG");
+							break;
+						default:
+							data.Add("XXX");
+							break;
+					}
 				}
-			} else {
-				data.Add (ByteVector.FromString (MimeType,
-					StringType.Latin1));
-				data.Add (ByteVector.TextDelimiter (
-					StringType.Latin1));
+				else
+				{
+					data.Add(ByteVector.FromString(MimeType,
+						StringType.Latin1));
+					data.Add(ByteVector.TextDelimiter(
+						StringType.Latin1));
+				}
+
+				data.Add((byte)type);
+				data.Add(ByteVector.FromString(Description, encoding));
+				data.Add(ByteVector.TextDelimiter(encoding));
 			}
-			
-			data.Add ((byte) type);
-			data.Add (ByteVector.FromString (Description, encoding));
-			data.Add (ByteVector.TextDelimiter (encoding));
-			data.Add (this.data);
-			
+			else if (header.FrameId == FrameType.GEOB)
+			{
+				// Make an ID3v2 General Encapsulated Object (GEOB)
+
+				data.Add((byte)encoding);
+
+				if (MimeType != null)
+					data.Add(ByteVector.FromString(MimeType,
+						StringType.Latin1));
+				data.Add(ByteVector.TextDelimiter(StringType.Latin1));
+
+				if (filename != null)
+					data.Add(ByteVector.FromString(filename,
+						encoding));
+				data.Add(ByteVector.TextDelimiter(encoding));
+
+				if (Description != null)
+					data.Add(ByteVector.FromString(Description,
+						encoding));
+				data.Add(ByteVector.TextDelimiter(encoding));
+
+			}
+			else
+			{
+				throw new InvalidOperationException("Bad Frame type");
+			}
+
+			data.Add(this.data);
 			return data;
 		}
-		
-#endregion
-		
-		
-		
-#region ICloneable
-		
+
+		#endregion
+
+
+
+		#region ICloneable
+
 		/// <summary>
 		///    Creates a deep copy of the current instance.
 		/// </summary>
@@ -878,10 +965,10 @@ namespace TagLib.Id3v2 {
 			if (file != null)
 				Load();
 
-			AttachedPictureFrame frame = new AttachedPictureFrame ();
-			frame.text_encoding = text_encoding;
+			AttachmentFrame frame = new AttachmentFrame ();
+			frame.encoding = encoding;
 			frame.mime_type = mime_type;
-			frame.type = type;
+			frame.Type = type;
 			frame.filename = filename;
 			frame.description = description;
 			if (data != null)
@@ -894,4 +981,293 @@ namespace TagLib.Id3v2 {
 		
 #endregion
 	}
+
+#region Legacy Class
+
+	/// <summary>
+	///    This class extends <see cref="Frame" />, implementing support for
+	///    ID3v2 Attached Picture (APIC) Frames.
+	/// </summary>
+	/// <remarks>
+	///    <para>A <see cref="AttachmentFrame" /> is used for storing
+	///    pictures that complement the media, including the album cover,
+	///    the physical medium, leaflets, file icons, etc. Other file and
+	///    object data can be encapulsated via <see
+	///    cref="GeneralEncapsulatedObjectFrame" />.</para>
+	///    <para>Additionally, <see cref="TagLib.Tag.Pictures" /> provides a
+	///    generic way or getting and setting pictures which is preferable
+	///    to format specific code.</para>
+	/// </remarks>
+	[Obsolete("Use AttachementFrame instead")]
+	public class AttachedPictureFrame : AttachmentFrame
+	{
+		#region Constructors
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="AttachmentFrame" /> with no contents and the
+		///    default values.
+		/// </summary>
+		/// <remarks>
+		///    <para>When a frame is created, it is not automatically
+		///    added to the tag. Consider using <see
+		///    cref="Get(Tag,string,PictureType,bool)" /> for more
+		///    integrated frame creation.</para>
+		///    <para>Additionally, <see cref="TagLib.Tag.Pictures" />
+		///    provides a generic way or getting and setting
+		///    pictures which is preferable to format specific
+		///    code.</para>
+		/// </remarks>
+		[Obsolete("Use AttachementFrame instead")]
+		public AttachedPictureFrame() : base()
+		{
+		}
+
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="AttachmentFrame" /> by populating it with
+		///    the contents of another <see cref="IPicture" /> object.
+		/// </summary>
+		/// <param name="picture">
+		///    A <see cref="IPicture" /> object containing values to use
+		///    in the new instance.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		///    <paramref name="picture" /> is <see langword="null" />.
+		/// </exception>
+		/// <remarks>
+		///    <para>When a frame is created, it is not automatically
+		///    added to the tag. Consider using <see
+		///    cref="Get(Tag,string,PictureType,bool)" /> for more
+		///    integrated frame creation.</para>
+		///    <para>Additionally, <see cref="TagLib.Tag.Pictures" />
+		///    provides a generic way or getting and setting
+		///    pictures which is preferable to format specific
+		///    code.</para>
+		/// </remarks>
+		/// <example>
+		///    <para>Add a picture to a file.</para>
+		///    <code lang="C#">
+		/// using TagLib;
+		/// using TagLib.Id3v2;
+		///
+		/// public static class AddId3v2Picture
+		/// {
+		/// 	public static void Main (string [] args)
+		/// 	{
+		/// 		if (args.Length != 2)
+		/// 			throw new ApplicationException (
+		/// 				"USAGE: AddId3v2Picture.exe AUDIO_FILE PICTURE_FILE");
+		///
+		/// 		// Create the file. Can throw file to TagLib# exceptions.
+		/// 		File file = File.Create (args [0]);
+		///
+		/// 		// Get or create the ID3v2 tag.
+		/// 		TagLib.Id3v2.Tag tag = file.GetTag (TagTypes.Id3v2, true) as TagLib.Id3v2.Tag;
+		/// 		if (tag == null)
+		/// 			throw new ApplicationException ("File does not support ID3v2 tags.");
+		///
+		/// 		// Create a picture. Can throw file related exceptions.
+		///			TagLib.Picture picture = TagLib.Picture.CreateFromPath (path);
+		///
+		/// 		// Add a new picture frame to the tag.
+		/// 		tag.AddFrame (new AttachedPictureFrame (picture));
+		///
+		/// 		// Save the file.
+		/// 		file.Save ();
+		/// 	}
+		/// }
+		///    </code>
+		/// </example>
+		[Obsolete("Use AttachementFrame instead")]
+		public AttachedPictureFrame(IPicture picture)
+			: base(picture)
+		{
+			if (picture.Type == PictureType.NotAPicture)
+				throw new InvalidCastException("Creating an AttachedPictureFrame from a non-picture object");
+		}
+
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="AttachmentFrame" /> by reading its raw data in
+		///    a specified ID3v2 version.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object starting with the raw
+		///    representation of the new frame.
+		/// </param>
+		/// <param name="version">
+		///    A <see cref="byte" /> indicating the ID3v2 version the
+		///    raw frame is encoded in.
+		/// </param>
+		[Obsolete("Use AttachementFrame instead")]
+		public AttachedPictureFrame(ByteVector data, byte version)
+			: base(data, version)
+		{
+		}
+
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="AttachmentFrame" /> by reading its raw data
+		///    in a specified ID3v2 version.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing the raw
+		///    representation of the new frame.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int" /> indicating at what offset in
+		///    <paramref name="data" /> the frame actually begins.
+		/// </param>
+		/// <param name="header">
+		///    A <see cref="FrameHeader" /> containing the header of the
+		///    frame found at <paramref name="offset" /> in the data.
+		/// </param>
+		/// <param name="version">
+		///    A <see cref="byte" /> indicating the ID3v2 version the
+		///    raw frame is encoded in.
+		/// </param>
+		[Obsolete("Use AttachementFrame instead")]
+		protected internal AttachedPictureFrame(ByteVector data,
+												 int offset,
+												 FrameHeader header,
+												 byte version)
+			: base(data, offset, header, version)
+		{
+		}
+
+		#endregion
+
+	}
+
+
+
+
+
+	/// <summary>
+	///    This class extends <see cref="Frame" />, implementing support for
+	///    ID3v2 General Encapsulated Object (GEOB) Frames.
+	/// </summary>
+	/// <remarks>
+	///    <para>A <see cref="GeneralEncapsulatedObjectFrame" /> should be
+	///    used for storing files and other objects relevant to the file but
+	///    not supported by other frames.</para>
+	/// </remarks>
+	[Obsolete("Use AttachementFrame instead")]
+	public class GeneralEncapsulatedObjectFrame : AttachmentFrame
+	{
+
+		#region Constructors
+
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="GeneralEncapsulatedObjectFrame" /> with no
+		///    contents.
+		/// </summary>
+		[Obsolete("Use AttachementFrame instead")]
+		public GeneralEncapsulatedObjectFrame()
+			: base()
+		{
+			Type = PictureType.NotAPicture;
+		}
+
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="GeneralEncapsulatedObjectFrame" /> by reading its
+		///    raw data in a specified ID3v2 version.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object starting with the raw
+		///    representation of the new frame.
+		/// </param>
+		/// <param name="version">
+		///    A <see cref="byte" /> indicating the ID3v2 version the
+		///    raw frame is encoded in.
+		/// </param>
+		[Obsolete("Use AttachementFrame instead")]
+		public GeneralEncapsulatedObjectFrame(ByteVector data,
+											   byte version)
+			: base(data, version)
+		{
+			Type = PictureType.NotAPicture;
+		}
+
+
+		/// <summary>
+		///    Constructs and initializes a new instance of <see
+		///    cref="GeneralEncapsulatedObjectFrame" /> by reading its
+		///    raw data in a specified ID3v2 version.
+		/// </summary>
+		/// <param name="data">
+		///    A <see cref="ByteVector" /> object containing the raw
+		///    representation of the new frame.
+		/// </param>
+		/// <param name="offset">
+		///    A <see cref="int" /> indicating at what offset in
+		///    <paramref name="data" /> the frame actually begins.
+		/// </param>
+		/// <param name="header">
+		///    A <see cref="FrameHeader" /> containing the header of the
+		///    frame found at <paramref name="offset" /> in the data.
+		/// </param>
+		/// <param name="version">
+		///    A <see cref="byte" /> indicating the ID3v2 version the
+		///    raw frame is encoded in.
+		/// </param>
+		[Obsolete("Use AttachementFrame instead")]
+		protected internal GeneralEncapsulatedObjectFrame(ByteVector data,
+														   int offset,
+														   FrameHeader header,
+														   byte version)
+			: base(data, offset, header, version)
+		{
+			Type = PictureType.NotAPicture;
+		}
+
+		#endregion
+
+
+
+		#region Public Properties
+
+		/// <summary>
+		///    Gets and sets the file name of the object stored in the
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the file name of the
+		///    object stored in the current instance.
+		/// </value>
+		[Obsolete("Use AttachementFrame instead")]
+		public string FileName
+		{
+			get
+			{
+				if (Filename != null)
+					return Filename;
+
+				return string.Empty;
+			}
+			set { Filename = value; }
+		}
+
+		/// <summary>
+		///    Gets and sets the object data stored in the current
+		///    instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="ByteVector" /> containing the object data
+		///    stored in the current instance.
+		/// </value>
+		[Obsolete("Use AttachementFrame instead")]
+		public ByteVector Object
+		{
+			get { return Data != null ? Data : new ByteVector(); }
+			set { Data = value; }
+		}
+
+		#endregion
+
+	}
+
+	#endregion
 }

@@ -2330,22 +2330,22 @@ namespace TagLib.Id3v2 {
 		/// </remarks>
 		public override IPicture [] Pictures {
 			get {
-				return new List<AttachedPictureFrame> (
-					GetFrames <AttachedPictureFrame> (
-						FrameType.APIC)).ToArray ();
+				return new List<AttachmentFrame> (
+					GetFrames <AttachmentFrame> ()).ToArray ();
 			}
 			set {
 				RemoveFrames(FrameType.APIC);
-				
-				if(value == null || value.Length == 0)
+				RemoveFrames(FrameType.GEOB);
+
+				if (value == null || value.Length == 0)
 					return;
 				
 				foreach(IPicture picture in value) {
-					AttachedPictureFrame frame =
-						picture as AttachedPictureFrame;
+					AttachmentFrame frame =
+						picture as AttachmentFrame;
 					
 					if (frame == null)
-						frame = new AttachedPictureFrame (
+						frame = new AttachmentFrame (
 							picture);
 					
 					AddFrame (frame);
