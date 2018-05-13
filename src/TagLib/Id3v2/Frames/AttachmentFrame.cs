@@ -1007,16 +1007,6 @@ namespace TagLib.Id3v2 {
 		///    cref="AttachmentFrame" /> with no contents and the
 		///    default values.
 		/// </summary>
-		/// <remarks>
-		///    <para>When a frame is created, it is not automatically
-		///    added to the tag. Consider using <see
-		///    cref="Get(Tag,string,PictureType,bool)" /> for more
-		///    integrated frame creation.</para>
-		///    <para>Additionally, <see cref="TagLib.Tag.Pictures" />
-		///    provides a generic way or getting and setting
-		///    pictures which is preferable to format specific
-		///    code.</para>
-		/// </remarks>
 		[Obsolete("Use AttachementFrame instead")]
 		public AttachedPictureFrame() : base()
 		{
@@ -1034,16 +1024,6 @@ namespace TagLib.Id3v2 {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="picture" /> is <see langword="null" />.
 		/// </exception>
-		/// <remarks>
-		///    <para>When a frame is created, it is not automatically
-		///    added to the tag. Consider using <see
-		///    cref="Get(Tag,string,PictureType,bool)" /> for more
-		///    integrated frame creation.</para>
-		///    <para>Additionally, <see cref="TagLib.Tag.Pictures" />
-		///    provides a generic way or getting and setting
-		///    pictures which is preferable to format specific
-		///    code.</para>
-		/// </remarks>
 		/// <example>
 		///    <para>Add a picture to a file.</para>
 		///    <code lang="C#">

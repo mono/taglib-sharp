@@ -542,7 +542,7 @@ namespace TagLib {
 
 		/// <summary>
 		///    Gets the mime type of from a file-name (it's extensions). 
-		///    More accurate than <see cref="FillInMimeFromData"/>.
+		///    More accurate than <see cref="GetExtensionFromData"/>.
 		///    If the format cannot be identified, it assumed to be a Binary file.
 		/// </summary>
 		/// <param name="name">

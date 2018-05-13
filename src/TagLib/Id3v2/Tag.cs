@@ -118,7 +118,7 @@ namespace TagLib.Id3v2 {
 		public Tag ()
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Tag" /> by reading the contents from a specified
@@ -131,6 +131,10 @@ namespace TagLib.Id3v2 {
 		/// <param name="position">
 		///    A <see cref="long" /> value specify at what position to
 		///    read the tag.
+		/// </param>
+		/// <param name="style">
+		///    A <see cref="ReadStyle"/> value specifying how the media
+		///    data is to be read into the current instance.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="file" /> is <see langword="null" />.
@@ -863,13 +867,13 @@ namespace TagLib.Id3v2 {
 			get {return use_numeric_genres;}
 			set {use_numeric_genres = value;}
 		}
-		
-#endregion
-		
-		
-		
-#region Protected Methods
-		
+
+		#endregion
+
+
+
+		#region Protected Methods
+
 		/// <summary>
 		///    Populates the current instance be reading in a tag from
 		///    a specified position in a specified file.
@@ -880,6 +884,10 @@ namespace TagLib.Id3v2 {
 		/// <param name="position">
 		///    A <see cref="long" /> value specifying the seek position
 		///    at which to read the tag.
+		/// </param>
+		/// <param name="style">
+		///    A <see cref="ReadStyle"/> value specifying how the media
+		///    data is to be read into the current instance.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="file" /> is <see langword="null" />.
@@ -912,7 +920,7 @@ namespace TagLib.Id3v2 {
 			position += Header.Size;
 			Parse (null, file, position, style);
 		}
-		
+
 		/// <summary>
 		///    Populates the current instance by parsing the contents of
 		///    a raw ID3v2 tag, minus the header.
@@ -920,6 +928,20 @@ namespace TagLib.Id3v2 {
 		/// <param name="data">
 		///    A <see cref="ByteVector" /> object containing the content
 		///    of an ID3v2 tag, minus the header.
+		/// </param>
+		/// <param name="file">
+		///    A <see cref="File"/> object containing
+		///    abstraction of the file to read. 
+		///    Ignored if <paramref name="data"/> is not null.
+		/// </param>
+		/// <param name="position">
+		///    A <see cref="int" /> value reference specifying at what
+		///    index in <paramref name="file" />
+		///    at which the frame begins. 
+		/// </param>
+		/// <param name="style">
+		///    A <see cref="ReadStyle"/> value specifying how the media
+		///    data is to be read into the current instance.
 		/// </param>
 		/// <remarks>
 		///    This method must only be called after the internal

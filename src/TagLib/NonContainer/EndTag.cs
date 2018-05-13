@@ -249,13 +249,13 @@ namespace TagLib.NonContainer {
 			
 			return tag;
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Private Methods
-		
+
 		/// <summary>
 		///    Reads a tag ending at a specified position and moves the
 		///    cursor to its start position.
@@ -265,6 +265,10 @@ namespace TagLib.NonContainer {
 		///    position the potential tag ends at. If a tag is found,
 		///    this value will be updated to the position at which the
 		///    found tag starts.
+		/// </param>
+		/// <param name="style">
+		///    A <see cref="ReadStyle"/> value specifying how the media
+		///    data is to be read into the current instance.
 		/// </param>
 		/// <returns>
 		///    A <see cref="TagLib.Tag" /> object representing the tag

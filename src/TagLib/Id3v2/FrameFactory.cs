@@ -93,7 +93,7 @@ namespace TagLib.Id3v2
 		/// </summary>
 		private static List<FrameCreator> frame_creators =
 			new List<FrameCreator> ();
-		
+
 		/// <summary>
 		///    Creates a <see cref="Frame" /> object by reading it from
 		///    raw ID3v2 frame data.
@@ -102,11 +102,17 @@ namespace TagLib.Id3v2
 		///    A <see cref="ByteVector" /> object containing a raw ID3v2
 		///    frame.
 		/// </param>
+		/// <param name="file">
+		///    A <see cref="File"/> object containing
+		///    abstraction of the file to read. 
+		///    Ignored if <paramref name="data"/> is not null.
+		/// </param>
 		/// <param name="offset">
 		///    A <see cref="int" /> value reference specifying at what
-		///    index in <paramref name="data" /> at which the frame
-		///    begins. After reading, it contains the offset of the next
-		///    frame to be read.
+		///    index in <paramref name="file" />, or in 
+		///    <paramref name="data" /> if not null,
+		///    at which the frame begins. After reading, it contains 
+		///    the offset of the next frame to be read.
 		/// </param>
 		/// <param name="version">
 		///    A <see cref="byte" /> value specifying the ID3v2 version
