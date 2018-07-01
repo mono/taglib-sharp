@@ -916,7 +916,7 @@ namespace TagLib.Id3v2 {
 					}
 					
 					if (value.Length > 0)
-						field_list.AddRange (value.Split (new char [] {'/'}));
+						field_list.AddRange (value.Split (new char [] {'/', ';'}));
 				} else {
 					field_list.Add (value);
 				}
