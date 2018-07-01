@@ -244,7 +244,7 @@ namespace TagLib.Tiff
 					ImageTag.AddTag (new XmpTag (xmp_entry.Data.ToString (), this));
 				}
 
-				if (!propertiesStyle.HasFlag(ReadStyle.Average))
+				if ((propertiesStyle & ReadStyle.Average) == 0)
 					return;
 
 				properties = ExtractProperties ();

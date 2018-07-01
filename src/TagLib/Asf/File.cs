@@ -422,7 +422,7 @@ namespace TagLib.Asf {
 				InvariantStartPosition = (long) header.OriginalSize;
 				InvariantEndPosition = Length;
 				
-				if (propertiesStyle.HasFlag(ReadStyle.Average))
+				if ((propertiesStyle & ReadStyle.Average) != 0)
 					properties = header.Properties;
 			} finally {
 				Mode = AccessMode.Closed;

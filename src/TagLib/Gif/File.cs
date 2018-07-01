@@ -281,7 +281,7 @@ namespace TagLib.Gif
 
 				TagTypesOnDisk = TagTypes;
 
-				if (propertiesStyle.HasFlag(ReadStyle.Average))
+				if ((propertiesStyle & ReadStyle.Average) != 0)
 					properties = ExtractProperties ();
 
 			} finally {

@@ -102,7 +102,7 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual(3, pics.Length);
 
 			// Lazy picture check
-			var isLazy = readStyle.HasFlag(ReadStyle.PictureLazy);
+			var isLazy = (readStyle & ReadStyle.PictureLazy) != 0;
 			for (int i = 0; i < 3; i++)
 			{
 				if (isLazy)

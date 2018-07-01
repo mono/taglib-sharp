@@ -343,7 +343,7 @@ namespace TagLib.Ogg
 				codecs.Add (streams [id].Codec);
 			}
 			
-			if (!propertiesStyle.HasFlag(ReadStyle.Average))
+			if ((propertiesStyle & ReadStyle.Average) == 0)
 				return;
 			
 			PageHeader last_header = LastPageHeader;

@@ -390,7 +390,7 @@ namespace TagLib.NonContainer {
 				ReadEnd (InvariantEndPosition, propertiesStyle);
 				
 				// Read the audio properties.
-				properties = (propertiesStyle.HasFlag(ReadStyle.Average)) ?
+				properties = (propertiesStyle & ReadStyle.Average) != 0 ?
 					ReadProperties (InvariantStartPosition,
 						InvariantEndPosition, propertiesStyle) :
 					null;

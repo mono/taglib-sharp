@@ -412,7 +412,7 @@ namespace TagLib.Matroska
 						break;
 
 					case MatroskaID.Tracks:
-						if (Mode != AccessMode.Write && propertiesStyle.HasFlag(ReadStyle.Average))
+						if (Mode != AccessMode.Write && (propertiesStyle & ReadStyle.Average) != 0)
 						{
 							if (valid = child.Read()) ReadTracks(child);
 						}
@@ -1049,7 +1049,7 @@ namespace TagLib.Matroska
 				Array.Resize(ref attachments, tags.Attachments.Length + 1);
 
 				var attach = new Attachment(file_abstraction, (long)file_data.DataOffset, (long)file_data.DataSize);
-				if (Mode == AccessMode.Write || !propertiesStyle.HasFlag(ReadStyle.PictureLazy)) attach.Load();
+				if (Mode == AccessMode.Write || (propertiesStyle & ReadStyle.PictureLazy) == 0) attach.Load();
 
 				attach.Filename = file_name;
 				attach.Description = file_desc != null ? file_desc : file_name;

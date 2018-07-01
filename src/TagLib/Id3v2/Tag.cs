@@ -953,15 +953,15 @@ namespace TagLib.Id3v2 {
 			// If the entire tag is marked as unsynchronized, and this tag
 			// is version id3v2.3 or lower, resynchronize it.
 			bool fullTagUnsynch =  (header.MajorVersion < 4) && 
-				header.Flags.HasFlag(HeaderFlags.Unsynchronisation);
+				(header.Flags & HeaderFlags.Unsynchronisation) != 0;
 
 			// Avoid to load all the ID3 tag if PictureLazy enabled and size is 
 			// significant enough (ID3v4 and later only)
 			if (data == null && 
 				(fullTagUnsynch || 
 				header.TagSize<1024 || 
-				!style.HasFlag(ReadStyle.PictureLazy) || 
-				header.Flags.HasFlag(HeaderFlags.ExtendedHeader)))
+				(style & ReadStyle.PictureLazy) == 0 || 
+				(header.Flags & HeaderFlags.ExtendedHeader) != 0))
 			{
 				file.Seek(position);
 				data = file.ReadBlock((int)header.TagSize);
@@ -977,7 +977,7 @@ namespace TagLib.Id3v2 {
 
 			// Check for the extended header (ID3v2 only)
 			
-			if (header.Flags.HasFlag(HeaderFlags.ExtendedHeader)) {
+			if ((header.Flags & HeaderFlags.ExtendedHeader) != 0) {
 				extended_header = new ExtendedHeader (data,
 					header.MajorVersion);
 				

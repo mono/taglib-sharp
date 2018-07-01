@@ -305,7 +305,7 @@ namespace TagLib.Mpeg {
 		protected override void ReadStart (long start,
 		                                   ReadStyle propertiesStyle)
 		{
-			if (!propertiesStyle.HasFlag(ReadStyle.Average))
+			if ((propertiesStyle & ReadStyle.Average) == 0)
 				return;
 			
 			FindMarker (ref start, Marker.SystemSyncPacket);
@@ -332,7 +332,7 @@ namespace TagLib.Mpeg {
 			GetTag (TagTypes.Id3v1, true);
 			GetTag (TagTypes.Id3v2, true);
 			
-			if (!propertiesStyle.HasFlag(ReadStyle.Average) ||
+			if ((propertiesStyle & ReadStyle.Average) == 0 ||
 				start_time == null)
 				return;
 
