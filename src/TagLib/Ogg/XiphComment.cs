@@ -53,12 +53,6 @@ namespace TagLib.Ogg
 		private string vendor_id;
 
 		/// <summary>
-		///    Contains the field identifier to use for <see
-		///    cref="Comment" />.
-		/// </summary>
-		private string comment_field = "DESCRIPTION";
-
-		/// <summary>
 		///    Picture instances parsed from the fields.
 		/// </summary>
 		private IPicture[] pictures = null;

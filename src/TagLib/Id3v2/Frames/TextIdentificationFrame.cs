@@ -988,7 +988,7 @@ namespace TagLib.Id3v2 {
 				StringBuilder data = new StringBuilder ();
 				foreach (string s in text) {
 					if (!prev_value_indexed) {
-						data.Append ("/").Append (s);
+						data.Append (";").Append (s);
 						continue;
 					}
 					
