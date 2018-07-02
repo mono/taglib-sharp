@@ -954,7 +954,7 @@ namespace TagLib.Tests.TaggingFormats
 		[Test]
 		public void TestAttachedPictureFrame ()
 		{
-			AttachedPictureFrame frame = new AttachedPictureFrame ();
+			AttachmentFrame frame = new AttachmentFrame ();
 			
 			string mime = "image/png";
 			string desc = "description";
@@ -973,15 +973,15 @@ namespace TagLib.Tests.TaggingFormats
 			
 			FrameTest (frame, 2,
 				delegate (Frame f, StringType e) {
-					(f as AttachedPictureFrame).TextEncoding = e;
+					(f as AttachmentFrame).TextEncoding = e;
 				},
 				
 				delegate (ByteVector d, byte v) {
-					return new AttachedPictureFrame (d, v);
+					return new AttachmentFrame (d, v);
 				},
 				
 				delegate (Frame f, string m) {
-					AttachedPictureFrame g = (f as AttachedPictureFrame);
+					AttachmentFrame g = (f as AttachmentFrame);
 					Assert.AreEqual (mime, g.MimeType, m);
 					Assert.AreEqual (desc, g.Description, m);
 					Assert.AreEqual (data, g.Data, m);
@@ -1017,10 +1017,11 @@ namespace TagLib.Tests.TaggingFormats
 		[Test]
 		public void TestGeneralEncapsulatedObjectFrame ()
 		{
-			GeneralEncapsulatedObjectFrame frame = new GeneralEncapsulatedObjectFrame ();
+			AttachmentFrame frame = new AttachmentFrame();
 			
 			string name = "TEST.txt";
 			string mime = "text/plain";
+			PictureType type = PictureType.NotAPicture;
 			string desc = "description";
 			ByteVector data = val_sing;
 			data.Add (data); data.Add (data); data.Add (data);
@@ -1030,26 +1031,29 @@ namespace TagLib.Tests.TaggingFormats
 			// data.Add (data); data.Add (data); data.Add (data);
 			
 			
-			frame.FileName = name;
+			frame.Filename = name;
 			frame.MimeType = mime;
 			frame.Description = desc;
-			frame.Object = data;
-			
+			frame.Data = data;
+			frame.Type = type;
+
+
 			FrameTest (frame, 2,
 				delegate (Frame f, StringType e) {
-					(f as GeneralEncapsulatedObjectFrame).TextEncoding = e;
+					(f as AttachmentFrame).TextEncoding = e;
 				},
 				
 				delegate (ByteVector d, byte v) {
-					return new GeneralEncapsulatedObjectFrame (d, v);
+					return new AttachmentFrame(d, v);
 				},
 				
 				delegate (Frame f, string m) {
-					GeneralEncapsulatedObjectFrame g = (f as GeneralEncapsulatedObjectFrame);
-					Assert.AreEqual (name, g.FileName, m);
-					Assert.AreEqual (mime, g.MimeType, m);
+					var g = (f as AttachmentFrame);
+					Assert.AreEqual(type, g.Type, m);
+					Assert.AreEqual (name, g.Filename, m);
+					Assert.AreEqual(mime, g.MimeType, m);
 					Assert.AreEqual (desc, g.Description, m);
-					Assert.AreEqual (data, g.Object, m);
+					Assert.AreEqual (data, g.Data, m);
 				});
 		}
 		

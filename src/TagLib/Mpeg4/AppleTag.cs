@@ -1665,7 +1665,6 @@ namespace TagLib.Mpeg4 {
 				
 				foreach (AppleDataBox box in DataBoxes(BoxType.Covr)) {
 					Picture p = new Picture (box.Data);
-					p.Type = PictureType.FrontCover;
 					l.Add (p);
 				}
 				
@@ -1689,8 +1688,11 @@ namespace TagLib.Mpeg4 {
 					else if (value [i].MimeType == "image/png")
 						type = (uint)
 							AppleDataBox.FlagType.ContainsPngData;
-					
-					boxes [i] = new AppleDataBox (value [i].Data, type);
+					else if (value[i].MimeType == "image/x-windows-bmp")
+						type = (uint)
+							AppleDataBox.FlagType.ContainsBmpData;
+
+					boxes[i] = new AppleDataBox (value [i].Data, type);
 				}
 				
 				SetData(BoxType.Covr, boxes);

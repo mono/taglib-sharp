@@ -36,9 +36,9 @@ using System.Runtime.Serialization;
 namespace TagLib {
 	
 	/// <summary>
-	///    Specifies the level of intensity to use when reading the media
-	///    properties.
+	///    Specifies the options to use when reading the media.
 	/// </summary>
+	[Flags]
 	public enum ReadStyle {
 		/// <summary>
 		///    The media properties will not be read.
@@ -51,8 +51,15 @@ namespace TagLib {
 		///    The media properties will be read with average accuracy.
 		/// </summary>
 		Average = 2,
-		
-		// Accurate = 3
+
+		/// <summary>
+		///    Use the <see cref="PictureLazy"/> class in the 
+		///    the property <see cref="Tag.Pictures"/>. 
+		///    This will avoid loading picture content when reading the Tag.
+		///    Picture will be read lazily, when the picture content is 
+		///    accessed.
+		/// </summary>
+		PictureLazy = 4
 	}
 	
 	/// <summary>
@@ -162,7 +169,7 @@ namespace TagLib {
 		/// <summary>
 		///    Contains the internal file abstraction.
 		/// </summary>
-		private IFileAbstraction file_abstraction;
+		protected IFileAbstraction file_abstraction;
 		
 		/// <summary>
 		///    Contains the mime-type of the file as provided by <see
@@ -447,7 +454,15 @@ namespace TagLib {
 				Mode = value;
 			}
 		}
-		
+
+		/// <summary>
+		/// Gets the <see cref="IFileAbstraction"/> representing the file.
+		/// </summary>
+		public IFileAbstraction FileAbstraction
+		{
+			get { return file_abstraction; }
+		}
+
 		/// <summary>
 		///    Indicates if tags can be written back to the current file or not
 		/// </summary>
@@ -1385,6 +1400,34 @@ namespace TagLib {
 
 
 		#region Private/Protected Methods
+
+		/// <summary>
+		///    Prepare to Save the file. Thismust be called at the begining 
+		///    of every File.Save() method.
+		/// </summary>
+		protected void PreSave()
+		{
+			// Check validity
+
+			if (!Writeable)
+				throw new InvalidOperationException("File not writeable.");
+
+			if (PossiblyCorrupt)
+				throw new CorruptFileException("Corrupted file cannot be saved.");
+
+			// All the Lazy objects must be loaded before opening the file
+			// in Write mode
+			if (Tag?.Pictures != null)
+			{
+				foreach (var pic in Tag.Pictures)
+				{
+					if (pic is ILazy lazy)
+					{
+						lazy.Load();
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		///    Inserts a specified block into the file repesented

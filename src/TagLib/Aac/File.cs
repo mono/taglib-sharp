@@ -219,7 +219,7 @@ namespace TagLib.Aac
 		{
 			// Only check the first 16 bytes so we're not stuck
 			// reading a bad file forever.
-			if (propertiesStyle != ReadStyle.None &&
+			if ((propertiesStyle & ReadStyle.Average) != 0 &&
 				!AudioHeader.Find (out first_header, this,
 					start, 0x4000))
 				throw new CorruptFileException (

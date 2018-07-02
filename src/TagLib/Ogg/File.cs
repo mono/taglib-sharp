@@ -172,6 +172,9 @@ namespace TagLib.Ogg
 		/// </summary>
 		public override void Save ()
 		{
+			// Boilerplate
+			PreSave();
+
 			Mode = AccessMode.Write;
 			try {
 				long end;
@@ -340,7 +343,7 @@ namespace TagLib.Ogg
 				codecs.Add (streams [id].Codec);
 			}
 			
-			if (propertiesStyle == ReadStyle.None)
+			if ((propertiesStyle & ReadStyle.Average) == 0)
 				return;
 			
 			PageHeader last_header = LastPageHeader;

@@ -39,7 +39,7 @@ namespace TagLib.Id3v2 {
 		/// <summary>
 		///    Contains the frame's header.
 		/// </summary>
-		private FrameHeader header;
+		protected FrameHeader header;
 		
 		/// <summary>
 		///    Contains the frame's grouping ID.
@@ -525,7 +525,7 @@ namespace TagLib.Id3v2 {
 		public virtual Frame Clone ()
 		{
 			int index = 0;
-			return FrameFactory.CreateFrame (Render (4), ref index,
+			return FrameFactory.CreateFrame(Render(4), null, ref index,
 				4, false);
 		}
 		

@@ -244,6 +244,9 @@ namespace TagLib.Aiff
 		/// </summary>
 		public override void Save()
 		{
+			// Boilerplate
+			PreSave();
+
 			Mode = AccessMode.Write;
 			try
 			{
@@ -517,7 +520,7 @@ namespace TagLib.Aiff
 				if (read_tags && tag == null)
 				{
 					tag = new Id3v2.Tag(this,
-					                    id3_chunk_pos + 8);
+					                    id3_chunk_pos + 8, style);
 				}
 
 				// Get the length of the tag out of the ID3 chunk

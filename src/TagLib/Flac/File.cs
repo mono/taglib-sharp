@@ -186,6 +186,9 @@ namespace TagLib.Flac {
 		/// </summary>
 		public override void Save ()
 		{
+			// Boilerplate
+			PreSave();
+
 			Mode = AccessMode.Write;
 			try {
 				// Update the tags at the beginning of the file.
@@ -363,7 +366,7 @@ namespace TagLib.Flac {
 			
 			TagTypesOnDisk |= metadata.TagTypes;
 			
-			if (propertiesStyle != ReadStyle.None) {
+			if ((propertiesStyle & ReadStyle.Average) != 0) {
 				// Check that the first block is a
 				// METADATA_BLOCK_STREAMINFO.
 				if (blocks.Count == 0 ||

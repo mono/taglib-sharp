@@ -208,8 +208,8 @@ namespace TagLib.NonContainer {
 		/// </param>
 		public void Read (out long start, out long end)
 		{
-			start = ReadStart ();
-			end = ReadEnd ();
+			start = ReadStart (ReadStyle.None);
+			end = ReadEnd (ReadStyle.None);
 		}
 		
 		/// <summary>
@@ -221,9 +221,9 @@ namespace TagLib.NonContainer {
 		///    in the file at which the read tags end. This also
 		///    marks the seek position at which the media begins.
 		/// </returns>
-		public long ReadStart ()
+		public long ReadStart (ReadStyle style)
 		{
-			return start_tag.Read ();
+			return start_tag.Read (style);
 		}
 		
 		/// <summary>
@@ -235,9 +235,9 @@ namespace TagLib.NonContainer {
 		///    in the file at which the read tags begin. This also
 		///    marks the seek position at which the media ends.
 		/// </returns>
-		public long ReadEnd ()
+		public long ReadEnd (ReadStyle style)
 		{
-			return end_tag.Read ();
+			return end_tag.Read (style);
 		}
 		
 		/// <summary>

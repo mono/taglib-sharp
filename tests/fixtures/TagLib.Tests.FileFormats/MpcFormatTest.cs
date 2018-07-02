@@ -1,6 +1,7 @@
 using System;
 using NUnit.Framework;
 using TagLib;
+using static TagLib.Tests.FileFormats.StandardTests;
 
 namespace TagLib.Tests.FileFormats
 {   
@@ -41,7 +42,20 @@ namespace TagLib.Tests.FileFormats
 		{
 			StandardTests.WriteStandardTags (sample_file, tmp_file);
 		}
-		
+
+		[Test]
+		public void WriteStandardPictures()
+		{
+			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.None, TestTagLevel.Normal);
+		}
+
+		[Test]
+		[Ignore("PictureLazy not supported yet")]
+		public void WriteStandardPicturesLazy()
+		{
+			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.PictureLazy, TestTagLevel.Normal);
+		}
+
 		[Test]
 		public void TestCorruptionResistance()
 		{

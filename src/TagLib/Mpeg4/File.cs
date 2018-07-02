@@ -204,6 +204,9 @@ namespace TagLib.Mpeg4 {
 		/// </summary>
 		public override void Save ()
 		{
+			// Boilerplate
+			PreSave();
+
 			if (udta_boxes.Count == 0) {
 				IsoUserDataBox udtaBox = new IsoUserDataBox ();
 				udta_boxes.Add(udtaBox);
@@ -387,7 +390,7 @@ namespace TagLib.Mpeg4 {
 			try {
 				FileParser parser = new FileParser (this);
 				
-				if (propertiesStyle == ReadStyle.None)
+				if ((propertiesStyle & ReadStyle.Average) == 0)
 					parser.ParseTag ();
 				else
 					parser.ParseTagAndProperties ();
@@ -416,7 +419,7 @@ namespace TagLib.Mpeg4 {
 				tag.SetTags (apple_tag);
 				
 				// If we're not reading properties, we're done.
-				if (propertiesStyle == ReadStyle.None) {
+				if ((propertiesStyle & ReadStyle.Average) == 0) {
 					Mode = AccessMode.Closed;
 					return;
 				}

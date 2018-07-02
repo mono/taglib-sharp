@@ -244,7 +244,7 @@ namespace TagLib.Tiff.Rw2
 
 				TagTypesOnDisk = TagTypes;
 
-				if (propertiesStyle != ReadStyle.None)
+				if ((propertiesStyle & ReadStyle.Average) != 0)
 					properties = ExtractProperties ();
 
 			} finally {

@@ -229,6 +229,9 @@ namespace TagLib.Png
 		/// </summary>
 		public override void Save ()
 		{
+			// Boilerplate
+			PreSave();
+
 			Mode = AccessMode.Write;
 			try {
 				SaveMetadata ();
@@ -262,7 +265,7 @@ namespace TagLib.Png
 
 				TagTypesOnDisk = TagTypes;
 
-				if (propertiesStyle != ReadStyle.None)
+				if ((propertiesStyle & ReadStyle.Average) != 0)
 					properties = ExtractProperties ();
 
 			} finally {

@@ -201,6 +201,9 @@ namespace TagLib.NonContainer {
 		/// </summary>
 		public override void Save ()
 		{
+			// Boilerplate
+			PreSave();
+
 			long start, end;
 			Mode = AccessMode.Write;
 			try {
@@ -374,7 +377,7 @@ namespace TagLib.NonContainer {
 				
 				// Read the tags and property data at the beginning of
 				// the file.
-				InvariantStartPosition = tag.ReadStart ();
+				InvariantStartPosition = tag.ReadStart (propertiesStyle);
 				TagTypesOnDisk |= StartTag.TagTypes;
 				ReadStart (InvariantStartPosition, propertiesStyle);
 				
@@ -382,12 +385,12 @@ namespace TagLib.NonContainer {
 				// file.
 				InvariantEndPosition =
 					(InvariantStartPosition == Length) ?
-					Length : tag.ReadEnd ();
+					Length : tag.ReadEnd (propertiesStyle);
 				TagTypesOnDisk |= EndTag.TagTypes;
 				ReadEnd (InvariantEndPosition, propertiesStyle);
 				
 				// Read the audio properties.
-				properties = (propertiesStyle != ReadStyle.None) ?
+				properties = (propertiesStyle & ReadStyle.Average) != 0 ?
 					ReadProperties (InvariantStartPosition,
 						InvariantEndPosition, propertiesStyle) :
 					null;

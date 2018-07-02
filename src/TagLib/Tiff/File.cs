@@ -167,6 +167,9 @@ namespace TagLib.Tiff
 		/// </summary>
 		public override void Save ()
 		{
+			// Boilerplate
+			PreSave();
+
 			Mode = AccessMode.Write;
 			try {
 				WriteFile ();
@@ -241,7 +244,7 @@ namespace TagLib.Tiff
 					ImageTag.AddTag (new XmpTag (xmp_entry.Data.ToString (), this));
 				}
 
-				if (propertiesStyle == ReadStyle.None)
+				if ((propertiesStyle & ReadStyle.Average) == 0)
 					return;
 
 				properties = ExtractProperties ();

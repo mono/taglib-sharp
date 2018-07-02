@@ -179,6 +179,9 @@ namespace TagLib.Asf {
 		/// </summary>
 		public override void Save ()
 		{
+			// Boilerplate
+			PreSave();
+
 			Mode = AccessMode.Write;
 			try {
 				HeaderObject header = new HeaderObject (this, 0);
@@ -419,7 +422,7 @@ namespace TagLib.Asf {
 				InvariantStartPosition = (long) header.OriginalSize;
 				InvariantEndPosition = Length;
 				
-				if (propertiesStyle != ReadStyle.None)
+				if ((propertiesStyle & ReadStyle.Average) != 0)
 					properties = header.Properties;
 			} finally {
 				Mode = AccessMode.Closed;

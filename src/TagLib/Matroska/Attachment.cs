@@ -30,7 +30,7 @@ namespace TagLib.Matroska
 	/// Describes a Matroska Attachment. 
 	/// Attachments may be pictures, but also any other content type.
 	/// </summary>
-	public class Attachment : Picture, IUIDElement
+	public class Attachment : PictureLazy, IUIDElement
 	{
 		#region Constructors
 
@@ -68,13 +68,20 @@ namespace TagLib.Matroska
 		///    A <see cref="TagLib.File.IFileAbstraction"/> object containing
 		///    abstraction of the file to read.
 		/// </param>
+		/// <param name="offset">
+		///    The position in bytes where the picture is located in the
+		///    <see cref="T:File.IFileAbstraction"/>.
+		/// </param>
+		/// <param name="size">
+		///    The size in bytes of the picture in the
+		///    <see cref="T:File.IFileAbstraction"/> (default: read all).
+		/// </param>
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public Attachment(File.IFileAbstraction abstraction) : base(abstraction)
+		public Attachment(File.IFileAbstraction abstraction, long offset = 0, long size = -1) : base(abstraction, offset, size)
 		{
-			SetTypeFromFilename();
 		}
 
 		/// <summary>

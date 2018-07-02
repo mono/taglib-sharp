@@ -118,13 +118,13 @@ namespace TagLib.NonContainer {
 		///    in the file at which the read tags end. This also
 		///    marks the seek position at which the media begins.
 		/// </returns>
-		public long Read ()
+		public long Read (ReadStyle style)
 		{
 			TagLib.Tag tag;
 			ClearTags ();
 			long end = 0;
 			
-			while ((tag = ReadTag (ref end)) != null)
+			while ((tag = ReadTag (ref end, style)) != null)
 				AddTag (tag);
 			
 			return end;
@@ -237,13 +237,13 @@ namespace TagLib.NonContainer {
 			
 			return tag;
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Private Methods
-		
+
 		/// <summary>
 		///    Reads a tag starting at a specified position and moves the
 		///    cursor to its start position.
@@ -254,12 +254,16 @@ namespace TagLib.NonContainer {
 		///    this value will be updated to the position at which the
 		///    found tag ends.
 		/// </param>
+		/// <param name="style">
+		///    A <see cref="ReadStyle"/> value specifying how the media
+		///    data is to be read into the current instance.
+		/// </param>
 		/// <returns>
 		///    A <see cref="TagLib.Tag" /> object representing the tag
 		///    found at the specified position, or <see langword="null"
 		///    /> if no tag was found.
 		/// </returns>
-		private TagLib.Tag ReadTag (ref long start)
+		private TagLib.Tag ReadTag (ref long start, ReadStyle style)
 		{
 			long end = start;
 			TagTypes type = ReadTagInfo (ref end);
@@ -270,7 +274,7 @@ namespace TagLib.NonContainer {
 					tag = new TagLib.Ape.Tag (file, start);
 					break;
 				case TagTypes.Id3v2:
-					tag = new TagLib.Id3v2.Tag (file, start);
+					tag = new TagLib.Id3v2.Tag (file, start, style);
 					break;
 			}
 

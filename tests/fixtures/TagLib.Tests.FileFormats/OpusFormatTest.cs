@@ -42,13 +42,28 @@ namespace TagLib.Tests.FileFormats
 			StandardTests.WriteStandardTags (sample_file, tmp_file);
 		}
 
-				[Test]
-				public void WriteExtendedTags()
-				{
-					ExtendedTests.WriteExtendedTags(sample_file, tmp_file);
-				}
+		[Test]
+		public void WriteExtendedTags()
+		{
+			ExtendedTests.WriteExtendedTags(sample_file, tmp_file);
+		}
 
-				[Test]
+
+		[Test]
+		public void WriteStandardPictures()
+		{
+			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.None);
+		}
+
+		[Test]
+		[Ignore("PictureLazy not supported yet")]
+		public void WriteStandardPicturesLazy()
+		{
+			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.PictureLazy);
+		}
+
+
+		[Test]
 		public void TestCorruptionResistance()
 		{
 			StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/a.opus");
