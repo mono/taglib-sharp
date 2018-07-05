@@ -38,7 +38,27 @@ namespace TagLib.Tests.FileFormats
 			Assert.AreEqual(7, file.Tag.TrackCount);
 			Assert.AreEqual(1234, file.Tag.Year);
 		}
-		
+
+		[Test]
+		public void MultiGenresTest()
+		{
+			string inFile = TestPath.Samples + "sample.mp3";
+			string tempFile = TestPath.Samples + "tmpwrite.mp3";
+
+			File rgFile = File.Create(inFile);
+			var tag = rgFile.Tag;
+			var genres = tag.Genres;
+
+			Assert.AreEqual(3, genres.Length);
+			Assert.AreEqual("Genre 1", genres[0]);
+			Assert.AreEqual("Genre 2", genres[1]);
+			Assert.AreEqual("Genre 3", genres[2]);
+
+			rgFile.Dispose();
+			System.IO.File.Delete(tempFile);
+		}
+
+
 		[Test]
 		public void WriteStandardTags ()
 		{
