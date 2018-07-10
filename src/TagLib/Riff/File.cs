@@ -478,11 +478,16 @@ namespace TagLib.Riff
 			// Read until there are less than 8 bytes to read.
 			do {
 				bool tag_found = false;
-				
+
+				// Check if the current position is an odd number and increment it so it is even
+				// This is done when the previous chunk size was an odd number.
+				// If this is not done, the chunk being read after the odd chunk will not be read.
+				if (position > 12 && (position & 1) != 0) { position++; }
+
 				Seek (position);
 				string fourcc = ReadBlock (4).ToString (StringType.UTF8);
 				size = ReadBlock (4).ToUInt (false);
-				
+
 				switch (fourcc)
 				{
 				
