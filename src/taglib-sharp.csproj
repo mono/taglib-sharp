@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net40;netstandard2.0</TargetFrameworks>
-    <Version>2.1.0.0</Version>
+    <Version>2.2.0.0</Version>
     <PackageId>TagLib#</PackageId>
     <Product>TagLib#</Product>
     <Description>A library for reading and writing audio metatags.</Description>
