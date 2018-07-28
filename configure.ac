@@ -1,5 +1,5 @@
 AC_INIT([taglib-sharp], [2.2.0.0])
-AM_INIT_AUTOMAKE([1.15 dist-bzip2 tar-ustar foreign])
+AM_INIT_AUTOMAKE([1.14.1 dist-bzip2 tar-ustar foreign])
 AM_MAINTAINER_MODE
 
 ASSEMBLY_NAME="$PACKAGE"
