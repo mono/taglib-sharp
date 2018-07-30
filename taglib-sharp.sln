@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27926.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taglib-sharp", "src\taglib-sharp.csproj", "{6B143A39-C7B2-4743-9917-92262C60E9A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "taglib-sharp", "src\taglib-sharp.csproj", "{6B143A39-C7B2-4743-9917-92262C60E9A6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{4D1C6110-D6F2-496E-BD7E-E45B7217D458}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "debug", "debug\debug.csproj", "{AD739881-60F3-4165-9C4E-3B5CD95469F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "debug", "debug\debug.csproj", "{AD739881-60F3-4165-9C4E-3B5CD95469F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +30,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB15318A-3210-44B1-B0BA-CCCCA2EF6688}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = tests\tests.csproj
