@@ -656,7 +656,36 @@ namespace TagLib.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
+		[Test]
+		public void TestMusicBrainzReleaseGroupID()
+		{
+			Id3v2.Tag tag = new Id3v2.Tag();
+			for (byte version = 2; version <= 4; version++)
+			{
+				tag.Version = version;
+
+				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+					Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull(t.MusicBrainzReleaseGroupId, "Initial (Null): " + m);
+				});
+
+				tag.MusicBrainzReleaseGroupId = val_sing;
+
+				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+					Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual(val_sing, t.MusicBrainzReleaseGroupId, "Value Set (!Null): " + m);
+				});
+
+				tag.MusicBrainzReleaseGroupId = string.Empty;
+
+				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+					Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull(t.MusicBrainzReleaseGroupId, "Value Cleared (Null): " + m);
+				});
+			}
+		}
+
 		[Test]
 		public void TestMusicBrainzReleaseArtistID ()
 		{
@@ -1410,10 +1439,10 @@ namespace TagLib.Tests.TaggingFormats
 				});
 		}
 		
-		private delegate void TagTestFunc (Id3v2.Tag tag, string msg);
+		delegate void TagTestFunc (Id3v2.Tag tag, string msg);
 		
-		private void TagTestWithSave (ref Id3v2.Tag tag,
-		                              TagTestFunc testFunc)
+		void TagTestWithSave (ref Id3v2.Tag tag,
+		                      TagTestFunc testFunc)
 		{
 			testFunc (tag, "Before Save");
 			for (byte version = 2; version <= 4; version ++) {
@@ -1433,18 +1462,18 @@ namespace TagLib.Tests.TaggingFormats
 			}
 		}
 		
-		private delegate void FrameTestFunc (Frame frame, string msg);
+		delegate void FrameTestFunc (Frame frame, string msg);
 		
-		private delegate void SetEncodingFunc (Frame frame,
-		                                       StringType encoding);
+		delegate void SetEncodingFunc (Frame frame,
+		                               StringType encoding);
 		
-		private delegate Frame CreateFrameFunc (ByteVector data,
-		                                        byte version);
+		delegate Frame CreateFrameFunc (ByteVector data,
+		                                byte version);
 		
-		private void FrameTest (Frame frame, byte minVersion,
-		                        SetEncodingFunc setEncFunc,
-		                        CreateFrameFunc createFunc,
-		                        FrameTestFunc testFunc)
+		void FrameTest (Frame frame, byte minVersion,
+		                SetEncodingFunc setEncFunc,
+		                CreateFrameFunc createFunc,
+		                FrameTestFunc testFunc)
 		{
 			testFunc (frame, "Beginning");
 			for (byte version = minVersion; version <= 4;

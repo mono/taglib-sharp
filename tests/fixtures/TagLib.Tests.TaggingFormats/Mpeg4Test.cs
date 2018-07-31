@@ -578,7 +578,33 @@ namespace TagLib.Tests.TaggingFormats
 				Assert.IsNull (t.MusicBrainzReleaseId, "Value Cleared (Null): " + m);
 			});
 		}
-		
+
+		[Test]
+		public void TestMusicBrainzReleaseGroupID()
+		{
+			MemoryFileAbstraction abst;
+			Mpeg4.File file = CreateFile(out abst);
+
+			TagTestWithSave(ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull(t.MusicBrainzReleaseGroupId, "Initial (Null): " + m);
+			});
+
+			file.Tag.MusicBrainzReleaseGroupId = val_sing;
+
+			TagTestWithSave(ref file, abst, delegate (Tag t, string m) {
+				Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual(val_sing, t.MusicBrainzReleaseGroupId, "Value Set (!Null): " + m);
+			});
+
+			file.Tag.MusicBrainzReleaseGroupId = string.Empty;
+
+			TagTestWithSave(ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull(t.MusicBrainzReleaseGroupId, "Value Cleared (Null): " + m);
+			});
+		}
+
 		[Test]
 		public void TestMusicBrainzReleaseArtistID ()
 		{
@@ -849,11 +875,11 @@ namespace TagLib.Tests.TaggingFormats
 			return new Mpeg4.File (abst, ReadStyle.None);
 		}
 		
-		private delegate void TagTestFunc (Tag tag, string msg);
+		delegate void TagTestFunc (Tag tag, string msg);
 		
-		private void TagTestWithSave (ref Mpeg4.File file,
-		                              MemoryFileAbstraction abst,
-		                              TagTestFunc testFunc)
+		void TagTestWithSave (ref Mpeg4.File file,
+		                      MemoryFileAbstraction abst,
+		                      TagTestFunc testFunc)
 		{
 			testFunc (file.GetTag (TagTypes.Apple), "Before Save");
 			file.Save ();
