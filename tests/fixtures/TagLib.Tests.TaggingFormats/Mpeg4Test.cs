@@ -875,11 +875,11 @@ namespace TagLib.Tests.TaggingFormats
 			return new Mpeg4.File (abst, ReadStyle.None);
 		}
 		
-		private delegate void TagTestFunc (Tag tag, string msg);
+		delegate void TagTestFunc (Tag tag, string msg);
 		
-		private void TagTestWithSave (ref Mpeg4.File file,
-									  MemoryFileAbstraction abst,
-									  TagTestFunc testFunc)
+		void TagTestWithSave (ref Mpeg4.File file,
+		                      MemoryFileAbstraction abst,
+		                      TagTestFunc testFunc)
 		{
 			testFunc (file.GetTag (TagTypes.Apple), "Before Save");
 			file.Save ();

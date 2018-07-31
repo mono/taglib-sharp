@@ -832,10 +832,10 @@ namespace TagLib.Tests.TaggingFormats
 			Assert.IsTrue (tag.IsEmpty, "Should be empty.");
 		}
 		
-		private delegate void TagTestFunc (Ape.Tag tag, string msg);
+		delegate void TagTestFunc (Ape.Tag tag, string msg);
 		
-		private void TagTestWithSave (ref Ape.Tag tag,
-									  TagTestFunc testFunc)
+		void TagTestWithSave (ref Ape.Tag tag,
+		                      TagTestFunc testFunc)
 		{
 			testFunc (tag, "Before Save");
 			tag = new Ape.Tag (tag.Render ());

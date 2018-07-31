@@ -879,10 +879,10 @@ namespace TagLib.Tests.TaggingFormats
 			Assert.IsTrue (tag.IsEmpty, "Should be empty.");
 		}
 		
-		private delegate void TagTestFunc (Ogg.XiphComment tag, string msg);
+		delegate void TagTestFunc (Ogg.XiphComment tag, string msg);
 		
-		private void TagTestWithSave (ref Ogg.XiphComment tag,
-									  TagTestFunc testFunc)
+		void TagTestWithSave (ref Ogg.XiphComment tag,
+		                      TagTestFunc testFunc)
 		{
 			testFunc (tag, "Before Save");
 			tag = new Ogg.XiphComment (tag.Render (true));

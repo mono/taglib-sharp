@@ -882,11 +882,11 @@ namespace TagLib.Tests.TaggingFormats
 			return new Asf.File (abst);
 		}
 		
-		private delegate void TagTestFunc (Tag tag, string msg);
+		delegate void TagTestFunc (Tag tag, string msg);
 		
-		private void TagTestWithSave (ref Asf.File file,
-									  MemoryFileAbstraction abst,
-									  TagTestFunc testFunc)
+		void TagTestWithSave (ref Asf.File file,
+		                      MemoryFileAbstraction abst,
+		                      TagTestFunc testFunc)
 		{
 			testFunc (file.Tag, "Before Save");
 			file.Save ();

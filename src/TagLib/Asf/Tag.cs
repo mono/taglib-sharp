@@ -230,7 +230,7 @@ namespace TagLib.Asf {
 		///    name="names" /> and the rest will be cleared.
 		/// </remarks>
 		public void SetDescriptorString (string value,
-										 params string [] names)
+		                                 params string [] names)
 		{
 			if (names == null)
 				throw new ArgumentNullException ("names");
@@ -269,7 +269,7 @@ namespace TagLib.Asf {
 		///    name="names" /> and the rest will be cleared.
 		/// </remarks>
 		public void SetDescriptorStrings (string [] value,
-										  params string [] names)
+		                                  params string [] names)
 		{
 			if (names == null)
 				throw new ArgumentNullException ("names");

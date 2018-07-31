@@ -1288,10 +1288,8 @@ namespace TagLib {
 		///    tag.</para>
 		/// </remarks>
 		/// <seealso cref="Tag.MusicBrainzReleaseGroupId" />
-		public override string MusicBrainzReleaseGroupId
-		{
-			get
-			{
+		public override string MusicBrainzReleaseGroupId {
+			get {
 				foreach (Tag tag in tags)
 				{
 					if (tag == null)
@@ -1306,8 +1304,7 @@ namespace TagLib {
 				return null;
 			}
 
-			set
-			{
+			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.MusicBrainzReleaseGroupId = value;

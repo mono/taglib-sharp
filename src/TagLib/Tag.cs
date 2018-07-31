@@ -1409,7 +1409,7 @@ namespace TagLib {
 		/// </exception>
 		[Obsolete("Use Tag.CopyTo(Tag,bool)")]
 		public static void Duplicate (Tag source, Tag target,
-									  bool overwrite)
+		                              bool overwrite)
 		{
 			if (source == null)
 				throw new ArgumentNullException ("source");
