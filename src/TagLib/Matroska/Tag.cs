@@ -1234,6 +1234,21 @@ namespace TagLib.Matroska
 		}
 
 		/// <summary>
+		///    Gets and sets the MusicBrainz Release Group ID of
+		///    the media described by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz 
+		///    ReleaseGroupID for the media described by the current
+		///    instance or null if no value is present.
+		/// </value>
+		public override string MusicBrainzReleaseGroupId
+		{
+			get { return null; }
+			set { }
+		}
+
+		/// <summary>
 		///    Gets and sets the MusicBrainz Release ID of
 		///    the media described by the current instance.
 		/// </summary>

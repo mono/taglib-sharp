@@ -180,7 +180,7 @@ namespace TagLib.Mpeg4 {
 		///    matching boxes.
 		/// </returns>
 		public IEnumerable<AppleDataBox> DataBoxes (string mean,
-		                                            string name)
+													string name)
 		{
 			// These children will have a box type of "----"
 			foreach (Box box in ilst_box.Children) {
@@ -301,7 +301,7 @@ namespace TagLib.Mpeg4 {
 		///    the added boxes.
 		/// </param>
 		public void SetData (ByteVector type, ByteVectorCollection data,
-		                     uint flags)
+							 uint flags)
 		{
 			if (data == null || data.Count == 0) {
 				ClearData (type);
@@ -332,7 +332,7 @@ namespace TagLib.Mpeg4 {
 		///    the added box.
 		/// </param>
 		public void SetData (ByteVector type, ByteVector data,
-		                     uint flags)
+							 uint flags)
 		{
 			if (data == null || data.Count == 0)
 				ClearData (type);
@@ -340,7 +340,7 @@ namespace TagLib.Mpeg4 {
 				SetData (type, new ByteVectorCollection (data),
 					flags);
 		}
-  	
+	
 		/// <summary>
 		///    Sets the text for a specified box type.
 		/// </summary>
@@ -1341,6 +1341,23 @@ namespace TagLib.Mpeg4 {
 		}
 
 		/// <summary>
+		///    Gets and sets the MusicBrainz ReleaseGroupID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ReleaseGroupID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dash"/"----" box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseGroupId {
+			get { return GetDashBox("com.apple.iTunes", "MusicBrainz Release Group Id"); }
+			set { SetDashBox("com.apple.iTunes", "MusicBrainz Release Group Id", value); }
+		}
+
+		/// <summary>
 		///    Gets and sets the MusicBrainz ReleaseID
 		/// </summary>
 		/// <value>
@@ -1387,8 +1404,8 @@ namespace TagLib.Mpeg4 {
 		///    http://musicbrainz.org/doc/PicardTagMapping
 		/// </remarks>
 		public override string MusicBrainzTrackId {
-		    get {return GetDashBox("com.apple.iTunes","MusicBrainz Track Id");}
-		    set {SetDashBox("com.apple.iTunes", "MusicBrainz Track Id", value);}
+			get {return GetDashBox("com.apple.iTunes","MusicBrainz Track Id");}
+			set {SetDashBox("com.apple.iTunes", "MusicBrainz Track Id", value);}
 		}
 
 		/// <summary>

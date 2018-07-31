@@ -458,7 +458,7 @@ namespace TagLib.Id3v2 {
 		///    <paramref name="ident" /> is not exactly four bytes long.
 		/// </exception>
 		public void SetTextFrame (ByteVector ident,
-		                          params string [] text)
+								  params string [] text)
 		{
 			if (ident == null)
 				throw new ArgumentNullException ("ident");
@@ -518,7 +518,7 @@ namespace TagLib.Id3v2 {
 		/// </exception>
 		[Obsolete("Use SetTextFrame(ByteVector,String[])")]
 		public void SetTextFrame (ByteVector ident,
-		                          StringCollection text)
+								  StringCollection text)
 		{
 			if (text == null || text.Count == 0)
 				RemoveFrames (ident);
@@ -563,7 +563,7 @@ namespace TagLib.Id3v2 {
 		///    <paramref name="ident" /> is not exactly four bytes long.
 		/// </exception>
 		public void SetNumberFrame (ByteVector ident, uint number,
-		                            uint count, string format = "0")
+									uint count, string format = "0")
 		{
 			if (ident == null)
 				throw new ArgumentNullException ("ident");
@@ -2040,6 +2040,23 @@ namespace TagLib.Id3v2 {
 		}
 
 		/// <summary>
+		///    Gets and sets the MusicBrainz ReleaseGroupID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ReleaseGroupID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TXXX:MusicBrainz Release Group Id" frame.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseGroupId {
+			get { return GetUserTextAsString("MusicBrainz Release Group Id"); }
+			set { SetUserTextAsString("MusicBrainz Release Group Id", value); }
+		}
+
+		/// <summary>
 		///    Gets and sets the MusicBrainz ReleaseID
 		/// </summary>
 		/// <value>
@@ -2086,8 +2103,8 @@ namespace TagLib.Id3v2 {
 		///    http://musicbrainz.org/doc/PicardTagMapping
 		/// </remarks>
 		public override string MusicBrainzTrackId {
-		    get { return GetUfidText ("http://musicbrainz.org");}
-		    set {SetUfidText ("http://musicbrainz.org", value);}
+			get { return GetUfidText ("http://musicbrainz.org");}
+			set {SetUfidText ("http://musicbrainz.org", value);}
 		}
 
 		/// <summary>

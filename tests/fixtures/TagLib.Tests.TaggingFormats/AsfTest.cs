@@ -578,7 +578,33 @@ namespace TagLib.Tests.TaggingFormats
 				Assert.IsNull (t.MusicBrainzReleaseId, "Value Cleared (Null): " + m);
 			});
 		}
-		
+
+		[Test]
+		public void TestMusicBrainzReleaseGroupID()
+		{
+			MemoryFileAbstraction abst;
+			Asf.File file = CreateFile(out abst);
+
+			TagTestWithSave(ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull(t.MusicBrainzReleaseGroupId, "Initial (Null): " + m);
+			});
+
+			file.Tag.MusicBrainzReleaseGroupId = val_sing;
+
+			TagTestWithSave(ref file, abst, delegate (Tag t, string m) {
+				Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual(val_sing, t.MusicBrainzReleaseGroupId, "Value Set (!Null): " + m);
+			});
+
+			file.Tag.MusicBrainzReleaseGroupId = string.Empty;
+
+			TagTestWithSave(ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull(t.MusicBrainzReleaseGroupId, "Value Cleared (Null): " + m);
+			});
+		}
+
 		[Test]
 		public void TestMusicBrainzReleaseArtistID ()
 		{
@@ -859,8 +885,8 @@ namespace TagLib.Tests.TaggingFormats
 		private delegate void TagTestFunc (Tag tag, string msg);
 		
 		private void TagTestWithSave (ref Asf.File file,
-		                              MemoryFileAbstraction abst,
-		                              TagTestFunc testFunc)
+									  MemoryFileAbstraction abst,
+									  TagTestFunc testFunc)
 		{
 			testFunc (file.Tag, "Before Save");
 			file.Save ();

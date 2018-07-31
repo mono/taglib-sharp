@@ -1391,6 +1391,25 @@ namespace TagLib.Ape {
 		}
 
 		/// <summary>
+		///    Gets and sets the MusicBrainz Release Group ID of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    ReleaseGroupID for the media represented by the current instance
+		///    or <see langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_RELEASEGROUPID" item.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzReleaseGroupId
+		{
+			get { return GetItemAsString("MUSICBRAINZ_RELEASEGROUPID"); }
+			set { SetValue("MUSICBRAINZ_RELEASEGROUPID", value); }
+		}
+
+		/// <summary>
 		///    Gets and sets the MusicBrainz Release ID of the media
 		///    represented by the current instance.
 		/// </summary>

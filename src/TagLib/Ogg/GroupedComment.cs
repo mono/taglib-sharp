@@ -104,7 +104,7 @@ namespace TagLib.Ogg
 		///    instance.
 		/// </param>
 		public void AddComment (uint streamSerialNumber,
-		                        XiphComment comment)
+								XiphComment comment)
 		{
 			comment_hash.Add (streamSerialNumber, comment);
 			tags.Add (comment);
@@ -122,7 +122,7 @@ namespace TagLib.Ogg
 		///    comment to add to the current instance.
 		/// </param>
 		public void AddComment (uint streamSerialNumber,
-		                        ByteVector data)
+								ByteVector data)
 		{
 			AddComment (streamSerialNumber, new XiphComment (data));
 		}
@@ -1063,6 +1063,42 @@ namespace TagLib.Ogg
 		}
 
 		/// <summary>
+		///    Gets and sets the MusicBrainz Release Group ID.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    ReleaseGroupID for the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.MusicBrainzReleaseGroupId" />
+		public override string MusicBrainzReleaseGroupId
+		{
+			get
+			{
+				foreach (XiphComment tag in tags)
+				{
+					if (tag == null)
+						continue;
+
+					string value = tag.MusicBrainzReleaseGroupId;
+
+					if (value != null && value.Length > 0)
+						return value;
+				}
+
+				return null;
+			}
+			set { if (tags.Count > 0) tags[0].MusicBrainzReleaseGroupId = value; }
+		}
+
+		/// <summary>
 		///    Gets and sets the MusicBrainz Release ID.
 		/// </summary>
 		/// <value>
@@ -1378,22 +1414,22 @@ namespace TagLib.Ogg
 	/// <seealso cref="Tag.ReplayGainTrackGain" />
 	public override double ReplayGainTrackGain
 	{
-  	get
-  	{
+	get
+	{
 		foreach (XiphComment tag in tags)
 		{
-  		if (tag == null)
+		if (tag == null)
 			continue;
 
-  		double value = tag.ReplayGainTrackGain;
+		double value = tag.ReplayGainTrackGain;
 
-  		if (!double.IsNaN(value))
+		if (!double.IsNaN(value))
 			return value;
 		}
 
 				return double.NaN;
-  	}
-  	set { if (tags.Count > 0) tags[0].ReplayGainTrackGain = value; }
+	}
+	set { if (tags.Count > 0) tags[0].ReplayGainTrackGain = value; }
 	}
 
 	/// <summary>
@@ -1415,22 +1451,22 @@ namespace TagLib.Ogg
 	/// <seealso cref="Tag.ReplayGainTrackPeak" />
 	public override double ReplayGainTrackPeak
 	{
-  	get
-  	{
+	get
+	{
 		foreach (XiphComment tag in tags)
 		{
-  		if (tag == null)
+		if (tag == null)
 			continue;
 
-  		double value = tag.ReplayGainTrackPeak;
+		double value = tag.ReplayGainTrackPeak;
 
-  		if (!double.IsNaN(value))
+		if (!double.IsNaN(value))
 			return value;
 		}
 
 		return double.NaN;
-  	}
-  	set { if (tags.Count > 0) tags[0].ReplayGainTrackPeak = value; }
+	}
+	set { if (tags.Count > 0) tags[0].ReplayGainTrackPeak = value; }
 	}
 
 	/// <summary>
@@ -1452,22 +1488,22 @@ namespace TagLib.Ogg
 	/// <seealso cref="Tag.ReplayGainAlbumGain" />
 	public override double ReplayGainAlbumGain
 	{
-  	get
-  	{
+	get
+	{
 		foreach (XiphComment tag in tags)
 		{
-  		if (tag == null)
+		if (tag == null)
 			continue;
 
-  		double value = tag.ReplayGainAlbumGain;
+		double value = tag.ReplayGainAlbumGain;
 
-  		if (!double.IsNaN(value))
+		if (!double.IsNaN(value))
 			return value;
 		}
 
 		return double.NaN;
-  	}
-  	set { if (tags.Count > 0) tags[0].ReplayGainAlbumGain = value; }
+	}
+	set { if (tags.Count > 0) tags[0].ReplayGainAlbumGain = value; }
 	}
 
 	/// <summary>
@@ -1489,22 +1525,22 @@ namespace TagLib.Ogg
 	/// <seealso cref="Tag.ReplayGainAlbumPeak" />
 	public override double ReplayGainAlbumPeak
 	{
-  	get
-  	{
+	get
+	{
 		foreach (XiphComment tag in tags)
 		{
-  		if (tag == null)
+		if (tag == null)
 			continue;
 
-  		double value = tag.ReplayGainAlbumPeak;
+		double value = tag.ReplayGainAlbumPeak;
 
-  		if (!double.IsNaN(value))
+		if (!double.IsNaN(value))
 			return value;
 		}
 
 		return double.NaN;
-  	}
-  	set { if (tags.Count > 0) tags[0].ReplayGainAlbumPeak = value; }
+	}
+	set { if (tags.Count > 0) tags[0].ReplayGainAlbumPeak = value; }
 	}
 
 		/// <summary>

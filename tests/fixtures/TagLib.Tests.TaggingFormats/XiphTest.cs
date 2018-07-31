@@ -555,7 +555,32 @@ namespace TagLib.Tests.TaggingFormats
 				Assert.IsNull (t.MusicBrainzArtistId, "Value Cleared (Null): " + m);
 			});
 		}
-		
+
+		[Test]
+		public void TestMusicBrainzReleaseGroupID()
+		{
+			Ogg.XiphComment tag = new Ogg.XiphComment();
+
+			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+				Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull(t.MusicBrainzReleaseGroupId, "Initial (Null): " + m);
+			});
+
+			tag.MusicBrainzReleaseGroupId = val_sing;
+
+			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+				Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual(val_sing, t.MusicBrainzReleaseGroupId, "Value Set (!Null): " + m);
+			});
+
+			tag.MusicBrainzReleaseGroupId = string.Empty;
+
+			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+				Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull(t.MusicBrainzReleaseGroupId, "Value Cleared (Null): " + m);
+			});
+		}
+
 		[Test]
 		public void TestMusicBrainzReleaseID ()
 		{
@@ -857,7 +882,7 @@ namespace TagLib.Tests.TaggingFormats
 		private delegate void TagTestFunc (Ogg.XiphComment tag, string msg);
 		
 		private void TagTestWithSave (ref Ogg.XiphComment tag,
-		                              TagTestFunc testFunc)
+									  TagTestFunc testFunc)
 		{
 			testFunc (tag, "Before Save");
 			tag = new Ogg.XiphComment (tag.Render (true));
