@@ -21,4 +21,5 @@ script:
   - ./autogen.sh
   - msbuild TaglibSharp.sln
   - cd src/TaglibSharp.Tests/bin/Debug
-  - mono ../../../../packages/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe --labels=All TaglibSharp.Tests.dll
+  - mono ../../../../packages/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe --labels=All net462/TaglibSharp.Tests.dll
+  - mono ../../../../packages/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe --labels=All netstandard2.0/TaglibSharp.Tests.dll
