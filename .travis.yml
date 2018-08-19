@@ -7,6 +7,7 @@ mono: latest
 
 # https://github.com/travis-ci/travis-ci/issues/5932#issuecomment-215693171
 before_install:
+
   - mkdir -p .nuget
   - wget -O .nuget/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
   - mono .nuget/nuget.exe # Output NuGet's version number
@@ -14,6 +15,7 @@ before_install:
 install:
   - sudo apt-get update -qq > /dev/null
   - mono .nuget/nuget.exe restore TaglibSharp.sln -Verbosity detailed
+  - mono .nuget/nuget.exe install NUnit.Runners -Version 3.8.0 -OutputDirectory packages
   - dotnet restore
 
 script:
