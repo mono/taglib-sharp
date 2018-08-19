@@ -13,7 +13,7 @@ before_install:
 
 install:
   - sudo apt-get update -qq > /dev/null
-  - mono .nuget/nuget.exe restore taglib-sharp.sln -Verbosity detailed
+  - mono .nuget/nuget.exe restore TaglibSharp.sln -Verbosity detailed
   - mono .nuget/nuget.exe install NUnit.Runners -Version 3.8.0 -OutputDirectory packages
   - dotnet restore
 
