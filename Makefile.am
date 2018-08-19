@@ -1,3 +1,5 @@
+include $(top_srcdir)/build/xbuild.include
+
 SUBDIRS = \
    src    \
    examples \
@@ -19,7 +21,7 @@ pkgconfig_DATA = $(pkgconfig_in_files:.pc.in=.pc)
 EXTRA_DIST =             \
    $(pkgconfig_in_files) \
    taglib-sharp.snk \
-   taglib-sharp.sln
+   TaglibSharp.sln
 
 DISTCLEANFILES = taglib-sharp.pc
 
@@ -40,7 +42,7 @@ MAINTAINERCLEANFILES = \
 
 if !IN_DIST
 test:
-	cd tests; make test; cd ..;
+	cd src/TaglibSharp.Tests; make test; cd ..;
 endif
 
 distwin: all

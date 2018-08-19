@@ -1,3 +1,5 @@
+include $(top_srcdir)/build/xbuild.include
+
 POLICIES = policy.2.0.$(ASSEMBLY_NAME).dll
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 TARGET = $(ASSEMBLY)

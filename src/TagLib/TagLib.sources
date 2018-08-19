@@ -1,5 +1,0 @@
-TAGLIB_CSFILES = \
-	$(wildcard *.cs)	\
-	$(wildcard */*.cs)	\
-	$(wildcard */*/*.cs)	\
-	$(wildcard */*/*/*.cs)

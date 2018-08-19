@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4D1C6110-D6F2-496E-BD7E-E45B7217D458}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TaglibSharp.Tests</RootNamespace>
+    <AssemblyName>TaglibSharp.Tests</AssemblyName>
+    <ReleaseVersion>2.2.0.0</ReleaseVersion>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\taglib-sharp.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Helpers.cs" />
+    <Compile Include="Collections\ByteVectorCollectionTest.cs" />
+    <Compile Include="Collections\ByteVectorTest.cs" />
+    <Compile Include="Collections\FileTest.cs" />
+    <Compile Include="Collections\StringCollectionTest.cs" />
+    <Compile Include="FileFormats\AacFormatTest.cs" />
+    <Compile Include="FileFormats\AiffFormatTest.cs" />
+    <Compile Include="FileFormats\AsfFormatTest.cs" />
+    <Compile Include="FileFormats\WavFormatTest.cs" />
+    <Compile Include="FileFormats\MpgFormatTest.cs" />
+    <Compile Include="FileFormats\MkvFormatTest.cs" />
+    <Compile Include="FileFormats\AviFormatTest.cs" />
+    <Compile Include="FileFormats\DsfFormatTest.cs" />
+    <Compile Include="FileFormats\FlacFormatTest.cs" />
+    <Compile Include="FileFormats\Id3BothFormatTest.cs" />
+    <Compile Include="FileFormats\Id3V1FormatTest.cs" />
+    <Compile Include="FileFormats\Id3V2FormatTest.cs" />
+    <Compile Include="FileFormats\IFormatTest.cs" />
+    <Compile Include="FileFormats\JpegFormatTest.cs" />
+    <Compile Include="FileFormats\M4aFormatTest.cs" />
+    <Compile Include="FileFormats\M4vFormatTest.cs" />
+    <Compile Include="FileFormats\Mpcv8FormatTest.cs" />
+    <Compile Include="FileFormats\MpcFormatTest.cs" />
+    <Compile Include="FileFormats\OggFormatTest.cs" />
+    <Compile Include="FileFormats\OpusFormatTest.cs" />
+    <Compile Include="FileFormats\ExtendedTests.cs" />
+    <Compile Include="FileFormats\StandardTests.cs" />
+    <Compile Include="Images\AddImageMetadataTests.cs" />
+    <Compile Include="Images\JpegCanonZoombrowserTest.cs" />
+    <Compile Include="Images\JpegNikon1Test.cs" />
+    <Compile Include="Images\JpegNikon2Test.cs" />
+    <Compile Include="Images\JpegNikon3Test.cs" />
+    <Compile Include="Images\JpegNikon4Test.cs" />
+    <Compile Include="Images\JpegNoMetadataTest.cs" />
+    <Compile Include="Images\JpegOlympus1Test.cs" />
+    <Compile Include="Images\JpegOlympus2Test.cs" />
+    <Compile Include="Images\JpegOlympus3Test.cs" />
+    <Compile Include="Images\JpegPanasonicTest.cs" />
+    <Compile Include="Images\JpegSegmentSizeTest.cs" />
+    <Compile Include="Images\JpegSony1Test.cs" />
+    <Compile Include="Images\JpegSony2Test.cs" />
+    <Compile Include="Images\JpegTangledTest.cs" />
+    <Compile Include="Images\RationalTest.cs" />
+    <Compile Include="Images\Utils.cs" />
+    <Compile Include="Images\Validators\CommentModificationValidator.cs" />
+    <Compile Include="Images\Validators\ImageTest.cs" />
+    <Compile Include="Images\Validators\IMetadataInvariantValidator.cs" />
+    <Compile Include="Images\Validators\IMetadataModificationValidator.cs" />
+    <Compile Include="Images\Validators\KeywordsModificationValidator.cs" />
+    <Compile Include="Images\Validators\NoModificationValidator.cs" />
+    <Compile Include="Images\Validators\TagCommentModificationValidator.cs" />
+    <Compile Include="Images\Validators\TagKeywordsModificationValidator.cs" />
+    <Compile Include="Images\XapTest.cs" />
+    <Compile Include="Images\XmpCrashTest.cs" />
+    <Compile Include="Images\XmpSpecTest.cs" />
+    <Compile Include="Performance\PerformanceTest.cs" />
+    <Compile Include="TaggingFormats\ApeTest.cs" />
+    <Compile Include="TaggingFormats\AsfTest.cs" />
+    <Compile Include="TaggingFormats\DivXTest.cs" />
+    <Compile Include="TaggingFormats\Id3V1Test.cs" />
+    <Compile Include="TaggingFormats\Id3V2Test.cs" />
+    <Compile Include="TaggingFormats\InfoTagTest.cs" />
+    <Compile Include="TaggingFormats\MovieIdTagTest.cs" />
+    <Compile Include="TaggingFormats\Mpeg4Test.cs" />
+    <Compile Include="TaggingFormats\XiphTest.cs" />
+    <Compile Include="Collections\ImageBlockFileTest.cs" />
+    <Compile Include="FileFormats\Id3V24FormatTest.cs" />
+    <Compile Include="Images\BadCommentMarkerTest.cs" />
+    <Compile Include="Images\BGO493530Test.cs" />
+    <Compile Include="Images\BGO625367Test.cs" />
+    <Compile Include="Images\BGO631333Test.cs" />
+    <Compile Include="Images\CopyFromTest.cs" />
+    <Compile Include="Images\EmptyCommentTest.cs" />
+    <Compile Include="Images\GifExiftoolLongCommentTest.cs" />
+    <Compile Include="Images\GifExiftoolTangled1Test.cs" />
+    <Compile Include="Images\GifExiftoolTangled2Test.cs" />
+    <Compile Include="Images\GifExiftoolTangled3Test.cs" />
+    <Compile Include="Images\GifExiftoolTest.cs" />
+    <Compile Include="Images\GifGimpTest.cs" />
+    <Compile Include="Images\InvalidIFDEntryTypeTest.cs" />
+    <Compile Include="Images\InvalidIFDOffsetTest.cs" />
+    <Compile Include="Images\JpegBGO624097Test.cs" />
+    <Compile Include="Images\JpegCanonBibble5Test.cs" />
+    <Compile Include="Images\JpegNikon1Bibble5Test.cs" />
+    <Compile Include="Images\JpegNikon2Bibble5Test.cs" />
+    <Compile Include="Images\JpegOlympusCorruptMNTest.cs" />
+    <Compile Include="Images\JpegPropertyTest.cs" />
+    <Compile Include="Images\NullOrientationTest.cs" />
+    <Compile Include="Images\PngGimpPngcrushTest.cs" />
+    <Compile Include="Images\PngGimpTest.cs" />
+    <Compile Include="Images\RecursiveIFDTest.cs" />
+    <Compile Include="Images\TiffCanonBibble516BitTest.cs" />
+    <Compile Include="Images\TiffCanonBibble58BitTest.cs" />
+    <Compile Include="Images\TiffCanonDpp16BitTest.cs" />
+    <Compile Include="Images\TiffCanonDpp8BitTest.cs" />
+    <Compile Include="Images\TiffGimp1Test.cs" />
+    <Compile Include="Images\TiffGimp2Test.cs" />
+    <Compile Include="Images\TiffNikon1Bibble516BitTest.cs" />
+    <Compile Include="Images\TiffNikon1Bibble58BitTest.cs" />
+    <Compile Include="Images\TiffNikon1ViewNX16BitTest.cs" />
+    <Compile Include="Images\TiffNikon1ViewNX8BitTest.cs" />
+    <Compile Include="Images\TiffNikon2Bibble516BitTest.cs" />
+    <Compile Include="Images\TiffNikon2Bibble58BitTest.cs" />
+    <Compile Include="Images\TiffNikon2ViewNX16BitTest.cs" />
+    <Compile Include="Images\TiffNikon2ViewNX8BitTest.cs" />
+    <Compile Include="Images\Validators\PropertyModificationValidator.cs" />
+    <Compile Include="Images\Validators\RemoveMetadataValidator.cs" />
+    <Compile Include="Images\Validators\TagPropertyModificationValidator.cs" />
+    <Compile Include="Images\IptcTest.cs" />
+    <Compile Include="FileFormats\AudibleFormat.cs" />
+    <Compile Include="Images\XmlNullEndedTest.cs" />
+    <Compile Include="Images\jpegSonyDscRX100M4.cs" />
+    <Compile Include="MainWindow.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\TaglibSharp\TaglibSharp.csproj">
+      <Project>{6B143A39-C7B2-4743-9917-92262C60E9A6}</Project>
+      <Name>taglib-sharp</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="GtkSharp">
+      <Version>3.1.2</Version>
+    </PackageReference>
+    <PackageReference Include="GtkSharp.Win32">
+      <Version>3.1.2</Version>
+    </PackageReference>
+    <PackageReference Include="NUnit">
+      <Version>3.10.1</Version>
+    </PackageReference>
+    <PackageReference Include="NUnit.ConsoleRunner">
+      <Version>3.8.0</Version>
+    </PackageReference>
+    <PackageReference Include="NUnit3TestAdapter">
+      <Version>3.10.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="taglib-sharp.snk" />
+  </ItemGroup>
+</Project>
