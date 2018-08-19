@@ -1,12 +1,11 @@
-using System;
 using NUnit.Framework;
+using TaglibSharp.Tests.Images.Validators;
+using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
 using TagLib.IFD.Tags;
-using TagLib.Xmp;
-using TagLib.Tests.Images.Validators;
 
-namespace TagLib.Tests.Images
+namespace TaglibSharp.Tests.Images
 {
 	[TestFixture]
 	public class Cr2Canon400d1Test
@@ -14,16 +13,14 @@ namespace TagLib.Tests.Images
 		[Test]
 		public void Test ()
 		{
-			ImageTest.Run ("raw-samples/CR2", "sample_canon_400d1.cr2",
-				false,
-				new Cr2Canon400d1TestInvariantValidator ()
-			);
+			ImageTest.Run (TestPath.GetRawSubDirectory ("CR2"), "sample_canon_400d1.cr2",
+			               false, new Cr2Canon400d1TestInvariantValidator ());
 		}
 	}
 
 	public class Cr2Canon400d1TestInvariantValidator : IMetadataInvariantValidator
 	{
-		public void ValidateMetadataInvariants (Image.File file)
+		public void ValidateMetadataInvariants (TagLib.Image.File file)
 		{
 			Assert.IsNotNull (file);
 			//  ---------- Start of IFD tests ----------

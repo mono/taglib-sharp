@@ -1,8 +1,8 @@
-using System;
 using NUnit.Framework;
+using TagLib;
 using TagLib.Image;
 
-namespace TagLib.Tests.Images
+namespace TaglibSharp.Tests.Images
 {
 	/// <summary>
 	///    This test validates the correct mapping of different metadata formats onto ImageTag.
@@ -13,10 +13,10 @@ namespace TagLib.Tests.Images
 		[Test]
 		public void TestXMPImageTag ()
 		{
-			var file = TagLib.File.Create (Debugger.Samples + "sample_canon_bibble5.jpg") as TagLib.Image.File;
+			var file = TagLib.File.Create (TestPath.Samples + "sample_canon_bibble5.jpg") as TagLib.Image.File;
 			Assert.IsNotNull (file);
 
-			var tag = file.GetTag (TagTypes.XMP) as TagLib.Image.ImageTag;
+			var tag = file.GetTag (TagTypes.XMP) as ImageTag;
 			Assert.IsNotNull (tag);
 
 			Assert.AreEqual (null, tag.Comment, "Comment");
@@ -41,7 +41,7 @@ namespace TagLib.Tests.Images
 		[Test]
 		public void TestXMPImageTag2 ()
 		{
-			var file = TagLib.File.Create (Debugger.Samples + "sample_gimp_exiftool.jpg") as TagLib.Image.File;
+			var file = TagLib.File.Create (TestPath.Samples + "sample_gimp_exiftool.jpg") as TagLib.Image.File;
 			Assert.IsNotNull (file);
 
 			var tag = file.GetTag (TagTypes.XMP) as TagLib.Image.ImageTag;
