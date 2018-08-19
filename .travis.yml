@@ -1,7 +1,7 @@
 sudo: required
 dist: trusty
 language: csharp
-solution: taglib-sharp.sln
+solution: TaglibSharp.sln
 dotnet: 2.1.4
 mono: latest
 
@@ -19,6 +19,6 @@ install:
 
 script:
   - ./autogen.sh
-  - msbuild taglib-sharp.sln
-  - cd tests
-  - mono ../packages/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe --labels=All tests.dll
+  - msbuild TaglibSharp.sln
+  - cd src/TaglibSharp.Tests
+  - mono ../../packages/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe --labels=All tests.dll
