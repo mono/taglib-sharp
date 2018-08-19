@@ -7,7 +7,6 @@ mono: latest
 
 # https://github.com/travis-ci/travis-ci/issues/5932#issuecomment-215693171
 before_install:
-
   - mkdir -p .nuget
   - wget -O .nuget/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
   - mono .nuget/nuget.exe # Output NuGet's version number
@@ -21,5 +20,5 @@ install:
 script:
   - ./autogen.sh
   - msbuild TaglibSharp.sln
-  - cd src/TaglibSharp.Tests
-  - mono ../../packages/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe --labels=All tests.dll
+  - cd src/TaglibSharp.Tests/bin/Debug
+  - mono ../../../../packages/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe --labels=All TaglibSharp.Tests.dll
