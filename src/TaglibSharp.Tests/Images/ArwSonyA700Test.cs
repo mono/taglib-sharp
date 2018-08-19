@@ -1,12 +1,11 @@
-using System;
 using NUnit.Framework;
+using TaglibSharp.Tests.Images.Validators;
+using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
 using TagLib.IFD.Tags;
-using TagLib.Xmp;
-using TagLib.Tests.Images.Validators;
 
-namespace TagLib.Tests.Images
+namespace TaglibSharp.Tests.Images
 {
 	[TestFixture]
 	public class ArwSonyA700
@@ -14,16 +13,14 @@ namespace TagLib.Tests.Images
 		[Test]
 		public void Test ()
 		{
-			ImageTest.Run ("raw-samples/ARW", "RAW_SONY_A700.ARW",
-				false,
-				new ArwSonyA700InvariantValidator ()
-			);
+			ImageTest.Run (TestPath.GetRawSubDirectory ("ARW"), "RAW_SONY_A700.ARW",
+			               false, new ArwSonyA700InvariantValidator ());
 		}
 	}
 
 	public class ArwSonyA700InvariantValidator : IMetadataInvariantValidator
 	{
-		public void ValidateMetadataInvariants (Image.File file)
+		public void ValidateMetadataInvariants (TagLib.Image.File file)
 		{
 			Assert.IsNotNull (file);
 			//  ---------- Start of IFD tests ----------

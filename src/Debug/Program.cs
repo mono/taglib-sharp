@@ -12,7 +12,7 @@ namespace Debug
 	class Program
 	{
 		static readonly string AssemblyLocation = Path.GetDirectoryName(Assembly.GetAssembly(typeof(Program)).Location);
-		static readonly string Samples = Path.Combine(AssemblyLocation, "..", "..", "..", "..", "TaglibSharp.Tests", "samples");
+		public static readonly string Samples = Path.Combine(AssemblyLocation, "..", "..", "..", "..", "TaglibSharp.Tests", "samples");
 
 		/// <summary>
 		/// Ouput message on the console and on the Visual Studio Output

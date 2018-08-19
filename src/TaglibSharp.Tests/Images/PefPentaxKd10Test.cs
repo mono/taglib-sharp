@@ -1,12 +1,12 @@
 using System;
 using NUnit.Framework;
+using TaglibSharp.Tests.Images.Validators;
+using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
 using TagLib.IFD.Tags;
-using TagLib.Xmp;
-using TagLib.Tests.Images.Validators;
 
-namespace TagLib.Tests.Images
+namespace TaglibSharp.Tests.Images
 {
 	[TestFixture]
 	public class PefPentaxKd10Test
@@ -14,16 +14,14 @@ namespace TagLib.Tests.Images
 		[Test]
 		public void Test ()
 		{
-			ImageTest.Run ("raw-samples/PEF", "RAW_PENTAX_KD10.PEF",
-				false,
-				new PefPentaxKd10TestInvariantValidator ()
-			);
+			ImageTest.Run (TestPath.GetRawSubDirectory ("PEF"), "RAW_PENTAX_KD10.PEF",
+			               false, new PefPentaxKd10TestInvariantValidator ());
 		}
 	}
 
 	public class PefPentaxKd10TestInvariantValidator : IMetadataInvariantValidator
 	{
-		public void ValidateMetadataInvariants (Image.File file)
+		public void ValidateMetadataInvariants (TagLib.Image.File file)
 		{
 			Assert.IsNotNull (file);
 
@@ -34,7 +32,7 @@ namespace TagLib.Tests.Images
 			Assert.AreEqual (String.Empty, imagetag.Comment, "Comment");
 			Assert.AreEqual (new string [] {}, imagetag.Keywords, "Keywords");
 			Assert.AreEqual (null, imagetag.Rating, "Rating");
-			Assert.AreEqual (Image.ImageOrientation.LeftBottom, imagetag.Orientation, "Orientation");
+			Assert.AreEqual (TagLib.Image.ImageOrientation.LeftBottom, imagetag.Orientation, "Orientation");
 			Assert.AreEqual ("K10D Ver 1.31          ", imagetag.Software, "Software");
 			Assert.AreEqual (null, imagetag.Latitude, "Latitude");
 			Assert.AreEqual (null, imagetag.Longitude, "Longitude");

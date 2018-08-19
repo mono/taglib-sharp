@@ -1,12 +1,11 @@
-using System;
 using NUnit.Framework;
+using TaglibSharp.Tests.Images.Validators;
+using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
 using TagLib.IFD.Tags;
-using TagLib.Xmp;
-using TagLib.Tests.Images.Validators;
 
-namespace TagLib.Tests.Images
+namespace TaglibSharp.Tests.Images
 {
 	[TestFixture]
 	public class BGO633972Test
@@ -14,16 +13,14 @@ namespace TagLib.Tests.Images
 		[Test]
 		public void Test ()
 		{
-			ImageTest.Run ("raw-samples/CR2", "sample_canon_350d_broken.cr2",
-				false,
-				new BGO633972TestInvariantValidator ()
-			);
+			ImageTest.Run (TestPath.GetRawSubDirectory ("CR2"), "sample_canon_350d_broken.cr2",
+			               false, new BGO633972TestInvariantValidator ());
 		}
 	}
 
 	public class BGO633972TestInvariantValidator : IMetadataInvariantValidator
 	{
-		public void ValidateMetadataInvariants (Image.File file)
+		public void ValidateMetadataInvariants (TagLib.Image.File file)
 		{
 			Assert.IsNotNull (file);
 			Assert.IsTrue (file.PossiblyCorrupt);

@@ -5,17 +5,6 @@ using File = TagLib.File;
 
 namespace TaglibSharp.Tests
 {
-	public static class TestPath
-	{
-		#region OS-Independent Path composition
-
-		public static readonly string TestsDir = Path.GetDirectoryName (System.Reflection.Assembly.GetAssembly (typeof (Debugger)).Location);
-		public static readonly string Samples = Path.Combine (TestsDir, "..", "..", "samples", " ").TrimEnd ();
-		public static readonly string Covers = Path.Combine (TestsDir, "..", "..", "..", "..", "examples", "covers", " ").TrimEnd ();
-
-		#endregion
-	}
-
 	public class Debugger
 	{
 		public static void DumpHex (ByteVector data)
