@@ -3,6 +3,7 @@ image: Visual Studio 2017
 
 build_script:
 - cmd: >-
+    git submodule update --init --recursive
     nuget restore
 
     msbuild /m /p:Configuration=Release /clp:v=m TaglibSharp.sln /bl /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
