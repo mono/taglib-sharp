@@ -47,7 +47,7 @@ namespace TaglibSharp.Tests.FileFormats
 			try {
 				File.Create (path);
 			} catch (CorruptFileException) {
-			} catch (NullReferenceException e) {
+			} catch (NullReferenceException) {
 				throw;
 			} catch {
 			}

@@ -195,11 +195,7 @@ namespace TaglibSharp.Tests.Collections
 			throw new System.NotImplementedException ();
 		}
 
-		public override Properties Properties {
-			get {
-				throw new System.NotImplementedException ();
-			}
-		}
+		public override Properties Properties => throw new System.NotImplementedException ();
 
 		public override void RemoveTags (TagTypes types)
 		{
@@ -211,11 +207,7 @@ namespace TaglibSharp.Tests.Collections
 			throw new System.NotImplementedException ();
 		}
 
-		public override Tag Tag {
-			get {
-				throw new System.NotImplementedException ();
-			}
-		}
+		public override Tag Tag => throw new System.NotImplementedException ();
 
 		public new void AddMetadataBlock (long start, long length)
 		{

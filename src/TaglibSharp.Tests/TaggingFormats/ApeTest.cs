@@ -10,10 +10,10 @@ namespace TaglibSharp.Tests.TaggingFormats
 		static string val_sing =
 			"01234567890123456789012345678901234567890123456789";
 
-		static string[] val_mult = {"A123456789",
+		static readonly string[] val_mult = {"A123456789",
 			"B123456789", "C123456789", "D123456789", "E123456789"};
 
-		static string[] val_gnre = {"Rap", "Jazz", "Non-Genre", "Blues"};
+		static readonly string[] val_gnre = {"Rap", "Jazz", "Non-Genre", "Blues"};
 
 		[Test]
 		public void TestTitle ()
