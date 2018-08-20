@@ -56,14 +56,17 @@ namespace TaglibSharp.Tests.FileFormats
 
 			// Insert new picture
 			Array.Resize(ref pics, 3);
-			pics[0] = new Picture(sample_picture);
-			pics[0].Type = PictureType.BackCover;
-			pics[0].Description = "TEST description 1";
-			pics[1] = new Picture(sample_other);
-			pics[1].Description = "TEST description 2";
-			pics[2] = new Picture(sample_picture);
-			pics[2].Type = PictureType.Other;
-			pics[2].Description = "TEST description 3";
+			pics[0] = new Picture (sample_picture) {
+				Type = PictureType.BackCover,
+				Description = "TEST description 1"
+			};
+			pics[1] = new Picture (sample_other) {
+				Description = "TEST description 2"
+			};
+			pics[2] = new Picture (sample_picture) {
+				Type = PictureType.Other,
+				Description = "TEST description 3"
+			};
 			file.Tag.Pictures = pics;
 
 			file.Save();

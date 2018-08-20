@@ -178,15 +178,16 @@ namespace TaglibSharp.Tests.TaggingFormats
 		[Test]
 		public void TestClear ()
 		{
-			var tag = new TagLib.Riff.DivXTag ();
+			var tag = new TagLib.Riff.DivXTag {
+				Title = "A",
+				Performers = new[] {"B"},
+				Album = "C",
+				Year = 123,
+				Comment = "D",
+				Track = 234,
+				Genres = new[] {"Blues"}
+			};
 
-			tag.Title = "A";
-			tag.Performers = new[] {"B"};
-			tag.Album = "C";
-			tag.Year = 123;
-			tag.Comment = "D";
-			tag.Track = 234;
-			tag.Genres = new[] {"Blues"};
 
 			Assert.IsFalse (tag.IsEmpty, "Should be full.");
 			tag.Clear ();
