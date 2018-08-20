@@ -1,15 +1,4 @@
-include $(top_srcdir)/build/xbuild.include
-
 SUBDIRS = \
-   src    \
-   examples \
-   docs
-
-if !IN_DIST
-SUBDIRS += tests
-endif
-
-DIST_SUBDIRS = \
    src    \
    examples \
    docs
@@ -20,7 +9,6 @@ pkgconfig_DATA = $(pkgconfig_in_files:.pc.in=.pc)
 
 EXTRA_DIST =             \
    $(pkgconfig_in_files) \
-   taglib-sharp.snk \
    TaglibSharp.sln
 
 DISTCLEANFILES = taglib-sharp.pc
@@ -40,10 +28,15 @@ MAINTAINERCLEANFILES = \
 	config.guess \
 	mkinstalldirs
 
-if !IN_DIST
+
+all: sln_build
+
+
+
+
+
 test:
-	cd src/TaglibSharp.Tests; make test; cd ..;
-endif
+	cd src/TaglibSharp.Tests; make test; cd ../..;
 
 distwin: all
 	mkdir -p $(srcdir)/$(WINDIR)
@@ -59,19 +52,4 @@ distwin: all
 	zip -9 -r $(srcdir)/$(WINDIR).zip $(srcdir)/$(WINDIR)
 	rm -rf $(srcdir)/$(WINDIR)
 
-UPLOAD_HOST = "$$BANSHEE_USER@banshee.fm"
-UPLOAD_PATH = "web/download.banshee.fm/taglib-sharp"
-push-release: distcheck distwin
-	[[ -z "$$BANSHEE_USER" ]] && { echo "Set BANSHEE_USER"; exit 1; } || true
-	mkdir -p release
-	mv $(WINDIR).zip release
-	mv $(PACKAGE)-$(VERSION).tar.* release
-	cp ChangeLog release/$(PACKAGE)-$(VERSION).changes
-	cp NEWS release/$(PACKAGE)-$(VERSION).news
-	pushd release; sha256sum * > $(PACKAGE)-$(VERSION).sha256sum; popd
-	scp -r release $(UPLOAD_HOST):$(UPLOAD_PATH)/$(VERSION)
-	rm -rf release
-	ssh $(UPLOAD_HOST) rm -f $(UPLOAD_PATH)/LATEST-IS\*
-	ssh $(UPLOAD_HOST) touch $(UPLOAD_PATH)/LATEST-IS-$(VERSION)
-	git tag -a -m "Tag for taglib-sharp release ${VERSION}" taglib-sharp-${VERSION} || bail "Could not create tag"
-	git push origin taglib-sharp-${VERSION} || bail "Failed to push tag to remote"
+include $(top_srcdir)/build/xbuild.include

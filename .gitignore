@@ -13,6 +13,8 @@ install-sh
 missing
 *.pc
 *.zip
+*.dll
+*.pdb
 docs/*.xml
 docs/*/*
 docs/*.tree
