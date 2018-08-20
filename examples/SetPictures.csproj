@@ -18,7 +18,7 @@
     <OutputPath>.</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Commandlineparameters>../tests/samples/sample_v2_only.mp3 covers/sample_a.png covers/sample_b.jpg</Commandlineparameters>
+    <Commandlineparameters>../src/TaglibSharp.Tests/samples/sample_v2_only.mp3 covers/sample_a.png covers/sample_b.jpg</Commandlineparameters>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -27,14 +27,14 @@
     <OutputPath>.</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Commandlineparameters>../tests/samples/sample_v2_only.mp3 covers/sample_a.png covers/sample_b.jpg</Commandlineparameters>
+    <Commandlineparameters>../src/TaglibSharp.Tests/samples/sample_v2_only.mp3 covers/sample_a.png covers/sample_b.jpg</Commandlineparameters>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="SetPictures.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\taglib-sharp.csproj">
+    <ProjectReference Include="..\src\TaglibSharp\TaglibSharp.csproj">
       <Project>{6B143A39-C7B2-4743-9917-92262C60E9A6}</Project>
       <Name>taglib-sharp</Name>
     </ProjectReference>
