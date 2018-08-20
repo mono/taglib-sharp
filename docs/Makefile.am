@@ -1,14 +1,14 @@
 DOC_UPDATER = @MONODOCER@ -delete -pretty
 DOC_ASSEMBLER = @MDASSEMBLER@ --out taglib-sharp-docs --ecma
 
-ASSEMBLY = $(top_builddir)/src/$(ASSEMBLY_NAME).dll
+ASSEMBLY = $(top_builddir)/src/TaglibSharp/bin/Debug/net462/$(ASSEMBLY_NAME)
 SLASHDOC = $(ASSEMBLY).xml
 
 if BUILD_DOCS
 all: XmlInjector.exe
 
 XmlInjector.exe: XmlInjector.cs
-	$(MCS) -out:$@ -r:System.Xml $<
+	$(MCS) -out:$@ $<
 
 monodocdir = $(DOCDIR)
 monodoc_DATA = \
@@ -16,7 +16,7 @@ monodoc_DATA = \
 	taglib-sharp-docs.tree \
 	taglib-sharp-docs.source
 
-en/index.xml: $(ASSEMBLY) $(SLASHDOC) XmlInjector.exe Package.en.xml
+en/index.xml: $(ASSEMBLY).dll $(SLASHDOC) XmlInjector.exe Package.en.xml
 # monodocer will create duplicate tags if run multiple times. Delete the whole
 # directory and start over.
 	if [ -d en ]; then \
