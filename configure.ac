@@ -24,7 +24,7 @@ DISTCHECK_CONFIGURE_FLAGS="--disable-docs"
 AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
 
 dnl Check for Mono
-AC_PATH_PROG(MCS, mcs)
+AC_PATH_PROG(MCS, csc)
 if test x$MCS = x; then
 	AC_MSG_ERROR(You need mcs)
 fi
@@ -33,16 +33,6 @@ AC_PATH_PROG(MONO, mono)
 if test x$MONO = x; then
 	AC_MSG_ERROR(You need mono)
 fi
-
-MCS_FLAGS="-codepage:utf8 -debug"
-MONO_FLAGS=
-
-if test $USE_MAINTAINER_MODE = yes; then
-	MONO_FLAGS="$MONO_FLAGS --debug"
-fi
-
-AC_SUBST(MCS_FLAGS)
-AC_SUBST(MONO_FLAGS)
 
 AC_PATH_PROG(AL, al)
 if test "x$AL" = "x"; then
@@ -71,25 +61,12 @@ if test "x$with_docs" = "xyes"; then
 		AC_MSG_ERROR([You need to install monodoc, or pass --disable-docs to configure to skip documentation installation])
 	fi
 
-	AC_PATH_PROG(MDASSEMBLER, mdassembler, no)
-	if test "x$MDASSEMBLER" = "xno"; then
-		AC_MSG_ERROR([You need to install mdassembler, or pass --disable-docs to configure to skip documentation installation])
-	fi
-
 	DOCDIR=`$PKG_CONFIG monodoc --variable=sourcesdir`
 	AC_SUBST(DOCDIR)
 	AM_CONDITIONAL(BUILD_DOCS, true)
 else
-	AC_MSG_NOTICE([not building Banshee API documentation])
+	AC_MSG_NOTICE([not building TaglibSharp API documentation])
 	AM_CONDITIONAL(BUILD_DOCS, false)
-fi
-
-PKG_CHECK_MODULES(GNOME_SHARP, gnome-sharp-2.0, have_gnome_sharp=yes, have_gnome_sharp=no)
-if test "x$have_gnome_sharp" = "xyes"; then
-	AC_SUBST(GNOME_SHARP_LIBS)
-	AM_CONDITIONAL(HAVE_GNOME_SHARP, true)
-else
-	AM_CONDITIONAL(HAVE_GNOME_SHARP, false)
 fi
 
 PKG_CHECK_MODULES(EXIV2, exiv2, have_exiv2=yes, have_exiv2=no)
@@ -100,41 +77,19 @@ else
 	AM_CONDITIONAL(HAVE_EXIV2, false)
 fi
 
-PKG_CHECK_MODULES(MONO_NUNIT, mono-nunit >= 1.0, do_tests="yes", do_tests="no") AC_SUBST(MONO_NUNIT_LIBS)
-AM_CONDITIONAL(ENABLE_TESTS, test "x$do_tests" = "xyes")
-if test "x$do_tests" = "xno"; then
-	AC_MSG_WARN([Could not find mono-nunit: tests will not be available.])
-else
-	AC_PATH_PROG(NUNIT_CMD, nunit-console2, nunit-console)
-	AC_SUBST(NUNIT_CMD)
-fi
-
-AC_ARG_ENABLE(raw-tests, AC_HELP_STRING([--enable-raw-tests], [Enable RAW image files NUnit tests]),
-		enable_raw_tests=$enableval, enable_raw_tests="no")
-if test "x$enable_raw_tests" = "xno"; then
-	AC_MSG_WARN([RAW image file tests disabled.])
-	AM_CONDITIONAL(ENABLE_RAW_TESTS, false)
-else
-	AM_CONDITIONAL(ENABLE_RAW_TESTS, true)
-fi
-
 AC_CONFIG_FILES([
 Makefile
 taglib-sharp.pc
 src/Makefile
+src/Debug/Makefile
 src/policy.2.0.taglib-sharp.config
+src/TaglibSharp/Makefile
+src/TaglibSharp.Tests/Makefile
 examples/Makefile
 docs/Makefile
 docs/Package.en.xml
 ])
 
-# Test suite is not shipped, only builds from git.
-if test -d tests; then
-	AC_CONFIG_FILES([tests/Makefile])
-	AM_CONDITIONAL(IN_DIST, false)
-else
-	AM_CONDITIONAL(IN_DIST, true)
-fi
 AC_OUTPUT
 
 echo "TagLib# ($ASSEMBLY_NAME-$ASSEMBLY_VERSION) is ready to be compiled."
