@@ -99,12 +99,17 @@ namespace TagLib.Riff
 					"Invalid header length.");
 			
 			header = new AviHeader (header_data, 0);
-			
-			foreach (ByteVector list_data in list ["LIST"])
-				if (list_data.StartsWith ("strl"))
-					codecs.Add (AviStream
-						.ParseStreamList (list_data)
-						.Codec);
+
+			foreach (ByteVector list_data in list["LIST"])
+			{
+				if (list_data.StartsWith("strl"))
+				{
+					AviStream stream = AviStream
+						.ParseStreamList(list_data);
+					if (stream != null)
+						codecs.Add(stream.Codec);
+				}
+			}
 		}
 		
 		/// <summary>
