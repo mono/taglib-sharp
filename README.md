@@ -6,7 +6,7 @@
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/v7vwgphs239i14ya?svg=true)](https://ci.appveyor.com/project/decriptor/taglib-sharp)
 
 
-(aka *Taglib-sharp*) is a library for reading and writing
+(aka *Taglib-sharp*) is a platform independent library (tested on Windows/Linux), built on .NET, for reading and writing
 metadata in media files, including video, audio, and photo formats. 
 This is a convenient one-stop-shop to present or tag all your media collection, regardless of which format/container 
 these might use. You can read/write the standard or more common tags/properties of a media, or you can also create and
