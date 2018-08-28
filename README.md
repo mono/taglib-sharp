@@ -107,7 +107,7 @@ cd taglib-sharp
 make test
 ```
 
-### MonoDevelop  (Linux)
+### Mono Develop  (Linux)
 
 You can build from MonoDevelop using taglib-sharp.sln
 
