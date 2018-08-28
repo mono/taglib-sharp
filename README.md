@@ -12,19 +12,17 @@ metadata in media files, including video, audio, and photo formats.
 It is API stable, with only API additions (not changes or removals)
 occuring in the 2.0 series.
 
- * Bugs:     <https://bugzilla.gnome.org/page.cgi?id=browse.html&product=taglib-sharp>
- * Tarballs: <http://banshee.fm/download/>
- * IRC:      Several TagLib# developers are often in #banshee on irc.gnome.org
- * Git:      <https://github.com/mono/taglib-sharp> or <git://github.com/mono/taglib-sharp.git>
-
-TagLib# is free/open source software, released under the LGPL.
-We welcome contributions!  Please try to match our coding style,
-and include unit tests with any patches.  Patches can be submitted
-by filing a bug and attaching the diff to it.
+## Website
+TagLib# is available on GitHub: <https://github.com/mono/taglib-sharp>
+ * Bugs:     Create an issue in <https://github.com/mono/taglib-sharp/issues>
+ * Chat:     Join us at Gitter <https://gitter.im/mono/taglib-sharp>
+ * Git:      Get the source at <git://github.com/mono/taglib-sharp.git>
 
 ## Building and Running
 
-### To Build From Git:
+### Command Line  (Linux)
+
+#### To Build From Git:
 
 ```sh
 git clone https://github.com/mono/taglib-sharp.git
@@ -32,23 +30,27 @@ cd taglib-sharp
 ./autogen.sh && make
 ```
 
-### To Build From Tarball:
+#### To Build From Tarball:
 
 ```
 ./configure && make
 ```
 
-### To Test:
+#### To Test:
 
 ```
 make test
 ```
 
-You can also build from MonoDevelop or Visual Studio using taglib-sharp.sln
+### MonoDevelop  (Linux)
 
-### To Test/Run from Visual Studio (Windows):
+You can build from MonoDevelop using taglib-sharp.sln
 
-Running regression by using Nunit 3 Test Adapter:
+### Visual Studio (Windows):
+
+You can open it in Visual Studio by using taglib-sharp.sln
+
+#### Running regression by using Nunit 3 Test Adapter:
  
 1. Ensure NuGet packages have been restored
     1. See: <https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore>
@@ -61,9 +63,17 @@ Running regression by using Nunit 3 Test Adapter:
    1. Double click on a test. Set some breakpoints in the test in the editor panel.
    2. right-click on the same test, select "Debug Selected tests".
 
-To test some scenarios and take advantage of the debugger:
+#### To test some scenarios and take advantage of the debugger:
 
 1. Make the "debug" project the Startup project
     (Right-click on the project, select: "Set as StartUp Project")
 2. Just modify the "Program.cs"
 3. Set some breakpoints and hit the "Start" button
+
+## Contributions
+
+TagLib# is free/open source software, released under the LGPL.
+We welcome contributions!  Please try to match our coding style,
+and include unit tests with any patches.  Patches can be submitted
+by issuing a Pull Request (Git).
+
