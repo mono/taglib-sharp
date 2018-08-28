@@ -7,7 +7,9 @@
 
 
 (aka *Taglib-sharp*) is a library for reading and writing
-metadata in media files, including video, audio, and photo formats.
+metadata in media files, including video, audio, and photo formats. 
+This is a convenient one-stop-shop to present or tag all your media collection, regardless of which format/container 
+these might use.
 
 It supports the following formats (by file-extensions):
  * **Video:** mkv, ogv, avi, wmv, asf, mp4 (m4p, m4v), mpeg (mpg, mpe, mpv, mpg, m2v)
