@@ -6,7 +6,7 @@
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/v7vwgphs239i14ya?svg=true)](https://ci.appveyor.com/project/decriptor/taglib-sharp)
 
 
-(aka *Taglib-sharp*) is a platform independent library (tested on Windows/Linux), built on .NET, for reading and writing
+(aka *Taglib-sharp*) is a .NET platform-independent library (tested on Windows/Linux) for reading and writing
 metadata in media files, including video, audio, and photo formats. 
 This is a convenient one-stop-shop to present or tag all your media collection, regardless of which format/container 
 these might use. You can read/write the standard or more common tags/properties of a media, or you can also create and
@@ -14,7 +14,7 @@ retrieve your own custom tags.
 
 It supports the following formats (by file-extensions):
  * **Video:** mkv, ogv, avi, wmv, asf, mp4 (m4p, m4v), mpeg (mpg, mpe, mpv, mpg, m2v)
- * **Audio:** aa, aax, aac, aiff, ape, flac, m4a, m4b, m4p, mp3, mpc, mpp, ogg, oga, wav, wma, wv, webm
+ * **Audio:** aa, aax, aac, aiff, ape, dsf, flac, m4a, m4b, m4p, mp3, mpc, mpp, ogg, oga, wav, wma, wv, webm
  * **Images:** bmp, gif, jpeg, pbm, pgm, ppm, pnm, pcx, png, tiff, dng, svg
 
 It is API stable, with only API additions (not changes or removals)
