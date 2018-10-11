@@ -1625,6 +1625,21 @@ namespace TagLib.Ogg
 		}
 
 		/// <summary>
+		///    Gets and sets the initial key of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the initial key of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "INITIALKEY" field.
+		/// </remarks>
+		public override string InitialKey
+		{
+			get { return GetFirstField("INITIALKEY"); }
+			set { SetField("INITIALKEY", value); }
+		}
+
+		/// <summary>
 		///    Gets whether or not the current instance is empty.
 		/// </summary>
 		/// <value>

@@ -1017,6 +1017,19 @@ namespace TagLib {
 		}
 
 		/// <summary>
+		///    Gets and sets the key.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> value for the album peak as per the
+		///    ReplayGain specification.
+		/// </value>
+		public virtual string InitialKey
+		{
+			get { return null; }
+			set { }
+		}
+
+		/// <summary>
 		///    Gets and sets a collection of pictures associated with
 		///    the media represented by the current instance.
 		/// </summary>
