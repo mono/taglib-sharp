@@ -1841,6 +1841,49 @@ namespace TagLib {
 		}
 
 		/// <summary>
+		///    Gets and sets the initial key of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the initial
+		///    key of the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.InitialKey" />
+		public override string InitialKey
+		{
+			get
+			{
+				foreach (Tag tag in tags)
+				{
+					if (tag == null)
+						continue;
+
+					string value = tag.InitialKey;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+
+			set
+			{
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.InitialKey = value;
+			}
+		}
+
+		/// <summary>
 		///    Gets whether or not the current instance is empty.
 		/// </summary>
 		/// <value>

@@ -63,6 +63,7 @@ namespace TagLib.Id3v2 {
 		public static readonly ReadOnlyByteVector TIT2 = "TIT2";
 		public static readonly ReadOnlyByteVector TIT3 = "TIT3";
 		public static readonly ReadOnlyByteVector TIME = "TIME";
+		public static readonly ReadOnlyByteVector TKEY = "TKEY";
 		public static readonly ReadOnlyByteVector TMCL = "TMCL";
 		public static readonly ReadOnlyByteVector TOLY = "TOLY";
 		public static readonly ReadOnlyByteVector TOPE = "TOPE";

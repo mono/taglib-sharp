@@ -2356,6 +2356,21 @@ namespace TagLib.Id3v2 {
 		}
 
 		/// <summary>
+		///    Gets and sets the initial key of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the initial key of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TKEY" field.
+		/// </remarks>
+		public override string InitialKey
+		{
+			get { return GetTextAsString(FrameType.TKEY); }
+			set { SetTextFrame(FrameType.TKEY, value); }
+		}
+
+		/// <summary>
 		///    Gets and sets a collection of pictures associated with
 		///    the media represented by the current instance.
 		/// </summary>

@@ -1133,7 +1133,7 @@ namespace TagLib.Ogg
 					text = GetFirstField("BPM");
 				double value;
 				return (text != null &&
-					double.TryParse (text, out value) &&
+					double.TryParse (text, System.Globalization.NumberStyles.AllowDecimalPoint, System.Globalization.NumberFormatInfo.InvariantInfo, out value) &&
 					value > 0) ? (uint) Math.Round (value) :
 					0;
 			}
