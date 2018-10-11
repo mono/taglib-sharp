@@ -1841,6 +1841,178 @@ namespace TagLib {
 		}
 
 		/// <summary>
+		///    Gets and sets the initial key of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the initial
+		///    key of the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.InitialKey" />
+		public override string InitialKey
+		{
+			get
+			{
+				foreach (Tag tag in tags)
+				{
+					if (tag == null)
+						continue;
+
+					string value = tag.InitialKey;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+
+			set
+			{
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.InitialKey = value;
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the remixer of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the remixer
+		///    of the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.RemixedBy" />
+		public override string RemixedBy
+		{
+			get
+			{
+				foreach (Tag tag in tags)
+				{
+					if (tag == null)
+						continue;
+
+					string value = tag.RemixedBy;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+
+			set
+			{
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.RemixedBy = value;
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the publisher of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the 
+		///    publisher of the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.Publisher" />
+		public override string Publisher
+		{
+			get
+			{
+				foreach (Tag tag in tags)
+				{
+					if (tag == null)
+						continue;
+
+					string value = tag.Publisher;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+
+			set
+			{
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.Publisher = value;
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the ISRC (International Standard Recording Code)
+		///    of the song represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the ISRC
+		///    of the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.ISRC" />
+		public override string ISRC
+		{
+			get
+			{
+				foreach (Tag tag in tags)
+				{
+					if (tag == null)
+						continue;
+
+					string value = tag.ISRC;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+
+			set
+			{
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.ISRC = value;
+			}
+		}
+
+		/// <summary>
 		///    Gets whether or not the current instance is empty.
 		/// </summary>
 		/// <value>
