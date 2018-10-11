@@ -1123,10 +1123,14 @@ namespace TagLib.Ogg
 		/// </value>
 		/// <remarks>
 		///    This property is implemented using the "TEMPO" field.
+		///    Since there is no official definition, this property is
+		///    also implemented using the "BPM" field.
 		/// </remarks>
 		public override uint BeatsPerMinute {
 			get {
 				string text = GetFirstField ("TEMPO");
+				if (text == null)
+					text = GetFirstField("BPM");
 				double value;
 				return (text != null &&
 					double.TryParse (text, out value) &&
