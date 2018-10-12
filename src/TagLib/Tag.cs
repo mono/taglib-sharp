@@ -1017,13 +1017,51 @@ namespace TagLib {
 		}
 
 		/// <summary>
-		///    Gets and sets the key.
+		///    Gets and sets the initial key of the song.
 		/// </summary>
 		/// <value>
-		///    A <see cref="bool" /> value for the album peak as per the
-		///    ReplayGain specification.
+		///    A <see cref="string" /> value for the initial key
+		///    of the song.
 		/// </value>
 		public virtual string InitialKey
+		{
+			get { return null; }
+			set { }
+		}
+
+		/// <summary>
+		///    Gets and sets the remixer of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> value for the remixer
+		///    of the song.
+		/// </value>
+		public virtual string RemixedBy
+		{
+			get { return null; }
+			set { }
+		}
+
+		/// <summary>
+		///    Gets and sets the publisher of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> value for the publisher
+		///    of the song.
+		/// </value>
+		public virtual string Publisher
+		{
+			get { return null; }
+			set { }
+		}
+
+		/// <summary>
+		///    Gets and sets the ISRC (International Standard Recording Code) of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> value containing the ISRC of the song.
+		/// </value>
+		public virtual string ISRC
 		{
 			get { return null; }
 			set { }

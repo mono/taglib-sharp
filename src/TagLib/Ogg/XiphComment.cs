@@ -1640,6 +1640,51 @@ namespace TagLib.Ogg
 		}
 
 		/// <summary>
+		///    Gets and sets the remixer of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the remixer of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "REMIXEDBY" field.
+		/// </remarks>
+		public override string RemixedBy
+		{
+			get { return GetFirstField("REMIXEDBY"); }
+			set { SetField("REMIXEDBY", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the publisher of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the publisher of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ORGANIZATION" field.
+		/// </remarks>
+		public override string Publisher
+		{
+			get { return GetFirstField("ORGANIZATION"); }
+			set { SetField("ORGANIZATION", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the ISRC (International Standard Recording Code) of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the ISRC of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ISRC" field.
+		/// </remarks>
+		public override string ISRC
+		{
+			get { return GetFirstField("ISRC"); }
+			set { SetField("ISRC", value); }
+		}
+
+		/// <summary>
 		///    Gets whether or not the current instance is empty.
 		/// </summary>
 		/// <value>
