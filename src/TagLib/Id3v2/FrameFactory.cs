@@ -295,6 +295,10 @@ namespace TagLib.Id3v2
 				return new UrlLinkFrame(data, position,
 					header, version);
 
+			if (header.FrameId == FrameType.ETCO)
+				return new EventTimeCodesFrame(data, offset, header,
+					version);
+
 			return new UnknownFrame (data, position, header,
 				version);
 		}

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using NUnit.Framework;
 using TagLib.Id3v2;
@@ -1438,7 +1439,36 @@ namespace TagLib.Tests.TaggingFormats
 					Assert.AreEqual (val_sing, g.Text, m);
 				});
 		}
-		
+
+		[Test]
+		public void TestEventTimeCodesFrame()
+		{
+			var events = new List<EventTimeCode> {
+				new EventTimeCode(EventType.IntroStart, 5000),
+				new EventTimeCode(EventType.IntroEnd, 15000),
+			};
+
+			var frame = new EventTimeCodesFrame(TimestampFormat.AbsoluteMilliseconds);
+			frame.Events = events;
+
+			FrameTest(frame, 2,
+				delegate (Frame f, StringType e) {
+				},
+
+				delegate (ByteVector d, byte v) {
+					return new EventTimeCodesFrame(d, v);
+				},
+
+				delegate (Frame f, string m) {
+					var g = (f as EventTimeCodesFrame);
+					Assert.AreEqual(TimestampFormat.AbsoluteMilliseconds, g.TimestampFormat, m);
+					for (int i = 0; i < events.Count ; i++)
+					{
+						Assert.AreEqual(events[i].Time, g.Events[i].Time, m);
+					}
+				});
+		}
+
 		delegate void TagTestFunc (Id3v2.Tag tag, string msg);
 		
 		void TagTestWithSave (ref Id3v2.Tag tag,
