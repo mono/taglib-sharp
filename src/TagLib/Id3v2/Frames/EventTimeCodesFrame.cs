@@ -110,9 +110,9 @@ namespace TagLib.Id3v2
 			timestampFormat = (TimestampFormat)data.Data[0];
 
 			var incomingEventsData = data.Mid(1);
-			for (var i = 0; i < incomingEventsData.Count; i++)
+			for (var i = 0; i < incomingEventsData.Count - 1; i++)
 			{
-				var eventType = (EventType)incomingEventsData.Data[1];
+				var eventType = (EventType)incomingEventsData.Data[i];
 				i++;
 
 				var timestampData = new ByteVector(incomingEventsData.Data[i], 
