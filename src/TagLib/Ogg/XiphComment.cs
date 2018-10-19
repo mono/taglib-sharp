@@ -48,9 +48,15 @@ namespace TagLib.Ogg
 			new Dictionary<string, string[]> ();
 
 		/// <summary>
-		///    Contains the ventor ID.
+		///    Contains the vendor ID.
 		/// </summary>
 		private string vendor_id;
+
+		/// <summary>
+		///    Saves BeatsPerMinute tag as either "Tempo" or "BPM"
+		///    based on which was last read.
+		/// </summary>
+		private static bool save_BPM_as_tempo = true;
 
 		/// <summary>
 		///    Picture instances parsed from the fields.
@@ -58,7 +64,7 @@ namespace TagLib.Ogg
 		private IPicture[] pictures = null;
 
 		/// <summary>
-		///    true if the picture fields ni <see cref="field_list" />
+		///    true if the picture fields in <see cref="field_list" />
 		///    should be updated from the <see cref="pictures"/> array.
 		/// </summary>
 		private bool picture_fields_dirty = false;
@@ -1128,16 +1134,26 @@ namespace TagLib.Ogg
 		/// </remarks>
 		public override uint BeatsPerMinute {
 			get {
+				save_BPM_as_tempo = true;
 				string text = GetFirstField ("TEMPO");
-				if (text == null)
+				if (string.IsNullOrEmpty(text))
+				{
 					text = GetFirstField("BPM");
+					if (!string.IsNullOrEmpty(text))
+					{
+						save_BPM_as_tempo = false;
+					}
+				}
 				double value;
 				return (text != null &&
 					double.TryParse (text, System.Globalization.NumberStyles.AllowDecimalPoint, System.Globalization.NumberFormatInfo.InvariantInfo, out value) &&
 					value > 0) ? (uint) Math.Round (value) :
 					0;
 			}
-			set {SetField ("TEMPO", value);}
+			set {
+				if (save_BPM_as_tempo) SetField("TEMPO", value);
+				else SetField("BPM", value);
+			}
 		}
 		
 		/// <summary>

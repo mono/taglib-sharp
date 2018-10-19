@@ -1548,6 +1548,18 @@ namespace TagLib {
 			if (overwrite || target.BeatsPerMinute == 0)
 				target.BeatsPerMinute = BeatsPerMinute;
 			
+			if (overwrite || IsNullOrLikeEmpty (target.InitialKey))
+				target.InitialKey = InitialKey;
+			
+			if (overwrite || IsNullOrLikeEmpty (target.Publisher))
+				target.Publisher = Publisher;
+			
+			if (overwrite || IsNullOrLikeEmpty (target.ISRC))
+				target.ISRC = ISRC;
+			
+			if (overwrite || IsNullOrLikeEmpty (target.RemixedBy))
+				target.RemixedBy = RemixedBy;
+			
 			if (overwrite || IsNullOrLikeEmpty (target.Grouping))
 				target.Grouping = Grouping;
 			
