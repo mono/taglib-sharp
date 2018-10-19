@@ -14,5 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="..\src\taglib-sharp.csproj" />
   </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 
 </Project>

@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
     <TargetFrameworks>net40;netstandard2.0</TargetFrameworks>
@@ -22,5 +22,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|AnyCPU'">
     <DocumentationFile>bin\Release\net40\taglib-sharp.xml</DocumentationFile>
   </PropertyGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 
 </Project>
