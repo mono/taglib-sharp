@@ -30,7 +30,7 @@ namespace debug
 			log("");
 
 			// Override command arguments
-			args = new string[]  { "noise.flac" };
+			args = new string[]  { "sample.wav" };
 
 			foreach (var fname in args) {
 				var fpath = Samples + fname;
