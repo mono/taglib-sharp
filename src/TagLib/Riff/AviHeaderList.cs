@@ -104,8 +104,7 @@ namespace TagLib.Riff
 			{
 				if (list_data.StartsWith("strl"))
 				{
-					AviStream stream = AviStream
-						.ParseStreamList(list_data);
+					AviStream stream = AviStream.ParseStreamList(list_data);
 					if (stream != null)
 						codecs.Add(stream.Codec);
 				}
