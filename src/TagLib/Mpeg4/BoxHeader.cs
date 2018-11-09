@@ -151,7 +151,7 @@ namespace TagLib.Mpeg4 {
 				extended_type = null;
 
 			if (box_size > (ulong) (file.Length - position)) {
-				throw new CorruptFileException ("Box header specified a size of {0} bytes but only {1} bytes left in the file");
+				throw new CorruptFileException (string.Format("Box header specified a size of {0} bytes but only {1} bytes left in the file", box_size, file.Length - position));
 			}
 		}
 		
