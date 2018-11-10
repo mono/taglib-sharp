@@ -56,7 +56,7 @@ namespace TagLib.Ogg
 		///    Saves BeatsPerMinute tag as either "Tempo" or "BPM"
 		///    based on which was last read.
 		/// </summary>
-		private static bool save_BPM_as_tempo = true;
+		private static bool SaveBeatsPerMinuteAsTempo = true;
 
 		/// <summary>
 		///    Picture instances parsed from the fields.
@@ -1134,24 +1134,24 @@ namespace TagLib.Ogg
 		/// </remarks>
 		public override uint BeatsPerMinute {
 			get {
-				save_BPM_as_tempo = true;
+				SaveBeatsPerMinuteAsTempo = true;
 				string text = GetFirstField ("TEMPO");
 				if (string.IsNullOrEmpty(text))
 				{
 					text = GetFirstField("BPM");
 					if (!string.IsNullOrEmpty(text))
 					{
-						save_BPM_as_tempo = false;
+						SaveBeatsPerMinuteAsTempo = false;
 					}
 				}
 				double value;
 				return (text != null &&
-					double.TryParse (text, System.Globalization.NumberStyles.AllowDecimalPoint, System.Globalization.NumberFormatInfo.InvariantInfo, out value) &&
+					double.TryParse (text, NumberStyles.AllowDecimalPoint, NumberFormatInfo.InvariantInfo, out value) &&
 					value > 0) ? (uint) Math.Round (value) :
 					0;
 			}
 			set {
-				if (save_BPM_as_tempo) SetField("TEMPO", value);
+				if (SaveBeatsPerMinuteAsTempo) SetField("TEMPO", value);
 				else SetField("BPM", value);
 			}
 		}
