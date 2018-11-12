@@ -1663,6 +1663,74 @@ namespace TagLib.Mpeg4 {
 		}
 
 		/// <summary>
+		///    Gets and sets the InitialKey
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the InitialKey
+		///    for the media described by the current  instance, 
+		///    or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dash"/"----" box type.
+		/// </remarks>
+		public override string InitialKey
+		{
+			get { return GetDashBox("com.apple.iTunes", "initialkey"); }
+			set { SetDashBox("com.apple.iTunes", "initialkey", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the ISRC
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the ISRC
+		///    for the media described by the current  instance, 
+		///    or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dash"/"----" box type.
+		/// </remarks>
+		public override string ISRC
+		{
+			get { return GetDashBox("com.apple.iTunes", "ISRC"); }
+			set { SetDashBox("com.apple.iTunes", "ISRC", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the Publisher
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the Publisher
+		///    for the media described by the current  instance, 
+		///    or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dash"/"----" box type.
+		/// </remarks>
+		public override string Publisher
+		{
+			get { return GetDashBox("com.apple.iTunes", "publisher"); }
+			set { SetDashBox("com.apple.iTunes", "publisher", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the Remixer
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the Remixer
+		///    for the media described by the current  instance, 
+		///    or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dash"/"----" box type.
+		/// </remarks>
+		public override string RemixedBy
+		{
+			get { return GetDashBox("com.apple.iTunes", "REMIXEDBY"); }
+			set { SetDashBox("com.apple.iTunes", "REMIXEDBY", value); }
+		}
+
+		/// <summary>
 		///    Gets and sets a collection of pictures associated with
 		///    the media represented by the current instance.
 		/// </summary>
