@@ -1,5 +1,5 @@
 ﻿//
-// SynchronizedLyricsFrame.cs:
+// TimestampFormat.cs:
 //
 // Author:
 //   Brian Nickel (brian.nickel@gmail.com)
@@ -21,15 +21,12 @@
 // USA
 //
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TagLib.Id3v2
 {
 	/// <summary>
 	///    Specifies the timestamp format used by a <see
-	///    cref="SynchronisedLyricsFrame" />.
+	///    cref="SynchronisedLyricsFrame" /> and <see cref="EventTimeCodesFrame"/>.
 	/// </summary>
 	public enum TimestampFormat
 	{
