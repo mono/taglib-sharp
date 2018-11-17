@@ -48,9 +48,15 @@ namespace TagLib.Ogg
 			new Dictionary<string, string[]> ();
 
 		/// <summary>
-		///    Contains the ventor ID.
+		///    Contains the vendor ID.
 		/// </summary>
 		private string vendor_id;
+
+		/// <summary>
+		///    Saves BeatsPerMinute tag as either "Tempo" or "BPM"
+		///    based on which was last read.
+		/// </summary>
+		private static bool SaveBeatsPerMinuteAsTempo = true;
 
 		/// <summary>
 		///    Picture instances parsed from the fields.
@@ -58,7 +64,7 @@ namespace TagLib.Ogg
 		private IPicture[] pictures = null;
 
 		/// <summary>
-		///    true if the picture fields ni <see cref="field_list" />
+		///    true if the picture fields in <see cref="field_list" />
 		///    should be updated from the <see cref="pictures"/> array.
 		/// </summary>
 		private bool picture_fields_dirty = false;
@@ -1123,17 +1129,31 @@ namespace TagLib.Ogg
 		/// </value>
 		/// <remarks>
 		///    This property is implemented using the "TEMPO" field.
+		///    Since there is no official definition, this property is
+		///    also implemented using the "BPM" field.
 		/// </remarks>
 		public override uint BeatsPerMinute {
 			get {
+				SaveBeatsPerMinuteAsTempo = true;
 				string text = GetFirstField ("TEMPO");
+				if (string.IsNullOrEmpty(text))
+				{
+					text = GetFirstField("BPM");
+					if (!string.IsNullOrEmpty(text))
+					{
+						SaveBeatsPerMinuteAsTempo = false;
+					}
+				}
 				double value;
 				return (text != null &&
-					double.TryParse (text, out value) &&
+					double.TryParse (text, NumberStyles.AllowDecimalPoint, NumberFormatInfo.InvariantInfo, out value) &&
 					value > 0) ? (uint) Math.Round (value) :
 					0;
 			}
-			set {SetField ("TEMPO", value);}
+			set {
+				if (SaveBeatsPerMinuteAsTempo) SetField("TEMPO", value);
+				else SetField("BPM", value);
+			}
 		}
 		
 		/// <summary>
@@ -1618,6 +1638,66 @@ namespace TagLib.Ogg
 					SetField ("REPLAYGAIN_ALBUM_PEAK", text);
 				}
 			}
+		}
+
+		/// <summary>
+		///    Gets and sets the initial key of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the initial key of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "INITIALKEY" field.
+		/// </remarks>
+		public override string InitialKey
+		{
+			get { return GetFirstField("INITIALKEY"); }
+			set { SetField("INITIALKEY", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the remixer of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the remixer of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "REMIXEDBY" field.
+		/// </remarks>
+		public override string RemixedBy
+		{
+			get { return GetFirstField("REMIXEDBY"); }
+			set { SetField("REMIXEDBY", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the publisher of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the publisher of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ORGANIZATION" field.
+		/// </remarks>
+		public override string Publisher
+		{
+			get { return GetFirstField("ORGANIZATION"); }
+			set { SetField("ORGANIZATION", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the ISRC (International Standard Recording Code) of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the ISRC of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ISRC" field.
+		/// </remarks>
+		public override string ISRC
+		{
+			get { return GetFirstField("ISRC"); }
+			set { SetField("ISRC", value); }
 		}
 
 		/// <summary>

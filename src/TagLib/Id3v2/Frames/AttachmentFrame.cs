@@ -739,7 +739,7 @@ namespace TagLib.Id3v2 {
 			finally
 			{
 				// Free the resources
-				if (stream != null)
+				if (stream != null && file != null)
 				{
 					file.CloseStream(stream);
 				}

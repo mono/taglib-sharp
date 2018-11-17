@@ -910,7 +910,123 @@ namespace TagLib.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
+		[Test]
+		public void TestInitialKey()
+		{
+			Id3v2.Tag tag = new Id3v2.Tag();
+			for (byte version = 2; version <= 4; version++)
+			{
+				tag.Version = version;
+
+				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+					Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull(t.InitialKey, "Initial (Null): " + m);
+				});
+
+				tag.InitialKey = val_sing;
+
+				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+					Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual(val_sing, t.InitialKey, "Value Set (!Null): " + m);
+				});
+
+				tag.InitialKey = string.Empty;
+
+				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+					Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull(t.InitialKey, "Value Cleared (Null): " + m);
+				});
+			}
+		}
+
+		[Test]
+		public void TestPublisher()
+		{
+			Id3v2.Tag tag = new Id3v2.Tag();
+			for (byte version = 2; version <= 4; version++)
+			{
+				tag.Version = version;
+
+				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+					Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull(t.Publisher, "Initial (Null): " + m);
+				});
+
+				tag.Publisher = val_sing;
+
+				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+					Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual(val_sing, t.Publisher, "Value Set (!Null): " + m);
+				});
+
+				tag.Publisher = string.Empty;
+
+				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+					Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull(t.Publisher, "Value Cleared (Null): " + m);
+				});
+			}
+		}
+
+		[Test]
+		public void TestISRC()
+		{
+			Id3v2.Tag tag = new Id3v2.Tag();
+			for (byte version = 2; version <= 4; version++)
+			{
+				tag.Version = version;
+
+				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+					Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull(t.ISRC, "Initial (Null): " + m);
+				});
+
+				tag.ISRC = val_sing;
+
+				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+					Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual(val_sing, t.ISRC, "Value Set (!Null): " + m);
+				});
+
+				tag.ISRC = string.Empty;
+
+				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+					Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull(t.ISRC, "Value Cleared (Null): " + m);
+				});
+			}
+		}
+
+		[Test]
+		public void TestRemixedBy()
+		{
+			Id3v2.Tag tag = new Id3v2.Tag();
+			for (byte version = 2; version <= 4; version++)
+			{
+				tag.Version = version;
+
+				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+					Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull(t.RemixedBy, "Initial (Null): " + m);
+				});
+
+				tag.RemixedBy = val_sing;
+
+				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+					Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual(val_sing, t.RemixedBy, "Value Set (!Null): " + m);
+				});
+
+				tag.RemixedBy = string.Empty;
+
+				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+					Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull(t.RemixedBy, "Value Cleared (Null): " + m);
+				});
+			}
+		}
+
 		[Test]
 		public void TestClear ()
 		{
@@ -934,7 +1050,11 @@ namespace TagLib.Tests.TaggingFormats
 			tag.Conductor = "I";
 			tag.Copyright = "J";
 			tag.Pictures = new Picture [] {new Picture (TestPath.Covers + "sample_a.png") };
-			
+			tag.InitialKey = "K";
+			tag.Publisher = "L";
+			tag.ISRC = "M";
+			tag.RemixedBy = "N";
+
 			Assert.IsFalse (tag.IsEmpty, "Should be full.");
 			tag.Clear ();
 			
@@ -957,8 +1077,12 @@ namespace TagLib.Tests.TaggingFormats
 			Assert.IsNull (tag.Copyright, "Copyright");
 			Assert.AreEqual (0, tag.Pictures.Length, "Pictures");
 			Assert.IsTrue (tag.IsEmpty, "Should be empty.");
+			Assert.IsNull(tag.InitialKey, "InitialKey");
+			Assert.IsNull(tag.Publisher, "Publisher");
+			Assert.IsNull(tag.ISRC, "ISRC");
+			Assert.IsNull(tag.RemixedBy, "RemixedBy");
 		}
-		
+
 		[Test]
 		public void TestCopyTo ()
 		{
