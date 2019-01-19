@@ -1,5 +1,5 @@
-READ_FROM_URI = ReadFromUri
-SET_PICTURES = SetPictures
+READ_FROM_URI = ReadFromUri/ReadFromUri
+SET_PICTURES = SetPictures/SetPictures
 LIST_TYPES = ListSupportedMimeTypes
 BATCH_SET = BatchSet
 PARSE_PHOTO = ParsePhoto
@@ -20,7 +20,7 @@ taglib-sharp.dll:
 
 if HAVE_EXIV2
 $(GENERATE_TEST_FIXTURE).exe: $(GENERATE_TEST_FIXTURE).cs listData extractKey
-	$(MCS) -out:$@ -debug $(REFERENCES) $<
+	$(CSC) -out:$@ -debug $(REFERENCES) $<
 
 listData: listData.cpp
 	g++ -o $@ $(EXIV2_LIBS) $<
@@ -30,19 +30,19 @@ extractKey: extractKey.cpp
 endif
 
 $(SET_PICTURES).exe: $(SET_PICTURES).cs
-	$(MCS) -out:$@ -debug $(REFERENCES) $<
+	$(CSC) -out:$@ -debug $(REFERENCES) $<
 
 $(LIST_TYPES).exe: $(LIST_TYPES).cs
-	$(MCS) -out:$@ -debug $(REFERENCES) $<
+	$(CSC) -out:$@ -debug $(REFERENCES) $<
 
 $(BATCH_SET).exe: $(BATCH_SET).cs
-	$(MCS) -out:$@ -debug $(REFERENCES) $<
+	$(CSC) -out:$@ -debug $(REFERENCES) $<
 
 $(PARSE_PHOTO).exe: $(PARSE_PHOTO).cs
-	$(MCS) -out:$@ -debug $(REFERENCES) $<
+	$(CSC) -out:$@ -debug $(REFERENCES) $<
 
 $(STRIP_IMAGE).exe: $(STRIP_IMAGE).cs
-	$(MCS) -out:$@ -debug $(REFERENCES) $<
+	$(CSC) -out:$@ -debug $(REFERENCES) $<
 
 EXTRA_DIST = $(READ_FROM_URI).cs $(SET_PICTURES).cs $(LIST_TYPES).cs $(BATCH_SET).cs $(PARSE_PHOTO).cs $(STRIP_IMAGE).cs $(GENERATE_TEST_FIXTURE).cs \
 	$(srcdir)/covers/sample*

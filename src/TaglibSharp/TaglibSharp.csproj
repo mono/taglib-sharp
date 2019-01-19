@@ -6,7 +6,7 @@
     <PackageId>TagLibSharp</PackageId>
     <Product>TagLib#</Product>
     <Description>A library for reading and writing audio and image metatags.</Description>
-    <Copyright>Copyright (c) 2006-2007 Brian Nickel.  Copyright (c) 2009-2010 Other contributors</Copyright>
+    <Copyright>Copyright (c) 2006-2007 Brian Nickel.  Copyright (c) 2009-2019 Other contributors</Copyright>
     <Company />
     <Authors>Brian Nickel</Authors>
     <AssemblyName>taglib-sharp</AssemblyName>

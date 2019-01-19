@@ -1,7 +1,7 @@
 SUBDIRS = \
-   src    \
-   examples \
-   docs
+       	  src    \
+       	  examples \
+       	  docs
 
 pkgconfig_in_files = taglib-sharp.pc.in
 pkgconfigdir = $(datadir)/pkgconfig
@@ -30,10 +30,7 @@ MAINTAINERCLEANFILES = \
 
 
 all: sln_build
-
-
-
-
+	echo "Making All"
 
 test:
 	cd src/TaglibSharp.Tests; make test; cd ../..;
@@ -52,4 +49,4 @@ distwin: all
 	zip -9 -r $(srcdir)/$(WINDIR).zip $(srcdir)/$(WINDIR)
 	rm -rf $(srcdir)/$(WINDIR)
 
-include $(top_srcdir)/build/xbuild.include
+include $(top_srcdir)/build/msbuild.include

@@ -24,9 +24,14 @@ DISTCHECK_CONFIGURE_FLAGS="--disable-docs"
 AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
 
 dnl Check for Mono
-AC_PATH_PROG(MCS, csc)
-if test x$MCS = x; then
-	AC_MSG_ERROR(You need mcs)
+AC_PATH_PROG(NUGET, nuget)
+if test x$NUGET = x; then
+	AC_MSG_ERROR(You need nuget)
+fi
+
+AC_PATH_PROG(CSC, csc)
+if test x$CSC = x; then
+	AC_MSG_ERROR(You need csc)
 fi
 
 AC_PATH_PROG(MONO, mono)
@@ -77,13 +82,29 @@ else
 	AM_CONDITIONAL(HAVE_EXIV2, false)
 fi
 
+AC_ARG_ENABLE(release,
+	      AC_HELP_STRING([--enable-release],
+			     [Use release configuration]),
+			     enable_release=yes, enable_release=`(test ! -d .git) && echo "yes" || echo "no"`)
+AM_CONDITIONAL(ENABLE_RELEASE, test "x$enable_release" = "xyes")
+ENABLE_RELEASE=$enable_release
+AC_SUBST(ENABLE_RELEASE)
+if test "x$enable_release" = "xyes"; then
+	CSC_FLAGS="-define:RElEASE"
+	PROFILE_NAME="Release"
+else
+	PROFILE_NAME="Debug"
+fi
+AC_SUBST(CSC_FLAGS)
+AC_SUBST(PROFILE_NAME)
+
 AC_CONFIG_FILES([
 Makefile
 taglib-sharp.pc
 src/Makefile
+src/policy.2.0.taglib-sharp.config
 src/TaglibSharp/Makefile
 src/Debug/Makefile
-src/policy.2.0.taglib-sharp.config
 src/TaglibSharp.Tests/Makefile
 examples/Makefile
 docs/Makefile

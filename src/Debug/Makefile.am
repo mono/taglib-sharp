@@ -2,4 +2,4 @@ LINK =
 
 EXTRA_DIST =
 
-include $(top_srcdir)/build/xbuild.include
+include $(top_srcdir)/build/msbuild.include

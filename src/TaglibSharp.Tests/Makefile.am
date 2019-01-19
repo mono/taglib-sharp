@@ -8,4 +8,4 @@ EXTRA_DIST = \
 	samples/corrupt/null_title_v2.mp3 \
 	samples/unsupported/sample*
 
-include $(top_srcdir)/build/xbuild.include
+include $(top_srcdir)/build/msbuild.include
