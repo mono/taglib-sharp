@@ -744,6 +744,12 @@ namespace TagLib.Matroska
 				EBMLreader ebml_seek = new EBMLreader(element, element.DataOffset + i);
 				MatroskaID matroska_id = ebml_seek.ID;
 
+				if (matroska_id == MatroskaID.CRC32) // Skip the CRC-32 element
+				{
+					i += ebml_seek.Size;
+					continue;
+				}
+
 				if (matroska_id != MatroskaID.Seek) return false; // corrupted SeekHead
 
 				ulong j = 0;
