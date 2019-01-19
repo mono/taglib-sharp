@@ -24,3 +24,4 @@ docs/*.tree
 packages
 .vs
 .DS_Store
+TestResult.xml
