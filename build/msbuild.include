@@ -1,5 +1,5 @@
 MSBUILD=msbuild
-MSBUILD_ARGS=/verbosity:normal /nologo /property:CodePage=65001
+MSBUILD_ARGS=/restore /verbosity:normal /nologo /property:CodePage=65001
 ALL_CSPROJ=$(wildcard *.csproj)
 MAIN_SLN=$(top_builddir)/TaglibSharp.sln
 
@@ -30,7 +30,6 @@ csproj_clean:
 
 sln_build:
 	@echo Building $(MAIN_SLN)
-	@$(NUGET) restore $(MAIN_SLN)
 	@$(MSBUILD) $(MSBUILD_ARGS) $(MAIN_SLN) $(PROFILE)
 
 sln_clean:
