@@ -837,23 +837,23 @@ namespace TaglibSharp.Tests.TaggingFormats
 		[Test]
 		public void TestInitialKey()
 		{
-			Ogg.XiphComment tag = new Ogg.XiphComment();
+			XiphComment tag = new XiphComment();
 
-			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+			TagTestWithSave(ref tag, delegate (XiphComment t, string m) {
 				Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
 				Assert.IsNull(t.InitialKey, "Initial (Null): " + m);
 			});
 
 			tag.InitialKey = val_sing;
 
-			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+			TagTestWithSave(ref tag, delegate (XiphComment t, string m) {
 				Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
 				Assert.AreEqual(val_sing, t.InitialKey, "Value Set (!Null): " + m);
 			});
 
 			tag.InitialKey = string.Empty;
 
-			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+			TagTestWithSave(ref tag, delegate (XiphComment t, string m) {
 				Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
 				Assert.IsNull(t.InitialKey, "Value Cleared (Null): " + m);
 			});
@@ -862,23 +862,23 @@ namespace TaglibSharp.Tests.TaggingFormats
 		[Test]
 		public void TestISRC()
 		{
-			Ogg.XiphComment tag = new Ogg.XiphComment();
+			XiphComment tag = new XiphComment();
 
-			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+			TagTestWithSave(ref tag, delegate (XiphComment t, string m) {
 				Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
 				Assert.IsNull(t.ISRC, "Initial (Null): " + m);
 			});
 
 			tag.ISRC = val_sing;
 
-			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+			TagTestWithSave(ref tag, delegate (XiphComment t, string m) {
 				Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
 				Assert.AreEqual(val_sing, t.ISRC, "Value Set (!Null): " + m);
 			});
 
 			tag.ISRC = string.Empty;
 
-			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+			TagTestWithSave(ref tag, delegate (XiphComment t, string m) {
 				Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
 				Assert.IsNull(t.ISRC, "Value Cleared (Null): " + m);
 			});
@@ -887,23 +887,23 @@ namespace TaglibSharp.Tests.TaggingFormats
 		[Test]
 		public void TestPublisher()
 		{
-			Ogg.XiphComment tag = new Ogg.XiphComment();
+			XiphComment tag = new XiphComment();
 
-			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+			TagTestWithSave(ref tag, delegate (XiphComment t, string m) {
 				Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
 				Assert.IsNull(t.Publisher, "Initial (Null): " + m);
 			});
 
 			tag.Publisher = val_sing;
 
-			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+			TagTestWithSave(ref tag, delegate (XiphComment t, string m) {
 				Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
 				Assert.AreEqual(val_sing, t.Publisher, "Value Set (!Null): " + m);
 			});
 
 			tag.Publisher = string.Empty;
 
-			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+			TagTestWithSave(ref tag, delegate (XiphComment t, string m) {
 				Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
 				Assert.IsNull(t.Publisher, "Value Cleared (Null): " + m);
 			});
@@ -912,23 +912,23 @@ namespace TaglibSharp.Tests.TaggingFormats
 		[Test]
 		public void TestRemixedBy()
 		{
-			Ogg.XiphComment tag = new Ogg.XiphComment();
+			XiphComment tag = new XiphComment();
 
-			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+			TagTestWithSave(ref tag, delegate (XiphComment t, string m) {
 				Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
 				Assert.IsNull(t.RemixedBy, "Initial (Null): " + m);
 			});
 
 			tag.RemixedBy = val_sing;
 
-			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+			TagTestWithSave(ref tag, delegate (XiphComment t, string m) {
 				Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
 				Assert.AreEqual(val_sing, t.RemixedBy, "Value Set (!Null): " + m);
 			});
 
 			tag.RemixedBy = string.Empty;
 
-			TagTestWithSave(ref tag, delegate (Ogg.XiphComment t, string m) {
+			TagTestWithSave(ref tag, delegate (XiphComment t, string m) {
 				Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
 				Assert.IsNull(t.RemixedBy, "Value Cleared (Null): " + m);
 			});

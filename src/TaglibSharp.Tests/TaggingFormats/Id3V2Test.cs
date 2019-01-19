@@ -1,6 +1,10 @@
+using System.Collections.Generic;
+
 using NUnit.Framework;
+
 using TagLib;
 using TagLib.Id3v2;
+
 using Tag = TagLib.Id3v2.Tag;
 
 namespace TaglibSharp.Tests.TaggingFormats
@@ -915,26 +919,26 @@ namespace TaglibSharp.Tests.TaggingFormats
 		[Test]
 		public void TestInitialKey()
 		{
-			Id3v2.Tag tag = new Id3v2.Tag();
+			Tag tag = new Tag();
 			for (byte version = 2; version <= 4; version++)
 			{
 				tag.Version = version;
 
-				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+				TagTestWithSave(ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.IsNull(t.InitialKey, "Initial (Null): " + m);
 				});
 
 				tag.InitialKey = val_sing;
 
-				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+				TagTestWithSave(ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual(val_sing, t.InitialKey, "Value Set (!Null): " + m);
 				});
 
 				tag.InitialKey = string.Empty;
 
-				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+				TagTestWithSave(ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
 					Assert.IsNull(t.InitialKey, "Value Cleared (Null): " + m);
 				});
@@ -944,26 +948,26 @@ namespace TaglibSharp.Tests.TaggingFormats
 		[Test]
 		public void TestPublisher()
 		{
-			Id3v2.Tag tag = new Id3v2.Tag();
+			Tag tag = new Tag();
 			for (byte version = 2; version <= 4; version++)
 			{
 				tag.Version = version;
 
-				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+				TagTestWithSave(ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.IsNull(t.Publisher, "Initial (Null): " + m);
 				});
 
 				tag.Publisher = val_sing;
 
-				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+				TagTestWithSave(ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual(val_sing, t.Publisher, "Value Set (!Null): " + m);
 				});
 
 				tag.Publisher = string.Empty;
 
-				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+				TagTestWithSave(ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
 					Assert.IsNull(t.Publisher, "Value Cleared (Null): " + m);
 				});
@@ -973,26 +977,26 @@ namespace TaglibSharp.Tests.TaggingFormats
 		[Test]
 		public void TestISRC()
 		{
-			Id3v2.Tag tag = new Id3v2.Tag();
+			Tag tag = new Tag();
 			for (byte version = 2; version <= 4; version++)
 			{
 				tag.Version = version;
 
-				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+				TagTestWithSave(ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.IsNull(t.ISRC, "Initial (Null): " + m);
 				});
 
 				tag.ISRC = val_sing;
 
-				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+				TagTestWithSave(ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual(val_sing, t.ISRC, "Value Set (!Null): " + m);
 				});
 
 				tag.ISRC = string.Empty;
 
-				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+				TagTestWithSave(ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
 					Assert.IsNull(t.ISRC, "Value Cleared (Null): " + m);
 				});
@@ -1002,26 +1006,26 @@ namespace TaglibSharp.Tests.TaggingFormats
 		[Test]
 		public void TestRemixedBy()
 		{
-			Id3v2.Tag tag = new Id3v2.Tag();
+			Tag tag = new Tag();
 			for (byte version = 2; version <= 4; version++)
 			{
 				tag.Version = version;
 
-				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+				TagTestWithSave(ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.IsNull(t.RemixedBy, "Initial (Null): " + m);
 				});
 
 				tag.RemixedBy = val_sing;
 
-				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+				TagTestWithSave(ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual(val_sing, t.RemixedBy, "Value Set (!Null): " + m);
 				});
 
 				tag.RemixedBy = string.Empty;
 
-				TagTestWithSave(ref tag, delegate (Id3v2.Tag t, string m) {
+				TagTestWithSave(ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
 					Assert.IsNull(t.RemixedBy, "Value Cleared (Null): " + m);
 				});

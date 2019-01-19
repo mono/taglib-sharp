@@ -21,9 +21,7 @@
 // USA
 //
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace TagLib.Id3v2
 {	
@@ -33,35 +31,14 @@ namespace TagLib.Id3v2
 	/// </summary>
 	public class SynchronisedLyricsFrame : Frame
 	{
+
 #region Private Properties
-		
-		/// <summary>
-		///    Contains the text encoding to use when rendering the
-		///    current instance.
-		/// </summary>
-		private StringType encoding = Tag.DefaultEncoding;
-		
+
 		/// <summary>
 		///    Contains the ISO-639-2 language code.
 		/// </summary>
 		private string language = null;
-		
-		/// <summary>
-		///    Contains the description.
-		/// </summary>
-		private string description = null;
-		
-		/// <summary>
-		///    Contains the timestamp format.
-		/// </summary>
-		private TimestampFormat timestamp_format =
-			TimestampFormat.Unknown;
-		
-		/// <summary>
-		///    Contains the text type.
-		/// </summary>
-		private SynchedTextType lyrics_type = SynchedTextType.Other;
-		
+
 		/// <summary>
 		///    Contains the text.
 		/// </summary>
@@ -106,10 +83,10 @@ namespace TagLib.Id3v2
 		                                StringType encoding)
 			: base (FrameType.SYLT, 4)
 		{
-			this.encoding = encoding;
+			this.TextEncoding = encoding;
 			this.language = language;
-			this.description = description;
-			this.lyrics_type = type;
+			this.Description = description;
+			this.Type = type;
 		}
 
 		/// <summary>
@@ -137,8 +114,7 @@ namespace TagLib.Id3v2
 		public SynchronisedLyricsFrame (string description,
 		                                string language,
 		                                SynchedTextType type)
-			: this (description, language, type,
-				TagLib.Id3v2.Tag.DefaultEncoding)
+			: this (description, language, type, Tag.DefaultEncoding)
 		{
 		}
 
@@ -190,31 +166,27 @@ namespace TagLib.Id3v2
 		{
 			SetData (data, offset, version, false);
 		}
-		
-#endregion
-		
-		
-		
-#region Public Properties
-		
-		/// <summary>
-		///    Gets and sets the text encoding to use when storing the
-		///    current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="string" /> containing the text encoding to
-		///    use when storing the current instance.
-		/// </value>
-		/// <remarks>
-		///    This encoding is overridden when rendering if <see
-		///    cref="Tag.ForceDefaultEncoding" /> is <see
-		///    langword="true" /> or the render version does not support
-		///    it.
-		/// </remarks>
-		public StringType TextEncoding {
-			get {return encoding;}
-			set {encoding = value;}
-		}
+
+        #endregion
+
+
+        #region Public Properties
+
+        /// <summary>
+        ///    Gets and sets the text encoding to use when storing the
+        ///    current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="string" /> containing the text encoding to
+        ///    use when storing the current instance.
+        /// </value>
+        /// <remarks>
+        ///    This encoding is overridden when rendering if <see
+        ///    cref="Tag.ForceDefaultEncoding" /> is <see
+        ///    langword="true" /> or the render version does not support
+        ///    it.
+        /// </remarks>
+        public StringType TextEncoding { get; set; } = Tag.DefaultEncoding;
 
 		/// <summary>
 		///    Gets and sets the ISO-639-2 language code stored in the
@@ -236,48 +208,39 @@ namespace TagLib.Id3v2
 			set {language = value;}
 		}
 
-		/// <summary>
-		///    Gets and sets the description stored in the current
-		///    instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="string" /> containing the description
-		///    stored in the current instance.
-		/// </value>
-		/// <remarks>
-		///    There should only be one frame with a matching
-		///    description, type, and ISO-639-2 language code per tag.
-		/// </remarks>
-		public string Description {
-			get {return description;}
-			set {description = value;}
-		}
-		
-		/// <summary>
-		///    Gets and sets the timestamp format used by the current
-		///    instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="TimestampFormat" /> value describing the
-		///    timestamp format used by the current instance.
-		/// </value>
-		public TimestampFormat Format {
-			get {return timestamp_format;}
-			set {timestamp_format = value;}
-		}
-		
-		/// <summary>
-		///    Gets and sets the type of text contained in the current
-		///    instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="TimestampFormat" /> value describing the
-		///    type of text contained in the current instance.
-		/// </value>
-		public SynchedTextType Type {
-			get {return lyrics_type;}
-			set {lyrics_type = value;}
-		}
+        /// <summary>
+        ///    Gets and sets the description stored in the current
+        ///    instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="string" /> containing the description
+        ///    stored in the current instance.
+        /// </value>
+        /// <remarks>
+        ///    There should only be one frame with a matching
+        ///    description, type, and ISO-639-2 language code per tag.
+        /// </remarks>
+        public string Description { get; set; } = null;
+
+        /// <summary>
+        ///    Gets and sets the timestamp format used by the current
+        ///    instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="TimestampFormat" /> value describing the
+        ///    timestamp format used by the current instance.
+        /// </value>
+        public TimestampFormat Format { get; set; } = TimestampFormat.Unknown;
+
+        /// <summary>
+        ///    Gets and sets the type of text contained in the current
+        ///    instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="TimestampFormat" /> value describing the
+        ///    type of text contained in the current instance.
+        /// </value>
+        public SynchedTextType Type { get; set; } = SynchedTextType.Other;
 
 		/// <summary>
 		///    Gets and sets the text contained in the current
@@ -288,11 +251,8 @@ namespace TagLib.Id3v2
 		///    contained in the current instance.
 		/// </value>
 		public SynchedText [] Text {
-			get {return text;}
-			set {
-				text = value == null ? new SynchedText [0] :
-					value;
-			}
+			get { return text; }
+			set { text = value ?? (new SynchedText[0]);	}
 		}
 		
 #endregion
@@ -337,8 +297,7 @@ namespace TagLib.Id3v2
 		                                           bool create)
 		{
 			foreach (Frame f in tag) {
-				SynchronisedLyricsFrame lyr =
-					f as SynchronisedLyricsFrame;
+				var lyr = f as SynchronisedLyricsFrame;
 				
 				if (lyr == null)
 					continue;
@@ -353,9 +312,7 @@ namespace TagLib.Id3v2
 			if (!create)
 				return null;
 
-			SynchronisedLyricsFrame frame =
-				new SynchronisedLyricsFrame (description,
-					language, type);
+			var frame = new SynchronisedLyricsFrame (description, language, type);
 			tag.AddFrame (frame);
 			return frame;
 		}
@@ -422,8 +379,7 @@ namespace TagLib.Id3v2
 			SynchronisedLyricsFrame best_frame = null;
 			
 			foreach (Frame f in tag) {
-				SynchronisedLyricsFrame cf =
-					f as SynchronisedLyricsFrame;
+				var cf = f as SynchronisedLyricsFrame;
 				
 				if (cf == null)
 					continue;
@@ -467,49 +423,40 @@ namespace TagLib.Id3v2
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    field data is encoded in.
 		/// </param>
-		protected override void ParseFields (ByteVector data,
-		                                     byte version)
+		protected override void ParseFields (ByteVector data, byte version)
 		{
 			if (data.Count < 6)
-				throw new CorruptFileException (
-					"Not enough bytes in field.");
+				throw new CorruptFileException ("Not enough bytes in field.");
 
-			encoding = (StringType) data [0];
+			TextEncoding = (StringType) data [0];
 			language = data.ToString (StringType.Latin1, 1, 3);
-			timestamp_format = (TimestampFormat) data [4];
-			lyrics_type = (SynchedTextType) data [5];
+			Format = (TimestampFormat) data [4];
+			Type = (SynchedTextType) data [5];
 
-			ByteVector delim = ByteVector.TextDelimiter (
-				encoding);
+			var delim = ByteVector.TextDelimiter (TextEncoding);
 			int delim_index = data.Find (delim, 6, delim.Count);
 
 			if (delim_index < 0)
-				throw new CorruptFileException (
-					"Text delimiter expected.");
+				throw new CorruptFileException ("Text delimiter expected.");
 
-			description = data.ToString (encoding, 6,
-				delim_index - 6);
+			Description = data.ToString (TextEncoding, 6, delim_index - 6);
 
 			int offset = delim_index + delim.Count;
-			List<SynchedText> l = new List<SynchedText> ();
+			var l = new List<SynchedText> ();
 
 			while (offset + delim.Count + 4 < data.Count) {
-				delim_index = data.Find (delim, offset,
-					delim.Count);
+				delim_index = data.Find (delim, offset, delim.Count);
 				
 				if (delim_index < offset)
-					throw new CorruptFileException (
-						"Text delimiter expected.");
+					throw new CorruptFileException ("Text delimiter expected.");
 				
-				string text = data.ToString (encoding, offset,
-					delim_index - offset);
+				string text = data.ToString (TextEncoding, offset, delim_index - offset);
 				offset = delim_index + delim.Count;
 				
 				if (offset + 4 > data.Count)
 					break;
 				
-				l.Add (new SynchedText (data.Mid (offset, 4)
-					.ToUInt (), text));
+				l.Add (new SynchedText (data.Mid (offset, 4).ToUInt (), text));
 				offset += 4;
 			}
 			
@@ -530,17 +477,15 @@ namespace TagLib.Id3v2
 		/// </returns>
 		protected override ByteVector RenderFields (byte version)
 		{
-			StringType encoding = CorrectEncoding(TextEncoding,
-				version);
+			StringType encoding = CorrectEncoding(TextEncoding, version);
 			ByteVector delim = ByteVector.TextDelimiter (encoding);
 			ByteVector v = new ByteVector ();
 			
 			v.Add ((byte) encoding);
-			v.Add (ByteVector.FromString (Language,
-				StringType.Latin1));
-			v.Add ((byte) timestamp_format);
-			v.Add ((byte) lyrics_type);
-			v.Add (ByteVector.FromString (description, encoding));
+			v.Add (ByteVector.FromString (Language, StringType.Latin1));
+			v.Add ((byte) Format);
+			v.Add ((byte) Type);
+			v.Add (ByteVector.FromString (Description, encoding));
 			v.Add (delim);
 			
 			foreach (SynchedText t in text) {
@@ -567,10 +512,8 @@ namespace TagLib.Id3v2
 		/// </returns>
 		public override Frame Clone ()
 		{
-			SynchronisedLyricsFrame frame =
-				new SynchronisedLyricsFrame (description,
-					language, lyrics_type, encoding);
-			frame.timestamp_format = timestamp_format;
+			var frame = new SynchronisedLyricsFrame (Description, language, Type, TextEncoding);
+			frame.Format = Format;
 			frame.text = (SynchedText[]) text.Clone ();
 			return frame;
 		}
@@ -585,16 +528,6 @@ namespace TagLib.Id3v2
 	/// </summary>
 	public struct SynchedText
 	{
-		/// <summary>
-		///    Contains the time offset.
-		/// </summary>
-		private long time;
-		
-		/// <summary>
-		///    Contains the text.
-		/// </summary>
-		private string text;
-		
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="SynchedText" /> with a specified time and text.
@@ -611,35 +544,29 @@ namespace TagLib.Id3v2
 		/// </param>
 		public SynchedText (long time, string text)
 		{
-			this.time = time;
-			this.text = text;
+			Time = time;
+			Text = text;
 		}
-		
-		/// <summary>
-		///    Gets and sets the time offset of the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="long" /> value representing an amount of
-		///    time in a format define in the class using it. The
-		///    specific format is specified in <see
-		///    cref="SynchronisedLyricsFrame.Format" />.
-		/// </value>
-		public long Time {
-			get {return time;}
-			set {time = value;}
-		}
-		
-		/// <summary>
-		///    Gets and sets the text for the point in time represented
-		///    by the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="string" /> object containing the text
-		///    for the point in time.
-		/// </value>
-		public string Text {
-			get {return text;}
-			set {text = value;}
-		}
-	}
+
+        /// <summary>
+        ///    Gets and sets the time offset of the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="long" /> value representing an amount of
+        ///    time in a format define in the class using it. The
+        ///    specific format is specified in <see
+        ///    cref="SynchronisedLyricsFrame.Format" />.
+        /// </value>
+        public long Time { get; set; }
+
+        /// <summary>
+        ///    Gets and sets the text for the point in time represented
+        ///    by the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="string" /> object containing the text
+        ///    for the point in time.
+        /// </value>
+        public string Text { get; set; }
+    }
 }
