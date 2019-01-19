@@ -343,12 +343,14 @@ namespace TagLib.Mpeg {
 		public int AudioBitrate {
 			get {
 				if (xing_header.TotalSize > 0 &&
+					xing_header.TotalFrames > 0 &&
 					Duration > TimeSpan.Zero)
 					return (int) Math.Round (((
 						(XingHeader.TotalSize * 8L) /
 						Duration.TotalSeconds) / 1000.0));
 
-				if (vbri_header.TotalSize > 0 && 
+				if (vbri_header.TotalSize > 0 &&
+					vbri_header.TotalFrames > 0 &&
 					Duration > TimeSpan.Zero)
 					return (int)Math.Round(((
 						(VBRIHeader.TotalSize * 8L) /
