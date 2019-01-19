@@ -72,7 +72,7 @@ namespace TagLib.Id3v2
 		TimeChange = 0x0C,
 
 		/// <summary>
-		/// momentary unwanted noise (Snap, Crackle & Pop)
+		/// momentary unwanted noise (Snap, Crackle, and Pop)
 		/// </summary>
 		MomentaryUnwantedNoise = 0x0D,
 

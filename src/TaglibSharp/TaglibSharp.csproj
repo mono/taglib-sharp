@@ -1,9 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net462;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>$(TaglibSharpTargetFramework)</TargetFrameworks>
     <Version>2.2.0.0</Version>
-    <PackageId>TagLib#</PackageId>
+    <PackageId>TagLibSharp</PackageId>
     <Product>TagLib#</Product>
     <Description>A library for reading and writing audio and image metatags.</Description>
     <Copyright>Copyright (c) 2006-2007 Brian Nickel.  Copyright (c) 2009-2010 Other contributors</Copyright>
@@ -13,6 +13,9 @@
     <RootNamespace>TagLib</RootNamespace>
     <AssemblyOriginatorKeyFile>..\..\taglib-sharp.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/mono/taglib-sharp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mono/taglib-sharp</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net462|AnyCPU'">

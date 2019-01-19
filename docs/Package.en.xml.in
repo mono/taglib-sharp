@@ -22,7 +22,7 @@
 			<summary><para>The TagLib.Aac namespace contains classes
 			for handling the AAC file format.</para></summary>
 			<remarks><para>See
-            http://www.hydrogenaudio.org/forums/lofiversion/index.php/t21617.html
+			http://www.hydrogenaudio.org/forums/lofiversion/index.php/t21617.html
 			for the complete specification.</para></remarks>
 		</Docs>
 	</Namespace>

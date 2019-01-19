@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+
 using TagLib;
 
 public class ReadFromUri
@@ -37,16 +38,16 @@ public class ReadFromUri
 
 				try {
 					file = TagLib.File.Create (new FileAbstraction (uri));
-				} catch (TagLib.UnsupportedFormatException) {
-					Console.WriteLine ("UNSUPPORTED FILE: " + uri);
+				} catch (UnsupportedFormatException) {
+					Console.WriteLine ($"UNSUPPORTED FILE: {uri}");
 					Console.WriteLine (string.Empty);
 					Console.WriteLine ("---------------------------------------");
 					Console.WriteLine (string.Empty);
 					continue;
 				}
 
-				Console.WriteLine ("Tags on disk:   " + file.TagTypesOnDisk);
-				Console.WriteLine ("Tags in object: " + file.TagTypes);
+				Console.WriteLine ($"Tags on disk:   {file.TagTypesOnDisk}");
+				Console.WriteLine ($"Tags in object: {file.TagTypes}");
 				Console.WriteLine (string.Empty);
 
 				Write ("Grouping", file.Tag.Grouping);
@@ -71,58 +72,58 @@ public class ReadFromUri
 				Write ("Disc", file.Tag.Disc);
 				Write ("DiscCount", file.Tag.DiscCount);
 
-				Console.WriteLine ("Lyrics:\n" + file.Tag.Lyrics + "\n");
+				Console.WriteLine ($"Lyrics:\n{file.Tag.Lyrics}\n");
 
-				Console.WriteLine ("Media Types:     " + file.Properties.MediaTypes + "\n");
+				Console.WriteLine ($"Media Types:     {file.Properties.MediaTypes}\n");
 
-				foreach (TagLib.ICodec codec in file.Properties.Codecs) {
-					TagLib.IAudioCodec acodec = codec as TagLib.IAudioCodec;
-					TagLib.IVideoCodec vcodec = codec as TagLib.IVideoCodec;
+				foreach (var codec in file.Properties.Codecs) {
+					var acodec = codec as IAudioCodec;
+					var vcodec = codec as IVideoCodec;
 
-					if (acodec != null && (acodec.MediaTypes & TagLib.MediaTypes.Audio) != TagLib.MediaTypes.None) {
-						Console.WriteLine ("Audio Properties : " + acodec.Description);
-						Console.WriteLine ("Bitrate:    " + acodec.AudioBitrate);
-						Console.WriteLine ("SampleRate: " + acodec.AudioSampleRate);
-						Console.WriteLine ("Channels:   " + acodec.AudioChannels + "\n");
+					if (acodec != null && (acodec.MediaTypes & MediaTypes.Audio) != MediaTypes.None) {
+						Console.WriteLine ($"Audio Properties : {acodec.Description}");
+						Console.WriteLine ($"Bitrate:    {acodec.AudioBitrate}");
+						Console.WriteLine ($"SampleRate: {acodec.AudioSampleRate}");
+						Console.WriteLine ($"Channels:   {acodec.AudioChannels}\n");
 					}
 
-					if (vcodec != null && (vcodec.MediaTypes & TagLib.MediaTypes.Video) != TagLib.MediaTypes.None) {
-						Console.WriteLine ("Video Properties : " + vcodec.Description);
-						Console.WriteLine ("Width:      " + vcodec.VideoWidth);
-						Console.WriteLine ("Height:     " + vcodec.VideoHeight + "\n");
+					if (vcodec != null && (vcodec.MediaTypes & MediaTypes.Video) != MediaTypes.None) {
+						Console.WriteLine ($"Video Properties : {vcodec.Description}");
+						Console.WriteLine ($"Width:      {vcodec.VideoWidth}");
+						Console.WriteLine ($"Height:     {vcodec.VideoHeight}\n");
 					}
 				}
 
-				if (file.Properties.MediaTypes != TagLib.MediaTypes.None)
-					Console.WriteLine ("Length:     " + file.Properties.Duration + "\n");
+				if (file.Properties.MediaTypes != MediaTypes.None)
+					Console.WriteLine ($"Length:     {file.Properties.Duration}\n");
 
 				IPicture[] pictures = file.Tag.Pictures;
 
-				Console.WriteLine ("Embedded Pictures: " + pictures.Length);
+				Console.WriteLine ($"Embedded Pictures: {pictures.Length}");
 
-				foreach (IPicture picture in pictures) {
+				foreach (var picture in pictures) {
 					Console.WriteLine (picture.Description);
-					Console.WriteLine ("   MimeType: " + picture.MimeType);
-					Console.WriteLine ("   Size:     " + picture.Data.Count);
-					Console.WriteLine ("   Type:     " + picture.Type);
+					Console.WriteLine ($"   MimeType: {picture.MimeType}");
+					Console.WriteLine ($"   Size:     {picture.Data.Count}");
+					Console.WriteLine ($"   Type:     {picture.Type}");
 				}
 
-				Console.WriteLine (string.Empty);
+				Console.WriteLine ();
 				Console.WriteLine ("---------------------------------------");
-				Console.WriteLine (string.Empty);
+				Console.WriteLine ();
 
 				songs_read++;
 			}
 		} finally {
 		}
 
-		DateTime end = DateTime.Now;
+		var end = DateTime.Now;
 
-		Console.WriteLine ("Total running time:    " + (end - start));
-		Console.WriteLine ("Total files read:      " + songs_read);
+		Console.WriteLine ($"Total running time:    {(end - start)}");
+		Console.WriteLine ($"Total files read:      {songs_read}");
 
 		if (songs_read > 0) {
-			Console.WriteLine ("Average time per file: " + new TimeSpan ((end - start).Ticks / songs_read));
+			Console.WriteLine ($"Average time per file: {new TimeSpan ((end - start).Ticks / songs_read)}");
 		}
 	}
 }
