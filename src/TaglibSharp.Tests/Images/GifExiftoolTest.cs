@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using TaglibSharp.Tests.Images.Validators;
 using TagLib;
+using TaglibSharp.Tests.Images.Validators;
 
 namespace TaglibSharp.Tests.Images
 {
@@ -16,7 +16,7 @@ namespace TaglibSharp.Tests.Images
 				true,
 				new GifExiftoolTestInvariantValidator (),
 				NoModificationValidator.Instance,
-				new TagKeywordsModificationValidator (new[] {"Keyword 1", "Keyword 2"}, TagTypes.XMP, true),
+				new TagKeywordsModificationValidator (new[] { "Keyword 1", "Keyword 2" }, TagTypes.XMP, true),
 				new CommentModificationValidator ("Created with GIMP"),
 				new TagCommentModificationValidator ("Created with GIMP", TagTypes.GifComment, true),
 				new RemoveMetadataValidator (TagTypes.GifComment | TagTypes.XMP),

@@ -34,47 +34,47 @@ namespace TagLib.IFD.Tags
 		/// <summary>
 		///    Version. (Hex: 0X0000)
 		/// </summary>
-		Version                                             = 0,
+		Version = 0,
 
 		/// <summary>
 		///    Shutter count 1. (Hex: 0X006A)
 		/// </summary>
-		ShutterCount1                                       = 106,
+		ShutterCount1 = 106,
 
 		/// <summary>
 		///    Deleted image count. (Hex: 0X006E)
 		/// </summary>
-		DeletedImageCount                                   = 110,
+		DeletedImageCount = 110,
 
 		/// <summary>
 		///    Vibration reduction. (Hex: 0X0075)
 		/// </summary>
-		VibrationReduction                                  = 117,
+		VibrationReduction = 117,
 
 		/// <summary>
 		///    . (Hex: 0X0082)
 		/// </summary>
-		VibrationReduction1                                 = 130,
+		VibrationReduction1 = 130,
 
 		/// <summary>
 		///    Shutter count 2. (Hex: 0X0157)
 		/// </summary>
-		ShutterCount2                                       = 343,
+		ShutterCount2 = 343,
 
 		/// <summary>
 		///    Vibration reduction 2. (Hex: 0X01AE)
 		/// </summary>
-		VibrationReduction2                                 = 430,
+		VibrationReduction2 = 430,
 
 		/// <summary>
 		///    ISO. (Hex: 0X0256)
 		/// </summary>
-		ISO                                                 = 598,
+		ISO = 598,
 
 		/// <summary>
 		///    Shutter count. (Hex: 0X0276)
 		/// </summary>
-		ShutterCount                                        = 630,
+		ShutterCount = 630,
 
 	}
 }

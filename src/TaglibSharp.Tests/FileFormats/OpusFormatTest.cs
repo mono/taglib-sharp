@@ -11,28 +11,28 @@ namespace TaglibSharp.Tests.FileFormats
 		File file;
 
 		[OneTimeSetUp]
-		public void Init()
+		public void Init ()
 		{
-			file = File.Create(sample_file);
+			file = File.Create (sample_file);
 		}
 
 		[Test]
-		public void ReadAudioProperties()
+		public void ReadAudioProperties ()
 		{
 			StandardTests.ReadAudioProperties (file);
 		}
 
 		[Test]
-		public void ReadTags()
+		public void ReadTags ()
 		{
-			Assert.AreEqual("Opus album", file.Tag.Album);
-			Assert.AreEqual("Opus artist", file.Tag.FirstPerformer);
-			Assert.AreEqual("Opus comment", file.Tag.Description);
-			Assert.AreEqual("Acid Punk", file.Tag.FirstGenre);
-			Assert.AreEqual("Opus title", file.Tag.Title);
-			Assert.AreEqual(6, file.Tag.Track);
-			Assert.AreEqual(7, file.Tag.TrackCount);
-			Assert.AreEqual(1234, file.Tag.Year);
+			Assert.AreEqual ("Opus album", file.Tag.Album);
+			Assert.AreEqual ("Opus artist", file.Tag.FirstPerformer);
+			Assert.AreEqual ("Opus comment", file.Tag.Description);
+			Assert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
+			Assert.AreEqual ("Opus title", file.Tag.Title);
+			Assert.AreEqual (6, file.Tag.Track);
+			Assert.AreEqual (7, file.Tag.TrackCount);
+			Assert.AreEqual (1234, file.Tag.Year);
 		}
 
 		[Test]
@@ -42,28 +42,28 @@ namespace TaglibSharp.Tests.FileFormats
 		}
 
 		[Test]
-		public void WriteExtendedTags()
+		public void WriteExtendedTags ()
 		{
-			ExtendedTests.WriteExtendedTags(sample_file, tmp_file);
+			ExtendedTests.WriteExtendedTags (sample_file, tmp_file);
 		}
 
 
 		[Test]
-		public void WriteStandardPictures()
+		public void WriteStandardPictures ()
 		{
-			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.None);
+			StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None);
 		}
 
 		[Test]
-		[Ignore("PictureLazy not supported yet")]
-		public void WriteStandardPicturesLazy()
+		[Ignore ("PictureLazy not supported yet")]
+		public void WriteStandardPicturesLazy ()
 		{
-			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.PictureLazy);
+			StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
 		}
 
 
 		[Test]
-		public void TestCorruptionResistance()
+		public void TestCorruptionResistance ()
 		{
 			StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/a.opus");
 		}

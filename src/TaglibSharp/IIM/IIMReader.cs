@@ -19,7 +19,6 @@
 //  You should have received a copy of the GNU Lesser General Public
 //  License along with this library; if not, write to the Free Software
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-using System;
 
 namespace TagLib.IIM
 {
@@ -31,10 +30,10 @@ namespace TagLib.IIM
 		/// <summary>
 		/// The magic bytes that start a new IPTC-IIM segment
 		/// </summary>
-		private static readonly byte[] IPTC_IIM_SEGMENT = new byte[] { 0x1C, 0x02};
+		static readonly byte[] IPTC_IIM_SEGMENT = { 0x1C, 0x02 };
 
-		private IIMTag Tag { get; set; }
-		private ByteVector Data { get; set; }
+		IIMTag Tag { get; set; }
+		ByteVector Data { get; set; }
 
 		/// <summary>
 		/// Constructor
@@ -65,22 +64,22 @@ namespace TagLib.IIM
 
 				// ENHANCE: enhance encoding used for string conversion. Unfortunately this is
 				// not detectable from IIM data.
-				switch (Data [i]) {
-					case 5: // Object Name
-						Tag.Title = Data.ToString (StringType.Latin1, i + 3, len);
-						break;
-					case 25: // Keywords
-						Tag.AddKeyword (Data.ToString (StringType.Latin1, i + 3, len));
-						break;
-					case 80: // By-line
-						Tag.Creator = Data.ToString (StringType.Latin1, i + 3, len);
-						break;
-					case 116: // Copyright notice
-						Tag.Copyright = Data.ToString (StringType.Latin1, i + 3, len);
-						break;
-					case 120: // Caption/Abstract
-						Tag.Comment = Data.ToString (StringType.Latin1, i + 3, len);
-						break;
+				switch (Data[i]) {
+				case 5: // Object Name
+					Tag.Title = Data.ToString (StringType.Latin1, i + 3, len);
+					break;
+				case 25: // Keywords
+					Tag.AddKeyword (Data.ToString (StringType.Latin1, i + 3, len));
+					break;
+				case 80: // By-line
+					Tag.Creator = Data.ToString (StringType.Latin1, i + 3, len);
+					break;
+				case 116: // Copyright notice
+					Tag.Copyright = Data.ToString (StringType.Latin1, i + 3, len);
+					break;
+				case 120: // Caption/Abstract
+					Tag.Comment = Data.ToString (StringType.Latin1, i + 3, len);
+					break;
 				}
 				findOffset = i + 3 + len;
 			}

@@ -27,10 +27,11 @@
 //
 
 using System;
-using System.Text;
 using System.Collections.Generic;
+using System.Text;
 
-namespace TagLib {
+namespace TagLib
+{
 	/// <summary>
 	///    This class implements <see cref="IAudioCodec" />, <see
 	///    cref="IVideoCodec" /> and <see cref="IPhotoCodec" />
@@ -40,23 +41,23 @@ namespace TagLib {
 	public class Properties : IAudioCodec, IVideoCodec, IPhotoCodec
 	{
 		#region Private Fields
-		
+
 		/// <summary>
 		///    Contains the codecs.
 		/// </summary>
-		private ICodec[] codecs = new ICodec [0];
-		
+		readonly ICodec[] codecs = new ICodec[0];
+
 		/// <summary>
 		///    Contains the duration.
 		/// </summary>
-		private TimeSpan duration = TimeSpan.Zero;
-		
+		TimeSpan duration = TimeSpan.Zero;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Properties" /> with no codecs or duration.
@@ -68,7 +69,7 @@ namespace TagLib {
 		public Properties ()
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Properties" /> with a specified duration and array
@@ -89,7 +90,7 @@ namespace TagLib {
 			if (codecs != null)
 				this.codecs = codecs;
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Properties" /> with a specified duration and
@@ -108,16 +109,15 @@ namespace TagLib {
 		{
 			this.duration = duration;
 			if (codecs != null)
-				this.codecs = new List<ICodec> (codecs)
-					.ToArray ();
+				this.codecs = new List<ICodec> (codecs).ToArray ();
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the codecs contained in the current instance.
 		/// </summary>
@@ -127,15 +127,15 @@ namespace TagLib {
 		///    instance.
 		/// </value>
 		public IEnumerable<ICodec> Codecs {
-			get {return codecs;}
+			get { return codecs; }
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region ICodec
-		
+
 		/// <summary>
 		///    Gets the duration of the media represented by the current
 		///    instance.
@@ -151,19 +151,18 @@ namespace TagLib {
 		public TimeSpan Duration {
 			get {
 				TimeSpan duration = this.duration;
-				
+
 				if (duration != TimeSpan.Zero)
 					return duration;
-				
+
 				foreach (ICodec codec in codecs)
-					if (codec != null &&
-						codec.Duration > duration)
+					if (codec != null && codec.Duration > duration)
 						duration = codec.Duration;
-				
+
 				return duration;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the types of media represented by the current
 		///    instance.
@@ -175,15 +174,15 @@ namespace TagLib {
 		public MediaTypes MediaTypes {
 			get {
 				MediaTypes types = MediaTypes.None;
-				
+
 				foreach (ICodec codec in codecs)
 					if (codec != null)
 						types |= codec.MediaTypes;
-				
+
 				return types;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets a string description of the media represented by the
 		///    current instance.
@@ -198,26 +197,26 @@ namespace TagLib {
 		/// </remarks>
 		public string Description {
 			get {
-				StringBuilder builder = new StringBuilder ();
+				var builder = new StringBuilder ();
 				foreach (ICodec codec in codecs) {
 					if (codec == null)
 						continue;
-					
+
 					if (builder.Length != 0)
 						builder.Append ("; ");
-					
+
 					builder.Append (codec.Description);
 				}
 				return builder.ToString ();
 			}
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region IAudioCodec
-		
+
 		/// <summary>
 		///    Gets the bitrate of the audio represented by the current
 		///    instance.
@@ -232,20 +231,17 @@ namespace TagLib {
 		public int AudioBitrate {
 			get {
 				foreach (ICodec codec in codecs) {
-					if (codec == null ||
-						(codec.MediaTypes & MediaTypes.Audio) == 0)
+					if (codec == null || (codec.MediaTypes & MediaTypes.Audio) == 0)
 						continue;
-					
-					IAudioCodec audio = codec as IAudioCodec;
-					
-					if (audio != null && audio.AudioBitrate != 0)
+
+					if (codec is IAudioCodec audio && audio.AudioBitrate != 0)
 						return audio.AudioBitrate;
 				}
-				
+
 				return 0;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the sample rate of the audio represented by the
 		///    current instance.
@@ -264,17 +260,15 @@ namespace TagLib {
 					if (codec == null ||
 						(codec.MediaTypes & MediaTypes.Audio) == 0)
 						continue;
-					
-					IAudioCodec audio = codec as IAudioCodec;
-					
-					if (audio != null && audio.AudioSampleRate != 0)
+
+					if (codec is IAudioCodec audio && audio.AudioSampleRate != 0)
 						return audio.AudioSampleRate;
 				}
-				
+
 				return 0;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the number of bits per sample in the audio
 		///    represented by the current instance.
@@ -290,13 +284,10 @@ namespace TagLib {
 		public int BitsPerSample {
 			get {
 				foreach (ICodec codec in codecs) {
-					if (codec == null ||
-						(codec.MediaTypes & MediaTypes.Audio) == 0)
+					if (codec == null || (codec.MediaTypes & MediaTypes.Audio) == 0)
 						continue;
 
-					ILosslessAudioCodec lossless = codec as ILosslessAudioCodec;
-
-					if (lossless != null && lossless.BitsPerSample != 0)
+					if (codec is ILosslessAudioCodec lossless && lossless.BitsPerSample != 0)
 						return lossless.BitsPerSample;
 				}
 
@@ -320,26 +311,23 @@ namespace TagLib {
 		public int AudioChannels {
 			get {
 				foreach (ICodec codec in codecs) {
-					if (codec == null ||
-						(codec.MediaTypes & MediaTypes.Audio) == 0)
+					if (codec == null || (codec.MediaTypes & MediaTypes.Audio) == 0)
 						continue;
-					
-					IAudioCodec audio = codec as IAudioCodec;
-					
-					if (audio != null && audio.AudioChannels != 0)
+
+					if (codec is IAudioCodec audio && audio.AudioChannels != 0)
 						return audio.AudioChannels;
 				}
-				
+
 				return 0;
 			}
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region IVideoCodec
-		
+
 		/// <summary>
 		///    Gets the width of the video represented by the current
 		///    instance.
@@ -354,20 +342,17 @@ namespace TagLib {
 		public int VideoWidth {
 			get {
 				foreach (ICodec codec in codecs) {
-					if (codec == null ||
-						(codec.MediaTypes & MediaTypes.Video) == 0)
+					if (codec == null || (codec.MediaTypes & MediaTypes.Video) == 0)
 						continue;
-					
-					IVideoCodec video = codec as IVideoCodec;
-					
-					if (video != null && video.VideoWidth != 0)
+
+					if (codec is IVideoCodec video && video.VideoWidth != 0)
 						return video.VideoWidth;
 				}
-				
+
 				return 0;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the height of the video represented by the current
 		///    instance.
@@ -382,20 +367,17 @@ namespace TagLib {
 		public int VideoHeight {
 			get {
 				foreach (ICodec codec in codecs) {
-					if (codec == null ||
-						(codec.MediaTypes & MediaTypes.Video) == 0)
+					if (codec == null || (codec.MediaTypes & MediaTypes.Video) == 0)
 						continue;
-					
-					IVideoCodec video = codec as IVideoCodec;
-					
-					if (video != null && video.VideoHeight != 0)
+
+					if (codec is IVideoCodec video && video.VideoHeight != 0)
 						return video.VideoHeight;
 				}
-				
+
 				return 0;
 			}
 		}
-		
+
 		#endregion
 
 
@@ -413,13 +395,10 @@ namespace TagLib {
 		public int PhotoWidth {
 			get {
 				foreach (ICodec codec in codecs) {
-					if (codec == null ||
-						(codec.MediaTypes & MediaTypes.Photo) == 0)
+					if (codec == null || (codec.MediaTypes & MediaTypes.Photo) == 0)
 						continue;
 
-					IPhotoCodec photo = codec as IPhotoCodec;
-
-					if (photo != null && photo.PhotoWidth != 0)
+					if (codec is IPhotoCodec photo && photo.PhotoWidth != 0)
 						return photo.PhotoWidth;
 				}
 
@@ -438,13 +417,10 @@ namespace TagLib {
 		public int PhotoHeight {
 			get {
 				foreach (ICodec codec in codecs) {
-					if (codec == null ||
-						(codec.MediaTypes & MediaTypes.Photo) == 0)
+					if (codec == null || (codec.MediaTypes & MediaTypes.Photo) == 0)
 						continue;
 
-					IPhotoCodec photo = codec as IPhotoCodec;
-
-					if (photo != null && photo.PhotoHeight != 0)
+					if (codec is IPhotoCodec photo && photo.PhotoHeight != 0)
 						return photo.PhotoHeight;
 				}
 
@@ -464,20 +440,16 @@ namespace TagLib {
 		public int PhotoQuality {
 			get {
 				foreach (ICodec codec in codecs) {
-					if (codec == null ||
-						(codec.MediaTypes & MediaTypes.Photo) == 0)
+					if (codec == null || (codec.MediaTypes & MediaTypes.Photo) == 0)
 						continue;
 
-					IPhotoCodec photo = codec as IPhotoCodec;
-
-					if (photo != null && photo.PhotoQuality != 0)
+					if (codec is IPhotoCodec photo && photo.PhotoQuality != 0)
 						return photo.PhotoQuality;
 				}
 
 				return 0;
 			}
 		}
-
 
 		#endregion
 	}

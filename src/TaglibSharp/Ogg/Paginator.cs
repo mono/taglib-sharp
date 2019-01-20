@@ -37,34 +37,34 @@ namespace TagLib.Ogg
 	/// </summary>
 	public class Paginator
 	{
-#region Private Fields
-		
+		#region Private Fields
+
 		/// <summary>
 		///    Contains the packets to paginate.
 		/// </summary>
-		private ByteVectorCollection packets =
+		readonly ByteVectorCollection packets =
 			new ByteVectorCollection ();
-		
+
 		/// <summary>
 		///    Contains the first page header.
 		/// </summary>
-		private PageHeader? first_page_header = null;
-		
+		PageHeader? first_page_header;
+
 		/// <summary>
 		///    Contains the codec to use.
 		/// </summary>
-		private Codec codec;
-		
+		readonly Codec codec;
+
 		/// <summary>
 		///    contains the number of pages read.
 		/// </summary>
-		private int pages_read = 0;
-#endregion
-		
-		
-		
-#region Constructors
-		
+		int pages_read;
+		#endregion
+
+
+
+		#region Constructors
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Paginator" /> for a given <see cref="Codec" />
@@ -78,13 +78,13 @@ namespace TagLib.Ogg
 		{
 			this.codec = codec;
 		}
-		
-#endregion
-		
-		
-		
-#region Public Methods
-		
+
+		#endregion
+
+
+
+		#region Public Methods
+
 		/// <summary>
 		///    Adds the next page to the current instance.
 		/// </summary>
@@ -93,26 +93,24 @@ namespace TagLib.Ogg
 		/// </param>
 		public void AddPage (Page page)
 		{
-			pages_read ++;
-			
+			pages_read++;
+
 			if (first_page_header == null)
 				first_page_header = page.Header;
-			
+
 			if (page.Packets.Length == 0)
 				return;
-			
+
 			ByteVector[] page_packets = page.Packets;
-			
-			for (int i = 0; i < page_packets.Length; i ++) {
-				if ((page.Header.Flags & PageFlags
-					.FirstPacketContinued) != 0 && i == 0 &&
-					packets.Count > 0)
-					packets [packets.Count - 1].Add (page_packets [0]);
+
+			for (int i = 0; i < page_packets.Length; i++) {
+				if ((page.Header.Flags & PageFlags.FirstPacketContinued) != 0 && i == 0 && packets.Count > 0)
+					packets[packets.Count - 1].Add (page_packets[0]);
 				else
-					packets.Add (page_packets [i]);
+					packets.Add (page_packets[i]);
 			}
 		}
-		
+
 		/// <summary>
 		///    Stores a Xiph comment in the codec-specific comment
 		///    packet.
@@ -134,11 +132,10 @@ namespace TagLib.Ogg
 		///    A <see cref="T:Page[]" /> containing the new page
 		///    collection.
 		/// </returns>
-		[Obsolete("Use Paginator.Paginate(out int)")]
-		public Page [] Paginate ()
+		[Obsolete ("Use Paginator.Paginate(out int)")]
+		public Page[] Paginate ()
 		{
-			int dummy;
-			return Paginate (out dummy);
+			return Paginate (out var dummy);
 		}
 
 		/// <summary>
@@ -154,64 +151,62 @@ namespace TagLib.Ogg
 		///    A <see cref="T:Page[]" /> containing the new page
 		///    collection.
 		/// </returns>
-		public Page [] Paginate (out int change)
+		public Page[] Paginate (out int change)
 		{
 			// Ogg Pagination: Welcome to sucksville!
 			// If you don't understand this, you're not alone.
 			// It is confusing as Hell.
-			
+
 			// TODO: Document this method, in the mean time, there
 			// is always http://xiph.org/ogg/doc/framing.html
-			
+
 			if (pages_read == 0) {
 				change = 0;
-				return new Page [0];
+				return new Page[0];
 			}
-			
+
 			int count = pages_read;
-			ByteVectorCollection packets = new ByteVectorCollection (
-				this.packets);
-			PageHeader first_header = (PageHeader) first_page_header;
+			ByteVectorCollection packets = new ByteVectorCollection (this.packets);
+			PageHeader first_header = (PageHeader)first_page_header;
 			List<Page> pages = new List<Page> ();
 			uint index = 0;
 			bool bos = first_header.PageSequenceNumber == 0;
-			
+
 			if (bos) {
-				pages.Add (new Page (new ByteVectorCollection (packets [0]), first_header));
-				index ++;
+				pages.Add (new Page (new ByteVectorCollection (packets[0]), first_header));
+				index++;
 				packets.RemoveAt (0);
-				count --;
+				count--;
 			}
-			
+
 			int lacing_per_page = 0xfc;
 			if (count > 0) {
 				int total_lacing_bytes = 0;
-				
-				for (int i = 0; i < packets.Count; i ++)
-					total_lacing_bytes += GetLacingValueLength (
-						packets, i);
-				
+
+				for (int i = 0; i < packets.Count; i++)
+					total_lacing_bytes += GetLacingValueLength (packets, i);
+
 				lacing_per_page = Math.Min (total_lacing_bytes / count + 1, lacing_per_page);
 			}
-			
+
 			int lacing_bytes_used = 0;
 			ByteVectorCollection page_packets = new ByteVectorCollection ();
 			bool first_packet_continued = false;
-			
+
 			while (packets.Count > 0) {
 				int packet_bytes = GetLacingValueLength (packets, 0);
 				int remaining = lacing_per_page - lacing_bytes_used;
 				bool whole_packet = packet_bytes <= remaining;
 				if (whole_packet) {
-					page_packets.Add (packets [0]);
+					page_packets.Add (packets[0]);
 					lacing_bytes_used += packet_bytes;
 					packets.RemoveAt (0);
 				} else {
-					page_packets.Add (packets [0].Mid (0, remaining * 0xff));
-					packets [0] = packets [0].Mid (remaining * 0xff);
+					page_packets.Add (packets[0].Mid (0, remaining * 0xff));
+					packets[0] = packets[0].Mid (remaining * 0xff);
 					lacing_bytes_used += remaining;
 				}
-				
+
 				if (lacing_bytes_used == lacing_per_page) {
 					pages.Add (new Page (page_packets,
 						new PageHeader (first_header,
@@ -220,12 +215,12 @@ namespace TagLib.Ogg
 							PageFlags.None)));
 					page_packets = new ByteVectorCollection ();
 					lacing_bytes_used = 0;
-					index ++;
-					count --;
+					index++;
+					count--;
 					first_packet_continued = !whole_packet;
 				}
 			}
-			
+
 			if (page_packets.Count > 0) {
 				pages.Add (new Page (page_packets,
 					new PageHeader (
@@ -233,19 +228,19 @@ namespace TagLib.Ogg
 						index, first_packet_continued ?
 						PageFlags.FirstPacketContinued :
 						PageFlags.None)));
-				index ++;
-				count --;
+				index++;
+				count--;
 			}
 			change = -count;
 			return pages.ToArray ();
 		}
-		
-#endregion
-		
-		
-		
-#region Private Methods
-		
+
+		#endregion
+
+
+
+		#region Private Methods
+
 		/// <summary>
 		///    Gets the number of lacing value bytes that would be
 		///    required for a given packet.
@@ -262,14 +257,13 @@ namespace TagLib.Ogg
 		///    A <see cref="int" /> value containing the number of bytes
 		///    needed to store the length.
 		/// </returns>
-		private static int GetLacingValueLength (ByteVectorCollection packets,
-		                                         int index)
+		static int GetLacingValueLength (ByteVectorCollection packets, int index)
 		{
-			int size = packets [index].Count;
+			int size = packets[index].Count;
 			return size / 0xff + ((index + 1 < packets.Count ||
 				size % 0xff > 0) ? 1 : 0);
 		}
-		
-#endregion
+
+		#endregion
 	}
 }

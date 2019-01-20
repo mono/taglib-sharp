@@ -38,7 +38,7 @@ namespace TagLib.Image
 	public class CombinedImageTag : ImageTag
 	{
 
-#region Private Fields
+		#region Private Fields
 
 		/// <summary>
 		///    Direct access to the Exif (IFD) tag (if any)
@@ -80,46 +80,44 @@ namespace TagLib.Image
 			}
 		}
 
-		private List<ImageTag> all_tags = null;
+		List<ImageTag> all_tags;
 
-#endregion
+		#endregion
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="CombinedImageTag" /> with a restriction on the
 		///    allowed tag types contained in this combined tag.
 		/// </summary>
-		/// <param name="allowed_types">
+		/// <param name="allowedTypes">
 		///    A <see cref="TagTypes" /> value, which restricts the
 		///    types of metadata that can be contained in this
 		///    combined tag.
 		/// </param>
-		public CombinedImageTag (TagTypes allowed_types)
+		public CombinedImageTag (TagTypes allowedTypes)
 		{
-			AllowedTypes = allowed_types;
+			AllowedTypes = allowedTypes;
 			OtherTags = new List<ImageTag> ();
 		}
 
-#endregion
+		#endregion
 
-#region Protected Methods
+		#region Protected Methods
 
 		internal void AddTag (ImageTag tag)
 		{
 			if ((tag.TagTypes & AllowedTypes) != tag.TagTypes)
-				throw new Exception (String.Format ("Attempted to add {0} to an image, but the only allowed types are {1}", tag.TagTypes, AllowedTypes));
+				throw new Exception ($"Attempted to add {tag.TagTypes} to an image, but the only allowed types are {AllowedTypes}");
 
 			if (tag is IFDTag)
 				Exif = tag as IFDTag;
-			else if (tag is XmpTag)
-			{
+			else if (tag is XmpTag) {
 				// we treat a IPTC-IIM tag as a XMP tag. However, we prefer the real XMP tag.
 				// See comments in Jpeg/File.cs for what we should do to deal with this properly.
 				if (Xmp != null && (tag is IIM.IIMTag || Xmp is IIM.IIMTag)) {
-					var iimTag = tag as IIM.IIMTag;
-					if (iimTag == null) {
+					if (!(tag is IIM.IIMTag iimTag)) {
 						iimTag = Xmp as IIM.IIMTag;
 						Xmp = tag as XmpTag;
 					}
@@ -137,8 +135,7 @@ namespace TagLib.Image
 				} else {
 					Xmp = tag as XmpTag;
 				}
-			}
-			else
+			} else
 				OtherTags.Add (tag);
 
 			all_tags = null;
@@ -156,9 +153,9 @@ namespace TagLib.Image
 			all_tags = null;
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods (Tag)
+		#region Public Methods (Tag)
 
 		/// <summary>
 		///    Gets the tag types contained in the current instance.
@@ -208,7 +205,7 @@ namespace TagLib.Image
 						return value;
 				}
 
-				return new string[] {};
+				return new string[] { };
 			}
 			set {
 				foreach (ImageTag tag in AllTags)
@@ -278,7 +275,7 @@ namespace TagLib.Image
 				foreach (ImageTag tag in AllTags) {
 					ImageOrientation value = tag.Orientation;
 
-					if ((uint) value >= 1U && (uint) value <= 8U)
+					if ((uint)value >= 1U && (uint)value <= 8U)
 						return value;
 				}
 
@@ -303,7 +300,7 @@ namespace TagLib.Image
 				foreach (ImageTag tag in AllTags) {
 					string value = tag.Software;
 
-					if (!string.IsNullOrEmpty(value))
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -522,7 +519,7 @@ namespace TagLib.Image
 				foreach (ImageTag tag in AllTags) {
 					string value = tag.Make;
 
-					if (!string.IsNullOrEmpty(value))
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -546,7 +543,7 @@ namespace TagLib.Image
 				foreach (ImageTag tag in AllTags) {
 					string value = tag.Model;
 
-					if (!string.IsNullOrEmpty(value))
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -569,7 +566,7 @@ namespace TagLib.Image
 				foreach (ImageTag tag in AllTags) {
 					string value = tag.Creator;
 
-					if (! string.IsNullOrEmpty (value))
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -581,9 +578,9 @@ namespace TagLib.Image
 			}
 		}
 
-#endregion
+		#endregion
 
-#region Public Properties (Tag)
+		#region Public Properties (Tag)
 
 
 		/// <summary>
@@ -600,7 +597,7 @@ namespace TagLib.Image
 				foreach (ImageTag tag in AllTags) {
 					string value = tag.Title;
 
-					if (! string.IsNullOrEmpty (value))
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -626,11 +623,11 @@ namespace TagLib.Image
 				foreach (ImageTag tag in AllTags) {
 					string value = tag.Comment;
 
-					if (! string.IsNullOrEmpty (value))
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
-				return String.Empty;
+				return string.Empty;
 			}
 			set {
 				foreach (ImageTag tag in AllTags)
@@ -652,7 +649,7 @@ namespace TagLib.Image
 				foreach (ImageTag tag in AllTags) {
 					string value = tag.Copyright;
 
-					if (! string.IsNullOrEmpty (value))
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -664,7 +661,6 @@ namespace TagLib.Image
 			}
 		}
 
-#endregion
-
+		#endregion
 	}
 }

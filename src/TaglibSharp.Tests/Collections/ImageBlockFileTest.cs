@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using TagLib;
 using TagLib.Image;
-using File = TagLib.File;
 
 namespace TaglibSharp.Tests.Collections
 {
@@ -15,7 +14,7 @@ namespace TaglibSharp.Tests.Collections
 			byte[] data = new byte[length];
 
 			for (int i = 0; i < length; i++) {
-				data [i] = (byte) Chars[i % Chars.Length];
+				data[i] = (byte)Chars[i % Chars.Length];
 			}
 
 			return new TestBlockFile (new MemoryFileAbstraction (data.Length, data));
@@ -33,7 +32,7 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("", 0);
 
 			file.Seek (0);
-			Assert.AreEqual ("AEIMNOPQRSTUVWXYZ", file.ReadBlock ((int) file.Length).ToString ());
+			Assert.AreEqual ("AEIMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
 		}
 
 		[Test]
@@ -48,7 +47,7 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("", 0);
 
 			file.Seek (0);
-			Assert.AreEqual ("AEIMNOPQRSTUVWXYZ", file.ReadBlock ((int) file.Length).ToString ());
+			Assert.AreEqual ("AEIMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
 		}
 
 		[Test]
@@ -63,12 +62,12 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("12345", 0);
 
 			file.Seek (0);
-			Assert.AreEqual ("12345ABCDEFGHIJKLMNOPQRSTUVWXYZ", file.ReadBlock ((int) file.Length).ToString ());
+			Assert.AreEqual ("12345ABCDEFGHIJKLMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
 
 			file.SaveMetadata ("9", 2);
 
 			file.Seek (0);
-			Assert.AreEqual ("9ABCDEFGHIJKLMNOPQRSTUVWXYZ", file.ReadBlock ((int) file.Length).ToString ());
+			Assert.AreEqual ("9ABCDEFGHIJKLMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
 
 			file.AddMetadataBlock (8, 3);
 			file.AddMetadataBlock (1, 6);
@@ -76,7 +75,7 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("abcdefghijklmnop", 7);
 
 			file.Seek (0);
-			Assert.AreEqual ("abcdefghijklmnopGKLMNOPQRSTUVWXYZ", file.ReadBlock ((int) file.Length).ToString ());
+			Assert.AreEqual ("abcdefghijklmnopGKLMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
 
 		}
 
@@ -94,7 +93,7 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("12", 26);
 
 			file.Seek (0);
-			Assert.AreEqual ("AIMNOPQRSTUVWXYZ12", file.ReadBlock ((int) file.Length).ToString ());
+			Assert.AreEqual ("AIMNOPQRSTUVWXYZ12", file.ReadBlock ((int)file.Length).ToString ());
 		}
 
 		[Test]
@@ -112,12 +111,12 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("9999999999999999999", 4);
 
 			file.Seek (0);
-			Assert.AreEqual ("A9999999999999999999IMNOPQRSTUVWXYZ", file.ReadBlock ((int) file.Length).ToString ());
+			Assert.AreEqual ("A9999999999999999999IMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
 
 			file.SaveMetadata ("0", 0);
 
 			file.Seek (0);
-			Assert.AreEqual ("0AIMNOPQRSTUVWXYZ", file.ReadBlock ((int) file.Length).ToString ());
+			Assert.AreEqual ("0AIMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
 		}
 
 		[Test]
@@ -135,12 +134,12 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("", 0);
 
 			file.Seek (0);
-			Assert.AreEqual ("AIMNOPQRST", file.ReadBlock ((int) file.Length).ToString ());
+			Assert.AreEqual ("AIMNOPQRST", file.ReadBlock ((int)file.Length).ToString ());
 
 			file.SaveMetadata ("4564536", 5);
 
 			file.Seek (0);
-			Assert.AreEqual ("AIMNO4564536PQRST", file.ReadBlock ((int) file.Length).ToString ());
+			Assert.AreEqual ("AIMNO4564536PQRST", file.ReadBlock ((int)file.Length).ToString ());
 		}
 
 		[Test]
@@ -160,7 +159,7 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("", 0);
 
 			file.Seek (0);
-			Assert.AreEqual ("", file.ReadBlock ((int) file.Length).ToString ());
+			Assert.AreEqual ("", file.ReadBlock ((int)file.Length).ToString ());
 		}
 
 		[Test]
@@ -178,7 +177,7 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("9999999999999999999", 15);
 
 			file.Seek (0);
-			Assert.AreEqual ("AIMNO9999999999999999999PQRSTUVWXYZ", file.ReadBlock ((int) file.Length).ToString ());
+			Assert.AreEqual ("AIMNO9999999999999999999PQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
 		}
 
 	}
@@ -188,7 +187,7 @@ namespace TaglibSharp.Tests.Collections
 	{
 
 		public TestBlockFile (IFileAbstraction abstraction)
-		: base (abstraction) {}
+		: base (abstraction) { }
 
 		public override Tag GetTag (TagTypes type, bool create)
 		{

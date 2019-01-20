@@ -25,86 +25,81 @@
 // USA
 //
 
-using System.Collections;
 using System.Collections.Generic;
-using System;
 
-namespace TagLib.Id3v2 {
+namespace TagLib.Id3v2
+{
 	/// <summary>
 	///    Specified the type of channel data to get from or set to a
 	///    <see cref="RelativeVolumeFrame" /> object.
 	/// </summary>
-	public enum ChannelType {
+	public enum ChannelType
+	{
 		/// <summary>
 		///    The channel data is for some other speaker.
 		/// </summary>
 		Other = 0x00,
-		
+
 		/// <summary>
 		///    The channel data is for the master volume.
 		/// </summary>
 		MasterVolume = 0x01,
-		
+
 		/// <summary>
 		///    The channel data is for the front right speaker.
 		/// </summary>
 		FrontRight = 0x02,
-		
+
 		/// <summary>
 		///    The channel data is for the front left speaker.
 		/// </summary>
 		FrontLeft = 0x03,
-		
+
 		/// <summary>
 		///    The channel data is for the back right speaker.
 		/// </summary>
 		BackRight = 0x04,
-		
+
 		/// <summary>
 		///    The channel data is for the back left speaker.
 		/// </summary>
 		BackLeft = 0x05,
-		
+
 		/// <summary>
 		///    The channel data is for the front center speaker.
 		/// </summary>
 		FrontCentre = 0x06,
-		
+
 		/// <summary>
 		///    The channel data is for the back center speaker.
 		/// </summary>
 		BackCentre = 0x07,
-		
+
 		/// <summary>
 		///    The channel data is for the subwoofer.
 		/// </summary>
 		Subwoofer = 0x08
 	}
-	
+
 	/// <summary>
 	///    This class extends <see cref="Frame" />, implementing support for
 	///    ID3v2 Relative Volume (RVA2) Frames.
 	/// </summary>
 	public class RelativeVolumeFrame : Frame
 	{
-#region Private Fields
-		
-		/// <summary>
-		///    Contains the frame identification.
-		/// </summary>
-		private string identification = null;
-		
+		#region Private Fields
+
 		/// <summary>
 		///    Contains the channel data.
 		/// </summary>
-		private ChannelData [] channels = new ChannelData [9];
-		
-#endregion
-		
-		
-		
-#region Constructors
-		
+		readonly ChannelData[] channels = new ChannelData[9];
+
+		#endregion
+
+
+
+		#region Constructors
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="RelativeVolumeFrame" /> with a specified
@@ -117,9 +112,9 @@ namespace TagLib.Id3v2 {
 		public RelativeVolumeFrame (string identification)
 			: base (FrameType.RVA2, 4)
 		{
-			this.identification = identification;
+			Identification = identification;
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="RelativeVolumeFrame" /> by reading its raw data in
@@ -138,7 +133,7 @@ namespace TagLib.Id3v2 {
 		{
 			SetData (data, 0, version, true);
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="RelativeVolumeFrame" /> by reading its raw data in
@@ -160,21 +155,18 @@ namespace TagLib.Id3v2 {
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		protected internal RelativeVolumeFrame (ByteVector data,
-		                                        int offset,
-		                                        FrameHeader header,
-		                                        byte version)
-			: base(header)
+		protected internal RelativeVolumeFrame (ByteVector data, int offset, FrameHeader header, byte version)
+			: base (header)
 		{
 			SetData (data, offset, version, false);
 		}
-		
-#endregion
-		
-		
-		
-#region Public Properties
-		
+
+		#endregion
+
+
+
+		#region Public Properties
+
 		/// <summary>
 		///    Gets the identification used for the current instance.
 		/// </summary>
@@ -182,10 +174,8 @@ namespace TagLib.Id3v2 {
 		///    A <see cref="string" /> object containing the
 		///    identification used for the current instance.
 		/// </value>
-		public string Identification {
-			get {return identification;}
-		}
-		
+		public string Identification { get; private set; }
+
 		/// <summary>
 		///    Gets a list of the channels in the current instance that
 		///    contain a value.
@@ -194,22 +184,22 @@ namespace TagLib.Id3v2 {
 		///    A <see cref="T:ChannelType[]" /> containing the channels
 		///    which have a value set in the current instance.
 		/// </value>
-		public ChannelType [] Channels {
+		public ChannelType[] Channels {
 			get {
-				List<ChannelType> types = new List<ChannelType> ();
-				for (int i = 0; i < 9; i ++)
-					if (channels [i].IsSet)
-						types.Add ((ChannelType) i);
+				var types = new List<ChannelType> ();
+				for (int i = 0; i < 9; i++)
+					if (channels[i].IsSet)
+						types.Add ((ChannelType)i);
 				return types.ToArray ();
 			}
 		}
-		
-#endregion
-		
-		
-		
-#region Public Methods
-		
+
+		#endregion
+
+
+
+		#region Public Methods
+
 		/// <summary>
 		///    Creates a text description of the current instance.
 		/// </summary>
@@ -219,9 +209,9 @@ namespace TagLib.Id3v2 {
 		/// </returns>
 		public override string ToString ()
 		{
-			return identification;
+			return Identification;
 		}
-		
+
 		/// <summary>
 		///    Gets the volume adjustment index for a specified channel.
 		/// </summary>
@@ -241,9 +231,9 @@ namespace TagLib.Id3v2 {
 		/// <seealso cref="GetVolumeAdjustment"/>
 		public short GetVolumeAdjustmentIndex (ChannelType type)
 		{
-			return channels [(int) type].VolumeAdjustmentIndex;
+			return channels[(int)type].VolumeAdjustmentIndex;
 		}
-		
+
 		/// <summary>
 		///    Sets the volume adjustment index for a specified channel.
 		/// </summary>
@@ -257,12 +247,11 @@ namespace TagLib.Id3v2 {
 		/// </param>
 		/// <seealso cref="GetVolumeAdjustmentIndex"/>
 		/// <seealso cref="SetVolumeAdjustment"/>
-		public void SetVolumeAdjustmentIndex (ChannelType type,
-		                                      short index)
+		public void SetVolumeAdjustmentIndex (ChannelType type, short index)
 		{
-			channels [(int) type].VolumeAdjustmentIndex = index;
+			channels[(int)type].VolumeAdjustmentIndex = index;
 		}
-		
+
 		/// <summary>
 		///    Gets the volume adjustment for a specified channel.
 		/// </summary>
@@ -281,9 +270,9 @@ namespace TagLib.Id3v2 {
 		/// <seealso cref="GetVolumeAdjustmentIndex"/>
 		public float GetVolumeAdjustment (ChannelType type)
 		{
-			return channels [(int) type].VolumeAdjustment;
+			return channels[(int)type].VolumeAdjustment;
 		}
-		
+
 		/// <summary>
 		///    Sets the volume adjustment for a specified channel.
 		/// </summary>
@@ -300,12 +289,11 @@ namespace TagLib.Id3v2 {
 		/// </remarks>
 		/// <seealso cref="GetVolumeAdjustment"/>
 		/// <seealso cref="SetVolumeAdjustmentIndex"/>
-		public void SetVolumeAdjustment (ChannelType type,
-		                                 float adjustment)
+		public void SetVolumeAdjustment (ChannelType type, float adjustment)
 		{
-			channels [(int) type].VolumeAdjustment = adjustment;
+			channels[(int)type].VolumeAdjustment = adjustment;
 		}
-		
+
 		/// <summary>
 		///    Gets the peak volume index for a specified channel.
 		/// </summary>
@@ -325,9 +313,9 @@ namespace TagLib.Id3v2 {
 		/// <seealso cref="GetPeakVolume"/>
 		public ulong GetPeakVolumeIndex (ChannelType type)
 		{
-			return channels [(int) type].PeakVolumeIndex;
+			return channels[(int)type].PeakVolumeIndex;
 		}
-		
+
 		/// <summary>
 		///    Sets the peak volume index for a specified channel.
 		/// </summary>
@@ -347,9 +335,9 @@ namespace TagLib.Id3v2 {
 		/// <seealso cref="SetPeakVolume"/>
 		public void SetPeakVolumeIndex (ChannelType type, ulong index)
 		{
-			channels [(int) type].PeakVolumeIndex = index;
+			channels[(int)type].PeakVolumeIndex = index;
 		}
-		
+
 		/// <summary>
 		///    Gets the peak volume for a specified channel.
 		/// </summary>
@@ -364,9 +352,9 @@ namespace TagLib.Id3v2 {
 		/// <seealso cref="GetPeakVolumeIndex"/>
 		public double GetPeakVolume (ChannelType type)
 		{
-			return channels [(int) type].PeakVolume;
+			return channels[(int)type].PeakVolume;
 		}
-		
+
 		/// <summary>
 		///    Sets the peak volume for a specified channel.
 		/// </summary>
@@ -381,15 +369,15 @@ namespace TagLib.Id3v2 {
 		/// <seealso cref="SetPeakVolumeIndex"/>
 		public void SetPeakVolume (ChannelType type, double peak)
 		{
-			channels [(int) type].PeakVolume = peak;
+			channels[(int)type].PeakVolume = peak;
 		}
-		
-#endregion
-		
-		
-		
-#region Public Static Methods
-		
+
+		#endregion
+
+
+
+		#region Public Static Methods
+
 		/// <summary>
 		///    Gets a specified volume adjustment frame from the
 		///    specified tag, optionally creating it if it does not
@@ -412,37 +400,35 @@ namespace TagLib.Id3v2 {
 		///    wasn't found and <paramref name="create" /> is <see
 		///    langword="false" />.
 		/// </returns>
-		public static RelativeVolumeFrame Get (Tag tag,
-		                                       string identification,
-		                                       bool create)
+		public static RelativeVolumeFrame Get (Tag tag, string identification, bool create)
 		{
 			RelativeVolumeFrame rva2;
 			foreach (Frame frame in tag.GetFrames (FrameType.RVA2)) {
 				rva2 = frame as RelativeVolumeFrame;
-				
+
 				if (rva2 == null)
 					continue;
-				
+
 				if (rva2.Identification != identification)
 					continue;
-				
+
 				return rva2;
 			}
-			
+
 			if (!create)
 				return null;
-			
+
 			rva2 = new RelativeVolumeFrame (identification);
 			tag.AddFrame (rva2);
 			return rva2;
 		}
-		
-#endregion
-		
-		
-		
-#region Protected Properties
-		
+
+		#endregion
+
+
+
+		#region Protected Properties
+
 		/// <summary>
 		///    Populates the values in the current instance by parsing
 		///    its field data in a specified version.
@@ -458,40 +444,34 @@ namespace TagLib.Id3v2 {
 		/// <exception cref="CorruptFileException">
 		///    <paramref name="data" /> contains less than 5 bytes.
 		/// </exception>
-		protected override void ParseFields (ByteVector data,
-		                                     byte version)
+		protected override void ParseFields (ByteVector data, byte version)
 		{
-			int pos = data.Find (ByteVector.TextDelimiter (
-				StringType.Latin1));
+			int pos = data.Find (ByteVector.TextDelimiter (StringType.Latin1));
 			if (pos < 0)
 				return;
-			
-			identification = data.ToString (StringType.Latin1, 0,
-				pos++);
-			
+
+			Identification = data.ToString (StringType.Latin1, 0, pos++);
+
 			// Each channel is at least 4 bytes.
-			
+
 			while (pos <= data.Count - 4) {
-				int type = data [pos++];
-				
+				int type = data[pos++];
+
 				unchecked {
-					channels [type].VolumeAdjustmentIndex =
-						(short) data.Mid (pos,
-							2).ToUShort ();
+					channels[type].VolumeAdjustmentIndex = (short)data.Mid (pos, 2).ToUShort ();
 				}
 				pos += 2;
-				
-				int bytes = BitsToBytes (data [pos++]);
-				
+
+				int bytes = BitsToBytes (data[pos++]);
+
 				if (data.Count < pos + bytes)
 					break;
-				
-				channels [type].PeakVolumeIndex = data.Mid (pos,
-					bytes).ToULong ();
+
+				channels[type].PeakVolumeIndex = data.Mid (pos, bytes).ToULong ();
 				pos += bytes;
 			}
 		}
-		
+
 		/// <summary>
 		///    Renders the values in the current instance into field
 		///    data for a specified version.
@@ -506,46 +486,41 @@ namespace TagLib.Id3v2 {
 		/// </returns>
 		protected override ByteVector RenderFields (byte version)
 		{
-			ByteVector data = new ByteVector ();
-			data.Add (ByteVector.FromString (identification,
-				StringType.Latin1));
-			data.Add (ByteVector.TextDelimiter(StringType.Latin1));
-			
-			for (byte i = 0; i < 9; i ++) {
-				if (!channels [i].IsSet)
+			var data = new ByteVector {
+				ByteVector.FromString (Identification, StringType.Latin1),
+				ByteVector.TextDelimiter (StringType.Latin1)
+			};
+
+			for (byte i = 0; i < 9; i++) {
+				if (!channels[i].IsSet)
 					continue;
-				
+
 				data.Add (i);
 				unchecked {
-					data.Add (ByteVector.FromUShort (
-						(ushort) channels [i]
-							.VolumeAdjustmentIndex));
+					data.Add (ByteVector.FromUShort ((ushort)channels[i].VolumeAdjustmentIndex));
 				}
-				
+
 				byte bits = 0;
-				
-				for (byte j = 0; j < 64; j ++)
-					if ((channels [i].PeakVolumeIndex &
-						(1UL << j)) != 0)
+
+				for (byte j = 0; j < 64; j++)
+					if ((channels[i].PeakVolumeIndex & (1UL << j)) != 0)
 						bits = (byte)(j + 1);
-				
+
 				data.Add (bits);
-				
+
 				if (bits > 0)
-					data.Add (ByteVector.FromULong (
-						channels [i].PeakVolumeIndex)
-							.Mid (8 - BitsToBytes (bits)));
+					data.Add (ByteVector.FromULong (channels[i].PeakVolumeIndex).Mid (8 - BitsToBytes (bits)));
 			}
-			
+
 			return data;
 		}
-		
-#endregion
-		
-		
-		
-#region ICloneable
-		
+
+		#endregion
+
+
+
+		#region ICloneable
+
 		/// <summary>
 		///    Creates a deep copy of the current instance.
 		/// </summary>
@@ -555,56 +530,52 @@ namespace TagLib.Id3v2 {
 		/// </returns>
 		public override Frame Clone ()
 		{
-			RelativeVolumeFrame frame =
-				new RelativeVolumeFrame (identification);
-			for (int i = 0; i < 9; i ++)
-				frame.channels [i] = channels [i];
+			var frame = new RelativeVolumeFrame (Identification);
+			for (int i = 0; i < 9; i++)
+				frame.channels[i] = channels[i];
 			return frame;
 		}
-		
-#endregion
-		
-		
-		
-#region Private Static Methods
-		
-		private static int BitsToBytes (int i)
+
+		#endregion
+
+
+
+		#region Private Static Methods
+
+		static int BitsToBytes (int i)
 		{
 			return i % 8 == 0 ? i / 8 : (i - i % 8) / 8 + 1;
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Classes
-		
-		private struct ChannelData
+
+		struct ChannelData
 		{
 			public short VolumeAdjustmentIndex;
 			public ulong PeakVolumeIndex;
-			
+
 			public bool IsSet {
 				get {
 					return VolumeAdjustmentIndex != 0 ||
 						PeakVolumeIndex != 0;
 				}
 			}
-			
+
 			public float VolumeAdjustment {
-				get {return VolumeAdjustmentIndex / 512f;}
-				set {
-					VolumeAdjustmentIndex =
-						(short) (value * 512f);
-				}
+				get { return VolumeAdjustmentIndex / 512f; }
+				set { VolumeAdjustmentIndex = (short)(value * 512f); }
 			}
-			
+
 			public double PeakVolume {
-				get {return PeakVolumeIndex / 512.0;}
-				set {PeakVolumeIndex = (ulong) (value * 512.0);}
+				get { return PeakVolumeIndex / 512.0; }
+				set { PeakVolumeIndex = (ulong)(value * 512.0); }
 			}
 		}
-		
+
 		#endregion
 	}
 }

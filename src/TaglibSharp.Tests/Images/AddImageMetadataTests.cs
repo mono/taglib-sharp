@@ -1,5 +1,5 @@
-using System;
 using NUnit.Framework;
+using System;
 using TagLib;
 using TagLib.IFD;
 using TagLib.Xmp;
@@ -11,14 +11,14 @@ namespace TaglibSharp.Tests.Images
 		public static string test_comment = "This is a TagLib# &Test?Comment%$@_ ";
 		public static readonly DateTime date_time = new DateTime (2009, 10, 15, 12, 12, 59);
 
-		public static readonly string[] keywords = {"keyword 1", "§$&§%", "99 dsf"};
+		public static readonly string[] keywords = { "keyword 1", "§$&§%", "99 dsf" };
 
 		public static void AddExifTest (string sample_file, string tmp_file, bool contains_exif)
 		{
 			var file = Utils.CreateTmpFile (sample_file, tmp_file);
 			IFDTag exif_tag;
 
-			if (! contains_exif) {
+			if (!contains_exif) {
 				exif_tag = file.GetTag (TagTypes.TiffIFD, false) as IFDTag;
 				Assert.IsNull (exif_tag, "Tiff Tag contained");
 			}
@@ -63,7 +63,7 @@ namespace TaglibSharp.Tests.Images
 			var file = Utils.CreateTmpFile (sample_file, tmp_file);
 			XmpTag xmp_tag;
 
-			if (! contains_xmp) {
+			if (!contains_xmp) {
 				xmp_tag = file.GetTag (TagTypes.XMP, false) as XmpTag;
 				Assert.IsNull (xmp_tag, "XMP Tag contained");
 			}
@@ -96,7 +96,7 @@ namespace TaglibSharp.Tests.Images
 			var file = Utils.CreateTmpFile (sample_file, tmp_file);
 			XmpTag xmp_tag;
 
-			if (! contains_xmp) {
+			if (!contains_xmp) {
 				xmp_tag = file.GetTag (TagTypes.XMP, false) as XmpTag;
 				Assert.IsNull (xmp_tag, "XMP Tag contained");
 			}
@@ -108,7 +108,7 @@ namespace TaglibSharp.Tests.Images
 			xmp_tag.Comment = null;
 			xmp_tag.Software = test_comment;
 
-			Assert.AreEqual (new string [] {}, xmp_tag.Keywords);
+			Assert.AreEqual (new string[] { }, xmp_tag.Keywords);
 			Assert.AreEqual (null, xmp_tag.Comment);
 			Assert.AreEqual (test_comment, xmp_tag.Software);
 
@@ -119,7 +119,7 @@ namespace TaglibSharp.Tests.Images
 			xmp_tag = file.GetTag (TagTypes.XMP, false) as XmpTag;
 			Assert.IsNotNull (xmp_tag, "XMP Tag not read");
 
-			Assert.AreEqual (new string [] {}, xmp_tag.Keywords);
+			Assert.AreEqual (new string[] { }, xmp_tag.Keywords);
 			Assert.AreEqual (null, xmp_tag.Comment);
 			Assert.AreEqual (test_comment, xmp_tag.Software);
 		}
@@ -184,7 +184,7 @@ namespace TaglibSharp.Tests.Images
 			var file = Utils.CreateTmpFile (sample_file, tmp_file);
 			IFDTag ifd;
 
-			if (! contains_tiff) {
+			if (!contains_tiff) {
 				ifd = file.GetTag (TagTypes.TiffIFD, false) as IFDTag;
 				Assert.IsNull (ifd, "Tiff IFD not contained");
 			}

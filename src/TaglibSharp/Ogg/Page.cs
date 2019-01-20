@@ -25,8 +25,8 @@
 // USA
 //
 
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 
 namespace TagLib.Ogg
 {
@@ -35,24 +35,19 @@ namespace TagLib.Ogg
 	/// </summary>
 	public class Page
 	{
-#region Private Properties
-		
-		/// <summary>
-		///    Contains the page header.
-		/// </summary>
-		private PageHeader header;
-		
+		#region Private Properties
+
 		/// <summary>
 		///    Contains the packets.
 		/// </summary>
-		private ByteVectorCollection packets;
-		
-#endregion
-		
-		
-		
-#region Constructors
-		
+		readonly ByteVectorCollection packets;
+
+		#endregion
+
+
+
+		#region Constructors
+
 		/// <summary>
 		///    Constructs and intializes a new instance of <see
 		///    cref="Page" /> with a specified header and no packets.
@@ -63,10 +58,10 @@ namespace TagLib.Ogg
 		/// </param>
 		protected Page (PageHeader header)
 		{
-			this.header = header;
+			Header = header;
 			packets = new ByteVectorCollection ();
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Page" /> by reading a raw Ogg page from a specified
@@ -94,12 +89,12 @@ namespace TagLib.Ogg
 		public Page (File file, long position)
 			: this (new PageHeader (file, position))
 		{
-			file.Seek (position + header.Size);
-			
-			foreach (int packet_size in header.PacketSizes)
+			file.Seek (position + Header.Size);
+
+			foreach (int packet_size in Header.PacketSizes)
 				packets.Add (file.ReadBlock (packet_size));
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Page" /> with a specified header and packets.
@@ -119,25 +114,25 @@ namespace TagLib.Ogg
 			: this (header)
 		{
 			if (packets == null)
-				throw new ArgumentNullException (nameof(packets));
-			
+				throw new ArgumentNullException (nameof (packets));
+
 			this.packets = new ByteVectorCollection (packets);
-			
+
 			List<int> packet_sizes = new List<int> ();
-			
+
 			// Build a page from the list of packets.
 			foreach (ByteVector v in packets)
 				packet_sizes.Add (v.Count);
-			
+
 			header.PacketSizes = packet_sizes.ToArray ();
 		}
-		
-#endregion
-		
-		
-		
-#region Public Methods
-		
+
+		#endregion
+
+
+
+		#region Public Methods
+
 		/// <summary>
 		///    Renders the current instance as a raw Ogg page.
 		/// </summary>
@@ -147,31 +142,31 @@ namespace TagLib.Ogg
 		/// </returns>
 		public ByteVector Render ()
 		{
-			ByteVector data = header.Render ();
-			
+			ByteVector data = Header.Render ();
+
 			foreach (ByteVector v in packets)
 				data.Add (v);
-			
+
 			// Compute and set the checksum for the Ogg page. The
 			// checksum is taken over the entire page with the 4
 			// bytes reserved for the checksum zeroed and then
 			// inserted in bytes 22-25 of the page header.
-			
+
 			ByteVector checksum = ByteVector.FromUInt (
 				data.Checksum, false);
-			
+
 			for (int i = 0; i < 4; i++)
-				data [i + 22] = checksum [i];
-			
+				data[i + 22] = checksum[i];
+
 			return data;
 		}
-		
-#endregion
-		
-		
-		
-#region Public Properties
-		
+
+		#endregion
+
+
+
+		#region Public Properties
+
 		/// <summary>
 		///    Gets the header of the current instance.
 		/// </summary>
@@ -179,10 +174,8 @@ namespace TagLib.Ogg
 		///    A <see cref="PageHeader" /> object that applies to the
 		///    current instance.
 		/// </value>
-		public PageHeader Header {
-			get {return header;}
-		}
-		
+		public PageHeader Header { get; private set; }
+
 		/// <summary>
 		///    Gets the packets contained in the current instance.
 		/// </summary>
@@ -191,9 +184,9 @@ namespace TagLib.Ogg
 		///    contained in the current instance.
 		/// </value>
 		public ByteVector[] Packets {
-			get {return packets.ToArray ();}
+			get { return packets.ToArray (); }
 		}
-		
+
 		/// <summary>
 		///    Gets the total size of the current instance as it
 		///    appeared on disk.
@@ -203,15 +196,15 @@ namespace TagLib.Ogg
 		///    page, including the header, as it appeared on disk.
 		/// </value>
 		public uint Size {
-			get {return header.Size + header.DataSize;}
+			get { return Header.Size + Header.DataSize; }
 		}
-		
-#endregion
-		
-		
-		
-#region Public Static Methods
-		
+
+		#endregion
+
+
+
+		#region Public Static Methods
+
 		/// <summary>
 		///    Overwrites all page headers in a file starting at a
 		///    specified position, shifting the page sequence numbers
@@ -244,47 +237,45 @@ namespace TagLib.Ogg
 		///    for a costly recalculation if large comment data is
 		///    added.
 		/// </remarks>
-		public static void OverwriteSequenceNumbers (File file,
-		                                             long position,
-		                                             IDictionary<uint, int> shiftTable)
+		public static void OverwriteSequenceNumbers (File file, long position, IDictionary<uint, int> shiftTable)
 		{
 			if (file == null)
-				throw new ArgumentNullException (nameof(file));
-			
+				throw new ArgumentNullException (nameof (file));
+
 			if (shiftTable == null)
-				throw new ArgumentNullException (nameof(shiftTable));
-			
+				throw new ArgumentNullException (nameof (shiftTable));
+
 			// Check to see if there are no changes to be made.
 			bool done = true;
-			foreach (KeyValuePair<uint, int> pair in shiftTable)
+			foreach (var pair in shiftTable)
 				if (pair.Value != 0) {
 					done = false;
 					break;
 				}
-			
+
 			// If the file is fine, quit.
 			if (done)
 				return;
-			
+
 			while (position < file.Length - 27) {
 				PageHeader header = new PageHeader (file, position);
-				int size = (int) (header.Size + header.DataSize);
-				
+				int size = (int)(header.Size + header.DataSize);
+
 				if (shiftTable.ContainsKey (header.StreamSerialNumber)
-					&& shiftTable [header.StreamSerialNumber] != 0) {
+					&& shiftTable[header.StreamSerialNumber] != 0) {
 					file.Seek (position);
 					ByteVector page_data = file.ReadBlock (size);
-					
+
 					ByteVector new_data = ByteVector.FromUInt (
 						(uint)(header.PageSequenceNumber +
-						shiftTable [header.StreamSerialNumber]),
+						shiftTable[header.StreamSerialNumber]),
 						false);
-					
-					for (int i = 18; i < 22; i ++)
-						page_data [i] = new_data [i - 18];
+
+					for (int i = 18; i < 22; i++)
+						page_data[i] = new_data[i - 18];
 					for (int i = 22; i < 26; i++)
-						page_data [i] = 0;
-					
+						page_data[i] = 0;
+
 					new_data.Add (ByteVector.FromUInt (
 						page_data.Checksum, false));
 					file.Seek (position + 18);
@@ -293,7 +284,7 @@ namespace TagLib.Ogg
 				position += size;
 			}
 		}
-		
-#endregion
+
+		#endregion
 	}
 }

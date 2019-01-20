@@ -1,4 +1,4 @@
-﻿//
+//
 // AudioTrack.cs:
 //
 // Author:
@@ -22,7 +22,6 @@
 //
 
 using System.Collections.Generic;
-using System;
 
 namespace TagLib.Matroska
 {
@@ -34,12 +33,11 @@ namespace TagLib.Matroska
 		#region Private fields
 
 #pragma warning disable 414 // Assigned, never used
-		private double rate;
-		private ulong channels;
-		private ulong depth;
+		readonly double rate;
+		readonly ulong channels;
+		readonly ulong depth;
 #pragma warning restore 414
 
-		private List<EBMLreader> unknown_elems = new List<EBMLreader> ();
 
 		#endregion
 
@@ -56,68 +54,56 @@ namespace TagLib.Matroska
 		public AudioTrack (File _file, EBMLreader element)
 			: base (_file, element)
 		{
-			MatroskaID matroska_id;
-
 			// Here we handle the unknown elements we know, and store the rest
 			foreach (EBMLreader elem in base.UnknownElements) {
+				var matroska_id = elem.ID;
 
-				matroska_id = (MatroskaID) elem.ID;
 
+				switch (matroska_id) {
+				case MatroskaID.TrackAudio: {
+						ulong i = 0;
 
-				switch (matroska_id)
-				{
-					case MatroskaID.TrackAudio:
-						{
-							ulong i = 0;
+						while (i < elem.DataSize) {
+							EBMLreader child = new EBMLreader (_file, elem.DataOffset + i);
 
-							while (i < elem.DataSize) {
-								EBMLreader child = new EBMLreader (_file, elem.DataOffset + i);
+							matroska_id = child.ID;
 
-								matroska_id = (MatroskaID) child.ID;
-
-								switch (matroska_id) {
-									case MatroskaID.AudioChannels:
-										channels = child.ReadULong ();
-										break;
-									case MatroskaID.AudioBitDepth:
-										depth = child.ReadULong ();
-										break;
-									case MatroskaID.AudioSamplingFreq:
-										rate = child.ReadDouble ();
-										break;
-									default:
-										unknown_elems.Add (child);
-										break;
-								}
-
-								i += child.Size;
+							switch (matroska_id) {
+							case MatroskaID.AudioChannels:
+								channels = child.ReadULong ();
+								break;
+							case MatroskaID.AudioBitDepth:
+								depth = child.ReadULong ();
+								break;
+							case MatroskaID.AudioSamplingFreq:
+								rate = child.ReadDouble ();
+								break;
+							default:
+								UnknownElements.Add (child);
+								break;
 							}
 
-							break;
+							i += child.Size;
 						}
 
-					default: 
-						unknown_elems.Add (elem);
 						break;
+					}
+
+				default:
+					UnknownElements.Add (elem);
+					break;
 				}
 			}
 		}
 
-		#endregion
+        #endregion
 
-		#region Public fields
+        #region Public fields
 
-		/// <summary>
-		/// List of unknown elements encountered while parsing.
-		/// </summary>
-		public new List<EBMLreader> UnknownElements
-		{
-			get { return unknown_elems; }
-		}
-
-		#endregion
-
-		#region Public methods
+        /// <summary>
+        /// List of unknown elements encountered while parsing.
+        /// </summary>
+        public new List<EBMLreader> UnknownElements { get; } = new List<EBMLreader>();
 
 		#endregion
 
@@ -126,8 +112,7 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// This type of track only has audio media type.
 		/// </summary>
-		public override MediaTypes MediaTypes
-		{
+		public override MediaTypes MediaTypes {
 			get { return MediaTypes.Audio; }
 		}
 
@@ -138,28 +123,24 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// Audio track bitrate.
 		/// </summary>
-		public int AudioBitrate
-		{
+		public int AudioBitrate {
 			get { return 0; }
 		}
 
 		/// <summary>
 		/// Audio track sampling rate.
 		/// </summary>
-		public int AudioSampleRate
-		{
-			get { return (int) rate; }
+		public int AudioSampleRate {
+			get { return (int)rate; }
 		}
 
 		/// <summary>
 		/// Number of audio channels in this track.
 		/// </summary>
-		public int AudioChannels
-		{
-			get { return (int) channels; }
+		public int AudioChannels {
+			get { return (int)channels; }
 		}
 
 		#endregion
-
 	}
 }

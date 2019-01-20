@@ -29,46 +29,36 @@ using System;
 
 namespace TagLib.Id3v2
 {
-	
+
 	/// <summary>
 	///    This structure provides a representation of an ID3v2 tag footer
 	///    which can be read from and written to disk.
 	/// </summary>
 	public struct Footer
 	{
-#region Private Fields
-		
+		#region Private Fields
+
 		/// <summary>
 		///    Contains the tag's major version.
 		/// </summary>
-		private byte major_version;
-		
-		/// <summary>
-		///    Contains the tag's version revision.
-		/// </summary>
-		private byte revision_number;
-		
+		byte major_version;
+
 		/// <summary>
 		///    Contains tag's flags.
 		/// </summary>
-		private HeaderFlags flags;
-		
-		/// <summary>
-		///    Contains the tag size.
-		/// </summary>
-		private uint tag_size;
-		
-#endregion
-		
-		
-		
-#region Public Fields
-		
+		HeaderFlags flags;
+
+		#endregion
+
+
+
+		#region Public Fields
+
 		/// <summary>
 		///    The size of a ID3v2 footer.
 		/// </summary>
 		public const uint Size = 10;
-		
+
 		/// <summary>
 		///    The identifier used to recognize a ID3v2 footer.
 		/// </summary>
@@ -76,13 +66,13 @@ namespace TagLib.Id3v2
 		///    "3DI"
 		/// </value>
 		public static readonly ReadOnlyByteVector FileIdentifier = "3DI";
-		
-#endregion
-		
-		
-		
-#region Constructors
-		
+
+		#endregion
+
+
+
+		#region Constructors
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Footer" /> by reading it from raw footer data.
@@ -103,40 +93,34 @@ namespace TagLib.Id3v2
 		public Footer (ByteVector data)
 		{
 			if (data == null)
-				throw new ArgumentNullException (nameof(data));
-			
+				throw new ArgumentNullException (nameof (data));
+
 			if (data.Count < Size)
-				throw new CorruptFileException (
-					"Provided data is smaller than object size.");
-			
+				throw new CorruptFileException ("Provided data is smaller than object size.");
+
 			if (!data.StartsWith (FileIdentifier))
-				throw new CorruptFileException (
-					"Provided data does not start with the file identifier");
-			
-			major_version = data [3];
-			revision_number = data [4];
-			flags = (HeaderFlags) data [5];
-			
-			if (major_version == 2 && ((int) flags & 127) != 0)
-				throw new CorruptFileException (
-					"Invalid flags set on version 2 tag.");
-			
-			if (major_version == 3 && ((int) flags & 15) != 0)
-				throw new CorruptFileException (
-					"Invalid flags set on version 3 tag.");
-			
-			if (major_version == 4 && ((int) flags & 7) != 0)
-				throw new CorruptFileException (
-					"Invalid flags set on version 4 tag.");
-			
-			for (int i = 6; i < 10; i ++)
-				if (data [i] >= 128)
-					throw new CorruptFileException (
-						"One of the bytes in the header was greater than the allowed 128.");
-			
-			tag_size = SynchData.ToUInt (data.Mid (6, 4));
+				throw new CorruptFileException ("Provided data does not start with the file identifier");
+
+			major_version = data[3];
+			RevisionNumber = data[4];
+			flags = (HeaderFlags)data[5];
+
+			if (major_version == 2 && ((int)flags & 127) != 0)
+				throw new CorruptFileException ("Invalid flags set on version 2 tag.");
+
+			if (major_version == 3 && ((int)flags & 15) != 0)
+				throw new CorruptFileException ("Invalid flags set on version 3 tag.");
+
+			if (major_version == 4 && ((int)flags & 7) != 0)
+				throw new CorruptFileException ("Invalid flags set on version 4 tag.");
+
+			for (int i = 6; i < 10; i++)
+				if (data[i] >= 128)
+					throw new CorruptFileException ("One of the bytes in the header was greater than the allowed 128.");
+
+			TagSize = SynchData.ToUInt (data.Mid (6, 4));
 		}
-		
+
 		/// <summary>
 		///    Constructs and intializes a new instance of <see
 		///    cref="Footer" /> by reading in the contents of the header
@@ -149,17 +133,17 @@ namespace TagLib.Id3v2
 		public Footer (Header header)
 		{
 			major_version = header.MajorVersion;
-			revision_number = header.RevisionNumber;
+			RevisionNumber = header.RevisionNumber;
 			flags = header.Flags | HeaderFlags.FooterPresent;
-			tag_size = header.TagSize;
+			TagSize = header.TagSize;
 		}
-		
-#endregion
-		
-		
-		
-#region Public Properties
-		
+
+		#endregion
+
+
+
+		#region Public Properties
+
 		/// <summary>
 		///    Gets and sets the major version of the tag described by
 		///    the current instance.
@@ -177,18 +161,16 @@ namespace TagLib.Id3v2
 		/// </exception>
 		public byte MajorVersion {
 			get {
-				return major_version == 0 ? Tag.DefaultVersion :
-					major_version;
+				return major_version == 0 ? Tag.DefaultVersion : major_version;
 			}
 			set {
 				if (value != 4)
-					throw new ArgumentException (
-						"Version unsupported.");
-				
+					throw new ArgumentException ("Version unsupported.");
+
 				major_version = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the version revision number of the tag
 		///    represented by the current instance.
@@ -205,11 +187,8 @@ namespace TagLib.Id3v2
 		///    implementation. Some software may refuse to read tags
 		///    with a non-zero value.
 		/// </remarks>
-		public byte RevisionNumber {
-			get {return revision_number;}
-			set {revision_number = value;}
-		}
-		
+		public byte RevisionNumber { get; set; }
+
 		/// <summary>
 		///    Gets and sets the flags applied to the current instance.
 		/// </summary>
@@ -222,25 +201,19 @@ namespace TagLib.Id3v2
 		///    by the the ID3v2 version of the current instance.
 		/// </exception>
 		public HeaderFlags Flags {
-			get {return flags;}
+			get { return flags; }
 			set {
 				if (0 != (value & (HeaderFlags.ExtendedHeader |
-					HeaderFlags.ExperimentalIndicator)) &&
-					MajorVersion < 3)
-					throw new ArgumentException (
-						"Feature only supported in version 2.3+",
-						nameof(value));
-				
-				if (0 != (value & HeaderFlags.FooterPresent) &&
-					MajorVersion < 3)
-					throw new ArgumentException (
-						"Feature only supported in version 2.4+",
-						nameof(value));
-				
+					HeaderFlags.ExperimentalIndicator)) && MajorVersion < 3)
+					throw new ArgumentException ("Feature only supported in version 2.3+", nameof (value));
+
+				if (0 != (value & HeaderFlags.FooterPresent) && MajorVersion < 3)
+					throw new ArgumentException ("Feature only supported in version 2.4+", nameof (value));
+
 				flags = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the size of the tag described by the
 		///    current instance, minus the header and footer.
@@ -249,11 +222,8 @@ namespace TagLib.Id3v2
 		///    A <see cref="uint" /> value containing the size of the
 		///    tag described by the current instance.
 		/// </value>
-		public uint TagSize {
-			get {return tag_size;}
-			set {tag_size = value;}
-		}
-		
+		public uint TagSize { get; set; }
+
 		/// <summary>
 		///    Gets the complete size of the tag described by the
 		///    current instance, including the header and footer.
@@ -263,15 +233,15 @@ namespace TagLib.Id3v2
 		///    of the tag described by the current instance.
 		/// </value>
 		public uint CompleteTagSize {
-			get {return TagSize + Header.Size + Size;}
+			get { return TagSize + Header.Size + Size; }
 		}
-		
-#endregion
-		
-		
-		
-#region Public Methods
-		
+
+		#endregion
+
+
+
+		#region Public Methods
+
 		/// <summary>
 		///    Renders the current instance as a raw ID3v2 header.
 		/// </summary>
@@ -281,15 +251,16 @@ namespace TagLib.Id3v2
 		/// </returns>
 		public ByteVector Render ()
 		{
-			ByteVector v = new ByteVector ();
-			v.Add (FileIdentifier);
-			v.Add (MajorVersion);
-			v.Add (RevisionNumber);
-			v.Add ((byte)flags);
-			v.Add (SynchData.FromUInt (TagSize));
+			var v = new ByteVector {
+				FileIdentifier,
+				MajorVersion,
+				RevisionNumber,
+				(byte)flags,
+				SynchData.FromUInt (TagSize)
+			};
 			return v;
 		}
-		
-#endregion
+
+		#endregion
 	}
 }

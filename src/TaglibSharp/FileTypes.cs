@@ -25,7 +25,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace TagLib {
+namespace TagLib
+{
 	/// <summary>
 	///    This static class provides a mechanism for registering file
 	///    classes and mime-types, to be used when constructing a class via
@@ -44,8 +45,8 @@ namespace TagLib {
 		///    Contains a mapping between mime-types and the <see
 		///    cref="File" /> subclasses that support them.
 		/// </summary>
-		private static Dictionary<string, Type> file_types;
-		
+		static Dictionary<string, Type> file_types;
+
 		/// <summary>
 		///    Contains a static array of file types contained in the
 		///    TagLib# assembly.
@@ -57,58 +58,58 @@ namespace TagLib {
 		///    Mono. Not reflecting taglib-sharp.dll saves about 120KB
 		///    of heap.
 		/// </remarks>
-		private static Type [] static_file_types = new Type [] {
-			typeof(TagLib.Aac.File),
-			typeof(TagLib.Aiff.File),
-			typeof(TagLib.Ape.File),
-			typeof(TagLib.Asf.File),
-			typeof(TagLib.Audible.File),
-			typeof(TagLib.Dsf.File),
-			typeof(TagLib.Flac.File),
-			typeof(TagLib.Matroska.File),
-			typeof(TagLib.Gif.File),
-			typeof(TagLib.Image.NoMetadata.File),
-			typeof(TagLib.Jpeg.File),
-			typeof(TagLib.Mpeg4.File),
-			typeof(TagLib.Mpeg.AudioFile),
-			typeof(TagLib.Mpeg.File),
-			typeof(TagLib.MusePack.File),
-			typeof(TagLib.Ogg.File),
-			typeof(TagLib.Png.File),
-			typeof(TagLib.Riff.File),
-			typeof(TagLib.Tiff.Arw.File),
-			typeof(TagLib.Tiff.Cr2.File),
-			typeof(TagLib.Tiff.Dng.File),
-			typeof(TagLib.Tiff.File),
-			typeof(TagLib.Tiff.Nef.File),
-			typeof(TagLib.Tiff.Pef.File),
-			typeof(TagLib.Tiff.Rw2.File),
-			typeof(TagLib.WavPack.File)
+		static readonly Type[] static_file_types = new[] {
+			typeof(Aac.File),
+			typeof(Aiff.File),
+			typeof(Ape.File),
+			typeof(Asf.File),
+			typeof(Audible.File),
+			typeof(Dsf.File),
+			typeof(Flac.File),
+			typeof(Matroska.File),
+			typeof(Gif.File),
+			typeof(Image.NoMetadata.File),
+			typeof(Jpeg.File),
+			typeof(Mpeg4.File),
+			typeof(Mpeg.AudioFile),
+			typeof(Mpeg.File),
+			typeof(MusePack.File),
+			typeof(Ogg.File),
+			typeof(Png.File),
+			typeof(Riff.File),
+			typeof(Tiff.Arw.File),
+			typeof(Tiff.Cr2.File),
+			typeof(Tiff.Dng.File),
+			typeof(Tiff.File),
+			typeof(Tiff.Nef.File),
+			typeof(Tiff.Pef.File),
+			typeof(Tiff.Rw2.File),
+			typeof(WavPack.File)
 		};
-		
+
 		/// <summary>
 		///    Constructs and initializes the <see cref="FileTypes" />
 		///    class by registering the default types.
 		/// </summary>
 		static FileTypes ()
 		{
-			Init();
+			Init ();
 		}
-		
+
 		/// <summary>
 		///    Initializes the class by registering the default types.
 		/// </summary>
 		internal static void Init ()
 		{
-			if(file_types != null)
+			if (file_types != null)
 				return;
-			
-			file_types = new Dictionary<string, Type>();
-			
-			foreach(Type type in static_file_types)
+
+			file_types = new Dictionary<string, Type> ();
+
+			foreach (Type type in static_file_types)
 				Register (type);
 		}
-		
+
 		/// <summary>
 		///    Registers a <see cref="File" /> subclass to be used when
 		///    creating files via <see cref="File.Create(string)" />.
@@ -123,16 +124,15 @@ namespace TagLib {
 		/// </remarks>
 		public static void Register (Type type)
 		{
-			Attribute [] attrs = Attribute.GetCustomAttributes (type,
-				typeof(SupportedMimeType), false);
-			
-			if(attrs == null || attrs.Length == 0)
+			Attribute[] attrs = Attribute.GetCustomAttributes (type, typeof (SupportedMimeType), false);
+
+			if (attrs.Length == 0)
 				return;
-			
-			foreach(SupportedMimeType attr in attrs)
-				file_types.Add(attr.MimeType, type);
+
+			foreach (SupportedMimeType attr in attrs)
+				file_types.Add (attr.MimeType, type);
 		}
-		
+
 		/// <summary>
 		///    Gets a dictionary containing all the supported mime-types
 		///    and file classes used by <see cref="File.Create(string)"
@@ -143,7 +143,7 @@ namespace TagLib {
 		///    supported mime-types.
 		/// </value>
 		public static IDictionary<string, Type> AvailableTypes {
-			get {return file_types;}
+			get { return file_types; }
 		}
 	}
 }

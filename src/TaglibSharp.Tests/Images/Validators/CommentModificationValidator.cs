@@ -1,5 +1,3 @@
-using System;
-
 namespace TaglibSharp.Tests.Images.Validators
 {
 	/// <summary>
@@ -12,10 +10,10 @@ namespace TaglibSharp.Tests.Images.Validators
 
 		public CommentModificationValidator (string orig_comment)
 			: this (orig_comment, "This is a TagLib# &Test?Comment%$@_ ")
-		{}
+		{ }
 
 		public CommentModificationValidator (string orig_comment, string test_comment)
 			: base ("Comment", orig_comment, test_comment)
-		{}
+		{ }
 	}
 }

@@ -27,7 +27,8 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace TagLib {
+namespace TagLib
+{
 	/// <summary>
 	///    This class extends <see cref="Exception" /> and is used to
 	///    indicate that a file or tag is stored in an unsupported format
@@ -105,19 +106,19 @@ namespace TagLib {
 		///    the reason for the exception.
 		/// </param>
 		public UnsupportedFormatException (string message)
-			: base(message)
+			: base (message)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="UnsupportedFormatException" /> with the default
 		///    values.
 		/// </summary>
-		public UnsupportedFormatException () : base()
+		public UnsupportedFormatException ()
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="UnsupportedFormatException" /> with a specified
@@ -131,12 +132,11 @@ namespace TagLib {
 		///    A <see cref="Exception" /> object to be contained in the
 		///    new exception. For example, previously caught exception.
 		/// </param>
-		public UnsupportedFormatException (string message,
-		                                   Exception innerException)
+		public UnsupportedFormatException (string message, Exception innerException)
 			: base (message, innerException)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="UnsupportedFormatException" /> from a specified
@@ -155,9 +155,8 @@ namespace TagLib {
 		///    cref="UnsupportedFormatException" /> implements the <see
 		///    cref="ISerializable" /> interface.
 		/// </remarks>
-		protected UnsupportedFormatException (SerializationInfo info,
-		                                      StreamingContext context)
-			: base(info, context)
+		protected UnsupportedFormatException (SerializationInfo info, StreamingContext context)
+			: base (info, context)
 		{
 		}
 	}

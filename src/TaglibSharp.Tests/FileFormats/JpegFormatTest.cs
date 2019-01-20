@@ -21,13 +21,13 @@ namespace TaglibSharp.Tests.FileFormats
 				TagTypes.XMP;
 
 		[OneTimeSetUp]
-		public void Init()
+		public void Init ()
 		{
 			file = File.Create (sample_file) as TagLib.Image.File;
 		}
 
 		[Test]
-		public void TestJpegRead()
+		public void TestJpegRead ()
 		{
 			Assert.IsTrue (file is TagLib.Jpeg.File);
 
@@ -45,40 +45,40 @@ namespace TaglibSharp.Tests.FileFormats
 		}
 
 		[Test]
-		public void TestExif()
+		public void TestExif ()
 		{
 			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 			Assert.IsFalse (tag == null);
 
-			var exif_ifd = tag.Structure.GetEntry(0, IFDEntryTag.ExifIFD) as SubIFDEntry;
+			var exif_ifd = tag.Structure.GetEntry (0, IFDEntryTag.ExifIFD) as SubIFDEntry;
 			Assert.IsFalse (exif_ifd == null);
 			var exif_tag = exif_ifd.Structure;
 
 			{
-				var entry = exif_tag.GetEntry (0, (ushort) ExifEntryTag.ExposureTime) as RationalIFDEntry;
+				var entry = exif_tag.GetEntry (0, (ushort)ExifEntryTag.ExposureTime) as RationalIFDEntry;
 				Assert.IsFalse (entry == null);
 				Assert.AreEqual (0.008, (double)entry.Value);
 			}
 			{
-				var entry = exif_tag.GetEntry (0, (ushort) ExifEntryTag.FNumber) as RationalIFDEntry;
+				var entry = exif_tag.GetEntry (0, (ushort)ExifEntryTag.FNumber) as RationalIFDEntry;
 				Assert.IsFalse (entry == null);
 				Assert.AreEqual (3.2, (double)entry.Value);
 			}
 			{
-				var entry = exif_tag.GetEntry (0, (ushort) ExifEntryTag.ISOSpeedRatings) as ShortIFDEntry;
+				var entry = exif_tag.GetEntry (0, (ushort)ExifEntryTag.ISOSpeedRatings) as ShortIFDEntry;
 				Assert.IsFalse (entry == null);
 				Assert.AreEqual (100, entry.Value);
 			}
 		}
 
 		[Test]
-		public void TestXmp()
+		public void TestXmp ()
 		{
 			var tag = file.GetTag (TagTypes.XMP) as XmpTag;
 			Assert.IsFalse (tag == null);
 
-			TestBagNode (tag, XmpTag.DC_NS, "subject", new[] {"keyword1", "keyword2", "keyword3"});
-			TestAltNode (tag, XmpTag.DC_NS, "description", new[] {"Sample Image"});
+			TestBagNode (tag, XmpTag.DC_NS, "subject", new[] { "keyword1", "keyword2", "keyword3" });
+			TestAltNode (tag, XmpTag.DC_NS, "description", new[] { "Sample Image" });
 		}
 
 		[Test]

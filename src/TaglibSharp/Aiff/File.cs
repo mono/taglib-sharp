@@ -23,7 +23,6 @@
 //
 
 using System;
-using TagLib.Id3v2;
 
 namespace TagLib.Aiff
 {
@@ -32,12 +31,12 @@ namespace TagLib.Aiff
 	///    support for reading and writing tags and properties for files
 	///    using the AIFF file format.
 	/// </summary>
-	[SupportedMimeType("taglib/aif", "aif")]
-	[SupportedMimeType("taglib/aiff", "aiff")]
-	[SupportedMimeType("audio/x-aiff")]
-	[SupportedMimeType("audio/aiff")]
-	[SupportedMimeType("sound/aiff")]
-	[SupportedMimeType("application/x-aiff")]
+	[SupportedMimeType ("taglib/aif", "aif")]
+	[SupportedMimeType ("taglib/aiff", "aiff")]
+	[SupportedMimeType ("audio/x-aiff")]
+	[SupportedMimeType ("audio/aiff")]
+	[SupportedMimeType ("sound/aiff")]
+	[SupportedMimeType ("application/x-aiff")]
 	public class File : TagLib.File
 	{
 		#region Private Fields
@@ -45,17 +44,17 @@ namespace TagLib.Aiff
 		/// <summary>
 		///    Contains the address of the AIFF header block.
 		/// </summary>
-		private ByteVector header_block = null;
+		ByteVector header_block;
 
 		/// <summary>
 		///  Contains the Id3v2 tag.
 		/// </summary>
-		private Id3v2.Tag tag = null;
+		Id3v2.Tag tag;
 
 		/// <summary>
 		///  Contains the media properties.
 		/// </summary>
-		private Properties properties = null;
+		Properties properties;
 
 		#endregion
 
@@ -122,9 +121,8 @@ namespace TagLib.Aiff
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
-		public File(string path, ReadStyle propertiesStyle)
-			: this(new File.LocalFileAbstraction(path),
-			       propertiesStyle)
+		public File (string path, ReadStyle propertiesStyle)
+			: this (new LocalFileAbstraction (path), propertiesStyle)
 		{
 		}
 
@@ -140,8 +138,8 @@ namespace TagLib.Aiff
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
-		public File(string path)
-			: this(path, ReadStyle.Average)
+		public File (string path)
+			: this (path, ReadStyle.Average)
 		{
 		}
 
@@ -163,26 +161,18 @@ namespace TagLib.Aiff
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public File(File.IFileAbstraction abstraction,
-		            ReadStyle propertiesStyle)
-			: base(abstraction)
+		public File (IFileAbstraction abstraction, ReadStyle propertiesStyle) : base (abstraction)
 		{
 			Mode = AccessMode.Read;
-			try
-			{
-				uint aiff_size;
-				long tag_start, tag_end;
-				Read(true, propertiesStyle, out aiff_size,
-				     out tag_start, out tag_end);
-			}
-			finally
-			{
+			try {
+				Read (true, propertiesStyle, out var aiff_size, out var tag_start, out var tag_end);
+			} finally {
 				Mode = AccessMode.Closed;
 			}
 
 			TagTypesOnDisk = TagTypes;
 
-			GetTag(TagTypes.Id3v2, true);
+			GetTag (TagTypes.Id3v2, true);
 		}
 
 		/// <summary>
@@ -198,8 +188,8 @@ namespace TagLib.Aiff
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public File(File.IFileAbstraction abstraction)
-			: this(abstraction, ReadStyle.Average)
+		public File (IFileAbstraction abstraction)
+			: this (abstraction, ReadStyle.Average)
 		{
 		}
 
@@ -215,8 +205,7 @@ namespace TagLib.Aiff
 		///    A <see cref="TagLib.Tag" /> object representing all tags
 		///    stored in the current instance.
 		/// </value>
-		public override Tag Tag
-		{
+		public override Tag Tag {
 			get { return tag; }
 		}
 
@@ -229,8 +218,7 @@ namespace TagLib.Aiff
 		///    media properties of the file represented by the current
 		///    instance.
 		/// </value>
-		public override TagLib.Properties Properties
-		{
+		public override Properties Properties {
 			get { return properties; }
 		}
 
@@ -242,74 +230,57 @@ namespace TagLib.Aiff
 		///    Saves the changes made in the current instance to the
 		///    file it represents.
 		/// </summary>
-		public override void Save()
+		public override void Save ()
 		{
 			// Boilerplate
-			PreSave();
+			PreSave ();
 
 			Mode = AccessMode.Write;
-			try
-			{
-				ByteVector data = new ByteVector();
+			try {
+				var data = new ByteVector ();
 
 				// Add the ID3 chunk and ID32 tag to the vector
-				if (tag != null)
-				{
-					ByteVector tag_data = tag.Render();
-					if (tag_data.Count > 10)
-					{
-						if (tag_data.Count%2 == 1)
-							tag_data.Add(0);
+				if (tag != null) {
+					ByteVector tag_data = tag.Render ();
+					if (tag_data.Count > 10) {
+						if (tag_data.Count % 2 == 1)
+							tag_data.Add (0);
 
-						data.Add("ID3 ");
-						data.Add(ByteVector.FromUInt(
-						         	(uint) tag_data.Count,
-						         	true));
-						data.Add(tag_data);
+						data.Add ("ID3 ");
+						data.Add (ByteVector.FromUInt ((uint)tag_data.Count, true));
+						data.Add (tag_data);
 					}
 				}
 
-				// Read the file to determine the current AIFF
-				// size and the area tagging is in.
-				uint aiff_size;
-				long tag_start, tag_end;
-				Read(false, ReadStyle.None, out aiff_size,
-				     out tag_start, out tag_end);
+				Read (false, ReadStyle.None, out var aiff_size,
+					 out var tag_start, out var tag_end);
 
 				// If tagging info cannot be found, place it at
 				// the end of the file.
 				if (tag_start < 12 || tag_end < tag_start)
 					tag_start = tag_end = Length;
 
-				int length = (int) (tag_end - tag_start + 8);
+				int length = (int)(tag_end - tag_start + 8);
 
 				// Insert the tagging data.
-				Insert(data, tag_start, length);
+				Insert (data, tag_start, length);
 
 				// If the data size changed update the aiff size.
 				if (data.Count - length != 0 &&
-				    tag_start <= aiff_size)
-				{
+					tag_start <= aiff_size) {
 					// Depending, if a Tag has been added or removed, 
 					// the length needs to be adjusted
-					if (tag == null)
-					{
+					if (tag == null) {
 						length -= 16;
-					}
-					else
-					{
+					} else {
 						length -= 8;
 					}
 
-					Insert(ByteVector.FromUInt((uint)
-					                           (aiff_size + data.Count - length),
-					                           true), 4, 4);
+					Insert (ByteVector.FromUInt ((uint)(aiff_size + data.Count - length), true), 4, 4);
 				}
 				// Update the tag types.
 				TagTypesOnDisk = TagTypes;
-			}
-			finally
-			{
+			} finally {
 				Mode = AccessMode.Closed;
 			}
 		}
@@ -325,11 +296,9 @@ namespace TagLib.Aiff
 		///    In order to remove all tags from a file, pass <see
 		///    cref="TagTypes.AllTags" /> as <paramref name="types" />.
 		/// </remarks>
-		public override void RemoveTags(TagTypes types)
+		public override void RemoveTags (TagTypes types)
 		{
-			if (types == TagLib.TagTypes.Id3v2 ||
-			    types == TagLib.TagTypes.AllTags)
-			{
+			if (types == TagTypes.Id3v2 || types == TagTypes.AllTags) {
 				tag = null;
 			}
 		}
@@ -352,21 +321,20 @@ namespace TagLib.Aiff
 		///    matching tag was found and none was created, <see
 		///    langword="null" /> is returned.
 		/// </returns>
-		public override TagLib.Tag GetTag(TagTypes type, bool create)
+		public override Tag GetTag (TagTypes type, bool create)
 		{
-			TagLib.Tag id32_tag = null;
+			Tag id32_tag = null;
 
-			switch (type)
-			{
-				case TagTypes.Id3v2:
-					if (tag == null && create)
-					{
-						tag = new Id3v2.Tag();
-						tag.Version = 2;
-					}
+			switch (type) {
+			case TagTypes.Id3v2:
+				if (tag == null && create) {
+					tag = new Id3v2.Tag {
+						Version = 2
+					};
+				}
 
-					id32_tag = tag;
-					break;
+				id32_tag = tag;
+				break;
 			}
 
 			return id32_tag;
@@ -388,43 +356,36 @@ namespace TagLib.Aiff
 		///    Position of the chunk in the stream, or -1
 		///    if no chunk was found.
 		/// </returns>
-		private long FindChunk(ByteVector chunkName, long startPos)
+		long FindChunk (ByteVector chunkName, long startPos)
 		{
 			long initialPos = Tell;
 
-			try
-			{
+			try {
 				// Start at the given position
-				Seek(startPos);
+				Seek (startPos);
 
 				// While not eof
-				while (Tell < Length)
-				{
+				while (Tell < Length) {
 					// Read 4-byte chunk name
-					ByteVector chunkHeader = ReadBlock(4);
+					ByteVector chunkHeader = ReadBlock (4);
 
-					if (chunkHeader == chunkName)
-					{
+					if (chunkHeader == chunkName) {
 						// We found a matching chunk, return the position
 						// of the header start
 						return Tell - 4;
-					}
-					else
-					{
+					} else {
 						// This chunk is not the one we are looking for
 						// Continue the search, seeking over the chunk
-						uint chunkSize = ReadBlock(4).ToUInt();
+						uint chunkSize = ReadBlock (4).ToUInt ();
 						// Seek forward "chunkSize" bytes
-						Seek(chunkSize, System.IO.SeekOrigin.Current);
+						Seek (chunkSize, System.IO.SeekOrigin.Current);
 					}
 				}
 
 				// We did not find the chunk
 				return -1;
-			}
-			finally
-			{
-				Seek(initialPos);
+			} finally {
+				Seek (initialPos);
 			}
 		}
 
@@ -459,73 +420,61 @@ namespace TagLib.Aiff
 		///    The file does not begin with <see cref="FileIdentifier"
 		///    />.
 		/// </exception>
-		private void Read(bool read_tags, ReadStyle style,
-		                  out uint aiff_size, out long tag_start,
-		                  out long tag_end)
+		void Read (bool read_tags, ReadStyle style, out uint aiff_size, out long tag_start, out long tag_end)
 		{
-			Seek(0);
-			if (ReadBlock(4) != FileIdentifier)
-				throw new CorruptFileException(
-					"File does not begin with AIFF identifier");
+			Seek (0);
+			if (ReadBlock (4) != FileIdentifier)
+				throw new CorruptFileException ("File does not begin with AIFF identifier");
 
-			aiff_size = ReadBlock(4).ToUInt(true);
+			aiff_size = ReadBlock (4).ToUInt (true);
 			tag_start = -1;
 			tag_end = -1;
 
 			// Check formType
-			if (ReadBlock(4) != AIFFFormType)
-				throw new CorruptFileException(
-					"File form type is not AIFF");
+			if (ReadBlock (4) != AIFFFormType)
+				throw new CorruptFileException ("File form type is not AIFF");
 
 			long formBlockChunksPosition = Tell;
 
 			// Get the properties of the file
 			if (header_block == null &&
-			    style != ReadStyle.None)
-			{
-				long common_chunk_pos = FindChunk(CommIdentifier, formBlockChunksPosition);
+				style != ReadStyle.None) {
+				long common_chunk_pos = FindChunk (CommIdentifier, formBlockChunksPosition);
 
-				if (common_chunk_pos == -1)
-				{
-					throw new CorruptFileException(
-						"No Common chunk available in AIFF file.");
+				if (common_chunk_pos == -1) {
+					throw new CorruptFileException ("No Common chunk available in AIFF file.");
 				}
 
-				Seek(common_chunk_pos);
-				header_block = ReadBlock((int) StreamHeader.Size);
+				Seek (common_chunk_pos);
+				header_block = ReadBlock ((int)StreamHeader.Size);
 
-				StreamHeader header = new StreamHeader(header_block, aiff_size);
-				properties = new Properties(TimeSpan.Zero, header);
+				var header = new StreamHeader (header_block, aiff_size);
+				properties = new Properties (TimeSpan.Zero, header);
 			}
 
 			// Search for the ID3 chunk
-			long id3_chunk_pos = FindChunk(ID3Identifier, formBlockChunksPosition);
+			long id3_chunk_pos = FindChunk (ID3Identifier, formBlockChunksPosition);
 
 			// Search for the sound chunk
-			long sound_chunk_pos = FindChunk(SoundIdentifier, formBlockChunksPosition);
+			long sound_chunk_pos = FindChunk (SoundIdentifier, formBlockChunksPosition);
 
 			// Ensure there is a sound chunk for the file to be valid
-			if (sound_chunk_pos == -1)
-			{
-				throw new CorruptFileException(
-					"No Sound chunk available in AIFF file.");
+			if (sound_chunk_pos == -1) {
+				throw new CorruptFileException ("No Sound chunk available in AIFF file.");
 			}
 
 			// Get the length of the Sound chunk and use this as a start value to look for the ID3 chunk
-			Seek(sound_chunk_pos + 4);
+			Seek (sound_chunk_pos + 4);
 
 			// Read the id3 chunk
-			if (id3_chunk_pos > -1)
-			{
-				if (read_tags && tag == null)
-				{
-					tag = new Id3v2.Tag(this,
-					                    id3_chunk_pos + 8, style);
+			if (id3_chunk_pos > -1) {
+				if (read_tags && tag == null) {
+					tag = new Id3v2.Tag (this, id3_chunk_pos + 8, style);
 				}
 
 				// Get the length of the tag out of the ID3 chunk
-				Seek(id3_chunk_pos + 4);
-				uint tag_size = ReadBlock(4).ToUInt(true) + 8;
+				Seek (id3_chunk_pos + 4);
+				uint tag_size = ReadBlock (4).ToUInt (true) + 8;
 
 				tag_start = InvariantStartPosition = id3_chunk_pos;
 				tag_end = InvariantEndPosition = tag_start + tag_size;

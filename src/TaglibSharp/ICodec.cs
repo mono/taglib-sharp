@@ -28,7 +28,8 @@
 
 using System;
 
-namespace TagLib {
+namespace TagLib
+{
 	/// <summary>
 	///    Indicates the types of media represented by a <see cref="ICodec"
 	///    /> or <see cref="Properties" /> object.
@@ -43,13 +44,13 @@ namespace TagLib {
 		/// <summary>
 		///    No media is present.
 		/// </summary>
-		None  = 0,
-		
+		None = 0,
+
 		/// <summary>
 		///    Audio is present.
 		/// </summary>
 		Audio = 1,
-		
+
 		/// <summary>
 		///    Video is present.
 		/// </summary>
@@ -65,7 +66,7 @@ namespace TagLib {
 		/// </summary>
 		Text = 8
 	}
-	
+
 	/// <summary>
 	///    This interface provides basic information, common to all media
 	///    codecs.
@@ -80,8 +81,8 @@ namespace TagLib {
 		///    A <see cref="TimeSpan" /> containing the duration of the
 		///    media represented by the current instance.
 		/// </value>
-		TimeSpan Duration {get;}
-		
+		TimeSpan Duration { get; }
+
 		/// <summary>
 		///    Gets the types of media represented by the current
 		///    instance.
@@ -90,8 +91,8 @@ namespace TagLib {
 		///    A bitwise combined <see cref="MediaTypes" /> containing
 		///    the types of media represented by the current instance.
 		/// </value>
-		MediaTypes MediaTypes {get;}
-		
+		MediaTypes MediaTypes { get; }
+
 		/// <summary>
 		///    Gets a text description of the media represented by the
 		///    current instance.
@@ -100,9 +101,9 @@ namespace TagLib {
 		///    A <see cref="string" /> object containing a description
 		///    of the media represented by the current instance.
 		/// </value>
-		string Description {get;}
+		string Description { get; }
 	}
-	
+
 	/// <summary>
 	///    This interface inherits <see cref="ICodec" /> to provide
 	///    information about an audio codec.
@@ -123,8 +124,8 @@ namespace TagLib {
 		///    A <see cref="int" /> value containing a bitrate of the
 		///    audio represented by the current instance.
 		/// </value>
-		int AudioBitrate {get;}
-		
+		int AudioBitrate { get; }
+
 		/// <summary>
 		///    Gets the sample rate of the audio represented by the
 		///    current instance.
@@ -133,8 +134,8 @@ namespace TagLib {
 		///    A <see cref="int" /> value containing the sample rate of
 		///    the audio represented by the current instance.
 		/// </value>
-		int AudioSampleRate {get;}
-		
+		int AudioSampleRate { get; }
+
 		/// <summary>
 		///    Gets the number of channels in the audio represented by
 		///    the current instance.
@@ -144,7 +145,7 @@ namespace TagLib {
 		///    channels in the audio represented by the current
 		///    instance.
 		/// </value>
-		int AudioChannels {get;}
+		int AudioChannels { get; }
 	}
 
 	/// <summary>
@@ -162,7 +163,7 @@ namespace TagLib {
 		///    per sample in the audio represented by the current
 		///    instance.
 		/// </value>
-		int BitsPerSample {get;}
+		int BitsPerSample { get; }
 	}
 
 	/// <summary>
@@ -185,8 +186,8 @@ namespace TagLib {
 		///    A <see cref="int" /> value containing the width of the
 		///    video represented by the current instance.
 		/// </value>
-		int VideoWidth  {get;}
-		
+		int VideoWidth { get; }
+
 		/// <summary>
 		///    Gets the height of the video represented by the current
 		///    instance.
@@ -195,7 +196,7 @@ namespace TagLib {
 		///    A <see cref="int" /> value containing the height of the
 		///    video represented by the current instance.
 		/// </value>
-		int VideoHeight {get;}
+		int VideoHeight { get; }
 	}
 
 	/// <summary>
@@ -218,7 +219,7 @@ namespace TagLib {
 		///    A <see cref="int" /> value containing the width of the
 		///    photo represented by the current instance.
 		/// </value>
-		int PhotoWidth  {get;}
+		int PhotoWidth { get; }
 
 		/// <summary>
 		///    Gets the height of the photo represented by the current
@@ -228,7 +229,7 @@ namespace TagLib {
 		///    A <see cref="int" /> value containing the height of the
 		///    photo represented by the current instance.
 		/// </value>
-		int PhotoHeight {get;}
+		int PhotoHeight { get; }
 
 		/// <summary>
 		///    Gets the (format specific) quality indicator of the photo
@@ -239,6 +240,6 @@ namespace TagLib {
 		///    0 means that there was no quality indicator for the format
 		///    or the file.
 		/// </value>
-		int PhotoQuality {get;}
+		int PhotoQuality { get; }
 	}
 }

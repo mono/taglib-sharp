@@ -24,7 +24,8 @@
 using System;
 using System.IO;
 
-namespace TagLib {
+namespace TagLib
+{
 
 	/// <summary>
 	///    This class implements <see cref="IPicture" /> and provides
@@ -38,47 +39,42 @@ namespace TagLib {
 	public class PictureLazy : IPicture, ILazy
 	{
 		#region Private Fields
-		
+
 		/// <summary>
 		///    Contains the mime-type.
 		/// </summary>
-		private string mime_type;
-		
+		string mime_type;
+
 		/// <summary>
 		///    Contains the content type.
 		/// </summary>
-		private PictureType type;
+		PictureType type;
 
 		/// <summary>
 		///    Contains the filename.
 		/// </summary>
-		private string filename;
+		string filename;
 
-		/// <summary>
-		///    Contains the description.
-		/// </summary>
-		private string description;
-		
 		/// <summary>
 		///    Contains the picture data.
 		/// </summary>
-		private ByteVector data;
+		ByteVector data;
 
 
 		/// <summary>
 		/// Stream where the picture is located
 		/// </summary>
-		private File.IFileAbstraction file;
+		File.IFileAbstraction file;
 
 		/// <summary>
 		/// Offset from where the picture start in the <see cref="file"/>
 		/// </summary>
-		private long stream_offset;
+		readonly long stream_offset;
 
 		/// <summary>
 		/// Size of the picture in the <see cref="file"/> (-1 = until end of Stream)
 		/// </summary>
-		private long stream_size = -1;
+		readonly long stream_size = -1;
 
 		#endregion
 
@@ -105,17 +101,17 @@ namespace TagLib {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
-		public PictureLazy(string path)
+		public PictureLazy (string path)
 		{
 			if (path == null)
-				throw new ArgumentNullException (nameof(path));
+				throw new ArgumentNullException (nameof (path));
 
-			file = new File.LocalFileAbstraction(path);
+			file = new File.LocalFileAbstraction (path);
 
-			filename = Path.GetFileName(path);
-			description = filename;
-			mime_type = Picture.GetMimeFromExtension(filename);
-			type = mime_type.StartsWith("image/") ? PictureType.FrontCover : PictureType.NotAPicture;
+			filename = Path.GetFileName (path);
+			Description = filename;
+			mime_type = Picture.GetMimeFromExtension (filename);
+			type = mime_type.StartsWith ("image/") ? PictureType.FrontCover : PictureType.NotAPicture;
 		}
 
 		/// <summary>
@@ -139,10 +135,10 @@ namespace TagLib {
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public PictureLazy(File.IFileAbstraction abstraction, long offset = 0, long size = -1)
+		public PictureLazy (File.IFileAbstraction abstraction, long offset = 0, long size = -1)
 		{
 			if (abstraction == null)
-				throw new ArgumentNullException (nameof(abstraction));
+				throw new ArgumentNullException (nameof (abstraction));
 
 
 			file = abstraction;
@@ -150,12 +146,11 @@ namespace TagLib {
 			stream_size = size;
 
 			filename = abstraction.Name;
-			description = abstraction.Name;
+			Description = abstraction.Name;
 
-			if (!string.IsNullOrEmpty(filename) && filename.Contains("."))
-			{
-				mime_type = Picture.GetMimeFromExtension(filename);
-				type = mime_type.StartsWith("image/") ? PictureType.FrontCover : PictureType.NotAPicture;
+			if (!string.IsNullOrEmpty (filename) && filename.Contains (".")) {
+				mime_type = Picture.GetMimeFromExtension (filename);
+				type = mime_type.StartsWith ("image/") ? PictureType.FrontCover : PictureType.NotAPicture;
 			}
 		}
 
@@ -172,21 +167,19 @@ namespace TagLib {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="data" /> is <see langword="null" />.
 		/// </exception>
-		public PictureLazy(ByteVector data)
+		public PictureLazy (ByteVector data)
 		{
 			if (data == null)
-				throw new ArgumentNullException (nameof(data));
-			
+				throw new ArgumentNullException (nameof (data));
+
 			Data = new ByteVector (data);
-			string ext = Picture.GetExtensionFromData(data);
-			MimeType = Picture.GetMimeFromExtension(ext);
-			if (ext != null)
-			{
+			string ext = Picture.GetExtensionFromData (data);
+			MimeType = Picture.GetMimeFromExtension (ext);
+
+			if (ext != null) {
 				type = PictureType.FrontCover;
-				filename = description = "cover" + ext;
-			}
-			else
-			{
+				filename = Description = "cover" + ext;
+			} else {
 				type = PictureType.NotAPicture;
 				filename = "UnknownType";
 			}
@@ -208,7 +201,7 @@ namespace TagLib {
 			mime_type = picture.MimeType;
 			type = picture.Type;
 			filename = picture.Filename;
-			description = picture.Description;
+			Description = picture.Description;
 			data = picture.Data;
 		}
 
@@ -223,7 +216,7 @@ namespace TagLib {
 		/// Load the picture data from the file,
 		/// if not done yet.
 		/// </summary>
-		public void Load()
+		public void Load ()
 		{
 			// Already loaded ?
 			if (data != null) return;
@@ -233,45 +226,35 @@ namespace TagLib {
 
 			Stream stream = null;
 
-			try
-			{
-				if (stream_size == 0)
-				{
-					data = new ByteVector();
-				}
-				else if (stream_size > 0)
-				{
+			try {
+				if (stream_size == 0) {
+					data = new ByteVector ();
+				} else if (stream_size > 0) {
 					stream = file.ReadStream;
-					stream.Seek(stream_offset, SeekOrigin.Begin);
+					stream.Seek (stream_offset, SeekOrigin.Begin);
 
 					int count = 0, read = 0, needed = (int)stream_size;
 					byte[] buffer = new byte[needed];
 
-					do
-					{
-						count = stream.Read(buffer, read, needed);
+					do {
+						count = stream.Read (buffer, read, needed);
 
 						read += count;
 						needed -= count;
 					} while (needed > 0 && count != 0);
 
-					data = new ByteVector(buffer, read);
-				}
-				else
-				{
+					data = new ByteVector (buffer, read);
+				} else {
 					stream = file.ReadStream;
-					stream.Seek(stream_offset, SeekOrigin.Begin);
+					stream.Seek (stream_offset, SeekOrigin.Begin);
 
-					data = ByteVector.FromStream(stream);
+					data = ByteVector.FromStream (stream);
 				}
 
-			}
-			finally
-			{
+			} finally {
 				// Free the resources
-				if (stream != null && file != null)
-				{
-					file.CloseStream(stream);
+				if (stream != null && file != null) {
+					file.CloseStream (stream);
 				}
 
 				file = null;
@@ -279,18 +262,14 @@ namespace TagLib {
 
 			// Retrieve remaining properties from data (if required)
 
-			if (mime_type == null) 
-			{
-				string ext = Picture.GetExtensionFromData(data);
-				MimeType = Picture.GetMimeFromExtension(ext);
-				if (ext != null)
-				{
+			if (mime_type == null) {
+				string ext = Picture.GetExtensionFromData (data);
+				MimeType = Picture.GetMimeFromExtension (ext);
+				if (ext != null) {
 					type = PictureType.FrontCover;
 					if (filename == null)
-						filename = description = "cover" + ext;
-				}
-				else
-				{
+						filename = Description = "cover" + ext;
+				} else {
 					type = PictureType.NotAPicture;
 					if (filename == null)
 						filename = "UnknownType";
@@ -314,12 +293,12 @@ namespace TagLib {
 		public string MimeType {
 			get {
 				if (mime_type == null)
-					Load();
+					Load ();
 				return mime_type;
 			}
 			set { mime_type = value; }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the type of content visible in the picture
 		///    stored in the current instance.
@@ -332,7 +311,7 @@ namespace TagLib {
 		public PictureType Type {
 			get {
 				if (type == PictureType.Other && mime_type == null)
-					Load();
+					Load ();
 				return type;
 			}
 			set { type = value; }
@@ -346,11 +325,10 @@ namespace TagLib {
 		///    A <see cref="string" /> object containing a fielname, with
 		///    extension, of the picture stored in the current instance.
 		/// </value>
-		public string Filename
-		{
+		public string Filename {
 			get {
 				if (filename == null)
-					Load();
+					Load ();
 				return filename;
 			}
 			set { filename = value; }
@@ -364,11 +342,8 @@ namespace TagLib {
 		///    A <see cref="string" /> object containing a description
 		///    of the picture stored in the current instance.
 		/// </value>
-		public string Description {
-			get { return description; }
-			set { description = value; }
-		}
-		
+		public string Description { get; set; }
+
 		/// <summary>
 		///    Gets and sets the picture data stored in the current
 		///    instance.
@@ -380,12 +355,12 @@ namespace TagLib {
 		public ByteVector Data {
 			get {
 				if (data == null)
-					Load();
+					Load ();
 				return data;
 			}
 			set { data = value; }
 		}
-		
+
 
 		/// <summary>
 		///    Gets an indication whether the picture is loaded.
@@ -397,6 +372,6 @@ namespace TagLib {
 		}
 
 		#endregion
-		
+
 	}
 }

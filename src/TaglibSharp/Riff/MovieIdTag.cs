@@ -23,23 +23,24 @@
 
 using System;
 
-namespace TagLib.Riff {
+namespace TagLib.Riff
+{
 	/// <summary>
 	///    This class extends <see cref="ListTag" /> to provide support for
 	///    reading and writing MovieID tags.
 	/// </summary>
 	public class MovieIdTag : ListTag
 	{
-#region Constructors
-		
+		#region Constructors
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="MovieIdTag" /> with no contents.
 		/// </summary>
-		public MovieIdTag () : base ()
+		public MovieIdTag ()
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="MovieIdTag" /> by reading the contents of a raw
@@ -52,7 +53,7 @@ namespace TagLib.Riff {
 		public MovieIdTag (ByteVector data) : base (data)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="MovieIdTag" /> by reading the contents of a raw
@@ -83,13 +84,13 @@ namespace TagLib.Riff {
 			: base (file, position, length)
 		{
 		}
-		
-#endregion
-		
-		
-		
-#region Public Methods
-		
+
+		#endregion
+
+
+
+		#region Public Methods
+
 		/// <summary>
 		///    Renders the current instance enclosed in a "MID " item.
 		/// </summary>
@@ -101,13 +102,13 @@ namespace TagLib.Riff {
 		{
 			return RenderEnclosed ("MID ");
 		}
-		
-#endregion
-		
-		
-		
-#region TagLib.Tag
-		
+
+		#endregion
+
+
+
+		#region TagLib.Tag
+
 		/// <summary>
 		///    Gets the tag types contained in the current instance.
 		/// </summary>
@@ -115,9 +116,9 @@ namespace TagLib.Riff {
 		///    Always <see cref="TagTypes.MovieId" />.
 		/// </value>
 		public override TagTypes TagTypes {
-			get {return TagTypes.MovieId;}
+			get { return TagTypes.MovieId; }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the title for the media described by the
 		///    current instance.
@@ -135,10 +136,10 @@ namespace TagLib.Riff {
 				foreach (string s in GetValuesAsStrings ("TITL"))
 					if (!string.IsNullOrEmpty (s))
 						return s;
-				
+
 				return null;
 			}
-			set {SetValue ("TITL", value);}
+			set { SetValue ("TITL", value); }
 		}
 
 		/// <summary>
@@ -154,11 +155,11 @@ namespace TagLib.Riff {
 		/// <remarks>
 		///    This property is implemented using the "IART" item.
 		/// </remarks>
-		public override string [] Performers {
-			get {return GetValuesAsStrings ("IART");}
-			set {SetValue ("IART", value);}
+		public override string[] Performers {
+			get { return GetValuesAsStrings ("IART"); }
+			set { SetValue ("IART", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets a user comment on the media represented by
 		///    the current instance.
@@ -176,12 +177,12 @@ namespace TagLib.Riff {
 				foreach (string s in GetValuesAsStrings ("COMM"))
 					if (!string.IsNullOrEmpty (s))
 						return s;
-				
+
 				return null;
 			}
-			set {SetValue ("COMM", value);}
+			set { SetValue ("COMM", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the genres of the media represented by the
 		///    current instance.
@@ -194,11 +195,11 @@ namespace TagLib.Riff {
 		/// <remarks>
 		///    This property is implemented using the "GENR" item.
 		/// </remarks>
-		public override string [] Genres {
-			get {return GetValuesAsStrings ("GENR");}
-			set {SetValue ("GENR", value);}
+		public override string[] Genres {
+			get { return GetValuesAsStrings ("GENR"); }
+			set { SetValue ("GENR", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the position of the media represented by
 		///    the current instance in its containing album.
@@ -212,10 +213,10 @@ namespace TagLib.Riff {
 		///    This property is implemented using the "PRT1" item.
 		/// </remarks>
 		public override uint Track {
-			get {return GetValueAsUInt ("PRT1");}
-			set {SetValue ("PRT1", value);}
+			get { return GetValueAsUInt ("PRT1"); }
+			set { SetValue ("PRT1", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the number of tracks in the album
 		///    containing the media represented by the current instance.
@@ -229,9 +230,9 @@ namespace TagLib.Riff {
 		///    This property is implemented using the "PRT2" item.
 		/// </remarks>
 		public override uint TrackCount {
-			get {return GetValueAsUInt ("PRT2");}
-			set {SetValue ("PRT2", value);}
+			get { return GetValueAsUInt ("PRT2"); }
+			set { SetValue ("PRT2", value); }
 		}
-#endregion
+		#endregion
 	}
 }

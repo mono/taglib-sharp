@@ -33,51 +33,52 @@ namespace TagLib.Ogg.Codecs
 	/// </summary>
 	public class Opus : Codec, IAudioCodec
 	{
-#region Private Static Fields
+		#region Private Static Fields
 
 		/// <summary>
 		///    Contains the file identifier.
 		/// </summary>
-		private static ByteVector magic_signature_base = "Opus";
-		private static ByteVector magic_signature_header = "OpusHead";
-		private static ByteVector magic_signature_comment = "OpusTags";
-		private static int magic_signature_length = 8;
+		static readonly ByteVector magic_signature_base = "Opus";
 
-#endregion
+		static readonly ByteVector magic_signature_header = "OpusHead";
+		static readonly ByteVector magic_signature_comment = "OpusTags";
+		static readonly int magic_signature_length = 8;
+
+		#endregion
 
 
 
-#region Private Fields
+		#region Private Fields
 
 		/// <summary>
 		///    Contains the header packet.
 		/// </summary>
-		private HeaderPacket header;
+		HeaderPacket header;
 
 		/// <summary>
 		///    Contains the comment data.
 		/// </summary>
-		private ByteVector comment_data;
+		ByteVector comment_data;
 
-#endregion
+		#endregion
 
 
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Opus" />.
 		/// </summary>
-		private Opus ()
+		Opus ()
 		{
 		}
 
-#endregion
+		#endregion
 
 
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Reads a Ogg packet that has been encountered in the
@@ -110,23 +111,20 @@ namespace TagLib.Ogg.Codecs
 		public override bool ReadPacket (ByteVector packet, int index)
 		{
 			if (packet == null)
-				throw new ArgumentNullException (nameof(packet));
+				throw new ArgumentNullException (nameof (packet));
 
 			if (index < 0)
-				throw new ArgumentOutOfRangeException (nameof(index),
-					"index must be at least zero.");
+				throw new ArgumentOutOfRangeException (nameof (index), "index must be at least zero.");
 
 			ByteVector signature = MagicSignature (packet);
 			if (signature != magic_signature_header && index == 0)
-				throw new CorruptFileException (
-					"Stream does not begin with opus header.");
+				throw new CorruptFileException ("Stream does not begin with opus header.");
 
 			if (comment_data == null) {
 				if (signature == magic_signature_header)
 					header = new HeaderPacket (packet);
 				else if (signature == magic_signature_comment)
-					comment_data =
-						packet.Mid (magic_signature_length);
+					comment_data = packet.Mid (magic_signature_length);
 				else
 					return true;
 			}
@@ -150,14 +148,9 @@ namespace TagLib.Ogg.Codecs
 		///    A <see cref="TimeSpan" /> value containing the duration
 		///    of the stream.
 		/// </returns>
-		public override TimeSpan GetDuration (long firstGranularPosition,
-		                                      long lastGranularPosition)
+		public override TimeSpan GetDuration (long firstGranularPosition, long lastGranularPosition)
 		{
-			return TimeSpan.FromSeconds ((double)
-					(lastGranularPosition -
-						firstGranularPosition
-						- 2 * header.pre_skip) /
-					(double) 48000);
+			return TimeSpan.FromSeconds ((lastGranularPosition - firstGranularPosition - 2 * header.pre_skip) / (double)48000);
 		}
 
 		/// <summary>
@@ -177,30 +170,28 @@ namespace TagLib.Ogg.Codecs
 		///    <paramref name="packets" /> or <paramref name="comment"
 		///    /> is <see langword="null" />.
 		/// </exception>
-		public override void SetCommentPacket (ByteVectorCollection packets,
-		                                       XiphComment comment)
+		public override void SetCommentPacket (ByteVectorCollection packets, XiphComment comment)
 		{
 			if (packets == null)
-				throw new ArgumentNullException (nameof(packets));
+				throw new ArgumentNullException (nameof (packets));
 
 			if (comment == null)
-				throw new ArgumentNullException (nameof(comment));
+				throw new ArgumentNullException (nameof (comment));
 
 			ByteVector data = new ByteVector ();
 			data.Add (magic_signature_comment);
 			data.Add (comment.Render (true));
-			if (packets.Count > 1 && MagicSignature (packets [1])
-						  == magic_signature_comment)
-				packets [1] = data;
+			if (packets.Count > 1 && MagicSignature (packets[1]) == magic_signature_comment)
+				packets[1] = data;
 			else
 				packets.Insert (1, data);
 		}
 
-#endregion
+		#endregion
 
 
 
-#region Public Properties
+		#region Public Properties
 
 		/// <summary>
 		///    Gets the bitrate of the audio represented by the current
@@ -215,7 +206,7 @@ namespace TagLib.Ogg.Codecs
 		///    information is stored in the Ogg header (unlike e.g. Vorbis).
 		/// </remarks>
 		public int AudioBitrate {
-			get {return 0;}
+			get { return 0; }
 		}
 
 		/// <summary>
@@ -227,7 +218,7 @@ namespace TagLib.Ogg.Codecs
 		///    sample rate of the audio represented by the current instance.
 		/// </value>
 		public int AudioSampleRate {
-			get {return (int) header.input_sample_rate;}
+			get { return (int)header.input_sample_rate; }
 		}
 
 		/// <summary>
@@ -240,7 +231,7 @@ namespace TagLib.Ogg.Codecs
 		///    instance.
 		/// </value>
 		public int AudioChannels {
-			get {return (int) header.channel_count;}
+			get { return (int)header.channel_count; }
 		}
 
 		/// <summary>
@@ -251,7 +242,7 @@ namespace TagLib.Ogg.Codecs
 		///    Always <see cref="MediaTypes.Audio" />.
 		/// </value>
 		public override MediaTypes MediaTypes {
-			get {return MediaTypes.Audio;}
+			get { return MediaTypes.Audio; }
 		}
 
 		/// <summary>
@@ -262,7 +253,7 @@ namespace TagLib.Ogg.Codecs
 		///    comment or <see langword="null"/> if none was found.
 		/// </value>
 		public override ByteVector CommentData {
-			get {return comment_data;}
+			get { return comment_data; }
 		}
 
 		/// <summary>
@@ -275,17 +266,15 @@ namespace TagLib.Ogg.Codecs
 		/// </value>
 		public override string Description {
 			get {
-				return string.Format (
-					"Opus Version {0} Audio",
-					header.opus_version);
+				return $"Opus Version {header.opus_version} Audio";
 			}
 		}
 
-#endregion
+		#endregion
 
 
 
-#region Public Static Methods
+		#region Public Static Methods
 
 		/// <summary>
 		///    Implements the <see cref="T:CodecProvider" /> delegate to
@@ -303,15 +292,14 @@ namespace TagLib.Ogg.Codecs
 		/// </returns>
 		public static Codec FromPacket (ByteVector packet)
 		{
-			return (MagicSignature (packet) == magic_signature_header) ?
-				new Opus () : null;
+			return (MagicSignature (packet) == magic_signature_header) ? new Opus () : null;
 		}
 
-#endregion
+		#endregion
 
 
 
-#region Private Static Methods
+		#region Private Static Methods
 
 		/// <summary>
 		///    Gets the magic signature for a specified Opus packet.
@@ -324,7 +312,7 @@ namespace TagLib.Ogg.Codecs
 		///    A <see cref="ByteVector" /> value containing the magic
 		///    signature or null if the packet is invalid.
 		/// </returns>
-		private static ByteVector MagicSignature (ByteVector packet)
+		static ByteVector MagicSignature (ByteVector packet)
 		{
 			if (packet.Count < magic_signature_length)
 				return null;
@@ -333,15 +321,15 @@ namespace TagLib.Ogg.Codecs
 				if (packet[i] != magic_signature_base[i])
 					return null;
 
-			return packet.Mid(0, magic_signature_length);
+			return packet.Mid (0, magic_signature_length);
 		}
 
-#endregion
+		#endregion
 
 		/// <summary>
 		///    This structure represents a Opus header packet.
 		/// </summary>
-		private struct HeaderPacket
+		struct HeaderPacket
 		{
 			public uint opus_version;
 			public uint channel_count;
@@ -355,20 +343,20 @@ namespace TagLib.Ogg.Codecs
 
 			public HeaderPacket (ByteVector data)
 			{
-				opus_version  	  = data [8];
-				channel_count     = data [9];
-				pre_skip	  = data.Mid(10, 2).ToUInt (false);
-				input_sample_rate = data.Mid(12, 4).ToUInt (false);
-				output_gain	  = data.Mid(16, 2).ToUInt (false);
-				channel_map       = data[18];
+				opus_version = data[8];
+				channel_count = data[9];
+				pre_skip = data.Mid (10, 2).ToUInt (false);
+				input_sample_rate = data.Mid (12, 4).ToUInt (false);
+				output_gain = data.Mid (16, 2).ToUInt (false);
+				channel_map = data[18];
 
-				if(channel_map == 0) {
+				if (channel_map == 0) {
 					stream_count = 1;
 					two_channel_stream_count = channel_count - 1;
 
 					channel_mappings = new uint[channel_count];
 					channel_mappings[0] = 0;
-					if(channel_count == 2) {
+					if (channel_count == 2) {
 						channel_mappings[1] = 1;
 					}
 				} else {

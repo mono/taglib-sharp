@@ -21,7 +21,6 @@
 // USA
 //
 
-using System.Collections.Generic;
 using System;
 
 namespace TagLib.Flac
@@ -36,59 +35,45 @@ namespace TagLib.Flac
 		///    The block contains stream information.
 		/// </summary>
 		StreamInfo = 0,
-		
+
 		/// <summary>
 		///    The block contains padding.
 		/// </summary>
 		Padding,
-		
+
 		/// <summary>
 		///    The block contains application data.
 		/// </summary>
 		Application,
-		
+
 		/// <summary>
 		///    The block contains seek table.
 		/// </summary>
 		SeekTable,
-		
+
 		/// <summary>
 		///    The block contains a Xipp comment.
 		/// </summary>
 		XiphComment,
-		
+
 		/// <summary>
 		///    The block contains a cue sheet.
 		/// </summary>
 		CueSheet,
-		
+
 		/// <summary>
 		///    The block contains a picture.
 		/// </summary>
 		Picture
 	}
-	
+
 	/// <summary>
 	///    This structure provides a representation of a Flac metadata block
 	///    header structure.
 	/// </summary>
 	public struct BlockHeader
 	{
-		/// <summary>
-		///    Contains the block type.
-		/// </summary>
-		private BlockType block_type;
-		
-		/// <summary>
-		///    Indicates whether or not this is the last metadata block.
-		/// </summary>
-		private bool is_last_block;
-		
-		/// <summary>
-		///    Contains the block size.
-		/// </summary>
-		private uint block_size;
-		
+
 		/// <summary>
 		///    The size of a block header.
 		/// </summary>
@@ -112,17 +97,16 @@ namespace TagLib.Flac
 		public BlockHeader (ByteVector data)
 		{
 			if (data == null)
-				throw new ArgumentNullException (nameof(data));
+				throw new ArgumentNullException (nameof (data));
 
 			if (data.Count < Size)
-				throw new CorruptFileException (
-					"Not enough data in Flac header.");
-			
-			block_type = (BlockType) (data[0] & 0x7f);
-			is_last_block = (data[0] & 0x80) != 0;
-			block_size = data.Mid (1,3).ToUInt ();
+				throw new CorruptFileException ("Not enough data in Flac header.");
+
+			BlockType = (BlockType)(data[0] & 0x7f);
+			IsLastBlock = (data[0] & 0x80) != 0;
+			BlockSize = data.Mid (1, 3).ToUInt ();
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="BlockHeader" /> for a specified block type and size.
@@ -137,11 +121,11 @@ namespace TagLib.Flac
 		/// </param>
 		public BlockHeader (BlockType type, uint blockSize)
 		{
-			block_type    = type;
-			is_last_block = false;
-			block_size    = blockSize;
+			BlockType = type;
+			IsLastBlock = false;
+			BlockSize = blockSize;
 		}
-		
+
 		/// <summary>
 		///    Renderes the current instance as a raw Flac block header.
 		/// </summary>
@@ -155,11 +139,11 @@ namespace TagLib.Flac
 		/// </returns>
 		public ByteVector Render (bool isLastBlock)
 		{
-			ByteVector data = ByteVector.FromUInt (block_size);
-			data [0] = (byte)(block_type + (isLastBlock ? 0x80 : 0));
+			ByteVector data = ByteVector.FromUInt (BlockSize);
+			data[0] = (byte)(BlockType + (isLastBlock ? 0x80 : 0));
 			return data;
 		}
-		
+
 		/// <summary>
 		///    Gets the type of block described by the current instance.
 		/// </summary>
@@ -167,10 +151,8 @@ namespace TagLib.Flac
 		///    A <see cref="BlockType" /> value describing the block
 		///    type.
 		/// </value>
-		public BlockType BlockType {
-			get {return block_type;}
-		}
-		
+		public BlockType BlockType { get; private set; }
+
 		/// <summary>
 		///    Gets whether or not the block is the last in the file.
 		/// </summary>
@@ -178,10 +160,8 @@ namespace TagLib.Flac
 		///    <see langword="true" /> if the block is the last in the
 		///    file; otherwise <see langword="false" />.
 		/// </value>
-		public bool IsLastBlock {
-			get {return is_last_block;}
-		}
-		
+		public bool IsLastBlock { get; private set; }
+
 		/// <summary>
 		///    Gets the size of the block described by the current
 		///    instance, minus the block header.
@@ -190,8 +170,6 @@ namespace TagLib.Flac
 		///    A <see cref="uint" /> value containing the size of the
 		///    block, minus the header.
 		/// </value>
-		public uint BlockSize {
-			get {return block_size;}
-		}
+		public uint BlockSize { get; private set; }
 	}
 }

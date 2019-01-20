@@ -7,13 +7,13 @@ namespace TaglibSharp.Tests.TaggingFormats
 	[TestFixture]
 	public class ApeTest
 	{
-		static string val_sing =
+		static readonly string val_sing =
 			"01234567890123456789012345678901234567890123456789";
 
 		static readonly string[] val_mult = {"A123456789",
 			"B123456789", "C123456789", "D123456789", "E123456789"};
 
-		static readonly string[] val_gnre = {"Rap", "Jazz", "Non-Genre", "Blues"};
+		static readonly string[] val_gnre = { "Rap", "Jazz", "Non-Genre", "Blues" };
 
 		[Test]
 		public void TestTitle ()
@@ -789,12 +789,12 @@ namespace TaglibSharp.Tests.TaggingFormats
 		{
 			Tag tag = new Tag {
 				Title = "A",
-				Performers = new[] {"B"},
-				AlbumArtists = new[] {"C"},
-				Composers = new[] {"D"},
+				Performers = new[] { "B" },
+				AlbumArtists = new[] { "C" },
+				Composers = new[] { "D" },
 				Album = "E",
 				Comment = "F",
-				Genres = new[] {"Blues"},
+				Genres = new[] { "Blues" },
 				Year = 123,
 				Track = 234,
 				TrackCount = 234,
@@ -805,7 +805,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 				BeatsPerMinute = 234,
 				Conductor = "I",
 				Copyright = "J",
-				Pictures = new[] { new Picture (TestPath.Covers + "sample_a.png")}
+				Pictures = new[] { new Picture (TestPath.Covers + "sample_a.png") }
 			};
 
 

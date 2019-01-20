@@ -26,8 +26,6 @@ using System.Collections.Generic;
 using System.Xml;
 
 using TagLib.Image;
-using TagLib.IFD.Entries;
-
 
 namespace TagLib.Xmp
 {
@@ -36,12 +34,14 @@ namespace TagLib.Xmp
 	/// </summary>
 	public class XmpTag : ImageTag
 	{
-		static XmpTag () {
+		static XmpTag ()
+		{
 			Initialize ();
 		}
 
-#region Parsing speedup
-		private Dictionary<string, Dictionary<string, XmpNode>> nodes;
+		#region Parsing speedup
+
+		Dictionary<string, Dictionary<string, XmpNode>> nodes;
 
 		/// <summary>
 		///    Adobe namespace
@@ -158,7 +158,7 @@ namespace TagLib.Xmp
 
 		// This allows for fast string comparison using operator==
 		static readonly NameTable NameTable = new NameTable ();
-		static bool initialized = false;
+		static bool initialized;
 
 		static void Initialize ()
 		{
@@ -220,9 +220,9 @@ namespace TagLib.Xmp
 		/// <summary>
 		///    Mapping between full namespaces and their short prefix. Needs to be public for the unit test generator.
 		/// </summary>
-		public static Dictionary<string, string> NamespacePrefixes = new Dictionary<string, string>();
+		public static Dictionary<string, string> NamespacePrefixes = new Dictionary<string, string> ();
 
-		static int anon_ns_count = 0;
+		static int anon_ns_count;
 
 		static void AddNamespacePrefix (string prefix, string ns)
 		{
@@ -230,16 +230,16 @@ namespace TagLib.Xmp
 			NamespacePrefixes.Add (ns, prefix);
 		}
 
-#endregion
+		#endregion
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Construct a new empty <see cref="XmpTag"/>.
 		/// </summary>
 		public XmpTag ()
 		{
-			NodeTree = new XmpNode (String.Empty, String.Empty);
+			NodeTree = new XmpNode (string.Empty, string.Empty);
 			nodes = new Dictionary<string, Dictionary<string, XmpNode>> ();
 		}
 
@@ -253,24 +253,24 @@ namespace TagLib.Xmp
 		/// <param name="file">
 		///    The file that's currently being parsed, used for reporting corruptions.
 		/// </param>
-		public XmpTag (string data, TagLib.File file)
+		public XmpTag (string data, File file)
 		{
 			// For some cameras, we have XMP data ending with the null value.
 			// This is fine with Mono, but with Microsoft .NET it will throw
 			// an XmlException. See also XmpNullValuesTest.cs.
-			if (data[data.Length-1] == '\0')
-				data = data.Substring(0, data.Length-1);
-			
+			if (data[data.Length - 1] == '\0')
+				data = data.Substring (0, data.Length - 1);
+
 			XmlDocument doc = new XmlDocument (NameTable);
 			doc.LoadXml (data);
 
-			XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
-			nsmgr.AddNamespace("x", ADOBE_X_NS);
-			nsmgr.AddNamespace("rdf", RDF_NS);
+			XmlNamespaceManager nsmgr = new XmlNamespaceManager (doc.NameTable);
+			nsmgr.AddNamespace ("x", ADOBE_X_NS);
+			nsmgr.AddNamespace ("rdf", RDF_NS);
 
-			XmlNode node = doc.SelectSingleNode("/x:xmpmeta/rdf:RDF", nsmgr);
+			XmlNode node = doc.SelectSingleNode ("/x:xmpmeta/rdf:RDF", nsmgr);
 			// Old versions of XMP were called XAP, fall back to this case (tested in sample_xap.jpg)
-			node = node ?? doc.SelectSingleNode("/x:xapmeta/rdf:RDF", nsmgr);
+			node = node ?? doc.SelectSingleNode ("/x:xapmeta/rdf:RDF", nsmgr);
 			if (node == null)
 				throw new CorruptFileException ();
 
@@ -278,25 +278,24 @@ namespace TagLib.Xmp
 			AcceptVisitors ();
 		}
 
-#endregion
+		#endregion
 
-#region Private Methods
+		#region Private Methods
 
 		// 7.2.9 RDF
 		//		start-element ( URI == rdf:RDF, attributes == set() )
 		//		nodeElementList
 		//		end-element()
-		private XmpNode ParseRDF (XmlNode rdf_node, TagLib.File file)
+		XmpNode ParseRDF (XmlNode rdf_node, File file)
 		{
-			XmpNode top = new XmpNode (String.Empty, String.Empty);
+			XmpNode top = new XmpNode (string.Empty, string.Empty);
 			foreach (XmlNode node in rdf_node.ChildNodes) {
 				if (node is XmlWhitespace)
 					continue;
 
 				if (node.Is (RDF_NS, DESCRIPTION_URI)) {
-					var attr = node.Attributes.GetNamedItem (RDF_NS, ABOUT_URI) as XmlAttribute;
-					if (attr != null) {
-						if (top.Name != String.Empty && top.Name != attr.InnerText)
+					if (node.Attributes.GetNamedItem (RDF_NS, ABOUT_URI) is XmlAttribute attr) {
+						if (top.Name != string.Empty && top.Name != attr.InnerText)
 							throw new CorruptFileException ("Multiple inconsistent rdf:about values!");
 						top.Name = attr.InnerText;
 					}
@@ -312,7 +311,7 @@ namespace TagLib.Xmp
 
 		// 7.2.10 nodeElementList
 		//		ws* ( nodeElement ws* )*
-		private void ParseNodeElementList (XmpNode parent, XmlNode xml_parent)
+		void ParseNodeElementList (XmpNode parent, XmlNode xml_parent)
 		{
 			foreach (XmlNode node in xml_parent.ChildNodes) {
 				if (node is XmlWhitespace)
@@ -329,7 +328,7 @@ namespace TagLib.Xmp
 		//
 		// 7.2.13 propertyEltList
 		//		ws* ( propertyElt ws* )*
-		private void ParseNodeElement (XmpNode parent, XmlNode node)
+		void ParseNodeElement (XmpNode parent, XmlNode node)
 		{
 			if (!node.IsNodeElement ())
 				throw new CorruptFileException ("Unexpected node found, invalid RDF?");
@@ -367,7 +366,7 @@ namespace TagLib.Xmp
 		//		resourcePropertyElt | literalPropertyElt | parseTypeLiteralPropertyElt |
 		//		parseTypeResourcePropertyElt | parseTypeCollectionPropertyElt |
 		//		parseTypeOtherPropertyElt | emptyPropertyElt
-		private void ParsePropertyElement (XmpNode parent, XmlNode node)
+		void ParsePropertyElement (XmpNode parent, XmlNode node)
 		{
 			int count = 0;
 			bool has_other = false;
@@ -411,7 +410,7 @@ namespace TagLib.Xmp
 							ParseTypeResourcePropertyElement (parent, node);
 						} else {
 							// Neither Literal, Collection or anything else is allowed
-							throw new CorruptFileException (String.Format ("This is not allowed in XMP! Bad XMP: {0}", node.OuterXml));
+							throw new CorruptFileException ($"This is not allowed in XMP! Bad XMP: {node.OuterXml}");
 						}
 					}
 				}
@@ -422,7 +421,7 @@ namespace TagLib.Xmp
 		//		start-element ( URI == propertyElementURIs, attributes == set ( idAttr? ) )
 		//		ws* nodeElement ws*
 		//		end-element()
-		private void ParseResourcePropertyElement (XmpNode parent, XmlNode node)
+		void ParseResourcePropertyElement (XmpNode parent, XmlNode node)
 		{
 			if (!node.IsPropertyElement ())
 				throw new CorruptFileException ("Invalid property");
@@ -435,7 +434,7 @@ namespace TagLib.Xmp
 					continue;
 				}
 
-				throw new CorruptFileException (String.Format ("Invalid attribute: {0}", attr.OuterXml));
+				throw new CorruptFileException ($"Invalid attribute: {attr.OuterXml}");
 			}
 
 			bool has_xml_children = false;
@@ -459,7 +458,7 @@ namespace TagLib.Xmp
 		//		start-element ( URI == propertyElementURIs, attributes == set ( idAttr?, datatypeAttr?) )
 		//		text()
 		//		end-element()
-		private void ParseLiteralPropertyElement (XmpNode parent, XmlNode node)
+		void ParseLiteralPropertyElement (XmpNode parent, XmlNode node)
 		{
 			if (!node.IsPropertyElement ())
 				throw new CorruptFileException ("Invalid property");
@@ -470,13 +469,14 @@ namespace TagLib.Xmp
 		//		start-element ( URI == propertyElementURIs, attributes == set ( idAttr?, parseResource ) )
 		//		propertyEltList
 		//		end-element()
-		private void ParseTypeResourcePropertyElement (XmpNode parent, XmlNode node)
+		void ParseTypeResourcePropertyElement (XmpNode parent, XmlNode node)
 		{
 			if (!node.IsPropertyElement ())
 				throw new CorruptFileException ("Invalid property");
 
-			XmpNode new_node = new XmpNode (node.NamespaceURI, node.LocalName);
-			new_node.Type = XmpNodeType.Struct;
+			XmpNode new_node = new XmpNode (node.NamespaceURI, node.LocalName) {
+				Type = XmpNodeType.Struct
+			};
 
 			foreach (XmlNode attr in node.Attributes) {
 				if (attr.Is (XML_NS, LANG_URI))
@@ -496,18 +496,18 @@ namespace TagLib.Xmp
 		//		start-element ( URI == propertyElementURIs,
 		//						attributes == set ( idAttr?, ( resourceAttr | nodeIdAttr )?, propertyAttr* ) )
 		//		end-element()
-		private void ParseEmptyPropertyElement (XmpNode parent, XmlNode node)
+		void ParseEmptyPropertyElement (XmpNode parent, XmlNode node)
 		{
 			if (!node.IsPropertyElement ())
 				throw new CorruptFileException ("Invalid property");
 			if (node.HasChildNodes)
-				throw new CorruptFileException (String.Format ("Can't have content in this node! Node: {0}", node.OuterXml));
+				throw new CorruptFileException ($"Can't have content in this node! Node: {node.OuterXml}");
 
 			var rdf_value = node.Attributes.GetNamedItem (VALUE_URI, RDF_NS) as XmlAttribute;
 			var rdf_resource = node.Attributes.GetNamedItem (RESOURCE_URI, RDF_NS) as XmlAttribute;
 
 			// Options 1 and 2
-			var simple_prop_val = rdf_value ?? rdf_resource ?? null;
+			var simple_prop_val = rdf_value ?? rdf_resource;
 			if (simple_prop_val != null) {
 				string value = simple_prop_val.InnerText;
 				parent.AddChild (CreateTextPropertyWithQualifiers (node, value));
@@ -517,7 +517,7 @@ namespace TagLib.Xmp
 			// Options 3 & 4
 			var new_node = new XmpNode (node.NamespaceURI, node.LocalName);
 			foreach (XmlAttribute a in node.Attributes) {
-				if (a.Is(RDF_NS, ID_URI) || a.Is(RDF_NS, NODE_ID_URI)) {
+				if (a.Is (RDF_NS, ID_URI) || a.Is (RDF_NS, NODE_ID_URI)) {
 					continue;
 				} else if (a.In (XMLNS_NS)) {
 					continue;
@@ -530,7 +530,7 @@ namespace TagLib.Xmp
 			parent.AddChild (new_node);
 		}
 
-		private XmpNode CreateTextPropertyWithQualifiers (XmlNode node, string value)
+		XmpNode CreateTextPropertyWithQualifiers (XmlNode node, string value)
 		{
 			XmpNode t = new XmpNode (node.NamespaceURI, node.LocalName, value);
 			foreach (XmlAttribute attr in node.Attributes) {
@@ -543,16 +543,16 @@ namespace TagLib.Xmp
 			return t;
 		}
 
-		private XmpNode NewNode (string ns, string name)
+		XmpNode NewNode (string ns, string name)
 		{
-			Dictionary <string, XmpNode> ns_nodes = null;
+			Dictionary<string, XmpNode> ns_nodes;
 
 			if (!nodes.ContainsKey (ns)) {
-				ns_nodes = new Dictionary <string, XmpNode> ();
+				ns_nodes = new Dictionary<string, XmpNode> ();
 				nodes.Add (ns, ns_nodes);
 
 			} else
-				ns_nodes = nodes [ns];
+				ns_nodes = nodes[ns];
 
 			if (ns_nodes.ContainsKey (name)) {
 				foreach (XmpNode child_node in NodeTree.Children) {
@@ -573,7 +573,7 @@ namespace TagLib.Xmp
 			return node;
 		}
 
-		private XmpNode NewNode (string ns, string name, XmpNodeType type)
+		XmpNode NewNode (string ns, string name, XmpNodeType type)
 		{
 			XmpNode node = NewNode (ns, name);
 			node.Type = type;
@@ -581,7 +581,7 @@ namespace TagLib.Xmp
 			return node;
 		}
 
-		private void RemoveNode (string ns, string name)
+		void RemoveNode (string ns, string name)
 		{
 			if (!nodes.ContainsKey (ns))
 				return;
@@ -599,16 +599,16 @@ namespace TagLib.Xmp
 		/// <summary>
 		/// Accept visitors to touch up the node tree.
 		/// </summary>
-		private void AcceptVisitors ()
+		void AcceptVisitors ()
 		{
 			NodeTree.Accept (new NodeIndexVisitor (this));
 			//NodeTree.Dump ();
 			//Console.WriteLine (node.OuterXml);
 		}
 
-#endregion
+		#endregion
 
-#region Public Properties
+		#region Public Properties
 
 		/// <summary>
 		///    Gets the tag types contained in the current instance.
@@ -617,7 +617,7 @@ namespace TagLib.Xmp
 		///    Always <see cref="TagTypes.XMP" />.
 		/// </value>
 		public override TagTypes TagTypes {
-			get {return TagTypes.XMP;}
+			get { return TagTypes.XMP; }
 		}
 
 		/// <summary>
@@ -628,9 +628,9 @@ namespace TagLib.Xmp
 			get; private set;
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///	   Replace the current tag with the given one.
@@ -671,9 +671,9 @@ namespace TagLib.Xmp
 		{
 			if (!nodes.ContainsKey (ns))
 				return null;
-			if (!nodes [ns].ContainsKey (name))
+			if (!nodes[ns].ContainsKey (name))
 				return null;
-			return nodes [ns][name];
+			return nodes[ns][name];
 
 		}
 
@@ -855,7 +855,7 @@ namespace TagLib.Xmp
 		/// <param name="type">
 		///    A <see cref="XmpNodeType"/> with the type of the parent node.
 		/// </param>
-		public void SetCollectionNode (string ns, string name, string [] values, XmpNodeType type)
+		public void SetCollectionNode (string ns, string name, string[] values, XmpNodeType type)
 		{
 			if (type == XmpNodeType.Simple || type == XmpNodeType.Alt)
 				throw new ArgumentException ("type");
@@ -896,22 +896,20 @@ namespace TagLib.Xmp
 				return null;
 
 			// format is expected to be e.g. "1/200" ...
-			string [] values = text.Split ('/');
+			string[] values = text.Split ('/');
 
 			if (values.Length != 2) {
 
 				// but we also try to parse a double value directly.
-				double result;
-				if (Double.TryParse (text, out result))
+				if (double.TryParse (text, out var result))
 					return result;
 
 				return null;
 			}
 
-			double nom, den;
-			if (Double.TryParse (values[0], out nom) && Double.TryParse (values[1], out den)) {
+			if (double.TryParse (values[0], out var nom) && double.TryParse (values[1], out var den)) {
 				if (den != 0.0)
-					return ((double) nom) / ((double) den);
+					return nom / den;
 			}
 
 			return null;
@@ -933,33 +931,36 @@ namespace TagLib.Xmp
 		public void SetRationalNode (string ns, string name, double value)
 		{
 
-			string fraction = DecimalToFraction (value, (long) Math.Pow (10, 10));
+			string fraction = DecimalToFraction (value, (long)Math.Pow (10, 10));
 			SetTextNode (ns, name, fraction);
 		}
 
 		// Based on http://www.ics.uci.edu/~eppstein/numth/frap.c
-		private string DecimalToFraction (double value, long max_denominator) {
-			var m = new long [2, 2];
+		string DecimalToFraction (double value, long max_denominator)
+		{
+			var m = new long[2, 2];
 			m[0, 0] = m[1, 1] = 1;
 			m[1, 0] = m[0, 1] = 0;
 
 			double x = value;
 			long ai;
 
-			while (m[1, 0] *  (ai = (long)x) + m[1, 1] <= max_denominator) {
+			while (m[1, 0] * (ai = (long)x) + m[1, 1] <= max_denominator) {
 				long t = m[0, 0] * ai + m[0, 1];
 				m[0, 1] = m[0, 0];
 				m[0, 0] = t;
 				t = m[1, 0] * ai + m[1, 1];
 				m[1, 1] = m[1, 0];
 				m[1, 0] = t;
-				if (x == (double)ai) break;     // AF: division by zero
-				x = 1 / (x - (double) ai);
-				if (x > (double) 0x7FFFFFFF) break;  // AF: representation failure
+				if (x == ai)
+					break;     // AF: division by zero
+				x = 1 / (x - ai);
+				if (x > 0x7FFFFFFF)
+					break;  // AF: representation failure
 
 			}
 
-			return String.Format ("{0}/{1}", m[0, 0], m[1, 0]);
+			return $"{m[0, 0]}/{m[1, 0]}";
 		}
 
 
@@ -985,9 +986,8 @@ namespace TagLib.Xmp
 			if (text == null)
 				return null;
 
-			uint result;
 
-			if (UInt32.TryParse (text, out result))
+			if (uint.TryParse (text, out var result))
 				return result;
 
 			return null;
@@ -1021,37 +1021,38 @@ namespace TagLib.Xmp
 		static void EnsureNamespacePrefix (string ns)
 		{
 			if (!NamespacePrefixes.ContainsKey (ns)) {
-				NamespacePrefixes.Add (ns, String.Format ("ns{0}", ++anon_ns_count));
-				Console.WriteLine ("TAGLIB# DEBUG: Added {0} prefix for {1} namespace (XMP)", NamespacePrefixes [ns], ns);
+				NamespacePrefixes.Add (ns, $"ns{++anon_ns_count}");
+				Console.WriteLine ("TAGLIB# DEBUG: Added {0} prefix for {1} namespace (XMP)", NamespacePrefixes[ns], ns);
 			}
 		}
 
 		internal static XmlNode CreateNode (XmlDocument doc, string name, string ns)
 		{
 			EnsureNamespacePrefix (ns);
-			return doc.CreateElement (NamespacePrefixes [ns], name, ns);
+			return doc.CreateElement (NamespacePrefixes[ns], name, ns);
 		}
 
 		internal static XmlAttribute CreateAttribute (XmlDocument doc, string name, string ns)
 		{
 			EnsureNamespacePrefix (ns);
-			return doc.CreateAttribute (NamespacePrefixes [ns], name, ns);
+			return doc.CreateAttribute (NamespacePrefixes[ns], name, ns);
 		}
 
-#endregion
+		#endregion
 
-		private class NodeIndexVisitor : XmpNodeVisitor
+		class NodeIndexVisitor : XmpNodeVisitor
 		{
-			private XmpTag tag;
+			readonly XmpTag tag;
 
-			public NodeIndexVisitor (XmpTag tag) {
+			public NodeIndexVisitor (XmpTag tag)
+			{
 				this.tag = tag;
 			}
 
 			public void Visit (XmpNode node)
 			{
 				// TODO: This should be a proper check to see if it is a nodeElement
-				if (node.Namespace == XmpTag.RDF_NS && node.Name == XmpTag.LI_URI)
+				if (node.Namespace == RDF_NS && node.Name == LI_URI)
 					return;
 
 				AddNode (node);
@@ -1062,13 +1063,13 @@ namespace TagLib.Xmp
 				if (tag.nodes == null)
 					tag.nodes = new Dictionary<string, Dictionary<string, XmpNode>> ();
 				if (!tag.nodes.ContainsKey (node.Namespace))
-					tag.nodes [node.Namespace] = new Dictionary<string, XmpNode> ();
+					tag.nodes[node.Namespace] = new Dictionary<string, XmpNode> ();
 
-				tag.nodes [node.Namespace][node.Name] = node;
+				tag.nodes[node.Namespace][node.Name] = node;
 			}
 		}
 
-#region Metadata fields
+		#region Metadata fields
 
 		/// <summary>
 		///    Gets or sets the comment for the image described
@@ -1103,7 +1104,7 @@ namespace TagLib.Xmp
 		///    current instace.
 		/// </value>
 		public override string[] Keywords {
-			get { return GetCollectionNode (DC_NS, "subject") ?? new string [] {}; }
+			get { return GetCollectionNode (DC_NS, "subject") ?? new string[] { }; }
 			set { SetCollectionNode (DC_NS, "subject", value, XmpNodeType.Bag); }
 		}
 
@@ -1117,7 +1118,8 @@ namespace TagLib.Xmp
 		/// </value>
 		public override uint? Rating {
 			get { return GetUIntNode (XAP_NS, "Rating"); }
-			set { SetTextNode (XAP_NS, "Rating", value != null ? value.ToString () : null);
+			set {
+				SetTextNode (XAP_NS, "Rating", value?.ToString ());
 			}
 		}
 
@@ -1133,13 +1135,13 @@ namespace TagLib.Xmp
 				// TODO: use correct parsing
 				try {
 					return System.DateTime.Parse (GetTextNode (XAP_NS, "CreateDate"));
-				} catch {}
+				} catch { }
 
 				return null;
 			}
 			set {
 				// TODO: write correct format
-				SetTextNode (XAP_NS, "CreateDate", value != null ? value.ToString () : null);
+				SetTextNode (XAP_NS, "CreateDate", value?.ToString ());
 			}
 		}
 
@@ -1156,17 +1158,17 @@ namespace TagLib.Xmp
 				var orientation = GetUIntNode (TIFF_NS, "Orientation");
 
 				if (orientation.HasValue)
-					return (ImageOrientation) orientation;
+					return (ImageOrientation)orientation;
 
 				return ImageOrientation.None;
 			}
 			set {
-				if ((uint) value < 1U || (uint) value > 8U) {
+				if ((uint)value < 1U || (uint)value > 8U) {
 					RemoveNode (TIFF_NS, "Orientation");
 					return;
 				}
 
-				SetTextNode (TIFF_NS, "Orientation", String.Format ("{0}", (ushort) value));
+				SetTextNode (TIFF_NS, "Orientation", $"{(ushort) value}");
 			}
 		}
 
@@ -1193,7 +1195,7 @@ namespace TagLib.Xmp
 		/// </value>
 		public override double? Latitude {
 			get { return null; }
-			set {}
+			set { }
 		}
 
 		/// <summary>
@@ -1206,7 +1208,7 @@ namespace TagLib.Xmp
 		/// </value>
 		public override double? Longitude {
 			get { return null; }
-			set {}
+			set { }
 		}
 
 		/// <summary>
@@ -1219,7 +1221,7 @@ namespace TagLib.Xmp
 		/// </value>
 		public override double? Altitude {
 			get { return null; }
-			set {}
+			set { }
 		}
 
 		/// <summary>
@@ -1231,7 +1233,7 @@ namespace TagLib.Xmp
 		/// </value>
 		public override double? ExposureTime {
 			get { return GetRationalNode (EXIF_NS, "ExposureTime"); }
-			set { SetRationalNode (EXIF_NS, "ExposureTime", value.HasValue ? (double) value : 0); }
+			set { SetRationalNode (EXIF_NS, "ExposureTime", value ?? 0); }
 		}
 
 		/// <summary>
@@ -1252,7 +1254,7 @@ namespace TagLib.Xmp
 			}
 			set {
 				SetTextNode (TIFF_NS, "FNumber", null); // Remove wrong value
-				SetRationalNode (EXIF_NS, "FNumber", value.HasValue ? (double) value : 0);
+				SetRationalNode (EXIF_NS, "FNumber", value ?? 0);
 			}
 		}
 
@@ -1271,8 +1273,7 @@ namespace TagLib.Xmp
 				string[] values = GetCollectionNode (EXIF_NS, "ISOSpeedRatings");
 
 				if (values != null && values.Length > 0) {
-					uint result;
-					if (UInt32.TryParse (values[0], out result))
+					if (uint.TryParse (values[0], out var result))
 						return result;
 				}
 
@@ -1281,7 +1282,7 @@ namespace TagLib.Xmp
 			}
 			set {
 				SetCollectionNode (EXIF_NS, "ISOSpeedRating", null, XmpNodeType.Seq);
-				SetCollectionNode (EXIF_NS, "ISOSpeedRatings", new string [] { value.ToString () }, XmpNodeType.Seq);
+				SetCollectionNode (EXIF_NS, "ISOSpeedRatings", new [] { value.ToString () }, XmpNodeType.Seq);
 			}
 		}
 
@@ -1294,7 +1295,7 @@ namespace TagLib.Xmp
 		/// </value>
 		public override double? FocalLength {
 			get { return GetRationalNode (EXIF_NS, "FocalLength"); }
-			set { SetRationalNode (EXIF_NS, "FocalLength", value.HasValue ? (double) value : 0); }
+			set { SetRationalNode (EXIF_NS, "FocalLength", value ?? 0); }
 		}
 
 		/// <summary>
@@ -1306,7 +1307,7 @@ namespace TagLib.Xmp
 		/// </value>
 		public override uint? FocalLengthIn35mmFilm {
 			get { return GetUIntNode (EXIF_NS, "FocalLengthIn35mmFilm"); }
-			set { SetTextNode (EXIF_NS, "FocalLengthIn35mmFilm", value.HasValue ? value.Value.ToString () : String.Empty); }
+			set { SetTextNode (EXIF_NS, "FocalLengthIn35mmFilm", value.HasValue ? value.Value.ToString () : string.Empty); }
 		}
 
 		/// <summary>
@@ -1341,9 +1342,9 @@ namespace TagLib.Xmp
 		/// </value>
 		public override string Creator {
 			get {
-				string [] values = GetCollectionNode (DC_NS, "creator");
+				string[] values = GetCollectionNode (DC_NS, "creator");
 				if (values != null && values.Length > 0)
-					return values [0];
+					return values[0];
 
 				return null;
 			}
@@ -1351,7 +1352,7 @@ namespace TagLib.Xmp
 				if (value == null)
 					RemoveNode (DC_NS, "creator");
 
-				SetCollectionNode (DC_NS, "creator", new string [] { value }, XmpNodeType.Seq);
+				SetCollectionNode (DC_NS, "creator", new[] { value }, XmpNodeType.Seq);
 			}
 		}
 
@@ -1383,6 +1384,6 @@ namespace TagLib.Xmp
 			set { SetLangAltNode (DC_NS, "rights", value); }
 		}
 
-#endregion
+		#endregion
 	}
 }

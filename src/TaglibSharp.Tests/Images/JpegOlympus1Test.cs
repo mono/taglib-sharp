@@ -1,5 +1,5 @@
-using System;
 using NUnit.Framework;
+using System;
 using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
@@ -108,13 +108,13 @@ namespace TaglibSharp.Tests.Images
 
 			Assert.IsNotNull (tag, "tag");
 
-			var exif_ifd = tag.Structure.GetEntry(0, IFDEntryTag.ExifIFD) as SubIFDEntry;
+			var exif_ifd = tag.Structure.GetEntry (0, IFDEntryTag.ExifIFD) as SubIFDEntry;
 			Assert.IsNotNull (exif_ifd, "Exif IFD");
 
 			Assert.AreEqual ("OLYMPUS IMAGING CORP.  ", tag.Make);
 			Assert.AreEqual ("u700,S700       ", tag.Model);
 			Assert.AreEqual (64, tag.ISOSpeedRatings, "ISOSpeedRatings");
-			Assert.AreEqual (1.0d/25.0d, tag.ExposureTime);
+			Assert.AreEqual (1.0d / 25.0d, tag.ExposureTime);
 			Assert.AreEqual (3.4d, tag.FNumber);
 			Assert.AreEqual (6.5d, tag.FocalLength);
 			Assert.AreEqual (new DateTime (2006, 10, 23, 06, 57, 40), tag.DateTime);
@@ -129,7 +129,7 @@ namespace TaglibSharp.Tests.Images
 			Assert.IsNotNull (tag, "tag");
 
 			var makernote_ifd =
-				tag.ExifIFD.GetEntry (0, (ushort) ExifEntryTag.MakerNote) as MakernoteIFDEntry;
+				tag.ExifIFD.GetEntry (0, (ushort)ExifEntryTag.MakerNote) as MakernoteIFDEntry;
 
 			Assert.IsNotNull (makernote_ifd, "makernote ifd");
 			Assert.AreEqual (MakernoteType.Olympus1, makernote_ifd.MakernoteType);
@@ -150,7 +150,7 @@ namespace TaglibSharp.Tests.Images
 			{
 				var entry = structure.GetEntry (0, 0x0204) as RationalIFDEntry;
 				Assert.IsNotNull (entry, "entry 0x0204");
-				Assert.AreEqual (100.0d/100.0d, (double) entry.Value);
+				Assert.AreEqual (100.0d / 100.0d, (double)entry.Value);
 			}
 			{
 				var entry = structure.GetEntry (0, 0x0207) as StringIFDEntry;
@@ -161,7 +161,7 @@ namespace TaglibSharp.Tests.Images
 
 		public void CheckXMP (File file)
 		{
-			string [] keywords = {
+			string[] keywords = {
 				"Olympus µ 700",
 				"Rom 2006-10",
 				"Architecture",

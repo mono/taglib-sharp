@@ -21,8 +21,6 @@
 // USA
 //
 
-using System;
-
 using TagLib.Image;
 
 namespace TagLib.Jpeg
@@ -32,7 +30,7 @@ namespace TagLib.Jpeg
 	/// </summary>
 	public class JpegCommentTag : ImageTag
 	{
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Constructor.
@@ -48,13 +46,14 @@ namespace TagLib.Jpeg
 		/// <summary>
 		///    Constructor. Creates a new empty comment.
 		/// </summary>
-		public JpegCommentTag () {
+		public JpegCommentTag ()
+		{
 			Value = null;
 		}
 
-#endregion
+		#endregion
 
-#region Public Properties
+		#region Public Properties
 
 		/// <summary>
 		///    The value of the comment represented by the current instance.
@@ -74,9 +73,9 @@ namespace TagLib.Jpeg
 			set { Value = value; }
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Gets the tag types contained in the current instance.
@@ -96,6 +95,6 @@ namespace TagLib.Jpeg
 			Value = null;
 		}
 
-#endregion
+		#endregion
 	}
 }

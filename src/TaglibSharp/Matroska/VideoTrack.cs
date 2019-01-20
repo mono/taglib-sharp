@@ -1,4 +1,4 @@
-﻿//
+//
 // VideoTrack.cs:
 //
 // Author:
@@ -22,7 +22,6 @@
 //
 
 using System.Collections.Generic;
-using System;
 
 namespace TagLib.Matroska
 {
@@ -53,17 +52,17 @@ namespace TagLib.Matroska
 		#region Private fields
 
 #pragma warning disable 414 // Assigned, never used
-		private ulong width;
-		private ulong height;
-		private ulong disp_width;
-		private ulong disp_height;
-		private double framerate;
-		private bool interlaced;
-		private VideoAspectRatioType ratio_type;
-		private ByteVector fourcc;
+		readonly ulong width;
+		readonly ulong height;
+		readonly ulong disp_width;
+		readonly ulong disp_height;
+		readonly double framerate;
+		readonly bool interlaced;
+		readonly VideoAspectRatioType ratio_type;
+		readonly ByteVector fourcc;
 #pragma warning restore 414
 
-		private List<EBMLreader> unknown_elems = new List<EBMLreader> ();
+		readonly List<EBMLreader> unknown_elems = new List<EBMLreader> ();
 
 		#endregion
 
@@ -80,71 +79,64 @@ namespace TagLib.Matroska
 		public VideoTrack (File _file, EBMLreader element)
 			: base (_file, element)
 		{
-			MatroskaID matroska_id;
-
 			// Here we handle the unknown elements we know, and store the rest
 			foreach (EBMLreader elem in base.UnknownElements) {
-				matroska_id = (MatroskaID) elem.ID;
+				var matroska_id = elem.ID;
 
 
-				switch (matroska_id)
-				{
-					case MatroskaID.TrackVideo:
-						{
-							ulong i = 0;
+				switch (matroska_id) {
+				case MatroskaID.TrackVideo: {
+						ulong i = 0;
 
-							while (i < elem.DataSize)
-							{
-								EBMLreader child = new EBMLreader(_file, elem.DataOffset + i);
+						while (i < elem.DataSize) {
+							EBMLreader child = new EBMLreader (_file, elem.DataOffset + i);
 
-								matroska_id = (MatroskaID)child.ID;
+							matroska_id = child.ID;
 
-								switch (matroska_id)
-								{
-									case MatroskaID.VideoDisplayWidth:
-										disp_width = child.ReadULong();
-										break;
-									case MatroskaID.VideoDisplayHeight:
-										disp_height = child.ReadULong();
-										break;
-									case MatroskaID.VideoPixelWidth:
-										width = child.ReadULong();
-										break;
-									case MatroskaID.VideoPixelHeight:
-										height = child.ReadULong();
-										break;
-									case MatroskaID.VideoFrameRate:
-										framerate = child.ReadDouble();
-										break;
-									case MatroskaID.VideoFlagInterlaced:
-										interlaced = child.ReadBool();
-										break;
-									case MatroskaID.VideoAspectRatioType:
-										ratio_type = (VideoAspectRatioType)child.ReadULong();
-										break;
-									case MatroskaID.VideoColourSpace:
-										fourcc = child.ReadBytes();
-										break;
-									default:
-										unknown_elems.Add(child);
-										break;
-								}
-
-								i += child.Size;
+							switch (matroska_id) {
+							case MatroskaID.VideoDisplayWidth:
+								disp_width = child.ReadULong ();
+								break;
+							case MatroskaID.VideoDisplayHeight:
+								disp_height = child.ReadULong ();
+								break;
+							case MatroskaID.VideoPixelWidth:
+								width = child.ReadULong ();
+								break;
+							case MatroskaID.VideoPixelHeight:
+								height = child.ReadULong ();
+								break;
+							case MatroskaID.VideoFrameRate:
+								framerate = child.ReadDouble ();
+								break;
+							case MatroskaID.VideoFlagInterlaced:
+								interlaced = child.ReadBool ();
+								break;
+							case MatroskaID.VideoAspectRatioType:
+								ratio_type = (VideoAspectRatioType)child.ReadULong ();
+								break;
+							case MatroskaID.VideoColourSpace:
+								fourcc = child.ReadBytes ();
+								break;
+							default:
+								unknown_elems.Add (child);
+								break;
 							}
-							break;
+
+							i += child.Size;
 						}
-
-					case MatroskaID.TrackDefaultDuration:
-						ulong tmp = elem.ReadULong();
-						framerate = 1000000000.0 / (double)tmp;
 						break;
+					}
 
-					default:
-						unknown_elems.Add(elem);
-						break;
+				case MatroskaID.TrackDefaultDuration:
+					ulong tmp = elem.ReadULong ();
+					framerate = 1000000000.0 / tmp;
+					break;
+
+				default:
+					unknown_elems.Add (elem);
+					break;
 				}
-				
 			}
 		}
 
@@ -155,8 +147,7 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// List of unknown elements encountered while parsing.
 		/// </summary>
-		public new List<EBMLreader> UnknownElements
-		{
+		public new List<EBMLreader> UnknownElements {
 			get { return unknown_elems; }
 		}
 
@@ -171,8 +162,7 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// This type of track only has video media type.
 		/// </summary>
-		public override MediaTypes MediaTypes
-		{
+		public override MediaTypes MediaTypes {
 			get { return MediaTypes.Video; }
 		}
 
@@ -183,20 +173,17 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// Describes video track width in pixels.
 		/// </summary>
-		public int VideoWidth
-		{
-			get { return (int) width; }
+		public int VideoWidth {
+			get { return (int)width; }
 		}
 
 		/// <summary>
 		/// Describes video track height in pixels.
 		/// </summary>
-		public int VideoHeight
-		{
-			get { return (int) height; }
+		public int VideoHeight {
+			get { return (int)height; }
 		}
 
 		#endregion
-
 	}
 }

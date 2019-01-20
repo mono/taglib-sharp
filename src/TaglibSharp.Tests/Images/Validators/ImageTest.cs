@@ -1,16 +1,17 @@
-using System;
 using Gdk;
 using NUnit.Framework;
+using System;
 using TagLib;
 
 namespace TaglibSharp.Tests.Images.Validators
 {
 	public class ImageTest
 	{
-		static ImageTest() {
+		static ImageTest ()
+		{
 			// Initialize GDK 
-			var args = Environment.GetCommandLineArgs();
-			Global.InitCheck(ref args);
+			var args = Environment.GetCommandLineArgs ();
+			Global.InitCheck (ref args);
 		}
 
 		string pre_hash;
@@ -39,14 +40,14 @@ namespace TaglibSharp.Tests.Images.Validators
 		{
 			if (modifications.Length == 0) {
 				var test = new ImageTest {
-						ImageFileName = filename,
-						ImageDirectory = directory,
-						TempDirectory = directory,
-						CompareImageData = compare_image_data,
-						InvariantValidator = invariant,
-						ModificationValidator = null
-					};
-					test.TestImage ();
+					ImageFileName = filename,
+					ImageDirectory = directory,
+					TempDirectory = directory,
+					CompareImageData = compare_image_data,
+					InvariantValidator = invariant,
+					ModificationValidator = null
+				};
+				test.TestImage ();
 			} else {
 				foreach (var modification in modifications) {
 					var test = new ImageTest {
@@ -137,13 +138,13 @@ namespace TaglibSharp.Tests.Images.Validators
 		string ReadImageData (TagLib.Image.File file)
 		{
 			if (!IsSupportedImageFile (file))
-				Assert.Fail("Unsupported type for data reading: "+file);
+				Assert.Fail ("Unsupported type for data reading: " + file);
 
 			file.Mode = File.AccessMode.Read;
-			var v = file.ReadBlock ((int) file.Length);
-			byte [] result = null;
-			using (var buf = new Pixbuf(v.Data))
-				result = buf.SaveToBuffer("png");
+			var v = file.ReadBlock ((int)file.Length);
+			byte[] result = null;
+			using (var buf = new Pixbuf (v.Data))
+				result = buf.SaveToBuffer ("png");
 			file.Mode = File.AccessMode.Closed;
 			return Utils.Md5Encode (result);
 		}

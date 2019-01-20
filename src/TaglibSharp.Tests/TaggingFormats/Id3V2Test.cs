@@ -1,10 +1,7 @@
-using System.Collections.Generic;
-
 using NUnit.Framework;
-
+using System.Collections.Generic;
 using TagLib;
 using TagLib.Id3v2;
-
 using Tag = TagLib.Id3v2.Tag;
 
 namespace TaglibSharp.Tests.TaggingFormats
@@ -15,31 +12,31 @@ namespace TaglibSharp.Tests.TaggingFormats
 		static readonly string val_sing =
 			"01234567890123456789012345678901234567890123456789";
 
-		static readonly string [] val_mult = {"A123456789",
+		static readonly string[] val_mult = {"A123456789",
 			"B123456789", "C123456789", "D123456789", "E123456789"};
 
-		static readonly string [] val_gnre = {"Rap",
+		static readonly string[] val_gnre = {"Rap",
 			"Jazz", "Non-Genre", "Blues"};
-		
+
 		[Test]
 		public void TestTitle ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.IsNull (t.Title, "Initial (Null): " + m);
 				});
-				
+
 				tag.Title = val_sing;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (val_sing, t.Title, "Value Set (!Null): " + m);
 				});
-				
+
 				tag.Title = string.Empty;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
@@ -48,30 +45,30 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestPerformers ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.AreEqual (0, t.Performers.Length, "Initial (Zero): " + m);
 				});
-				
+
 				tag.Performers = val_mult;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (val_mult.Length, t.Performers.Length, "Value Set: " + m);
-					for (int i = 0; i < val_mult.Length; i ++) {
-						Assert.AreEqual (val_mult [i], t.Performers [i], "Value Set: " + m);
+					for (int i = 0; i < val_mult.Length; i++) {
+						Assert.AreEqual (val_mult[i], t.Performers[i], "Value Set: " + m);
 					}
 				});
-				
-				tag.Performers = new string [0];
+
+				tag.Performers = new string[0];
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
@@ -79,30 +76,30 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestAlbumArtists ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.AreEqual (0, t.AlbumArtists.Length, "Initial (Zero): " + m);
 				});
-				
+
 				tag.AlbumArtists = val_mult;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (val_mult.Length, t.AlbumArtists.Length, "Value Set: " + m);
-					for (int i = 0; i < val_mult.Length; i ++) {
-						Assert.AreEqual (val_mult [i], t.AlbumArtists [i], "Value Set: " + m);
+					for (int i = 0; i < val_mult.Length; i++) {
+						Assert.AreEqual (val_mult[i], t.AlbumArtists[i], "Value Set: " + m);
 					}
 				});
-				
-				tag.AlbumArtists = new string [0];
+
+				tag.AlbumArtists = new string[0];
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
@@ -110,30 +107,30 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestComposers ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.AreEqual (0, t.Composers.Length, "Initial (Zero): " + m);
 				});
-				
+
 				tag.Composers = val_mult;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (val_mult.Length, t.Composers.Length, "Value Set: " + m);
-					for (int i = 0; i < val_mult.Length; i ++) {
-						Assert.AreEqual (val_mult [i], t.Composers [i], "Value Set: " + m);
+					for (int i = 0; i < val_mult.Length; i++) {
+						Assert.AreEqual (val_mult[i], t.Composers[i], "Value Set: " + m);
 					}
 				});
-				
-				tag.Composers = new string [0];
+
+				tag.Composers = new string[0];
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
@@ -141,26 +138,26 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestAlbum ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.IsNull (t.Album, "Initial (Null): " + m);
 				});
-				
+
 				tag.Album = val_sing;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (val_sing, t.Album, "Value Set (!Null): " + m);
 				});
-				
+
 				tag.Album = string.Empty;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
@@ -169,26 +166,26 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestComment ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.IsNull (t.Comment, "Initial (Null): " + m);
 				});
-				
+
 				tag.Comment = val_sing;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (val_sing, t.Comment, "Value Set (!Null): " + m);
 				});
-				
+
 				tag.Comment = string.Empty;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
@@ -212,35 +209,35 @@ namespace TaglibSharp.Tests.TaggingFormats
 		public void TestGenres ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.AreEqual (0, t.Genres.Length, "Initial (Zero): " + m);
 				});
-				
+
 				tag.Genres = val_gnre;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (val_gnre.Length, t.Genres.Length, "Value Set: " + m);
-					for (int i = 0; i < val_gnre.Length; i ++) {
-						Assert.AreEqual (val_gnre [i], t.Genres [i], "Value Set: " + m);
+					for (int i = 0; i < val_gnre.Length; i++) {
+						Assert.AreEqual (val_gnre[i], t.Genres[i], "Value Set: " + m);
 					}
 				});
-				
+
 				tag.Genres = val_mult;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (val_mult.Length, t.Genres.Length, "Value Set: " + m);
-					for (int i = 0; i < val_mult.Length; i ++) {
-						Assert.AreEqual (val_mult [i], t.Genres [i], "Value Set: " + m);
+					for (int i = 0; i < val_mult.Length; i++) {
+						Assert.AreEqual (val_mult[i], t.Genres[i], "Value Set: " + m);
 					}
 				});
-				
-				tag.Genres = new string [0];
+
+				tag.Genres = new string[0];
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
@@ -248,26 +245,26 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestYear ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.AreEqual (0, tag.Year, "Initial (Zero): " + m);
 				});
-				
+
 				tag.Year = 1999;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (1999, tag.Year, "Value Set: " + m);
 				});
-				
+
 				tag.Year = 20000;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
@@ -276,26 +273,26 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestTrack ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.AreEqual (0, tag.Track, "Initial (Zero): " + m);
 				});
-				
+
 				tag.Track = 199;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (199, tag.Track, "Value Set: " + m);
 				});
-				
+
 				tag.Track = 0;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
@@ -304,26 +301,26 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestTrackCount ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.AreEqual (0, tag.TrackCount, "Initial (Zero): " + m);
 				});
-				
+
 				tag.TrackCount = 199;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (199, tag.TrackCount, "Value Set: " + m);
 				});
-				
+
 				tag.TrackCount = 0;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
@@ -332,26 +329,26 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestDisc ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.AreEqual (0, tag.Disc, "Initial (Zero): " + m);
 				});
-				
+
 				tag.Disc = 199;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (199, tag.Disc, "Value Set: " + m);
 				});
-				
+
 				tag.Disc = 0;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
@@ -360,26 +357,26 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestDiscCount ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.AreEqual (0, tag.DiscCount, "Initial (Zero): " + m);
 				});
-				
+
 				tag.DiscCount = 199;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (199, tag.DiscCount, "Value Set: " + m);
 				});
-				
+
 				tag.DiscCount = 0;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
@@ -388,26 +385,26 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestLyrics ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.IsNull (t.Lyrics, "Initial (Null): " + m);
 				});
-				
+
 				tag.Lyrics = val_sing;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (val_sing, t.Lyrics, "Value Set (!Null): " + m);
 				});
-				
+
 				tag.Lyrics = string.Empty;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
@@ -416,26 +413,26 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestGrouping ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.IsNull (t.Grouping, "Initial (Null): " + m);
 				});
-				
+
 				tag.Grouping = val_sing;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (val_sing, t.Grouping, "Value Set (!Null): " + m);
 				});
-				
+
 				tag.Grouping = string.Empty;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
@@ -444,26 +441,26 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestBeatsPerMinute ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.AreEqual (0, tag.BeatsPerMinute, "Initial (Zero): " + m);
 				});
-				
+
 				tag.BeatsPerMinute = 199;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (199, tag.BeatsPerMinute, "Value Set: " + m);
 				});
-				
+
 				tag.BeatsPerMinute = 0;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
@@ -472,26 +469,26 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestConductor ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.IsNull (t.Conductor, "Initial (Null): " + m);
 				});
-				
+
 				tag.Conductor = val_sing;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (val_sing, t.Conductor, "Value Set (!Null): " + m);
 				});
-				
+
 				tag.Conductor = string.Empty;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
@@ -500,26 +497,26 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestCopyright ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.IsNull (t.Copyright, "Initial (Null): " + m);
 				});
-				
+
 				tag.Copyright = val_sing;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (val_sing, t.Copyright, "Value Set (!Null): " + m);
 				});
-				
+
 				tag.Copyright = string.Empty;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
@@ -528,13 +525,13 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestPictures ()
 		{
 			var tag = new Tag ();
-			
-			Picture [] pictures = {
+
+			Picture[] pictures = {
 				new Picture (TestPath.Covers + "sample_a.png"),
 				new Picture (TestPath.Covers + "sample_a.jpg"),
 				new Picture (TestPath.Covers + "sample_b.png"),
@@ -543,34 +540,34 @@ namespace TaglibSharp.Tests.TaggingFormats
 				new Picture (TestPath.Covers + "sample_c.jpg")
 			};
 
-			for (int i = 0; i < 6; i ++)
-				pictures [i].Type = (PictureType) (i * 2);
+			for (int i = 0; i < 6; i++)
+				pictures[i].Type = (PictureType)(i * 2);
 
-			pictures [3].Description = val_sing;
-			
-			for (byte version = 2; version <= 4; version ++) {
+			pictures[3].Description = val_sing;
+
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.AreEqual (0, t.Pictures.Length, "Initial (Zero): " + m);
 				});
-				
+
 				tag.Pictures = pictures;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.AreEqual (pictures.Length, t.Pictures.Length, "Value Set: " + m);
-					for (int i = 0; i < pictures.Length; i ++) {
+					for (int i = 0; i < pictures.Length; i++) {
 						string msg = "Value " + i + "Set: " + m;
-						Assert.AreEqual (pictures [i].Data, t.Pictures [i].Data, msg);
-						Assert.AreEqual (pictures [i].Type, t.Pictures [i].Type, msg);
-						Assert.AreEqual (pictures [i].Description, t.Pictures [i].Description, msg);
-						Assert.AreEqual (pictures [i].MimeType, t.Pictures [i].MimeType, msg);
+						Assert.AreEqual (pictures[i].Data, t.Pictures[i].Data, msg);
+						Assert.AreEqual (pictures[i].Type, t.Pictures[i].Type, msg);
+						Assert.AreEqual (pictures[i].Description, t.Pictures[i].Description, msg);
+						Assert.AreEqual (pictures[i].MimeType, t.Pictures[i].MimeType, msg);
 					}
 				});
-				
-				tag.Pictures = new Picture [0];
+
+				tag.Pictures = new Picture[0];
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
@@ -578,26 +575,26 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-			
+
 		[Test]
 		public void TestIsCompilation ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
 					Assert.IsFalse (t.IsCompilation, "Initial (False): " + m);
 				});
-				
+
 				tag.IsCompilation = true;
-				
+
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
 					Assert.IsTrue (t.IsCompilation, "Value Set (True): " + m);
 				});
-				
+
 				tag.IsCompilation = false;
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
@@ -606,88 +603,87 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestMusicBrainzArtistID ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzArtistId, "Initial (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzArtistId, "Initial (Null): " + m);
 				});
-			
-			tag.MusicBrainzArtistId = val_sing;
-			
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzArtistId, "Value Set (!Null): " + m);
-				});
-			
-			tag.MusicBrainzArtistId = string.Empty;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzArtistId, "Value Cleared (Null): " + m);
-				});	
+				tag.MusicBrainzArtistId = val_sing;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.MusicBrainzArtistId, "Value Set (!Null): " + m);
+				});
+
+				tag.MusicBrainzArtistId = string.Empty;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzArtistId, "Value Cleared (Null): " + m);
+				});
 			}
 		}
-		
+
 		[Test]
 		public void TestMusicBrainzReleaseID ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseId, "Initial (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzReleaseId, "Initial (Null): " + m);
 				});
-			
-			tag.MusicBrainzReleaseId = val_sing;
-			
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzReleaseId, "Value Set (!Null): " + m);
-				});
-			
-			tag.MusicBrainzReleaseId = string.Empty;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseId, "Value Cleared (Null): " + m);
+				tag.MusicBrainzReleaseId = val_sing;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.MusicBrainzReleaseId, "Value Set (!Null): " + m);
+				});
+
+				tag.MusicBrainzReleaseId = string.Empty;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzReleaseId, "Value Cleared (Null): " + m);
 				});
 			}
 		}
 
 		[Test]
-		public void TestMusicBrainzReleaseGroupID()
+		public void TestMusicBrainzReleaseGroupID ()
 		{
-			var tag = new Tag();
-			for (byte version = 2; version <= 4; version++)
-			{
+			var tag = new Tag ();
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
-				TagTestWithSave(ref tag, delegate (Tag t, string m) {
-					Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
-					Assert.IsNull(t.MusicBrainzReleaseGroupId, "Initial (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzReleaseGroupId, "Initial (Null): " + m);
 				});
 
 				tag.MusicBrainzReleaseGroupId = val_sing;
 
-				TagTestWithSave(ref tag, delegate (Tag t, string m) {
-					Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
-					Assert.AreEqual(val_sing, t.MusicBrainzReleaseGroupId, "Value Set (!Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.MusicBrainzReleaseGroupId, "Value Set (!Null): " + m);
 				});
 
 				tag.MusicBrainzReleaseGroupId = string.Empty;
 
-				TagTestWithSave(ref tag, delegate (Tag t, string m) {
-					Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-					Assert.IsNull(t.MusicBrainzReleaseGroupId, "Value Cleared (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzReleaseGroupId, "Value Cleared (Null): " + m);
 				});
 			}
 		}
@@ -696,338 +692,334 @@ namespace TaglibSharp.Tests.TaggingFormats
 		public void TestMusicBrainzReleaseArtistID ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseArtistId, "Initial (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzReleaseArtistId, "Initial (Null): " + m);
 				});
-			
-			tag.MusicBrainzReleaseArtistId = val_sing;
-			
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzReleaseArtistId, "Value Set (!Null): " + m);
-				});
-			
-			tag.MusicBrainzReleaseArtistId = string.Empty;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseArtistId, "Value Cleared (Null): " + m);
+				tag.MusicBrainzReleaseArtistId = val_sing;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.MusicBrainzReleaseArtistId, "Value Set (!Null): " + m);
+				});
+
+				tag.MusicBrainzReleaseArtistId = string.Empty;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzReleaseArtistId, "Value Cleared (Null): " + m);
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestMusicBrainzTrackID ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzTrackId, "Initial (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzTrackId, "Initial (Null): " + m);
 				});
-			
-			tag.MusicBrainzTrackId = val_sing;
-			
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzTrackId, "Value Set (!Null): " + m);
-				});
-			
-			tag.MusicBrainzTrackId = string.Empty;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzTrackId, "Value Cleared (Null): " + m);
+				tag.MusicBrainzTrackId = val_sing;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.MusicBrainzTrackId, "Value Set (!Null): " + m);
+				});
+
+				tag.MusicBrainzTrackId = string.Empty;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzTrackId, "Value Cleared (Null): " + m);
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestMusicBrainzDiscID ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzDiscId, "Initial (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzDiscId, "Initial (Null): " + m);
 				});
-			
-			tag.MusicBrainzDiscId = val_sing;
-			
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzDiscId, "Value Set (!Null): " + m);
-				});
-			
-			tag.MusicBrainzDiscId = string.Empty;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzDiscId, "Value Cleared (Null): " + m);
+				tag.MusicBrainzDiscId = val_sing;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.MusicBrainzDiscId, "Value Set (!Null): " + m);
+				});
+
+				tag.MusicBrainzDiscId = string.Empty;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzDiscId, "Value Cleared (Null): " + m);
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestMusicIPPUID ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicIpId, "Initial (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.MusicIpId, "Initial (Null): " + m);
 				});
-			
-			tag.MusicIpId = val_sing;
-			
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicIpId, "Value Set (!Null): " + m);
-				});
-			
-			tag.MusicIpId = string.Empty;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicIpId, "Value Cleared (Null): " + m);
+				tag.MusicIpId = val_sing;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.MusicIpId, "Value Set (!Null): " + m);
+				});
+
+				tag.MusicIpId = string.Empty;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.MusicIpId, "Value Cleared (Null): " + m);
 				});
 			}
 		}
-		
+
 		[Test]
 		public void TestAmazonID ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.AmazonId, "Initial (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.AmazonId, "Initial (Null): " + m);
 				});
-			
-			tag.AmazonId = val_sing;
-			
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.AmazonId, "Value Set (!Null): " + m);
-				});
-				
-			tag.AmazonId = string.Empty;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.AmazonId, "Value Cleared (Null): " + m);
+				tag.AmazonId = val_sing;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.AmazonId, "Value Set (!Null): " + m);
+				});
+
+				tag.AmazonId = string.Empty;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.AmazonId, "Value Cleared (Null): " + m);
 				});
 			}
 		}
-				
+
 		[Test]
 		public void TestMusicBrainzReleaseStatus ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseStatus, "Initial (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzReleaseStatus, "Initial (Null): " + m);
 				});
-			
-			tag.MusicBrainzReleaseStatus = val_sing;
-			
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzReleaseStatus, "Value Set (!Null): " + m);
-				});
-			
-			tag.MusicBrainzReleaseStatus = string.Empty;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseStatus, "Value Cleared (Null): " + m);
+				tag.MusicBrainzReleaseStatus = val_sing;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.MusicBrainzReleaseStatus, "Value Set (!Null): " + m);
+				});
+
+				tag.MusicBrainzReleaseStatus = string.Empty;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzReleaseStatus, "Value Cleared (Null): " + m);
 				});
 			}
 		}
-				
+
 		[Test]
 		public void TestMusicBrainzReleaseType ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseType, "Initial (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzReleaseType, "Initial (Null): " + m);
 				});
-			
-			tag.MusicBrainzReleaseType = val_sing;
-			
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzReleaseType, "Value Set (!Null): " + m);
-				});
-			
-			tag.MusicBrainzReleaseType = string.Empty;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseType, "Value Cleared (Null): " + m);
+				tag.MusicBrainzReleaseType = val_sing;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.MusicBrainzReleaseType, "Value Set (!Null): " + m);
+				});
+
+				tag.MusicBrainzReleaseType = string.Empty;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzReleaseType, "Value Cleared (Null): " + m);
 				});
 			}
 		}
-				
+
 		[Test]
 		public void TestMusicBrainzReleaseCountry ()
 		{
 			var tag = new Tag ();
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseCountry, "Initial (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzReleaseCountry, "Initial (Null): " + m);
 				});
-			
-			tag.MusicBrainzReleaseCountry = val_sing;
-			
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzReleaseCountry, "Value Set (!Null): " + m);
-				});
-			
-			tag.MusicBrainzReleaseCountry = string.Empty;
 
-			TagTestWithSave (ref tag, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseCountry, "Value Cleared (Null): " + m);
+				tag.MusicBrainzReleaseCountry = val_sing;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.MusicBrainzReleaseCountry, "Value Set (!Null): " + m);
+				});
+
+				tag.MusicBrainzReleaseCountry = string.Empty;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.MusicBrainzReleaseCountry, "Value Cleared (Null): " + m);
 				});
 			}
 		}
 
 		[Test]
-		public void TestInitialKey()
+		public void TestInitialKey ()
 		{
-			Tag tag = new Tag();
-			for (byte version = 2; version <= 4; version++)
-			{
+			Tag tag = new Tag ();
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
-				TagTestWithSave(ref tag, delegate (Tag t, string m) {
-					Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
-					Assert.IsNull(t.InitialKey, "Initial (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.InitialKey, "Initial (Null): " + m);
 				});
 
 				tag.InitialKey = val_sing;
 
-				TagTestWithSave(ref tag, delegate (Tag t, string m) {
-					Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
-					Assert.AreEqual(val_sing, t.InitialKey, "Value Set (!Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.InitialKey, "Value Set (!Null): " + m);
 				});
 
 				tag.InitialKey = string.Empty;
 
-				TagTestWithSave(ref tag, delegate (Tag t, string m) {
-					Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-					Assert.IsNull(t.InitialKey, "Value Cleared (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.InitialKey, "Value Cleared (Null): " + m);
 				});
 			}
 		}
 
 		[Test]
-		public void TestPublisher()
+		public void TestPublisher ()
 		{
-			Tag tag = new Tag();
-			for (byte version = 2; version <= 4; version++)
-			{
+			Tag tag = new Tag ();
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
-				TagTestWithSave(ref tag, delegate (Tag t, string m) {
-					Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
-					Assert.IsNull(t.Publisher, "Initial (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.Publisher, "Initial (Null): " + m);
 				});
 
 				tag.Publisher = val_sing;
 
-				TagTestWithSave(ref tag, delegate (Tag t, string m) {
-					Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
-					Assert.AreEqual(val_sing, t.Publisher, "Value Set (!Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.Publisher, "Value Set (!Null): " + m);
 				});
 
 				tag.Publisher = string.Empty;
 
-				TagTestWithSave(ref tag, delegate (Tag t, string m) {
-					Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-					Assert.IsNull(t.Publisher, "Value Cleared (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.Publisher, "Value Cleared (Null): " + m);
 				});
 			}
 		}
 
 		[Test]
-		public void TestISRC()
+		public void TestISRC ()
 		{
-			Tag tag = new Tag();
-			for (byte version = 2; version <= 4; version++)
-			{
+			Tag tag = new Tag ();
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
-				TagTestWithSave(ref tag, delegate (Tag t, string m) {
-					Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
-					Assert.IsNull(t.ISRC, "Initial (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.ISRC, "Initial (Null): " + m);
 				});
 
 				tag.ISRC = val_sing;
 
-				TagTestWithSave(ref tag, delegate (Tag t, string m) {
-					Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
-					Assert.AreEqual(val_sing, t.ISRC, "Value Set (!Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.ISRC, "Value Set (!Null): " + m);
 				});
 
 				tag.ISRC = string.Empty;
 
-				TagTestWithSave(ref tag, delegate (Tag t, string m) {
-					Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-					Assert.IsNull(t.ISRC, "Value Cleared (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.ISRC, "Value Cleared (Null): " + m);
 				});
 			}
 		}
 
 		[Test]
-		public void TestRemixedBy()
+		public void TestRemixedBy ()
 		{
-			Tag tag = new Tag();
-			for (byte version = 2; version <= 4; version++)
-			{
+			Tag tag = new Tag ();
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 
-				TagTestWithSave(ref tag, delegate (Tag t, string m) {
-					Assert.IsTrue(t.IsEmpty, "Initial (IsEmpty): " + m);
-					Assert.IsNull(t.RemixedBy, "Initial (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.RemixedBy, "Initial (Null): " + m);
 				});
 
 				tag.RemixedBy = val_sing;
 
-				TagTestWithSave(ref tag, delegate (Tag t, string m) {
-					Assert.IsFalse(t.IsEmpty, "Value Set (!IsEmpty): " + m);
-					Assert.AreEqual(val_sing, t.RemixedBy, "Value Set (!Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.RemixedBy, "Value Set (!Null): " + m);
 				});
 
 				tag.RemixedBy = string.Empty;
 
-				TagTestWithSave(ref tag, delegate (Tag t, string m) {
-					Assert.IsTrue(t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-					Assert.IsNull(t.RemixedBy, "Value Cleared (Null): " + m);
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.RemixedBy, "Value Cleared (Null): " + m);
 				});
 			}
 		}
@@ -1037,12 +1029,12 @@ namespace TaglibSharp.Tests.TaggingFormats
 		{
 			var tag = new Tag {
 				Title = "A",
-				Performers = new[] {"B"},
-				AlbumArtists = new[] {"C"},
-				Composers = new[] {"D"},
+				Performers = new[] { "B" },
+				AlbumArtists = new[] { "C" },
+				Composers = new[] { "D" },
 				Album = "E",
 				Comment = "F",
-				Genres = new[] {"Blues"},
+				Genres = new[] { "Blues" },
 				Year = 123,
 				Track = 234,
 				TrackCount = 234,
@@ -1053,7 +1045,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 				BeatsPerMinute = 234,
 				Conductor = "I",
 				Copyright = "J",
-				Pictures = new[] { new Picture (TestPath.Covers + "sample_a.png")},
+				Pictures = new[] { new Picture (TestPath.Covers + "sample_a.png") },
 				InitialKey = "K",
 				Publisher = "L",
 				ISRC = "M",
@@ -1063,7 +1055,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 
 			Assert.IsFalse (tag.IsEmpty, "Should be full.");
 			tag.Clear ();
-			
+
 			Assert.IsNull (tag.Title, "Title");
 			Assert.AreEqual (0, tag.Performers.Length, "Performers");
 			Assert.AreEqual (0, tag.AlbumArtists.Length, "AlbumArtists");
@@ -1083,10 +1075,10 @@ namespace TaglibSharp.Tests.TaggingFormats
 			Assert.IsNull (tag.Copyright, "Copyright");
 			Assert.AreEqual (0, tag.Pictures.Length, "Pictures");
 			Assert.IsTrue (tag.IsEmpty, "Should be empty.");
-			Assert.IsNull(tag.InitialKey, "InitialKey");
-			Assert.IsNull(tag.Publisher, "Publisher");
-			Assert.IsNull(tag.ISRC, "ISRC");
-			Assert.IsNull(tag.RemixedBy, "RemixedBy");
+			Assert.IsNull (tag.InitialKey, "InitialKey");
+			Assert.IsNull (tag.Publisher, "Publisher");
+			Assert.IsNull (tag.ISRC, "ISRC");
+			Assert.IsNull (tag.RemixedBy, "RemixedBy");
 		}
 
 		[Test]
@@ -1097,25 +1089,25 @@ namespace TaglibSharp.Tests.TaggingFormats
 
 			var frame1 = UserTextInformationFrame.Get (tag1, "FOOBAR", true);
 			var frame2 = UserTextInformationFrame.Get (tag2, "FOOBAR", true);
-			
-			frame1.Text = new[] {"1"};
-			frame2.Text = new[] {"2"};
-			
-			Assert.AreEqual ("2", UserTextInformationFrame.Get (tag2, "FOOBAR", false).Text [0], "Not yet copied.");
+
+			frame1.Text = new[] { "1" };
+			frame2.Text = new[] { "2" };
+
+			Assert.AreEqual ("2", UserTextInformationFrame.Get (tag2, "FOOBAR", false).Text[0], "Not yet copied.");
 			tag1.CopyTo (tag2, false);
-			Assert.AreEqual ("2", UserTextInformationFrame.Get (tag2, "FOOBAR", false).Text [0], "overwrite=false");
+			Assert.AreEqual ("2", UserTextInformationFrame.Get (tag2, "FOOBAR", false).Text[0], "overwrite=false");
 			tag1.CopyTo (tag2, true);
-			Assert.AreEqual ("1", UserTextInformationFrame.Get (tag2, "FOOBAR", false).Text [0], "overwrite=true");
-			
-			UserTextInformationFrame.Get (tag2, "FOOBAR", false).Text = new[] {"3"};
-			Assert.AreEqual ("1", UserTextInformationFrame.Get (tag1, "FOOBAR", false).Text [0], "Deep copy.");
+			Assert.AreEqual ("1", UserTextInformationFrame.Get (tag2, "FOOBAR", false).Text[0], "overwrite=true");
+
+			UserTextInformationFrame.Get (tag2, "FOOBAR", false).Text = new[] { "3" };
+			Assert.AreEqual ("1", UserTextInformationFrame.Get (tag1, "FOOBAR", false).Text[0], "Deep copy.");
 		}
-		
+
 		[Test]
 		public void TestAttachedPictureFrame ()
 		{
 			var frame = new AttachmentFrame ();
-			
+
 			string mime = "image/png";
 			string desc = "description";
 			var type = PictureType.FrontCover;
@@ -1125,18 +1117,18 @@ namespace TaglibSharp.Tests.TaggingFormats
 			data.Add (data); data.Add (data); data.Add (data);
 			data.Add (data); data.Add (data); data.Add (data);
 			// data.Add (data); data.Add (data); data.Add (data);
-			
+
 			frame.MimeType = mime;
 			frame.Description = desc;
 			frame.Type = type;
 			frame.Data = data;
-			
-			FrameTest (frame, 2, 
+
+			FrameTest (frame, 2,
 				delegate (Frame f, StringType e) {
 					(f as AttachmentFrame).TextEncoding = e;
 				},
 				(d, v) => new AttachmentFrame (d, v),
-				
+
 				delegate (Frame f, string m) {
 					var g = (f as AttachmentFrame);
 					Assert.AreEqual (mime, g.MimeType, m);
@@ -1145,7 +1137,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 					Assert.AreEqual (type, g.Type, m);
 				});
 		}
-		
+
 		[Test]
 		public void TestCommentsFrame ()
 		{
@@ -1160,7 +1152,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 					(f as CommentsFrame).TextEncoding = e;
 				},
 				(d, v) => new CommentsFrame (d, v),
-				
+
 				delegate (Frame f, string m) {
 					var g = (f as CommentsFrame);
 					Assert.AreEqual (desc, g.Description, m);
@@ -1168,12 +1160,12 @@ namespace TaglibSharp.Tests.TaggingFormats
 					Assert.AreEqual (val_sing, g.Text, m);
 				});
 		}
-		
+
 		[Test]
 		public void TestGeneralEncapsulatedObjectFrame ()
 		{
-			var frame = new AttachmentFrame();
-			
+			var frame = new AttachmentFrame ();
+
 			string name = "TEST.txt";
 			string mime = "text/plain";
 			var type = PictureType.NotAPicture;
@@ -1184,8 +1176,8 @@ namespace TaglibSharp.Tests.TaggingFormats
 			data.Add (data); data.Add (data); data.Add (data);
 			data.Add (data); data.Add (data); data.Add (data);
 			// data.Add (data); data.Add (data); data.Add (data);
-			
-			
+
+
 			frame.Filename = name;
 			frame.MimeType = mime;
 			frame.Description = desc;
@@ -1198,70 +1190,70 @@ namespace TaglibSharp.Tests.TaggingFormats
 					(f as AttachmentFrame).TextEncoding = e;
 				},
 				(d, v) => new AttachmentFrame (d, v),
-				
+
 				delegate (Frame f, string m) {
 					var g = (f as AttachmentFrame);
-					Assert.AreEqual(type, g.Type, m);
+					Assert.AreEqual (type, g.Type, m);
 					Assert.AreEqual (name, g.Filename, m);
-					Assert.AreEqual(mime, g.MimeType, m);
+					Assert.AreEqual (mime, g.MimeType, m);
 					Assert.AreEqual (desc, g.Description, m);
 					Assert.AreEqual (data, g.Data, m);
 				});
 		}
-		
+
 		[Test]
 		public void TestMusicCdIdentifierFrame ()
 		{
 			var frame = new MusicCdIdentifierFrame ();
-			
+
 			ByteVector data = val_sing;
 			data.Add (data); data.Add (data); data.Add (data);
 			data.Add (data); data.Add (data); data.Add (data);
 			data.Add (data); data.Add (data); data.Add (data);
 			data.Add (data); data.Add (data); data.Add (data);
 			// data.Add (data); data.Add (data); data.Add (data);
-			
+
 			frame.Data = data;
-			
+
 			FrameTest (frame, 2, null,
 				(d, v) => new MusicCdIdentifierFrame (d, v),
-				
+
 				delegate (Frame f, string m) {
 					var g = (f as MusicCdIdentifierFrame);
 					Assert.AreEqual (data, g.Data, m);
 				});
 		}
-		
+
 		[Test]
 		public void TestPlayCountFrame ()
 		{
 			var frame = new PlayCountFrame ();
-			
+
 			ulong value = 0xFFFFFFFFFFFFFFFF;
 			frame.PlayCount = value;
-			
+
 			FrameTest (frame, 2, null,
 				(d, v) => new PlayCountFrame (d, v),
-				
+
 				delegate (Frame f, string m) {
 					var g = (f as PlayCountFrame);
 					Assert.AreEqual (value, g.PlayCount, m);
 				});
 		}
-		
+
 		[Test]
 		public void TestPopularimeterFrame ()
 		{
 			var frame = new PopularimeterFrame (val_sing);
-			
+
 			ulong pcnt = 0xFFFFFFFFFFFFFFFF;
 			byte rate = 0xFF;
 			frame.Rating = rate;
 			frame.PlayCount = pcnt;
-			
+
 			FrameTest (frame, 2, null,
 				(d, v) => new PopularimeterFrame (d, v),
-				
+
 				delegate (Frame f, string m) {
 					var g = (f as PopularimeterFrame);
 					Assert.AreEqual (val_sing, g.User, m);
@@ -1269,7 +1261,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 					Assert.AreEqual (pcnt, g.PlayCount, m);
 				});
 		}
-		
+
 		[Test]
 		public void TestPrivateFrame ()
 		{
@@ -1281,77 +1273,85 @@ namespace TaglibSharp.Tests.TaggingFormats
 			// data.Add (data); data.Add (data); data.Add (data);
 
 			var frame = new PrivateFrame (val_sing, data);
-			
+
 			FrameTest (frame, 3, null,
 				(d, v) => new PrivateFrame (d, v),
-				
+
 				delegate (Frame f, string m) {
 					var g = (f as PrivateFrame);
 					Assert.AreEqual (val_sing, g.Owner, m);
 					Assert.AreEqual (data, g.PrivateData, m);
 				});
 		}
-		
+
 		[Test]
 		public void TestRelativeVolumeFrame ()
 		{
-			for (int a = 0; a < 2; a ++) {
-			for (int b = 0; b < 2; b ++) {
-			for (int c = 0; c < 2; c ++) {
-			for (int d = 0; d < 2; d ++) {
-			for (int e = 0; e < 2; e ++) {
-			for (int f = 0; f < 2; f ++) {
-			for (int g = 0; g < 2; g ++) {
-			for (int h = 0; h < 2; h ++) {
-			for (int i = 0; i < 2; i ++) {
+			for (int a = 0; a < 2; a++) {
+				for (int b = 0; b < 2; b++) {
+					for (int c = 0; c < 2; c++) {
+						for (int d = 0; d < 2; d++) {
+							for (int e = 0; e < 2; e++) {
+								for (int f = 0; f < 2; f++) {
+									for (int g = 0; g < 2; g++) {
+										for (int h = 0; h < 2; h++) {
+											for (int i = 0; i < 2; i++) {
 
 												var frame = new RelativeVolumeFrame (val_sing);
-			
-			frame.SetPeakVolume ((ChannelType) 0, (double) a);
-			frame.SetVolumeAdjustment ((ChannelType) 0, (float) -a);
-			frame.SetPeakVolume ((ChannelType) 1, (double) b);
-			frame.SetVolumeAdjustment ((ChannelType) 1, (float) -b);
-			frame.SetPeakVolume ((ChannelType) 2, (double) c);
-			frame.SetVolumeAdjustment ((ChannelType) 2, (float) -c);
-			frame.SetPeakVolume ((ChannelType) 3, (double) d);
-			frame.SetVolumeAdjustment ((ChannelType) 3, (float) -d);
-			frame.SetPeakVolume ((ChannelType) 4, (double) e);
-			frame.SetVolumeAdjustment ((ChannelType) 4, (float) -e);
-			frame.SetPeakVolume ((ChannelType) 5, (double) f);
-			frame.SetVolumeAdjustment ((ChannelType) 5, (float) -f);
-			frame.SetPeakVolume ((ChannelType) 6, (double) g);
-			frame.SetVolumeAdjustment ((ChannelType) 6, (float) -g);
-			frame.SetPeakVolume ((ChannelType) 7, (double) h);
-			frame.SetVolumeAdjustment ((ChannelType) 7, (float) -h);
-			frame.SetPeakVolume ((ChannelType) 8, (double) i);
-			frame.SetVolumeAdjustment ((ChannelType) 8, (float) -i);
-			
-			FrameTest (frame, 2, null,
-				(d_, v_) => new RelativeVolumeFrame (d_, v_),
-				
-				delegate (Frame f_, string m_) {
-					var g_ = (f_ as RelativeVolumeFrame);
-					Assert.AreEqual ((double) a, g_.GetPeakVolume ((ChannelType) 0), "A: " + m_);
-					Assert.AreEqual ((float) -a, g_.GetVolumeAdjustment ((ChannelType) 0), "A: " + m_);
-					Assert.AreEqual ((double) b, g_.GetPeakVolume ((ChannelType) 1), "B: " + m_);
-					Assert.AreEqual ((float) -b, g_.GetVolumeAdjustment ((ChannelType) 1), "B: " + m_);
-					Assert.AreEqual ((double) c, g_.GetPeakVolume ((ChannelType) 2), "C: " + m_);
-					Assert.AreEqual ((float) -c, g_.GetVolumeAdjustment ((ChannelType) 2), "C: " + m_);
-					Assert.AreEqual ((double) d, g_.GetPeakVolume ((ChannelType) 3), "D: " + m_);
-					Assert.AreEqual ((float) -d, g_.GetVolumeAdjustment ((ChannelType) 3), "D: " + m_);
-					Assert.AreEqual ((double) e, g_.GetPeakVolume ((ChannelType) 4), "E: " + m_);
-					Assert.AreEqual ((float) -e, g_.GetVolumeAdjustment ((ChannelType) 4), "E: " + m_);
-					Assert.AreEqual ((double) f, g_.GetPeakVolume ((ChannelType) 5), "F: " + m_);
-					Assert.AreEqual ((float) -f, g_.GetVolumeAdjustment ((ChannelType) 5), "F: " + m_);
-					Assert.AreEqual ((double) g, g_.GetPeakVolume ((ChannelType) 6), "G: " + m_);
-					Assert.AreEqual ((float) -g, g_.GetVolumeAdjustment ((ChannelType) 6), "G: " + m_);
-					Assert.AreEqual ((double) h, g_.GetPeakVolume ((ChannelType) 7), "H: " + m_);
-					Assert.AreEqual ((float) -h, g_.GetVolumeAdjustment ((ChannelType) 7), "H: " + m_);
-					Assert.AreEqual ((double) i, g_.GetPeakVolume ((ChannelType) 8), "I: " + m_);
-					Assert.AreEqual ((float) -i, g_.GetVolumeAdjustment ((ChannelType) 8), "I: " + m_);
-				});
-			
-			}}}}}}}}}
+
+												frame.SetPeakVolume (0, a);
+												frame.SetVolumeAdjustment (0, -a);
+												frame.SetPeakVolume ((ChannelType)1, b);
+												frame.SetVolumeAdjustment ((ChannelType)1, -b);
+												frame.SetPeakVolume ((ChannelType)2, c);
+												frame.SetVolumeAdjustment ((ChannelType)2, -c);
+												frame.SetPeakVolume ((ChannelType)3, d);
+												frame.SetVolumeAdjustment ((ChannelType)3, -d);
+												frame.SetPeakVolume ((ChannelType)4, e);
+												frame.SetVolumeAdjustment ((ChannelType)4, -e);
+												frame.SetPeakVolume ((ChannelType)5, f);
+												frame.SetVolumeAdjustment ((ChannelType)5, -f);
+												frame.SetPeakVolume ((ChannelType)6, g);
+												frame.SetVolumeAdjustment ((ChannelType)6, -g);
+												frame.SetPeakVolume ((ChannelType)7, h);
+												frame.SetVolumeAdjustment ((ChannelType)7, -h);
+												frame.SetPeakVolume ((ChannelType)8, i);
+												frame.SetVolumeAdjustment ((ChannelType)8, -i);
+
+												FrameTest (frame, 2, null,
+													(d_, v_) => new RelativeVolumeFrame (d_, v_),
+
+													delegate (Frame f_, string m_) {
+														var g_ = (f_ as RelativeVolumeFrame);
+														Assert.AreEqual ((double)a, g_.GetPeakVolume (0), "A: " + m_);
+														Assert.AreEqual ((float)-a, g_.GetVolumeAdjustment (0), "A: " + m_);
+														Assert.AreEqual ((double)b, g_.GetPeakVolume ((ChannelType)1), "B: " + m_);
+														Assert.AreEqual ((float)-b, g_.GetVolumeAdjustment ((ChannelType)1), "B: " + m_);
+														Assert.AreEqual ((double)c, g_.GetPeakVolume ((ChannelType)2), "C: " + m_);
+														Assert.AreEqual ((float)-c, g_.GetVolumeAdjustment ((ChannelType)2), "C: " + m_);
+														Assert.AreEqual ((double)d, g_.GetPeakVolume ((ChannelType)3), "D: " + m_);
+														Assert.AreEqual ((float)-d, g_.GetVolumeAdjustment ((ChannelType)3), "D: " + m_);
+														Assert.AreEqual ((double)e, g_.GetPeakVolume ((ChannelType)4), "E: " + m_);
+														Assert.AreEqual ((float)-e, g_.GetVolumeAdjustment ((ChannelType)4), "E: " + m_);
+														Assert.AreEqual ((double)f, g_.GetPeakVolume ((ChannelType)5), "F: " + m_);
+														Assert.AreEqual ((float)-f, g_.GetVolumeAdjustment ((ChannelType)5), "F: " + m_);
+														Assert.AreEqual ((double)g, g_.GetPeakVolume ((ChannelType)6), "G: " + m_);
+														Assert.AreEqual ((float)-g, g_.GetVolumeAdjustment ((ChannelType)6), "G: " + m_);
+														Assert.AreEqual ((double)h, g_.GetPeakVolume ((ChannelType)7), "H: " + m_);
+														Assert.AreEqual ((float)-h, g_.GetVolumeAdjustment ((ChannelType)7), "H: " + m_);
+														Assert.AreEqual ((double)i, g_.GetPeakVolume ((ChannelType)8), "I: " + m_);
+														Assert.AreEqual ((float)-i, g_.GetVolumeAdjustment ((ChannelType)8), "I: " + m_);
+													});
+
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 
 		[Test]
@@ -1369,7 +1369,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 		public void TestSynchronisedLyricsFrame ()
 		{
 			string lang = "ENG";
-			SynchedText [] text = {
+			SynchedText[] text = {
 				new SynchedText (0, "Curtain Opens"),
 				new SynchedText (1000, "Lights"),
 				new SynchedText (2000, "Romeo Enters"),
@@ -1386,7 +1386,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 					(f as SynchronisedLyricsFrame).TextEncoding = e;
 				},
 				(d, v) => new SynchronisedLyricsFrame (d, v),
-				
+
 				delegate (Frame f, string m) {
 					var g = (f as SynchronisedLyricsFrame);
 					Assert.AreEqual (val_sing, g.Description, m);
@@ -1394,13 +1394,13 @@ namespace TaglibSharp.Tests.TaggingFormats
 					Assert.AreEqual (SynchedTextType.Events, g.Type, m);
 					Assert.AreEqual (TimestampFormat.AbsoluteMilliseconds, g.Format, m);
 					Assert.AreEqual (text.Length, g.Text.Length, m);
-					for (int i = 0; i < text.Length; i ++) {
-						Assert.AreEqual (text [i].Time, g.Text [i].Time, m);
-						Assert.AreEqual (text [i].Text, g.Text [i].Text, m);
+					for (int i = 0; i < text.Length; i++) {
+						Assert.AreEqual (text[i].Time, g.Text[i].Time, m);
+						Assert.AreEqual (text[i].Text, g.Text[i].Text, m);
 					}
 				});
 		}
-		
+
 		[Test]
 		public void TestTermsOfUseFrame ()
 		{
@@ -1414,14 +1414,14 @@ namespace TaglibSharp.Tests.TaggingFormats
 					(f as TermsOfUseFrame).TextEncoding = e;
 				},
 				(d, v) => new TermsOfUseFrame (d, v),
-				
+
 				delegate (Frame f, string m) {
 					var g = (f as TermsOfUseFrame);
 					Assert.AreEqual (lang, g.Language, m);
 					Assert.AreEqual (val_sing, g.Text, m);
 				});
 		}
-		
+
 		[Test]
 		public void TestTextInformationFrame ()
 		{
@@ -1435,17 +1435,17 @@ namespace TaglibSharp.Tests.TaggingFormats
 					(f as TextInformationFrame).TextEncoding = e;
 				},
 				(d, v) => new TextInformationFrame (d, v),
-				
+
 				delegate (Frame f, string m) {
 					var g = (f as TextInformationFrame);
 					Assert.AreEqual (id, g.FrameId, m);
 					Assert.AreEqual (val_mult.Length, g.Text.Length, m);
-					for (int i = 0; i < val_mult.Length; i ++) {
-						Assert.AreEqual (val_mult [i], g.Text [i], m);
+					for (int i = 0; i < val_mult.Length; i++) {
+						Assert.AreEqual (val_mult[i], g.Text[i], m);
 					}
 				});
 		}
-		
+
 		[Test]
 		public void TestUserTextInformationFrame ()
 		{
@@ -1458,17 +1458,17 @@ namespace TaglibSharp.Tests.TaggingFormats
 					(f as UserTextInformationFrame).TextEncoding = e;
 				},
 				(d, v) => new UserTextInformationFrame (d, v),
-				
+
 				delegate (Frame f, string m) {
 					var g = (f as UserTextInformationFrame);
 					Assert.AreEqual (val_sing, g.Description, m);
 					Assert.AreEqual (val_mult.Length, g.Text.Length, m);
-					for (int i = 0; i < val_mult.Length; i ++) {
-						Assert.AreEqual (val_mult [i], g.Text [i], m);
+					for (int i = 0; i < val_mult.Length; i++) {
+						Assert.AreEqual (val_mult[i], g.Text[i], m);
 					}
 				});
 		}
-		
+
 		[Test]
 		public void TestUniqueFileIdentifierFrame ()
 		{
@@ -1485,14 +1485,14 @@ namespace TaglibSharp.Tests.TaggingFormats
 
 			FrameTest (frame, 2, null,
 				(d, v) => new UniqueFileIdentifierFrame (d, v),
-				
+
 				delegate (Frame f, string m) {
 					var g = (f as UniqueFileIdentifierFrame);
 					Assert.AreEqual (val_sing, g.Owner, m);
 					Assert.AreEqual (data, g.Identifier, m);
 				});
 		}
-		
+
 		[Test]
 		public void TestUnknownFrame ()
 		{
@@ -1505,17 +1505,17 @@ namespace TaglibSharp.Tests.TaggingFormats
 			// data.Add (data); data.Add (data); data.Add (data);
 
 			var frame = new UnknownFrame (id, data);
-			
+
 			FrameTest (frame, 3, null,
 				(d, v) => new UnknownFrame (d, v),
-				
+
 				delegate (Frame f, string m) {
 					var g = (f as UnknownFrame);
 					Assert.AreEqual (id, g.FrameId, m);
 					Assert.AreEqual (data, g.Data, m);
 				});
 		}
-		
+
 		[Test]
 		public void TestUnsynchronisedLyricsFrame ()
 		{
@@ -1530,7 +1530,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 					(f as UnsynchronisedLyricsFrame).TextEncoding = e;
 				},
 				(d, v) => new UnsynchronisedLyricsFrame (d, v),
-				
+
 				delegate (Frame f, string m) {
 					var g = (f as UnsynchronisedLyricsFrame);
 					Assert.AreEqual (desc, g.Description, m);
@@ -1540,40 +1540,40 @@ namespace TaglibSharp.Tests.TaggingFormats
 		}
 
 		[Test]
-		public void TestEventTimeCodesFrame()
+		public void TestEventTimeCodesFrame ()
 		{
 			var events = new List<EventTimeCode> {
 				new EventTimeCode(EventType.IntroStart, 5000),
 				new EventTimeCode(EventType.IntroEnd, 15000),
 			};
 
-			var frame = new EventTimeCodesFrame(TimestampFormat.AbsoluteMilliseconds);
-			frame.Events = events;
+			var frame = new EventTimeCodesFrame (TimestampFormat.AbsoluteMilliseconds) {
+				Events = events
+			};
 
-			FrameTest(frame, 2,
+			FrameTest (frame, 2,
 				delegate (Frame f, StringType e) {
 				},
 
 				delegate (ByteVector d, byte v) {
-					return new EventTimeCodesFrame(d, v);
+					return new EventTimeCodesFrame (d, v);
 				},
 
 				delegate (Frame f, string m) {
 					var g = (f as EventTimeCodesFrame);
-					Assert.AreEqual(TimestampFormat.AbsoluteMilliseconds, g.TimestampFormat, m);
-					for (int i = 0; i < events.Count ; i++)
-					{
-						Assert.AreEqual(events[i].Time, g.Events[i].Time, m);
+					Assert.AreEqual (TimestampFormat.AbsoluteMilliseconds, g.TimestampFormat, m);
+					for (int i = 0; i < events.Count; i++) {
+						Assert.AreEqual (events[i].Time, g.Events[i].Time, m);
 					}
 				});
 		}
 
 		delegate void TagTestFunc (Tag tag, string msg);
-		
+
 		void TagTestWithSave (ref Tag tag, TagTestFunc testFunc)
 		{
 			testFunc (tag, "Before Save");
-			for (byte version = 2; version <= 4; version ++) {
+			for (byte version = 2; version <= 4; version++) {
 				tag.Version = version;
 				tag = new Tag (tag.Render ());
 				testFunc (tag, "After Save, Version: " + version);
@@ -1591,20 +1591,20 @@ namespace TaglibSharp.Tests.TaggingFormats
 		}
 
 		delegate void FrameTestFunc (Frame frame, string msg);
-		
+
 		delegate void SetEncodingFunc (Frame frame, StringType encoding);
-		
+
 		delegate Frame CreateFrameFunc (ByteVector data, byte version);
 
 		void FrameTest (Frame frame, byte minVersion,
-		                SetEncodingFunc setEncFunc,
-		                CreateFrameFunc createFunc,
-		                FrameTestFunc testFunc)
+						SetEncodingFunc setEncFunc,
+						CreateFrameFunc createFunc,
+						FrameTestFunc testFunc)
 		{
 			testFunc (frame, "Beginning");
-			for (byte version = minVersion; version <= 4; version ++) {
-				for (int encoding = 0; encoding < (setEncFunc != null ? 5 : 1); encoding ++) {
-					setEncFunc?.Invoke (frame, (StringType) encoding);
+			for (byte version = minVersion; version <= 4; version++) {
+				for (int encoding = 0; encoding < (setEncFunc != null ? 5 : 1); encoding++) {
+					setEncFunc?.Invoke (frame, (StringType)encoding);
 
 					var tmp = frame.Render (version);
 					//Extras.DumpHex (tmp.Data);

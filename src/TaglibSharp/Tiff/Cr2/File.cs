@@ -22,12 +22,9 @@
 //
 
 using System;
-using System.Collections.Generic;
-
-using TagLib;
-using TagLib.Image;
 using TagLib.IFD;
 using TagLib.IFD.Tags;
+using TagLib.Image;
 
 namespace TagLib.Tiff.Cr2
 {
@@ -36,21 +33,21 @@ namespace TagLib.Tiff.Cr2
 	///    This class extends <see cref="TagLib.Tiff.BaseTiffFile" /> to provide tagging
 	///    for CR2 image files.
 	/// </summary>
-	[SupportedMimeType("taglib/cr2", "cr2")]
-	[SupportedMimeType("image/cr2")]
-	[SupportedMimeType("image/x-canon-cr2")]
-	public class File : TagLib.Tiff.BaseTiffFile
+	[SupportedMimeType ("taglib/cr2", "cr2")]
+	[SupportedMimeType ("image/cr2")]
+	[SupportedMimeType ("image/x-canon-cr2")]
+	public class File : BaseTiffFile
 	{
-#region private fields
+		#region private fields
 
 		/// <summary>
 		///    The Properties of the image
 		/// </summary>
-		private Properties properties;
+		Properties properties;
 
-#endregion
+		#endregion
 
-#region public Properties
+		#region public Properties
 
 		/// <summary>
 		///    Gets the media properties of the file represented by the
@@ -61,7 +58,7 @@ namespace TagLib.Tiff.Cr2
 		///    media properties of the file represented by the current
 		///    instance.
 		/// </value>
-		public override TagLib.Properties Properties {
+		public override Properties Properties {
 			get { return properties; }
 		}
 
@@ -77,9 +74,9 @@ namespace TagLib.Tiff.Cr2
 		}
 
 
-#endregion
+		#endregion
 
-#region constructors
+		#region constructors
 
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
@@ -99,8 +96,7 @@ namespace TagLib.Tiff.Cr2
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		public File (string path, ReadStyle propertiesStyle)
-			: this (new File.LocalFileAbstraction (path),
-				propertiesStyle)
+			: this (new LocalFileAbstraction (path), propertiesStyle)
 		{
 		}
 
@@ -116,7 +112,8 @@ namespace TagLib.Tiff.Cr2
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
-		public File (string path) : this (path, ReadStyle.Average)
+		public File (string path)
+			: this (path, ReadStyle.Average)
 		{
 		}
 
@@ -138,8 +135,8 @@ namespace TagLib.Tiff.Cr2
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle) : base (abstraction)
+		public File (IFileAbstraction abstraction, ReadStyle propertiesStyle)
+			: base (abstraction)
 		{
 			Read (propertiesStyle);
 		}
@@ -161,9 +158,9 @@ namespace TagLib.Tiff.Cr2
 		{
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Saves the changes made in the current instance to the
@@ -174,9 +171,9 @@ namespace TagLib.Tiff.Cr2
 			throw new NotSupportedException ();
 		}
 
-#endregion
+		#endregion
 
-#region private methods
+		#region private methods
 
 		/// <summary>
 		///    Reads the information from file with a specified read style.
@@ -186,7 +183,7 @@ namespace TagLib.Tiff.Cr2
 		///    of accuracy to read the media properties, or <see
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
-		private void Read (ReadStyle propertiesStyle)
+		void Read (ReadStyle propertiesStyle)
 		{
 			Mode = AccessMode.Read;
 			try {
@@ -207,7 +204,7 @@ namespace TagLib.Tiff.Cr2
 		/// <summary>
 		///    Parses the CR2 file
 		/// </summary>
-		private void ReadFile ()
+		void ReadFile ()
 		{
 			// A CR2 file starts with a Tiff header followed by a CR2 header
 			uint first_ifd_offset = ReadHeader ();
@@ -223,7 +220,7 @@ namespace TagLib.Tiff.Cr2
 		/// <returns>
 		///    A <see cref="System.UInt32"/> with the offset to the IFD with the RAW data.
 		/// </returns>
-		private uint ReadAdditionalCR2Header ()
+		uint ReadAdditionalCR2Header ()
 		{
 			// CR2 Header
 			//
@@ -241,10 +238,10 @@ namespace TagLib.Tiff.Cr2
 				throw new CorruptFileException ("Unexpected end of CR2 header");
 
 			if (header.Mid (0, 2).ToString () != "CR")
-				throw new CorruptFileException("CR2 Magic (CR) expected");
+				throw new CorruptFileException ("CR2 Magic (CR) expected");
 
-			byte major_version = header [2];
-			byte minor_version = header [3];
+			byte major_version = header[2];
+			byte minor_version = header[3];
 
 			if (major_version != 2 || minor_version != 0)
 				throw new UnsupportedFormatException ("Only major version 2 and minor version 0 are supported");
@@ -263,14 +260,14 @@ namespace TagLib.Tiff.Cr2
 		///    at the right values. When no guess at all can be made,
 		///    <see langword="null" /> is returned.
 		/// </returns>
-		private Properties ExtractProperties ()
+		Properties ExtractProperties ()
 		{
 			int width = 0, height = 0;
 
 			IFDTag tag = GetTag (TagTypes.TiffIFD) as IFDTag;
 
-			width = (int) (tag.ExifIFD.GetLongValue (0, (ushort) ExifEntryTag.PixelXDimension) ?? 0);
-			height = (int) (tag.ExifIFD.GetLongValue (0, (ushort) ExifEntryTag.PixelYDimension) ?? 0);
+			width = (int)(tag.ExifIFD.GetLongValue (0, (ushort)ExifEntryTag.PixelXDimension) ?? 0);
+			height = (int)(tag.ExifIFD.GetLongValue (0, (ushort)ExifEntryTag.PixelYDimension) ?? 0);
 
 			if (width > 0 && height > 0) {
 				return new Properties (TimeSpan.Zero, new Codec (width, height, "Canon RAW File"));
@@ -279,7 +276,7 @@ namespace TagLib.Tiff.Cr2
 			return null;
 		}
 
-#endregion
+		#endregion
 
 
 	}

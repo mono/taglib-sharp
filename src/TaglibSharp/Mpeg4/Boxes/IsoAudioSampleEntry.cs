@@ -26,7 +26,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace TagLib.Mpeg4 {
+namespace TagLib.Mpeg4
+{
 	/// <summary>
 	///    This class extends <see cref="IsoSampleEntry" /> and implements
 	///    <see cref="IAudioCodec" /> to provide an implementation of a
@@ -36,33 +37,33 @@ namespace TagLib.Mpeg4 {
 	public class IsoAudioSampleEntry : IsoSampleEntry, IAudioCodec
 	{
 		#region Private Fields
-		
+
 		/// <summary>
 		///    Contains the channel count.
 		/// </summary>
-		private ushort channel_count;
+		readonly ushort channel_count;
 
 		/// <summary>
 		///    Contains the sample size.
 		/// </summary>
-		private ushort sample_size;
+		readonly ushort sample_size;
 
 		/// <summary>
 		///    Contains the sample rate.
 		/// </summary>
-		private uint   sample_rate;
-		
+		readonly uint sample_rate;
+
 		/// <summary>
 		///    Contains the children of the box.
 		/// </summary>
-		private IEnumerable<Box> children;
-		
+		readonly IEnumerable<Box> children;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="IsoVisualSampleEntry" /> with a provided header and
@@ -83,13 +84,12 @@ namespace TagLib.Mpeg4 {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
-		public IsoAudioSampleEntry (BoxHeader header, TagLib.File file,
-		                            IsoHandlerBox handler)
+		public IsoAudioSampleEntry (BoxHeader header, TagLib.File file, IsoHandlerBox handler)
 			: base (header, file, handler)
 		{
 			if (file == null)
-				throw new ArgumentNullException (nameof(file));
-			
+				throw new ArgumentNullException (nameof (file));
+
 			file.Seek (base.DataPosition + 8);
 			channel_count = file.ReadBlock (2).ToUShort ();
 			sample_size = file.ReadBlock (2).ToUShort ();
@@ -97,13 +97,13 @@ namespace TagLib.Mpeg4 {
 			sample_rate = file.ReadBlock (4).ToUInt ();
 			children = LoadChildren (file);
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the position of the data contained in the current
 		///    instance, after any box specific headers.
@@ -113,9 +113,9 @@ namespace TagLib.Mpeg4 {
 		///    the data contained in the current instance.
 		/// </value>
 		protected override long DataPosition {
-			get {return base.DataPosition + 20;}
+			get { return base.DataPosition + 20; }
 		}
-		
+
 		/// <summary>
 		///    Gets the children of the current instance.
 		/// </summary>
@@ -124,15 +124,15 @@ namespace TagLib.Mpeg4 {
 		///    children of the current instance.
 		/// </value>
 		public override IEnumerable<Box> Children {
-			get {return children;}
+			get { return children; }
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region IAudioCodec Properties
-		
+
 		/// <summary>
 		///    Gets the duration of the media represented by the current
 		///    instance.
@@ -141,9 +141,9 @@ namespace TagLib.Mpeg4 {
 		///    Always <see cref="TimeSpan.Zero" />.
 		/// </value>
 		public TimeSpan Duration {
-			get {return TimeSpan.Zero;}
+			get { return TimeSpan.Zero; }
 		}
-		
+
 		/// <summary>
 		///    Gets the types of media represented by the current
 		///    instance.
@@ -152,9 +152,9 @@ namespace TagLib.Mpeg4 {
 		///    Always <see cref="MediaTypes.Video" />.
 		/// </value>
 		public MediaTypes MediaTypes {
-			get {return MediaTypes.Audio;}
+			get { return MediaTypes.Audio; }
 		}
-		
+
 		/// <summary>
 		///    Gets a text description of the media represented by the
 		///    current instance.
@@ -165,12 +165,10 @@ namespace TagLib.Mpeg4 {
 		/// </value>
 		public string Description {
 			get {
-				return string.Format (
-					CultureInfo.InvariantCulture,
-					"MPEG-4 Audio ({0})", BoxType);
+				return string.Format (CultureInfo.InvariantCulture, "MPEG-4 Audio ({0})", BoxType);
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the bitrate of the audio represented by the current
 		///    instance.
@@ -181,20 +179,16 @@ namespace TagLib.Mpeg4 {
 		/// </value>
 		public int AudioBitrate {
 			get {
-				AppleElementaryStreamDescriptor esds =
-					GetChildRecursively ("esds") as
-						AppleElementaryStreamDescriptor;
-				
 				// If we don't have an stream descriptor, we
 				// don't know what's what.
-				if (esds == null)
+				if (!(GetChildRecursively ("esds") is AppleElementaryStreamDescriptor esds))
 					return 0;
-				
+
 				// Return from the elementary stream descriptor.
-				return (int) esds.AverageBitrate;
+				return (int)esds.AverageBitrate;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the sample rate of the audio represented by the
 		///    current instance.
@@ -204,9 +198,9 @@ namespace TagLib.Mpeg4 {
 		///    the audio represented by the current instance.
 		/// </value>
 		public int AudioSampleRate {
-			get {return (int)(sample_rate >> 16);}
+			get { return (int)(sample_rate >> 16); }
 		}
-		
+
 		/// <summary>
 		///    Gets the number of channels in the audio represented by
 		///    the current instance.
@@ -217,9 +211,9 @@ namespace TagLib.Mpeg4 {
 		///    instance.
 		/// </value>
 		public int AudioChannels {
-			get {return channel_count;}
+			get { return channel_count; }
 		}
-		
+
 		/// <summary>
 		///    Gets the sample size of the audio represented by the
 		///    current instance.
@@ -229,9 +223,9 @@ namespace TagLib.Mpeg4 {
 		///    the audio represented by the current instance.
 		/// </value>
 		public int AudioSampleSize {
-			get {return sample_size;}
+			get { return sample_size; }
 		}
-		
+
 		#endregion
 	}
 }

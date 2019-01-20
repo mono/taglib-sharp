@@ -33,17 +33,17 @@ namespace TagLib.IFD.Entries
 	public class StripOffsetsIFDEntry : ArrayIFDEntry<uint>
 	{
 
-#region Private Fields
+		#region Private Fields
 
 		/// <value>
 		///    Store the strip length to read them before writing.
 		/// </value>
-		private uint[] byte_counts;
+		readonly uint[] byte_counts;
 
 		/// <value>
 		///    The file the offsets belong to
 		/// </value>
-		private File file;
+		readonly File file;
 
 		#endregion
 
@@ -75,9 +75,9 @@ namespace TagLib.IFD.Entries
 				throw new Exception ("strip offsets and strip byte counts do not have the same length");
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Renders the current instance to a <see cref="ByteVector"/>
@@ -108,13 +108,13 @@ namespace TagLib.IFD.Entries
 			ByteVector offset_data = new ByteVector ();
 
 			// every offset needs 4 byte, we need to reserve the bytes.
-			uint data_offset = offset + (uint) (4 * Values.Length);
+			uint data_offset = offset + (uint)(4 * Values.Length);
 
 			for (int i = 0; i < Values.Length; i++) {
-				uint new_offset = (uint) (data_offset + data.Count);
+				uint new_offset = (uint)(data_offset + data.Count);
 
 				file.Seek (Values[i], SeekOrigin.Begin);
-				data.Add (file.ReadBlock ((int) byte_counts[i]));
+				data.Add (file.ReadBlock ((int)byte_counts[i]));
 
 				// update strip offset data to new offset
 				Values[i] = new_offset;
@@ -139,13 +139,12 @@ namespace TagLib.IFD.Entries
 
 			// the entry is a single long entry where the value is an offset to the data
 			// the offset is automatically updated by the renderer.
-			type = (ushort) IFDEntryType.Long;
-			count = (uint) Values.Length;
+			type = (ushort)IFDEntryType.Long;
+			count = (uint)Values.Length;
 
 			return data;
 		}
 
-#endregion
-
+		#endregion
 	}
 }

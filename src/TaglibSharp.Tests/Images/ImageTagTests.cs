@@ -20,7 +20,7 @@ namespace TaglibSharp.Tests.Images
 			Assert.IsNotNull (tag);
 
 			Assert.AreEqual (null, tag.Comment, "Comment");
-			Assert.AreEqual (new string [] {}, tag.Keywords, "Keywords");
+			Assert.AreEqual (new string[] { }, tag.Keywords, "Keywords");
 			Assert.AreEqual (0, tag.Rating, "Rating");
 			Assert.AreEqual (null, tag.DateTime, "DateTime");
 			Assert.AreEqual (ImageOrientation.None, tag.Orientation, "Orientation");
@@ -44,11 +44,11 @@ namespace TaglibSharp.Tests.Images
 			var file = TagLib.File.Create (TestPath.Samples + "sample_gimp_exiftool.jpg") as TagLib.Image.File;
 			Assert.IsNotNull (file);
 
-			var tag = file.GetTag (TagTypes.XMP) as TagLib.Image.ImageTag;
+			var tag = file.GetTag (TagTypes.XMP) as ImageTag;
 			Assert.IsNotNull (tag);
 
 			Assert.AreEqual ("This is an image Comment", tag.Comment, "Comment");
-			Assert.AreEqual (new string [] { "keyword 1", "keyword 2" }, tag.Keywords, "Keywords");
+			Assert.AreEqual (new string[] { "keyword 1", "keyword 2" }, tag.Keywords, "Keywords");
 			Assert.AreEqual (5, tag.Rating, "Rating");
 			Assert.AreEqual (null, tag.DateTime, "DateTime");
 			Assert.AreEqual (ImageOrientation.None, tag.Orientation, "Orientation");

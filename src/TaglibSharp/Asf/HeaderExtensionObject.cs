@@ -22,10 +22,11 @@
 // USA
 //
 
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 
-namespace TagLib.Asf {
+namespace TagLib.Asf
+{
 	/// <summary>
 	///    This class extends <see cref="Object" /> to provide a
 	///    representation of an ASF Header Extension object which can be
@@ -34,18 +35,18 @@ namespace TagLib.Asf {
 	public class HeaderExtensionObject : Object
 	{
 		#region Private Fields
-		
+
 		/// <summary>
 		///    Contains the child objects.
 		/// </summary>
-		private List<Object> children = new List<Object> ();
-		
+		readonly List<Object> children = new List<Object> ();
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="HeaderExtensionObject" /> by reading the contents
@@ -70,38 +71,35 @@ namespace TagLib.Asf {
 		///    The object read from disk does not have the correct GUID
 		///    or contents.
 		/// </exception>
-		public HeaderExtensionObject (Asf.File file, long position)
+		public HeaderExtensionObject (File file, long position)
 			: base (file, position)
 		{
 			if (!Guid.Equals (Asf.Guid.AsfHeaderExtensionObject))
-				throw new CorruptFileException (
-					"Object GUID incorrect.");
-			
+				throw new CorruptFileException ("Object GUID incorrect.");
+
 			if (file.ReadGuid () != Asf.Guid.AsfReserved1)
-				throw new CorruptFileException (
-					"Reserved1 GUID expected.");
-			
+				throw new CorruptFileException ("Reserved1 GUID expected.");
+
 			if (file.ReadWord () != 6)
-				throw new CorruptFileException (
-					"Invalid reserved WORD. Expected '6'.");
-			
+				throw new CorruptFileException ("Invalid reserved WORD. Expected '6'.");
+
 			uint size_remaining = file.ReadDWord ();
 			position += 0x170 / 8;
-			
+
 			while (size_remaining > 0) {
 				Object obj = file.ReadObject (position);
-				position += (long) obj.OriginalSize;
-				size_remaining -= (uint) obj.OriginalSize;
+				position += (long)obj.OriginalSize;
+				size_remaining -= (uint)obj.OriginalSize;
 				children.Add (obj);
 			}
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the child objects contained in the current instance.
 		/// </summary>
@@ -110,15 +108,15 @@ namespace TagLib.Asf {
 		///    through the children of the current instance.
 		/// </value>
 		public IEnumerable<Object> Children {
-			get {return children;}
+			get { return children; }
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Methods
-		
+
 		/// <summary>
 		///    Renders the current instance as a raw ASF object.
 		/// </summary>
@@ -129,17 +127,17 @@ namespace TagLib.Asf {
 		public override ByteVector Render ()
 		{
 			ByteVector output = new ByteVector ();
-			
-			foreach (Object child in children)
+
+			foreach (var child in children)
 				output.Add (child.Render ());
-			
-			output.Insert (0, RenderDWord ((uint) output.Count));
+
+			output.Insert (0, RenderDWord ((uint)output.Count));
 			output.Insert (0, RenderWord (6));
 			output.Insert (0, Asf.Guid.AsfReserved1.ToByteArray ());
-			
+
 			return Render (output);
 		}
-		
+
 		/// <summary>
 		///    Adds a child object to the current instance.
 		/// </summary>
@@ -151,7 +149,7 @@ namespace TagLib.Asf {
 		{
 			children.Add (obj);
 		}
-		
+
 		/// <summary>
 		///    Adds a child unique child object to the current instance,
 		///    replacing and existing child if present.
@@ -162,15 +160,15 @@ namespace TagLib.Asf {
 		/// </param>
 		public void AddUniqueObject (Object obj)
 		{
-			for (int i = 0; i < children.Count; i ++)
-				if (((Object) children [i]).Guid == obj.Guid) {
-					children [i] = obj;
+			for (int i = 0; i < children.Count; i++)
+				if (children[i].Guid == obj.Guid) {
+					children[i] = obj;
 					return;
 				}
-			
+
 			children.Add (obj);
 		}
-		
+
 		#endregion
 	}
 }

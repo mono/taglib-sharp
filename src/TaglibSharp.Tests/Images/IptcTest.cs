@@ -38,7 +38,7 @@ namespace TaglibSharp.Tests.Images
 
 			Assert.IsNotNull (tag, "tag");
 
-			CollectionAssert.AreEqual (new[] { "kw1", "kw2", "kw3 "}, tag.Keywords);
+			CollectionAssert.AreEqual (new[] { "kw1", "kw2", "kw3 " }, tag.Keywords);
 		}
 
 		[Test]

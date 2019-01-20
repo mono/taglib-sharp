@@ -24,7 +24,8 @@
 
 using System;
 
-namespace TagLib.Mpeg4 {
+namespace TagLib.Mpeg4
+{
 	/// <summary>
 	///    This class extends <see cref="Box" /> to provide an
 	///    implementation of an Apple AdditionalInfoBox.
@@ -32,18 +33,17 @@ namespace TagLib.Mpeg4 {
 	public class AppleAdditionalInfoBox : Box
 	{
 		#region Private Fields
-		
+
 		/// <summary>
 		///    Contains the box data.
 		/// </summary>
-		private ByteVector data;
-		
+		ByteVector data;
+
 		#endregion
-		
-		
-		
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="AppleAdditionalInfoBox" /> with a provided header
@@ -65,13 +65,14 @@ namespace TagLib.Mpeg4 {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
-		public AppleAdditionalInfoBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, handler)
+		public AppleAdditionalInfoBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler)
+			: base (header, handler)
 		{
 			// We do not care what is in this custom data section
 			// see: https://developer.apple.com/library/mac/#documentation/QuickTime/QTFF/QTFFChap2/qtff2.html
 			Data = LoadData (file);
 		}
-		
+
 		/// <summary>
 		/// Constructs and initializes a new instance of <see
 		///    cref="AppleAdditionalInfoBox" /> using specified header, version and flags
@@ -80,13 +81,13 @@ namespace TagLib.Mpeg4 {
 		public AppleAdditionalInfoBox (ByteVector header) : base (header)
 		{
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets and sets the data contained in the current instance.
 		/// </summary>
@@ -95,10 +96,10 @@ namespace TagLib.Mpeg4 {
 		///    contained in the current instance.
 		/// </value>
 		public override ByteVector Data {
-			get {return data;}
-			set {data = value != null ? value : new ByteVector ();}
+			get { return data; }
+			set { data = value ?? new ByteVector (); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the text contained in the current instance.
 		/// </summary>
@@ -107,13 +108,10 @@ namespace TagLib.Mpeg4 {
 		///    contained in the current instance.
 		/// </value>
 		public string Text {
-			get {return Data.ToString (StringType.Latin1).TrimStart ('\0');}
-			set {
-				Data = ByteVector.FromString (value,
-					StringType.Latin1);
-			}
+			get { return Data.ToString (StringType.Latin1).TrimStart ('\0'); }
+			set { Data = ByteVector.FromString (value, StringType.Latin1); }
 		}
-		
+
 		#endregion
 	}
 }

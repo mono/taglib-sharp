@@ -32,7 +32,7 @@ namespace TagLib.Image
 	/// </summary>
 	public abstract class Codec : IPhotoCodec
 	{
-#region Properties
+		#region Properties
 
 		/// <summary>
 		///    Gets the duration of the media represented by the current
@@ -72,7 +72,7 @@ namespace TagLib.Image
 		///    A <see cref="int" /> value containing the width of the
 		///    photo represented by the current instance.
 		/// </value>
-		public int PhotoWidth  { get; protected set; }
+		public int PhotoWidth { get; protected set; }
 
 		/// <summary>
 		///    Gets the height of the photo represented by the current
@@ -95,9 +95,9 @@ namespace TagLib.Image
 		/// </value>
 		public int PhotoQuality { get; protected set; }
 
-#endregion
+		#endregion
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Constructs a new <see cref="Codec" /> with the given width
@@ -112,7 +112,8 @@ namespace TagLib.Image
 		/// <returns>
 		///    A new <see cref="Codec" /> instance.
 		/// </returns>
-		public Codec (int width, int height) : this (width, height, 0)
+		public Codec (int width, int height)
+			: this (width, height, 0)
 		{
 		}
 
@@ -139,7 +140,6 @@ namespace TagLib.Image
 			PhotoQuality = quality;
 		}
 
-#endregion
-
+		#endregion
 	}
 }

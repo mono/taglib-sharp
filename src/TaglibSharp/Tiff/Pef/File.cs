@@ -22,12 +22,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-
-using TagLib;
-using TagLib.Image;
-using TagLib.IFD;
-using TagLib.IFD.Tags;
 
 namespace TagLib.Tiff.Pef
 {
@@ -36,13 +30,13 @@ namespace TagLib.Tiff.Pef
 	///    This class extends <see cref="TagLib.Tiff.BaseTiffFile" /> to provide tagging
 	///    for PEF image files.
 	/// </summary>
-	[SupportedMimeType("taglib/pef", "pef")]
-	[SupportedMimeType("image/pef")]
-	[SupportedMimeType("image/x-pentax-pef")]
+	[SupportedMimeType ("taglib/pef", "pef")]
+	[SupportedMimeType ("image/pef")]
+	[SupportedMimeType ("image/x-pentax-pef")]
 	public class File : TagLib.Tiff.File
 	{
 
-#region public Properties
+		#region public Properties
 
 		/// <summary>
 		///    Indicates if tags can be written back to the current file or not
@@ -56,9 +50,9 @@ namespace TagLib.Tiff.Pef
 		}
 
 
-#endregion
+		#endregion
 
-#region constructors
+		#region constructors
 
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
@@ -78,8 +72,7 @@ namespace TagLib.Tiff.Pef
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		public File (string path, ReadStyle propertiesStyle)
-			: this (new File.LocalFileAbstraction (path),
-				propertiesStyle)
+			: this (new LocalFileAbstraction (path), propertiesStyle)
 		{
 		}
 
@@ -95,7 +88,8 @@ namespace TagLib.Tiff.Pef
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
-		public File (string path) : this (path, ReadStyle.Average)
+		public File (string path)
+			: this (path, ReadStyle.Average)
 		{
 		}
 
@@ -117,8 +111,8 @@ namespace TagLib.Tiff.Pef
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle) : base (abstraction, propertiesStyle)
+		public File (IFileAbstraction abstraction, ReadStyle propertiesStyle)
+			: base (abstraction, propertiesStyle)
 		{
 		}
 
@@ -139,9 +133,9 @@ namespace TagLib.Tiff.Pef
 		{
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Saves the changes made in the current instance to the
@@ -152,7 +146,7 @@ namespace TagLib.Tiff.Pef
 			throw new NotSupportedException ();
 		}
 
-#endregion
+		#endregion
 
 		/// <summary>
 		///    Create a codec that describes the photo properties.

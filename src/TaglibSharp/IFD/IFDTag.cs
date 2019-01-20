@@ -26,12 +26,10 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 
-using TagLib.Image;
 using TagLib.IFD.Entries;
 using TagLib.IFD.Tags;
+using TagLib.Image;
 
 namespace TagLib.IFD
 {
@@ -41,25 +39,25 @@ namespace TagLib.IFD
 	public class IFDTag : ImageTag
 	{
 
-#region Private Fields
+		#region Private Fields
 
 		/// <summary>
 		///    A reference to the Exif IFD (which can be found by following the
 		///    pointer in IFD0, ExifIFD tag). This variable should not be used
 		///    directly, use the <see cref="ExifIFD"/> property instead.
 		/// </summary>
-		private IFDStructure exif_ifd = null;
+		IFDStructure exif_ifd;
 
 		/// <summary>
 		///    A reference to the GPS IFD (which can be found by following the
 		///    pointer in IFD0, GPSIFD tag). This variable should not be used
 		///    directly, use the <see cref="GPSIFD"/> property instead.
 		/// </summary>
-		private IFDStructure gps_ifd = null;
+		IFDStructure gps_ifd;
 
-#endregion
+		#endregion
 
-#region Public Properties
+		#region Public Properties
 
 		/// <value>
 		///    The IFD structure referenced by the current instance
@@ -77,10 +75,9 @@ namespace TagLib.IFD
 		public IFDStructure ExifIFD {
 			get {
 				if (exif_ifd == null) {
-					var entry = Structure.GetEntry (0, IFDEntryTag.ExifIFD) as SubIFDEntry;
-					if (entry == null) {
+					if (!(Structure.GetEntry (0, IFDEntryTag.ExifIFD) is SubIFDEntry entry)) {
 						exif_ifd = new IFDStructure ();
-						entry = new SubIFDEntry ((ushort) IFDEntryTag.ExifIFD, (ushort) IFDEntryType.Long, 1, exif_ifd);
+						entry = new SubIFDEntry ((ushort)IFDEntryTag.ExifIFD, (ushort)IFDEntryType.Long, 1, exif_ifd);
 						Structure.SetEntry (0, entry);
 					}
 
@@ -102,10 +99,9 @@ namespace TagLib.IFD
 		public IFDStructure GPSIFD {
 			get {
 				if (gps_ifd == null) {
-					var entry = Structure.GetEntry (0, IFDEntryTag.GPSIFD) as SubIFDEntry;
-					if (entry == null) {
+					if (!(Structure.GetEntry (0, IFDEntryTag.GPSIFD) is SubIFDEntry entry)) {
 						gps_ifd = new IFDStructure ();
-						entry = new SubIFDEntry ((ushort) IFDEntryTag.GPSIFD, (ushort) IFDEntryType.Long, 1, gps_ifd);
+						entry = new SubIFDEntry ((ushort)IFDEntryTag.GPSIFD, (ushort)IFDEntryType.Long, 1, gps_ifd);
 						Structure.SetEntry (0, entry);
 					}
 
@@ -126,9 +122,9 @@ namespace TagLib.IFD
 			get { return TagTypes.TiffIFD; }
 		}
 
-#endregion
+		#endregion
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Constructor. Creates an empty IFD tag. Can be populated manually, or via
@@ -139,9 +135,9 @@ namespace TagLib.IFD
 			Structure = new IFDStructure ();
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Clears the values stored in the current instance.
@@ -151,9 +147,9 @@ namespace TagLib.IFD
 			throw new NotImplementedException ();
 		}
 
-#endregion
+		#endregion
 
-#region Metadata fields
+		#region Metadata fields
 
 		/// <summary>
 		///    Gets or sets the comment for the image described
@@ -165,24 +161,23 @@ namespace TagLib.IFD
 		/// </value>
 		public override string Comment {
 			get {
-				var comment_entry = ExifIFD.GetEntry (0, (ushort) ExifEntryTag.UserComment) as UserCommentIFDEntry;
 
-				if (comment_entry == null) {
+				if (!(ExifIFD.GetEntry (0, (ushort)ExifEntryTag.UserComment) is UserCommentIFDEntry comment_entry)) {
 					var description = Structure.GetEntry (0, IFDEntryTag.ImageDescription) as StringIFDEntry;
-					return description == null ? null : description.Value;
+					return description?.Value;
 				}
 
 				return comment_entry.Value;
 			}
 			set {
 				if (value == null) {
-					ExifIFD.RemoveTag (0, (ushort) ExifEntryTag.UserComment);
-					Structure.RemoveTag (0, (ushort) IFDEntryTag.ImageDescription);
+					ExifIFD.RemoveTag (0, (ushort)ExifEntryTag.UserComment);
+					Structure.RemoveTag (0, (ushort)IFDEntryTag.ImageDescription);
 					return;
 				}
 
-				ExifIFD.SetEntry (0, new UserCommentIFDEntry ((ushort) ExifEntryTag.UserComment, value));
-				Structure.SetEntry (0, new StringIFDEntry ((ushort) IFDEntryTag.ImageDescription, value));
+				ExifIFD.SetEntry (0, new UserCommentIFDEntry ((ushort)ExifEntryTag.UserComment, value));
+				Structure.SetEntry (0, new StringIFDEntry ((ushort)IFDEntryTag.ImageDescription, value));
 			}
 		}
 
@@ -197,15 +192,15 @@ namespace TagLib.IFD
 		/// </value>
 		public override string Copyright {
 			get {
-				return Structure.GetStringValue (0, (ushort) IFDEntryTag.Copyright);
+				return Structure.GetStringValue (0, (ushort)IFDEntryTag.Copyright);
 			}
 			set {
 				if (value == null) {
-					Structure.RemoveTag (0, (ushort) IFDEntryTag.Copyright);
+					Structure.RemoveTag (0, (ushort)IFDEntryTag.Copyright);
 					return;
 				}
 
-				Structure.SetEntry (0, new StringIFDEntry ((ushort) IFDEntryTag.Copyright, value));
+				Structure.SetEntry (0, new StringIFDEntry ((ushort)IFDEntryTag.Copyright, value));
 			}
 		}
 
@@ -217,10 +212,10 @@ namespace TagLib.IFD
 		/// </value>
 		public override string Creator {
 			get {
-				return Structure.GetStringValue (0, (ushort) IFDEntryTag.Artist);
+				return Structure.GetStringValue (0, (ushort)IFDEntryTag.Artist);
 			}
 			set {
-				Structure.SetStringValue (0, (ushort) IFDEntryTag.Artist, value);
+				Structure.SetStringValue (0, (ushort)IFDEntryTag.Artist, value);
 			}
 		}
 
@@ -234,10 +229,10 @@ namespace TagLib.IFD
 		/// </value>
 		public override string Software {
 			get {
-				return Structure.GetStringValue (0, (ushort) IFDEntryTag.Software);
+				return Structure.GetStringValue (0, (ushort)IFDEntryTag.Software);
 			}
 			set {
-				Structure.SetStringValue (0, (ushort) IFDEntryTag.Software, value);
+				Structure.SetStringValue (0, (ushort)IFDEntryTag.Software, value);
 			}
 		}
 
@@ -261,15 +256,15 @@ namespace TagLib.IFD
 		/// </value>
 		public DateTime? DateTimeOriginal {
 			get {
-				return ExifIFD.GetDateTimeValue (0, (ushort) ExifEntryTag.DateTimeOriginal);
+				return ExifIFD.GetDateTimeValue (0, (ushort)ExifEntryTag.DateTimeOriginal);
 			}
 			set {
 				if (value == null) {
-					ExifIFD.RemoveTag (0, (ushort) ExifEntryTag.DateTimeOriginal);
+					ExifIFD.RemoveTag (0, (ushort)ExifEntryTag.DateTimeOriginal);
 					return;
 				}
 
-				ExifIFD.SetDateTimeValue (0, (ushort) ExifEntryTag.DateTimeOriginal, value.Value);
+				ExifIFD.SetDateTimeValue (0, (ushort)ExifEntryTag.DateTimeOriginal, value.Value);
 			}
 		}
 
@@ -281,15 +276,15 @@ namespace TagLib.IFD
 		/// </value>
 		public DateTime? DateTimeDigitized {
 			get {
-				return ExifIFD.GetDateTimeValue (0, (ushort) ExifEntryTag.DateTimeDigitized);
+				return ExifIFD.GetDateTimeValue (0, (ushort)ExifEntryTag.DateTimeDigitized);
 			}
 			set {
 				if (value == null) {
-					ExifIFD.RemoveTag (0, (ushort) ExifEntryTag.DateTimeDigitized);
+					ExifIFD.RemoveTag (0, (ushort)ExifEntryTag.DateTimeDigitized);
 					return;
 				}
 
-				ExifIFD.SetDateTimeValue (0, (ushort) ExifEntryTag.DateTimeDigitized, value.Value);
+				ExifIFD.SetDateTimeValue (0, (ushort)ExifEntryTag.DateTimeDigitized, value.Value);
 			}
 		}
 
@@ -304,13 +299,12 @@ namespace TagLib.IFD
 		public override double? Latitude {
 			get {
 				var gps_ifd = GPSIFD;
-				var degree_entry = gps_ifd.GetEntry (0, (ushort) GPSEntryTag.GPSLatitude) as RationalArrayIFDEntry;
-				var degree_ref = gps_ifd.GetStringValue (0, (ushort) GPSEntryTag.GPSLatitudeRef);
+				var degree_ref = gps_ifd.GetStringValue (0, (ushort)GPSEntryTag.GPSLatitudeRef);
 
-				if (degree_entry == null || degree_ref == null)
+				if (!(gps_ifd.GetEntry (0, (ushort)GPSEntryTag.GPSLatitude) is RationalArrayIFDEntry degree_entry) || degree_ref == null)
 					return null;
 
-				Rational [] values  = degree_entry.Values;
+				Rational[] values = degree_entry.Values;
 				if (values.Length != 3)
 					return null;
 
@@ -325,8 +319,8 @@ namespace TagLib.IFD
 				var gps_ifd = GPSIFD;
 
 				if (value == null) {
-					gps_ifd.RemoveTag (0, (ushort) GPSEntryTag.GPSLatitudeRef);
-					gps_ifd.RemoveTag (0, (ushort) GPSEntryTag.GPSLatitude);
+					gps_ifd.RemoveTag (0, (ushort)GPSEntryTag.GPSLatitudeRef);
+					gps_ifd.RemoveTag (0, (ushort)GPSEntryTag.GPSLatitude);
 					return;
 				}
 
@@ -337,11 +331,10 @@ namespace TagLib.IFD
 
 				InitGpsDirectory ();
 
-				gps_ifd.SetStringValue (0, (ushort) GPSEntryTag.GPSLatitudeRef, angle < 0 ? "S" : "N");
+				gps_ifd.SetStringValue (0, (ushort)GPSEntryTag.GPSLatitudeRef, angle < 0 ? "S" : "N");
 
 				var entry =
-					new RationalArrayIFDEntry ((ushort) GPSEntryTag.GPSLatitude,
-					                           DegreeToRationals (Math.Abs (angle)));
+					new RationalArrayIFDEntry ((ushort)GPSEntryTag.GPSLatitude, DegreeToRationals (Math.Abs (angle)));
 				gps_ifd.SetEntry (0, entry);
 			}
 		}
@@ -357,13 +350,12 @@ namespace TagLib.IFD
 		public override double? Longitude {
 			get {
 				var gps_ifd = GPSIFD;
-				var degree_entry = gps_ifd.GetEntry (0, (ushort) GPSEntryTag.GPSLongitude) as RationalArrayIFDEntry;
-				var degree_ref = gps_ifd.GetStringValue (0, (ushort) GPSEntryTag.GPSLongitudeRef);
+				var degree_ref = gps_ifd.GetStringValue (0, (ushort)GPSEntryTag.GPSLongitudeRef);
 
-				if (degree_entry == null || degree_ref == null)
+				if (!(gps_ifd.GetEntry (0, (ushort)GPSEntryTag.GPSLongitude) is RationalArrayIFDEntry degree_entry) || degree_ref == null)
 					return null;
 
-				Rational [] values  = degree_entry.Values;
+				Rational[] values = degree_entry.Values;
 				if (values.Length != 3)
 					return null;
 
@@ -378,8 +370,8 @@ namespace TagLib.IFD
 				var gps_ifd = GPSIFD;
 
 				if (value == null) {
-					gps_ifd.RemoveTag (0, (ushort) GPSEntryTag.GPSLongitudeRef);
-					gps_ifd.RemoveTag (0, (ushort) GPSEntryTag.GPSLongitude);
+					gps_ifd.RemoveTag (0, (ushort)GPSEntryTag.GPSLongitudeRef);
+					gps_ifd.RemoveTag (0, (ushort)GPSEntryTag.GPSLongitude);
 					return;
 				}
 
@@ -390,11 +382,11 @@ namespace TagLib.IFD
 
 				InitGpsDirectory ();
 
-				gps_ifd.SetStringValue (0, (ushort) GPSEntryTag.GPSLongitudeRef, angle < 0 ? "W" : "E");
+				gps_ifd.SetStringValue (0, (ushort)GPSEntryTag.GPSLongitudeRef, angle < 0 ? "W" : "E");
 
 				var entry =
-					new RationalArrayIFDEntry ((ushort) GPSEntryTag.GPSLongitude,
-					                           DegreeToRationals (Math.Abs (angle)));
+					new RationalArrayIFDEntry ((ushort)GPSEntryTag.GPSLongitude,
+											   DegreeToRationals (Math.Abs (angle)));
 				gps_ifd.SetEntry (0, entry);
 			}
 		}
@@ -410,8 +402,8 @@ namespace TagLib.IFD
 		public override double? Altitude {
 			get {
 				var gps_ifd = GPSIFD;
-				var altitude = gps_ifd.GetRationalValue (0, (ushort) GPSEntryTag.GPSAltitude);
-				var ref_entry = gps_ifd.GetByteValue (0, (ushort) GPSEntryTag.GPSAltitudeRef);
+				var altitude = gps_ifd.GetRationalValue (0, (ushort)GPSEntryTag.GPSAltitude);
+				var ref_entry = gps_ifd.GetByteValue (0, (ushort)GPSEntryTag.GPSAltitudeRef);
 
 				if (altitude == null)
 					return null;
@@ -425,8 +417,8 @@ namespace TagLib.IFD
 				var gps_ifd = GPSIFD;
 
 				if (value == null) {
-					gps_ifd.RemoveTag (0, (ushort) GPSEntryTag.GPSAltitudeRef);
-					gps_ifd.RemoveTag (0, (ushort) GPSEntryTag.GPSAltitude);
+					gps_ifd.RemoveTag (0, (ushort)GPSEntryTag.GPSAltitudeRef);
+					gps_ifd.RemoveTag (0, (ushort)GPSEntryTag.GPSAltitude);
 					return;
 				}
 
@@ -434,8 +426,8 @@ namespace TagLib.IFD
 
 				InitGpsDirectory ();
 
-				gps_ifd.SetByteValue (0, (ushort) GPSEntryTag.GPSAltitudeRef, (byte)(altitude < 0 ? 1 : 0));
-				gps_ifd.SetRationalValue (0, (ushort) GPSEntryTag.GPSAltitude, Math.Abs (altitude));
+				gps_ifd.SetByteValue (0, (ushort)GPSEntryTag.GPSAltitudeRef, (byte)(altitude < 0 ? 1 : 0));
+				gps_ifd.SetRationalValue (0, (ushort)GPSEntryTag.GPSAltitude, Math.Abs (altitude));
 			}
 		}
 
@@ -448,10 +440,10 @@ namespace TagLib.IFD
 		/// </value>
 		public override double? ExposureTime {
 			get {
-				return ExifIFD.GetRationalValue (0, (ushort) ExifEntryTag.ExposureTime);
+				return ExifIFD.GetRationalValue (0, (ushort)ExifEntryTag.ExposureTime);
 			}
 			set {
-				ExifIFD.SetRationalValue (0, (ushort) ExifEntryTag.ExposureTime, value.HasValue ? (double) value : 0);
+				ExifIFD.SetRationalValue (0, (ushort)ExifEntryTag.ExposureTime, value ?? 0);
 			}
 		}
 
@@ -464,10 +456,10 @@ namespace TagLib.IFD
 		/// </value>
 		public override double? FNumber {
 			get {
-				return ExifIFD.GetRationalValue (0, (ushort) ExifEntryTag.FNumber);
+				return ExifIFD.GetRationalValue (0, (ushort)ExifEntryTag.FNumber);
 			}
 			set {
-				ExifIFD.SetRationalValue (0, (ushort) ExifEntryTag.FNumber, value.HasValue ? (double) value : 0);
+				ExifIFD.SetRationalValue (0, (ushort)ExifEntryTag.FNumber, value ?? 0);
 			}
 		}
 
@@ -480,10 +472,10 @@ namespace TagLib.IFD
 		/// </value>
 		public override uint? ISOSpeedRatings {
 			get {
-				return ExifIFD.GetLongValue (0, (ushort) ExifEntryTag.ISOSpeedRatings);
+				return ExifIFD.GetLongValue (0, (ushort)ExifEntryTag.ISOSpeedRatings);
 			}
 			set {
-				ExifIFD.SetLongValue (0, (ushort) ExifEntryTag.ISOSpeedRatings, value.HasValue ? (uint) value : 0);
+				ExifIFD.SetLongValue (0, (ushort)ExifEntryTag.ISOSpeedRatings, value ?? 0);
 			}
 		}
 
@@ -496,10 +488,10 @@ namespace TagLib.IFD
 		/// </value>
 		public override double? FocalLength {
 			get {
-				return ExifIFD.GetRationalValue (0, (ushort) ExifEntryTag.FocalLength);
+				return ExifIFD.GetRationalValue (0, (ushort)ExifEntryTag.FocalLength);
 			}
 			set {
-				ExifIFD.SetRationalValue (0, (ushort) ExifEntryTag.FocalLength, value.HasValue ? (double) value : 0);
+				ExifIFD.SetRationalValue (0, (ushort)ExifEntryTag.FocalLength, value ?? 0);
 			}
 		}
 
@@ -512,13 +504,13 @@ namespace TagLib.IFD
 		/// </value>
 		public override uint? FocalLengthIn35mmFilm {
 			get {
-				return ExifIFD.GetLongValue (0, (ushort) ExifEntryTag.FocalLengthIn35mmFilm);
+				return ExifIFD.GetLongValue (0, (ushort)ExifEntryTag.FocalLengthIn35mmFilm);
 			}
 			set {
 				if (value.HasValue) {
-					ExifIFD.SetLongValue (0, (ushort) ExifEntryTag.FocalLengthIn35mmFilm, (uint) value);
+					ExifIFD.SetLongValue (0, (ushort)ExifEntryTag.FocalLengthIn35mmFilm, (uint)value);
 				} else {
-					ExifIFD.RemoveTag (0, (ushort) ExifEntryTag.FocalLengthIn35mmFilm);
+					ExifIFD.RemoveTag (0, (ushort)ExifEntryTag.FocalLengthIn35mmFilm);
 				}
 			}
 		}
@@ -533,20 +525,20 @@ namespace TagLib.IFD
 		/// </value>
 		public override ImageOrientation Orientation {
 			get {
-				var orientation = Structure.GetLongValue (0, (ushort) IFDEntryTag.Orientation);
+				var orientation = Structure.GetLongValue (0, (ushort)IFDEntryTag.Orientation);
 
 				if (orientation.HasValue)
-					return (ImageOrientation) orientation;
+					return (ImageOrientation)orientation;
 
 				return ImageOrientation.None;
 			}
 			set {
-				if ((uint) value < 1U || (uint) value > 8U) {
-					Structure.RemoveTag (0, (ushort) IFDEntryTag.Orientation);
+				if ((uint)value < 1U || (uint)value > 8U) {
+					Structure.RemoveTag (0, (ushort)IFDEntryTag.Orientation);
 					return;
 				}
 
-				Structure.SetLongValue (0, (ushort) IFDEntryTag.Orientation, (uint) value);
+				Structure.SetLongValue (0, (ushort)IFDEntryTag.Orientation, (uint)value);
 			}
 		}
 
@@ -559,10 +551,10 @@ namespace TagLib.IFD
 		/// </value>
 		public override string Make {
 			get {
-				return Structure.GetStringValue (0, (ushort) IFDEntryTag.Make);
+				return Structure.GetStringValue (0, (ushort)IFDEntryTag.Make);
 			}
 			set {
-				Structure.SetStringValue (0, (ushort) IFDEntryTag.Make, value);
+				Structure.SetStringValue (0, (ushort)IFDEntryTag.Make, value);
 			}
 		}
 
@@ -575,24 +567,24 @@ namespace TagLib.IFD
 		/// </value>
 		public override string Model {
 			get {
-				return Structure.GetStringValue (0, (ushort) IFDEntryTag.Model);
+				return Structure.GetStringValue (0, (ushort)IFDEntryTag.Model);
 			}
 			set {
-				Structure.SetStringValue (0, (ushort) IFDEntryTag.Model, value);
+				Structure.SetStringValue (0, (ushort)IFDEntryTag.Model, value);
 			}
 		}
 
-#endregion
+		#endregion
 
-#region Private Methods
+		#region Private Methods
 
 		/// <summary>
 		///    Initilazies the GPS IFD with some basic entries.
 		/// </summary>
-		private void InitGpsDirectory ()
+		void InitGpsDirectory ()
 		{
-			GPSIFD.SetStringValue (0, (ushort) GPSEntryTag.GPSVersionID, "2 0 0 0");
-			GPSIFD.SetStringValue (0, (ushort) GPSEntryTag.GPSMapDatum, "WGS-84");
+			GPSIFD.SetStringValue (0, (ushort)GPSEntryTag.GPSVersionID, "2 0 0 0");
+			GPSIFD.SetStringValue (0, (ushort)GPSEntryTag.GPSMapDatum, "WGS-84");
 		}
 
 		/// <summary>
@@ -607,16 +599,16 @@ namespace TagLib.IFD
 		///    A <see cref="Rational"/> representing the same angle by degree, minutes
 		///    and seconds of the angle.
 		/// </returns>
-		private Rational[] DegreeToRationals (double angle)
+		Rational[] DegreeToRationals (double angle)
 		{
 			if (angle < 0.0 || angle > 180.0)
-				throw new ArgumentException ("angle");
+				throw new ArgumentException (nameof (angle));
 
-			uint deg = (uint) Math.Floor (angle);
-			uint min = (uint) ((angle - Math.Floor (angle)) * 60.0);
-			uint sec = (uint) ((angle - Math.Floor (angle) - (min / 60.0))  * 360000000.0);
+			uint deg = (uint)Math.Floor (angle);
+			uint min = (uint)((angle - Math.Floor (angle)) * 60.0);
+			uint sec = (uint)((angle - Math.Floor (angle) - (min / 60.0)) * 360000000.0);
 
-			Rational[] rationals = new Rational [] {
+			var rationals = new[] {
 				new Rational (deg, 1),
 				new Rational (min, 1),
 				new Rational (sec, 100000)
@@ -625,7 +617,7 @@ namespace TagLib.IFD
 			return rationals;
 		}
 
-#endregion
+		#endregion
 
 	}
 }

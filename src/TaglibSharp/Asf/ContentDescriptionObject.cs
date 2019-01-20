@@ -24,7 +24,8 @@
 
 using System;
 
-namespace TagLib.Asf {
+namespace TagLib.Asf
+{
 	/// <summary>
 	///    This class extends <see cref="Object" /> to provide a
 	///    representation of an ASF Content Description object which can be
@@ -33,36 +34,36 @@ namespace TagLib.Asf {
 	public class ContentDescriptionObject : Object
 	{
 		#region Private Fields
-		
+
 		/// <summary>
 		///    Contains the media title.
 		/// </summary>
-		private string title = string.Empty;
-		
+		string title = string.Empty;
+
 		/// <summary>
 		///    Contains the author/performer.
 		/// </summary>
-		private string author = string.Empty;
-		
+		string author = string.Empty;
+
 		/// <summary>
 		///    Contains the copyright information.
 		/// </summary>
-		private string copyright = string.Empty;
-		
+		string copyright = string.Empty;
+
 		/// <summary>
 		///    Contains the description of the media.
 		/// </summary>
-		private string description = string.Empty;
-		
+		string description = string.Empty;
+
 		/// <summary>
 		///    Contains the rating of the media.
 		/// </summary>
-		private string rating = string.Empty;
-		
+		string rating = string.Empty;
+
 		#endregion
-		
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="ContentDescriptionObject" /> by reading the
@@ -87,30 +88,28 @@ namespace TagLib.Asf {
 		///    The object read from disk does not have the correct GUID
 		///    or smaller than the minimum size.
 		/// </exception>
-		public ContentDescriptionObject (Asf.File file, long position)
+		public ContentDescriptionObject (File file, long position)
 			: base (file, position)
 		{
 			if (Guid != Asf.Guid.AsfContentDescriptionObject)
-				throw new CorruptFileException (
-					"Object GUID incorrect.");
-			
+				throw new CorruptFileException ("Object GUID incorrect.");
+
 			if (OriginalSize < 34)
-				throw new CorruptFileException (
-					"Object size too small.");
-			
+				throw new CorruptFileException ("Object size too small.");
+
 			ushort title_length = file.ReadWord ();
 			ushort author_length = file.ReadWord ();
 			ushort copyright_length = file.ReadWord ();
 			ushort description_length = file.ReadWord ();
 			ushort rating_length = file.ReadWord ();
-			
+
 			title = file.ReadUnicode (title_length);
 			author = file.ReadUnicode (author_length);
 			copyright = file.ReadUnicode (copyright_length);
 			description = file.ReadUnicode (description_length);
 			rating = file.ReadUnicode (rating_length);
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="ContentDescriptionObject" /> with no contents.
@@ -119,13 +118,13 @@ namespace TagLib.Asf {
 			: base (Asf.Guid.AsfContentDescriptionObject)
 		{
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Region
-		
+
 		/// <summary>
 		///    Gets and sets the title of the media described by the
 		///    current instance.
@@ -135,13 +134,12 @@ namespace TagLib.Asf {
 		///    the media or <see langword="null" /> if it is not set.
 		/// </value>
 		public string Title {
-			get {return title.Length == 0 ? null : title;}
+			get { return title.Length == 0 ? null : title; }
 			set {
-				title = string.IsNullOrEmpty (value) ?
-					string.Empty : value;
+				title = string.IsNullOrEmpty (value) ? string.Empty : value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the author or performer of the media
 		///    described by the current instance.
@@ -151,13 +149,12 @@ namespace TagLib.Asf {
 		///    the media or <see langword="null" /> if it is not set.
 		/// </value>
 		public string Author {
-			get {return author.Length == 0 ? null : author;}
+			get { return author.Length == 0 ? null : author; }
 			set {
-				author = string.IsNullOrEmpty (value) ?
-					string.Empty : value;
+				author = string.IsNullOrEmpty (value) ? string.Empty : value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the copyright information for the media
 		///    described by the current instance.
@@ -168,13 +165,12 @@ namespace TagLib.Asf {
 		///    it is not set.
 		/// </value>
 		public string Copyright {
-			get {return copyright.Length == 0 ? null : copyright;}
+			get { return copyright.Length == 0 ? null : copyright; }
 			set {
-				copyright = string.IsNullOrEmpty (value) ?
-					string.Empty : value;
+				copyright = string.IsNullOrEmpty (value) ? string.Empty : value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the description of the media described by
 		///    the current instance.
@@ -185,15 +181,13 @@ namespace TagLib.Asf {
 		/// </value>
 		public string Description {
 			get {
-				return description.Length == 0 ?
-					null : description;
+				return description.Length == 0 ? null : description;
 			}
 			set {
-				description = string.IsNullOrEmpty (value) ?
-					string.Empty : value;
+				description = string.IsNullOrEmpty (value) ? string.Empty : value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the rating of the media described by the
 		///    current instance.
@@ -203,13 +197,12 @@ namespace TagLib.Asf {
 		///    media or <see langword="null" /> if it is not set.
 		/// </value>
 		public string Rating {
-			get {return rating.Length == 0 ? null : rating;}
+			get { return rating.Length == 0 ? null : rating; }
 			set {
-				rating = string.IsNullOrEmpty (value) ?
-					string.Empty : value;
+				rating = string.IsNullOrEmpty (value) ? string.Empty : value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets whether or not the current instance is empty.
 		/// </summary>
@@ -226,13 +219,13 @@ namespace TagLib.Asf {
 				rating.Length == 0;
 			}
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Region
-		
+
 		/// <summary>
 		///    Renders the current instance as a raw ASF object.
 		/// </summary>
@@ -248,23 +241,23 @@ namespace TagLib.Asf {
 			ByteVector description_bytes =
 				RenderUnicode (description);
 			ByteVector rating_bytes = RenderUnicode (rating);
-			
+
 			ByteVector output = RenderWord ((ushort)
 				title_bytes.Count);
-			output.Add (RenderWord ((ushort) author_bytes.Count));
-			output.Add (RenderWord ((ushort) copyright_bytes.Count));
+			output.Add (RenderWord ((ushort)author_bytes.Count));
+			output.Add (RenderWord ((ushort)copyright_bytes.Count));
 			output.Add (RenderWord ((ushort)
 				description_bytes.Count));
-			output.Add (RenderWord ((ushort) rating_bytes.Count));
+			output.Add (RenderWord ((ushort)rating_bytes.Count));
 			output.Add (title_bytes);
 			output.Add (author_bytes);
 			output.Add (copyright_bytes);
 			output.Add (description_bytes);
 			output.Add (rating_bytes);
-			
+
 			return Render (output);
 		}
-		
+
 		#endregion
 	}
 }

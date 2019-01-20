@@ -37,7 +37,7 @@ namespace TagLib.Png
 	public class PngTag : ImageTag, IEnumerable
 	{
 
-#region defined PNG keywords
+		#region defined PNG keywords
 
 		/// <summary>
 		///    Short (one line) title or caption for image
@@ -89,18 +89,18 @@ namespace TagLib.Png
 		/// </summary>
 		public static readonly string COMMENT = "Comment";
 
-#endregion
+		#endregion
 
-#region Private Fieds
+		#region Private Fieds
 
 		/// <summary>
 		///    Store the keywords with their values
 		/// </summary>
-		private Dictionary<string, string> keyword_store = new Dictionary<string, string> ();
+		readonly Dictionary<string, string> keyword_store = new Dictionary<string, string> ();
 
-#endregion
+		#endregion
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Constructor.
@@ -109,9 +109,9 @@ namespace TagLib.Png
 		{
 		}
 
-#endregion
+		#endregion
 
-#region Public Properties
+		#region Public Properties
 
 		/// <summary>
 		///    Gets or sets the comment for the image described
@@ -129,7 +129,7 @@ namespace TagLib.Png
 			get {
 				string description = GetKeyword (DESCRIPTION);
 
-				if (! String.IsNullOrEmpty (description))
+				if (!string.IsNullOrEmpty (description))
 					return description;
 
 				return GetKeyword (COMMENT);
@@ -201,10 +201,9 @@ namespace TagLib.Png
 		/// </value>
 		public override DateTime? DateTime {
 			get {
-				DateTime ret;
 				string date = GetKeyword (CREATION_TIME);
 
-				if (System.DateTime.TryParse (date, out ret))
+				if (System.DateTime.TryParse (date, out var ret))
 					return ret;
 
 				return null;
@@ -221,9 +220,9 @@ namespace TagLib.Png
 			}
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Sets a keyword of to the given value.
@@ -236,7 +235,7 @@ namespace TagLib.Png
 		/// </param>
 		public void SetKeyword (string keyword, string value)
 		{
-			if (String.IsNullOrEmpty (keyword))
+			if (string.IsNullOrEmpty (keyword))
 				throw new ArgumentException ("keyword is null or empty");
 
 			keyword_store.Remove (keyword);
@@ -259,9 +258,8 @@ namespace TagLib.Png
 		/// </returns>
 		public string GetKeyword (string keyword)
 		{
-			string ret = null;
 
-			keyword_store.TryGetValue (keyword, out ret);
+			keyword_store.TryGetValue (keyword, out var ret);
 
 			return ret;
 		}
@@ -299,6 +297,6 @@ namespace TagLib.Png
 			return keyword_store.GetEnumerator ();
 		}
 
-#endregion
+		#endregion
 	}
 }

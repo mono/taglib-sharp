@@ -21,8 +21,6 @@
 // USA
 //
 
-using System;
-
 namespace TagLib.Id3v2
 {
 	/// <summary>
@@ -35,31 +33,19 @@ namespace TagLib.Id3v2
 	/// </remarks>
 	public class TermsOfUseFrame : Frame
 	{
-#region Private Fields
-		
-		/// <summary>
-		///    Contains the text encoding to use when rendering the
-		///    current instance.
-		/// </summary>
-		private StringType encoding = Tag.DefaultEncoding;
-		
+		#region Private Fields
+
 		/// <summary>
 		///    Contains the ISO-639-2 language code of the current
 		///    instance.
 		/// </summary>
-		private string language = null;
-		
-		/// <summary>
-		///    Contains the text in the current instance.
-		/// </summary>
-		private string text = null;
-		
-#endregion
-		
-		
-		
-#region Constructors
-		
+		string language;
+
+		#endregion
+
+
+		#region Constructors
+
 		/// <summary>
 		///    Constructs and intializes a new instance of <see
 		///    cref="TermsOfUseFrame" /> with a specified language and
@@ -81,10 +67,10 @@ namespace TagLib.Id3v2
 		public TermsOfUseFrame (string language, StringType encoding)
 			: base (FrameType.USER, 4)
 		{
-			this.encoding = encoding;
+			TextEncoding = encoding;
 			this.language = language;
 		}
-		
+
 		/// <summary>
 		///    Constructs and intializes a new instance of <see
 		///    cref="TermsOfUseFrame" /> with a specified language.
@@ -103,7 +89,7 @@ namespace TagLib.Id3v2
 		{
 			this.language = language;
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="TermsOfUseFrame" /> by reading its raw data in a
@@ -122,7 +108,7 @@ namespace TagLib.Id3v2
 		{
 			SetData (data, 0, version, true);
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="TermsOfUseFrame" /> by reading its raw data in a
@@ -144,20 +130,18 @@ namespace TagLib.Id3v2
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		protected internal TermsOfUseFrame (ByteVector data, int offset,
-		                                    FrameHeader header,
-		                                    byte version)
+		protected internal TermsOfUseFrame (ByteVector data, int offset, FrameHeader header, byte version)
 			: base (header)
 		{
 			SetData (data, offset, version, false);
 		}
-		
-#endregion
-		
-		
-		
-#region Public Properties
-		
+
+		#endregion
+
+
+
+		#region Public Properties
+
 		/// <summary>
 		///    Gets and sets the text encoding to use when storing the
 		///    current instance.
@@ -172,11 +156,8 @@ namespace TagLib.Id3v2
 		///    langword="true" /> or the render version does not support
 		///    it.
 		/// </remarks>
-		public StringType TextEncoding {
-			get {return encoding;}
-			set {encoding = value;}
-		}
-		
+		public StringType TextEncoding { get; set; } = Tag.DefaultEncoding;
+
 		/// <summary>
 		///    Gets and sets the ISO-639-2 language code stored in the
 		///    current instance.
@@ -194,9 +175,9 @@ namespace TagLib.Id3v2
 				return (language != null && language.Length > 2)
 					? language.Substring (0, 3) : "XXX";
 			}
-			set {language = value;}
+			set { language = value; }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the terms of use stored in the current
 		///    instance.
@@ -205,17 +186,14 @@ namespace TagLib.Id3v2
 		///    A <see cref="string" /> object containing the terms of
 		///    use.
 		/// </value>
-		public string Text {
-			get {return text;}
-			set {text = value;}
-		}
-		
-#endregion
-		
-		
-		
-#region Public Methods
-		
+		public string Text { get; set; }
+
+		#endregion
+
+
+
+		#region Public Methods
+
 		/// <summary>
 		///    Gets a string representation of the current instance.
 		/// </summary>
@@ -224,15 +202,15 @@ namespace TagLib.Id3v2
 		/// </returns>
 		public override string ToString ()
 		{
-			return text;
+			return Text;
 		}
-		
-#endregion
-		
-		
-		
-#region Public Static Methods
-		
+
+		#endregion
+
+
+
+		#region Public Static Methods
+
 		/// <summary>
 		///    Gets a specified terms of use frame from the specified
 		///    tag, optionally creating it if it does not exist.
@@ -254,25 +232,21 @@ namespace TagLib.Id3v2
 		///    wasn't found and <paramref name="create" /> is <see
 		///    langword="false" />.
 		/// </returns>
-		public static TermsOfUseFrame Get (Tag tag, string language,
-		                                   bool create)
+		public static TermsOfUseFrame Get (Tag tag, string language, bool create)
 		{
 			foreach (Frame f in tag.GetFrames (FrameType.USER)) {
-				TermsOfUseFrame cf = f as TermsOfUseFrame;
-				
-				if (cf != null && (language == null ||
-					language == cf.Language))
+				if (f is TermsOfUseFrame cf && (language == null || language == cf.Language))
 					return cf;
 			}
-			
+
 			if (!create)
 				return null;
-			
-			TermsOfUseFrame frame = new TermsOfUseFrame (language);
+
+			var frame = new TermsOfUseFrame (language);
 			tag.AddFrame (frame);
 			return frame;
 		}
-		
+
 		/// <summary>
 		///    Gets a specified terms of use frame from the specified
 		///    tag, trying to to match the language but accepting one
@@ -290,31 +264,29 @@ namespace TagLib.Id3v2
 		///    matching frame, or <see langword="null" /> if a match
 		///    wasn't found.
 		/// </returns>
-		public static TermsOfUseFrame GetPreferred (Tag tag,
-		                                            string language)
+		public static TermsOfUseFrame GetPreferred (Tag tag, string language)
 		{
 			TermsOfUseFrame best = null;
 			foreach (Frame f in tag.GetFrames (FrameType.USER)) {
-				TermsOfUseFrame cf = f as TermsOfUseFrame;
-				if (cf == null)
+				if (!(f is TermsOfUseFrame cf))
 					continue;
-				
+
 				if (cf.Language == language)
 					return cf;
-				
+
 				if (best == null)
 					best = cf;
 			}
-			
+
 			return best;
 		}
-		
-#endregion
-		
-		
-		
-#region Protected Methods
-		
+
+		#endregion
+
+
+
+		#region Protected Methods
+
 		/// <summary>
 		///    Populates the values in the current instance by parsing
 		///    its field data in a specified version.
@@ -327,18 +299,16 @@ namespace TagLib.Id3v2
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    field data is encoded in.
 		/// </param>
-		protected override void ParseFields (ByteVector data,
-		                                     byte version)
+		protected override void ParseFields (ByteVector data, byte version)
 		{
 			if (data.Count < 4)
-				throw new CorruptFileException (
-					"Not enough bytes in field.");
-			
-			encoding = (StringType) data [0];
+				throw new CorruptFileException ("Not enough bytes in field.");
+
+			TextEncoding = (StringType)data[0];
 			language = data.ToString (StringType.Latin1, 1, 3);
-			text = data.ToString (encoding, 4, data.Count - 4);
+			Text = data.ToString (TextEncoding, 4, data.Count - 4);
 		}
-		
+
 		/// <summary>
 		///    Renders the values in the current instance into field
 		///    data for a specified version.
@@ -353,24 +323,23 @@ namespace TagLib.Id3v2
 		/// </returns>
 		protected override ByteVector RenderFields (byte version)
 		{
-			StringType encoding = CorrectEncoding (TextEncoding,
-				version);
-			ByteVector v = new ByteVector ();
-			
-			v.Add ((byte) encoding);
-			v.Add (ByteVector.FromString (Language,
-				StringType.Latin1));
-			v.Add (ByteVector.FromString (text, encoding));
-			
+			var encoding = CorrectEncoding (TextEncoding, version);
+			var v = new ByteVector {
+				(byte)encoding,
+				ByteVector.FromString (Language,
+				StringType.Latin1),
+				ByteVector.FromString (Text, encoding)
+			};
+
 			return v;
 		}
-		
-#endregion
-		
-		
-		
-#region ICloneable
-		
+
+		#endregion
+
+
+
+		#region ICloneable
+
 		/// <summary>
 		///    Creates a deep copy of the current instance.
 		/// </summary>
@@ -380,11 +349,12 @@ namespace TagLib.Id3v2
 		/// </returns>
 		public override Frame Clone ()
 		{
-			TermsOfUseFrame frame = new TermsOfUseFrame (language, encoding);
-			frame.text = text;
+			var frame = new TermsOfUseFrame (language, TextEncoding) {
+				Text = Text
+			};
 			return frame;
 		}
-		
-#endregion
+
+		#endregion
 	}
 }

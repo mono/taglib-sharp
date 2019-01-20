@@ -1,10 +1,10 @@
 using NUnit.Framework;
-using TaglibSharp.Tests.Images.Validators;
 using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
 using TagLib.IFD.Tags;
 using TagLib.Xmp;
+using TaglibSharp.Tests.Images.Validators;
 
 namespace TaglibSharp.Tests.Images
 {
@@ -35,21 +35,21 @@ namespace TaglibSharp.Tests.Images
 
 			// Image.0x010F (Make/Ascii/6) "Canon"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.Make);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.Make);
 				Assert.IsNotNull (entry, "Entry 0x010F missing in IFD 0");
 				Assert.IsNotNull (entry as StringIFDEntry, "Entry is not a string!");
 				Assert.AreEqual ("Canon", (entry as StringIFDEntry).Value);
 			}
 			// Image.0x0110 (Model/Ascii/23) "Canon EOS 400D DIGITAL"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.Model);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.Model);
 				Assert.IsNotNull (entry, "Entry 0x0110 missing in IFD 0");
 				Assert.IsNotNull (entry as StringIFDEntry, "Entry is not a string!");
 				Assert.AreEqual ("Canon EOS 400D DIGITAL", (entry as StringIFDEntry).Value);
 			}
 			// Image.0x011A (XResolution/Rational/1) "150/1"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.XResolution);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.XResolution);
 				Assert.IsNotNull (entry, "Entry 0x011A missing in IFD 0");
 				Assert.IsNotNull (entry as RationalIFDEntry, "Entry is not a rational!");
 				Assert.AreEqual (150, (entry as RationalIFDEntry).Value.Numerator);
@@ -57,7 +57,7 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Image.0x011B (YResolution/Rational/1) "150/1"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.YResolution);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.YResolution);
 				Assert.IsNotNull (entry, "Entry 0x011B missing in IFD 0");
 				Assert.IsNotNull (entry as RationalIFDEntry, "Entry is not a rational!");
 				Assert.AreEqual (150, (entry as RationalIFDEntry).Value.Numerator);
@@ -65,53 +65,53 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Image.0x0128 (ResolutionUnit/Short/1) "2"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.ResolutionUnit);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.ResolutionUnit);
 				Assert.IsNotNull (entry, "Entry 0x0128 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (2, (entry as ShortIFDEntry).Value);
 			}
 			// Image.0x0131 (Software/Ascii/17) "Bibble 5 Pro 5.0"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.Software);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.Software);
 				Assert.IsNotNull (entry, "Entry 0x0131 missing in IFD 0");
 				Assert.IsNotNull (entry as StringIFDEntry, "Entry is not a string!");
 				Assert.AreEqual ("Bibble 5 Pro 5.0", (entry as StringIFDEntry).Value);
 			}
 			// Image.0x8769 (ExifTag/SubIFD/1) "8"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.ExifIFD);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.ExifIFD);
 				Assert.IsNotNull (entry, "Entry 0x8769 missing in IFD 0");
 				Assert.IsNotNull (entry as SubIFDEntry, "Entry is not a sub IFD!");
 			}
 
-			var exif = structure.GetEntry (0, (ushort) IFDEntryTag.ExifIFD) as SubIFDEntry;
+			var exif = structure.GetEntry (0, (ushort)IFDEntryTag.ExifIFD) as SubIFDEntry;
 			Assert.IsNotNull (exif, "Exif tag not found");
 			var exif_structure = exif.Structure;
 
 			// Photo.0x010F (0x010f/Ascii/6) "Canon"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) IFDEntryTag.Make);
+				var entry = exif_structure.GetEntry (0, (ushort)IFDEntryTag.Make);
 				Assert.IsNotNull (entry, "Entry 0x010F missing in IFD 0");
 				Assert.IsNotNull (entry as StringIFDEntry, "Entry is not a string!");
 				Assert.AreEqual ("Canon", (entry as StringIFDEntry).Value);
 			}
 			// Photo.0x0110 (0x0110/Ascii/23) "Canon EOS 400D DIGITAL"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) IFDEntryTag.Model);
+				var entry = exif_structure.GetEntry (0, (ushort)IFDEntryTag.Model);
 				Assert.IsNotNull (entry, "Entry 0x0110 missing in IFD 0");
 				Assert.IsNotNull (entry as StringIFDEntry, "Entry is not a string!");
 				Assert.AreEqual ("Canon EOS 400D DIGITAL", (entry as StringIFDEntry).Value);
 			}
 			// Photo.0x0132 (0x0132/Ascii/20) "2010:02:03 10:51:35"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) IFDEntryTag.DateTime);
+				var entry = exif_structure.GetEntry (0, (ushort)IFDEntryTag.DateTime);
 				Assert.IsNotNull (entry, "Entry 0x0132 missing in IFD 0");
 				Assert.IsNotNull (entry as StringIFDEntry, "Entry is not a string!");
 				Assert.AreEqual ("2010:02:03 10:51:35", (entry as StringIFDEntry).Value);
 			}
 			// Photo.0x829A (ExposureTime/Rational/1) "1/200"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.ExposureTime);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.ExposureTime);
 				Assert.IsNotNull (entry, "Entry 0x829A missing in IFD 0");
 				Assert.IsNotNull (entry as RationalIFDEntry, "Entry is not a rational!");
 				Assert.AreEqual (1, (entry as RationalIFDEntry).Value.Numerator);
@@ -119,7 +119,7 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Photo.0x829D (FNumber/Rational/1) "5/1"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.FNumber);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.FNumber);
 				Assert.IsNotNull (entry, "Entry 0x829D missing in IFD 0");
 				Assert.IsNotNull (entry as RationalIFDEntry, "Entry is not a rational!");
 				Assert.AreEqual (5, (entry as RationalIFDEntry).Value.Numerator);
@@ -127,35 +127,35 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Photo.0x8822 (ExposureProgram/Short/1) "1"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.ExposureProgram);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.ExposureProgram);
 				Assert.IsNotNull (entry, "Entry 0x8822 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (1, (entry as ShortIFDEntry).Value);
 			}
 			// Photo.0x8827 (ISOSpeedRatings/Short/1) "100"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.ISOSpeedRatings);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.ISOSpeedRatings);
 				Assert.IsNotNull (entry, "Entry 0x8827 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (100, (entry as ShortIFDEntry).Value);
 			}
 			// Photo.0x9003 (DateTimeOriginal/Ascii/20) "2010:01:06 19:50:44"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.DateTimeOriginal);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.DateTimeOriginal);
 				Assert.IsNotNull (entry, "Entry 0x9003 missing in IFD 0");
 				Assert.IsNotNull (entry as StringIFDEntry, "Entry is not a string!");
 				Assert.AreEqual ("2010:01:06 19:50:44", (entry as StringIFDEntry).Value);
 			}
 			// Photo.0x9004 (DateTimeDigitized/Ascii/20) "2010:01:06 19:50:44"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.DateTimeDigitized);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.DateTimeDigitized);
 				Assert.IsNotNull (entry, "Entry 0x9004 missing in IFD 0");
 				Assert.IsNotNull (entry as StringIFDEntry, "Entry is not a string!");
 				Assert.AreEqual ("2010:01:06 19:50:44", (entry as StringIFDEntry).Value);
 			}
 			// Photo.0x9201 (ShutterSpeedValue/Rational/1) "500948/65536"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.ShutterSpeedValue);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.ShutterSpeedValue);
 				Assert.IsNotNull (entry, "Entry 0x9201 missing in IFD 0");
 				Assert.IsNotNull (entry as RationalIFDEntry, "Entry is not a rational!");
 				Assert.AreEqual (500948, (entry as RationalIFDEntry).Value.Numerator);
@@ -163,7 +163,7 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Photo.0x9202 (ApertureValue/Rational/1) "304340/65536"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.ApertureValue);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.ApertureValue);
 				Assert.IsNotNull (entry, "Entry 0x9202 missing in IFD 0");
 				Assert.IsNotNull (entry as RationalIFDEntry, "Entry is not a rational!");
 				Assert.AreEqual (304340, (entry as RationalIFDEntry).Value.Numerator);
@@ -171,7 +171,7 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Photo.0x9204 (ExposureBiasValue/SRational/1) "0/3"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.ExposureBiasValue);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.ExposureBiasValue);
 				Assert.IsNotNull (entry, "Entry 0x9204 missing in IFD 0");
 				Assert.IsNotNull (entry as SRationalIFDEntry, "Entry is not a srational!");
 				Assert.AreEqual (0, (entry as SRationalIFDEntry).Value.Numerator);
@@ -179,7 +179,7 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Photo.0x9205 (MaxApertureValue/Rational/1) "85/32"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.MaxApertureValue);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.MaxApertureValue);
 				Assert.IsNotNull (entry, "Entry 0x9205 missing in IFD 0");
 				Assert.IsNotNull (entry as RationalIFDEntry, "Entry is not a rational!");
 				Assert.AreEqual (85, (entry as RationalIFDEntry).Value.Numerator);
@@ -187,21 +187,21 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Photo.0x9207 (MeteringMode/Short/1) "5"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.MeteringMode);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.MeteringMode);
 				Assert.IsNotNull (entry, "Entry 0x9207 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (5, (entry as ShortIFDEntry).Value);
 			}
 			// Photo.0x9209 (Flash/Short/1) "9"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.Flash);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.Flash);
 				Assert.IsNotNull (entry, "Entry 0x9209 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (9, (entry as ShortIFDEntry).Value);
 			}
 			// Photo.0x920A (FocalLength/Rational/1) "21/1"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.FocalLength);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.FocalLength);
 				Assert.IsNotNull (entry, "Entry 0x920A missing in IFD 0");
 				Assert.IsNotNull (entry as RationalIFDEntry, "Entry is not a rational!");
 				Assert.AreEqual (21, (entry as RationalIFDEntry).Value.Numerator);
@@ -209,28 +209,28 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Photo.0x9290 (SubSecTime/Ascii/4) "976"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.SubsecTime);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.SubsecTime);
 				Assert.IsNotNull (entry, "Entry 0x9290 missing in IFD 0");
 				Assert.IsNotNull (entry as StringIFDEntry, "Entry is not a string!");
 				Assert.AreEqual ("976", (entry as StringIFDEntry).Value);
 			}
 			// Photo.0xA402 (ExposureMode/Short/1) "1"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.ExposureMode);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.ExposureMode);
 				Assert.IsNotNull (entry, "Entry 0xA402 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (1, (entry as ShortIFDEntry).Value);
 			}
 			// Photo.0xA403 (WhiteBalance/Short/1) "0"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.WhiteBalance);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.WhiteBalance);
 				Assert.IsNotNull (entry, "Entry 0xA403 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (0, (entry as ShortIFDEntry).Value);
 			}
 			// Photo.0xA406 (SceneCaptureType/Short/1) "0"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.SceneCaptureType);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.SceneCaptureType);
 				Assert.IsNotNull (entry, "Entry 0xA406 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (0, (entry as ShortIFDEntry).Value);

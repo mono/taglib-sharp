@@ -24,7 +24,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace TagLib {
+namespace TagLib
+{
 	/// <summary>
 	///    This class combines a collection of tags so that they behave as
 	///    one.
@@ -32,18 +33,18 @@ namespace TagLib {
 	public class CombinedTag : Tag
 	{
 		#region Private Fields
-		
+
 		/// <summary>
 		///    Contains tags to be combined.
 		/// </summary>
-		private List<Tag> tags;
-		
+		readonly List<Tag> tags;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="CombinedTag" /> with no internal tags.
@@ -54,7 +55,7 @@ namespace TagLib {
 		/// </remarks>
 		public CombinedTag ()
 		{
-			this.tags = new List<Tag> ();
+			tags = new List<Tag> ();
 		}
 
 		/// <summary>
@@ -66,7 +67,7 @@ namespace TagLib {
 		///    A <see cref="T:Tag[]" /> containing a collection of tags to
 		///    combine in the new instance.
 		/// </param>
-		public CombinedTag (params Tag [] tags)
+		public CombinedTag (params Tag[] tags)
 		{
 			this.tags = new List<Tag> (tags);
 		}
@@ -84,8 +85,8 @@ namespace TagLib {
 		///    A <see cref="T:Tag[]" /> containing the tags combined in
 		///    the current instance.
 		/// </value>
-		public virtual Tag [] Tags {
-			get {return tags.ToArray ();}
+		public virtual Tag[] Tags {
+			get { return tags.ToArray (); }
 		}
 
 		#endregion
@@ -100,18 +101,18 @@ namespace TagLib {
 		/// <param name="tags">
 		///    A <see cref="T:Tag[]" /> containing the tags to combine.
 		/// </param>
-		public void SetTags (params Tag [] tags)
+		public void SetTags (params Tag[] tags)
 		{
 			this.tags.Clear ();
 			this.tags.AddRange (tags);
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Protected Methods
-		
+
 		/// <summary>
 		///    Inserts a tag into the collection of tags in the current
 		///    instance.
@@ -130,9 +131,9 @@ namespace TagLib {
 		/// </exception>
 		protected void InsertTag (int index, Tag tag)
 		{
-			this.tags.Insert (index, tag);
+			tags.Insert (index, tag);
 		}
-		
+
 		/// <summary>
 		///    Adds a tag at the end of the collection of tags in the
 		///    current instance.
@@ -143,9 +144,9 @@ namespace TagLib {
 		/// </param>
 		protected void AddTag (Tag tag)
 		{
-			this.tags.Add (tag);
+			tags.Add (tag);
 		}
-		
+
 		/// <summary>
 		///    Removes a specified tag from the collection in the
 		///    current instance.
@@ -156,23 +157,23 @@ namespace TagLib {
 		/// </param>
 		protected void RemoveTag (Tag tag)
 		{
-			this.tags.Remove (tag);
+			tags.Remove (tag);
 		}
-		
+
 		/// <summary>
 		///    Clears the tag collection in the current instance.
 		/// </summary>
 		protected void ClearTags ()
 		{
-			this.tags.Clear ();
+			tags.Clear ();
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Overrides
-		
+
 		/// <summary>
 		///    Gets the tag types contained in the current instance.
 		/// </summary>
@@ -192,11 +193,11 @@ namespace TagLib {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						types |= tag.TagTypes;
-				
+
 				return types;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the title for the media described by the
 		///    current instance.
@@ -219,16 +220,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.Title;
-					
+
 					if (value != null)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -253,12 +254,9 @@ namespace TagLib {
 		///    "It's About Time". 
 		///    </para>
 		/// </remarks>
-		public override string Subtitle
-		{
-			get
-			{
-				foreach (Tag tag in tags)
-				{
+		public override string Subtitle {
+			get {
+				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
 
@@ -271,8 +269,7 @@ namespace TagLib {
 				return null;
 			}
 
-			set
-			{
+			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.Subtitle = value;
@@ -300,12 +297,9 @@ namespace TagLib {
 		///    interfering with his first trip".
 		///    </para>
 		/// </remarks>
-		public override string Description
-		{
-			get
-			{
-				foreach (Tag tag in tags)
-				{
+		public override string Description {
+			get {
+				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
 
@@ -318,8 +312,7 @@ namespace TagLib {
 				return null;
 			}
 
-			set
-			{
+			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.Description = value;
@@ -344,28 +337,28 @@ namespace TagLib {
 		///    tag.</para>
 		/// </remarks>
 		/// <seealso cref="Tag.Performers" />
-		public override string [] Performers {
+		public override string[] Performers {
 			get {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
-					string [] value = tag.Performers;
-					
+
+					string[] value = tag.Performers;
+
 					if (value != null && value.Length > 0)
 						return value;
 				}
-				
-				return new string [] {};
+
+				return new string[] { };
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.Performers = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the sort names of the performers or artists
 		///    who performed in the media described by the current instance.
@@ -389,16 +382,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string[] value = tag.PerformersSort;
-					
+
 					if (value != null && value.Length > 0)
 						return value;
 				}
-				
+
 				return new string[] { };
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -425,12 +418,9 @@ namespace TagLib {
 		///    Performers[i] and PerformersRole[i].
 		///    </para>
 		/// </remarks>
-		public override string[] PerformersRole
-		{
-			get
-			{
-				foreach (Tag tag in tags)
-				{
+		public override string[] PerformersRole {
+			get {
+				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
 
@@ -443,8 +433,7 @@ namespace TagLib {
 				return new string[] { };
 			}
 
-			set
-			{
+			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.PerformersRole = value;
@@ -478,23 +467,23 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string[] value = tag.AlbumArtistsSort;
-					
+
 					if (value != null && value.Length > 0)
 						return value;
 				}
-				
+
 				return new string[] { };
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.AlbumArtistsSort = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the band or artist who is credited in the
 		///    creation of the entire album or collection containing the
@@ -514,28 +503,28 @@ namespace TagLib {
 		///    tag.</para>
 		/// </remarks>
 		/// <seealso cref="Tag.AlbumArtists" />
-		public override string [] AlbumArtists {
+		public override string[] AlbumArtists {
 			get {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
-					string [] value = tag.AlbumArtists;
-					
+
+					string[] value = tag.AlbumArtists;
+
 					if (value != null && value.Length > 0)
 						return value;
 				}
-				
-				return new string [] {};
+
+				return new string[] { };
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.AlbumArtists = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the composers of the media represented by
 		///    the current instance.
@@ -553,28 +542,28 @@ namespace TagLib {
 		///    tag.</para>
 		/// </remarks>
 		/// <seealso cref="Tag.Composers" />
-		public override string [] Composers {
+		public override string[] Composers {
 			get {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
-					string [] value = tag.Composers;
-					
+
+					string[] value = tag.Composers;
+
 					if (value != null && value.Length > 0)
 						return value;
 				}
-				
-				return new string [] {};
+
+				return new string[] { };
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.Composers = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the sort names for the composer of the 
 		///    media described by the current instance.
@@ -597,23 +586,23 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string[] value = tag.ComposersSort;
-					
+
 					if (value != null && value.Length > 0)
 						return value;
 				}
-				
+
 				return new string[] { };
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.ComposersSort = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the sort names for the Track Title of the 
 		///    media described by the current instance.
@@ -636,16 +625,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.TitleSort;
-					
+
 					if (value != null && value.Length > 0)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -675,23 +664,23 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.AlbumSort;
-					
+
 					if (value != null && value.Length > 0)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.AlbumSort = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the album of the media represented by the
 		///    current instance.
@@ -714,23 +703,23 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.Album;
-					
+
 					if (value != null)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.Album = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets a user comment on the media represented by
 		///    the current instance.
@@ -753,23 +742,23 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.Comment;
-					
+
 					if (value != null)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.Comment = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the genres of the media represented by the
 		///    current instance.
@@ -787,28 +776,28 @@ namespace TagLib {
 		///    tag.</para>
 		/// </remarks>
 		/// <seealso cref="Tag.Genres" />
-		public override string [] Genres {
+		public override string[] Genres {
 			get {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
-					string [] value = tag.Genres;
-					
+
+					string[] value = tag.Genres;
+
 					if (value != null && value.Length > 0)
 						return value;
 				}
-				
-				return new string [] {};
+
+				return new string[] { };
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.Genres = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the year that the media represented by the
 		///    current instance was recorded.
@@ -831,23 +820,23 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					uint value = tag.Year;
-					
+
 					if (value != 0)
 						return value;
 				}
-				
+
 				return 0;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.Year = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the position of the media represented by
 		///    the current instance in its containing album.
@@ -870,23 +859,23 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					uint value = tag.Track;
-					
+
 					if (value != 0)
 						return value;
 				}
-				
+
 				return 0;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.Track = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the number of tracks in the album
 		///    containing the media represented by the current instance.
@@ -909,23 +898,23 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					uint value = tag.TrackCount;
-					
+
 					if (value != 0)
 						return value;
 				}
-				
+
 				return 0;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.TrackCount = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the number of the disc containing the media
 		///    represented by the current instance in the boxed set.
@@ -948,23 +937,23 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					uint value = tag.Disc;
-					
+
 					if (value != 0)
 						return value;
 				}
-				
+
 				return 0;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.Disc = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the number of discs in the boxed set
 		///    containing the media represented by the current instance.
@@ -987,23 +976,23 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					uint value = tag.DiscCount;
-					
+
 					if (value != 0)
 						return value;
 				}
-				
+
 				return 0;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.DiscCount = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the lyrics or script of the media
 		///    represented by the current instance.
@@ -1026,23 +1015,23 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.Lyrics;
-					
+
 					if (value != null)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.Lyrics = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the grouping on the album which the media
 		///    in the current instance belongs to.
@@ -1065,23 +1054,23 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.Grouping;
-					
+
 					if (value != null)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.Grouping = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the number of beats per minute in the audio
 		///    of the media represented by the current instance.
@@ -1104,23 +1093,23 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					uint value = tag.BeatsPerMinute;
-					
+
 					if (value != 0)
 						return value;
 				}
-				
+
 				return 0;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.BeatsPerMinute = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the conductor or director of the media
 		///    represented by the current instance.
@@ -1143,23 +1132,23 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.Conductor;
-					
+
 					if (value != null)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.Conductor = value;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the copyright information for the media
 		///    represented by the current instance.
@@ -1182,16 +1171,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.Copyright;
-					
+
 					if (value != null)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -1207,12 +1196,9 @@ namespace TagLib {
 		///    date at which the tag has been written, or <see 
 		///    langword="null" /> if no value present.
 		/// </value>
-		public override DateTime? DateTagged
-		{
-			get
-			{
-				foreach (Tag tag in tags)
-				{
+		public override DateTime? DateTagged {
+			get {
+				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
 
@@ -1225,8 +1211,7 @@ namespace TagLib {
 				return null;
 			}
 
-			set
-			{
+			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.DateTagged = value;
@@ -1255,16 +1240,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.MusicBrainzArtistId;
-					
+
 					if (value != null)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -1290,8 +1275,7 @@ namespace TagLib {
 		/// <seealso cref="Tag.MusicBrainzReleaseGroupId" />
 		public override string MusicBrainzReleaseGroupId {
 			get {
-				foreach (Tag tag in tags)
-				{
+				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
 
@@ -1332,16 +1316,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.MusicBrainzReleaseId;
-					
+
 					if (value != null)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -1370,16 +1354,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.MusicBrainzReleaseArtistId;
-					
+
 					if (value != null)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -1408,16 +1392,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.MusicBrainzTrackId;
-					
+
 					if (value != null)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -1446,16 +1430,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.MusicBrainzDiscId;
-					
+
 					if (value != null)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -1484,16 +1468,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.MusicIpId;
-					
+
 					if (value != null)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -1522,16 +1506,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.AmazonId;
-					
+
 					if (value != null)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -1560,16 +1544,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.MusicBrainzReleaseStatus;
-					
+
 					if (value != null)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -1598,16 +1582,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.MusicBrainzReleaseType;
-					
+
 					if (value != null)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -1636,16 +1620,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					string value = tag.MusicBrainzReleaseCountry;
-					
+
 					if (value != null)
 						return value;
 				}
-				
+
 				return null;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -1670,24 +1654,24 @@ namespace TagLib {
 		///    tag.</para>
 		/// </remarks>
 		/// <seealso cref="Tag.Pictures" />
-		public override IPicture [] Pictures {
+		public override IPicture[] Pictures {
 			get {
-				foreach(Tag tag in tags) {
+				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
-					IPicture [] value = tag.Pictures;
-					
+
+					IPicture[] value = tag.Pictures;
+
 					if (value != null && value.Length > 0)
 						return value;
 				}
-				
+
 				return base.Pictures;
 			}
-			
+
 			set {
-				foreach(Tag tag in tags)
-					if(tag != null)
+				foreach (Tag tag in tags)
+					if (tag != null)
 						tag.Pictures = value;
 			}
 		}
@@ -1712,16 +1696,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					double value = tag.ReplayGainTrackGain;
-					
+
 					if (!double.IsNaN (value))
 						return value;
 				}
-				
+
 				return double.NaN;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -1749,16 +1733,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					double value = tag.ReplayGainTrackPeak;
-					
+
 					if (!double.IsNaN (value))
 						return value;
 				}
-				
+
 				return double.NaN;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -1786,16 +1770,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					double value = tag.ReplayGainAlbumGain;
-					
+
 					if (!double.IsNaN (value))
 						return value;
 				}
-				
+
 				return double.NaN;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -1823,16 +1807,16 @@ namespace TagLib {
 				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
-					
+
 					double value = tag.ReplayGainAlbumPeak;
-					
+
 					if (!double.IsNaN (value))
 						return value;
 				}
-				
+
 				return double.NaN;
 			}
-			
+
 			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
@@ -1857,12 +1841,9 @@ namespace TagLib {
 		///    tag.</para>
 		/// </remarks>
 		/// <seealso cref="Tag.InitialKey" />
-		public override string InitialKey
-		{
-			get
-			{
-				foreach (Tag tag in tags)
-				{
+		public override string InitialKey {
+			get {
+				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
 
@@ -1875,8 +1856,7 @@ namespace TagLib {
 				return null;
 			}
 
-			set
-			{
+			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.InitialKey = value;
@@ -1900,12 +1880,9 @@ namespace TagLib {
 		///    tag.</para>
 		/// </remarks>
 		/// <seealso cref="Tag.RemixedBy" />
-		public override string RemixedBy
-		{
-			get
-			{
-				foreach (Tag tag in tags)
-				{
+		public override string RemixedBy {
+			get {
+				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
 
@@ -1918,8 +1895,7 @@ namespace TagLib {
 				return null;
 			}
 
-			set
-			{
+			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.RemixedBy = value;
@@ -1943,12 +1919,9 @@ namespace TagLib {
 		///    tag.</para>
 		/// </remarks>
 		/// <seealso cref="Tag.Publisher" />
-		public override string Publisher
-		{
-			get
-			{
-				foreach (Tag tag in tags)
-				{
+		public override string Publisher {
+			get {
+				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
 
@@ -1961,8 +1934,7 @@ namespace TagLib {
 				return null;
 			}
 
-			set
-			{
+			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.Publisher = value;
@@ -1986,12 +1958,9 @@ namespace TagLib {
 		///    tag.</para>
 		/// </remarks>
 		/// <seealso cref="Tag.ISRC" />
-		public override string ISRC
-		{
-			get
-			{
-				foreach (Tag tag in tags)
-				{
+		public override string ISRC {
+			get {
+				foreach (Tag tag in tags) {
 					if (tag == null)
 						continue;
 
@@ -2004,8 +1973,7 @@ namespace TagLib {
 				return null;
 			}
 
-			set
-			{
+			set {
 				foreach (Tag tag in tags)
 					if (tag != null)
 						tag.ISRC = value;
@@ -2025,11 +1993,11 @@ namespace TagLib {
 				foreach (Tag tag in tags)
 					if (tag.IsEmpty)
 						return true;
-				
+
 				return false;
 			}
 		}
-		
+
 		/// <summary>
 		///    Clears all of the child tags.
 		/// </summary>
@@ -2038,7 +2006,7 @@ namespace TagLib {
 			foreach (Tag tag in tags)
 				tag.Clear ();
 		}
-		
+
 		#endregion
 	}
 }

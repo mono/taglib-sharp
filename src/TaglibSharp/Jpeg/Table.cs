@@ -33,7 +33,7 @@ namespace TagLib.Jpeg
 		///
 		///    See CCIT Rec. T.81 (1992 E), K.1 (p143)
 		/// </summary>
-		public static int [] StandardLuminanceQuantization = new int [] {
+		public static int[] StandardLuminanceQuantization = {
 			16,  11,  12,  14,  12,  10,  16,  14,
 			13,  14,  18,  17,  16,  19,  24,  40,
 			26,  24,  22,  22,  24,  49,  35,  37,
@@ -49,7 +49,7 @@ namespace TagLib.Jpeg
 		///
 		///    See CCIT Rec. T.81 (1992 E), K.1 (p143)
 		/// </summary>
-		public static int [] StandardChrominanceQuantization = new int [] {
+		public static int[] StandardChrominanceQuantization = {
 			17,  18,  18,  24,  21,  24,  47,  26,
 			26,  47,  99,  66,  56,  66,  99,  99,
 			99,  99,  99,  99,  99,  99,  99,  99,

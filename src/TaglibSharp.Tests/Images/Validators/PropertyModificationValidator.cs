@@ -1,6 +1,6 @@
+using NUnit.Framework;
 using System;
 using System.Reflection;
-using NUnit.Framework;
 
 namespace TaglibSharp.Tests.Images.Validators
 {
@@ -53,7 +53,7 @@ namespace TaglibSharp.Tests.Images.Validators
 		{
 			Assert.IsNotNull (tag);
 
-			return (T) property_info.GetValue (tag, null);
+			return (T)property_info.GetValue (tag, null);
 		}
 	}
 }

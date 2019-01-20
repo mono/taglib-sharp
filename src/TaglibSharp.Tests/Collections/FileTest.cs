@@ -13,16 +13,16 @@ namespace TaglibSharp.Tests.Collections
 		// length1 is smaller than the used buffer size
 		// length2 is bigger than the used buffer size
 		// length3 is even more bigger than length2 and used to catch some special cases
-		static readonly int length1 = (int) (0.75 * File.BufferSize);
-		static readonly int length2 = (int) (1.5  * File.BufferSize);
-		static readonly int length3 = (int) (3.1  * File.BufferSize);
+		static readonly int length1 = (int)(0.75 * File.BufferSize);
+		static readonly int length2 = (int)(1.5 * File.BufferSize);
+		static readonly int length3 = (int)(3.1 * File.BufferSize);
 
 		File CreateFile (int length)
 		{
 			byte[] data = new byte[length];
 
 			for (int i = 0; i < length; i++) {
-				data [i] = (byte) Chars[i % Chars.Length];
+				data[i] = (byte)Chars[i % Chars.Length];
 			}
 
 			return new TestFile (new MemoryFileAbstraction (data.Length, data));
@@ -97,7 +97,7 @@ namespace TaglibSharp.Tests.Collections
 		{
 			// file1
 			var file1 = CreateFile (length1);
-			Assert.AreEqual (Chars.IndexOf ('U'), file1.Find ((byte) 'U'));
+			Assert.AreEqual (Chars.IndexOf ('U'), file1.Find ((byte)'U'));
 
 			Assert.AreEqual (-1, file1.Find (Pattern1));
 			Assert.AreEqual (-1, file1.Find (Pattern1, 9));
@@ -114,7 +114,7 @@ namespace TaglibSharp.Tests.Collections
 
 			// file2
 			var file2 = CreateFile (length2);
-			Assert.AreEqual (Chars.IndexOf ('M'), file2.Find ((byte) 'M'));
+			Assert.AreEqual (Chars.IndexOf ('M'), file2.Find ((byte)'M'));
 
 			Assert.AreEqual (-1, file2.Find (Pattern1));
 			Assert.AreEqual (-1, file2.Find (Pattern1, 3));
@@ -162,7 +162,7 @@ namespace TaglibSharp.Tests.Collections
 	public class TestFile : File
 	{
 
-		public TestFile (IFileAbstraction abstraction) : base (abstraction) {}
+		public TestFile (IFileAbstraction abstraction) : base (abstraction) { }
 
 		public override Tag GetTag (TagTypes type, bool create)
 		{

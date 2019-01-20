@@ -13,7 +13,7 @@ namespace Examples
 				return;
 			}
 
-			var file = TagLib.File.Create (args[0]);
+			var file = File.Create (args[0]);
 			Console.WriteLine ("Current picture count: " + file.Tag.Pictures.Length);
 
 			var pictures = new Picture[args.Length - 1];

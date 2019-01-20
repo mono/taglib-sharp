@@ -34,17 +34,17 @@ namespace TagLib.IFD.Tags
 		/// <summary>
 		///    Timezone. (Hex: 0X0000)
 		/// </summary>
-		Timezone                                            = 0,
+		Timezone = 0,
 
 		/// <summary>
 		///    Daylight savings. (Hex: 0X0002)
 		/// </summary>
-		DaylightSavings                                     = 2,
+		DaylightSavings = 2,
 
 		/// <summary>
 		///    Date display format. (Hex: 0X0003)
 		/// </summary>
-		DateDisplayFormat                                   = 3,
+		DateDisplayFormat = 3,
 
 	}
 }

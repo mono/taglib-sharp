@@ -32,61 +32,61 @@ namespace TagLib.IFD.Tags
 		/// <summary>
 		///    File Number. (Hex: 0X0001)
 		/// </summary>
-		FileNumber                                          = 1,
+		FileNumber = 1,
 
 		/// <summary>
 		///    Bracket Mode. (Hex: 0X0003)
 		/// </summary>
-		BracketMode                                         = 3,
+		BracketMode = 3,
 
 		/// <summary>
 		///    Bracket Value. (Hex: 0X0004)
 		/// </summary>
-		BracketValue                                        = 4,
+		BracketValue = 4,
 
 		/// <summary>
 		///    Bracket Shot Number. (Hex: 0X0005)
 		/// </summary>
-		BracketShotNumber                                   = 5,
+		BracketShotNumber = 5,
 
 		/// <summary>
 		///    Raw Jpg Quality. (Hex: 0X0006)
 		/// </summary>
-		RawJpgQuality                                       = 6,
+		RawJpgQuality = 6,
 
 		/// <summary>
 		///    Raw Jpg Size. (Hex: 0X0007)
 		/// </summary>
-		RawJpgSize                                          = 7,
+		RawJpgSize = 7,
 
 		/// <summary>
 		///    Noise Reduction. (Hex: 0X0008)
 		/// </summary>
-		NoiseReduction                                      = 8,
+		NoiseReduction = 8,
 
 		/// <summary>
 		///    WB Bracket Mode. (Hex: 0X0009)
 		/// </summary>
-		WBBracketMode                                       = 9,
+		WBBracketMode = 9,
 
 		/// <summary>
 		///    WB Bracket Value AB. (Hex: 0X000C)
 		/// </summary>
-		WBBracketValueAB                                    = 12,
+		WBBracketValueAB = 12,
 
 		/// <summary>
 		///    WB Bracket Value GM. (Hex: 0X000D)
 		/// </summary>
-		WBBracketValueGM                                    = 13,
+		WBBracketValueGM = 13,
 
 		/// <summary>
 		///    Filter Effect. (Hex: 0X000E)
 		/// </summary>
-		FilterEffect                                        = 14,
+		FilterEffect = 14,
 
 		/// <summary>
 		///    Toning Effect. (Hex: 0X000F)
 		/// </summary>
-		ToningEffect                                        = 15,
+		ToningEffect = 15,
 	}
 }

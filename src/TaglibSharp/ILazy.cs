@@ -21,9 +21,8 @@
 // USA
 //
 
-namespace TagLib {
-
-
+namespace TagLib
+{
 	/// <summary>
 	///    This interface provides generic information about ab object,
 	///    from which the content can be load only on demand.
@@ -38,8 +37,6 @@ namespace TagLib {
 		/// <summary>
 		/// Load the object data if not done yet.
 		/// </summary>
-		void Load();
-
+		void Load ();
 	}
-
 }

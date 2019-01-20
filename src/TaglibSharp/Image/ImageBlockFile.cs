@@ -39,13 +39,14 @@ namespace TagLib.Image
 	///    functionality. Blocks can be marked as metadata and when metadata is
 	///    saved their space is used or they are deleted.
 	/// </summary>
-	public abstract class ImageBlockFile : TagLib.Image.File
+	public abstract class ImageBlockFile : File
 	{
 
 		/// <summary>
 		///    This class represents a metadata block to overwrite.
 		/// </summary>
-		private class MetadataBlock {
+		class MetadataBlock
+		{
 
 			/// <summary>
 			///    The start index
@@ -70,10 +71,10 @@ namespace TagLib.Image
 			public MetadataBlock (long start, long length)
 			{
 				if (start < 0)
-					throw new ArgumentOutOfRangeException (nameof(start));
+					throw new ArgumentOutOfRangeException (nameof (start));
 
 				if (length < 0)
-					throw new ArgumentOutOfRangeException (nameof(length));
+					throw new ArgumentOutOfRangeException (nameof (length));
 
 				Start = start;
 				Length = length;
@@ -82,7 +83,7 @@ namespace TagLib.Image
 			/// <summary>
 			///    Constructor. Creates a new instance with an empty block
 			/// </summary>
-			public MetadataBlock () : this (0, 0) {}
+			public MetadataBlock () : this (0, 0) { }
 
 
 			/// <summary>
@@ -129,7 +130,7 @@ namespace TagLib.Image
 					return;
 				}
 
-				throw new ArgumentException (String.Format ("blocks do not overlap: {0} and {1}", this, block));
+				throw new ArgumentException ($"blocks do not overlap: {this} and {block}");
 			}
 
 
@@ -160,14 +161,14 @@ namespace TagLib.Image
 			/// </returns>
 			public override string ToString ()
 			{
-				return string.Format("[MetadataBlock: Start={0}, Length={1}]", Start, Length);
+				return $"[MetadataBlock: Start={Start}, Length={Length}]";
 			}
 		}
 
 		/// <summary>
 		///    An odered list of the metadata blocks. The blocks do not overlap.
 		/// </summary>
-		private List<MetadataBlock> metadata_blocks = new List<MetadataBlock> ();
+		readonly List<MetadataBlock> metadata_blocks = new List<MetadataBlock> ();
 
 
 		/// <summary>
@@ -278,7 +279,7 @@ namespace TagLib.Image
 		}
 
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Constructs and initializes a new instance for a specified
@@ -291,7 +292,8 @@ namespace TagLib.Image
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
-		protected ImageBlockFile (string path) : base (path)
+		protected ImageBlockFile (string path)
+			: base (path)
 		{
 		}
 
@@ -307,11 +309,11 @@ namespace TagLib.Image
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		protected ImageBlockFile (IFileAbstraction abstraction) : base (abstraction)
+		protected ImageBlockFile (IFileAbstraction abstraction)
+			: base (abstraction)
 		{
 		}
 
-#endregion
-
+		#endregion
 	}
 }

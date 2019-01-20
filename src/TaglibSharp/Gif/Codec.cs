@@ -21,8 +21,6 @@
 // USA
 //
 
-using System;
-
 namespace TagLib.Gif
 {
 
@@ -57,6 +55,6 @@ namespace TagLib.Gif
 		///    A new <see cref="Codec" /> instance.
 		/// </returns>
 		public Codec (int width, int height)
-			: base (width, height) {}
+			: base (width, height) { }
 	}
 }

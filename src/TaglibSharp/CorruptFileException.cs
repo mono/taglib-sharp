@@ -27,7 +27,8 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace TagLib {
+namespace TagLib
+{
 	/// <summary>
 	///    This class extends <see cref="Exception" /> and is used to
 	///    indicate that a file or tag is corrupt.
@@ -109,19 +110,19 @@ namespace TagLib {
 		///    A <see cref="string" /> containing a message explaining
 		///    the reason for the exception.
 		/// </param>
-		public CorruptFileException (string message) : base(message)
+		public CorruptFileException (string message) : base (message)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="CorruptFileException" /> with the default
 		///    values.
 		/// </summary>
-		public CorruptFileException () : base()
+		public CorruptFileException ()
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="CorruptFileException" /> with a specified
@@ -135,12 +136,11 @@ namespace TagLib {
 		///    A <see cref="Exception" /> object to be contained in the
 		///    new exception. For example, previously caught exception.
 		/// </param>
-		public CorruptFileException (string message,
-		                             Exception innerException)
+		public CorruptFileException (string message, Exception innerException)
 			: base (message, innerException)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="CorruptFileException" /> from a specified
@@ -159,9 +159,8 @@ namespace TagLib {
 		///    cref="CorruptFileException" /> implements the <see
 		///    cref="ISerializable" /> interface.
 		/// </remarks>
-		protected CorruptFileException (SerializationInfo info,
-		                                StreamingContext context)
-			: base(info, context)
+		protected CorruptFileException (SerializationInfo info, StreamingContext context)
+			: base (info, context)
 		{
 		}
 	}

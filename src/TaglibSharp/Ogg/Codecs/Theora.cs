@@ -32,49 +32,49 @@ namespace TagLib.Ogg.Codecs
 	/// </summary>
 	public class Theora : Codec, IVideoCodec
 	{
-#region Private Static Fields
-		
+		#region Private Static Fields
+
 		/// <summary>
 		///    Contains the file identifier.
 		/// </summary>
-		private static ByteVector id = "theora";
-		
-#endregion
-		
-		
-		
-#region Private Fields
-		
+		static readonly ByteVector id = "theora";
+
+		#endregion
+
+
+
+		#region Private Fields
+
 		/// <summary>
 		///    Contains the header packet.
 		/// </summary>
-		private HeaderPacket header;
-		
+		HeaderPacket header;
+
 		/// <summary>
 		///    Contains the comment data.
 		/// </summary>
-		private ByteVector comment_data;
-		
-#endregion
-		
-		
-		
-#region Constructors
-		
+		ByteVector comment_data;
+
+		#endregion
+
+
+
+		#region Constructors
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Theora" />.
 		/// </summary>
-		private Theora ()
+		Theora ()
 		{
 		}
-		
-#endregion
-		
-		
-		
-#region Public Methods
-		
+
+		#endregion
+
+
+
+		#region Public Methods
+
 		/// <summary>
 		///    Reads a Ogg packet that has been encountered in the
 		///    stream.
@@ -106,17 +106,15 @@ namespace TagLib.Ogg.Codecs
 		public override bool ReadPacket (ByteVector packet, int index)
 		{
 			if (packet == null)
-				throw new ArgumentNullException (nameof(packet));
-			
+				throw new ArgumentNullException (nameof (packet));
+
 			if (index < 0)
-				throw new ArgumentOutOfRangeException (nameof(index),
-					"index must be at least zero.");
-			
+				throw new ArgumentOutOfRangeException (nameof (index), "index must be at least zero.");
+
 			int type = PacketType (packet);
 			if (type != 0x80 && index == 0)
-				throw new CorruptFileException (
-					"Stream does not begin with theora header.");
-			
+				throw new CorruptFileException ("Stream does not begin with theora header.");
+
 			if (comment_data == null) {
 				if (type == 0x80)
 					header = new HeaderPacket (packet);
@@ -125,10 +123,10 @@ namespace TagLib.Ogg.Codecs
 				else
 					return true;
 			}
-			
+
 			return comment_data != null;
 		}
-		
+
 		/// <summary>
 		///    Computes the duration of the stream using the first and
 		///    last granular positions of the stream.
@@ -145,14 +143,13 @@ namespace TagLib.Ogg.Codecs
 		///    A <see cref="TimeSpan" /> value containing the duration
 		///    of the stream.
 		/// </returns>
-		public override TimeSpan GetDuration (long firstGranularPosition,
-		                                      long lastGranularPosition)
+		public override TimeSpan GetDuration (long firstGranularPosition, long lastGranularPosition)
 		{
 			return TimeSpan.FromSeconds (
 				header.GranuleTime (lastGranularPosition) -
 				header.GranuleTime (firstGranularPosition));
 		}
-		
+
 		/// <summary>
 		///    Replaces the comment packet in a collection of packets
 		///    with the rendered version of a Xiph comment or inserts a
@@ -170,31 +167,30 @@ namespace TagLib.Ogg.Codecs
 		///    <paramref name="packets" /> or <paramref name="comment"
 		///    /> is <see langword="null" />.
 		/// </exception>
-		public override void SetCommentPacket (ByteVectorCollection packets,
-		                                       XiphComment comment)
+		public override void SetCommentPacket (ByteVectorCollection packets, XiphComment comment)
 		{
 			if (packets == null)
-				throw new ArgumentNullException (nameof(packets));
-			
+				throw new ArgumentNullException (nameof (packets));
+
 			if (comment == null)
-				throw new ArgumentNullException (nameof(comment));
-			
-			ByteVector data = new ByteVector ((byte) 0x81);
+				throw new ArgumentNullException (nameof (comment));
+
+			ByteVector data = new ByteVector ((byte)0x81);
 			data.Add (id);
 			data.Add (comment.Render (true));
-			
-			if (packets.Count > 1 && PacketType (packets [1]) == 0x81)
-				packets [1] = data;
+
+			if (packets.Count > 1 && PacketType (packets[1]) == 0x81)
+				packets[1] = data;
 			else
 				packets.Insert (1, data);
 		}
-		
-#endregion
-		
-		
-		
-#region Public Properties
-		
+
+		#endregion
+
+
+
+		#region Public Properties
+
 		/// <summary>
 		///    Gets the width of the video represented by the current
 		///    instance.
@@ -204,9 +200,9 @@ namespace TagLib.Ogg.Codecs
 		///    video represented by the current instance.
 		/// </value>
 		public int VideoWidth {
-			get {return header.width;}
+			get { return header.width; }
 		}
-		
+
 		/// <summary>
 		///    Gets the height of the video represented by the current
 		///    instance.
@@ -216,9 +212,9 @@ namespace TagLib.Ogg.Codecs
 		///    video represented by the current instance.
 		/// </value>
 		public int VideoHeight {
-			get {return header.height;}
+			get { return header.height; }
 		}
-		
+
 		/// <summary>
 		///    Gets the types of media represented by the current
 		///    instance.
@@ -227,9 +223,9 @@ namespace TagLib.Ogg.Codecs
 		///    Always <see cref="MediaTypes.Video" />.
 		/// </value>
 		public override MediaTypes MediaTypes {
-			get {return MediaTypes.Video;}
+			get { return MediaTypes.Video; }
 		}
-		
+
 		/// <summary>
 		///    Gets the raw Xiph comment data contained in the codec.
 		/// </summary>
@@ -238,9 +234,9 @@ namespace TagLib.Ogg.Codecs
 		///    comment or <see langword="null"/> if none was found.
 		/// </value>
 		public override ByteVector CommentData {
-			get {return comment_data;}
+			get { return comment_data; }
 		}
-		
+
 		/// <summary>
 		///    Gets a text description of the media represented by the
 		///    current instance.
@@ -251,19 +247,16 @@ namespace TagLib.Ogg.Codecs
 		/// </value>
 		public override string Description {
 			get {
-				return string.Format (
-					"Theora Version {0}.{1} Video",
-					header.major_version,
-					header.minor_version);
+				return $"Theora Version {header.major_version}.{header.minor_version} Video";
 			}
 		}
-		
-#endregion
-		
-		
-		
-#region Public Static Methods
-		
+
+		#endregion
+
+
+
+		#region Public Static Methods
+
 		/// <summary>
 		///    Implements the <see cref="T:CodecProvider" /> delegate to
 		///    provide support for recognizing a Theora stream from the
@@ -282,13 +275,13 @@ namespace TagLib.Ogg.Codecs
 		{
 			return (PacketType (packet) == 0x80) ? new Theora () : null;
 		}
-		
-#endregion
-		
-		
-		
-#region Private Static Methods
-		
+
+		#endregion
+
+
+
+		#region Private Static Methods
+
 		/// <summary>
 		///    Gets the packet type for a specified Theora packet.
 		/// </summary>
@@ -300,24 +293,24 @@ namespace TagLib.Ogg.Codecs
 		///    A <see cref="int" /> value containing the packet type or
 		///    -1 if the packet is invalid.
 		/// </returns>
-		private static int PacketType (ByteVector packet)
+		static int PacketType (ByteVector packet)
 		{
-			if (packet.Count <= id.Count || packet [0] < 0x80)
+			if (packet.Count <= id.Count || packet[0] < 0x80)
 				return -1;
-			
-			for (int i = 0; i < id.Count; i ++)
-				if (packet [i + 1] != id [i])
-				return -1;
-			
-			return packet [0];
+
+			for (int i = 0; i < id.Count; i++)
+				if (packet[i + 1] != id[i])
+					return -1;
+
+			return packet[0];
 		}
-		
-#endregion
-		
+
+		#endregion
+
 		/// <summary>
 		///    This structure represents a Theora header packet.
 		/// </summary>
-		private struct HeaderPacket
+		struct HeaderPacket
 		{
 			public byte major_version;
 			public byte minor_version;
@@ -327,20 +320,20 @@ namespace TagLib.Ogg.Codecs
 			public int fps_numerator;
 			public int fps_denominator;
 			public int keyframe_granule_shift;
-			
+
 			public HeaderPacket (ByteVector data)
 			{
-				major_version = data [7];
-				minor_version = data [8];
-				revision_version = data [9];
+				major_version = data[7];
+				minor_version = data[8];
+				revision_version = data[9];
 				// width = data.Mid (10, 2).ToShort () << 4;
 				// height = data.Mid (12, 2).ToShort () << 4;
-				width = (int) data.Mid (14, 3).ToUInt (); // Frame Width.
-				height = (int) data.Mid (17, 3).ToUInt (); // Frame Height.
-				// Offset X.
-				// Offset Y.
-				fps_numerator = (int) data.Mid (22, 4).ToUInt ();
-				fps_denominator = (int) data.Mid (26, 4).ToUInt ();
+				width = (int)data.Mid (14, 3).ToUInt (); // Frame Width.
+				height = (int)data.Mid (17, 3).ToUInt (); // Frame Height.
+														  // Offset X.
+														  // Offset Y.
+				fps_numerator = (int)data.Mid (22, 4).ToUInt ();
+				fps_denominator = (int)data.Mid (26, 4).ToUInt ();
 				// Aspect Numerator.
 				// Aspect Denominator.
 				// Colorspace.
@@ -348,7 +341,7 @@ namespace TagLib.Ogg.Codecs
 				ushort last_bits = data.Mid (40, 2).ToUShort ();
 				keyframe_granule_shift = (last_bits >> 5) & 0x1F;
 			}
-			
+
 			/// <summary>
 			///    Converts an absolute granular position into a
 			///    seconds.
@@ -368,13 +361,10 @@ namespace TagLib.Ogg.Codecs
 			/// </remarks>
 			public double GranuleTime (long granularPosition)
 			{
-				long iframe = granularPosition >>
-					keyframe_granule_shift;
-				long pframe = granularPosition -
-					(iframe << keyframe_granule_shift);
-				return (iframe + pframe) *
-					((double) fps_denominator /
-					(double) fps_numerator);
+				long iframe = granularPosition >> keyframe_granule_shift;
+				long pframe = granularPosition - (iframe << keyframe_granule_shift);
+
+				return (iframe + pframe) * (fps_denominator / (double)fps_numerator);
 			}
 		}
 	}

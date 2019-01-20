@@ -25,11 +25,6 @@
 // USA
 //
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using TagLib.Id3v2;
-
 namespace TagLib.Id3v2
 {
 	/// <summary>
@@ -38,36 +33,30 @@ namespace TagLib.Id3v2
 	/// </summary>
 	public class UnsynchronisedLyricsFrame : Frame
 	{
-#region Private Properties
-		
-		/// <summary>
-		///    Contains the text encoding to use when rendering the
-		///    current instance.
-		/// </summary>
-		private StringType encoding = Tag.DefaultEncoding;
-		
+		#region Private Properties
+
 		/// <summary>
 		///    Contains the ISO-639-2 language code of the current
 		///    instance.
 		/// </summary>
-		private string language = null;
-		
+		string language;
+
 		/// <summary>
 		///    Contains the description of the current instance.
 		/// </summary>
-		private string description = null;
-		
+		string description;
+
 		/// <summary>
 		///    Contains the lyrics text of the current instance.
 		/// </summary>
-		private string text = null;
-		
-#endregion
-		
-		
-		
-#region Constructors
-		
+		string text;
+
+		#endregion
+
+
+
+		#region Constructors
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="UnsynchronisedLyricsFrame" /> with a specified
@@ -90,16 +79,14 @@ namespace TagLib.Id3v2
 		///    the tag. Consider using <see cref="Get" /> for more
 		///    integrated frame creation.
 		/// </remarks>
-		public UnsynchronisedLyricsFrame (string description,
-		                                  string language,
-		                                  StringType encoding)
+		public UnsynchronisedLyricsFrame (string description, string language, StringType encoding)
 			: base (FrameType.USLT, 4)
 		{
-			this.encoding    = encoding;
-			this.language    = language;
+			TextEncoding = encoding;
+			this.language = language;
 			this.description = description;
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="UnsynchronisedLyricsFrame" /> with a specified
@@ -118,13 +105,11 @@ namespace TagLib.Id3v2
 		///    the tag. Consider using <see cref="Get" /> for more
 		///    integrated frame creation.
 		/// </remarks>
-		public UnsynchronisedLyricsFrame (string description,
-		                                  string language)
-			: this (description, language,
-				TagLib.Id3v2.Tag.DefaultEncoding)
+		public UnsynchronisedLyricsFrame (string description, string language)
+			: this (description, language, Tag.DefaultEncoding)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="UnsynchronisedLyricsFrame" /> with a specified
@@ -143,7 +128,7 @@ namespace TagLib.Id3v2
 			: this (description, null)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="UnsynchronisedLyricsFrame" /> by reading its raw
@@ -158,11 +143,11 @@ namespace TagLib.Id3v2
 		///    raw frame is encoded in.
 		/// </param>
 		public UnsynchronisedLyricsFrame (ByteVector data, byte version)
-			: base(data, version)
+			: base (data, version)
 		{
 			SetData (data, 0, version, true);
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="UnsynchronisedLyricsFrame" /> by reading its raw
@@ -184,21 +169,18 @@ namespace TagLib.Id3v2
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		protected internal UnsynchronisedLyricsFrame (ByteVector data,
-		                                              int offset,
-		                                              FrameHeader header,
-		                                              byte version)
-			: base(header)
+		protected internal UnsynchronisedLyricsFrame (ByteVector data, int offset, FrameHeader header, byte version)
+			: base (header)
 		{
 			SetData (data, offset, version, false);
 		}
-		
-#endregion
-		
-		
-		
-#region Public Properties
-		
+
+		#endregion
+
+
+
+		#region Public Properties
+
 		/// <summary>
 		///    Gets and sets the text encoding to use when storing the
 		///    current instance.
@@ -213,11 +195,8 @@ namespace TagLib.Id3v2
 		///    langword="true" /> or the render version does not support
 		///    it.
 		/// </remarks>
-		public StringType TextEncoding {
-			get {return encoding;}
-			set {encoding = value;}
-		}
-		
+		public StringType TextEncoding { get; set; } = Tag.DefaultEncoding;
+
 		/// <summary>
 		///    Gets and sets the ISO-639-2 language code stored in the
 		///    current instance.
@@ -234,12 +213,12 @@ namespace TagLib.Id3v2
 			get {
 				if (language != null && language.Length > 2)
 					return language.Substring (0, 3);
-				
+
 				return "XXX";
 			}
-			set {language = value;}
+			set { language = value; }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the description stored in the current
 		///    instance.
@@ -256,12 +235,12 @@ namespace TagLib.Id3v2
 			get {
 				if (description != null)
 					return description;
-				
+
 				return string.Empty;
 			}
-			set {description = value;}
+			set { description = value; }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the lyrical text stored in the current
 		///    instance.
@@ -274,18 +253,18 @@ namespace TagLib.Id3v2
 			get {
 				if (text != null)
 					return text;
-				
+
 				return string.Empty;
 			}
-			set {text = value;}
+			set { text = value; }
 		}
-		
-#endregion
-		
-		
-		
-#region Public Methods
-		
+
+		#endregion
+
+
+
+		#region Public Methods
+
 		/// <summary>
 		///    Gets a string representation of the current instance.
 		/// </summary>
@@ -296,13 +275,13 @@ namespace TagLib.Id3v2
 		{
 			return Text;
 		}
-		
-#endregion
-		
-		
-		
-#region Public Static Methods
-		
+
+		#endregion
+
+
+
+		#region Public Static Methods
+
 		/// <summary>
 		///    Gets a specified lyrics frame from the specified tag,
 		///    optionally creating it if it does not exist.
@@ -328,36 +307,33 @@ namespace TagLib.Id3v2
 		///    if a match wasn't found and <paramref name="create" /> is
 		///    <see langword="false" />.
 		/// </returns>
-		public static UnsynchronisedLyricsFrame Get (Tag tag,
-		                                             string description,
-		                                             string language,
-		                                             bool create)
+		public static UnsynchronisedLyricsFrame Get (Tag tag, string description, string language, bool create)
 		{
 			UnsynchronisedLyricsFrame uslt;
 			foreach (Frame frame in tag.GetFrames (FrameType.USLT)) {
 				uslt = frame as UnsynchronisedLyricsFrame;
-				
+
 				if (uslt == null)
 					continue;
-				
+
 				if (uslt.Description != description)
 					continue;
-				
+
 				if (language != null && language != uslt.Language)
 					continue;
-				
+
 				return uslt;
 			}
-			
+
 			if (!create)
 				return null;
-			
+
 			uslt = new UnsynchronisedLyricsFrame (description,
 				language);
 			tag.AddFrame (uslt);
 			return uslt;
 		}
-		
+
 		/// <summary>
 		///    Gets a specified comments frame from the specified tag,
 		///    trying to to match the description and language but
@@ -392,9 +368,7 @@ namespace TagLib.Id3v2
 		///       <item><term>The first frame.</term></item>
 		///    </list>
 		/// </remarks>
-		public static UnsynchronisedLyricsFrame GetPreferred (Tag tag,
-		                                                      string description,
-		                                                      string language)
+		public static UnsynchronisedLyricsFrame GetPreferred (Tag tag, string description, string language)
 		{
 			// This is weird, so bear with me. The best thing we can
 			// have is something straightforward and in our own
@@ -406,41 +380,38 @@ namespace TagLib.Id3v2
 			// languages, so we'd rather have one with actual
 			// content, so we try to get one with no description
 			// first.
-			
+
 			int best_value = -1;
 			UnsynchronisedLyricsFrame best_frame = null;
-			
+
 			foreach (Frame frame in tag.GetFrames (FrameType.USLT)) {
-				UnsynchronisedLyricsFrame uslt =
-					frame as UnsynchronisedLyricsFrame;
-				
-				if (uslt == null)
+				if (!(frame is UnsynchronisedLyricsFrame uslt))
 					continue;
-				
+
 				bool same_name = uslt.Description == description;
 				bool same_lang = uslt.Language == language;
-				
+
 				if (same_name && same_lang)
 					return uslt;
-				
+
 				int value = same_lang ? 2 : same_name ? 1 : 0;
-				
+
 				if (value <= best_value)
 					continue;
-				
+
 				best_value = value;
 				best_frame = uslt;
 			}
-			
+
 			return best_frame;
 		}
-		
-#endregion
-		
-		
-		
-#region Protected Methods
-		
+
+		#endregion
+
+
+
+		#region Protected Methods
+
 		/// <summary>
 		///    Populates the values in the current instance by parsing
 		///    its field data in a specified version.
@@ -453,29 +424,27 @@ namespace TagLib.Id3v2
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    field data is encoded in.
 		/// </param>
-		protected override void ParseFields (ByteVector data,
-		                                     byte version)
+		protected override void ParseFields (ByteVector data, byte version)
 		{
 			if (data.Count < 4)
-				throw new CorruptFileException (
-					"Not enough bytes in field.");
-			
-			encoding = (StringType) data [0];
+				throw new CorruptFileException ("Not enough bytes in field.");
+
+			TextEncoding = (StringType)data[0];
 			language = data.ToString (StringType.Latin1, 1, 3);
-			
-			string [] split = data.ToStrings (encoding, 4, 2);
-			
+
+			string[] split = data.ToStrings (TextEncoding, 4, 2);
+
 			if (split.Length == 1) {
 				// Bad lyrics frame. Assume that it lacks a
 				// description.
-				description = String.Empty;
-				text = split [0];
+				description = string.Empty;
+				text = split[0];
 			} else {
-				description = split [0];
-				text = split [1];
+				description = split[0];
+				text = split[1];
 			}
 		}
-		
+
 		/// <summary>
 		///    Renders the values in the current instance into field
 		///    data for a specified version.
@@ -488,27 +457,26 @@ namespace TagLib.Id3v2
 		///    A <see cref="ByteVector" /> object containing the
 		///    rendered field data.
 		/// </returns>
-		protected override ByteVector RenderFields(byte version)
+		protected override ByteVector RenderFields (byte version)
 		{
-			StringType encoding = CorrectEncoding (TextEncoding,
-				version);
-			ByteVector v = new ByteVector();
-			
-			v.Add ((byte) encoding);
-			v.Add (ByteVector.FromString (Language, StringType.Latin1));
-			v.Add (ByteVector.FromString (description, encoding));
-			v.Add (ByteVector.TextDelimiter(encoding));
-			v.Add (ByteVector.FromString (text, encoding));
+			var encoding = CorrectEncoding (TextEncoding, version);
+			var v = new ByteVector {
+				(byte)encoding,
+				ByteVector.FromString (Language, StringType.Latin1),
+				ByteVector.FromString (description, encoding),
+				ByteVector.TextDelimiter (encoding),
+				ByteVector.FromString (text, encoding)
+			};
 
-		return v;
+			return v;
 		}
-		
-#endregion
-		
-		
-		
-#region ICloneable
-		
+
+		#endregion
+
+
+
+		#region ICloneable
+
 		/// <summary>
 		///    Creates a deep copy of the current instance.
 		/// </summary>
@@ -518,13 +486,12 @@ namespace TagLib.Id3v2
 		/// </returns>
 		public override Frame Clone ()
 		{
-			UnsynchronisedLyricsFrame frame =
-				new UnsynchronisedLyricsFrame (description,
-					language, encoding);
-			frame.text = text;
+			var frame = new UnsynchronisedLyricsFrame (description, language, TextEncoding) {
+				text = text
+			};
 			return frame;
 		}
-		
-#endregion
+
+		#endregion
 	}
 }

@@ -24,7 +24,8 @@
 
 using System;
 
-namespace TagLib.Mpeg4 {
+namespace TagLib.Mpeg4
+{
 	/// <summary>
 	///    This structure provides support for reading and writing headers
 	///    for ISO/IEC 14496-12 boxes.
@@ -32,59 +33,44 @@ namespace TagLib.Mpeg4 {
 	public struct BoxHeader
 	{
 		#region Private Fields
-		
-		/// <summary>
-		///    Contains the box type.
-		/// </summary>
-		private ByteVector box_type;
-		
-		/// <summary>
-		///    Contains the extended type.
-		/// </summary>
-		private ByteVector extended_type;
-		
+
 		/// <summary>
 		///    Contains the box size.
 		/// </summary>
-		private ulong box_size;
-		
+		ulong box_size;
+
 		/// <summary>
 		///    Contains the header size.
 		/// </summary>
-		private uint header_size;
-		
+		uint header_size;
+
 		/// <summary>
 		///    Contains the position of the header.
 		/// </summary>
-		private long position;
-		
-		/// <summary>
-		///    Contains the box (temporarily).
-		/// </summary>
-		private Box box;
-		
+		readonly long position;
+
 		/// <summary>
 		///    Indicated that the header was read from a file.
 		/// </summary>
-		private bool from_disk;
-		
+		readonly bool from_disk;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Fields
-		
+
 		/// <summary>
 		///    An empty box header.
 		/// </summary>
 		public static readonly BoxHeader Empty = new BoxHeader ("xxxx");
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="BoxHeader" /> by reading it from a specified seek
@@ -108,53 +94,51 @@ namespace TagLib.Mpeg4 {
 		public BoxHeader (TagLib.File file, long position)
 		{
 			if (file == null)
-				throw new ArgumentNullException (nameof(file));
-			
-			this.box = null;
-			this.from_disk = true;
+				throw new ArgumentNullException (nameof (file));
+
+			Box = null;
+			from_disk = true;
 			this.position = position;
 			file.Seek (position);
-			
+
 			ByteVector data = file.ReadBlock (32);
 			int offset = 0;
-			
+
 			if (data.Count < 8 + offset)
-				throw new CorruptFileException (
-					"Not enough data in box header.");
-			
+				throw new CorruptFileException ("Not enough data in box header.");
+
 			header_size = 8;
 			box_size = data.Mid (offset, 4).ToUInt ();
-			box_type = data.Mid (offset + 4, 4);
-			
+			BoxType = data.Mid (offset + 4, 4);
+
 			// If the size is 1, that just tells us we have a
 			// massive ULONG size waiting for us in the next 8
 			// bytes.
 			if (box_size == 1) {
 				if (data.Count < 8 + offset)
-					throw new CorruptFileException (
-						"Not enough data in box header.");
-				
+					throw new CorruptFileException ("Not enough data in box header.");
+
 				header_size += 8;
 				offset += 8;
 				box_size = data.Mid (offset, 8).ToULong ();
 			}
-			
-			// UUID has a special header with 16 extra bytes.
-			if (box_type == Mpeg4.BoxType.Uuid) {
-				if (data.Count < 16 + offset)
-					throw new CorruptFileException (
-						"Not enough data in box header.");
-				
-				header_size += 16;
-				extended_type = data.Mid (offset, 16);
-			} else
-				extended_type = null;
 
-			if (box_size > (ulong) (file.Length - position)) {
-				throw new CorruptFileException (string.Format("Box header specified a size of {0} bytes but only {1} bytes left in the file", box_size, file.Length - position));
+			// UUID has a special header with 16 extra bytes.
+			if (BoxType == Mpeg4.BoxType.Uuid) {
+				if (data.Count < 16 + offset)
+					throw new CorruptFileException ("Not enough data in box header.");
+
+				header_size += 16;
+				ExtendedType = data.Mid (offset, 16);
+			} else
+				ExtendedType = null;
+
+			if (box_size > (ulong)(file.Length - position)) {
+				throw new CorruptFileException (
+					$"Box header specified a size of {box_size} bytes but only {file.Length - position} bytes left in the file");
 			}
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="BoxHeader" /> with a specified box type.
@@ -177,7 +161,7 @@ namespace TagLib.Mpeg4 {
 		public BoxHeader (ByteVector type) : this (type, null)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="BoxHeader" /> with a specified box type and
@@ -208,48 +192,44 @@ namespace TagLib.Mpeg4 {
 		public BoxHeader (ByteVector type, ByteVector extendedType)
 		{
 			position = -1;
-			box = null;
+			Box = null;
 			from_disk = false;
-			box_type = type;
-			
+			BoxType = type;
+
 			if (type == null)
-				throw new ArgumentNullException (nameof(type));
-			
+				throw new ArgumentNullException (nameof (type));
+
 			if (type.Count != 4)
-				throw new ArgumentException (
-					"Box type must be 4 bytes in length.",
-					nameof(type));
-			
+				throw new ArgumentException ("Box type must be 4 bytes in length.", nameof (type));
+
 			box_size = header_size = 8;
-			
+
 			if (type != "uuid") {
 				if (extendedType != null)
-					throw new ArgumentException (
-						"Extended type only permitted for 'uuid'.",
-						nameof(extendedType));
-				
-				this.extended_type = extendedType;
+					throw new ArgumentException ("Extended type only permitted for 'uuid'.", nameof (extendedType));
+
+				ExtendedType = extendedType;
 				return;
 			}
-			
+
 			if (extendedType == null)
-				throw new ArgumentNullException (nameof(extendedType));
-			
+				throw new ArgumentNullException (nameof (extendedType));
+
 			if (extendedType.Count != 16)
 				throw new ArgumentException (
 					"Extended type must be 16 bytes in length.",
-					nameof(extendedType));
-			
+					nameof (extendedType));
+
 			box_size = header_size = 24;
-			this.extended_type = extendedType;
+			ExtendedType = extendedType;
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the type of box represented by the current instance.
 		/// </summary>
@@ -257,10 +237,8 @@ namespace TagLib.Mpeg4 {
 		///    A <see cref="ByteVector" /> object containing the 4 byte
 		///    box type.
 		/// </value>
-		public ByteVector BoxType {
-			get {return box_type;}
-		}
-		
+		public ByteVector BoxType { get; private set; }
+
 		/// <summary>
 		///    Gets the extended type of the box represented by the
 		///    current instance.
@@ -270,10 +248,8 @@ namespace TagLib.Mpeg4 {
 		///    extended type, or <see langword="null" /> if <see
 		///    cref="BoxType" /> is not "<c>uuid</c>".
 		/// </value>
-		public ByteVector ExtendedType {
-			get {return extended_type;}
-		}
-		
+		public ByteVector ExtendedType { get; private set; }
+
 		/// <summary>
 		///    Gets the size of the header represented by the current
 		///    instance.
@@ -283,9 +259,9 @@ namespace TagLib.Mpeg4 {
 		///    header represented by the current instance.
 		/// </value>
 		public long HeaderSize {
-			get {return header_size;}
+			get { return header_size; }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the size of the data in the box described
 		///    by the current instance.
@@ -295,10 +271,10 @@ namespace TagLib.Mpeg4 {
 		///    data in the box described by the current instance.
 		/// </value>
 		public long DataSize {
-			get {return (long) (box_size - header_size);}
-			set {box_size = (ulong) value + header_size;}
+			get { return (long)(box_size - header_size); }
+			set { box_size = (ulong)value + header_size; }
 		}
-		
+
 		/// <summary>
 		///    Gets the offset of the box data from the position of the
 		///    header.
@@ -307,11 +283,11 @@ namespace TagLib.Mpeg4 {
 		///    A <see cref="long" /> value containing the offset of the
 		///    box data from the position of the header.
 		/// </value>
-		[Obsolete("Use HeaderSize")]
+		[Obsolete ("Use HeaderSize")]
 		public long DataOffset {
-			get {return header_size;}
+			get { return header_size; }
 		}
-		
+
 		/// <summary>
 		///    Gets the total size of the box described by the current
 		///    instance.
@@ -321,9 +297,9 @@ namespace TagLib.Mpeg4 {
 		///    the box described by the current instance.
 		/// </value>
 		public long TotalBoxSize {
-			get {return (long)box_size;}
+			get { return (long)box_size; }
 		}
-		
+
 		/// <summary>
 		///    Gets the position box represented by the current instance
 		///    in the file it comes from.
@@ -334,15 +310,15 @@ namespace TagLib.Mpeg4 {
 		///    from.
 		/// </value>
 		public long Position {
-			get {return from_disk ? position : -1;}
+			get { return from_disk ? position : -1; }
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Methods
-		
+
 		/// <summary>
 		///    Overwrites the header on disk, updating it to include a
 		///    change in the size of the box.
@@ -364,18 +340,17 @@ namespace TagLib.Mpeg4 {
 		public long Overwrite (TagLib.File file, long sizeChange)
 		{
 			if (file == null)
-				throw new ArgumentNullException (nameof(file));
-			
+				throw new ArgumentNullException (nameof (file));
+
 			if (!from_disk)
-				throw new InvalidOperationException (
-					"Cannot overwrite headers not on disk.");
-			
+				throw new InvalidOperationException ("Cannot overwrite headers not on disk.");
+
 			long old_header_size = HeaderSize;
 			DataSize += sizeChange;
 			file.Insert (Render (), position, old_header_size);
 			return sizeChange + HeaderSize - old_header_size;
 		}
-		
+
 		/// <summary>
 		///    Renders the header represented by the current instance.
 		/// </summary>
@@ -386,43 +361,42 @@ namespace TagLib.Mpeg4 {
 		public ByteVector Render ()
 		{
 			// Enlarge for size if necessary.
-			if ((header_size == 8 || header_size == 24) &&
-				box_size > uint.MaxValue) {
+			if ((header_size == 8 || header_size == 24) && box_size > uint.MaxValue) {
 				header_size += 8;
 				box_size += 8;
 			}
-			
+
 			// Add the box size and type to the output.
 			ByteVector output = ByteVector.FromUInt (
 				(header_size == 8 || header_size == 24) ?
-				(uint) box_size : 1);
-			output.Add (box_type);
-			
+				(uint)box_size : 1);
+			output.Add (BoxType);
+
 			// If the box size is 16 or 32, we must have more a
 			// large header to append.
 			if (header_size == 16 || header_size == 32)
 				output.Add (ByteVector.FromULong (box_size));
-			
+
 			// The only reason for such a big size is an extended
 			// type. Extend!!!
 			if (header_size >= 24)
-				output.Add (extended_type);
-			
+				output.Add (ExtendedType);
+
 			return output;
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Internal Properties
-		
+
 		/// <summary>
 		///    Gets and sets the box represented by the current instance
 		///    as a means of temporary storage for internal uses.
 		/// </summary>
-		internal Box Box {get {return box;} set {box = value;}}
-		
+		internal Box Box { get; set; }
+
 		#endregion
 	}
 }

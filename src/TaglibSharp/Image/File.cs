@@ -23,12 +23,11 @@
 
 using System;
 using System.Collections.Generic;
-
-using TagLib.Jpeg;
 using TagLib.Gif;
 using TagLib.IFD;
-using TagLib.Xmp;
+using TagLib.Jpeg;
 using TagLib.Png;
+using TagLib.Xmp;
 
 namespace TagLib.Image
 {
@@ -38,9 +37,7 @@ namespace TagLib.Image
 	/// </summary>
 	public abstract class File : TagLib.File
 	{
-		private CombinedImageTag image_tag;
-
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
@@ -54,7 +51,8 @@ namespace TagLib.Image
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
-		protected File (string path) : base (path)
+		protected File (string path)
+			: base (path)
 		{
 		}
 
@@ -70,13 +68,14 @@ namespace TagLib.Image
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		protected File (IFileAbstraction abstraction) : base (abstraction)
+		protected File (IFileAbstraction abstraction)
+			: base (abstraction)
 		{
 		}
 
-#endregion
+		#endregion
 
-#region Public Properties
+		#region Public Properties
 
 		/// <summary>
 		///    Gets a abstract representation of all tags stored in the
@@ -96,14 +95,11 @@ namespace TagLib.Image
 		///    A <see cref="TagLib.Image.CombinedImageTag" /> object
 		///    representing all image tags stored in the current instance.
 		/// </value>
-		public CombinedImageTag ImageTag {
-			get { return image_tag; }
-			protected set { image_tag = value; }
-		}
+		public CombinedImageTag ImageTag { get; protected set; }
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    The method creates all tags which are allowed for the current
@@ -130,7 +126,7 @@ namespace TagLib.Image
 		///    In order to remove all tags from a file, pass <see
 		///    cref="TagTypes.AllTags" /> as <paramref name="types" />.
 		/// </remarks>
-		public override void RemoveTags (TagLib.TagTypes types)
+		public override void RemoveTags (TagTypes types)
 		{
 			List<ImageTag> to_delete = new List<ImageTag> ();
 
@@ -161,8 +157,8 @@ namespace TagLib.Image
 		///    matching tag was found and none was created, <see
 		///    langword="null" /> is returned.
 		/// </returns>
-		public override TagLib.Tag GetTag (TagLib.TagTypes type,
-		                                   bool create)
+		public override Tag GetTag (TagTypes type,
+										   bool create)
 		{
 			foreach (Tag tag in ImageTag.AllTags) {
 				if ((tag.TagTypes & type) == type)
@@ -200,7 +196,7 @@ namespace TagLib.Image
 				return new_tag;
 			}
 
-			throw new NotImplementedException (String.Format ("Adding tag of type {0} not supported!", type));
+			throw new NotImplementedException ($"Adding tag of type {type} not supported!");
 		}
 
 		/// <summary>
@@ -209,12 +205,12 @@ namespace TagLib.Image
 		/// <param name='file'>
 		/// 	File to copy metadata from.
 		/// </param>
-		public void CopyFrom (TagLib.Image.File file)
+		public void CopyFrom (File file)
 		{
 			EnsureAvailableTags ();
 			var from_tag = file.ImageTag;
 			var to_tag = ImageTag;
-			foreach (var prop in typeof (TagLib.Image.ImageTag).GetProperties ()) {
+			foreach (var prop in typeof (ImageTag).GetProperties ()) {
 				if (!prop.CanWrite || prop.Name == "TagTypes")
 					continue;
 
@@ -223,7 +219,6 @@ namespace TagLib.Image
 			}
 		}
 
-#endregion
-
+		#endregion
 	}
 }

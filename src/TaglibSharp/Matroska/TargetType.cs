@@ -1,4 +1,4 @@
-﻿//
+//
 // TargetType.cs:
 //
 // Author:

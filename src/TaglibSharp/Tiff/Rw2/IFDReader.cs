@@ -32,7 +32,7 @@ namespace TagLib.Tiff.Rw2
 	public class IFDReader : TagLib.IFD.IFDReader
 	{
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Constructor. Reads an IFD from given file, using the given endianness.
@@ -66,7 +66,7 @@ namespace TagLib.Tiff.Rw2
 		{
 		}
 
-#endregion
+		#endregion
 
 		/// <summary>
 		///    Try to parse the given IFD entry, used to discover format-specific entries.
@@ -91,15 +91,16 @@ namespace TagLib.Tiff.Rw2
 		///    A <see cref="IFDEntry"/> with the given parameters, or null if none was parsed, after
 		///    which the normal TIFF parsing is used.
 		/// </returns>
-		protected override IFDEntry ParseIFDEntry (ushort tag, ushort type, uint count, long base_offset, uint offset) {
+		protected override IFDEntry ParseIFDEntry (ushort tag, ushort type, uint count, long base_offset, uint offset)
+		{
 			if (tag == 0x002e && !seen_jpgfromraw) {
 				// FIXME: JpgFromRaw
 
 				file.Seek (base_offset + offset, SeekOrigin.Begin);
-				var data = file.ReadBlock ((int) count);
+				var data = file.ReadBlock ((int)count);
 				var mem_stream = new MemoryStream (data.Data);
 				var res = new StreamJPGAbstraction (mem_stream);
-				(file as Rw2.File).JpgFromRaw = new Jpeg.File (res, ReadStyle.Average);
+				(file as File).JpgFromRaw = new Jpeg.File (res, ReadStyle.Average);
 
 				seen_jpgfromraw = true;
 				return null;
@@ -108,33 +109,29 @@ namespace TagLib.Tiff.Rw2
 			return base.ParseIFDEntry (tag, type, count, base_offset, offset);
 		}
 
-		private bool seen_jpgfromraw = false;
+		bool seen_jpgfromraw;
 	}
 
-	class StreamJPGAbstraction : File.IFileAbstraction
+	class StreamJPGAbstraction : TagLib.File.IFileAbstraction
 	{
-		readonly Stream stream;
-
 		public StreamJPGAbstraction (Stream stream)
 		{
-			this.stream = stream;
+			ReadStream = stream;
 		}
 
 		public string Name {
 			get { return "JpgFromRaw.jpg"; }
 		}
 
-		public void CloseStream (System.IO.Stream stream)
+		public void CloseStream (Stream stream)
 		{
 			stream.Close ();
 		}
 
-		public System.IO.Stream ReadStream  {
-			get { return stream; }
-		}
+		public Stream ReadStream { get; private set; }
 
-		public System.IO.Stream WriteStream  {
-			get { return stream; }
+		public Stream WriteStream {
+			get { return ReadStream; }
 		}
 	}
 }

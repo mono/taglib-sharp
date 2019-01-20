@@ -21,8 +21,6 @@
 // USA
 //
 
-using System;
-
 namespace TagLib.Tiff
 {
 	/// <summary>
@@ -30,7 +28,7 @@ namespace TagLib.Tiff
 	/// </summary>
 	public class Codec : Image.Codec
 	{
-		private string description = "TIFF File";
+		readonly string description = "TIFF File";
 
 		/// <summary>
 		///    Gets a text description of the media represented by the
@@ -57,7 +55,7 @@ namespace TagLib.Tiff
 		///    A new <see cref="Codec" /> instance.
 		/// </returns>
 		public Codec (int width, int height)
-			: base (width, height) {}
+			: base (width, height) { }
 
 		/// <summary>
 		///    Constructs a new <see cref="Codec" /> with the given width
@@ -76,7 +74,8 @@ namespace TagLib.Tiff
 		///    A new <see cref="Codec" /> instance.
 		/// </returns>
 		public Codec (int width, int height, string description)
-			: base (width, height) {
+			: base (width, height)
+		{
 			this.description = description;
 		}
 	}

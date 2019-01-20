@@ -31,7 +31,8 @@ namespace TagLib.IFD.Entries
 	///    The information of the makernote types is from:
 	///    http://exiv2.org/makernote.html
 	/// </summary>
-	public enum MakernoteType {
+	public enum MakernoteType
+	{
 
 		/// <summary>
 		///    The manufactor could not be determined
@@ -127,34 +128,34 @@ namespace TagLib.IFD.Entries
 	public class MakernoteIFDEntry : IFDEntry
 	{
 
-#region Private Fields
+		#region Private Fields
 
 		/// <value>
 		///    Stores the prefix of the makernote
 		/// </value>
-		private ByteVector prefix;
+		readonly ByteVector prefix;
 
 		/// <value>
 		///    Stores the offset of the IFD contained in makernote
 		/// </value>
-		private uint ifd_offset;
+		readonly uint ifd_offset;
 
 		/// <value>
 		///    Indicates, if the offsets are relative to the current makernote
 		///    or absolut to the base_offset of the surrounding IFD.
 		/// </value>
-		private bool absolute_offset;
+		readonly bool absolute_offset;
 
 		/// <value>
 		///    Stores, if the makernote is encoded in big- or little endian.
 		///    If the field is <see langword="null"/>, the endianess of the
 		///    surrounding IFD is used.
 		/// </value>
-		private bool? is_bigendian;
+		readonly bool? is_bigendian;
 
-#endregion
+		#endregion
 
-#region Properties
+		#region Properties
 
 		/// <value>
 		///    The ID of the tag, the current instance belongs to
@@ -172,9 +173,9 @@ namespace TagLib.IFD.Entries
 		/// </value>
 		public IFDStructure Structure { get; private set; }
 
-#endregion
+		#endregion
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Construcor.
@@ -187,20 +188,20 @@ namespace TagLib.IFD.Entries
 		///    A <see cref="IFDStructure"/> with the IFD structure, which is stored by this
 		///    instance
 		/// </param>
-		/// <param name="makernote_type">
+		/// <param name="makernoteType">
 		///    A <see cref="MakernoteType"/> with the type of the makernote.
 		/// </param>
 		/// <param name="prefix">
 		///    A <see cref="ByteVector"/> containing the prefix, which should be rendered
 		///    before the real IFD.
 		/// </param>
-		/// <param name="ifd_offset">
+		/// <param name="ifdOffset">
 		///    A <see cref="System.UInt32"/> with the offset in addition to the relative
 		///    offsets in the IFD
 		/// </param>
-		/// <param name="absolute_offset">
+		/// <param name="absoluteOffset">
 		///    A <see cref="System.Boolean"/> indicating if the offsets of the IFD are relative
-		///    to the <paramref name="ifd_offset"/>, or absolut to the base offset of the
+		///    to the <paramref name="ifdOffset"/>, or absolut to the base offset of the
 		///    surrounding IFD.
 		/// </param>
 		/// <param name="is_bigendian">
@@ -208,14 +209,14 @@ namespace TagLib.IFD.Entries
 		///    big- or little endian. It it is <see langword="null"/>, the endianess of the
 		///    surrounding IFD is used.
 		/// </param>
-		public MakernoteIFDEntry (ushort tag, IFDStructure structure, MakernoteType makernote_type, ByteVector prefix, uint ifd_offset, bool absolute_offset, bool? is_bigendian)
+		public MakernoteIFDEntry (ushort tag, IFDStructure structure, MakernoteType makernoteType, ByteVector prefix, uint ifdOffset, bool absoluteOffset, bool? is_bigendian)
 		{
 			Tag = tag;
 			Structure = structure;
-			MakernoteType = makernote_type;
+			MakernoteType = makernoteType;
 			this.prefix = prefix;
-			this.ifd_offset = ifd_offset;
-			this.absolute_offset = absolute_offset;
+			this.ifd_offset = ifdOffset;
+			this.absolute_offset = absoluteOffset;
 			this.is_bigendian = is_bigendian;
 		}
 
@@ -235,11 +236,11 @@ namespace TagLib.IFD.Entries
 		///    A <see cref="MakernoteType"/> with the type of the makernote.
 		/// </param>
 		public MakernoteIFDEntry (ushort tag, IFDStructure structure, MakernoteType makernote_type)
-			: this (tag, structure, makernote_type, null, 0, true, null) {}
+			: this (tag, structure, makernote_type, null, 0, true, null) { }
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Renders the current instance to a <see cref="ByteVector"/>
@@ -262,18 +263,17 @@ namespace TagLib.IFD.Entries
 		/// </returns>
 		public ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
 		{
-			type = (ushort) IFDEntryType.Undefined;
+			type = (ushort)IFDEntryType.Undefined;
 
 			var renderer =
 				new IFDRenderer (this.is_bigendian ?? is_bigendian, Structure, absolute_offset ? offset + ifd_offset : ifd_offset);
 
 			ByteVector data = renderer.Render ();
 			data.Insert (0, prefix);
-			count = (uint) data.Count;
+			count = (uint)data.Count;
 			return data;
 		}
 
-#endregion
-
+		#endregion
 	}
 }

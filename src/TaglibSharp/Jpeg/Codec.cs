@@ -23,8 +23,6 @@
 // USA
 //
 
-using System;
-
 namespace TagLib.Jpeg
 {
 	/// <summary>
@@ -61,6 +59,6 @@ namespace TagLib.Jpeg
 		///    A new <see cref="Codec" /> instance.
 		/// </returns>
 		public Codec (int width, int height, int quality)
-			: base (width, height, quality) {}
+			: base (width, height, quality) { }
 	}
 }

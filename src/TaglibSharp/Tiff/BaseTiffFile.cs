@@ -22,8 +22,6 @@
 //
 
 using System;
-
-using TagLib.Image;
 using TagLib.IFD;
 
 
@@ -37,7 +35,7 @@ namespace TagLib.Tiff
 	public abstract class BaseTiffFile : TagLib.Image.File
 	{
 
-#region Public Properties
+		#region Public Properties
 
 		/// <summary>
 		///    Indicates if the current file is in big endian or little endian format.
@@ -46,24 +44,20 @@ namespace TagLib.Tiff
 		///    The method <see cref="ReadHeader()"/> must be called from a subclass to
 		///    properly initialize this property.
 		/// </remarks>
-		public bool IsBigEndian {
-			get; private set;
-		}
+		public bool IsBigEndian { get; private set; }
 
-#endregion
+		#endregion
 
-#region Protected Properties
+		#region Protected Properties
 
 		/// <summary>
 		///    The identifier used to recognize the file. This is 42 for most TIFF files.
 		/// </summary>
-		protected ushort Magic {
-			get; set;
-		}
+		protected ushort Magic { get; set; }
 
-#endregion
+		#endregion
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
@@ -77,7 +71,8 @@ namespace TagLib.Tiff
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
-		protected BaseTiffFile (string path) : base (path)
+		protected BaseTiffFile (string path)
+			: base (path)
 		{
 			Magic = 42;
 		}
@@ -94,14 +89,15 @@ namespace TagLib.Tiff
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		protected BaseTiffFile (IFileAbstraction abstraction) : base (abstraction)
+		protected BaseTiffFile (IFileAbstraction abstraction)
+			: base (abstraction)
 		{
 			Magic = 42;
 		}
 
-#endregion
+		#endregion
 
-#region Protected Methods
+		#region Protected Methods
 
 		/// <summary>
 		///    Reads and validates the TIFF header at the current position.
@@ -138,7 +134,7 @@ namespace TagLib.Tiff
 			}
 
 			if (header.Mid (2, 2).ToUShort (IsBigEndian) != Magic)
-				throw new CorruptFileException (String.Format ("TIFF Magic ({0}) expected", Magic));
+				throw new CorruptFileException ($"TIFF Magic ({Magic}) expected");
 
 			uint first_ifd_offset = header.Mid (4, 4).ToUInt (IsBigEndian);
 
@@ -171,7 +167,7 @@ namespace TagLib.Tiff
 		/// </param>
 		protected void ReadIFD (uint offset, int ifd_count)
 		{
-			long length = 0;
+			long length;
 			try {
 				length = Length;
 			} catch (Exception) {
@@ -179,7 +175,7 @@ namespace TagLib.Tiff
 				length = 1073741824L * 4;
 			}
 			var ifd_tag = GetTag (TagTypes.TiffIFD, true) as IFDTag;
-			var reader = CreateIFDReader (this, IsBigEndian, ifd_tag.Structure, 0, offset, (uint) length);
+			var reader = CreateIFDReader (this, IsBigEndian, ifd_tag.Structure, 0, offset, (uint)length);
 
 			reader.Read (ifd_count);
 		}
@@ -230,7 +226,7 @@ namespace TagLib.Tiff
 		/// </returns>
 		protected ByteVector RenderHeader (uint first_ifd_offset)
 		{
-			ByteVector data = new ByteVector ();
+			var data = new ByteVector ();
 
 			if (IsBigEndian)
 				data.Add ("MM");
@@ -243,7 +239,7 @@ namespace TagLib.Tiff
 			return data;
 		}
 
-#endregion
+		#endregion
 
 	}
 }

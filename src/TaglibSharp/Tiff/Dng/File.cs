@@ -22,13 +22,10 @@
 //
 
 using System;
-using System.Collections.Generic;
 
-using TagLib;
-using TagLib.Image;
 using TagLib.IFD;
-using TagLib.IFD.Tags;
 using TagLib.IFD.Entries;
+using TagLib.IFD.Tags;
 
 namespace TagLib.Tiff.Dng
 {
@@ -37,13 +34,13 @@ namespace TagLib.Tiff.Dng
 	///    This class extends <see cref="TagLib.Tiff.File" /> to provide tagging
 	///    for DNG image files.
 	/// </summary>
-	[SupportedMimeType("taglib/dng", "dng")]
-	[SupportedMimeType("image/dng")]
-	[SupportedMimeType("image/x-adobe-dng")]
+	[SupportedMimeType ("taglib/dng", "dng")]
+	[SupportedMimeType ("image/dng")]
+	[SupportedMimeType ("image/x-adobe-dng")]
 	public class File : TagLib.Tiff.File
 	{
 
-#region public Properties
+		#region public Properties
 
 		/// <summary>
 		///    Indicates if tags can be written back to the current file or not
@@ -57,9 +54,9 @@ namespace TagLib.Tiff.Dng
 		}
 
 
-#endregion
+		#endregion
 
-#region constructors
+		#region constructors
 
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
@@ -79,8 +76,7 @@ namespace TagLib.Tiff.Dng
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		public File (string path, ReadStyle propertiesStyle)
-			: this (new File.LocalFileAbstraction (path),
-				propertiesStyle)
+			: this (new LocalFileAbstraction (path), propertiesStyle)
 		{
 		}
 
@@ -118,8 +114,8 @@ namespace TagLib.Tiff.Dng
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle) : base (abstraction, propertiesStyle)
+		public File (IFileAbstraction abstraction, ReadStyle propertiesStyle)
+			: base (abstraction, propertiesStyle)
 		{
 		}
 
@@ -140,9 +136,9 @@ namespace TagLib.Tiff.Dng
 		{
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Saves the changes made in the current instance to the
@@ -153,7 +149,7 @@ namespace TagLib.Tiff.Dng
 			throw new NotSupportedException ();
 		}
 
-#endregion
+		#endregion
 
 		/// <summary>
 		///    Attempts to extract the media properties of the main
@@ -168,20 +164,19 @@ namespace TagLib.Tiff.Dng
 		{
 			int width = 0, height = 0;
 
-			IFDTag tag = GetTag (TagTypes.TiffIFD) as IFDTag;
+			var tag = GetTag (TagTypes.TiffIFD) as IFDTag;
 			IFDStructure structure = tag.Structure;
 
 			// DNG uses SubIFDs for images, the one with SubfileType = 0 is the RAW data.
-			var sub_ifds = structure.GetEntry (0, (ushort) IFDEntryTag.SubIFDs) as SubIFDArrayEntry;
-			if (sub_ifds == null) {
+			if (!(structure.GetEntry (0, (ushort)IFDEntryTag.SubIFDs) is SubIFDArrayEntry sub_ifds)) {
 				return base.ExtractProperties ();
 			}
 
 			foreach (var entry in sub_ifds.Entries) {
-				var type = entry.GetLongValue (0, (ushort) IFDEntryTag.NewSubfileType);
+				var type = entry.GetLongValue (0, (ushort)IFDEntryTag.NewSubfileType);
 				if (type == 0) {
-					width = (int) (entry.GetLongValue (0, (ushort) IFDEntryTag.ImageWidth) ?? 0);
-					height = (int) (entry.GetLongValue (0, (ushort) IFDEntryTag.ImageLength) ?? 0);
+					width = (int)(entry.GetLongValue (0, (ushort)IFDEntryTag.ImageWidth) ?? 0);
+					height = (int)(entry.GetLongValue (0, (ushort)IFDEntryTag.ImageLength) ?? 0);
 					break; // No need to iterate the other SubIFDs
 				}
 			}

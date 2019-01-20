@@ -27,10 +27,8 @@
 // USA
 //
 
-using System.Collections;
-using System;
-
-namespace TagLib {
+namespace TagLib
+{
 	/// <summary>
 	///    This static class provides convenience functions for converting
 	///    between <see cref="string" /> genres and their respective audio
@@ -41,7 +39,7 @@ namespace TagLib {
 		/// <summary>
 		///    Contains a list of ID3v1 audio generes.
 		/// </summary>
-		private static readonly string [] audio = {
+		static readonly string[] audio = {
 			"Blues",
 			"Classic Rock",
 			"Country",
@@ -191,11 +189,11 @@ namespace TagLib {
 			"Jpop",
 			"Synthpop"
 		};
-		
+
 		/// <summary>
 		///    Contains a list of DivX audio generes.
 		/// </summary>
-		private static readonly string [] video = new string [] {
+		static readonly string[] video = new[] {
 			"Action",
 			"Action/Adventure",
 			"Adult",
@@ -249,10 +247,10 @@ namespace TagLib {
 		///    The genres are stored in the same order and with the same
 		///    values as in the ID3v1 format.
 		/// </remarks>
-		public static string [] Audio {
-			get {return (string []) audio.Clone ();}
+		public static string[] Audio {
+			get { return (string[])audio.Clone (); }
 		}
-		
+
 		/// <summary>
 		///    Gets a list of standard video generes.
 		/// </summary>
@@ -264,10 +262,10 @@ namespace TagLib {
 		///    The genres are stored in the same order and with the same
 		///    values as in the DivX format.
 		/// </remarks>
-		public static string [] Video {
-			get {return (string []) video.Clone ();}
+		public static string[] Video {
+			get { return (string[])video.Clone (); }
 		}
-		
+
 		/// <summary>
 		///    Gets the genre index for a specified audio genre.
 		/// </summary>
@@ -281,12 +279,12 @@ namespace TagLib {
 		/// </returns>
 		public static byte AudioToIndex (string name)
 		{
-			for (byte i = 0; i < audio.Length; i ++)
-				if (name == audio [i])
+			for (byte i = 0; i < audio.Length; i++)
+				if (name == audio[i])
 					return i;
 			return 255;
 		}
-		
+
 		/// <summary>
 		///    Gets the genre index for a specified video genre.
 		/// </summary>
@@ -300,12 +298,12 @@ namespace TagLib {
 		/// </returns>
 		public static byte VideoToIndex (string name)
 		{
-			for (byte i = 0; i < video.Length; i ++)
-				if (name == video [i])
+			for (byte i = 0; i < video.Length; i++)
+				if (name == video[i])
 					return i;
 			return 255;
 		}
-		
+
 		/// <summary>
 		///    Gets the audio genre from its index in the array.
 		/// </summary>
@@ -320,9 +318,9 @@ namespace TagLib {
 		/// </returns>
 		public static string IndexToAudio (byte index)
 		{
-			return (index < audio.Length) ? audio [index] : null;
+			return (index < audio.Length) ? audio[index] : null;
 		}
-		
+
 		/// <summary>
 		///    Gets the video genre from its index in the array.
 		/// </summary>
@@ -337,9 +335,9 @@ namespace TagLib {
 		/// </returns>
 		public static string IndexToVideo (byte index)
 		{
-			return (index < video.Length) ? video [index] : null;
+			return (index < video.Length) ? video[index] : null;
 		}
-		
+
 		/// <summary>
 		///    Gets the audio genre from its index in the array.
 		/// </summary>
@@ -356,7 +354,7 @@ namespace TagLib {
 		{
 			return IndexToAudio (StringToByte (text));
 		}
-		
+
 		/// <summary>
 		///    Gets the video genre from its index in the array.
 		/// </summary>
@@ -373,7 +371,7 @@ namespace TagLib {
 		{
 			return IndexToVideo (StringToByte (text));
 		}
-		
+
 		/// <summary>
 		///    Converts a string, either in the format <c>"(123)"</c> or
 		///    <c>"123"</c> into a byte or equal numeric value.
@@ -387,19 +385,17 @@ namespace TagLib {
 		///    of <paramref name="text" /> or 255 if no numeric value
 		///    could be extracted.
 		/// </returns>
-		private static byte StringToByte (string text)
+		static byte StringToByte (string text)
 		{
-			byte value;
 			int last_pos;
-			if (text != null && text.Length > 2 && text [0] == '('
+			if (text != null && text.Length > 2 && text[0] == '('
 				&& (last_pos = text.IndexOf (')')) != -1
-				&& byte.TryParse (text.Substring (1,
-					last_pos - 1), out value))
+				&& byte.TryParse (text.Substring (1, last_pos - 1), out var value))
 				return value;
-			
+
 			if (text != null && byte.TryParse (text, out value))
 				return value;
-				
+
 			return 255;
 		}
 	}

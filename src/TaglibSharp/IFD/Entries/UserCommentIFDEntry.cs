@@ -23,8 +23,6 @@
 // USA
 //
 
-using System;
-
 namespace TagLib.IFD.Entries
 {
 	/// <summary>
@@ -33,36 +31,36 @@ namespace TagLib.IFD.Entries
 	public class UserCommentIFDEntry : IFDEntry
 	{
 
-#region Constant Values
+		#region Constant Values
 
 		/// <summary>
 		///   Marker for an ASCII-encoded UserComment tag.
 		/// </summary>
-		public static readonly ByteVector COMMENT_ASCII_CODE = new byte[] {0x41, 0x53, 0x43, 0x49, 0x49, 0x00, 0x00, 0x00};
+		public static readonly ByteVector COMMENT_ASCII_CODE = new byte[] { 0x41, 0x53, 0x43, 0x49, 0x49, 0x00, 0x00, 0x00 };
 
 		/// <summary>
 		///   Marker for a JIS-encoded UserComment tag.
 		/// </summary>
-		public static readonly ByteVector COMMENT_JIS_CODE = new byte[] {0x4A, 0x49, 0x53, 0x00, 0x00, 0x00, 0x00, 0x00};
+		public static readonly ByteVector COMMENT_JIS_CODE = new byte[] { 0x4A, 0x49, 0x53, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
 		/// <summary>
 		///   Marker for a UNICODE-encoded UserComment tag.
 		/// </summary>
-		public static readonly ByteVector COMMENT_UNICODE_CODE = new byte[] {0x55, 0x4E, 0x49, 0x43, 0x4F, 0x44, 0x45, 0x00};
+		public static readonly ByteVector COMMENT_UNICODE_CODE = new byte[] { 0x55, 0x4E, 0x49, 0x43, 0x4F, 0x44, 0x45, 0x00 };
 
 		/// <summary>
 		///   Corrupt marker that seems to be resembling unicode.
 		/// </summary>
-		public static readonly ByteVector COMMENT_BAD_UNICODE_CODE = new byte[] {0x55, 0x6E, 0x69, 0x63, 0x6F, 0x64, 0x65, 0x00};
+		public static readonly ByteVector COMMENT_BAD_UNICODE_CODE = new byte[] { 0x55, 0x6E, 0x69, 0x63, 0x6F, 0x64, 0x65, 0x00 };
 
 		/// <summary>
 		///   Marker for a UserComment tag with undefined encoding.
 		/// </summary>
-		public static readonly ByteVector COMMENT_UNDEFINED_CODE = new byte[] {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+		public static readonly ByteVector COMMENT_UNDEFINED_CODE = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
-#endregion
+		#endregion
 
-#region Properties
+		#region Properties
 
 		/// <value>
 		///    The ID of the tag, the current instance belongs to
@@ -74,9 +72,9 @@ namespace TagLib.IFD.Entries
 		/// </value>
 		public string Value { get; private set; }
 
-#endregion
+		#endregion
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Construcor.
@@ -107,7 +105,7 @@ namespace TagLib.IFD.Entries
 		/// <param name="file">
 		///    The file that's currently being parsed, used for reporting corruptions.
 		/// </param>
-		public UserCommentIFDEntry (ushort tag, ByteVector data, TagLib.File file)
+		public UserCommentIFDEntry (ushort tag, ByteVector data, File file)
 		{
 			Tag = tag;
 
@@ -123,13 +121,13 @@ namespace TagLib.IFD.Entries
 
 			var trimmed = data.ToString ().Trim ();
 			if (trimmed.Length == 0 || trimmed == "\0") {
-				Value = String.Empty;
+				Value = string.Empty;
 				return;
 			}
 
 			// Some programs like e.g. CanonZoomBrowser inserts just the first 0x00-byte
 			// followed by 7-bytes of trash.
-			if (data.StartsWith ((byte) 0x00) && data.Count >= 8) {
+			if (data.StartsWith ((byte)0x00) && data.Count >= 8) {
 
 				// And CanonZoomBrowser fills some trailing bytes of the comment field
 				// with '\0'. So we return only the characters before the first '\0'.
@@ -143,7 +141,7 @@ namespace TagLib.IFD.Entries
 			}
 
 			if (data.Data.Length == 0) {
-				Value = String.Empty;
+				Value = string.Empty;
 				return;
 			}
 
@@ -161,7 +159,7 @@ namespace TagLib.IFD.Entries
 			Value = TrimNull (data.ToString (StringType.UTF8, offset, length));
 		}
 
-		private string TrimNull (string value)
+		string TrimNull (string value)
 		{
 			int term = value.IndexOf ('\0');
 			if (term > -1)
@@ -169,9 +167,9 @@ namespace TagLib.IFD.Entries
 			return value;
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Renders the current instance to a <see cref="ByteVector"/>
@@ -194,18 +192,18 @@ namespace TagLib.IFD.Entries
 		/// </returns>
 		public ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
 		{
-			type = (ushort) IFDEntryType.Undefined;
+			type = (ushort)IFDEntryType.Undefined;
 
-			ByteVector data = new ByteVector ();
-			data.Add (COMMENT_UNICODE_CODE);
-			data.Add (ByteVector.FromString (Value, StringType.UTF8));
+			var data = new ByteVector {
+				COMMENT_UNICODE_CODE,
+				ByteVector.FromString (Value, StringType.UTF8)
+			};
 
-			count = (uint) data.Count;
+			count = (uint)data.Count;
 
 			return data;
 		}
 
-#endregion
-
+		#endregion
 	}
 }

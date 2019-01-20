@@ -20,32 +20,30 @@
 //  License along with this library; if not, write to the Free Software
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-using System;
 using NUnit.Framework;
+using System;
 using TagLib;
 
 namespace TaglibSharp.Tests.Images
 {
-		[TestFixture ()]
-		public class jpegSonyDscRX100M4
+	[TestFixture ()]
+	public class jpegSonyDscRX100M4
+	{
+		[Test ()]
+		public void Test ()
 		{
-				[Test ()]
-				public void Test ()
-				{
-						bool isSuccess = true;
-						try
-						{
-							File.Create (TestPath.Samples + "sample_sony_DSC-RX100M4.jpg");
-						}
-						catch(ArithmeticException) {
-								// Old versions of TagLib were throwing an ArithmeticException on reading in Sony DSC RX100M4 images
-								isSuccess = false;
-						} catch (Exception) {
-								// All excetions shall make this test fail
-								isSuccess = false;
-						}
-						Assert.True (isSuccess);
-				}
+			bool isSuccess = true;
+			try {
+				File.Create (TestPath.Samples + "sample_sony_DSC-RX100M4.jpg");
+			} catch (ArithmeticException) {
+				// Old versions of TagLib were throwing an ArithmeticException on reading in Sony DSC RX100M4 images
+				isSuccess = false;
+			} catch (Exception) {
+				// All excetions shall make this test fail
+				isSuccess = false;
+			}
+			Assert.True (isSuccess);
 		}
+	}
 }
 

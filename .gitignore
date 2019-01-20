@@ -25,3 +25,5 @@ packages
 .vs
 .DS_Store
 TestResult.xml
+src/TaglibSharp.Tests/samples/tmp*
+*.sln.DotSettings.user

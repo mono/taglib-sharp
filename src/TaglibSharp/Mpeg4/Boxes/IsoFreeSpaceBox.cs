@@ -22,8 +22,8 @@
 // USA
 //
 
-using System;
-namespace TagLib.Mpeg4 {
+namespace TagLib.Mpeg4
+{
 	/// <summary>
 	///    This class extends <see cref="Box" /> to provide an
 	///    implementation of a ISO/IEC 14496-12 FreeSpaceBox.
@@ -31,18 +31,18 @@ namespace TagLib.Mpeg4 {
 	public class IsoFreeSpaceBox : Box
 	{
 		#region Private Fields
-		
+
 		/// <summary>
 		///    Contains the size of the padding.
 		/// </summary>
-		private long padding;
-		
+		long padding;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="IsoMetaBox" /> with a provided header and
@@ -60,13 +60,12 @@ namespace TagLib.Mpeg4 {
 		///    A <see cref="IsoHandlerBox" /> object containing the
 		///    handler that applies to the new instance.
 		/// </param>
-		public IsoFreeSpaceBox (BoxHeader header, TagLib.File file,
-		                        IsoHandlerBox handler)
+		public IsoFreeSpaceBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler)
 			: base (header, handler)
 		{
 			padding = DataSize;
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="IsoFreeSpaceBox" /> to occupy a specified number of
@@ -80,13 +79,13 @@ namespace TagLib.Mpeg4 {
 		{
 			PaddingSize = padding;
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets and sets the data contained in the current instance.
 		/// </summary>
@@ -95,10 +94,10 @@ namespace TagLib.Mpeg4 {
 		///    contained in the current instance.
 		/// </value>
 		public override ByteVector Data {
-			get {return new ByteVector ((int) padding);}
-			set {padding = (value != null) ? value.Count : 0;}
+			get { return new ByteVector ((int)padding); }
+			set { padding = (value != null) ? value.Count : 0; }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the size the current instance will occupy
 		///    when rendered.
@@ -108,10 +107,10 @@ namespace TagLib.Mpeg4 {
 		///    current instance will occupy when rendered.
 		/// </value>
 		public long PaddingSize {
-			get {return padding + 8;}
-			set {padding = value - 8;}
+			get { return padding + 8; }
+			set { padding = value - 8; }
 		}
-		
+
 		#endregion
 	}
 }

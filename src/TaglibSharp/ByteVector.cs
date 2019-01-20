@@ -31,9 +31,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
-namespace TagLib {
+namespace TagLib
+{
 	/// <summary>
 	///    Specifies the text encoding used when converting between a <see
 	///    cref="string" /> and a <see cref="ByteVector" />.
@@ -43,45 +45,46 @@ namespace TagLib {
 	///    cref="ByteVector.FromString(string,StringType)" /> and <see
 	///    cref="ByteVector.ToString(StringType)" />.
 	/// </remarks>
-	public enum StringType {
+	public enum StringType
+	{
 		/// <summary>
 		///    The string is to be Latin-1 encoded.
 		/// </summary>
 		Latin1 = 0,
-		
+
 		/// <summary>
 		///    The string is to be UTF-16 encoded.
 		/// </summary>
 		UTF16 = 1,
-		
+
 		/// <summary>
 		///    The string is to be UTF-16BE encoded.
 		/// </summary>
 		UTF16BE = 2,
-		
+
 		/// <summary>
 		///    The string is to be UTF-8 encoded.
 		/// </summary>
 		UTF8 = 3,
-		
+
 		/// <summary>
 		///    The string is to be UTF-16LE encoded.
 		/// </summary>
 		UTF16LE = 4
 	}
-	
+
 	/// <summary>
 	///    This class represents and performs operations on variable length
 	///    list of <see cref="byte" /> elements.
 	/// </summary>
 	public class ByteVector : IList<byte>, IComparable<ByteVector>
 	{
-#region Private Static Fields
-		
+		#region Private Static Fields
+
 		/// <summary>
 		///    Contains values to use in CRC calculation.
 		/// </summary>
-		private static uint [] crc_table = new uint[256] {
+		static readonly uint[] crc_table = new uint[256] {
 			0x00000000, 0x04c11db7, 0x09823b6e, 0x0d4326d9,
 			0x130476dc, 0x17c56b6b, 0x1a864db2, 0x1e475005,
 			0x2608edb8, 0x22c9f00f, 0x2f8ad6d6, 0x2b4bcb61,
@@ -104,7 +107,7 @@ namespace TagLib {
 			0x018aeb13, 0x054bf6a4, 0x0808d07d, 0x0cc9cdca,
 			0x7897ab07, 0x7c56b6b0, 0x71159069, 0x75d48dde,
 			0x6b93dddb, 0x6f52c06c, 0x6211e6b5, 0x66d0fb02,
-			0x5e9f46bf, 0x5a5e5b08,	0x571d7dd1, 0x53dc6066,
+			0x5e9f46bf, 0x5a5e5b08, 0x571d7dd1, 0x53dc6066,
 			0x4d9b3063, 0x495a2dd4, 0x44190b0d, 0x40d816ba,
 			0xaca5c697, 0xa864db20, 0xa527fdf9, 0xa1e6e04e,
 			0xbfa1b04b, 0xbb60adfc, 0xb6238b25, 0xb2e29692,
@@ -147,25 +150,25 @@ namespace TagLib {
 			0xafb010b1, 0xab710d06, 0xa6322bdf, 0xa2f33668,
 			0xbcb4666d, 0xb8757bda, 0xb5365d03, 0xb1f740b4
 		};
-		
+
 		/// <summary>
 		///    Specifies whether or not to use a broken Latin-1
 		///    behavior.
 		/// </summary>
-		private static bool use_broken_latin1 = false;
-		
+		static bool use_broken_latin1;
+
 		/// <summary>
 		///    Contains a one byte text delimiter.
 		/// </summary>
-		private static readonly ReadOnlyByteVector td1 =
-			new ReadOnlyByteVector ((int)1);
-		
+		static readonly ReadOnlyByteVector td1 =
+			new ReadOnlyByteVector (1);
+
 		/// <summary>
 		///    Contains a two byte text delimiter.
 		/// </summary>
-		private static readonly ReadOnlyByteVector td2 =
-			new ReadOnlyByteVector ((int)2);
-		
+		static readonly ReadOnlyByteVector td2 =
+			new ReadOnlyByteVector (2);
+
 		/// <summary>
 		///    Contains the last generic UTF-16 encoding read.
 		/// </summary>
@@ -175,26 +178,26 @@ namespace TagLib {
 		///    this field will inform the file what encoding to use for
 		///    the second string.
 		/// </remarks>
-		private static System.Text.Encoding last_utf16_encoding =
-			System.Text.Encoding.Unicode;
-		
-#endregion
-		
-		
-		
-#region Private Fields
-		
+		static Encoding last_utf16_encoding =
+			Encoding.Unicode;
+
+		#endregion
+
+
+
+		#region Private Fields
+
 		/// <summary>
 		///    Contains the internal byte list.
 		/// </summary>
-		private List<byte> data = new List<byte>();
-		
-#endregion
-		
-		
-		
-#region Constructors
-		
+		readonly List<byte> data = new List<byte> ();
+
+		#endregion
+
+
+
+		#region Constructors
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="ByteVector" /> with a length of zero.
@@ -202,7 +205,7 @@ namespace TagLib {
 		public ByteVector ()
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="ByteVector" /> by copying the values from another
@@ -215,7 +218,7 @@ namespace TagLib {
 		public ByteVector (ByteVector vector)
 		{
 			if (vector != null)
-				this.data.AddRange (vector);
+				data.AddRange (vector);
 		}
 
 		/// <summary>
@@ -227,13 +230,13 @@ namespace TagLib {
 		///    A <see cref="T:byte[]" /> containing the bytes to be stored
 		///    in the new instance.
 		/// </param>
-		public ByteVector (params byte [] data)
+		public ByteVector (params byte[] data)
 		{
 			if (data != null)
 				this.data.AddRange (data);
 		}
-		
-		
+
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="ByteVector" /> by copying a specified number of
@@ -251,25 +254,23 @@ namespace TagLib {
 		///    <paramref name="length" /> is less than zero or greater
 		///    than the length of the data.
 		/// </exception>
-		public ByteVector (byte [] data, int length)
+		public ByteVector (byte[] data, int length)
 		{
 			if (length > data.Length)
-				throw new ArgumentOutOfRangeException (nameof(length),
-					"Length exceeds size of data.");
-			
+				throw new ArgumentOutOfRangeException (nameof (length), "Length exceeds size of data.");
+
 			if (length < 0)
-				throw new ArgumentOutOfRangeException (nameof(length),
-					"Length is less than zero.");
-			
+				throw new ArgumentOutOfRangeException (nameof (length), "Length is less than zero.");
+
 			if (length == data.Length) {
 				this.data.AddRange (data);
 			} else {
-				byte [] array = new byte[length];
-				System.Array.Copy (data, 0, array, 0, length);
+				byte[] array = new byte[length];
+				Array.Copy (data, 0, array, 0, length);
 				this.data.AddRange (array);
 			}
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="ByteVector" /> of specified size containing bytes
@@ -287,10 +288,11 @@ namespace TagLib {
 		/// <exception cref="ArgumentOutOfRangeException">
 		///    <paramref name="size" /> is less than zero.
 		/// </exception>
-		public ByteVector (int size) : this (size, 0)
+		public ByteVector (int size)
+			: this (size, 0)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="ByteVector" /> of specified size containing bytes
@@ -310,26 +312,25 @@ namespace TagLib {
 		public ByteVector (int size, byte value)
 		{
 			if (size < 0)
-				throw new ArgumentOutOfRangeException (nameof(size),
-					"Size is less than zero.");
-			
-			if(size == 0)
+				throw new ArgumentOutOfRangeException (nameof (size), "Size is less than zero.");
+
+			if (size == 0)
 				return;
-			
-			byte [] data = new byte [size];
-			
-			for (int i = 0; i < size; i ++)
+
+			byte[] data = new byte[size];
+
+			for (int i = 0; i < size; i++)
 				data[i] = value;
-			
+
 			this.data.AddRange (data);
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the data stored in the current instance.
 		/// </summary>
@@ -337,10 +338,10 @@ namespace TagLib {
 		///    A <see cref="T:byte[]" /> containing the data stored in the
 		///    current instance.
 		/// </value>
-		public byte [] Data {
-			get {return this.data.ToArray();}
+		public byte[] Data {
+			get { return data.ToArray (); }
 		}
-		
+
 		/// <summary>
 		///    Gets whether or not the current instance is empty.
 		/// </summary>
@@ -349,9 +350,9 @@ namespace TagLib {
 		///    current instance is empty.
 		/// </value>
 		public bool IsEmpty {
-			get {return this.data.Count == 0;}
+			get { return data.Count == 0; }
 		}
-		
+
 		/// <summary>
 		///    Gets the CRC-32 checksum of the current instance.
 		/// </summary>
@@ -362,21 +363,21 @@ namespace TagLib {
 		public uint Checksum {
 			get {
 				uint sum = 0;
-				
-				foreach(byte b in this.data)
+
+				foreach (byte b in data)
 					sum = (sum << 8) ^ crc_table
 						[((sum >> 24) & 0xFF) ^ b];
-				
+
 				return sum;
 			}
 		}
-		
-#endregion
-		
-		
-		
-#region Public Static Properties
-		
+
+		#endregion
+
+
+
+		#region Public Static Properties
+
 		/// <summary>
 		///    Gets and sets whether or not to use a broken behavior for
 		///    Latin-1 strings, common to ID3v1 and ID3v2 tags.
@@ -400,16 +401,16 @@ namespace TagLib {
 		///    problems in tags it has written.</para>
 		/// </remarks>
 		public static bool UseBrokenLatin1Behavior {
-			get {return use_broken_latin1;}
-			set {use_broken_latin1 = value;}
+			get { return use_broken_latin1; }
+			set { use_broken_latin1 = value; }
 		}
-		
-#endregion
-		
-		
-		
-#region Public Methods
-		
+
+		#endregion
+
+
+
+		#region Public Methods
+
 		/// <summary>
 		///    Creates a new instance of <see cref="ByteVector" />
 		///    containing a specified range of elements from the current
@@ -432,26 +433,24 @@ namespace TagLib {
 		public ByteVector Mid (int startIndex, int length)
 		{
 			if (startIndex < 0 || startIndex > Count)
-				throw new ArgumentOutOfRangeException (
-					nameof(startIndex));
-			
+				throw new ArgumentOutOfRangeException (nameof (startIndex));
+
 			if (length < 0 || startIndex + length > Count)
-				throw new ArgumentOutOfRangeException (
-					nameof(length));
-			
+				throw new ArgumentOutOfRangeException (nameof (length));
+
 			if (length == 0)
 				return new ByteVector ();
-				
-			if(startIndex + length > this.data.Count)
+
+			if (startIndex + length > this.data.Count)
 				length = this.data.Count - startIndex;
-			
-			byte [] data = new byte [length];
-			
+
+			byte[] data = new byte[length];
+
 			this.data.CopyTo (startIndex, data, 0, length);
-			
+
 			return data;
 		}
-		
+
 		/// <summary>
 		///    Creates a new instance of <see cref="ByteVector" />
 		///    containing elements from the current instance starting
@@ -467,9 +466,9 @@ namespace TagLib {
 		/// </exception>
 		public ByteVector Mid (int index)
 		{
-			return Mid(index, Count - index);
+			return Mid (index, Count - index);
 		}
-		
+
 		/// <summary>
 		///    Finds the first byte-aligned occurance of a pattern in
 		///    the current instance, starting at a specified position.
@@ -505,60 +504,54 @@ namespace TagLib {
 		public int Find (ByteVector pattern, int offset, int byteAlign)
 		{
 			if (pattern == null)
-				throw new ArgumentNullException (nameof(pattern));
-			
+				throw new ArgumentNullException (nameof (pattern));
+
 			if (offset < 0)
-				throw new ArgumentOutOfRangeException (
-					nameof(offset), "offset must be at least 0.");
-			
+				throw new ArgumentOutOfRangeException (nameof (offset), "offset must be at least 0.");
+
 			if (byteAlign < 1)
-				throw new ArgumentOutOfRangeException (
-					nameof(byteAlign),
-					"byteAlign must be at least 1.");
-			
+				throw new ArgumentOutOfRangeException (nameof (byteAlign), "byteAlign must be at least 1.");
+
 			if (pattern.Count > Count - offset)
 				return -1;
-			
+
 			// Let's go ahead and special case a pattern of size one
 			// since that's common and easy to make fast.
-			
+
 			if (pattern.Count == 1) {
-				byte p = pattern [0];
-				for (int i = offset; i < this.data.Count;
+				byte p = pattern[0];
+				for (int i = offset; i < data.Count;
 					i += byteAlign)
-					if (this.data [i] == p)
+					if (data[i] == p)
 						return i;
 				return -1;
 			}
-			
-			int [] last_occurrence = new int [256];
+
+			int[] last_occurrence = new int[256];
 			for (int i = 0; i < 256; ++i)
-				last_occurrence [i] = pattern.Count;
-			
+				last_occurrence[i] = pattern.Count;
+
 			for (int i = 0; i < pattern.Count - 1; ++i)
-				last_occurrence [pattern [i]] =
-					pattern.Count - i - 1;
-			
+				last_occurrence[pattern[i]] = pattern.Count - i - 1;
+
 			for (int i = pattern.Count - 1 + offset;
-				i < this.data.Count;
-				i += last_occurrence [this.data [i]]) {
+				i < data.Count;
+				i += last_occurrence[data[i]]) {
 				int iBuffer = i;
 				int iPattern = pattern.Count - 1;
-				
-				while(iPattern >= 0 && this.data [iBuffer] ==
-					pattern [iPattern]) {
+
+				while (iPattern >= 0 && data[iBuffer] == pattern[iPattern]) {
 					--iBuffer;
 					--iPattern;
 				}
-				
-				if (-1 == iPattern && (iBuffer + 1 - offset) %
-					byteAlign == 0)
+
+				if (-1 == iPattern && (iBuffer + 1 - offset) % byteAlign == 0)
 					return iBuffer + 1;
 			}
-			
+
 			return -1;
 		}
-		
+
 		/// <summary>
 		///    Finds the first occurance of a pattern in the current
 		///    instance, starting at a specified position.
@@ -582,11 +575,11 @@ namespace TagLib {
 		/// <exception cref="ArgumentOutOfRangeException">
 		///    <paramref name="offset" /> is less than zero.
 		/// </exception>
-		public int Find(ByteVector pattern, int offset)
+		public int Find (ByteVector pattern, int offset)
 		{
-			return Find(pattern, offset, 1);
+			return Find (pattern, offset, 1);
 		}
-		
+
 		/// <summary>
 		///    Finds the first occurance of a pattern in the current
 		///    instance.
@@ -603,11 +596,11 @@ namespace TagLib {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="pattern" /> is <see langword="null" />.
 		/// </exception>
-		public int Find(ByteVector pattern)
+		public int Find (ByteVector pattern)
 		{
-			return Find(pattern, 0, 1);
+			return Find (pattern, 0, 1);
 		}
-		
+
 		/// <summary>
 		///    Finds the last byte-aligned occurance of a pattern in
 		///    the current instance, starting before a specified
@@ -643,44 +636,42 @@ namespace TagLib {
 		public int RFind (ByteVector pattern, int offset, int byteAlign)
 		{
 			if (pattern == null)
-				throw new ArgumentNullException (nameof(pattern));
-			
+				throw new ArgumentNullException (nameof (pattern));
+
 			if (offset < 0)
-				throw new ArgumentOutOfRangeException (
-					nameof(offset));
-			
+				throw new ArgumentOutOfRangeException (nameof (offset));
+
 			if (pattern.Count == 0 || pattern.Count > Count - offset)
 				return -1;
-			
+
 			// Let's go ahead and special case a pattern of size one
 			// since that's common and easy to make fast.
-			
+
 			if (pattern.Count == 1) {
-				byte p = pattern [0];
+				byte p = pattern[0];
 				for (int i = Count - offset - 1; i >= 0;
 					i -= byteAlign)
-					if (this.data [i] == p)
+					if (data[i] == p)
 						return i;
 				return -1;
 			}
-			
-			int [] first_occurrence = new int [256];
-			
+
+			int[] first_occurrence = new int[256];
+
 			for (int i = 0; i < 256; ++i)
-				first_occurrence [i] = pattern.Count;
-			
+				first_occurrence[i] = pattern.Count;
+
 			for (int i = pattern.Count - 1; i > 0; --i)
-				first_occurrence [pattern [i]] = i;
-			
+				first_occurrence[pattern[i]] = i;
+
 			for (int i = Count - offset - pattern.Count; i >= 0;
-				i -= first_occurrence [this.data [i]])
-				if ((offset - i) % byteAlign == 0 &&
-					ContainsAt (pattern, i))
+				i -= first_occurrence[data[i]])
+				if ((offset - i) % byteAlign == 0 && ContainsAt (pattern, i))
 					return i;
-			
+
 			return -1;
 		}
-		
+
 		/// <summary>
 		///    Finds the last occurance of a pattern in the current
 		///    instance, starting before a specified position.
@@ -704,11 +695,11 @@ namespace TagLib {
 		/// <exception cref="ArgumentOutOfRangeException">
 		///    <paramref name="offset" /> is less than zero.
 		/// </exception>
-		public int RFind(ByteVector pattern, int offset)
+		public int RFind (ByteVector pattern, int offset)
 		{
 			return RFind (pattern, offset, 1);
 		}
-		
+
 		/// <summary>
 		///    Finds the last occurance of a pattern in the current
 		///    instance.
@@ -725,11 +716,11 @@ namespace TagLib {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="pattern" /> is <see langword="null" />.
 		/// </exception>
-		public int RFind(ByteVector pattern)
+		public int RFind (ByteVector pattern)
 		{
-			return RFind(pattern, 0, 1);
+			return RFind (pattern, 0, 1);
 		}
-		
+
 		/// <summary>
 		///    Checks whether or not a pattern appears at a specified
 		///    position in the current instance.
@@ -757,33 +748,31 @@ namespace TagLib {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="pattern" /> is <see langword="null" />.
 		/// </exception>
-		public bool ContainsAt (ByteVector pattern, int offset, 
-		                        int patternOffset, int patternLength)
+		public bool ContainsAt (ByteVector pattern, int offset, int patternOffset, int patternLength)
 		{
 			if (pattern == null)
-				throw new ArgumentNullException (nameof(pattern));
-			
-			if(pattern.Count < patternLength) {
+				throw new ArgumentNullException (nameof (pattern));
+
+			if (pattern.Count < patternLength) {
 				patternLength = pattern.Count;
 			}
-			
+
 			// do some sanity checking -- all of these things are 
 			// needed for the search to be valid
-			if (patternLength > this.data.Count ||
-				offset >= this.data.Count ||
+			if (patternLength > data.Count ||
+				offset >= data.Count ||
 				patternOffset >= pattern.Count ||
 				patternLength <= 0 || offset < 0)
 				return false;
-			
+
 			// loop through looking for a mismatch
 			for (int i = 0; i < patternLength - patternOffset; i++)
-				if (this.data[i + offset] !=
-					pattern [i + patternOffset])
+				if (data[i + offset] != pattern[i + patternOffset])
 					return false;
-			
+
 			return true;
 		}
-		
+
 		/// <summary>
 		///    Checks whether or not a pattern appears at a specified
 		///    position in the current instance.
@@ -807,13 +796,11 @@ namespace TagLib {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="pattern" /> is <see langword="null" />.
 		/// </exception>
-		public bool ContainsAt (ByteVector pattern, int offset,
-		                        int patternOffset)
+		public bool ContainsAt (ByteVector pattern, int offset, int patternOffset)
 		{
-			return ContainsAt (pattern, offset, patternOffset,
-				int.MaxValue);
+			return ContainsAt (pattern, offset, patternOffset, int.MaxValue);
 		}
-		
+
 		/// <summary>
 		///    Checks whether or not a pattern appears at a specified
 		///    position in the current instance.
@@ -837,7 +824,7 @@ namespace TagLib {
 		{
 			return ContainsAt (pattern, offset, 0);
 		}
-		
+
 		/// <summary>
 		///    Checks whether or not a pattern appears at the beginning
 		///    of the current instance.
@@ -858,7 +845,7 @@ namespace TagLib {
 		{
 			return ContainsAt (pattern, 0);
 		}
-		
+
 		/// <summary>
 		///    Checks whether or not a pattern appears at the end of the
 		///    current instance.
@@ -878,12 +865,11 @@ namespace TagLib {
 		public bool EndsWith (ByteVector pattern)
 		{
 			if (pattern == null)
-				throw new ArgumentNullException (nameof(pattern));
-			
-			return ContainsAt (pattern,
-				this.data.Count - pattern.Count);
+				throw new ArgumentNullException (nameof (pattern));
+
+			return ContainsAt (pattern, data.Count - pattern.Count);
 		}
-		
+
 		/// <summary>
 		///    Checks whether or not the current instance ends with part
 		///    of a pattern.
@@ -903,28 +889,27 @@ namespace TagLib {
 		public int EndsWithPartialMatch (ByteVector pattern)
 		{
 			if (pattern == null)
-				throw new ArgumentNullException (nameof(pattern));
-			
-			if(pattern.Count > this.data.Count) {
+				throw new ArgumentNullException (nameof (pattern));
+
+			if (pattern.Count > data.Count) {
 				return -1;
 			}
-			
-			int start_index = this.data.Count - pattern.Count;
-			
+
+			int start_index = data.Count - pattern.Count;
+
 			// try to match the last n-1 bytes from the vector
 			// (where n is the pattern size) -- continue trying to
 			// match n-2, n-3...1 bytes
-			
-			for(int i = 1; i < pattern.Count; i++) {
-				if (ContainsAt (pattern, start_index + i, 0,
-					pattern.Count - i)) {
+
+			for (int i = 1; i < pattern.Count; i++) {
+				if (ContainsAt (pattern, start_index + i, 0, pattern.Count - i)) {
 					return start_index + i;
 				}
 			}
-			
+
 			return -1;
 		}
-		
+
 		/// <summary>
 		///    Adds the contents of another <see cref="ByteVector" />
 		///    object to the end of the current instance.
@@ -939,14 +924,13 @@ namespace TagLib {
 		public void Add (ByteVector data)
 		{
 			if (IsReadOnly)
-				throw new NotSupportedException (
-					"Cannot edit readonly objects.");
-			
-			if(data != null) {
-				this.data.AddRange(data);
+				throw new NotSupportedException ("Cannot edit readonly objects.");
+
+			if (data != null) {
+				this.data.AddRange (data);
 			}
 		}
-		
+
 		/// <summary>
 		///    Adds the contents of an array to the end of the current
 		///    instance.
@@ -958,16 +942,15 @@ namespace TagLib {
 		/// <exception cref="NotSupportedException">
 		///    The current instance is read-only.
 		/// </exception>
-		public void Add (byte [] data)
+		public void Add (byte[] data)
 		{
 			if (IsReadOnly)
-				throw new NotSupportedException (
-					"Cannot edit readonly objects.");
-			
-			if(data != null)
-				this.data.AddRange(data);
+				throw new NotSupportedException ("Cannot edit readonly objects.");
+
+			if (data != null)
+				this.data.AddRange (data);
 		}
-		
+
 		/// <summary>
 		///    Inserts the contents of another <see cref="ByteVector" />
 		///    object into the current instance.
@@ -986,13 +969,12 @@ namespace TagLib {
 		public void Insert (int index, ByteVector data)
 		{
 			if (IsReadOnly)
-				throw new NotSupportedException (
-					"Cannot edit readonly objects.");
-			
+				throw new NotSupportedException ("Cannot edit readonly objects.");
+
 			if (data != null)
 				this.data.InsertRange (index, data);
 		}
-		
+
 		/// <summary>
 		///    Inserts the contents of an array to insert into the
 		///    current instance.
@@ -1008,16 +990,15 @@ namespace TagLib {
 		/// <exception cref="NotSupportedException">
 		///    The current instance is read-only.
 		/// </exception>
-		public void Insert (int index, byte [] data)
+		public void Insert (int index, byte[] data)
 		{
 			if (IsReadOnly)
-				throw new NotSupportedException (
-					"Cannot edit readonly objects.");
-			
+				throw new NotSupportedException ("Cannot edit readonly objects.");
+
 			if (data != null)
 				this.data.InsertRange (index, data);
 		}
-		
+
 		/// <summary>
 		///    Resizes the current instance.
 		/// </summary>
@@ -1038,19 +1019,17 @@ namespace TagLib {
 		public ByteVector Resize (int size, byte padding)
 		{
 			if (IsReadOnly)
-				throw new NotSupportedException (
-					"Cannot edit readonly objects.");
-			
-			if (this.data.Count > size)
-				this.data.RemoveRange (size,
-					this.data.Count - size);
-			
-			while (this.data.Count < size)
-				this.data.Add (padding);
-			
+				throw new NotSupportedException ("Cannot edit readonly objects.");
+
+			if (data.Count > size)
+				data.RemoveRange (size, data.Count - size);
+
+			while (data.Count < size)
+				data.Add (padding);
+
 			return this;
 		}
-		
+
 		/// <summary>
 		///    Resizes the current instance.
 		/// </summary>
@@ -1074,7 +1053,7 @@ namespace TagLib {
 		{
 			return Resize (size, 0);
 		}
-		
+
 		/// <summary>
 		///    Removes a range of data from the current instance.
 		/// </summary>
@@ -1092,18 +1071,17 @@ namespace TagLib {
 		public void RemoveRange (int index, int count)
 		{
 			if (IsReadOnly)
-				throw new NotSupportedException (
-					"Cannot edit readonly objects.");
-			
-			this.data.RemoveRange (index, count);
+				throw new NotSupportedException ("Cannot edit readonly objects.");
+
+			data.RemoveRange (index, count);
 		}
-		
-#endregion
-		
-		
-		
-#region Conversions
-		
+
+		#endregion
+
+
+
+		#region Conversions
+
 		/// <summary>
 		///    Converts an first four bytes of the current instance to
 		///    a <see cref="int" /> value.
@@ -1124,9 +1102,9 @@ namespace TagLib {
 			int last = Count > 4 ? 3 : Count - 1;
 
 			for (int i = 0; i <= last; i++) {
-				int offset = mostSignificantByteFirst ? last-i : i;
+				int offset = mostSignificantByteFirst ? last - i : i;
 				unchecked {
-					sum |= (int) this[i] << (offset * 8);
+					sum |= this[i] << (offset * 8);
 				}
 			}
 
@@ -1164,15 +1142,15 @@ namespace TagLib {
 		{
 			uint sum = 0;
 			int last = Count > 4 ? 3 : Count - 1;
-			
+
 			for (int i = 0; i <= last; i++) {
-				int offset = mostSignificantByteFirst ? last-i : i;
-				sum |= (uint) this[i] << (offset * 8);
+				int offset = mostSignificantByteFirst ? last - i : i;
+				sum |= (uint)this[i] << (offset * 8);
 			}
-			
+
 			return sum;
 		}
-		
+
 		/// <summary>
 		///    Converts an first four bytes of the current instance to
 		///    a <see cref="uint" /> value using big-endian format.
@@ -1205,7 +1183,7 @@ namespace TagLib {
 			short sum = 0;
 			int last = Count > 2 ? 1 : Count - 1;
 			for (int i = 0; i <= last; i++) {
-				int offset = mostSignificantByteFirst ? last-i : i;
+				int offset = mostSignificantByteFirst ? last - i : i;
 				unchecked {
 					sum |= (short)(this[i] << (offset * 8));
 				}
@@ -1246,13 +1224,13 @@ namespace TagLib {
 			ushort sum = 0;
 			int last = Count > 2 ? 1 : Count - 1;
 			for (int i = 0; i <= last; i++) {
-				int offset = mostSignificantByteFirst ? last-i : i;
+				int offset = mostSignificantByteFirst ? last - i : i;
 				sum |= (ushort)(this[i] << (offset * 8));
 			}
-			
+
 			return sum;
 		}
-		
+
 		/// <summary>
 		///    Converts an first two bytes of the current instance to
 		///    a <see cref="ushort" /> value using big-endian format.
@@ -1284,10 +1262,10 @@ namespace TagLib {
 		{
 			long sum = 0;
 			int last = Count > 8 ? 7 : Count - 1;
-			for(int i = 0; i <= last; i++) {
-				int offset = mostSignificantByteFirst ? last-i : i;
+			for (int i = 0; i <= last; i++) {
+				int offset = mostSignificantByteFirst ? last - i : i;
 				unchecked {
-					sum |= (long) this[i] << (offset * 8);
+					sum |= (long)this[i] << (offset * 8);
 				}
 			}
 			return sum;
@@ -1324,13 +1302,13 @@ namespace TagLib {
 		{
 			ulong sum = 0;
 			int last = Count > 8 ? 7 : Count - 1;
-			for(int i = 0; i <= last; i++) {
-				int offset = mostSignificantByteFirst ? last-i : i;
-				sum |= (ulong) this[i] << (offset * 8);
+			for (int i = 0; i <= last; i++) {
+				int offset = mostSignificantByteFirst ? last - i : i;
+				sum |= (ulong)this[i] << (offset * 8);
 			}
 			return sum;
 		}
-		
+
 		/// <summary>
 		///    Converts an first eight bytes of the current instance to
 		///    a <see cref="ulong" /> value using big-endian format.
@@ -1360,7 +1338,7 @@ namespace TagLib {
 		/// </returns>
 		public float ToFloat (bool mostSignificantByteFirst)
 		{
-			byte [] bytes = (byte []) Data.Clone ();
+			byte[] bytes = (byte[])Data.Clone ();
 
 			if (mostSignificantByteFirst) {
 				Array.Reverse (bytes);
@@ -1398,7 +1376,7 @@ namespace TagLib {
 		/// </returns>
 		public double ToDouble (bool mostSignificantByteFirst)
 		{
-			byte [] bytes = (byte []) Data.Clone ();
+			byte[] bytes = (byte[])Data.Clone ();
 
 			if (mostSignificantByteFirst) {
 				Array.Reverse (bytes);
@@ -1419,7 +1397,7 @@ namespace TagLib {
 		{
 			return ToDouble (true);
 		}
-		
+
 		/// <summary>
 		///    Converts a portion of the current instance to a <see
 		///    cref="string"/> object using a specified encoding.
@@ -1449,24 +1427,24 @@ namespace TagLib {
 		public string ToString (StringType type, int offset, int count)
 		{
 			if (offset < 0 || offset > Count)
-				throw new ArgumentOutOfRangeException (nameof(offset));
-			
+				throw new ArgumentOutOfRangeException (nameof (offset));
+
 			if (count < 0 || count + offset > Count)
-				throw new ArgumentOutOfRangeException (nameof(count));
-			
-			ByteVector bom = type == StringType.UTF16 &&
-				this.data.Count - offset > 1 ? Mid (offset, 2) : null;
-			
+				throw new ArgumentOutOfRangeException (nameof (count));
+
+			var bom = type == StringType.UTF16 &&
+				data.Count - offset > 1 ? Mid (offset, 2) : null;
+
 			string s = StringTypeToEncoding (type, bom)
 				.GetString (Data, offset, count);
-			
+
 			// UTF16 BOM
-			if(s.Length != 0 && (s[0] == 0xfffe || s[0] == 0xfeff)) 
+			if (s.Length != 0 && (s[0] == 0xfffe || s[0] == 0xfeff))
 				return s.Substring (1);
-			
+
 			return s;
 		}
-		
+
 		/// <summary>
 		///    Converts all data after a specified index in the current
 		///    instance to a <see cref="string"/> object using a
@@ -1493,7 +1471,7 @@ namespace TagLib {
 		{
 			return ToString (type, offset, Count - offset);
 		}
-		
+
 		/// <summary>
 		///    Converts the current instance into a <see cref="string"/>
 		///    object using a specified encoding.
@@ -1506,7 +1484,7 @@ namespace TagLib {
 		{
 			return ToString (type, 0, Count);
 		}
-		
+
 		/// <summary>
 		///    Converts the current instance into a <see cref="string"/>
 		///    object using a UTF-8 encoding.
@@ -1519,7 +1497,7 @@ namespace TagLib {
 		{
 			return ToString (StringType.UTF8);
 		}
-		
+
 		/// <summary>
 		///    Converts the current instance into a <see cref="T:string[]"
 		///    /> starting at a specified offset and using a specified
@@ -1540,7 +1518,7 @@ namespace TagLib {
 		{
 			return ToStrings (type, offset, int.MaxValue);
 		}
-		
+
 		/// <summary>
 		///    Converts the current instance into a <see cref="T:string[]"
 		///    /> starting at a specified offset and using a specified
@@ -1564,31 +1542,30 @@ namespace TagLib {
 		/// <returns>
 		///    A <see cref="T:string[]" /> containing the converted text.
 		/// </returns>
-		public string[] ToStrings (StringType type, int offset,
-		                           int count)
+		public string[] ToStrings (StringType type, int offset, int count)
 		{
 			int chunk = 0;
 			int position = offset;
-			
-			List<string> list = new List<string> ();
-			ByteVector separator = TextDelimiter (type);
+
+			var list = new List<string> ();
+			var separator = TextDelimiter (type);
 			int align = separator.Count;
-			
+
 			while (chunk < count && position < Count) {
 				int start = position;
-				
+
 				if (chunk + 1 == count) {
 					position = offset + count;
 				} else {
 					position = Find (separator, start,
 						align);
-					
+
 					if (position < 0)
 						position = Count;
 				}
-				
+
 				int length = position - start;
-				
+
 				if (length == 0) {
 					list.Add (string.Empty);
 				} else {
@@ -1598,22 +1575,22 @@ namespace TagLib {
 						s[0] == 0xfeff)) { // UTF16 BOM
 						s = s.Substring (1);
 					}
-					
+
 					list.Add (s);
 				}
-				
+
 				position += align;
 			}
-			
+
 			return list.ToArray ();
 		}
-		
-#endregion
-		
-		
-		
-#region Operators
-		
+
+		#endregion
+
+
+
+		#region Operators
+
 		/// <summary>
 		///    Determines whether two specified <see cref="ByteVector"
 		///    /> objects are equal.
@@ -1629,16 +1606,15 @@ namespace TagLib {
 		///    /> and <paramref name="second" /> contain the same
 		///    data; otherwise, <see langword="false" />.</para>
 		/// </returns>
-		public static bool operator== (ByteVector first,
-		                               ByteVector second)
+		public static bool operator == (ByteVector first, ByteVector second)
 		{
-			bool fnull = (object) first == null;
-			bool snull = (object) second == null;
+			bool fnull = first is null;
+			bool snull = second is null;
 			if (fnull && snull)
 				return true;
 			else if (fnull || snull)
 				return false;
-			
+
 			return first.Equals (second);
 		}
 
@@ -1657,8 +1633,7 @@ namespace TagLib {
 		///    /> and <paramref name="second" /> contain different
 		///    data; otherwise, <see langword="false" />.</para>
 		/// </returns>
-		public static bool operator!= (ByteVector first,
-		                               ByteVector second)
+		public static bool operator != (ByteVector first, ByteVector second)
 		{
 			return !(first == second);
 		}
@@ -1682,15 +1657,14 @@ namespace TagLib {
 		///    <paramref name="first" /> or <paramref name="second" />
 		///    is <see langword="null" />.
 		/// </exception>
-		public static bool operator< (ByteVector first,
-		                              ByteVector second)
+		public static bool operator < (ByteVector first, ByteVector second)
 		{
 			if (first == null)
-				throw new ArgumentNullException (nameof(first));
+				throw new ArgumentNullException (nameof (first));
 
 			if (second == null)
-				throw new ArgumentNullException (nameof(second));
-			
+				throw new ArgumentNullException (nameof (second));
+
 			return first.CompareTo (second) < 0;
 		}
 
@@ -1713,15 +1687,14 @@ namespace TagLib {
 		///    <paramref name="first" /> or <paramref name="second" />
 		///    is <see langword="null" />.
 		/// </exception>
-		public static bool operator<= (ByteVector first,
-		                               ByteVector second)
+		public static bool operator <= (ByteVector first, ByteVector second)
 		{
 			if (first == null)
-				throw new ArgumentNullException (nameof(first));
-			
+				throw new ArgumentNullException (nameof (first));
+
 			if (second == null)
-				throw new ArgumentNullException (nameof(second));
-			
+				throw new ArgumentNullException (nameof (second));
+
 			return first.CompareTo (second) <= 0;
 		}
 
@@ -1744,14 +1717,13 @@ namespace TagLib {
 		///    <paramref name="first" /> or <paramref name="second" />
 		///    is <see langword="null" />.
 		/// </exception>
-		public static bool operator> (ByteVector first,
-		                              ByteVector second)
+		public static bool operator > (ByteVector first, ByteVector second)
 		{
 			if (first == null)
-				throw new ArgumentNullException (nameof(first));
+				throw new ArgumentNullException (nameof (first));
 
 			if (second == null)
-				throw new ArgumentNullException (nameof(second));
+				throw new ArgumentNullException (nameof (second));
 
 			return first.CompareTo (second) > 0;
 		}
@@ -1775,18 +1747,17 @@ namespace TagLib {
 		///    <paramref name="first" /> or <paramref name="second" />
 		///    is <see langword="null" />.
 		/// </exception>
-		public static bool operator>= (ByteVector first,
-		                               ByteVector second)
+		public static bool operator >= (ByteVector first, ByteVector second)
 		{
 			if (first == null)
-				throw new ArgumentNullException (nameof(first));
+				throw new ArgumentNullException (nameof (first));
 
 			if (second == null)
-				throw new ArgumentNullException (nameof(second));
+				throw new ArgumentNullException (nameof (second));
 
 			return first.CompareTo (second) >= 0;
 		}
-		
+
 		/// <summary>
 		///    Creates a new <see cref="ByteVector"/> object by adding
 		///    two objects together.
@@ -1802,14 +1773,14 @@ namespace TagLib {
 		///    contents of <paramref name="first" /> followed by the
 		///    contents of <paramref name="second" />.
 		/// </returns>
-		public static ByteVector operator+ (ByteVector first,
-		                                    ByteVector second)
+		public static ByteVector operator + (ByteVector first, ByteVector second)
 		{
-			ByteVector sum = new ByteVector(first);
-			sum.Add(second);
+			var sum = new ByteVector (first) {
+				second
+			};
 			return sum;
 		}
-		
+
 		/// <summary>
 		///    Converts a <see cref="byte" /> to a new <see
 		///    cref="ByteVector" /> object.
@@ -1837,7 +1808,7 @@ namespace TagLib {
 		///    A new instance of <see cref="ByteVector" /> containing
 		///    the contents of <paramref name="value" />.
 		/// </returns>
-		public static implicit operator ByteVector (byte [] value)
+		public static implicit operator ByteVector (byte[] value)
 		{
 			return new ByteVector (value);
 		}
@@ -1855,15 +1826,15 @@ namespace TagLib {
 		/// </returns>
 		public static implicit operator ByteVector (string value)
 		{
-			return ByteVector.FromString (value, StringType.UTF8);
+			return FromString (value, StringType.UTF8);
 		}
-		
-#endregion
-		
-		
-		
-#region Static Conversions
-		
+
+		#endregion
+
+
+
+		#region Static Conversions
+
 		/// <summary>
 		///    Converts a value into a data representation.
 		/// </summary>
@@ -1880,12 +1851,11 @@ namespace TagLib {
 		///    A <see cref="ByteVector"/> object containing the encoded
 		///    representation of <paramref name="value" />.
 		/// </returns>
-		public static ByteVector FromInt (int value,
-		                                   bool mostSignificantByteFirst)
+		public static ByteVector FromInt (int value, bool mostSignificantByteFirst)
 		{
-			ByteVector vector = new ByteVector();
-			for(int i = 0; i < 4; i++) {
-				int offset = mostSignificantByteFirst ? 3-i : i;
+			var vector = new ByteVector ();
+			for (int i = 0; i < 4; i++) {
+				int offset = mostSignificantByteFirst ? 3 - i : i;
 				vector.Add ((byte)(value >> (offset * 8) & 0xFF));
 			}
 
@@ -1923,18 +1893,17 @@ namespace TagLib {
 		///    A <see cref="ByteVector"/> object containing the encoded
 		///    representation of <paramref name="value" />.
 		/// </returns>
-		public static ByteVector FromUInt (uint value,
-		                                   bool mostSignificantByteFirst)
+		public static ByteVector FromUInt (uint value, bool mostSignificantByteFirst)
 		{
-			ByteVector vector = new ByteVector();
-			for(int i = 0; i < 4; i++) {
-				int offset = mostSignificantByteFirst ? 3-i : i;
+			var vector = new ByteVector ();
+			for (int i = 0; i < 4; i++) {
+				int offset = mostSignificantByteFirst ? 3 - i : i;
 				vector.Add ((byte)(value >> (offset * 8) & 0xFF));
 			}
-			
+
 			return vector;
 		}
-		
+
 		/// <summary>
 		///    Converts an unsigned value into a big-endian data
 		///    representation.
@@ -1948,7 +1917,7 @@ namespace TagLib {
 		/// </returns>
 		public static ByteVector FromUInt (uint value)
 		{
-			return FromUInt(value, true);
+			return FromUInt (value, true);
 		}
 
 		/// <summary>
@@ -1967,12 +1936,11 @@ namespace TagLib {
 		///    A <see cref="ByteVector"/> object containing the encoded
 		///    representation of <paramref name="value" />.
 		/// </returns>
-		public static ByteVector FromShort (short value,
-		                                    bool mostSignificantByteFirst)
+		public static ByteVector FromShort (short value, bool mostSignificantByteFirst)
 		{
-			ByteVector vector = new ByteVector();
-			for(int i = 0; i < 2; i++) {
-				int offset = mostSignificantByteFirst ? 1-i : i;
+			var vector = new ByteVector ();
+			for (int i = 0; i < 2; i++) {
+				int offset = mostSignificantByteFirst ? 1 - i : i;
 				vector.Add ((byte)(value >> (offset * 8) & 0xFF));
 			}
 
@@ -1989,11 +1957,11 @@ namespace TagLib {
 		///    A <see cref="ByteVector"/> object containing the encoded
 		///    representation of <paramref name="value" />.
 		/// </returns>
-		public static ByteVector FromShort(short value)
+		public static ByteVector FromShort (short value)
 		{
 			return FromShort (value, true);
 		}
-		
+
 		/// <summary>
 		///    Converts an unsigned value into a data representation.
 		/// </summary>
@@ -2010,18 +1978,17 @@ namespace TagLib {
 		///    A <see cref="ByteVector"/> object containing the encoded
 		///    representation of <paramref name="value" />.
 		/// </returns>
-		public static ByteVector FromUShort (ushort value,
-		                                     bool mostSignificantByteFirst)
+		public static ByteVector FromUShort (ushort value, bool mostSignificantByteFirst)
 		{
-			ByteVector vector = new ByteVector();
-			for(int i = 0; i < 2; i++) {
-				int offset = mostSignificantByteFirst ? 1-i : i;
+			var vector = new ByteVector ();
+			for (int i = 0; i < 2; i++) {
+				int offset = mostSignificantByteFirst ? 1 - i : i;
 				vector.Add ((byte)(value >> (offset * 8) & 0xFF));
 			}
-			
+
 			return vector;
 		}
-		
+
 		/// <summary>
 		///    Converts an unsigned value into a big-endian data
 		///    representation.
@@ -2033,7 +2000,7 @@ namespace TagLib {
 		///    A <see cref="ByteVector"/> object containing the encoded
 		///    representation of <paramref name="value" />.
 		/// </returns>
-		public static ByteVector FromUShort(ushort value)
+		public static ByteVector FromUShort (ushort value)
 		{
 			return FromUShort (value, true);
 		}
@@ -2054,12 +2021,11 @@ namespace TagLib {
 		///    A <see cref="ByteVector"/> object containing the encoded
 		///    representation of <paramref name="value" />.
 		/// </returns>
-		public static ByteVector FromLong (long value,
-		                                   bool mostSignificantByteFirst)
+		public static ByteVector FromLong (long value, bool mostSignificantByteFirst)
 		{
-			ByteVector vector = new ByteVector();
-			for(int i = 0; i < 8; i++) {
-				int offset = mostSignificantByteFirst ? 7-i : i;
+			var vector = new ByteVector ();
+			for (int i = 0; i < 8; i++) {
+				int offset = mostSignificantByteFirst ? 7 - i : i;
 				vector.Add ((byte)(value >> (offset * 8) & 0xFF));
 			}
 			return vector;
@@ -2075,11 +2041,11 @@ namespace TagLib {
 		///    A <see cref="ByteVector"/> object containing the encoded
 		///    representation of <paramref name="value" />.
 		/// </returns>
-		public static ByteVector FromLong(long value)
+		public static ByteVector FromLong (long value)
 		{
-			return FromLong(value, true);
+			return FromLong (value, true);
 		}
-		
+
 		/// <summary>
 		///    Converts an unsigned value into a data representation.
 		/// </summary>
@@ -2096,17 +2062,16 @@ namespace TagLib {
 		///    A <see cref="ByteVector"/> object containing the encoded
 		///    representation of <paramref name="value" />.
 		/// </returns>
-		public static ByteVector FromULong (ulong value,
-		                                    bool mostSignificantByteFirst)
+		public static ByteVector FromULong (ulong value, bool mostSignificantByteFirst)
 		{
-			ByteVector vector = new ByteVector();
-			for(int i = 0; i < 8; i++) {
-				int offset = mostSignificantByteFirst ? 7-i : i;
+			var vector = new ByteVector ();
+			for (int i = 0; i < 8; i++) {
+				int offset = mostSignificantByteFirst ? 7 - i : i;
 				vector.Add ((byte)(value >> (offset * 8) & 0xFF));
 			}
 			return vector;
 		}
-		
+
 		/// <summary>
 		///    Converts an unsigned value into a big-endian data
 		///    representation.
@@ -2118,11 +2083,11 @@ namespace TagLib {
 		///    A <see cref="ByteVector"/> object containing the encoded
 		///    representation of <paramref name="value" />.
 		/// </returns>
-		public static ByteVector FromULong(ulong value)
+		public static ByteVector FromULong (ulong value)
 		{
-			return FromULong(value, true);
+			return FromULong (value, true);
 		}
-		
+
 		/// <summary>
 		///    Converts an string into a encoded data representation.
 		/// </summary>
@@ -2142,27 +2107,25 @@ namespace TagLib {
 		///    A <see cref="ByteVector"/> object containing the encoded
 		///    representation of <paramref name="text" />.
 		/// </returns>
-		public static ByteVector FromString (string text,
-		                                     StringType type,
-		                                     int length)
+		public static ByteVector FromString (string text, StringType type, int length)
 		{
-			ByteVector data = new ByteVector ();
-			
+			var data = new ByteVector ();
+
 			if (type == StringType.UTF16)
-				data.Add (new byte [] {0xff, 0xfe});
-			
+				data.Add (new byte[] { 0xff, 0xfe });
+
 			if (text == null || text.Length == 0)
 				return data;
-			
+
 			if (text.Length > length)
 				text = text.Substring (0, length);
-			
+
 			data.Add (StringTypeToEncoding (type, data)
 				.GetBytes (text));
-			
+
 			return data;
 		}
-		
+
 		/// <summary>
 		///    Converts an string into a encoded data representation.
 		/// </summary>
@@ -2178,12 +2141,11 @@ namespace TagLib {
 		///    A <see cref="ByteVector"/> object containing the encoded
 		///    representation of <paramref name="text" />.
 		/// </returns>
-		public static ByteVector FromString(string text,
-		                                    StringType type)
+		public static ByteVector FromString (string text, StringType type)
 		{
-			return FromString(text, type, Int32.MaxValue);
+			return FromString (text, type, int.MaxValue);
 		}
-		
+
 		/// <summary>
 		///    Converts an string into a encoded data representation.
 		/// </summary>
@@ -2199,11 +2161,11 @@ namespace TagLib {
 		///    A <see cref="ByteVector"/> object containing the encoded
 		///    representation of <paramref name="text" />.
 		/// </returns>
-		public static ByteVector FromString(string text, int length)
+		public static ByteVector FromString (string text, int length)
 		{
-			return FromString(text, StringType.UTF8, length);
+			return FromString (text, StringType.UTF8, length);
 		}
-		
+
 		/// <summary>
 		///    Converts an string into a encoded data representation.
 		/// </summary>
@@ -2215,12 +2177,12 @@ namespace TagLib {
 		///    A <see cref="ByteVector"/> object containing the encoded
 		///    representation of <paramref name="text" />.
 		/// </returns>
-		[Obsolete("Use FromString(string,StringType)")]
-		public static ByteVector FromString(string text)
+		[Obsolete ("Use FromString(string,StringType)")]
+		public static ByteVector FromString (string text)
 		{
 			return FromString (text, StringType.UTF8);
 		}
-		
+
 		/// <summary>
 		///    Creates a new instance of <see cref="ByteVector" /> by
 		///    reading in the contents of a specified file.
@@ -2238,10 +2200,9 @@ namespace TagLib {
 		/// </exception>
 		public static ByteVector FromPath (string path)
 		{
-			byte [] tmp_out;
-			return FromPath (path, out tmp_out, false);
+			return FromPath (path, out _, false);
 		}
-		
+
 		/// <summary>
 		///    Creates a new instance of <see cref="ByteVector" /> by
 		///    reading in the contents of a specified file.
@@ -2266,17 +2227,14 @@ namespace TagLib {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
-		internal static ByteVector FromPath (string path,
-		                                     out byte [] firstChunk,
-		                                     bool copyFirstChunk)
+		internal static ByteVector FromPath (string path, out byte[] firstChunk, bool copyFirstChunk)
 		{
 			if (path == null)
-				throw new ArgumentNullException (nameof(path));
-			
-			return FromFile (new File.LocalFileAbstraction (path),
-				out firstChunk, copyFirstChunk);
+				throw new ArgumentNullException (nameof (path));
+
+			return FromFile (new File.LocalFileAbstraction (path), out firstChunk, copyFirstChunk);
 		}
-		
+
 		/// <summary>
 		///    Creates a new instance of <see cref="ByteVector" /> by
 		///    reading in the contents of a specified file abstraction.
@@ -2293,13 +2251,11 @@ namespace TagLib {
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public static ByteVector FromFile (File.IFileAbstraction
-		                                   abstraction)
+		public static ByteVector FromFile (File.IFileAbstraction abstraction)
 		{
-			byte [] tmp_out;
-			return FromFile (abstraction, out tmp_out, false);
+			return FromFile (abstraction, out _, false);
 		}
-		
+
 		/// <summary>
 		///    Creates a new instance of <see cref="ByteVector" /> by
 		///    reading in the contents of a specified file abstraction.
@@ -2325,27 +2281,23 @@ namespace TagLib {
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		internal static ByteVector FromFile (File.IFileAbstraction
-		                                     abstraction,
-		                                     out byte [] firstChunk,
-		                                     bool copyFirstChunk)
+		internal static ByteVector FromFile (File.IFileAbstraction abstraction, out byte[] firstChunk, bool copyFirstChunk)
 		{
 			if (abstraction == null)
-				throw new ArgumentNullException (nameof(abstraction));
-			
-			System.IO.Stream stream = abstraction.ReadStream;
-			ByteVector output = FromStream (stream, out firstChunk,
-				copyFirstChunk);
+				throw new ArgumentNullException (nameof (abstraction));
+
+			var stream = abstraction.ReadStream;
+			var output = FromStream (stream, out firstChunk, copyFirstChunk);
 			abstraction.CloseStream (stream);
 			return output;
 		}
-		
+
 		/// <summary>
 		///    Creates a new instance of <see cref="ByteVector" /> by
 		///    reading in the contents of a specified stream.
 		/// </summary>
 		/// <param name="stream">
-		///    A <see cref="System.IO.Stream"/> object containing
+		///    A <see cref="Stream"/> object containing
 		///    the stream to read.
 		/// </param>
 		/// <returns>
@@ -2355,17 +2307,17 @@ namespace TagLib {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="stream" /> is <see langword="null" />.
 		/// </exception>
-		public static ByteVector FromStream (System.IO.Stream stream)
+		public static ByteVector FromStream (Stream stream)
 		{
-			return FromStream (stream, out var tmp_out, false);
+			return FromStream (stream, out _, false);
 		}
-		
+
 		/// <summary>
 		///    Creates a new instance of <see cref="ByteVector" /> by
 		///    reading in the contents of a specified stream.
 		/// </summary>
 		/// <param name="stream">
-		///    A <see cref="System.IO.Stream"/> object containing
+		///    A <see cref="Stream"/> object containing
 		///    the stream to read.
 		/// </param>
 		/// <param name="firstChunk">
@@ -2384,55 +2336,53 @@ namespace TagLib {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="stream" /> is <see langword="null" />.
 		/// </exception>
-		internal static ByteVector FromStream (System.IO.Stream stream,
-		                                       out byte [] firstChunk,
-		                                       bool copyFirstChunk)
+		internal static ByteVector FromStream (Stream stream, out byte[] firstChunk, bool copyFirstChunk)
 		{
-			ByteVector vector = new ByteVector();
-			byte [] bytes = new byte[4096];
+			var vector = new ByteVector ();
+			byte[] bytes = new byte[4096];
 			int read_size = bytes.Length;
 			int bytes_read = 0;
 			bool set_first_chunk = false;
-			
+
 			firstChunk = null;
-			
+
 			while (true) {
-				Array.Clear(bytes, 0, bytes.Length);
-				int n = stream.Read(bytes, 0, read_size);
-				vector.Add(bytes);
+				Array.Clear (bytes, 0, bytes.Length);
+				int n = stream.Read (bytes, 0, read_size);
+				vector.Add (bytes);
 				bytes_read += n;
-				
+
 				if (!set_first_chunk) {
 					if (copyFirstChunk) {
-						if(firstChunk == null ||
+						if (firstChunk == null ||
 							firstChunk.Length != read_size) {
-							firstChunk = new byte [read_size];
+							firstChunk = new byte[read_size];
 						}
-						
+
 						Array.Copy (bytes, 0, firstChunk, 0, n);
 					}
 					set_first_chunk = true;
 				}
-				
-				if ((bytes_read == stream.Length && stream.Length > 0) || 
+
+				if ((bytes_read == stream.Length && stream.Length > 0) ||
 					(n < read_size && stream.Length <= 0)) {
 					break;
 				}
 			}
-			
+
 			if (stream.Length > 0 && vector.Count != stream.Length) {
 				vector.Resize ((int)stream.Length);
 			}
-			
+
 			return vector;
 		}
-		
-#endregion
-		
-		
-		
-#region Utilities
-		
+
+		#endregion
+
+
+
+		#region Utilities
+
 		/// <summary>
 		///    Gets the text delimiter for nil separated string lists of
 		///    a specified encoding.
@@ -2451,7 +2401,7 @@ namespace TagLib {
 				type == StringType.UTF16BE ||
 				type == StringType.UTF16LE ? td2 : td1;
 		}
-		
+
 		/// <summary>
 		///    Gets the <see cref="Encoding" /> to use for a specified
 		///    encoding.
@@ -2474,56 +2424,55 @@ namespace TagLib {
 		///    encoding is big or little endian. If it does not contain
 		///    BOM data, the previously used endian format is used.
 		/// </remarks>
-		private static Encoding StringTypeToEncoding (StringType type,
-		                                              ByteVector bom)
+		static Encoding StringTypeToEncoding (StringType type, ByteVector bom)
 		{
-			switch(type) {
+			switch (type) {
 			case StringType.UTF16:
 				// If we have a BOM, return the appropriate
 				// encoding. Otherwise, assume we're reading
 				// from a string that was already identified. In
 				// that case, the encoding will be stored as
 				// last_utf16_encoding.
-				
+
 				if (bom == null)
 					return last_utf16_encoding;
-				
-				if (bom [0] == 0xFF && bom [1] == 0xFE)
+
+				if (bom[0] == 0xFF && bom[1] == 0xFE)
 					return last_utf16_encoding =
 						Encoding.Unicode;
-				
-				if (bom [1] == 0xFF && bom [0] == 0xFE)
+
+				if (bom[1] == 0xFF && bom[0] == 0xFE)
 					return last_utf16_encoding =
 						Encoding.BigEndianUnicode;
-				
+
 				return last_utf16_encoding;
-				
+
 			case StringType.UTF16BE:
 				return Encoding.BigEndianUnicode;
-				
+
 			case StringType.UTF8:
 				return Encoding.UTF8;
-				
+
 			case StringType.UTF16LE:
 				return Encoding.Unicode;
 			}
-			
+
 			if (use_broken_latin1)
 				return Encoding.Default;
-			
+
 			try {
 				return Encoding.GetEncoding ("latin1");
 			} catch (ArgumentException) {
 				return Encoding.UTF8;
 			}
 		}
-		
-#endregion
-		
-		
-		
-#region System.Object
-		
+
+		#endregion
+
+
+
+		#region System.Object
+
 		/// <summary>
 		///    Determines whether another object is equal to the current
 		///    instance.
@@ -2542,10 +2491,10 @@ namespace TagLib {
 		{
 			if (!(other is ByteVector))
 				return false;
-			
-			return Equals ((ByteVector) other);
+
+			return Equals ((ByteVector)other);
 		}
-		
+
 		/// <summary>
 		///    Determines whether another <see cref="ByteVector"/>
 		///    object is equal to the current instance.
@@ -2563,7 +2512,7 @@ namespace TagLib {
 		{
 			return CompareTo (other) == 0;
 		}
-		
+
 		/// <summary>
 		///    Gets the hash value for the current instance.
 		/// </summary>
@@ -2573,15 +2522,15 @@ namespace TagLib {
 		/// </returns>
 		public override int GetHashCode ()
 		{
-			unchecked {return (int) Checksum;}
+			unchecked { return (int)Checksum; }
 		}
-		
-#endregion
-		
-		
-		
-#region IComparable<T>
-		
+
+		#endregion
+
+
+
+		#region IComparable<T>
+
 		/// <summary>
 		///    Compares the current instance to another to determine if
 		///    their order.
@@ -2599,22 +2548,22 @@ namespace TagLib {
 		/// </returns>
 		public int CompareTo (ByteVector other)
 		{
-			if ((object) other == null)
-				throw new ArgumentNullException (nameof(other));
-		
+			if (other is null)
+				throw new ArgumentNullException (nameof (other));
+
 			int diff = Count - other.Count;
-		
-			for(int i = 0; diff == 0 && i < Count; i ++)
-				diff = this [i] - other [i];
-		
+
+			for (int i = 0; diff == 0 && i < Count; i++)
+				diff = this[i] - other[i];
+
 			return diff;
 		}
-		
-#endregion
-		
-		
-		
-#region IEnumerable<T>
+
+		#endregion
+
+
+
+		#region IEnumerable<T>
 
 		/// <summary>
 		///    Gets an enumerator for enumerating through the the bytes
@@ -2624,36 +2573,36 @@ namespace TagLib {
 		///    A <see cref="T:System.Collections.IEnumerator`1" /> for
 		///    enumerating through the contents of the current instance.
 		/// </returns>
-		public IEnumerator<byte> GetEnumerator()
+		public IEnumerator<byte> GetEnumerator ()
 		{
-			return this.data.GetEnumerator();
+			return data.GetEnumerator ();
 		}
 
-		IEnumerator IEnumerable.GetEnumerator()
+		IEnumerator IEnumerable.GetEnumerator ()
 		{
-			return this.data.GetEnumerator();
+			return data.GetEnumerator ();
 		}
-		
-#endregion
-		
-		
-		
-#region ICollection<T>
-		
+
+		#endregion
+
+
+
+		#region ICollection<T>
+
 		/// <summary>
 		///    Clears the current instance.
 		/// </summary>
 		/// <exception cref="NotSupportedException">
 		///    The current instance is read-only.
 		/// </exception>
-		public void Clear()
+		public void Clear ()
 		{
 			if (IsReadOnly)
 				throw new NotSupportedException ("Cannot edit readonly objects.");
-		
-			this.data.Clear();
+
+			data.Clear ();
 		}
-		
+
 		/// <summary>
 		///    Adds a single byte to the end of the current instance.
 		/// </summary>
@@ -2666,12 +2615,11 @@ namespace TagLib {
 		public void Add (byte item)
 		{
 			if (IsReadOnly)
-				throw new NotSupportedException (
-					"Cannot edit readonly objects.");
-		
-			this.data.Add(item);
+				throw new NotSupportedException ("Cannot edit readonly objects.");
+
+			data.Add (item);
 		}
-		
+
 		/// <summary>
 		///    Removes the first occurance of a <see cref="byte" /> from
 		///    the current instance.
@@ -2690,12 +2638,11 @@ namespace TagLib {
 		public bool Remove (byte item)
 		{
 			if (IsReadOnly)
-				throw new NotSupportedException (
-					"Cannot edit readonly objects.");
-			
-			return this.data.Remove(item);
+				throw new NotSupportedException ("Cannot edit readonly objects.");
+
+			return data.Remove (item);
 		}
-		
+
 		/// <summary>
 		///    Copies the current instance to a <see cref="T:byte[]"/>
 		///    starting at a specified index.
@@ -2707,11 +2654,11 @@ namespace TagLib {
 		///    A <see cref="int" /> value indicating the index in
 		///    <paramref name="array" /> at which to start copying.
 		/// </param>
-		public void CopyTo (byte [] array, int arrayIndex)
+		public void CopyTo (byte[] array, int arrayIndex)
 		{
-			this.data.CopyTo (array, arrayIndex);
+			data.CopyTo (array, arrayIndex);
 		}
-		
+
 		/// <summary>
 		///    Gets whether or not the current instance contains a
 		///    specified byte.
@@ -2726,9 +2673,9 @@ namespace TagLib {
 		/// </returns>
 		public bool Contains (byte item)
 		{
-			return this.data.Contains (item);
+			return data.Contains (item);
 		}
-		
+
 		/// <summary>
 		///    Gets the number of elements in the current instance.
 		/// </summary>
@@ -2737,9 +2684,9 @@ namespace TagLib {
 		///    in the current instance.
 		/// </value>
 		public int Count {
-			get {return this.data.Count;}
+			get { return data.Count; }
 		}
-		
+
 		/// <summary>
 		///    Gets whether or not the current instance is synchronized.
 		/// </summary>
@@ -2747,9 +2694,9 @@ namespace TagLib {
 		///    Always <see langword="false" />.
 		/// </value>
 		public bool IsSynchronized {
-			get {return false;}
+			get { return false; }
 		}
-		
+
 		/// <summary>
 		///    Gets the object that can be used to synchronize the
 		///    current instance.
@@ -2759,15 +2706,15 @@ namespace TagLib {
 		///    the current instance.
 		/// </value>
 		public object SyncRoot {
-			get {return this;}
+			get { return this; }
 		}
-		
-#endregion
-		
-		
-		
-#region IList<T>
-		
+
+		#endregion
+
+
+
+		#region IList<T>
+
 		/// <summary>
 		///    Removes the byte at the specified index.
 		/// </summary>
@@ -2781,12 +2728,11 @@ namespace TagLib {
 		public void RemoveAt (int index)
 		{
 			if (IsReadOnly)
-				throw new NotSupportedException (
-					"Cannot edit readonly objects.");
-			
-			this.data.RemoveAt(index);
+				throw new NotSupportedException ("Cannot edit readonly objects.");
+
+			data.RemoveAt (index);
 		}
-		
+
 		/// <summary>
 		///    Inserts a single byte into the current instance at a
 		///    specified index.
@@ -2805,12 +2751,11 @@ namespace TagLib {
 		public void Insert (int index, byte item)
 		{
 			if (IsReadOnly)
-				throw new NotSupportedException (
-					"Cannot edit readonly objects.");
-			
-			this.data.Insert(index, item);
+				throw new NotSupportedException ("Cannot edit readonly objects.");
+
+			data.Insert (index, item);
 		}
-		
+
 		/// <summary>
 		///    Gets the index of the first occurance of a value.
 		/// </summary>
@@ -2823,9 +2768,9 @@ namespace TagLib {
 		/// </returns>
 		public int IndexOf (byte item)
 		{
-			return this.data.IndexOf (item);
+			return data.IndexOf (item);
 		}
-		
+
 		/// <summary>
 		///    Gets whether or not the current instance is read-only.
 		/// </summary>
@@ -2834,9 +2779,9 @@ namespace TagLib {
 		///    read-only; otherwise <see langword="false" />.
 		/// </value>
 		public virtual bool IsReadOnly {
-			get {return false;}
+			get { return false; }
 		}
-		
+
 		/// <summary>
 		///    Gets whether or not the current instance has a fixed
 		///    size.
@@ -2846,9 +2791,9 @@ namespace TagLib {
 		///    fixed size; otherwise <see langword="false" />.
 		/// </value>
 		public virtual bool IsFixedSize {
-			get {return false;}
+			get { return false; }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the value as a specified index.
 		/// </summary>
@@ -2856,16 +2801,15 @@ namespace TagLib {
 		///    The current instance is read-only.
 		/// </exception>
 		public byte this[int index] {
-			get {return this.data[index]; }
+			get { return data[index]; }
 			set {
 				if (IsReadOnly)
-					throw new NotSupportedException (
-						"Cannot edit readonly objects.");
-				
+					throw new NotSupportedException ("Cannot edit readonly objects.");
+
 				data[index] = value;
 			}
 		}
-		
-#endregion
+
+		#endregion
 	}
 }

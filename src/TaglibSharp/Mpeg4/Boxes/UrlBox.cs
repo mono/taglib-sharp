@@ -30,18 +30,18 @@ namespace TagLib
 	public class UrlBox : Box
 	{
 		#region Private Fields
-		
+
 		/// <summary>
 		///    Contains the box's data.
 		/// </summary>
-		private ByteVector data;
-		
-#endregion
-		
-		
-		
+		ByteVector data;
+
+		#endregion
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="UnknownBox" /> with a provided header and handler
@@ -62,22 +62,21 @@ namespace TagLib
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
-		public UrlBox (BoxHeader header, TagLib.File file,
-		                IsoHandlerBox handler)
+		public UrlBox (BoxHeader header, File file, IsoHandlerBox handler)
 			: base (header, handler)
 		{
 			if (file == null)
-				throw new ArgumentNullException (nameof(file));
-			
-			this.data = LoadData (file);
+				throw new ArgumentNullException (nameof (file));
+
+			data = LoadData (file);
 		}
-		
-#endregion
-		
-		
-		
+
+		#endregion
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets and sets the box data contained in the current
 		///    instance.
@@ -87,11 +86,11 @@ namespace TagLib
 		///    data contained in the current instance.
 		/// </value>
 		public override ByteVector Data {
-			get {return data;}
-			set {data = value;}
+			get { return data; }
+			set { data = value; }
 		}
-		
-#endregion
+
+		#endregion
 	}
 }
 

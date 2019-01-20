@@ -24,7 +24,8 @@
 
 using System;
 
-namespace TagLib.Mpeg4 {
+namespace TagLib.Mpeg4
+{
 	/// <summary>
 	///    This class extends <see cref="FullBox" /> to provide an
 	///    implementation of an Apple ElementaryStreamDescriptor.
@@ -37,53 +38,23 @@ namespace TagLib.Mpeg4 {
 	public class AppleElementaryStreamDescriptor : FullBox
 	{
 		#region Private Fields
-		
-		/// <summary>
-		///    Contains the stream ID.
-		/// </summary>
-		private ushort es_id;
-		
-		/// <summary>
-		///    Contains the stream priority.
-		/// </summary>
-		private byte stream_priority;
-		
-		/// <summary>
-		///    Contains the object type ID.
-		/// </summary>
-		private byte object_type_id;
-		
-		/// <summary>
-		///    Contains the stream type.
-		/// </summary>
-		private byte stream_type;
-		
-		/// <summary>
-		///    Contains the bugger size.
-		/// </summary>
-		private uint buffer_size_db;
-		
+
 		/// <summary>
 		///    Contains the maximum bitrate.
 		/// </summary>
-		private uint max_bitrate;
-		
+		readonly uint max_bitrate;
+
 		/// <summary>
 		///    Contains the average bitrate.
 		/// </summary>
-		private uint average_bitrate;
-		
-		/// <summary>
-		///    Contains the decoder config.
-		/// </summary>
-		private ByteVector decoder_config;
-		
+		readonly uint average_bitrate;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="AppleElementaryStreamDescriptor" /> with a provided
@@ -108,73 +79,67 @@ namespace TagLib.Mpeg4 {
 		/// <exception cref="CorruptFileException">
 		///    Valid data could not be read.
 		/// </exception>
-		public AppleElementaryStreamDescriptor (BoxHeader header,
-		                                        TagLib.File file,
-		                                        IsoHandlerBox handler)
+		public AppleElementaryStreamDescriptor (BoxHeader header, TagLib.File file, IsoHandlerBox handler)
 			: base (header, file, handler)
 		{
 			int offset = 0;
 			ByteVector box_data = file.ReadBlock (DataSize);
-			decoder_config = new ByteVector ();
-			
+			DecoderConfig = new ByteVector ();
+
 			// Elementary Stream Descriptor Tag
-			if (box_data [offset ++] == 3) {
+			if (box_data[offset++] == 3) {
 				// We have a descriptor tag. Check that it's at
 				// least 20 long.
 				if (ReadLength (box_data, ref offset) < 20)
-					throw new CorruptFileException (
-						"Insufficient data present.");
-				
-				es_id = box_data.Mid (offset, 2).ToUShort ();
+					throw new CorruptFileException ("Insufficient data present.");
+
+				StreamId = box_data.Mid (offset, 2).ToUShort ();
 				offset += 2;
-				stream_priority = box_data [offset ++];
+				StreamPriority = box_data[offset++];
 			} else {
 				// The tag wasn't found, so the next two byte
 				// are the ID, and after that, business as
 				// usual.
-				es_id = box_data.Mid (offset, 2).ToUShort ();
+				StreamId = box_data.Mid (offset, 2).ToUShort ();
 				offset += 2;
 			}
-			
+
 			// Verify that the next data is the Decoder
 			// Configuration Descriptor Tag and escape if it won't
 			// work out.
-			if (box_data [offset ++] != 4)
-				throw new CorruptFileException (
-					"Could not identify decoder configuration descriptor.");
-			
+			if (box_data[offset++] != 4)
+				throw new CorruptFileException ("Could not identify decoder configuration descriptor.");
+
 			// Check that it's at least 15 long.
 			if (ReadLength (box_data, ref offset) < 15)
-				throw new CorruptFileException (
-					"Could not read data. Too small.");
-			
+				throw new CorruptFileException ("Could not read data. Too small.");
+
 			// Read a lot of good info.
-			object_type_id = box_data [offset ++];
-			stream_type = box_data [offset ++];
-			buffer_size_db = box_data.Mid (offset, 3).ToUInt ();
+			ObjectTypeId = box_data[offset++];
+			StreamType = box_data[offset++];
+			BufferSizeDB = box_data.Mid (offset, 3).ToUInt ();
 			offset += 3;
 			max_bitrate = box_data.Mid (offset, 4).ToUInt ();
 			offset += 4;
 			average_bitrate = box_data.Mid (offset, 4).ToUInt ();
 			offset += 4;
-			
+
 			// Verify that the next data is the Decoder Specific
 			// Descriptor Tag and escape if it won't work out.
-			if (box_data [offset ++] != 5)
-				throw new CorruptFileException (
-					"Could not identify decoder specific descriptor.");
-			
+			if (box_data[offset++] != 5)
+				throw new CorruptFileException ("Could not identify decoder specific descriptor.");
+
 			// The rest of the info is decoder specific.
 			uint length = ReadLength (box_data, ref offset);
-			decoder_config = box_data.Mid (offset, (int) length);
+			DecoderConfig = box_data.Mid (offset, (int)length);
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the ID of the stream described by the current
 		///    instance.
@@ -183,10 +148,8 @@ namespace TagLib.Mpeg4 {
 		///    A <see cref="ushort" /> value containing the ID of the
 		///    stream described by the current instance.
 		/// </value>
-		public ushort StreamId {
-			get {return es_id;}
-		}
-		
+		public ushort StreamId { get; private set; }
+
 		/// <summary>
 		///    Gets the priority of the stream described by the current
 		///    instance.
@@ -195,10 +158,8 @@ namespace TagLib.Mpeg4 {
 		///    A <see cref="byte" /> value containing the priority of
 		///    the stream described by the current instance.
 		/// </value>
-		public byte StreamPriority {
-			get {return stream_priority;}
-		}
-		
+		public byte StreamPriority { get; private set; }
+
 		/// <summary>
 		///    Gets the object type ID of the stream described by the
 		///    current instance.
@@ -207,10 +168,8 @@ namespace TagLib.Mpeg4 {
 		///    A <see cref="byte" /> value containing the object type ID
 		///    of the stream described by the current instance.
 		/// </value>
-		public byte ObjectTypeId {
-			get {return object_type_id;}
-		}
-		
+		public byte ObjectTypeId { get; private set; }
+
 		/// <summary>
 		///    Gets the type the stream described by the current
 		///    instance.
@@ -219,10 +178,8 @@ namespace TagLib.Mpeg4 {
 		///    A <see cref="byte" /> value containing the type the
 		///    stream described by the current instance.
 		/// </value>
-		public byte StreamType {
-			get {return stream_type;}
-		}
-		
+		public byte StreamType { get; private set; }
+
 		/// <summary>
 		///    Gets the buffer size DB value the stream described by the
 		///    current instance.
@@ -231,10 +188,8 @@ namespace TagLib.Mpeg4 {
 		///    A <see cref="uint" /> value containing the buffer size DB
 		///    value the stream described by the current instance.
 		/// </value>
-		public uint BufferSizeDB {
-			get {return buffer_size_db;}
-		}
-		
+		public uint BufferSizeDB { get; private set; }
+
 		/// <summary>
 		///    Gets the maximum bitrate the stream described by the
 		///    current instance.
@@ -244,9 +199,9 @@ namespace TagLib.Mpeg4 {
 		///    bitrate the stream described by the current instance.
 		/// </value>
 		public uint MaximumBitrate {
-			get {return max_bitrate / 1000;}
+			get { return max_bitrate / 1000; }
 		}
-		
+
 		/// <summary>
 		///    Gets the maximum average the stream described by the
 		///    current instance.
@@ -256,9 +211,9 @@ namespace TagLib.Mpeg4 {
 		///    bitrate the stream described by the current instance.
 		/// </value>
 		public uint AverageBitrate {
-			get {return average_bitrate / 1000;}
+			get { return average_bitrate / 1000; }
 		}
-		
+
 		/// <summary>
 		///    Gets the decoder config data of stream described by the
 		///    current instance.
@@ -268,16 +223,14 @@ namespace TagLib.Mpeg4 {
 		///    config data of the stream described by the current
 		///    instance.
 		/// </value>
-		public ByteVector DecoderConfig {
-			get {return decoder_config;}
-		}
-		
+		public ByteVector DecoderConfig { get; private set; }
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Private Methods
-		
+
 		/// <summary>
 		///    Reads a section length and updates the offset to the end
 		///    of of the length block.
@@ -294,21 +247,20 @@ namespace TagLib.Mpeg4 {
 		///    A <see cref="uint" /> value containing the length that
 		///    was read.
 		/// </returns>
-		private static uint ReadLength (ByteVector data, ref int offset)
+		static uint ReadLength (ByteVector data, ref int offset)
 		{
 			byte b;
 			int end = offset + 4;
 			uint length = 0;
-			
+
 			do {
-				b = data [offset ++];
-				length = (uint) (length << 7) |
-					(uint) (b & 0x7f);
+				b = data[offset++];
+				length = length << 7 | (uint)(b & 0x7f);
 			} while ((b & 0x80) != 0 && offset <= end);
-			
+
 			return length;
 		}
-		
+
 		#endregion
 	}
 }

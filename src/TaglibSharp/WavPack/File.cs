@@ -28,7 +28,8 @@
 
 using System;
 
-namespace TagLib.WavPack {
+namespace TagLib.WavPack
+{
 	/// <summary>
 	///    This class extends <see cref="TagLib.NonContainer.File" /> to
 	///    provide tagging and properties support for WavPack files.
@@ -39,23 +40,23 @@ namespace TagLib.WavPack {
 	///    the file and can be reversed using the following method:
 	///    <code>file.RemoveTags (file.TagTypes &amp; ~file.TagTypesOnDisk);</code>
 	/// </remarks>
-	[SupportedMimeType("taglib/wv", "wv")]
-	[SupportedMimeType("audio/x-wavpack")]
+	[SupportedMimeType ("taglib/wv", "wv")]
+	[SupportedMimeType ("audio/x-wavpack")]
 	public class File : TagLib.NonContainer.File
 	{
 		#region Private Fields
-		
+
 		/// <summary>
 		///    Contains the block with the audio header.
 		/// </summary>
-		private ByteVector header_block = null;
-		
+		ByteVector header_block;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified path in the local file
@@ -77,7 +78,7 @@ namespace TagLib.WavPack {
 			: base (path, propertiesStyle)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified path in the local file
@@ -90,10 +91,11 @@ namespace TagLib.WavPack {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
-		public File (string path) : base (path)
+		public File (string path)
+			: base (path)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified file abstraction and
@@ -112,12 +114,11 @@ namespace TagLib.WavPack {
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle)
+		public File (IFileAbstraction abstraction, ReadStyle propertiesStyle)
 			: base (abstraction, propertiesStyle)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified file abstraction with an
@@ -131,17 +132,17 @@ namespace TagLib.WavPack {
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public File (File.IFileAbstraction abstraction)
+		public File (IFileAbstraction abstraction)
 			: base (abstraction)
 		{
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Methods
-		
+
 		/// <summary>
 		///    Gets a tag of a specified type from the current instance,
 		///    optionally creating a new tag if possible.
@@ -167,35 +168,34 @@ namespace TagLib.WavPack {
 		///    <see cref="TagLib.Ape.Tag" /> will be added to the end of
 		///    the file. All other tag types will be ignored.
 		/// </remarks>
-		public override TagLib.Tag GetTag (TagTypes type, bool create)
+		public override Tag GetTag (TagTypes type, bool create)
 		{
 			Tag t = (Tag as TagLib.NonContainer.Tag).GetTag (type);
-			
+
 			if (t != null || !create)
 				return t;
-			
-			switch (type)
-			{
+
+			switch (type) {
 			case TagTypes.Id3v1:
 				return EndTag.AddTag (type, Tag);
-			
+
 			case TagTypes.Id3v2:
 				return StartTag.AddTag (type, Tag);
-			
+
 			case TagTypes.Ape:
 				return EndTag.AddTag (type, Tag);
-			
+
 			default:
 				return null;
 			}
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Protected Methods
-		
+
 		/// <summary>
 		///    Reads format specific information at the start of the
 		///    file.
@@ -209,18 +209,16 @@ namespace TagLib.WavPack {
 		///    of accuracy to read the media properties, or <see
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
-		protected override void ReadStart (long start,
-		                                   ReadStyle propertiesStyle)
+		protected override void ReadStart (long start, ReadStyle propertiesStyle)
 		{
 			if (header_block != null &&
 				(propertiesStyle & ReadStyle.Average) == 0)
 				return;
-				
+
 			Seek (start);
-			header_block = ReadBlock (
-				(int) StreamHeader.Size);
+			header_block = ReadBlock ((int)StreamHeader.Size);
 		}
-		
+
 		/// <summary>
 		///    Reads format specific information at the end of the
 		///    file.
@@ -234,13 +232,12 @@ namespace TagLib.WavPack {
 		///    of accuracy to read the media properties, or <see
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
-		protected override void ReadEnd (long end,
-		                                 ReadStyle propertiesStyle)
+		protected override void ReadEnd (long end, ReadStyle propertiesStyle)
 		{
 			// Make sure we have an APE tag.
 			GetTag (TagTypes.Ape, true);
 		}
-		
+
 		/// <summary>
 		///    Reads the audio properties from the file represented by
 		///    the current instance.
@@ -263,15 +260,12 @@ namespace TagLib.WavPack {
 		///    media properties of the file represented by the current
 		///    instance.
 		/// </returns>
-		protected override Properties ReadProperties (long start,
-		                                              long end,
-		                                              ReadStyle propertiesStyle)
+		protected override Properties ReadProperties (long start, long end, ReadStyle propertiesStyle)
 		{
-			StreamHeader header = new StreamHeader (header_block,
-				end - start);
+			var header = new StreamHeader (header_block, end - start);
 			return new Properties (TimeSpan.Zero, header);
 		}
-		
+
 		#endregion
 	}
 }

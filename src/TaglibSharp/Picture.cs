@@ -29,7 +29,8 @@
 
 using System;
 
-namespace TagLib {
+namespace TagLib
+{
 	/// <summary>
 	///    Specifies the type of content appearing in the picture.
 	/// </summary>
@@ -39,106 +40,106 @@ namespace TagLib {
 		///    The picture is of a type other than those specified.
 		/// </summary>
 		Other = 0x00,
-		
+
 		/// <summary>
 		///    The picture is a 32x32 PNG image that should be used when
 		///    displaying the file in a browser.
 		/// </summary>
 		FileIcon = 0x01,
-		
+
 		/// <summary>
 		///    The picture is of an icon different from <see
 		///    cref="FileIcon" />.
 		/// </summary>
 		OtherFileIcon = 0x02,
-		
+
 		/// <summary>
 		///    The picture is of the front cover of the album.
 		/// </summary>
 		FrontCover = 0x03,
-		
+
 		/// <summary>
 		///    The picture is of the back cover of the album.
 		/// </summary>
 		BackCover = 0x04,
-		
+
 		/// <summary>
 		///    The picture is of a leaflet page including with the
 		///    album.
 		/// </summary>
 		LeafletPage = 0x05,
-		
+
 		/// <summary>
 		///    The picture is of the album or disc itself.
 		/// </summary>
 		Media = 0x06,
 		// Image from the album itself
-		
+
 		/// <summary>
 		///    The picture is of the lead artist or soloist.
 		/// </summary>
 		LeadArtist = 0x07,
-		
+
 		/// <summary>
 		///    The picture is of the artist or performer.
 		/// </summary>
 		Artist = 0x08,
-		
+
 		/// <summary>
 		///    The picture is of the conductor.
 		/// </summary>
 		Conductor = 0x09,
-		
+
 		/// <summary>
 		///    The picture is of the band or orchestra.
 		/// </summary>
 		Band = 0x0A,
-		
+
 		/// <summary>
 		///    The picture is of the composer.
 		/// </summary>
 		Composer = 0x0B,
-		
+
 		/// <summary>
 		///    The picture is of the lyricist or text writer.
 		/// </summary>
 		Lyricist = 0x0C,
-		
+
 		/// <summary>
 		///    The picture is of the recording location or studio.
 		/// </summary>
 		RecordingLocation = 0x0D,
-		
+
 		/// <summary>
 		///    The picture is one taken during the track's recording.
 		/// </summary>
 		DuringRecording = 0x0E,
-		
+
 		/// <summary>
 		///    The picture is one taken during the track's performance.
 		/// </summary>
 		DuringPerformance = 0x0F,
-		
+
 		/// <summary>
 		///    The picture is a capture from a movie screen.
 		/// </summary>
 		MovieScreenCapture = 0x10,
-		
+
 		/// <summary>
 		///    The picture is of a large, colored fish.
 		/// </summary>
 		ColoredFish = 0x11,
-		
+
 		/// <summary>
 		///    The picture is an illustration related to the track.
 		/// </summary>
 		Illustration = 0x12,
-		
+
 		/// <summary>
 		///    The picture contains the logo of the band or performer.
 		/// </summary>
 		BandLogo = 0x13,
-		
+
 		/// <summary>
 		///    The picture is the logo of the publisher or record
 		///    company.
@@ -167,8 +168,8 @@ namespace TagLib {
 		///    A <see cref="string" /> object containing the mime-type
 		///    of the picture data stored in the current instance.
 		/// </value>
-		string MimeType {get; set;}
-		
+		string MimeType { get; set; }
+
 		/// <summary>
 		///    Gets and sets the type of content visible in the picture
 		///    stored in the current instance.
@@ -178,7 +179,7 @@ namespace TagLib {
 		///    content visible in the picture stored in the current
 		///    instance.
 		/// </value>
-		PictureType Type {get; set;}
+		PictureType Type { get; set; }
 
 
 
@@ -202,8 +203,8 @@ namespace TagLib {
 		///    A <see cref="string" /> object containing a description
 		///    of the picture stored in the current instance.
 		/// </value>
-		string Description {get; set;}
-		
+		string Description { get; set; }
+
 		/// <summary>
 		///    Gets and sets the picture data stored in the current
 		///    instance.
@@ -212,43 +213,15 @@ namespace TagLib {
 		///    A <see cref="ByteVector" /> object containing the picture
 		///    data stored in the current instance.
 		/// </value>
-		ByteVector Data {get; set;}
+		ByteVector Data { get; set; }
 	}
-	
+
 	/// <summary>
 	///    This class implements <see cref="IPicture" /> and provides
 	///    mechanisms for loading pictures from files.
 	/// </summary>
 	public class Picture : IPicture
 	{
-		#region Private Fields
-		
-		/// <summary>
-		///    Contains the mime-type.
-		/// </summary>
-		private string mime_type;
-		
-		/// <summary>
-		///    Contains the content type.
-		/// </summary>
-		private PictureType type;
-
-		/// <summary>
-		///    Contains the filename.
-		/// </summary>
-		private string filename;
-
-		/// <summary>
-		///    Contains the description.
-		/// </summary>
-		private string description;
-		
-		/// <summary>
-		///    Contains the picture data.
-		/// </summary>
-		private ByteVector data;
-
-		#endregion
 
 		#region Constants
 
@@ -256,7 +229,7 @@ namespace TagLib {
 		///    Look-Up-Table associating a file-extension to 
 		///    a Mime-Type 
 		/// </summary>
-		private static readonly string[] lutExtensionMime = new string[] {
+		static readonly string[] lutExtensionMime = new[] {
 			"aac", "audio/aac", // AAC audio file
 			"abw", "application/x-abiword", // AbiWord document
 			"arc", "application/octet-stream", // Archive document (multiple files embedded)
@@ -345,7 +318,7 @@ namespace TagLib {
 		public Picture ()
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Picture" /> by reading in the contents of a
@@ -361,13 +334,13 @@ namespace TagLib {
 		public Picture (string path)
 		{
 			if (path == null)
-				throw new ArgumentNullException (nameof(path));
-			
+				throw new ArgumentNullException (nameof (path));
+
 			Data = ByteVector.FromPath (path);
-			filename = System.IO.Path.GetFileName(path);
-			description = filename;
-			mime_type = GetMimeFromExtension(filename);
-			type = mime_type.StartsWith("image/") ? PictureType.FrontCover : PictureType.NotAPicture;
+			Filename = System.IO.Path.GetFileName (path);
+			Description = Filename;
+			MimeType = GetMimeFromExtension (Filename);
+			Type = MimeType.StartsWith ("image/") ? PictureType.FrontCover : PictureType.NotAPicture;
 		}
 
 		/// <summary>
@@ -386,34 +359,28 @@ namespace TagLib {
 		public Picture (File.IFileAbstraction abstraction)
 		{
 			if (abstraction == null)
-				throw new ArgumentNullException (nameof(abstraction));
-			
-			Data = ByteVector.FromFile (abstraction);
-			filename = abstraction.Name;
-			description = abstraction.Name;
+				throw new ArgumentNullException (nameof (abstraction));
 
-			if (!string.IsNullOrEmpty(filename) && filename.Contains("."))
-			{
-				mime_type = GetMimeFromExtension(filename);
-				type = mime_type.StartsWith("image/") ? PictureType.FrontCover : PictureType.NotAPicture;
-			}
-			else
-			{
-				string ext = GetExtensionFromData(data);
-				MimeType = GetMimeFromExtension(ext);
-				if (ext != null)
-				{
-					type = PictureType.FrontCover;
-					filename = description = "cover" + ext;
-				}
-				else
-				{
-					type = PictureType.NotAPicture;
-					filename = "UnknownType";
+			Data = ByteVector.FromFile (abstraction);
+			Filename = abstraction.Name;
+			Description = abstraction.Name;
+
+			if (!string.IsNullOrEmpty (Filename) && Filename.Contains (".")) {
+				MimeType = GetMimeFromExtension (Filename);
+				Type = MimeType.StartsWith ("image/") ? PictureType.FrontCover : PictureType.NotAPicture;
+			} else {
+				string ext = GetExtensionFromData (Data);
+				MimeType = GetMimeFromExtension (ext);
+				if (ext != null) {
+					Type = PictureType.FrontCover;
+					Filename = Description = "cover" + ext;
+				} else {
+					Type = PictureType.NotAPicture;
+					Filename = "UnknownType";
 				}
 			}
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Picture" /> by using the contents of a <see
@@ -429,20 +396,17 @@ namespace TagLib {
 		public Picture (ByteVector data)
 		{
 			if (data == null)
-				throw new ArgumentNullException (nameof(data));
-			
+				throw new ArgumentNullException (nameof (data));
+
 			Data = new ByteVector (data);
-			string ext = GetExtensionFromData(data);
-			MimeType = GetMimeFromExtension(ext);
-			if (ext != null)
-			{
-				type = PictureType.FrontCover;
-				filename = description = "cover" + ext;
-			}
-			else
-			{
-				type = PictureType.NotAPicture;
-				filename = "UnknownType";
+			string ext = GetExtensionFromData (data);
+			MimeType = GetMimeFromExtension (ext);
+			if (ext != null) {
+				Type = PictureType.FrontCover;
+				Filename = Description = "cover" + ext;
+			} else {
+				Type = PictureType.NotAPicture;
+				Filename = "UnknownType";
 			}
 		}
 
@@ -456,19 +420,16 @@ namespace TagLib {
 		///    A <see cref="IPicture"/> object containing picture data
 		///    to convert to an Picture.
 		/// </param>
-		public Picture(IPicture picture)
+		public Picture (IPicture picture)
 		{
-			mime_type = picture.MimeType;
-			type = picture.Type;
-			filename = picture.Filename;
-			description = picture.Description;
-			data = picture.Data;
+			MimeType = picture.MimeType;
+			Type = picture.Type;
+			Filename = picture.Filename;
+			Description = picture.Description;
+			Data = picture.Data;
 		}
 
-
-
 		#endregion
-
 
 
 		#region Legacy Factory methods
@@ -486,12 +447,12 @@ namespace TagLib {
 		///    contents of the file and with a mime-type guessed from
 		///    the file's contents.
 		/// </returns>
-		[Obsolete("Use Picture(string filename) constructor instead.")]
+		[Obsolete ("Use Picture(string filename) constructor instead.")]
 		public static Picture CreateFromPath (string filename)
 		{
 			return new Picture (filename);
 		}
-		
+
 		/// <summary>
 		///    Creates a new <see cref="Picture" />, populating it with
 		///    the contents of a file.
@@ -505,18 +466,18 @@ namespace TagLib {
 		///    contents of the file and with a mime-type guessed from
 		///    the file's contents.
 		/// </returns>
-		[Obsolete("Use Picture(File.IFileAbstraction abstraction) constructor instead.")]
+		[Obsolete ("Use Picture(File.IFileAbstraction abstraction) constructor instead.")]
 		public static Picture CreateFromFile (File.IFileAbstraction abstraction)
 		{
 			return new Picture (abstraction);
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets and sets the mime-type of the picture data
 		///    stored in the current instance.
@@ -525,11 +486,8 @@ namespace TagLib {
 		///    A <see cref="string" /> object containing the mime-type
 		///    of the picture data stored in the current instance.
 		/// </value>
-		public string MimeType {
-			get { return mime_type; }
-			set { mime_type = value; }
-		}
-		
+		public string MimeType { get; set; }
+
 		/// <summary>
 		///    Gets and sets the type of content visible in the picture
 		///    stored in the current instance.
@@ -539,10 +497,7 @@ namespace TagLib {
 		///    content visible in the picture stored in the current
 		///    instance.
 		/// </value>
-		public PictureType Type {
-			get { return type; }
-			set { type = value; }
-		}
+		public PictureType Type { get; set; }
 
 		/// <summary>
 		///    Gets and sets a filename of the picture stored in the
@@ -552,11 +507,7 @@ namespace TagLib {
 		///    A <see cref="string" /> object containing a fielname, with
 		///    extension, of the picture stored in the current instance.
 		/// </value>
-		public string Filename
-		{
-			get { return filename; }
-			set { filename = value; }
-		}
+		public string Filename { get; set; }
 
 		/// <summary>
 		///    Gets and sets a description of the picture stored in the
@@ -566,11 +517,8 @@ namespace TagLib {
 		///    A <see cref="string" /> object containing a description
 		///    of the picture stored in the current instance.
 		/// </value>
-		public string Description {
-			get { return description; }
-			set { description = value; }
-		}
-		
+		public string Description { get; set; }
+
 		/// <summary>
 		///    Gets and sets the picture data stored in the current
 		///    instance.
@@ -579,10 +527,7 @@ namespace TagLib {
 		///    A <see cref="ByteVector" /> object containing the picture
 		///    data stored in the current instance.
 		/// </value>
-		public ByteVector Data {
-			get { return data; }
-			set { data = value; }
-		}
+		public ByteVector Data { get; set; }
 
 		#endregion
 
@@ -605,22 +550,14 @@ namespace TagLib {
 			string ext = null;
 
 			// No picture, unless it is corrupted, can fit in a file of less than 4 bytes
-			if (data.Count >= 4)
-			{
-				if (data[1] == 'P' && data[2] == 'N' && data[3] == 'G')
-				{
+			if (data.Count >= 4) {
+				if (data[1] == 'P' && data[2] == 'N' && data[3] == 'G') {
 					ext = ".png";
-				}
-				else if (data[0] == 'G' && data[1] == 'I' && data[2] == 'F')
-				{
+				} else if (data[0] == 'G' && data[1] == 'I' && data[2] == 'F') {
 					ext = ".gif";
-				}
-				else if (data[0] == 'B' && data[1] == 'M')
-				{
+				} else if (data[0] == 'B' && data[1] == 'M') {
 					ext = ".bmp";
-				}
-				else if (data[0] == 0xFF && data[1] == 0xD8 && data[2] == 0xFF && data[3] == 0xE0 )
-				{
+				} else if (data[0] == 0xFF && data[1] == 0xD8 && data[2] == 0xFF && data[3] == 0xE0) {
 					ext = ".jpg";
 				}
 
@@ -638,15 +575,13 @@ namespace TagLib {
 		/// </param>
 		/// <returns>File-extension as <see cref="string"/>, or null if 
 		///    not identified</returns>
-		public static string GetExtensionFromMime(string mime)
+		public static string GetExtensionFromMime (string mime)
 		{
 			// Default
 			string ext = null;
 
-			for (int i = 1; i< lutExtensionMime.Length; i += 2)
-			{
-				if (lutExtensionMime[i] == mime)
-				{
+			for (int i = 1; i < lutExtensionMime.Length; i += 2) {
+				if (lutExtensionMime[i] == mime) {
 					ext = lutExtensionMime[i - 1];
 					break;
 				}
@@ -664,25 +599,23 @@ namespace TagLib {
 		///    file name with extension, or just extension of a file
 		/// </param>
 		/// <returns>Mime-type as <see cref="string"/></returns>
-		public static string GetMimeFromExtension(string name)
+		public static string GetMimeFromExtension (string name)
 		{
 			// Default
 			string mime_type = "application/octet-stream";
 
 			// Get extension from Filename
-			if (string.IsNullOrEmpty(name)) return mime_type;
-			var ext = System.IO.Path.GetExtension(name);
-			if (string.IsNullOrEmpty(ext))
+			if (string.IsNullOrEmpty (name)) return mime_type;
+			var ext = System.IO.Path.GetExtension (name);
+			if (string.IsNullOrEmpty (ext))
 				ext = name;
 			else
-				ext = ext.Substring(1);
+				ext = ext.Substring (1);
 
-			ext = ext.ToLower();
+			ext = ext.ToLower ();
 
-			for (int i = 0; i < lutExtensionMime.Length; i += 2)
-			{
-				if (lutExtensionMime[i] == ext)
-				{
+			for (int i = 0; i < lutExtensionMime.Length; i += 2) {
+				if (lutExtensionMime[i] == ext) {
 					mime_type = lutExtensionMime[i + 1];
 					break;
 				}

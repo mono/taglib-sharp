@@ -43,15 +43,15 @@ namespace TagLib.IFD.Entries
 		/// <param name="entries">
 		///    A <see cref="T:Rational[]"/> to be stored
 		/// </param>
-		public RationalArrayIFDEntry (ushort tag, Rational [] entries)
+		public RationalArrayIFDEntry (ushort tag, Rational[] entries)
 			: base (tag)
 		{
 			Values = entries;
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Renders the current instance to a <see cref="ByteVector"/>
@@ -74,8 +74,8 @@ namespace TagLib.IFD.Entries
 		/// </returns>
 		public override ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
 		{
-			type = (ushort) IFDEntryType.Rational;
-			count = (uint) Values.Length;
+			type = (ushort)IFDEntryType.Rational;
+			count = (uint)Values.Length;
 
 			ByteVector data = new ByteVector ();
 			foreach (Rational rational in Values) {
@@ -86,7 +86,6 @@ namespace TagLib.IFD.Entries
 			return data;
 		}
 
-#endregion
-
+		#endregion
 	}
 }

@@ -1,4 +1,4 @@
-﻿//
+//
 // MatroskaIDs.cs:
 //
 // Author:

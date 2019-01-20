@@ -37,54 +37,53 @@ namespace TagLib.Ogg
 	///    cref="T:System.Collections.Generic.IEnumerable`1" /> to provide
 	///    support for reading and writing Xiph comments.
 	/// </summary>
-	public class XiphComment : TagLib.Tag, IEnumerable<string>
+	public class XiphComment : Tag, IEnumerable<string>
 	{
-#region Private Fields
-		
+		#region Private Fields
+
 		/// <summary>
 		///    Contains the comment fields.
 		/// </summary>
-		private Dictionary<string, string[]> field_list =
-			new Dictionary<string, string[]> ();
+		readonly Dictionary<string, string[]> field_list = new Dictionary<string, string[]> ();
 
 		/// <summary>
 		///    Contains the vendor ID.
 		/// </summary>
-		private string vendor_id;
+		string vendor_id;
 
 		/// <summary>
 		///    Saves BeatsPerMinute tag as either "Tempo" or "BPM"
 		///    based on which was last read.
 		/// </summary>
-		private static bool SaveBeatsPerMinuteAsTempo = true;
+		static bool SaveBeatsPerMinuteAsTempo = true;
 
 		/// <summary>
 		///    Picture instances parsed from the fields.
 		/// </summary>
-		private IPicture[] pictures = null;
+		IPicture[] pictures;
 
 		/// <summary>
 		///    true if the picture fields in <see cref="field_list" />
 		///    should be updated from the <see cref="pictures"/> array.
 		/// </summary>
-		private bool picture_fields_dirty = false;
+		bool picture_fields_dirty;
 
 		/// <summary>
 		///    Name of picture fields as defined in the norm.
 		/// </summary>
-		private static readonly string[] PICTURE_FIELDS = new string[] {"COVERART", "METADATA_BLOCK_PICTURE"};
+		static readonly string[] PICTURE_FIELDS = { "COVERART", "METADATA_BLOCK_PICTURE" };
 
 		/// <summary>
 		///    Cached empty pictures array.
 		/// </summary>
-		private static readonly IPicture[] EMPTY_PICTURES = new IPicture[0];
+		static readonly IPicture[] EMPTY_PICTURES = new IPicture[0];
 
-#endregion
-		
-		
-		
-#region Constructors
-		
+		#endregion
+
+
+
+		#region Constructors
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="XiphComment" /> with no contents.
@@ -108,7 +107,7 @@ namespace TagLib.Ogg
 		public XiphComment (ByteVector data)
 		{
 			if (data == null)
-				throw new ArgumentNullException (nameof(data));
+				throw new ArgumentNullException (nameof (data));
 
 			Parse (data);
 		}
@@ -133,21 +132,21 @@ namespace TagLib.Ogg
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="key" /> is <see langword="null" />.
 		/// </exception>
-		public string [] GetField (string key)
+		public string[] GetField (string key)
 		{
 			if (key == null)
-				throw new ArgumentNullException (nameof(key));
-			
+				throw new ArgumentNullException (nameof (key));
+
 			key = key.ToUpper (CultureInfo.InvariantCulture);
 
-			EnsurePictureFieldsClean(key);
-			
+			EnsurePictureFieldsClean (key);
+
 			if (!field_list.ContainsKey (key))
-				return new string [0];
-			
-			return (string []) field_list [key].Clone ();
+				return new string[0];
+
+			return (string[])field_list[key].Clone ();
 		}
-		
+
 		/// <summary>
 		///    Gets the first field for a given field identifier.
 		/// </summary>
@@ -165,12 +164,12 @@ namespace TagLib.Ogg
 		public string GetFirstField (string key)
 		{
 			if (key == null)
-				throw new ArgumentNullException (nameof(key));
+				throw new ArgumentNullException (nameof (key));
 
-			EnsurePictureFieldsClean(key);
-			
-			string [] values = GetField (key);
-			return (values.Length > 0) ? values [0] : null;
+			EnsurePictureFieldsClean (key);
+
+			string[] values = GetField (key);
+			return (values.Length > 0) ? values[0] : null;
 		}
 
 		/// <summary>
@@ -194,8 +193,8 @@ namespace TagLib.Ogg
 		public void SetField (string key, uint number, string format = "0")
 		{
 			if (key == null)
-				throw new ArgumentNullException (nameof(key));
-			
+				throw new ArgumentNullException (nameof (key));
+
 			if (number == 0)
 				RemoveField (key);
 			else
@@ -203,7 +202,7 @@ namespace TagLib.Ogg
 					format,
 					CultureInfo.InvariantCulture));
 		}
-		
+
 		/// <summary>
 		///    Sets the contents of a specified field to the contents of
 		///    a <see cref="T:string[]" />.
@@ -219,34 +218,34 @@ namespace TagLib.Ogg
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="key" /> is <see langword="null" />.
 		/// </exception>
-		public void SetField (string key, params string [] values)
+		public void SetField (string key, params string[] values)
 		{
 			if (key == null)
-				throw new ArgumentNullException (nameof(key));
-			
+				throw new ArgumentNullException (nameof (key));
+
 			key = key.ToUpper (CultureInfo.InvariantCulture);
-			
+
 			if (values == null || values.Length == 0) {
 				RemoveField (key);
 				return;
 			}
-			
-			List <string> result = new List<string> ();
+
+			List<string> result = new List<string> ();
 			foreach (string text in values)
 				if (text != null && text.Trim ().Length != 0)
 					result.Add (text);
-			
+
 			if (result.Count == 0)
 				RemoveField (key);
 			else if (field_list.ContainsKey (key))
-				field_list [key] = result.ToArray ();
+				field_list[key] = result.ToArray ();
 			else
 				field_list.Add (key, result.ToArray ());
 
 			// Update picture state if this field name is a picture field
 			ResetPicturesState (key);
 		}
-		
+
 		/// <summary>
 		///    Removes a field and all its values from the current
 		///    instance.
@@ -261,10 +260,10 @@ namespace TagLib.Ogg
 		public void RemoveField (string key)
 		{
 			if (key == null)
-				throw new ArgumentNullException (nameof(key));
-			
+				throw new ArgumentNullException (nameof (key));
+
 			key = key.ToUpper (CultureInfo.InvariantCulture);
-			
+
 			field_list.Remove (key);
 
 			// Update picture state if this field name is a picture field
@@ -297,49 +296,44 @@ namespace TagLib.Ogg
 			// rather than the lenght of the the string since this
 			// is UTF8 text and there may be more characters in the
 			// data than in the UTF16 string.
-			
+
 			ByteVector vendor_data = ByteVector.FromString (
 				vendor_id, StringType.UTF8);
 
-			data.Add (ByteVector.FromUInt ((uint) vendor_data.Count,
-				false));
+			data.Add (ByteVector.FromUInt ((uint)vendor_data.Count, false));
 			data.Add (vendor_data);
 
 			// Add the number of fields.
 
 			data.Add (ByteVector.FromUInt (FieldCount, false));
 
-			foreach (KeyValuePair<string,string[]> entry in field_list) {
+			foreach (KeyValuePair<string, string[]> entry in field_list) {
 				// And now iterate over the values of the
 				// current list.
 
 				foreach (string value in entry.Value) {
-					ByteVector field_data =
-						ByteVector.FromString (
-							entry.Key, StringType.UTF8);
-					field_data.Add ((byte) '=');
-					field_data.Add (ByteVector.FromString (
-						value, StringType.UTF8));
-					
-					data.Add (ByteVector.FromUInt ((uint)
-						field_data.Count, false));
+					ByteVector field_data = ByteVector.FromString (entry.Key, StringType.UTF8);
+					field_data.Add ((byte)'=');
+					field_data.Add (ByteVector.FromString (value, StringType.UTF8));
+
+					data.Add (ByteVector.FromUInt ((uint)field_data.Count, false));
 					data.Add (field_data);
 				}
 			}
 
 			// Append the "framing bit".
 			if (addFramingBit)
-				data.Add ((byte) 1);
+				data.Add (1);
 
 			return data;
 		}
 
-#endregion
-		
-		
-		
-#region Public Properties
-		
+		#endregion
+
+
+
+		#region Public Properties
+
 		/// <summary>
 		///    Gets the number of fields contained in the current
 		///    instance.
@@ -349,29 +343,27 @@ namespace TagLib.Ogg
 		///    fields in the current instance.
 		/// </value>
 		public uint FieldCount {
-			get
-			{
+			get {
 				uint count = 0;
 				foreach (string[] values in field_list.Values)
-					count += (uint) values.Length;
+					count += (uint)values.Length;
 
 				// If the pictures array is loaded and not in sync
 				// with the underlying fields, adjust the field count
 				if (pictures != null && picture_fields_dirty) {
 					foreach (string fieldName in PICTURE_FIELDS) {
-						string[] fieldValue;
-						if (field_list.TryGetValue (fieldName, out fieldValue)) {
-							count -= (uint) fieldValue.Length;
+						if (field_list.TryGetValue (fieldName, out var fieldValue)) {
+							count -= (uint)fieldValue.Length;
 						}
 					}
 
-					count += (uint) pictures.Length;
+					count += (uint)pictures.Length;
 				}
-				
+
 				return count;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the vendor ID for the current instance.
 		/// </summary>
@@ -380,15 +372,15 @@ namespace TagLib.Ogg
 		///    for current instance.
 		/// </value>
 		public string VendorId {
-			get {return vendor_id;}
+			get { return vendor_id; }
 		}
-		
-#endregion
-		
-		
-		
-#region Protected Methods
-		
+
+		#endregion
+
+
+
+		#region Protected Methods
+
 		/// <summary>
 		///    Populates and initializes a new instance of <see
 		///    cref="XiphComment" /> by reading the contents of a raw
@@ -404,7 +396,7 @@ namespace TagLib.Ogg
 		protected void Parse (ByteVector data)
 		{
 			if (data == null)
-				throw new ArgumentNullException (nameof(data));
+				throw new ArgumentNullException (nameof (data));
 
 			// Reset picture state before parsing
 			picture_fields_dirty = false;
@@ -413,64 +405,54 @@ namespace TagLib.Ogg
 			// The first thing in the comment data is the vendor ID
 			// length, followed by a UTF8 string with the vendor ID.
 			int pos = 0;
-			int vendor_length = (int) data.Mid (pos, 4)
-				.ToUInt (false);
+			int vendor_length = (int)data.Mid (pos, 4).ToUInt (false);
 			pos += 4;
 
-			vendor_id = data.ToString (StringType.UTF8, pos,
-				vendor_length);
+			vendor_id = data.ToString (StringType.UTF8, pos, vendor_length);
 			pos += vendor_length;
 
 			// Next the number of fields in the comment vector.
 
-			int comment_fields = (int) data.Mid (pos, 4)
-				.ToUInt (false);
+			int comment_fields = (int)data.Mid (pos, 4).ToUInt (false);
 			pos += 4;
 
-			for(int i = 0; i < comment_fields; i++) {
+			for (int i = 0; i < comment_fields; i++) {
 				// Each comment field is in the format
 				// "KEY=value" in a UTF8 string and has 4 bytes
 				// before the text starts that gives the length.
 
-				int comment_length = (int) data.Mid (pos, 4)
-					.ToUInt (false);
+				int comment_length = (int)data.Mid (pos, 4).ToUInt (false);
 				pos += 4;
 
-				string comment = data.ToString (StringType.UTF8,
-					pos, comment_length);
+				string comment = data.ToString (StringType.UTF8, pos, comment_length);
 				pos += comment_length;
 
-				int comment_separator_position = comment
-					.IndexOf ('=');
+				int comment_separator_position = comment.IndexOf ('=');
 
 				if (comment_separator_position < 0)
 					continue;
 
-				string key = comment.Substring (0,
-					comment_separator_position)
-					.ToUpper (
-						CultureInfo.InvariantCulture);
-				string value = comment.Substring (
-					comment_separator_position + 1);
-				string [] values;
-				
-				if (field_list.TryGetValue (key, out values)) {
-					Array.Resize <string> (ref values,
-						values.Length + 1);
-					values [values.Length - 1] = value;
-					field_list [key] = values;
+				string key = comment.Substring (0, comment_separator_position)
+					.ToUpper (CultureInfo.InvariantCulture);
+
+				string value = comment.Substring (comment_separator_position + 1);
+
+				if (field_list.TryGetValue (key, out var values)) {
+					Array.Resize<string> (ref values, values.Length + 1);
+					values[values.Length - 1] = value;
+					field_list[key] = values;
 				} else {
 					SetField (key, value);
 				}
 			}
 		}
-		
-#endregion
-		
-		
-		
 
-#region Private methods
+		#endregion
+
+
+
+
+		#region Private methods
 
 		/// <summary>
 		///    If needed, update the pictures field from the value of the
@@ -480,7 +462,7 @@ namespace TagLib.Ogg
 		///    Name of the field being queried by the user.
 		///    If the field name is not a picture field name, no update will take place.
 		/// </param>
-		private void EnsurePictureFieldsClean (string fieldName)
+		void EnsurePictureFieldsClean (string fieldName)
 		{
 			if (IsPictureField (fieldName) && picture_fields_dirty)
 				StorePictures ();
@@ -490,7 +472,7 @@ namespace TagLib.Ogg
 		///    Parses the pictures from the COVERART and METADATA_BLOCK_PICTURE
 		///    fields contained in the <see cref="field_list" /> variable.
 		/// </summary>
-		private void ParsePictures ()
+		void ParsePictures ()
 		{
 			string[] coverArtStrings = GetField ("COVERART"),
 				blockPictureStrings = GetField ("METADATA_BLOCK_PICTURE");
@@ -519,15 +501,14 @@ namespace TagLib.Ogg
 		///    METADATA_BLOCK_PICTURE field. Conversion to Flac.Picture is done
 		///    as needed.
 		/// </summary>
-		private void StorePictures ()
+		void StorePictures ()
 		{
 			// Remove all picture fields
 			foreach (string pictureField in PICTURE_FIELDS)
 				field_list.Remove (pictureField);
 
 			// Store the pictures array in METADATA_BLOCK_PICTURE
-			if (pictures != null &&
-				pictures.Length > 0) {
+			if (pictures != null && pictures.Length > 0) {
 				string[] flacPictures = new string[pictures.Length];
 
 				for (int i = 0; i < pictures.Length; ++i) {
@@ -548,9 +529,9 @@ namespace TagLib.Ogg
 		///    when the Pictures property is accessed.
 		/// </summary>
 		/// <param name="key">Name of the Xiph field being changed</param>
-		private void ResetPicturesState(string key)
+		void ResetPicturesState (string key)
 		{
-			if (IsPictureField(key)) {
+			if (IsPictureField (key)) {
 				picture_fields_dirty = false;
 				pictures = null;
 			}
@@ -564,7 +545,7 @@ namespace TagLib.Ogg
 		///    true if the field represents a field that contains picture art data,
 		///    false otherwise.
 		/// </returns>
-		private static bool IsPictureField (string fieldName)
+		static bool IsPictureField (string fieldName)
 		{
 			foreach (string pictureFieldName in PICTURE_FIELDS)
 				if (string.Equals (fieldName, pictureFieldName))
@@ -572,10 +553,10 @@ namespace TagLib.Ogg
 			return false;
 		}
 
-#endregion
+		#endregion
 
-#region IEnumerable
-		
+		#region IEnumerable
+
 		/// <summary>
 		///    Gets an enumerator for enumerating through the the field
 		///    identifiers.
@@ -586,20 +567,20 @@ namespace TagLib.Ogg
 		/// </returns>
 		public IEnumerator<string> GetEnumerator ()
 		{
-			return field_list.Keys.GetEnumerator();
+			return field_list.Keys.GetEnumerator ();
 		}
-		
-		IEnumerator IEnumerable.GetEnumerator()
+
+		IEnumerator IEnumerable.GetEnumerator ()
 		{
-			return field_list.Keys.GetEnumerator();
+			return field_list.Keys.GetEnumerator ();
 		}
-		
-#endregion
-		
-		
-		
-#region TagLib.Tag
-		
+
+		#endregion
+
+
+
+		#region TagLib.Tag
+
 		/// <summary>
 		///    Gets the tag types contained in the current instance.
 		/// </summary>
@@ -607,9 +588,9 @@ namespace TagLib.Ogg
 		///    Always <see cref="TagTypes.Xiph" />.
 		/// </value>
 		public override TagTypes TagTypes {
-			get {return TagTypes.Xiph;}
+			get { return TagTypes.Xiph; }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the title for the media described by the
 		///    current instance.
@@ -623,10 +604,10 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "TITLE" field.
 		/// </remarks>
 		public override string Title {
-			get {return GetFirstField ("TITLE");}
-			set {SetField ("TITLE", value);}
+			get { return GetFirstField ("TITLE"); }
+			set { SetField ("TITLE", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the sort names for the Track Title of
 		///    the media described by the current instance.
@@ -642,8 +623,8 @@ namespace TagLib.Ogg
 		///    http://musicbrainz.org/doc/PicardTagMapping
 		/// </remarks>
 		public override string TitleSort {
-			get {return GetFirstField ("TITLESORT");}
-			set {SetField ("TITLESORT", value);}
+			get { return GetFirstField ("TITLESORT"); }
+			set { SetField ("TITLESORT", value); }
 		}
 
 		/// <summary>
@@ -667,10 +648,9 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "SUBTITLE"
 		///    non-standard field.
 		/// </remarks>
-		public override string Subtitle
-		{
-			get { return GetFirstField("SUBTITLE"); }
-			set { SetField("SUBTITLE", value); }
+		public override string Subtitle {
+			get { return GetFirstField ("SUBTITLE"); }
+			set { SetField ("SUBTITLE", value); }
 		}
 
 		/// <summary>
@@ -691,12 +671,11 @@ namespace TagLib.Ogg
 		///    field.
 		///    http://musicbrainz.org/doc/PicardTagMapping
 		/// </remarks>
-		public override string Description
-		{
-			get { return GetFirstField("DESCRIPTION"); }
-			set { SetField("DESCRIPTION", value); }
+		public override string Description {
+			get { return GetFirstField ("DESCRIPTION"); }
+			set { SetField ("DESCRIPTION", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the performers or artists who performed in
 		///    the media described by the current instance.
@@ -710,11 +689,11 @@ namespace TagLib.Ogg
 		/// <remarks>
 		///    This property is implemented using the "ARTIST" field.
 		/// </remarks>
-		public override string [] Performers {
-			get {return GetField ("ARTIST");}
-			set {SetField ("ARTIST", value);}
+		public override string[] Performers {
+			get { return GetField ("ARTIST"); }
+			set { SetField ("ARTIST", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the sort names of the performers or artists
 		///    who performed in the media described by the current instance.
@@ -729,9 +708,9 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "ARTISTSORT" field.
 		///    http://musicbrainz.org/doc/PicardTagMapping
 		/// </remarks>
-		public override string [] PerformersSort {
-			get {return GetField ("ARTISTSORT");}
-			set {SetField ("ARTISTSORT", value);}
+		public override string[] PerformersSort {
+			get { return GetField ("ARTISTSORT"); }
+			set { SetField ("ARTISTSORT", value); }
 		}
 
 		/// <summary>
@@ -757,10 +736,9 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "ARTISTROLE" 
 		///    non-standard field.
 		/// </remarks>
-		public override string[] PerformersRole
-		{
-			get { return GetField("ARTISTROLE"); }
-			set { SetField("ARTISTROLE", value); }
+		public override string[] PerformersRole {
+			get { return GetField ("ARTISTROLE"); }
+			set { SetField ("ARTISTROLE", value); }
 		}
 
 		/// <summary>
@@ -778,24 +756,24 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "ALBUMARTIST"
 		///    field.
 		/// </remarks>
-		public override string [] AlbumArtists {
+		public override string[] AlbumArtists {
 			get {
 				// First try to get AlbumArtist, if that comment is not present try: 
 				// ENSEMBLE: set by TAG & RENAME
 				// ALBUM ARTIST: set by The GodFather
-				string[] value = GetField("ALBUMARTIST");
+				string[] value = GetField ("ALBUMARTIST");
 				if (value != null && value.Length > 0)
-				  return value;
+					return value;
 
-				value = GetField("ALBUM ARTIST");
+				value = GetField ("ALBUM ARTIST");
 				if (value != null && value.Length > 0)
-				  return value;
+					return value;
 
-				return GetField ("ENSEMBLE"); 
+				return GetField ("ENSEMBLE");
 			}
-			set {SetField ("ALBUMARTIST", value);}
+			set { SetField ("ALBUMARTIST", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the sort names for the band or artist who
 		///    is credited in the creation of the entire album or
@@ -814,11 +792,11 @@ namespace TagLib.Ogg
 		///    field.
 		///    http://musicbrainz.org/doc/PicardTagMapping
 		/// </remarks>
-		public override string [] AlbumArtistsSort {
-			get {return GetField ("ALBUMARTISTSORT");}
-			set {SetField ("ALBUMARTISTSORT", value);}
+		public override string[] AlbumArtistsSort {
+			get { return GetField ("ALBUMARTISTSORT"); }
+			set { SetField ("ALBUMARTISTSORT", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the composers of the media represented by
 		///    the current instance.
@@ -831,11 +809,11 @@ namespace TagLib.Ogg
 		/// <remarks>
 		///    This property is implemented using the "COMPOSER" field.
 		/// </remarks>
-		public override string [] Composers {
-			get {return GetField ("COMPOSER");}
-			set {SetField ("COMPOSER", value);}
+		public override string[] Composers {
+			get { return GetField ("COMPOSER"); }
+			set { SetField ("COMPOSER", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the sort names for the composers of
 		///    the media described by the current instance.
@@ -850,9 +828,9 @@ namespace TagLib.Ogg
 		///    field.
 		///    http://musicbrainz.org/doc/PicardTagMapping
 		/// </remarks>
-		public override string [] ComposersSort {
-			get {return GetField ("COMPOSERSORT");}
-			set {SetField ("COMPOSERSORT", value);}
+		public override string[] ComposersSort {
+			get { return GetField ("COMPOSERSORT"); }
+			set { SetField ("COMPOSERSORT", value); }
 		}
 
 		/// <summary>
@@ -868,10 +846,10 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "ALBUM" field.
 		/// </remarks>
 		public override string Album {
-			get {return GetFirstField ("ALBUM");}
-			set {SetField ("ALBUM", value);}
+			get { return GetFirstField ("ALBUM"); }
+			set { SetField ("ALBUM", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the sort names for the Album Title of
 		///    the media described by the current instance.
@@ -887,8 +865,8 @@ namespace TagLib.Ogg
 		///    http://musicbrainz.org/doc/PicardTagMapping
 		/// </remarks>
 		public override string AlbumSort {
-			get {return GetFirstField ("ALBUMSORT");}
-			set {SetField ("ALBUMSORT", value);}
+			get { return GetFirstField ("ALBUMSORT"); }
+			set { SetField ("ALBUMSORT", value); }
 		}
 
 		/// <summary>
@@ -904,8 +882,8 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "COMMENT" field.
 		/// </remarks>
 		public override string Comment {
-			get { return GetFirstField("COMMENT"); }
-			set { SetField("COMMENT", value); }
+			get { return GetFirstField ("COMMENT"); }
+			set { SetField ("COMMENT", value); }
 		}
 
 		/// <summary>
@@ -920,11 +898,11 @@ namespace TagLib.Ogg
 		/// <remarks>
 		///    This property is implemented using the "GENRE" field.
 		/// </remarks>
-		public override string [] Genres {
-			get {return GetField ("GENRE");}
-			set {SetField ("GENRE", value);}
+		public override string[] Genres {
+			get { return GetField ("GENRE"); }
+			set { SetField ("GENRE", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the year that the media represented by the
 		///    current instance was recorded.
@@ -942,14 +920,13 @@ namespace TagLib.Ogg
 		public override uint Year {
 			get {
 				string text = GetFirstField ("DATE");
-				uint value;
 				return (text != null && uint.TryParse (
 					text.Length > 4 ? text.Substring (0, 4)
-					: text, out value)) ? value : 0;
+					: text, out var value)) ? value : 0;
 			}
-			set {SetField ("DATE", value);}
+			set { SetField ("DATE", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the position of the media represented by
 		///    the current instance in its containing album.
@@ -966,14 +943,13 @@ namespace TagLib.Ogg
 		public override uint Track {
 			get {
 				string text = GetFirstField ("TRACKNUMBER");
-				string [] values;
-				uint value;
-				
+				string[] values;
+
 				if (text != null && (values = text.Split ('/'))
 					.Length > 0 && uint.TryParse (
-						values [0], out value))
+						values[0], out var value))
 					return value;
-				
+
 				return 0;
 			}
 			set {
@@ -981,7 +957,7 @@ namespace TagLib.Ogg
 				SetField ("TRACKNUMBER", value, "00");
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the number of tracks in the album
 		///    containing the media represented by the current instance.
@@ -999,24 +975,23 @@ namespace TagLib.Ogg
 		public override uint TrackCount {
 			get {
 				string text;
-				string [] values;
-				uint value;
-				
+				string[] values;
+
 				if ((text = GetFirstField ("TRACKTOTAL")) !=
-					null && uint.TryParse (text, out value))
+					null && uint.TryParse (text, out var value))
 					return value;
-				
+
 				if ((text = GetFirstField ("TRACKNUMBER")) !=
 					null && (values = text.Split ('/'))
 					.Length > 1 && uint.TryParse (
-						values [1], out value))
+						values[1], out value))
 					return value;
-				
+
 				return 0;
 			}
-			set {SetField ("TRACKTOTAL", value);}
+			set { SetField ("TRACKTOTAL", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the number of the disc containing the media
 		///    represented by the current instance in the boxed set.
@@ -1033,14 +1008,13 @@ namespace TagLib.Ogg
 		public override uint Disc {
 			get {
 				string text = GetFirstField ("DISCNUMBER");
-				string [] values;
-				uint value;
-				
+				string[] values;
+
 				if (text != null && (values = text.Split ('/'))
 					.Length > 0 && uint.TryParse (
-						values [0], out value))
+						values[0], out var value))
 					return value;
-				
+
 				return 0;
 			}
 			set {
@@ -1048,7 +1022,7 @@ namespace TagLib.Ogg
 				SetField ("DISCNUMBER", value);
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the number of discs in the boxed set
 		///    containing the media represented by the current instance.
@@ -1066,24 +1040,23 @@ namespace TagLib.Ogg
 		public override uint DiscCount {
 			get {
 				string text;
-				string [] values;
-				uint value;
+				string[] values;
 
 				if ((text = GetFirstField ("DISCTOTAL")) != null
-					&& uint.TryParse (text, out value))
+					&& uint.TryParse (text, out var value))
 					return value;
-				
+
 				if ((text = GetFirstField ("DISCNUMBER")) !=
 					null && (values = text.Split ('/'))
 					.Length > 1 && uint.TryParse (
-						values [1], out value))
+						values[1], out value))
 					return value;
-				
+
 				return 0;
 			}
-			set {SetField ("DISCTOTAL", value);}
+			set { SetField ("DISCTOTAL", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the lyrics or script of the media
 		///    represented by the current instance.
@@ -1097,10 +1070,10 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "LYRICS" field.
 		/// </remarks>
 		public override string Lyrics {
-			get {return GetFirstField ("LYRICS");}
-			set {SetField ("LYRICS", value);}
+			get { return GetFirstField ("LYRICS"); }
+			set { SetField ("LYRICS", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the grouping on the album which the media
 		///    in the current instance belongs to.
@@ -1114,10 +1087,10 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "GROUPING" field.
 		/// </remarks>
 		public override string Grouping {
-			get {return GetFirstField ("GROUPING");}
-			set {SetField ("GROUPING", value);}
+			get { return GetFirstField ("GROUPING"); }
+			set { SetField ("GROUPING", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the number of beats per minute in the audio
 		///    of the media represented by the current instance.
@@ -1136,26 +1109,27 @@ namespace TagLib.Ogg
 			get {
 				SaveBeatsPerMinuteAsTempo = true;
 				string text = GetFirstField ("TEMPO");
-				if (string.IsNullOrEmpty(text))
-				{
-					text = GetFirstField("BPM");
-					if (!string.IsNullOrEmpty(text))
-					{
+
+				if (string.IsNullOrEmpty (text)) {
+					text = GetFirstField ("BPM");
+
+					if (!string.IsNullOrEmpty (text)) {
 						SaveBeatsPerMinuteAsTempo = false;
 					}
 				}
-				double value;
+
 				return (text != null &&
-					double.TryParse (text, NumberStyles.AllowDecimalPoint, NumberFormatInfo.InvariantInfo, out value) &&
-					value > 0) ? (uint) Math.Round (value) :
-					0;
+					double.TryParse (text, NumberStyles.AllowDecimalPoint, NumberFormatInfo.InvariantInfo, out var value) &&
+					value > 0) ? (uint)Math.Round (value) : 0;
 			}
 			set {
-				if (SaveBeatsPerMinuteAsTempo) SetField("TEMPO", value);
-				else SetField("BPM", value);
+				if (SaveBeatsPerMinuteAsTempo)
+					SetField ("TEMPO", value);
+				else
+					SetField ("BPM", value);
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the conductor or director of the media
 		///    represented by the current instance.
@@ -1169,10 +1143,10 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "CONDUCTOR" field.
 		/// </remarks>
 		public override string Conductor {
-			get {return GetFirstField ("CONDUCTOR");}
-			set {SetField ("CONDUCTOR", value);}
+			get { return GetFirstField ("CONDUCTOR"); }
+			set { SetField ("CONDUCTOR", value); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the copyright information for the media
 		///    represented by the current instance.
@@ -1186,8 +1160,8 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "COPYRIGHT" field.
 		/// </remarks>
 		public override string Copyright {
-			get {return GetFirstField ("COPYRIGHT");}
-			set {SetField ("COPYRIGHT", value);}
+			get { return GetFirstField ("COPYRIGHT"); }
+			set { SetField ("COPYRIGHT", value); }
 		}
 
 
@@ -1205,31 +1179,24 @@ namespace TagLib.Ogg
 		///    YYYY-MM-DDTHH:MM:SS
 		///    <see url="https://wiki.xiph.org/VorbisComment#Date_and_time"/> 
 		/// </remarks>
-		public override DateTime? DateTagged
-		{
-			get
-			{
-				string value = GetFirstField("DATETAGGED");
-				if (value != null)
-				{
-					value = value.Replace('T', ' ');
-					DateTime date;
-					if (DateTime.TryParseExact(value, "yyyy-MM-dd HH:mm:ss", null, DateTimeStyles.None, out date))
-					{
+		public override DateTime? DateTagged {
+			get {
+				string value = GetFirstField ("DATETAGGED");
+				if (value != null) {
+					value = value.Replace ('T', ' ');
+					if (DateTime.TryParseExact (value, "yyyy-MM-dd HH:mm:ss", null, DateTimeStyles.None, out var date)) {
 						return date;
 					}
 				}
 				return null;
 			}
-			set
-			{
+			set {
 				string date = null;
-				if (value != null)
-				{
-					date = string.Format("{0:yyyy-MM-dd HH:mm:ss}", value);
-					date = date.Replace(' ', 'T');
+				if (value != null) {
+					date = $"{value:yyyy-MM-dd HH:mm:ss}";
+					date = date.Replace (' ', 'T');
 				}
-				SetField("DATETAGGED", date);
+				SetField ("DATETAGGED", date);
 			}
 		}
 
@@ -1246,8 +1213,8 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "MUSICBRAINZ_ARTISTID" field.
 		/// </remarks>
 		public override string MusicBrainzArtistId {
-			get {return GetFirstField ("MUSICBRAINZ_ARTISTID");}
-			set {SetField ("MUSICBRAINZ_ARTISTID", value);}
+			get { return GetFirstField ("MUSICBRAINZ_ARTISTID"); }
+			set { SetField ("MUSICBRAINZ_ARTISTID", value); }
 		}
 
 		/// <summary>
@@ -1263,8 +1230,8 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "MUSICBRAINZ_RELEASEGROUPID" field.
 		/// </remarks>
 		public override string MusicBrainzReleaseGroupId {
-			get { return GetFirstField("MUSICBRAINZ_RELEASEGROUPID"); }
-			set { SetField("MUSICBRAINZ_RELEASEGROUPID", value); }
+			get { return GetFirstField ("MUSICBRAINZ_RELEASEGROUPID"); }
+			set { SetField ("MUSICBRAINZ_RELEASEGROUPID", value); }
 		}
 
 		/// <summary>
@@ -1280,8 +1247,8 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "MUSICBRAINZ_ALBUMID" field.
 		/// </remarks>
 		public override string MusicBrainzReleaseId {
-			get {return GetFirstField ("MUSICBRAINZ_ALBUMID");}
-			set {SetField ("MUSICBRAINZ_ALBUMID", value);}
+			get { return GetFirstField ("MUSICBRAINZ_ALBUMID"); }
+			set { SetField ("MUSICBRAINZ_ALBUMID", value); }
 		}
 
 		/// <summary>
@@ -1297,8 +1264,8 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "MUSICBRAINZ_ALBUMARTISTID" field.
 		/// </remarks>
 		public override string MusicBrainzReleaseArtistId {
-			get {return GetFirstField ("MUSICBRAINZ_ALBUMARTISTID");}
-			set {SetField ("MUSICBRAINZ_ALBUMARTISTID", value);}
+			get { return GetFirstField ("MUSICBRAINZ_ALBUMARTISTID"); }
+			set { SetField ("MUSICBRAINZ_ALBUMARTISTID", value); }
 		}
 
 		/// <summary>
@@ -1314,8 +1281,8 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "MUSICBRAINZ_TRACKID" field.
 		/// </remarks>
 		public override string MusicBrainzTrackId {
-			get {return GetFirstField ("MUSICBRAINZ_TRACKID");}
-			set {SetField ("MUSICBRAINZ_TRACKID", value);}
+			get { return GetFirstField ("MUSICBRAINZ_TRACKID"); }
+			set { SetField ("MUSICBRAINZ_TRACKID", value); }
 		}
 
 		/// <summary>
@@ -1331,8 +1298,8 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "MUSICBRAINZ_DISCID" field.
 		/// </remarks>
 		public override string MusicBrainzDiscId {
-			get {return GetFirstField ("MUSICBRAINZ_DISCID");}
-			set {SetField ("MUSICBRAINZ_DISCID", value);}
+			get { return GetFirstField ("MUSICBRAINZ_DISCID"); }
+			set { SetField ("MUSICBRAINZ_DISCID", value); }
 		}
 
 		/// <summary>
@@ -1348,8 +1315,8 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "MUSICIP_PUID" field.
 		/// </remarks>
 		public override string MusicIpId {
-			get {return GetFirstField ("MUSICIP_PUID");}
-			set {SetField ("MUSICIP_PUID", value);}
+			get { return GetFirstField ("MUSICIP_PUID"); }
+			set { SetField ("MUSICIP_PUID", value); }
 		}
 
 		/// <summary>
@@ -1365,8 +1332,8 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "ASIN" field.
 		/// </remarks>
 		public override string AmazonId {
-			get {return GetFirstField ("ASIN");}
-			set {SetField ("ASIN", value);}
+			get { return GetFirstField ("ASIN"); }
+			set { SetField ("ASIN", value); }
 		}
 
 		/// <summary>
@@ -1382,8 +1349,8 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "MUSICBRAINZ_ALBUMSTATUS" field.
 		/// </remarks>
 		public override string MusicBrainzReleaseStatus {
-			get {return GetFirstField ("MUSICBRAINZ_ALBUMSTATUS");}
-			set {SetField ("MUSICBRAINZ_ALBUMSTATUS", value);}
+			get { return GetFirstField ("MUSICBRAINZ_ALBUMSTATUS"); }
+			set { SetField ("MUSICBRAINZ_ALBUMSTATUS", value); }
 		}
 
 		/// <summary>
@@ -1399,8 +1366,8 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "MUSICBRAINZ_ALBUMTYPE" field.
 		/// </remarks>
 		public override string MusicBrainzReleaseType {
-			get {return GetFirstField ("MUSICBRAINZ_ALBUMTYPE");}
-			set {SetField ("MUSICBRAINZ_ALBUMTYPE", value);}
+			get { return GetFirstField ("MUSICBRAINZ_ALBUMTYPE"); }
+			set { SetField ("MUSICBRAINZ_ALBUMTYPE", value); }
 		}
 
 		/// <summary>
@@ -1416,8 +1383,8 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "RELEASECOUNTRY" field.
 		/// </remarks>
 		public override string MusicBrainzReleaseCountry {
-			get {return GetFirstField ("RELEASECOUNTRY");}
-			set {SetField ("RELEASECOUNTRY", value);}
+			get { return GetFirstField ("RELEASECOUNTRY"); }
+			set { SetField ("RELEASECOUNTRY", value); }
 		}
 
 		/// <summary>
@@ -1434,26 +1401,23 @@ namespace TagLib.Ogg
 		///    field.</para>
 		/// </remarks>
 		public override IPicture[] Pictures {
-			get
-			{
+			get {
 				// Load pictures on demand from the fields
 				if (pictures == null) {
 					ParsePictures ();
 				}
-				
+
 				return pictures;
 			}
-			set
-			{
+			set {
 				if (value == null) {
 					// Set pictures to a 0-length array to prevent
 					// re-parsing by the getter on the next access
 					pictures = EMPTY_PICTURES;
-				}
-				else {
+				} else {
 					pictures = value;
 				}
-				
+
 				// The pictures fields are not up to date with the pictures array anymore
 				picture_fields_dirty = true;
 			}
@@ -1473,11 +1437,10 @@ namespace TagLib.Ogg
 		public bool IsCompilation {
 			get {
 				string text;
-				int value;
 
 				if ((text = GetFirstField ("COMPILATION")) !=
-					null && int.TryParse (text, out value)) {
-						return value == 1;
+					null && int.TryParse (text, out var value)) {
+					return value == 1;
 				}
 				return false;
 			}
@@ -1505,17 +1468,16 @@ namespace TagLib.Ogg
 		public override double ReplayGainTrackGain {
 			get {
 				string text = GetFirstField ("REPLAYGAIN_TRACK_GAIN");
-				double value;
-				
+
 				if (text == null) {
 					return double.NaN;
 				}
-				if (text.ToLower(CultureInfo.InvariantCulture).EndsWith("db")) {
-					text = text.Substring (0, text.Length - 2).Trim();
+				if (text.ToLower (CultureInfo.InvariantCulture).EndsWith ("db")) {
+					text = text.Substring (0, text.Length - 2).Trim ();
 				}
-				
+
 				if (double.TryParse (text, NumberStyles.Float,
-					CultureInfo.InvariantCulture, out value)) {
+					CultureInfo.InvariantCulture, out var value)) {
 					return value;
 				}
 				return double.NaN;
@@ -1524,8 +1486,7 @@ namespace TagLib.Ogg
 				if (double.IsNaN (value)) {
 					RemoveField ("REPLAYGAIN_TRACK_GAIN");
 				} else {
-					string text = value.ToString("0.00 dB",
-						CultureInfo.InvariantCulture);
+					string text = value.ToString ("0.00 dB", CultureInfo.InvariantCulture);
 					SetField ("REPLAYGAIN_TRACK_GAIN", text);
 				}
 			}
@@ -1546,12 +1507,10 @@ namespace TagLib.Ogg
 		public override double ReplayGainTrackPeak {
 			get {
 				string text;
-				double value;
 
 				if ((text = GetFirstField ("REPLAYGAIN_TRACK_PEAK")) !=
-					null && double.TryParse (text, NumberStyles.Float,
-						CultureInfo.InvariantCulture, out value)) {
-						return value;
+					null && double.TryParse (text, NumberStyles.Float, CultureInfo.InvariantCulture, out var value)) {
+					return value;
 				}
 				return double.NaN;
 			}
@@ -1580,17 +1539,16 @@ namespace TagLib.Ogg
 		public override double ReplayGainAlbumGain {
 			get {
 				string text = GetFirstField ("REPLAYGAIN_ALBUM_GAIN");
-				double value;
 
 				if (text == null) {
 					return double.NaN;
 				}
-				if (text.ToLower(CultureInfo.InvariantCulture).EndsWith("db")) {
-					text = text.Substring (0, text.Length - 2).Trim();
+				if (text.ToLower (CultureInfo.InvariantCulture).EndsWith ("db")) {
+					text = text.Substring (0, text.Length - 2).Trim ();
 				}
-				
+
 				if (double.TryParse (text, NumberStyles.Float,
-					CultureInfo.InvariantCulture, out value)) {
+					CultureInfo.InvariantCulture, out var value)) {
 					return value;
 				}
 				return double.NaN;
@@ -1599,8 +1557,7 @@ namespace TagLib.Ogg
 				if (double.IsNaN (value)) {
 					RemoveField ("REPLAYGAIN_ALBUM_GAIN");
 				} else {
-					string text = value.ToString ("0.00 dB",
-						CultureInfo.InvariantCulture);
+					string text = value.ToString ("0.00 dB", CultureInfo.InvariantCulture);
 					SetField ("REPLAYGAIN_ALBUM_GAIN", text);
 				}
 			}
@@ -1621,12 +1578,11 @@ namespace TagLib.Ogg
 		public override double ReplayGainAlbumPeak {
 			get {
 				string text;
-				double value;
 
 				if ((text = GetFirstField ("REPLAYGAIN_ALBUM_PEAK")) !=
 					null && double.TryParse (text, NumberStyles.Float,
-						CultureInfo.InvariantCulture, out value)) {
-						return value;
+						CultureInfo.InvariantCulture, out var value)) {
+					return value;
 				}
 				return double.NaN;
 			}
@@ -1634,7 +1590,7 @@ namespace TagLib.Ogg
 				if (double.IsNaN (value)) {
 					RemoveField ("REPLAYGAIN_ALBUM_PEAK");
 				} else {
-					string text = value.ToString("0.000000", CultureInfo.InvariantCulture);
+					string text = value.ToString ("0.000000", CultureInfo.InvariantCulture);
 					SetField ("REPLAYGAIN_ALBUM_PEAK", text);
 				}
 			}
@@ -1649,10 +1605,9 @@ namespace TagLib.Ogg
 		/// <remarks>
 		///    This property is implemented using the "INITIALKEY" field.
 		/// </remarks>
-		public override string InitialKey
-		{
-			get { return GetFirstField("INITIALKEY"); }
-			set { SetField("INITIALKEY", value); }
+		public override string InitialKey {
+			get { return GetFirstField ("INITIALKEY"); }
+			set { SetField ("INITIALKEY", value); }
 		}
 
 		/// <summary>
@@ -1664,10 +1619,9 @@ namespace TagLib.Ogg
 		/// <remarks>
 		///    This property is implemented using the "REMIXEDBY" field.
 		/// </remarks>
-		public override string RemixedBy
-		{
-			get { return GetFirstField("REMIXEDBY"); }
-			set { SetField("REMIXEDBY", value); }
+		public override string RemixedBy {
+			get { return GetFirstField ("REMIXEDBY"); }
+			set { SetField ("REMIXEDBY", value); }
 		}
 
 		/// <summary>
@@ -1679,10 +1633,9 @@ namespace TagLib.Ogg
 		/// <remarks>
 		///    This property is implemented using the "ORGANIZATION" field.
 		/// </remarks>
-		public override string Publisher
-		{
-			get { return GetFirstField("ORGANIZATION"); }
-			set { SetField("ORGANIZATION", value); }
+		public override string Publisher {
+			get { return GetFirstField ("ORGANIZATION"); }
+			set { SetField ("ORGANIZATION", value); }
 		}
 
 		/// <summary>
@@ -1694,10 +1647,9 @@ namespace TagLib.Ogg
 		/// <remarks>
 		///    This property is implemented using the "ISRC" field.
 		/// </remarks>
-		public override string ISRC
-		{
-			get { return GetFirstField("ISRC"); }
-			set { SetField("ISRC", value); }
+		public override string ISRC {
+			get { return GetFirstField ("ISRC"); }
+			set { SetField ("ISRC", value); }
 		}
 
 		/// <summary>
@@ -1710,7 +1662,7 @@ namespace TagLib.Ogg
 		public override bool IsEmpty {
 			get { return FieldCount == 0; }
 		}
-		
+
 		/// <summary>
 		///    Clears the values stored in the current instance.
 		/// </summary>
@@ -1722,7 +1674,7 @@ namespace TagLib.Ogg
 			pictures = new IPicture[0];
 			picture_fields_dirty = false;
 		}
-		
-#endregion
+
+		#endregion
 	}
 }

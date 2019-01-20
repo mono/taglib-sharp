@@ -39,42 +39,42 @@ namespace TagLib.IFD.Tags
 		///     Compression scheme used on the image data. (Hex: 0x0103)
 		///     http://www.awaresystems.be/imaging/tiff/tifftags/compression.html
 		/// </summary>
-		Compression                                        = 259,
+		Compression = 259,
 
 		/// <summary>
 		///     The number of pixels per ResolutionUnit in the ImageWidth direction. (Hex: 0x011A)
 		///     http://www.awaresystems.be/imaging/tiff/tifftags/xresolution.html
 		/// </summary>
-		XResolution                                        = 282,
+		XResolution = 282,
 
 		/// <summary>
 		///     The number of pixels per ResolutionUnit in the ImageLength direction. (Hex: 0x011B)
 		///     http://www.awaresystems.be/imaging/tiff/tifftags/yresolution.html
 		/// </summary>
-		YResolution                                        = 283,
+		YResolution = 283,
 
 		/// <summary>
 		///     The unit of measurement for XResolution and YResolution. (Hex: 0x0128)
 		///     http://www.awaresystems.be/imaging/tiff/tifftags/resolutionunit.html
 		/// </summary>
-		ResolutionUnit                                     = 296,
+		ResolutionUnit = 296,
 
 		/// <summary>
 		///     Start of the preview image data. (Hex: 0x0201)
 		///     http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/Nikon.html#PreviewImage
 		/// </summary>
-		PreviewImageStart                                  = 513,
+		PreviewImageStart = 513,
 
 		/// <summary>
 		///     Length of the preview image data. (Hex: 0x0202)
 		///     http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/Nikon.html#PreviewImage
 		/// </summary>
-		PreviewImageLength                                 = 514,
+		PreviewImageLength = 514,
 
 		/// <summary>
 		///     Specifies the positioning of subsampled chrominance components relative to luminance samples. (Hex: 0x0213)
 		///     http://www.awaresystems.be/imaging/tiff/tifftags/ycbcrpositioning.html
 		/// </summary>
-		YCbCrPositioning                                   = 531
+		YCbCrPositioning = 531
 	}
 }

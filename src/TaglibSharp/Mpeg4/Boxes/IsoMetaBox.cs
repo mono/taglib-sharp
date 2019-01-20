@@ -24,26 +24,16 @@
 using System;
 using System.Collections.Generic;
 
-namespace TagLib.Mpeg4 {
+namespace TagLib.Mpeg4
+{
 	/// <summary>
 	///    This class extends <see cref="FullBox" /> to provide an
 	///    implementation of a ISO/IEC 14496-12 MetaBox.
 	/// </summary>
 	public class IsoMetaBox : FullBox
 	{
-		#region Private Fields
-		
-		/// <summary>
-		///    Contains the children of the box.
-		/// </summary>
-		private IEnumerable<Box> children;
-		
-		#endregion
-		
-		
-		
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="IsoMetaBox" /> with a provided header and
@@ -64,13 +54,12 @@ namespace TagLib.Mpeg4 {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
-		public IsoMetaBox (BoxHeader header, TagLib.File file,
-		                   IsoHandlerBox handler)
+		public IsoMetaBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler)
 			: base (header, file, handler)
 		{
-			children = LoadChildren (file);
+			Children = LoadChildren (file);
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="IsoMetaBox" /> with a specified handler.
@@ -95,23 +84,21 @@ namespace TagLib.Mpeg4 {
 			: base ("meta", 0, 0)
 		{
 			if (handlerType == null)
-				throw new ArgumentNullException (nameof(handlerType));
-			
+				throw new ArgumentNullException (nameof (handlerType));
+
 			if (handlerType.Count < 4)
-				throw new ArgumentException (
-					"The handler type must be four bytes long.",
-					nameof(handlerType));
-			
-			children = new List<Box> ();
+				throw new ArgumentException ("The handler type must be four bytes long.", nameof (handlerType));
+
+			Children = new List<Box> ();
 			AddChild (new IsoHandlerBox (handlerType, handlerName));
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the children of the current instance.
 		/// </summary>
@@ -119,10 +106,8 @@ namespace TagLib.Mpeg4 {
 		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating the
 		///    children of the current instance.
 		/// </value>
-		public override IEnumerable<Box> Children {
-			get {return children;}
-		}
-		
+		public override IEnumerable<Box> Children { get; }
+
 		#endregion
 	}
 }

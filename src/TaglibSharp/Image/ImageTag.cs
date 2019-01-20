@@ -46,8 +46,8 @@ namespace TagLib.Image
 		///    current instace.
 		/// </value>
 		public virtual string[] Keywords {
-			get { return new string [] {}; }
-			set {}
+			get { return new string[] { }; }
+			set { }
 		}
 
 		/// <summary>
@@ -60,7 +60,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual uint? Rating {
 			get { return null; }
-			set {}
+			set { }
 		}
 
 		/// <summary>
@@ -72,7 +72,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual DateTime? DateTime {
 			get { return null; }
-			set {}
+			set { }
 		}
 
 		/// <summary>
@@ -85,7 +85,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual ImageOrientation Orientation {
 			get { return ImageOrientation.None; }
-			set {}
+			set { }
 		}
 
 		/// <summary>
@@ -98,7 +98,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual string Software {
 			get { return null; }
-			set {}
+			set { }
 		}
 
 		/// <summary>
@@ -111,7 +111,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual double? Latitude {
 			get { return null; }
-			set {}
+			set { }
 		}
 
 		/// <summary>
@@ -124,7 +124,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual double? Longitude {
 			get { return null; }
-			set {}
+			set { }
 		}
 
 		/// <summary>
@@ -137,7 +137,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual double? Altitude {
 			get { return null; }
-			set {}
+			set { }
 		}
 
 		/// <summary>
@@ -149,7 +149,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual double? ExposureTime {
 			get { return null; }
-			set {}
+			set { }
 		}
 
 		/// <summary>
@@ -161,7 +161,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual double? FNumber {
 			get { return null; }
-			set {}
+			set { }
 		}
 
 		/// <summary>
@@ -173,7 +173,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual uint? ISOSpeedRatings {
 			get { return null; }
-			set {}
+			set { }
 		}
 
 		/// <summary>
@@ -185,7 +185,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual double? FocalLength {
 			get { return null; }
-			set {}
+			set { }
 		}
 
 		/// <summary>
@@ -197,7 +197,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual uint? FocalLengthIn35mmFilm {
 			get { return null; }
-			set {}
+			set { }
 		}
 
 		/// <summary>
@@ -209,7 +209,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual string Make {
 			get { return null; }
-			set {}
+			set { }
 		}
 
 		/// <summary>
@@ -221,7 +221,7 @@ namespace TagLib.Image
 		/// </value>
 		public virtual string Model {
 			get { return null; }
-			set {}
+			set { }
 		}
 
 		/// <summary>
@@ -232,10 +232,10 @@ namespace TagLib.Image
 		/// </value>
 		public virtual string Creator {
 			get { return null; }
-			set {}
+			set { }
 		}
 
-#endregion
+		#endregion
 
 	}
 }

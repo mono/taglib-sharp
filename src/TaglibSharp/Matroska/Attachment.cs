@@ -1,4 +1,4 @@
-﻿//
+//
 // SimpleTag.cs:
 //
 // Author:
@@ -38,7 +38,7 @@ namespace TagLib.Matroska
 		///    Constructs and initializes a new instance of <see
 		///    cref="Attachment" /> with no data or values.
 		/// </summary>
-		public Attachment()
+		public Attachment ()
 		{
 		}
 
@@ -54,9 +54,10 @@ namespace TagLib.Matroska
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
-		public Attachment(string path) : base (path)
+		public Attachment (string path)
+			: base (path)
 		{
-			SetTypeFromFilename();
+			SetTypeFromFilename ();
 		}
 
 		/// <summary>
@@ -80,7 +81,8 @@ namespace TagLib.Matroska
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public Attachment(File.IFileAbstraction abstraction, long offset = 0, long size = -1) : base(abstraction, offset, size)
+		public Attachment (TagLib.File.IFileAbstraction abstraction, long offset = 0, long size = -1)
+			: base (abstraction, offset, size)
 		{
 		}
 
@@ -96,7 +98,8 @@ namespace TagLib.Matroska
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="data" /> is <see langword="null" />.
 		/// </exception>
-		public Attachment(ByteVector data) : base(data)
+		public Attachment (ByteVector data)
+			: base (data)
 		{
 		}
 
@@ -110,7 +113,8 @@ namespace TagLib.Matroska
 		///    A <see cref="IPicture"/> object containing picture data
 		///    to convert to an Attachment.
 		/// </param>
-		public Attachment(IPicture picture) : base(picture)
+		public Attachment (IPicture picture)
+			: base (picture)
 		{
 		}
 
@@ -124,34 +128,29 @@ namespace TagLib.Matroska
 		/// Derive the Picture-type from the the file-name. 
 		/// It change the <see cref="P:Type"/> from the <see cref="P:Filename"/>.
 		/// </summary>
-		public void SetTypeFromFilename()
+		public void SetTypeFromFilename ()
 		{
-			if (MimeType != null && !MimeType.StartsWith("image/"))
-			{
+			if (MimeType != null && !MimeType.StartsWith ("image/")) {
 				Type = PictureType.NotAPicture;
 				return;
 			}
 
-			if (Filename == null)
-			{
+			if (Filename == null) {
 				Type = PictureType.Other;
 				return;
 			}
 
 			PictureType type = PictureType.Other;
-			string fname = Filename.ToLower();
+			string fname = Filename.ToLower ();
 
-			foreach (var ptype in Enum.GetNames(typeof(PictureType)))
-			{
-				if (fname.Contains(ptype.ToLower()))
-				{
-					type = (PictureType)Enum.Parse(typeof(PictureType), ptype);
+			foreach (var ptype in Enum.GetNames (typeof (PictureType))) {
+				if (fname.Contains (ptype.ToLower ())) {
+					type = (PictureType)Enum.Parse (typeof (PictureType), ptype);
 					break;
 				}
 			}
 
-			if (type == PictureType.Other && ((fname.Contains("cover") || fname.Contains("poster"))))
-			{
+			if (type == PictureType.Other && ((fname.Contains ("cover") || fname.Contains ("poster")))) {
 				type = PictureType.FrontCover;
 			}
 
@@ -164,13 +163,12 @@ namespace TagLib.Matroska
 		/// but not if the filename already matches the type.
 		/// </summary>
 		/// <returns>true if <see cref="P:Filename"/> changed</returns>
-		public bool SetFilenameFromType()
+		public bool SetFilenameFromType ()
 		{
 			PictureType type = Type;
 
-			if (! string.IsNullOrEmpty(Filename))
-			{
-				SetTypeFromFilename();
+			if (!string.IsNullOrEmpty (Filename)) {
+				SetTypeFromFilename ();
 
 				// Filename already matches the type, so do not change it
 				if (type == Type) return false;
@@ -181,12 +179,12 @@ namespace TagLib.Matroska
 
 			// Derive extension from file or MimeType
 			string ext = null;
-			if (Filename != null) ext = Path.GetExtension(Filename);
-			if (ext == null && MimeType != null && MimeType.StartsWith("image/") ) ext = "." + MimeType.Substring(6);
-			if (ext == null || ext.Length<2) ext = "";
+			if (Filename != null) ext = Path.GetExtension (Filename);
+			if (ext == null && MimeType != null && MimeType.StartsWith ("image/")) ext = "." + MimeType.Substring (6);
+			if (ext == null || ext.Length < 2) ext = "";
 
 			// Change the filename
-			Filename = type.ToString() + ext;
+			Filename = type + ext;
 			return true;
 		}
 
@@ -198,12 +196,12 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// Unique ID representing the element, as random as possible (setting zero will generate automatically a new one).
 		/// </summary>
-		public ulong UID
-		{
+		public ulong UID {
 			get { return _UID; }
-			set { _UID = UIDElement.GenUID(value); }
+			set { _UID = UIDElement.GenUID (value); }
 		}
-		private ulong _UID = UIDElement.GenUID();
+
+		ulong _UID = UIDElement.GenUID ();
 
 
 		/// <summary>

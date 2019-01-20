@@ -23,7 +23,6 @@
 //
 
 using System;
-using System.Globalization;
 
 namespace TagLib.Aiff
 {
@@ -43,7 +42,7 @@ namespace TagLib.Aiff
 		///    1 is monophonic, 2 is stereo, 4 means 4 channels, etc..
 		///    any number of audio channels may be represented
 		/// </remarks>
-		private ushort channels;
+		readonly ushort channels;
 
 		/// <summary>
 		///    Contains the number of sample frames in the Sound Data chunk.
@@ -51,7 +50,7 @@ namespace TagLib.Aiff
 		/// <remarks>
 		///    This value is stored in bytes (11-14).
 		/// </remarks>
-		private ulong total_frames;
+		readonly ulong total_frames;
 
 		/// <summary>
 		///    Contains the number of bits per sample.
@@ -60,7 +59,7 @@ namespace TagLib.Aiff
 		///    This value is stored in bytes (15,16).
 		///    It can be any number from 1 to 32.
 		/// </remarks>
-		private ushort bits_per_sample;
+		readonly ushort bits_per_sample;
 
 		/// <summary>
 		///    Contains the sample rate.
@@ -70,7 +69,7 @@ namespace TagLib.Aiff
 		///    the sample rate at which the sound is to be played back, 
 		///    in sample frames per second
 		/// </remarks>
-		private ulong sample_rate;
+		readonly ulong sample_rate;
 
 		/// <summary>
 		///    Contains the length of the audio stream.
@@ -78,7 +77,7 @@ namespace TagLib.Aiff
 		/// <remarks>
 		///    This value is provided by the constructor.
 		/// </remarks>
-		private long stream_length;
+		readonly long stream_length;
 
 		#endregion
 
@@ -97,8 +96,7 @@ namespace TagLib.Aiff
 		/// <value>
 		///    "COMM"
 		/// </value>
-		public static readonly ReadOnlyByteVector FileIdentifier =
-			"COMM";
+		public static readonly ReadOnlyByteVector FileIdentifier = "COMM";
 
 		#endregion
 
@@ -124,86 +122,69 @@ namespace TagLib.Aiff
 		///    <paramref name="data" /> does not begin with <see
 		///    cref="FileIdentifier" /> 
 		/// </exception>
-		public StreamHeader(ByteVector data, long streamLength)
+		public StreamHeader (ByteVector data, long streamLength)
 		{
 			if (data == null)
-				throw new ArgumentNullException(nameof(data));
+				throw new ArgumentNullException (nameof (data));
 
 
-			if (!data.StartsWith(FileIdentifier))
-				throw new CorruptFileException(
-					"Data does not begin with identifier.");
+			if (!data.StartsWith (FileIdentifier))
+				throw new CorruptFileException ("Data does not begin with identifier.");
 
 			stream_length = streamLength;
 
 			// The first 8 bytes contain the Common chunk identifier "COMM"
 			// And the size of the common chunk, which is always 18
-			channels = data.Mid(8, 2).ToUShort(true);
-			total_frames = data.Mid(10, 4).ToULong(true);
-			bits_per_sample = data.Mid(14, 2).ToUShort(true);
+			channels = data.Mid (8, 2).ToUShort (true);
+			total_frames = data.Mid (10, 4).ToULong (true);
+			bits_per_sample = data.Mid (14, 2).ToUShort (true);
 
-			ByteVector sample_rate_indicator = data.Mid(17, 1);
-			ulong sample_rate_tmp = data.Mid(18, 2).ToULong(true);
+			ByteVector sample_rate_indicator = data.Mid (17, 1);
+			ulong sample_rate_tmp = data.Mid (18, 2).ToULong (true);
 			sample_rate = 44100; // Set 44100 as default sample rate
 
 			// The following are combinations that iTunes 8 encodes to.
 			// There may be other combinations in the field, but i couldn't test them.
-			switch (sample_rate_tmp)
-			{
-				case 44100:
-					if (sample_rate_indicator == 0x0E)
-					{
-						sample_rate = 44100;
-					}
-					else if (sample_rate_indicator == 0x0D)
-					{
-						sample_rate = 22050;
-					}
-					else if (sample_rate_indicator == 0x0C)
-					{
-						sample_rate = 11025;
-					}
-					break;
+			switch (sample_rate_tmp) {
+			case 44100:
+				if (sample_rate_indicator == 0x0E) {
+					sample_rate = 44100;
+				} else if (sample_rate_indicator == 0x0D) {
+					sample_rate = 22050;
+				} else if (sample_rate_indicator == 0x0C) {
+					sample_rate = 11025;
+				}
+				break;
 
-				case 48000:
-					if (sample_rate_indicator == 0x0E)
-					{
-						sample_rate = 48000;
-					}
-					else if (sample_rate_indicator == 0x0D)
-					{
-						sample_rate = 24000;
-					}
-					break;
+			case 48000:
+				if (sample_rate_indicator == 0x0E) {
+					sample_rate = 48000;
+				} else if (sample_rate_indicator == 0x0D) {
+					sample_rate = 24000;
+				}
+				break;
 
-				case 64000:
-					if (sample_rate_indicator == 0x0D)
-					{
-						sample_rate = 32000;
-					}
-					else if (sample_rate_indicator == 0x0C)
-					{
-						sample_rate = 16000;
-					}
-					else if (sample_rate_indicator == 0x0B)
-					{
-						sample_rate = 8000;
-					}
-					break;
+			case 64000:
+				if (sample_rate_indicator == 0x0D) {
+					sample_rate = 32000;
+				} else if (sample_rate_indicator == 0x0C) {
+					sample_rate = 16000;
+				} else if (sample_rate_indicator == 0x0B) {
+					sample_rate = 8000;
+				}
+				break;
 
-				case 44510:
-					if (sample_rate_indicator == 0x0D)
-					{
-						sample_rate = 22255;
-					}
-					break;
+			case 44510:
+				if (sample_rate_indicator == 0x0D) {
+					sample_rate = 22255;
+				}
+				break;
 
-				case 44508:
-					if (sample_rate_indicator == 0x0C)
-					{
-						sample_rate = 11127;
-					}
-					break;
+			case 44508:
+				if (sample_rate_indicator == 0x0C) {
+					sample_rate = 11127;
+				}
+				break;
 			}
 		}
 
@@ -219,16 +200,14 @@ namespace TagLib.Aiff
 		///    A <see cref="TimeSpan" /> containing the duration of the
 		///    media represented by the current instance.
 		/// </value>
-		public TimeSpan Duration
-		{
-			get
-			{
+		public TimeSpan Duration {
+			get {
 				if (sample_rate <= 0 || total_frames <= 0)
 					return TimeSpan.Zero;
 
-				return TimeSpan.FromSeconds(
-					(double) total_frames/
-					(double) sample_rate);
+				return TimeSpan.FromSeconds (
+					total_frames /
+					(double)sample_rate);
 			}
 		}
 
@@ -239,8 +218,7 @@ namespace TagLib.Aiff
 		/// <value>
 		///    Always <see cref="MediaTypes.Audio" />.
 		/// </value>
-		public MediaTypes MediaTypes
-		{
+		public MediaTypes MediaTypes {
 			get { return MediaTypes.Audio; }
 		}
 
@@ -252,8 +230,7 @@ namespace TagLib.Aiff
 		///    A <see cref="string" /> object containing a description
 		///    of the media represented by the current instance.
 		/// </value>
-		public string Description
-		{
+		public string Description {
 			get { return "AIFF Audio"; }
 		}
 
@@ -265,16 +242,13 @@ namespace TagLib.Aiff
 		///    A <see cref="int" /> value containing a bitrate of the
 		///    audio represented by the current instance.
 		/// </value>
-		public int AudioBitrate
-		{
-			get
-			{
+		public int AudioBitrate {
+			get {
 				TimeSpan d = Duration;
 				if (d <= TimeSpan.Zero)
 					return 0;
 
-				return (int) ((stream_length*8L)/
-				              d.TotalSeconds)/1000;
+				return (int)((stream_length * 8L) / d.TotalSeconds) / 1000;
 			}
 		}
 
@@ -286,9 +260,8 @@ namespace TagLib.Aiff
 		///    A <see cref="int" /> value containing the sample rate of
 		///    the audio represented by the current instance.
 		/// </value>
-		public int AudioSampleRate
-		{
-			get { return (int) sample_rate; }
+		public int AudioSampleRate {
+			get { return (int)sample_rate; }
 		}
 
 		/// <summary>
@@ -300,8 +273,7 @@ namespace TagLib.Aiff
 		///    channels in the audio represented by the current
 		///    instance.
 		/// </value>
-		public int AudioChannels
-		{
+		public int AudioChannels {
 			get { return channels; }
 		}
 
@@ -314,8 +286,7 @@ namespace TagLib.Aiff
 		///    per sample in the audio represented by the current
 		///    instance.
 		/// </value>
-		public int BitsPerSample
-		{
+		public int BitsPerSample {
 			get { return bits_per_sample; }
 		}
 

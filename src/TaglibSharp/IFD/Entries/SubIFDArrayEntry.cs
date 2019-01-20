@@ -43,9 +43,9 @@ namespace TagLib.IFD.Entries
 		/// <value>
 		///    The structures of the IFDs to which this entry points.
 		/// </value>
-		public IFDStructure [] Entries { get; private set; }
+		public IFDStructure[] Entries { get; private set; }
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Constructor.
@@ -63,9 +63,9 @@ namespace TagLib.IFD.Entries
 			Entries = entries.ToArray ();
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Renders the current instance to a <see cref="ByteVector"/>
@@ -91,7 +91,7 @@ namespace TagLib.IFD.Entries
 			throw new NotImplementedException ("Not implemented yet!");
 		}
 
-#endregion
+		#endregion
 
 	}
 }

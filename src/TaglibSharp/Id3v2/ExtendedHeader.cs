@@ -25,7 +25,6 @@
 // USA
 //
 
-using System.Collections;
 using System;
 
 namespace TagLib.Id3v2
@@ -39,8 +38,8 @@ namespace TagLib.Id3v2
 		/// <summary>
 		///    Contains the size of the read header.
 		/// </summary>
-		private uint size;
-		
+		uint size;
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="ExtendedHeader"/> with no contents.
@@ -48,7 +47,7 @@ namespace TagLib.Id3v2
 		public ExtendedHeader ()
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="ExtendedHeader" /> by reading the raw contents from
@@ -65,7 +64,7 @@ namespace TagLib.Id3v2
 		{
 			Parse (data, version);
 		}
-		
+
 		/// <summary>
 		///    Gets the size of the data on disk in bytes.
 		/// </summary>
@@ -74,9 +73,9 @@ namespace TagLib.Id3v2
 		///    data on disk.
 		/// </value>
 		public uint Size {
-			get {return size;}
+			get { return size; }
 		}
-		
+
 		/// <summary>
 		///    Populates the current instance with the contents of the
 		///    raw ID3v2 frame.
@@ -91,13 +90,13 @@ namespace TagLib.Id3v2
 		protected void Parse (ByteVector data, byte version)
 		{
 			if (data == null)
-				throw new ArgumentNullException (nameof(data));
-			
+				throw new ArgumentNullException (nameof (data));
+
 			size = (version == 3 ? 4u : 0u) + SynchData.ToUInt (data.Mid (0, 4));
 		}
-		
-#region ICloneable
-		
+
+		#region ICloneable
+
 		/// <summary>
 		///    Creates a deep copy of the current instance.
 		/// </summary>
@@ -107,16 +106,17 @@ namespace TagLib.Id3v2
 		/// </returns>
 		public ExtendedHeader Clone ()
 		{
-			ExtendedHeader header = new ExtendedHeader ();
-			header.size = size;
+			var header = new ExtendedHeader {
+				size = size
+			};
 			return header;
 		}
-		
+
 		object ICloneable.Clone ()
 		{
 			return Clone ();
 		}
-		
-#endregion
+
+		#endregion
 	}
 }

@@ -8,13 +8,13 @@ namespace TagLib.Id3v2
 
 		public EventType TypeOfEvent { get; set; }
 
-        public int Time { get; set; }
+		public int Time { get; set; }
 
-        #endregion
+		#endregion
 
-        #region Public Constructors
+		#region Public Constructors
 
-        public EventTimeCode (EventType typeOfEvent, int time)
+		public EventTimeCode (EventType typeOfEvent, int time)
 		{
 			TypeOfEvent = typeOfEvent;
 			Time = time;

@@ -35,7 +35,7 @@ namespace TagLib.IFD.Entries
 	public class ThumbnailDataIFDEntry : IFDEntry
 	{
 
-#region Properties
+		#region Properties
 
 		/// <value>
 		///    The ID of the tag, the current instance belongs to
@@ -47,9 +47,9 @@ namespace TagLib.IFD.Entries
 		/// </value>
 		public ByteVector Data { get; private set; }
 
-#endregion
+		#endregion
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Construcor.
@@ -67,9 +67,9 @@ namespace TagLib.IFD.Entries
 			Data = data;
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Renders the current instance to a <see cref="ByteVector"/>
@@ -94,13 +94,12 @@ namespace TagLib.IFD.Entries
 		{
 			// the entry is a single long entry where the value is an offset to the data
 			// the offset is automatically updated by the renderer.
-			type = (ushort) IFDEntryType.Long;
+			type = (ushort)IFDEntryType.Long;
 			count = 1;
 
 			return Data;
 		}
 
-#endregion
-
+		#endregion
 	}
 }

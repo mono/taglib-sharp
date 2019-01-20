@@ -21,10 +21,10 @@
 // USA
 //
 
-using System.Collections;
 using System;
 
-namespace TagLib.Id3v2 {	
+namespace TagLib.Id3v2
+{
 	/// <summary>
 	///    This class extends <see cref="Frame" />, implementing support for
 	///    ID3v2 Private (PRIV) Frames.
@@ -155,24 +155,8 @@ namespace TagLib.Id3v2 {
 	/// </example>
 	public class PrivateFrame : Frame
 	{
-		#region Private Properties
-		
-		/// <summary>
-		///    Contains the owner of the current instance.
-		/// </summary>
-		private string owner = null;
-		
-		/// <summary>
-		///    Contains private data stored in the current instance.
-		/// </summary>
-		private ByteVector data  = null;
-		
-		#endregion
-		
-		
-		
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="PrivateFrame" /> for a specified owner and data.
@@ -193,10 +177,10 @@ namespace TagLib.Id3v2 {
 		public PrivateFrame (string owner, ByteVector data)
 			: base (FrameType.PRIV, 4)
 		{
-			this.owner = owner;
-			this.data  = data;
+			Owner = owner;
+			PrivateData = data;
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="PrivateFrame" /> without data for a specified
@@ -214,7 +198,7 @@ namespace TagLib.Id3v2 {
 		public PrivateFrame (string owner) : this (owner, null)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="PrivateFrame" /> by reading its raw data in a
@@ -233,7 +217,7 @@ namespace TagLib.Id3v2 {
 		{
 			SetData (data, 0, version, true);
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="PrivateFrame" /> by reading its raw data in a
@@ -255,19 +239,17 @@ namespace TagLib.Id3v2 {
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		protected internal PrivateFrame (ByteVector data, int offset,
-		                                 FrameHeader header,
-		                                 byte version) : base(header)
+		protected internal PrivateFrame (ByteVector data, int offset, FrameHeader header, byte version) : base (header)
 		{
 			SetData (data, offset, version, false);
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the owner of the current instance.
 		/// </summary>
@@ -279,10 +261,8 @@ namespace TagLib.Id3v2 {
 		///    There should only be one frame with a given owner per
 		///    tag.
 		/// </remarks>
-		public string Owner {
-			get {return owner;}
-		}
-		
+		public string Owner { get; private set; }
+
 		/// <summary>
 		///    Gets and sets the private data stored in the current
 		///    instance.
@@ -291,17 +271,14 @@ namespace TagLib.Id3v2 {
 		///    A <see cref="ByteVector" /> containing the private data
 		///    stored in the current instance.
 		/// </value>
-		public ByteVector PrivateData {
-			get {return data;}
-			set {data = value;}
-		}
-		
+		public ByteVector PrivateData { get; set; }
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Static Methods
-		
+
 		/// <summary>
 		///    Gets a specified private frame from the specified tag,
 		///    optionally creating it if it does not exist.
@@ -322,31 +299,30 @@ namespace TagLib.Id3v2 {
 		///    wasn't found and <paramref name="create" /> is <see
 		///    langword="false" />.
 		/// </returns>
-		public static PrivateFrame Get (Tag tag, string owner,
-		                                bool create)
+		public static PrivateFrame Get (Tag tag, string owner, bool create)
 		{
 			PrivateFrame priv;
-			
+
 			foreach (Frame frame in tag.GetFrames (FrameType.PRIV)) {
 				priv = frame as PrivateFrame;
 				if (priv != null && priv.Owner == owner)
 					return priv;
 			}
-			
+
 			if (!create)
 				return null;
-			
+
 			priv = new PrivateFrame (owner);
 			tag.AddFrame (priv);
 			return priv;
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Protected Methods
-		
+
 		/// <summary>
 		///    Populates the values in the current instance by parsing
 		///    its field data in a specified version.
@@ -362,20 +338,16 @@ namespace TagLib.Id3v2 {
 		protected override void ParseFields (ByteVector data, byte version)
 		{
 			if (data.Count < 1)
-				throw new CorruptFileException (
-					"A private frame must contain at least 1 byte.");
-			
-			ByteVectorCollection l = ByteVectorCollection.Split (
-				data,
-				ByteVector.TextDelimiter (StringType.Latin1),
-				1, 2);
-			
+				throw new CorruptFileException ("A private frame must contain at least 1 byte.");
+
+			var l = ByteVectorCollection.Split (data, ByteVector.TextDelimiter (StringType.Latin1), 1, 2);
+
 			if (l.Count == 2) {
-				this.owner = l [0].ToString (StringType.Latin1);
-				this.data  = l [1];
+				Owner = l[0].ToString (StringType.Latin1);
+				PrivateData = l[1];
 			}
 		}
-		
+
 		/// <summary>
 		///    Renders the values in the current instance into field
 		///    data for a specified version.
@@ -396,22 +368,22 @@ namespace TagLib.Id3v2 {
 		{
 			if (version < 3)
 				throw new NotImplementedException ();
-			
-			ByteVector v = new ByteVector ();
-			
-			v.Add (ByteVector.FromString (owner, StringType.Latin1));
-			v.Add (ByteVector.TextDelimiter (StringType.Latin1));
-			v.Add (data);
-			
+
+			var v = new ByteVector {
+				ByteVector.FromString (Owner, StringType.Latin1),
+				ByteVector.TextDelimiter (StringType.Latin1),
+				PrivateData
+			};
+
 			return v;
 		}
-		
-#endregion
-		
-		
-		
-#region ICloneable
-		
+
+		#endregion
+
+
+
+		#region ICloneable
+
 		/// <summary>
 		///    Creates a deep copy of the current instance.
 		/// </summary>
@@ -421,12 +393,12 @@ namespace TagLib.Id3v2 {
 		/// </returns>
 		public override Frame Clone ()
 		{
-			PrivateFrame frame = new PrivateFrame (owner);
-			if (data != null)
-				frame.data = new ByteVector (data);
+			var frame = new PrivateFrame (Owner);
+			if (PrivateData != null)
+				frame.PrivateData = new ByteVector (PrivateData);
 			return frame;
 		}
-		
-#endregion
+
+		#endregion
 	}
 }

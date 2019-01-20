@@ -1,6 +1,7 @@
 namespace TaglibSharp.Tests.Images.Validators
 {
-	public interface IMetadataModificationValidator {
+	public interface IMetadataModificationValidator
+	{
 		/// <summary>
 		///    Validate metadata assumptions that should hold
 		///    before modification.

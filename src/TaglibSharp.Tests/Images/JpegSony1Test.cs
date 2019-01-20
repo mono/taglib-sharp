@@ -20,8 +20,8 @@
 //  License along with this library; if not, write to the Free Software
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-using System;
 using NUnit.Framework;
+using System;
 using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
@@ -116,13 +116,13 @@ namespace TaglibSharp.Tests.Images
 
 			Assert.IsNotNull (tag, "tag");
 
-			var exif_ifd = tag.Structure.GetEntry(0, IFDEntryTag.ExifIFD) as SubIFDEntry;
+			var exif_ifd = tag.Structure.GetEntry (0, IFDEntryTag.ExifIFD) as SubIFDEntry;
 			Assert.IsNotNull (exif_ifd, "Exif IFD");
 
 			Assert.AreEqual ("SONY ", tag.Make);
 			Assert.AreEqual ("DSLR-A200", tag.Model);
 			Assert.AreEqual (400, tag.ISOSpeedRatings, "ISOSpeedRatings");
-			Assert.AreEqual (1.0d/60.0d, tag.ExposureTime);
+			Assert.AreEqual (1.0d / 60.0d, tag.ExposureTime);
 			Assert.AreEqual (5.6d, tag.FNumber);
 			Assert.AreEqual (35.0d, tag.FocalLength);
 			Assert.AreEqual (52, tag.FocalLengthIn35mmFilm);
@@ -138,7 +138,7 @@ namespace TaglibSharp.Tests.Images
 			Assert.IsNotNull (tag, "tag");
 
 			var makernote_ifd =
-				tag.ExifIFD.GetEntry (0, (ushort) ExifEntryTag.MakerNote) as MakernoteIFDEntry;
+				tag.ExifIFD.GetEntry (0, (ushort)ExifEntryTag.MakerNote) as MakernoteIFDEntry;
 
 			Assert.IsNotNull (makernote_ifd, "makernote ifd");
 			Assert.AreEqual (MakernoteType.Sony, makernote_ifd.MakernoteType);

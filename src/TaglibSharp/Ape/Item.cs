@@ -28,29 +28,31 @@
 
 using System;
 
-namespace TagLib.Ape {
+namespace TagLib.Ape
+{
 	/// <summary>
 	///    Indicates the type of data stored in a <see cref="Item" />
 	///    object.
 	/// </summary>
-	public enum ItemType {
+	public enum ItemType
+	{
 		/// <summary>
 		///    The item contains Unicode text.
 		/// </summary>
 		Text = 0,
-		
+
 		/// <summary>
 		///    The item contains binary data.
 		/// </summary>
 		Binary = 1,
-		
+
 		/// <summary>
 		///    The item contains a locator (file path/URL) for external
 		///    information.
 		/// </summary>
 		Locator = 2
 	}
-	
+
 	/// <summary>
 	///    This class provides a representation of an APEv2 tag item which
 	///    can be read from and written to disk.
@@ -58,43 +60,23 @@ namespace TagLib.Ape {
 	public class Item : ICloneable
 	{
 		#region Private Fields
-		
-		/// <summary>
-		///    Contains the type of data stored in the item.
-		/// </summary>
-		private ItemType type = ItemType.Text;
-		
-		/// <summary>
-		///    Contains the item key.
-		/// </summary>
-		private string key = null;
-		
+
 		/// <summary>
 		///    Contains the item value.
 		/// </summary>
-		private ReadOnlyByteVector data = null;
-		
+		ReadOnlyByteVector data;
+
 		/// <summary>
 		///    Contains the item text.
 		/// </summary>
-		private string [] text = null;
-		
-		/// <summary>
-		///    Indicates whether or not the item is read only.
-		/// </summary>
-		private bool read_only = false;
-		
-		/// <summary>
-		///    Contains the size of the item on disk.
-		/// </summary>
-		private int size_on_disk;
-		
+		string[] text;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Item" />  by reading in a raw APEv2 item.
@@ -119,11 +101,11 @@ namespace TagLib.Ape {
 		public Item (ByteVector data, int offset)
 		{
 			if (data == null)
-				throw new ArgumentNullException (nameof(data));
-			
+				throw new ArgumentNullException (nameof (data));
+
 			Parse (data, offset);
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Item" /> with a specified key and value.
@@ -143,15 +125,15 @@ namespace TagLib.Ape {
 		public Item (string key, string value)
 		{
 			if (key == null)
-				throw new ArgumentNullException (nameof(key));
-			
+				throw new ArgumentNullException (nameof (key));
+
 			if (value == null)
-				throw new ArgumentNullException (nameof(value));
-			
-			this.key = key;
-			this.text = new string [] {value};
+				throw new ArgumentNullException (nameof (value));
+
+			Key = key;
+			text = new [] { value };
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Item" /> with a specified key and collection of
@@ -169,18 +151,18 @@ namespace TagLib.Ape {
 		///    <paramref name="key" /> or <paramref name="value" /> is
 		///    <see langword="null" />.
 		/// </exception>
-		public Item (string key, params string [] value)
+		public Item (string key, params string[] value)
 		{
 			if (key == null)
-				throw new ArgumentNullException (nameof(key));
-			
+				throw new ArgumentNullException (nameof (key));
+
 			if (value == null)
-				throw new ArgumentNullException (nameof(value));
-			
-			this.key = key;
-			this.text = (string[]) value.Clone ();
+				throw new ArgumentNullException (nameof (value));
+
+			Key = key;
+			text = (string[])value.Clone ();
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Item" /> with a specified key and collection of
@@ -199,19 +181,19 @@ namespace TagLib.Ape {
 		///    <see langword="null" />.
 		/// </exception>
 		/// <seealso cref="Item(string,string[])" />
-		[Obsolete("Use Item(string,string[])")]
+		[Obsolete ("Use Item(string,string[])")]
 		public Item (string key, StringCollection value)
 		{
 			if (key == null)
-				throw new ArgumentNullException (nameof(key));
-			
+				throw new ArgumentNullException (nameof (key));
+
 			if (value == null)
-				throw new ArgumentNullException (nameof(value));
-			
-			this.key = key;
-			this.text = value.ToArray ();
+				throw new ArgumentNullException (nameof (value));
+
+			Key = key;
+			text = value.ToArray ();
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Item" /> with a specified key and raw data.
@@ -235,32 +217,35 @@ namespace TagLib.Ape {
 		/// <seealso cref="Item(string,string[])" />
 		public Item (string key, ByteVector value)
 		{
-			this.key = key;
-			this.type = ItemType.Binary;
-			
+			Key = key;
+			Type = ItemType.Binary;
+
 			data = value as ReadOnlyByteVector;
 			if (data == null)
 				data = new ReadOnlyByteVector (value);
 		}
-		
-		private Item (Item item)
+
+		Item (Item item)
 		{
-			type = item.type;
-			key = item.key;
+			Type = item.Type;
+			Key = item.Key;
+
 			if (item.data != null)
 				data = new ReadOnlyByteVector (item.data);
+
 			if (item.text != null)
-				text = (string[]) item.text.Clone ();
-			read_only = item.read_only;
-			size_on_disk = item.size_on_disk;
+				text = (string[])item.text.Clone ();
+
+			ReadOnly = item.ReadOnly;
+			Size = item.Size;
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the key used to identify the current instance.
 		/// </summary>
@@ -274,10 +259,8 @@ namespace TagLib.Ape {
 		///    <c>"TITLE"</c> specifies that the item contains the title
 		///    of the track.
 		/// </remarks>
-		public string Key {
-			get {return key;}
-		}
-		
+		public string Key { get; private set; }
+
 		/// <summary>
 		///    Gets the binary value stored in the current instance.
 		/// </summary>
@@ -287,9 +270,9 @@ namespace TagLib.Ape {
 		///    langword="null" /> if the item contains text.
 		/// </value>
 		public ByteVector Value {
-			get {return (type == ItemType.Binary) ? data : null;}
+			get { return (Type == ItemType.Binary) ? data : null; }
 		}
-		
+
 		/// <summary>
 		///    Gets the size of the current instance as it last appeared
 		///    on disk.
@@ -298,10 +281,8 @@ namespace TagLib.Ape {
 		///    A <see cref="int" /> value containing the size of the
 		///    current instance as it last appeared on disk.
 		/// </value>
-		public int Size {
-			get {return size_on_disk;}
-		}
-		
+		public int Size { get; private set; }
+
 		/// <summary>
 		///    Gets and sets the type of value contained in the
 		///    current instance.
@@ -310,11 +291,8 @@ namespace TagLib.Ape {
 		///    A <see cref="ItemType" /> value indicating the type of
 		///    value contained in the current instance.
 		/// </value>
-		public ItemType Type {
-			get {return type;}
-			set {type = value;}
-		}
-		
+		public ItemType Type { get; set; } = ItemType.Text;
+
 		/// <summary>
 		///    Gets and sets whether or not the current instance is
 		///    flagged as read-only on disk.
@@ -323,11 +301,8 @@ namespace TagLib.Ape {
 		///    A <see cref="bool" /> value indicating whether or not the
 		///    current instance is flagged as read-only on disk.
 		/// </value>
-		public bool ReadOnly {
-			get {return read_only;}
-			set {read_only = value;}
-		}
-		
+		public bool ReadOnly { get; set; }
+
 		/// <summary>
 		///    Gets whether or not the current instance is empty.
 		/// </summary>
@@ -337,19 +312,19 @@ namespace TagLib.Ape {
 		/// </value>
 		public bool IsEmpty {
 			get {
-				if (type != ItemType.Binary)
+				if (Type != ItemType.Binary)
 					return text == null || text.Length == 0;
 				else
 					return data == null || data.IsEmpty;
 			}
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Methods
-		
+
 		/// <summary>
 		///    Gets the contents of the current instance as a <see
 		///    cref="string" />.
@@ -364,12 +339,12 @@ namespace TagLib.Ape {
 		/// </returns>
 		public override string ToString ()
 		{
-			if (type == ItemType.Binary || text == null)
+			if (Type == ItemType.Binary || text == null)
 				return null;
-			else
-				return string.Join (", ", text);
+
+			return string.Join (", ", text);
 		}
-		
+
 		/// <summary>
 		///    Gets the contents of the current instance as a <see
 		///    cref="string" /> array.
@@ -379,14 +354,14 @@ namespace TagLib.Ape {
 		///    the current instance, or an empty array if the item
 		///    contains binary data.
 		/// </returns>
-		public string [] ToStringArray ()
+		public string[] ToStringArray ()
 		{
-			if (type == ItemType.Binary || text == null)
-				return new string [0];
-			
+			if (Type == ItemType.Binary || text == null)
+				return new string[0];
+
 			return text;
 		}
-		
+
 		/// <summary>
 		///    Renders the current instance as an APEv2 item.
 		/// </summary>
@@ -396,52 +371,52 @@ namespace TagLib.Ape {
 		/// </returns>
 		public ByteVector Render ()
 		{
-			uint flags = (uint) ((ReadOnly) ? 1 : 0) |
-				((uint) Type << 1);
-			
+			uint flags = (uint)((ReadOnly) ? 1 : 0) |
+				((uint)Type << 1);
+
 			if (IsEmpty)
 				return new ByteVector ();
-			
+
 			ByteVector result = null;
-			
-			if (type == ItemType.Binary) {
+
+			if (Type == ItemType.Binary) {
 				if (text == null && data != null)
 					result = data;
 			}
-			
+
 			if (result == null && text != null) {
 				result = new ByteVector ();
-				
-				for (int i = 0; i < text.Length; i ++) {
+
+				for (int i = 0; i < text.Length; i++) {
 					if (i != 0)
-						result.Add ((byte) 0);
-					
-					result.Add (ByteVector.FromString (
-						text [i], StringType.UTF8));
+						result.Add (0);
+
+					result.Add (ByteVector.FromString (text[i], StringType.UTF8));
 				}
 			}
-			
+
 			// If no data is stored, don't write the item.
 			if (result == null || result.Count == 0)
 				return new ByteVector ();
-			
-			ByteVector output = new ByteVector ();
-			output.Add (ByteVector.FromUInt ((uint) result.Count,
-				false));
-			output.Add (ByteVector.FromUInt (flags, false));
-			output.Add (ByteVector.FromString (key, StringType.UTF8));
-			output.Add ((byte) 0);
-			output.Add (result);
-			
-			size_on_disk = output.Count;
-			
+
+			var output = new ByteVector {
+				ByteVector.FromUInt ((uint)result.Count,
+				false),
+				ByteVector.FromUInt (flags, false),
+				ByteVector.FromString (Key, StringType.UTF8),
+				0,
+				result
+			};
+
+			Size = output.Count;
+
 			return output;
 		}
-		
+
 		#endregion
-		
+
 		#region Protected Methods
-		
+
 		/// <summary>
 		///    Populates the current instance by reading in a raw APEv2
 		///    item.
@@ -466,50 +441,43 @@ namespace TagLib.Ape {
 		protected void Parse (ByteVector data, int offset)
 		{
 			if (data == null)
-				throw new ArgumentNullException (nameof(data));
-			
+				throw new ArgumentNullException (nameof (data));
+
 			if (offset < 0)
-				throw new ArgumentOutOfRangeException (nameof(offset));
-			
-			
+				throw new ArgumentOutOfRangeException (nameof (offset));
+
+
 			// 11 bytes is the minimum size for an APE item
-			if(data.Count < offset + 11)
-				throw new CorruptFileException (
-					"Not enough data for APE Item");
-			
+			if (data.Count < offset + 11)
+				throw new CorruptFileException ("Not enough data for APE Item");
+
 			uint value_length = data.Mid (offset, 4).ToUInt (false);
 			uint flags = data.Mid (offset + 4, 4).ToUInt (false);
-			
+
 			ReadOnly = (flags & 1) == 1;
-			Type = (ItemType) ((flags >> 1) & 3);
-			
-			int pos = data.Find (ByteVector.TextDelimiter (
-				StringType.UTF8), offset + 8);
-			
-			key = data.ToString (StringType.UTF8,
-				offset + 8, pos - offset - 8);
-			
+			Type = (ItemType)((flags >> 1) & 3);
+
+			int pos = data.Find (ByteVector.TextDelimiter (StringType.UTF8), offset + 8);
+
+			Key = data.ToString (StringType.UTF8, offset + 8, pos - offset - 8);
+
 			if (value_length > data.Count - pos - 1)
-				throw new CorruptFileException (
-					"Invalid data length.");
-			
-			size_on_disk = pos + 1 + (int) value_length - offset;
-			
+				throw new CorruptFileException ("Invalid data length.");
+
+			Size = pos + 1 + (int)value_length - offset;
+
 			if (Type == ItemType.Binary)
-				this.data = new ReadOnlyByteVector (
-					data.Mid (pos + 1, (int) value_length));
+				this.data = new ReadOnlyByteVector (data.Mid (pos + 1, (int)value_length));
 			else
-				this.text = data.Mid (pos + 1,
-					(int) value_length).ToStrings (
-						StringType.UTF8, 0);
+				text = data.Mid (pos + 1, (int)value_length).ToStrings (StringType.UTF8, 0);
 		}
-		
-#endregion
-		
-		
-		
-#region ICloneable
-		
+
+		#endregion
+
+
+
+		#region ICloneable
+
 		/// <summary>
 		///    Creates a deep copy of the current instance.
 		/// </summary>
@@ -521,12 +489,12 @@ namespace TagLib.Ape {
 		{
 			return new Item (this);
 		}
-		
+
 		object ICloneable.Clone ()
 		{
 			return Clone ();
 		}
-		
-#endregion
+
+		#endregion
 	}
 }

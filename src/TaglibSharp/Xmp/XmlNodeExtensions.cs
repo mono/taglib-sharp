@@ -21,13 +21,11 @@
 // USA
 //
 
-using System;
-using System.Collections.Generic;
 using System.Xml;
 
 namespace TagLib.Xmp
 {
-	internal static class XmlNodeExtensions
+	static class XmlNodeExtensions
 	{
 		public static bool In (this XmlNode node, string ns)
 		{

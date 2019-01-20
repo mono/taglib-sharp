@@ -23,9 +23,9 @@
 //
 
 using System;
-using System.Text;
 
-namespace TagLib.Asf {
+namespace TagLib.Asf
+{
 	/// <summary>
 	///    This class extends <see cref="Object" /> to provide a
 	///    representation of an ASF Stream Properties object which can be
@@ -34,48 +34,23 @@ namespace TagLib.Asf {
 	public class StreamPropertiesObject : Object
 	{
 		#region Private Fields
-		
-		/// <summary>
-		///    Contains the stream type GUID.
-		/// </summary>
-		private System.Guid stream_type;
-		
-		/// <summary>
-		///    Contains the error correction type GUID.
-		/// </summary>
-		private System.Guid error_correction_type;
-		
+
 		/// <summary>
 		///    Contains the time offset of the stream.
 		/// </summary>
-		private ulong time_offset;
-		
-		/// <summary>
-		///    Contains the stream flags.
-		/// </summary>
-		private ushort flags;
-		
+		readonly ulong time_offset;
+
 		/// <summary>
 		///    Contains the reserved data.
 		/// </summary>
-		private uint reserved;
-		
-		/// <summary>
-		///    Contains the type specific data.
-		/// </summary>
-		private ByteVector type_specific_data;
-		
-		/// <summary>
-		///    Contains the error correction data.
-		/// </summary>
-		private ByteVector error_correction_data;
-		
+		readonly uint reserved;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="PaddingObject" /> by reading the contents from a
@@ -100,39 +75,34 @@ namespace TagLib.Asf {
 		///    The object read from disk does not have the correct GUID
 		///    or smaller than the minimum size.
 		/// </exception>
-		public StreamPropertiesObject (Asf.File file, long position)
+		public StreamPropertiesObject (File file, long position)
 			: base (file, position)
 		{
 			if (!Guid.Equals (Asf.Guid.AsfStreamPropertiesObject))
-				throw new CorruptFileException (
-					"Object GUID incorrect.");
-			
+				throw new CorruptFileException ("Object GUID incorrect.");
+
 			if (OriginalSize < 78)
-				throw new CorruptFileException (
-					"Object size too small.");
-			
-			stream_type = file.ReadGuid ();
-			error_correction_type = file.ReadGuid ();
+				throw new CorruptFileException ("Object size too small.");
+
+			StreamType = file.ReadGuid ();
+			ErrorCorrectionType = file.ReadGuid ();
 			time_offset = file.ReadQWord ();
-			
-			int type_specific_data_length = (int) file.ReadDWord ();
-			int error_correction_data_length = (int)
-				file.ReadDWord ();
-			
-			flags = file.ReadWord ();
+
+			int type_specific_data_length = (int)file.ReadDWord ();
+			int error_correction_data_length = (int)file.ReadDWord ();
+
+			Flags = file.ReadWord ();
 			reserved = file.ReadDWord ();
-			type_specific_data =
-				file.ReadBlock (type_specific_data_length);
-			error_correction_data =
-				file.ReadBlock (error_correction_data_length);
+			TypeSpecificData = file.ReadBlock (type_specific_data_length);
+			ErrorCorrectionData = file.ReadBlock (error_correction_data_length);
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the codec information contained in the current
 		///    instance.
@@ -144,18 +114,16 @@ namespace TagLib.Asf {
 		/// </value>
 		public ICodec Codec {
 			get {
-				if (stream_type == Asf.Guid.AsfAudioMedia)
-					return new Riff.WaveFormatEx (
-						type_specific_data, 0);
-				
-				if (stream_type == Asf.Guid.AsfVideoMedia)
-					return new TagLib.Riff.BitmapInfoHeader (
-						type_specific_data, 11);
-				
+				if (StreamType == Asf.Guid.AsfAudioMedia)
+					return new Riff.WaveFormatEx (TypeSpecificData, 0);
+
+				if (StreamType == Asf.Guid.AsfVideoMedia)
+					return new Riff.BitmapInfoHeader (TypeSpecificData, 11);
+
 				return null;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the stream type GUID of the current instance.
 		/// </summary>
@@ -163,10 +131,8 @@ namespace TagLib.Asf {
 		///    A <see cref="System.Guid" /> object containing the stream
 		///    type GUID of the current instance.
 		/// </summary>
-		public System.Guid StreamType {
-			get {return stream_type;}
-		}
-		
+		public System.Guid StreamType { get; }
+
 		/// <summary>
 		///    Gets the error correction type GUID of the current
 		///    instance.
@@ -175,10 +141,8 @@ namespace TagLib.Asf {
 		///    A <see cref="System.Guid" /> object containing the error
 		///    correction type GUID of the current instance.
 		/// </summary>
-		public System.Guid ErrorCorrectionType {
-			get {return error_correction_type;}
-		}
-		
+		public System.Guid ErrorCorrectionType { get; }
+
 		/// <summary>
 		///    Gets the time offset at which the stream described by the
 		///    current instance begins.
@@ -189,9 +153,9 @@ namespace TagLib.Asf {
 		///    instance begins.
 		/// </value>
 		public TimeSpan TimeOffset {
-			get {return new TimeSpan ((long)time_offset);}
+			get { return new TimeSpan ((long)time_offset); }
 		}
-		
+
 		/// <summary>
 		///    Gets the flags that apply to the current instance.
 		/// </summary>
@@ -199,10 +163,8 @@ namespace TagLib.Asf {
 		///    A <see cref="ushort" /> value containing the flags that
 		///    apply to the current instance.
 		/// </value>
-		public ushort Flags {
-			get {return flags;}
-		}
-		
+		public ushort Flags { get; private set; }
+
 		/// <summary>
 		///    Gets the type specific data contained in the current
 		///    instance.
@@ -215,10 +177,8 @@ namespace TagLib.Asf {
 		///    The contents of this value are dependant on the type
 		///    contained in <see cref="StreamType" />.
 		/// </remarks>
-		public ByteVector TypeSpecificData {
-			get {return type_specific_data;}
-		}
-		
+		public ByteVector TypeSpecificData { get; private set; }
+
 		/// <summary>
 		///    Gets the error correction data contained in the current
 		///    instance.
@@ -231,16 +191,14 @@ namespace TagLib.Asf {
 		///    The contents of this value are dependant on the type
 		///    contained in <see cref="ErrorCorrectionType" />.
 		/// </remarks>
-		public ByteVector ErrorCorrectionData {
-			get {return error_correction_data;}
-		}
-		
+		public ByteVector ErrorCorrectionData { get; private set; }
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Methods
-		
+
 		/// <summary>
 		///    Renders the current instance as a raw ASF object.
 		/// </summary>
@@ -250,21 +208,19 @@ namespace TagLib.Asf {
 		/// </returns>
 		public override ByteVector Render ()
 		{
-			ByteVector output = stream_type.ToByteArray ();
-			output.Add (error_correction_type.ToByteArray ());
+			ByteVector output = StreamType.ToByteArray ();
+			output.Add (ErrorCorrectionType.ToByteArray ());
 			output.Add (RenderQWord (time_offset));
-			output.Add (RenderDWord ((uint)
-				type_specific_data.Count));
-			output.Add (RenderDWord ((uint)
-				error_correction_data.Count));
-			output.Add (RenderWord  (flags));
+			output.Add (RenderDWord ((uint)TypeSpecificData.Count));
+			output.Add (RenderDWord ((uint)ErrorCorrectionData.Count));
+			output.Add (RenderWord (Flags));
 			output.Add (RenderDWord (reserved));
-			output.Add (type_specific_data);
-			output.Add (error_correction_data);
-			
+			output.Add (TypeSpecificData);
+			output.Add (ErrorCorrectionData);
+
 			return Render (output);
 		}
-		
+
 		#endregion
 	}
 }

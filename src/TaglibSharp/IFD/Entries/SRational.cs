@@ -33,21 +33,16 @@ namespace TagLib.IFD.Entries
 	/// </summary>
 	public struct SRational : IFormattable
 	{
-#region Private Fields
-
-		/// <summary>
-		///    The numerator of the rational value
-		/// </summary>
-		private int numerator;
+		#region Private Fields
 
 		/// <summary>
 		///    The denominator of the rational value
 		/// </summary>
-		private int denominator;
+		int denominator;
 
-#endregion
+		#endregion
 
-#region Constructor
+		#region Constructor
 
 		/// <summary>
 		///    Creates a new Rational value
@@ -63,14 +58,15 @@ namespace TagLib.IFD.Entries
 		public SRational (int numerator, int denominator)
 		{
 			if (denominator == 0)
-				throw new ArgumentException ("denominator");
-			this.numerator = numerator;
+				throw new ArgumentException (nameof(denominator), "denominator can't be 0");
+
+			Numerator = numerator;
 			this.denominator = denominator;
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Returns a rational value with reduced nominator and denominator
@@ -105,11 +101,12 @@ namespace TagLib.IFD.Entries
 		/// <returns>
 		///    A <see cref="System.String"/> formated according to the given parameter
 		/// </returns>
-		public string ToString (string format, IFormatProvider provider) {
+		public string ToString (string format, IFormatProvider provider)
+		{
 
 			SRational reduced = Reduce ();
 
-			return String.Format ("{0}/{1}", reduced.Numerator, reduced.Denominator);
+			return $"{reduced.Numerator}/{reduced.Denominator}";
 		}
 
 		/// <summary>
@@ -120,20 +117,17 @@ namespace TagLib.IFD.Entries
 		/// </returns>
 		public override string ToString ()
 		{
-			return String.Format ("{0}", this);
+			return $"{this}";
 		}
 
-#endregion
+		#endregion
 
-#region Public Properties
+		#region Public Properties
 
 		/// <value>
 		///    The numerator of the rational value
 		/// </value>
-		public int Numerator {
-			get { return numerator; }
-			set { numerator = value; }
-		}
+		public int Numerator { get; set; }
 
 		/// <value>
 		///    The denominator of the rational value
@@ -151,9 +145,9 @@ namespace TagLib.IFD.Entries
 			}
 		}
 
-#endregion
+		#endregion
 
-#region Public Static Methods
+		#region Public Static Methods
 
 		/// <summary>
 		///    Cast the <see cref="Rational"/> value to a <see cref="System.Double"/>.
@@ -166,10 +160,9 @@ namespace TagLib.IFD.Entries
 		/// </returns>
 		public static implicit operator double (SRational rat)
 		{
-			return (double) rat.Numerator / (double) rat.Denominator;
+			return rat.Numerator / (double)rat.Denominator;
 		}
 
-#endregion
-
+		#endregion
 	}
 }

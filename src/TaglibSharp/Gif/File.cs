@@ -24,10 +24,8 @@
 using System;
 using System.IO;
 
-using TagLib;
 using TagLib.Image;
 using TagLib.Xmp;
-
 
 namespace TagLib.Gif
 {
@@ -36,12 +34,12 @@ namespace TagLib.Gif
 	///    This class extends <see cref="TagLib.Image.ImageBlockFile" /> to provide tagging
 	///    and property support for Gif files.
 	/// </summary>
-	[SupportedMimeType("taglib/gif", "gif")]
-	[SupportedMimeType("image/gif")]
-	public class File : TagLib.Image.ImageBlockFile
+	[SupportedMimeType ("taglib/gif", "gif")]
+	[SupportedMimeType ("image/gif")]
+	public class File : ImageBlockFile
 	{
 
-#region GIF specific constants
+		#region GIF specific constants
 
 		/// <summary>
 		///    Gif file signature which occurs at the begin of the file
@@ -61,12 +59,12 @@ namespace TagLib.Gif
 		/// <summary>
 		///    Application Extension Identifier for an XMP Block
 		/// </summary>
-		private static readonly string XMP_IDENTIFIER = "XMP Data";
+		static readonly string XMP_IDENTIFIER = "XMP Data";
 
 		/// <summary>
 		///    Application Authentication Extension Code for an XMP Block
 		/// </summary>
-		private static readonly string XMP_AUTH_CODE = "XMP";
+		static readonly string XMP_AUTH_CODE = "XMP";
 
 		/// <summary>
 		///    The Magic Trailer for XMP Data
@@ -83,7 +81,7 @@ namespace TagLib.Gif
 		///    to the last one. Therefoe, independent of the byte, the reader reads as sub-block length, it is
 		///    redirected to the last byte of the trailer and therfore to the end of the XMP data.
 		/// </remarks>
-		private static readonly byte [] XMP_MAGIC_TRAILER = new byte [] {
+		static readonly byte[] XMP_MAGIC_TRAILER = new byte[] {
 			0x01, 0xFF, 0xFE, 0xFD, 0xFC, 0xFB, 0xFA, 0xF9, 0xF8, 0xF7, 0xF6, 0xF5, 0xF4, 0xF3, 0xF2, 0xF1,
 			0xF0, 0xEF, 0xEE, 0xED, 0xEC, 0xEB, 0xEA, 0xE9, 0xE8, 0xE7, 0xE6, 0xE5, 0xE4, 0xE3, 0xE2, 0xE1,
 			0xE0, 0xDF, 0xDE, 0xDD, 0xDC, 0xDB, 0xDA, 0xD9, 0xD8, 0xD7, 0xD6, 0xD5, 0xD4, 0xD3, 0xD2, 0xD1,
@@ -103,38 +101,38 @@ namespace TagLib.Gif
 			0x00, 0x00
 		};
 
-#endregion
+		#endregion
 
-#region private fields
+		#region private fields
 
 		/// <summary>
 		///    The width of the image
 		/// </summary>
-		private int width;
+		int width;
 
 		/// <summary>
 		///    The height of the image
 		/// </summary>
-		private int height;
+		int height;
 
 		/// <summary>
 		///    The Properties of the image
 		/// </summary>
-		private Properties properties;
+		Properties properties;
 
 		/// <summary>
 		///    The version of the file format
 		/// </summary>
-		private string version;
+		string version;
 
 		/// <summary>
 		///    The start of the first block in file after the header.
 		/// </summary>
-		private long start_of_blocks = -1;
+		long start_of_blocks = -1;
 
-#endregion
+		#endregion
 
-#region public Properties
+		#region public Properties
 
 		/// <summary>
 		///    Gets the media properties of the file represented by the
@@ -145,13 +143,13 @@ namespace TagLib.Gif
 		///    media properties of the file represented by the current
 		///    instance.
 		/// </value>
-		public override TagLib.Properties Properties {
+		public override Properties Properties {
 			get { return properties; }
 		}
 
-#endregion
+		#endregion
 
-#region constructors
+		#region constructors
 
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
@@ -171,8 +169,7 @@ namespace TagLib.Gif
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		public File (string path, ReadStyle propertiesStyle)
-			: this (new File.LocalFileAbstraction (path),
-				propertiesStyle)
+			: this (new LocalFileAbstraction (path), propertiesStyle)
 		{
 		}
 
@@ -210,8 +207,8 @@ namespace TagLib.Gif
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle) : base (abstraction)
+		public File (IFileAbstraction abstraction, ReadStyle propertiesStyle)
+			: base (abstraction)
 		{
 			Read (propertiesStyle);
 		}
@@ -233,10 +230,10 @@ namespace TagLib.Gif
 		{
 		}
 
-#endregion
+		#endregion
 
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Saves the changes made in the current instance to the
@@ -245,7 +242,7 @@ namespace TagLib.Gif
 		public override void Save ()
 		{
 			// Boilerplate
-			PreSave();
+			PreSave ();
 
 			Mode = AccessMode.Write;
 			try {
@@ -257,10 +254,10 @@ namespace TagLib.Gif
 			}
 		}
 
-#endregion
+		#endregion
 
 
-#region Private Methods
+		#region Private Methods
 
 		/// <summary>
 		///    Reads the information from file with a specified read style.
@@ -270,7 +267,7 @@ namespace TagLib.Gif
 		///    of accuracy to read the media properties, or <see
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
-		private void Read (ReadStyle propertiesStyle)
+		void Read (ReadStyle propertiesStyle)
 		{
 			Mode = AccessMode.Read;
 			try {
@@ -296,7 +293,7 @@ namespace TagLib.Gif
 		/// <returns>
 		///   A <see cref="System.Byte"/> with the read data.
 		/// </returns>
-		private byte ReadByte ()
+		byte ReadByte ()
 		{
 			ByteVector data = ReadBlock (1);
 
@@ -312,7 +309,7 @@ namespace TagLib.Gif
 		///    if there is one, skips the global color table. It also extracts the
 		///    image width and height from it.
 		/// </summary>
-		private void ReadHeader ()
+		void ReadHeader ()
 		{
 			// The header consists of:
 			//
@@ -334,7 +331,8 @@ namespace TagLib.Gif
 				throw new CorruptFileException ("Unexpected end of Header");
 
 			if (data.Mid (0, 3).ToString () != SIGNATURE)
-				throw new CorruptFileException (String.Format ("Expected a GIF signature at start of file, but found: {0}", data.Mid (0, 3).ToString ()));
+				throw new CorruptFileException (
+					$"Expected a GIF signature at start of file, but found: {data.Mid (0, 3)}");
 
 			// We do not care about the version here, because we can read both versions in the same way.
 			// We just care when writing metadata, that, if necessary, the version is increased to 89a.
@@ -343,14 +341,14 @@ namespace TagLib.Gif
 				version = read_version;
 			else
 				throw new UnsupportedFormatException (
-					String.Format ("Only GIF versions 87a and 89a are currently supported, but not: {0}", read_version));
+					$"Only GIF versions 87a and 89a are currently supported, but not: {read_version}");
 
 			// Read Image Size (little endian)
 			width = data.Mid (6, 2).ToUShort (false);
 			height = data.Mid (8, 2).ToUShort (false);
 
 			// Skip optional global color table
-			SkipColorTable (data [10]);
+			SkipColorTable (data[10]);
 		}
 
 
@@ -359,7 +357,7 @@ namespace TagLib.Gif
 		///    start of the first block after the Header and Logical Screen
 		///    Descriptor (and, if there is one, the Global Color Table)
 		/// </summary>
-		private void ReadMetadata ()
+		void ReadMetadata ()
 		{
 			start_of_blocks = Tell;
 
@@ -381,7 +379,7 @@ namespace TagLib.Gif
 
 				default:
 					throw new CorruptFileException (
-						String.Format ("Do not know what to do with byte 0x{0:X2} at the beginning of a block ({1}).", identifier, Tell - 1));
+						$"Do not know what to do with byte 0x{identifier:X2} at the beginning of a block ({Tell - 1}).");
 				}
 			}
 		}
@@ -391,7 +389,7 @@ namespace TagLib.Gif
 		///    point to the 2nd byte of the comment block. (The other byte is usually
 		///    read before to identify the comment block)
 		/// </summary>
-		private void ReadExtensionBlock ()
+		void ReadExtensionBlock ()
 		{
 			// Extension Block
 			//
@@ -431,7 +429,7 @@ namespace TagLib.Gif
 		///    position must point to the 3rd byte of the comment block. (The other 2 bytes
 		///    are usually read before to identify the comment block)
 		/// </summary>
-		private void ReadApplicationExtensionBlock ()
+		void ReadApplicationExtensionBlock ()
 		{
 			// Application Extension Block
 			//
@@ -452,8 +450,7 @@ namespace TagLib.Gif
 				throw new CorruptFileException ("");
 
 			// Contains XMP data
-			if (data.Mid (1, 8) == XMP_IDENTIFIER &&
-			    data.Mid (9, 3) == XMP_AUTH_CODE) {
+			if (data.Mid (1, 8) == XMP_IDENTIFIER && data.Mid (9, 3) == XMP_AUTH_CODE) {
 				// XMP Data is not organized in sub-blocks
 
 				// start of xmp data
@@ -466,7 +463,7 @@ namespace TagLib.Gif
 
 				// Since searching just one byte is save, we search for the end of the xmp trailer which
 				// consists of two 0x00 bytes and compute the expected start.
-				long xmp_trailer_start = Find (new byte [] {0x00}, data_start) - XMP_MAGIC_TRAILER.Length + 2;
+				long xmp_trailer_start = Find (new byte[] { 0x00 }, data_start) - XMP_MAGIC_TRAILER.Length + 2;
 
 				Seek (data_start, SeekOrigin.Begin);
 
@@ -474,7 +471,7 @@ namespace TagLib.Gif
 					throw new CorruptFileException ("No End of XMP data found");
 
 				// length of xmp data
-				int data_length = (int) (xmp_trailer_start - data_start);
+				int data_length = (int)(xmp_trailer_start - data_start);
 
 				ByteVector xmp_data = ReadBlock (data_length);
 				ImageTag.AddTag (new XmpTag (xmp_data.ToString (StringType.UTF8), this));
@@ -496,7 +493,7 @@ namespace TagLib.Gif
 		///    point to the 3rd byte of the comment block. (The other 2 bytes are usually
 		///    read before to identify the comment block)
 		/// </summary>
-		private void ReadCommentBlock ()
+		void ReadCommentBlock ()
 		{
 			long position = Tell;
 
@@ -535,7 +532,7 @@ namespace TagLib.Gif
 		///    the bits which are used do identifying the exitstance and the size
 		///    of the color table are at the same position.
 		/// </remarks>
-		private void SkipColorTable (byte packed_data)
+		void SkipColorTable (byte packed_data)
 		{
 			// Packed Field (Information with Bit 0 is  LSB)
 			//
@@ -565,7 +562,7 @@ namespace TagLib.Gif
 		///    point to 2nd byte of the Image Descriptor. (First byte is usually read before
 		///    to identify the image descriptor.)
 		/// </summary>
-		private void SkipImage ()
+		void SkipImage ()
 		{
 			// Image Descriptor
 			//
@@ -584,7 +581,7 @@ namespace TagLib.Gif
 				throw new CorruptFileException ("Unexpected end of Image Descriptor");
 
 			// Skip an optional local color table
-			SkipColorTable (data [8]);
+			SkipColorTable (data[8]);
 
 
 			// Image Data
@@ -607,24 +604,24 @@ namespace TagLib.Gif
 		/// <returns>
 		///    A <see cref="System.String"/> with the data contained in the sub-blocks.
 		/// </returns>
-		private string ReadSubBlocks ()
+		string ReadSubBlocks ()
 		{
 			// Sub Block
 			// Starts with one byte with the number of data bytes
 			// following. The last sub block is terminated by length 0
-			System.Text.StringBuilder builder = new System.Text.StringBuilder ();
+			var builder = new System.Text.StringBuilder ();
 
 			byte length = 0;
 
 			do {
 
 				if (length >= 0)
-					builder.Append (ReadBlock (length).ToString ());
+					builder.Append (ReadBlock (length));
 
 				// read new length byte
 				length = ReadByte ();
 
-			// The sub-blocks are terminated with 0
+				// The sub-blocks are terminated with 0
 			} while (length != 0);
 
 			return builder.ToString ();
@@ -635,7 +632,7 @@ namespace TagLib.Gif
 		///    Skips over a sequence of sub-blocks from the current position in the file.
 		///    The current position must point to the size-byte of the first subblock to skip.
 		/// </summary>
-		private void SkipSubBlocks ()
+		void SkipSubBlocks ()
 		{
 			// Sub Block
 			// Starts with one byte with the number of data bytes
@@ -654,7 +651,7 @@ namespace TagLib.Gif
 				// read new length byte
 				length = ReadByte ();
 
-			// The sub-blocks are terminated with 0
+				// The sub-blocks are terminated with 0
 			} while (length != 0);
 		}
 
@@ -662,7 +659,7 @@ namespace TagLib.Gif
 		/// <summary>
 		///    Save the metadata to file.
 		/// </summary>
-		private void SaveMetadata ()
+		void SaveMetadata ()
 		{
 			ByteVector comment_block = RenderGifCommentBlock ();
 			ByteVector xmp_block = RenderXMPBlock ();
@@ -677,9 +674,10 @@ namespace TagLib.Gif
 			}
 
 			// now, only metadata is stored at the beginning of the file, and we can overwrite it.
-			ByteVector metadata_blocks = new ByteVector ();
-			metadata_blocks.Add (comment_block);
-			metadata_blocks.Add (xmp_block);
+			var metadata_blocks = new ByteVector {
+				comment_block,
+				xmp_block
+			};
 
 			SaveMetadata (metadata_blocks, start_of_blocks);
 		}
@@ -693,28 +691,29 @@ namespace TagLib.Gif
 		///    A <see cref="ByteVector"/> with the Application Extension Block for the
 		///    XMP data, or <see langword="null" /> if the file does not have XMP data.
 		/// </returns>
-		private ByteVector RenderXMPBlock ()
+		ByteVector RenderXMPBlock ()
 		{
 			// Check, if XmpTag is contained
 			XmpTag xmp = ImageTag.Xmp;
 			if (xmp == null)
 				return null;
 
-			ByteVector xmp_data = new ByteVector ();
+			var xmp_data = new ByteVector {
 
-			// Add Extension Introducer (0x21), Application Extension Label (0xFF) and
-			// the Block Size (0x0B
-			xmp_data.Add (new byte [] {0x21, 0xFF, 0x0B});
+				// Add Extension Introducer (0x21), Application Extension Label (0xFF) and
+				// the Block Size (0x0B
+				new byte[] { 0x21, 0xFF, 0x0B },
 
-			// Application Identifier and Appl. Auth. Code
-			xmp_data.Add (XMP_IDENTIFIER);
-			xmp_data.Add (XMP_AUTH_CODE);
+				// Application Identifier and Appl. Auth. Code
+				XMP_IDENTIFIER,
+				XMP_AUTH_CODE,
 
-			// Add XMP data and Magic Trailer
-			// For XMP, we do not need to store the data in sub-blocks, therfore we
-			// can just add the whole rendered data. (The trailer fixes this)
-			xmp_data.Add (xmp.Render ());
-			xmp_data.Add (XMP_MAGIC_TRAILER);
+				// Add XMP data and Magic Trailer
+				// For XMP, we do not need to store the data in sub-blocks, therfore we
+				// can just add the whole rendered data. (The trailer fixes this)
+				xmp.Render (),
+				XMP_MAGIC_TRAILER
+			};
 
 			return xmp_data;
 		}
@@ -729,11 +728,10 @@ namespace TagLib.Gif
 		///    Gif Comment, or <see langword="null" /> if the file does not have
 		///    a Gif Comment.
 		/// </returns>
-		private ByteVector RenderGifCommentBlock ()
+		ByteVector RenderGifCommentBlock ()
 		{
 			// Check, if GifCommentTag is contained
-			GifCommentTag comment_tag = GetTag (TagTypes.GifComment) as GifCommentTag;
-			if (comment_tag == null)
+			if (!(GetTag (TagTypes.GifComment) is GifCommentTag comment_tag))
 				return null;
 
 			string comment = comment_tag.Comment;
@@ -743,18 +741,18 @@ namespace TagLib.Gif
 			ByteVector comment_data = new ByteVector ();
 
 			// Add Extension Introducer (0x21) and Comment Label (0xFE)
-			comment_data.Add (new byte [] {0x21, 0xFE});
+			comment_data.Add (new byte[] { 0x21, 0xFE });
 
 			// Add data of comment in sub-blocks of max length 256.
 			ByteVector comment_bytes = new ByteVector (comment);
 			byte block_max = 255;
 			for (int start = 0; start < comment_bytes.Count; start += block_max) {
-				byte block_length = (byte) Math.Min (comment_bytes.Count - start, block_max);
+				byte block_length = (byte)Math.Min (comment_bytes.Count - start, block_max);
 
 				comment_data.Add (block_length);
 				comment_data.Add (comment_bytes.Mid (start, block_length));
 			}
-			comment_data.Add (new byte [] {0x00});
+			comment_data.Add (new byte[] { 0x00 });
 
 			return comment_data;
 		}
@@ -769,7 +767,7 @@ namespace TagLib.Gif
 		///    at the right values. When no guess at all can be made,
 		///    <see langword="null" /> is returned.
 		/// </returns>
-		private Properties ExtractProperties ()
+		Properties ExtractProperties ()
 		{
 			if (width > 0 && height > 0)
 				return new Properties (TimeSpan.Zero, new Codec (width, height));
@@ -778,7 +776,7 @@ namespace TagLib.Gif
 
 		}
 
-#endregion
+		#endregion
 
 	}
 }

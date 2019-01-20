@@ -26,29 +26,28 @@
 using System;
 using System.Collections.Generic;
 
-namespace TagLib.Asf {
+namespace TagLib.Asf
+{
 	/// <summary>
 	///    This class extends <see cref="Object" /> to provide a
 	///    representation of an ASF Extended Content Description object
 	///    which can be read from and written to disk.
 	/// </summary>
-	public class ExtendedContentDescriptionObject : Object,
-		IEnumerable<ContentDescriptor>
+	public class ExtendedContentDescriptionObject : Object, IEnumerable<ContentDescriptor>
 	{
 		#region Private Fields
-		
+
 		/// <summary>
 		///    Contains the content descriptors.
 		/// </summary>
-		private List<ContentDescriptor> descriptors =
-			new List<ContentDescriptor> ();
-		
+		readonly List<ContentDescriptor> descriptors = new List<ContentDescriptor> ();
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="ExtendedContentDescriptionObject" /> by reading the
@@ -73,25 +72,21 @@ namespace TagLib.Asf {
 		///    The object read from disk does not have the correct GUID
 		///    or smaller than the minimum size.
 		/// </exception>
-		public ExtendedContentDescriptionObject (Asf.File file,
-		                                         long position)
+		public ExtendedContentDescriptionObject (File file, long position)
 			: base (file, position)
 		{
-			if (!Guid.Equals (
-				Asf.Guid.AsfExtendedContentDescriptionObject))
-				throw new CorruptFileException (
-					"Object GUID incorrect.");
-			
+			if (!Guid.Equals (Asf.Guid.AsfExtendedContentDescriptionObject))
+				throw new CorruptFileException ("Object GUID incorrect.");
+
 			if (OriginalSize < 26)
-				throw new CorruptFileException (
-					"Object size too small.");
-			
+				throw new CorruptFileException ("Object size too small.");
+
 			ushort count = file.ReadWord ();
-			
-			for (ushort i = 0; i < count; i ++)
+
+			for (ushort i = 0; i < count; i++)
 				AddDescriptor (new ContentDescriptor (file));
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="ExtendedContentDescriptionObject" /> with no
@@ -101,13 +96,13 @@ namespace TagLib.Asf {
 			: base (Asf.Guid.AsfExtendedContentDescriptionObject)
 		{
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets whether or not the current instance is empty.
 		/// </summary>
@@ -117,15 +112,15 @@ namespace TagLib.Asf {
 		///    Otherwise <see langword="false" />.
 		/// </value>
 		public bool IsEmpty {
-			get {return descriptors.Count == 0;}
+			get { return descriptors.Count == 0; }
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Methods
-		
+
 		/// <summary>
 		///    Renders the current instance as a raw ASF object.
 		/// </summary>
@@ -137,15 +132,15 @@ namespace TagLib.Asf {
 		{
 			ByteVector output = new ByteVector ();
 			ushort count = 0;
-			
+
 			foreach (ContentDescriptor desc in descriptors) {
-				count ++;
+				count++;
 				output.Add (desc.Render ());
 			}
-			
+
 			return Render (RenderWord (count) + output);
 		}
-		
+
 		/// <summary>
 		///    Removes all descriptors with a given name from the
 		///    current instance.
@@ -156,8 +151,8 @@ namespace TagLib.Asf {
 		/// </param>
 		public void RemoveDescriptors (string name)
 		{
-			for (int i = descriptors.Count - 1; i >= 0; i --)
-				if (name == descriptors [i].Name)
+			for (int i = descriptors.Count - 1; i >= 0; i--)
+				if (name == descriptors[i].Name)
 					descriptors.RemoveAt (i);
 		}
 
@@ -177,17 +172,17 @@ namespace TagLib.Asf {
 		///    through the <see cref="ContentDescriptor" /> objects
 		///    retrieved from the current instance.
 		/// </returns>
-		public IEnumerable<ContentDescriptor> GetDescriptors (params string [] names)
+		public IEnumerable<ContentDescriptor> GetDescriptors (params string[] names)
 		{
 			if (names == null)
-				throw new ArgumentNullException (nameof(names));
-			
+				throw new ArgumentNullException (nameof (names));
+
 			foreach (string name in names)
 				foreach (ContentDescriptor desc in descriptors)
 					if (desc.Name == name)
 						yield return desc;
 		}
-		
+
 		/// <summary>
 		///    Adds a descriptor to the current instance.
 		/// </summary>
@@ -202,11 +197,11 @@ namespace TagLib.Asf {
 		public void AddDescriptor (ContentDescriptor descriptor)
 		{
 			if (descriptor == null)
-				throw new ArgumentNullException (nameof(descriptor));
-			
+				throw new ArgumentNullException (nameof (descriptor));
+
 			descriptors.Add (descriptor);
 		}
-		
+
 		/// <summary>
 		///    Sets the a collection of desciptors for a given name,
 		///    removing the existing matching records.
@@ -230,28 +225,27 @@ namespace TagLib.Asf {
 		///    method, which are used for removing existing values and
 		///    determining where to position the new objects.
 		/// </remarks>
-		public void SetDescriptors (string name,
-		                            params ContentDescriptor [] descriptors)
+		public void SetDescriptors (string name, params ContentDescriptor[] descriptors)
 		{
 			if (name == null)
-				throw new ArgumentNullException (nameof(name));
-			
+				throw new ArgumentNullException (nameof (name));
+
 			int position = this.descriptors.Count;
-			for (int i = this.descriptors.Count - 1; i >= 0; i --) {
-				if (name == this.descriptors [i].Name) {
+			for (int i = this.descriptors.Count - 1; i >= 0; i--) {
+				if (name == this.descriptors[i].Name) {
 					this.descriptors.RemoveAt (i);
 					position = i;
 				}
 			}
 			this.descriptors.InsertRange (position, descriptors);
 		}
-		
+
 		#endregion
-		
-		
-		
-#region IEnumerable
-		
+
+
+
+		#region IEnumerable
+
 		/// <summary>
 		///    Gets an enumerator for enumerating through the content
 		///    descriptors.
@@ -264,13 +258,13 @@ namespace TagLib.Asf {
 		{
 			return descriptors.GetEnumerator ();
 		}
-		
+
 		System.Collections.IEnumerator
 			System.Collections.IEnumerable.GetEnumerator ()
 		{
 			return descriptors.GetEnumerator ();
 		}
-		
-#endregion
+
+		#endregion
 	}
 }

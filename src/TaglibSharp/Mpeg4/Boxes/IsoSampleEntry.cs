@@ -24,26 +24,16 @@
 
 using System;
 
-namespace TagLib.Mpeg4 {
+namespace TagLib.Mpeg4
+{
 	/// <summary>
 	///    This class extends <see cref="Box" /> to provide an
 	///    implementation of a ISO/IEC 14496-12 SampleEntry.
 	/// </summary>
 	public class IsoSampleEntry : Box
 	{
-		#region Private Fields
-		
-		/// <summary>
-		///    Contains the data reference index.
-		/// </summary>
-		private ushort data_reference_index;
-		
-		#endregion
-		
-		
-		
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="IsoSampleEntry" /> with a provided header and
@@ -64,23 +54,22 @@ namespace TagLib.Mpeg4 {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
-		public IsoSampleEntry (BoxHeader header, TagLib.File file,
-		                       IsoHandlerBox handler)
+		public IsoSampleEntry (BoxHeader header, TagLib.File file, IsoHandlerBox handler)
 			: base (header, handler)
 		{
 			if (file == null)
-				throw new ArgumentNullException (nameof(file));
-			
+				throw new ArgumentNullException (nameof (file));
+
 			file.Seek (base.DataPosition + 6);
-			data_reference_index = file.ReadBlock (2).ToUShort ();
+			DataReferenceIndex = file.ReadBlock (2).ToUShort ();
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the position of the data contained in the current
 		///    instance, after any box specific headers.
@@ -90,20 +79,18 @@ namespace TagLib.Mpeg4 {
 		///    the data contained in the current instance.
 		/// </value>
 		protected override long DataPosition {
-			get {return base.DataPosition + 8;}
+			get { return base.DataPosition + 8; }
 		}
-		
-		/// <summary>
-		///    Gets the data reference index of the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="ushort" /> value containing the data
-		///    reference index of the current instance.
-		/// </value>
-		public ushort DataReferenceIndex {
-			get {return data_reference_index;}
-		}
-		
-		#endregion
-	}
+
+        /// <summary>
+        ///    Gets the data reference index of the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="ushort" /> value containing the data
+        ///    reference index of the current instance.
+        /// </value>
+        public ushort DataReferenceIndex { get; private set; }
+
+        #endregion
+    }
 }

@@ -24,7 +24,8 @@
 
 using System;
 
-namespace TagLib.Asf {
+namespace TagLib.Asf
+{
 	/// <summary>
 	///    This class extends <see cref="Object" /> to provide a
 	///    representation of an ASF Padding object which can be read from
@@ -32,19 +33,9 @@ namespace TagLib.Asf {
 	/// </summary>
 	public class PaddingObject : Object
 	{
-		#region Private Fields
-		
-		/// <summary>
-		///    Contains the size of the current instance.
-		/// </summary>
-		private ulong size;
-		
-		#endregion
-		
-		
-		
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="PaddingObject" /> by reading the contents from a
@@ -69,20 +60,18 @@ namespace TagLib.Asf {
 		///    The object read from disk does not have the correct GUID
 		///    or smaller than the minimum size.
 		/// </exception>
-		public PaddingObject (Asf.File file, long position)
+		public PaddingObject (File file, long position)
 			: base (file, position)
 		{
 			if (!Guid.Equals (Asf.Guid.AsfPaddingObject))
-				throw new CorruptFileException (
-					"Object GUID incorrect.");
-			
+				throw new CorruptFileException ("Object GUID incorrect.");
+
 			if (OriginalSize < 24)
-				throw new CorruptFileException (
-					"Object size too small.");
-			
-			size = OriginalSize;
+				throw new CorruptFileException ("Object size too small.");
+
+			Size = OriginalSize;
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="PaddingObject" /> of a specified size.
@@ -94,15 +83,15 @@ namespace TagLib.Asf {
 		public PaddingObject (uint size)
 			: base (Asf.Guid.AsfPaddingObject)
 		{
-			this.size = size;
+			Size = size;
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Prublic Properties
-		
+
 		/// <summary>
 		///    Gets and sets the number of bytes the current instance
 		///    will take up on disk.
@@ -111,17 +100,14 @@ namespace TagLib.Asf {
 		///    A <see cref="ulong" /> value containing the size of the
 		///    current instance on disk.
 		/// </value>
-		public ulong Size {
-			get {return size;}
-			set {size = value;}
-		}
-		
+		public ulong Size { get; set; }
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Methods
-		
+
 		/// <summary>
 		///    Renders the current instance as a raw ASF object.
 		/// </summary>
@@ -131,9 +117,9 @@ namespace TagLib.Asf {
 		/// </returns>
 		public override ByteVector Render ()
 		{
-			return Render (new ByteVector ((int) (size - 24)));
+			return Render (new ByteVector ((int)(Size - 24)));
 		}
-		
+
 		#endregion
 	}
 }

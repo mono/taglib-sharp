@@ -39,15 +39,14 @@ namespace TagLib.Ogg
 		///    Contains a mapping between stream serial numbers and
 		///    comments.
 		/// </summary>
-		private Dictionary<uint, XiphComment> comment_hash;
+		readonly Dictionary<uint, XiphComment> comment_hash;
 
 		/// <summary>
 		///    Contains comments in the order they are added.
 		/// </summary>
-		private List<XiphComment> tags;
+		readonly List<XiphComment> tags;
 
 		#endregion
-
 
 
 		#region Constructors
@@ -56,10 +55,10 @@ namespace TagLib.Ogg
 		///    Constructs and initializes a new instance of <see
 		///    cref="GroupedComment" /> with now contents.
 		/// </summary>
-		public GroupedComment() : base()
+		public GroupedComment ()
 		{
-			comment_hash = new Dictionary<uint, XiphComment>();
-			tags = new List<XiphComment>();
+			comment_hash = new Dictionary<uint, XiphComment> ();
+			tags = new List<XiphComment> ();
 		}
 
 		/// <summary>
@@ -87,7 +86,7 @@ namespace TagLib.Ogg
 		///    A <see cref="XiphComment"/> with the matching serial
 		///    number.
 		/// </returns>
-		public XiphComment GetComment(uint streamSerialNumber)
+		public XiphComment GetComment (uint streamSerialNumber)
 		{
 			return comment_hash[streamSerialNumber];
 		}
@@ -103,11 +102,10 @@ namespace TagLib.Ogg
 		///    A <see cref="XiphComment" /> object to add to the current
 		///    instance.
 		/// </param>
-		public void AddComment(uint streamSerialNumber,
-								XiphComment comment)
+		public void AddComment (uint streamSerialNumber, XiphComment comment)
 		{
-			comment_hash.Add(streamSerialNumber, comment);
-			tags.Add(comment);
+			comment_hash.Add (streamSerialNumber, comment);
+			tags.Add (comment);
 		}
 
 		/// <summary>
@@ -121,10 +119,9 @@ namespace TagLib.Ogg
 		///    A <see cref="ByteVector"/> object containing the raw Xiph
 		///    comment to add to the current instance.
 		/// </param>
-		public void AddComment(uint streamSerialNumber,
-								ByteVector data)
+		public void AddComment (uint streamSerialNumber, ByteVector data)
 		{
-			AddComment(streamSerialNumber, new XiphComment(data));
+			AddComment (streamSerialNumber, new XiphComment (data));
 		}
 
 		#endregion
@@ -177,12 +174,9 @@ namespace TagLib.Ogg
 		public override string Title {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.Title;
 
-					string value = tag.Title;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -216,7 +210,7 @@ namespace TagLib.Ogg
 
 					string value = tag.TitleSort;
 
-					if (!string.IsNullOrEmpty(value))
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -245,12 +239,9 @@ namespace TagLib.Ogg
 		public override string Subtitle {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.Subtitle;
 
-					string value = tag.Subtitle;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -283,12 +274,9 @@ namespace TagLib.Ogg
 		public override string Description {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.Description;
 
-					string value = tag.Description;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -318,10 +306,7 @@ namespace TagLib.Ogg
 		public override string[] Performers {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
-
-					string[] value = tag.Performers;
+					string[] value = tag?.Performers;
 
 					if (value != null && value.Length > 0)
 						return value;
@@ -353,10 +338,7 @@ namespace TagLib.Ogg
 		public override string[] PerformersSort {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
-
-					string[] value = tag.PerformersSort;
+					string[] value = tag?.PerformersSort;
 
 					if (value != null && value.Length > 0)
 						return value;
@@ -386,10 +368,7 @@ namespace TagLib.Ogg
 		public override string[] PerformersRole {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
-
-					string[] value = tag.PerformersRole;
+					string[] value = tag?.PerformersRole;
 
 					if (value != null && value.Length > 0)
 						return value;
@@ -422,10 +401,7 @@ namespace TagLib.Ogg
 		public override string[] AlbumArtists {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
-
-					string[] value = tag.AlbumArtists;
+					string[] value = tag?.AlbumArtists;
 
 					if (value != null && value.Length > 0)
 						return value;
@@ -460,10 +436,7 @@ namespace TagLib.Ogg
 		public override string[] AlbumArtistsSort {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
-
-					string[] value = tag.AlbumArtistsSort;
+					string[] value = tag?.AlbumArtistsSort;
 
 					if (value != null && value.Length > 0)
 						return value;
@@ -495,10 +468,7 @@ namespace TagLib.Ogg
 		public override string[] Composers {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
-
-					string[] value = tag.Composers;
+					string[] value = tag?.Composers;
 
 					if (value != null && value.Length > 0)
 						return value;
@@ -529,10 +499,7 @@ namespace TagLib.Ogg
 		public override string[] ComposersSort {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
-
-					string[] value = tag.ComposersSort;
+					string[] value = tag?.ComposersSort;
 
 					if (value != null && value.Length > 0)
 						return value;
@@ -563,12 +530,9 @@ namespace TagLib.Ogg
 		public override string Album {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.Album;
 
-					string value = tag.Album;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -597,12 +561,9 @@ namespace TagLib.Ogg
 		public override string AlbumSort {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.AlbumSort;
 
-					string value = tag.AlbumSort;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -631,12 +592,9 @@ namespace TagLib.Ogg
 		public override string Comment {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.Comment;
 
-					string value = tag.Comment;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -665,10 +623,7 @@ namespace TagLib.Ogg
 		public override string[] Genres {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
-
-					string[] value = tag.Genres;
+					string[] value = tag?.Genres;
 
 					if (value != null && value.Length > 0)
 						return value;
@@ -839,12 +794,9 @@ namespace TagLib.Ogg
 		public override string Lyrics {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.Lyrics;
 
-					string value = tag.Lyrics;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -878,7 +830,7 @@ namespace TagLib.Ogg
 
 					string value = tag.Grouping;
 
-					if (!string.IsNullOrEmpty(value))
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -936,12 +888,9 @@ namespace TagLib.Ogg
 		public override string Conductor {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.Conductor;
 
-					string value = tag.Conductor;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -970,12 +919,9 @@ namespace TagLib.Ogg
 		public override string Copyright {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.Copyright;
 
-					string value = tag.Copyright;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -1003,10 +949,7 @@ namespace TagLib.Ogg
 		public override DateTime? DateTagged {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
-
-					DateTime? value = tag.DateTagged;
+					DateTime? value = tag?.DateTagged;
 
 					if (value != null)
 						return value;
@@ -1036,12 +979,9 @@ namespace TagLib.Ogg
 		public override string MusicBrainzArtistId {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.MusicBrainzArtistId;
 
-					string value = tag.MusicBrainzArtistId;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -1069,12 +1009,9 @@ namespace TagLib.Ogg
 		public override string MusicBrainzReleaseGroupId {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.MusicBrainzReleaseGroupId;
 
-					string value = tag.MusicBrainzReleaseGroupId;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -1102,12 +1039,9 @@ namespace TagLib.Ogg
 		public override string MusicBrainzReleaseId {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.MusicBrainzReleaseId;
 
-					string value = tag.MusicBrainzReleaseId;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -1135,12 +1069,9 @@ namespace TagLib.Ogg
 		public override string MusicBrainzReleaseArtistId {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.MusicBrainzReleaseArtistId;
 
-					string value = tag.MusicBrainzReleaseArtistId;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -1168,12 +1099,9 @@ namespace TagLib.Ogg
 		public override string MusicBrainzTrackId {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.MusicBrainzTrackId;
 
-					string value = tag.MusicBrainzTrackId;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -1201,12 +1129,9 @@ namespace TagLib.Ogg
 		public override string MusicBrainzDiscId {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.MusicBrainzDiscId;
 
-					string value = tag.MusicBrainzDiscId;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -1234,12 +1159,9 @@ namespace TagLib.Ogg
 		public override string MusicIpId {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.MusicIpId;
 
-					string value = tag.MusicIpId;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -1267,12 +1189,9 @@ namespace TagLib.Ogg
 		public override string AmazonId {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.AmazonId;
 
-					string value = tag.AmazonId;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -1300,12 +1219,9 @@ namespace TagLib.Ogg
 		public override string MusicBrainzReleaseStatus {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.MusicBrainzReleaseStatus;
 
-					string value = tag.MusicBrainzReleaseStatus;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -1333,12 +1249,9 @@ namespace TagLib.Ogg
 		public override string MusicBrainzReleaseType {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.MusicBrainzReleaseType;
 
-					string value = tag.MusicBrainzReleaseType;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -1366,12 +1279,9 @@ namespace TagLib.Ogg
 		public override string MusicBrainzReleaseCountry {
 			get {
 				foreach (XiphComment tag in tags) {
-					if (tag == null)
-						continue;
+					string value = tag?.MusicBrainzReleaseCountry;
 
-					string value = tag.MusicBrainzReleaseCountry;
-
-					if (value != null && value.Length > 0)
+					if (!string.IsNullOrEmpty (value))
 						return value;
 				}
 
@@ -1405,7 +1315,7 @@ namespace TagLib.Ogg
 
 					double value = tag.ReplayGainTrackGain;
 
-					if (!double.IsNaN(value))
+					if (!double.IsNaN (value))
 						return value;
 				}
 
@@ -1439,7 +1349,7 @@ namespace TagLib.Ogg
 
 					double value = tag.ReplayGainTrackPeak;
 
-					if (!double.IsNaN(value))
+					if (!double.IsNaN (value))
 						return value;
 				}
 
@@ -1473,7 +1383,7 @@ namespace TagLib.Ogg
 
 					double value = tag.ReplayGainAlbumGain;
 
-					if (!double.IsNaN(value))
+					if (!double.IsNaN (value))
 						return value;
 				}
 
@@ -1507,7 +1417,7 @@ namespace TagLib.Ogg
 
 					double value = tag.ReplayGainAlbumPeak;
 
-					if (!double.IsNaN(value))
+					if (!double.IsNaN (value))
 						return value;
 				}
 
@@ -1566,10 +1476,10 @@ namespace TagLib.Ogg
 		/// <summary>
 		///    Clears all of the child tags.
 		/// </summary>
-		public override void Clear()
+		public override void Clear ()
 		{
 			foreach (XiphComment tag in tags)
-				tag.Clear();
+				tag.Clear ();
 		}
 
 		#endregion

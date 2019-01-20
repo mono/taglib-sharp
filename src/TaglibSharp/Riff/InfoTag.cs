@@ -22,6 +22,7 @@
 //
 
 using System;
+
 namespace TagLib.Riff
 {
 	/// <summary>
@@ -30,16 +31,16 @@ namespace TagLib.Riff
 	/// </summary>
 	public class InfoTag : ListTag
 	{
-#region Constructors
-		
+		#region Constructors
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="InfoTag" /> with no contents.
 		/// </summary>
-		public InfoTag () : base ()
+		public InfoTag ()
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="InfoTag" /> by reading the contents of a raw
@@ -52,7 +53,7 @@ namespace TagLib.Riff
 		public InfoTag (ByteVector data) : base (data)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="InfoTag" /> by reading the contents of a raw RIFF
@@ -83,13 +84,13 @@ namespace TagLib.Riff
 			: base (file, position, length)
 		{
 		}
-		
-#endregion
-		
-		
-		
-#region Public Methods
-		
+
+		#endregion
+
+
+
+		#region Public Methods
+
 		/// <summary>
 		///    Renders the current instance enclosed in a "INFO" item.
 		/// </summary>
@@ -99,15 +100,15 @@ namespace TagLib.Riff
 		/// </returns>
 		public override ByteVector RenderEnclosed ()
 		{
-		return RenderEnclosed ("INFO");
+			return RenderEnclosed ("INFO");
 		}
-		
-#endregion
-		
-		
-		
-#region TagLib.Tag
-		
+
+		#endregion
+
+
+
+		#region TagLib.Tag
+
 		/// <summary>
 		///    Gets the tag types contained in the current instance.
 		/// </summary>
@@ -115,9 +116,9 @@ namespace TagLib.Riff
 		///    Always <see cref="TagTypes.RiffInfo" />.
 		/// </value>
 		public override TagTypes TagTypes {
-			get {return TagTypes.RiffInfo;}
+			get { return TagTypes.RiffInfo; }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the title for the media described by the
 		///    current instance.
@@ -135,10 +136,10 @@ namespace TagLib.Riff
 				foreach (string s in GetValuesAsStrings ("INAM"))
 					if (!string.IsNullOrEmpty (s))
 						return s;
-				
+
 				return null;
 			}
-			set {SetValue ("INAM", value);}
+			set { SetValue ("INAM", value); }
 		}
 
 		/// <summary>
@@ -157,17 +158,15 @@ namespace TagLib.Riff
 		/// <remarks>
 		///    This property is implemented using the "ISBJ" item.
 		/// </remarks>
-		public override string Description
-		{
-			get
-			{
-				foreach (string s in GetValuesAsStrings("ISBJ"))
-					if (!string.IsNullOrEmpty(s))
+		public override string Description {
+			get {
+				foreach (string s in GetValuesAsStrings ("ISBJ"))
+					if (!string.IsNullOrEmpty (s))
 						return s;
 
 				return null;
 			}
-			set { SetValue("ISBJ", value); }
+			set { SetValue ("ISBJ", value); }
 		}
 
 
@@ -184,9 +183,9 @@ namespace TagLib.Riff
 		/// <remarks>
 		///    This property is implemented using the "ISTR" item.
 		/// </remarks>
-		public override string [] Performers {
-			get {return GetValuesAsStrings ("ISTR");}
-			set {SetValue ("ISTR", value);}
+		public override string[] Performers {
+			get { return GetValuesAsStrings ("ISTR"); }
+			set { SetValue ("ISTR", value); }
 		}
 
 		/// <summary>
@@ -203,9 +202,9 @@ namespace TagLib.Riff
 		/// <remarks>
 		///    This property is implemented using the "IART" item.
 		/// </remarks>
-		public override string [] AlbumArtists {
-			get {return GetValuesAsStrings ("IART");}
-			set {SetValue ("IART", value);}
+		public override string[] AlbumArtists {
+			get { return GetValuesAsStrings ("IART"); }
+			set { SetValue ("IART", value); }
 		}
 
 		/// <summary>
@@ -220,9 +219,9 @@ namespace TagLib.Riff
 		/// <remarks>
 		///    This property is implemented using the "IWRI" item.
 		/// </remarks>
-		public override string [] Composers {
-			get {return GetValuesAsStrings ("IWRI");}
-			set {SetValue ("IWRI", value);}
+		public override string[] Composers {
+			get { return GetValuesAsStrings ("IWRI"); }
+			set { SetValue ("IWRI", value); }
 		}
 
 
@@ -239,17 +238,15 @@ namespace TagLib.Riff
 		///    This property is implemented using the non-standard
 		///    "DIRC" (Directory) item.
 		/// </remarks>
-		public override string Album
-		{
-			get
-			{
-				foreach (string s in GetValuesAsStrings("DIRC"))
-					if (!string.IsNullOrEmpty(s))
+		public override string Album {
+			get {
+				foreach (string s in GetValuesAsStrings ("DIRC"))
+					if (!string.IsNullOrEmpty (s))
 						return s;
 
 				return null;
 			}
-			set { SetValue("DIRC", value); }
+			set { SetValue ("DIRC", value); }
 		}
 
 		/// <summary>
@@ -265,17 +262,15 @@ namespace TagLib.Riff
 		///    This property is implemented using the "ICNM" 
 		///    (Cinematographer) non-standard item.
 		/// </remarks>
-		public override string Conductor
-		{
-			get
-			{
-				foreach (string s in GetValuesAsStrings("ICNM"))
-					if (!string.IsNullOrEmpty(s))
+		public override string Conductor {
+			get {
+				foreach (string s in GetValuesAsStrings ("ICNM"))
+					if (!string.IsNullOrEmpty (s))
 						return s;
 
 				return null;
 			}
-			set { SetValue("ICNM", value); }
+			set { SetValue ("ICNM", value); }
 		}
 
 
@@ -296,10 +291,10 @@ namespace TagLib.Riff
 				foreach (string s in GetValuesAsStrings ("ICMT"))
 					if (!string.IsNullOrEmpty (s))
 						return s;
-				
+
 				return null;
 			}
-			set {SetValue ("ICMT", value);}
+			set { SetValue ("ICMT", value); }
 		}
 
 		/// <summary>
@@ -314,9 +309,9 @@ namespace TagLib.Riff
 		/// <remarks>
 		///    This property is implemented using the "IGNR" item.
 		/// </remarks>
-		public override string [] Genres {
-			get {return GetValuesAsStrings ("IGNR");}
-			set {SetValue ("IGNR", value);}
+		public override string[] Genres {
+			get { return GetValuesAsStrings ("IGNR"); }
+			set { SetValue ("IGNR", value); }
 		}
 
 		/// <summary>
@@ -332,8 +327,8 @@ namespace TagLib.Riff
 		///    This property is implemented using the "ICRD" item.
 		/// </remarks>
 		public override uint Year {
-			get {return GetValueAsUInt ("ICRD");}
-			set {SetValue ("ICRD", value);}
+			get { return GetValueAsUInt ("ICRD"); }
+			set { SetValue ("ICRD", value); }
 		}
 
 		/// <summary>
@@ -349,8 +344,8 @@ namespace TagLib.Riff
 		///    This property is implemented using the "IPRT" item.
 		/// </remarks>
 		public override uint Track {
-			get {return GetValueAsUInt ("IPRT");}
-			set {SetValue ("IPRT", value);}
+			get { return GetValueAsUInt ("IPRT"); }
+			set { SetValue ("IPRT", value); }
 		}
 
 		/// <summary>
@@ -366,8 +361,8 @@ namespace TagLib.Riff
 		///    This property is implemented using the "IFRM" item.
 		/// </remarks>
 		public override uint TrackCount {
-			get {return GetValueAsUInt ("IFRM");}
-			set {SetValue ("IFRM", value);}
+			get { return GetValueAsUInt ("IFRM"); }
+			set { SetValue ("IFRM", value); }
 		}
 
 		/// <summary>
@@ -387,11 +382,11 @@ namespace TagLib.Riff
 				foreach (string s in GetValuesAsStrings ("ICOP"))
 					if (!string.IsNullOrEmpty (s))
 						return s;
-				
+
 				return null;
 			}
-			set {SetValue ("ICOP", value);}
+			set { SetValue ("ICOP", value); }
 		}
-#endregion
+		#endregion
 	}
 }

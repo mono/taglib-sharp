@@ -23,7 +23,8 @@
 
 using System;
 
-namespace TagLib.Mpeg {
+namespace TagLib.Mpeg
+{
 	/// <summary>
 	///    This structure implements <see cref="IVideoCodec" /> and provides
 	///    information about an MPEG video stream.
@@ -31,48 +32,33 @@ namespace TagLib.Mpeg {
 	public struct VideoHeader : IVideoCodec
 	{
 		#region Private Static Fields
-		
+
 		/// <summary>
 		///    Contains frame rate values.
 		/// </summary>
-		private static readonly double[] frame_rates = new double[9] {
+		static readonly double[] frame_rates = new double[9] {
 			0, 24000d/1001d, 24, 25, 30000d/1001d, 30, 50,
 			60000d/1001d, 60
 		};
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Private Fields
-		
-		/// <summary>
-		///    Contains the video width.
-		/// </summary>
-		int width;
-		
-		/// <summary>
-		///    Contains the video height.
-		/// </summary>
-		int height;
-		
+
 		/// <summary>
 		///    Contains the index in <see cref="frame_rates" /> of the
 		///    video frame rate.
 		/// </summary>
-		int frame_rate_index;
-		
-		/// <summary>
-		///    Contains the video bitrate.
-		/// </summary>
-		int bitrate;
-		
+		readonly int frame_rate_index;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="VideoHeader" /> by reading it from a specified
@@ -94,28 +80,26 @@ namespace TagLib.Mpeg {
 		public VideoHeader (TagLib.File file, long position)
 		{
 			if (file == null)
-				throw new ArgumentNullException (nameof(file));
-			
+				throw new ArgumentNullException (nameof (file));
+
 			file.Seek (position);
 			ByteVector data = file.ReadBlock (7);
-			
+
 			if (data.Count < 7)
-				throw new CorruptFileException (
-					"Insufficient data in header.");
-			
-			width = data.Mid (0, 2).ToUShort () >> 4;
-			height = data.Mid (1, 2).ToUShort () & 0x0FFF;
-			frame_rate_index = data [3] & 0x0F;
-			bitrate = (int) ((data.Mid (4, 3).ToUInt () >> 6) &
-				0x3FFFF);
+				throw new CorruptFileException ("Insufficient data in header.");
+
+			VideoWidth = data.Mid (0, 2).ToUShort () >> 4;
+			VideoHeight = data.Mid (1, 2).ToUShort () & 0x0FFF;
+			frame_rate_index = data[3] & 0x0F;
+			VideoBitrate = (int)((data.Mid (4, 3).ToUInt () >> 6) & 0x3FFFF);
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the duration of the media represented by the current
 		///    instance.
@@ -124,9 +108,9 @@ namespace TagLib.Mpeg {
 		///    Always <see cref="TimeSpan.Zero" />.
 		/// </value>
 		public TimeSpan Duration {
-			get {return TimeSpan.Zero;}
+			get { return TimeSpan.Zero; }
 		}
-		
+
 		/// <summary>
 		///    Gets the types of media represented by the current
 		///    instance.
@@ -135,9 +119,9 @@ namespace TagLib.Mpeg {
 		///    Always <see cref="MediaTypes.Video" />.
 		/// </value>
 		public MediaTypes MediaTypes {
-			get {return MediaTypes.Video;}
+			get { return MediaTypes.Video; }
 		}
-		
+
 		/// <summary>
 		///    Gets a text description of the media represented by the
 		///    current instance.
@@ -147,9 +131,9 @@ namespace TagLib.Mpeg {
 		///    of the media represented by the current instance.
 		/// </value>
 		public string Description {
-			get {return "MPEG Video";}
+			get { return "MPEG Video"; }
 		}
-		
+
 		/// <summary>
 		///    Gets the width of the video represented by the current
 		///    instance.
@@ -158,10 +142,8 @@ namespace TagLib.Mpeg {
 		///    A <see cref="int" /> value containing the width of the
 		///    video represented by the current instance.
 		/// </value>
-		public int VideoWidth {
-			get {return width;}
-		}
-		
+		public int VideoWidth { get; private set; }
+
 		/// <summary>
 		///    Gets the height of the video represented by the current
 		///    instance.
@@ -170,10 +152,8 @@ namespace TagLib.Mpeg {
 		///    A <see cref="int" /> value containing the height of the
 		///    video represented by the current instance.
 		/// </value>
-		public int VideoHeight {
-			get {return height;}
-		}
-		
+		public int VideoHeight { get; private set; }
+
 		/// <summary>
 		///    Gets the frame rate of the video represented by the
 		///    current instance.
@@ -184,11 +164,10 @@ namespace TagLib.Mpeg {
 		/// </value>
 		public double VideoFrameRate {
 			get {
-				return frame_rate_index < 9 ? 
-					frame_rates [frame_rate_index] : 0;
+				return frame_rate_index < 9 ? frame_rates[frame_rate_index] : 0;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the bitrate of the video represented by the current
 		///    instance.
@@ -197,10 +176,8 @@ namespace TagLib.Mpeg {
 		///    A <see cref="int" /> value containing a bitrate of the
 		///    video represented by the current instance.
 		/// </value>
-		public int VideoBitrate {
-			get {return bitrate;}
-		}
-		
+		public int VideoBitrate { get; private set; }
+
 		#endregion
 	}
 }

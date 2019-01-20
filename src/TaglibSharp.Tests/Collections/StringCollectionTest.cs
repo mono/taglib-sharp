@@ -1,13 +1,12 @@
-using System;
 using NUnit.Framework;
 using TagLib;
 
 namespace TaglibSharp.Tests.Collections
-{   
+{
 	[TestFixture]
 	public class StringCollectionTest
 	{
-		static StringCollection BuildList()
+		static StringCollection BuildList ()
 		{
 			var list = new StringCollection {
 				"ABC",
@@ -16,35 +15,35 @@ namespace TaglibSharp.Tests.Collections
 			};
 			return list;
 		}
-	
+
 		[Test]
-		public void Add()
+		public void Add ()
 		{
-			Assert.AreEqual("ABC:DEF:GHI", BuildList().ToString(":"));
+			Assert.AreEqual ("ABC:DEF:GHI", BuildList ().ToString (":"));
 		}
-		
+
 		[Test]
-		public void Remove()
+		public void Remove ()
 		{
-			var list = BuildList();
-			list.Remove("DEF");
-			Assert.AreEqual("ABCGHI", list.ToString(string.Empty));
+			var list = BuildList ();
+			list.Remove ("DEF");
+			Assert.AreEqual ("ABCGHI", list.ToString (string.Empty));
 		}
-		
+
 		[Test]
-		public void Insert()
+		public void Insert ()
 		{
-			var list = BuildList();
-			list.Insert(1, "QUACK");
-			Assert.AreEqual("ABC,QUACK,DEF,GHI", list.ToString(","));
+			var list = BuildList ();
+			list.Insert (1, "QUACK");
+			Assert.AreEqual ("ABC,QUACK,DEF,GHI", list.ToString (","));
 		}
-		
+
 		[Test]
-		public void Contains()
+		public void Contains ()
 		{
-			var list = BuildList();
-			Assert.IsTrue(list.Contains("DEF"));
-			Assert.IsFalse(list.Contains("CDEFG"));
+			var list = BuildList ();
+			Assert.IsTrue (list.Contains ("DEF"));
+			Assert.IsFalse (list.Contains ("CDEFG"));
 		}
 	}
 }

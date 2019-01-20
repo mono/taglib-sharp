@@ -43,16 +43,16 @@ namespace TaglibSharp.Tests.FileFormats
 			Assert.AreEqual (2008, file.Tag.Year);
 
 			// Test Apple tags
-			var tag = (TagLib.Mpeg4.AppleTag) file.GetTag (TagTypes.Apple, false);
+			var tag = (TagLib.Mpeg4.AppleTag)file.GetTag (TagTypes.Apple, false);
 			Assert.IsNotNull (tag);
 
-			foreach (var adbox in tag.DataBoxes (new[] {BOXTYPE_LDES})) {
+			foreach (var adbox in tag.DataBoxes (new[] { BOXTYPE_LDES })) {
 				Assert.AreEqual (LONG_DESC, adbox.Text);
 				gotLongDesc = true;
 			}
 
-			foreach (var adbox in tag.DataBoxes (new[] {BOXTYPE_PURD})) {
-				Assert.AreEqual(PURD_DATE, adbox.Text);
+			foreach (var adbox in tag.DataBoxes (new[] { BOXTYPE_PURD })) {
+				Assert.AreEqual (PURD_DATE, adbox.Text);
 				gotPurdDate = true;
 			}
 
@@ -69,20 +69,20 @@ namespace TaglibSharp.Tests.FileFormats
 			System.IO.File.Copy (sample_file, tmp_file);
 
 			var tmp = File.Create (tmp_file);
-			var tag = (TagLib.Mpeg4.AppleTag) tmp.GetTag (TagTypes.Apple, false);
+			var tag = (TagLib.Mpeg4.AppleTag)tmp.GetTag (TagTypes.Apple, false);
 			SetTags (tag);
 			tmp.Save ();
 
 			tmp = File.Create (tmp_file);
-			tag = (TagLib.Mpeg4.AppleTag) tmp.GetTag (TagTypes.Apple, false);
+			tag = (TagLib.Mpeg4.AppleTag)tmp.GetTag (TagTypes.Apple, false);
 			CheckTags (tag);
 		}
 
 		[Test]
-		[Ignore("PictureLazy not supported yet")]
-		public void WriteStandardPicturesLazy()
+		[Ignore ("PictureLazy not supported yet")]
+		public void WriteStandardPicturesLazy ()
 		{
-			StandardTests.WriteStandardPictures(sample_file, tmp_file, ReadStyle.PictureLazy);
+			StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
 		}
 
 
@@ -94,14 +94,14 @@ namespace TaglibSharp.Tests.FileFormats
 		void SetTags (TagLib.Mpeg4.AppleTag tag)
 		{
 			tag.Title = "TEST title";
-			tag.Performers = new[] {"TEST performer 1", "TEST performer 2"};
+			tag.Performers = new[] { "TEST performer 1", "TEST performer 2" };
 			tag.Comment = "TEST comment";
 			tag.Copyright = "TEST copyright";
-			tag.Genres = new[] {"TEST genre 1", "TEST genre 2"};
+			tag.Genres = new[] { "TEST genre 1", "TEST genre 2" };
 			tag.Year = 1999;
 
-			var atag = (TagLib.Mpeg4.AppleTag)tag;
-			Assert.IsNotNull(atag);
+			var atag = tag;
+			Assert.IsNotNull (atag);
 
 			var newbox1 = new TagLib.Mpeg4.AppleDataBox (
 				ByteVector.FromString ("TEST Long Description", StringType.UTF8),
@@ -109,8 +109,8 @@ namespace TaglibSharp.Tests.FileFormats
 			var newbox2 = new TagLib.Mpeg4.AppleDataBox (
 				ByteVector.FromString ("TEST TV Show", StringType.UTF8),
 				(int)TagLib.Mpeg4.AppleDataBox.FlagType.ContainsText);
-			atag.SetData (BOXTYPE_LDES, new[] {newbox1});
-			atag.SetData (BOXTYPE_TVSH, new[] {newbox2});
+			atag.SetData (BOXTYPE_LDES, new[] { newbox1 });
+			atag.SetData (BOXTYPE_TVSH, new[] { newbox2 });
 		}
 
 		void CheckTags (TagLib.Mpeg4.AppleTag tag)
@@ -122,14 +122,14 @@ namespace TaglibSharp.Tests.FileFormats
 			Assert.AreEqual ("TEST genre 1; TEST genre 2", tag.JoinedGenres);
 			Assert.AreEqual (1999, tag.Year);
 
-			var atag = (TagLib.Mpeg4.AppleTag) tag;
+			var atag = tag;
 			Assert.IsNotNull (atag);
 
-			foreach (var adbox in atag.DataBoxes (new[] {BOXTYPE_LDES})) {
+			foreach (var adbox in atag.DataBoxes (new[] { BOXTYPE_LDES })) {
 				Assert.AreEqual ("TEST Long Description", adbox.Text);
 			}
 
-			foreach (var adbox in atag.DataBoxes (new[] {BOXTYPE_TVSH})) {
+			foreach (var adbox in atag.DataBoxes (new[] { BOXTYPE_TVSH })) {
 				Assert.AreEqual ("TEST TV Show", adbox.Text);
 			}
 		}

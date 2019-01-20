@@ -1,4 +1,4 @@
-﻿//
+//
 // SubtitleTrack.cs:
 //
 // Author:
@@ -22,7 +22,6 @@
 //
 
 using System.Collections.Generic;
-using System;
 
 namespace TagLib.Matroska
 {
@@ -31,12 +30,6 @@ namespace TagLib.Matroska
 	/// </summary>
 	public class SubtitleTrack : Track
 	{
-		#region Private fields
-
-		private List<EBMLreader> unknown_elems = new List<EBMLreader> ();
-
-		#endregion
-
 		#region Constructors
 
 		/// <summary>
@@ -52,27 +45,24 @@ namespace TagLib.Matroska
 		{
 			// Here we handle the unknown elements we know, and store the rest
 			foreach (EBMLreader elem in base.UnknownElements) {
-				MatroskaID matroska_id = (MatroskaID) elem.ID;
+				MatroskaID matroska_id = elem.ID;
 
 				switch (matroska_id) {
-					default:
-						unknown_elems.Add (elem);
-						break;
+				default:
+					UnknownElements.Add (elem);
+					break;
 				}
 			}
 		}
 
-		#endregion
+        #endregion
 
-		#region Public fields
+        #region Public fields
 
-		/// <summary>
-		/// List of unknown elements encountered while parsing.
-		/// </summary>
-		public new List<EBMLreader> UnknownElements
-		{
-			get { return unknown_elems; }
-		}
+        /// <summary>
+        /// List of unknown elements encountered while parsing.
+        /// </summary>
+        public new List<EBMLreader> UnknownElements { get; } = new List<EBMLreader>();
 
 		#endregion
 
@@ -85,16 +75,12 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// This type of track only has text media type.
 		/// </summary>
-		public override MediaTypes MediaTypes
-		{
-			get
-			{
+		public override MediaTypes MediaTypes {
+			get {
 				return MediaTypes.Text;
 			}
 		}
 
 		#endregion
-
-
 	}
 }

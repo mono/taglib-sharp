@@ -37,7 +37,7 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// Constructs an empty <see cref="EBMLelement" />.
 		/// </summary>
-		public EBMLelement()
+		public EBMLelement ()
 		{
 		}
 
@@ -46,10 +46,10 @@ namespace TagLib.Matroska
 		/// Construct a <see cref="EBMLelement" /> to contain children elements.
 		/// </summary>
 		/// <param name="ebmlid">EBML ID of the element to be created.</param>
-		public EBMLelement(MatroskaID ebmlid)
+		public EBMLelement (MatroskaID ebmlid)
 		{
 			ID = ebmlid;
-			Children = new List<EBMLelement>();
+			Children = new List<EBMLelement> ();
 		}
 
 		/// <summary>
@@ -57,10 +57,10 @@ namespace TagLib.Matroska
 		/// </summary>
 		/// <param name="ebmlid">EBML ID of the element to be created.</param>
 		/// <param name="data">EBML data of the element to be created.</param>
-		public EBMLelement(MatroskaID ebmlid, ByteVector data)
+		public EBMLelement (MatroskaID ebmlid, ByteVector data)
 		{
 			ID = ebmlid;
-			this.Data = data;
+			Data = data;
 		}
 
 
@@ -69,10 +69,10 @@ namespace TagLib.Matroska
 		/// </summary>
 		/// <param name="ebmlid">EBML ID of the element to be created.</param>
 		/// <param name="value">EBML data as an <see cref="ulong"/> value.</param>
-		public EBMLelement(MatroskaID ebmlid, ulong value)
+		public EBMLelement (MatroskaID ebmlid, ulong value)
 		{
 			ID = ebmlid;
-			SetData(value);
+			SetData (value);
 		}
 
 
@@ -89,20 +89,20 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// Get or set the data represented by the EBML
 		/// </summary>
-		public ByteVector Data = null;
+		public ByteVector Data;
 
 
 		/// <summary>
 		/// Get or set the element embedded in the EBML
 		/// </summary>
-		public List<EBMLelement> Children = null;
+		public List<EBMLelement> Children;
 
 
 		/// <summary>
 		/// Get or set whether the EBML should have a size of one byte more 
 		/// than the optimal size.
 		/// </summary>
-		public bool IncSize = false;
+		public bool IncSize;
 
 
 		#endregion
@@ -113,12 +113,10 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// EBML Element size in bytes.
 		/// </summary>
-		public long Size
-		{
-			get
-			{
+		public long Size {
+			get {
 				long size_length = DataSize;
-				return IDSize + EBMLByteSize((ulong)size_length) + (IncSize ? 1 : 0) + size_length;
+				return IDSize + EBMLByteSize ((ulong)size_length) + (IncSize ? 1 : 0) + size_length;
 			}
 		}
 
@@ -126,21 +124,18 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// Get the size of the EBML ID, in bytes
 		/// </summary>
-		public long IDSize
-		{
-			get
-			{
+		public long IDSize {
+			get {
 				uint ebml_id = (uint)ID;
 
 				// Figure out the ID size in bytes
 				long mask = 0xFF000000, id_length = 4;
-				while (id_length > 0 && (ebml_id & mask) == 0)
-				{
+				while (id_length > 0 && (ebml_id & mask) == 0) {
 					id_length--;
 					mask >>= 8;
 				}
 				if (id_length == 0)
-					throw new CorruptFileException("invalid EBML ID (zero)");
+					throw new CorruptFileException ("invalid EBML ID (zero)");
 
 				return id_length;
 			}
@@ -149,35 +144,28 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// Get the size of the EBML data-size, in bytes
 		/// </summary>
-		public long DataSizeSize
-		{
-			get { return EBMLByteSize((ulong)DataSize) + (IncSize ? 1 : 0);  }
+		public long DataSizeSize {
+			get { return EBMLByteSize ((ulong)DataSize) + (IncSize ? 1 : 0); }
 		}
 
 
 		/// <summary>
 		/// EBML Element data/content size in bytes.
 		/// </summary>
-		public long DataSize
-		{
-			get
-			{
+		public long DataSize {
+			get {
 				long ret = 0;
 
-				if (Data != null)
-				{
+				if (Data != null) {
 					// Get Data size
 					ret = Data.Count;
 
 					if (Children != null)
-						throw new UnsupportedFormatException("EBML element cannot contain both Data and Children");
-				}
-				else
-				{
+						throw new UnsupportedFormatException ("EBML element cannot contain both Data and Children");
+				} else {
 					// Get the content size
-					foreach (var child in Children)
-					{
-						ret += child.Size; 
+					foreach (var child in Children) {
+						ret += child.Size;
 					}
 				}
 
@@ -190,20 +178,17 @@ namespace TagLib.Matroska
 		/// Try to increase the size of the EBML by 1 byte.
 		/// </summary>
 		/// <returns>True if successfully increased size, false if failed.</returns>
-		public bool IncrementSize()
+		public bool IncrementSize ()
 		{
 			// Try to extend current DataSizeSize
-			if ( !IncSize && DataSizeSize < 8)
-			{
+			if (!IncSize && DataSizeSize < 8) {
 				return IncSize = true;
 			}
-			
+
 			// Try to extend one of the children
-			if (Children!=null)
-			{
-				foreach (var child in Children)
-				{
-					if (child.IncrementSize()) return true;
+			if (Children != null) {
+				foreach (var child in Children) {
+					if (child.IncrementSize ()) return true;
 				}
 			}
 
@@ -216,30 +201,26 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// Get the EBML ID and data-size as a vector of bytes.
 		/// </summary>
-		public ByteVector Header
-		{
-			get
-			{
+		public ByteVector Header {
+			get {
 				// Retrieve sizes
 				var id_length = IDSize;
 				var size_length = DataSizeSize;
 
 				// Create vector
-				ByteVector vector = new ByteVector((int)(id_length + size_length));
+				ByteVector vector = new ByteVector ((int)(id_length + size_length));
 
 				// Construct the ID field
 				uint ebml_id = (uint)ID;
-				uint mask = (uint)ebml_id;
-				for (int i = (int)id_length - 1; i >= 0; i--)
-				{
+				uint mask = ebml_id;
+				for (int i = (int)id_length - 1; i >= 0; i--) {
 					vector[i] = (byte)(mask & 0xFF);
 					mask >>= 8;
 				}
 
 				// Construct the data-size field
 				ulong lmask = (ulong)DataSize;
-				for (int i = (int)(id_length + size_length - 1); i >= id_length; i--)
-				{
+				for (int i = (int)(id_length + size_length - 1); i >= id_length; i--) {
 					vector[i] = (byte)(lmask & 0xFF);
 					lmask >>= 8;
 				}
@@ -262,21 +243,17 @@ namespace TagLib.Matroska
 		/// </summary>
 		/// <param name="value">Encoded value</param>
 		/// <returns>size in bytes</returns>
-		public static long EBMLByteSize(ulong value)
+		public static long EBMLByteSize (ulong value)
 		{
 			// Figure out the required data-size size in bytes
 			long size_length;
-			if (value == 0x7F)
-			{
+			if (value == 0x7F) {
 				// Special case: Avoid element-size reserved word of 0xFF (all ones)
 				size_length = 2;
-			}
-			else
-			{
+			} else {
 				size_length = 8;
-				ulong mask = (ulong)0x7F << (7*7);
-				while (size_length > 1 && (value & mask) == 0)
-				{
+				ulong mask = (ulong)0x7F << (7 * 7);
+				while (size_length > 1 && (value & mask) == 0) {
 					size_length--;
 					mask >>= 7;
 				}
@@ -284,7 +261,7 @@ namespace TagLib.Matroska
 
 			return size_length;
 		}
-		
+
 		#endregion
 
 
@@ -298,10 +275,10 @@ namespace TagLib.Matroska
 		/// <returns>a string object containing the parsed value.</returns>
 		public string GetString ()
 		{
-			if (Data == null)  return null;
-			var idx = Data.IndexOf(0x00); // Detected Null termination
-			if (idx>=0)  return Data.ToString(StringType.UTF8, 0, idx);
-			return Data.ToString(StringType.UTF8);
+			if (Data == null) return null;
+			var idx = Data.IndexOf (0x00); // Detected Null termination
+			if (idx >= 0) return Data.ToString (StringType.UTF8, 0, idx);
+			return Data.ToString (StringType.UTF8);
 		}
 
 		/// <summary>
@@ -311,7 +288,7 @@ namespace TagLib.Matroska
 		public bool GetBool ()
 		{
 			if (Data == null) return false;
-			return (Data.ToUInt() > 0);
+			return (Data.ToUInt () > 0);
 		}
 
 		/// <summary>
@@ -325,14 +302,11 @@ namespace TagLib.Matroska
 			double result = 0.0;
 
 			if (Data.Count == 4) {
-				result = (double)Data.ToFloat();
-			}
-			else if (Data.Count == 8) {
-				result = Data.ToDouble();
-			}
-			else
-			{
-				throw new UnsupportedFormatException("Can not read a Double with sizes differing from 4 or 8");
+				result = Data.ToFloat ();
+			} else if (Data.Count == 8) {
+				result = Data.ToDouble ();
+			} else {
+				throw new UnsupportedFormatException ("Can not read a Double with sizes differing from 4 or 8");
 			}
 
 			return result;
@@ -345,7 +319,7 @@ namespace TagLib.Matroska
 		public ulong GetULong ()
 		{
 			if (Data == null) return 0;
-			return Data.ToULong();
+			return Data.ToULong ();
 		}
 
 
@@ -353,7 +327,7 @@ namespace TagLib.Matroska
 		/// Get a bytes vector from EBML Element's data section.
 		/// </summary>
 		/// <returns>a <see cref="ByteVector" /> containing the parsed value.</returns>
-		public ByteVector GetBytes()
+		public ByteVector GetBytes ()
 		{
 			return Data;
 		}
@@ -365,7 +339,7 @@ namespace TagLib.Matroska
 		/// Set data content as <see cref="string"/> to the EBML file
 		/// </summary>
 		/// <param name="data">data as <see cref="string"/></param>
-		public void SetData(string data)
+		public void SetData (string data)
 		{
 			Data = data;
 		}
@@ -375,14 +349,13 @@ namespace TagLib.Matroska
 		///  Set data content as <see cref="ulong"/> to the EBML file
 		/// </summary>
 		/// <param name="data">unsigned long number to write</param>
-		public void SetData(ulong data)
+		public void SetData (ulong data)
 		{
 			const ulong mask = 0xffffffff00000000;
 			bool isLong = (data & mask) != 0;
 
-			ByteVector vector = new ByteVector(isLong ? 8 : 4);
-			for (int i = vector.Count - 1; i >= 0; i--)
-			{
+			ByteVector vector = new ByteVector (isLong ? 8 : 4);
+			for (int i = vector.Count - 1; i >= 0; i--) {
 				vector[i] = (byte)(data & 0xff);
 				data >>= 8;
 			}
@@ -402,43 +375,38 @@ namespace TagLib.Matroska
 		/// <param name="file">A <see cref="File"/> representing the file to write to.</param>
 		/// <param name="position">The byte-position in the file to write the EBML to.</param>
 		/// <param name="reserved">The reserved size in bytes that the EBML may overwrite from the given position. (Default: 0, insert)</param>
-		public void Write(Matroska.File file, long position, long reserved = 0)
+		public void Write (File file, long position, long reserved = 0)
 		{
 			if (file == null)
-				throw new ArgumentNullException(nameof(file));
+				throw new ArgumentNullException (nameof (file));
 
 			if (position > file.Length || position < 0)
-				throw new ArgumentOutOfRangeException(nameof(position));
+				throw new ArgumentOutOfRangeException (nameof (position));
 
 			if (Data != null && Children != null)
-				throw new UnsupportedFormatException("EBML element cannot contain both Data and Children");
+				throw new UnsupportedFormatException ("EBML element cannot contain both Data and Children");
 
 
 			// Reserve required size upfront to speed up writing
 			var size = Size;
-			if (size > reserved)
-			{
+			if (size > reserved) {
 				// Extend reserved size
-				file.Insert(size - reserved, position + reserved);
+				file.Insert (size - reserved, position + reserved);
 				reserved = size;
 			}
 
 			// Write the Header
 			var header = Header;
-			file.Insert(header, position, header.Count);
+			file.Insert (header, position, header.Count);
 			position += header.Count;
 			reserved -= header.Count;
 
 			// Write the data/content
-			if (Data != null)
-			{
-				file.Insert(Data, position, Data.Count);
-			}
-			else if(Children != null)
-			{
-				foreach (var child in Children)
-				{
-					child.Write(file, position, reserved);
+			if (Data != null) {
+				file.Insert (Data, position, Data.Count);
+			} else if (Children != null) {
+				foreach (var child in Children) {
+					child.Write (file, position, reserved);
 					var csize = child.Size;
 					position += csize;
 					reserved -= csize;
@@ -448,7 +416,5 @@ namespace TagLib.Matroska
 
 
 		#endregion
-
-
 	}
 }

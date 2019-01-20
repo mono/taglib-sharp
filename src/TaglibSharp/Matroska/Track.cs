@@ -1,4 +1,4 @@
-﻿//
+//
 // Track.cs:
 //
 // Author:
@@ -21,8 +21,8 @@
 // USA
 //
 
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 
 namespace TagLib.Matroska
 {
@@ -34,17 +34,17 @@ namespace TagLib.Matroska
 		#region Private fields
 
 #pragma warning disable 414 // Assigned, never used
-		private ulong track_number;
-		private string track_codec_id;
-		private string track_codec_name;
-		private string track_name;
-		private string track_language;
-		private bool track_enabled;
-		private bool track_default;
-		private ByteVector codec_data;
+		readonly ulong track_number;
+		readonly string track_codec_id;
+		readonly string track_codec_name;
+		readonly string track_name;
+		readonly string track_language;
+		readonly bool track_enabled;
+		readonly bool track_default;
+		readonly ByteVector codec_data;
 #pragma warning restore 414
 
-		private List<EBMLreader> unknown_elems = new List<EBMLreader> ();
+		readonly List<EBMLreader> unknown_elems = new List<EBMLreader> ();
 
 		#endregion
 
@@ -65,39 +65,39 @@ namespace TagLib.Matroska
 			while (i < element.DataSize) {
 				EBMLreader child = new EBMLreader (_file, element.DataOffset + i);
 
-				MatroskaID matroska_id = (MatroskaID) child.ID;
+				MatroskaID matroska_id = child.ID;
 
 				switch (matroska_id) {
-					case MatroskaID.TrackNumber:
-						track_number = child.ReadULong ();
-						break;
-					case MatroskaID.TrackUID:
-						_UID = child.ReadULong ();
-						break;
-					case MatroskaID.CodecID:
-						track_codec_id = child.ReadString ();
-						break;
-					case MatroskaID.CodecName:
-						track_codec_name = child.ReadString ();
-						break;
-					case MatroskaID.TrackName:
-						track_name = child.ReadString ();
-						break;
-					case MatroskaID.TrackLanguage:
-						track_language = child.ReadString ();
-						break;
-					case MatroskaID.TrackFlagEnabled:
-						track_enabled = child.ReadBool ();
-						break;
-					case MatroskaID.TrackFlagDefault:
-						track_default = child.ReadBool ();
-						break;
-					case MatroskaID.CodecPrivate:
-						codec_data = child.ReadBytes ();
-						break;
-					default:
-						unknown_elems.Add (child);
-						break;
+				case MatroskaID.TrackNumber:
+					track_number = child.ReadULong ();
+					break;
+				case MatroskaID.TrackUID:
+					_UID = child.ReadULong ();
+					break;
+				case MatroskaID.CodecID:
+					track_codec_id = child.ReadString ();
+					break;
+				case MatroskaID.CodecName:
+					track_codec_name = child.ReadString ();
+					break;
+				case MatroskaID.TrackName:
+					track_name = child.ReadString ();
+					break;
+				case MatroskaID.TrackLanguage:
+					track_language = child.ReadString ();
+					break;
+				case MatroskaID.TrackFlagEnabled:
+					track_enabled = child.ReadBool ();
+					break;
+				case MatroskaID.TrackFlagDefault:
+					track_default = child.ReadBool ();
+					break;
+				case MatroskaID.CodecPrivate:
+					codec_data = child.ReadBytes ();
+					break;
+				default:
+					unknown_elems.Add (child);
+					break;
 				}
 
 				i += child.Size;
@@ -111,8 +111,7 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// List of unknown elements encountered while parsing.
 		/// </summary>
-		public List<EBMLreader> UnknownElements
-		{
+		public List<EBMLreader> UnknownElements {
 			get { return unknown_elems; }
 		}
 
@@ -127,25 +126,22 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// Describes track duration.
 		/// </summary>
-		public virtual TimeSpan Duration
-		{
+		public virtual TimeSpan Duration {
 			get { return TimeSpan.Zero; }
 		}
 
 		/// <summary>
 		/// Describes track media types.
 		/// </summary>
-		public virtual MediaTypes MediaTypes
-		{
+		public virtual MediaTypes MediaTypes {
 			get { return MediaTypes.None; }
 		}
 
 		/// <summary>
 		/// Track description.
 		/// </summary>
-		public virtual string Description
-		{
-			get { return String.Format ("{0} {1}", track_codec_name, track_language); }
+		public virtual string Description {
+			get { return $"{track_codec_name} {track_language}"; }
 		}
 
 		#endregion
@@ -155,12 +151,12 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// Unique ID representing the element, as random as possible (setting zero will generate automatically a new one).
 		/// </summary>
-		public ulong UID
-		{
+		public ulong UID {
 			get { return _UID; }
-			set { _UID = UIDElement.GenUID(value); }
+			set { _UID = UIDElement.GenUID (value); }
 		}
-		private ulong _UID = UIDElement.GenUID();
+
+		ulong _UID = UIDElement.GenUID ();
 
 		/// <summary>
 		/// Get the Tag type the UID should be represented by, or 0 if undefined

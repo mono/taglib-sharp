@@ -11,94 +11,93 @@ namespace Debug
 	/// </summary>
 	class Program
 	{
-		static readonly string AssemblyLocation = Path.GetDirectoryName(Assembly.GetAssembly(typeof(Program)).Location);
-		public static readonly string Samples = Path.Combine(AssemblyLocation, "..", "..", "..", "..", "TaglibSharp.Tests", "samples");
+		static readonly string AssemblyLocation = Path.GetDirectoryName (Assembly.GetAssembly (typeof (Program)).Location);
+		public static readonly string Samples = Path.Combine (AssemblyLocation, "..", "..", "..", "..", "TaglibSharp.Tests", "samples");
 
 		/// <summary>
 		/// Ouput message on the console and on the Visual Studio Output
 		/// </summary>
 		/// <param name="str"></param>
-		static void Log(string str)
+		static void Log (string str)
 		{
-			Console.WriteLine(str);
-			System.Diagnostics.Debug.WriteLine(str);
+			Console.WriteLine (str);
+			System.Diagnostics.Debug.WriteLine (str);
 		}
-		
-		static void Main(string[] args)
+
+		static void Main (string[] args)
 		{
-			Log("--------------------");
-			Log("* Start : Samples directory: " + Samples);
-			Log("");
+			Log ("--------------------");
+			Log ("* Start : Samples directory: " + Samples);
+			Log ("");
 
 			// Override command arguments
-			args = new []  { "sample.wav" };
+			args = new[] { "sample.wav" };
 
 			foreach (var fname in args) {
 				var fpath = Samples + fname;
-				var tpath = Samples + "tmpwrite" + Path.GetExtension(fname);
+				var tpath = Samples + "tmpwrite" + Path.GetExtension (fname);
 
-				Log("+ File  : " + fpath);
-				if(!File.Exists(fpath)) {
-					Log("  # File not found: " + fpath);
+				Log ("+ File  : " + fpath);
+				if (!File.Exists (fpath)) {
+					Log ("  # File not found: " + fpath);
 					continue;
 				}
 
-				Log("  read  : " + fpath);
-				var rfile = TagLib.File.Create(fpath);
-				Log("  Type  : " + rfile.MimeType);
+				Log ("  read  : " + fpath);
+				var rfile = TagLib.File.Create (fpath);
+				Log ("  Type  : " + rfile.MimeType);
 
-				File.Copy(fpath, tpath, true);
+				File.Copy (fpath, tpath, true);
 
-				var file = TagLib.File.Create(tpath);
-				Log("  Type  : " + file.MimeType);
-				
-				Log("  rboy1 test start  : " + file.MimeType);
+				var file = TagLib.File.Create (tpath);
+				Log ("  Type  : " + file.MimeType);
 
-				var MKVTag = (TagLib.Matroska.Tag)file.GetTag(TagTypes.Matroska);
+				Log ("  rboy1 test start  : " + file.MimeType);
+
+				var MKVTag = (TagLib.Matroska.Tag)file.GetTag (TagTypes.Matroska);
 				MKVTag.Title = "my Title";
-				MKVTag.Set("SUBTITLE", null, "my SubTitle");
-				MKVTag.Set("DESCRIPTION", null, "my Description");
-				MKVTag.Set("TVCHANNEL", null, "my Network");
-				MKVTag.Set("LAW_RATING", null, "my Rating");
-				MKVTag.Set("ACTOR", null, "my MediaCredits");
-				MKVTag.Set("GENRE", null, "my Genres");
-				MKVTag.Set("SEASON", null, "my Season");
-				MKVTag.Set("EPISODE", null, "my Episode");
+				MKVTag.Set ("SUBTITLE", null, "my SubTitle");
+				MKVTag.Set ("DESCRIPTION", null, "my Description");
+				MKVTag.Set ("TVCHANNEL", null, "my Network");
+				MKVTag.Set ("LAW_RATING", null, "my Rating");
+				MKVTag.Set ("ACTOR", null, "my MediaCredits");
+				MKVTag.Set ("GENRE", null, "my Genres");
+				MKVTag.Set ("SEASON", null, "my Season");
+				MKVTag.Set ("EPISODE", null, "my Episode");
 
-				var BannerFile = Samples + "sample_invalidifdoffset.jpg";
-				var VideoPicture = new Picture(BannerFile);
-				MKVTag.Pictures = new IPicture[] { VideoPicture };
+				var bannerFile = Samples + "sample_invalidifdoffset.jpg";
+				var videoPicture = new Picture (bannerFile);
+				MKVTag.Pictures = new IPicture[] { videoPicture };
 
-				Log("  rboy1 test save  : " + file.MimeType);
-				file.Save();
-				
-				Log("  rboy1 test read  : " + file.MimeType);
-				var TagFile = TagLib.File.Create(tpath);
+				Log ("  rboy1 test save  : " + file.MimeType);
+				file.Save ();
 
-				Log("  rboy1 test end  : " + file.MimeType);
+				Log ("  rboy1 test read  : " + file.MimeType);
+				var tagFile = TagLib.File.Create (tpath);
+
+				Log ("  rboy1 test end  : " + file.MimeType);
 
 				var tag = file.Tag;
 				var pics = file.Tag.Pictures;
 
-				var mtag = (TagLib.Matroska.Tag)file.GetTag(TagTypes.Matroska);
+				var mtag = (TagLib.Matroska.Tag)file.GetTag (TagTypes.Matroska);
 				mtag.PerformersRole = new[] { "TEST role 1", "TEST role 2" };
 
-				Log("    Picture            : " + pics[0].Description);
+				Log ("    Picture            : " + pics[0].Description);
 
 				var tracks = mtag.Tags.Tracks;
-				var audiotag = mtag.Tags.Get(tracks[1]);
-				if (audiotag != null)
-				{
-					audiotag.Clear();
+				var audiotag = mtag.Tags.Get (tracks[1]);
+				if (audiotag != null) {
+					audiotag.Clear ();
 					audiotag.Title = "The Noise";
-					audiotag.Set("DESCRIPTION", null, "Useless background noise");
+					audiotag.Set ("DESCRIPTION", null, "Useless background noise");
 				}
 
-				Log("  Erase : " + tag.Title);
-				file.RemoveTags(TagTypes.Matroska);
-				file.Save();
+				Log ("  Erase : " + tag.Title);
+				file.RemoveTags (TagTypes.Matroska);
+				file.Save ();
 
-				Log("  Write : " + tag.Title);
+				Log ("  Write : " + tag.Title);
 
 				tag.TitleSort = "title, TEST";
 				tag.AlbumSort = "album, TEST";
@@ -126,53 +125,53 @@ namespace Debug
 				tag.Year = 1999;
 
 				// Insert new picture
-				Array.Resize(ref pics, 2);
-				pics[1] = new Picture(Samples + "sample_sony2.jpg");
+				Array.Resize (ref pics, 2);
+				pics[1] = new Picture (Samples + "sample_sony2.jpg");
 				file.Tag.Pictures = pics;
 
-				file.Save();
+				file.Save ();
 
 
-				Log("  Done  : " + tag.Title);
+				Log ("  Done  : " + tag.Title);
 
 				// Now read it again
-				file = TagLib.File.Create(tpath);
+				file = TagLib.File.Create (tpath);
 				tag = file.Tag;
-				mtag = (TagLib.Matroska.Tag)file.GetTag(TagTypes.Matroska);
+				mtag = (TagLib.Matroska.Tag)file.GetTag (TagTypes.Matroska);
 
-				Log("  Read  : " + tag.Title);
+				Log ("  Read  : " + tag.Title);
 
-				Log("    Album              : " + tag.Album);
-				Log("    JoinedAlbumArtists : " + tag.JoinedAlbumArtists);
-				Log("    BeatsPerMinute     : " + tag.BeatsPerMinute);
-				Log("    Comment            : " + tag.Comment);
-				Log("    JoinedComposers    : " + tag.JoinedComposers);
-				Log("    Conductor          : " + tag.Conductor);
-				Log("    Copyright          : " + tag.Copyright);
-				Log("    Disc               : " + tag.Disc);
-				Log("    DiscCount          : " + tag.DiscCount);
-				Log("    JoinedGenres       : " + tag.JoinedGenres);
-				Log("    Grouping           : " + tag.Grouping);
-				Log("    Lyrics             : " + tag.Lyrics);
-				Log("    JoinedPerformers   : " + tag.JoinedPerformers);
-				Log("    Title              : " + tag.Title);
-				Log("    Track              : " + tag.Track);
-				Log("    TrackCount         : " + tag.TrackCount);
-				Log("    Year               : " + tag.Year);
+				Log ("    Album              : " + tag.Album);
+				Log ("    JoinedAlbumArtists : " + tag.JoinedAlbumArtists);
+				Log ("    BeatsPerMinute     : " + tag.BeatsPerMinute);
+				Log ("    Comment            : " + tag.Comment);
+				Log ("    JoinedComposers    : " + tag.JoinedComposers);
+				Log ("    Conductor          : " + tag.Conductor);
+				Log ("    Copyright          : " + tag.Copyright);
+				Log ("    Disc               : " + tag.Disc);
+				Log ("    DiscCount          : " + tag.DiscCount);
+				Log ("    JoinedGenres       : " + tag.JoinedGenres);
+				Log ("    Grouping           : " + tag.Grouping);
+				Log ("    Lyrics             : " + tag.Lyrics);
+				Log ("    JoinedPerformers   : " + tag.JoinedPerformers);
+				Log ("    Title              : " + tag.Title);
+				Log ("    Track              : " + tag.Track);
+				Log ("    TrackCount         : " + tag.TrackCount);
+				Log ("    Year               : " + tag.Year);
 
-				Log("    TitleSort          : " + tag.TitleSort);
-				Log("    AlbumSort          : " + tag.AlbumSort);
-				Log("    PerformersSort     : " + tag.JoinedPerformersSort);
-				Log("    ComposersSort      : " + string.Join("; ", tag.ComposersSort));
-				Log("    AlbumArtistsSort   : " + string.Join("; ", tag.AlbumArtistsSort));
+				Log ("    TitleSort          : " + tag.TitleSort);
+				Log ("    AlbumSort          : " + tag.AlbumSort);
+				Log ("    PerformersSort     : " + tag.JoinedPerformersSort);
+				Log ("    ComposersSort      : " + string.Join ("; ", tag.ComposersSort));
+				Log ("    AlbumArtistsSort   : " + string.Join ("; ", tag.AlbumArtistsSort));
 
 
-				Log("    PerformersRole     : " + string.Join("; ", mtag.PerformersRole));
+				Log ("    PerformersRole     : " + string.Join ("; ", mtag.PerformersRole));
 
-				Log("  Done  : " + tag.Title);
+				Log ("  Done  : " + tag.Title);
 			}
 
-			Log("* End");
+			Log ("* End");
 		}
 	}
 }

@@ -34,12 +34,12 @@ namespace TagLib.IFD.Tags
 		/// <summary>
 		///    Version. (Hex: 0X0000)
 		/// </summary>
-		Version                                             = 0,
+		Version = 0,
 
 		/// <summary>
 		///    Vibration reduction. (Hex: 0X0004)
 		/// </summary>
-		VibrationReduction                                  = 4,
+		VibrationReduction = 4,
 
 	}
 }

@@ -1,5 +1,5 @@
-using System;
 using NUnit.Framework;
+using System;
 using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
@@ -19,32 +19,38 @@ namespace TaglibSharp.Tests.Images
 		File file;
 
 		[OneTimeSetUp]
-		public void Init () {
+		public void Init ()
+		{
 			file = File.Create (sample_file);
 		}
 
 		[Test]
-		public void JpegRead () {
+		public void JpegRead ()
+		{
 			CheckTags (file);
 		}
 
 		[Test]
-		public void ExifRead () {
+		public void ExifRead ()
+		{
 			CheckExif (file);
 		}
 
 		[Test]
-		public void MakernoteRead () {
+		public void MakernoteRead ()
+		{
 			CheckMakerNote (file);
 		}
 
 		[Test]
-		public void PropertiesRead () {
+		public void PropertiesRead ()
+		{
 			CheckProperties (file);
 		}
 
 		[Test]
-		public void Rewrite () {
+		public void Rewrite ()
+		{
 			var tmp = Utils.CreateTmpFile (sample_file, tmp_file);
 			tmp.Save ();
 
@@ -80,25 +86,27 @@ namespace TaglibSharp.Tests.Images
 			AddImageMetadataTests.AddXMPTest2 (sample_file, tmp_file, false);
 		}
 
-		public void CheckTags (File file) {
+		public void CheckTags (File file)
+		{
 			Assert.IsTrue (file is TagLib.Jpeg.File, "not a Jpeg file");
 
 			Assert.AreEqual (contained_types, file.TagTypes);
 			Assert.AreEqual (contained_types, file.TagTypesOnDisk);
 		}
 
-		public void CheckExif (File file) {
+		public void CheckExif (File file)
+		{
 			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 
 			Assert.IsNotNull (tag, "tag");
 
-			var exif_ifd = tag.Structure.GetEntry(0, IFDEntryTag.ExifIFD) as SubIFDEntry;
+			var exif_ifd = tag.Structure.GetEntry (0, IFDEntryTag.ExifIFD) as SubIFDEntry;
 			Assert.IsNotNull (exif_ifd, "Exif IFD");
 
 			Assert.AreEqual ("OLYMPUS IMAGING CORP.  ", tag.Make);
 			Assert.AreEqual ("E-410           ", tag.Model);
 			Assert.AreEqual (100, tag.ISOSpeedRatings);
-			Assert.AreEqual (1.0d/125.0d, tag.ExposureTime);
+			Assert.AreEqual (1.0d / 125.0d, tag.ExposureTime);
 			Assert.AreEqual (6.3d, tag.FNumber);
 			Assert.AreEqual (42.0d, tag.FocalLength);
 			Assert.AreEqual (new DateTime (2009, 04, 11, 19, 45, 42), tag.DateTime);
@@ -107,12 +115,13 @@ namespace TaglibSharp.Tests.Images
 		}
 
 
-		public void CheckMakerNote (File file) {
+		public void CheckMakerNote (File file)
+		{
 			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 			Assert.IsNotNull (tag, "tag");
 
 			var makernote_ifd =
-				tag.ExifIFD.GetEntry (0, (ushort) ExifEntryTag.MakerNote) as MakernoteIFDEntry;
+				tag.ExifIFD.GetEntry (0, (ushort)ExifEntryTag.MakerNote) as MakernoteIFDEntry;
 
 			Assert.IsNotNull (makernote_ifd, "makernote ifd");
 			Assert.AreEqual (MakernoteType.Olympus2, makernote_ifd.MakernoteType);

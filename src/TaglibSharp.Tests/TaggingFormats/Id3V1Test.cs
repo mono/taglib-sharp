@@ -1,11 +1,10 @@
 using NUnit.Framework;
-using TagLib;
 
 namespace TaglibSharp.Tests.TaggingFormats
 {
 	[TestFixture]
 	public class Id3V1Test
-	{   
+	{
 		[Test]
 		public void TestTitle ()
 		{
@@ -51,7 +50,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 			Assert.IsTrue (tag.IsEmpty, "Still empty");
 			Assert.AreEqual (0, tag.Performers.Length, "Still empty");
 
-			tag.Performers = new[] {"A123456789", "B123456789", "C123456789", "D123456789", "E123456789"};
+			tag.Performers = new[] { "A123456789", "B123456789", "C123456789", "D123456789", "E123456789" };
 			Assert.IsFalse (tag.IsEmpty, "Not empty");
 			Assert.AreEqual ("A123456789; B123456789; C123456789; D123456789; E123456789", tag.JoinedPerformers);
 
@@ -60,7 +59,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 			Assert.IsFalse (tag.IsEmpty, "Still not empty");
 			Assert.AreEqual ("A123456789; B123456789; C1234567", tag.JoinedPerformers);
 
-			tag.Performers = new string [0];
+			tag.Performers = new string[0];
 			Assert.IsTrue (tag.IsEmpty, "Again empty");
 			Assert.AreEqual (0, tag.Performers.Length, "Again empty");
 
@@ -211,7 +210,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 			Assert.IsTrue (tag.IsEmpty, "Still empty");
 			Assert.AreEqual (0, tag.Genres.Length, "Still empty");
 
-			tag.Genres = new[] {"Rap", "Jazz", "Non-Genre", "Blues"};
+			tag.Genres = new[] { "Rap", "Jazz", "Non-Genre", "Blues" };
 			Assert.IsFalse (tag.IsEmpty, "Not empty");
 			Assert.AreEqual ("Rap", tag.JoinedGenres);
 
@@ -220,7 +219,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 			Assert.IsFalse (tag.IsEmpty, "Still not empty");
 			Assert.AreEqual ("Rap", tag.JoinedGenres);
 
-			tag.Genres = new[] {"Non-Genre"};
+			tag.Genres = new[] { "Non-Genre" };
 			Assert.IsTrue (tag.IsEmpty, "Surprisingly empty");
 			Assert.AreEqual (0, tag.Genres.Length, "Surprisingly empty");
 
@@ -229,7 +228,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 			Assert.IsTrue (tag.IsEmpty, "Still empty");
 			Assert.AreEqual (0, tag.Genres.Length, "Still empty");
 
-			tag.Genres = new string [0];
+			tag.Genres = new string[0];
 			Assert.IsTrue (tag.IsEmpty, "Again empty");
 			Assert.AreEqual (0, tag.Genres.Length, "Again empty");
 
@@ -244,12 +243,12 @@ namespace TaglibSharp.Tests.TaggingFormats
 		{
 			var tag = new TagLib.Id3v1.Tag {
 				Title = "A",
-				Performers = new[] {"B"},
+				Performers = new[] { "B" },
 				Album = "C",
 				Year = 123,
 				Comment = "D",
 				Track = 234,
-				Genres = new[] {"Blues"}
+				Genres = new[] { "Blues" }
 			};
 
 			Assert.IsFalse (tag.IsEmpty, "Should be full.");

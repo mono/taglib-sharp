@@ -25,33 +25,16 @@
 using System;
 using System.Collections.Generic;
 
-namespace TagLib.Mpeg4 {
+namespace TagLib.Mpeg4
+{
 	/// <summary>
 	///    This class extends <see cref="FullBox" /> to provide an
 	///    implementation of a ISO/IEC 14496-12 SampleDescriptionBox.
 	/// </summary>
 	public class IsoSampleDescriptionBox : FullBox
 	{
-		#region Private Fields
-		
-		/// <summary>
-		///    Contains the number of entries at the beginning of the
-		///    children that will be of type <see cref="IsoSampleEntry"
-		///    />, regardless of their box type.
-		/// </summary>
-		private uint entry_count;
-		
-		/// <summary>
-		///    Contains the children of the box.
-		/// </summary>
-		private IEnumerable<Box> children;
-		
-		#endregion
-		
-		
-		
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="IsoSampleDescriptionBox" /> with a provided header
@@ -73,23 +56,21 @@ namespace TagLib.Mpeg4 {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
-		public IsoSampleDescriptionBox (BoxHeader header,
-		                                TagLib.File file,
-		                                IsoHandlerBox handler)
+		public IsoSampleDescriptionBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler)
 			: base (header, file, handler)
 		{
 			if (file == null)
-				throw new ArgumentNullException (nameof(file));
-			
-			entry_count = file.ReadBlock (4).ToUInt ();
-			children = LoadChildren (file);
+				throw new ArgumentNullException (nameof (file));
+
+			EntryCount = file.ReadBlock (4).ToUInt ();
+			Children = LoadChildren (file);
 		}
-		
+
 		#endregion
-		
-		
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the position of the data contained in the current
 		///    instance, after any box specific headers.
@@ -99,9 +80,9 @@ namespace TagLib.Mpeg4 {
 		///    the data contained in the current instance.
 		/// </value>
 		protected override long DataPosition {
-			get {return base.DataPosition + 4;}
+			get { return base.DataPosition + 4; }
 		}
-		
+
 		/// <summary>
 		///    Gets the number of boxes at the begining of the children
 		///    that will be stored as <see cref="IsoAudioSampleEntry" />
@@ -112,10 +93,8 @@ namespace TagLib.Mpeg4 {
 		///    A <see cref="uint" /> value containing the number of
 		///    children that will appear as sample entries.
 		/// </value>
-		public uint EntryCount {
-			get {return entry_count;}
-		}
-		
+		public uint EntryCount { get; }
+
 		/// <summary>
 		///    Gets the children of the current instance.
 		/// </summary>
@@ -123,10 +102,8 @@ namespace TagLib.Mpeg4 {
 		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating the
 		///    children of the current instance.
 		/// </value>
-		public override IEnumerable<Box> Children {
-			get {return children;}
-		}
-		
+		public override IEnumerable<Box> Children { get; }
+
 		#endregion
 	}
 }

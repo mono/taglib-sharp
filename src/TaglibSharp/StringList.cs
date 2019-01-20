@@ -27,12 +27,13 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace TagLib {
+namespace TagLib
+{
 	/// <summary>
 	///    This class extends <see cref="T:TagLib.ListBase`1" /> for a collection of
 	///    <see cref="string" /> objects.
 	/// </summary>
-	[ComVisible(false)]
+	[ComVisible (false)]
 	public class StringCollection : ListBase<string>
 	{
 		/// <summary>
@@ -42,7 +43,7 @@ namespace TagLib {
 		public StringCollection ()
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="StringCollection" /> with the contents of another
@@ -56,7 +57,7 @@ namespace TagLib {
 		{
 			Add (values);
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="StringCollection" /> with the contents of a
@@ -66,11 +67,11 @@ namespace TagLib {
 		///    A <see cref="T:string[]" /> whose values are to be added to
 		///    the new instance.
 		/// </param>
-		public StringCollection (params string [] values)
+		public StringCollection (params string[] values)
 		{
 			Add (values);
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="StringCollection" /> by converting a collection of
@@ -85,13 +86,12 @@ namespace TagLib {
 		///    A <see cref="StringType" /> specifying what encoding to
 		///    use when converting the data to strings.
 		/// </param>
-		public StringCollection (ByteVectorCollection vectorList,
-		                         StringType type)
+		public StringCollection (ByteVectorCollection vectorList, StringType type)
 		{
 			foreach (ByteVector vector in vectorList)
 				Add (vector.ToString (type));
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="StringCollection" /> by converting a collection of
@@ -102,11 +102,11 @@ namespace TagLib {
 		///    A <see cref="ByteVectorCollection" /> object containing
 		///    values to convert and add to the new instance.
 		/// </param>
-		public StringCollection(ByteVectorCollection vectorList)
+		public StringCollection (ByteVectorCollection vectorList)
 			: this (vectorList, StringType.UTF8)
 		{
 		}
-		
+
 		/// <summary>
 		///    Splits a single <see cref="string" /> into a <see
 		///    cref="StringCollection" /> using a pattern.
@@ -126,31 +126,28 @@ namespace TagLib {
 		///    <paramref name="value" /> or <paramref name="pattern" />
 		///    is <see langword="null" />.
 		/// </exception>
-		public static StringCollection Split (string value,
-		                                      string pattern)
+		public static StringCollection Split (string value, string pattern)
 		{
 			if (value == null)
-				throw new ArgumentNullException (nameof(value));
-			
+				throw new ArgumentNullException (nameof (value));
+
 			if (pattern == null)
-				throw new ArgumentNullException (nameof(pattern));
-			
-			StringCollection list = new StringCollection ();
-			
+				throw new ArgumentNullException (nameof (pattern));
+
+			var list = new StringCollection ();
+
 			int previous_position = 0;
 			int position = value.IndexOf (pattern, 0);
 			int pattern_length = pattern.Length;
-			
+
 			while (position != -1) {
-				list.Add (value.Substring (previous_position,
-					position - previous_position));
+				list.Add (value.Substring (previous_position, position - previous_position));
 				previous_position = position + pattern_length;
-				position = value.IndexOf (pattern,
-					previous_position);
+				position = value.IndexOf (pattern, previous_position);
 			}
-			
+
 			list.Add (value.Substring (previous_position));
-			
+
 			return list;
 		}
 	}

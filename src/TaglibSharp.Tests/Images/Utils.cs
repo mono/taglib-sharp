@@ -9,7 +9,8 @@ namespace TaglibSharp.Tests.Images
 	{
 		static readonly MD5 md5 = MD5.Create ();
 
-		public static File CreateTmpFile (string sample_file, string tmp_file) {
+		public static File CreateTmpFile (string sample_file, string tmp_file)
+		{
 			if (sample_file == tmp_file)
 				throw new Exception ("files cannot be equal");
 
@@ -22,7 +23,7 @@ namespace TaglibSharp.Tests.Images
 			return tmp;
 		}
 
-		public static string Md5Encode (byte [] data)
+		public static string Md5Encode (byte[] data)
 		{
 			var hash = md5.ComputeHash (data);
 

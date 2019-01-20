@@ -31,7 +31,7 @@ namespace TagLib.IFD.Entries
 	public class RationalIFDEntry : IFDEntry
 	{
 
-#region Properties
+		#region Properties
 
 		/// <value>
 		///    The ID of the tag, the current instance belongs to
@@ -43,9 +43,9 @@ namespace TagLib.IFD.Entries
 		/// </value>
 		public Rational Value { get; private set; }
 
-#endregion
+		#endregion
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Construcor.
@@ -63,9 +63,9 @@ namespace TagLib.IFD.Entries
 			Value = value;
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Renders the current instance to a <see cref="ByteVector"/>
@@ -88,17 +88,18 @@ namespace TagLib.IFD.Entries
 		/// </returns>
 		public ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
 		{
-			type = (ushort) IFDEntryType.Rational;
+			type = (ushort)IFDEntryType.Rational;
 			count = 1;
 
-			ByteVector data = new ByteVector ();
-			data.Add (ByteVector.FromUInt (Value.Numerator, is_bigendian));
-			data.Add (ByteVector.FromUInt (Value.Denominator, is_bigendian));
+			var data = new ByteVector {
+				ByteVector.FromUInt (Value.Numerator, is_bigendian),
+				ByteVector.FromUInt (Value.Denominator, is_bigendian)
+			};
 
 			return data;
 		}
 
-#endregion
+		#endregion
 
 	}
 }

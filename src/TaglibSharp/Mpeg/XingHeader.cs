@@ -26,39 +26,19 @@
 // USA
 //
 
-using System.Collections;
 using System;
 
-namespace TagLib.Mpeg {
+namespace TagLib.Mpeg
+{
 	/// <summary>
 	///    This structure provides information about a variable bitrate MPEG
 	///    audio stream.
 	/// </summary>
 	public struct XingHeader
 	{
-		#region Private Fields
-		
-		/// <summary>
-		///    Contains the frame count.
-		/// </summary>
-		private uint frames;
-		
-		/// <summary>
-		///    Contains the stream size.
-		/// </summary>
-		private uint size;
-		
-		/// <summary>
-		///    Indicates that a physical Xing header is present.
-		/// </summary>
-		private bool present;
-		
-		#endregion
-		
-		
-		
+
 		#region Public Fields
-		
+
 		/// <summary>
 		///    Contains te Xing identifier.
 		/// </summary>
@@ -66,18 +46,18 @@ namespace TagLib.Mpeg {
 		///    "Xing"
 		/// </value>
 		public static readonly ReadOnlyByteVector FileIdentifier = "Xing";
-		
+
 		/// <summary>
 		///    An empty and unset Xing header.
 		/// </summary>
 		public static readonly XingHeader Unknown = new XingHeader (0, 0);
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="XingHeader" /> with a specified frame count and
@@ -91,13 +71,13 @@ namespace TagLib.Mpeg {
 		///    A <see cref="uint" /> value specifying the stream size of
 		///    the audio represented by the new instance.
 		/// </param>
-		private XingHeader (uint frame, uint size)
+		XingHeader (uint frame, uint size)
 		{
-			this.frames = frame;
-			this.size = size;
-			this.present = false;
+			TotalFrames = frame;
+			TotalSize = size;
+			Present = false;
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="XingHeader" /> by reading its raw contents.
@@ -116,36 +96,35 @@ namespace TagLib.Mpeg {
 		public XingHeader (ByteVector data)
 		{
 			if (data == null)
-				throw new ArgumentNullException (nameof(data));
-			
+				throw new ArgumentNullException (nameof (data));
+
 			// Check to see if a valid Xing header is available.
 			if (!data.StartsWith (FileIdentifier))
-				throw new CorruptFileException (
-					"Not a valid Xing header");
-			
+				throw new CorruptFileException ("Not a valid Xing header");
+
 			int position = 8;
-			
-			if ((data [7] & 0x01) != 0) {
-				frames = data.Mid (position, 4).ToUInt ();
+
+			if ((data[7] & 0x01) != 0) {
+				TotalFrames = data.Mid (position, 4).ToUInt ();
 				position += 4;
 			} else
-				frames = 0;
-			
-			if ((data [7] & 0x02) != 0) {
-				size = data.Mid (position, 4).ToUInt ();
+				TotalFrames = 0;
+
+			if ((data[7] & 0x02) != 0) {
+				TotalSize = data.Mid (position, 4).ToUInt ();
 				position += 4;
 			} else
-				size = 0;
-			
-			present = true;
+				TotalSize = 0;
+
+			Present = true;
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the total number of frames in the file, as indicated
 		///    by the current instance.
@@ -154,10 +133,8 @@ namespace TagLib.Mpeg {
 		///    A <see cref="uint" /> value containing the number of
 		///    frames in the file, or <c>0</c> if not specified.
 		/// </value>
-		public uint TotalFrames {
-			get {return frames;}
-		}
-		
+		public uint TotalFrames { get; private set; }
+
 		/// <summary>
 		///    Gets the total size of the file, as indicated by the
 		///    current instance.
@@ -166,10 +143,8 @@ namespace TagLib.Mpeg {
 		///    A <see cref="uint" /> value containing the total size of
 		///    the file, or <c>0</c> if not specified.
 		/// </value>
-		public uint TotalSize {
-			get {return size;}
-		}
-		
+		public uint TotalSize { get; private set; }
+
 		/// <summary>
 		///    Gets whether or not a physical Xing header is present in
 		///    the file.
@@ -178,16 +153,14 @@ namespace TagLib.Mpeg {
 		///    A <see cref="bool" /> value indicating whether or not the
 		///    current instance represents a physical Xing header.
 		/// </value>
-		public bool Present {
-			get {return present;}
-		}
-		
+		public bool Present { get; private set; }
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Static Methods
-		
+
 		/// <summary>
 		///    Gets the offset at which a Xing header would appear in an
 		///    MPEG audio packet based on the version and channel mode.
@@ -204,18 +177,16 @@ namespace TagLib.Mpeg {
 		///    A <see cref="int" /> value indicating the offset in an
 		///    MPEG audio packet at which the Xing header would appear.
 		/// </returns>
-		public static int XingHeaderOffset (Version version,
-		                                    ChannelMode channelMode)
+		public static int XingHeaderOffset (Version version, ChannelMode channelMode)
 		{
-			bool single_channel =
-				channelMode == ChannelMode.SingleChannel;
-			
+			bool single_channel = channelMode == ChannelMode.SingleChannel;
+
 			if (version == Version.Version1)
 				return single_channel ? 0x15 : 0x24;
 			else
 				return single_channel ? 0x0D : 0x15;
 		}
-		
+
 		#endregion
 	}
 }

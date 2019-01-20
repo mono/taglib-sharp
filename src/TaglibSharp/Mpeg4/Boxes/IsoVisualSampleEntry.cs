@@ -25,7 +25,8 @@
 using System;
 using System.Globalization;
 
-namespace TagLib.Mpeg4 {
+namespace TagLib.Mpeg4
+{
 	/// <summary>
 	///    This class extends <see cref="IsoSampleEntry" /> and implements
 	///    <see cref="IVideoCodec" /> to provide an implementation of a
@@ -35,30 +36,30 @@ namespace TagLib.Mpeg4 {
 	public class IsoVisualSampleEntry : IsoSampleEntry, IVideoCodec
 	{
 		#region Private Fields
-		
+
 		/// <summary>
 		///    Contains the width of the visual.
 		/// </summary>
-		private ushort width;
-		
+		readonly ushort width;
+
 		/// <summary>
 		///    Contains the height of the visual.
 		/// </summary>
-		private ushort height;
-		
+		readonly ushort height;
+
 		/*
 		/// <summary>
 		///    Contains the children of the box.
 		/// </summary>
 		private BoxList children;
 		*/
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="IsoVisualSampleEntry" /> with a provided header and
@@ -80,25 +81,25 @@ namespace TagLib.Mpeg4 {
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		public IsoVisualSampleEntry (BoxHeader header, TagLib.File file,
-		                             IsoHandlerBox handler)
+									 IsoHandlerBox handler)
 			: base (header, file, handler)
 		{
 			file.Seek (base.DataPosition + 16);
 			width = file.ReadBlock (2).ToUShort ();
 			height = file.ReadBlock (2).ToUShort ();
-			
+
 			/*
 			TODO: What are the children anyway?
 			children = LoadChildren (file);
 			*/
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the position of the data contained in the current
 		///    instance, after any box specific headers.
@@ -108,9 +109,9 @@ namespace TagLib.Mpeg4 {
 		///    the data contained in the current instance.
 		/// </value>
 		protected override long DataPosition {
-			get {return base.DataPosition + 62;}
+			get { return base.DataPosition + 62; }
 		}
-		
+
 		/*
 		/// <summary>
 		///    Gets the children of the current instance.
@@ -123,13 +124,13 @@ namespace TagLib.Mpeg4 {
 			get {return children;}
 		}
 		*/
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region IVideoCodec Properties
-		
+
 		/// <summary>
 		///    Gets the duration of the media represented by the current
 		///    instance.
@@ -138,9 +139,9 @@ namespace TagLib.Mpeg4 {
 		///    Always <see cref="TimeSpan.Zero" />.
 		/// </value>
 		public TimeSpan Duration {
-			get {return TimeSpan.Zero;}
+			get { return TimeSpan.Zero; }
 		}
-		
+
 		/// <summary>
 		///    Gets the types of media represented by the current
 		///    instance.
@@ -149,9 +150,9 @@ namespace TagLib.Mpeg4 {
 		///    Always <see cref="MediaTypes.Video" />.
 		/// </value>
 		public MediaTypes MediaTypes {
-			get {return MediaTypes.Video;}
+			get { return MediaTypes.Video; }
 		}
-		
+
 		/// <summary>
 		///    Gets a text description of the media represented by the
 		///    current instance.
@@ -162,12 +163,10 @@ namespace TagLib.Mpeg4 {
 		/// </value>
 		public string Description {
 			get {
-				return string.Format (
-					CultureInfo.InvariantCulture,
-					"MPEG-4 Video ({0})", BoxType);
+				return string.Format (CultureInfo.InvariantCulture, "MPEG-4 Video ({0})", BoxType);
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the width of the video represented by the current
 		///    instance.
@@ -177,9 +176,9 @@ namespace TagLib.Mpeg4 {
 		///    represented by the current instance.
 		/// </value>
 		public int VideoWidth {
-			get {return width;}
+			get { return width; }
 		}
-		
+
 		/// <summary>
 		///    Gets the height of the video represented by the current
 		///    instance.
@@ -189,9 +188,9 @@ namespace TagLib.Mpeg4 {
 		///    represented by the current instance.
 		/// </value>
 		public int VideoHeight {
-			get {return height;}
+			get { return height; }
 		}
-		
+
 		#endregion
 	}
 }

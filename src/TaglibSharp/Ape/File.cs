@@ -25,7 +25,8 @@
 
 using System;
 
-namespace TagLib.Ape {
+namespace TagLib.Ape
+{
 	/// <summary>
 	///    This class extends <see cref="TagLib.NonContainer.File" /> to
 	///    provide tagging and properties support for Monkey's Audio APE
@@ -38,25 +39,25 @@ namespace TagLib.Ape {
 	///    reversed using the following method:
 	///    <code>file.RemoveTags (file.TagTypes &amp; ~file.TagTypesOnDisk);</code>
 	/// </remarks>
-	[SupportedMimeType("taglib/ape", "ape")]
-	[SupportedMimeType("audio/x-ape")]
-	[SupportedMimeType("audio/ape")]
-	[SupportedMimeType("application/x-ape")]
+	[SupportedMimeType ("taglib/ape", "ape")]
+	[SupportedMimeType ("audio/x-ape")]
+	[SupportedMimeType ("audio/ape")]
+	[SupportedMimeType ("application/x-ape")]
 	public class File : TagLib.NonContainer.File
 	{
 		#region Private Fields
-		
+
 		/// <summary>
 		///    Contains the block with the audio header.
 		/// </summary>
-		private ByteVector header_block = null;
-		
+		ByteVector header_block;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified path in the local file
@@ -78,7 +79,7 @@ namespace TagLib.Ape {
 			: base (path, propertiesStyle)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified path in the local file
@@ -95,7 +96,7 @@ namespace TagLib.Ape {
 			: base (path)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified file abstraction and
@@ -114,8 +115,7 @@ namespace TagLib.Ape {
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle)
+		public File (IFileAbstraction abstraction, ReadStyle propertiesStyle)
 			: base (abstraction, propertiesStyle)
 		{
 		}
@@ -133,17 +133,17 @@ namespace TagLib.Ape {
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public File (File.IFileAbstraction abstraction)
+		public File (IFileAbstraction abstraction)
 			: base (abstraction)
 		{
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Methods
-		
+
 		/// <summary>
 		///    Gets a tag of a specified type from the current instance,
 		///    optionally creating a new tag if possible.
@@ -169,36 +169,35 @@ namespace TagLib.Ape {
 		///    <see cref="TagLib.Ape.Tag" /> will be added to the end of
 		///    the file. All other tag types will be ignored.
 		/// </remarks>
-		public override TagLib.Tag GetTag(TagTypes type, bool create)
+		public override TagLib.Tag GetTag (TagTypes type, bool create)
 		{
 			TagLib.Tag t = (Tag as TagLib.NonContainer.Tag)
 				.GetTag (type);
-			
+
 			if (t != null || !create)
 				return t;
-			
-			switch (type)
-			{
+
+			switch (type) {
 			case TagTypes.Id3v1:
 				return EndTag.AddTag (type, Tag);
-			
+
 			case TagTypes.Id3v2:
 				return StartTag.AddTag (type, Tag);
-			
+
 			case TagTypes.Ape:
 				return EndTag.AddTag (type, Tag);
-			
+
 			default:
 				return null;
 			}
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Protected Methods
-		
+
 		/// <summary>
 		///    Reads format specific information at the start of the
 		///    file.
@@ -212,17 +211,16 @@ namespace TagLib.Ape {
 		///    of accuracy to read the media properties, or <see
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
-		protected override void ReadStart (long start,
-		                                   ReadStyle propertiesStyle)
+		protected override void ReadStart (long start, ReadStyle propertiesStyle)
 		{
 			if (header_block != null &&
 				(propertiesStyle & ReadStyle.Average) == 0)
 				return;
-			
-			Seek(start);
-				header_block = ReadBlock ((int)StreamHeader.Size);
+
+			Seek (start);
+			header_block = ReadBlock ((int)StreamHeader.Size);
 		}
-		
+
 		/// <summary>
 		///    Reads format specific information at the end of the
 		///    file.
@@ -236,13 +234,12 @@ namespace TagLib.Ape {
 		///    of accuracy to read the media properties, or <see
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
-		protected override void ReadEnd (long end,
-		                                 ReadStyle propertiesStyle)
+		protected override void ReadEnd (long end, ReadStyle propertiesStyle)
 		{
 			// Make sure we have an APE tag.
 			GetTag (TagTypes.Ape, true);
 		}
-		
+
 		/// <summary>
 		///    Reads the audio properties from the file represented by
 		///    the current instance.
@@ -265,16 +262,14 @@ namespace TagLib.Ape {
 		///    media properties of the file represented by the current
 		///    instance.
 		/// </returns>
-		protected override Properties ReadProperties (long start,
-		                                              long end,
-		                                              ReadStyle propertiesStyle)
+		protected override Properties ReadProperties (long start, long end, ReadStyle propertiesStyle)
 		{
 			StreamHeader header = new StreamHeader (header_block,
 				end - start);
-			
-			return new Properties(TimeSpan.Zero, header);
+
+			return new Properties (TimeSpan.Zero, header);
 		}
-		
+
 		#endregion
 	}
 }

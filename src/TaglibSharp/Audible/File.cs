@@ -31,42 +31,37 @@ namespace TagLib.Audible
 	///    This class extends <see cref="TagLib.File" /> to provide tagging
 	///    and properties support for Audible inc's aa file format.
 	/// </summary>
-	[SupportedMimeType("audio/x-audible")]
-	[SupportedMimeType("taglib/aa", "aa")]
-	[SupportedMimeType("taglib/aax", "aax")]
+	[SupportedMimeType ("audio/x-audible")]
+	[SupportedMimeType ("taglib/aa", "aa")]
+	[SupportedMimeType ("taglib/aax", "aax")]
 	public class File : TagLib.File
 	{
-		
+
 		#region Private Fields
-		
+
 		/// <summary>
 		///   Contains the tags for the file.
 		/// </summary>
-		private TagLib.Tag tag;
-		
-		/// <summary>
-		///    Contains the media properties.
-		/// </summary>
-		private Properties properties = new Properties();
-		
-		#endregion	
-		
+		readonly TagLib.Tag tag;
+
+		#endregion
+
 		#region Public Static Fields
-		
+
 		/// <summary>
 		///    The offset to the tag block.
 		/// </summary>
 		public const short TagBlockOffset = 0xBD;
-		
+
 		/// <summary>
 		///    The offset to the end of tag pointer.
 		/// </summary>
 		public const short OffsetToEndTagPointer = 0x38;
 
 		#endregion
-		
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified path in the local file
@@ -85,8 +80,7 @@ namespace TagLib.Audible
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		public File (string path, ReadStyle propertiesStyle)
-			: this (new File.LocalFileAbstraction (path),
-				propertiesStyle)
+			: this (new LocalFileAbstraction (path), propertiesStyle)
 		{
 		}
 
@@ -102,10 +96,11 @@ namespace TagLib.Audible
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
-		public File (string path) : this (path, ReadStyle.Average)
+		public File (string path)
+			: this (path, ReadStyle.Average)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified file abstraction and
@@ -127,33 +122,33 @@ namespace TagLib.Audible
 		/// <exception cref="CorruptFileException">
 		///    The file is not the write length.
 		/// </exception>
-		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle) : base (abstraction)
-		{			
-			
+		public File (IFileAbstraction abstraction, ReadStyle propertiesStyle)
+			: base (abstraction)
+		{
+
 			Mode = AccessMode.Read;
-			
+
 			try {
 				// get the pointer to the end of the tag block
 				// and calculate the tag block length
 				Seek (OffsetToEndTagPointer);
-				int tagLen = ( (int) ReadBlock(4).ToUInt(true) ) - TagBlockOffset;
-				
+				int tagLen = ((int)ReadBlock (4).ToUInt (true)) - TagBlockOffset;
+
 				// read the whole tag and send to Tag class
 				Seek (TagBlockOffset);
-				ByteVector bv = ReadBlock(tagLen);
-				
-				tag = new  TagLib.Audible.Tag( bv );
-				
+				ByteVector bv = ReadBlock (tagLen);
+
+				tag = new Tag (bv);
+
 			} finally {
 				Mode = AccessMode.Closed;
 			}
-			
+
 			// ??
 			TagTypesOnDisk = TagTypes;
-			
+
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified file abstraction with an
@@ -167,15 +162,15 @@ namespace TagLib.Audible
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public File (File.IFileAbstraction abstraction)
+		public File (IFileAbstraction abstraction)
 			: this (abstraction, ReadStyle.Average)
 		{
 		}
-		
+
 		#endregion
-		
+
 		#region Public Methods
-		
+
 		/// <summary>
 		///    Saves the changes made in the current instance to the
 		///    file it represents.
@@ -187,7 +182,7 @@ namespace TagLib.Audible
 		public override void Save ()
 		{
 		}
-		
+
 		/// <summary>
 		///    Removes a set of tag types from the current instance.
 		/// </summary>
@@ -203,10 +198,10 @@ namespace TagLib.Audible
 		/// 	Currently this does not work as there is not enough
 		/// 	information about the file format
 		/// </remarks>
-		public override void RemoveTags (TagLib.TagTypes types)
+		public override void RemoveTags (TagTypes types)
 		{
 		}
-		
+
 		/// <summary>
 		///    Gets a tag of a specified type from the current instance,
 		///    optionally creating a new tag if possible.
@@ -229,16 +224,16 @@ namespace TagLib.Audible
 		{
 			if (type == TagTypes.AudibleMetadata)
 				return tag;
-			
+
 			return null;
 
 		}
-#endregion
-		
-		
-		
+		#endregion
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets a abstract representation of all tags stored in the
 		///    current instance.
@@ -248,9 +243,9 @@ namespace TagLib.Audible
 		///    stored in the current instance.
 		/// </value>
 		public override TagLib.Tag Tag {
-			get {return tag;}
+			get { return tag; }
 		}
-		
+
 		/// <summary>
 		///    Gets the media properties of the file represented by the
 		///    current instance.
@@ -260,11 +255,8 @@ namespace TagLib.Audible
 		///    media properties of the file represented by the current
 		///    instance.
 		/// </value>
-		public override TagLib.Properties Properties {
-			get {return properties;}
-		}
-		
+		public override Properties Properties { get; } = new Properties ();
+
 		#endregion
-		
 	}
 }

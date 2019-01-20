@@ -1,6 +1,7 @@
 namespace TaglibSharp.Tests.Images.Validators
 {
-	public interface IMetadataInvariantValidator {
+	public interface IMetadataInvariantValidator
+	{
 		/// <summary>
 		///    Validate any metadata assumptions that should always
 		///    hold (and thus never change upon modification).

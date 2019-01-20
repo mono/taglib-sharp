@@ -1,12 +1,12 @@
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
 using TagLib;
 using TagLib.Mpeg4;
 using File = TagLib.Mpeg4.File;
 
 namespace TaglibSharp.Tests.FileFormats
-{   
+{
 	[TestFixture]
 	public class M4aFormatTest : IFormatTest
 	{
@@ -17,18 +17,18 @@ namespace TaglibSharp.Tests.FileFormats
 
 			}
 
-			public new List<IsoUserDataBox>  UdtaBoxes => base.UdtaBoxes;
+			public new List<IsoUserDataBox> UdtaBoxes => base.UdtaBoxes;
 		}
 
 		static readonly string sample_file = TestPath.Samples + "sample.m4a";
 		static readonly string tmp_file = TestPath.Samples + "tmpwrite.m4a";
 		static readonly string aac_broken_tags = TestPath.Samples + "bgo_658920.m4a";
 		TagLib.File file;
-		
+
 		[OneTimeSetUp]
-		public void Init()
+		public void Init ()
 		{
-			file = TagLib.File.Create(sample_file);
+			file = TagLib.File.Create (sample_file);
 		}
 
 		[Test]
@@ -40,7 +40,7 @@ namespace TaglibSharp.Tests.FileFormats
 			TagLib.File.Create (TestPath.Samples + "apple_tags.m4a");
 		}
 
-		
+
 		[Test]
 		public void bgo_676934 ()
 		{
@@ -65,34 +65,34 @@ namespace TaglibSharp.Tests.FileFormats
 			var file = new Mpeg4TestFile (aac_broken_tags);
 			Assert.AreEqual (2, file.UdtaBoxes.Count, "#1");
 
-			var first = file.UdtaBoxes [0];
+			var first = file.UdtaBoxes[0];
 			Assert.AreEqual (1, first.Children.Count (), "#2");
 
-			Assert.IsInstanceOf<AppleAdditionalInfoBox>(first.Children.First ());
-			var child = (AppleAdditionalInfoBox) first.Children.First ();
+			Assert.IsInstanceOf<AppleAdditionalInfoBox> (first.Children.First ());
+			var child = (AppleAdditionalInfoBox)first.Children.First ();
 			Assert.AreEqual ((ReadOnlyByteVector)"name", child.BoxType, "#3");
-			Assert.AreEqual (0 , child.Data.Count, "#4");
+			Assert.AreEqual (0, child.Data.Count, "#4");
 		}
 
 		[Test]
-		public void ReadAudioProperties()
+		public void ReadAudioProperties ()
 		{
 			StandardTests.ReadAudioProperties (file);
 		}
-		
+
 		[Test]
-		public void ReadTags()
+		public void ReadTags ()
 		{
-			Assert.AreEqual("M4A album", file.Tag.Album);
-			Assert.AreEqual("M4A artist", file.Tag.FirstPerformer);
-			Assert.AreEqual("M4A comment", file.Tag.Comment);
-			Assert.AreEqual("Acid Punk", file.Tag.FirstGenre);
-			Assert.AreEqual("M4A title", file.Tag.Title);
-			Assert.AreEqual(6, file.Tag.Track);
+			Assert.AreEqual ("M4A album", file.Tag.Album);
+			Assert.AreEqual ("M4A artist", file.Tag.FirstPerformer);
+			Assert.AreEqual ("M4A comment", file.Tag.Comment);
+			Assert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
+			Assert.AreEqual ("M4A title", file.Tag.Title);
+			Assert.AreEqual (6, file.Tag.Track);
 			//Assert.AreEqual(7, file.Tag.TrackCount);
-			Assert.AreEqual(1234, file.Tag.Year);
-		}       
-		
+			Assert.AreEqual (1234, file.Tag.Year);
+		}
+
 		[Test]
 		public void WriteStandardTags ()
 		{
@@ -100,13 +100,13 @@ namespace TaglibSharp.Tests.FileFormats
 		}
 
 		[Test]
-		public void WriteExtendedTags()
+		public void WriteExtendedTags ()
 		{
-			ExtendedTests.WriteExtendedTags(sample_file, tmp_file);
+			ExtendedTests.WriteExtendedTags (sample_file, tmp_file);
 		}
 
 		[Test]
-		public void TestCorruptionResistance()
+		public void TestCorruptionResistance ()
 		{
 			StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/a.m4a");
 		}

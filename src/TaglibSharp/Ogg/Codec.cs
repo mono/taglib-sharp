@@ -38,8 +38,8 @@ namespace TagLib.Ogg
 	/// <seealso cref="AddCodecProvider" />
 	public abstract class Codec : ICodec
 	{
-#region Public Delegates
-		
+		#region Public Delegates
+
 		/// <summary>
 		///    Represents a method capable of checking an Ogg header
 		///    packet to see it is matches a given codec.
@@ -78,25 +78,24 @@ namespace TagLib.Ogg
 		///    </code>
 		/// </example>
 		public delegate Codec CodecProvider (ByteVector packet);
-		
-#endregion
-		
-		
-		
-#region Private Static Fields
-		
+
+		#endregion
+
+
+
+		#region Private Static Fields
+
 		/// <summary>
 		///    Contains registered codec providers.
 		/// </summary>
-		private static List<CodecProvider> providers =
-			new List<CodecProvider> ();
-		
-#endregion
-		
-		
-		
-#region Private Static Methods
-		
+		static readonly List<CodecProvider> providers = new List<CodecProvider> ();
+
+		#endregion
+
+
+
+		#region Private Static Methods
+
 		/// <summary>
 		///    Determines the correct codec to use for a stream header
 		///    packet.
@@ -122,27 +121,27 @@ namespace TagLib.Ogg
 		public static Codec GetCodec (ByteVector packet)
 		{
 			Codec c = null;
-			
+
 			foreach (CodecProvider p in providers) {
 				c = p (packet);
 				if (c != null) return c;
 			}
-			
+
 			c = Codecs.Vorbis.FromPacket (packet);
 			if (c != null)
 				return c;
-			
+
 			c = Codecs.Theora.FromPacket (packet);
 			if (c != null)
 				return c;
-			
+
 			c = Codecs.Opus.FromPacket (packet);
 			if (c != null)
 				return c;
 
 			throw new UnsupportedFormatException ("Unknown codec.");
 		}
-		
+
 		/// <summary>
 		///    Adds a codec 
 		/// </summary>
@@ -159,13 +158,13 @@ namespace TagLib.Ogg
 		{
 			providers.Insert (0, provider);
 		}
-		
-#endregion
-		
-		
-		
-#region Private Properties
-		
+
+		#endregion
+
+
+
+		#region Private Properties
+
 		/// <summary>
 		///    Gets a text description of the media represented by the
 		///    current instance.
@@ -174,8 +173,8 @@ namespace TagLib.Ogg
 		///    A <see cref="string" /> object containing a description
 		///    of the media represented by the current instance.
 		/// </value>
-		public abstract string Description {get;}
-		
+		public abstract string Description { get; }
+
 		/// <summary>
 		///    Gets the types of media represented by the current
 		///    instance.
@@ -184,8 +183,8 @@ namespace TagLib.Ogg
 		///    A bitwise combined <see cref="MediaTypes" /> containing
 		///    the types of media represented by the current instance.
 		/// </value>
-		public abstract MediaTypes MediaTypes {get;}
-		
+		public abstract MediaTypes MediaTypes { get; }
+
 		/// <summary>
 		///    Gets the raw Xiph comment data contained in the codec.
 		/// </summary>
@@ -193,8 +192,8 @@ namespace TagLib.Ogg
 		///    A <see cref="ByteVector" /> object containing a raw Xiph
 		///    comment or <see langword="null"/> if none was found.
 		/// </value>
-		public abstract ByteVector CommentData {get;}
-		
+		public abstract ByteVector CommentData { get; }
+
 		/// <summary>
 		///    Gets the duration of the media represented by the current
 		///    instance.
@@ -208,15 +207,15 @@ namespace TagLib.Ogg
 		///    cref="GetDuration" />.
 		/// </remarks>
 		public TimeSpan Duration {
-			get {return TimeSpan.Zero;}
+			get { return TimeSpan.Zero; }
 		}
-		
-#endregion
-		
-		
-		
-#region Private Methods
-		
+
+		#endregion
+
+
+
+		#region Private Methods
+
 		/// <summary>
 		///    Reads a Ogg packet that has been encountered in the
 		///    stream.
@@ -246,7 +245,7 @@ namespace TagLib.Ogg
 		///    codec represented by the current instance.
 		/// </exception>
 		public abstract bool ReadPacket (ByteVector packet, int index);
-		
+
 		/// <summary>
 		///    Computes the duration of the stream using the first and
 		///    last granular positions of the stream.
@@ -263,9 +262,8 @@ namespace TagLib.Ogg
 		///    A <see cref="TimeSpan" /> value containing the duration
 		///    of the stream.
 		/// </returns>
-		public abstract TimeSpan GetDuration (long firstGranularPosition,
-		                                      long lastGranularPosition);
-		
+		public abstract TimeSpan GetDuration (long firstGranularPosition, long lastGranularPosition);
+
 		/// <summary>
 		///    Replaces the comment packet in a collection of packets
 		///    with the rendered version of a Xiph comment or inserts a
@@ -283,9 +281,8 @@ namespace TagLib.Ogg
 		///    <paramref name="packets" /> or <paramref name="comment"
 		///    /> is <see langword="null" />.
 		/// </exception>
-		public abstract void SetCommentPacket (ByteVectorCollection packets,
-		                                       XiphComment comment);
-		
-#endregion
+		public abstract void SetCommentPacket (ByteVectorCollection packets, XiphComment comment);
+
+		#endregion
 	}
 }

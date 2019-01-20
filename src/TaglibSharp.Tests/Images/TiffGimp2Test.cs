@@ -1,10 +1,10 @@
 using NUnit.Framework;
-using TaglibSharp.Tests.Images.Validators;
 using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
 using TagLib.IFD.Tags;
 using TagLib.Xmp;
+using TaglibSharp.Tests.Images.Validators;
 
 namespace TaglibSharp.Tests.Images
 {
@@ -35,112 +35,112 @@ namespace TaglibSharp.Tests.Images
 
 			// Image.0x00FE (NewSubfileType/Long/1) "0"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.NewSubfileType);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.NewSubfileType);
 				Assert.IsNotNull (entry, "Entry 0x00FE missing in IFD 0");
 				Assert.IsNotNull (entry as LongIFDEntry, "Entry is not a long!");
 				Assert.AreEqual (0, (entry as LongIFDEntry).Value);
 			}
 			// Image.0x0100 (ImageWidth/Short/1) "10"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.ImageWidth);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.ImageWidth);
 				Assert.IsNotNull (entry, "Entry 0x0100 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (10, (entry as ShortIFDEntry).Value);
 			}
 			// Image.0x0101 (ImageLength/Short/1) "10"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.ImageLength);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.ImageLength);
 				Assert.IsNotNull (entry, "Entry 0x0101 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (10, (entry as ShortIFDEntry).Value);
 			}
 			// Image.0x0102 (BitsPerSample/Short/3) "8 8 8"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.BitsPerSample);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.BitsPerSample);
 				Assert.IsNotNull (entry, "Entry 0x0102 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortArrayIFDEntry, "Entry is not a short array!");
-				Assert.AreEqual (new ushort [] { 8, 8, 8 }, (entry as ShortArrayIFDEntry).Values);
+				Assert.AreEqual (new ushort[] { 8, 8, 8 }, (entry as ShortArrayIFDEntry).Values);
 			}
 			// Image.0x0103 (Compression/Short/1) "5"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.Compression);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.Compression);
 				Assert.IsNotNull (entry, "Entry 0x0103 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (5, (entry as ShortIFDEntry).Value);
 			}
 			// Image.0x0106 (PhotometricInterpretation/Short/1) "2"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.PhotometricInterpretation);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.PhotometricInterpretation);
 				Assert.IsNotNull (entry, "Entry 0x0106 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (2, (entry as ShortIFDEntry).Value);
 			}
 			// Image.0x010D (DocumentName/Ascii/30) "/home/ruben/Desktop/test.tiff"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.DocumentName);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.DocumentName);
 				Assert.IsNotNull (entry, "Entry 0x010D missing in IFD 0");
 				Assert.IsNotNull (entry as StringIFDEntry, "Entry is not a string!");
 				Assert.AreEqual ("/home/ruben/Desktop/test.tiff", (entry as StringIFDEntry).Value);
 			}
 			// Image.0x010E (ImageDescription/Ascii/18) "Created with GIMP"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.ImageDescription);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.ImageDescription);
 				Assert.IsNotNull (entry, "Entry 0x010E missing in IFD 0");
 				Assert.IsNotNull (entry as StringIFDEntry, "Entry is not a string!");
 				Assert.AreEqual ("Created with GIMP", (entry as StringIFDEntry).Value);
 			}
 			// Image.0x010F (Make/Ascii/6) "Canon"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.Make);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.Make);
 				Assert.IsNotNull (entry, "Entry 0x010F missing in IFD 0");
 				Assert.IsNotNull (entry as StringIFDEntry, "Entry is not a string!");
 				Assert.AreEqual ("Canon", (entry as StringIFDEntry).Value);
 			}
 			// Image.0x0110 (Model/Ascii/26) "Canon DIGITAL IXUS 850 IS"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.Model);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.Model);
 				Assert.IsNotNull (entry, "Entry 0x0110 missing in IFD 0");
 				Assert.IsNotNull (entry as StringIFDEntry, "Entry is not a string!");
 				Assert.AreEqual ("Canon DIGITAL IXUS 850 IS", (entry as StringIFDEntry).Value);
 			}
 			// Image.0x0111 (StripOffsets/StripOffsets/1) "6980"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.StripOffsets);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.StripOffsets);
 				Assert.IsNotNull (entry, "Entry 0x0111 missing in IFD 0");
 				Assert.IsNotNull (entry as StripOffsetsIFDEntry, "Entry is not a strip offsets entry!");
 				Assert.AreEqual (1, (entry as StripOffsetsIFDEntry).Values.Length);
 			}
 			// Image.0x0112 (Orientation/Short/1) "1"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.Orientation);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.Orientation);
 				Assert.IsNotNull (entry, "Entry 0x0112 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (1, (entry as ShortIFDEntry).Value);
 			}
 			// Image.0x0115 (SamplesPerPixel/Short/1) "3"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.SamplesPerPixel);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.SamplesPerPixel);
 				Assert.IsNotNull (entry, "Entry 0x0115 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (3, (entry as ShortIFDEntry).Value);
 			}
 			// Image.0x0116 (RowsPerStrip/Short/1) "64"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.RowsPerStrip);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.RowsPerStrip);
 				Assert.IsNotNull (entry, "Entry 0x0116 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (64, (entry as ShortIFDEntry).Value);
 			}
 			// Image.0x0117 (StripByteCounts/Long/1) "49"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.StripByteCounts);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.StripByteCounts);
 				Assert.IsNotNull (entry, "Entry 0x0117 missing in IFD 0");
 				Assert.IsNotNull (entry as LongIFDEntry, "Entry is not a long!");
 				Assert.AreEqual (49, (entry as LongIFDEntry).Value);
 			}
 			// Image.0x011A (XResolution/Rational/1) "1207959552/16777216"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.XResolution);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.XResolution);
 				Assert.IsNotNull (entry, "Entry 0x011A missing in IFD 0");
 				Assert.IsNotNull (entry as RationalIFDEntry, "Entry is not a rational!");
 				Assert.AreEqual (1207959552, (entry as RationalIFDEntry).Value.Numerator);
@@ -148,7 +148,7 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Image.0x011B (YResolution/Rational/1) "1207959552/16777216"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.YResolution);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.YResolution);
 				Assert.IsNotNull (entry, "Entry 0x011B missing in IFD 0");
 				Assert.IsNotNull (entry as RationalIFDEntry, "Entry is not a rational!");
 				Assert.AreEqual (1207959552, (entry as RationalIFDEntry).Value.Numerator);
@@ -156,59 +156,59 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Image.0x011C (PlanarConfiguration/Short/1) "1"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.PlanarConfiguration);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.PlanarConfiguration);
 				Assert.IsNotNull (entry, "Entry 0x011C missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (1, (entry as ShortIFDEntry).Value);
 			}
 			// Image.0x0128 (ResolutionUnit/Short/1) "2"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.ResolutionUnit);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.ResolutionUnit);
 				Assert.IsNotNull (entry, "Entry 0x0128 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (2, (entry as ShortIFDEntry).Value);
 			}
 			// Image.0x0131 (Software/Ascii/20) "CHDK ver. 0.9.8-782"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.Software);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.Software);
 				Assert.IsNotNull (entry, "Entry 0x0131 missing in IFD 0");
 				Assert.IsNotNull (entry as StringIFDEntry, "Entry is not a string!");
 				Assert.AreEqual ("CHDK ver. 0.9.8-782", (entry as StringIFDEntry).Value);
 			}
 			// Image.0x0132 (DateTime/Ascii/20) "2009:07:05 19:33:52"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.DateTime);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.DateTime);
 				Assert.IsNotNull (entry, "Entry 0x0132 missing in IFD 0");
 				Assert.IsNotNull (entry as StringIFDEntry, "Entry is not a string!");
 				Assert.AreEqual ("2009:07:05 19:33:52", (entry as StringIFDEntry).Value);
 			}
 			// Image.0x013D (0x013d/Short/1) "2"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.Predictor);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.Predictor);
 				Assert.IsNotNull (entry, "Entry 0x013D missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (2, (entry as ShortIFDEntry).Value);
 			}
 			// Image.0x02BC (XMLPacket/XMLPacket/6285) "60 63 120 112 97 99 107 101 116 32 98 101 103 105 110 61 34 239 187 191 34 32 105 100 61 34 87 53 77 48 77 112 67 101 104 105 72 122 114 101 83 122 78 84 99 122 107 99 57 100 34 63 62 10 60 120 58 120 109 112 109 101 116 97 32 120 109 108 110 115 58 120 61 34 97 100 111 98 101 58 110 115 58 109 101 116 97 47 34 32 120 58 120 109 112 116 107 61 34 88 77 80 32 67 111 114 101 32 52 46 49 46 49 45 69 120 105 118 50 34 62 10 32 60 114 100 102 58 82 68 70 32 120 109 108 110 115 58 114 100 102 61 34 104 116 116 112 58 47 47 119 119 119 46 119 51 46 111 114 103 47 49 57 57 57 47 48 50 47 50 50 45 114 100 102 45 115 121 110 116 97 120 45 110 115 35 34 62 10 32 32 60 114 100 102 58 68 101 115 99 114 105 112 116 105 111 110 32 114 100 102 58 97 98 111 117 116 61 34 34 10 32 32 32 32 120 109 108 110 115 58 101 120 105 102 61 34 104 116 116 112 58 47 47 110 115 46 97 100 111 98 101 46 99 111 109 47 101 120 105 102 47 49 46 48 47 34 10 32 32 32 32 120 109 108 110 115 58 120 97 112 61 34 104 116 116 112 58 47 47 110 115 46 97 100 111 98 101 46 99 111 109 47 120 97 112 47 49 46 48 47 34 10 32 32 32 32 120 109 108 110 115 58 99 114 115 61 34 104 116 116 112 58 47 47 110 115 46 97 100 111 98 101 46 99 111 109 47 99 97 109 101 114 97 45 114 97 119 45 115 101 116 116 105 110 103 115 47 49 46 48 47 34 10 32 32 32 32 120 109 108 110 115 58 116 105 102 102 61 34 104 116 116 112 58 47 47 110 115 46 97 100 111 98 101 46 99 111 109 47 116 105 102 102 47 49 46 48 47 34 10 32 32 32 32 120 109 108 110 115 58 100 99 61 34 104 116 116 112 58 47 47 112 117 114 108 46 111 114 103 47 100 99 47 101 108 101 109 101 110 116 115 47 49 46 49 47 34 10 32 32 32 101 120 105 102 58 69 120 105 102 86 101 114 115 105 111 110 61 34 48 50 50 49 34 10 32 32 32 101 120 105 102 58 68 97 116 101 84 105 109 101 79 114 105 103 105 110 97 108 61 34 50 48 48 57 45 48 55 45 48 53 84 49 57 58 51 51 58 53 50 34 10 32 32 32 101 120 105 102 58 69 120 112 111 115 117 114 101 84 105 109 101 61 34 49 47 51 48 34 10 32 32 32 101 120 105 102 58 70 78 117 109 98 101 114 61 34 50 56 47 49 48 34 10 32 32 32 101 120 105 102 58 69 120 112 111 115 117 114 101 80 114 111 103 114 97 109 61 34 48 34 10 32 32 32 101 120 105 102 58 83 104 117 116 116 101 114 83 112 101 101 100 86 97 108 117 101 61 34 52 57 48 54 56 57 49 47 49 48 48 48 48 48 48 34 10 32 32 32 101 120 105 102 58 65 112 101 114 116 117 114 101 86 97 108 117 101 61 34 50 57 55 48 56 53 52 47 49 48 48 48 48 48 48 34 10 32 32 32 101 120 105 102 58 69 120 112 111 115 117 114 101 66 105 97 115 86 97 108 117 101 61 34 45 57 54 47 57 54 34 10 32 32 32 101 120 105 102 58 77 97 120 65 112 101 114 116 117 114 101 86 97 108 117 101 61 34 50 57 51 47 57 54 34 10 32 32 32 101 120 105 102 58 77 101 116 101 114 105 110 103 77 111 100 101 61 34 53 34 10 32 32 32 101 120 105 102 58 70 111 99 97 108 76 101 110 103 116 104 61 34 52 54 48 48 47 49 48 48 48 34 10 32 32 32 101 120 105 102 58 70 111 99 97 108 76 101 110 103 116 104 73 110 51 53 109 109 70 105 108 109 61 34 50 55 34 10 32 32 32 120 97 112 58 77 111 100 105 102 121 68 97 116 101 61 34 50 48 48 57 45 48 55 45 48 53 84 49 57 58 51 51 58 53 50 43 48 51 58 48 48 34 10 32 32 32 120 97 112 58 67 114 101 97 116 111 114 84 111 111 108 61 34 67 72 68 75 32 118 101 114 46 32 48 46 57 46 56 45 55 56 50 34 10 32 32 32 120 97 112 58 82 97 116 105 110 103 61 34 48 34 10 32 32 32 99 114 115 58 86 101 114 115 105 111 110 61 34 51 46 55 34 10 32 32 32 99 114 115 58 87 104 105 116 101 66 97 108 97 110 99 101 61 34 67 117 115 116 111 109 34 10 32 32 32 99 114 115 58 84 101 109 112 101 114 97 116 117 114 101 61 34 54 53 53 48 34 10 32 32 32 99 114 115 58 84 105 110 116 61 34 43 49 53 48 34 10 32 32 32 99 114 115 58 69 120 112 111 115 117 114 101 61 34 48 46 48 48 34 10 32 32 32 99 114 115 58 83 104 97 100 111 119 115 61 34 53 34 10 32 32 32 99 114 115 58 66 114 105 103 104 116 110 101 115 115 61 34 43 53 48 34 10 32 32 32 99 114 115 58 67 111 110 116 114 97 115 116 61 34 43 50 53 34 10 32 32 32 99 114 115 58 83 97 116 117 114 97 116 105 111 110 61 34 48 34 10 32 32 32 99 114 115 58 83 104 97 114 112 110 101 115 115 61 34 50 53 34 10 32 32 32 99 114 115 58 76 117 109 105 110 97 110 99 101 83 109 111 111 116 104 105 110 103 61 34 51 49 34 10 32 32 32 99 114 115 58 67 111 108 111 114 78 111 105 115 101 82 101 100 117 99 116 105 111 110 61 34 49 57 34 10 32 32 32 99 114 115 58 67 104 114 111 109 97 116 105 99 65 98 101 114 114 97 116 105 111 110 82 61 34 48 34 10 32 32 32 99 114 115 58 67 104 114 111 109 97 116 105 99 65 98 101 114 114 97 116 105 111 110 66 61 34 48 34 10 32 32 32 99 114 115 58 86 105 103 110 101 116 116 101 65 109 111 117 110 116 61 34 48 34 10 32 32 32 99 114 115 58 83 104 97 100 111 119 84 105 110 116 61 34 43 49 48 48 34 10 32 32 32 99 114 115 58 82 101 100 72 117 101 61 34 43 51 51 34 10 32 32 32 99 114 115 58 82 101 100 83 97 116 117 114 97 116 105 111 110 61 34 45 51 51 34 10 32 32 32 99 114 115 58 71 114 101 101 110 72 117 101 61 34 45 49 48 48 34 10 32 32 32 99 114 115 58 71 114 101 101 110 83 97 116 117 114 97 116 105 111 110 61 34 45 49 48 48 34 10 32 32 32 99 114 115 58 66 108 117 101 72 117 101 61 34 43 49 48 48 34 10 32 32 32 99 114 115 58 66 108 117 101 83 97 116 117 114 97 116 105 111 110 61 34 43 51 51 34 10 32 32 32 99 114 115 58 70 105 108 108 76 105 103 104 116 61 34 48 34 10 32 32 32 99 114 115 58 86 105 98 114 97 110 99 101 61 34 48 34 10 32 32 32 99 114 115 58 72 105 103 104 108 105 103 104 116 82 101 99 111 118 101 114 121 61 34 48 34 10 32 32 32 99 114 115 58 72 117 101 65 100 106 117 115 116 109 101 110 116 82 101 100 61 34 48 34 10 32 32 32 99 114 115 58 72 117 101 65 100 106 117 115 116 109 101 110 116 79 114 97 110 103 101 61 34 48 34 10 32 32 32 99 114 115 58 72 117 101 65 100 106 117 115 116 109 101 110 116 89 101 108 108 111 119 61 34 48 34 10 32 32 32 99 114 115 58 72 117 101 65 100 106 117 115 116 109 101 110 116 71 114 101 101 110 61 34 48 34 10 32 32 32 99 114 115 58 72 117 101 65 100 106 117 115 116 109 101 110 116 65 113 117 97 61 34 48 34 10 32 32 32 99 114 115 58 72 117 101 65 100 106 117 115 116 109 101 110 116 66 108 117 101 61 34 48 34 10 32 32 32 99 114 115 58 72 117 101 65 100 106 117 115 116 109 101 110 116 80 117 114 112 108 101 61 34 48 34 10 32 32 32 99 114 115 58 72 117 101 65 100 106 117 115 116 109 101 110 116 77 97 103 101 110 116 97 61 34 48 34 10 32 32 32 99 114 115 58 83 97 116 117 114 97 116 105 111 110 65 100 106 117 115 116 109 101 110 116 82 101 100 61 34 48 34 10 32 32 32 99 114 115 58 83 97 116 117 114 97 116 105 111 110 65 100 106 117 115 116 109 101 110 116 79 114 97 110 103 101 61 34 48 34 10 32 32 32 99 114 115 58 83 97 116 117 114 97 116 105 111 110 65 100 106 117 115 116 109 101 110 116 89 101 108 108 111 119 61 34 48 34 10 32 32 32 99 114 115 58 83 97 116 117 114 97 116 105 111 110 65 100 106 117 115 116 109 101 110 116 71 114 101 101 110 61 34 48 34 10 32 32 32 99 114 115 58 83 97 116 117 114 97 116 105 111 110 65 100 106 117 115 116 109 101 110 116 65 113 117 97 61 34 48 34 10 32 32 32 99 114 115 58 83 97 116 117 114 97 116 105 111 110 65 100 106 117 115 116 109 101 110 116 66 108 117 101 61 34 48 34 10 32 32 32 99 114 115 58 83 97 116 117 114 97 116 105 111 110 65 100 106 117 115 116 109 101 110 116 80 117 114 112 108 101 61 34 48 34 10 32 32 32 99 114 115 58 83 97 116 117 114 97 116 105 111 110 65 100 106 117 115 116 109 101 110 116 77 97 103 101 110 116 97 61 34 48 34 10 32 32 32 99 114 115 58 76 117 109 105 110 97 110 99 101 65 100 106 117 115 116 109 101 110 116 82 101 100 61 34 48 34 10 32 32 32 99 114 115 58 76 117 109 105 110 97 110 99 101 65 100 106 117 115 116 109 101 110 116 79 114 97 110 103 101 61 34 48 34 10 32 32 32 99 114 115 58 76 117 109 105 110 97 110 99 101 65 100 106 117 115 116 109 101 110 116 89 101 108 108 111 119 61 34 48 34 10 32 32 32 99 114 115 58 76 117 109 105 110 97 110 99 101 65 100 106 117 115 116 109 101 110 116 71 114 101 101 110 61 34 48 34 10 32 32 32 99 114 115 58 76 117 109 105 110 97 110 99 101 65 100 106 117 115 116 109 101 110 116 65 113 117 97 61 34 48 34 10 32 32 32 99 114 115 58 76 117 109 105 110 97 110 99 101 65 100 106 117 115 116 109 101 110 116 66 108 117 101 61 34 48 34 10 32 32 32 99 114 115 58 76 117 109 105 110 97 110 99 101 65 100 106 117 115 116 109 101 110 116 80 117 114 112 108 101 61 34 48 34 10 32 32 32 99 114 115 58 76 117 109 105 110 97 110 99 101 65 100 106 117 115 116 109 101 110 116 77 97 103 101 110 116 97 61 34 48 34 10 32 32 32 99 114 115 58 83 112 108 105 116 84 111 110 105 110 103 83 104 97 100 111 119 72 117 101 61 34 48 34 10 32 32 32 99 114 115 58 83 112 108 105 116 84 111 110 105 110 103 83 104 97 100 111 119 83 97 116 117 114 97 116 105 111 110 61 34 48 34 10 32 32 32 99 114 115 58 83 112 108 105 116 84 111 110 105 110 103 72 105 103 104 108 105 103 104 116 72 117 101 61 34 48 34 10 32 32 32 99 114 115 58 83 112 108 105 116 84 111 110 105 110 103 72 105 103 104 108 105 103 104 116 83 97 116 117 114 97 116 105 111 110 61 34 48 34 10 32 32 32 99 114 115 58 83 112 108 105 116 84 111 110 105 110 103 66 97 108 97 110 99 101 61 34 48 34 10 32 32 32 99 114 115 58 80 97 114 97 109 101 116 114 105 99 83 104 97 100 111 119 115 61 34 48 34 10 32 32 32 99 114 115 58 80 97 114 97 109 101 116 114 105 99 68 97 114 107 115 61 34 48 34 10 32 32 32 99 114 115 58 80 97 114 97 109 101 116 114 105 99 76 105 103 104 116 115 61 34 48 34 10 32 32 32 99 114 115 58 80 97 114 97 109 101 116 114 105 99 72 105 103 104 108 105 103 104 116 115 61 34 48 34 10 32 32 32 99 114 115 58 80 97 114 97 109 101 116 114 105 99 83 104 97 100 111 119 83 112 108 105 116 61 34 50 53 34 10 32 32 32 99 114 115 58 80 97 114 97 109 101 116 114 105 99 77 105 100 116 111 110 101 83 112 108 105 116 61 34 53 48 34 10 32 32 32 99 114 115 58 80 97 114 97 109 101 116 114 105 99 72 105 103 104 108 105 103 104 116 83 112 108 105 116 61 34 55 53 34 10 32 32 32 99 114 115 58 67 111 110 118 101 114 116 84 111 71 114 97 121 115 99 97 108 101 61 34 70 97 108 115 101 34 10 32 32 32 99 114 115 58 84 111 110 101 67 117 114 118 101 78 97 109 101 61 34 67 117 115 116 111 109 34 10 32 32 32 99 114 115 58 67 97 109 101 114 97 80 114 111 102 105 108 101 61 34 69 109 98 101 100 100 101 100 34 10 32 32 32 99 114 115 58 72 97 115 83 101 116 116 105 110 103 115 61 34 84 114 117 101 34 10 32 32 32 99 114 115 58 72 97 115 67 114 111 112 61 34 70 97 108 115 101 34 10 32 32 32 99 114 115 58 65 108 114 101 97 100 121 65 112 112 108 105 101 100 61 34 70 97 108 115 101 34 10 32 32 32 116 105 102 102 58 73 109 97 103 101 87 105 100 116 104 61 34 50 53 54 34 10 32 32 32 116 105 102 102 58 73 109 97 103 101 76 101 110 103 116 104 61 34 49 57 50 34 10 32 32 32 116 105 102 102 58 67 111 109 112 114 101 115 115 105 111 110 61 34 49 34 10 32 32 32 116 105 102 102 58 80 104 111 116 111 109 101 116 114 105 99 73 110 116 101 114 112 114 101 116 97 116 105 111 110 61 34 50 34 10 32 32 32 116 105 102 102 58 79 114 105 101 110 116 97 116 105 111 110 61 34 49 34 10 32 32 32 116 105 102 102 58 83 97 109 112 108 101 115 80 101 114 80 105 120 101 61 34 51 34 10 32 32 32 116 105 102 102 58 80 108 97 110 97 114 67 111 110 102 105 103 117 114 97 116 105 111 110 61 34 49 34 10 32 32 32 116 105 102 102 58 68 97 116 101 84 105 109 101 61 34 50 48 48 57 45 48 55 45 48 53 84 49 57 58 51 51 58 53 50 34 10 32 32 32 116 105 102 102 58 77 97 107 101 61 34 67 97 110 111 110 34 10 32 32 32 116 105 102 102 58 77 111 100 101 108 61 34 67 97 110 111 110 32 68 73 71 73 84 65 76 32 73 88 85 83 32 56 53 48 32 73 83 34 10 32 32 32 116 105 102 102 58 83 111 102 116 119 97 114 101 61 34 67 72 68 75 32 118 101 114 46 32 48 46 57 46 56 45 55 56 50 34 62 10 32 32 32 60 101 120 105 102 58 70 108 97 115 104 10 32 32 32 32 101 120 105 102 58 70 105 114 101 100 61 34 70 97 108 115 101 34 10 32 32 32 32 101 120 105 102 58 82 101 116 117 114 110 61 34 48 34 10 32 32 32 32 101 120 105 102 58 77 111 100 101 61 34 50 34 10 32 32 32 32 101 120 105 102 58 70 117 110 99 116 105 111 110 61 34 70 97 108 115 101 34 10 32 32 32 32 101 120 105 102 58 82 101 100 69 121 101 77 111 100 101 61 34 70 97 108 115 101 34 47 62 10 32 32 32 60 101 120 105 102 58 73 83 79 83 112 101 101 100 82 97 116 105 110 103 115 62 10 32 32 32 32 60 114 100 102 58 83 101 113 62 10 32 32 32 32 32 60 114 100 102 58 108 105 62 52 48 48 60 47 114 100 102 58 108 105 62 10 32 32 32 32 60 47 114 100 102 58 83 101 113 62 10 32 32 32 60 47 101 120 105 102 58 73 83 79 83 112 101 101 100 82 97 116 105 110 103 115 62 10 32 32 32 60 99 114 115 58 84 111 110 101 67 117 114 118 101 62 10 32 32 32 32 60 114 100 102 58 83 101 113 62 10 32 32 32 32 32 60 114 100 102 58 108 105 62 48 44 32 48 60 47 114 100 102 58 108 105 62 10 32 32 32 32 32 60 114 100 102 58 108 105 62 51 53 44 32 49 53 52 60 47 114 100 102 58 108 105 62 10 32 32 32 32 32 60 114 100 102 58 108 105 62 54 52 44 32 53 54 60 47 114 100 102 58 108 105 62 10 32 32 32 32 32 60 114 100 102 58 108 105 62 57 55 44 32 49 56 52 60 47 114 100 102 58 108 105 62 10 32 32 32 32 32 60 114 100 102 58 108 105 62 49 51 52 44 32 49 56 50 60 47 114 100 102 58 108 105 62 10 32 32 32 32 32 60 114 100 102 58 108 105 62 49 53 49 44 32 49 56 57 60 47 114 100 102 58 108 105 62 10 32 32 32 32 32 60 114 100 102 58 108 105 62 49 56 49 44 32 49 55 55 60 47 114 100 102 58 108 105 62 10 32 32 32 32 32 60 114 100 102 58 108 105 62 49 57 50 44 32 49 57 54 60 47 114 100 102 58 108 105 62 10 32 32 32 32 32 60 114 100 102 58 108 105 62 50 48 50 44 32 50 52 48 60 47 114 100 102 58 108 105 62 10 32 32 32 32 32 60 114 100 102 58 108 105 62 50 53 53 44 32 50 53 53 60 47 114 100 102 58 108 105 62 10 32 32 32 32 60 47 114 100 102 58 83 101 113 62 10 32 32 32 60 47 99 114 115 58 84 111 110 101 67 117 114 118 101 62 10 32 32 32 60 116 105 102 102 58 66 105 116 115 80 101 114 83 97 109 112 108 101 62 10 32 32 32 32 60 114 100 102 58 83 101 113 62 10 32 32 32 32 32 60 114 100 102 58 108 105 62 56 32 56 32 56 60 47 114 100 102 58 108 105 62 10 32 32 32 32 60 47 114 100 102 58 83 101 113 62 10 32 32 32 60 47 116 105 102 102 58 66 105 116 115 80 101 114 83 97 109 112 108 101 62 10 32 32 32 60 100 99 58 100 101 115 99 114 105 112 116 105 111 110 62 10 32 32 32 32 60 114 100 102 58 65 108 116 62 10 32 32 32 32 32 60 114 100 102 58 108 105 32 120 109 108 58 108 97 110 103 61 34 120 45 100 101 102 97 117 108 116 34 62 84 101 115 116 60 47 114 100 102 58 108 105 62 10 32 32 32 32 60 47 114 100 102 58 65 108 116 62 10 32 32 32 60 47 100 99 58 100 101 115 99 114 105 112 116 105 111 110 62 10 32 32 60 47 114 100 102 58 68 101 115 99 114 105 112 116 105 111 110 62 10 32 60 47 114 100 102 58 82 68 70 62 10 60 47 120 58 120 109 112 109 101 116 97 62 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 10 60 63 120 112 97 99 107 101 116 32 101 110 100 61 34 119 34 63 62 "
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.XMP);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.XMP);
 				Assert.IsNotNull (entry, "Entry 0x02BC missing in IFD 0");
 				Assert.IsNotNull (entry as ByteVectorIFDEntry, "Entry is not a byte array!");
 			}
 			// Image.0x8769 (ExifTag/SubIFD/1) "6730"
 			{
-				var entry = structure.GetEntry (0, (ushort) IFDEntryTag.ExifIFD);
+				var entry = structure.GetEntry (0, (ushort)IFDEntryTag.ExifIFD);
 				Assert.IsNotNull (entry, "Entry 0x8769 missing in IFD 0");
 				Assert.IsNotNull (entry as SubIFDEntry, "Entry is not a sub IFD!");
 			}
 
-			var exif = structure.GetEntry (0, (ushort) IFDEntryTag.ExifIFD) as SubIFDEntry;
+			var exif = structure.GetEntry (0, (ushort)IFDEntryTag.ExifIFD) as SubIFDEntry;
 			Assert.IsNotNull (exif, "Exif tag not found");
 			var exif_structure = exif.Structure;
 
 			// Photo.0x829A (ExposureTime/Rational/1) "1/30"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.ExposureTime);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.ExposureTime);
 				Assert.IsNotNull (entry, "Entry 0x829A missing in IFD 0");
 				Assert.IsNotNull (entry as RationalIFDEntry, "Entry is not a rational!");
 				Assert.AreEqual (1, (entry as RationalIFDEntry).Value.Numerator);
@@ -216,7 +216,7 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Photo.0x829D (FNumber/Rational/1) "28/10"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.FNumber);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.FNumber);
 				Assert.IsNotNull (entry, "Entry 0x829D missing in IFD 0");
 				Assert.IsNotNull (entry as RationalIFDEntry, "Entry is not a rational!");
 				Assert.AreEqual (28, (entry as RationalIFDEntry).Value.Numerator);
@@ -224,37 +224,37 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Photo.0x8822 (ExposureProgram/Short/1) "0"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.ExposureProgram);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.ExposureProgram);
 				Assert.IsNotNull (entry, "Entry 0x8822 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (0, (entry as ShortIFDEntry).Value);
 			}
 			// Photo.0x8827 (ISOSpeedRatings/Short/1) "400"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.ISOSpeedRatings);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.ISOSpeedRatings);
 				Assert.IsNotNull (entry, "Entry 0x8827 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (400, (entry as ShortIFDEntry).Value);
 			}
 			// Photo.0x9000 (ExifVersion/Undefined/4) "48 50 50 49 "
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.ExifVersion);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.ExifVersion);
 				Assert.IsNotNull (entry, "Entry 0x9000 missing in IFD 0");
 				Assert.IsNotNull (entry as UndefinedIFDEntry, "Entry is not an undefined IFD entry!");
-				var bytes = new byte [] { 48, 50, 50, 49 };
+				var bytes = new byte[] { 48, 50, 50, 49 };
 				var parsed_bytes = (entry as UndefinedIFDEntry).Data.Data;
 				Assert.AreEqual (bytes, parsed_bytes);
 			}
 			// Photo.0x9003 (DateTimeOriginal/Ascii/20) "2009:07:05 19:33:52"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.DateTimeOriginal);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.DateTimeOriginal);
 				Assert.IsNotNull (entry, "Entry 0x9003 missing in IFD 0");
 				Assert.IsNotNull (entry as StringIFDEntry, "Entry is not a string!");
 				Assert.AreEqual ("2009:07:05 19:33:52", (entry as StringIFDEntry).Value);
 			}
 			// Photo.0x9201 (ShutterSpeedValue/SRational/1) "4906891/1000000"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.ShutterSpeedValue);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.ShutterSpeedValue);
 				Assert.IsNotNull (entry, "Entry 0x9201 missing in IFD 0");
 				Assert.IsNotNull (entry as SRationalIFDEntry, "Entry is not a srational!");
 				Assert.AreEqual (4906891, (entry as SRationalIFDEntry).Value.Numerator);
@@ -262,7 +262,7 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Photo.0x9202 (ApertureValue/Rational/1) "2970854/1000000"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.ApertureValue);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.ApertureValue);
 				Assert.IsNotNull (entry, "Entry 0x9202 missing in IFD 0");
 				Assert.IsNotNull (entry as RationalIFDEntry, "Entry is not a rational!");
 				Assert.AreEqual (2970854, (entry as RationalIFDEntry).Value.Numerator);
@@ -270,7 +270,7 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Photo.0x9204 (ExposureBiasValue/SRational/1) "-96/96"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.ExposureBiasValue);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.ExposureBiasValue);
 				Assert.IsNotNull (entry, "Entry 0x9204 missing in IFD 0");
 				Assert.IsNotNull (entry as SRationalIFDEntry, "Entry is not a srational!");
 				Assert.AreEqual (-96, (entry as SRationalIFDEntry).Value.Numerator);
@@ -278,7 +278,7 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Photo.0x9205 (MaxApertureValue/Rational/1) "293/96"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.MaxApertureValue);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.MaxApertureValue);
 				Assert.IsNotNull (entry, "Entry 0x9205 missing in IFD 0");
 				Assert.IsNotNull (entry as RationalIFDEntry, "Entry is not a rational!");
 				Assert.AreEqual (293, (entry as RationalIFDEntry).Value.Numerator);
@@ -286,21 +286,21 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Photo.0x9207 (MeteringMode/Short/1) "5"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.MeteringMode);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.MeteringMode);
 				Assert.IsNotNull (entry, "Entry 0x9207 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (5, (entry as ShortIFDEntry).Value);
 			}
 			// Photo.0x9209 (Flash/Short/1) "16"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.Flash);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.Flash);
 				Assert.IsNotNull (entry, "Entry 0x9209 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (16, (entry as ShortIFDEntry).Value);
 			}
 			// Photo.0x920A (FocalLength/Rational/1) "4600/1000"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.FocalLength);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.FocalLength);
 				Assert.IsNotNull (entry, "Entry 0x920A missing in IFD 0");
 				Assert.IsNotNull (entry as RationalIFDEntry, "Entry is not a rational!");
 				Assert.AreEqual (4600, (entry as RationalIFDEntry).Value.Numerator);
@@ -308,7 +308,7 @@ namespace TaglibSharp.Tests.Images
 			}
 			// Photo.0xA405 (FocalLengthIn35mmFilm/Short/1) "27"
 			{
-				var entry = exif_structure.GetEntry (0, (ushort) ExifEntryTag.FocalLengthIn35mmFilm);
+				var entry = exif_structure.GetEntry (0, (ushort)ExifEntryTag.FocalLengthIn35mmFilm);
 				Assert.IsNotNull (entry, "Entry 0xA405 missing in IFD 0");
 				Assert.IsNotNull (entry as ShortIFDEntry, "Entry is not a short!");
 				Assert.AreEqual (27, (entry as ShortIFDEntry).Value);
@@ -498,7 +498,7 @@ namespace TaglibSharp.Tests.Images
 				Assert.AreEqual (XmpNodeType.Seq, node.Type);
 				Assert.AreEqual ("", node.Value);
 				Assert.AreEqual (1, node.Children.Count);
-				Assert.AreEqual ("400", node.Children [0].Value);
+				Assert.AreEqual ("400", node.Children[0].Value);
 			}
 			// Xmp.xmp.ModifyDate (XmpText/25) "2009-07-05T19:33:52+03:00"
 			{
@@ -1138,16 +1138,16 @@ namespace TaglibSharp.Tests.Images
 				Assert.AreEqual (XmpNodeType.Seq, node.Type);
 				Assert.AreEqual ("", node.Value);
 				Assert.AreEqual (10, node.Children.Count);
-				Assert.AreEqual ("0, 0", node.Children [0].Value);
-				Assert.AreEqual ("35, 154", node.Children [1].Value);
-				Assert.AreEqual ("64, 56", node.Children [2].Value);
-				Assert.AreEqual ("97, 184", node.Children [3].Value);
-				Assert.AreEqual ("134, 182", node.Children [4].Value);
-				Assert.AreEqual ("151, 189", node.Children [5].Value);
-				Assert.AreEqual ("181, 177", node.Children [6].Value);
-				Assert.AreEqual ("192, 196", node.Children [7].Value);
-				Assert.AreEqual ("202, 240", node.Children [8].Value);
-				Assert.AreEqual ("255, 255", node.Children [9].Value);
+				Assert.AreEqual ("0, 0", node.Children[0].Value);
+				Assert.AreEqual ("35, 154", node.Children[1].Value);
+				Assert.AreEqual ("64, 56", node.Children[2].Value);
+				Assert.AreEqual ("97, 184", node.Children[3].Value);
+				Assert.AreEqual ("134, 182", node.Children[4].Value);
+				Assert.AreEqual ("151, 189", node.Children[5].Value);
+				Assert.AreEqual ("181, 177", node.Children[6].Value);
+				Assert.AreEqual ("192, 196", node.Children[7].Value);
+				Assert.AreEqual ("202, 240", node.Children[8].Value);
+				Assert.AreEqual ("255, 255", node.Children[9].Value);
 			}
 			// Xmp.tiff.ImageWidth (XmpText/3) "256"
 			{
@@ -1247,15 +1247,15 @@ namespace TaglibSharp.Tests.Images
 				Assert.AreEqual (XmpNodeType.Seq, node.Type);
 				Assert.AreEqual ("", node.Value);
 				Assert.AreEqual (1, node.Children.Count);
-				Assert.AreEqual ("8 8 8", node.Children [0].Value);
+				Assert.AreEqual ("8 8 8", node.Children[0].Value);
 			}
 			// Xmp.dc.description (LangAlt/1) "lang="x-default" Test"
 			{
 				var node = xmp.NodeTree;
 				node = node.GetChild (XmpTag.DC_NS, "description");
 				Assert.IsNotNull (node);
-				Assert.AreEqual ("x-default", node.Children [0].GetQualifier (XmpTag.XML_NS, "lang").Value);
-				Assert.AreEqual ("Test", node.Children [0].Value);
+				Assert.AreEqual ("x-default", node.Children[0].GetQualifier (XmpTag.XML_NS, "lang").Value);
+				Assert.AreEqual ("Test", node.Children[0].Value);
 			}
 
 			//  ---------- End of XMP tests ----------

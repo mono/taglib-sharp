@@ -31,18 +31,16 @@ namespace TagLib.IFD
 	public interface IFDEntry
 	{
 
-#region Properties
+		#region Properties
 
 		/// <value>
 		///    The ID of the tag, the current instance belongs to
 		/// </value>
-		ushort Tag {
-			get;
-		}
+		ushort Tag { get; }
 
-#endregion
+		#endregion
 
-#region Methods
+		#region Methods
 
 		/// <summary>
 		///    Renders the current instance to a <see cref="ByteVector"/>
@@ -65,7 +63,7 @@ namespace TagLib.IFD
 		/// </returns>
 		ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count);
 
-#endregion
+		#endregion
 
 	}
 
@@ -76,7 +74,7 @@ namespace TagLib.IFD
 	public abstract class ArrayIFDEntry<T> : IFDEntry
 	{
 
-#region Properties
+		#region Properties
 
 		/// <value>
 		///    The ID of the tag, the current instance belongs to
@@ -86,11 +84,11 @@ namespace TagLib.IFD
 		/// <value>
 		///    The values stored by the current instance.
 		/// </value>
-		public T [] Values { get; protected set; }
+		public T[] Values { get; protected set; }
 
-#endregion
+		#endregion
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Constructor.
@@ -104,9 +102,9 @@ namespace TagLib.IFD
 			Tag = tag;
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Renders the current instance to a <see cref="ByteVector"/>
@@ -129,7 +127,6 @@ namespace TagLib.IFD
 		/// </returns>
 		public abstract ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count);
 
-#endregion
-
+		#endregion
 	}
 }

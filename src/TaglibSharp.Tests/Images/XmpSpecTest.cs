@@ -38,7 +38,8 @@ namespace TaglibSharp.Tests.Images
 			TestXmp (metadata, ValidateSimpleType);
 		}
 
-		void ValidateSimpleType (XmpTag tag) {
+		void ValidateSimpleType (XmpTag tag)
+		{
 			var tree = tag.NodeTree;
 
 			Assert.IsTrue (tree != null);
@@ -188,7 +189,7 @@ namespace TaglibSharp.Tests.Images
 		// An extra note: The parser goes through the xml and turns the code into a tree structure
 		// made up of XmpNode objects.
 		[Test]
-		[Ignore("Known failure, needs fixing")]
+		[Ignore ("Known failure, needs fixing")]
 		public void QualifierTest ()
 		{
 			string metadata =
@@ -218,8 +219,7 @@ namespace TaglibSharp.Tests.Images
 					</rdf:RDF>
 				</x:xmpmeta>";
 
-			TestXmp (metadata, delegate (XmpTag tag)
-			{
+			TestXmp (metadata, delegate (XmpTag tag) {
 				var tree = tag.NodeTree;
 
 				Assert.IsTrue (tree != null);
@@ -267,8 +267,7 @@ namespace TaglibSharp.Tests.Images
 					</rdf:RDF>
 				</x:xmpmeta>";
 
-			TestXmp (metadata, delegate (XmpTag tag)
-			{
+			TestXmp (metadata, delegate (XmpTag tag) {
 				var tree = tag.NodeTree;
 
 				Assert.IsTrue (tree != null);

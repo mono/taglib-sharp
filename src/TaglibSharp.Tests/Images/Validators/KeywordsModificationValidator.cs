@@ -10,9 +10,9 @@ namespace TaglibSharp.Tests.Images.Validators
 	public class KeywordsModificationValidator : IMetadataModificationValidator
 	{
 		readonly string[] orig_keywords;
-		readonly string[] test_keywords = {"keyword 1", "§$&§%", "99 dsf", "ഈ ヰᛥกツ"};
+		readonly string[] test_keywords = { "keyword 1", "§$&§%", "99 dsf", "ഈ ヰᛥกツ" };
 
-		public KeywordsModificationValidator () : this (new string [] { }) { }
+		public KeywordsModificationValidator () : this (new string[] { }) { }
 
 		public KeywordsModificationValidator (string[] orig_keywords)
 		{

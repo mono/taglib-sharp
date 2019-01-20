@@ -19,20 +19,17 @@
 //  You should have received a copy of the GNU Lesser General Public
 //  License along with this library; if not, write to the Free Software
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-using System;
-using System.Collections.Generic;
 
-using TagLib.Image;
-using TagLib.IFD.Entries;
+using System.Collections.Generic;
 
 namespace TagLib.IIM
 {
 	/// <summary>
 	/// Represents an IIM Tag
 	/// </summary>
-	public class IIMTag: Xmp.XmpTag
+	public class IIMTag : Xmp.XmpTag
 	{
-		private List<string> m_Keywords;
+		List<string> m_Keywords;
 
 		/// <summary>
 		/// Constructor
@@ -44,11 +41,9 @@ namespace TagLib.IIM
 		/// <summary>
 		/// Defines the supported TagType
 		/// </summary>
-		public override TagLib.TagTypes TagTypes
-		{
-			get
-			{
-				return TagLib.TagTypes.IPTCIIM;
+		public override TagTypes TagTypes {
+			get {
+				return TagTypes.IPTCIIM;
 			}
 		}
 
@@ -90,12 +85,9 @@ namespace TagLib.IIM
 		/// <summary>
 		/// Get or Set the Keywords Tag
 		/// </summary>
-		public override string[] Keywords
-		{
+		public override string[] Keywords {
 			get {
-				if (m_Keywords == null)
-					return null;
-				return m_Keywords.ToArray ();
+				return m_Keywords?.ToArray ();
 			}
 		}
 

@@ -24,57 +24,59 @@
 
 using System;
 
-namespace TagLib.Mpeg {
+namespace TagLib.Mpeg
+{
 	/// <summary>
 	///    Indicates the type of marker found in a MPEG file.
 	/// </summary>
-	public enum Marker {
+	public enum Marker
+	{
 		/// <summary>
 		///    An invalid marker.
 		/// </summary>
 		Corrupt = -1,
-		
+
 		/// <summary>
 		///    A zero value marker.
 		/// </summary>
 		Zero = 0,
-		
+
 		/// <summary>
 		///   A marker indicating a system sync packet.
 		/// </summary>
 		SystemSyncPacket = 0xBA,
-		
+
 		/// <summary>
 		///   A marker indicating a video sync packet.
 		/// </summary>
 		VideoSyncPacket = 0xB3,
-		
+
 		/// <summary>
 		///   A marker indicating a system packet.
 		/// </summary>
 		SystemPacket = 0xBB,
-		
+
 		/// <summary>
 		///   A marker indicating a padding packet.
 		/// </summary>
 		PaddingPacket = 0xBE,
-		
+
 		/// <summary>
 		///   A marker indicating a audio packet.
 		/// </summary>
 		AudioPacket = 0xC0,
-		
+
 		/// <summary>
 		///   A marker indicating a video packet.
 		/// </summary>
 		VideoPacket = 0xE0,
-		
+
 		/// <summary>
 		///   A marker indicating the end of a stream.
 		/// </summary>
 		EndOfStream = 0xB9
 	}
-	
+
 	/// <summary>
 	///    This class extends <see cref="TagLib.NonContainer.File" /> to
 	///    provide tagging and properties support for MPEG-1, MPEG-2, and
@@ -88,67 +90,65 @@ namespace TagLib.Mpeg {
 	///    method:
 	///    <code>file.RemoveTags (file.TagTypes &amp; ~file.TagTypesOnDisk);</code>
 	/// </remarks>
-	[SupportedMimeType("taglib/mpg", "mpg")]
-	[SupportedMimeType("taglib/mpeg", "mpeg")]
-	[SupportedMimeType("taglib/mpe", "mpe")]
-	[SupportedMimeType("taglib/mpv2", "mpv2")]
-	[SupportedMimeType("taglib/m2v", "m2v")]
-	[SupportedMimeType("video/x-mpg")]
-	[SupportedMimeType("video/mpeg")]
+	[SupportedMimeType ("taglib/mpg", "mpg")]
+	[SupportedMimeType ("taglib/mpeg", "mpeg")]
+	[SupportedMimeType ("taglib/mpe", "mpe")]
+	[SupportedMimeType ("taglib/mpv2", "mpv2")]
+	[SupportedMimeType ("taglib/m2v", "m2v")]
+	[SupportedMimeType ("video/x-mpg")]
+	[SupportedMimeType ("video/mpeg")]
 	public class File : TagLib.NonContainer.File
 	{
 		#region Private Static Fields
-		
-		private static readonly ByteVector MarkerStart =
-			new byte [] {0, 0, 1};
-		
+
+		static readonly ByteVector MarkerStart = new byte[] { 0, 0, 1 };
+
 		#endregion
-		
-		
-		
+
+
 		#region Private Fields
-		
+
 		/// <summary>
 		///    Contains the MPEG version.
 		/// </summary>
-		private Version version;
-		
+		Version version;
+
 		/// <summary>
 		///    Contains the first audio header.
 		/// </summary>
-		private AudioHeader audio_header;
-		
+		AudioHeader audio_header;
+
 		/// <summary>
 		///    Contains the first video header.
 		/// </summary>
-		private VideoHeader video_header;
-		
+		VideoHeader video_header;
+
 		/// <summary>
 		///    Indicates whether or not audio was found.
 		/// </summary>
-		private bool video_found = false;
-		
+		bool video_found;
+
 		/// <summary>
 		///    Indicates whether or not video was found.
 		/// </summary>
-		private bool audio_found = false;
-		
+		bool audio_found;
+
 		/// <summary>
 		///    Contains the start time of the file.
 		/// </summary>
-		private double? start_time = null;
-		
+		double? start_time;
+
 		/// <summary>
 		///    Contains the end time of the file.
 		/// </summary>
-		private double end_time;
-		
+		double end_time;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified path in the local file
@@ -170,7 +170,7 @@ namespace TagLib.Mpeg {
 			: base (path, propertiesStyle)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified path in the local file
@@ -183,10 +183,11 @@ namespace TagLib.Mpeg {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
-		public File (string path) : base (path)
+		public File (string path)
+			: base (path)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified file abstraction and
@@ -205,12 +206,11 @@ namespace TagLib.Mpeg {
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle)
+		public File (IFileAbstraction abstraction, ReadStyle propertiesStyle)
 			: base (abstraction, propertiesStyle)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified file abstraction with an
@@ -224,17 +224,17 @@ namespace TagLib.Mpeg {
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public File (File.IFileAbstraction abstraction)
+		public File (IFileAbstraction abstraction)
 			: base (abstraction)
 		{
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Methods
-		
+
 		/// <summary>
 		///    Gets a tag of a specified type from the current instance,
 		///    optionally creating a new tag if possible.
@@ -260,35 +260,34 @@ namespace TagLib.Mpeg {
 		///    <see cref="TagLib.Ape.Tag" /> will be added to the end of
 		///    the file. All other tag types will be ignored.
 		/// </remarks>
-		public override TagLib.Tag GetTag (TagTypes type, bool create)
+		public override Tag GetTag (TagTypes type, bool create)
 		{
 			Tag t = (Tag as TagLib.NonContainer.Tag).GetTag (type);
-			
+
 			if (t != null || !create)
 				return t;
-			
-			switch (type)
-			{
+
+			switch (type) {
 			case TagTypes.Id3v1:
 				return EndTag.AddTag (type, Tag);
-			
+
 			case TagTypes.Id3v2:
 				return EndTag.AddTag (type, Tag);
-			
+
 			case TagTypes.Ape:
 				return EndTag.AddTag (type, Tag);
-			
+
 			default:
 				return null;
 			}
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Protected Methods
-		
+
 		/// <summary>
 		///    Reads format specific information at the start of the
 		///    file.
@@ -302,16 +301,15 @@ namespace TagLib.Mpeg {
 		///    of accuracy to read the media properties, or <see
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
-		protected override void ReadStart (long start,
-		                                   ReadStyle propertiesStyle)
+		protected override void ReadStart (long start, ReadStyle propertiesStyle)
 		{
 			if ((propertiesStyle & ReadStyle.Average) == 0)
 				return;
-			
+
 			FindMarker (ref start, Marker.SystemSyncPacket);
 			ReadSystemFile (start);
 		}
-		
+
 		/// <summary>
 		///    Reads format specific information at the end of the
 		///    file.
@@ -325,15 +323,13 @@ namespace TagLib.Mpeg {
 		///    of accuracy to read the media properties, or <see
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
-		protected override void ReadEnd (long end,
-		                                 ReadStyle propertiesStyle)
+		protected override void ReadEnd (long end, ReadStyle propertiesStyle)
 		{
 			// Make sure we have ID3v1 and ID3v2 tags.
 			GetTag (TagTypes.Id3v1, true);
 			GetTag (TagTypes.Id3v2, true);
-			
-			if ((propertiesStyle & ReadStyle.Average) == 0 ||
-				start_time == null)
+
+			if ((propertiesStyle & ReadStyle.Average) == 0 || start_time == null)
 				return;
 
 			// Enable to search the marker in the entire file if none is found so far
@@ -341,10 +337,10 @@ namespace TagLib.Mpeg {
 				end = 0;
 
 			RFindMarker (ref end, Marker.SystemSyncPacket);
-			
+
 			end_time = ReadTimestamp (end + 4);
 		}
-		
+
 		/// <summary>
 		///    Reads the audio properties from the file represented by
 		///    the current instance.
@@ -367,18 +363,14 @@ namespace TagLib.Mpeg {
 		///    media properties of the file represented by the current
 		///    instance.
 		/// </returns>
-		protected override Properties ReadProperties (long start,
-		                                              long end,
-		                                              ReadStyle propertiesStyle)
+		protected override Properties ReadProperties (long start, long end, ReadStyle propertiesStyle)
 		{
 			TimeSpan duration = start_time == null ?
-				TimeSpan.Zero : TimeSpan.FromSeconds (
-					end_time - (double) start_time);
-			
-			return new Properties (duration, video_header,
-				audio_header);
+				TimeSpan.Zero : TimeSpan.FromSeconds (end_time - (double)start_time);
+
+			return new Properties (duration, video_header, audio_header);
 		}
-		
+
 		/// <summary>
 		///    Gets the marker at a specified position.
 		/// </summary>
@@ -398,15 +390,13 @@ namespace TagLib.Mpeg {
 		{
 			Seek (position);
 			ByteVector identifier = ReadBlock (4);
-			
-			if (identifier.Count == 4 && identifier.StartsWith (
-				MarkerStart))
-				return (Marker) identifier [3];
-			
-			throw new CorruptFileException (
-				"Invalid marker at position " + position);
+
+			if (identifier.Count == 4 && identifier.StartsWith (MarkerStart))
+				return (Marker)identifier[3];
+
+			throw new CorruptFileException ("Invalid marker at position " + position);
 		}
-		
+
 		/// <summary>
 		///    Finds the next marker starting at a specified position.
 		/// </summary>
@@ -426,12 +416,11 @@ namespace TagLib.Mpeg {
 		{
 			position = Find (MarkerStart, position);
 			if (position < 0)
-				throw new CorruptFileException (
-					"Marker not found");
-			
+				throw new CorruptFileException ("Marker not found");
+
 			return GetMarker (position);
 		}
-		
+
 		/// <summary>
 		///    Finds the next marker of a specified type, starting at a
 		///    specified position.
@@ -451,12 +440,11 @@ namespace TagLib.Mpeg {
 		protected void FindMarker (ref long position, Marker marker)
 		{
 			ByteVector packet = new ByteVector (MarkerStart);
-			packet.Add ((byte) marker);
+			packet.Add ((byte)marker);
 			position = Find (packet, position);
-			
+
 			if (position < 0)
-				throw new CorruptFileException (
-					"Marker not found");
+				throw new CorruptFileException ("Marker not found");
 		}
 
 		/// <summary>
@@ -478,14 +466,13 @@ namespace TagLib.Mpeg {
 		protected void RFindMarker (ref long position, Marker marker)
 		{
 			ByteVector packet = new ByteVector (MarkerStart);
-			packet.Add ((byte) marker);
+			packet.Add ((byte)marker);
 			position = RFind (packet, position);
-			
+
 			if (position < 0)
-				throw new CorruptFileException (
-					"Marker not found");
+				throw new CorruptFileException ("Marker not found");
 		}
-		
+
 		/// <summary>
 		///    Reads the contents of the file as a system file, starting
 		///    at a specified position.
@@ -504,49 +491,48 @@ namespace TagLib.Mpeg {
 		protected void ReadSystemFile (long position)
 		{
 			int sanity_limit = 100;
-			
+
 			for (int i = 0; i < sanity_limit && (start_time == null ||
-				!audio_found || !video_found); i ++) {
-				
+				!audio_found || !video_found); i++) {
+
 				Marker marker = FindMarker (ref position);
-				
-				switch (marker)
-				{
+
+				switch (marker) {
 				case Marker.SystemSyncPacket:
 					ReadSystemSyncPacket (ref position);
 					break;
-				
+
 				case Marker.SystemPacket:
 				case Marker.PaddingPacket:
 					Seek (position + 4);
 					position += ReadBlock (2).ToUShort () +
 						6;
 					break;
-				
+
 				case Marker.VideoPacket:
 					ReadVideoPacket (ref position);
 					break;
-				
+
 				case Marker.AudioPacket:
 					ReadAudioPacket (ref position);
 					break;
-				
+
 				case Marker.EndOfStream:
 					return;
-				
+
 				default:
 					position += 4;
 					break;
 				}
 			}
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Private Methods
-		
+
 		/// <summary>
 		///    Reads an audio packet, assigning the audio header and
 		///    advancing the position to the next packet position.
@@ -560,14 +546,12 @@ namespace TagLib.Mpeg {
 		{
 			Seek (position + 4);
 			int length = ReadBlock (2).ToUShort ();
-			
+
 			if (!audio_found)
-				audio_found = AudioHeader.Find (
-					out audio_header, this, position + 15,
-					length - 9);
+				audio_found = AudioHeader.Find (out audio_header, this, position + 15, length - 9);
 			position += length;
 		}
-		
+
 		/// <summary>
 		///    Reads a video packet, assigning the video header and
 		///    advancing the position to the next packet position.
@@ -582,12 +566,10 @@ namespace TagLib.Mpeg {
 			Seek (position + 4);
 			int length = ReadBlock (2).ToUShort ();
 			long offset = position + 6;
-			
+
 			while (!video_found && offset < position + length)
-				if (FindMarker (ref offset) ==
-					Marker.VideoSyncPacket) {
-					video_header = new VideoHeader (this,
-						offset + 4);
+				if (FindMarker (ref offset) == Marker.VideoSyncPacket) {
+					video_header = new VideoHeader (this, offset + 4);
 					video_found = true;
 				} else {
 					// advance the offset by 6 bytes, so the next iteration of the
@@ -596,10 +578,10 @@ namespace TagLib.Mpeg {
 					// posible pes packet with a size =0 would be 6 bytes.
 					offset += 6;
 				}
-			
+
 			position += length;
 		}
-		
+
 		/// <summary>
 		///    Reads a system sync packet, filling in version
 		///    information and the first timestamp value, advancing the
@@ -618,25 +600,24 @@ namespace TagLib.Mpeg {
 		{
 			int packet_size = 0;
 			Seek (position + 4);
-			byte version_info = ReadBlock (1) [0];
-			
+			byte version_info = ReadBlock (1)[0];
+
 			if ((version_info & 0xF0) == 0x20) {
 				version = Version.Version1;
 				packet_size = 12;
 			} else if ((version_info & 0xC0) == 0x40) {
 				version = Version.Version2;
 				Seek (position + 13);
-				packet_size = 14 + (ReadBlock (1) [0] & 0x07);
+				packet_size = 14 + (ReadBlock (1)[0] & 0x07);
 			} else
-				throw new UnsupportedFormatException (
-					"Unknown MPEG version.");
-			
+				throw new UnsupportedFormatException ("Unknown MPEG version.");
+
 			if (start_time == null)
 				start_time = ReadTimestamp (position + 4);
-			
+
 			position += packet_size;
 		}
-		
+
 		/// <summary>
 		///    Reads an MPEG timestamp from a specified position in the
 		///    file represented by the current instance.
@@ -650,38 +631,38 @@ namespace TagLib.Mpeg {
 		///    A <see cref="double" /> value containing the read time in
 		///    seconds.
 		/// </returns>
-		private double ReadTimestamp (long position)
+		double ReadTimestamp (long position)
 		{
 			double high;
 			uint low;
-			
+
 			Seek (position);
 
 			if (version == Version.Version1) {
 				ByteVector data = ReadBlock (5);
-				high = (double) ((data [0] >> 3) & 0x01);
-				
-				low =  ((uint)((data [0] >> 1) & 0x03) << 30) |
-					(uint) (data [1] << 22) |
-					(uint)((data [2] >> 1) << 15) |
-					(uint) (data [3] << 7) |
-					(uint) (data [4] >> 1);
+				high = (data[0] >> 3) & 0x01;
+
+				low = ((uint)((data[0] >> 1) & 0x03) << 30) |
+					(uint)(data[1] << 22) |
+					(uint)((data[2] >> 1) << 15) |
+					(uint)(data[3] << 7) |
+					(uint)(data[4] >> 1);
 			} else {
 				ByteVector data = ReadBlock (6);
-				high = (double) ((data [0] & 0x20) >> 5);
-				
-				low =  ((uint) ((data [0] & 0x18) >> 3) << 30) |
-					(uint) ((data [0] & 0x03) << 28) |
-					(uint)  (data [1] << 20) |
-					(uint) ((data [2] & 0xF8) << 12) |
-					(uint) ((data [2] & 0x03) << 13) |
-					(uint)  (data [3] << 5) |
-					(uint)  (data [4] >> 3);
+				high = (data[0] & 0x20) >> 5;
+
+				low = ((uint)((data[0] & 0x18) >> 3) << 30) |
+					(uint)((data[0] & 0x03) << 28) |
+					(uint)(data[1] << 20) |
+					(uint)((data[2] & 0xF8) << 12) |
+					(uint)((data[2] & 0x03) << 13) |
+					(uint)(data[3] << 5) |
+					(uint)(data[4] >> 3);
 			}
-			
+
 			return (((high * 0x10000) * 0x10000) + low) / 90000.0;
 		}
-		
+
 		#endregion
 	}
 }

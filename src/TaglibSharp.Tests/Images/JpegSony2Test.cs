@@ -1,5 +1,5 @@
-using System;
 using NUnit.Framework;
+using System;
 using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
@@ -94,13 +94,13 @@ namespace TaglibSharp.Tests.Images
 
 			Assert.IsNotNull (tag, "tag");
 
-			var exif_ifd = tag.Structure.GetEntry(0, IFDEntryTag.ExifIFD) as SubIFDEntry;
+			var exif_ifd = tag.Structure.GetEntry (0, IFDEntryTag.ExifIFD) as SubIFDEntry;
 			Assert.IsNotNull (exif_ifd, "Exif IFD");
 
 			Assert.AreEqual ("SONY ", tag.Make);
 			Assert.AreEqual ("DSLR-A700", tag.Model);
 			Assert.AreEqual (400, tag.ISOSpeedRatings, "ISOSpeedRatings");
-			Assert.AreEqual (1.0d/125.0d, tag.ExposureTime);
+			Assert.AreEqual (1.0d / 125.0d, tag.ExposureTime);
 			Assert.AreEqual (5.6d, tag.FNumber);
 			Assert.AreEqual (70.0d, tag.FocalLength);
 			Assert.AreEqual (new DateTime (2009, 11, 06, 20, 56, 07), tag.DateTime);
@@ -114,7 +114,7 @@ namespace TaglibSharp.Tests.Images
 			Assert.IsNotNull (tag, "tag");
 
 			var makernote_ifd =
-				tag.ExifIFD.GetEntry (0, (ushort) ExifEntryTag.MakerNote) as MakernoteIFDEntry;
+				tag.ExifIFD.GetEntry (0, (ushort)ExifEntryTag.MakerNote) as MakernoteIFDEntry;
 
 			Assert.IsNotNull (makernote_ifd, "makernote ifd");
 			Assert.AreEqual (MakernoteType.Sony, makernote_ifd.MakernoteType);
@@ -131,7 +131,7 @@ namespace TaglibSharp.Tests.Images
 			{
 				var entry = structure.GetEntry (0, 0x0104) as SRationalIFDEntry;
 				Assert.IsNotNull (entry, "entry 0x0115");
-				Assert.AreEqual (0.0d, (double) entry.Value);
+				Assert.AreEqual (0.0d, (double)entry.Value);
 			}
 			//0x0115: white balance
 			{

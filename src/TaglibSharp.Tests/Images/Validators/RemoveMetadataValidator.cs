@@ -11,7 +11,7 @@ namespace TaglibSharp.Tests.Images.Validators
 		readonly TagTypes remove_types;
 		readonly TagTypes contained_types;
 
-		public RemoveMetadataValidator (TagTypes contained_types) : this (contained_types, contained_types) {}
+		public RemoveMetadataValidator (TagTypes contained_types) : this (contained_types, contained_types) { }
 
 		public RemoveMetadataValidator (TagTypes contained_types, TagTypes remove_types)
 		{

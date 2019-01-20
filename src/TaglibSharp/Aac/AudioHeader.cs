@@ -33,7 +33,7 @@ namespace TagLib.Aac
 		/// <summary>
 		///    Contains a sample rate table for ADTS AAC audio.
 		/// </summary>
-		private static readonly int[] sample_rates = new int[13] {
+		static readonly int[] sample_rates = new int[13] {
 			96000, 88200, 64000, 48000, 44100, 32000,
 			24000, 22050, 16000, 12000, 11025, 8000, 7350
 		};
@@ -41,7 +41,7 @@ namespace TagLib.Aac
 		/// <summary>
 		///    Contains a channel table for ADTS AAC audio.
 		/// </summary>
-		private static readonly int[] channels = new int[8] {
+		static readonly int[] channels = new int[8] {
 			0, 1, 2, 3, 4, 5, 6, 8
 		};
 
@@ -54,27 +54,27 @@ namespace TagLib.Aac
 		/// <summary>
 		///    Contains the audio stream length.
 		/// </summary>
-		private long stream_length;
+		long stream_length;
 
 		/// <summary>
 		///    Contains the audio stream duration.
 		/// </summary>
-		private TimeSpan duration;
+		TimeSpan duration;
 
 		/// <summary>
 		///    Contains the number of channels in the audio
 		/// </summary>
-		private int audiochannels;
+		readonly int audiochannels;
 
 		/// <summary>
 		///    Contains the bitrate of the audio stream
 		/// </summary>
-		private int audiobitrate;
+		readonly int audiobitrate;
 
 		/// <summary>
 		///    Contains the samplerate of the audio stream
 		/// </summary>
-		private int audiosamplerate;
+		readonly int audiosamplerate;
 
 		#endregion
 
@@ -85,8 +85,7 @@ namespace TagLib.Aac
 		/// <summary>
 		///    An empty and unset header.
 		/// </summary>
-		public static readonly AudioHeader Unknown =
-			new AudioHeader();
+		public static readonly AudioHeader Unknown = new AudioHeader ();
 
 		#endregion
 
@@ -98,13 +97,13 @@ namespace TagLib.Aac
 		///    Constructs and initializes a new empty instance of <see
 		///    cref="AudioHeader" />
 		/// </summary>       
-		private AudioHeader()
+		AudioHeader ()
 		{
-			this.stream_length = 0;
-			this.duration = TimeSpan.Zero;
-			this.audiochannels = 0;
-			this.audiobitrate = 0;
-			this.audiosamplerate = 0;
+			stream_length = 0;
+			duration = TimeSpan.Zero;
+			audiochannels = 0;
+			audiobitrate = 0;
+			audiosamplerate = 0;
 		}
 
 		/// <summary>
@@ -132,14 +131,13 @@ namespace TagLib.Aac
 		///    A <see cref="int" /> value indicating the number
 		///    of frames in the audio stream
 		/// </param>
-		private AudioHeader(int channels, int bitrate,
-							int samplerate, int numberofsamples, int numberofframes)
+		AudioHeader (int channels, int bitrate, int samplerate, int numberofsamples, int numberofframes)
 		{
-			this.duration = TimeSpan.Zero;
-			this.stream_length = 0;
-			this.audiochannels = channels;
-			this.audiobitrate = bitrate;
-			this.audiosamplerate = samplerate;
+			duration = TimeSpan.Zero;
+			stream_length = 0;
+			audiochannels = channels;
+			audiobitrate = bitrate;
+			audiosamplerate = samplerate;
 		}
 
 		#endregion
@@ -156,10 +154,8 @@ namespace TagLib.Aac
 		///    A <see cref="string" /> object containing a description
 		///    of the media represented by the current instance.
 		/// </value>
-		public string Description
-		{
-			get
-			{
+		public string Description {
+			get {
 				return "ADTS AAC";
 			}
 		}
@@ -171,8 +167,7 @@ namespace TagLib.Aac
 		/// <value>
 		///    Always <see cref="MediaTypes.Audio" />.
 		/// </value>
-		public MediaTypes MediaTypes
-		{
+		public MediaTypes MediaTypes {
 			get { return MediaTypes.Audio; }
 		}
 
@@ -188,10 +183,8 @@ namespace TagLib.Aac
 		///    If <see cref="SetStreamLength" /> has not been called, this 
 		///    value will not be correct.
 		/// </remarks>
-		public TimeSpan Duration
-		{
-			get
-			{
+		public TimeSpan Duration {
+			get {
 				return duration;
 			}
 		}
@@ -204,10 +197,8 @@ namespace TagLib.Aac
 		///    A <see cref="int" /> value containing a bitrate of the
 		///    audio represented by the current instance.
 		/// </value>
-		public int AudioBitrate
-		{
-			get
-			{
+		public int AudioBitrate {
+			get {
 				return audiobitrate;
 			}
 		}
@@ -220,14 +211,12 @@ namespace TagLib.Aac
 		///    A <see cref="int" /> value containing the sample rate of
 		///    the audio represented by the current instance.
 		/// </value>
-		public int AudioSampleRate
-		{
-			get
-			{
+		public int AudioSampleRate {
+			get {
 				return audiosamplerate;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the number of channels in the audio represented by
 		///    the current instance.
@@ -237,8 +226,7 @@ namespace TagLib.Aac
 		///    channels in the audio represented by the current
 		///    instance.
 		/// </value>
-		public int AudioChannels
-		{
+		public int AudioChannels {
 			get { return audiochannels; }
 		}
 
@@ -261,10 +249,10 @@ namespace TagLib.Aac
 		///    The this value has been set, <see cref="Duration" /> will
 		///    return an incorrect value.
 		/// </remarks>
-		public void SetStreamLength(long streamLength)
+		public void SetStreamLength (long streamLength)
 		{
-			this.stream_length = streamLength;
-			duration = TimeSpan.FromSeconds(((double)this.stream_length) * 8.0 / ((double)this.audiobitrate));
+			stream_length = streamLength;
+			duration = TimeSpan.FromSeconds (stream_length * 8.0 / audiobitrate);
 		}
 
 		#endregion
@@ -300,96 +288,91 @@ namespace TagLib.Aac
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
-		public static bool Find(out AudioHeader header,
-							    TagLib.File file, long position, int length)
+		public static bool Find (out AudioHeader header, TagLib.File file, long position, int length)
 		{
 			if (file == null)
-				throw new ArgumentNullException(nameof(file));
+				throw new ArgumentNullException (nameof (file));
 
 			long end = position + length;
-			header = AudioHeader.Unknown;
+			header = Unknown;
 
-			file.Seek(position);
+			file.Seek (position);
 
-			ByteVector buffer = file.ReadBlock(3);
+			ByteVector buffer = file.ReadBlock (3);
 
 			if (buffer.Count < 3)
 				return false;
 
-			do
-			{
-				file.Seek(position + 3);
-				buffer = buffer.Mid(buffer.Count - 3);
-				buffer.Add(file.ReadBlock(
-					(int)File.BufferSize));
+			do {
+				file.Seek (position + 3);
+				buffer = buffer.Mid (buffer.Count - 3);
+				buffer.Add (file.ReadBlock (
+					(int)TagLib.File.BufferSize));
 
 				for (int i = 0; i < buffer.Count - 3 &&
 					(length < 0 || position + i < end); i++)
 					if (buffer[i] == 0xFF
-						&& buffer[i+1] >= 0xF0) // 0xFFF
-						try
-						{                            
-							BitStream bits = new BitStream(buffer.Mid(i, 7).Data);
+						&& buffer[i + 1] >= 0xF0) // 0xFFF
+						try {
+							BitStream bits = new BitStream (buffer.Mid (i, 7).Data);
 
 							// 12 bits sync header 
-							bits.ReadInt32(12);
+							bits.ReadInt32 (12);
 
 							// 1 bit mpeg 2/4
-							bits.ReadInt32(1);
+							bits.ReadInt32 (1);
 
 							// 2 bits layer
-							bits.ReadInt32(2);
+							bits.ReadInt32 (2);
 
 							// 1 bit protection absent  
-							bits.ReadInt32(1);
-						  
+							bits.ReadInt32 (1);
+
 							// 2 bits profile object type
-							bits.ReadInt32(2);
+							bits.ReadInt32 (2);
 
 							// 4 bits sampling frequency index                            
-							int samplerateindex = bits.ReadInt32(4);
-							if(samplerateindex >= sample_rates.Length)
+							int samplerateindex = bits.ReadInt32 (4);
+							if (samplerateindex >= sample_rates.Length)
 								return false;
 							long samplerate = sample_rates[samplerateindex];
 
 							// 1 bit private bit
-							bits.ReadInt32(1);
+							bits.ReadInt32 (1);
 
 							// 3 bits channel configuration
-							int channelconfigindex = bits.ReadInt32(3);
+							int channelconfigindex = bits.ReadInt32 (3);
 							if (channelconfigindex >= channels.Length)
-								return false;                            
+								return false;
 
 							// 4 copyright bits
-							bits.ReadInt32(4);
+							bits.ReadInt32 (4);
 
 							// 13 bits frame length
-							long framelength = bits.ReadInt32(13); // double check framelength
-								if (framelength < 7)
+							long framelength = bits.ReadInt32 (13); // double check framelength
+							if (framelength < 7)
 								return false;
 
 							// 11 bits buffer fullness
-							bits.ReadInt32(11);
+							bits.ReadInt32 (11);
 
 							// 2 bits number of raw data blocks in frame
-							int numberofframes = bits.ReadInt32(2) + 1;
+							int numberofframes = bits.ReadInt32 (2) + 1;
 
 							long numberofsamples = numberofframes * 1024;
-							long bitrate = framelength * 8 * samplerate / numberofsamples;                            
+							long bitrate = framelength * 8 * samplerate / numberofsamples;
 
-							header = new AudioHeader(channels[channelconfigindex],
+							header = new AudioHeader (channels[channelconfigindex],
 								(int)bitrate,
 								(int)samplerate,
 								(int)numberofsamples,
-								numberofframes);                            
+								numberofframes);
 
 							return true;
-						}
-						catch (CorruptFileException)
-						{
+						} catch (CorruptFileException) {
 						}
 
-				position += File.BufferSize;
+				position += TagLib.File.BufferSize;
 			} while (buffer.Count > 3 && (length < 0 || position < end));
 
 			return false;
@@ -422,10 +405,9 @@ namespace TagLib.Aac
 		///    cref="M:AudioHeader.Find(AudioHeader,TagLib.File,long,int)" />
 		///    instead.
 		/// </remarks>
-		public static bool Find(out AudioHeader header,
-							    TagLib.File file, long position)
+		public static bool Find (out AudioHeader header, TagLib.File file, long position)
 		{
-			return Find(out header, file, position, -1);
+			return Find (out header, file, position, -1);
 		}
 
 		#endregion

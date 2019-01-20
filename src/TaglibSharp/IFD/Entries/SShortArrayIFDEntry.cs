@@ -43,14 +43,14 @@ namespace TagLib.IFD.Entries
 		/// <param name="values">
 		///    A <see cref="T:System.Int16[]"/> to be stored
 		/// </param>
-		public SShortArrayIFDEntry (ushort tag, short [] values) : base (tag)
+		public SShortArrayIFDEntry (ushort tag, short[] values) : base (tag)
 		{
 			Values = values;
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Renders the current instance to a <see cref="ByteVector"/>
@@ -73,8 +73,8 @@ namespace TagLib.IFD.Entries
 		/// </returns>
 		public override ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
 		{
-			type = (ushort) IFDEntryType.SShort;
-			count = (uint) Values.Length;
+			type = (ushort)IFDEntryType.SShort;
+			count = (uint)Values.Length;
 
 			ByteVector data = new ByteVector ();
 			foreach (var value in Values)
@@ -83,7 +83,7 @@ namespace TagLib.IFD.Entries
 			return data;
 		}
 
-#endregion
+		#endregion
 
 	}
 }

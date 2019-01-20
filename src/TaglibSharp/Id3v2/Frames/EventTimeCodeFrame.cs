@@ -97,13 +97,6 @@ namespace TagLib.Id3v2
 	/// </example>
 	public class EventTimeCodesFrame : Frame
 	{
-		#region Private Properties
-
-		private TimestampFormat timestampFormat;
-
-		private List<EventTimeCode> events;
-
-		#endregion
 
 		#region Constructors
 
@@ -117,7 +110,8 @@ namespace TagLib.Id3v2
 		///    the tag. Consider using <see cref="Get" /> for more
 		///    integrated frame creation.
 		/// </remarks>
-		public EventTimeCodesFrame () : base (FrameType.ETCO, 4)
+		public EventTimeCodesFrame ()
+			: base (FrameType.ETCO, 4)
 		{
 			Flags = FrameFlags.FileAlterPreservation;
 		}
@@ -130,9 +124,10 @@ namespace TagLib.Id3v2
 		/// <param name="timestampFormat">
 		///    A <see cref="TimestampFormat" /> Specifies the time unit to use in this frame.
 		/// </param>
-		public EventTimeCodesFrame (TimestampFormat timestampFormat) : base (FrameType.ETCO, 4)
+		public EventTimeCodesFrame (TimestampFormat timestampFormat)
+			: base (FrameType.ETCO, 4)
 		{
-			this.timestampFormat = timestampFormat;
+			TimestampFormat = timestampFormat;
 			Flags = FrameFlags.FileAlterPreservation;
 		}
 
@@ -149,8 +144,8 @@ namespace TagLib.Id3v2
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		public EventTimeCodesFrame (ByteVector data,
-			byte version) : base (data, version)
+		public EventTimeCodesFrame (ByteVector data, byte version)
+			: base (data, version)
 		{
 			SetData (data, 0, version, true);
 		}
@@ -164,11 +159,11 @@ namespace TagLib.Id3v2
 		/// <param name="frameHeader">
 		///    A <see cref="FrameHeader" /> containing the header of the frame
 		/// </param>
-		public EventTimeCodesFrame (FrameHeader frameHeader) : base (frameHeader)
+		public EventTimeCodesFrame (FrameHeader frameHeader)
+			: base (frameHeader)
 		{
 
 		}
-
 
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
@@ -191,10 +186,8 @@ namespace TagLib.Id3v2
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		public EventTimeCodesFrame (ByteVector data,
-								int offset,
-								FrameHeader header,
-								byte version) : base (header)
+		public EventTimeCodesFrame (ByteVector data, int offset, FrameHeader header, byte version)
+			: base (header)
 		{
 			SetData (data, offset, version, false);
 		}
@@ -209,10 +202,7 @@ namespace TagLib.Id3v2
 		/// <value>
 		/// A <see cref="TimestampFormat"/> that will be used in this frame instance.
 		/// </value>
-		public TimestampFormat TimestampFormat {
-			get { return timestampFormat; }
-			set { timestampFormat = value; }
-		}
+		public TimestampFormat TimestampFormat { get; set; }
 
 		/// <summary>
 		/// Gets or sets the events this frame contains.
@@ -221,10 +211,7 @@ namespace TagLib.Id3v2
 		/// <value>
 		/// A <see cref="List{EventTimeCode}"/> that are stored in this frame instance.
 		/// </value>
-		public List<EventTimeCode> Events {
-			get { return events; }
-			set { events = value; }
-		}
+		public List<EventTimeCode> Events { get; set; }
 
 		#endregion
 
@@ -283,8 +270,8 @@ namespace TagLib.Id3v2
 		/// </param>
 		protected override void ParseFields (ByteVector data, byte version)
 		{
-			events = new List<EventTimeCode> ();
-			timestampFormat = (TimestampFormat)data.Data[0];
+			Events = new List<EventTimeCode> ();
+			TimestampFormat = (TimestampFormat)data.Data[0];
 
 			var incomingEventsData = data.Mid (1);
 			for (var i = 0; i < incomingEventsData.Count - 1; i++) {
@@ -300,7 +287,7 @@ namespace TagLib.Id3v2
 
 				var timestamp = timestampData.ToInt ();
 
-				events.Add (new EventTimeCode (eventType, timestamp));
+				Events.Add (new EventTimeCode (eventType, timestamp));
 			}
 		}
 
@@ -318,10 +305,11 @@ namespace TagLib.Id3v2
 		/// </returns>
 		protected override ByteVector RenderFields (byte version)
 		{
-			var data = new List<byte> ();
-			data.Add ((byte)timestampFormat);
+			var data = new List<byte> {
+				(byte) TimestampFormat
+			};
 
-			foreach (var @event in events) {
+			foreach (var @event in Events) {
 				data.Add ((byte)@event.TypeOfEvent);
 
 				var timeData = ByteVector.FromInt (@event.Time);
@@ -344,9 +332,10 @@ namespace TagLib.Id3v2
 		/// </returns>
 		public override Frame Clone ()
 		{
-			var frame = new EventTimeCodesFrame (header);
-			frame.timestampFormat = timestampFormat;
-			frame.events = events.ConvertAll (item => (EventTimeCode)item.Clone ());
+			var frame = new EventTimeCodesFrame (header) {
+				TimestampFormat = TimestampFormat,
+				Events = Events.ConvertAll (item => (EventTimeCode)item.Clone ())
+			};
 			return frame;
 		}
 

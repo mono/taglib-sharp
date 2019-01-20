@@ -32,49 +32,49 @@ namespace TagLib.Ogg.Codecs
 	/// </summary>
 	public class Vorbis : Codec, IAudioCodec
 	{
-#region Private Static Fields
-		
+		#region Private Static Fields
+
 		/// <summary>
 		///    Contains the file identifier.
 		/// </summary>
-		private static ByteVector id = "vorbis";
-		
-#endregion
-		
-		
-		
-#region Private Fields
-		
+		static readonly ByteVector id = "vorbis";
+
+		#endregion
+
+
+
+		#region Private Fields
+
 		/// <summary>
 		///    Contains the header packet.
 		/// </summary>
-		private HeaderPacket header;
-		
+		HeaderPacket header;
+
 		/// <summary>
 		///    Contains the comment data.
 		/// </summary>
-		private ByteVector comment_data;
-		
-#endregion
-		
-		
-		
-#region Constructors
-		
+		ByteVector comment_data;
+
+		#endregion
+
+
+
+		#region Constructors
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Vorbis" />.
 		/// </summary>
-		private Vorbis ()
+		Vorbis ()
 		{
 		}
-		
-#endregion
-		
-		
-		
-#region Public Methods
-		
+
+		#endregion
+
+
+
+		#region Public Methods
+
 		/// <summary>
 		///    Reads a Ogg packet that has been encountered in the
 		///    stream.
@@ -106,17 +106,15 @@ namespace TagLib.Ogg.Codecs
 		public override bool ReadPacket (ByteVector packet, int index)
 		{
 			if (packet == null)
-				throw new ArgumentNullException (nameof(packet));
-			
+				throw new ArgumentNullException (nameof (packet));
+
 			if (index < 0)
-				throw new ArgumentOutOfRangeException (nameof(index),
-					"index must be at least zero.");
-			
+				throw new ArgumentOutOfRangeException (nameof (index), "index must be at least zero.");
+
 			int type = PacketType (packet);
 			if (type != 1 && index == 0)
-				throw new CorruptFileException (
-					"Stream does not begin with vorbis header.");
-			
+				throw new CorruptFileException ("Stream does not begin with vorbis header.");
+
 			if (comment_data == null) {
 				if (type == 1)
 					header = new HeaderPacket (packet);
@@ -125,10 +123,10 @@ namespace TagLib.Ogg.Codecs
 				else
 					return true;
 			}
-			
+
 			return comment_data != null;
 		}
-		
+
 		/// <summary>
 		///    Computes the duration of the stream using the first and
 		///    last granular positions of the stream.
@@ -145,16 +143,12 @@ namespace TagLib.Ogg.Codecs
 		///    A <see cref="TimeSpan" /> value containing the duration
 		///    of the stream.
 		/// </returns>
-		public override TimeSpan GetDuration (long firstGranularPosition,
-		                                      long lastGranularPosition)
+		public override TimeSpan GetDuration (long firstGranularPosition, long lastGranularPosition)
 		{
-			return header.sample_rate == 0 ? TimeSpan.Zero : 
-				TimeSpan.FromSeconds ((double)
-					(lastGranularPosition -
-						firstGranularPosition) /
-					(double) header.sample_rate);
+			return header.sample_rate == 0 ? TimeSpan.Zero :
+				TimeSpan.FromSeconds ((lastGranularPosition - firstGranularPosition) / (double)header.sample_rate);
 		}
-		
+
 		/// <summary>
 		///    Replaces the comment packet in a collection of packets
 		///    with the rendered version of a Xiph comment or inserts a
@@ -172,30 +166,29 @@ namespace TagLib.Ogg.Codecs
 		///    <paramref name="packets" /> or <paramref name="comment"
 		///    /> is <see langword="null" />.
 		/// </exception>
-		public override void SetCommentPacket (ByteVectorCollection packets,
-		                                       XiphComment comment)
+		public override void SetCommentPacket (ByteVectorCollection packets, XiphComment comment)
 		{
 			if (packets == null)
-				throw new ArgumentNullException (nameof(packets));
-			
+				throw new ArgumentNullException (nameof (packets));
+
 			if (comment == null)
-				throw new ArgumentNullException (nameof(comment));
-			
-			ByteVector data = new ByteVector ((byte) 0x03);
+				throw new ArgumentNullException (nameof (comment));
+
+			ByteVector data = new ByteVector ((byte)0x03);
 			data.Add (id);
 			data.Add (comment.Render (true));
-			if (packets.Count > 1 && PacketType (packets [1]) == 0x03)
-				packets [1] = data;
+			if (packets.Count > 1 && PacketType (packets[1]) == 0x03)
+				packets[1] = data;
 			else
 				packets.Insert (1, data);
 		}
-		
-#endregion
-		
-		
-		
-#region Public Properties
-		
+
+		#endregion
+
+
+
+		#region Public Properties
+
 		/// <summary>
 		///    Gets the bitrate of the audio represented by the current
 		///    instance.
@@ -206,11 +199,10 @@ namespace TagLib.Ogg.Codecs
 		/// </value>
 		public int AudioBitrate {
 			get {
-				return (int) ((float)header.bitrate_nominal /
-					1000f + 0.5);
+				return (int)(header.bitrate_nominal / 1000f + 0.5);
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the sample rate of the audio represented by the
 		///    current instance.
@@ -220,9 +212,9 @@ namespace TagLib.Ogg.Codecs
 		///    the audio represented by the current instance.
 		/// </value>
 		public int AudioSampleRate {
-			get {return (int) header.sample_rate;}
+			get { return (int)header.sample_rate; }
 		}
-		
+
 		/// <summary>
 		///    Gets the number of channels in the audio represented by
 		///    the current instance.
@@ -233,9 +225,9 @@ namespace TagLib.Ogg.Codecs
 		///    instance.
 		/// </value>
 		public int AudioChannels {
-			get {return (int) header.channels;}
+			get { return (int)header.channels; }
 		}
-		
+
 		/// <summary>
 		///    Gets the types of media represented by the current
 		///    instance.
@@ -244,9 +236,9 @@ namespace TagLib.Ogg.Codecs
 		///    Always <see cref="MediaTypes.Audio" />.
 		/// </value>
 		public override MediaTypes MediaTypes {
-			get {return MediaTypes.Audio;}
+			get { return MediaTypes.Audio; }
 		}
-		
+
 		/// <summary>
 		///    Gets the raw Xiph comment data contained in the codec.
 		/// </summary>
@@ -255,9 +247,9 @@ namespace TagLib.Ogg.Codecs
 		///    comment or <see langword="null"/> if none was found.
 		/// </value>
 		public override ByteVector CommentData {
-			get {return comment_data;}
+			get { return comment_data; }
 		}
-		
+
 		/// <summary>
 		///    Gets a text description of the media represented by the
 		///    current instance.
@@ -268,18 +260,16 @@ namespace TagLib.Ogg.Codecs
 		/// </value>
 		public override string Description {
 			get {
-				return string.Format (
-					"Vorbis Version {0} Audio",
-					header.vorbis_version);
+				return $"Vorbis Version {header.vorbis_version} Audio";
 			}
 		}
-		
-#endregion
-		
-		
-		
-#region Public Static Methods
-		
+
+		#endregion
+
+
+
+		#region Public Static Methods
+
 		/// <summary>
 		///    Implements the <see cref="T:CodecProvider" /> delegate to
 		///    provide support for recognizing a Vorbis stream from the
@@ -298,13 +288,13 @@ namespace TagLib.Ogg.Codecs
 		{
 			return (PacketType (packet) == 1) ? new Vorbis () : null;
 		}
-		
-#endregion
-		
-		
-		
-#region Private Static Methods
-		
+
+		#endregion
+
+
+
+		#region Private Static Methods
+
 		/// <summary>
 		///    Gets the packet type for a specified Vorbis packet.
 		/// </summary>
@@ -316,24 +306,24 @@ namespace TagLib.Ogg.Codecs
 		///    A <see cref="int" /> value containing the packet type or
 		///    -1 if the packet is invalid.
 		/// </returns>
-		private static int PacketType (ByteVector packet)
+		static int PacketType (ByteVector packet)
 		{
 			if (packet.Count <= id.Count)
 				return -1;
-			
-			for (int i = 0; i < id.Count; i ++)
-				if (packet [i + 1] != id [i])
+
+			for (int i = 0; i < id.Count; i++)
+				if (packet[i + 1] != id[i])
 					return -1;
-			
-			return packet [0];
+
+			return packet[0];
 		}
-		
-#endregion
-		
+
+		#endregion
+
 		/// <summary>
 		///    This structure represents a Vorbis header packet.
 		/// </summary>
-		private struct HeaderPacket
+		struct HeaderPacket
 		{
 			public uint sample_rate;
 			public uint channels;
@@ -341,15 +331,15 @@ namespace TagLib.Ogg.Codecs
 			public uint bitrate_maximum;
 			public uint bitrate_nominal;
 			public uint bitrate_minimum;
-			
+
 			public HeaderPacket (ByteVector data)
 			{
-				vorbis_version  = data.Mid(7, 4).ToUInt (false);
-				channels        = data [11];
-				sample_rate     = data.Mid(12, 4).ToUInt (false);
-				bitrate_maximum = data.Mid(16, 4).ToUInt (false);
-				bitrate_nominal = data.Mid(20, 4).ToUInt (false);
-				bitrate_minimum = data.Mid(24, 4).ToUInt (false);
+				vorbis_version = data.Mid (7, 4).ToUInt (false);
+				channels = data[11];
+				sample_rate = data.Mid (12, 4).ToUInt (false);
+				bitrate_maximum = data.Mid (16, 4).ToUInt (false);
+				bitrate_nominal = data.Mid (20, 4).ToUInt (false);
+				bitrate_minimum = data.Mid (24, 4).ToUInt (false);
 			}
 		}
 	}

@@ -25,7 +25,6 @@
 // USA
 //
 
-using System.Collections;
 using System;
 
 namespace TagLib.Flac
@@ -36,29 +35,29 @@ namespace TagLib.Flac
 	/// </summary>
 	public struct StreamHeader : IAudioCodec, ILosslessAudioCodec
 	{
-#region Private Properties
-		
+		#region Private Properties
+
 		/// <summary>
 		///    Contains the flags.
 		/// </summary>
-		private uint flags;
-		
+		readonly uint flags;
+
 		/// <summary>
 		///    Contains the low portion of the length.
 		/// </summary>
-		private uint low_length;
-		
+		readonly uint low_length;
+
 		/// <summary>
 		///    Contains the stream length.
 		/// </summary>
-		private long stream_length;
-		
-#endregion
-		
-		
-		
-#region Constructors
-		
+		readonly long stream_length;
+
+		#endregion
+
+
+
+		#region Constructors
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="StreamHeader" /> by reading a raw stream header
@@ -81,23 +80,22 @@ namespace TagLib.Flac
 		public StreamHeader (ByteVector data, long streamLength)
 		{
 			if (data == null)
-			throw new ArgumentNullException (nameof(data));
-			
+				throw new ArgumentNullException (nameof (data));
+
 			if (data.Count < 18)
-				throw new CorruptFileException (
-				"Not enough data in FLAC header.");
-			
-			this.stream_length = streamLength;
-			this.flags = data.Mid (10, 4).ToUInt (true);
+				throw new CorruptFileException ("Not enough data in FLAC header.");
+
+			stream_length = streamLength;
+			flags = data.Mid (10, 4).ToUInt (true);
 			low_length = data.Mid (14, 4).ToUInt (true);
 		}
-		
-#endregion
-		
-		
-		
-#region Public Properties
-		
+
+		#endregion
+
+
+
+		#region Public Properties
+
 		/// <summary>
 		///    Gets the duration of the media represented by the current
 		///    instance.
@@ -110,13 +108,13 @@ namespace TagLib.Flac
 			get {
 				return (AudioSampleRate > 0 && stream_length > 0)
 					? TimeSpan.FromSeconds (
-						(double) low_length /
-						(double) AudioSampleRate +
-						(double) HighLength) :
+						low_length /
+						(double)AudioSampleRate +
+						HighLength) :
 					TimeSpan.Zero;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the bitrate of the audio represented by the current
 		///    instance.
@@ -127,12 +125,11 @@ namespace TagLib.Flac
 		/// </value>
 		public int AudioBitrate {
 			get {
-				return  (int) (Duration > TimeSpan.Zero ?
-					((stream_length * 8L) /
-					Duration.TotalSeconds) / 1000 : 0);
+				return (int)(Duration > TimeSpan.Zero ?
+					((stream_length * 8L) / Duration.TotalSeconds) / 1000 : 0);
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the sample rate of the audio represented by the
 		///    current instance.
@@ -142,9 +139,9 @@ namespace TagLib.Flac
 		///    the audio represented by the current instance.
 		/// </value>
 		public int AudioSampleRate {
-			get {return (int) (flags >> 12);}
+			get { return (int)(flags >> 12); }
 		}
-		
+
 		/// <summary>
 		///    Gets the number of channels in the audio represented by
 		///    the current instance.
@@ -155,9 +152,9 @@ namespace TagLib.Flac
 		///    instance.
 		/// </value>
 		public int AudioChannels {
-			get {return (int) (((flags >> 9) & 7) + 1);}
+			get { return (int)(((flags >> 9) & 7) + 1); }
 		}
-		
+
 		/// <summary>
 		///    Gets the types of media represented by the current
 		///    instance.
@@ -166,9 +163,9 @@ namespace TagLib.Flac
 		///    Always <see cref="MediaTypes.Audio" />.
 		/// </value>
 		public MediaTypes MediaTypes {
-			get {return MediaTypes.Audio;}
+			get { return MediaTypes.Audio; }
 		}
-		
+
 		/// <summary>
 		///    Gets the sample width of the audio represented by the
 		///    current instance.
@@ -179,7 +176,7 @@ namespace TagLib.Flac
 		/// </value>
 		[Obsolete ("This property is depreciated, use BitsPerSample instead")]
 		public int AudioSampleWidth {
-			get {return BitsPerSample;}
+			get { return BitsPerSample; }
 		}
 
 		/// <summary>
@@ -192,7 +189,7 @@ namespace TagLib.Flac
 		///    instance.
 		/// </value>
 		public int BitsPerSample {
-			get {return (int) (((flags >> 4) & 31) + 1);}
+			get { return (int)(((flags >> 4) & 31) + 1); }
 		}
 
 		/// <summary>
@@ -204,15 +201,15 @@ namespace TagLib.Flac
 		///    of the media represented by the current instance.
 		/// </value>
 		public string Description {
-			get {return "Flac Audio";}
+			get { return "Flac Audio"; }
 		}
-		
-#endregion
-		
-		
-		
-#region Private Properties
-		
+
+		#endregion
+
+
+
+		#region Private Properties
+
 		/// <summary>
 		///    Gets a high portion of the length of the audio
 		///    represented by the current instance.
@@ -221,17 +218,17 @@ namespace TagLib.Flac
 		///    A <see cref="uint" /> value containing the high portion
 		///    of the length.
 		/// </value>
-		private uint HighLength {
+		uint HighLength {
 			get {
 				// The last 4 bits are the most significant 4
 				// bits for the 36 bit stream length in samples.
 				// (Audio files measured in days)
-				return (uint) (AudioSampleRate > 0 ?
+				return (uint)(AudioSampleRate > 0 ?
 					(((flags & 0xf) << 28) /
 					AudioSampleRate) << 4 : 0);
 			}
 		}
-		
-#endregion
+
+		#endregion
 	}
 }

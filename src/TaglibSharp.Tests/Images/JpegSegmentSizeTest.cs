@@ -1,5 +1,5 @@
-using System;
 using NUnit.Framework;
+using System;
 using TagLib;
 using TagLib.IFD;
 using TagLib.Jpeg;
@@ -28,8 +28,7 @@ namespace TaglibSharp.Tests.Images
 
 			var data = new ByteVector ();
 
-			for (int i = 0; data.Count < min_size; i++)
-			{
+			for (int i = 0; data.Count < min_size; i++) {
 				int index = i % src.Length;
 				data.Add (src.Substring (index, src.Length - index));
 			}
@@ -85,7 +84,8 @@ namespace TaglibSharp.Tests.Images
 			Assert.IsFalse (SaveFile (tmp), "file with exceed comment segment saved");
 		}
 
-		void CheckTags (File file) {
+		void CheckTags (File file)
+		{
 			Assert.IsTrue (file is TagLib.Jpeg.File, "not a Jpeg file");
 
 			Assert.AreEqual (contained_types, file.TagTypes);

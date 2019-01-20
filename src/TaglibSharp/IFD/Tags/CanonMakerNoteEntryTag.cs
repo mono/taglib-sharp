@@ -34,126 +34,126 @@ namespace TagLib.IFD.Tags
 		/// <summary>
 		///    Unknown field at tag 0x0000. (Hex: 0x0000)
 		/// </summary>
-		Unknown0                                           = 0,
+		Unknown0 = 0,
 
 		/// <summary>
 		///    Camera Settings. (Hex: 0x0001)
 		/// </summary>
-		CameraSettings                                      = 1,
+		CameraSettings = 1,
 
 		/// <summary>
 		///    Focal Length. (Hex: 0x0002)
 		/// </summary>
-		FocalLength                                         = 2,
+		FocalLength = 2,
 
 		/// <summary>
 		///    Unknown field at tag 0x0000. (Hex: 0x0003)
 		/// </summary>
-		Unknown3                                            = 3,
+		Unknown3 = 3,
 
 		/// <summary>
 		///    Shot Information. (Hex: 0x0004)
 		/// </summary>
-		ShotInfo                                            = 4,
+		ShotInfo = 4,
 
 		/// <summary>
 		///    Panorama. (Hex: 0x0005)
 		/// </summary>
-		Panorama                                            = 5,
+		Panorama = 5,
 
 		/// <summary>
 		///    Image Type. (Hex: 0x0006)
 		/// </summary>
-		ImageType                                           = 6,
+		ImageType = 6,
 
 		/// <summary>
 		///    Firmware Version. (Hex: 0x0007)
 		/// </summary>
-		FirmwareVersion                                     = 7,
+		FirmwareVersion = 7,
 
 		/// <summary>
 		///    Image Number. (Hex: 0x0008)
 		/// </summary>
-		ImageNumber                                         = 8,
+		ImageNumber = 8,
 
 		/// <summary>
 		///    Owner Name. (Hex: 0x0009)
 		/// </summary>
-		OwnerName                                           = 9,
+		OwnerName = 9,
 
 		/// <summary>
 		///    Serial Number. (Hex: 0x000C)
 		/// </summary>
-		SerialNumber                                        = 12,
+		SerialNumber = 12,
 
 		/// <summary>
 		///    Unknown field at tag 0x0000. (Hex: 0x000D)
 		/// </summary>
-		Unknown13                                           = 13,
+		Unknown13 = 13,
 
 		/// <summary>
 		///    Custom Functions. (Hex: 0x000F)
 		/// </summary>
-		CustomFunctions                                     = 15,
+		CustomFunctions = 15,
 
 		/// <summary>
 		///    Model ID. (Hex: 0x0010)
 		/// </summary>
-		ModelID                                             = 16,
+		ModelID = 16,
 
 		/// <summary>
 		///    Picture Info. (Hex: 0x0012)
 		/// </summary>
-		PictureInfo                                         = 18,
+		PictureInfo = 18,
 
 		/// <summary>
 		///    Serial Number Format. (Hex: 0x0015)
 		/// </summary>
-		SerialNumberFormat                                  = 21,
+		SerialNumberFormat = 21,
 
 		/// <summary>
 		///    Canon File Info. (Hex: 0x0093)
 		/// </summary>
-		CanonFileInfo                                       = 147,
+		CanonFileInfo = 147,
 
 		/// <summary>
 		///    Lens Model. (Hex: 0x0095)
 		/// </summary>
-		LensModel                                           = 149,
+		LensModel = 149,
 
 		/// <summary>
 		///    Serial Info. (Hex: 0x0096)
 		/// </summary>
-		SerialInfo                                          = 150,
+		SerialInfo = 150,
 
 		/// <summary>
 		///    Processing Info. (Hex: 0x00A0)
 		/// </summary>
-		ProcessingInfo                                      = 160,
+		ProcessingInfo = 160,
 
 		/// <summary>
 		///    White Balance Table. (Hex: 0x00A9)
 		/// </summary>
-		WhiteBalanceTable                                   = 169,
+		WhiteBalanceTable = 169,
 
 		/// <summary>
 		///    Measured Color. (Hex: 0x00AA)
 		/// </summary>
-		MeasuredColor                                       = 170,
+		MeasuredColor = 170,
 
 		/// <summary>
 		///    Color Space. (Hex: 0x00B4)
 		/// </summary>
-		ColorSpace                                          = 180,
+		ColorSpace = 180,
 
 		/// <summary>
 		///    Sensor Info. (Hex: 0x00E0)
 		/// </summary>
-		SensorInfo                                          = 224,
+		SensorInfo = 224,
 
 		/// <summary>
 		///    Black Level. (Hex: 0x4008)
 		/// </summary>
-		BlackLevel                                          = 16392,
+		BlackLevel = 16392,
 	}
 }

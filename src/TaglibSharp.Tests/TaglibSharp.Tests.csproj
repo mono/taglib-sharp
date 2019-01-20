@@ -7,6 +7,9 @@
     <ReleaseVersion>2.2.0.0</ReleaseVersion>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Makefile.am" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TaglibSharp\TaglibSharp.csproj">

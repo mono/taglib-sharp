@@ -25,7 +25,6 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-using System;
 
 namespace TagLib.Id3v2
 {
@@ -36,28 +35,18 @@ namespace TagLib.Id3v2
 	public class PopularimeterFrame : Frame
 	{
 		#region Private Properties
-		
+
 		/// <summary>
 		///    Contains the email of the user this frame belongs to.
 		/// </summary>
-		private string user = string.Empty;
-		
-		/// <summary>
-		///    Contains the rating of the files from 0 to 255.
-		/// </summary>
-		private byte rating = 0;
-		
-		/// <summary>
-		///    Contains the number of times this file has been played.
-		/// </summary>
-		private ulong play_count = 0;
-		
+		string user = string.Empty;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="PopularimeterFrame" /> for a specified user with a
@@ -73,7 +62,7 @@ namespace TagLib.Id3v2
 		{
 			User = user;
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="PopularimeterFrame" /> by reading its raw data in a
@@ -92,7 +81,7 @@ namespace TagLib.Id3v2
 		{
 			SetData (data, 0, version, true);
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="PopularimeterFrame" /> by reading its raw data in a
@@ -114,21 +103,18 @@ namespace TagLib.Id3v2
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		protected internal PopularimeterFrame (ByteVector data,
-		                                       int offset,
-		                                       FrameHeader header,
-		                                       byte version)
+		protected internal PopularimeterFrame (ByteVector data, int offset, FrameHeader header, byte version)
 			: base (header)
 		{
 			SetData (data, offset, version, false);
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets and sets the user to whom the current instance
 		///    belongs.
@@ -138,10 +124,10 @@ namespace TagLib.Id3v2
 		///    current instance belongs.
 		/// </value>
 		public string User {
-			get {return user;}
-			set {user = value != null ? value : string.Empty;}
+			get { return user; }
+			set { user = value ?? string.Empty; }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the rating of the current instance.
 		/// </summary>
@@ -149,10 +135,7 @@ namespace TagLib.Id3v2
 		///    A <see cref="byte" /> containing the rating of the
 		///    current instance.
 		/// </value>
-		public byte Rating {
-			get {return rating;}
-			set {rating = value;}
-		}
+		public byte Rating { get; set; }
 
 		/// <summary>
 		///    Gets and sets the play count of the current instance.
@@ -161,17 +144,14 @@ namespace TagLib.Id3v2
 		///    A <see cref="ulong" /> containing the play count of the
 		///    current instance.
 		/// </value>
-		public ulong PlayCount {
-			get {return play_count;}
-			set {play_count = value;}
-		}
-		
+		public ulong PlayCount { get; set; }
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Static Methods
-		
+
 		/// <summary>
 		///    Gets a popularimeter frame from a specified tag,
 		///    optionally creating it if it does not exist.
@@ -193,31 +173,30 @@ namespace TagLib.Id3v2
 		///    wasn't found and <paramref name="create" /> is <see
 		///    langword="false" />.
 		/// </returns>
-		public static PopularimeterFrame Get (Tag tag, string user,
-		                                      bool create)
+		public static PopularimeterFrame Get (Tag tag, string user, bool create)
 		{
 			PopularimeterFrame popm;
 			foreach (Frame frame in tag) {
 				popm = frame as PopularimeterFrame;
-				
+
 				if (popm != null && popm.user.Equals (user))
 					return popm;
 			}
-			
+
 			if (!create)
 				return null;
-			
+
 			popm = new PopularimeterFrame (user);
 			tag.AddFrame (popm);
 			return popm;
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Protected Methods
-		
+
 		/// <summary>
 		///    Populates the values in the current instance by parsing
 		///    its field data in a specified version.
@@ -230,24 +209,22 @@ namespace TagLib.Id3v2
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    field data is encoded in.
 		/// </param>
-		protected override void ParseFields (ByteVector data,
-		                                     byte version)
+		protected override void ParseFields (ByteVector data, byte version)
 		{
-			ByteVector delim = ByteVector.TextDelimiter (
-				StringType.Latin1);
-			
+			var delim = ByteVector.TextDelimiter (StringType.Latin1);
+
 			int index = data.Find (delim);
 			if (index < 0)
-				throw new CorruptFileException (
-					"Popularimeter frame does not contain a text delimiter");
+				throw new CorruptFileException ("Popularimeter frame does not contain a text delimiter");
+
 			if (index + 2 > data.Count)
-				throw new CorruptFileException("Popularimeter is too short");
+				throw new CorruptFileException ("Popularimeter is too short");
 
 			user = data.ToString (StringType.Latin1, 0, index);
-			rating = data [index + 1];
-			play_count = data.Mid (index + 2).ToULong ();
+			Rating = data[index + 1];
+			PlayCount = data.Mid (index + 2).ToULong ();
 		}
-		
+
 		/// <summary>
 		///    Renders the values in the current instance into field
 		///    data for a specified version.
@@ -262,23 +239,22 @@ namespace TagLib.Id3v2
 		/// </returns>
 		protected override ByteVector RenderFields (byte version)
 		{
-			ByteVector data = ByteVector.FromULong (play_count);
-			while (data.Count > 0 && data [0] == 0)
+			ByteVector data = ByteVector.FromULong (PlayCount);
+			while (data.Count > 0 && data[0] == 0)
 				data.RemoveAt (0);
-			
-			data.Insert (0, rating);
+
+			data.Insert (0, Rating);
 			data.Insert (0, 0);
-			data.Insert (0, ByteVector.FromString (user,
-				StringType.Latin1));
+			data.Insert (0, ByteVector.FromString (user, StringType.Latin1));
 			return data;
 		}
-		
-#endregion
-		
-		
-		
-#region ICloneable
-		
+
+		#endregion
+
+
+
+		#region ICloneable
+
 		/// <summary>
 		///    Creates a deep copy of the current instance.
 		/// </summary>
@@ -289,11 +265,11 @@ namespace TagLib.Id3v2
 		public override Frame Clone ()
 		{
 			PopularimeterFrame frame = new PopularimeterFrame (user);
-			frame.play_count = play_count;
-			frame.rating = rating;
+			frame.PlayCount = PlayCount;
+			frame.Rating = Rating;
 			return frame;
 		}
-		
-#endregion
+
+		#endregion
 	}
 }

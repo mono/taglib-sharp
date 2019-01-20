@@ -29,7 +29,8 @@
 
 using System;
 
-namespace TagLib.NonContainer {
+namespace TagLib.NonContainer
+{
 	/// <summary>
 	///    This abstract class extends <see cref="TagLib.File" /> to provide
 	///    tagging and properties for files that contain an indeterminite
@@ -59,23 +60,23 @@ namespace TagLib.NonContainer {
 	public abstract class File : TagLib.File
 	{
 		#region Private Fields
-		
+
 		/// <summary>
 		///    Contains the tags.
 		/// </summary>
-		private TagLib.NonContainer.Tag tag;
-		
+		Tag tag;
+
 		/// <summary>
 		///    Contains the media properties.
 		/// </summary>
-		private Properties properties;
-		
+		Properties properties;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified path in the local file
@@ -98,7 +99,7 @@ namespace TagLib.NonContainer {
 		{
 			Read (propertiesStyle);
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified path in the local file
@@ -114,7 +115,7 @@ namespace TagLib.NonContainer {
 		protected File (string path) : this (path, ReadStyle.Average)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified file abstraction and
@@ -133,13 +134,12 @@ namespace TagLib.NonContainer {
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		protected File (File.IFileAbstraction abstraction,
-		                ReadStyle propertiesStyle)
-		: base (abstraction)
+		protected File (IFileAbstraction abstraction, ReadStyle propertiesStyle)
+			: base (abstraction)
 		{
 			Read (propertiesStyle);
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified file abstraction with an
@@ -153,17 +153,17 @@ namespace TagLib.NonContainer {
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		protected File (File.IFileAbstraction abstraction)
+		protected File (IFileAbstraction abstraction)
 			: this (abstraction, ReadStyle.Average)
 		{
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets a abstract representation of all tags stored in the
 		///    current instance.
@@ -173,9 +173,9 @@ namespace TagLib.NonContainer {
 		///    stored in the current instance.
 		/// </value>
 		public override TagLib.Tag Tag {
-			get {return tag;}
+			get { return tag; }
 		}
-		
+
 		/// <summary>
 		///    Gets the media properties of the file represented by the
 		///    current instance.
@@ -185,16 +185,16 @@ namespace TagLib.NonContainer {
 		///    media properties of the file represented by the current
 		///    instance.
 		/// </value>
-		public override TagLib.Properties Properties {
-			get {return properties;}
+		public override Properties Properties {
+			get { return properties; }
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Methods
-		
+
 		/// <summary>
 		///    Saves the changes made in the current instance to the
 		///    file it represents.
@@ -202,12 +202,10 @@ namespace TagLib.NonContainer {
 		public override void Save ()
 		{
 			// Boilerplate
-			PreSave();
-
-			long start, end;
+			PreSave ();
 			Mode = AccessMode.Write;
 			try {
-				tag.Write (out start, out end);
+				tag.Write (out var start, out var end);
 				InvariantStartPosition = start;
 				InvariantEndPosition = end;
 				TagTypesOnDisk = TagTypes;
@@ -215,7 +213,7 @@ namespace TagLib.NonContainer {
 				Mode = AccessMode.Closed;
 			}
 		}
-		
+
 		/// <summary>
 		///    Removes a set of tag types from the current instance.
 		/// </summary>
@@ -231,13 +229,13 @@ namespace TagLib.NonContainer {
 		{
 			tag.RemoveTags (types);
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Protected Properties
-		
+
 		/// <summary>
 		///    Gets the collection of tags appearing at the start of the
 		///    file.
@@ -247,9 +245,9 @@ namespace TagLib.NonContainer {
 		///    tags for the start of the file.
 		/// </value>
 		protected StartTag StartTag {
-			get {return tag.StartTag;}
+			get { return tag.StartTag; }
 		}
-		
+
 		/// <summary>
 		///    Gets the collection of tags appearing at the end of the
 		///    file.
@@ -259,15 +257,15 @@ namespace TagLib.NonContainer {
 		///    tags for the end of the file.
 		/// </value>
 		protected EndTag EndTag {
-			get {return tag.EndTag;}
+			get { return tag.EndTag; }
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Protected Methods
-		
+
 		/// <summary>
 		///    Reads format specific information at the start of the
 		///    file.
@@ -289,11 +287,10 @@ namespace TagLib.NonContainer {
 		///    specific information, such as an audio header from the
 		///    start of the file.
 		/// </remarks>
-		protected virtual void ReadStart (long start,
-		                                  ReadStyle propertiesStyle)
+		protected virtual void ReadStart (long start, ReadStyle propertiesStyle)
 		{
 		}
-		
+
 		/// <summary>
 		///    Reads format specific information at the end of the
 		///    file.
@@ -315,11 +312,10 @@ namespace TagLib.NonContainer {
 		///    specific information, such as an audio header from the
 		///    end of the file.
 		/// </remarks>
-		protected virtual void ReadEnd (long end,
-		                                ReadStyle propertiesStyle)
+		protected virtual void ReadEnd (long end, ReadStyle propertiesStyle)
 		{
 		}
-		
+
 		/// <summary>
 		///    Reads the audio properties from the file represented by
 		///    the current instance.
@@ -351,16 +347,14 @@ namespace TagLib.NonContainer {
 		///    method should be strictly used to perform final
 		///    processing on already read data.
 		/// </remarks>
-		protected abstract Properties ReadProperties (long start,
-		                                              long end,
-		                                              ReadStyle propertiesStyle);
-		
+		protected abstract Properties ReadProperties (long start, long end, ReadStyle propertiesStyle);
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Private Methods
-		
+
 		/// <summary>
 		///    Reads the file with a specified read style.
 		/// </summary>
@@ -369,18 +363,18 @@ namespace TagLib.NonContainer {
 		///    of accuracy to read the media properties, or <see
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
-		private void Read (ReadStyle propertiesStyle)
+		void Read (ReadStyle propertiesStyle)
 		{
 			Mode = AccessMode.Read;
 			try {
 				tag = new Tag (this);
-				
+
 				// Read the tags and property data at the beginning of
 				// the file.
 				InvariantStartPosition = tag.ReadStart (propertiesStyle);
 				TagTypesOnDisk |= StartTag.TagTypes;
 				ReadStart (InvariantStartPosition, propertiesStyle);
-				
+
 				// Read the tags and property data at the end of the
 				// file.
 				InvariantEndPosition =
@@ -388,7 +382,7 @@ namespace TagLib.NonContainer {
 					Length : tag.ReadEnd (propertiesStyle);
 				TagTypesOnDisk |= EndTag.TagTypes;
 				ReadEnd (InvariantEndPosition, propertiesStyle);
-				
+
 				// Read the audio properties.
 				properties = (propertiesStyle & ReadStyle.Average) != 0 ?
 					ReadProperties (InvariantStartPosition,
@@ -398,7 +392,7 @@ namespace TagLib.NonContainer {
 				Mode = AccessMode.Closed;
 			}
 		}
-		
+
 		#endregion
 	}
 }

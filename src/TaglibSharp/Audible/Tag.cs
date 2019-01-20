@@ -28,7 +28,7 @@ using System.Collections.Generic;
 
 namespace TagLib.Audible
 {
-	
+
 	/// <summary>
 	///    This class extends <see cref="Tag" /> to provide support for
 	///    reading tags stored in the Audible Metadata format.
@@ -36,13 +36,13 @@ namespace TagLib.Audible
 	public class Tag : TagLib.Tag
 	{
 		#region Private Fields
-		
-		private List<KeyValuePair<string, string>> tags;
-		
+
+		List<KeyValuePair<string, string>> tags;
+
 		#endregion
-		
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Tag" /> with no contents.
@@ -51,7 +51,7 @@ namespace TagLib.Audible
 		{
 			Clear ();
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Tag" /> by reading the contents from a specified
@@ -80,7 +80,7 @@ namespace TagLib.Audible
 		{
 			// TODO: can we read from file
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Tag" /> by reading the contents from a specified
@@ -98,18 +98,18 @@ namespace TagLib.Audible
 		/// </exception>
 		public Tag (ByteVector data)
 		{
-			
+
 			if (data == null)
-				throw new ArgumentNullException (nameof(data));
-			
+				throw new ArgumentNullException (nameof (data));
+
 			Clear ();
 			Parse (data);
 		}
-		
+
 		#endregion
-		
+
 		#region Private Methods
-		
+
 		/// <summary>
 		///    Populates the current instance by parsing the contents of
 		///    a raw AudibleMetadata tag.
@@ -122,53 +122,51 @@ namespace TagLib.Audible
 		///    <paramref name="data" /> is less than 128 bytes or does
 		///    not start with FileIdentifier.
 		/// </exception>
-		private void Parse (ByteVector data)
+		void Parse (ByteVector data)
 		{
-			String currentKey, currentValue;
+			string currentKey, currentValue;
 			int keyLen, valueLen;
-			
-			try
-			{
-				do
-				{
-					keyLen = (int) data.ToUInt(true);
+
+			try {
+				do {
+					keyLen = (int)data.ToUInt (true);
 					data.RemoveRange (0, 4);
-					valueLen = (int) data.ToUInt(true);
+					valueLen = (int)data.ToUInt (true);
 					data.RemoveRange (0, 4);
-					currentKey = data.ToString ( TagLib.StringType.UTF8, 0, keyLen );
+					currentKey = data.ToString (StringType.UTF8, 0, keyLen);
 					data.RemoveRange (0, keyLen);
-					currentValue = data.ToString ( TagLib.StringType.UTF8, 0, valueLen );
+					currentValue = data.ToString (StringType.UTF8, 0, valueLen);
 					data.RemoveRange (0, valueLen);
-					
-					tags.Add( new KeyValuePair<string, string>(currentKey, currentValue) );
-					
+
+					tags.Add (new KeyValuePair<string, string> (currentKey, currentValue));
+
 					//StringHandle (currentKey, currentValue);
-					
+
 					// if it is not the last item remove the end byte (null terminated)
 					if (data.Count != 0)
-						data.RemoveRange(0,1);
+						data.RemoveRange (0, 1);
 				}
 				while (data.Count >= 4);
-			}
-			catch (Exception)
-			{
+			} catch (Exception) {
 				//
 			}
-			
+
 			if (data.Count != 0)
-				throw new CorruptFileException();
+				throw new CorruptFileException ();
 		}
 
-		void setTag (string tagName, string value) {
-			for (int i = 0; i < tags.Count; i ++) {
-				if(tags[i].Key == tagName)
-					tags [i] = new KeyValuePair<string, string> (tags [i].Key, value);
+		void setTag (string tagName, string value)
+		{
+			for (int i = 0; i < tags.Count; i++) {
+				if (tags[i].Key == tagName)
+					tags[i] = new KeyValuePair<string, string> (tags[i].Key, value);
 			}
 		}
 
-		private string getTag(string tagName){
-			foreach( KeyValuePair<string, string> tag in tags) {
-				if(tag.Key == tagName)
+		string getTag (string tagName)
+		{
+			foreach (KeyValuePair<string, string> tag in tags) {
+				if (tag.Key == tagName)
 					return tag.Value;
 			}
 			return null;
@@ -202,11 +200,11 @@ namespace TagLib.Audible
 			
 		}
 		*/
-		
-		#endregion	
-		
+
+		#endregion
+
 		#region TagLib.Tag
-		
+
 		/// <summary>
 		///    Gets the tag types contained in the current instance.
 		/// </summary>
@@ -214,7 +212,7 @@ namespace TagLib.Audible
 		///    Always <see cref="TagTypes.AudibleMetadata" />.
 		/// </value>
 		public override TagTypes TagTypes {
-			get {return TagTypes.AudibleMetadata;}
+			get { return TagTypes.AudibleMetadata; }
 		}
 
 		/// <summary>
@@ -256,7 +254,7 @@ namespace TagLib.Audible
 				return getTag ("narrator");
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the title for the media described by the
 		///    current instance.
@@ -268,7 +266,7 @@ namespace TagLib.Audible
 		/// </value>
 		public override string Title {
 			get {
-				return getTag("title");
+				return getTag ("title");
 			}
 		}
 
@@ -283,7 +281,7 @@ namespace TagLib.Audible
 		/// </value>
 		public override string Album {
 			get {
-				return getTag("provider");
+				return getTag ("provider");
 				//return string.IsNullOrEmpty (album) ?
 				//	null : album;
 			}
@@ -300,23 +298,23 @@ namespace TagLib.Audible
 		/// </value>
 		public override string[] AlbumArtists {
 			get {
-				String artist = getTag("provider");
-				
+				var artist = getTag ("provider");
+
 				return string.IsNullOrEmpty (artist) ?
-					null : new string[] {artist};
+					null : new [] { artist };
 			}
 		}
-		
+
 		/// <summary>
 		///    Clears the values stored in the current instance.
 		/// </summary>
 		public override void Clear ()
 		{
-			tags = new List<KeyValuePair<string, string>>();
+			tags = new List<KeyValuePair<string, string>> ();
 		}
-		
+
 		#endregion
-		
+
 	}
 }
 

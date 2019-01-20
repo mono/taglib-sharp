@@ -25,7 +25,6 @@
 // USA
 //
 
-using System.Collections;
 using System;
 using System.Globalization;
 
@@ -37,63 +36,56 @@ namespace TagLib.Id3v1
 	/// </summary>
 	public class Tag : TagLib.Tag
 	{
-#region Private Static Fields
-		
-		private static StringHandler string_handler = new StringHandler ();
-		
-#endregion
 
+		#region Private Fields
 
-
-#region Private Fields
-		
 		/// <summary>
 		///    Contains the title.
 		/// </summary>
-		private string title;
-		
+		string title;
+
 		/// <summary>
 		///    Contains the semicolon separated performers.
 		/// </summary>
-		private string artist;
-		
+		string artist;
+
 		/// <summary>
 		///    Contains the album name.
 		/// </summary>
-		private string album;
-		
+		string album;
+
 		/// <summary>
 		///    Contains the 4 digit year.
 		/// </summary>
-		private string year;
-		
+		string year;
+
 		/// <summary>
 		///    Contains a comment on track.
 		/// </summary>
-		private string comment;
-		
+		string comment;
+
 		/// <summary>
 		///    Contains the track number in the album.
 		/// </summary>
-		private byte track;
-		
+		byte track;
+
 		/// <summary>
 		///    Contains the genre index.
 		/// </summary>
-		private byte genre;
-		
-#endregion
+		byte genre;
+
+		#endregion
 
 
 
 
-#region Public Static Fields
-		
+		#region Public Static Fields
+
 		/// <summary>
 		///    The size of a ID3v1 tag.
 		/// </summary>
 		public const uint Size = 128;
-		
+
 		/// <summary>
 		///    The identifier used to recognize a ID3v1 tags.
 		/// </summary>
@@ -102,12 +94,12 @@ namespace TagLib.Id3v1
 		/// </value>
 		public static readonly ReadOnlyByteVector FileIdentifier = "TAG";
 
-#endregion
+		#endregion
 
 
 
-#region Constructors
-		
+		#region Constructors
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Tag" /> with no contents.
@@ -116,7 +108,7 @@ namespace TagLib.Id3v1
 		{
 			Clear ();
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Tag" /> by reading the contents from a specified
@@ -144,30 +136,27 @@ namespace TagLib.Id3v1
 		public Tag (File file, long position)
 		{
 			if (file == null)
-				throw new ArgumentNullException (nameof(file));
-			
-			file.Mode = TagLib.File.AccessMode.Read;
-			
-			if (position < 0 ||
-				position > file.Length - Size)
-				throw new ArgumentOutOfRangeException (
-					nameof(position));
-			
+				throw new ArgumentNullException (nameof (file));
+
+			file.Mode = File.AccessMode.Read;
+
+			if (position < 0 || position > file.Length - Size)
+				throw new ArgumentOutOfRangeException (nameof (position));
+
 			file.Seek (position);
-			
+
 			// read the tag -- always 128 bytes
-			
-			ByteVector data = file.ReadBlock ((int) Size);
-			
+
+			ByteVector data = file.ReadBlock ((int)Size);
+
 			// some initial sanity checking
-			
+
 			if (!data.StartsWith (FileIdentifier))
-				throw new CorruptFileException (
-					"ID3v1 data does not start with identifier.");
-			
+				throw new CorruptFileException ("ID3v1 data does not start with identifier.");
+
 			Parse (data);
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Tag" /> by reading the contents from a specified
@@ -186,25 +175,23 @@ namespace TagLib.Id3v1
 		public Tag (ByteVector data)
 		{
 			if (data == null)
-				throw new ArgumentNullException (nameof(data));
-			
+				throw new ArgumentNullException (nameof (data));
+
 			if (data.Count < Size)
-				throw new CorruptFileException (
-					"ID3v1 data is less than 128 bytes long.");
-			
+				throw new CorruptFileException ("ID3v1 data is less than 128 bytes long.");
+
 			if (!data.StartsWith (FileIdentifier))
-				throw new CorruptFileException (
-					"ID3v1 data does not start with identifier.");
-			
+				throw new CorruptFileException ("ID3v1 data does not start with identifier.");
+
 			Parse (data);
 		}
-		
-#endregion
-		
-		
-		
-#region Public Methods
-		
+
+		#endregion
+
+
+
+		#region Public Methods
+
 		/// <summary>
 		///    Renders the current instance as a raw ID3v1 tag.
 		/// </summary>
@@ -214,27 +201,27 @@ namespace TagLib.Id3v1
 		/// </returns>
 		public ByteVector Render ()
 		{
-			ByteVector data = new ByteVector ();
-			
-			data.Add (FileIdentifier);
-			data.Add (string_handler.Render (title  ).Resize (30));
-			data.Add (string_handler.Render (artist ).Resize (30));
-			data.Add (string_handler.Render (album  ).Resize (30));
-			data.Add (string_handler.Render (year   ).Resize ( 4));
-			data.Add (string_handler.Render (comment).Resize (28));
-			data.Add ((byte) 0);
-			data.Add (track);
-			data.Add (genre);
-			
+			var data = new ByteVector {
+				FileIdentifier,
+				DefaultStringHandler.Render (title).Resize (30),
+				DefaultStringHandler.Render (artist).Resize (30),
+				DefaultStringHandler.Render (album).Resize (30),
+				DefaultStringHandler.Render (year).Resize (4),
+				DefaultStringHandler.Render (comment).Resize (28),
+				0,
+				track,
+				genre
+			};
+
 			return data;
 		}
-		
-#endregion
-		
-		
-		
-#region Public Static Properties
-		
+
+		#endregion
+
+
+
+		#region Public Static Properties
+
 		/// <summary>
 		///    Gets and sets the <see cref="StringHandler" /> object
 		///    to use when reading and writing ID3v1 fields.
@@ -243,16 +230,13 @@ namespace TagLib.Id3v1
 		///    A <see cref="StringHandler" /> object to use when
 		///    processing fields.
 		/// </value>
-		public static StringHandler DefaultStringHandler {
-			get {return string_handler;}
-			set {string_handler = value;}
-		}
-		
-#endregion
-		
-		
-#region Private Methods
-		
+		public static StringHandler DefaultStringHandler { get; set; } = new StringHandler ();
+
+		#endregion
+
+
+		#region Private Methods
+
 		/// <summary>
 		///    Populates the current instance by parsing the contents of
 		///    a raw ID3v1 tag.
@@ -261,12 +245,12 @@ namespace TagLib.Id3v1
 		///    A <see cref="ByteVector" /> object containing the
 		///    starting with an ID3v1 tag.
 		/// </param>
-		private void Parse (ByteVector data)
+		void Parse (ByteVector data)
 		{
-			title  = string_handler.Parse (data.Mid ( 3, 30));
-			artist = string_handler.Parse (data.Mid (33, 30));
-			album  = string_handler.Parse (data.Mid (63, 30));
-			year   = string_handler.Parse (data.Mid (93,  4));
+			title = DefaultStringHandler.Parse (data.Mid (3, 30));
+			artist = DefaultStringHandler.Parse (data.Mid (33, 30));
+			album = DefaultStringHandler.Parse (data.Mid (63, 30));
+			year = DefaultStringHandler.Parse (data.Mid (93, 4));
 
 			// Check for ID3v1.1 -- Note that ID3v1 *does not*
 			// support "track zero" -- this is not a bug in TagLib.
@@ -275,23 +259,23 @@ namespace TagLib.Id3v1
 			// comment string, a value of zero must be assumed to be
 			// just that.
 
-			if (data [125] == 0 && data [126] != 0) {
+			if (data[125] == 0 && data[126] != 0) {
 				// ID3v1.1 detected
-				comment = string_handler.Parse (data.Mid (97, 28));
-				track = data [126];
+				comment = DefaultStringHandler.Parse (data.Mid (97, 28));
+				track = data[126];
 			} else {
-				comment = string_handler.Parse (data.Mid (97, 30));
+				comment = DefaultStringHandler.Parse (data.Mid (97, 30));
 			}
-			
-			genre = data [127];
+
+			genre = data[127];
 		}
-		
-#endregion
-		
-		
-		
-#region TagLib.Tag
-		
+
+		#endregion
+
+
+
+		#region TagLib.Tag
+
 		/// <summary>
 		///    Gets the tag types contained in the current instance.
 		/// </summary>
@@ -299,9 +283,9 @@ namespace TagLib.Id3v1
 		///    Always <see cref="TagTypes.Id3v1" />.
 		/// </value>
 		public override TagTypes TagTypes {
-			get {return TagTypes.Id3v1;}
+			get { return TagTypes.Id3v1; }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the title for the media described by the
 		///    current instance.
@@ -323,7 +307,7 @@ namespace TagLib.Id3v1
 			}
 			set {
 				title = value != null ?
-					value.Trim () : String.Empty;
+					value.Trim () : string.Empty;
 			}
 		}
 
@@ -344,17 +328,15 @@ namespace TagLib.Id3v1
 		///    have 29 bytes and three performers will only have 28
 		///    bytes).This may result in lost data.
 		/// </remarks>
-		public override string [] Performers {
+		public override string[] Performers {
 			get {
-				return string.IsNullOrEmpty (artist) ?
-					new string [0] : artist.Split (';');
+				return string.IsNullOrEmpty (artist) ? new string[0] : artist.Split (';');
 			}
 			set {
-				artist = value != null ?
-					string.Join (";", value) : string.Empty;
+				artist = value != null ? string.Join (";", value) : string.Empty;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the album of the media represented by the
 		///    current instance.
@@ -371,15 +353,13 @@ namespace TagLib.Id3v1
 		/// </remarks>
 		public override string Album {
 			get {
-				return string.IsNullOrEmpty (album) ?
-					null : album;
+				return string.IsNullOrEmpty (album) ? null : album;
 			}
 			set {
-				album = value != null ?
-					value.Trim () : String.Empty;
+				album = value != null ? value.Trim () : string.Empty;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets a user comment on the media represented by
 		///    the current instance.
@@ -396,12 +376,10 @@ namespace TagLib.Id3v1
 		/// </remarks>
 		public override string Comment {
 			get {
-				return string.IsNullOrEmpty (comment) ?
-					null : comment;
+				return string.IsNullOrEmpty (comment) ? null : comment;
 			}
 			set {
-				comment = value != null ?
-					value.Trim () : String.Empty;
+				comment = value != null ? value.Trim () : string.Empty;
 			}
 		}
 
@@ -420,23 +398,18 @@ namespace TagLib.Id3v1
 		///    cref="TagLib.Genres.Audio" />. All other values will
 		///    result in the property being cleared.
 		/// </remarks>
-		public override string [] Genres {
+		public override string[] Genres {
 			get {
-				string genre_name =
-					TagLib.Genres.IndexToAudio (genre);
-				
-				return (genre_name != null) ?
-					new string [] {genre_name} :
-					new string [0];
+				string genre_name = TagLib.Genres.IndexToAudio (genre);
+
+				return (genre_name != null) ? new [] { genre_name } : new string[0];
 			}
 			set {
 				genre = (value == null || value.Length == 0) ?
-					(byte) 255 :
-					TagLib.Genres.AudioToIndex (
-						value [0].Trim ());
+					(byte)255 : TagLib.Genres.AudioToIndex (value[0].Trim ());
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the year that the media represented by the
 		///    current instance was recorded.
@@ -452,21 +425,13 @@ namespace TagLib.Id3v1
 		/// </remarks>
 		public override uint Year {
 			get {
-				uint value;
-				return uint.TryParse (year,
-					NumberStyles.Integer,
-					CultureInfo.InvariantCulture,
-					out value) ? value : 0;
+				return uint.TryParse (year, NumberStyles.Integer, CultureInfo.InvariantCulture, out var value) ? value : 0;
 			}
-			
 			set {
-				year = (value > 0 && value < 10000) ?
-					value.ToString (
-						CultureInfo.InvariantCulture) :
-					String.Empty;
+				year = (value > 0 && value < 10000) ? value.ToString (CultureInfo.InvariantCulture) : string.Empty;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the position of the media represented by
 		///    the current instance in its containing album.
@@ -481,8 +446,8 @@ namespace TagLib.Id3v1
 		///    values will result in the property being zeroed.
 		/// </remarks>
 		public override uint Track {
-			get {return track;}
-			set {track = (byte) (value < 256 ? value : 0);}
+			get { return track; }
+			set { track = (byte)(value < 256 ? value : 0); }
 		}
 
 		/// <summary>
@@ -495,6 +460,6 @@ namespace TagLib.Id3v1
 			genre = 255;
 		}
 
-#endregion
+		#endregion
 	}
 }

@@ -33,16 +33,8 @@ namespace TagLib.Asf
 	/// </summary>
 	public class UnknownObject : Object
 	{
-		#region Private Fields
-		
-		private ByteVector data;
-		
-		#endregion
-		
-		
-		
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="UnknownObject" /> by reading the contents from a
@@ -63,48 +55,45 @@ namespace TagLib.Asf
 		///    <paramref name="position" /> is less than zero or greater
 		///    than the size of the file.
 		/// </exception>
-		public UnknownObject (Asf.File file, long position)
+		public UnknownObject (File file, long position)
 			: base (file, position)
 		{
-			data = file.ReadBlock ((int) (OriginalSize - 24));
+			Data = file.ReadBlock ((int)(OriginalSize - 24));
 		}
-		
-		#endregion
-		
-		
-		
-		#region Public Properties
-		
-		/// <summary>
-		///    Gets and sets the data contained in the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="ByteVector" /> object containing the data
-		///    contained in the current instance.
-		/// </value>
-		public ByteVector Data {
-			get {return data;}
-			set {data = value;}
-		}
-		
-		#endregion
-		
-		
-		
-		#region Public Methods
-		
-		/// <summary>
-		///    Renders the current instance as a raw ASF object.
-		/// </summary>
-		/// <returns>
-		///    A <see cref="ByteVector" /> object containing the
-		///    rendered version of the current instance.
-		/// </returns>
-		public override ByteVector Render ()
+
+        #endregion
+
+
+
+        #region Public Properties
+
+        /// <summary>
+        ///    Gets and sets the data contained in the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="ByteVector" /> object containing the data
+        ///    contained in the current instance.
+        /// </value>
+        public ByteVector Data { get; set; }
+
+        #endregion
+
+
+
+        #region Public Methods
+
+        /// <summary>
+        ///    Renders the current instance as a raw ASF object.
+        /// </summary>
+        /// <returns>
+        ///    A <see cref="ByteVector" /> object containing the
+        ///    rendered version of the current instance.
+        /// </returns>
+        public override ByteVector Render ()
 		{
-			return Render (data);
+			return Render (Data);
 		}
-		
+
 		#endregion
 	}
 }

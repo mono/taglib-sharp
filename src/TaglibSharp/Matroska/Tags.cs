@@ -1,4 +1,4 @@
-﻿//
+//
 // Tags.cs:
 //
 // Author:
@@ -36,7 +36,9 @@ namespace TagLib.Matroska
 		#region Private fields/Properties
 
 		// Store the Attachments
-		private Attachment[] attachments = new Attachment[0];
+		Attachment[] attachments = new Attachment[0];
+
+		readonly List<Track> _Tracks;
 
 		#endregion
 
@@ -47,7 +49,7 @@ namespace TagLib.Matroska
 		/// Constructor
 		/// </summary>
 		/// <param name="tracks">List of Matroska tracks</param>
-		public Tags(List<Track> tracks)
+		public Tags (List<Track> tracks)
 		{
 			_Tracks = tracks;
 		}
@@ -64,24 +66,21 @@ namespace TagLib.Matroska
 		/// </summary>
 		/// <param name="index">index at which the Tag element should be preferably inserted</param>
 		/// <param name="tag">Tag element to be inserted in the Tag list</param>
-		protected override void InsertItem(int index, Tag tag)
+		protected override void InsertItem (int index, Tag tag)
 		{
-			if (tag == null) throw new ArgumentNullException("Can't add a null Matroska.Tag to a Matroska.Tags object");
+			if (tag == null)
+				throw new ArgumentNullException (nameof(tag), "Can't add a null Matroska.Tag to a Matroska.Tags object");
 
 			// Remove duplicate
-			for (int j = 0; j < this.Count; j++)
-			{
-				if (this[j] == tag)
-				{
-					RemoveAt(j);
+			for (int j = 0; j < Count; j++) {
+				if (this[j] == tag) {
+					RemoveAt (j);
 					break;
 				}
 			}
 
-			if (index < 0 || index >= this.Count || this[index].TargetTypeValue < tag.TargetTypeValue || (index + 1 < this.Count && this[index + 1].TargetTypeValue > tag.TargetTypeValue))
-			{
-				for (index = this.Count - 1; index >= 0; index--)
-				{
+			if (index < 0 || index >= Count || this[index].TargetTypeValue < tag.TargetTypeValue || (index + 1 < Count && this[index + 1].TargetTypeValue > tag.TargetTypeValue)) {
+				for (index = Count - 1; index >= 0; index--) {
 					if (this[index].TargetTypeValue > tag.TargetTypeValue)
 						break;
 					if (this[index].TargetTypeValue == tag.TargetTypeValue && (this[index].Elements == null || tag.Elements != null))
@@ -91,7 +90,7 @@ namespace TagLib.Matroska
 				index++;
 			}
 
-			base.InsertItem(index, tag);
+			base.InsertItem (index, tag);
 
 		}
 
@@ -100,38 +99,28 @@ namespace TagLib.Matroska
 		/// </summary>
 		/// <param name="index">Index of the lement to be replaced</param>
 		/// <param name="tag">tag to replace the older one</param>
-		protected override void SetItem(int index, Tag tag)
+		protected override void SetItem (int index, Tag tag)
 		{
-			RemoveItem(index);
-			InsertItem(index, tag);
-		}
-
-		/// <summary>
-		/// Remove a Tag from the Tags list
-		/// </summary>
-		/// <param name="index"></param>
-		protected override void RemoveItem(int index)
-		{
-			base.RemoveItem(index);
+			RemoveItem (index);
+			InsertItem (index, tag);
 		}
 
 		/// <summary>
 		/// Clears the values stored in the current Tags and Children.
 		/// </summary>
-		protected override void ClearItems()
+		protected override void ClearItems ()
 		{
 			Title = null;
 			var medium = Medium;
 
-			foreach (var tag in this)
-			{
-				tag.Clear();
+			foreach (var tag in this) {
+				tag.Clear ();
 			}
 
-			base.ClearItems();
+			base.ClearItems ();
 
 			// Keep Medium Tag reference unchanged (if any)
-			if (medium != null) Add(medium);
+			if (medium != null) Add (medium);
 		}
 
 
@@ -146,7 +135,7 @@ namespace TagLib.Matroska
 		/// <param name="targetType">TargetTypeValue to find</param>
 		/// <param name="medium">null: any kind, true: represent the current medium, false: represent a sub-element</param>
 		/// <returns>the Tag if match found, null otherwise</returns>
-		public Tag Get(TargetType targetType, bool? medium = true)
+		public Tag Get (TargetType targetType, bool? medium = true)
 		{
 			Tag ret = null;
 			int i;
@@ -162,18 +151,13 @@ namespace TagLib.Matroska
 
 			// Find first match of the given targetValue
 			// List is sorted in descending TargetTypeValue
-			for (i = this.Count - 1; i >= 0; i--)
-			{
-				if (targetTypeValue == this[i].TargetTypeValue)
-				{
+			for (i = Count - 1; i >= 0; i--) {
+				if (targetTypeValue == this[i].TargetTypeValue) {
 					ret = this[i];
-					if (medium != null)
-					{
+					if (medium != null) {
 						bool isMedium = (ret.Elements == null);
 						if (medium == isMedium) break;
-					}
-					else
-					{
+					} else {
 						break;
 					}
 				}
@@ -188,22 +172,17 @@ namespace TagLib.Matroska
 		/// <param name="UIDelement">Matroska Track, Edition, Chapter or Attachment (element having an UID)</param>
 		/// <param name="targetTypeValue">TargetTypeValue to match (default: match any)</param>
 		/// <returns>the first matching Tag representing the UID, or null if not found.</returns>
-		public Tag Get(IUIDElement UIDelement, ushort targetTypeValue = 0)
+		public Tag Get (IUIDElement UIDelement, ushort targetTypeValue = 0)
 		{
-			Tag ret = null;
 			int i;
 
 			ulong UID = UIDelement.UID;
 
-			for (i = this.Count - 1; i >= 0; i--)
-			{
-				if (targetTypeValue == 0 || targetTypeValue == this[i].TargetTypeValue)
-				{
-					ret = this[i];
-					if (ret.Elements != null)
-					{
-						foreach (var uid in ret.Elements)
-						{
+			for (i = Count - 1; i >= 0; i--) {
+				if (targetTypeValue == 0 || targetTypeValue == this[i].TargetTypeValue) {
+					var ret = this[i];
+					if (ret.Elements != null) {
+						foreach (var uid in ret.Elements) {
 							if (uid.UID == UID) return ret; // found
 						}
 					}
@@ -233,20 +212,17 @@ namespace TagLib.Matroska
 		public string Title { get; set; }
 
 
-		
+
 		/// <summary>
 		/// Get/set the Tag that represents the current medium (file)
 		/// </summary>
-		public Tag Medium
-		{
-			get
-			{
+		public Tag Medium {
+			get {
 				Tag ret = null;
 				bool vid = IsVideo;
 
 				// Try to find a default TargetType
-				for (int i = this.Count - 1; i >= 0; i--)
-				{
+				for (int i = Count - 1; i >= 0; i--) {
 					ret = this[i];
 					if (ret.TargetType == TargetType.DEFAULT) // Avoid CD/DVD
 					{
@@ -256,15 +232,14 @@ namespace TagLib.Matroska
 
 				// Lower level without UID is the Tag representing the file
 				// List is sorted in descending TargetTypeValue
-				for (int i = this.Count - 1; i >= 0; i--)
-				{
+				for (int i = Count - 1; i >= 0; i--) {
 					ret = this[i];
 					if (ret.TargetTypeValue != 40 || !vid) // Avoid CD/DVD
 					{
 						if (ret.Elements == null) break;
 					}
 				}
-				
+
 
 				return ret;
 			}
@@ -275,12 +250,10 @@ namespace TagLib.Matroska
 		/// For Audio, this should be an Album, type 50 (itself if the mka file represents an album).
 		/// For Video, this should be a Collection, type 70.
 		/// </summary>
-		public Tag Album
-		{
-			get
-			{
+		public Tag Album {
+			get {
 				TargetType targetValue = IsVideo ? TargetType.COLLECTION : TargetType.ALBUM;
-				return Get(targetValue, true);
+				return Get (targetValue);
 			}
 		}
 
@@ -294,20 +267,14 @@ namespace TagLib.Matroska
 		///    attachments associated with the media represented by the
 		///    current instance or an empty array if none are present.
 		/// </value>
-		public Attachment [] Attachments
-		{
-			get
-			{
+		public Attachment[] Attachments {
+			get {
 				return attachments;
 			}
-			set
-			{
-				if (value==null)
-				{
-					if(attachments.Length > 0)  attachments = new Attachment[0];
-				}
-				else
-				{
+			set {
+				if (value == null) {
+					if (attachments.Length > 0) attachments = new Attachment[0];
+				} else {
 					attachments = value;
 				}
 			}
@@ -316,13 +283,10 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// Get direct access to the Matroska Tracks. 
 		/// </summary>
-		public ReadOnlyCollection<Track> Tracks
-		{
-			get { return _Tracks.AsReadOnly(); }
+		public ReadOnlyCollection<Track> Tracks {
+			get { return _Tracks.AsReadOnly (); }
 		}
-		private List<Track> _Tracks = null;
-
-
+		
 		#endregion
 	}
 }

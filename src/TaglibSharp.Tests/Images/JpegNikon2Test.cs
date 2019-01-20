@@ -1,5 +1,5 @@
-using System;
 using NUnit.Framework;
+using System;
 using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
@@ -20,37 +20,44 @@ namespace TaglibSharp.Tests.Images
 		File file;
 
 		[OneTimeSetUp]
-		public void Init () {
+		public void Init ()
+		{
 			file = File.Create (sample_file);
 		}
 
 		[Test]
-		public void JpegRead () {
+		public void JpegRead ()
+		{
 			CheckTags (file);
 		}
 
 		[Test]
-		public void ExifRead () {
+		public void ExifRead ()
+		{
 			CheckExif (file);
 		}
 
 		[Test]
-		public void MakernoteRead () {
+		public void MakernoteRead ()
+		{
 			CheckMakerNote (file);
 		}
 
 		[Test]
-		public void XMPRead () {
+		public void XMPRead ()
+		{
 			CheckXMP (file);
 		}
 
 		[Test]
-		public void PropertiesRead () {
+		public void PropertiesRead ()
+		{
 			CheckProperties (file);
 		}
 
 		[Test]
-		public void Rewrite () {
+		public void Rewrite ()
+		{
 			var tmp = Utils.CreateTmpFile (sample_file, tmp_file);
 			tmp.Save ();
 
@@ -60,7 +67,7 @@ namespace TaglibSharp.Tests.Images
 			CheckExif (tmp);
 			CheckMakerNote (tmp);
 			CheckXMP (tmp);
-			CheckProperties(tmp);
+			CheckProperties (tmp);
 		}
 
 		[Test]
@@ -87,25 +94,27 @@ namespace TaglibSharp.Tests.Images
 			AddImageMetadataTests.AddXMPTest2 (sample_file, tmp_file, true);
 		}
 
-		public void CheckTags (File file) {
+		public void CheckTags (File file)
+		{
 			Assert.IsTrue (file is TagLib.Jpeg.File, "not a Jpeg file");
 
 			Assert.AreEqual (contained_types, file.TagTypes);
 			Assert.AreEqual (contained_types, file.TagTypesOnDisk);
 		}
 
-		public void CheckExif (File file) {
+		public void CheckExif (File file)
+		{
 			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 
 			Assert.IsNotNull (tag, "tag");
 
-			var exif_ifd = tag.Structure.GetEntry(0, IFDEntryTag.ExifIFD) as SubIFDEntry;
+			var exif_ifd = tag.Structure.GetEntry (0, IFDEntryTag.ExifIFD) as SubIFDEntry;
 			Assert.IsNotNull (exif_ifd, "Exif IFD");
 
 			Assert.AreEqual ("NIKON CORPORATION", tag.Make);
 			Assert.AreEqual ("NIKON D70s", tag.Model);
 			Assert.AreEqual (null, tag.ISOSpeedRatings, "ISOSpeedRatings");
-			Assert.AreEqual (1.0d/180.0d, tag.ExposureTime);
+			Assert.AreEqual (1.0d / 180.0d, tag.ExposureTime);
 			Assert.AreEqual (6.7d, tag.FNumber);
 			Assert.AreEqual (50.0d, tag.FocalLength);
 			Assert.AreEqual (new DateTime (2007, 01, 01, 12, 19, 34), tag.DateTime);
@@ -114,12 +123,13 @@ namespace TaglibSharp.Tests.Images
 		}
 
 
-		public void CheckMakerNote (File file) {
+		public void CheckMakerNote (File file)
+		{
 			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 			Assert.IsNotNull (tag, "tag");
 
 			var makernote_ifd =
-				tag.ExifIFD.GetEntry (0, (ushort) ExifEntryTag.MakerNote) as MakernoteIFDEntry;
+				tag.ExifIFD.GetEntry (0, (ushort)ExifEntryTag.MakerNote) as MakernoteIFDEntry;
 
 			Assert.IsNotNull (makernote_ifd, "makernote ifd");
 			Assert.AreEqual (MakernoteType.Nikon3, makernote_ifd.MakernoteType);
@@ -130,7 +140,7 @@ namespace TaglibSharp.Tests.Images
 				var entry = structure.GetEntry (0, 0x01) as UndefinedIFDEntry;
 				Assert.IsNotNull (entry);
 				var read_bytes = entry.Data;
-				var expected_bytes = new ByteVector (new byte [] {48, 50, 49, 48});
+				var expected_bytes = new ByteVector (new byte[] { 48, 50, 49, 48 });
 
 				Assert.AreEqual (expected_bytes.Count, read_bytes.Count);
 				for (int i = 0; i < expected_bytes.Count; i++)
@@ -158,14 +168,14 @@ namespace TaglibSharp.Tests.Images
 
 				Assert.IsNotNull (values, "values of entry 0x9A");
 				Assert.AreEqual (2, values.Length);
-				Assert.AreEqual (78.0d/10.0d, (double) values[0]);
-				Assert.AreEqual (78.0d/10.0d, (double) values[1]);
+				Assert.AreEqual (78.0d / 10.0d, (double)values[0]);
+				Assert.AreEqual (78.0d / 10.0d, (double)values[1]);
 			}
 		}
 
 		public void CheckXMP (File file)
 		{
-			string [] keywords = {
+			string[] keywords = {
 				"Nikon D70s",
 				"Food",
 				"2007",

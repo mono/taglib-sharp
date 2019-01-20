@@ -23,7 +23,8 @@
 
 using System;
 
-namespace TagLib.Mpeg4 {
+namespace TagLib.Mpeg4
+{
 	/// <summary>
 	///    This class extends <see cref="FullBox" /> to provide an
 	///    implementation of an Apple DataBox.
@@ -31,31 +32,32 @@ namespace TagLib.Mpeg4 {
 	public class AppleDataBox : FullBox
 	{
 		#region Enums
-		
+
 		/// <summary>
 		///    Specifies the type of data contained in a box.
 		/// </summary>
-		public enum FlagType {
+		public enum FlagType
+		{
 			/// <summary>
 			///    The box contains UTF-8 text.
 			/// </summary>
 			ContainsText = 0x01,
-			
+
 			/// <summary>
 			///    The box contains binary data.
 			/// </summary>
 			ContainsData = 0x00,
-			
+
 			/// <summary>
 			///    The box contains data for a tempo box.
 			/// </summary>
 			ForTempo = 0x15,
-			
+
 			/// <summary>
 			///    The box contains a raw JPEG image.
 			/// </summary>
 			ContainsJpegData = 0x0D,
-			
+
 			/// <summary>
 			///    The box contains a raw PNG image.
 			/// </summary>
@@ -77,14 +79,14 @@ namespace TagLib.Mpeg4 {
 		/// <summary>
 		///    Contains the box data.
 		/// </summary>
-		private ByteVector data;
-		
+		ByteVector data;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="AppleDataBox" /> with a provided header and handler
@@ -105,13 +107,12 @@ namespace TagLib.Mpeg4 {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
-		public AppleDataBox (BoxHeader header, TagLib.File file,
-		                     IsoHandlerBox handler)
+		public AppleDataBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler)
 			: base (header, file, handler)
 		{
 			Data = LoadData (file);
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="AppleDataBox" /> with specified data and flags.
@@ -129,13 +130,13 @@ namespace TagLib.Mpeg4 {
 		{
 			Data = data;
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the position of the data contained in the current
 		///    instance, after any box specific headers.
@@ -145,9 +146,9 @@ namespace TagLib.Mpeg4 {
 		///    the data contained in the current instance.
 		/// </value>
 		protected override long DataPosition {
-			get {return base.DataPosition + 4;}
+			get { return base.DataPosition + 4; }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the data contained in the current instance.
 		/// </summary>
@@ -156,10 +157,10 @@ namespace TagLib.Mpeg4 {
 		///    contained in the current instance.
 		/// </value>
 		public override ByteVector Data {
-			get {return data;}
-			set {data = value != null ? value : new ByteVector ();}
+			get { return data; }
+			set { data = value ?? new ByteVector (); }
 		}
-		
+
 		/// <summary>
 		///    Gets and sets the text contained in the current instance.
 		/// </summary>
@@ -171,23 +172,20 @@ namespace TagLib.Mpeg4 {
 		/// </value>
 		public string Text {
 			get {
-				return ((Flags & (int)
-					FlagType.ContainsText) != 0) ?
-					Data.ToString (StringType.UTF8) : null;
+				return ((Flags & (int)FlagType.ContainsText) != 0) ? Data.ToString (StringType.UTF8) : null;
 			}
 			set {
-				Flags = (int) FlagType.ContainsText;
-				Data = ByteVector.FromString (value,
-					StringType.UTF8);
+				Flags = (int)FlagType.ContainsText;
+				Data = ByteVector.FromString (value, StringType.UTF8);
 			}
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Protected Methods
-		
+
 		/// <summary>
 		///    Renders the current instance, including its children, to
 		///    a new <see cref="ByteVector" /> object, preceeding the
@@ -203,11 +201,12 @@ namespace TagLib.Mpeg4 {
 		/// </returns>
 		protected override ByteVector Render (ByteVector topData)
 		{
-			ByteVector output = new ByteVector (4);
-			output.Add (topData);
+			var output = new ByteVector (4) {
+				topData
+			};
 			return base.Render (output);
 		}
-		
+
 		#endregion
 	}
 }

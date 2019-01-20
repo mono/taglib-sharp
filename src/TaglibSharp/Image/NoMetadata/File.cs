@@ -31,33 +31,33 @@ namespace TagLib.Image.NoMetadata
 	///    obviously can't write to them, but you can populate an XMP tag, for
 	///    sidecar purposes.
 	/// </summary>
-	[SupportedMimeType("taglib/bmp", "bmp")]
-	[SupportedMimeType("image/x-MS-bmp")]
-	[SupportedMimeType("image/x-bmp")]
-	[SupportedMimeType("taglib/ppm", "ppm")]
-	[SupportedMimeType("taglib/pgm", "pgm")]
-	[SupportedMimeType("taglib/pbm", "pbm")]
-	[SupportedMimeType("taglib/pnm", "pnm")]
-	[SupportedMimeType("image/x-portable-pixmap")]
-	[SupportedMimeType("image/x-portable-graymap")]
-	[SupportedMimeType("image/x-portable-bitmap")]
-	[SupportedMimeType("image/x-portable-anymap")]
-	[SupportedMimeType("taglib/pcx", "pcx")]
-	[SupportedMimeType("image/x-pcx")]
-	[SupportedMimeType("taglib/svg", "svg")]
-	[SupportedMimeType("taglib/svgz", "svgz")]
-	[SupportedMimeType("image/svg+xml")]
-	[SupportedMimeType("taglib/kdc", "kdc")]    // FIXME: Not supported yet!
-	[SupportedMimeType("taglib/orf", "orf")]    // FIXME: Not supported yet!
-	[SupportedMimeType("taglib/srf", "srf")]    // FIXME: Not supported yet!
-	[SupportedMimeType("taglib/crw", "crw")]    // FIXME: Not supported yet!
-	[SupportedMimeType("taglib/mrw", "mrw")]    // FIXME: Not supported yet!
-	[SupportedMimeType("taglib/raf", "raf")]    // FIXME: Not supported yet!
-	[SupportedMimeType("taglib/x3f", "x3f")]    // FIXME: Not supported yet!
+	[SupportedMimeType ("taglib/bmp", "bmp")]
+	[SupportedMimeType ("image/x-MS-bmp")]
+	[SupportedMimeType ("image/x-bmp")]
+	[SupportedMimeType ("taglib/ppm", "ppm")]
+	[SupportedMimeType ("taglib/pgm", "pgm")]
+	[SupportedMimeType ("taglib/pbm", "pbm")]
+	[SupportedMimeType ("taglib/pnm", "pnm")]
+	[SupportedMimeType ("image/x-portable-pixmap")]
+	[SupportedMimeType ("image/x-portable-graymap")]
+	[SupportedMimeType ("image/x-portable-bitmap")]
+	[SupportedMimeType ("image/x-portable-anymap")]
+	[SupportedMimeType ("taglib/pcx", "pcx")]
+	[SupportedMimeType ("image/x-pcx")]
+	[SupportedMimeType ("taglib/svg", "svg")]
+	[SupportedMimeType ("taglib/svgz", "svgz")]
+	[SupportedMimeType ("image/svg+xml")]
+	[SupportedMimeType ("taglib/kdc", "kdc")]    // FIXME: Not supported yet!
+	[SupportedMimeType ("taglib/orf", "orf")]    // FIXME: Not supported yet!
+	[SupportedMimeType ("taglib/srf", "srf")]    // FIXME: Not supported yet!
+	[SupportedMimeType ("taglib/crw", "crw")]    // FIXME: Not supported yet!
+	[SupportedMimeType ("taglib/mrw", "mrw")]    // FIXME: Not supported yet!
+	[SupportedMimeType ("taglib/raf", "raf")]    // FIXME: Not supported yet!
+	[SupportedMimeType ("taglib/x3f", "x3f")]    // FIXME: Not supported yet!
 	public class File : TagLib.Image.File
 	{
 
-#region public Properties
+		#region public Properties
 
 		/// <summary>
 		///    Gets the media properties of the file represented by the
@@ -68,7 +68,7 @@ namespace TagLib.Image.NoMetadata
 		///    media properties of the file represented by the current
 		///    instance.
 		/// </value>
-		public override TagLib.Properties Properties {
+		public override Properties Properties {
 			get { return null; }
 		}
 
@@ -83,9 +83,9 @@ namespace TagLib.Image.NoMetadata
 			get { return false; }
 		}
 
-#endregion
+		#endregion
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
@@ -105,8 +105,7 @@ namespace TagLib.Image.NoMetadata
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		public File (string path, ReadStyle propertiesStyle)
-			: this (new File.LocalFileAbstraction (path),
-				propertiesStyle)
+			: this (new LocalFileAbstraction (path), propertiesStyle)
 		{
 		}
 
@@ -122,7 +121,8 @@ namespace TagLib.Image.NoMetadata
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
-		public File (string path) : this (path, ReadStyle.Average)
+		public File (string path)
+			: this (path, ReadStyle.Average)
 		{
 		}
 
@@ -144,8 +144,8 @@ namespace TagLib.Image.NoMetadata
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle) : base (abstraction)
+		public File (IFileAbstraction abstraction, ReadStyle propertiesStyle)
+			: base (abstraction)
 		{
 			ImageTag = new CombinedImageTag (TagTypes.XMP);
 		}
@@ -167,9 +167,9 @@ namespace TagLib.Image.NoMetadata
 		{
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///    Saves the changes made in the current instance to the
@@ -180,7 +180,6 @@ namespace TagLib.Image.NoMetadata
 			throw new NotSupportedException ();
 		}
 
-#endregion
-
+		#endregion
 	}
 }

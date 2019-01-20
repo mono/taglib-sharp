@@ -22,8 +22,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TagLib.Aac
 {
@@ -39,23 +37,23 @@ namespace TagLib.Aac
 	///    method:
 	///    <code>file.RemoveTags (file.TagTypes &amp; ~file.TagTypesOnDisk);</code>
 	/// </remarks>
-	[SupportedMimeType("taglib/aac", "aac")]
-	[SupportedMimeType("audio/aac")]
+	[SupportedMimeType ("taglib/aac", "aac")]
+	[SupportedMimeType ("audio/aac")]
 	public class File : TagLib.NonContainer.File
 	{
 		#region Private Fields
-		
+
 		/// <summary>
 		///    Contains the first audio header.
 		/// </summary>
-		private AudioHeader first_header;
-		
+		AudioHeader first_header;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified path in the local
@@ -77,7 +75,7 @@ namespace TagLib.Aac
 			: base (path, propertiesStyle)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified path in the local
@@ -93,7 +91,7 @@ namespace TagLib.Aac
 		public File (string path) : base (path)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified file abstraction and
@@ -112,12 +110,11 @@ namespace TagLib.Aac
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public File (File.IFileAbstraction abstraction,
-					 ReadStyle propertiesStyle)
+		public File (IFileAbstraction abstraction, ReadStyle propertiesStyle)
 			: base (abstraction, propertiesStyle)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="File" /> for a specified file abstraction with
@@ -131,17 +128,17 @@ namespace TagLib.Aac
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public File (File.IFileAbstraction abstraction)
+		public File (IFileAbstraction abstraction)
 			: base (abstraction)
 		{
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Methods
-		
+
 		/// <summary>
 		///    Gets a tag of a specified type from the current instance,
 		///    optionally creating a new tag if possible.
@@ -167,35 +164,34 @@ namespace TagLib.Aac
 		///    <see cref="TagLib.Ape.Tag" /> will be added to the end of
 		///    the file. All other tag types will be ignored.
 		/// </remarks>
-		public override TagLib.Tag GetTag (TagTypes type, bool create)
+		public override Tag GetTag (TagTypes type, bool create)
 		{
 			Tag t = (Tag as TagLib.NonContainer.Tag).GetTag (type);
-			
+
 			if (t != null || !create)
 				return t;
-			
-			switch (type)
-			{
+
+			switch (type) {
 			case TagTypes.Id3v1:
 				return EndTag.AddTag (type, Tag);
-			
+
 			case TagTypes.Id3v2:
 				return StartTag.AddTag (type, Tag);
-			
+
 			case TagTypes.Ape:
 				return EndTag.AddTag (type, Tag);
-			
+
 			default:
 				return null;
 			}
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Protected Methods
-		
+
 		/// <summary>
 		///    Reads format specific information at the start of the
 		///    file.
@@ -214,18 +210,15 @@ namespace TagLib.Aac
 		///    first 16384 bytes of code to avoid searching forever in
 		///    corrupt files.
 		/// </remarks>
-		protected override void ReadStart (long start,
-										   ReadStyle propertiesStyle)
+		protected override void ReadStart (long start, ReadStyle propertiesStyle)
 		{
 			// Only check the first 16 bytes so we're not stuck
 			// reading a bad file forever.
 			if ((propertiesStyle & ReadStyle.Average) != 0 &&
-				!AudioHeader.Find (out first_header, this,
-					start, 0x4000))
-				throw new CorruptFileException (
-					"ADTS audio header not found.");
+				!AudioHeader.Find (out first_header, this, start, 0x4000))
+				throw new CorruptFileException ("ADTS audio header not found.");
 		}
-		
+
 		/// <summary>
 		///    Reads format specific information at the end of the
 		///    file.
@@ -239,14 +232,13 @@ namespace TagLib.Aac
 		///    of accuracy to read the media properties, or <see
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
-		protected override void ReadEnd (long end,
-										 ReadStyle propertiesStyle)
+		protected override void ReadEnd (long end, ReadStyle propertiesStyle)
 		{
 			// Make sure we have ID3v1 and ID3v2 tags.
 			GetTag (TagTypes.Id3v1, true);
 			GetTag (TagTypes.Id3v2, true);
 		}
-		
+
 		/// <summary>
 		///    Reads the audio properties from the file represented by
 		///    the current instance.
@@ -269,14 +261,12 @@ namespace TagLib.Aac
 		///    media properties of the file represented by the current
 		///    instance.
 		/// </returns>
-		protected override Properties ReadProperties (long start,
-													  long end,
-													  ReadStyle propertiesStyle)
+		protected override Properties ReadProperties (long start, long end, ReadStyle propertiesStyle)
 		{
 			first_header.SetStreamLength (end - start);
 			return new Properties (TimeSpan.Zero, first_header);
 		}
-		
+
 		#endregion
 	}
 }

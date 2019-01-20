@@ -1,9 +1,9 @@
-using System.IO;
 using NUnit.Framework;
+using System.IO;
 using File = TagLib.File;
 
 namespace TaglibSharp.Tests.FileFormats
-{   
+{
 	[TestFixture]
 	public class AudibleFormatTest
 	{
@@ -12,7 +12,7 @@ namespace TaglibSharp.Tests.FileFormats
 		[Test]
 		public void First ()
 		{
-			var tag = (TagLib.Audible.Tag) File.Create(Path.Combine (BaseDirectory, "first.aa")).Tag;
+			var tag = (TagLib.Audible.Tag)File.Create (Path.Combine (BaseDirectory, "first.aa")).Tag;
 			Assert.AreEqual (tag.Album, "Glyn Hughes"); // This is probably wrong. The publisher is not the album
 			Assert.AreEqual (tag.Author, "Ricky Gervais, Steve Merchant, & Karl Pilkington");
 			Assert.AreEqual (tag.Copyright, "&#169;2009 Ricky Gervais; (P)2009 Ricky Gervais");
@@ -25,7 +25,7 @@ namespace TaglibSharp.Tests.FileFormats
 		[Ignore ("Not supported yet")]
 		public void Second ()
 		{
-			var tag = (TagLib.Audible.Tag) File.Create(Path.Combine (BaseDirectory, "second.aax")).Tag;
+			var tag = (TagLib.Audible.Tag)File.Create (Path.Combine (BaseDirectory, "second.aax")).Tag;
 			Assert.AreEqual (tag.Album, "Glyn Hughes"); // This is probably wrong. The publisher is not the album
 			Assert.AreEqual (tag.Author, "Ricky Gervais, Steve Merchant, & Karl Pilkington");
 			Assert.AreEqual (tag.Copyright, "&#169;2009 Ricky Gervais; (P)2009 Ricky Gervais");
@@ -37,7 +37,7 @@ namespace TaglibSharp.Tests.FileFormats
 		[Test]
 		public void Third ()
 		{
-			var tag = (TagLib.Audible.Tag) File.Create(Path.Combine (BaseDirectory, "third.aa")).Tag;
+			var tag = (TagLib.Audible.Tag)File.Create (Path.Combine (BaseDirectory, "third.aa")).Tag;
 			Assert.AreEqual (tag.Album, "Glyn Hughes"); // This is probably wrong. The publisher is not the album
 			Assert.AreEqual (tag.Author, "Ricky Gervais, Steve Merchant, & Karl Pilkington");
 			Assert.AreEqual (tag.Copyright, "&#169;2009 Ricky Gervais; (P)2009 Ricky Gervais");
@@ -49,7 +49,7 @@ namespace TaglibSharp.Tests.FileFormats
 		[Test]
 		public void Fourth ()
 		{
-			var tag = (TagLib.Audible.Tag) File.Create(Path.Combine (BaseDirectory, "fourth.aa")).Tag;
+			var tag = (TagLib.Audible.Tag)File.Create (Path.Combine (BaseDirectory, "fourth.aa")).Tag;
 			Assert.AreEqual (tag.Album, "Glyn Hughes"); // This is probably wrong. The publisher is not the album
 			Assert.AreEqual (tag.Author, "Ricky Gervais, Steve Merchant & Karl Pilkington");
 			Assert.AreEqual (tag.Copyright, "&#169;2010 Ricky Gervais; (P)2010 Ricky Gervais");

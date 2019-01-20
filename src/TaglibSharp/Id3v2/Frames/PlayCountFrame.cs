@@ -26,9 +26,8 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
-namespace TagLib.Id3v2 {
+namespace TagLib.Id3v2
+{
 	/// <summary>
 	///    This class extends <see cref="Frame" />, implementing support for
 	///    ID3v2 Play Count (PCNT) Frames.
@@ -159,20 +158,8 @@ namespace TagLib.Id3v2 {
 	/// </example>
 	public class PlayCountFrame : Frame
 	{
-		#region Private Properties
-		
-		/// <summary>
-		///    Contains the total number of times the file has been
-		///    played.
-		/// </summary>
-		private ulong play_count = 0;
-		
-		#endregion
-		
-		
-		
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="PlayCountFrame" /> with a count of zero.
@@ -185,7 +172,7 @@ namespace TagLib.Id3v2 {
 		public PlayCountFrame () : base (FrameType.PCNT, 4)
 		{
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="PlayCountFrame" /> by reading its raw data in a
@@ -204,7 +191,7 @@ namespace TagLib.Id3v2 {
 		{
 			SetData (data, 0, version, true);
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="PlayCountFrame" /> by reading its raw data in a
@@ -226,37 +213,33 @@ namespace TagLib.Id3v2 {
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		protected internal PlayCountFrame (ByteVector data, int offset,
-		                                   FrameHeader header,
-		                                   byte version) : base(header)
+		protected internal PlayCountFrame (ByteVector data, int offset, FrameHeader header, byte version)
+			: base (header)
 		{
 			SetData (data, offset, version, false);
 		}
-		
+
+        #endregion
+
+
+
+        #region Public Properties
+
+        /// <summary>
+        ///    Gets and sets the play count of the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="ulong" /> containing the play count of the
+        ///    current instance.
+        /// </value>
+        public ulong PlayCount { get; set; }
+
 		#endregion
-		
-		
-		
-		#region Public Properties
-		
-		/// <summary>
-		///    Gets and sets the play count of the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="ulong" /> containing the play count of the
-		///    current instance.
-		/// </value>
-		public ulong PlayCount {
-			get {return play_count;}
-			set {play_count = value;}
-		}
-		
-		#endregion
-		
-		
-		
+
+
+
 		#region Public Static Methods
-		
+
 		/// <summary>
 		///    Gets a play count frame from a specified tag, optionally
 		///    creating it if it does not exist.
@@ -279,25 +262,25 @@ namespace TagLib.Id3v2 {
 			PlayCountFrame pcnt;
 			foreach (Frame frame in tag) {
 				pcnt = frame as PlayCountFrame;
-				
+
 				if (pcnt != null)
 					return pcnt;
 			}
-			
+
 			if (!create)
 				return null;
-			
+
 			pcnt = new PlayCountFrame ();
 			tag.AddFrame (pcnt);
 			return pcnt;
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Protected Methods
-		
+
 		/// <summary>
 		///    Populates the values in the current instance by parsing
 		///    its field data in a specified version.
@@ -312,9 +295,9 @@ namespace TagLib.Id3v2 {
 		/// </param>
 		protected override void ParseFields (ByteVector data, byte version)
 		{
-			play_count = data.ToULong ();
+			PlayCount = data.ToULong ();
 		}
-		
+
 		/// <summary>
 		///    Renders the values in the current instance into field
 		///    data for a specified version.
@@ -329,19 +312,19 @@ namespace TagLib.Id3v2 {
 		/// </returns>
 		protected override ByteVector RenderFields (byte version)
 		{
-			ByteVector data = ByteVector.FromULong (play_count);
-			while (data.Count > 4 && data [0] == 0)
+			ByteVector data = ByteVector.FromULong (PlayCount);
+			while (data.Count > 4 && data[0] == 0)
 				data.RemoveAt (0);
-			
+
 			return data;
 		}
-		
-#endregion
-		
-		
-		
-#region ICloneable
-		
+
+		#endregion
+
+
+
+		#region ICloneable
+
 		/// <summary>
 		///    Creates a deep copy of the current instance.
 		/// </summary>
@@ -351,11 +334,12 @@ namespace TagLib.Id3v2 {
 		/// </returns>
 		public override Frame Clone ()
 		{
-			PlayCountFrame frame = new PlayCountFrame ();
-			frame.play_count = play_count;
+			var frame = new PlayCountFrame {
+				PlayCount = PlayCount
+			};
 			return frame;
 		}
-		
-#endregion
+
+		#endregion
 	}
 }

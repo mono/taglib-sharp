@@ -1,5 +1,5 @@
-using System;
 using NUnit.Framework;
+using System;
 using TaglibSharp.Tests.Images.Validators;
 
 namespace TaglibSharp.Tests.Images
@@ -11,7 +11,7 @@ namespace TaglibSharp.Tests.Images
 		public void Test ()
 		{
 			ImageTest.Run (TestPath.GetRawSubDirectory ("RAW"), "RAW_LEICA_DIGILUX2_SRGB.RAW",
-			               false,new RawLeicaDigilux2TestInvariantValidator ());
+						   false, new RawLeicaDigilux2TestInvariantValidator ());
 		}
 	}
 
@@ -26,7 +26,7 @@ namespace TaglibSharp.Tests.Images
 			var imagetag = file.ImageTag;
 			Assert.IsNotNull (imagetag);
 			Assert.AreEqual (String.Empty, imagetag.Comment, "Comment");
-			Assert.AreEqual (new string [] {}, imagetag.Keywords, "Keywords");
+			Assert.AreEqual (new string[] { }, imagetag.Keywords, "Keywords");
 			Assert.AreEqual (null, imagetag.Rating, "Rating");
 			Assert.AreEqual (TagLib.Image.ImageOrientation.TopLeft, imagetag.Orientation, "Orientation");
 			Assert.AreEqual (null, imagetag.Software, "Software");

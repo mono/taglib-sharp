@@ -26,39 +26,19 @@
 // USA
 //
 
-using System.Collections;
 using System;
 
-namespace TagLib.Mpeg {
+namespace TagLib.Mpeg
+{
 	/// <summary>
 	///    This structure provides information about a variable bitrate MPEG
 	///    audio stream encoded by the Fraunhofer Encoder.
 	/// </summary>
 	public struct VBRIHeader
 	{
-#region Private Fields
-		
-		/// <summary>
-		///    Contains the frame count.
-		/// </summary>
-		private uint frames;
-		
-		/// <summary>
-		///    Contains the stream size.
-		/// </summary>
-		private uint size;
-		
-		/// <summary>
-		///    Indicates that a physical VBRI header is present.
-		/// </summary>
-		private bool present;
-		
-#endregion
-		
-		
-		
-#region Public Fields
-		
+
+		#region Public Fields
+
 		/// <summary>
 		///    Contains te VBRI identifier.
 		/// </summary>
@@ -66,18 +46,18 @@ namespace TagLib.Mpeg {
 		///    "VBRI"
 		/// </value>
 		public static readonly ReadOnlyByteVector FileIdentifier = "VBRI";
-		
+
 		/// <summary>
 		///    An empty and unset VBRI header.
 		/// </summary>
 		public static readonly VBRIHeader Unknown = new VBRIHeader (0, 0);
-		
-#endregion
-		
-		
-		
-#region Constructors
-		
+
+		#endregion
+
+
+
+		#region Constructors
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="VBRIHeader" /> with a specified frame count and
@@ -91,13 +71,13 @@ namespace TagLib.Mpeg {
 		///    A <see cref="uint" /> value specifying the stream size of
 		///    the audio represented by the new instance.
 		/// </param>
-		private VBRIHeader (uint frame, uint size)
+		VBRIHeader (uint frame, uint size)
 		{
-			this.frames = frame;
-			this.size = size;
-			this.present = false;
+			TotalFrames = frame;
+			TotalSize = size;
+			Present = false;
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="VBRIHeader" /> by reading its raw contents.
@@ -116,32 +96,31 @@ namespace TagLib.Mpeg {
 		public VBRIHeader (ByteVector data)
 		{
 			if (data == null)
-				throw new ArgumentNullException (nameof(data));
-			
+				throw new ArgumentNullException (nameof (data));
+
 			// Check to see if a valid VBRI header is available.
 			if (!data.StartsWith (FileIdentifier))
-				throw new CorruptFileException (
-					"Not a valid VBRI header");
-			
+				throw new CorruptFileException ("Not a valid VBRI header");
+
 			// Size starts at Position 10
 			int position = 10;
 
-			size = data.Mid(position, 4).ToUInt();
+			TotalSize = data.Mid (position, 4).ToUInt ();
 			position += 4;
 
 			// The number of Frames are found at Posistion 14
-			frames = data.Mid(position, 4).ToUInt();
+			TotalFrames = data.Mid (position, 4).ToUInt ();
 			position += 4;
-			
-			present = true;
+
+			Present = true;
 		}
-		
-#endregion
-		
-		
-		
-#region Public Properties
-		
+
+		#endregion
+
+
+
+		#region Public Properties
+
 		/// <summary>
 		///    Gets the total number of frames in the file, as indicated
 		///    by the current instance.
@@ -150,10 +129,8 @@ namespace TagLib.Mpeg {
 		///    A <see cref="uint" /> value containing the number of
 		///    frames in the file, or <c>0</c> if not specified.
 		/// </value>
-		public uint TotalFrames {
-			get {return frames;}
-		}
-		
+		public uint TotalFrames { get; private set; }
+
 		/// <summary>
 		///    Gets the total size of the file, as indicated by the
 		///    current instance.
@@ -162,10 +139,8 @@ namespace TagLib.Mpeg {
 		///    A <see cref="uint" /> value containing the total size of
 		///    the file, or <c>0</c> if not specified.
 		/// </value>
-		public uint TotalSize {
-			get {return size;}
-		}
-		
+		public uint TotalSize { get; private set; }
+
 		/// <summary>
 		///    Gets whether or not a physical VBRI header is present in
 		///    the file.
@@ -174,16 +149,14 @@ namespace TagLib.Mpeg {
 		///    A <see cref="bool" /> value indicating whether or not the
 		///    current instance represents a physical VBRI header.
 		/// </value>
-		public bool Present {
-			get {return present;}
-		}
-		
-#endregion
-		
-		
-		
-#region Public Static Methods
-		
+		public bool Present { get; private set; }
+
+		#endregion
+
+
+
+		#region Public Static Methods
+
 		/// <summary>
 		///    Gets the offset at which a VBRI header would appear in an
 		///    MPEG audio packet.
@@ -197,9 +170,9 @@ namespace TagLib.Mpeg {
 		{
 			// A VBRI header always appears 32 bytes after the end
 			// of the first MPEG Header. So it's position 36 (0x24).
-	  		return 0x24;
+			return 0x24;
 		}
-		
-#endregion
+
+		#endregion
 	}
 }

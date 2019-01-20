@@ -27,10 +27,11 @@
 
 using System;
 
-namespace TagLib.Mpeg {
-	
+namespace TagLib.Mpeg
+{
+
 	#region Enums
-	
+
 	/// <summary>
 	///    Indicates the MPEG version of a file or stream.
 	/// </summary>
@@ -40,23 +41,23 @@ namespace TagLib.Mpeg {
 		///    Unknown version.
 		/// </summary>
 		Unknown = -1,
-		
+
 		/// <summary>
 		///    MPEG-1
 		/// </summary>
 		Version1 = 0,
-		
+
 		/// <summary>
 		///    MPEG-2
 		/// </summary>
 		Version2 = 1,
-		
+
 		/// <summary>
 		///    MPEG-2.5
 		/// </summary>
 		Version25 = 2
 	}
-	
+
 	/// <summary>
 	///    Indicates the MPEG audio channel mode of a file or stream.
 	/// </summary>
@@ -66,25 +67,25 @@ namespace TagLib.Mpeg {
 		///    Stereo
 		/// </summary>
 		Stereo = 0,
-		
+
 		/// <summary>
 		///    Joint Stereo
 		/// </summary>
 		JointStereo = 1,
-		
+
 		/// <summary>
 		///    Dual Channel Mono
 		/// </summary>
 		DualChannel = 2,
-		
+
 		/// <summary>
 		///    Single Channel Mono
 		/// </summary>
 		SingleChannel = 3
 	}
-	
+
 	#endregion
-	
+
 	/// <summary>
 	///    This structure implements <see cref="IAudioCodec" /> and provides
 	///    information about an MPEG audio stream.
@@ -92,29 +93,29 @@ namespace TagLib.Mpeg {
 	public struct AudioHeader : IAudioCodec
 	{
 		#region Private Static Value Arrays
-		
+
 		/// <summary>
 		///    Contains a sample rate table for MPEG audio.
 		/// </summary>
-		private static readonly int [,] sample_rates = new int [3,4] {
+		static readonly int[,] sample_rates = new int[3, 4] {
 			{44100, 48000, 32000, 0}, // Version 1
 			{22050, 24000, 16000, 0}, // Version 2
 			{11025, 12000,  8000, 0}  // Version 2.5
 		};
-		
+
 		/// <summary>
 		///    Contains a block size table for MPEG audio.
 		/// </summary>
-		private static readonly int [,] block_size = new int [3,4] {
+		static readonly int[,] block_size = new int[3, 4] {
 			{0, 384, 1152, 1152}, // Version 1
 			{0, 384, 1152,  576}, // Version 2
 			{0, 384, 1152,  576}  // Version 2.5
 		};
-		
+
 		/// <summary>
 		///    Contains a bitrate table for MPEG audio.
 		/// </summary>
-		private static readonly int [,,] bitrates = new int [2,3,16] {
+		static readonly int[,,] bitrates = new int[2, 3, 16] {
 			{ // Version 1
 				{0, 32, 64, 96, 128, 160, 192, 224, 256, 288,
 					320, 352, 384, 416, 448, -1}, // layer 1
@@ -132,57 +133,56 @@ namespace TagLib.Mpeg {
 					112, 128, 144, 160, -1}  // layer 3
 			}
 		};
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Private Properties
-		
+
 		/// <summary>
 		///    Contains the header flags.
 		/// </summary>
-		private uint flags;
-		
+		readonly uint flags;
+
 		/// <summary>
 		///    Contains the audio stream length.
 		/// </summary>
-		private long stream_length;
-		
+		long stream_length;
+
 		/// <summary>
 		///    Contains the associated Xing header.
 		/// </summary>
-		private XingHeader xing_header;
-		
+		XingHeader xing_header;
+
 		/// <summary>
 		///    Contains the associated VBRI header.
 		/// </summary>
-		private VBRIHeader vbri_header;
-		
+		readonly VBRIHeader vbri_header;
+
 		/// <summary>
 		///    Contains the audio stream duration.
 		/// </summary>
-		private TimeSpan duration;
-		
+		TimeSpan duration;
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Fields
-		
+
 		/// <summary>
 		///    An empty and unset header.
 		/// </summary>
 		public static readonly AudioHeader Unknown =
-			new AudioHeader (0, 0, XingHeader.Unknown,
-				VBRIHeader.Unknown);
-		
+			new AudioHeader (0, 0, XingHeader.Unknown, VBRIHeader.Unknown);
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Constructors
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="AudioHeader" /> by populating it with specified
@@ -204,17 +204,15 @@ namespace TagLib.Mpeg {
 		///    A <see cref="VBRIHeader" /> object representing the VBRI
 		///    header associated with the new instance.
 		/// </param>
-		private AudioHeader (uint flags, long streamLength,
-		                     XingHeader xingHeader,
-		                     VBRIHeader vbriHeader)
+		AudioHeader (uint flags, long streamLength, XingHeader xingHeader, VBRIHeader vbriHeader)
 		{
 			this.flags = flags;
-			this.stream_length = streamLength;
-			this.xing_header = xingHeader;
-			this.vbri_header = vbriHeader;
-			this.duration = TimeSpan.Zero;
+			stream_length = streamLength;
+			xing_header = xingHeader;
+			vbri_header = vbriHeader;
+			duration = TimeSpan.Zero;
 		}
-		
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="AudioHeader" /> by reading its contents from a
@@ -238,36 +236,33 @@ namespace TagLib.Mpeg {
 		///    does not begin with a MPEG audio synch, has a negative
 		///    bitrate, or has a sample rate of zero.
 		/// </exception>
-		private AudioHeader (ByteVector data, TagLib.File file,
-		                     long position)
+		AudioHeader (ByteVector data, TagLib.File file, long position)
 		{
-			this.duration = TimeSpan.Zero;
+			duration = TimeSpan.Zero;
 			stream_length = 0;
 
-			string error = GetHeaderError(data);
+			string error = GetHeaderError (data);
 			if (error != null) {
 				throw new CorruptFileException (error);
 			}
-			
+
 			flags = data.ToUInt ();
 
 			xing_header = XingHeader.Unknown;
-			
+
 			vbri_header = VBRIHeader.Unknown;
-			
+
 			// Check for a Xing header that will help us in
 			// gathering information about a VBR stream.
-			file.Seek (position + XingHeader.XingHeaderOffset (
-				Version, ChannelMode));
-				
+			file.Seek (position + XingHeader.XingHeaderOffset (Version, ChannelMode));
+
 			ByteVector xing_data = file.ReadBlock (16);
-			if (xing_data.Count == 16 && xing_data.StartsWith (
-				XingHeader.FileIdentifier))
+			if (xing_data.Count == 16 && xing_data.StartsWith (XingHeader.FileIdentifier))
 				xing_header = new XingHeader (xing_data);
 
 			if (xing_header.Present)
 				return;
-			
+
 			// A Xing header could not be found, next chec for a
 			// Fraunhofer VBRI header.
 			file.Seek (position + VBRIHeader.VBRIHeaderOffset ());
@@ -276,16 +271,16 @@ namespace TagLib.Mpeg {
 			// We're not interested in the TOC entries.
 			ByteVector vbri_data = file.ReadBlock (24);
 			if (vbri_data.Count == 24 &&
-				vbri_data.StartsWith(VBRIHeader.FileIdentifier))
-			vbri_header = new VBRIHeader (vbri_data);
+				vbri_data.StartsWith (VBRIHeader.FileIdentifier))
+				vbri_header = new VBRIHeader (vbri_data);
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Properties
-		
+
 		/// <summary>
 		///    Gets the MPEG version used to encode the audio
 		///    represented by the current instance.
@@ -297,8 +292,7 @@ namespace TagLib.Mpeg {
 		/// </value>
 		public Version Version {
 			get {
-				switch ((flags >> 19) & 0x03)
-				{
+				switch ((flags >> 19) & 0x03) {
 				case 0:
 					return Version.Version25;
 				case 2:
@@ -308,7 +302,7 @@ namespace TagLib.Mpeg {
 				}
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the MPEG audio layer used to encode the audio
 		///    represented by the current instance.
@@ -320,8 +314,7 @@ namespace TagLib.Mpeg {
 		/// </value>
 		public int AudioLayer {
 			get {
-				switch ((flags >> 17) & 0x03)
-				{
+				switch ((flags >> 17) & 0x03) {
 				case 1:
 					return 3;
 				case 2:
@@ -331,7 +324,7 @@ namespace TagLib.Mpeg {
 				}
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the bitrate of the audio represented by the current
 		///    instance.
@@ -345,24 +338,24 @@ namespace TagLib.Mpeg {
 				if (xing_header.TotalSize > 0 &&
 					xing_header.TotalFrames > 0 &&
 					Duration > TimeSpan.Zero)
-					return (int) Math.Round (((
+					return (int)Math.Round (((
 						(XingHeader.TotalSize * 8L) /
 						Duration.TotalSeconds) / 1000.0));
 
 				if (vbri_header.TotalSize > 0 &&
 					vbri_header.TotalFrames > 0 &&
 					Duration > TimeSpan.Zero)
-					return (int)Math.Round(((
+					return (int)Math.Round (((
 						(VBRIHeader.TotalSize * 8L) /
 						Duration.TotalSeconds) / 1000.0));
-				
-				return bitrates [
+
+				return bitrates[
 					Version == Version.Version1 ? 0 : 1,
 					AudioLayer > 0 ? AudioLayer - 1 : 0,
-					(int) (flags >> 12) & 0x0F];
+					(int)(flags >> 12) & 0x0F];
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the sample rate of the audio represented by the
 		///    current instance.
@@ -373,11 +366,11 @@ namespace TagLib.Mpeg {
 		/// </value>
 		public int AudioSampleRate {
 			get {
-				return sample_rates [(int) Version,
-					(int) (flags >> 10) & 0x03];
+				return sample_rates[(int)Version,
+					(int)(flags >> 10) & 0x03];
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the number of channels in the audio represented by
 		///    the current instance.
@@ -388,9 +381,9 @@ namespace TagLib.Mpeg {
 		///    instance.
 		/// </value>
 		public int AudioChannels {
-			get {return ChannelMode == ChannelMode.SingleChannel ? 1 : 2;}
+			get { return ChannelMode == ChannelMode.SingleChannel ? 1 : 2; }
 		}
-		
+
 		/// <summary>
 		///    Gets the length of the frames in the audio represented by
 		///    the current instance.
@@ -401,28 +394,27 @@ namespace TagLib.Mpeg {
 		/// </value>
 		public int AudioFrameLength {
 			get {
-				switch (AudioLayer)
-				{
-					case 1:
-						return 48000  * AudioBitrate /
-							AudioSampleRate +
-							(IsPadded ? 4 : 0);
-					case 2:
-						return 144000 * AudioBitrate /
-							AudioSampleRate +
-							(IsPadded ? 1 : 0);
-					case 3:
-						if (Version == Version.Version1)
-							goto case 2;
-						
-						return 72000 * AudioBitrate /
-							AudioSampleRate +
-							(IsPadded ? 1 : 0);
-					default: return 0;
+				switch (AudioLayer) {
+				case 1:
+					return 48000 * AudioBitrate /
+						AudioSampleRate +
+						(IsPadded ? 4 : 0);
+				case 2:
+					return 144000 * AudioBitrate /
+						AudioSampleRate +
+						(IsPadded ? 1 : 0);
+				case 3:
+					if (Version == Version.Version1)
+						goto case 2;
+
+					return 72000 * AudioBitrate /
+						AudioSampleRate +
+						(IsPadded ? 1 : 0);
+				default: return 0;
 				}
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the duration of the media represented by the current
 		///    instance.
@@ -445,16 +437,15 @@ namespace TagLib.Mpeg {
 			get {
 				if (duration > TimeSpan.Zero)
 					return duration;
-					
+
 				if (xing_header.TotalFrames > 0) {
 					// Read the length and the bitrate from
 					// the Xing header.
-					
-					double time_per_frame = (double)
-						block_size [(int) Version,
-						AudioLayer] / (double)
+
+					double time_per_frame = block_size[(int)Version,
+						                        AudioLayer] / (double)
 						AudioSampleRate;
-					
+
 					duration = TimeSpan.FromSeconds (
 						time_per_frame *
 						XingHeader.TotalFrames);
@@ -463,13 +454,9 @@ namespace TagLib.Mpeg {
 					// the VBRI header.
 
 					double time_per_frame =
-						(double) block_size [
-							(int) Version, AudioLayer]
-						/ (double) AudioSampleRate;
+						block_size[(int)Version, AudioLayer] / (double)AudioSampleRate;
 
-					duration = TimeSpan.FromSeconds (
-						Math.Round (time_per_frame *
-							VBRIHeader.TotalFrames));
+					duration = TimeSpan.FromSeconds (Math.Round (time_per_frame * VBRIHeader.TotalFrames));
 				} else if (AudioFrameLength > 0 &&
 					AudioBitrate > 0) {
 					// Since there was no valid Xing or VBRI
@@ -477,19 +464,15 @@ namespace TagLib.Mpeg {
 					// constant bitrate file.
 
 					// Round off to upper integer value
-					int frames = (int) ((stream_length + 
-						AudioFrameLength - 1) /
-						AudioFrameLength);
-					
-					duration = TimeSpan.FromSeconds (
-						(double) (AudioFrameLength *
-						frames) / (AudioBitrate * 125));
+					int frames = (int)((stream_length + AudioFrameLength - 1) / AudioFrameLength);
+
+					duration = TimeSpan.FromSeconds ( (double)(AudioFrameLength * frames) / (AudioBitrate * 125));
 				}
-				
+
 				return duration;
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets a text description of the media represented by the
 		///    current instance.
@@ -500,12 +483,10 @@ namespace TagLib.Mpeg {
 		/// </value>
 		public string Description {
 			get {
-				System.Text.StringBuilder builder =
-					new System.Text.StringBuilder ();
-				
+				var builder = new System.Text.StringBuilder ();
+
 				builder.Append ("MPEG Version ");
-				switch (Version)
-				{
+				switch (Version) {
 				case Version.Version1:
 					builder.Append ("1");
 					break;
@@ -518,14 +499,14 @@ namespace TagLib.Mpeg {
 				}
 				builder.Append (" Audio, Layer ");
 				builder.Append (AudioLayer);
-				
+
 				if (xing_header.Present || vbri_header.Present)
 					builder.Append (" VBR");
-				
+
 				return builder.ToString ();
 			}
 		}
-		
+
 		/// <summary>
 		///    Gets the types of media represented by the current
 		///    instance.
@@ -534,9 +515,9 @@ namespace TagLib.Mpeg {
 		///    Always <see cref="MediaTypes.Audio" />.
 		/// </value>
 		public MediaTypes MediaTypes {
-			get {return MediaTypes.Audio;}
+			get { return MediaTypes.Audio; }
 		}
-		
+
 		/// <summary>
 		///    Gets whether or not the audio represented by the current
 		///    instance is protected.
@@ -546,9 +527,9 @@ namespace TagLib.Mpeg {
 		///    audio represented by the current instance is protected.
 		/// </value>
 		public bool IsProtected {
-			get {return ((flags >>16) & 1) == 0;}
+			get { return ((flags >> 16) & 1) == 0; }
 		}
-		
+
 		/// <summary>
 		///    Gets whether or not the audio represented by the current
 		///    instance is padded.
@@ -558,9 +539,9 @@ namespace TagLib.Mpeg {
 		///    audio represented by the current instance is padded.
 		/// </value>
 		public bool IsPadded {
-			get {return ((flags >> 9) & 1) == 1;}
+			get { return ((flags >> 9) & 1) == 1; }
 		}
-		
+
 		/// <summary>
 		///    Gets whether or not the audio represented by the current
 		///    instance is copyrighted.
@@ -570,9 +551,9 @@ namespace TagLib.Mpeg {
 		///    audio represented by the current instance is copyrighted.
 		/// </value>
 		public bool IsCopyrighted {
-			get {return ((flags >> 3) & 1) == 1;}
+			get { return ((flags >> 3) & 1) == 1; }
 		}
-		
+
 		/// <summary>
 		///    Gets whether or not the audio represented by the current
 		///    instance is original.
@@ -582,9 +563,9 @@ namespace TagLib.Mpeg {
 		///    audio represented by the current instance is original.
 		/// </value>
 		public bool IsOriginal {
-			get {return ((flags >> 2) & 1) == 1;}
+			get { return ((flags >> 2) & 1) == 1; }
 		}
-		
+
 		/// <summary>
 		///    Gets the MPEG audio channel mode of the audio represented
 		///    by the current instance.
@@ -595,9 +576,9 @@ namespace TagLib.Mpeg {
 		///    current instance.
 		/// </value>
 		public ChannelMode ChannelMode {
-			get {return (ChannelMode) ((flags >> 6) & 0x03);}
+			get { return (ChannelMode)((flags >> 6) & 0x03); }
 		}
-		
+
 		/// <summary>
 		///    Gets the Xing header found in the audio represented by
 		///    the current instance.
@@ -609,9 +590,9 @@ namespace TagLib.Mpeg {
 		///    header was found.
 		/// </value>
 		public XingHeader XingHeader {
-			get {return xing_header;}
+			get { return xing_header; }
 		}
-		
+
 		/// <summary>
 		///    Gets the VBRI header found in the audio represented by
 		///    the current instance.
@@ -623,14 +604,14 @@ namespace TagLib.Mpeg {
 		///    header was found.
 		/// </value>
 		public VBRIHeader VBRIHeader {
-			get {return vbri_header;}
+			get { return vbri_header; }
 		}
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Methods
-		
+
 		/// <summary>
 		///    Sets the length of the audio stream represented by the
 		///    current instance.
@@ -646,21 +627,21 @@ namespace TagLib.Mpeg {
 		/// </remarks>
 		public void SetStreamLength (long streamLength)
 		{
-			this.stream_length = streamLength;
-			
+			stream_length = streamLength;
+
 			// Force the recalculation of duration if it depends on
 			// the stream length.
 			if (xing_header.TotalFrames == 0 ||
 				vbri_header.TotalFrames == 0)
 				duration = TimeSpan.Zero;
 		}
-		
+
 		#endregion
-		
-		
-		
+
+
+
 		#region Public Static Methods
-		
+
 		/// <summary>
 		///    Searches for an audio header in a <see cref="TagLib.File"
 		///    /> starting at a specified position and searching through
@@ -688,37 +669,35 @@ namespace TagLib.Mpeg {
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
-		public static bool Find (out AudioHeader header,
-		                         TagLib.File file, long position,
-		                         int length)
+		public static bool Find (out AudioHeader header, TagLib.File file, long position, int length)
 		{
 			if (file == null)
-				throw new ArgumentNullException (nameof(file));
-			
+				throw new ArgumentNullException (nameof (file));
+
 			long end = position + length;
-			header = AudioHeader.Unknown;
-			
+			header = Unknown;
+
 			file.Seek (position);
-			
+
 			ByteVector buffer = file.ReadBlock (3);
-			
+
 			if (buffer.Count < 3)
 				return false;
-			
+
 			do {
 				file.Seek (position + 3);
 				buffer = buffer.Mid (buffer.Count - 3);
 				buffer.Add (file.ReadBlock (
-					(int) File.BufferSize));
-				
+					(int)TagLib.File.BufferSize));
+
 				for (int i = 0; i < buffer.Count - 3 &&
 					(length < 0 || position + i < end); i++)
-					if (buffer [i] == 0xFF &&
-						buffer [i + 1] > 0xE0) {
-						ByteVector data = buffer.Mid(i, 4);
-						if (GetHeaderError(data) == null) {
+					if (buffer[i] == 0xFF &&
+						buffer[i + 1] > 0xE0) {
+						ByteVector data = buffer.Mid (i, 4);
+						if (GetHeaderError (data) == null) {
 							try {
-								header = new AudioHeader(
+								header = new AudioHeader (
 									data,
 									file, position + i);
 								return true;
@@ -726,13 +705,13 @@ namespace TagLib.Mpeg {
 							}
 						}
 					}
-				
-				position += File.BufferSize;
+
+				position += TagLib.File.BufferSize;
 			} while (buffer.Count > 3 && (length < 0 || position < end));
-			
+
 			return false;
 		}
-		
+
 		/// <summary>
 		///    Searches for an audio header in a <see cref="TagLib.File"
 		///    /> starting at a specified position and searching to the
@@ -760,18 +739,17 @@ namespace TagLib.Mpeg {
 		///    cref="M:AudioHeader.Find(AudioHeader,TagLib.File,long,int)" />
 		///    instead.
 		/// </remarks>
-		public static bool Find (out AudioHeader header,
-		                         TagLib.File file, long position)
+		public static bool Find (out AudioHeader header, TagLib.File file, long position)
 		{
 			return Find (out header, file, position, -1);
 		}
 
-		private static string GetHeaderError(ByteVector data)
+		static string GetHeaderError (ByteVector data)
 		{
 			if (data.Count < 4)
 				return "Insufficient header length.";
 
-			if (data [0] != 0xFF)
+			if (data[0] != 0xFF)
 				return "First byte did not match MPEG synch.";
 
 			// Checking bits from high to low:
@@ -780,7 +758,7 @@ namespace TagLib.Mpeg {
 			// be 00, 10, or 11 but not 01. One or more of
 			// bits 6 and 7 must be set. Bit 8 can be
 			// anything.
-			if ((data [1] & 0xE6) <= 0xE0 || (data [1] & 0x18) == 0x08)
+			if ((data[1] & 0xE6) <= 0xE0 || (data[1] & 0x18) == 0x08)
 				return "Second byte did not match MPEG synch.";
 
 			uint flags = data.ToUInt ();
@@ -793,7 +771,7 @@ namespace TagLib.Mpeg {
 
 			return null;
 		}
-		
+
 		#endregion
 	}
 }

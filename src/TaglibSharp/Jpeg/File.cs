@@ -26,12 +26,10 @@
 //
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 
-using TagLib.Image;
 using TagLib.IFD;
-using TagLib.IFD.Entries;
+using TagLib.Image;
 using TagLib.Xmp;
 
 namespace TagLib.Jpeg
@@ -41,30 +39,30 @@ namespace TagLib.Jpeg
 	///    This class extends <see cref="TagLib.Image.ImageBlockFile" /> to provide tagging
 	///    and properties support for Jpeg files.
 	/// </summary>
-	[SupportedMimeType("taglib/jpg", "jpg")]
-	[SupportedMimeType("taglib/jpeg", "jpeg")]
-	[SupportedMimeType("taglib/jpe", "jpe")]
-	[SupportedMimeType("taglib/jif", "jif")]
-	[SupportedMimeType("taglib/jfif", "jfif")]
-	[SupportedMimeType("taglib/jfi", "jfi")]
-	[SupportedMimeType("image/jpeg")]
-	public class File : TagLib.Image.ImageBlockFile
+	[SupportedMimeType ("taglib/jpg", "jpg")]
+	[SupportedMimeType ("taglib/jpeg", "jpeg")]
+	[SupportedMimeType ("taglib/jpe", "jpe")]
+	[SupportedMimeType ("taglib/jif", "jif")]
+	[SupportedMimeType ("taglib/jfif", "jfif")]
+	[SupportedMimeType ("taglib/jfi", "jfi")]
+	[SupportedMimeType ("image/jpeg")]
+	public class File : ImageBlockFile
 	{
 
 		/// <summary>
 		///    The magic bits used to recognize an Exif segment
 		/// </summary>
-		private static readonly string EXIF_IDENTIFIER = "Exif\0\0";
+		static readonly string EXIF_IDENTIFIER = "Exif\0\0";
 
 		/// <summary>
 		/// The magic strings used to identifiy an IPTC-IIM section
 		/// </summary>
-		private static readonly string IPTC_IIM_IDENTIFIER = "Photoshop 3.0\u00008BIM\u0004\u0004";
+		static readonly string IPTC_IIM_IDENTIFIER = "Photoshop 3.0\u00008BIM\u0004\u0004";
 
 		/// <summary>
 		///    Standard (empty) JFIF header to add, if no one is contained
 		/// </summary>
-		private static readonly byte [] BASIC_JFIF_HEADER = new byte [] {
+		static readonly byte[] BASIC_JFIF_HEADER = new byte[] {
 			// segment maker
 			0xFF, (byte) Marker.APP0,
 
@@ -77,18 +75,18 @@ namespace TagLib.Jpeg
 		};
 
 
-#region Private Fields
+		#region Private Fields
 
 		/// <summary>
 		///    Contains the media properties.
 		/// </summary>
-		private Properties properties;
+		Properties properties;
 
 		/// <summary>
 		///    For now, we do not allow to change the jfif header. As long as this is
 		///    the case, the header is kept as it is.
 		/// </summary>
-		private ByteVector jfif_header = null;
+		ByteVector jfif_header;
 
 		/// <summary>
 		///    The image width, as parsed from the Frame
@@ -105,9 +103,9 @@ namespace TagLib.Jpeg
 		/// </summary>
 		int quality;
 
-#endregion
+		#endregion
 
-#region Constructors
+		#region Constructors
 
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
@@ -127,8 +125,7 @@ namespace TagLib.Jpeg
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
 		public File (string path, ReadStyle propertiesStyle)
-			: this (new File.LocalFileAbstraction (path),
-				propertiesStyle)
+			: this (new LocalFileAbstraction (path), propertiesStyle)
 		{
 		}
 
@@ -144,7 +141,8 @@ namespace TagLib.Jpeg
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="path" /> is <see langword="null" />.
 		/// </exception>
-		public File (string path) : this (path, ReadStyle.Average)
+		public File (string path)
+			: this (path, ReadStyle.Average)
 		{
 		}
 
@@ -166,8 +164,8 @@ namespace TagLib.Jpeg
 		///    <paramref name="abstraction" /> is <see langword="null"
 		///    />.
 		/// </exception>
-		public File (File.IFileAbstraction abstraction,
-		             ReadStyle propertiesStyle) : base (abstraction)
+		public File (IFileAbstraction abstraction, ReadStyle propertiesStyle)
+			: base (abstraction)
 		{
 			Read (propertiesStyle);
 		}
@@ -189,9 +187,9 @@ namespace TagLib.Jpeg
 		{
 		}
 
-#endregion
+		#endregion
 
-#region Public Properties
+		#region Public Properties
 
 		/// <summary>
 		///    Gets the media properties of the file represented by the
@@ -202,19 +200,19 @@ namespace TagLib.Jpeg
 		///    media properties of the file represented by the current
 		///    instance.
 		/// </value>
-		public override TagLib.Properties Properties {
+		public override Properties Properties {
 			get { return properties; }
 		}
 
-#endregion
+		#endregion
 
-#region Public Methods
+		#region Public Methods
 
 		/// <summary>
 		///  Gets a tag of a specified type from the current instance, optionally creating a
 		/// new tag if possible.
 		/// </summary>
-		public override TagLib.Tag GetTag (TagLib.TagTypes type, bool create)
+		public override Tag GetTag (TagTypes type, bool create)
 		{
 			if (type == TagTypes.XMP) {
 				foreach (Tag tag in ImageTag.AllTags) {
@@ -222,11 +220,10 @@ namespace TagLib.Jpeg
 						return tag;
 				}
 			}
-			if (type == TagTypes.IPTCIIM && create)
-			  {
-			    // FIXME: don't know how to create IPTCIIM tags
-			    return base.GetTag (type, false);
-			  }
+			if (type == TagTypes.IPTCIIM && create) {
+				// FIXME: don't know how to create IPTCIIM tags
+				return base.GetTag (type, false);
+			}
 
 			return base.GetTag (type, create);
 		}
@@ -238,7 +235,7 @@ namespace TagLib.Jpeg
 		public override void Save ()
 		{
 			// Boilerplate
-			PreSave();
+			PreSave ();
 
 			Mode = AccessMode.Write;
 			try {
@@ -250,9 +247,9 @@ namespace TagLib.Jpeg
 			}
 		}
 
-#endregion
+		#endregion
 
-#region Private Methods
+		#region Private Methods
 
 		/// <summary>
 		///    Reads the information from file with a specified read style.
@@ -262,7 +259,7 @@ namespace TagLib.Jpeg
 		///    of accuracy to read the media properties, or <see
 		///    cref="ReadStyle.None" /> to ignore the properties.
 		/// </param>
-		private void Read (ReadStyle propertiesStyle)
+		void Read (ReadStyle propertiesStyle)
 		{
 			Mode = AccessMode.Read;
 			try {
@@ -290,7 +287,7 @@ namespace TagLib.Jpeg
 		///    at the right values. When no guess at all can be made,
 		///    <see langword="null" /> is returned.
 		/// </returns>
-		private Properties ExtractProperties ()
+		Properties ExtractProperties ()
 		{
 			if (width > 0 && height > 0)
 				return new Properties (TimeSpan.Zero, new Codec (width, height, quality));
@@ -302,7 +299,7 @@ namespace TagLib.Jpeg
 		/// <summary>
 		///    Validates if the opened file is actually a JPEG.
 		/// </summary>
-		private void ValidateHeader ()
+		void ValidateHeader ()
 		{
 			ByteVector segment = ReadBlock (2);
 			if (segment.ToUShort () != 0xFFD8)
@@ -318,7 +315,7 @@ namespace TagLib.Jpeg
 		/// <returns>
 		///    A <see cref="TagLib.Jpeg.Marker"/> with the second byte of the segment marker.
 		/// </returns>
-		private Marker ReadSegmentMarker ()
+		Marker ReadSegmentMarker ()
 		{
 			ByteVector segment_header = ReadBlock (2);
 
@@ -338,7 +335,7 @@ namespace TagLib.Jpeg
 		/// <returns>
 		///    A <see cref="System.UInt16"/> with the size of the current segment.
 		/// </returns>
-		private ushort ReadSegmentSize ()
+		ushort ReadSegmentSize ()
 		{
 			long position = Tell;
 
@@ -352,7 +349,7 @@ namespace TagLib.Jpeg
 			// the size itself must be contained in the segment size
 			// so the smallest (theoretically) possible number of bytes if 2
 			if (segment_size < 2)
-				throw new CorruptFileException (String.Format ("Invalid segment size ({0} bytes)", segment_size));
+				throw new CorruptFileException ($"Invalid segment size ({segment_size} bytes)");
 
 			long length = 0;
 			try {
@@ -372,7 +369,7 @@ namespace TagLib.Jpeg
 		///    Extracts the metadata from the current file by reading every segment in file.
 		///    Method should be called with read position at first segment marker.
 		/// </summary>
-		private void ReadMetadata ()
+		void ReadMetadata ()
 		{
 			// loop while marker is not EOI and not the data segment
 			while (true) {
@@ -389,14 +386,14 @@ namespace TagLib.Jpeg
 
 				// segment size contains 2 bytes of the size itself, so the
 				// pure data size is this (and the cast is save)
-				ushort data_size = (ushort) (segment_size - 2);
+				ushort data_size = (ushort)(segment_size - 2);
 
 				switch (marker) {
-				case Marker.APP0:	// possibly JFIF header
+				case Marker.APP0:   // possibly JFIF header
 					ReadJFIFHeader (data_size);
 					break;
 
-				case Marker.APP1:	// possibly Exif or Xmp data found
+				case Marker.APP1:   // possibly Exif or Xmp data found
 					ReadAPP1Segment (data_size);
 					break;
 
@@ -404,7 +401,7 @@ namespace TagLib.Jpeg
 					ReadAPP13Segment (data_size);
 					break;
 
-				case Marker.COM:	// Comment segment found
+				case Marker.COM:    // Comment segment found
 					ReadCOMSegment (data_size);
 					break;
 
@@ -418,7 +415,7 @@ namespace TagLib.Jpeg
 					ReadSOFSegment (data_size, marker);
 					break;
 
-				case Marker.DQT:	// Quantization table(s), use it to guess quality
+				case Marker.DQT:    // Quantization table(s), use it to guess quality
 					ReadDQTSegment (data_size);
 					break;
 				}
@@ -431,7 +428,7 @@ namespace TagLib.Jpeg
 		/// <summary>
 		///    Reads a JFIF header at current position
 		/// </summary>
-		private void ReadJFIFHeader (ushort length)
+		void ReadJFIFHeader (ushort length)
 		{
 			// JFIF header should be contained as first segment
 			// SOI marker + APP0 Marker + segment size = 6 bytes
@@ -455,7 +452,7 @@ namespace TagLib.Jpeg
 		/// <param name="length">
 		///    The length of the segment that will be read.
 		/// </param>
-		private void ReadAPP1Segment (ushort length)
+		void ReadAPP1Segment (ushort length)
 		{
 			long position = Tell;
 			ByteVector data = null;
@@ -471,23 +468,23 @@ namespace TagLib.Jpeg
 			int exif_header_length = 14;
 
 			// could be an Exif segment
-			if ((ImageTag.TagTypes & TagLib.TagTypes.TiffIFD) == 0x00 && length >= exif_header_length) {
+			if ((ImageTag.TagTypes & TagTypes.TiffIFD) == 0x00 && length >= exif_header_length) {
 
 				data = ReadBlock (exif_header_length);
 
 				if (data.Count == exif_header_length
-				    && data.Mid (0, 6).ToString ().Equals (EXIF_IDENTIFIER)) {
+					&& data.Mid (0, 6).ToString ().Equals (EXIF_IDENTIFIER)) {
 
 					bool is_bigendian = data.Mid (6, 2).ToString ().Equals ("MM");
 
 					ushort magic = data.Mid (8, 2).ToUShort (is_bigendian);
 					if (magic != 42)
-						throw new Exception (String.Format ("Invalid TIFF magic: {0}", magic));
+						throw new Exception ($"Invalid TIFF magic: {magic}");
 
 					uint ifd_offset = data.Mid (10, 4).ToUInt (is_bigendian);
 
 					var exif = new IFDTag ();
-					var reader = new IFDReader (this, is_bigendian, exif.Structure, position + 6, ifd_offset, (uint) (length - 6));
+					var reader = new IFDReader (this, is_bigendian, exif.Structure, position + 6, ifd_offset, (uint)(length - 6));
 					reader.Read ();
 					ImageTag.AddTag (exif);
 
@@ -500,7 +497,7 @@ namespace TagLib.Jpeg
 			int xmp_header_length = XmpTag.XAP_NS.Length + 1;
 
 			// could be an Xmp segment
-			if ((ImageTag.TagTypes & TagLib.TagTypes.XMP) == 0x00 && length >= xmp_header_length) {
+			if ((ImageTag.TagTypes & TagTypes.XMP) == 0x00 && length >= xmp_header_length) {
 
 				// if already data is read for determining the Exif segment,
 				// just read the remaining bytes.
@@ -532,7 +529,7 @@ namespace TagLib.Jpeg
 		/// - Extracting IPTC header information from JPEG images (http://www.codeproject.com/KB/graphics/iptc.aspx?fid=2301&amp;df=90&amp;mpp=25&amp;noise=3&amp;prof=False&amp;sort=Position&amp;view=Quick&amp;fr=51#xx0xx)
 		/// - Reading IPTC APP14 Segment Header Information from JPEG Images (http://www.codeproject.com/KB/graphics/ReadingIPTCAPP14.aspx?q=iptc)
 		/// </remarks>
-		private void ReadAPP13Segment (ushort length)
+		void ReadAPP13Segment (ushort length)
 		{
 			// TODO: if both IPTC-IIM and XMP metadata is contained in a file, we should read
 			// a IPTC-IIM checksum and compare that with the checksum built over the IIM block.
@@ -553,7 +550,7 @@ namespace TagLib.Jpeg
 				return;
 
 			// PS6 introduced a new header with variable length text
-			var headerInfoLen = data.Mid (iptc_iim_length, 1).ToUShort();
+			var headerInfoLen = data.Mid (iptc_iim_length, 1).ToUShort ();
 			int lenToSkip;
 			if (headerInfoLen > 0) {
 				// PS6 header: 1 byte headerinfolen + headerinfo + 2 bytes 00 padding (?) + 2 bytes length
@@ -574,11 +571,11 @@ namespace TagLib.Jpeg
 		///    Writes the metadata back to file. All metadata is stored in the first segments
 		///    of the file.
 		/// </summary>
-		private void WriteMetadata ()
+		void WriteMetadata ()
 		{
 			// first render all metadata segments to a ByteVector before the
 			// file is touched ...
-			ByteVector data = new ByteVector ();
+			var data = new ByteVector ();
 
 			// existing jfif header is retained, otherwise a standard one
 			// is created
@@ -601,7 +598,7 @@ namespace TagLib.Jpeg
 		///    A <see cref="ByteVector"/> with the whole Exif segment, if exif tags
 		///    exists, otherwise null.
 		/// </returns>
-		private ByteVector RenderExifSegment ()
+		ByteVector RenderExifSegment ()
 		{
 			// Check, if IFD0 is contained
 			IFDTag exif = ImageTag.Exif;
@@ -616,22 +613,23 @@ namespace TagLib.Jpeg
 			var renderer = new IFDRenderer (true, exif.Structure, first_ifd_offset);
 			ByteVector exif_data = renderer.Render ();
 
-			uint segment_size = (uint) (first_ifd_offset + exif_data.Count + 2 + 6);
+			uint segment_size = (uint)(first_ifd_offset + exif_data.Count + 2 + 6);
 
 			// do not render data segments, which cannot fit into the possible segment size
 			if (segment_size > ushort.MaxValue)
 				throw new Exception ("Exif Segment is too big to render");
 
 			// Create whole segment
-			ByteVector data = new ByteVector (new byte [] { 0xFF, (byte) Marker.APP1 });
-			data.Add (ByteVector.FromUShort ((ushort) segment_size));
-			data.Add ("Exif\0\0");
-			data.Add (ByteVector.FromString ("MM", StringType.Latin1));
-			data.Add (ByteVector.FromUShort (42));
-			data.Add (ByteVector.FromUInt (first_ifd_offset));
+			var data = new ByteVector (new byte[] { 0xFF, (byte)Marker.APP1 }) {
+				ByteVector.FromUShort ((ushort)segment_size),
+				"Exif\0\0",
+				ByteVector.FromString ("MM", StringType.Latin1),
+				ByteVector.FromUShort (42),
+				ByteVector.FromUInt (first_ifd_offset),
 
-			// Add ifd data itself
-			data.Add (exif_data);
+				// Add ifd data itself
+				exif_data
+			};
 
 			return data;
 		}
@@ -644,7 +642,7 @@ namespace TagLib.Jpeg
 		///    A <see cref="ByteVector"/> with the whole Xmp segment, if xmp tags
 		///    exists, otherwise null.
 		/// </returns>
-		private ByteVector RenderXMPSegment ()
+		ByteVector RenderXMPSegment ()
 		{
 			// Check, if XmpTag is contained
 			XmpTag xmp = ImageTag.Xmp;
@@ -654,16 +652,17 @@ namespace TagLib.Jpeg
 			ByteVector xmp_data = XmpTag.XAP_NS + "\0";
 			xmp_data.Add (xmp.Render ());
 
-			uint segment_size = (uint) (2 + xmp_data.Count);
+			uint segment_size = (uint)(2 + xmp_data.Count);
 
 			// do not render data segments, which cannot fit into the possible segment size
 			if (segment_size > ushort.MaxValue)
 				throw new Exception ("XMP Segment is too big to render");
 
 			// Create whole segment
-			ByteVector data = new ByteVector (new byte [] { 0xFF, (byte) Marker.APP1 });
-			data.Add (ByteVector.FromUShort ((ushort) segment_size));
-			data.Add (xmp_data);
+			var data = new ByteVector (new byte[] { 0xFF, (byte)Marker.APP1 }) {
+				ByteVector.FromUShort ((ushort)segment_size),
+				xmp_data
+			};
 
 			return data;
 		}
@@ -675,9 +674,9 @@ namespace TagLib.Jpeg
 		/// <param name="length">
 		///    The length of the segment that will be read.
 		/// </param>
-		private void ReadCOMSegment (int length)
+		void ReadCOMSegment (int length)
 		{
-			if ((ImageTag.TagTypes & TagLib.TagTypes.JpegComment) != 0x00)
+			if ((ImageTag.TagTypes & TagTypes.JpegComment) != 0x00)
 				return;
 
 			long position = Tell;
@@ -685,7 +684,7 @@ namespace TagLib.Jpeg
 			JpegCommentTag com_tag;
 
 			if (length == 0) {
-				 com_tag = new JpegCommentTag ();
+				com_tag = new JpegCommentTag ();
 			} else {
 				ByteVector data = ReadBlock (length);
 
@@ -708,28 +707,27 @@ namespace TagLib.Jpeg
 		///    A <see cref="ByteVector"/> with the whole comment segment, if a comment tag
 		///    exists, otherwise null.
 		/// </returns>
-		private ByteVector RenderCOMSegment ()
+		ByteVector RenderCOMSegment ()
 		{
 			// check, if Comment is contained
-			JpegCommentTag com_tag = GetTag (TagTypes.JpegComment) as JpegCommentTag;
-			if (com_tag == null)
+			if (!(GetTag (TagTypes.JpegComment) is JpegCommentTag com_tag))
 				return null;
 
 			// create comment data
-			ByteVector com_data =
-				ByteVector.FromString (com_tag.Value + "\0", StringType.Latin1);
+			var com_data = ByteVector.FromString (com_tag.Value + "\0", StringType.Latin1);
 
-			uint segment_size = (uint) (2 + com_data.Count);
+			uint segment_size = (uint)(2 + com_data.Count);
 
 			// do not render data segments, which cannot fit into the possible segment size
 			if (segment_size > ushort.MaxValue)
 				throw new Exception ("Comment Segment is too big to render");
 
 			// create segment
-			ByteVector data = new ByteVector (new byte [] { 0xFF, (byte) Marker.COM });
-			data.Add (ByteVector.FromUShort ((ushort) segment_size));
+			var data = new ByteVector (new byte[] { 0xFF, (byte)Marker.COM }) {
+				ByteVector.FromUShort ((ushort)segment_size),
 
-			data.Add (com_data);
+				com_data
+			};
 
 			return data;
 		}
@@ -746,7 +744,7 @@ namespace TagLib.Jpeg
 		void ReadSOFSegment (int length, Marker marker)
 		{
 #pragma warning disable 219 // Assigned, never read
-			byte p = ReadBlock (1)[0];	//precision
+			byte p = ReadBlock (1)[0];  //precision
 #pragma warning restore 219
 
 			//FIXME: according to specs, height could be 0 here, and should be retrieved from the DNL marker
@@ -765,10 +763,10 @@ namespace TagLib.Jpeg
 			// See CCITT Rec. T.81 (1992 E), B.2.4.1 (p39) for DQT syntax
 			while (length > 0) {
 
-				byte pqtq = ReadBlock (1)[0]; length --;
-				byte pq = (byte)(pqtq >> 4);	//0 indicates 8-bit Qk, 1 indicates 16-bit Qk
-				byte tq = (byte)(pqtq & 0x0f);	//table index;
-				int [] table = null;
+				byte pqtq = ReadBlock (1)[0]; length--;
+				byte pq = (byte)(pqtq >> 4);    //0 indicates 8-bit Qk, 1 indicates 16-bit Qk
+				byte tq = (byte)(pqtq & 0x0f);  //table index;
+				int[] table = null;
 				switch (tq) {
 				case 0:
 					table = Table.StandardLuminanceQuantization;
@@ -781,11 +779,11 @@ namespace TagLib.Jpeg
 				bool allones = true; //check for all-ones tables (q=100)
 				double cumsf = 0.0;
 				//double cumsf2 = 0.0;
-				for (int row = 0; row < 8; row ++) {
+				for (int row = 0; row < 8; row++) {
 					for (int col = 0; col < 8; col++) {
 						ushort val = ReadBlock (pq == 1 ? 2 : 1).ToUShort (); length -= (pq + 1);
 						if (table != null) {
-							double x = 100.0 * (double)val / (double)table [row*8+col]; //Scaling factor in percent
+							double x = 100.0 * val / table[row * 8 + col]; //Scaling factor in percent
 							cumsf += x;
 							//cumsf2 += x*x;
 							allones = allones && (val == 1);
@@ -795,9 +793,9 @@ namespace TagLib.Jpeg
 
 				if (table != null) {
 					double local_q;
-					cumsf /= 64.0;		// mean scale factor
-					//cumfs2 /= 64.0;
-					//double variance = cumsf2 - (cumsf * cumsf);
+					cumsf /= 64.0;      // mean scale factor
+										//cumfs2 /= 64.0;
+										//double variance = cumsf2 - (cumsf * cumsf);
 
 					if (allones)
 						local_q = 100.0;
@@ -810,6 +808,6 @@ namespace TagLib.Jpeg
 			}
 		}
 
-#endregion
+		#endregion
 	}
 }

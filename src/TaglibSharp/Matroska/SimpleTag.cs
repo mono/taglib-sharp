@@ -1,4 +1,4 @@
-﻿//
+//
 // SimpleTag.cs:
 //
 // Author:
@@ -38,7 +38,7 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public SimpleTag()
+		public SimpleTag ()
 		{
 		}
 
@@ -46,13 +46,12 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// Construct from value
 		/// </summary>
-		public SimpleTag(ByteVector value)
+		public SimpleTag (ByteVector value)
 		{
 			Value = value;
 		}
 
 		#endregion
-
 
 
 		#region Properties
@@ -70,27 +69,18 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// Specifies the language of the tag, as a string.
 		/// </summary>
-		public string TagLanguage
-		{
-			get
-			{
-				var ret = Language.ToString();
-				return string.IsNullOrEmpty(ret) ? "und" : ret;
+		public string TagLanguage {
+			get {
+				var ret = Language.ToString ();
+				return string.IsNullOrEmpty (ret) ? "und" : ret;
 			}
-			set
-			{
-				if (string.IsNullOrEmpty(value) || value == "und")
-				{
+			set {
+				if (string.IsNullOrEmpty (value) || value == "und") {
 					Language = CultureInfo.InvariantCulture;
-				}
-				else
-				{
-					try
-					{
-						Language = new CultureInfo(value);
-					}
-					catch
-					{
+				} else {
+					try {
+						Language = new CultureInfo (value);
+					} catch {
 						Language = CultureInfo.InvariantCulture;
 					}
 				}
@@ -106,10 +96,9 @@ namespace TagLib.Matroska
 		/// <summary>
 		/// Get/Set the data contained in the SimpleTag
 		/// </summary>
-		public ByteVector Value
-		{
+		public ByteVector Value {
 			get { return this; }
-			set { Clear(); Add(value); }
+			set { Clear (); Add (value); }
 		}
 
 
@@ -126,12 +115,11 @@ namespace TagLib.Matroska
 		/// Convert a SimpleTag to a String in the Default encoding
 		/// </summary>
 		/// <param name="v"></param>
-		public static implicit operator string(SimpleTag v)
+		public static implicit operator string (SimpleTag v)
 		{
-			return v != null ? v.ToString(StringType.UTF8) : null;
+			return v?.ToString (StringType.UTF8);
 		}
 
 		#endregion
-
 	}
 }

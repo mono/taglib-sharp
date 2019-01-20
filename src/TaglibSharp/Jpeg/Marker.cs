@@ -30,7 +30,8 @@ namespace TagLib.Jpeg
 	///
 	///    See CCITT Rec. T.81 (1992 E), Table B.1 (p.32)
 	/// </summary>
-	public enum Marker : byte {
+	public enum Marker : byte
+	{
 		/// <summary>
 		///    Start Of Frame marker, non-differential, Huffman coding, Baseline DCT
 		/// </summary>

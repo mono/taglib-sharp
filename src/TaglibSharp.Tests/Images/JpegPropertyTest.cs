@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using TaglibSharp.Tests.Images.Validators;
 using TagLib;
+using TaglibSharp.Tests.Images.Validators;
 
 namespace TaglibSharp.Tests.Images
 {
@@ -23,7 +23,7 @@ namespace TaglibSharp.Tests.Images
 				new PropertyModificationValidator<string> ("Comment", "This is an image Comment", "And here comes another image comment"),
 				new PropertyModificationValidator<string> ("Title", "Sunrise", "Eclipse"),
 				new PropertyModificationValidator<string> ("Software", "Exiftool", "Unit tests"),
-				new PropertyModificationValidator<string[]> ("Keywords", new[] {"keyword 1", "keyword 2"}, new[] {"keyword a", "keyword b", "keyword 2"}),
+				new PropertyModificationValidator<string[]> ("Keywords", new[] { "keyword 1", "keyword 2" }, new[] { "keyword a", "keyword b", "keyword 2" }),
 				new PropertyModificationValidator<uint?> ("Rating", 5, 2),
 
 				new TagPropertyModificationValidator<string> ("Creator", null, "Albert Einstein", TagTypes.TiffIFD, true),
@@ -36,7 +36,7 @@ namespace TaglibSharp.Tests.Images
 				new TagPropertyModificationValidator<string> ("Comment", "This is an image Comment", "And here comes another image comment", TagTypes.XMP, true),
 				new TagPropertyModificationValidator<string> ("Title", "Sunrise", "Eclipse", TagTypes.XMP, true),
 				new TagPropertyModificationValidator<string> ("Software", null, "Unit tests", TagTypes.XMP, true),
-				new TagPropertyModificationValidator<string[]> ("Keywords", new[] {"keyword 1", "keyword 2"}, new[] {"keyword a", "keyword b", "keyword 2"}, TagTypes.XMP, true),
+				new TagPropertyModificationValidator<string[]> ("Keywords", new[] { "keyword 1", "keyword 2" }, new[] { "keyword a", "keyword b", "keyword 2" }, TagTypes.XMP, true),
 				new TagPropertyModificationValidator<uint?> ("Rating", 5, 2, TagTypes.XMP, true),
 
 				new TagPropertyModificationValidator<string> ("Comment", "This is an image Comment", "And here comes another image comment", TagTypes.JpegComment, true)
