@@ -1,14 +1,11 @@
 version: 2.2.0.{build}
 image: Visual Studio 2017
 
-before_build:
-- nuget restore
-
 build_script:
 - cmd: >-
     git submodule update --init --recursive
 
-    msbuild /m /p:Configuration=Release /clp:v=m TaglibSharp.sln /bl /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+    msbuild /restore /m /p:Configuration=Release /clp:v=m TaglibSharp.sln /bl /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 artifacts:
 - path: msbuild.binlog
