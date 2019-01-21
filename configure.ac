@@ -6,9 +6,6 @@ ASSEMBLY_NAME="$PACKAGE"
 ASSEMBLY_VERSION="$VERSION"
 TARGET_FRAMEWORK="net462"
 
-POLICY_2_0_VERSIONS="2.0.0.0-$ASSEMBLY_VERSION"
-AC_SUBST(POLICY_2_0_VERSIONS)
-
 AC_SUBST(VERSION)
 AC_SUBST(ASSEMBLY_VERSION)
 AC_SUBST(ASSEMBLY_NAME)
@@ -110,7 +107,6 @@ AC_CONFIG_FILES([
 Makefile
 taglib-sharp.pc
 src/Makefile
-src/policy.2.0.taglib-sharp.config
 src/TaglibSharp/Makefile
 src/Debug/Makefile
 src/TaglibSharp.Tests/Makefile
