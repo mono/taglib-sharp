@@ -1,7 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>$(TaglibSharpTargetFramework)</TargetFrameworks>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\taglib-sharp.xml</DocumentationFile>
     <Version>$(ReleaseVersion)</Version>
     <PackageId>TagLibSharp</PackageId>
     <Product>TagLib#</Product>
@@ -15,14 +16,6 @@
     <SignAssembly>true</SignAssembly>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/mono/taglib-sharp</PackageProjectUrl>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net462|AnyCPU'">
-    <DocumentationFile>bin\Debug\net462\taglib-sharp.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net462|AnyCPU'">
-    <DocumentationFile>bin\Release\net462\taglib-sharp.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

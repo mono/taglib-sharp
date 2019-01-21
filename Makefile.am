@@ -34,7 +34,7 @@ all: sln_build
 
 test: all
 	nuget install NUnit.Runners -Version 3.9.0 -OutputDirectory packages
-	$(MONO) packages/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe --labels=All $(srcdir)/src/TaglibSharp.Tests/bin/Debug/net462/TaglibSharp.Tests.dll
+	$(MONO) packages/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe --labels=All $(srcdir)/src/TaglibSharp.Tests/bin/Debug/$(TARGET_FRAMEWORK)/TaglibSharp.Tests.dll
 
 distwin: all
 	mkdir -p $(srcdir)/$(WINDIR)

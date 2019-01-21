@@ -1,8 +1,8 @@
 DOC_UPDATER = @MONODOCER@ -delete -pretty
 DOC_ASSEMBLER = @MDASSEMBLER@ --out taglib-sharp-docs --ecma
 
-ASSEMBLY = $(top_builddir)/src/TaglibSharp/bin/Debug/net462/$(ASSEMBLY_NAME).dll
-SLASHDOC = $(top_builddir)/src/TaglibSharp/bin/Debug/net462/$(ASSEMBLY_NAME).xml
+ASSEMBLY = $(top_builddir)/src/TaglibSharp/bin/Debug/$(TARGET_FRAMEWORK)/$(ASSEMBLY_NAME).dll
+SLASHDOC = $(top_builddir)/src/TaglibSharp/bin/Debug/$(TARGET_FRAMEWORK)/$(ASSEMBLY_NAME).xml
 
 if BUILD_DOCS
 all: XmlInjector.exe
