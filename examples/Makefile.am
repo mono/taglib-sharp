@@ -16,7 +16,7 @@ endif
 all: $(EXAMPLES_BUILD)
 
 taglib-sharp.dll:
-	if [ ! -e $@ ]; then ln -s $(top_builddir)/src/TaglibSharp/bin/Debug/$(TARGET_FRAMEWORK)/taglib-sharp.dll $@; fi
+	if [ ! -e $@ ]; then ln -s $(top_builddir)/src/TaglibSharp/bin/$(PROFILE_NAME)/$(TARGET_FRAMEWORK)/taglib-sharp.dll $@; fi
 
 if HAVE_EXIV2
 $(GENERATE_TEST_FIXTURE).exe: $(GENERATE_TEST_FIXTURE).cs listData extractKey
