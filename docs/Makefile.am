@@ -1,14 +1,15 @@
 DOC_UPDATER = @MONODOCER@ -delete -pretty
 DOC_ASSEMBLER = @MDASSEMBLER@ --out taglib-sharp-docs --ecma
 
-ASSEMBLY = $(top_builddir)/src/$(ASSEMBLY_NAME).dll
-SLASHDOC = $(ASSEMBLY).xml
+VARIABLES = $(PROFILE_NAME)/$(TARGET_FRAMEWORK)/$(ASSEMBLY_NAME)
+ASSEMBLY = $(top_builddir)/src/TaglibSharp/bin/$(VARIABLES).dll
+SLASHDOC = $(top_builddir)/src/TaglibSharp/bin/$(VARIABLES).xml
 
 if BUILD_DOCS
 all: XmlInjector.exe
 
 XmlInjector.exe: XmlInjector.cs
-	$(MCS) -out:$@ -r:System.Xml $<
+	$(CSC) -out:$@ $<
 
 monodocdir = $(DOCDIR)
 monodoc_DATA = \
@@ -51,16 +52,16 @@ clean-local:
 endif
 
 EXTRA_DIST = \
-	taglib-sharp-docs.source \
-	XmlInjector.cs \
-	Package.en.xml.in
+     	     taglib-sharp-docs.source \
+     	     XmlInjector.cs \
+     	     Package.en.xml.in
 
 DISTCLEANFILES = \
-	taglib-sharp-docs.zip \
-	taglib-sharp-docs.tree
+	 	 taglib-sharp-docs.zip \
+	 	 taglib-sharp-docs.tree
 
 MAINTAINERCLEANFILES = \
-	Makefile.in
+	       	       Makefile.in
 
 CLEANFILES = \
-	XmlInjector.exe
+	     XmlInjector.exe

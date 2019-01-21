@@ -1,0 +1,61 @@
+MSBUILD=msbuild
+MSBUILD_ARGS=/restore /verbosity:normal /nologo /property:CodePage=65001
+ALL_CSPROJ=$(wildcard *.csproj)
+MAIN_SLN=$(top_builddir)/TaglibSharp.sln
+
+PROFILE=/property:Configuration=$(PROFILE_NAME)
+
+# Figure out how far we are from top_builddir
+DEPTH=$(shell echo "$(top_builddir)" | tr '/' '\n' | grep -c '..')
+
+all: csproj_build
+
+all-local: csproj_build
+
+clean: csproj_clean
+
+clean-local: csproj_clean
+
+csproj_build:
+	@if test x$(SKIP) != xy -a $(DEPTH) -gt $(MAKELEVEL); then \
+	echo Building $(ALL_CSPROJ); \
+	for p in $(ALL_CSPROJ); do $(MSBUILD) $(MSBUILD_ARGS) $$p; done \
+	fi
+
+csproj_clean:
+	@if test x$(SKIP) != xy -a $(DEPTH) -gt $(MAKELEVEL); then \
+	echo Cleaning $(ALL_CSPROJ); \
+	for p in $(ALL_CSPROJ); do $(MSBUILD) $(MSBUILD_ARGS) $$p /t:Clean; done \
+	fi
+
+sln_build:
+	@echo Building $(MAIN_SLN)
+	@$(MSBUILD) $(MSBUILD_ARGS) $(MAIN_SLN) $(PROFILE)
+
+sln_clean:
+	@echo Cleaning $(MAIN_SLN)
+	@$(MSBUILD) $(MSBUILD_ARGS) $(MAIN_SLN) $(PROFILE) /t:Clean
+
+print_extradist:
+	@echo $(WILDCARDED_FILES)
+
+EXTS:=*.bmp *.cs *.csproj *.html *.png *.snk *.config *.stetic *.glade *.xml *.xsd *.template *.tt *.txt *.targets *.sh
+
+ALL_FILES:= \
+	$(EXTS)                           \
+	$(addprefix */,$(EXTS))           \
+	$(addprefix */*/,$(EXTS))         \
+	$(addprefix */*/*/,$(EXTS))       \
+	$(addprefix */*/*/*/,$(EXTS))     \
+	$(addprefix */*/*/*/*/,$(EXTS))   \
+	$(addprefix */*/*/*/*/*/,$(EXTS)) \
+	$(wildcard icons/*)               \
+	$(wildcard templates/*)
+
+WILDCARDED_FILES:=$(wildcard $(ALL_FILES))
+
+EXTRA_DIST += \
+	$(wildcard $(ALL_FILES))
+
+
+.PHONY: all clean csproj_build csproj_clean sln_build sln_clean
