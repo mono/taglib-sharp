@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>2.2.0.0</Version>
+    <Version>$(ReleaseVersion)</Version>
     <PackageId>TagLibSharp</PackageId>
     <Product>TagLib#</Product>
     <Description>A library for for reading and writing metadata in media files, including video, audio, and photo formats.</Description>
@@ -21,7 +21,7 @@
     <PackageProjectUrl>https://github.com/mono/taglib-sharp</PackageProjectUrl>
     <Company />
     <PackageLicenseUrl>http://www.opensource.org/licenses/lgpl-2.1.php</PackageLicenseUrl>
-    <PackageReleaseNotes>Version 2.2.0.0
+    <PackageReleaseNotes>Version $(ReleaseVersion)
 January 21, 2019
 * Lots and lots of updates including net462 and .netstandard 2.0</PackageReleaseNotes>
   </PropertyGroup>
