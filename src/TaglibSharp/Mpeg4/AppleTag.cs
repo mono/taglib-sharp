@@ -435,8 +435,8 @@ namespace TagLib.Mpeg4
 				data_box.Text = datastring;
 			} else {
 				//Create the new boxes, should use 1 for text as a flag
-				var amean_box = new AppleAdditionalInfoBox (BoxType.Mean);
-				var aname_box = new AppleAdditionalInfoBox (BoxType.Name);
+				var amean_box = new AppleAdditionalInfoBox (BoxType.Mean,0,1);
+				var aname_box = new AppleAdditionalInfoBox (BoxType.Name,0,1);
 				var adata_box = new AppleDataBox (BoxType.Data, 1);
 				amean_box.Text = meanstring;
 				aname_box.Text = namestring;
