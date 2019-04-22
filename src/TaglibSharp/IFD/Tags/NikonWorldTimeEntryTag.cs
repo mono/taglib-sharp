@@ -23,28 +23,28 @@
 
 namespace TagLib.IFD.Tags
 {
-	/// <summary>
-	///    Nikon world time entry tags.
-	///    Based on:
-	///    http://exiv2.org/tags-nikon.html
-	/// </summary>
-	public enum NikonWorldTimeEntryTag : ushort
-	{
+    /// <summary>
+    ///    Nikon world time entry tags.
+    ///    Based on:
+    ///    http://exiv2.org/tags-nikon.html
+    /// </summary>
+    public enum NikonWorldTimeEntryTag : ushort
+    {
 
-		/// <summary>
-		///    Timezone. (Hex: 0X0000)
-		/// </summary>
-		Timezone = 0,
+        /// <summary>
+        ///    Timezone. (Hex: 0X0000)
+        /// </summary>
+        Timezone = 0,
 
-		/// <summary>
-		///    Daylight savings. (Hex: 0X0002)
-		/// </summary>
-		DaylightSavings = 2,
+        /// <summary>
+        ///    Daylight savings. (Hex: 0X0002)
+        /// </summary>
+        DaylightSavings = 2,
 
-		/// <summary>
-		///    Date display format. (Hex: 0X0003)
-		/// </summary>
-		DateDisplayFormat = 3,
+        /// <summary>
+        ///    Date display format. (Hex: 0X0003)
+        /// </summary>
+        DateDisplayFormat = 3,
 
-	}
+    }
 }

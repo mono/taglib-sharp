@@ -2,42 +2,42 @@ using System;
 
 namespace TagLib.Id3v2
 {
-	public class EventTimeCode : ICloneable
-	{
-		#region Public Properties
+    public class EventTimeCode : ICloneable
+    {
+#region Public Properties
 
-		public EventType TypeOfEvent { get; set; }
+        public EventType TypeOfEvent { get; set; }
 
-		public int Time { get; set; }
+        public int Time { get; set; }
 
-		#endregion
+#endregion
 
-		#region Public Constructors
+#region Public Constructors
 
-		public EventTimeCode (EventType typeOfEvent, int time)
-		{
-			TypeOfEvent = typeOfEvent;
-			Time = time;
-		}
+        public EventTimeCode (EventType typeOfEvent, int time)
+        {
+            TypeOfEvent = typeOfEvent;
+            Time = time;
+        }
 
-		#endregion
+#endregion
 
-		#region Static Methods
+#region Static Methods
 
-		public static EventTimeCode CreateEmpty ()
-		{
-			return new EventTimeCode (EventType.Padding, 0);
-		}
+        public static EventTimeCode CreateEmpty ()
+        {
+            return new EventTimeCode (EventType.Padding, 0);
+        }
 
-		#endregion
+#endregion
 
-		#region ICloneable
+#region ICloneable
 
-		public object Clone ()
-		{
-			return new EventTimeCode (TypeOfEvent, Time);
-		}
+        public object Clone ()
+        {
+            return new EventTimeCode (TypeOfEvent, Time);
+        }
 
-		#endregion
-	}
+#endregion
+    }
 }

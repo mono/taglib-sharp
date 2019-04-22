@@ -23,34 +23,34 @@
 
 namespace TagLib.Xmp
 {
-	/// <summary>
-	///    Denotes the type of a node.
-	/// </summary>
-	public enum XmpNodeType
-	{
-		/// <summary>
-		///    Unstructured (simple) value node.
-		/// </summary>
-		Simple,
+    /// <summary>
+    ///    Denotes the type of a node.
+    /// </summary>
+    public enum XmpNodeType
+    {
+        /// <summary>
+        ///    Unstructured (simple) value node.
+        /// </summary>
+        Simple,
 
-		/// <summary>
-		///    Structured value node.
-		/// </summary>
-		Struct,
+        /// <summary>
+        ///    Structured value node.
+        /// </summary>
+        Struct,
 
-		/// <summary>
-		///    Ordered array.
-		/// </summary>
-		Seq,
+        /// <summary>
+        ///    Ordered array.
+        /// </summary>
+        Seq,
 
-		/// <summary>
-		///    Language alternative.
-		/// </summary>
-		Alt,
+        /// <summary>
+        ///    Language alternative.
+        /// </summary>
+        Alt,
 
-		/// <summary>
-		///    Unordered structured value.
-		/// </summary>
-		Bag
-	}
+        /// <summary>
+        ///    Unordered structured value.
+        /// </summary>
+        Bag
+    }
 }

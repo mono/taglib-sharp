@@ -25,11 +25,11 @@ using System.Collections.Generic;
 
 namespace TagLib.IFD
 {
-	/// <summary>
-	///    Contains the entries in this IFD.
-	/// </summary>
-	public class IFDDirectory : Dictionary<ushort, IFDEntry>
-	{
+    /// <summary>
+    ///    Contains the entries in this IFD.
+    /// </summary>
+    public class IFDDirectory : Dictionary<ushort, IFDEntry>
+    {
 
-	}
+    }
 }

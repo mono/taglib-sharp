@@ -26,145 +26,145 @@ using System.Collections.Generic;
 
 namespace TagLib.Matroska
 {
-	/// <summary>
-	/// Describes a Matroska Track.
-	/// </summary>
-	public class Track : ICodec, IUIDElement
-	{
-		#region Private fields
+    /// <summary>
+    /// Describes a Matroska Track.
+    /// </summary>
+    public class Track : ICodec, IUIDElement
+    {
+#region Private fields
 
 #pragma warning disable 414 // Assigned, never used
-		readonly ulong track_number;
-		readonly string track_codec_id;
-		readonly string track_codec_name;
-		readonly string track_name;
-		readonly string track_language;
-		readonly bool track_enabled;
-		readonly bool track_default;
-		readonly ByteVector codec_data;
+        readonly ulong track_number;
+        readonly string track_codec_id;
+        readonly string track_codec_name;
+        readonly string track_name;
+        readonly string track_language;
+        readonly bool track_enabled;
+        readonly bool track_default;
+        readonly ByteVector codec_data;
 #pragma warning restore 414
 
-		readonly List<EBMLreader> unknown_elems = new List<EBMLreader> ();
+        readonly List<EBMLreader> unknown_elems = new List<EBMLreader> ();
 
-		#endregion
+#endregion
 
-		#region Constructors
+#region Constructors
 
-		/// <summary>
-		/// Constructs a <see cref="Track" /> parsing from provided 
-		/// file data.
-		/// Parsing will be done reading from _file at position references by 
-		/// parent element's data section.
-		/// </summary>
-		/// <param name="_file"><see cref="File" /> instance to read from.</param>
-		/// <param name="element">Parent <see cref="EBMLreader" />.</param>
-		public Track (File _file, EBMLreader element)
-		{
-			ulong i = 0;
+        /// <summary>
+        /// Constructs a <see cref="Track" /> parsing from provided 
+        /// file data.
+        /// Parsing will be done reading from _file at position references by 
+        /// parent element's data section.
+        /// </summary>
+        /// <param name="_file"><see cref="File" /> instance to read from.</param>
+        /// <param name="element">Parent <see cref="EBMLreader" />.</param>
+        public Track (File _file, EBMLreader element)
+        {
+            ulong i = 0;
 
-			while (i < element.DataSize) {
-				EBMLreader child = new EBMLreader (_file, element.DataOffset + i);
+            while (i < element.DataSize) {
+                EBMLreader child = new EBMLreader (_file, element.DataOffset + i);
 
-				MatroskaID matroska_id = child.ID;
+                MatroskaID matroska_id = child.ID;
 
-				switch (matroska_id) {
-				case MatroskaID.TrackNumber:
-					track_number = child.ReadULong ();
-					break;
-				case MatroskaID.TrackUID:
-					_UID = child.ReadULong ();
-					break;
-				case MatroskaID.CodecID:
-					track_codec_id = child.ReadString ();
-					break;
-				case MatroskaID.CodecName:
-					track_codec_name = child.ReadString ();
-					break;
-				case MatroskaID.TrackName:
-					track_name = child.ReadString ();
-					break;
-				case MatroskaID.TrackLanguage:
-					track_language = child.ReadString ();
-					break;
-				case MatroskaID.TrackFlagEnabled:
-					track_enabled = child.ReadBool ();
-					break;
-				case MatroskaID.TrackFlagDefault:
-					track_default = child.ReadBool ();
-					break;
-				case MatroskaID.CodecPrivate:
-					codec_data = child.ReadBytes ();
-					break;
-				default:
-					unknown_elems.Add (child);
-					break;
-				}
+                switch (matroska_id) {
+                    case MatroskaID.TrackNumber:
+                        track_number = child.ReadULong ();
+                        break;
+                    case MatroskaID.TrackUID:
+                        _UID = child.ReadULong ();
+                        break;
+                    case MatroskaID.CodecID:
+                        track_codec_id = child.ReadString ();
+                        break;
+                    case MatroskaID.CodecName:
+                        track_codec_name = child.ReadString ();
+                        break;
+                    case MatroskaID.TrackName:
+                        track_name = child.ReadString ();
+                        break;
+                    case MatroskaID.TrackLanguage:
+                        track_language = child.ReadString ();
+                        break;
+                    case MatroskaID.TrackFlagEnabled:
+                        track_enabled = child.ReadBool ();
+                        break;
+                    case MatroskaID.TrackFlagDefault:
+                        track_default = child.ReadBool ();
+                        break;
+                    case MatroskaID.CodecPrivate:
+                        codec_data = child.ReadBytes ();
+                        break;
+                    default:
+                        unknown_elems.Add (child);
+                        break;
+                }
 
-				i += child.Size;
-			}
-		}
+                i += child.Size;
+            }
+        }
 
-		#endregion
+#endregion
 
-		#region Public fields
+#region Public fields
 
-		/// <summary>
-		/// List of unknown elements encountered while parsing.
-		/// </summary>
-		public List<EBMLreader> UnknownElements {
-			get { return unknown_elems; }
-		}
+        /// <summary>
+        /// List of unknown elements encountered while parsing.
+        /// </summary>
+        public List<EBMLreader> UnknownElements {
+            get { return unknown_elems; }
+        }
 
-		#endregion
+#endregion
 
-		#region Public methods
+#region Public methods
 
-		#endregion
+#endregion
 
-		#region ICodec
+#region ICodec
 
-		/// <summary>
-		/// Describes track duration.
-		/// </summary>
-		public virtual TimeSpan Duration {
-			get { return TimeSpan.Zero; }
-		}
+        /// <summary>
+        /// Describes track duration.
+        /// </summary>
+        public virtual TimeSpan Duration {
+            get { return TimeSpan.Zero; }
+        }
 
-		/// <summary>
-		/// Describes track media types.
-		/// </summary>
-		public virtual MediaTypes MediaTypes {
-			get { return MediaTypes.None; }
-		}
+        /// <summary>
+        /// Describes track media types.
+        /// </summary>
+        public virtual MediaTypes MediaTypes {
+            get { return MediaTypes.None; }
+        }
 
-		/// <summary>
-		/// Track description.
-		/// </summary>
-		public virtual string Description {
-			get { return $"{track_codec_name} {track_language}"; }
-		}
+        /// <summary>
+        /// Track description.
+        /// </summary>
+        public virtual string Description {
+            get { return $"{track_codec_name} {track_language}"; }
+        }
 
-		#endregion
+#endregion
 
-		#region IUIDElement Boilerplate
+#region IUIDElement Boilerplate
 
-		/// <summary>
-		/// Unique ID representing the element, as random as possible (setting zero will generate automatically a new one).
-		/// </summary>
-		public ulong UID {
-			get { return _UID; }
-			set { _UID = UIDElement.GenUID (value); }
-		}
+        /// <summary>
+        /// Unique ID representing the element, as random as possible (setting zero will generate automatically a new one).
+        /// </summary>
+        public ulong UID {
+            get { return _UID; }
+            set { _UID = UIDElement.GenUID (value); }
+        }
 
-		ulong _UID = UIDElement.GenUID ();
+        ulong _UID = UIDElement.GenUID ();
 
-		/// <summary>
-		/// Get the Tag type the UID should be represented by, or 0 if undefined
-		/// </summary>
-		public MatroskaID UIDType { get { return MatroskaID.TagTrackUID; } }
+        /// <summary>
+        /// Get the Tag type the UID should be represented by, or 0 if undefined
+        /// </summary>
+        public MatroskaID UIDType { get { return MatroskaID.TagTrackUID; } }
 
-		#endregion
+#endregion
 
 
-	}
+    }
 }

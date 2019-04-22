@@ -23,23 +23,23 @@
 
 namespace TagLib.IFD.Tags
 {
-	/// <summary>
-	///    Nikon vibration reduction entry tags.
-	///    Based on:
-	///    http://exiv2.org/tags-nikon.html
-	/// </summary>
-	public enum NikonVibrationReductionEntryTag : ushort
-	{
+    /// <summary>
+    ///    Nikon vibration reduction entry tags.
+    ///    Based on:
+    ///    http://exiv2.org/tags-nikon.html
+    /// </summary>
+    public enum NikonVibrationReductionEntryTag : ushort
+    {
 
-		/// <summary>
-		///    Version. (Hex: 0X0000)
-		/// </summary>
-		Version = 0,
+        /// <summary>
+        ///    Version. (Hex: 0X0000)
+        /// </summary>
+        Version = 0,
 
-		/// <summary>
-		///    Vibration reduction. (Hex: 0X0004)
-		/// </summary>
-		VibrationReduction = 4,
+        /// <summary>
+        ///    Vibration reduction. (Hex: 0X0004)
+        /// </summary>
+        VibrationReduction = 4,
 
-	}
+    }
 }

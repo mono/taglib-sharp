@@ -25,167 +25,167 @@ using System;
 
 namespace TagLib.Flac
 {
-	/// <summary>
-	///    This class represents a Flac metadata block.
-	/// </summary>
-	public class Block
-	{
-		#region Private Fields
+    /// <summary>
+    ///    This class represents a Flac metadata block.
+    /// </summary>
+    public class Block
+    {
+#region Private Fields
 
-		/// <summary>
-		///    Contains the block header.
-		/// </summary>
-		readonly BlockHeader header;
+        /// <summary>
+        ///    Contains the block header.
+        /// </summary>
+        readonly BlockHeader header;
 
-		#endregion
-
-
-
-		#region Constructors
-
-		/// <summary>
-		///    Constructs and initializes a new instance of <see
-		///    cref="Block" /> with a specified header and internal
-		///    data.
-		/// </summary>
-		/// <param name="header">
-		///    A <see cref="BlockHeader" /> object containing the
-		///    header to use for the new instance.
-		/// </param>
-		/// <param name="data">
-		///    A <see cref="ByteVector" /> object containing the data
-		///    to be contained in the new instance.
-		/// </param>
-		/// <exception cref="ArgumentNullException">
-		///    <paramref name="data" /> is <see langword="null" />.
-		/// </exception>
-		/// <exception cref="CorruptFileException">
-		///    The size of <paramref name="data" /> does not match the
-		///    size specified in <paramref name="header" />.
-		/// </exception>
-		public Block (BlockHeader header, ByteVector data)
-		{
-			if (data == null)
-				throw new ArgumentNullException (nameof (data));
-
-			if (header.BlockSize != data.Count)
-				throw new CorruptFileException ("Data count not equal to block size.");
-
-			this.header = header;
-			Data = data;
-		}
-
-		/// <summary>
-		///    Constructs and initializes a new instance of <see
-		///    cref="Block" /> with of a specified type and internal
-		///    data.
-		/// </summary>
-		/// <param name="type">
-		///    A <see cref="BlockType" /> value indicating the type of
-		///    data stored in <paramref name="data" />.
-		/// </param>
-		/// <param name="data">
-		///    A <see cref="ByteVector" /> object containing the data
-		///    to be contained in the new instance.
-		/// </param>
-		/// <exception cref="ArgumentNullException">
-		///    <paramref name="data" /> is <see langword="null" />.
-		/// </exception>
-		public Block (BlockType type, ByteVector data)
-		{
-			if (data == null)
-				throw new ArgumentNullException (nameof (data));
-
-			header = new BlockHeader (type, (uint)data.Count);
-
-			Data = data;
-		}
-
-		#endregion
+#endregion
 
 
 
-		#region Public Properties
+#region Constructors
 
-		/// <summary>
-		///    Gets the type of data contained in the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="BlockType" /> value indicating the type of
-		///    data contained in <see cref="Data" />.
-		/// </value>
-		public BlockType Type {
-			get { return header.BlockType; }
-		}
+        /// <summary>
+        ///    Constructs and initializes a new instance of <see
+        ///    cref="Block" /> with a specified header and internal
+        ///    data.
+        /// </summary>
+        /// <param name="header">
+        ///    A <see cref="BlockHeader" /> object containing the
+        ///    header to use for the new instance.
+        /// </param>
+        /// <param name="data">
+        ///    A <see cref="ByteVector" /> object containing the data
+        ///    to be contained in the new instance.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///    <paramref name="data" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="CorruptFileException">
+        ///    The size of <paramref name="data" /> does not match the
+        ///    size specified in <paramref name="header" />.
+        /// </exception>
+        public Block (BlockHeader header, ByteVector data)
+        {
+            if (data == null)
+                throw new ArgumentNullException (nameof (data));
 
-		/// <summary>
-		///    Gets whether or not the block represented by the current
-		///    instance is the last metadata block in the Flac stream.
-		/// </summary>
-		/// <value>
-		///    <see langword="true" /> if the block represented by the
-		///    current instance was the last one to appear in the file
-		///    and is followed immediately by the audio data, or <see
-		///    langword="false" /> if another block appears after the
-		///    current one or the block was not read from disk.
-		/// </value>
-		public bool IsLastBlock {
-			get { return header.IsLastBlock; }
-		}
+            if (header.BlockSize != data.Count)
+                throw new CorruptFileException ("Data count not equal to block size.");
 
-		/// <summary>
-		///    Gets the size of the data contained in the current
-		///    instance.
-		/// </summary>
-		public uint DataSize {
-			get { return header.BlockSize; }
-		}
+            this.header = header;
+            Data = data;
+        }
 
-		/// <summary>
-		///    Gets the total size of the block represented by the
-		///    current instance as it appears on disk.
-		/// </summary>
-		public uint TotalSize {
-			get { return DataSize + BlockHeader.Size; }
-		}
+        /// <summary>
+        ///    Constructs and initializes a new instance of <see
+        ///    cref="Block" /> with of a specified type and internal
+        ///    data.
+        /// </summary>
+        /// <param name="type">
+        ///    A <see cref="BlockType" /> value indicating the type of
+        ///    data stored in <paramref name="data" />.
+        /// </param>
+        /// <param name="data">
+        ///    A <see cref="ByteVector" /> object containing the data
+        ///    to be contained in the new instance.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///    <paramref name="data" /> is <see langword="null" />.
+        /// </exception>
+        public Block (BlockType type, ByteVector data)
+        {
+            if (data == null)
+                throw new ArgumentNullException (nameof (data));
 
-		/// <summary>
-		///    Gets the data contained in the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="ByteVector" /> object containing the data
-		///    stored in the current instance.
-		/// </value>
-		public ByteVector Data { get; private set; }
+            header = new BlockHeader (type, (uint)data.Count);
 
-		#endregion
+            Data = data;
+        }
+
+#endregion
 
 
 
-		#region Public Methods
+#region Public Properties
 
-		/// <summary>
-		///    Renders the current instance as a raw Flac metadata
-		///    block.
-		/// </summary>
-		/// <param name="isLastBlock">
-		///    A <see cref="bool" /> value indicating whether or not the
-		///    block is to be marked as the last metadata block.
-		/// </param>
-		/// <returns>
-		///    A <see cref="ByteVector" /> object containing the
-		///    rendered version of the current instance.
-		/// </returns>
-		public ByteVector Render (bool isLastBlock)
-		{
-			if (Data == null)
-				throw new InvalidOperationException ("Cannot render empty blocks.");
+        /// <summary>
+        ///    Gets the type of data contained in the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="BlockType" /> value indicating the type of
+        ///    data contained in <see cref="Data" />.
+        /// </value>
+        public BlockType Type {
+            get { return header.BlockType; }
+        }
 
-			ByteVector data = header.Render (isLastBlock);
-			data.Add (Data);
-			return data;
-		}
+        /// <summary>
+        ///    Gets whether or not the block represented by the current
+        ///    instance is the last metadata block in the Flac stream.
+        /// </summary>
+        /// <value>
+        ///    <see langword="true" /> if the block represented by the
+        ///    current instance was the last one to appear in the file
+        ///    and is followed immediately by the audio data, or <see
+        ///    langword="false" /> if another block appears after the
+        ///    current one or the block was not read from disk.
+        /// </value>
+        public bool IsLastBlock {
+            get { return header.IsLastBlock; }
+        }
 
-		#endregion
-	}
+        /// <summary>
+        ///    Gets the size of the data contained in the current
+        ///    instance.
+        /// </summary>
+        public uint DataSize {
+            get { return header.BlockSize; }
+        }
+
+        /// <summary>
+        ///    Gets the total size of the block represented by the
+        ///    current instance as it appears on disk.
+        /// </summary>
+        public uint TotalSize {
+            get { return DataSize + BlockHeader.Size; }
+        }
+
+        /// <summary>
+        ///    Gets the data contained in the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="ByteVector" /> object containing the data
+        ///    stored in the current instance.
+        /// </value>
+        public ByteVector Data { get; private set; }
+
+#endregion
+
+
+
+#region Public Methods
+
+        /// <summary>
+        ///    Renders the current instance as a raw Flac metadata
+        ///    block.
+        /// </summary>
+        /// <param name="isLastBlock">
+        ///    A <see cref="bool" /> value indicating whether or not the
+        ///    block is to be marked as the last metadata block.
+        /// </param>
+        /// <returns>
+        ///    A <see cref="ByteVector" /> object containing the
+        ///    rendered version of the current instance.
+        /// </returns>
+        public ByteVector Render (bool isLastBlock)
+        {
+            if (Data == null)
+                throw new InvalidOperationException ("Cannot render empty blocks.");
+
+            ByteVector data = header.Render (isLastBlock);
+            data.Add (Data);
+            return data;
+        }
+
+#endregion
+    }
 }

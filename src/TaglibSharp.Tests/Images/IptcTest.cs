@@ -27,46 +27,46 @@ using File = TagLib.File;
 
 namespace TaglibSharp.Tests.Images
 {
-	[TestFixture]
-	public class IptcIimTest
-	{
-		[Test]
-		public void Iim_Keywords ()
-		{
-			var file = File.Create (TestPath.Samples + "sample_iptc1.jpg");
-			var tag = file.GetTag (TagTypes.XMP) as XmpTag;
+    [TestFixture]
+    public class IptcIimTest
+    {
+        [Test]
+        public void Iim_Keywords ()
+        {
+            var file = File.Create (TestPath.Samples + "sample_iptc1.jpg");
+            var tag = file.GetTag (TagTypes.XMP) as XmpTag;
 
-			Assert.IsNotNull (tag, "tag");
+            Assert.IsNotNull (tag, "tag");
 
-			CollectionAssert.AreEqual (new[] { "kw1", "kw2", "kw3 " }, tag.Keywords);
-		}
+            CollectionAssert.AreEqual (new[] { "kw1", "kw2", "kw3 " }, tag.Keywords);
+        }
 
-		[Test]
-		public void Iim_AllInfo ()
-		{
-			var file = File.Create (TestPath.Samples + "sample_iptc2.jpg");
-			var tag = file.GetTag (TagTypes.XMP) as XmpTag;
+        [Test]
+        public void Iim_AllInfo ()
+        {
+            var file = File.Create (TestPath.Samples + "sample_iptc2.jpg");
+            var tag = file.GetTag (TagTypes.XMP) as XmpTag;
 
-			Assert.IsNotNull (tag, "tag");
+            Assert.IsNotNull (tag, "tag");
 
-			CollectionAssert.AreEqual (new[] { "kw" }, tag.Keywords);
-			Assert.AreEqual ("Title", tag.Title);
-			Assert.AreEqual ("Creator", tag.Creator);
-			Assert.AreEqual ("Copyright", tag.Copyright);
-		}
+            CollectionAssert.AreEqual (new[] { "kw" }, tag.Keywords);
+            Assert.AreEqual ("Title", tag.Title);
+            Assert.AreEqual ("Creator", tag.Creator);
+            Assert.AreEqual ("Copyright", tag.Copyright);
+        }
 
-		[Test]
-		public void IimAndXmp ()
-		{
-			var file = File.Create (TestPath.Samples + "sample_iptc3.jpg");
-			var tag = file.GetTag (TagTypes.XMP) as XmpTag;
+        [Test]
+        public void IimAndXmp ()
+        {
+            var file = File.Create (TestPath.Samples + "sample_iptc3.jpg");
+            var tag = file.GetTag (TagTypes.XMP) as XmpTag;
 
-			Assert.IsNotNull (tag, "tag");
+            Assert.IsNotNull (tag, "tag");
 
-			CollectionAssert.AreEqual (new[] { "XmpKw" }, tag.Keywords);
-			Assert.AreEqual ("XmpTitle", tag.Title);
-			Assert.AreEqual ("XmpCreator", tag.Creator);
-			Assert.AreEqual ("XmpCopyright", tag.Copyright);
-		}
-	}
+            CollectionAssert.AreEqual (new[] { "XmpKw" }, tag.Keywords);
+            Assert.AreEqual ("XmpTitle", tag.Title);
+            Assert.AreEqual ("XmpCreator", tag.Creator);
+            Assert.AreEqual ("XmpCopyright", tag.Copyright);
+        }
+    }
 }

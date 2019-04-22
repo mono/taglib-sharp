@@ -23,60 +23,60 @@
 
 namespace TagLib.Tiff
 {
-	/// <summary>
-	///    A TIFF photo codec. Contains basic photo details.
-	/// </summary>
-	public class Codec : Image.Codec
-	{
-		readonly string description = "TIFF File";
+    /// <summary>
+    ///    A TIFF photo codec. Contains basic photo details.
+    /// </summary>
+    public class Codec : Image.Codec
+    {
+        readonly string description = "TIFF File";
 
-		/// <summary>
-		///    Gets a text description of the media represented by the
-		///    current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="string" /> object containing a description
-		///    of the media represented by the current instance.
-		/// </value>
-		public override string Description { get { return description; } }
+        /// <summary>
+        ///    Gets a text description of the media represented by the
+        ///    current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="string" /> object containing a description
+        ///    of the media represented by the current instance.
+        /// </value>
+        public override string Description { get { return description; } }
 
 
-		/// <summary>
-		///    Constructs a new <see cref="Codec" /> with the given width
-		///    and height.
-		/// </summary>
-		/// <param name="width">
-		///    The width of the photo.
-		/// </param>
-		/// <param name="height">
-		///    The height of the photo.
-		/// </param>
-		/// <returns>
-		///    A new <see cref="Codec" /> instance.
-		/// </returns>
-		public Codec (int width, int height)
-			: base (width, height) { }
+        /// <summary>
+        ///    Constructs a new <see cref="Codec" /> with the given width
+        ///    and height.
+        /// </summary>
+        /// <param name="width">
+        ///    The width of the photo.
+        /// </param>
+        /// <param name="height">
+        ///    The height of the photo.
+        /// </param>
+        /// <returns>
+        ///    A new <see cref="Codec" /> instance.
+        /// </returns>
+        public Codec (int width, int height)
+        : base (width, height) { }
 
-		/// <summary>
-		///    Constructs a new <see cref="Codec" /> with the given width
-		///    and height.
-		/// </summary>
-		/// <param name="width">
-		///    The width of the photo.
-		/// </param>
-		/// <param name="height">
-		///    The height of the photo.
-		/// </param>
-		/// <param name="description">
-		///    The description of the photo type.
-		/// </param>
-		/// <returns>
-		///    A new <see cref="Codec" /> instance.
-		/// </returns>
-		public Codec (int width, int height, string description)
-			: base (width, height)
-		{
-			this.description = description;
-		}
-	}
+        /// <summary>
+        ///    Constructs a new <see cref="Codec" /> with the given width
+        ///    and height.
+        /// </summary>
+        /// <param name="width">
+        ///    The width of the photo.
+        /// </param>
+        /// <param name="height">
+        ///    The height of the photo.
+        /// </param>
+        /// <param name="description">
+        ///    The description of the photo type.
+        /// </param>
+        /// <returns>
+        ///    A new <see cref="Codec" /> instance.
+        /// </returns>
+        public Codec (int width, int height, string description)
+        : base (width, height)
+        {
+            this.description = description;
+        }
+    }
 }

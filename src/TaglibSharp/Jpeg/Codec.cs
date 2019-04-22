@@ -25,40 +25,40 @@
 
 namespace TagLib.Jpeg
 {
-	/// <summary>
-	///    A Jpeg photo codec. Contains basic photo details.
-	/// </summary>
-	public class Codec : Image.Codec
-	{
+    /// <summary>
+    ///    A Jpeg photo codec. Contains basic photo details.
+    /// </summary>
+    public class Codec : Image.Codec
+    {
 
-		/// <summary>
-		///    Gets a text description of the media represented by the
-		///    current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="string" /> object containing a description
-		///    of the media represented by the current instance.
-		/// </value>
-		public override string Description { get { return "JFIF File"; } }
+        /// <summary>
+        ///    Gets a text description of the media represented by the
+        ///    current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="string" /> object containing a description
+        ///    of the media represented by the current instance.
+        /// </value>
+        public override string Description { get { return "JFIF File"; } }
 
 
-		/// <summary>
-		///    Constructs a new <see cref="Codec" /> with the given width
-		///    and height.
-		/// </summary>
-		/// <param name="width">
-		///    The width of the photo.
-		/// </param>
-		/// <param name="height">
-		///    The height of the photo.
-		/// </param>
-		/// <param name="quality">
-		///    The quality of the photo.
-		/// </param>
-		/// <returns>
-		///    A new <see cref="Codec" /> instance.
-		/// </returns>
-		public Codec (int width, int height, int quality)
-			: base (width, height, quality) { }
-	}
+        /// <summary>
+        ///    Constructs a new <see cref="Codec" /> with the given width
+        ///    and height.
+        /// </summary>
+        /// <param name="width">
+        ///    The width of the photo.
+        /// </param>
+        /// <param name="height">
+        ///    The height of the photo.
+        /// </param>
+        /// <param name="quality">
+        ///    The quality of the photo.
+        /// </param>
+        /// <returns>
+        ///    A new <see cref="Codec" /> instance.
+        /// </returns>
+        public Codec (int width, int height, int quality)
+        : base (width, height, quality) { }
+    }
 }

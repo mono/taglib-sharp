@@ -26,112 +26,112 @@ using System.Collections.Generic;
 
 namespace TagLib
 {
-	static class Debugger
-	{
-		public delegate void DebugMessageSentHandler (string message);
+    static class Debugger
+    {
+        public delegate void DebugMessageSentHandler (string message);
 
-		public static event DebugMessageSentHandler DebugMessageSent;
+        public static event DebugMessageSentHandler DebugMessageSent;
 
-		public static void Debug (string message)
-		{
-			DebugMessageSent?.Invoke (message);
-		}
+        public static void Debug (string message)
+        {
+            DebugMessageSent?.Invoke (message);
+        }
 
-		public static void DumpHex (ByteVector data)
-		{
-			DumpHex (data.Data);
-		}
+        public static void DumpHex (ByteVector data)
+        {
+            DumpHex (data.Data);
+        }
 
-		public static void DumpHex (byte[] data)
-		{
-			int cols = 16;
-			int rows = data.Length / cols + (data.Length % cols != 0 ? 1 : 0);
+        public static void DumpHex (byte[] data)
+        {
+            int cols = 16;
+            int rows = data.Length / cols + (data.Length % cols != 0 ? 1 : 0);
 
-			for (int row = 0; row < rows; row++) {
-				for (int col = 0; col < cols; col++) {
-					if (row == rows - 1 && data.Length % cols != 0 && col >= data.Length % cols)
-						Console.Write ("   ");
-					else
-						Console.Write (" {0:x2}", data[row * cols + col]);
-				}
+            for (int row = 0; row < rows; row++) {
+                for (int col = 0; col < cols; col++) {
+                    if (row == rows - 1 && data.Length % cols != 0 && col >= data.Length % cols)
+                        Console.Write ("   ");
+                    else
+                        Console.Write (" {0:x2}", data[row * cols + col]);
+                }
 
-				Console.Write (" | ");
+                Console.Write (" | ");
 
-				for (int col = 0; col < cols; col++) {
-					if (row == rows - 1 && data.Length % cols != 0 && col >= data.Length % cols)
-						Console.Write (" ");
-					else
-						WriteByte2 (data[row * cols + col]);
-				}
+                for (int col = 0; col < cols; col++) {
+                    if (row == rows - 1 && data.Length % cols != 0 && col >= data.Length % cols)
+                        Console.Write (" ");
+                    else
+                        WriteByte2 (data[row * cols + col]);
+                }
 
-				Console.WriteLine ();
-			}
-			Console.WriteLine ();
-		}
+                Console.WriteLine ();
+            }
+            Console.WriteLine ();
+        }
 
-		static void WriteByte2 (byte data)
-		{
-			foreach (char c in allowed)
-				if (c == data) {
-					Console.Write (c);
-					return;
-				}
+        static void WriteByte2 (byte data)
+        {
+            foreach (char c in allowed)
+                if (c == data) {
+                    Console.Write (c);
+                    return;
+                }
 
-			Console.Write (".");
-		}
+            Console.Write (".");
+        }
 
-		static readonly string allowed = "0123456789abcdefghijklmnopqr" +
-			"stuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`~!@#$%^&*()_+-={}" +
-			"[];:'\",.<>?/\\|";
+        static readonly string allowed = "0123456789abcdefghijklmnopqr" +
+            "stuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`~!@#$%^&*()_+-={}" +
+            "[];:'\",.<>?/\\|";
 
 
-		static readonly Dictionary<object, Dictionary<object, DebugTimeData>>
-			debug_times = new Dictionary<object, Dictionary<object, DebugTimeData>> ();
+        static readonly Dictionary<object, Dictionary<object, DebugTimeData>>
+        debug_times = new Dictionary<object, Dictionary<object, DebugTimeData>> ();
 
-		public static void AddDebugTime (object o1, object o2, DateTime start)
-		{
-			var data = new DebugTimeData (DateTime.Now - start, 1);
-			if (debug_times.ContainsKey (o1) && debug_times[o1].ContainsKey (o2)) {
-				data.time += debug_times[o1][o2].time;
-				data.occurances += debug_times[o1][o2].occurances;
-			}
+        public static void AddDebugTime (object o1, object o2, DateTime start)
+        {
+            var data = new DebugTimeData (DateTime.Now - start, 1);
+            if (debug_times.ContainsKey (o1) && debug_times[o1].ContainsKey (o2)) {
+                data.time += debug_times[o1][o2].time;
+                data.occurances += debug_times[o1][o2].occurances;
+            }
 
-			if (!debug_times.ContainsKey (o1))
-				debug_times.Add (o1, new Dictionary<object, DebugTimeData> ());
+            if (!debug_times.ContainsKey (o1))
+                debug_times.Add (o1, new Dictionary<object, DebugTimeData> ());
 
-			if (!debug_times[o1].ContainsKey (o2))
-				debug_times[o1].Add (o2, data);
-			else
-				debug_times[o1][o2] = data;
-		}
+            if (!debug_times[o1].ContainsKey (o2))
+                debug_times[o1].Add (o2, data);
+            else
+                debug_times[o1][o2] = data;
+        }
 
-		public static void DumpDebugTime (object o1)
-		{
-			Console.WriteLine (o1.ToString ());
-			if (!debug_times.ContainsKey (o1))
-				return;
+        public static void DumpDebugTime (object o1)
+        {
+            Console.WriteLine (o1.ToString ());
+            if (!debug_times.ContainsKey (o1))
+                return;
 
-			foreach (var pair in debug_times[o1]) {
-				Console.WriteLine ("  {0}", pair.Key);
-				Console.WriteLine ("    Objects: {0}", pair.Value.time);
-				Console.WriteLine ("    Total:   {0}", pair.Value.occurances);
-				Console.WriteLine ("    Average: {0}", new TimeSpan (pair.Value.time.Ticks / pair.Value.occurances));
-				Console.WriteLine ();
-			}
+            foreach (var pair in debug_times[o1]) {
+                Console.WriteLine ("  {0}", pair.Key);
+                Console.WriteLine ("    Objects: {0}", pair.Value.time);
+                Console.WriteLine ("    Total:   {0}", pair.Value.occurances);
+                Console.WriteLine ("    Average: {0}", new TimeSpan (pair.Value.time.Ticks / pair.Value.occurances));
+                Console.WriteLine ();
+            }
 
-			debug_times.Remove (o1);
-		}
+            debug_times.Remove (o1);
+        }
 
-		struct DebugTimeData
-		{
-			public TimeSpan time;
-			public long occurances;
+        struct DebugTimeData
+        {
+            public TimeSpan time;
+            public long occurances;
 
-			public DebugTimeData (TimeSpan time, int occurances)
-			{
-				this.time = time;
-				this.occurances = occurances;
-			}
-		}
-	}
+            public DebugTimeData (TimeSpan time, int occurances)
+            {
+                this.time = time;
+                this.occurances = occurances;
+            }
+        }
+    }
 }

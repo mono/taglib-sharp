@@ -28,169 +28,169 @@
 
 namespace TagLib.Id3v2
 {
-	/// <summary>
-	///    This class extends <see cref="Frame" />, implementing support for
-	///    ID3v2 Music CD Identifier (MCDI) Frames.
-	/// </summary>
-	/// <remarks>
-	///    Music CD Identifier Frames should contain the table of
-	///    contents data as stored on the physical CD. It is primarily used
-	///    for track information lookup by through web sources like CDDB.
-	/// </remarks>
-	/// <example>
-	///    <para>Reading the music CD identifier from a tag.</para>
-	///    <code lang="C#">
-	/// using TagLib;
-	/// using TagLib.Id3v2;
-	/// 
-	/// public static class LookupUtil
-	/// {
-	/// 	public static ByteVector GetCdIdentifier (string filename)
-	/// 	{
-	/// 		File file = File.Create (filename, ReadStyle.None);
-	/// 		Id3v2.Tag tag = file.GetTag (TagTypes.Id3v2, false) as Id3v2.Tag;
-	/// 		if (tag == null)
-	/// 			return new ByteVector ();
-	/// 		
-	/// 		MusicCdIdentifierFrame frame = MusicCdIdentifierFrame.Get (tag, false);
-	/// 		if (frame == null)
-	/// 			return new ByteVector ();
-	///
-	/// 		return frame.Data;
-	/// 	}
-	/// }
-	///    </code>
-	///    <code lang="C++">
-	/// #using &lt;System.dll>
-	/// #using &lt;taglib-sharp.dll>
-	///
-	/// using System;
-	/// using TagLib;
-	/// using TagLib::Id3v2;
-	/// 
-	/// public ref class LookupUtil abstract sealed
-	/// {
-	/// public:
-	/// 	static ByteVector^ GetCdIdentifier (String^ filename)
-	/// 	{
-	/// 		File^ file = File::Create (filename, ReadStyle::None);
-	/// 		Id3v2::Tag^ tag = dynamic_cast&lt;Id3v2::Tag^> (file.GetTag (TagTypes::Id3v2, false));
-	/// 		if (tag == null)
-	/// 			return gcnew ByteVector;
-	/// 		
-	/// 		MusicCdIdentifierFrame^ frame = MusicCdIdentifierFrame::Get (tag, false);
-	/// 		if (frame == null)
-	/// 			return gcnew ByteVector;
-	///
-	/// 		return frame->Data;
-	/// 	}
-	/// }
-	///    </code>
-	///    <code lang="VB">
-	/// Imports TagLib
-	/// Imports TagLib.Id3v2
-	/// 
-	/// Public Shared Class LookupUtil
-	/// 	Public Shared Sub GetCdIdentifier (filename As String) As TagLib.ByteVector
-	/// 		Dim file As File = File.Create (filename, ReadStyle.None)
-	/// 		Dim tag As Id3v2.Tag = file.GetTag (TagTypes.Id3v2, False)
-	/// 		If tag Is Nothing Return New ByteVector ()
-	/// 		
-	/// 		Dim frame As MusicCdIdentifierFrame = MusicCdIdentifierFrame.Get (tag, False)
-	/// 		If frame Is Nothing Return New ByteVector ()
-	///
-	/// 		Return frame.Data
-	/// 	End Sub
-	/// End Class
-	///    </code>
-	///    <code lang="Boo">
-	/// import TagLib
-	/// import TagLib.Id3v2
-	/// 
-	/// public static class LookupUtil:
-	/// 	static def GetCdIdentifier (filename as string) as TagLib.ByteVector:
-	/// 		file as File = File.Create (filename, ReadStyle.None)
-	/// 		tag as Id3v2.Tag = file.GetTag (TagTypes.Id3v2, false)
-	/// 		if tag == null:
-	/// 			return ByteVector ()
-	/// 		
-	/// 		frame as MusicCdIdentifierFrame = MusicCdIdentifierFrame.Get (tag, false)
-	/// 		if frame == null:
-	/// 			return ByteVector ()
-	///
-	/// 		return frame.Data
-	///    </code>
-	/// </example>
-	public class MusicCdIdentifierFrame : Frame
-	{
-		#region Constructors
+    /// <summary>
+    ///    This class extends <see cref="Frame" />, implementing support for
+    ///    ID3v2 Music CD Identifier (MCDI) Frames.
+    /// </summary>
+    /// <remarks>
+    ///    Music CD Identifier Frames should contain the table of
+    ///    contents data as stored on the physical CD. It is primarily used
+    ///    for track information lookup by through web sources like CDDB.
+    /// </remarks>
+    /// <example>
+    ///    <para>Reading the music CD identifier from a tag.</para>
+    ///    <code lang="C#">
+    /// using TagLib;
+    /// using TagLib.Id3v2;
+    /// 
+    /// public static class LookupUtil
+    /// {
+    ///     public static ByteVector GetCdIdentifier (string filename)
+    ///     {
+    ///         File file = File.Create (filename, ReadStyle.None);
+    ///         Id3v2.Tag tag = file.GetTag (TagTypes.Id3v2, false) as Id3v2.Tag;
+    ///         if (tag == null)
+    ///             return new ByteVector ();
+    ///         
+    ///         MusicCdIdentifierFrame frame = MusicCdIdentifierFrame.Get (tag, false);
+    ///         if (frame == null)
+    ///             return new ByteVector ();
+    ///
+    ///         return frame.Data;
+    ///     }
+    /// }
+    ///    </code>
+    ///    <code lang="C++">
+    /// #using &lt;System.dll>
+    /// #using &lt;taglib-sharp.dll>
+    ///
+    /// using System;
+    /// using TagLib;
+    /// using TagLib::Id3v2;
+    /// 
+    /// public ref class LookupUtil abstract sealed
+    /// {
+    /// public:
+    ///     static ByteVector^ GetCdIdentifier (String^ filename)
+    ///     {
+    ///         File^ file = File::Create (filename, ReadStyle::None);
+    ///         Id3v2::Tag^ tag = dynamic_cast&lt;Id3v2::Tag^> (file.GetTag (TagTypes::Id3v2, false));
+    ///         if (tag == null)
+    ///             return gcnew ByteVector;
+    ///         
+    ///         MusicCdIdentifierFrame^ frame = MusicCdIdentifierFrame::Get (tag, false);
+    ///         if (frame == null)
+    ///             return gcnew ByteVector;
+    ///
+    ///         return frame->Data;
+    ///     }
+    /// }
+    ///    </code>
+    ///    <code lang="VB">
+    /// Imports TagLib
+    /// Imports TagLib.Id3v2
+    /// 
+    /// Public Shared Class LookupUtil
+    ///     Public Shared Sub GetCdIdentifier (filename As String) As TagLib.ByteVector
+    ///         Dim file As File = File.Create (filename, ReadStyle.None)
+    ///         Dim tag As Id3v2.Tag = file.GetTag (TagTypes.Id3v2, False)
+    ///         If tag Is Nothing Return New ByteVector ()
+    ///         
+    ///         Dim frame As MusicCdIdentifierFrame = MusicCdIdentifierFrame.Get (tag, False)
+    ///         If frame Is Nothing Return New ByteVector ()
+    ///
+    ///         Return frame.Data
+    ///     End Sub
+    /// End Class
+    ///    </code>
+    ///    <code lang="Boo">
+    /// import TagLib
+    /// import TagLib.Id3v2
+    /// 
+    /// public static class LookupUtil:
+    ///     static def GetCdIdentifier (filename as string) as TagLib.ByteVector:
+    ///         file as File = File.Create (filename, ReadStyle.None)
+    ///         tag as Id3v2.Tag = file.GetTag (TagTypes.Id3v2, false)
+    ///         if tag == null:
+    ///             return ByteVector ()
+    ///         
+    ///         frame as MusicCdIdentifierFrame = MusicCdIdentifierFrame.Get (tag, false)
+    ///         if frame == null:
+    ///             return ByteVector ()
+    ///
+    ///         return frame.Data
+    ///    </code>
+    /// </example>
+    public class MusicCdIdentifierFrame : Frame
+    {
+#region Constructors
 
-		/// <summary>
-		///    Constructs and initializes a new instance of <see
-		///    cref="MusicCdIdentifierFrame" /> with empty
-		///    identifier data.
-		/// </summary>
-		/// <remarks>
-		///    When a frame is created, it is not automatically added to
-		///    the tag. Consider using <see cref="Get" /> for more
-		///    integrated frame creation.
-		/// </remarks>
-		public MusicCdIdentifierFrame ()
-			: base (FrameType.MCDI, 4)
-		{
-		}
+        /// <summary>
+        ///    Constructs and initializes a new instance of <see
+        ///    cref="MusicCdIdentifierFrame" /> with empty
+        ///    identifier data.
+        /// </summary>
+        /// <remarks>
+        ///    When a frame is created, it is not automatically added to
+        ///    the tag. Consider using <see cref="Get" /> for more
+        ///    integrated frame creation.
+        /// </remarks>
+        public MusicCdIdentifierFrame ()
+        : base (FrameType.MCDI, 4)
+        {
+        }
 
-		/// <summary>
-		///    Constructs and initializes a new instance of <see
-		///    cref="MusicCdIdentifierFrame" /> by reading its raw data
-		///    in a specified ID3v2 version.
-		/// </summary>
-		/// <param name="data">
-		///    A <see cref="ByteVector" /> object starting with the raw
-		///    representation of the new frame.
-		/// </param>
-		/// <param name="version">
-		///    A <see cref="byte" /> indicating the ID3v2 version the
-		///    raw frame is encoded in.
-		/// </param>
-		public MusicCdIdentifierFrame (ByteVector data, byte version)
-			: base (data, version)
-		{
-			SetData (data, 0, version, true);
-		}
+        /// <summary>
+        ///    Constructs and initializes a new instance of <see
+        ///    cref="MusicCdIdentifierFrame" /> by reading its raw data
+        ///    in a specified ID3v2 version.
+        /// </summary>
+        /// <param name="data">
+        ///    A <see cref="ByteVector" /> object starting with the raw
+        ///    representation of the new frame.
+        /// </param>
+        /// <param name="version">
+        ///    A <see cref="byte" /> indicating the ID3v2 version the
+        ///    raw frame is encoded in.
+        /// </param>
+        public MusicCdIdentifierFrame (ByteVector data, byte version)
+        : base (data, version)
+        {
+            SetData (data, 0, version, true);
+        }
 
-		/// <summary>
-		///    Constructs and initializes a new instance of <see
-		///    cref="MusicCdIdentifierFrame" /> by reading its raw data
-		///    in a specified ID3v2 version.
-		/// </summary>
-		/// <param name="data">
-		///    A <see cref="ByteVector" /> object containing the raw
-		///    representation of the new frame.
-		/// </param>
-		/// <param name="offset">
-		///    A <see cref="int" /> indicating at what offset in
-		///    <paramref name="data" /> the frame actually begins.
-		/// </param>
-		/// <param name="header">
-		///    A <see cref="FrameHeader" /> containing the header of the
-		///    frame found at <paramref name="offset" /> in the data.
-		/// </param>
-		/// <param name="version">
-		///    A <see cref="byte" /> indicating the ID3v2 version the
-		///    raw frame is encoded in.
-		/// </param>
-		protected internal MusicCdIdentifierFrame (ByteVector data, int offset, FrameHeader header, byte version)
-			: base (header)
-		{
-			SetData (data, offset, version, false);
-		}
+        /// <summary>
+        ///    Constructs and initializes a new instance of <see
+        ///    cref="MusicCdIdentifierFrame" /> by reading its raw data
+        ///    in a specified ID3v2 version.
+        /// </summary>
+        /// <param name="data">
+        ///    A <see cref="ByteVector" /> object containing the raw
+        ///    representation of the new frame.
+        /// </param>
+        /// <param name="offset">
+        ///    A <see cref="int" /> indicating at what offset in
+        ///    <paramref name="data" /> the frame actually begins.
+        /// </param>
+        /// <param name="header">
+        ///    A <see cref="FrameHeader" /> containing the header of the
+        ///    frame found at <paramref name="offset" /> in the data.
+        /// </param>
+        /// <param name="version">
+        ///    A <see cref="byte" /> indicating the ID3v2 version the
+        ///    raw frame is encoded in.
+        /// </param>
+        protected internal MusicCdIdentifierFrame (ByteVector data, int offset, FrameHeader header, byte version)
+        : base (header)
+        {
+            SetData (data, offset, version, false);
+        }
 
-        #endregion
+#endregion
 
 
 
-        #region Public Properties
+#region Public Properties
 
         /// <summary>
         ///    Gets and sets the identifier data stored in the current
@@ -202,10 +202,10 @@ namespace TagLib.Id3v2
         /// </value>
         public ByteVector Data { get; set; }
 
-        #endregion
+#endregion
 
 
-        #region Public Static Methods
+#region Public Static Methods
 
         /// <summary>
         ///    Gets a music CD identifier frame from a specified tag,
@@ -225,84 +225,84 @@ namespace TagLib.Id3v2
         ///    langword="false" />.
         /// </returns>
         public static MusicCdIdentifierFrame Get (Tag tag, bool create)
-		{
-			MusicCdIdentifierFrame mcdi;
-			foreach (Frame frame in tag) {
-				mcdi = frame as MusicCdIdentifierFrame;
+        {
+            MusicCdIdentifierFrame mcdi;
+            foreach (Frame frame in tag) {
+                mcdi = frame as MusicCdIdentifierFrame;
 
-				if (mcdi != null)
-					return mcdi;
-			}
+                if (mcdi != null)
+                    return mcdi;
+            }
 
-			if (!create)
-				return null;
+            if (!create)
+                return null;
 
-			mcdi = new MusicCdIdentifierFrame ();
-			tag.AddFrame (mcdi);
-			return mcdi;
-		}
+            mcdi = new MusicCdIdentifierFrame ();
+            tag.AddFrame (mcdi);
+            return mcdi;
+        }
 
-		#endregion
-
-
-
-		#region Protected Methods
-
-		/// <summary>
-		///    Populates the values in the current instance by parsing
-		///    its field data in a specified version.
-		/// </summary>
-		/// <param name="data">
-		///    A <see cref="ByteVector" /> object containing the
-		///    extracted field data.
-		/// </param>
-		/// <param name="version">
-		///    A <see cref="byte" /> indicating the ID3v2 version the
-		///    field data is encoded in.
-		/// </param>
-		protected override void ParseFields (ByteVector data, byte version)
-		{
-			Data = data;
-		}
-
-		/// <summary>
-		///    Renders the values in the current instance into field
-		///    data for a specified version.
-		/// </summary>
-		/// <param name="version">
-		///    A <see cref="byte" /> indicating the ID3v2 version the
-		///    field data is to be encoded in.
-		/// </param>
-		/// <returns>
-		///    A <see cref="ByteVector" /> object containing the
-		///    rendered field data.
-		/// </returns>
-		protected override ByteVector RenderFields (byte version)
-		{
-			return Data != null ? Data : new ByteVector ();
-		}
-
-		#endregion
+#endregion
 
 
 
-		#region ICloneable
+#region Protected Methods
 
-		/// <summary>
-		///    Creates a deep copy of the current instance.
-		/// </summary>
-		/// <returns>
-		///    A new <see cref="Frame" /> object identical to the
-		///    current instance.
-		/// </returns>
-		public override Frame Clone ()
-		{
-			MusicCdIdentifierFrame frame = new MusicCdIdentifierFrame ();
-			if (Data != null)
-				frame.Data = new ByteVector (Data);
-			return frame;
-		}
+        /// <summary>
+        ///    Populates the values in the current instance by parsing
+        ///    its field data in a specified version.
+        /// </summary>
+        /// <param name="data">
+        ///    A <see cref="ByteVector" /> object containing the
+        ///    extracted field data.
+        /// </param>
+        /// <param name="version">
+        ///    A <see cref="byte" /> indicating the ID3v2 version the
+        ///    field data is encoded in.
+        /// </param>
+        protected override void ParseFields (ByteVector data, byte version)
+        {
+            Data = data;
+        }
 
-		#endregion
-	}
+        /// <summary>
+        ///    Renders the values in the current instance into field
+        ///    data for a specified version.
+        /// </summary>
+        /// <param name="version">
+        ///    A <see cref="byte" /> indicating the ID3v2 version the
+        ///    field data is to be encoded in.
+        /// </param>
+        /// <returns>
+        ///    A <see cref="ByteVector" /> object containing the
+        ///    rendered field data.
+        /// </returns>
+        protected override ByteVector RenderFields (byte version)
+        {
+            return Data != null ? Data : new ByteVector ();
+        }
+
+#endregion
+
+
+
+#region ICloneable
+
+        /// <summary>
+        ///    Creates a deep copy of the current instance.
+        /// </summary>
+        /// <returns>
+        ///    A new <see cref="Frame" /> object identical to the
+        ///    current instance.
+        /// </returns>
+        public override Frame Clone ()
+        {
+            MusicCdIdentifierFrame frame = new MusicCdIdentifierFrame ();
+            if (Data != null)
+                frame.Data = new ByteVector (Data);
+            return frame;
+        }
+
+#endregion
+    }
 }

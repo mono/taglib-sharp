@@ -23,78 +23,78 @@
 
 namespace TagLib.IFD.Tags
 {
-	/// <summary>
-	///    Nikon picture control entry tags.
-	///    Based on:
-	///    http://exiv2.org/tags-nikon.html
-	/// </summary>
-	public enum NikonPictureControlEntryTag : ushort
-	{
+    /// <summary>
+    ///    Nikon picture control entry tags.
+    ///    Based on:
+    ///    http://exiv2.org/tags-nikon.html
+    /// </summary>
+    public enum NikonPictureControlEntryTag : ushort
+    {
 
-		/// <summary>
-		///    Version. (Hex: 0X0000)
-		/// </summary>
-		Version = 0,
+        /// <summary>
+        ///    Version. (Hex: 0X0000)
+        /// </summary>
+        Version = 0,
 
-		/// <summary>
-		///    Name. (Hex: 0X0004)
-		/// </summary>
-		Name = 4,
+        /// <summary>
+        ///    Name. (Hex: 0X0004)
+        /// </summary>
+        Name = 4,
 
-		/// <summary>
-		///    Base. (Hex: 0X0018)
-		/// </summary>
-		Base = 24,
+        /// <summary>
+        ///    Base. (Hex: 0X0018)
+        /// </summary>
+        Base = 24,
 
-		/// <summary>
-		///    Adjust. (Hex: 0X0030)
-		/// </summary>
-		Adjust = 48,
+        /// <summary>
+        ///    Adjust. (Hex: 0X0030)
+        /// </summary>
+        Adjust = 48,
 
-		/// <summary>
-		///    Quick adjust. (Hex: 0X0031)
-		/// </summary>
-		QuickAdjust = 49,
+        /// <summary>
+        ///    Quick adjust. (Hex: 0X0031)
+        /// </summary>
+        QuickAdjust = 49,
 
-		/// <summary>
-		///    Sharpness. (Hex: 0X0032)
-		/// </summary>
-		Sharpness = 50,
+        /// <summary>
+        ///    Sharpness. (Hex: 0X0032)
+        /// </summary>
+        Sharpness = 50,
 
-		/// <summary>
-		///    Contrast. (Hex: 0X0033)
-		/// </summary>
-		Contrast = 51,
+        /// <summary>
+        ///    Contrast. (Hex: 0X0033)
+        /// </summary>
+        Contrast = 51,
 
-		/// <summary>
-		///    Brightness. (Hex: 0X0034)
-		/// </summary>
-		Brightness = 52,
+        /// <summary>
+        ///    Brightness. (Hex: 0X0034)
+        /// </summary>
+        Brightness = 52,
 
-		/// <summary>
-		///    Saturation. (Hex: 0X0035)
-		/// </summary>
-		Saturation = 53,
+        /// <summary>
+        ///    Saturation. (Hex: 0X0035)
+        /// </summary>
+        Saturation = 53,
 
-		/// <summary>
-		///    Hue adjustment. (Hex: 0X0036)
-		/// </summary>
-		HueAdjustment = 54,
+        /// <summary>
+        ///    Hue adjustment. (Hex: 0X0036)
+        /// </summary>
+        HueAdjustment = 54,
 
-		/// <summary>
-		///    Filter effect. (Hex: 0X0037)
-		/// </summary>
-		FilterEffect = 55,
+        /// <summary>
+        ///    Filter effect. (Hex: 0X0037)
+        /// </summary>
+        FilterEffect = 55,
 
-		/// <summary>
-		///    Toning effect. (Hex: 0X0038)
-		/// </summary>
-		ToningEffect = 56,
+        /// <summary>
+        ///    Toning effect. (Hex: 0X0038)
+        /// </summary>
+        ToningEffect = 56,
 
-		/// <summary>
-		///    Toning saturation. (Hex: 0X0039)
-		/// </summary>
-		ToningSaturation = 57,
+        /// <summary>
+        ///    Toning saturation. (Hex: 0X0039)
+        /// </summary>
+        ToningSaturation = 57,
 
-	}
+    }
 }

@@ -23,33 +23,33 @@
 
 namespace TagLib.IFD.Tags
 {
-	/// <summary>
-	///    Nikon Iso Info entry tags.
-	///    Based on:
-	///    http://exiv2.org/tags-nikon.html
-	/// </summary>
-	public enum NikonIsoInfoEntryTag : ushort
-	{
+    /// <summary>
+    ///    Nikon Iso Info entry tags.
+    ///    Based on:
+    ///    http://exiv2.org/tags-nikon.html
+    /// </summary>
+    public enum NikonIsoInfoEntryTag : ushort
+    {
 
-		/// <summary>
-		///    ISO. (Hex: 0X0000)
-		/// </summary>
-		ISO = 0,
+        /// <summary>
+        ///    ISO. (Hex: 0X0000)
+        /// </summary>
+        ISO = 0,
 
-		/// <summary>
-		///    ISO expansion. (Hex: 0X0004)
-		/// </summary>
-		ISOExpansion = 4,
+        /// <summary>
+        ///    ISO expansion. (Hex: 0X0004)
+        /// </summary>
+        ISOExpansion = 4,
 
-		/// <summary>
-		///    ISO 2. (Hex: 0X0006)
-		/// </summary>
-		ISO2 = 6,
+        /// <summary>
+        ///    ISO 2. (Hex: 0X0006)
+        /// </summary>
+        ISO2 = 6,
 
-		/// <summary>
-		///    ISO expansion 2. (Hex: 0X000A)
-		/// </summary>
-		ISOExpansion2 = 10,
+        /// <summary>
+        ///    ISO expansion 2. (Hex: 0X000A)
+        /// </summary>
+        ISOExpansion2 = 10,
 
-	}
+    }
 }

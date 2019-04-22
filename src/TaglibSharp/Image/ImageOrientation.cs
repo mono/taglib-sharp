@@ -22,69 +22,69 @@
 
 namespace TagLib.Image
 {
-	/**
+    /**
 
-	  1        2       3      4         5            6           7          8
+       1        2       3      4         5            6           7          8
 
-	888888  888888      88  88      8888888888  88                  88  8888888888
-	88          88      88  88      88  88      88  88          88  88      88  88
-	8888      8888    8888  8888    88          8888888888  8888888888          88
-	88          88      88  88
-	88          88  888888  888888
+       888888  888888      88  88      8888888888  88                  88  8888888888
+       88          88      88  88      88  88      88  88          88  88      88  88
+       8888      8888    8888  8888    88          8888888888  8888888888          88
+       88          88      88  88
+       88          88  888888  888888
 
-	t-l     t-r     b-r     b-l     l-t         r-t         r-b             l-b
+       t-l     t-r     b-r     b-l     l-t         r-t         r-b             l-b
 
-	**/
+    **/
 
-	/// <summary>
-	/// Describes the orientation of an image.
-	/// Values are viewed in terms of rows and columns.
-	/// </summary>
-	public enum ImageOrientation : uint
-	{
-		/// <summary>
-		/// No value is known.
-		/// </summary>
-		None = 0,
+    /// <summary>
+    /// Describes the orientation of an image.
+    /// Values are viewed in terms of rows and columns.
+    /// </summary>
+    public enum ImageOrientation : uint
+    {
+        /// <summary>
+        /// No value is known.
+        /// </summary>
+        None = 0,
 
-		/// <summary>
-		/// No need to do any transformations.
-		/// </summary>
-		TopLeft = 1,
+        /// <summary>
+        /// No need to do any transformations.
+        /// </summary>
+        TopLeft = 1,
 
-		/// <summary>
-		/// Mirror image vertically.
-		/// </summary>
-		TopRight = 2,
+        /// <summary>
+        /// Mirror image vertically.
+        /// </summary>
+        TopRight = 2,
 
-		/// <summary>
-		/// Rotate image 180 degrees.
-		/// </summary>
-		BottomRight = 3,
+        /// <summary>
+        /// Rotate image 180 degrees.
+        /// </summary>
+        BottomRight = 3,
 
-		/// <summary>
-		/// Mirror image horizontally
-		/// </summary>
-		BottomLeft = 4,
+        /// <summary>
+        /// Mirror image horizontally
+        /// </summary>
+        BottomLeft = 4,
 
-		/// <summary>
-		/// Mirror image horizontally and rotate 90 degrees clockwise.
-		/// </summary>
-		LeftTop = 5,
+        /// <summary>
+        /// Mirror image horizontally and rotate 90 degrees clockwise.
+        /// </summary>
+        LeftTop = 5,
 
-		/// <summary>
-		/// Rotate image 90 degrees clockwise.
-		/// </summary>
-		RightTop = 6,
+        /// <summary>
+        /// Rotate image 90 degrees clockwise.
+        /// </summary>
+        RightTop = 6,
 
-		/// <summary>
-		/// Mirror image vertically and rotate 90 degrees clockwise.
-		/// </summary>
-		RightBottom = 7,
+        /// <summary>
+        /// Mirror image vertically and rotate 90 degrees clockwise.
+        /// </summary>
+        RightBottom = 7,
 
-		/// <summary>
-		/// Rotate image 270 degrees clockwise.
-		/// </summary>
-		LeftBottom = 8
-	}
+        /// <summary>
+        /// Rotate image 270 degrees clockwise.
+        /// </summary>
+        LeftBottom = 8
+    }
 }

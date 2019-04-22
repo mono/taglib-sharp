@@ -27,83 +27,83 @@ using System.Collections.Generic;
 
 namespace TagLib.Mpeg4
 {
-	/// <summary>
-	///    This class extends <see cref="FullBox" /> to provide an
-	///    implementation of a ISO/IEC 14496-12 SampleDescriptionBox.
-	/// </summary>
-	public class IsoSampleDescriptionBox : FullBox
-	{
-		#region Constructors
+    /// <summary>
+    ///    This class extends <see cref="FullBox" /> to provide an
+    ///    implementation of a ISO/IEC 14496-12 SampleDescriptionBox.
+    /// </summary>
+    public class IsoSampleDescriptionBox : FullBox
+    {
+#region Constructors
 
-		/// <summary>
-		///    Constructs and initializes a new instance of <see
-		///    cref="IsoSampleDescriptionBox" /> with a provided header
-		///    and handler by reading the contents from a specified
-		///    file.
-		/// </summary>
-		/// <param name="header">
-		///    A <see cref="BoxHeader" /> object containing the header
-		///    to use for the new instance.
-		/// </param>
-		/// <param name="file">
-		///    A <see cref="TagLib.File" /> object to read the contents
-		///    of the box from.
-		/// </param>
-		/// <param name="handler">
-		///    A <see cref="IsoHandlerBox" /> object containing the
-		///    handler that applies to the new instance.
-		/// </param>
-		/// <exception cref="ArgumentNullException">
-		///    <paramref name="file" /> is <see langword="null" />.
-		/// </exception>
-		public IsoSampleDescriptionBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler)
-			: base (header, file, handler)
-		{
-			if (file == null)
-				throw new ArgumentNullException (nameof (file));
+        /// <summary>
+        ///    Constructs and initializes a new instance of <see
+        ///    cref="IsoSampleDescriptionBox" /> with a provided header
+        ///    and handler by reading the contents from a specified
+        ///    file.
+        /// </summary>
+        /// <param name="header">
+        ///    A <see cref="BoxHeader" /> object containing the header
+        ///    to use for the new instance.
+        /// </param>
+        /// <param name="file">
+        ///    A <see cref="TagLib.File" /> object to read the contents
+        ///    of the box from.
+        /// </param>
+        /// <param name="handler">
+        ///    A <see cref="IsoHandlerBox" /> object containing the
+        ///    handler that applies to the new instance.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///    <paramref name="file" /> is <see langword="null" />.
+        /// </exception>
+        public IsoSampleDescriptionBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler)
+        : base (header, file, handler)
+        {
+            if (file == null)
+                throw new ArgumentNullException (nameof (file));
 
-			EntryCount = file.ReadBlock (4).ToUInt ();
-			Children = LoadChildren (file);
-		}
+            EntryCount = file.ReadBlock (4).ToUInt ();
+            Children = LoadChildren (file);
+        }
 
-		#endregion
+#endregion
 
 
-		#region Public Properties
+#region Public Properties
 
-		/// <summary>
-		///    Gets the position of the data contained in the current
-		///    instance, after any box specific headers.
-		/// </summary>
-		/// <value>
-		///    A <see cref="long" /> value containing the position of
-		///    the data contained in the current instance.
-		/// </value>
-		protected override long DataPosition {
-			get { return base.DataPosition + 4; }
-		}
+        /// <summary>
+        ///    Gets the position of the data contained in the current
+        ///    instance, after any box specific headers.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="long" /> value containing the position of
+        ///    the data contained in the current instance.
+        /// </value>
+        protected override long DataPosition {
+            get { return base.DataPosition + 4; }
+        }
 
-		/// <summary>
-		///    Gets the number of boxes at the begining of the children
-		///    that will be stored as <see cref="IsoAudioSampleEntry" />
-		///    of <see cref="IsoVisualSampleEntry" /> objects, depending
-		///    on the handler.
-		/// </summary>
-		/// <value>
-		///    A <see cref="uint" /> value containing the number of
-		///    children that will appear as sample entries.
-		/// </value>
-		public uint EntryCount { get; }
+        /// <summary>
+        ///    Gets the number of boxes at the begining of the children
+        ///    that will be stored as <see cref="IsoAudioSampleEntry" />
+        ///    of <see cref="IsoVisualSampleEntry" /> objects, depending
+        ///    on the handler.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="uint" /> value containing the number of
+        ///    children that will appear as sample entries.
+        /// </value>
+        public uint EntryCount { get; }
 
-		/// <summary>
-		///    Gets the children of the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating the
-		///    children of the current instance.
-		/// </value>
-		public override IEnumerable<Box> Children { get; }
+        /// <summary>
+        ///    Gets the children of the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating the
+        ///    children of the current instance.
+        /// </value>
+        public override IEnumerable<Box> Children { get; }
 
-		#endregion
-	}
+#endregion
+    }
 }

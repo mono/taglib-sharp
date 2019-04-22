@@ -23,20 +23,20 @@
 
 namespace TagLib
 {
-	/// <summary>
-	///    This interface provides generic information about ab object,
-	///    from which the content can be load only on demand.
-	/// </summary>
-	public interface ILazy
-	{
-		/// <summary>
-		///    Gets an indication whether the object is loaded.
-		/// </summary>
-		bool IsLoaded { get; }
+    /// <summary>
+    ///    This interface provides generic information about ab object,
+    ///    from which the content can be load only on demand.
+    /// </summary>
+    public interface ILazy
+    {
+        /// <summary>
+        ///    Gets an indication whether the object is loaded.
+        /// </summary>
+        bool IsLoaded { get; }
 
-		/// <summary>
-		/// Load the object data if not done yet.
-		/// </summary>
-		void Load ();
-	}
+        /// <summary>
+        /// Load the object data if not done yet.
+        /// </summary>
+        void Load ();
+    }
 }

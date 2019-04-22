@@ -30,147 +30,147 @@ using File = TagLib.File;
 
 namespace TaglibSharp.Tests.Images
 {
-	[TestFixture]
-	public class JpegSony1Test
-	{
-		static readonly string sample_file = TestPath.Samples + "sample_sony1.jpg";
-		static readonly string tmp_file = TestPath.Samples + "tmpwrite_sony1.jpg";
+    [TestFixture]
+    public class JpegSony1Test
+    {
+        static readonly string sample_file = TestPath.Samples + "sample_sony1.jpg";
+        static readonly string tmp_file = TestPath.Samples + "tmpwrite_sony1.jpg";
 
-		readonly TagTypes contained_types = TagTypes.TiffIFD;
+        readonly TagTypes contained_types = TagTypes.TiffIFD;
 
-		File file;
+        File file;
 
-		[OneTimeSetUp]
-		public void Init ()
-		{
-			file = File.Create (sample_file);
-		}
+        [OneTimeSetUp]
+        public void Init ()
+        {
+            file = File.Create (sample_file);
+        }
 
-		[Test]
-		public void JpegRead ()
-		{
-			CheckTags (file);
-		}
+        [Test]
+        public void JpegRead ()
+        {
+            CheckTags (file);
+        }
 
-		[Test]
-		public void ExifRead ()
-		{
-			CheckExif (file);
-		}
+        [Test]
+        public void ExifRead ()
+        {
+            CheckExif (file);
+        }
 
-		[Test]
-		public void MakernoteRead ()
-		{
-			CheckMakerNote (file);
-		}
+        [Test]
+        public void MakernoteRead ()
+        {
+            CheckMakerNote (file);
+        }
 
-		[Test]
-		public void Rewrite ()
-		{
-			var tmp = Utils.CreateTmpFile (sample_file, tmp_file);
-			tmp.Save ();
+        [Test]
+        public void Rewrite ()
+        {
+            var tmp = Utils.CreateTmpFile (sample_file, tmp_file);
+            tmp.Save ();
 
-			tmp = File.Create (tmp_file);
+            tmp = File.Create (tmp_file);
 
-			CheckTags (tmp);
-			CheckExif (tmp);
-			CheckMakerNote (tmp);
-			CheckProperties (tmp);
-		}
+            CheckTags (tmp);
+            CheckExif (tmp);
+            CheckMakerNote (tmp);
+            CheckProperties (tmp);
+        }
 
-		[Test]
-		public void AddExif ()
-		{
-			AddImageMetadataTests.AddExifTest (sample_file, tmp_file, true);
-		}
+        [Test]
+        public void AddExif ()
+        {
+            AddImageMetadataTests.AddExifTest (sample_file, tmp_file, true);
+        }
 
-		[Test]
-		public void AddGPS ()
-		{
-			AddImageMetadataTests.AddGPSTest (sample_file, tmp_file, true);
-		}
+        [Test]
+        public void AddGPS ()
+        {
+            AddImageMetadataTests.AddGPSTest (sample_file, tmp_file, true);
+        }
 
-		[Test]
-		public void AddXMP1 ()
-		{
-			AddImageMetadataTests.AddXMPTest1 (sample_file, tmp_file, false);
-		}
+        [Test]
+        public void AddXMP1 ()
+        {
+            AddImageMetadataTests.AddXMPTest1 (sample_file, tmp_file, false);
+        }
 
-		[Test]
-		public void AddXMP2 ()
-		{
-			AddImageMetadataTests.AddXMPTest2 (sample_file, tmp_file, false);
-		}
+        [Test]
+        public void AddXMP2 ()
+        {
+            AddImageMetadataTests.AddXMPTest2 (sample_file, tmp_file, false);
+        }
 
-		public void CheckTags (File file)
-		{
-			Assert.IsTrue (file is TagLib.Jpeg.File, "not a Jpeg file");
+        public void CheckTags (File file)
+        {
+            Assert.IsTrue (file is TagLib.Jpeg.File, "not a Jpeg file");
 
-			Assert.AreEqual (contained_types, file.TagTypes);
-			Assert.AreEqual (contained_types, file.TagTypesOnDisk);
-		}
+            Assert.AreEqual (contained_types, file.TagTypes);
+            Assert.AreEqual (contained_types, file.TagTypesOnDisk);
+        }
 
-		public void CheckExif (File file)
-		{
-			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
+        public void CheckExif (File file)
+        {
+            var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 
-			Assert.IsNotNull (tag, "tag");
+            Assert.IsNotNull (tag, "tag");
 
-			var exif_ifd = tag.Structure.GetEntry (0, IFDEntryTag.ExifIFD) as SubIFDEntry;
-			Assert.IsNotNull (exif_ifd, "Exif IFD");
+            var exif_ifd = tag.Structure.GetEntry (0, IFDEntryTag.ExifIFD) as SubIFDEntry;
+            Assert.IsNotNull (exif_ifd, "Exif IFD");
 
-			Assert.AreEqual ("SONY ", tag.Make);
-			Assert.AreEqual ("DSLR-A200", tag.Model);
-			Assert.AreEqual (400, tag.ISOSpeedRatings, "ISOSpeedRatings");
-			Assert.AreEqual (1.0d / 60.0d, tag.ExposureTime);
-			Assert.AreEqual (5.6d, tag.FNumber);
-			Assert.AreEqual (35.0d, tag.FocalLength);
-			Assert.AreEqual (52, tag.FocalLengthIn35mmFilm);
-			Assert.AreEqual (new DateTime (2009, 11, 21, 12, 39, 39), tag.DateTime);
-			Assert.AreEqual (new DateTime (2009, 11, 21, 12, 39, 39), tag.DateTimeDigitized);
-			Assert.AreEqual (new DateTime (2009, 11, 21, 12, 39, 39), tag.DateTimeOriginal);
-			Assert.AreEqual (TagLib.Image.ImageOrientation.TopLeft, tag.Orientation);
-		}
+            Assert.AreEqual ("SONY ", tag.Make);
+            Assert.AreEqual ("DSLR-A200", tag.Model);
+            Assert.AreEqual (400, tag.ISOSpeedRatings, "ISOSpeedRatings");
+            Assert.AreEqual (1.0d / 60.0d, tag.ExposureTime);
+            Assert.AreEqual (5.6d, tag.FNumber);
+            Assert.AreEqual (35.0d, tag.FocalLength);
+            Assert.AreEqual (52, tag.FocalLengthIn35mmFilm);
+            Assert.AreEqual (new DateTime (2009, 11, 21, 12, 39, 39), tag.DateTime);
+            Assert.AreEqual (new DateTime (2009, 11, 21, 12, 39, 39), tag.DateTimeDigitized);
+            Assert.AreEqual (new DateTime (2009, 11, 21, 12, 39, 39), tag.DateTimeOriginal);
+            Assert.AreEqual (TagLib.Image.ImageOrientation.TopLeft, tag.Orientation);
+        }
 
-		public void CheckMakerNote (File file)
-		{
-			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
-			Assert.IsNotNull (tag, "tag");
+        public void CheckMakerNote (File file)
+        {
+            var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
+            Assert.IsNotNull (tag, "tag");
 
-			var makernote_ifd =
-				tag.ExifIFD.GetEntry (0, (ushort)ExifEntryTag.MakerNote) as MakernoteIFDEntry;
+            var makernote_ifd =
+                tag.ExifIFD.GetEntry (0, (ushort)ExifEntryTag.MakerNote) as MakernoteIFDEntry;
 
-			Assert.IsNotNull (makernote_ifd, "makernote ifd");
-			Assert.AreEqual (MakernoteType.Sony, makernote_ifd.MakernoteType);
+            Assert.IsNotNull (makernote_ifd, "makernote ifd");
+            Assert.AreEqual (MakernoteType.Sony, makernote_ifd.MakernoteType);
 
-			var structure = makernote_ifd.Structure;
-			Assert.IsNotNull (structure, "structure");
-			//Tag info from http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/Sony.html
-			//0x0102: image quality
-			{
-				var entry = structure.GetEntry (0, 0x0102) as LongIFDEntry;
-				Assert.IsNotNull (entry, "entry 0x0102");
-				Assert.AreEqual (2, entry.Value);
-			}
-			//0x0115: white balance
-			{
-				var entry = structure.GetEntry (0, 0x0115) as LongIFDEntry;
-				Assert.IsNotNull (entry, "entry 0x0115");
-				Assert.AreEqual (0, entry.Value);
-			}
-			//0xb026: image stabilizer
-			{
-				var entry = structure.GetEntry (0, 0xb026) as LongIFDEntry;
-				Assert.IsNotNull (entry, "entry 0xb026");
-				Assert.AreEqual (0, entry.Value);
-			}
-		}
+            var structure = makernote_ifd.Structure;
+            Assert.IsNotNull (structure, "structure");
+            //Tag info from http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/Sony.html
+            //0x0102: image quality
+            {
+                var entry = structure.GetEntry (0, 0x0102) as LongIFDEntry;
+                Assert.IsNotNull (entry, "entry 0x0102");
+                Assert.AreEqual (2, entry.Value);
+            }
+            //0x0115: white balance
+            {
+                var entry = structure.GetEntry (0, 0x0115) as LongIFDEntry;
+                Assert.IsNotNull (entry, "entry 0x0115");
+                Assert.AreEqual (0, entry.Value);
+            }
+            //0xb026: image stabilizer
+            {
+                var entry = structure.GetEntry (0, 0xb026) as LongIFDEntry;
+                Assert.IsNotNull (entry, "entry 0xb026");
+                Assert.AreEqual (0, entry.Value);
+            }
+        }
 
-		public void CheckProperties (File file)
-		{
-			Assert.AreEqual (3872, file.Properties.PhotoWidth);
-			Assert.AreEqual (2592, file.Properties.PhotoHeight);
-			Assert.AreEqual (95, file.Properties.PhotoQuality);
-		}
-	}
+        public void CheckProperties (File file)
+        {
+            Assert.AreEqual (3872, file.Properties.PhotoWidth);
+            Assert.AreEqual (2592, file.Properties.PhotoHeight);
+            Assert.AreEqual (95, file.Properties.PhotoQuality);
+        }
+    }
 }

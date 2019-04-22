@@ -24,27 +24,27 @@
 
 namespace TagLib.Id3v2
 {
-	/// <summary>
-	///    Specifies the timestamp format used by a <see
-	///    cref="SynchronisedLyricsFrame" /> and <see cref="EventTimeCodesFrame"/>.
-	/// </summary>
-	public enum TimestampFormat
-	{
-		/// <summary>
-		///    The timestamp is of unknown format.
-		/// </summary>
-		Unknown = 0x00,
+    /// <summary>
+    ///    Specifies the timestamp format used by a <see
+    ///    cref="SynchronisedLyricsFrame" /> and <see cref="EventTimeCodesFrame"/>.
+    /// </summary>
+    public enum TimestampFormat
+    {
+        /// <summary>
+        ///    The timestamp is of unknown format.
+        /// </summary>
+        Unknown = 0x00,
 
-		/// <summary>
-		///    The timestamp represents the number of MPEG frames since
-		///    the beginning of the audio stream.
-		/// </summary>
-		AbsoluteMpegFrames = 0x01,
+        /// <summary>
+        ///    The timestamp represents the number of MPEG frames since
+        ///    the beginning of the audio stream.
+        /// </summary>
+        AbsoluteMpegFrames = 0x01,
 
-		/// <summary>
-		///    The timestamp represents the number of milliseconds since
-		///    the beginning of the audio stream.
-		/// </summary>
-		AbsoluteMilliseconds = 0x02
-	}
+        /// <summary>
+        ///    The timestamp represents the number of milliseconds since
+        ///    the beginning of the audio stream.
+        /// </summary>
+        AbsoluteMilliseconds = 0x02
+    }
 }

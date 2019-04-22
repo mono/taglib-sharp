@@ -27,64 +27,64 @@ using System.Collections.Generic;
 
 namespace TagLib.Mpeg4
 {
-	/// <summary>
-	///    This class extends <see cref="Box" /> to provide an
-	///    implementation of a ISO/IEC 14496-12 SampleTableBox.
-	/// </summary>
-	public class IsoSampleTableBox : Box
-	{
-		#region Private Fields
+    /// <summary>
+    ///    This class extends <see cref="Box" /> to provide an
+    ///    implementation of a ISO/IEC 14496-12 SampleTableBox.
+    /// </summary>
+    public class IsoSampleTableBox : Box
+    {
+#region Private Fields
 
-		#endregion
-
-
-
-		#region Constructors
-
-		/// <summary>
-		///    Constructs and initializes a new instance of <see
-		///    cref="IsoSampleTableBox" /> with a provided header and
-		///    handler by reading the contents from a specified file.
-		/// </summary>
-		/// <param name="header">
-		///    A <see cref="BoxHeader" /> object containing the header
-		///    to use for the new instance.
-		/// </param>
-		/// <param name="file">
-		///    A <see cref="TagLib.File" /> object to read the contents
-		///    of the box from.
-		/// </param>
-		/// <param name="handler">
-		///    A <see cref="IsoHandlerBox" /> object containing the
-		///    handler that applies to the new instance.
-		/// </param>
-		/// <exception cref="ArgumentNullException">
-		///    <paramref name="file" /> is <see langword="null" />.
-		/// </exception>
-		public IsoSampleTableBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler)
-			: base (header, handler)
-		{
-			if (file == null)
-				throw new ArgumentNullException (nameof (file));
-
-			Children = LoadChildren (file);
-		}
-
-		#endregion
+#endregion
 
 
 
-		#region Public Properties
+#region Constructors
 
-		/// <summary>
-		///    Gets the children of the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating the
-		///    children of the current instance.
-		/// </value>
-		public override IEnumerable<Box> Children { get; }
+        /// <summary>
+        ///    Constructs and initializes a new instance of <see
+        ///    cref="IsoSampleTableBox" /> with a provided header and
+        ///    handler by reading the contents from a specified file.
+        /// </summary>
+        /// <param name="header">
+        ///    A <see cref="BoxHeader" /> object containing the header
+        ///    to use for the new instance.
+        /// </param>
+        /// <param name="file">
+        ///    A <see cref="TagLib.File" /> object to read the contents
+        ///    of the box from.
+        /// </param>
+        /// <param name="handler">
+        ///    A <see cref="IsoHandlerBox" /> object containing the
+        ///    handler that applies to the new instance.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///    <paramref name="file" /> is <see langword="null" />.
+        /// </exception>
+        public IsoSampleTableBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler)
+        : base (header, handler)
+        {
+            if (file == null)
+                throw new ArgumentNullException (nameof (file));
 
-		#endregion
-	}
+            Children = LoadChildren (file);
+        }
+
+#endregion
+
+
+
+#region Public Properties
+
+        /// <summary>
+        ///    Gets the children of the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object enumerating the
+        ///    children of the current instance.
+        /// </value>
+        public override IEnumerable<Box> Children { get; }
+
+#endregion
+    }
 }

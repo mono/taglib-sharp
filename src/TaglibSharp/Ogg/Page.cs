@@ -30,261 +30,261 @@ using System.Collections.Generic;
 
 namespace TagLib.Ogg
 {
-	/// <summary>
-	///    This class provides a representation of an Ogg page.
-	/// </summary>
-	public class Page
-	{
-		#region Private Properties
+    /// <summary>
+    ///    This class provides a representation of an Ogg page.
+    /// </summary>
+    public class Page
+    {
+#region Private Properties
 
-		/// <summary>
-		///    Contains the packets.
-		/// </summary>
-		readonly ByteVectorCollection packets;
+        /// <summary>
+        ///    Contains the packets.
+        /// </summary>
+        readonly ByteVectorCollection packets;
 
-		#endregion
-
-
-
-		#region Constructors
-
-		/// <summary>
-		///    Constructs and intializes a new instance of <see
-		///    cref="Page" /> with a specified header and no packets.
-		/// </summary>
-		/// <param name="header">
-		///    A <see cref="PageHeader"/> object to use as the header of
-		///    the new instance.
-		/// </param>
-		protected Page (PageHeader header)
-		{
-			Header = header;
-			packets = new ByteVectorCollection ();
-		}
-
-		/// <summary>
-		///    Constructs and initializes a new instance of <see
-		///    cref="Page" /> by reading a raw Ogg page from a specified
-		///    position in a specified file.
-		/// </summary>
-		/// <param name="file">
-		///    A <see cref="File" /> object containing the file from
-		///    which the contents of the new instance are to be read.
-		/// </param>
-		/// <param name="position">
-		///    A <see cref="long" /> value specify at what position to
-		///    read.
-		/// </param>
-		/// <exception cref="ArgumentNullException">
-		///    <paramref name="file" /> is <see langword="null" />.
-		/// </exception>
-		/// <exception cref="ArgumentOutOfRangeException">
-		///    <paramref name="position" /> is less than zero or greater
-		///    than the size of the file.
-		/// </exception>
-		/// <exception cref="CorruptFileException">
-		///    The Ogg identifier could not be found at the correct
-		///    location.
-		/// </exception>
-		public Page (File file, long position)
-			: this (new PageHeader (file, position))
-		{
-			file.Seek (position + Header.Size);
-
-			foreach (int packet_size in Header.PacketSizes)
-				packets.Add (file.ReadBlock (packet_size));
-		}
-
-		/// <summary>
-		///    Constructs and initializes a new instance of <see
-		///    cref="Page" /> with a specified header and packets.
-		/// </summary>
-		/// <param name="packets">
-		///    A <see cref="ByteVectorCollection" /> object containing
-		///    packets to use for the new instance.
-		/// </param>
-		/// <param name="header">
-		///    A <see cref="PageHeader"/> object to use as the header of
-		///    the new instance.
-		/// </param>
-		/// <exception cref="ArgumentNullException">
-		///    <paramref name="packets" /> is <see langword="null" />.
-		/// </exception>
-		public Page (ByteVectorCollection packets, PageHeader header)
-			: this (header)
-		{
-			if (packets == null)
-				throw new ArgumentNullException (nameof (packets));
-
-			this.packets = new ByteVectorCollection (packets);
-
-			List<int> packet_sizes = new List<int> ();
-
-			// Build a page from the list of packets.
-			foreach (ByteVector v in packets)
-				packet_sizes.Add (v.Count);
-
-			header.PacketSizes = packet_sizes.ToArray ();
-		}
-
-		#endregion
+#endregion
 
 
 
-		#region Public Methods
+#region Constructors
 
-		/// <summary>
-		///    Renders the current instance as a raw Ogg page.
-		/// </summary>
-		/// <returns>
-		///    A <see cref="ByteVector" /> object containing the
-		///    rendered version of the current instance.
-		/// </returns>
-		public ByteVector Render ()
-		{
-			ByteVector data = Header.Render ();
+        /// <summary>
+        ///    Constructs and intializes a new instance of <see
+        ///    cref="Page" /> with a specified header and no packets.
+        /// </summary>
+        /// <param name="header">
+        ///    A <see cref="PageHeader"/> object to use as the header of
+        ///    the new instance.
+        /// </param>
+        protected Page (PageHeader header)
+        {
+            Header = header;
+            packets = new ByteVectorCollection ();
+        }
 
-			foreach (ByteVector v in packets)
-				data.Add (v);
+        /// <summary>
+        ///    Constructs and initializes a new instance of <see
+        ///    cref="Page" /> by reading a raw Ogg page from a specified
+        ///    position in a specified file.
+        /// </summary>
+        /// <param name="file">
+        ///    A <see cref="File" /> object containing the file from
+        ///    which the contents of the new instance are to be read.
+        /// </param>
+        /// <param name="position">
+        ///    A <see cref="long" /> value specify at what position to
+        ///    read.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///    <paramref name="file" /> is <see langword="null" />.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///    <paramref name="position" /> is less than zero or greater
+        ///    than the size of the file.
+        /// </exception>
+        /// <exception cref="CorruptFileException">
+        ///    The Ogg identifier could not be found at the correct
+        ///    location.
+        /// </exception>
+        public Page (File file, long position)
+        : this (new PageHeader (file, position))
+        {
+            file.Seek (position + Header.Size);
 
-			// Compute and set the checksum for the Ogg page. The
-			// checksum is taken over the entire page with the 4
-			// bytes reserved for the checksum zeroed and then
-			// inserted in bytes 22-25 of the page header.
+            foreach (int packet_size in Header.PacketSizes)
+                packets.Add (file.ReadBlock (packet_size));
+        }
 
-			ByteVector checksum = ByteVector.FromUInt (
-				data.Checksum, false);
+        /// <summary>
+        ///    Constructs and initializes a new instance of <see
+        ///    cref="Page" /> with a specified header and packets.
+        /// </summary>
+        /// <param name="packets">
+        ///    A <see cref="ByteVectorCollection" /> object containing
+        ///    packets to use for the new instance.
+        /// </param>
+        /// <param name="header">
+        ///    A <see cref="PageHeader"/> object to use as the header of
+        ///    the new instance.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///    <paramref name="packets" /> is <see langword="null" />.
+        /// </exception>
+        public Page (ByteVectorCollection packets, PageHeader header)
+        : this (header)
+        {
+            if (packets == null)
+                throw new ArgumentNullException (nameof (packets));
 
-			for (int i = 0; i < 4; i++)
-				data[i + 22] = checksum[i];
+            this.packets = new ByteVectorCollection (packets);
 
-			return data;
-		}
+            List<int> packet_sizes = new List<int> ();
 
-		#endregion
+            // Build a page from the list of packets.
+            foreach (ByteVector v in packets)
+                packet_sizes.Add (v.Count);
 
+            header.PacketSizes = packet_sizes.ToArray ();
+        }
 
-
-		#region Public Properties
-
-		/// <summary>
-		///    Gets the header of the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="PageHeader" /> object that applies to the
-		///    current instance.
-		/// </value>
-		public PageHeader Header { get; private set; }
-
-		/// <summary>
-		///    Gets the packets contained in the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="T:ByteVector[]" /> containing the packets
-		///    contained in the current instance.
-		/// </value>
-		public ByteVector[] Packets {
-			get { return packets.ToArray (); }
-		}
-
-		/// <summary>
-		///    Gets the total size of the current instance as it
-		///    appeared on disk.
-		/// </summary>
-		/// <value>
-		///    A <see cref="uint" /> value containing the size of the
-		///    page, including the header, as it appeared on disk.
-		/// </value>
-		public uint Size {
-			get { return Header.Size + Header.DataSize; }
-		}
-
-		#endregion
+#endregion
 
 
 
-		#region Public Static Methods
+#region Public Methods
 
-		/// <summary>
-		///    Overwrites all page headers in a file starting at a
-		///    specified position, shifting the page sequence numbers
-		///    a set amount.
-		/// </summary>
-		/// <param name="file">
-		///    A <see cref="File" /> object containing the file to
-		///    update.
-		/// </param>
-		/// <param name="position">
-		///    A <see cref="long" /> value specify at what position to
-		///    start updating.
-		/// </param>
-		/// <param name="shiftTable">
-		///    A <see cref="T:System.Collections.Generic.IDictionary`2"
-		///    /> object where the key is the serial number of the
-		///    stream to update and the value is the amount to offset
-		///    the page sequence numbers in the stream.
-		/// </param>
-		/// <exception cref="ArgumentNullException">
-		///    <paramref name="file" /> or <paramref name="shiftTable"
-		///    /> is <see langword="null" />.
-		/// </exception>
-		/// <remarks>
-		///    When the number of pages in a stream changes, all
-		///    subsequent pages in the stream need to have their page
-		///    sequence number update in order to remain valid.
-		///    Additionally, when the page sequence number changes, the
-		///    page needs to have its checksum recomputed. This makes
-		///    for a costly recalculation if large comment data is
-		///    added.
-		/// </remarks>
-		public static void OverwriteSequenceNumbers (File file, long position, IDictionary<uint, int> shiftTable)
-		{
-			if (file == null)
-				throw new ArgumentNullException (nameof (file));
+        /// <summary>
+        ///    Renders the current instance as a raw Ogg page.
+        /// </summary>
+        /// <returns>
+        ///    A <see cref="ByteVector" /> object containing the
+        ///    rendered version of the current instance.
+        /// </returns>
+        public ByteVector Render ()
+        {
+            ByteVector data = Header.Render ();
 
-			if (shiftTable == null)
-				throw new ArgumentNullException (nameof (shiftTable));
+            foreach (ByteVector v in packets)
+                data.Add (v);
 
-			// Check to see if there are no changes to be made.
-			bool done = true;
-			foreach (var pair in shiftTable)
-				if (pair.Value != 0) {
-					done = false;
-					break;
-				}
+            // Compute and set the checksum for the Ogg page. The
+            // checksum is taken over the entire page with the 4
+            // bytes reserved for the checksum zeroed and then
+            // inserted in bytes 22-25 of the page header.
 
-			// If the file is fine, quit.
-			if (done)
-				return;
+            ByteVector checksum = ByteVector.FromUInt (
+                data.Checksum, false);
 
-			while (position < file.Length - 27) {
-				PageHeader header = new PageHeader (file, position);
-				int size = (int)(header.Size + header.DataSize);
+            for (int i = 0; i < 4; i++)
+                data[i + 22] = checksum[i];
 
-				if (shiftTable.ContainsKey (header.StreamSerialNumber)
-					&& shiftTable[header.StreamSerialNumber] != 0) {
-					file.Seek (position);
-					ByteVector page_data = file.ReadBlock (size);
+            return data;
+        }
 
-					ByteVector new_data = ByteVector.FromUInt (
-						(uint)(header.PageSequenceNumber +
-						shiftTable[header.StreamSerialNumber]),
-						false);
+#endregion
 
-					for (int i = 18; i < 22; i++)
-						page_data[i] = new_data[i - 18];
-					for (int i = 22; i < 26; i++)
-						page_data[i] = 0;
 
-					new_data.Add (ByteVector.FromUInt (
-						page_data.Checksum, false));
-					file.Seek (position + 18);
-					file.WriteBlock (new_data);
-				}
-				position += size;
-			}
-		}
 
-		#endregion
-	}
+#region Public Properties
+
+        /// <summary>
+        ///    Gets the header of the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="PageHeader" /> object that applies to the
+        ///    current instance.
+        /// </value>
+        public PageHeader Header { get; private set; }
+
+        /// <summary>
+        ///    Gets the packets contained in the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="T:ByteVector[]" /> containing the packets
+        ///    contained in the current instance.
+        /// </value>
+        public ByteVector[] Packets {
+            get { return packets.ToArray (); }
+        }
+
+        /// <summary>
+        ///    Gets the total size of the current instance as it
+        ///    appeared on disk.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="uint" /> value containing the size of the
+        ///    page, including the header, as it appeared on disk.
+        /// </value>
+        public uint Size {
+            get { return Header.Size + Header.DataSize; }
+        }
+
+#endregion
+
+
+
+#region Public Static Methods
+
+        /// <summary>
+        ///    Overwrites all page headers in a file starting at a
+        ///    specified position, shifting the page sequence numbers
+        ///    a set amount.
+        /// </summary>
+        /// <param name="file">
+        ///    A <see cref="File" /> object containing the file to
+        ///    update.
+        /// </param>
+        /// <param name="position">
+        ///    A <see cref="long" /> value specify at what position to
+        ///    start updating.
+        /// </param>
+        /// <param name="shiftTable">
+        ///    A <see cref="T:System.Collections.Generic.IDictionary`2"
+        ///    /> object where the key is the serial number of the
+        ///    stream to update and the value is the amount to offset
+        ///    the page sequence numbers in the stream.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///    <paramref name="file" /> or <paramref name="shiftTable"
+        ///    /> is <see langword="null" />.
+        /// </exception>
+        /// <remarks>
+        ///    When the number of pages in a stream changes, all
+        ///    subsequent pages in the stream need to have their page
+        ///    sequence number update in order to remain valid.
+        ///    Additionally, when the page sequence number changes, the
+        ///    page needs to have its checksum recomputed. This makes
+        ///    for a costly recalculation if large comment data is
+        ///    added.
+        /// </remarks>
+        public static void OverwriteSequenceNumbers (File file, long position, IDictionary<uint, int> shiftTable)
+        {
+            if (file == null)
+                throw new ArgumentNullException (nameof (file));
+
+            if (shiftTable == null)
+                throw new ArgumentNullException (nameof (shiftTable));
+
+            // Check to see if there are no changes to be made.
+            bool done = true;
+            foreach (var pair in shiftTable)
+                if (pair.Value != 0) {
+                    done = false;
+                    break;
+                }
+
+            // If the file is fine, quit.
+            if (done)
+                return;
+
+            while (position < file.Length - 27) {
+                PageHeader header = new PageHeader (file, position);
+                int size = (int)(header.Size + header.DataSize);
+
+                if (shiftTable.ContainsKey (header.StreamSerialNumber)
+                    && shiftTable[header.StreamSerialNumber] != 0) {
+                    file.Seek (position);
+                    ByteVector page_data = file.ReadBlock (size);
+
+                    ByteVector new_data = ByteVector.FromUInt (
+                        (uint)(header.PageSequenceNumber +
+                               shiftTable[header.StreamSerialNumber]),
+                        false);
+
+                    for (int i = 18; i < 22; i++)
+                        page_data[i] = new_data[i - 18];
+                    for (int i = 22; i < 26; i++)
+                        page_data[i] = 0;
+
+                    new_data.Add (ByteVector.FromUInt (
+                                      page_data.Checksum, false));
+                    file.Seek (position + 18);
+                    file.WriteBlock (new_data);
+                }
+                position += size;
+            }
+        }
+
+#endregion
+    }
 }

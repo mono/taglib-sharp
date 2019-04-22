@@ -26,72 +26,72 @@ using System.Collections.Generic;
 
 namespace TagLib.IFD.Entries
 {
-	/// <summary>
-	///    Contains the SubIFDs IFD entry.
-	/// </summary>
-	public class SubIFDArrayEntry : IFDEntry
-	{
+    /// <summary>
+    ///    Contains the SubIFDs IFD entry.
+    /// </summary>
+    public class SubIFDArrayEntry : IFDEntry
+    {
 
-		/// <value>
-		///    The ID of the tag, the current instance belongs to
-		/// </value>
-		public ushort Tag {
-			get;
-			set;
-		}
+        /// <value>
+        ///    The ID of the tag, the current instance belongs to
+        /// </value>
+        public ushort Tag {
+            get;
+            set;
+        }
 
-		/// <value>
-		///    The structures of the IFDs to which this entry points.
-		/// </value>
-		public IFDStructure[] Entries { get; private set; }
+        /// <value>
+        ///    The structures of the IFDs to which this entry points.
+        /// </value>
+        public IFDStructure[] Entries { get; private set; }
 
-		#region Constructors
+#region Constructors
 
-		/// <summary>
-		///    Constructor.
-		/// </summary>
-		/// <param name="tag">
-		///    A <see cref="System.UInt16"/> with the tag ID of the entry this instance
-		///    represents
-		/// </param>
-		/// <param name="entries">
-		///    A set of ifd structures.
-		/// </param>
-		public SubIFDArrayEntry (ushort tag, List<IFDStructure> entries)
-		{
-			Tag = tag;
-			Entries = entries.ToArray ();
-		}
+        /// <summary>
+        ///    Constructor.
+        /// </summary>
+        /// <param name="tag">
+        ///    A <see cref="System.UInt16"/> with the tag ID of the entry this instance
+        ///    represents
+        /// </param>
+        /// <param name="entries">
+        ///    A set of ifd structures.
+        /// </param>
+        public SubIFDArrayEntry (ushort tag, List<IFDStructure> entries)
+        {
+            Tag = tag;
+            Entries = entries.ToArray ();
+        }
 
-		#endregion
+#endregion
 
-		#region Public Methods
+#region Public Methods
 
-		/// <summary>
-		///    Renders the current instance to a <see cref="ByteVector"/>
-		/// </summary>
-		/// <param name="is_bigendian">
-		///    A <see cref="System.Boolean"/> indicating the endianess for rendering.
-		/// </param>
-		/// <param name="offset">
-		///    A <see cref="System.UInt32"/> with the offset, the data is stored.
-		/// </param>
-		/// <param name="type">
-		///    A <see cref="System.UInt16"/> the ID of the type, which is rendered
-		/// </param>
-		/// <param name="count">
-		///    A <see cref="System.UInt32"/> with the count of the values which are
-		///    rendered.
-		/// </param>
-		/// <returns>
-		///    A <see cref="ByteVector"/> with the rendered data.
-		/// </returns>
-		public ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
-		{
-			throw new NotImplementedException ("Not implemented yet!");
-		}
+        /// <summary>
+        ///    Renders the current instance to a <see cref="ByteVector"/>
+        /// </summary>
+        /// <param name="is_bigendian">
+        ///    A <see cref="System.Boolean"/> indicating the endianess for rendering.
+        /// </param>
+        /// <param name="offset">
+        ///    A <see cref="System.UInt32"/> with the offset, the data is stored.
+        /// </param>
+        /// <param name="type">
+        ///    A <see cref="System.UInt16"/> the ID of the type, which is rendered
+        /// </param>
+        /// <param name="count">
+        ///    A <see cref="System.UInt32"/> with the count of the values which are
+        ///    rendered.
+        /// </param>
+        /// <returns>
+        ///    A <see cref="ByteVector"/> with the rendered data.
+        /// </returns>
+        public ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
+        {
+            throw new NotImplementedException ("Not implemented yet!");
+        }
 
-		#endregion
+#endregion
 
-	}
+    }
 }

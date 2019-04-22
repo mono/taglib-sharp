@@ -30,94 +30,94 @@ using System.Collections.Generic;
 
 namespace TagLib
 {
-	/// <summary>
-	///    This class provides an attribute for listing supported mime-types
-	///    for classes that extend <see cref="File" />.
-	/// </summary>
-	/// <remarks>
-	///    When classes that extend <see cref="File" /> are registered with
-	///    <see cref="FileTypes.Register" />, its <see
-	///    cref="SupportedMimeType" /> attributes are read.
-	/// </remarks>
-	/// <example>
-	///    <code lang="C#">using TagLib;
-	///
-	///[SupportedMimeType("taglib/wv", "wv")]
-	///[SupportedMimeType("audio/x-wavpack")]
-	///public class MyFile : File {
-	///	...
-	///}</code>
-	/// </example>
-	[AttributeUsage (AttributeTargets.Class, AllowMultiple = true)]
-	public sealed class SupportedMimeType : Attribute
-	{
-		/// <summary>
-		///    Contains the registered <see cref="SupportedMimeType" />
-		///    objects.
-		/// </summary>
-		static readonly List<SupportedMimeType> mimetypes = new List<SupportedMimeType> ();
+    /// <summary>
+    ///    This class provides an attribute for listing supported mime-types
+    ///    for classes that extend <see cref="File" />.
+    /// </summary>
+    /// <remarks>
+    ///    When classes that extend <see cref="File" /> are registered with
+    ///    <see cref="FileTypes.Register" />, its <see
+    ///    cref="SupportedMimeType" /> attributes are read.
+    /// </remarks>
+    /// <example>
+    ///    <code lang="C#">using TagLib;
+    ///
+    ///[SupportedMimeType("taglib/wv", "wv")]
+    ///[SupportedMimeType("audio/x-wavpack")]
+    ///public class MyFile : File {
+    ///    ...
+    ///}</code>
+    /// </example>
+    [AttributeUsage (AttributeTargets.Class, AllowMultiple = true)]
+    public sealed class SupportedMimeType : Attribute
+    {
+        /// <summary>
+        ///    Contains the registered <see cref="SupportedMimeType" />
+        ///    objects.
+        /// </summary>
+        static readonly List<SupportedMimeType> mimetypes = new List<SupportedMimeType> ();
 
-		/// <summary>
-		///    Constructs and initializes the <see
-		///    cref="SupportedMimeType" /> class by initializing the
-		///    <see cref="FileTypes" /> class.
-		/// </summary>
-		static SupportedMimeType ()
-		{
-			FileTypes.Init ();
-		}
+        /// <summary>
+        ///    Constructs and initializes the <see
+        ///    cref="SupportedMimeType" /> class by initializing the
+        ///    <see cref="FileTypes" /> class.
+        /// </summary>
+        static SupportedMimeType ()
+        {
+            FileTypes.Init ();
+        }
 
-		/// <summary>
-		///    Constructs and initializes a new instance of the <see
-		///    cref="SupportedMimeType" /> attribute for a specified
-		///    mime-type.
-		/// </summary>
-		/// <param name="mimetype">
-		///    A <see cref="string" /> object containing a standard
-		///    mime-type.
-		/// </param>
-		/// <remarks>
-		///    <para>Standard practice is to use <see
-		///    cref="SupportedMimeType(string)" /> to register standard
-		///    mime-types, like "audio/mp3" and "video/mpeg" and to use
-		///    <see cref="SupportedMimeType(string,string)" /> strictly
-		///    to register extensions, using "taglib/ext" for the mime
-		///    type. Eg. <c>SupportedMimeType("taglib/mp3",
-		///    "mp3")</c>.</para>
-		/// </remarks>
-		public SupportedMimeType (string mimetype)
-		{
-			MimeType = mimetype;
-			mimetypes.Add (this);
-		}
+        /// <summary>
+        ///    Constructs and initializes a new instance of the <see
+        ///    cref="SupportedMimeType" /> attribute for a specified
+        ///    mime-type.
+        /// </summary>
+        /// <param name="mimetype">
+        ///    A <see cref="string" /> object containing a standard
+        ///    mime-type.
+        /// </param>
+        /// <remarks>
+        ///    <para>Standard practice is to use <see
+        ///    cref="SupportedMimeType(string)" /> to register standard
+        ///    mime-types, like "audio/mp3" and "video/mpeg" and to use
+        ///    <see cref="SupportedMimeType(string,string)" /> strictly
+        ///    to register extensions, using "taglib/ext" for the mime
+        ///    type. Eg. <c>SupportedMimeType("taglib/mp3",
+        ///    "mp3")</c>.</para>
+        /// </remarks>
+        public SupportedMimeType (string mimetype)
+        {
+            MimeType = mimetype;
+            mimetypes.Add (this);
+        }
 
-		/// <summary>
-		///    Constructs and initializes a new instance of the <see
-		///    cref="SupportedMimeType" /> attribute for a specified
-		///    mime-type and extension.
-		/// </summary>
-		/// <param name="mimetype">
-		///    A <see cref="string" /> object containing a standard
-		///    mime-type.
-		/// </param>
-		/// <param name="extension">
-		///    A <see cref="string" /> object containing a file
-		///    extension.
-		/// </param>
-		/// <remarks>
-		///    <para>Standard practice is to use <see
-		///    cref="SupportedMimeType(string)" /> to register standard
-		///    mime-types, like "audio/mp3" and "video/mpeg" and to use
-		///    <see cref="SupportedMimeType(string,string)" /> strictly
-		///    to register extensions, using "taglib/ext" for the mime
-		///    type. Eg. <c>SupportedMimeType("taglib/mp3",
-		///    "mp3")</c>.</para>
-		/// </remarks>
-		public SupportedMimeType (string mimetype, string extension)
-			: this (mimetype)
-		{
-			Extension = extension;
-		}
+        /// <summary>
+        ///    Constructs and initializes a new instance of the <see
+        ///    cref="SupportedMimeType" /> attribute for a specified
+        ///    mime-type and extension.
+        /// </summary>
+        /// <param name="mimetype">
+        ///    A <see cref="string" /> object containing a standard
+        ///    mime-type.
+        /// </param>
+        /// <param name="extension">
+        ///    A <see cref="string" /> object containing a file
+        ///    extension.
+        /// </param>
+        /// <remarks>
+        ///    <para>Standard practice is to use <see
+        ///    cref="SupportedMimeType(string)" /> to register standard
+        ///    mime-types, like "audio/mp3" and "video/mpeg" and to use
+        ///    <see cref="SupportedMimeType(string,string)" /> strictly
+        ///    to register extensions, using "taglib/ext" for the mime
+        ///    type. Eg. <c>SupportedMimeType("taglib/mp3",
+        ///    "mp3")</c>.</para>
+        /// </remarks>
+        public SupportedMimeType (string mimetype, string extension)
+        : this (mimetype)
+        {
+            Extension = extension;
+        }
 
         /// <summary>
         ///    Gets the mime-type registered by the current instance.
@@ -161,31 +161,31 @@ namespace TagLib
         ///    match file types.</para>
         /// </remarks>
         public static IEnumerable<string> AllMimeTypes {
-			get {
-				foreach (SupportedMimeType type in mimetypes)
-					yield return type.MimeType;
-			}
-		}
+            get {
+                foreach (SupportedMimeType type in mimetypes)
+                    yield return type.MimeType;
+            }
+        }
 
-		/// <summary>
-		///    Gets all the extensions that have been registered with
-		///    <see cref="SupportedMimeType" />.
-		/// </summary>
-		/// <value>
-		///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object containing all the
-		///    extensions that have been registered with <see
-		///    cref="SupportedMimeType" />.
-		/// </value>
-		/// <remarks>
-		///    <para>These values are currently not used in file type
-		///    recognition.</para>
-		/// </remarks>
-		public static IEnumerable<string> AllExtensions {
-			get {
-				foreach (SupportedMimeType type in mimetypes)
-					if (type.Extension != null)
-						yield return type.Extension;
-			}
-		}
-	}
+        /// <summary>
+        ///    Gets all the extensions that have been registered with
+        ///    <see cref="SupportedMimeType" />.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="T:System.Collections.Generic.IEnumerable`1" /> object containing all the
+        ///    extensions that have been registered with <see
+        ///    cref="SupportedMimeType" />.
+        /// </value>
+        /// <remarks>
+        ///    <para>These values are currently not used in file type
+        ///    recognition.</para>
+        /// </remarks>
+        public static IEnumerable<string> AllExtensions {
+            get {
+                foreach (SupportedMimeType type in mimetypes)
+                    if (type.Extension != null)
+                        yield return type.Extension;
+            }
+        }
+    }
 }

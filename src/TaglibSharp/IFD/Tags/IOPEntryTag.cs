@@ -25,37 +25,37 @@
 
 namespace TagLib.IFD.Tags
 {
-	/// <summary>
-	///    Entry tags occuring in the Interoperability IFD
-	///    The complete overview can be obtained at:
-	///    http://www.awaresystems.be/imaging/tiff.html
-	/// </summary>
-	public enum IOPEntryTag : ushort
-	{
-		/// <summary>
-		///     Indicates the identification of the Interoperability rule. (Hex: 0x0001)
-		///     http://www.awaresystems.be/imaging/tiff/tifftags/privateifd/interoperability/interoperabilityindex.html
-		/// </summary>
-		InteroperabilityIndex = 1,
+    /// <summary>
+    ///    Entry tags occuring in the Interoperability IFD
+    ///    The complete overview can be obtained at:
+    ///    http://www.awaresystems.be/imaging/tiff.html
+    /// </summary>
+    public enum IOPEntryTag : ushort
+    {
+        /// <summary>
+        ///     Indicates the identification of the Interoperability rule. (Hex: 0x0001)
+        ///     http://www.awaresystems.be/imaging/tiff/tifftags/privateifd/interoperability/interoperabilityindex.html
+        /// </summary>
+        InteroperabilityIndex = 1,
 
-		/// <summary>
-		///     Interoperability version. (Hex: 0x0002)
-		/// </summary>
-		InteroperabilityVersion = 2,
+        /// <summary>
+        ///     Interoperability version. (Hex: 0x0002)
+        /// </summary>
+        InteroperabilityVersion = 2,
 
-		/// <summary>
-		///     File format of image file. (Hex: 0x1000)
-		/// </summary>
-		RelatedImageFileFormat = 4096,
+        /// <summary>
+        ///     File format of image file. (Hex: 0x1000)
+        /// </summary>
+        RelatedImageFileFormat = 4096,
 
-		/// <summary>
-		///     Image Width. (Hex: 0x1001)
-		/// </summary>
-		RelatedImageWidth = 4097,
+        /// <summary>
+        ///     Image Width. (Hex: 0x1001)
+        /// </summary>
+        RelatedImageWidth = 4097,
 
-		/// <summary>
-		///     Image Height. (Hex: 0x1002)
-		/// </summary>
-		RelatedImageLength = 4098,
-	}
+        /// <summary>
+        ///     Image Height. (Hex: 0x1002)
+        /// </summary>
+        RelatedImageLength = 4098,
+    }
 }

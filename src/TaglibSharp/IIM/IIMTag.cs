@@ -24,78 +24,78 @@ using System.Collections.Generic;
 
 namespace TagLib.IIM
 {
-	/// <summary>
-	/// Represents an IIM Tag
-	/// </summary>
-	public class IIMTag : Xmp.XmpTag
-	{
-		List<string> m_Keywords;
+    /// <summary>
+    /// Represents an IIM Tag
+    /// </summary>
+    public class IIMTag : Xmp.XmpTag
+    {
+        List<string> m_Keywords;
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public IIMTag ()
-		{
-		}
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public IIMTag ()
+        {
+        }
 
-		/// <summary>
-		/// Defines the supported TagType
-		/// </summary>
-		public override TagTypes TagTypes {
-			get {
-				return TagTypes.IPTCIIM;
-			}
-		}
+        /// <summary>
+        /// Defines the supported TagType
+        /// </summary>
+        public override TagTypes TagTypes {
+            get {
+                return TagTypes.IPTCIIM;
+            }
+        }
 
-		/// <summary>
-		/// Clear IIM content
-		/// </summary>
-		public override void Clear ()
-		{
-			Title = null;
-			m_Keywords = null;
-			Creator = null;
-			Copyright = null;
-			Comment = null;
-		}
+        /// <summary>
+        /// Clear IIM content
+        /// </summary>
+        public override void Clear ()
+        {
+            Title = null;
+            m_Keywords = null;
+            Creator = null;
+            Copyright = null;
+            Comment = null;
+        }
 
-		/// <summary>
-		/// Get or Set the Title Tag
-		/// </summary>
+        /// <summary>
+        /// Get or Set the Title Tag
+        /// </summary>
 
-		public override string Title { get; set; }
+        public override string Title { get; set; }
 
-		/// <summary>
-		/// Get or Set the Creator Tag
-		/// </summary>
+        /// <summary>
+        /// Get or Set the Creator Tag
+        /// </summary>
 
-		public override string Creator { get; set; }
+        public override string Creator { get; set; }
 
-		/// <summary>
-		/// Get or Set the Copyright Tag
-		/// </summary>
+        /// <summary>
+        /// Get or Set the Copyright Tag
+        /// </summary>
 
-		public override string Copyright { get; set; }
+        public override string Copyright { get; set; }
 
-		/// <summary>
-		/// Get or Set the comment Tag
-		/// </summary>
-		public override string Comment { get; set; }
+        /// <summary>
+        /// Get or Set the comment Tag
+        /// </summary>
+        public override string Comment { get; set; }
 
-		/// <summary>
-		/// Get or Set the Keywords Tag
-		/// </summary>
-		public override string[] Keywords {
-			get {
-				return m_Keywords?.ToArray ();
-			}
-		}
+        /// <summary>
+        /// Get or Set the Keywords Tag
+        /// </summary>
+        public override string[] Keywords {
+            get {
+                return m_Keywords?.ToArray ();
+            }
+        }
 
-		internal void AddKeyword (string keyword)
-		{
-			if (m_Keywords == null)
-				m_Keywords = new List<string> ();
-			m_Keywords.Add (keyword);
-		}
-	}
+        internal void AddKeyword (string keyword)
+        {
+            if (m_Keywords == null)
+                m_Keywords = new List<string> ();
+            m_Keywords.Add (keyword);
+        }
+    }
 }

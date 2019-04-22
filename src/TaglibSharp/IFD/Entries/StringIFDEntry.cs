@@ -25,80 +25,80 @@
 
 namespace TagLib.IFD.Entries
 {
-	/// <summary>
-	///    Contains an ASCII STRING value.
-	/// </summary>
-	public class StringIFDEntry : IFDEntry
-	{
+    /// <summary>
+    ///    Contains an ASCII STRING value.
+    /// </summary>
+    public class StringIFDEntry : IFDEntry
+    {
 
-		#region Properties
+#region Properties
 
-		/// <value>
-		///    The ID of the tag, the current instance belongs to
-		/// </value>
-		public ushort Tag { get; private set; }
+        /// <value>
+        ///    The ID of the tag, the current instance belongs to
+        /// </value>
+        public ushort Tag { get; private set; }
 
-		/// <value>
-		///    The value which is stored by the current instance
-		/// </value>
-		public string Value { get; private set; }
+        /// <value>
+        ///    The value which is stored by the current instance
+        /// </value>
+        public string Value { get; private set; }
 
-		#endregion
+#endregion
 
-		#region Constructors
+#region Constructors
 
-		/// <summary>
-		///    Construcor.
-		/// </summary>
-		/// <param name="tag">
-		///    A <see cref="System.UInt16"/> with the tag ID of the entry this instance
-		///    represents
-		/// </param>
-		/// <param name="value">
-		///    A <see cref="System.String"/> to be stored
-		/// </param>
-		public StringIFDEntry (ushort tag, string value)
-		{
-			Tag = tag;
-			Value = value;
-		}
+        /// <summary>
+        ///    Construcor.
+        /// </summary>
+        /// <param name="tag">
+        ///    A <see cref="System.UInt16"/> with the tag ID of the entry this instance
+        ///    represents
+        /// </param>
+        /// <param name="value">
+        ///    A <see cref="System.String"/> to be stored
+        /// </param>
+        public StringIFDEntry (ushort tag, string value)
+        {
+            Tag = tag;
+            Value = value;
+        }
 
-		#endregion
+#endregion
 
-		#region Public Methods
+#region Public Methods
 
-		/// <summary>
-		///    Renders the current instance to a <see cref="ByteVector"/>
-		/// </summary>
-		/// <param name="is_bigendian">
-		///    A <see cref="System.Boolean"/> indicating the endianess for rendering.
-		/// </param>
-		/// <param name="offset">
-		///    A <see cref="System.UInt32"/> with the offset, the data is stored.
-		/// </param>
-		/// <param name="type">
-		///    A <see cref="System.UInt16"/> the ID of the type, which is rendered
-		/// </param>
-		/// <param name="count">
-		///    A <see cref="System.UInt32"/> with the count of the values which are
-		///    rendered.
-		/// </param>
-		/// <returns>
-		///    A <see cref="ByteVector"/> with the rendered data.
-		/// </returns>
-		public ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
-		{
-			type = (ushort)IFDEntryType.Ascii;
+        /// <summary>
+        ///    Renders the current instance to a <see cref="ByteVector"/>
+        /// </summary>
+        /// <param name="is_bigendian">
+        ///    A <see cref="System.Boolean"/> indicating the endianess for rendering.
+        /// </param>
+        /// <param name="offset">
+        ///    A <see cref="System.UInt32"/> with the offset, the data is stored.
+        /// </param>
+        /// <param name="type">
+        ///    A <see cref="System.UInt16"/> the ID of the type, which is rendered
+        /// </param>
+        /// <param name="count">
+        ///    A <see cref="System.UInt32"/> with the count of the values which are
+        ///    rendered.
+        /// </param>
+        /// <returns>
+        ///    A <see cref="ByteVector"/> with the rendered data.
+        /// </returns>
+        public ByteVector Render (bool is_bigendian, uint offset, out ushort type, out uint count)
+        {
+            type = (ushort)IFDEntryType.Ascii;
 
-			ByteVector data = Value;
-			data.Add ("\0");
+            ByteVector data = Value;
+            data.Add ("\0");
 
-			count = (uint)data.Count;
+            count = (uint)data.Count;
 
-			return data;
-		}
+            return data;
+        }
 
-		#endregion
+#endregion
 
-	}
+    }
 }

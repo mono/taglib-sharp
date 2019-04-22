@@ -31,216 +31,216 @@ using System.Collections.Generic;
 
 namespace TagLib.NonContainer
 {
-	/// <summary>
-	///    This class extends <see cref="CombinedTag" />, combining <see
-	///    cref="StartTag" /> and <see cref="EndTag" /> in such a way as
-	///    their children appear as its children.
-	/// </summary>
-	public class Tag : CombinedTag
-	{
-		#region Constructors
+    /// <summary>
+    ///    This class extends <see cref="CombinedTag" />, combining <see
+    ///    cref="StartTag" /> and <see cref="EndTag" /> in such a way as
+    ///    their children appear as its children.
+    /// </summary>
+    public class Tag : CombinedTag
+    {
+#region Constructors
 
-		/// <summary>
-		///    Constructs and initializes a new instance of <see
-		///    cref="Tag" /> for a specified <see cref="TagLib.File" />.
-		/// </summary>
-		/// <param name="file">
-		///    A <see cref="TagLib.File" /> object on which the new
-		///    instance will perform its operations.
-		/// </param>
-		/// <remarks>
-		///    Constructing a new instance does not automatically read
-		///    the contents from the disk. <see cref="Read" /> must be
-		///    called to read the tags.
-		/// </remarks>
-		public Tag (File file)
-		{
-			StartTag = new StartTag (file);
-			EndTag = new EndTag (file);
-			AddTag (StartTag);
-			AddTag (EndTag);
-		}
+        /// <summary>
+        ///    Constructs and initializes a new instance of <see
+        ///    cref="Tag" /> for a specified <see cref="TagLib.File" />.
+        /// </summary>
+        /// <param name="file">
+        ///    A <see cref="TagLib.File" /> object on which the new
+        ///    instance will perform its operations.
+        /// </param>
+        /// <remarks>
+        ///    Constructing a new instance does not automatically read
+        ///    the contents from the disk. <see cref="Read" /> must be
+        ///    called to read the tags.
+        /// </remarks>
+        public Tag (File file)
+        {
+            StartTag = new StartTag (file);
+            EndTag = new EndTag (file);
+            AddTag (StartTag);
+            AddTag (EndTag);
+        }
 
-		#endregion
-
-
-
-		#region Public Properties
-
-		/// <summary>
-		///    Gets the collection of tags appearing at the start of the
-		///    file.
-		/// </summary>
-		/// <value>
-		///    A <see cref="TagLib.NonContainer.StartTag" /> storing the
-		///    tags for the start of the file.
-		/// </value>
-		public StartTag StartTag { get; private set; }
-
-		/// <summary>
-		///    Gets the collection of tags appearing at the end of the
-		///    file.
-		/// </summary>
-		/// <value>
-		///    A <see cref="TagLib.NonContainer.EndTag" /> storing the
-		///    tags for the end of the file.
-		/// </value>
-		public EndTag EndTag { get; private set; }
-
-		/// <summary>
-		///    Gets the tag types contained in the current instance.
-		/// </summary>
-		/// <value>
-		///    A bitwise combined <see cref="TagLib.TagTypes" />
-		///    containing the tag types contained in the current
-		///    instance.
-		/// </value>
-		public override TagTypes TagTypes {
-			get { return StartTag.TagTypes | EndTag.TagTypes; }
-		}
-
-		/// <summary>
-		///    Gets the tags combined in the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="T:TagLib.Tag[]" /> containing the tags combined in
-		///    the current instance.
-		/// </value>
-		/// <remarks>
-		///    This contains the combined children of <see
-		///    cref="Tag.StartTag" /> and <see cref="Tag.EndTag" />.
-		/// </remarks>
-		public override TagLib.Tag[] Tags {
-			get {
-				List<TagLib.Tag> tags = new List<TagLib.Tag> ();
-				tags.AddRange (StartTag.Tags);
-				tags.AddRange (EndTag.Tags);
-				return tags.ToArray ();
-			}
-		}
-
-		#endregion
+#endregion
 
 
 
-		#region Public Methods
+#region Public Properties
 
-		/// <summary>
-		///    Gets a tag of a specified type from the current instance.
-		/// </summary>
-		/// <param name="type">
-		///    A <see cref="TagLib.TagTypes" /> value indicating the
-		///    type of tag to read.
-		/// </param>
-		/// <returns>
-		///    A <see cref="Tag" /> object containing the tag that was
-		///    found in the current instance. If no
-		///    matching tag was found and none was created, <see
-		///    langword="null" /> is returned.
-		/// </returns>
-		public TagLib.Tag GetTag (TagTypes type)
-		{
-			foreach (TagLib.Tag t in Tags) {
-				if (type == TagTypes.Id3v1 && t is Id3v1.Tag)
-					return t;
+        /// <summary>
+        ///    Gets the collection of tags appearing at the start of the
+        ///    file.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="TagLib.NonContainer.StartTag" /> storing the
+        ///    tags for the start of the file.
+        /// </value>
+        public StartTag StartTag { get; private set; }
 
-				if (type == TagTypes.Id3v2 && t is Id3v2.Tag)
-					return t;
+        /// <summary>
+        ///    Gets the collection of tags appearing at the end of the
+        ///    file.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="TagLib.NonContainer.EndTag" /> storing the
+        ///    tags for the end of the file.
+        /// </value>
+        public EndTag EndTag { get; private set; }
 
-				if (type == TagTypes.Ape && t is Ape.Tag)
-					return t;
-			}
+        /// <summary>
+        ///    Gets the tag types contained in the current instance.
+        /// </summary>
+        /// <value>
+        ///    A bitwise combined <see cref="TagLib.TagTypes" />
+        ///    containing the tag types contained in the current
+        ///    instance.
+        /// </value>
+        public override TagTypes TagTypes {
+            get { return StartTag.TagTypes | EndTag.TagTypes; }
+        }
 
-			return null;
-		}
+        /// <summary>
+        ///    Gets the tags combined in the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="T:TagLib.Tag[]" /> containing the tags combined in
+        ///    the current instance.
+        /// </value>
+        /// <remarks>
+        ///    This contains the combined children of <see
+        ///    cref="Tag.StartTag" /> and <see cref="Tag.EndTag" />.
+        /// </remarks>
+        public override TagLib.Tag[] Tags {
+            get {
+                List<TagLib.Tag> tags = new List<TagLib.Tag> ();
+                tags.AddRange (StartTag.Tags);
+                tags.AddRange (EndTag.Tags);
+                return tags.ToArray ();
+            }
+        }
 
-		/// <summary>
-		///    Removes a set of tag types from the current instance.
-		/// </summary>
-		/// <param name="types">
-		///    A bitwise combined <see cref="TagLib.TagTypes" /> value
-		///    containing tag types to be removed from the file.
-		/// </param>
-		/// <remarks>
-		///    In order to remove all tags from a file, pass <see
-		///    cref="TagTypes.AllTags" /> as <paramref name="types" />.
-		/// </remarks>
-		public void RemoveTags (TagTypes types)
-		{
-			StartTag.RemoveTags (types);
-			EndTag.RemoveTags (types);
-		}
+#endregion
 
-		/// <summary>
-		///    Reads the tags at the start and end of the file.
-		/// </summary>
-		/// <param name="start">
-		///    A <see cref="long" /> value reference which will be set
-		///    to contain the seek position in the file at which the
-		///    tags at the start end. This also marks the seek position
-		///    at which the media begins.
-		/// </param>
-		/// <param name="end">
-		///    A <see cref="long" /> value reference which will be set
-		///    to contain the seek position in the file at which the
-		///    tags at the end begin. This also marks the seek position
-		///    at which the media ends.
-		/// </param>
-		public void Read (out long start, out long end)
-		{
-			start = ReadStart (ReadStyle.None);
-			end = ReadEnd (ReadStyle.None);
-		}
 
-		/// <summary>
-		///    Reads the tags stored at the start of the file into the
-		///    current instance.
-		/// </summary>
-		/// <returns>
-		///    A <see cref="long" /> value indicating the seek position
-		///    in the file at which the read tags end. This also
-		///    marks the seek position at which the media begins.
-		/// </returns>
-		public long ReadStart (ReadStyle style)
-		{
-			return StartTag.Read (style);
-		}
 
-		/// <summary>
-		///    Reads the tags stored at the end of the file into the
-		///    current instance.
-		/// </summary>
-		/// <returns>
-		///    A <see cref="long" /> value indicating the seek position
-		///    in the file at which the read tags begin. This also
-		///    marks the seek position at which the media ends.
-		/// </returns>
-		public long ReadEnd (ReadStyle style)
-		{
-			return EndTag.Read (style);
-		}
+#region Public Methods
 
-		/// <summary>
-		///    Writes the tags to the start and end of the file.
-		/// </summary>
-		/// <param name="start">
-		///    A <see cref="long" /> value reference which will be set
-		///    to contain the new seek position in the file at which the
-		///    tags at the start end. This also marks the seek position
-		///    at which the media begins.
-		/// </param>
-		/// <param name="end">
-		///    A <see cref="long" /> value reference which will be set
-		///    to contain the new seek position in the file at which the
-		///    tags at the end begin. This also marks the seek position
-		///    at which the media ends.
-		/// </param>
-		public void Write (out long start, out long end)
-		{
-			start = StartTag.Write ();
-			end = EndTag.Write ();
-		}
+        /// <summary>
+        ///    Gets a tag of a specified type from the current instance.
+        /// </summary>
+        /// <param name="type">
+        ///    A <see cref="TagLib.TagTypes" /> value indicating the
+        ///    type of tag to read.
+        /// </param>
+        /// <returns>
+        ///    A <see cref="Tag" /> object containing the tag that was
+        ///    found in the current instance. If no
+        ///    matching tag was found and none was created, <see
+        ///    langword="null" /> is returned.
+        /// </returns>
+        public TagLib.Tag GetTag (TagTypes type)
+        {
+            foreach (TagLib.Tag t in Tags) {
+                if (type == TagTypes.Id3v1 && t is Id3v1.Tag)
+                    return t;
 
-		#endregion
-	}
+                if (type == TagTypes.Id3v2 && t is Id3v2.Tag)
+                    return t;
+
+                if (type == TagTypes.Ape && t is Ape.Tag)
+                    return t;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        ///    Removes a set of tag types from the current instance.
+        /// </summary>
+        /// <param name="types">
+        ///    A bitwise combined <see cref="TagLib.TagTypes" /> value
+        ///    containing tag types to be removed from the file.
+        /// </param>
+        /// <remarks>
+        ///    In order to remove all tags from a file, pass <see
+        ///    cref="TagTypes.AllTags" /> as <paramref name="types" />.
+        /// </remarks>
+        public void RemoveTags (TagTypes types)
+        {
+            StartTag.RemoveTags (types);
+            EndTag.RemoveTags (types);
+        }
+
+        /// <summary>
+        ///    Reads the tags at the start and end of the file.
+        /// </summary>
+        /// <param name="start">
+        ///    A <see cref="long" /> value reference which will be set
+        ///    to contain the seek position in the file at which the
+        ///    tags at the start end. This also marks the seek position
+        ///    at which the media begins.
+        /// </param>
+        /// <param name="end">
+        ///    A <see cref="long" /> value reference which will be set
+        ///    to contain the seek position in the file at which the
+        ///    tags at the end begin. This also marks the seek position
+        ///    at which the media ends.
+        /// </param>
+        public void Read (out long start, out long end)
+        {
+            start = ReadStart (ReadStyle.None);
+            end = ReadEnd (ReadStyle.None);
+        }
+
+        /// <summary>
+        ///    Reads the tags stored at the start of the file into the
+        ///    current instance.
+        /// </summary>
+        /// <returns>
+        ///    A <see cref="long" /> value indicating the seek position
+        ///    in the file at which the read tags end. This also
+        ///    marks the seek position at which the media begins.
+        /// </returns>
+        public long ReadStart (ReadStyle style)
+        {
+            return StartTag.Read (style);
+        }
+
+        /// <summary>
+        ///    Reads the tags stored at the end of the file into the
+        ///    current instance.
+        /// </summary>
+        /// <returns>
+        ///    A <see cref="long" /> value indicating the seek position
+        ///    in the file at which the read tags begin. This also
+        ///    marks the seek position at which the media ends.
+        /// </returns>
+        public long ReadEnd (ReadStyle style)
+        {
+            return EndTag.Read (style);
+        }
+
+        /// <summary>
+        ///    Writes the tags to the start and end of the file.
+        /// </summary>
+        /// <param name="start">
+        ///    A <see cref="long" /> value reference which will be set
+        ///    to contain the new seek position in the file at which the
+        ///    tags at the start end. This also marks the seek position
+        ///    at which the media begins.
+        /// </param>
+        /// <param name="end">
+        ///    A <see cref="long" /> value reference which will be set
+        ///    to contain the new seek position in the file at which the
+        ///    tags at the end begin. This also marks the seek position
+        ///    at which the media ends.
+        /// </param>
+        public void Write (out long start, out long end)
+        {
+            start = StartTag.Write ();
+            end = EndTag.Write ();
+        }
+
+#endregion
+    }
 }

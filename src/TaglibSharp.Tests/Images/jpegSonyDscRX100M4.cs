@@ -26,24 +26,24 @@ using TagLib;
 
 namespace TaglibSharp.Tests.Images
 {
-	[TestFixture ()]
-	public class jpegSonyDscRX100M4
-	{
-		[Test ()]
-		public void Test ()
-		{
-			bool isSuccess = true;
-			try {
-				File.Create (TestPath.Samples + "sample_sony_DSC-RX100M4.jpg");
-			} catch (ArithmeticException) {
-				// Old versions of TagLib were throwing an ArithmeticException on reading in Sony DSC RX100M4 images
-				isSuccess = false;
-			} catch (Exception) {
-				// All excetions shall make this test fail
-				isSuccess = false;
-			}
-			Assert.True (isSuccess);
-		}
-	}
+    [TestFixture ()]
+    public class jpegSonyDscRX100M4
+    {
+        [Test ()]
+        public void Test ()
+        {
+            bool isSuccess = true;
+            try {
+                File.Create (TestPath.Samples + "sample_sony_DSC-RX100M4.jpg");
+            } catch (ArithmeticException) {
+                // Old versions of TagLib were throwing an ArithmeticException on reading in Sony DSC RX100M4 images
+                isSuccess = false;
+            } catch (Exception) {
+                // All excetions shall make this test fail
+                isSuccess = false;
+            }
+            Assert.True (isSuccess);
+        }
+    }
 }
 

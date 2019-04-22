@@ -25,76 +25,76 @@ using TagLib.Image;
 
 namespace TagLib.Jpeg
 {
-	/// <summary>
-	///    Contains the JPEG comment.
-	/// </summary>
-	public class JpegCommentTag : ImageTag
-	{
-		#region Constructors
+    /// <summary>
+    ///    Contains the JPEG comment.
+    /// </summary>
+    public class JpegCommentTag : ImageTag
+    {
+#region Constructors
 
-		/// <summary>
-		///    Constructor.
-		/// </summary>
-		/// <param name="value">
-		///    The value of the comment.
-		/// </param>
-		public JpegCommentTag (string value)
-		{
-			Value = value;
-		}
+        /// <summary>
+        ///    Constructor.
+        /// </summary>
+        /// <param name="value">
+        ///    The value of the comment.
+        /// </param>
+        public JpegCommentTag (string value)
+        {
+            Value = value;
+        }
 
-		/// <summary>
-		///    Constructor. Creates a new empty comment.
-		/// </summary>
-		public JpegCommentTag ()
-		{
-			Value = null;
-		}
+        /// <summary>
+        ///    Constructor. Creates a new empty comment.
+        /// </summary>
+        public JpegCommentTag ()
+        {
+            Value = null;
+        }
 
-		#endregion
+#endregion
 
-		#region Public Properties
+#region Public Properties
 
-		/// <summary>
-		///    The value of the comment represented by the current instance.
-		/// </summary>
-		public string Value { get; set; }
+        /// <summary>
+        ///    The value of the comment represented by the current instance.
+        /// </summary>
+        public string Value { get; set; }
 
-		/// <summary>
-		///    Gets or sets the comment for the image described
-		///    by the current instance.
-		/// </summary>
-		/// <value>
-		///    A <see cref="string" /> containing the comment of the
-		///    current instace.
-		/// </value>
-		public override string Comment {
-			get { return Value; }
-			set { Value = value; }
-		}
+        /// <summary>
+        ///    Gets or sets the comment for the image described
+        ///    by the current instance.
+        /// </summary>
+        /// <value>
+        ///    A <see cref="string" /> containing the comment of the
+        ///    current instace.
+        /// </value>
+        public override string Comment {
+            get { return Value; }
+            set { Value = value; }
+        }
 
-		#endregion
+#endregion
 
-		#region Public Methods
+#region Public Methods
 
-		/// <summary>
-		///    Gets the tag types contained in the current instance.
-		/// </summary>
-		/// <value>
-		///    Always <see cref="TagTypes.JpegComment" />.
-		/// </value>
-		public override TagTypes TagTypes {
-			get { return TagTypes.JpegComment; }
-		}
+        /// <summary>
+        ///    Gets the tag types contained in the current instance.
+        /// </summary>
+        /// <value>
+        ///    Always <see cref="TagTypes.JpegComment" />.
+        /// </value>
+        public override TagTypes TagTypes {
+            get { return TagTypes.JpegComment; }
+        }
 
-		/// <summary>
-		///    Clears the values stored in the current instance.
-		/// </summary>
-		public override void Clear ()
-		{
-			Value = null;
-		}
+        /// <summary>
+        ///    Clears the values stored in the current instance.
+        /// </summary>
+        public override void Clear ()
+        {
+            Value = null;
+        }
 
-		#endregion
-	}
+#endregion
+    }
 }

@@ -25,84 +25,84 @@
 
 namespace TagLib.IFD
 {
-	/// <summary>
-	///    A type indicator, which identifies how the corresponding value
-	///    field should be interpreted.
-	/// </summary>
-	public enum IFDEntryType : ushort
-	{
-		/// <summary>
-		///    Unknown (shouldn't occur)
-		/// </summary>
-		Unknown = 0,
+    /// <summary>
+    ///    A type indicator, which identifies how the corresponding value
+    ///    field should be interpreted.
+    /// </summary>
+    public enum IFDEntryType : ushort
+    {
+        /// <summary>
+        ///    Unknown (shouldn't occur)
+        /// </summary>
+        Unknown = 0,
 
-		/// <summary>
-		///    8-bit unsigned integer.
-		/// </summary>
-		Byte = 1,
+        /// <summary>
+        ///    8-bit unsigned integer.
+        /// </summary>
+        Byte = 1,
 
-		/// <summary>
-		///    8-bit byte that contains a 7-bit ASCII code; the last byte
-		///    must be NUL (binary zero).
-		/// </summary>
-		Ascii = 2,
+        /// <summary>
+        ///    8-bit byte that contains a 7-bit ASCII code; the last byte
+        ///    must be NUL (binary zero).
+        /// </summary>
+        Ascii = 2,
 
-		/// <summary>
-		///    16-bit (2-byte) unsigned integer.
-		/// </summary>
-		Short = 3,
+        /// <summary>
+        ///    16-bit (2-byte) unsigned integer.
+        /// </summary>
+        Short = 3,
 
-		/// <summary>
-		///    32-bit (4-byte) unsigned integer.
-		/// </summary>
-		Long = 4,
+        /// <summary>
+        ///    32-bit (4-byte) unsigned integer.
+        /// </summary>
+        Long = 4,
 
-		/// <summary>
-		///    Two LONGs: the first represents the numerator of a
-		///    fraction; the second, the denominator.
-		/// </summary>
-		Rational = 5,
+        /// <summary>
+        ///    Two LONGs: the first represents the numerator of a
+        ///    fraction; the second, the denominator.
+        /// </summary>
+        Rational = 5,
 
-		/// <summary>
-		///    An 8-bit signed (twos-complement) integer.
-		/// </summary>
-		SByte = 6,
+        /// <summary>
+        ///    An 8-bit signed (twos-complement) integer.
+        /// </summary>
+        SByte = 6,
 
-		/// <summary>
-		///    An 8-bit byte that may contain anything, depending on
-		///    the definition of the field.
-		/// </summary>
-		Undefined = 7,
+        /// <summary>
+        ///    An 8-bit byte that may contain anything, depending on
+        ///    the definition of the field.
+        /// </summary>
+        Undefined = 7,
 
-		/// <summary>
-		///    A 16-bit (2-byte) signed (twos-complement) integer.
-		/// </summary>
-		SShort = 8,
+        /// <summary>
+        ///    A 16-bit (2-byte) signed (twos-complement) integer.
+        /// </summary>
+        SShort = 8,
 
-		/// <summary>
-		///    A 32-bit (4-byte) signed (twos-complement) integer.
-		/// </summary>
-		SLong = 9,
+        /// <summary>
+        ///    A 32-bit (4-byte) signed (twos-complement) integer.
+        /// </summary>
+        SLong = 9,
 
-		/// <summary>
-		///    Two SLONG’s: the first represents the numerator of a
-		///    fraction, the second the denominator.
-		/// </summary>
-		SRational = 10,
+        /// <summary>
+        ///    Two SLONG’s: the first represents the numerator of a
+        ///    fraction, the second the denominator.
+        /// </summary>
+        SRational = 10,
 
-		/// <summary>
-		///    Single precision (4-byte) IEEE format.
-		/// </summary>
-		Float = 11,
+        /// <summary>
+        ///    Single precision (4-byte) IEEE format.
+        /// </summary>
+        Float = 11,
 
-		/// <summary>
-		///    Double precision (8-byte) IEEE format.
-		/// </summary>
-		Double = 12,
+        /// <summary>
+        ///    Double precision (8-byte) IEEE format.
+        /// </summary>
+        Double = 12,
 
-		/// <summary>
-		///    IFD
-		/// </summary>
-		IFD = 13
-	}
+        /// <summary>
+        ///    IFD
+        /// </summary>
+        IFD = 13
+    }
 }
