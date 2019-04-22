@@ -12,13 +12,13 @@
 
 <PropertyGroup>
 <Version>$(ReleaseVersion)</Version>
-<PackageId>TagLibSharp</PackageId>
+<PackageId>TagLibSharp-Lidarr</PackageId>
 <Product>TagLib#</Product>
 <Description>A library for for reading and writing metadata in media files, including video, audio, and photo formats.</Description>
 <Copyright>Copyright (c) 2006-2007 Brian Nickel.  Copyright (c) 2009-2019 Other contributors</Copyright>
 <Authors>Brian Nickel, Gabriel Burt, Stephen Shaw, etc</Authors>
 <owners />
-<PackageProjectUrl>https://github.com/mono/taglib-sharp</PackageProjectUrl>
+<PackageProjectUrl>https://github.com/lidarr/taglib-sharp</PackageProjectUrl>
 <Company />
 <PackageLicenseUrl>http://www.opensource.org/licenses/lgpl-2.1.php</PackageLicenseUrl>
 <PackageReleaseNotes>Version $(ReleaseVersion)
