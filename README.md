@@ -85,28 +85,6 @@ TagLib# is available on GitHub: <https://github.com/mono/taglib-sharp>
 
 ## Building and Running
 
-### Command Line  (Linux)
-
-#### To Build From Git:
-
-```sh
-git clone https://github.com/mono/taglib-sharp.git
-cd taglib-sharp
-./autogen.sh && make
-```
-
-#### To Build From Tarball:
-
-```
-./configure && make
-```
-
-#### To Test:
-
-```
-make test
-```
-
 ### Mono Develop  (Linux)
 
 You can build from MonoDevelop using taglib-sharp.sln
