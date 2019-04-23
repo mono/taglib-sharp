@@ -1,6 +1,15 @@
 version: 2.2.0.{build}
 image: Visual Studio 2017
 
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj;**\*.props;**\*.fsproj;**\*.xml'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+
 build_script:
 - cmd: >-
     git submodule update --init --recursive
@@ -8,8 +17,17 @@ build_script:
     msbuild /restore /m /p:Configuration=Release /clp:v=m TaglibSharp.sln /bl /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 artifacts:
-- path: msbuild.binlog
-  name: MSBuild Log
+  - path: src\TaglibSharp\bin\Release
+    type: zip
 
-on_failure:
-- appveyor PushArtifact msbuild.binlog
+deploy:
+  provider: NuGet
+  api_key:
+    secure: m49OJ7+Jdt9an3jPcTukHA==
+  skip_symbols: false
+  artifact: /.*\.nupkg/
+
+pull_requests:
+  do_not_increment_build_number: true
+
+skip_branch_with_pr: true
