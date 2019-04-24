@@ -20,6 +20,10 @@ artifacts:
   - path: src\TaglibSharp\bin\Release
     type: zip
 
+  - path: src\TaglibSharp\**\*.nupkg
+
+  - path: src\TaglibSharp\**\*.snupkg
+
 deploy:
   provider: NuGet
   api_key:
