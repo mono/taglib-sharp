@@ -297,7 +297,19 @@ namespace TagLib.IFD
 				uint value_count = entry_data.Mid (4, 4).ToUInt (is_bigendian);
 				ByteVector offset_data = entry_data.Mid (8, 4);
 
-				IFDEntry entry = CreateIFDEntry (entry_tag, type, value_count, baseOffset, offset_data, maxOffset);
+				IFDEntry entry;
+
+				try
+				{
+					entry = CreateIFDEntry(entry_tag, type, value_count, baseOffset, offset_data, maxOffset);
+				}
+				catch (OverflowException)
+				{
+					// This exception occurs when the image does not have data in the expected format at the
+					// requested location.  This has been observed in images taken with an Olympus camera.
+					file.MarkAsCorrupt("Invalid IFD entry");
+					continue;
+				}
 
 				if (entry == null)
 					continue;
