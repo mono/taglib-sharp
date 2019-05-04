@@ -23,7 +23,7 @@
     <PackageLicenseUrl>http://www.opensource.org/licenses/lgpl-2.1.php</PackageLicenseUrl>
     <PackageReleaseNotes>Version $(ReleaseVersion)
 January 21, 2019
-* Lots and lots of updates including net462 and .netstandard 2.0</PackageReleaseNotes>
+* Lots and lots of updates including net45 and .netstandard 2.0</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
