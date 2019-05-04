@@ -27,10 +27,10 @@ using System;
 namespace TagLib.Mpeg4
 {
 	/// <summary>
-	///    This class extends <see cref="Box" /> to provide an
+	///    This class extends <see cref="FullBox" /> to provide an
 	///    implementation of an Apple AdditionalInfoBox.
 	/// </summary>
-	public class AppleAdditionalInfoBox : Box
+	public class AppleAdditionalInfoBox : FullBox
 	{
 		#region Private Fields
 
@@ -66,11 +66,11 @@ namespace TagLib.Mpeg4
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
 		public AppleAdditionalInfoBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler)
-			: base (header, handler)
+			: base (header, file, handler)
 		{
 			// We do not care what is in this custom data section
 			// see: https://developer.apple.com/library/mac/#documentation/QuickTime/QTFF/QTFFChap2/qtff2.html
-			Data = LoadData (file);
+			Data = file.ReadBlock (DataSize > 0 ? DataSize : 0);
 		}
 
 		/// <summary>
@@ -78,7 +78,7 @@ namespace TagLib.Mpeg4
 		///    cref="AppleAdditionalInfoBox" /> using specified header, version and flags
 		/// </summary>
 		/// <param name="header">defines the header data</param>
-		public AppleAdditionalInfoBox (ByteVector header) : base (header)
+		public AppleAdditionalInfoBox (ByteVector header, byte version, uint flags) : base (header, version, flags)
 		{
 		}
 
