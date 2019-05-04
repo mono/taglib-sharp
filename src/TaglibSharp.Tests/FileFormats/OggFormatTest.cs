@@ -65,6 +65,7 @@ namespace TaglibSharp.Tests.FileFormats
 		public void TestCorruptionResistance ()
 		{
 			StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/a.ogg");
+			StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/missing_flag.ogg");
 		}
 	}
 }
