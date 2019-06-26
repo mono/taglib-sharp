@@ -926,7 +926,7 @@ namespace TagLib.Id3v2
 				} catch (NotImplementedException) {
 					continue;
 				} catch (CorruptFileException) {
-					throw;
+					continue;
 				}
 
 				if (frame == null)
