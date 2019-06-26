@@ -1,0 +1,3 @@
+[submodule "src/TaglibSharp.Tests/raw-samples"]
+	path = src/TaglibSharp.Tests/raw-samples
+	url = https://github.com/f-spot/raw-samples.git

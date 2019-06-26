@@ -1,0 +1,9 @@
+<Project>
+    <PropertyGroup>
+        <ReleaseVersion>2.2.0.0-beta</ReleaseVersion>
+        <RepositoryUrl>https://github.com/mono/taglib-sharp</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <TaglibSharpTargetFramework>net462;netstandard2.0</TaglibSharpTargetFramework>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+</Project>

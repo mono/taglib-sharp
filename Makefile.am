@@ -1,16 +1,7 @@
 SUBDIRS = \
-   src    \
-   examples \
-   docs
-
-if !IN_DIST
-SUBDIRS += tests
-endif
-
-DIST_SUBDIRS = \
-   src    \
-   examples \
-   docs
+       	  src    \
+       	  examples \
+       	  docs
 
 pkgconfig_in_files = taglib-sharp.pc.in
 pkgconfigdir = $(datadir)/pkgconfig
@@ -18,8 +9,7 @@ pkgconfig_DATA = $(pkgconfig_in_files:.pc.in=.pc)
 
 EXTRA_DIST =             \
    $(pkgconfig_in_files) \
-   taglib-sharp.snk \
-   taglib-sharp.sln
+   TaglibSharp.sln
 
 DISTCLEANFILES = taglib-sharp.pc
 
@@ -38,10 +28,13 @@ MAINTAINERCLEANFILES = \
 	config.guess \
 	mkinstalldirs
 
-if !IN_DIST
-test:
-	cd tests; make test; cd ..;
-endif
+
+all: sln_build
+	echo "Building TaglibSharp solution"
+
+test: all
+	nuget install NUnit.Runners -Version 3.9.0 -OutputDirectory packages
+	$(MONO) packages/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe --labels=All $(srcdir)/src/TaglibSharp.Tests/bin/Debug/$(TARGET_FRAMEWORK)/TaglibSharp.Tests.dll
 
 distwin: all
 	mkdir -p $(srcdir)/$(WINDIR)
@@ -57,19 +50,4 @@ distwin: all
 	zip -9 -r $(srcdir)/$(WINDIR).zip $(srcdir)/$(WINDIR)
 	rm -rf $(srcdir)/$(WINDIR)
 
-UPLOAD_HOST = "$$BANSHEE_USER@banshee.fm"
-UPLOAD_PATH = "web/download.banshee.fm/taglib-sharp"
-push-release: distcheck distwin
-	[[ -z "$$BANSHEE_USER" ]] && { echo "Set BANSHEE_USER"; exit 1; } || true
-	mkdir -p release
-	mv $(WINDIR).zip release
-	mv $(PACKAGE)-$(VERSION).tar.* release
-	cp ChangeLog release/$(PACKAGE)-$(VERSION).changes
-	cp NEWS release/$(PACKAGE)-$(VERSION).news
-	pushd release; sha256sum * > $(PACKAGE)-$(VERSION).sha256sum; popd
-	scp -r release $(UPLOAD_HOST):$(UPLOAD_PATH)/$(VERSION)
-	rm -rf release
-	ssh $(UPLOAD_HOST) rm -f $(UPLOAD_PATH)/LATEST-IS\*
-	ssh $(UPLOAD_HOST) touch $(UPLOAD_PATH)/LATEST-IS-$(VERSION)
-	git tag -a -m "Tag for taglib-sharp release ${VERSION}" taglib-sharp-${VERSION} || bail "Could not create tag"
-	git push origin taglib-sharp-${VERSION} || bail "Failed to push tag to remote"
+include $(top_srcdir)/build/msbuild.include
