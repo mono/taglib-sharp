@@ -64,13 +64,12 @@ namespace TagLib.Mpeg4
 		/// <exception cref="ArgumentNullException">
 		///    <paramref name="file" /> is <see langword="null" />.
 		/// </exception>
-		public UnknownBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler)
-			: base (header, handler)
+		public UnknownBox (BoxHeader header, TagLib.File file, IsoHandlerBox handler) : base (header, handler)
 		{
 			if (file == null)
 				throw new ArgumentNullException (nameof (file));
 
-			data = LoadData (file);
+			data = file.ReadBlock (DataSize > 0 ? DataSize : 0);
 		}
 
 		#endregion
