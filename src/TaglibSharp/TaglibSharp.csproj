@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(TaglibSharpTargetFramework)</TargetFrameworks>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\taglib-sharp.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\TaglibSharp.xml</DocumentationFile>
     <AssemblyName>TagLibSharp</AssemblyName>
     <RootNamespace>TagLib</RootNamespace>
     <AssemblyOriginatorKeyFile>..\..\taglib-sharp.snk</AssemblyOriginatorKeyFile>
