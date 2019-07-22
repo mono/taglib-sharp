@@ -3,9 +3,9 @@ strategy:
     linux:
       imageName: 'ubuntu-16.04'
     mac:
-      imageName: 'macos-10.13'
+      imageName: 'macos-10.14'
     windows:
-      imageName: 'vs2017-win2016'
+      imageName: 'windows-2019'
 
 pool:
   vmImage: $(imageName)
@@ -23,17 +23,11 @@ steps:
   inputs:
     command: test
     projects:  '**/*.Tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 
 - script: dotnet test <test-project> --logger trx
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
-    testRunner: VSTest
+    testRunner: nunit
     testResultsFiles: '**/*.trx'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: test
-    projects: '**/*Tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
