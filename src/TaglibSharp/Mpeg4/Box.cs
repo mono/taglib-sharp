@@ -456,6 +456,9 @@ namespace TagLib.Mpeg4
 			header.Box = this;
 			while (position < end) {
 				Box child = BoxFactory.CreateBox (file, position, header, Handler, children.Count);
+				if (child.Size == 0)
+					break;
+
 				children.Add (child);
 				position += child.Size;
 			}
