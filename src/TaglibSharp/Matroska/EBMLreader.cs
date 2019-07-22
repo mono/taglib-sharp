@@ -267,7 +267,7 @@ namespace TagLib.Matroska
 
 				return true;
 
-			} catch (Exception ex) {
+			} catch (Exception) {
 				if (throwException)
 					throw;
 				return false;
