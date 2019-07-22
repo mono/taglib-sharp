@@ -1,9 +1,9 @@
 strategy:
   matrix:
-    linux:
-      imageName: 'ubuntu-16.04'
-    mac:
-      imageName: 'macos-10.14'
+    #linux:
+    #  imageName: 'ubuntu-16.04'
+    #mac:
+    #  imageName: 'macos-10.14'
     windows:
       imageName: 'windows-2019'
 
@@ -29,5 +29,5 @@ steps:
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
-    testRunner: nunit
+    testRunner: VSTest
     testResultsFiles: '**/*.trx'
