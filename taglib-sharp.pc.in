@@ -1,0 +1,8 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+
+Name: TagLib Sharp
+Description: A .NET platform-independent library for reading and writing metadata in media files, including video, audio, and photo formats.
+Version: 2.2.0.0
+Libs: -r:${libdir}/mono/taglib-sharp/TagLibSharp.dll
