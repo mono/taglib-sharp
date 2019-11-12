@@ -21,6 +21,7 @@ namespace TaglibSharp.Tests.FileFormats
 		}
 
 		static readonly string sample_file = TestPath.Samples + "sample.m4a";
+		static readonly string sample_file_rg = TestPath.Samples + "sample_replaygain.m4a";
 		static readonly string tmp_file = TestPath.Samples + "tmpwrite.m4a";
 		static readonly string aac_broken_tags = TestPath.Samples + "bgo_658920.m4a";
 		TagLib.File file;
@@ -91,6 +92,13 @@ namespace TaglibSharp.Tests.FileFormats
 			Assert.AreEqual (6, file.Tag.Track);
 			//Assert.AreEqual(7, file.Tag.TrackCount);
 			Assert.AreEqual (1234, file.Tag.Year);
+		}
+
+		[Test]
+		public void ReadReplayGain()
+		{
+			var fileWithRg = TagLib.File.Create (sample_file_rg);
+			Assert.AreEqual(-1.43, fileWithRg.Tag.ReplayGainTrackGain, 0.01);
 		}
 
 		[Test]
