@@ -471,7 +471,7 @@ namespace TagLib.Mpeg4
 
 				if (mean_box == null || name_box == null ||
 					mean_box.Text != meanstring ||
-					name_box.Text != namestring) {
+					!name_box.Text.Equals (namestring, StringComparison.OrdinalIgnoreCase)) {
 					continue;
 				} else {
 					return (AppleDataBox)box.GetChild (BoxType.Data);
