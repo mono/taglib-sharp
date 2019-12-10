@@ -120,9 +120,11 @@ You can open it in Visual Studio by using taglib-sharp.sln
 1. Ensure NuGet packages have been restored
     1. See: <https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore>
 2. In Visual Studio, go to menu: Tools > Extensions and Updates > Online
+   (In Visual Studio 2019, use Extensions > Manage Extensions)
 3. Search: Nunit 3 Test Adapter
 4. Download and install it
 5. Open from menu: Test > Windows > Test Explorer
+   (In Visual Studio 2019, use Test > Test Explorer)
 6. You can run your tests from this panel (*not* using the "Start" button)
 7. You can debug your tests from this panel:
    1. Double click on a test. Set some breakpoints in the test in the editor panel.
@@ -134,7 +136,6 @@ You can open it in Visual Studio by using taglib-sharp.sln
     (Right-click on the project, select: "Set as StartUp Project")
 2. Just modify the "Program.cs"
 3. Set some breakpoints and hit the "Start" button
-
 
 
 ## They also use TagLib#
