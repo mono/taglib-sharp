@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.28516.95
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaglibSharp", "src\TaglibSharp\TaglibSharp.csproj", "{6B143A39-C7B2-4743-9917-92262C60E9A6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaglibSharp.Tests", "src\TaglibSharp.Tests\TaglibSharp.Tests.csproj", "{4D1C6110-D6F2-496E-BD7E-E45B7217D458}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaglibSharp.Tests", "src\TaglibSharp.Tests\TaglibSharp.Tests.csproj", "{4D1C6110-D6F2-496E-BD7E-E45B7217D458}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Debug", "src\Debug\Debug.csproj", "{AD739881-60F3-4165-9C4E-3B5CD95469F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Debug", "src\Debug\Debug.csproj", "{AD739881-60F3-4165-9C4E-3B5CD95469F1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{713FA4BF-64F6-4940-8BCD-5700356D90D3}"
 EndProject
@@ -17,9 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SetPictures", "examples\Set
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DBAF85DD-F405-4903-AF22-91FE886EF7DA}"
 	ProjectSection(SolutionItems) = preProject
-		.travis.yml = .travis.yml
-		appveyor.yml = appveyor.yml
-		azure-pipelines.yml = azure-pipelines.yml
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
 	EndProjectSection
@@ -65,25 +62,6 @@ Global
 		StartupItem = src\TaglibSharp.Tests\TaglibSharp.Tests.csproj
 		Policies = $0
 		$0.TextStylePolicy = $6
-		$1.inheritsSet = null
-		$1.scope = application/x-mdp
-		$0.StandardHeader = $2
-		$2.Text = @\n ${FileName}\n \n Author:\n      ${AuthorName} <${AuthorEmail}>\n\n Copyright (c) ${Year} ${CopyrightHolder}\n\n This library is free software; you can redistribute it and/or modify\n it under the terms of the GNU Lesser General Public License as\n published by the Free Software Foundation; either version 2.1 of the\n License, or (at your option) any later version.\n\n This library is distributed in the hope that it will be useful, but\n WITHOUT ANY WARRANTY; without even the implied warranty of\n MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU\n Lesser General Public License for more details.\n\n You should have received a copy of the GNU Lesser General Public\n License along with this library; if not, write to the Free Software\n Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-		$2.IncludeInNewFiles = True
-		$0.DotNetNamingPolicy = $3
-		$3.DirectoryNamespaceAssociation = None
-		$3.ResourceNamePolicy = FileFormatDefault
-		$4.inheritsSet = null
-		$4.scope = text/x-csharp
-		$0.CSharpFormattingPolicy = $5
-		$5.inheritsSet = Mono
-		$5.inheritsScope = text/x-csharp
-		$5.scope = text/x-csharp
-		$6.FileWidth = 120
-		$6.TabWidth = 4
-		$6.inheritsSet = Mono
-		$6.inheritsScope = text/plain
-		$6.scope = text/plain
 		version = 2.2.0.0
 		outputpath = build
 	EndGlobalSection
