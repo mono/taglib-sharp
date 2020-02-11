@@ -1563,6 +1563,9 @@ namespace TagLib
 
 			if (overwrite || target.DateTagged == null)
 				target.DateTagged = DateTagged;
+
+			if (overwrite || target.Pictures.Length == 0)
+				target.Pictures = Pictures;
 		}
 
 		/// <summary>
