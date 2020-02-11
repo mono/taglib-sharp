@@ -83,6 +83,15 @@ TagLib# is available on GitHub: <https://github.com/mono/taglib-sharp>
 * **Git:**      Get the source at <git://github.com/mono/taglib-sharp.git>
 
 
+## Installation From NuGet
+
+TagLib# is available on NuGet: <https://www.nuget.org/packages/TagLibSharp>
+
+Install from package manager:
+
+PM> Install-Package TagLibSharp -Version 2.2.0
+
+
 ## Building and Running
 
 ### Command Line  (Linux)
