@@ -1,3 +1,4 @@
+using System.Linq;
 using NUnit.Framework;
 using TagLib;
 
@@ -136,6 +137,62 @@ namespace TaglibSharp.Tests.FileFormats
 			urlLinkFile.Dispose ();
 
 			System.IO.File.Delete (tempFile);
+		}
+
+		/// <summary>
+		/// If we construct a new Id3v2 tag, then try to copy that onto a File.Tag
+		/// We observe that simple text frames are copied, but APIC and GEOB aren't
+		/// </summary>
+		[Test]
+		public void TestPicturesAreCopied ()
+		{
+			string tempFile = TestPath.Samples + "tmpwrite_sample_v2_only.mp3";
+
+			System.IO.File.Copy (sample_file, tempFile, true);
+
+			// Put a picture on the starting file
+			File file = TagLib.File.Create (tempFile);
+			var picture = new Picture (TestPath.Samples + "sample_gimp.gif") {
+				Type = PictureType.BackCover,
+				Description = "TEST description 1"
+			};
+			file.Tag.Pictures = new[] { picture };
+			file.Save ();
+
+			Assert.IsTrue (file.Tag.Pictures.Count () == 1, "File should start with 1 picture");
+
+			// Now construct a new tag with a title, APIC and GEOB frame
+
+			var tag = new TagLib.Id3v2.Tag();
+			tag.Title = "FOOBAR";
+
+			// single red dot (1x1 px red image) APIC frame found in wild
+			var redDot = new byte[] { 65, 80, 73, 67, 0, 0, 0, 155, 0, 0, 0, 105, 109, 97, 103, 101, 47, 112, 110, 103, 0, 3, 0, 137, 80, 78,
+				71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 0, 0, 0, 144, 119, 83, 222, 0, 0, 0, 4, 103, 65,
+				77, 65, 0, 0, 177, 143, 11, 252, 97, 5, 0, 0, 0, 9, 112, 72, 89, 115, 0, 0, 11, 18, 0, 0, 11, 18, 1, 210, 221, 126, 252, 0, 0, 0,
+				24, 116, 69, 88, 116, 83, 111, 102, 116, 119, 97, 114, 101, 0, 112, 97, 105, 110, 116, 46, 110, 101, 116, 32, 52, 46, 49, 46, 53,
+				100, 71, 88, 82, 0, 0, 0, 12, 73, 68, 65, 84, 24, 87, 99, 248, 47, 162, 0, 0, 3, 73, 1, 52, 163, 224, 5, 179, 0, 0, 0, 0, 73, 69,
+				78, 68, 174, 66, 96, 130 };
+			var pictureFrame = new TagLib.Id3v2.AttachmentFrame (redDot, 3);
+
+			var geobFrame = new TagLib.Id3v2.AttachmentFrame ();
+			geobFrame.MimeType = "plain/text";
+			geobFrame.Description = "random";
+			geobFrame.Type = PictureType.NotAPicture;
+			geobFrame.Data = "random text in geob";
+
+			tag.AddFrame (pictureFrame);
+			tag.AddFrame (geobFrame);
+
+			tag.CopyTo (file.Tag, false);
+
+			Assert.AreEqual ("MP3 title", file.Tag.Title, "Title shouldn't be copied if overwrite=false");
+			Assert.AreEqual (1, file.Tag.Pictures.Count (), "GEOB/APIC frames shouldn't be copied if overwrite=false");
+
+			tag.CopyTo (file.Tag, true);
+
+			Assert.AreEqual (tag.Title, file.Tag.Title, "Title wasn't copied");
+			Assert.AreEqual (tag.Pictures.Count (), file.Tag.Pictures.Count (), "GEOB/APIC frames weren't copied");
 		}
 	}
 }
