@@ -1568,6 +1568,40 @@ namespace TaglibSharp.Tests.TaggingFormats
 				});
 		}
 
+		[Test]
+		public void TestInvolvedPersonsFrame ()
+		{
+			var personFunction = new string[] {"Person1", "Function1", "Person2", "Function2"};
+			var delimiter = new string(new char[1]{'\0'});
+
+			var ipls = "";
+			foreach (var s in personFunction) {
+				ipls += s + delimiter;
+			}
+			ipls = ipls.Trim(new[] {'\0'});
+
+			ByteVector id = "IPLS";
+			var frame = new TextInformationFrame (id) {
+				Text = new string[] { ipls }
+			};
+
+			FrameTest (frame, 3,
+				delegate (Frame f, StringType e) {
+					(f as TextInformationFrame).TextEncoding = e;
+				},
+				(d, v) => new TextInformationFrame (d, v),
+
+				delegate (Frame f, string m) {
+					var g = (f as TextInformationFrame);
+					Assert.AreEqual (id, g.FrameId, m);
+					var p = g.Text[0].Split(new[] { '\0' });
+					for (var i = 0; i < p.Length; i++) {
+						Assert.AreEqual (personFunction[i], p[i], m);
+					}
+				});
+
+		}
+
 		delegate void TagTestFunc (Tag tag, string msg);
 
 		void TagTestWithSave (ref Tag tag, TagTestFunc testFunc)
