@@ -53,9 +53,8 @@ namespace TaglibSharp.Tests.FileFormats
 			if (System.IO.File.Exists (tmp_file))
 				System.IO.File.Delete (tmp_file);
 
-			File file;
 			System.IO.File.Copy (sample_file, tmp_file);
-			file = File.Create (tmp_file, readStyle);
+			var file = File.Create (tmp_file, readStyle);
 			Assert.NotNull (file);
 
 			var pics = file.Tag.Pictures;

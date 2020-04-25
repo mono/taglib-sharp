@@ -1,19 +1,17 @@
-using Gdk;
-using NUnit.Framework;
 using System;
+using System.Runtime.InteropServices;
+
+using NUnit.Framework;
+
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Advanced;
+
 using TagLib;
 
 namespace TaglibSharp.Tests.Images.Validators
 {
 	public class ImageTest
 	{
-		static ImageTest ()
-		{
-			// Initialize GDK 
-			var args = Environment.GetCommandLineArgs ();
-			Global.InitCheck (ref args);
-		}
-
 		string pre_hash;
 		string post_hash;
 
@@ -142,11 +140,19 @@ namespace TaglibSharp.Tests.Images.Validators
 
 			file.Mode = File.AccessMode.Read;
 			var v = file.ReadBlock ((int)file.Length);
-			byte[] result = null;
-			using (var buf = new Pixbuf (v.Data))
-				result = buf.SaveToBuffer ("png");
+			string md5Sum;
+
+			if (file.MimeType == "taglib/tiff") {
+				// TODO, ImageSharp doesn't support tiff yet (4/25/2020): https://github.com/SixLabors/ImageSharp/issues/12
+				md5Sum = "";// Utils.Md5Encode (v.Data);
+			} else {
+				using var image = Image.Load (v.Data);
+				byte[] result = MemoryMarshal.AsBytes (image.GetPixelSpan ()).ToArray ();
+				md5Sum = Utils.Md5Encode (result);
+			}
+
 			file.Mode = File.AccessMode.Closed;
-			return Utils.Md5Encode (result);
+			return md5Sum;
 		}
 
 		void ValidateImageData ()
