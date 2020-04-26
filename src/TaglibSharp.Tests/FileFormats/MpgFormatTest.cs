@@ -25,7 +25,8 @@ namespace TaglibSharp.Tests.FileFormats
 		public void ReadAudioProperties ()
 		{
 			Assert.AreEqual (44100, file.Properties.AudioSampleRate);
-			Assert.AreEqual (1391, file.Properties.Duration.TotalMilliseconds);
+			// NOTE, with .net core it keeps the decimal places. So, for now, we round to match .net behavior
+			Assert.AreEqual (1391, Math.Round (file.Properties.Duration.TotalMilliseconds));
 		}
 
 
