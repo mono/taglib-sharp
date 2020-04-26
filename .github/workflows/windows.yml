@@ -1,4 +1,4 @@
-name: WindowsNetCore
+name: Windows
 
 on:
   push:

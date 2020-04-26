@@ -1,4 +1,4 @@
-name: UbuntuNetCore
+name: Ubuntu
 
 on:
   push:

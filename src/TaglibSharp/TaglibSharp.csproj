@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(TaglibSharpTargetFramework)</TargetFrameworks>
+    <TargetFrameworks>$(LibTargetFrameworks)</TargetFrameworks>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\TaglibSharp.xml</DocumentationFile>
     <AssemblyName>TagLibSharp</AssemblyName>
     <RootNamespace>TagLib</RootNamespace>
@@ -31,9 +31,5 @@ July 22, 2019
 January 21, 2019
 * Lots and lots of updates including net45 and .netstandard 2.0</PackageReleaseNotes>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="All" Version="1.0.0" />
-  </ItemGroup>
 
 </Project>
