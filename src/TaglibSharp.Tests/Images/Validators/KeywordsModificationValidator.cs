@@ -12,7 +12,7 @@ namespace TaglibSharp.Tests.Images.Validators
 		readonly string[] orig_keywords;
 		readonly string[] test_keywords = { "keyword 1", "§$&§%", "99 dsf", "ഈ ヰᛥกツ" };
 
-		public KeywordsModificationValidator () : this (new string[] { }) { }
+		public KeywordsModificationValidator () : this (System.Array.Empty<string> ()) { }
 
 		public KeywordsModificationValidator (string[] orig_keywords)
 		{

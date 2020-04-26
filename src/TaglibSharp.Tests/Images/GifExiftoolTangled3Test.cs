@@ -19,7 +19,7 @@ namespace TaglibSharp.Tests.Images
 				true,
 				new GifExiftoolTangled3TestInvariantValidator (),
 				NoModificationValidator.Instance,
-				new TagKeywordsModificationValidator (new string[] { }, TagTypes.XMP, false),
+				new TagKeywordsModificationValidator (System.Array.Empty<string> (), TagTypes.XMP, false),
 				new CommentModificationValidator ("Created with GIMP"),
 				new TagCommentModificationValidator ("Created with GIMP", TagTypes.GifComment, true),
 				new RemoveMetadataValidator (TagTypes.GifComment)

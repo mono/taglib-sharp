@@ -108,7 +108,7 @@ namespace TaglibSharp.Tests.Images
 			xmp_tag.Comment = null;
 			xmp_tag.Software = test_comment;
 
-			Assert.AreEqual (new string[] { }, xmp_tag.Keywords);
+			Assert.AreEqual (Array.Empty<string> (), xmp_tag.Keywords);
 			Assert.AreEqual (null, xmp_tag.Comment);
 			Assert.AreEqual (test_comment, xmp_tag.Software);
 
@@ -119,7 +119,7 @@ namespace TaglibSharp.Tests.Images
 			xmp_tag = file.GetTag (TagTypes.XMP, false) as XmpTag;
 			Assert.IsNotNull (xmp_tag, "XMP Tag not read");
 
-			Assert.AreEqual (new string[] { }, xmp_tag.Keywords);
+			Assert.AreEqual (Array.Empty<string> (), xmp_tag.Keywords);
 			Assert.AreEqual (null, xmp_tag.Comment);
 			Assert.AreEqual (test_comment, xmp_tag.Software);
 		}

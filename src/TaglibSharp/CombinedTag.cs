@@ -349,7 +349,7 @@ namespace TagLib
 						return value;
 				}
 
-				return new string[] { };
+				return Array.Empty<string> ();
 			}
 
 			set {
@@ -389,7 +389,7 @@ namespace TagLib
 						return value;
 				}
 
-				return new string[] { };
+				return Array.Empty<string> ();
 			}
 
 			set {
@@ -430,7 +430,7 @@ namespace TagLib
 						return value;
 				}
 
-				return new string[] { };
+				return Array.Empty<string> ();
 			}
 
 			set {
@@ -474,7 +474,7 @@ namespace TagLib
 						return value;
 				}
 
-				return new string[] { };
+				return Array.Empty<string> ();
 			}
 
 			set {
@@ -515,7 +515,7 @@ namespace TagLib
 						return value;
 				}
 
-				return new string[] { };
+				return Array.Empty<string> ();
 			}
 
 			set {
@@ -554,7 +554,7 @@ namespace TagLib
 						return value;
 				}
 
-				return new string[] { };
+				return Array.Empty<string> ();
 			}
 
 			set {
@@ -593,7 +593,7 @@ namespace TagLib
 						return value;
 				}
 
-				return new string[] { };
+				return Array.Empty<string> ();
 			}
 
 			set {
@@ -788,7 +788,7 @@ namespace TagLib
 						return value;
 				}
 
-				return new string[] { };
+				return Array.Empty<string> ();
 			}
 
 			set {

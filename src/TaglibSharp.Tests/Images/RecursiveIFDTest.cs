@@ -259,7 +259,7 @@ namespace TaglibSharp.Tests.Images
 				Assert.IsNotNull (entry, "Entry 0x92D6 missing in IFD 0");
 				Assert.IsNotNull (entry as UndefinedIFDEntry, "Entry is not an undefined IFD entry!");
 				var parsed_bytes = (entry as UndefinedIFDEntry).Data.Data;
-				var bytes = new byte[] { };
+				var bytes = System.Array.Empty<byte> ();
 				Assert.AreEqual (bytes, parsed_bytes);
 			}
 			// Thumbnail.0x0103 (Compression/Short/1) "6"

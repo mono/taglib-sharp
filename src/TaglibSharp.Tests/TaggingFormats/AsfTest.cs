@@ -60,7 +60,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 				}
 			});
 
-			file.Tag.Performers = new string[0];
+			file.Tag.Performers = System.Array.Empty<string> ();
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
@@ -88,7 +88,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 				}
 			});
 
-			file.Tag.AlbumArtists = new string[0];
+			file.Tag.AlbumArtists = System.Array.Empty<string> ();
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
@@ -116,7 +116,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 				}
 			});
 
-			file.Tag.Composers = new string[0];
+			file.Tag.Composers = System.Array.Empty<string> ();
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
@@ -204,7 +204,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 				}
 			});
 
-			file.Tag.Genres = new string[0];
+			file.Tag.Genres = System.Array.Empty<string> ();
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
@@ -500,7 +500,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 				}
 			});
 
-			file.Tag.Pictures = new Picture[0];
+			file.Tag.Pictures = System.Array.Empty<Picture> ();
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);

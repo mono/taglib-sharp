@@ -1104,7 +1104,7 @@ namespace TagLib.Xmp
 		///    current instace.
 		/// </value>
 		public override string[] Keywords {
-			get { return GetCollectionNode (DC_NS, "subject") ?? new string[] { }; }
+			get { return GetCollectionNode (DC_NS, "subject") ?? Array.Empty<string> (); }
 			set { SetCollectionNode (DC_NS, "subject", value, XmpNodeType.Bag); }
 		}
 

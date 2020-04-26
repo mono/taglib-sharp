@@ -1022,7 +1022,7 @@ namespace TagLib.Id3v2
 		{
 			var frame = TextInformationFrame.Get (this, ident, false);
 
-			return frame == null ? new string[0] : frame.Text;
+			return frame == null ? Array.Empty<string> () : frame.Text;
 		}
 
 		/// <summary>
@@ -1392,7 +1392,7 @@ namespace TagLib.Id3v2
 
 				var perfref = Performers;
 				if (Performers == null)
-					return performers_role = new string[0];
+					return performers_role = Array.Empty<string> ();
 
 				// Map the instruments to the performers
 
@@ -1423,7 +1423,7 @@ namespace TagLib.Id3v2
 			}
 
 			set {
-				performers_role = value ?? new string[0];
+				performers_role = value ?? Array.Empty<string> ();
 			}
 		}
 

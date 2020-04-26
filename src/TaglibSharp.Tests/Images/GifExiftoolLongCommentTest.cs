@@ -20,7 +20,7 @@ namespace TaglibSharp.Tests.Images
 				true,
 				new GifExiftoolLongCommentTestInvariantValidator (),
 				NoModificationValidator.Instance,
-				new TagKeywordsModificationValidator (new string[] { }, TagTypes.XMP, true),
+				new TagKeywordsModificationValidator (System.Array.Empty<string> (), TagTypes.XMP, true),
 				new CommentModificationValidator (long_comment_orig),
 				new CommentModificationValidator (long_comment_orig, long_comment_test),
 				new TagCommentModificationValidator (long_comment_orig, TagTypes.GifComment, true),
