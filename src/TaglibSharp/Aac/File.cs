@@ -171,19 +171,12 @@ namespace TagLib.Aac
 			if (t != null || !create)
 				return t;
 
-			switch (type) {
-			case TagTypes.Id3v1:
-				return EndTag.AddTag (type, Tag);
-
-			case TagTypes.Id3v2:
-				return StartTag.AddTag (type, Tag);
-
-			case TagTypes.Ape:
-				return EndTag.AddTag (type, Tag);
-
-			default:
-				return null;
-			}
+			return type switch {
+				TagTypes.Id3v1 => EndTag.AddTag (type, Tag),
+				TagTypes.Id3v2 => StartTag.AddTag (type, Tag),
+				TagTypes.Ape => EndTag.AddTag (type, Tag),
+				_ => null
+			};
 		}
 
 		#endregion

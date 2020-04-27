@@ -942,12 +942,10 @@ namespace TagLib.Png
 		{
 			// there is currently just one compression method specified
 			// for PNG.
-			switch (compression_method) {
-			case 0:
-				return Inflate (compressed_data);
-			default:
-				return null;
-			}
+			return compression_method switch {
+				0 => Inflate (compressed_data),
+				_ => null
+			};
 		}
 
 		#endregion

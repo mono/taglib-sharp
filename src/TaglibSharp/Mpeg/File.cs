@@ -267,19 +267,12 @@ namespace TagLib.Mpeg
 			if (t != null || !create)
 				return t;
 
-			switch (type) {
-			case TagTypes.Id3v1:
-				return EndTag.AddTag (type, Tag);
-
-			case TagTypes.Id3v2:
-				return EndTag.AddTag (type, Tag);
-
-			case TagTypes.Ape:
-				return EndTag.AddTag (type, Tag);
-
-			default:
-				return null;
-			}
+			return type switch {
+				TagTypes.Id3v1 => EndTag.AddTag (type, Tag),
+				TagTypes.Id3v2 => EndTag.AddTag (type, Tag),
+				TagTypes.Ape => EndTag.AddTag (type, Tag),
+				_ => null
+			};
 		}
 
 		#endregion

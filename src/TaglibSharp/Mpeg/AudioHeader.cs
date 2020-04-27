@@ -292,14 +292,11 @@ namespace TagLib.Mpeg
 		/// </value>
 		public Version Version {
 			get {
-				switch ((flags >> 19) & 0x03) {
-				case 0:
-					return Version.Version25;
-				case 2:
-					return Version.Version2;
-				default:
-					return Version.Version1;
-				}
+				return ((flags >> 19) & 0x03) switch {
+					0 => Version.Version25,
+					2 => Version.Version2,
+					_ => Version.Version1
+				};
 			}
 		}
 
@@ -314,14 +311,11 @@ namespace TagLib.Mpeg
 		/// </value>
 		public int AudioLayer {
 			get {
-				switch ((flags >> 17) & 0x03) {
-				case 1:
-					return 3;
-				case 2:
-					return 2;
-				default:
-					return 1;
-				}
+				return ((flags >> 17) & 0x03) switch {
+					1 => 3,
+					2 => 2,
+					_ => 1
+				};
 			}
 		}
 
