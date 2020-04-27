@@ -65,10 +65,7 @@ namespace TagLib.Riff
 		/// </exception>
 		protected ListTag (List fields)
 		{
-			if (fields == null)
-				throw new ArgumentNullException (nameof (fields));
-
-			this.fields = fields;
+			this.fields = fields ?? throw new ArgumentNullException (nameof (fields));
 		}
 
 		/// <summary>

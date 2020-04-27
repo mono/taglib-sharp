@@ -124,13 +124,11 @@ namespace TagLib.Ape
 		/// </exception>
 		public Item (string key, string value)
 		{
-			if (key == null)
-				throw new ArgumentNullException (nameof (key));
+			Key = key ?? throw new ArgumentNullException (nameof (key));
 
 			if (value == null)
 				throw new ArgumentNullException (nameof (value));
 
-			Key = key;
 			text = new [] { value };
 		}
 
@@ -153,13 +151,11 @@ namespace TagLib.Ape
 		/// </exception>
 		public Item (string key, params string[] value)
 		{
-			if (key == null)
-				throw new ArgumentNullException (nameof (key));
+			Key = key ?? throw new ArgumentNullException (nameof (key));
 
 			if (value == null)
 				throw new ArgumentNullException (nameof (value));
 
-			Key = key;
 			text = (string[])value.Clone ();
 		}
 
@@ -184,13 +180,11 @@ namespace TagLib.Ape
 		[Obsolete ("Use Item(string,string[])")]
 		public Item (string key, StringCollection value)
 		{
-			if (key == null)
-				throw new ArgumentNullException (nameof (key));
+			Key = key ?? throw new ArgumentNullException (nameof (key));
 
 			if (value == null)
 				throw new ArgumentNullException (nameof (value));
 
-			Key = key;
 			text = value.ToArray ();
 		}
 

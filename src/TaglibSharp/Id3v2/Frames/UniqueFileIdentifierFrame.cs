@@ -63,10 +63,8 @@ namespace TagLib.Id3v2
 		public UniqueFileIdentifierFrame (string owner, ByteVector identifier)
 			: base (FrameType.UFID, 4)
 		{
-			if (owner == null)
-				throw new ArgumentNullException (nameof (owner));
+			Owner = owner ?? throw new ArgumentNullException (nameof (owner));
 
-			Owner = owner;
 			Identifier = identifier;
 		}
 
