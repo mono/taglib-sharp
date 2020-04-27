@@ -1265,8 +1265,8 @@ namespace TagLib.Matroska
 			set {
 				if (value == null) {
 					Tags.Attachments = null;
-				} else if (value is Attachment[]) {
-					Tags.Attachments = (Attachment[])value;
+				} else if (value is Attachment[] attachments) {
+					Tags.Attachments = attachments;
 				} else {
 					var attach = new Attachment[value.Length];
 					for (int i = 0; i < attach.Length; i++) {
