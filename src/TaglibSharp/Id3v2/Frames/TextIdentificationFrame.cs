@@ -642,7 +642,7 @@ namespace TagLib.Id3v2
 			if (text.Length < 10 || text[4] != '-' || text[7] != '-')
 				return base.Render (version);
 
-			ByteVector output = new ByteVector ();
+			var output = new ByteVector ();
 			TextInformationFrame f;
 
 			f = new TextInformationFrame (FrameType.TYER, encoding) {
@@ -848,9 +848,9 @@ namespace TagLib.Id3v2
 			// read the string data type (the first byte of the
 			// field data)
 			encoding = (StringType)data[0];
-			List<string> field_list = new List<string> ();
+			var field_list = new List<string> ();
 
-			ByteVector delim = ByteVector.TextDelimiter (encoding);
+			var delim = ByteVector.TextDelimiter (encoding);
 
 			if (raw_version > 3 || FrameId == FrameType.TXXX) {
 				field_list.AddRange (data.ToStrings (encoding, 1));
@@ -927,7 +927,7 @@ namespace TagLib.Id3v2
 				return raw_data;
 
 			StringType encoding = CorrectEncoding (TextEncoding, version);
-			ByteVector v = new ByteVector ((byte)encoding);
+			var v = new ByteVector ((byte)encoding);
 			string[] text = text_fields;
 
 			bool txxx = FrameId == FrameType.TXXX;
@@ -956,7 +956,7 @@ namespace TagLib.Id3v2
 				}
 			} else if (FrameId == FrameType.TCON) {
 				bool prev_value_indexed = true;
-				StringBuilder data = new StringBuilder ();
+				var data = new StringBuilder ();
 				foreach (string s in text) {
 					if (!prev_value_indexed) {
 						data.Append (";").Append (s);

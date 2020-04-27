@@ -239,7 +239,7 @@ namespace TagLib.Mpeg4
 
 			while (offset < DataSize) // Loop through all trailing Descriptors Tags
 			{
-				DescriptorTag tag = (DescriptorTag)box_data[offset++];
+				var tag = (DescriptorTag)box_data[offset++];
 				switch (tag) {
 				case DescriptorTag.DecoderConfigDescrTag: // DecoderConfigDescriptor
 					{

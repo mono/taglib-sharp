@@ -239,7 +239,7 @@ namespace TagLib.Id3v2
 		/// </returns>
 		protected override ByteVector RenderFields (byte version)
 		{
-			ByteVector data = ByteVector.FromULong (PlayCount);
+			var data = ByteVector.FromULong (PlayCount);
 			while (data.Count > 0 && data[0] == 0)
 				data.RemoveAt (0);
 

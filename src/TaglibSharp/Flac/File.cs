@@ -243,7 +243,7 @@ namespace TagLib.Flac
 						new ByteVector ((int)padding_size)));
 
 				// Render the blocks.
-				ByteVector block_data = new ByteVector ();
+				var block_data = new ByteVector ();
 				for (int i = 0; i < new_blocks.Count; i++)
 					block_data.Add (new_blocks[i].Render (
 						i == new_blocks.Count - 1));
@@ -468,7 +468,7 @@ namespace TagLib.Flac
 		/// </exception>
 		IList<Block> ReadBlocks (ref long start, out long end, BlockMode mode, params BlockType[] types)
 		{
-			List<Block> blocks = new List<Block> ();
+			var blocks = new List<Block> ();
 
 			long start_position = Find ("fLaC", start);
 
@@ -594,7 +594,7 @@ namespace TagLib.Flac
 			if (!create)
 				return null;
 
-			Ogg.XiphComment c = new Ogg.XiphComment ();
+			var c = new Ogg.XiphComment ();
 
 			if (copy != null)
 				copy.CopyTo (c, true);

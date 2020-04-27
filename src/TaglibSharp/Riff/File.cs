@@ -234,12 +234,12 @@ namespace TagLib.Riff
 
 			Mode = AccessMode.Write;
 			try {
-				ByteVector data = new ByteVector ();
+				var data = new ByteVector ();
 
 				// Enclose the Id3v2 tag in an "id3 " item and
 				// embed it as the first tag.
 				if (id32_tag != null) {
-					ByteVector tag_data = id32_tag.Render ();
+					var tag_data = id32_tag.Render ();
 					if (tag_data.Count > 10) {
 						if (tag_data.Count % 2 == 1)
 							tag_data.Add (0);

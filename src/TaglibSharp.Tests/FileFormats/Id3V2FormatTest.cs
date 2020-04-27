@@ -160,7 +160,7 @@ namespace TaglibSharp.Tests.FileFormats
 			System.IO.File.Copy (sample_file, tempFile, true);
 
 			// Put a picture on the starting file
-			File file = TagLib.File.Create (tempFile);
+			var file = TagLib.File.Create (tempFile);
 			var picture = new Picture (TestPath.Samples + "sample_gimp.gif") {
 				Type = PictureType.BackCover,
 				Description = "TEST description 1"
