@@ -200,9 +200,9 @@ namespace TagLib.Mpeg4
 			StreamId = box_data.Mid (offset, 2).ToUShort ();
 			offset += 2; // Done with ES_ID
 
-			stream_dependence_flag = ((byte)((box_data[offset] >> 7) & 0x1) == 0x1 ? true : false); // 1st bit
-			URL_flag = ((byte)((box_data[offset] >> 6) & 0x1) == 0x1 ? true : false); // 2nd bit
-			ocr_stream_flag = ((byte)((box_data[offset] >> 5) & 0x1) == 0x1 ? true : false); // 3rd bit
+			stream_dependence_flag = (byte)((box_data[offset] >> 7) & 0x1) == 0x1; // 1st bit
+			URL_flag = ((byte)((box_data[offset] >> 6) & 0x1) == 0x1); // 2nd bit
+			ocr_stream_flag = ((byte)((box_data[offset] >> 5) & 0x1) == 0x1); // 3rd bit
 			StreamPriority = (byte)(box_data[offset++] & 0x1F); // Last 5 bits and we're done with this byte
 
 			if (stream_dependence_flag) {
@@ -251,7 +251,7 @@ namespace TagLib.Mpeg4
 						ObjectTypeId = box_data[offset++];
 
 						StreamType = (byte)(box_data[offset] >> 2); // First 6 bits
-						upStream = ((byte)((box_data[offset++] >> 1) & 0x1) == 0x1 ? true : false); // 7th bit and we're done with the stream bits
+						upStream = (byte)((box_data[offset++] >> 1) & 0x1) == 0x1; // 7th bit and we're done with the stream bits
 
 						BufferSizeDB = box_data.Mid (offset, 3).ToUInt ();
 						offset += 3; // Done with bufferSizeDB
