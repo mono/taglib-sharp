@@ -264,9 +264,10 @@ namespace TagLib.Id3v2
 		/// </returns>
 		public override Frame Clone ()
 		{
-			PopularimeterFrame frame = new PopularimeterFrame (user);
-			frame.PlayCount = PlayCount;
-			frame.Rating = Rating;
+			var frame = new PopularimeterFrame (user) {
+				PlayCount = PlayCount,
+				Rating = Rating
+			};
 			return frame;
 		}
 

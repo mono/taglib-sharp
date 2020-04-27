@@ -355,8 +355,9 @@ namespace TagLib.Riff
 			switch (type) {
 			case TagTypes.Id3v2:
 				if (id32_tag == null && create) {
-					id32_tag = new Id3v2.Tag ();
-					id32_tag.Version = 4;
+					id32_tag = new Id3v2.Tag {
+						Version = 4
+					};
 					id32_tag.Flags |= Id3v2.HeaderFlags.FooterPresent;
 					this.tag.CopyTo (id32_tag, true);
 				}

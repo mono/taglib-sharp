@@ -645,22 +645,21 @@ namespace TagLib.Id3v2
 			ByteVector output = new ByteVector ();
 			TextInformationFrame f;
 
-			f = new TextInformationFrame (FrameType.TYER, encoding);
-			f.Text = new [] { text.Substring (0, 4) };
+			f = new TextInformationFrame (FrameType.TYER, encoding) {
+				Text = new[] {text.Substring (0, 4)}
+			};
 			output.Add (f.Render (version));
 
-			f = new TextInformationFrame (FrameType.TDAT, encoding);
-			f.Text = new [] {
-				text.Substring (5, 2) + text.Substring (8, 2)
+			f = new TextInformationFrame (FrameType.TDAT, encoding) {
+				Text = new[] {text.Substring (5, 2) + text.Substring (8, 2)}
 			};
 			output.Add (f.Render (version));
 
 			if (text.Length < 16 || text[10] != 'T' || text[13] != ':')
 				return output;
 
-			f = new TextInformationFrame (FrameType.TIME, encoding);
-			f.Text = new [] {
-				text.Substring (11, 2) + text.Substring (14, 2)
+			f = new TextInformationFrame (FrameType.TIME, encoding) {
+				Text = new[] {text.Substring (11, 2) + text.Substring (14, 2)}
 			};
 			output.Add (f.Render (version));
 

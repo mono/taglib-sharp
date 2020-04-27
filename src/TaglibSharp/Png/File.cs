@@ -661,9 +661,10 @@ namespace TagLib.Png
 			var parts = value.Split (new[] { '\n' });
 			if (parts.Length < 4)
 				return null;
-			var profile = new RawProfile ();
-			profile.Name = parts [1];
-			profile.LengthText = parts [2];
+			var profile = new RawProfile {
+				Name = parts[1],
+				LengthText = parts[2]
+			};
 
 			for (int i = 3; i < parts.Length; i++) {
 				var buffer = new Byte[parts [i].Length];

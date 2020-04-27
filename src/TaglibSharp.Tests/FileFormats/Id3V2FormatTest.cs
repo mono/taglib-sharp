@@ -172,8 +172,9 @@ namespace TaglibSharp.Tests.FileFormats
 
 			// Now construct a new tag with a title, APIC and GEOB frame
 
-			var tag = new TagLib.Id3v2.Tag();
-			tag.Title = "FOOBAR";
+			var tag = new TagLib.Id3v2.Tag {
+				Title = "FOOBAR"
+			};
 
 			// single red dot (1x1 px red image) APIC frame found in wild
 			var redDot = new byte[] { 65, 80, 73, 67, 0, 0, 0, 155, 0, 0, 0, 105, 109, 97, 103, 101, 47, 112, 110, 103, 0, 3, 0, 137, 80, 78,
@@ -184,11 +185,12 @@ namespace TaglibSharp.Tests.FileFormats
 				78, 68, 174, 66, 96, 130 };
 			var pictureFrame = new TagLib.Id3v2.AttachmentFrame (redDot, 3);
 
-			var geobFrame = new TagLib.Id3v2.AttachmentFrame ();
-			geobFrame.MimeType = "plain/text";
-			geobFrame.Description = "random";
-			geobFrame.Type = PictureType.NotAPicture;
-			geobFrame.Data = "random text in geob";
+			var geobFrame = new TagLib.Id3v2.AttachmentFrame {
+				MimeType = "plain/text",
+				Description = "random",
+				Type = PictureType.NotAPicture,
+				Data = "random text in geob"
+			};
 
 			tag.AddFrame (pictureFrame);
 			tag.AddFrame (geobFrame);
