@@ -1,6 +1,8 @@
 using NUnit.Framework;
+
 using TagLib;
 using TagLib.Aac;
+
 using File = TagLib.File;
 
 namespace TaglibSharp.Tests.FileFormats
@@ -16,6 +18,13 @@ namespace TaglibSharp.Tests.FileFormats
 		public void Init ()
 		{
 			file = File.Create (sample_file);
+		}
+
+		[OneTimeTearDown]
+		public void TearDown ()
+		{
+			if (System.IO.File.Exists (tmp_file))
+				System.IO.File.Delete (tmp_file);
 		}
 
 		[Test]

@@ -1,10 +1,12 @@
 using NUnit.Framework;
+
 using TagLib;
 using TagLib.IFD;
 using TagLib.IFD.Entries;
 using TagLib.IFD.Tags;
 using TagLib.Jpeg;
 using TagLib.Xmp;
+
 using File = TagLib.File;
 
 namespace TaglibSharp.Tests.FileFormats
@@ -24,6 +26,11 @@ namespace TaglibSharp.Tests.FileFormats
 		public void Init ()
 		{
 			file = File.Create (sample_file) as TagLib.Image.File;
+		}
+
+		[OneTimeTearDown]
+		public void TearDown ()
+		{
 		}
 
 		[Test]
