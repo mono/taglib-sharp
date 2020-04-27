@@ -432,8 +432,9 @@ namespace TagLib.Mpeg
 		/// </exception>
 		protected void FindMarker (ref long position, Marker marker)
 		{
-			ByteVector packet = new ByteVector (MarkerStart);
-			packet.Add ((byte)marker);
+			var packet = new ByteVector (MarkerStart) {
+				(byte) marker
+			};
 			position = Find (packet, position);
 
 			if (position < 0)
@@ -458,8 +459,9 @@ namespace TagLib.Mpeg
 		/// </exception>
 		protected void RFindMarker (ref long position, Marker marker)
 		{
-			ByteVector packet = new ByteVector (MarkerStart);
-			packet.Add ((byte)marker);
+			var packet = new ByteVector (MarkerStart) {
+				(byte) marker
+			};
 			position = RFind (packet, position);
 
 			if (position < 0)

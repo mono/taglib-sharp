@@ -738,10 +738,11 @@ namespace TagLib.Gif
 			if (comment == null)
 				return null;
 
-			ByteVector comment_data = new ByteVector ();
+			ByteVector comment_data = new ByteVector {
+				new byte[] {0x21, 0xFE}
+			};
 
 			// Add Extension Introducer (0x21) and Comment Label (0xFE)
-			comment_data.Add (new byte[] { 0x21, 0xFE });
 
 			// Add data of comment in sub-blocks of max length 256.
 			ByteVector comment_bytes = new ByteVector (comment);

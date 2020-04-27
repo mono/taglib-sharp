@@ -174,9 +174,10 @@ namespace TagLib.Ogg.Codecs
 			if (comment == null)
 				throw new ArgumentNullException (nameof (comment));
 
-			ByteVector data = new ByteVector ((byte)0x03);
-			data.Add (id);
-			data.Add (comment.Render (true));
+			var data = new ByteVector ((byte) 0x03) {
+				id,
+				comment.Render (true)
+			};
 			if (packets.Count > 1 && PacketType (packets[1]) == 0x03)
 				packets[1] = data;
 			else
