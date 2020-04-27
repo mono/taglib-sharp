@@ -244,10 +244,7 @@ namespace TagLib
 		/// </exception>
 		protected File (IFileAbstraction abstraction)
 		{
-			if (abstraction == null)
-				throw new ArgumentNullException (nameof (abstraction));
-
-			file_abstraction = abstraction;
+			file_abstraction = abstraction ?? throw new ArgumentNullException (nameof (abstraction));
 		}
 
 		#endregion
@@ -1557,10 +1554,7 @@ namespace TagLib
 			/// </exception>
 			public LocalFileAbstraction (string path)
 			{
-				if (path == null)
-					throw new ArgumentNullException (nameof (path));
-
-				name = path;
+				name = path ?? throw new ArgumentNullException (nameof (path));
 			}
 
 			/// <summary>

@@ -1,5 +1,7 @@
-using NUnit.Framework;
 using System;
+
+using NUnit.Framework;
+
 using TagLib;
 
 namespace TaglibSharp.Tests.FileFormats

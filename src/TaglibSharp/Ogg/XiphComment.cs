@@ -76,7 +76,7 @@ namespace TagLib.Ogg
 		/// <summary>
 		///    Cached empty pictures array.
 		/// </summary>
-		static readonly IPicture[] EMPTY_PICTURES = new IPicture[0];
+		static readonly IPicture[] EMPTY_PICTURES = Array.Empty<IPicture> ();
 
 		#endregion
 
@@ -142,7 +142,7 @@ namespace TagLib.Ogg
 			EnsurePictureFieldsClean (key);
 
 			if (!field_list.ContainsKey (key))
-				return new string[0];
+				return Array.Empty<string> ();
 
 			return (string[])field_list[key].Clone ();
 		}
@@ -1671,7 +1671,7 @@ namespace TagLib.Ogg
 			field_list.Clear ();
 
 			// clear pictures
-			pictures = new IPicture[0];
+			pictures = Array.Empty<IPicture> ();
 			picture_fields_dirty = false;
 		}
 

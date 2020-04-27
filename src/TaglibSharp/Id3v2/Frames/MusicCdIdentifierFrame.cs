@@ -279,7 +279,7 @@ namespace TagLib.Id3v2
 		/// </returns>
 		protected override ByteVector RenderFields (byte version)
 		{
-			return Data != null ? Data : new ByteVector ();
+			return Data ?? new ByteVector ();
 		}
 
 		#endregion

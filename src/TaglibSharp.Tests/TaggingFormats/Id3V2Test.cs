@@ -68,7 +68,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 					}
 				});
 
-				tag.Performers = new string[0];
+				tag.Performers = System.Array.Empty<string> ();
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
@@ -99,7 +99,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 					}
 				});
 
-				tag.AlbumArtists = new string[0];
+				tag.AlbumArtists = System.Array.Empty<string> ();
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
@@ -130,7 +130,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 					}
 				});
 
-				tag.Composers = new string[0];
+				tag.Composers = System.Array.Empty<string> ();
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
@@ -237,7 +237,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 					}
 				});
 
-				tag.Genres = new string[0];
+				tag.Genres = System.Array.Empty<string> ();
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
@@ -567,7 +567,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 					}
 				});
 
-				tag.Pictures = new Picture[0];
+				tag.Pictures = System.Array.Empty<Picture> ();
 
 				TagTestWithSave (ref tag, delegate (Tag t, string m) {
 					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);

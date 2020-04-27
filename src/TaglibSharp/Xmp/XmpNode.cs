@@ -69,10 +69,7 @@ namespace TagLib.Xmp
 				if (name != null)
 					throw new Exception ("Cannot change named node");
 
-				if (value == null)
-					throw new ArgumentException ("value");
-
-				name = value;
+				name = value ?? throw new ArgumentException ("value");
 			}
 		}
 

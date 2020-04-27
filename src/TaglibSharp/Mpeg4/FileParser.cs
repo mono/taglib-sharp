@@ -110,10 +110,8 @@ namespace TagLib.Mpeg4
 		/// </exception>
 		public FileParser (TagLib.File file)
 		{
-			if (file == null)
-				throw new ArgumentNullException (nameof (file));
+			this.file = file ?? throw new ArgumentNullException (nameof (file));
 
-			this.file = file;
 			first_header = new BoxHeader (file, 0);
 
 			if (first_header.BoxType != "ftyp")

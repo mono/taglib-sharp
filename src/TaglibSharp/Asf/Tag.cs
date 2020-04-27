@@ -430,7 +430,7 @@ namespace TagLib.Asf
 		static string[] SplitAndClean (string s)
 		{
 			if (s == null || s.Trim ().Length == 0)
-				return new string[0];
+				return Array.Empty<string> ();
 
 			string[] result = s.Split (';');
 
@@ -777,7 +777,7 @@ namespace TagLib.Asf
 				string value = GetDescriptorString ("WM/Genre", "WM/GenreID", "Genre");
 
 				if (value == null || value.Trim ().Length == 0)
-					return new string[] { };
+					return Array.Empty<string> ();
 
 				string[] result = value.Split (';');
 

@@ -289,10 +289,8 @@ namespace TagLib.Id3v2
 		public AttachmentFrame (File.IFileAbstraction abstraction, long offset, long size, FrameHeader header, byte version)
 			: base (header)
 		{
-			if (abstraction == null)
-				throw new ArgumentNullException (nameof (abstraction));
+			file = abstraction ?? throw new ArgumentNullException (nameof (abstraction));
 
-			file = abstraction;
 			stream_offset = offset;
 			stream_size = size;
 			raw_version = version;
@@ -464,7 +462,7 @@ namespace TagLib.Id3v2
 					Load ();
 
 				ParseRawData ();
-				return data != null ? data : new ByteVector ();
+				return data ?? new ByteVector ();
 			}
 			set {
 				if (file != null)

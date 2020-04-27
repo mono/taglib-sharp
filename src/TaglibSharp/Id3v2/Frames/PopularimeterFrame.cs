@@ -239,7 +239,7 @@ namespace TagLib.Id3v2
 		/// </returns>
 		protected override ByteVector RenderFields (byte version)
 		{
-			ByteVector data = ByteVector.FromULong (PlayCount);
+			var data = ByteVector.FromULong (PlayCount);
 			while (data.Count > 0 && data[0] == 0)
 				data.RemoveAt (0);
 
@@ -264,9 +264,10 @@ namespace TagLib.Id3v2
 		/// </returns>
 		public override Frame Clone ()
 		{
-			PopularimeterFrame frame = new PopularimeterFrame (user);
-			frame.PlayCount = PlayCount;
-			frame.Rating = Rating;
+			var frame = new PopularimeterFrame (user) {
+				PlayCount = PlayCount,
+				Rating = Rating
+			};
 			return frame;
 		}
 

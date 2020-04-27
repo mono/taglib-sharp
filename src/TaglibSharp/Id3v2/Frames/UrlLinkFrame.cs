@@ -118,7 +118,7 @@ namespace TagLib.Id3v2
 		/// <summary>
 		///    Contains the text fields.
 		/// </summary>
-		string[] text_fields = new string[0];
+		string[] text_fields = Array.Empty<string> ();
 
 		/// <summary>
 		///    Contains the raw data from the frame, or
@@ -238,7 +238,7 @@ namespace TagLib.Id3v2
 				raw_data = null;
 				text_fields = value != null ?
 				  (string[])value.Clone () :
-				  new string[0];
+				  Array.Empty<string> ();
 			}
 		}
 
@@ -642,7 +642,7 @@ namespace TagLib.Id3v2
 			get {
 				string[] text = base.Text;
 				if (text.Length < 2)
-					return new string[0];
+					return Array.Empty<string> ();
 
 				string[] new_text = new string[text.Length - 1];
 				for (int i = 0; i < new_text.Length; i++)

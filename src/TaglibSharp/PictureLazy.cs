@@ -137,11 +137,8 @@ namespace TagLib
 		/// </exception>
 		public PictureLazy (File.IFileAbstraction abstraction, long offset = 0, long size = -1)
 		{
-			if (abstraction == null)
-				throw new ArgumentNullException (nameof (abstraction));
+			file = abstraction ?? throw new ArgumentNullException (nameof (abstraction));
 
-
-			file = abstraction;
 			stream_offset = offset;
 			stream_size = size;
 

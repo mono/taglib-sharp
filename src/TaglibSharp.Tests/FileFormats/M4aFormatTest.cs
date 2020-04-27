@@ -1,8 +1,11 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+
+using NUnit.Framework;
+
 using TagLib;
 using TagLib.Mpeg4;
+
 using File = TagLib.Mpeg4.File;
 
 namespace TaglibSharp.Tests.FileFormats
@@ -30,6 +33,13 @@ namespace TaglibSharp.Tests.FileFormats
 		public void Init ()
 		{
 			file = TagLib.File.Create (sample_file);
+		}
+
+		[OneTimeTearDown]
+		public void TearDown ()
+		{
+			if (System.IO.File.Exists (tmp_file))
+				System.IO.File.Delete (tmp_file);
 		}
 
 		[Test]

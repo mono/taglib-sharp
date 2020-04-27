@@ -197,16 +197,14 @@ namespace TagLib.Flac
 
 				// Get all the blocks, but don't read the data for ones
 				// we're filling with stored data.
-				IList<Block> old_blocks = ReadBlocks (ref metadata_start,
-					out var metadata_end, BlockMode.Blacklist,
+				IList<Block> old_blocks = ReadBlocks (ref metadata_start, out var metadata_end, BlockMode.Blacklist,
 					BlockType.XiphComment, BlockType.Picture);
 
 				// Create new vorbis comments is they don't exist.
 				GetTag (TagTypes.Xiph, true);
 
 				// Create new blocks and add the basics.
-				var new_blocks = new List<Block> ();
-				new_blocks.Add (old_blocks[0]);
+				var new_blocks = new List<Block> { old_blocks[0] };
 
 				// Add blocks we don't deal with from the file.
 				foreach (Block block in old_blocks)
@@ -245,7 +243,7 @@ namespace TagLib.Flac
 						new ByteVector ((int)padding_size)));
 
 				// Render the blocks.
-				ByteVector block_data = new ByteVector ();
+				var block_data = new ByteVector ();
 				for (int i = 0; i < new_blocks.Count; i++)
 					block_data.Add (new_blocks[i].Render (
 						i == new_blocks.Count - 1));
@@ -296,19 +294,12 @@ namespace TagLib.Flac
 			if (t != null || !create)
 				return t;
 
-			switch (type) {
-			case TagTypes.Id3v1:
-				return EndTag.AddTag (type, Tag);
-
-			case TagTypes.Id3v2:
-				return StartTag.AddTag (type, Tag);
-
-			case TagTypes.Ape:
-				return EndTag.AddTag (type, Tag);
-
-			default:
-				return null;
-			}
+			return type switch {
+				TagTypes.Id3v1 => EndTag.AddTag (type, Tag),
+				TagTypes.Id3v2 => StartTag.AddTag (type, Tag),
+				TagTypes.Ape => EndTag.AddTag (type, Tag),
+				_ => null
+			};
 		}
 
 		/// <summary>
@@ -477,7 +468,7 @@ namespace TagLib.Flac
 		/// </exception>
 		IList<Block> ReadBlocks (ref long start, out long end, BlockMode mode, params BlockType[] types)
 		{
-			List<Block> blocks = new List<Block> ();
+			var blocks = new List<Block> ();
 
 			long start_position = Find ("fLaC", start);
 
@@ -603,7 +594,7 @@ namespace TagLib.Flac
 			if (!create)
 				return null;
 
-			Ogg.XiphComment c = new Ogg.XiphComment ();
+			var c = new Ogg.XiphComment ();
 
 			if (copy != null)
 				copy.CopyTo (c, true);

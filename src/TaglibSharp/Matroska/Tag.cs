@@ -836,7 +836,7 @@ namespace TagLib.Matroska
 				string value = GetString ("GENRE");
 
 				if (value == null || value.Trim ().Length == 0)
-					return new string[] { };
+					return Array.Empty<string> ();
 
 				string[] result = value.Split (';');
 
@@ -1265,8 +1265,8 @@ namespace TagLib.Matroska
 			set {
 				if (value == null) {
 					Tags.Attachments = null;
-				} else if (value is Attachment[]) {
-					Tags.Attachments = (Attachment[])value;
+				} else if (value is Attachment[] attachments) {
+					Tags.Attachments = attachments;
 				} else {
 					var attach = new Attachment[value.Length];
 					for (int i = 0; i < attach.Length; i++) {

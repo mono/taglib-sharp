@@ -382,7 +382,7 @@ namespace TagLib.Id3v2
 		/// <summary>
 		///    Contains the text fields.
 		/// </summary>
-		string[] text_fields = new string[0];
+		string[] text_fields = Array.Empty<string> ();
 
 		/// <summary>
 		///    Contains the raw data from the frame, or <see
@@ -550,7 +550,7 @@ namespace TagLib.Id3v2
 				raw_data = null;
 				text_fields = value != null ?
 					(string[])value.Clone () :
-					new string[0];
+					Array.Empty<string> ();
 			}
 		}
 
@@ -642,25 +642,24 @@ namespace TagLib.Id3v2
 			if (text.Length < 10 || text[4] != '-' || text[7] != '-')
 				return base.Render (version);
 
-			ByteVector output = new ByteVector ();
+			var output = new ByteVector ();
 			TextInformationFrame f;
 
-			f = new TextInformationFrame (FrameType.TYER, encoding);
-			f.Text = new [] { text.Substring (0, 4) };
+			f = new TextInformationFrame (FrameType.TYER, encoding) {
+				Text = new[] {text.Substring (0, 4)}
+			};
 			output.Add (f.Render (version));
 
-			f = new TextInformationFrame (FrameType.TDAT, encoding);
-			f.Text = new [] {
-				text.Substring (5, 2) + text.Substring (8, 2)
+			f = new TextInformationFrame (FrameType.TDAT, encoding) {
+				Text = new[] {text.Substring (5, 2) + text.Substring (8, 2)}
 			};
 			output.Add (f.Render (version));
 
 			if (text.Length < 16 || text[10] != 'T' || text[13] != ':')
 				return output;
 
-			f = new TextInformationFrame (FrameType.TIME, encoding);
-			f.Text = new [] {
-				text.Substring (11, 2) + text.Substring (14, 2)
+			f = new TextInformationFrame (FrameType.TIME, encoding) {
+				Text = new[] {text.Substring (11, 2) + text.Substring (14, 2)}
 			};
 			output.Add (f.Render (version));
 
@@ -849,9 +848,9 @@ namespace TagLib.Id3v2
 			// read the string data type (the first byte of the
 			// field data)
 			encoding = (StringType)data[0];
-			List<string> field_list = new List<string> ();
+			var field_list = new List<string> ();
 
-			ByteVector delim = ByteVector.TextDelimiter (encoding);
+			var delim = ByteVector.TextDelimiter (encoding);
 
 			if (raw_version > 3 || FrameId == FrameType.TXXX) {
 				field_list.AddRange (data.ToStrings (encoding, 1));
@@ -928,7 +927,7 @@ namespace TagLib.Id3v2
 				return raw_data;
 
 			StringType encoding = CorrectEncoding (TextEncoding, version);
-			ByteVector v = new ByteVector ((byte)encoding);
+			var v = new ByteVector ((byte)encoding);
 			string[] text = text_fields;
 
 			bool txxx = FrameId == FrameType.TXXX;
@@ -957,7 +956,7 @@ namespace TagLib.Id3v2
 				}
 			} else if (FrameId == FrameType.TCON) {
 				bool prev_value_indexed = true;
-				StringBuilder data = new StringBuilder ();
+				var data = new StringBuilder ();
 				foreach (string s in text) {
 					if (!prev_value_indexed) {
 						data.Append (";").Append (s);
@@ -1158,7 +1157,7 @@ namespace TagLib.Id3v2
 			get {
 				string[] text = base.Text;
 				if (text.Length < 2)
-					return new string[0];
+					return Array.Empty<string> ();
 
 				string[] new_text = new string[text.Length - 1];
 				for (int i = 0; i < new_text.Length; i++)

@@ -661,9 +661,10 @@ namespace TagLib.Png
 			var parts = value.Split (new[] { '\n' });
 			if (parts.Length < 4)
 				return null;
-			var profile = new RawProfile ();
-			profile.Name = parts [1];
-			profile.LengthText = parts [2];
+			var profile = new RawProfile {
+				Name = parts[1],
+				LengthText = parts[2]
+			};
 
 			for (int i = 3; i < parts.Length; i++) {
 				var buffer = new Byte[parts [i].Length];
@@ -922,20 +923,19 @@ namespace TagLib.Png
 
 		static ByteVector Inflate (ByteVector data)
 		{
-			using (var out_stream = new MemoryStream ())
-			using (var input = new MemoryStream (data.Data)) {
-				input.Seek (2, SeekOrigin.Begin); // First 2 bytes are properties deflate does not need (or handle)
-				using (var zipstream = new DeflateStream (input, CompressionMode.Decompress)) {
-					//zipstream.CopyTo (out_stream); Cleaner with .NET 4
-					byte[] buffer = new byte[1024];
-					int written_bytes;
+			using var out_stream = new MemoryStream ();
+			using var input = new MemoryStream (data.Data);
+			input.Seek (2, SeekOrigin.Begin); // First 2 bytes are properties deflate does not need (or handle)
 
-					while ((written_bytes = zipstream.Read (buffer, 0, 1024)) > 0)
-						out_stream.Write (buffer, 0, written_bytes);
+			using var zipstream = new DeflateStream (input, CompressionMode.Decompress);
+			//zipstream.CopyTo (out_stream); Cleaner with .NET 4
+			byte[] buffer = new byte[1024];
+			int written_bytes;
 
-					return new ByteVector (out_stream.ToArray ());
-				}
-			}
+			while ((written_bytes = zipstream.Read (buffer, 0, 1024)) > 0)
+				out_stream.Write (buffer, 0, written_bytes);
+
+			return new ByteVector (out_stream.ToArray ());
 		}
 
 
@@ -943,12 +943,10 @@ namespace TagLib.Png
 		{
 			// there is currently just one compression method specified
 			// for PNG.
-			switch (compression_method) {
-			case 0:
-				return Inflate (compressed_data);
-			default:
-				return null;
-			}
+			return compression_method switch {
+				0 => Inflate (compressed_data),
+				_ => null
+			};
 		}
 
 		#endregion

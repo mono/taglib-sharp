@@ -46,7 +46,7 @@ namespace TagLib.Image
 		///    current instace.
 		/// </value>
 		public virtual string[] Keywords {
-			get { return new string[] { }; }
+			get { return Array.Empty<string> (); }
 			set { }
 		}
 

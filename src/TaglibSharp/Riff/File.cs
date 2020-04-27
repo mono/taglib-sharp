@@ -234,12 +234,12 @@ namespace TagLib.Riff
 
 			Mode = AccessMode.Write;
 			try {
-				ByteVector data = new ByteVector ();
+				var data = new ByteVector ();
 
 				// Enclose the Id3v2 tag in an "id3 " item and
 				// embed it as the first tag.
 				if (id32_tag != null) {
-					ByteVector tag_data = id32_tag.Render ();
+					var tag_data = id32_tag.Render ();
 					if (tag_data.Count > 10) {
 						if (tag_data.Count % 2 == 1)
 							tag_data.Add (0);
@@ -355,8 +355,9 @@ namespace TagLib.Riff
 			switch (type) {
 			case TagTypes.Id3v2:
 				if (id32_tag == null && create) {
-					id32_tag = new Id3v2.Tag ();
-					id32_tag.Version = 4;
+					id32_tag = new Id3v2.Tag {
+						Version = 4
+					};
 					id32_tag.Flags |= Id3v2.HeaderFlags.FooterPresent;
 					this.tag.CopyTo (id32_tag, true);
 				}
@@ -448,7 +449,7 @@ namespace TagLib.Riff
 			long length = Length;
 			uint size = 0;
 			TimeSpan duration = TimeSpan.Zero;
-			ICodec[] codecs = new ICodec[0];
+			ICodec[] codecs = Array.Empty<ICodec> ();
 
 			// Read until there are less than 8 bytes to read.
 			do {

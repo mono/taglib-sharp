@@ -42,7 +42,7 @@ namespace TagLib.Id3v2
 		/// <summary>
 		///    Contains the text.
 		/// </summary>
-		SynchedText[] text = new SynchedText[0];
+		SynchedText[] text = System.Array.Empty<SynchedText> ();
 
 		#endregion
 
@@ -244,7 +244,7 @@ namespace TagLib.Id3v2
 		/// </value>
 		public SynchedText[] Text {
 			get { return text; }
-			set { text = value ?? (new SynchedText[0]); }
+			set { text = value ?? (System.Array.Empty<SynchedText> ()); }
 		}
 
 		#endregion
