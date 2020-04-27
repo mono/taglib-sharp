@@ -23,23 +23,19 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
 // USA
 //
+
 using System;
 using System.Collections.Generic;
 
 namespace TagLib.Audible
 {
-
 	/// <summary>
 	///    This class extends <see cref="Tag" /> to provide support for
 	///    reading tags stored in the Audible Metadata format.
 	/// </summary>
 	public class Tag : TagLib.Tag
 	{
-		#region Private Fields
-
-		List<KeyValuePair<string, string>> tags;
-
-		#endregion
+		Dictionary<string, string> tags;
 
 		#region Constructors
 
@@ -138,7 +134,7 @@ namespace TagLib.Audible
 					currentValue = data.ToString (StringType.UTF8, 0, valueLen);
 					data.RemoveRange (0, valueLen);
 
-					tags.Add (new KeyValuePair<string, string> (currentKey, currentValue));
+					tags.Add (currentKey, currentValue);
 
 					//StringHandle (currentKey, currentValue);
 
@@ -155,21 +151,15 @@ namespace TagLib.Audible
 				throw new CorruptFileException ();
 		}
 
-		void setTag (string tagName, string value)
+		void SetTag (string tagName, string value)
 		{
-			for (int i = 0; i < tags.Count; i++) {
-				if (tags[i].Key == tagName)
-					tags[i] = new KeyValuePair<string, string> (tags[i].Key, value);
-			}
+			if (tags.ContainsKey (tagName))
+				tags[tagName] = value;
 		}
 
-		string getTag (string tagName)
+		string GetTag (string tagName)
 		{
-			foreach (KeyValuePair<string, string> tag in tags) {
-				if (tag.Key == tagName)
-					return tag.Value;
-			}
-			return null;
+			return tags.ContainsKey (tagName) ? tags[tagName] : null;
 		}
 
 		/*
@@ -221,7 +211,7 @@ namespace TagLib.Audible
 
 		public string Author {
 			get {
-				return getTag ("author");
+				return GetTag ("author");
 			}
 		}
 
@@ -231,10 +221,10 @@ namespace TagLib.Audible
 
 		public override string Copyright {
 			get {
-				return getTag ("copyright");
+				return GetTag ("copyright");
 			}
 			set {
-				setTag ("copyright", value);
+				SetTag ("copyright", value);
 			}
 		}
 
@@ -243,7 +233,7 @@ namespace TagLib.Audible
 		/// </summary>
 
 		public override string Description {
-			get { return getTag ("description"); }
+			get { return GetTag ("description"); }
 		}
 
 		/// <summary>
@@ -251,7 +241,7 @@ namespace TagLib.Audible
 		/// </summary>
 		public string Narrator {
 			get {
-				return getTag ("narrator");
+				return GetTag ("narrator");
 			}
 		}
 
@@ -266,7 +256,7 @@ namespace TagLib.Audible
 		/// </value>
 		public override string Title {
 			get {
-				return getTag ("title");
+				return GetTag ("title");
 			}
 		}
 
@@ -281,7 +271,7 @@ namespace TagLib.Audible
 		/// </value>
 		public override string Album {
 			get {
-				return getTag ("provider");
+				return GetTag ("provider");
 				//return string.IsNullOrEmpty (album) ?
 				//	null : album;
 			}
@@ -298,7 +288,7 @@ namespace TagLib.Audible
 		/// </value>
 		public override string[] AlbumArtists {
 			get {
-				var artist = getTag ("provider");
+				var artist = GetTag ("provider");
 
 				return string.IsNullOrEmpty (artist) ?
 					null : new [] { artist };
@@ -310,11 +300,9 @@ namespace TagLib.Audible
 		/// </summary>
 		public override void Clear ()
 		{
-			tags = new List<KeyValuePair<string, string>> ();
+			tags = new Dictionary<string, string> ();
 		}
 
 		#endregion
-
 	}
 }
-
