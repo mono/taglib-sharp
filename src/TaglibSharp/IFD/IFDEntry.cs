@@ -97,7 +97,7 @@ namespace TagLib.IFD
 		///    A <see cref="System.UInt16"/> with the tag ID of the entry this instance
 		///    represents
 		/// </param>
-		public ArrayIFDEntry (ushort tag)
+		protected ArrayIFDEntry (ushort tag)
 		{
 			Tag = tag;
 		}
