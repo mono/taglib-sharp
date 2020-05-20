@@ -69,6 +69,7 @@ namespace TagLib.Matroska
 	[SupportedMimeType ("taglib/mkv", "mkv")]
 	[SupportedMimeType ("taglib/mka", "mka")]
 	[SupportedMimeType ("taglib/mks", "mks")]
+	[SupportedMimeType ("taglib/webm", "webm")]
 	[SupportedMimeType ("video/webm")]
 	[SupportedMimeType ("video/x-matroska")]
 	public class File : TagLib.File
