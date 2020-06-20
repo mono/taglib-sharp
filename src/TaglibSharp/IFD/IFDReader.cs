@@ -238,8 +238,8 @@ namespace TagLib.IFD
 			}
 		}
 
-		static readonly Dictionary<File, List<long>> ifd_offsets = new Dictionary<File, List<long>> ();
-		static readonly Dictionary<File, int> ifd_loopdetect_refs = new Dictionary<File, int> ();
+		readonly Dictionary<File, List<long>> ifd_offsets = new Dictionary<File, List<long>> ();
+		readonly Dictionary<File, int> ifd_loopdetect_refs = new Dictionary<File, int> ();
 
 		/// <summary>
 		///    Reads an IFD from file at position <paramref name="offset"/> relative
