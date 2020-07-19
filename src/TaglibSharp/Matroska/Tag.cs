@@ -904,9 +904,10 @@ namespace TagLib.Matroska
 		///    This property is implemented using the "PART_NUMBER" Tag.
 		/// </remarks>
 		public override uint Track {
-			get { return GetUint ("PART_NUMBER"); }
-			set { Set ("PART_NUMBER", null, value, "00"); }
+			get { return TagsGet (false, IsVideo ? TargetType.CHAPTER : TargetType.TRACK)?.GetUint ("PART_NUMBER") ?? 0; }
+			set { TagsGet (true, IsVideo ? TargetType.CHAPTER : TargetType.TRACK)?.Set ("PART_NUMBER", null, value,00); }
 		}
+
 
 		/// <summary>
 		///    Gets and sets the number of items contained in the parent Tag (album, disc, episode, collection...)
