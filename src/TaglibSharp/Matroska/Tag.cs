@@ -905,7 +905,7 @@ namespace TagLib.Matroska
 		/// </remarks>
 		public override uint Track {
 			get { return TagsGet (false, IsVideo ? TargetType.CHAPTER : TargetType.TRACK)?.GetUint ("PART_NUMBER") ?? 0; }
-			set { TagsGet (true, IsVideo ? TargetType.CHAPTER : TargetType.TRACK)?.Set ("PART_NUMBER", null, value,00); }
+			set { TagsGet (true, IsVideo ? TargetType.CHAPTER : TargetType.TRACK)?.Set ("PART_NUMBER", null, value,"00"); }
 		}
 
 
