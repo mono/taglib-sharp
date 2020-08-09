@@ -40,6 +40,8 @@ namespace TagLib.Id3v2
 	{
 		public static readonly ReadOnlyByteVector APIC = "APIC";
 		public static readonly ReadOnlyByteVector COMM = "COMM";
+		public static readonly ReadOnlyByteVector CHAP = "CHAP"; // Chapter Frame
+		public static readonly ReadOnlyByteVector CTOC = "CTOC"; // Table of Contents Frame
 		public static readonly ReadOnlyByteVector EQUA = "EQUA";
 		public static readonly ReadOnlyByteVector GEOB = "GEOB";
 		public static readonly ReadOnlyByteVector IPLS = "IPLS";

@@ -139,7 +139,7 @@ namespace TagLib.Id3v2
 				position = offset;
 			}
 
-			// If the next data is position is 0, assume
+			// If the next data in position is 0, assume
 			// that we've hit the padding portion of the
 			// frame data.
 
@@ -162,8 +162,8 @@ namespace TagLib.Id3v2
 			}
 
 			if (alreadyUnsynched) {
-				// Mark the frame as not Unsynchronozed because the entire
-				// tag has already been Unsynchronized
+				// Mark the frame as not unsynchronized because the entire
+				// tag has already been unsynchronized
 				header.Flags &= ~FrameFlags.Unsynchronisation;
 			}
 
@@ -270,6 +270,10 @@ namespace TagLib.Id3v2
 			if (header.FrameId == FrameType.PRIV)
 				return new PrivateFrame (data, position, header, version);
 
+			// User Url Link (frames 4.3.2)
+			if (header.FrameId == FrameType.WXXX)
+				return new UserUrlLinkFrame (data, position, header, version);
+
 			// Url Link (frames 4.3.1)
 			if (header.FrameId[0] == (byte)'W')
 				return new UrlLinkFrame (data, position, header, version);
@@ -277,6 +281,14 @@ namespace TagLib.Id3v2
 			// Event timing codes (frames 4.6)
 			if (header.FrameId == FrameType.ETCO)
 				return new EventTimeCodesFrame (data, position, header, version);
+
+			// Chapter (ID3v2 Chapter Frame Addendum)
+			if (header.FrameId == FrameType.CHAP)
+				return new ChapterFrame (data, position, header, version);
+
+			// Table of Contents (ID3v2 Chapter Frame Addendum)
+			if (header.FrameId == FrameType.CTOC)
+				return new TableOfContentsFrame (data, position, header, version);
 
 			return new UnknownFrame (data, position, header, version);
 		}
