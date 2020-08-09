@@ -248,5 +248,31 @@ namespace TagLib.Id3v2
 		}
 
 		#endregion
+
+
+		#region ICloneable
+
+		/// <summary>
+		///    Creates a deep copy of the current instance.
+		/// </summary>
+		/// <returns>
+		///    A new <see cref="Frame" /> object identical to the
+		///    current instance.
+		/// </returns>
+		public override Frame Clone()
+		{
+			var frame = new ChapterFrame(Id);
+			frame.StartMilliseconds = StartMilliseconds;
+			frame.EndMilliseconds = EndMilliseconds;
+			frame.StartByteOffset = StartByteOffset;
+			frame.EndByteOffset = EndByteOffset;
+
+			foreach(var f in SubFrames)
+				frame.SubFrames.Add(f.Clone());
+
+			return frame;
+		}
+
+		#endregion
 	}
 }
