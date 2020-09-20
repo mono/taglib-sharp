@@ -119,14 +119,6 @@ namespace TagLib.Ogg
 			ByteVector[] packets = page.Packets;
 
 			for (int i = 0; i < packets.Length; i++) {
-				if ((page.Header.Flags &
-					PageFlags.FirstPacketContinued) == 0 &&
-					previous_packet != null) {
-					if (ReadPacket (previous_packet))
-						return true;
-					previous_packet = null;
-				}
-
 
 				ByteVector packet = packets[i];
 
@@ -142,9 +134,9 @@ namespace TagLib.Ogg
 
 				previous_packet = null;
 
-				if (i == packets.Length - 1) {
+				if (i == packets.Length - 1 && !page.Header.LastPacketComplete) {
 					// If we're at the last packet of the
-					// page, store it.
+					// page and it's continued on the next page, store it.
 					previous_packet = new ByteVector (packet);
 				} else if (ReadPacket (packet)) {
 					// Otherwise, we need to process it.
