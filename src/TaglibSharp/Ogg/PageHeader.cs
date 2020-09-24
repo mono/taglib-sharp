@@ -115,6 +115,7 @@ namespace TagLib.Ogg
 			Size = 0;
 			DataSize = 0;
 			packet_sizes = new List<int> ();
+			LastPacketComplete = false;
 
 			if (pageNumber == 0 && (flags & PageFlags.FirstPacketContinued) == 0)
 				Flags |= PageFlags.FirstPageOfStream;
@@ -200,6 +201,8 @@ namespace TagLib.Ogg
 
 			if (packet_size > 0)
 				packet_sizes.Add (packet_size);
+
+			LastPacketComplete = page_segments[page_segment_count - 1] < 255;
 		}
 
 		/// <summary>
@@ -230,6 +233,7 @@ namespace TagLib.Ogg
 			Size = original.Size;
 			DataSize = original.DataSize;
 			packet_sizes = new List<int> ();
+			LastPacketComplete = false;
 
 			if (PageSequenceNumber == 0 && (flags & PageFlags.FirstPacketContinued) == 0)
 				Flags |= PageFlags.FirstPageOfStream;
@@ -257,12 +261,20 @@ namespace TagLib.Ogg
 		}
 
 		/// <summary>
-		///    Gets the flags for the page described by the current
-		///    instance.
+		///	   Indicates whether the final packet is continued on the next page
 		/// </summary>
 		/// <value>
-		///    A <see cref="PageFlags" /> value containing the page
-		///    flags.
+		///	   true if the final packet is complete and not continued on the next page
+		/// </value>
+		public bool LastPacketComplete { get; private set; }
+
+		/// <summary>
+		///	   Gets the flags for the page described by the current
+		///	   instance.
+		/// </summary>
+		/// <value>
+		///	   A <see cref="PageFlags" /> value containing the page
+		///	   flags.
 		/// </value>
 		public PageFlags Flags { get; private set; }
 
