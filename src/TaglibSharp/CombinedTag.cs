@@ -1981,6 +1981,80 @@ namespace TagLib
 		}
 
 		/// <summary>
+		/// 
+		/// </summary>
+		public override string Software {
+			get {
+				foreach (Tag tag in tags) {
+					if (tag == null)
+						continue;
+
+					string value = tag.Software;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+
+			set {
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.Software = value;
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override string Timecode {
+			get {
+				foreach (Tag tag in tags) {
+					if (tag == null)
+						continue;
+
+					string value = tag.Timecode;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+
+			set {
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.Timecode = value;
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override string TimecodeFrequency {
+			get {
+				foreach (Tag tag in tags) {
+					if (tag == null)
+						continue;
+
+					string value = tag.TimecodeFrequency;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+
+			set {
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.TimecodeFrequency = value;
+			}
+		}
+		/// <summary>
 		///    Gets whether or not the current instance is empty.
 		/// </summary>
 		/// <value>

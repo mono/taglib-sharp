@@ -22,6 +22,7 @@
 //
 
 using System;
+using System.Globalization;
 
 namespace TagLib.Riff
 {
@@ -387,6 +388,103 @@ namespace TagLib.Riff
 			}
 			set { SetValue ("ICOP", value); }
 		}
+
+		/// <summary>
+		///    Gets and sets the timecode information for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the timecode
+		///    information for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ISMP" item.
+		/// </remarks>
+		public override string Timecode {
+			get {
+				foreach (string s in GetValuesAsStrings ("ISMP"))
+					if (!string.IsNullOrEmpty (s))
+						return s;
+
+				return null;
+			}
+			set { SetValue ("ISMP", value); }
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public override string TimecodeFrequency {
+			get {
+				foreach (string s in GetValuesAsStrings ("ISMF"))
+					if (!string.IsNullOrEmpty (s))
+						return s;
+
+				return null;
+			}
+			set { SetValue ("ISMF", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the digitization date information for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the digitization date
+		///    information for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "IDIT" item.
+		/// </remarks>
+		public override DateTime? DateTagged {
+			get {
+				foreach (string s in GetValuesAsStrings ("IDIT"))
+					
+					if (!string.IsNullOrEmpty (s))
+					{
+						var sd = s.Trim (new Char[] { '\n','\r',' '});
+						if (DateTime.TryParseExact(sd, "ddd MMM  d HH:mm:ss yyyy", null, DateTimeStyles.None, out var date))
+						{
+							return date;
+						}
+					}
+				return null;
+			}
+			set {
+				string date = null;
+				if (value != null) {
+					date = $"{value:ddd MMM  d HH:mm: ss yyyy}";
+				}
+				SetValue ("IDIT", date);
+			}
+		}
+
+
+			/// <summary>
+			///    Gets and sets the software information for the media
+			///    represented by the current instance.
+			/// </summary>
+			/// <value>
+			///    A <see cref="string" /> object containing the software
+			///    information for the media represented by the current
+			///    instance or <see langword="null" /> if no value present.
+			/// </value>
+			/// <remarks>
+			///    This property is implemented using the "ISFT" item.
+			/// </remarks>
+		public override string Software {
+			get {
+				foreach (string s in GetValuesAsStrings ("ISFT"))
+					if (!string.IsNullOrEmpty (s))
+						return s;
+
+				return null;
+			}
+			set { SetValue ("ISFT", value); }
+		}
+
 		#endregion
 	}
 }

@@ -743,6 +743,60 @@ namespace TagLib
 			set { }
 		}
 
+		/// <summary>
+		///    Gets and sets the timecode information for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the timecode
+		///    information for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field should be used for storing timecode
+		///    information. It may be useful to show this information
+		///    somewhere in the program while the media is
+		///    playing.</para>
+		///    <para>Players should not support editing this field, but
+		///    media creation tools should definitely allow
+		///    modification.</para>
+		/// </remarks>
+		public virtual string Timecode {
+			get { return null; }
+			set { }
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public virtual string TimecodeFrequency {
+			get { return null; }
+			set { }
+		}
+
+		/// <summary>
+		///    Gets and sets the software information for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the software
+		///    information for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field should be used for storing software
+		///    information. It may be useful to show this information
+		///    somewhere in the program while the media is
+		///    playing.</para>
+		///    <para>Players should not support editing this field, but
+		///    media creation tools should definitely allow
+		///    modification.</para>
+		/// </remarks>
+		public virtual string Software {
+			get { return null; }
+			set { }
+		}
+
 
 		/// <summary>
 		///    Gets and sets the date at which the tag has been written.
@@ -1566,6 +1620,13 @@ namespace TagLib
 
 			if (overwrite || target.Pictures == null || target.Pictures.Length == 0)
 				target.Pictures = Pictures;
+
+			if (overwrite || IsNullOrLikeEmpty (target.Software))
+				target.Software = Software;
+
+			if (overwrite || IsNullOrLikeEmpty (target.Timecode))
+				target.Timecode = Timecode;
+
 		}
 
 		/// <summary>
