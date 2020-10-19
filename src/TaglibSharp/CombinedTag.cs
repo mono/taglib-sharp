@@ -1981,8 +1981,22 @@ namespace TagLib
 		}
 
 		/// <summary>
-		/// 
+		///    Gets and sets the ISFT (Software)
+		///    of the media represented by the current instance.
 		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the ISFT
+		///    of the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.Software" />
 		public override string Software {
 			get {
 				foreach (Tag tag in tags) {
@@ -2006,8 +2020,22 @@ namespace TagLib
 		}
 
 		/// <summary>
-		/// 
+		///    Gets and sets the ISMP (Smpte / timecode)
+		///    of the media represented by the current instance.
 		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the ISMP
+		///    of the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.Timecode" />
 		public override string Timecode {
 			get {
 				foreach (Tag tag in tags) {
@@ -2031,8 +2059,22 @@ namespace TagLib
 		}
 
 		/// <summary>
-		/// 
+		///    Gets and sets the ISMF (Smpte / timecode frequency)
+		///    of the media represented by the current instance.
 		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the ISMF
+		///    of the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.TimecodeFrequency" />
 		public override string TimecodeFrequency {
 			get {
 				foreach (Tag tag in tags) {
