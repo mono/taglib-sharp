@@ -413,8 +413,17 @@ namespace TagLib.Riff
 		}
 
 		/// <summary>
-		/// 
+		///    Gets and sets the timecode frequency for the media
+		///    represented by the current instance.
 		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the timecode
+		///    frequency for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "ISMF" item.
+		/// </remarks>
 		public override string TimecodeFrequency {
 			get {
 				foreach (string s in GetValuesAsStrings ("ISMF"))
