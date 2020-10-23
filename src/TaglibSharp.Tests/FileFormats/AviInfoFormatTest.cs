@@ -7,8 +7,8 @@ namespace TaglibSharp.Tests.FileFormats
 	[TestFixture]
 	public class AviInfoFormatTest : IFormatTest
 	{
-		static readonly string sample_file = TestPath.Samples + "sampleInfo.avi";
-		static readonly string tmp_file = TestPath.Samples + "tmpwriteInfo.avi";
+		static readonly string sample_file = TestPath.Samples + "sampleinfo.avi";
+		static readonly string tmp_file = TestPath.Samples + "tmpwriteinfo.avi";
 		File file;
 
 		[OneTimeSetUp]
