@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using TagLib;
 using TagLib.Riff;
@@ -17,6 +18,8 @@ namespace TaglibSharp.Tests.TaggingFormats
 
 		static readonly string[] val_gnre = {"Rap",
 			"Jazz", "Non-Genre", "Blues"};
+
+		static readonly DateTime val_date = new DateTime (2000, 1, 2, 10, 11, 12);
 
 		[TestCase (StringType.Latin1)]
 		[TestCase (StringType.UTF8)]
@@ -432,6 +435,126 @@ namespace TaglibSharp.Tests.TaggingFormats
 			});
 		}
 
+		[TestCase (StringType.Latin1)]
+		[TestCase (StringType.UTF8)]
+		public void TestTimecode(StringType stringType)
+		{
+			InfoTag tag;
+			if (stringType == StringType.UTF8)
+				tag = new TagLib.Riff.InfoTag ();
+			else
+				tag = new TagLib.Riff.InfoTag { StringType = stringType };
+
+			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.Timecode, "Initial (Null): " + m);
+			});
+
+			tag.Timecode = val_sing;
+
+			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.Timecode, "Value Set (!Null): " + m);
+			});
+
+			tag.Timecode = string.Empty;
+
+			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.Timecode, "Value Cleared (Null): " + m);
+			});
+		}
+
+		[TestCase (StringType.Latin1)]
+		[TestCase (StringType.UTF8)]
+		public void TestTimecodeFrequency (StringType stringType)
+		{
+			InfoTag tag;
+			if (stringType == StringType.UTF8)
+				tag = new TagLib.Riff.InfoTag ();
+			else
+				tag = new TagLib.Riff.InfoTag { StringType = stringType };
+
+			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.TimecodeFrequency, "Initial (Null): " + m);
+			});
+
+			tag.TimecodeFrequency = val_sing;
+
+			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.TimecodeFrequency, "Value Set (!Null): " + m);
+			});
+
+			tag.TimecodeFrequency = string.Empty;
+
+			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.TimecodeFrequency, "Value Cleared (Null): " + m);
+			});
+		}
+
+		[TestCase (StringType.Latin1)]
+		[TestCase (StringType.UTF8)]
+		public void TestSoftware (StringType stringType)
+		{
+			InfoTag tag;
+			if (stringType == StringType.UTF8)
+				tag = new TagLib.Riff.InfoTag ();
+			else
+				tag = new TagLib.Riff.InfoTag { StringType = stringType };
+
+			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.Software, "Initial (Null): " + m);
+			});
+
+			tag.Software = val_sing;
+
+			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.Software, "Value Set (!Null): " + m);
+			});
+
+			tag.Software = string.Empty;
+
+			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.Software, "Value Cleared (Null): " + m);
+			});
+		}
+
+		[TestCase (StringType.Latin1)]
+		[TestCase (StringType.UTF8)]
+		public void TestDateTagged (StringType stringType)
+		{
+			InfoTag tag;
+			if (stringType == StringType.UTF8)
+				tag = new TagLib.Riff.InfoTag ();
+			else
+				tag = new TagLib.Riff.InfoTag { StringType = stringType };
+
+			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.DateTagged, "Initial (Null): " + m);
+			});
+
+			tag.DateTagged = val_date;
+
+			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_date, t.DateTagged, "Value Set (!Null): " + m);
+			});
+
+			tag.DateTagged = null;
+
+			TagTestWithSave (ref tag, delegate (TagLib.Riff.InfoTag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.DateTagged, "Value Cleared (Null): " + m);
+			});
+		}
+
 		[Test]
 		public void TestClear ()
 		{
@@ -453,7 +576,11 @@ namespace TaglibSharp.Tests.TaggingFormats
 				BeatsPerMinute = 234,
 				Conductor = "I",
 				Copyright = "J",
-				Pictures = new[] { new Picture (TestPath.Covers + "sample_a.png") }
+				Pictures = new[] { new Picture (TestPath.Covers + "sample_a.png") },
+				Timecode = "10:30:20:01",
+				TimecodeFrequency = "30",
+				Software = "taglib_sharp",
+				DateTagged = new DateTime(2000, 1, 2, 10, 11, 12)
 			};
 
 
@@ -478,6 +605,10 @@ namespace TaglibSharp.Tests.TaggingFormats
 			Assert.IsNull (tag.Conductor, "Conductor");
 			Assert.IsNull (tag.Copyright, "Copyright");
 			Assert.AreEqual (0, tag.Pictures.Length, "Pictures");
+			Assert.IsNull (tag.Timecode, "Timecode");
+			Assert.IsNull (tag.TimecodeFrequency, "TimecodeFrequency");
+			Assert.IsNull (tag.Software, "Software");
+			Assert.IsNull(tag.DateTagged, "DateTagged");
 			Assert.IsTrue (tag.IsEmpty, "Should be empty.");
 		}
 
