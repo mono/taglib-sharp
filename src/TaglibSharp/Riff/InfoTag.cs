@@ -464,7 +464,7 @@ namespace TagLib.Riff
 			set {
 				string date = null;
 				if (value != null) {
-					date = $"{value:ddd MMM  d HH:mm: ss yyyy}";
+					date = $"{value:ddd MMM  d HH:mm:ss yyyy}";
 				}
 				SetValue ("IDIT", date);
 			}
