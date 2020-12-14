@@ -24,9 +24,19 @@ namespace TaglibSharp.Tests.FileFormats
 		[Test]
 		public void ReadAudioProperties ()
 		{
+			Assert.AreEqual (128, file.Properties.AudioBitrate);
+			Assert.AreEqual (2, file.Properties.AudioChannels);
 			Assert.AreEqual (44100, file.Properties.AudioSampleRate);
 			// NOTE, with .net core it keeps the decimal places. So, for now, we round to match .net behavior
 			Assert.AreEqual (1391, Math.Round (file.Properties.Duration.TotalMilliseconds));
+
+		}
+
+		[Test]
+		public void ReadVideoProperties ()
+		{
+			Assert.AreEqual (480, file.Properties.VideoHeight);
+			Assert.AreEqual (640, file.Properties.VideoWidth);
 		}
 
 
@@ -68,7 +78,7 @@ namespace TaglibSharp.Tests.FileFormats
 
 			file.Save ();
 
-			// Read back the Matroska-specific tags 
+			// Read back the Matroska-specific tags
 			file = File.Create (tmp_file);
 			Assert.NotNull (file);
 			pics = file.Tag.Pictures;
