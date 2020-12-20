@@ -1097,7 +1097,7 @@ namespace TagLib.Id3v2
 		/// TXXX frame</param>
 		/// <param name="text">String containing the Text field for the TXXX frame</param>
 		/// <param name="caseSensitive">case-sensitive search if true.</param>
-		void SetUserTextAsString (string description, string text, bool caseSensitive)
+		public void SetUserTextAsString (string description, string text, bool caseSensitive)
 		{
 			//Get the TXXX frame, create a new one if needed
 			var frame = UserTextInformationFrame.Get (this, description, DefaultEncoding, true, caseSensitive);
@@ -1117,7 +1117,7 @@ namespace TagLib.Id3v2
 		/// <param name="description">String containing the Description field for the
 		/// TXXX frame</param>
 		/// <param name="text">String containing the Text field for the TXXX frame</param>
-		void SetUserTextAsString (string description, string text)
+		public void SetUserTextAsString (string description, string text)
 		{
 			SetUserTextAsString (description, text, true);
 		}
