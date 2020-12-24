@@ -147,7 +147,8 @@ namespace TaglibSharp.Tests.Images.Validators
 				md5Sum = "";// Utils.Md5Encode (v.Data);
 			} else {
 				using var image = Image.Load (v.Data);
-				byte[] result = MemoryMarshal.AsBytes (image.GetPixelSpan ()).ToArray ();
+				image.TryGetSinglePixelSpan (out var span);
+				byte[] result = MemoryMarshal.AsBytes (span).ToArray ();
 				md5Sum = Utils.Md5Encode (result);
 			}
 

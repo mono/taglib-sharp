@@ -18,8 +18,13 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.201
+        dotnet-version: 3.1.404
+
+    - name: Clean
+      run: dotnet clean --configuration Release && dotnet nuget locals all --clear
+
     - name: Build with dotnet
       run: dotnet build --configuration Release
+
     - name: Run unit tests
       run: dotnet test --verbosity normal
