@@ -1216,7 +1216,7 @@ namespace TagLib.Ogg
 		public override string MusicBrainzArtistId {
 			get {
 				string[] artistIds = GetField ("MUSICBRAINZ_ARTISTID");
-				return string.Join ("/", artistIds);
+				return artistIds.Length == 0 ? null : string.Join ("/", artistIds);
 			}
 			set {
 				string[] artistIds = value.Split ('/');
@@ -1273,7 +1273,7 @@ namespace TagLib.Ogg
 		public override string MusicBrainzReleaseArtistId {
 			get {
 				string[] releaseArtistIds = GetField ("MUSICBRAINZ_ALBUMARTISTID");
-				return string.Join ("/", releaseArtistIds);
+				return releaseArtistIds.Length == 0 ? null : string.Join ("/", releaseArtistIds);
 			}
 			set {
 				string[] releaseArtistIds = value.Split ('/');
