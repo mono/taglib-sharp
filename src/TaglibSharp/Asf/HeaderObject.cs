@@ -6,7 +6,7 @@
 //   Brian Nickel (brian.nickel@gmail.com)
 //
 // Copyright (C) 2006-2007 Brian Nickel
-// 
+//
 // This library is free software; you can redistribute it and/or modify
 // it  under the terms of the GNU Lesser General Public License version
 // 2.1 as published by the Free Software Foundation.
@@ -144,7 +144,7 @@ namespace TagLib.Asf
 
 				foreach (var obj in Children) {
 					if (obj is FilePropertiesObject fpobj) {
-						duration = fpobj.PlayDuration - new TimeSpan ((long)fpobj.Preroll);
+						duration = fpobj.PlayDuration - TimeSpan.FromMilliseconds (fpobj.Preroll);
 						continue;
 					}
 
