@@ -6,7 +6,7 @@
 //   Brian Nickel (brian.nickel@gmail.com)
 //
 // Copyright (C) 2006-2007 Brian Nickel
-// 
+//
 // This library is free software; you can redistribute it and/or modify
 // it  under the terms of the GNU Lesser General Public License version
 // 2.1 as published by the Free Software Foundation.
@@ -33,6 +33,12 @@ namespace TagLib.Asf
 	/// </summary>
 	public class FilePropertiesObject : Object
 	{
+		#region Constant Values
+
+		static readonly DateTime FileTimeOffset = new DateTime (1601, 1, 1);
+
+		#endregion
+
 		#region Private Fields
 
 		/// <summary>
@@ -98,8 +104,8 @@ namespace TagLib.Asf
 			FileSize = file.ReadQWord ();
 			creation_date = file.ReadQWord ();
 			DataPacketsCount = file.ReadQWord ();
-			send_duration = file.ReadQWord ();
 			play_duration = file.ReadQWord ();
+			send_duration = file.ReadQWord ();
 			Preroll = file.ReadQWord ();
 			Flags = file.ReadDWord ();
 			MinimumDataPacketSize = file.ReadDWord ();
@@ -144,7 +150,7 @@ namespace TagLib.Asf
 		///    date of the file described by the current instance.
 		/// </value>
 		public DateTime CreationDate {
-			get { return new DateTime ((long)creation_date); }
+			get { return new DateTime ((long)creation_date + FileTimeOffset.Ticks); }
 		}
 
 		/// <summary>
@@ -253,8 +259,8 @@ namespace TagLib.Asf
 			output.Add (RenderQWord (FileSize));
 			output.Add (RenderQWord (creation_date));
 			output.Add (RenderQWord (DataPacketsCount));
-			output.Add (RenderQWord (send_duration));
 			output.Add (RenderQWord (play_duration));
+			output.Add (RenderQWord (send_duration));
 			output.Add (RenderQWord (Preroll));
 			output.Add (RenderDWord (Flags));
 			output.Add (RenderDWord (MinimumDataPacketSize));

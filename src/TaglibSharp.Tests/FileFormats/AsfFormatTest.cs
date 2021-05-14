@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using TagLib;
 
@@ -19,7 +20,12 @@ namespace TaglibSharp.Tests.FileFormats
 		[Test]
 		public void ReadAudioProperties ()
 		{
-			StandardTests.ReadAudioProperties (file);
+			Assert.AreEqual (96, file.Properties.AudioBitrate);
+			Assert.AreEqual (2, file.Properties.AudioChannels);
+			Assert.AreEqual (44100, file.Properties.AudioSampleRate);
+			// NOTE, with .net core it keeps the decimal places. So, for now, we round to match .net behavior
+			Assert.AreEqual (4153, Math.Round(file.Properties.Duration.TotalMilliseconds));
+			Assert.AreEqual (MediaTypes.Audio, file.Properties.MediaTypes);
 		}
 
 		[Test]
