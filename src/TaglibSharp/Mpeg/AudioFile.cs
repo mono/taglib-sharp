@@ -68,6 +68,16 @@ namespace TagLib.Mpeg
 		#endregion
 
 
+		#region Private Static Fields
+
+		/// <summary>
+		///    Specifies whether or not to create ID3v1 and
+		///    ID3v2 tags when they don't exist..
+		/// </summary>
+		private static bool create_id3_tags = true;
+
+		#endregion
+
 
 		#region Constructors
 
@@ -153,6 +163,33 @@ namespace TagLib.Mpeg
 
 		#endregion
 
+
+		#region Public Static Properties
+
+		/// <summary>
+		///    Gets and sets whether or not to create ID3v1 and
+		///    ID3v2 tags automatically when they are not existing.
+		/// </summary>
+		/// <value>
+		///    <see langword="true" /> if tags to be created automatically.
+		///    Otherwise, <see langword="false" />.
+		/// </value>
+		/// <remarks>
+		///    <para>Sometimes a MP3 file should only contain ID3v1 and no
+		///    ID3v2 Tags. Or instead of ID3v2 Tags APE Tags should be used.
+		///    By setting this property to <see langword="false" />,
+		///    no ID3v1 and Id3v2 Tags will be created when creating the file,
+		///    if they don't exist.
+		///    They need to be created explicitly if needed.</para>
+		///    <para>The default is <see langword="true" /> which means that
+		///    ID3v1 and Id3v2 tags are created when they don't exist.</para>
+		/// </remarks>
+		public static bool CreateID3Tags {
+			get { return create_id3_tags; }
+			set { create_id3_tags = value; }
+		}
+
+		#endregion
 
 
 		#region Public Methods
@@ -252,9 +289,9 @@ namespace TagLib.Mpeg
 		/// </param>
 		protected override void ReadEnd (long end, ReadStyle propertiesStyle)
 		{
-			// Make sure we have ID3v1 and ID3v2 tags.
-			GetTag (TagTypes.Id3v1, true);
-			GetTag (TagTypes.Id3v2, true);
+			// Creation of ID3v1 and ID3v2 tags based on CreateID3Tags property
+			GetTag (TagTypes.Id3v1, create_id3_tags);
+			GetTag (TagTypes.Id3v2, create_id3_tags);
 		}
 
 		/// <summary>

@@ -109,5 +109,29 @@ namespace TaglibSharp.Tests.FileFormats
 			file.RemoveTags (TagTypes.AllTags);
 			Assert.AreEqual (TagTypes.None, file.TagTypes);
 		}
+
+		[Test]
+		public void TestCreateId3Tags ()
+		{
+			string tempFile = TestPath.Samples + "tmpwrite_sample_createid3tags.mp3";
+
+			System.IO.File.Copy (sample_file, tempFile, true);
+
+			// Remove All Tags first
+			var file = File.Create (tempFile);
+			file.RemoveTags (TagTypes.AllTags);
+			file.Save ();
+
+			// No TagTypes should exist
+			TagLib.Mpeg.AudioFile.CreateID3Tags = false;
+			file = File.Create (tempFile);
+			Assert.AreEqual (TagTypes.None, file.TagTypes);
+			file.Save ();
+
+			// Empty TagTypes should be created
+			TagLib.Mpeg.AudioFile.CreateID3Tags = true;
+			file = File.Create (tempFile);
+			Assert.AreEqual (TagTypes.Id3v1 | TagTypes.Id3v2, file.TagTypes);
+		}
 	}
 }
