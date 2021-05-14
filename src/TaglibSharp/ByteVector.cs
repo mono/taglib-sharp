@@ -1495,7 +1495,7 @@ namespace TagLib
 		/// </returns>
 		public override string ToString ()
 		{
-			return ToString (StringType.UTF8);
+			return ToString (StringType.UTF8, 0, Count);
 		}
 
 		/// <summary>
