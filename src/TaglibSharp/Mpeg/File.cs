@@ -547,8 +547,29 @@ namespace TagLib.Mpeg
 			Seek (position + 4);
 			int length = ReadBlock (2).ToUShort ();
 
-			if (!audio_found)
-				audio_found = AudioHeader.Find (out audio_header, this, position + 15, length - 9);
+			if (!audio_found) {
+				// There is a maximum of 16 stuffing bytes, read up to the PTS/DTS flags
+				ByteVector packetHeaderBytes = this.ReadBlock (19);
+				int i = 0;
+				while (i < packetHeaderBytes.Count && packetHeaderBytes[i] == 0xFF) {
+					// Byte is a stuffing byte
+					i++;
+				}
+
+				if ((packetHeaderBytes[i] & 0x40) != 0) {
+					// STD buffer size is unexpected for audio packets, but whatever
+					i++;
+				}
+
+				// Decode the PTS/DTS flags
+				byte timestampFlags = packetHeaderBytes[i];
+				long dataOffset = 4 + 2 + i +                             // Packet marker + packet length + stuffing bytes/STD buffer size
+				                  ((timestampFlags & 0x20) > 0 ? 4 : 0) + // Presentation timestamp
+				                  ((timestampFlags & 0x10) > 0 ? 4 : 0);  // Decode timestamp
+
+				audio_found = AudioHeader.Find (out audio_header, this, position + dataOffset, length - 9);
+			}
+
 			position += length;
 		}
 
