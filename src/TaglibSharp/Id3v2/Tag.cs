@@ -1705,7 +1705,7 @@ namespace TagLib.Id3v2
 		/// </remarks>
 		public override uint TrackCount {
 			get { return GetTextAsUInt32 (FrameType.TRCK, 1); }
-			set { SetNumberFrame (FrameType.TRCK, Track, value); }
+			set { SetNumberFrame (FrameType.TRCK, Track, value, "00"); }
 		}
 
 		/// <summary>
