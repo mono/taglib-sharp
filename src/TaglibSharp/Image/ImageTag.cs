@@ -96,7 +96,7 @@ namespace TagLib.Image
 		///    A <see cref="string" /> containing the name of the
 		///    software the current instace was created with.
 		/// </value>
-		public virtual string Software {
+		public override string Software {
 			get { return null; }
 			set { }
 		}
