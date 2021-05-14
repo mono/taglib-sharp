@@ -25,6 +25,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace TagLib.Mpeg4
 {
@@ -402,9 +403,28 @@ namespace TagLib.Mpeg4
 		/// <returns>Text string from data box</returns>
 		public string GetDashBox (string meanstring, string namestring)
 		{
-			AppleDataBox data_box = GetDashAtoms (meanstring, namestring);
-			if (data_box != null) {
-				return data_box.Text;
+			List<AppleDataBox> data_boxes = GetDashAtoms (meanstring, namestring);
+			if (data_boxes != null) {
+				return data_boxes[0].Text;
+			} else {
+				return null;
+			}
+		}
+
+		/// <summary>
+		/// Gets the text strings from a specific data boxes in Dash (----) atoms
+		/// </summary>
+		/// <param name="meanstring">String specifying text from mean box</param>
+		/// <param name="namestring">String specifying text from name box</param>
+		/// <returns>Text string from data box</returns>
+		public string[] GetDashBoxes (string meanstring, string namestring)
+		{
+			List<AppleDataBox> data_boxes = GetDashAtoms (meanstring, namestring);
+			if (data_boxes != null) {
+				string[] box_text = new string[data_boxes.Count];
+				for (int i = 0; i < data_boxes.Count; i++)
+					box_text[i] = data_boxes[i].Text;
+				return box_text;
 			} else {
 				return null;
 			}
@@ -420,7 +440,7 @@ namespace TagLib.Mpeg4
 		/// <param name="datastring">String specifying text for data box</param>
 		public void SetDashBox (string meanstring, string namestring, string datastring)
 		{
-			AppleDataBox data_box = GetDashAtoms (meanstring, namestring);
+			AppleDataBox data_box = GetDashAtom (meanstring, namestring);
 
 			// If we did find a data_box and we have an empty datastring we should
 			// remove the entire dash box.
@@ -450,12 +470,94 @@ namespace TagLib.Mpeg4
 		}
 
 		/// <summary>
+		/// Sets specific strings in Dash (----) atom.  This method updates
+		/// existing atoms, or creates new one.  If an empty datastring is
+		/// specified, the Dash boxes and its children are removed.
+		/// </summary>
+		/// <param name="meanstring">String specifying text for mean box</param>
+		/// <param name="namestring">String specifying text for name box</param>
+		/// <param name="datastring">String values specifying text for data boxes</param>
+		public void SetDashBoxes (string meanstring, string namestring, string[] datastring)
+		{
+			List<AppleDataBox> data_boxes = GetDashAtoms (meanstring, namestring);
+
+			// If we did find a data_box and we have an empty datastring we should
+			// remove the entire dash box.
+			if (data_boxes != null && string.IsNullOrEmpty (datastring[0])) {
+				AppleAnnotationBox dash_box = GetParentDashBox (meanstring, namestring);
+				dash_box.ClearChildren ();
+				ilst_box.RemoveChild (dash_box);
+				return;
+			}
+
+			if (data_boxes != null && data_boxes.Count == datastring.Length) {
+				for (int i = 0; i < data_boxes.Count; i++)
+					data_boxes[i].Text = datastring[i];
+			} else {
+				// Remove all Boxes
+				AppleAnnotationBox dash_box = GetParentDashBox (meanstring, namestring);
+				if (dash_box != null) {
+					dash_box.ClearChildren ();
+					ilst_box.RemoveChild (dash_box);
+				}
+
+				var whole_box = new AppleAnnotationBox (BoxType.DASH);
+				foreach (var text in datastring)
+				{
+					//Create the new boxes, should use 1 for text as a flag
+					var amean_box = new AppleAdditionalInfoBox (BoxType.Mean, 0, 1);
+					var aname_box = new AppleAdditionalInfoBox (BoxType.Name, 0, 1);
+					var adata_box = new AppleDataBox (BoxType.Data, 1);
+					amean_box.Text = meanstring;
+					aname_box.Text = namestring;
+					adata_box.Text = text;
+					whole_box.AddChild (amean_box);
+					whole_box.AddChild (aname_box);
+					whole_box.AddChild (adata_box);
+					ilst_box.AddChild (whole_box);
+				}
+			}
+		}
+
+		/// <summary>
 		/// Gets the AppleDataBox that corresponds to the specified mean and name values.
 		/// </summary>
 		/// <param name="meanstring">String specifying text for mean box</param>
 		/// <param name="namestring">String specifying text for name box</param>
 		/// <returns>Existing AppleDataBox or null if one does not exist</returns>
-		AppleDataBox GetDashAtoms (string meanstring, string namestring)
+		AppleDataBox GetDashAtom (string meanstring, string namestring)
+		{
+			foreach (Box box in ilst_box.Children) {
+				if (box.BoxType != BoxType.DASH)
+					continue;
+
+				// Get the mean and name boxes, make sure
+				// they're legit, check the Text fields for
+				// a match.  If we have a match return
+				// the AppleDatabox containing the data
+
+				var mean_box = (AppleAdditionalInfoBox)box.GetChild (BoxType.Mean);
+				var name_box = (AppleAdditionalInfoBox)box.GetChild (BoxType.Name);
+
+				if (mean_box == null || name_box == null ||
+				    mean_box.Text != meanstring ||
+				    !name_box.Text.Equals (namestring, StringComparison.OrdinalIgnoreCase)) {
+					continue;
+				} else {
+					return (AppleDataBox)box.GetChild (BoxType.Data);
+				}
+			}
+			// If we haven't returned the found box yet, there isn't one, return null
+			return null;
+		}
+
+		/// <summary>
+		/// Gets the AppleDataBox that corresponds to the specified mean and name values.
+		/// </summary>
+		/// <param name="meanstring">String specifying text for mean box</param>
+		/// <param name="namestring">String specifying text for name box</param>
+		/// <returns>Existing AppleDataBox or null if one does not exist</returns>
+		List<AppleDataBox> GetDashAtoms (string meanstring, string namestring)
 		{
 			foreach (Box box in ilst_box.Children) {
 				if (box.BoxType != BoxType.DASH)
@@ -474,7 +576,7 @@ namespace TagLib.Mpeg4
 					!name_box.Text.Equals (namestring, StringComparison.OrdinalIgnoreCase)) {
 					continue;
 				} else {
-					return (AppleDataBox)box.GetChild (BoxType.Data);
+					return box.GetChildren (BoxType.Data).Cast<AppleDataBox>().ToList ();
 				}
 			}
 			// If we haven't returned the found box yet, there isn't one, return null
@@ -1292,8 +1394,14 @@ namespace TagLib.Mpeg4
 		///    http://musicbrainz.org/doc/PicardTagMapping
 		/// </remarks>
 		public override string MusicBrainzArtistId {
-			get { return GetDashBox ("com.apple.iTunes", "MusicBrainz Artist Id"); }
-			set { SetDashBox ("com.apple.iTunes", "MusicBrainz Artist Id", value); }
+			get {
+				string[] artistIds = GetDashBoxes ("com.apple.iTunes", "MusicBrainz Artist Id");
+				return artistIds == null ? null : string.Join ("/", artistIds);
+			}
+			set {
+				string[] artistIds = value.Split ('/');
+				SetDashBoxes ("com.apple.iTunes", "MusicBrainz Artist Id", artistIds);
+			}
 		}
 
 		/// <summary>
@@ -1343,8 +1451,14 @@ namespace TagLib.Mpeg4
 		///    http://musicbrainz.org/doc/PicardTagMapping
 		/// </remarks>
 		public override string MusicBrainzReleaseArtistId {
-			get { return GetDashBox ("com.apple.iTunes", "MusicBrainz Album Artist Id"); }
-			set { SetDashBox ("com.apple.iTunes", "MusicBrainz Album Artist Id", value); }
+			get {
+				string[] releaseArtistIds = GetDashBoxes ("com.apple.iTunes", "MusicBrainz Album Artist Id");
+				return releaseArtistIds == null ? null : string.Join ("/", releaseArtistIds);
+			}
+			set {
+				string[] releaseArtistIds = value.Split ('/');
+				SetDashBoxes ("com.apple.iTunes", "MusicBrainz Album Artist Id", releaseArtistIds);
+			}
 		}
 
 		/// <summary>

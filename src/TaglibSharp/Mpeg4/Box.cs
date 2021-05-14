@@ -202,6 +202,34 @@ namespace TagLib.Mpeg4
 			return null;
 		}
 
+		/// <summary>
+		///    Gets all child boxes from the current instance by finding
+		///    a matching box type.
+		/// </summary>
+		/// <param name="type">
+		///    A <see cref="ByteVector" /> object containing the box
+		///    type to match.
+		/// </param>
+		/// <returns>
+		///    A List of <see cref="Box" /> objects containing the matched box,
+		///    or <see langword="null" /> if no matching boxes was found.
+		/// </returns>
+		public List<Box> GetChildren (ByteVector type)
+		{
+			if (Children == null)
+				return null;
+
+			List<Box> boxes = new List<Box> ();
+			foreach (Box box in Children)
+				if (box.BoxType == type)
+					boxes.Add (box);
+
+			if (boxes.Count > 0)
+				return boxes; 
+
+			return null;
+		}
+
 		/*
 		/// <summary>
 		///    Gets a child box from the current instance by finding

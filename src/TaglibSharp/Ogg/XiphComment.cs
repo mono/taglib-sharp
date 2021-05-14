@@ -29,6 +29,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace TagLib.Ogg
 {
@@ -1213,8 +1214,14 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "MUSICBRAINZ_ARTISTID" field.
 		/// </remarks>
 		public override string MusicBrainzArtistId {
-			get { return GetFirstField ("MUSICBRAINZ_ARTISTID"); }
-			set { SetField ("MUSICBRAINZ_ARTISTID", value); }
+			get {
+				string[] artistIds = GetField ("MUSICBRAINZ_ARTISTID");
+				return artistIds.Length == 0 ? null : string.Join ("/", artistIds);
+			}
+			set {
+				string[] artistIds = value.Split ('/');
+				SetField ("MUSICBRAINZ_ARTISTID", artistIds);
+			}
 		}
 
 		/// <summary>
@@ -1264,8 +1271,14 @@ namespace TagLib.Ogg
 		///    This property is implemented using the "MUSICBRAINZ_ALBUMARTISTID" field.
 		/// </remarks>
 		public override string MusicBrainzReleaseArtistId {
-			get { return GetFirstField ("MUSICBRAINZ_ALBUMARTISTID"); }
-			set { SetField ("MUSICBRAINZ_ALBUMARTISTID", value); }
+			get {
+				string[] releaseArtistIds = GetField ("MUSICBRAINZ_ALBUMARTISTID");
+				return releaseArtistIds.Length == 0 ? null : string.Join ("/", releaseArtistIds);
+			}
+			set {
+				string[] releaseArtistIds = value.Split ('/');
+				SetField ("MUSICBRAINZ_ALBUMARTISTID", releaseArtistIds);
+			}
 		}
 
 		/// <summary>
