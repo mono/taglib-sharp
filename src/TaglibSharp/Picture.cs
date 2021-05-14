@@ -557,7 +557,7 @@ namespace TagLib
 					ext = ".gif";
 				} else if (data[0] == 'B' && data[1] == 'M') {
 					ext = ".bmp";
-				} else if (data[0] == 0xFF && data[1] == 0xD8 && data[2] == 0xFF && data[3] == 0xE0) {
+				} else if (data[0] == 0xFF && data[1] == 0xD8 && data[data.Count - 2] == 0xFF && data[data.Count - 1] == 0xD9) {
 					ext = ".jpg";
 				}
 
