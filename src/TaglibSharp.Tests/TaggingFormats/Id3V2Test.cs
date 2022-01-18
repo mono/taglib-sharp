@@ -1077,8 +1077,8 @@ namespace TaglibSharp.Tests.TaggingFormats
 				InitialKey = "K",
 				Publisher = "L",
 				ISRC = "M",
-				Length = "L"
-,				RemixedBy = "N"
+				Length = "L",
+				RemixedBy = "N"
 			};
 
 
