@@ -2289,7 +2289,7 @@ namespace TagLib.Id3v2
 		///    langword="null" /> if no value is present.
 		/// </value>
 		/// <remarks>
-		///    <para>This field represents the label or publisher of the album the
+		///    <para>This field represents the label or length of the album the
 		///    media belongs to. </para>
 		///    <para>For example, "00:15:00".</para>
 		/// </remarks>
