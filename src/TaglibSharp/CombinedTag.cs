@@ -1981,6 +1981,45 @@ namespace TagLib
 		}
 
 		/// <summary>
+		///    Gets and sets the length of the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the 
+		///    length of the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.Length" />
+		public override string Length {
+			get {
+				foreach (Tag tag in tags) {
+					if (tag == null)
+						continue;
+
+					string value = tag.Length;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+
+			set {
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.Length = value;
+			}
+		}
+
+		/// <summary>
 		///    Gets whether or not the current instance is empty.
 		/// </summary>
 		/// <value>

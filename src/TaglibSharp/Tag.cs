@@ -1060,6 +1060,25 @@ namespace TagLib
 		}
 
 		/// <summary>
+		///    Gets and sets the Length of the media represented
+		///    by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the length of
+		///    the media represented by the current instance or <see
+		///    langword="null" /> if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field represents the label or length of the album the
+		///    media belongs to. </para>
+		///    <para>For example, "00:15:00".</para>
+		/// </remarks>
+		public virtual string Length {
+			get { return null; }
+			set { }
+		}
+
+		/// <summary>
 		///    Gets and sets a collection of pictures associated with
 		///    the media represented by the current instance.
 		/// </summary>
