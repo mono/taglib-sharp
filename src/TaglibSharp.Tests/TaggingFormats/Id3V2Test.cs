@@ -997,6 +997,34 @@ namespace TaglibSharp.Tests.TaggingFormats
 		}
 
 		[Test]
+		public void TestLength ()
+		{
+			Tag tag = new Tag ();
+			for (byte version = 2; version <= 4; version++) {
+				tag.Version = version;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.Length, "Initial (Null): " + m);
+				});
+
+				tag.Length = val_sing;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.Length, "Value Set (!Null): " + m);
+				});
+
+				tag.Length = string.Empty;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.Length, "Value Cleared (Null): " + m);
+				});
+			}
+		}
+
+		[Test]
 		public void TestRemixedBy ()
 		{
 			Tag tag = new Tag ();
@@ -1049,6 +1077,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 				InitialKey = "K",
 				Publisher = "L",
 				ISRC = "M",
+				Length = "L",
 				RemixedBy = "N"
 			};
 
@@ -1078,6 +1107,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 			Assert.IsNull (tag.InitialKey, "InitialKey");
 			Assert.IsNull (tag.Publisher, "Publisher");
 			Assert.IsNull (tag.ISRC, "ISRC");
+			Assert.IsNull (tag.Length, "Length");
 			Assert.IsNull (tag.RemixedBy, "RemixedBy");
 		}
 
