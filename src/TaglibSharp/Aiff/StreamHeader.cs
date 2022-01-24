@@ -66,7 +66,7 @@ namespace TagLib.Aiff
 		/// </summary>
 		/// <remarks>
 		///    This value is stored in bytes (17-26).
-		///    the sample rate at which the sound is to be played back, 
+		///    the sample rate at which the sound is to be played back,
 		///    in sample frames per second
 		/// </remarks>
 		readonly ulong sample_rate;
@@ -120,7 +120,7 @@ namespace TagLib.Aiff
 		/// </exception>
 		/// <exception cref="CorruptFileException">
 		///    <paramref name="data" /> does not begin with <see
-		///    cref="FileIdentifier" /> 
+		///    cref="FileIdentifier" />
 		/// </exception>
 		public StreamHeader (ByteVector data, long streamLength)
 		{
@@ -138,54 +138,7 @@ namespace TagLib.Aiff
 			channels = data.Mid (8, 2).ToUShort (true);
 			total_frames = data.Mid (10, 4).ToULong (true);
 			bits_per_sample = data.Mid (14, 2).ToUShort (true);
-
-			ByteVector sample_rate_indicator = data.Mid (17, 1);
-			ulong sample_rate_tmp = data.Mid (18, 2).ToULong (true);
-			sample_rate = 44100; // Set 44100 as default sample rate
-
-			// The following are combinations that iTunes 8 encodes to.
-			// There may be other combinations in the field, but i couldn't test them.
-			switch (sample_rate_tmp) {
-			case 44100:
-				if (sample_rate_indicator == 0x0E) {
-					sample_rate = 44100;
-				} else if (sample_rate_indicator == 0x0D) {
-					sample_rate = 22050;
-				} else if (sample_rate_indicator == 0x0C) {
-					sample_rate = 11025;
-				}
-				break;
-
-			case 48000:
-				if (sample_rate_indicator == 0x0E) {
-					sample_rate = 48000;
-				} else if (sample_rate_indicator == 0x0D) {
-					sample_rate = 24000;
-				}
-				break;
-
-			case 64000:
-				if (sample_rate_indicator == 0x0D) {
-					sample_rate = 32000;
-				} else if (sample_rate_indicator == 0x0C) {
-					sample_rate = 16000;
-				} else if (sample_rate_indicator == 0x0B) {
-					sample_rate = 8000;
-				}
-				break;
-
-			case 44510:
-				if (sample_rate_indicator == 0x0D) {
-					sample_rate = 22255;
-				}
-				break;
-
-			case 44508:
-				if (sample_rate_indicator == 0x0C) {
-					sample_rate = 11127;
-				}
-				break;
-			}
+			sample_rate = (ulong)data.Mid (16, 10).ToExtendedPrecision ();
 		}
 
 		#endregion

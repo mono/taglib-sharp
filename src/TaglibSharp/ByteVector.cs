@@ -757,7 +757,7 @@ namespace TagLib
 				patternLength = pattern.Count;
 			}
 
-			// do some sanity checking -- all of these things are 
+			// do some sanity checking -- all of these things are
 			// needed for the search to be valid
 			if (patternLength > data.Count ||
 				offset >= data.Count ||
@@ -1396,6 +1396,43 @@ namespace TagLib
 		public double ToDouble ()
 		{
 			return ToDouble (true);
+		}
+
+		/// <summary>
+		///    Converts the first 10 bytes of the current instance to an IEEE
+		///    754 80-bit extended precision floating point number, expressed
+		///    as a <see cref="double"/>.
+		/// </summary>
+		/// <returns>
+		///    A <see cref="double"/> value containing the value read from the
+		///    current instance.
+		/// </returns>
+		public double ToExtendedPrecision ()
+		{
+			int exponent = ((this[0] & 0x7F) << 8) | this[1];
+			ulong hiMantissa = ((ulong)this[2] << 24)
+			                   | ((ulong)this[3] << 16)
+			                   | ((ulong)this[4] << 8)
+			                   | this[5];
+			ulong loMantissa = ((ulong)this[6] << 24)
+			                   | ((ulong)this[7] << 16)
+			                   | ((ulong)this[8] << 8)
+			                   | this[9];
+
+			double f;
+			if (exponent == 0 && hiMantissa == 0 && loMantissa == 0) {
+				f = 0;
+			} else {
+				if (exponent == 0x7FFF) {
+					f = double.PositiveInfinity;
+				} else {
+					exponent -= 16383;
+					f = hiMantissa * Math.Pow (2, exponent -= 31);
+					f += loMantissa * Math.Pow (2, exponent -= 32);
+				}
+			}
+
+			return (this[0] & 0x80) != 0 ? -f : f;
 		}
 
 		/// <summary>
