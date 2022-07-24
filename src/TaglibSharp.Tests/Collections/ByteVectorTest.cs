@@ -152,7 +152,9 @@ namespace TaglibSharp.Tests.Collections
 
 		static string MD5Hash (byte[] bytes)
 		{
+#pragma warning disable SYSLIB0021 // Type or member is obsolete
 			var md5 = new MD5CryptoServiceProvider ();
+#pragma warning restore SYSLIB0021 // Type or member is obsolete
 			byte[] hash_bytes = md5.ComputeHash (bytes);
 			string hash_string = string.Empty;
 

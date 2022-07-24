@@ -6,17 +6,17 @@
     <RepositoryType>git</RepositoryType>
 
     <!-- Make sure to update Directory.Build.targets too! -->
-    <ExeTargetFrameworks>net462;netcoreapp3.1</ExeTargetFrameworks>
-    <LibTargetFrameworks>net462;netstandard2.0</LibTargetFrameworks>
+    <ExeTargetFrameworks>net6.0-windows</ExeTargetFrameworks>
+    <LibTargetFrameworks>net6.0-windows</LibTargetFrameworks>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net462'">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
     <DebugType>full</DebugType>
   </PropertyGroup>
 
   <!-- Allow building net framework using mono -->
-  <ItemGroup Condition="$(TargetFramework.StartsWith('net4')) and '$(OS)' == 'Unix'">
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net6')) and '$(OS)' == 'Unix'">
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

@@ -338,10 +338,10 @@ namespace TagLib.Matroska
 				EBMLreader element;
 				try {
 					element = new EBMLreader (this, offset);
-				} catch (Exception ex) {
+				} catch  {
 					// Sometimes, the file has zero padding at the end
 					if (hasSegment) break; // Avoid crash 
-					throw ex;
+					throw;
 				}
 
 				EBMLID ebml_id = (EBMLID)element.ID;

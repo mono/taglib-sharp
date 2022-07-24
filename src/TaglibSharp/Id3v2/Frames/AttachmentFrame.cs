@@ -289,10 +289,7 @@ namespace TagLib.Id3v2
 		public AttachmentFrame (File.IFileAbstraction abstraction, long offset, long size, FrameHeader header, byte version)
 			: base (header)
 		{
-			if (abstraction == null)
-				throw new ArgumentNullException (nameof (abstraction));
-
-			file = abstraction;
+			file = abstraction ?? throw new ArgumentNullException (nameof (abstraction));
 			stream_offset = offset;
 			stream_size = size;
 			raw_version = version;
@@ -460,11 +457,10 @@ namespace TagLib.Id3v2
 		/// </value>
 		public ByteVector Data {
 			get {
-				if (file != null)
-					Load ();
+				if (file != null) Load ();
 
 				ParseRawData ();
-				return data != null ? data : new ByteVector ();
+				return data ?? new ByteVector ();
 			}
 			set {
 				if (file != null)
@@ -506,7 +502,7 @@ namespace TagLib.Id3v2
 
 			if (string.IsNullOrEmpty (Description)) {
 				builder.Append (Description);
-				builder.Append (" ");
+				builder.Append (' ');
 			}
 
 			builder.AppendFormat (System.Globalization.CultureInfo.InvariantCulture, "[{0}] {1} bytes", MimeType, Data.Count);
@@ -644,7 +640,7 @@ namespace TagLib.Id3v2
 		{
 			AttachmentFrame att;
 			foreach (Frame frame in tag.GetFrames<AttachmentFrame> ()) {
-				att = frame as AttachmentFrame;
+				att = (AttachmentFrame)frame;
 
 				if (att == null)
 					continue;
@@ -659,7 +655,7 @@ namespace TagLib.Id3v2
 			}
 
 			if (!create)
-				return null;
+				return new AttachmentFrame ();
 
 			att = new AttachmentFrame {
 				Description = description,
@@ -685,7 +681,7 @@ namespace TagLib.Id3v2
 			// Load the picture from the stream
 
 			Stream stream = null;
-			ByteVector data = null;
+			var data = new ByteVector ();
 
 			try {
 				if (stream_size == 0) {
@@ -789,7 +785,7 @@ namespace TagLib.Id3v2
 
 			encoding = (StringType)data[pos++];
 
-			ByteVector delim = ByteVector.TextDelimiter (encoding);
+			var delim = ByteVector.TextDelimiter (encoding);
 
 			if (header.FrameId == FrameType.APIC) {
 				// Retrieve an ID3v2 Attached Picture (APIC)
@@ -867,7 +863,7 @@ namespace TagLib.Id3v2
 				return raw_data;
 
 			StringType encoding = CorrectEncoding (TextEncoding, version);
-			ByteVector data = new ByteVector ();
+			var data = new ByteVector ();
 
 			if (header.FrameId == FrameType.APIC) {
 				// Make an ID3v2 Attached Picture (APIC)

@@ -2730,9 +2730,9 @@ namespace TagLib
 		/// <value>
 		///    Always <see langword="false" />.
 		/// </value>
-		public bool IsSynchronized {
-			get { return false; }
-		}
+		//public bool IsSynchronized {
+		//	get { return false; }
+		//}
 
 		/// <summary>
 		///    Gets the object that can be used to synchronize the
