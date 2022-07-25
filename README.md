@@ -97,7 +97,7 @@ PM> Install-Package TagLibSharp -Version 2.2.0
 ```sh
 git clone https://github.com/mono/taglib-sharp.git
 cd taglib-sharp
-./autogen.sh && make
+dotnet build
 ```
 
 #### To Build From Tarball:
