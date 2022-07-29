@@ -24,6 +24,28 @@
     <PackageProjectUrl>https://github.com/mono/taglib-sharp</PackageProjectUrl>
     <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
     <PackageReleaseNotes>Version $(ReleaseVersion)
+July 29, 2022
+* Added support for chapters by implementing the frames CHAP and CTOC (#228) - Jan Romero
+* Adding extended precision ByteVector conversion (#245) - Benjamin Russell
+  Using extended precision conversion to get any possible AIFF sample rate
+* Audio Id3v2 add support for the Tag Length (#284) - L Carroll
+* ASF Duration Calculation Fix, Creation Date Fix (#256) - Benjamin Russell
+* Property preventing autocreate id3 tag types (#254) - Helmut Wahrmann
+* Multiple music brainz entries (#253) - Helmut Wahrmann
+* MusicBrainz Tags should be retrieved case insensitive (#243) - Helmut Wahrmann
+* Make methods SetUserTextAsString public (#242) - Helmut Wahrmann
+* MPEG Audio Header Offset Calculation (#241) - Benjamin Russell
+* Add format to TrackCount setter (#240) - EatonZ
+* Improve JPG detection in GetExtensionFromData (#239) - EatonZ
+* Fixed: Corrupting OPUS files on write (#232) - ta264
+* Add support for webm audio files (#219) - Michael Phillips
+* Bump to net462 - Stephen Shaw
+* Remove gtk# dependency in tests. Replaced with SixLabors.ImageSharp - Stephen Shaw
+* Added support for IPLS Frame (#208) - Helmut Wahrmann
+* Fixes #200 and copies Pictures over from Id3v2 Tag to File.Tag (#201) - Sean Kearney
+* Disregard case in Apple box names + initial unit test (#187)
+* Various repo maintenance fixes - Stephen Shaw, Andrew Sun, Mike Blaszczak, James John McGuire, ta264, Alex Koeplinger, Immanuel Martini
+
 July 22, 2019
 * Remove autotools and friends. Simply code base.
 * Include a few fixes from lidarr Project
