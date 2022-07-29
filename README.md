@@ -3,8 +3,8 @@
 [![Join the chat at https://gitter.im/mono/taglib-sharp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mono/taglib-sharp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 (aka *Taglib-sharp*) is a .NET platform-independent library (tested on Windows/Linux) for reading and writing
-metadata in media files, including video, audio, and photo formats. 
-This is a convenient one-stop-shop to present or tag all your media collection, regardless of which format/container 
+metadata in media files, including video, audio, and photo formats.
+This is a convenient one-stop-shop to present or tag all your media collection, regardless of which format/container
 these might use. You can read/write the standard or more common tags/properties of a media, or you can also create and
 retrieve your own custom tags.
 
@@ -85,12 +85,12 @@ TagLib# is available on NuGet: <https://www.nuget.org/packages/TagLibSharp>
 
 Install from package manager:
 
-PM> Install-Package TagLibSharp -Version 2.2.0
+PM> Install-Package TagLibSharp -Version 2.3.0
 
 
 ## Building and Running
 
-### Command Line  (Linux)
+### Command Line
 
 #### To Build From Git:
 
@@ -100,28 +100,18 @@ cd taglib-sharp
 dotnet build
 ```
 
-#### To Build From Tarball:
-
-```
-./configure && make
-```
-
 #### To Test:
 
 ```
-make test
+dotnet test
 ```
 
-### Mono Develop  (Linux)
+### Build in IDE (Visual Studio, Visual Studio for Mac, Rider, etc):
 
-You can build from MonoDevelop using taglib-sharp.sln
-
-### Visual Studio (Windows):
-
-You can open it in Visual Studio by using taglib-sharp.sln
+You can open it in Visual Studio by using TaglibSharp.sln
 
 #### Running regression by using Nunit 3 Test Adapter:
- 
+
 1. Ensure NuGet packages have been restored
     1. See: <https://docs.microsoft.com/en-us/nuget/consume-packages/package-restore>
 2. In Visual Studio, go to menu: Tools > Extensions and Updates > Online
@@ -149,7 +139,7 @@ Non exhaustive list of projects that use TagLib#:
 * [MediaPortal 2](https://www.team-mediaportal.com/wiki/display/MediaPortal2/MediaPortal+2)
 * [F-Spot](https://en.wikipedia.org/wiki/F-Spot)
 
-And you, what do you use TagLib# for ? Reply [here](https://github.com/mono/taglib-sharp/issues/120)
+And you, what do you use TagLib# for? Reply [here](https://github.com/mono/taglib-sharp/issues/120)
 
 ## Contributions
 
@@ -157,4 +147,3 @@ TagLib# is free/open source software, released under the LGPL.
 We welcome contributions!  Please try to match our coding style,
 and include unit tests with any patches.  Patches can be submitted
 by issuing a Pull Request (Git).
-
