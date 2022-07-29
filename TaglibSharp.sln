@@ -81,7 +81,7 @@ Global
 		$6.inheritsSet = Mono
 		$6.inheritsScope = text/plain
 		$6.scope = text/plain
-		version = 2.2.0.0
+		version = 2.3.0.0
 		outputpath = build
 	EndGlobalSection
 EndGlobal
