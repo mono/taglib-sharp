@@ -159,7 +159,7 @@ namespace TaglibSharp.Tests.FileFormats
 			file.Tag.Pictures = new[] { picture };
 			file.Save ();
 
-			Assert.IsTrue (file.Tag.Pictures.Count () == 1, "File should start with 1 picture");
+			Assert.IsTrue (file.Tag.Pictures.Length == 1, "File should start with 1 picture");
 
 			// Now construct a new tag with a title, APIC and GEOB frame
 
@@ -187,12 +187,12 @@ namespace TaglibSharp.Tests.FileFormats
 			tag.CopyTo (file.Tag, false);
 
 			Assert.AreEqual ("MP3 title", file.Tag.Title, "Title shouldn't be copied if overwrite=false");
-			Assert.AreEqual (1, file.Tag.Pictures.Count (), "GEOB/APIC frames shouldn't be copied if overwrite=false");
+			Assert.AreEqual (1, file.Tag.Pictures.Length, "GEOB/APIC frames shouldn't be copied if overwrite=false");
 
 			tag.CopyTo (file.Tag, true);
 
 			Assert.AreEqual (tag.Title, file.Tag.Title, "Title wasn't copied");
-			Assert.AreEqual (tag.Pictures.Count (), file.Tag.Pictures.Count (), "GEOB/APIC frames weren't copied");
+			Assert.AreEqual (tag.Pictures.Length, file.Tag.Pictures.Length, "GEOB/APIC frames weren't copied");
 		}
 	}
 }
