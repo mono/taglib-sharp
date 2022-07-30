@@ -289,7 +289,7 @@ namespace TagLib.Riff
 		/// </remarks>
 		public override string[] Performers {
 			get {
-				return string.IsNullOrEmpty (artist) ? new string[0] : artist.Split (';');
+				return string.IsNullOrEmpty (artist) ? Array.Empty<string> () : artist.Split (';');
 			}
 			set {
 				artist = value != null ? string.Join (";", value) : string.Empty;
@@ -338,7 +338,7 @@ namespace TagLib.Riff
 			get {
 				string genre_name = TagLib.Genres.IndexToVideo (genre);
 
-				return (genre_name != null) ? new[] { genre_name } : new string[0];
+				return (genre_name != null) ? new[] { genre_name } : Array.Empty<string> ();
 			}
 			set {
 				genre = (value != null && value.Length > 0) ?

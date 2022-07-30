@@ -836,7 +836,7 @@ namespace TagLib.Matroska
 				string value = GetString ("GENRE");
 
 				if (value == null || value.Trim ().Length == 0)
-					return new string[] { };
+					return Array.Empty<string> ();
 
 				string[] result = value.Split (';');
 

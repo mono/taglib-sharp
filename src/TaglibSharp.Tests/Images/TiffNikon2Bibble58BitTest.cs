@@ -1,3 +1,5 @@
+using System;
+
 using NUnit.Framework;
 using TagLib;
 using TagLib.IFD;
@@ -20,7 +22,7 @@ namespace TaglibSharp.Tests.Images
 				new CommentModificationValidator (string.Empty),
 				new TagCommentModificationValidator (null, TagTypes.TiffIFD, true),
 				new TagCommentModificationValidator (null, TagTypes.XMP, true),
-				new TagKeywordsModificationValidator (new string[] { }, TagTypes.XMP, true)
+				new TagKeywordsModificationValidator (Array.Empty<string> (), TagTypes.XMP, true)
 			);
 		}
 	}

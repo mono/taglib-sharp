@@ -36,7 +36,7 @@ namespace TagLib.Matroska
 		#region Private fields/Properties
 
 		// Store the Attachments
-		Attachment[] attachments = new Attachment[0];
+		Attachment[] attachments = Array.Empty<Attachment> ();
 
 		readonly List<Track> _Tracks;
 
@@ -273,7 +273,7 @@ namespace TagLib.Matroska
 			}
 			set {
 				if (value == null) {
-					if (attachments.Length > 0) attachments = new Attachment[0];
+					if (attachments.Length > 0) attachments = Array.Empty<Attachment> ();
 				} else {
 					attachments = value;
 				}

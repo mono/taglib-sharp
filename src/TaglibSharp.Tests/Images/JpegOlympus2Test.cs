@@ -165,7 +165,7 @@ namespace TaglibSharp.Tests.Images
 
 			Assert.IsNotNull (tag, "tag");
 
-			Assert.AreEqual (new string[] { }, tag.Keywords);
+			Assert.AreEqual (Array.Empty<string> (), tag.Keywords);
 			Assert.AreEqual ("OLYMPUS CORPORATION", tag.Make);
 			Assert.AreEqual ("C5060WZ", tag.Model);
 			Assert.AreEqual ("Adobe Photoshop Elements 4.0", tag.Software);

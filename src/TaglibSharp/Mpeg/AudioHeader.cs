@@ -488,10 +488,10 @@ namespace TagLib.Mpeg
 				builder.Append ("MPEG Version ");
 				switch (Version) {
 				case Version.Version1:
-					builder.Append ("1");
+					builder.Append ('1');
 					break;
 				case Version.Version2:
-					builder.Append ("2");
+					builder.Append ('2');
 					break;
 				case Version.Version25:
 					builder.Append ("2.5");

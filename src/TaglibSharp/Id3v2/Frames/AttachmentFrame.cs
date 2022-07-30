@@ -506,7 +506,7 @@ namespace TagLib.Id3v2
 
 			if (string.IsNullOrEmpty (Description)) {
 				builder.Append (Description);
-				builder.Append (" ");
+				builder.Append (' ');
 			}
 
 			builder.AppendFormat (System.Globalization.CultureInfo.InvariantCulture, "[{0}] {1} bytes", MimeType, Data.Count);
