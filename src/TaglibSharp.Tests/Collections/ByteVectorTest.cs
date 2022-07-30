@@ -152,7 +152,7 @@ namespace TaglibSharp.Tests.Collections
 
 		static string MD5Hash (byte[] bytes)
 		{
-			var md5 = new MD5CryptoServiceProvider ();
+			var md5 = MD5.Create ();
 			byte[] hash_bytes = md5.ComputeHash (bytes);
 			string hash_string = string.Empty;
 
