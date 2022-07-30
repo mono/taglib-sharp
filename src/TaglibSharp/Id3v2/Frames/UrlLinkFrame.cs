@@ -677,7 +677,7 @@ namespace TagLib.Id3v2
 		/// </returns>
 		public override string ToString ()
 		{
-			return new StringBuilder ().Append ("[")
+			return new StringBuilder ().Append ('[')
 			  .Append (Description)
 			  .Append ("] ")
 			  .Append (base.ToString ()).ToString ();

@@ -979,14 +979,14 @@ namespace TagLib.Id3v2
 			if (tdat != null) {
 				string tdat_text = tdat.ToString ();
 				if (tdat_text.Length == 4) {
-					tdrc_text.Append ("-").Append (tdat_text, 0, 2).Append ("-").Append (tdat_text, 2, 2);
+					tdrc_text.Append ('-').Append (tdat_text, 0, 2).Append ('-').Append (tdat_text, 2, 2);
 
 					// Add the time
 					if (time != null) {
 						string time_text = time.ToString ();
 
 						if (time_text.Length == 4)
-							tdrc_text.Append ("T").Append (time_text, 0, 2).Append (":").Append (time_text, 2, 2);
+							tdrc_text.Append ('T').Append (time_text, 0, 2).Append (':').Append (time_text, 2, 2);
 
 						RemoveFrames (FrameType.TIME);
 					}

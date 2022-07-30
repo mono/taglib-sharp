@@ -960,7 +960,7 @@ namespace TagLib.Id3v2
 				StringBuilder data = new StringBuilder ();
 				foreach (string s in text) {
 					if (!prev_value_indexed) {
-						data.Append (";").Append (s);
+						data.Append (';').Append (s);
 						continue;
 					}
 
@@ -1192,7 +1192,7 @@ namespace TagLib.Id3v2
 		/// </returns>
 		public override string ToString ()
 		{
-			return new StringBuilder ().Append ("[")
+			return new StringBuilder ().Append ('[')
 				.Append (Description)
 				.Append ("] ")
 				.Append (base.ToString ()).ToString ();
