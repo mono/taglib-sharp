@@ -1,3 +1,5 @@
+using System;
+
 using NUnit.Framework;
 using TagLib;
 using TaglibSharp.Tests.Images.Validators;
@@ -20,7 +22,7 @@ namespace TaglibSharp.Tests.Images
 				true,
 				new GifExiftoolLongCommentTestInvariantValidator (),
 				NoModificationValidator.Instance,
-				new TagKeywordsModificationValidator (new string[] { }, TagTypes.XMP, true),
+				new TagKeywordsModificationValidator (Array.Empty<string> (), TagTypes.XMP, true),
 				new CommentModificationValidator (long_comment_orig),
 				new CommentModificationValidator (long_comment_orig, long_comment_test),
 				new TagCommentModificationValidator (long_comment_orig, TagTypes.GifComment, true),

@@ -30,7 +30,7 @@ namespace TaglibSharp.Tests.Images
 			var imagetag = file.ImageTag;
 			Assert.IsNotNull (imagetag);
 			Assert.AreEqual (String.Empty, imagetag.Comment, "Comment");
-			Assert.AreEqual (new string[] { }, imagetag.Keywords, "Keywords");
+			Assert.AreEqual (Array.Empty<string> (), imagetag.Keywords, "Keywords");
 			Assert.AreEqual (null, imagetag.Rating, "Rating");
 			Assert.AreEqual (TagLib.Image.ImageOrientation.LeftBottom, imagetag.Orientation, "Orientation");
 			Assert.AreEqual ("K10D Ver 1.31          ", imagetag.Software, "Software");

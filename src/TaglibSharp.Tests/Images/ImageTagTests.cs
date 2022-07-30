@@ -1,3 +1,5 @@
+using System;
+
 using NUnit.Framework;
 using TagLib;
 using TagLib.Image;
@@ -20,7 +22,7 @@ namespace TaglibSharp.Tests.Images
 			Assert.IsNotNull (tag);
 
 			Assert.AreEqual (null, tag.Comment, "Comment");
-			Assert.AreEqual (new string[] { }, tag.Keywords, "Keywords");
+			Assert.AreEqual (Array.Empty<string> (), tag.Keywords, "Keywords");
 			Assert.AreEqual (0, tag.Rating, "Rating");
 			Assert.AreEqual (null, tag.DateTime, "DateTime");
 			Assert.AreEqual (ImageOrientation.None, tag.Orientation, "Orientation");

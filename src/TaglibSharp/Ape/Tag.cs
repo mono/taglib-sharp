@@ -707,7 +707,7 @@ namespace TagLib.Ape
 		string[] GetItemAsStrings (string key)
 		{
 			Item item = GetItem (key);
-			return item != null ? item.ToStringArray () : new string[0];
+			return item != null ? item.ToStringArray () : Array.Empty<string> ();
 		}
 
 		/// <summary>

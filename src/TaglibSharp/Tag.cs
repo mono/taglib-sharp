@@ -277,7 +277,7 @@ namespace TagLib
 		///    choice they may make.</para>
 		/// </remarks>
 		public virtual string[] Performers {
-			get { return new string[] { }; }
+			get { return Array.Empty<string> (); }
 			set { }
 		}
 
@@ -299,7 +299,7 @@ namespace TagLib
 		///    </para>
 		/// </remarks>
 		public virtual string[] PerformersSort {
-			get { return new string[] { }; }
+			get { return Array.Empty<string> (); }
 			set { }
 		}
 
@@ -324,7 +324,7 @@ namespace TagLib
 		///    </para>
 		/// </remarks>
 		public virtual string[] PerformersRole {
-			get { return new string[] { }; }
+			get { return Array.Empty<string> (); }
 			set { }
 		}
 
@@ -355,7 +355,7 @@ namespace TagLib
 		///    name. For example, "The Beatles".</para>
 		/// </remarks>
 		public virtual string[] AlbumArtists {
-			get { return new string[] { }; }
+			get { return Array.Empty<string> (); }
 			set { }
 		}
 
@@ -387,7 +387,7 @@ namespace TagLib
 		///    name. For example, "Beatles, The".</para>
 		/// </remarks>
 		public virtual string[] AlbumArtistsSort {
-			get { return new string[] { }; }
+			get { return Array.Empty<string> (); }
 			set { }
 		}
 
@@ -406,7 +406,7 @@ namespace TagLib
 		///    media.</para>
 		/// </remarks>
 		public virtual string[] Composers {
-			get { return new string[] { }; }
+			get { return Array.Empty<string> (); }
 			set { }
 		}
 
@@ -430,7 +430,7 @@ namespace TagLib
 		///    For example, "McCartney, Paul".</para>
 		/// </remarks>
 		public virtual string[] ComposersSort {
-			get { return new string[] { }; }
+			get { return Array.Empty<string> (); }
 			set { }
 		}
 
@@ -524,7 +524,7 @@ namespace TagLib
 		///    genres as used by DivX.</para>
 		/// </remarks>
 		public virtual string[] Genres {
-			get { return new string[] { }; }
+			get { return Array.Empty<string> (); }
 			set { }
 		}
 
@@ -1094,7 +1094,7 @@ namespace TagLib
 		///    band, the recording studio, the concert, etc.</para>
 		/// </remarks>
 		public virtual IPicture[] Pictures {
-			get { return new IPicture[] { }; }
+			get { return Array.Empty<IPicture> (); }
 			set { }
 		}
 

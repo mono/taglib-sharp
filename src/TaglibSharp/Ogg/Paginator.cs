@@ -162,7 +162,7 @@ namespace TagLib.Ogg
 
 			if (pages_read == 0) {
 				change = 0;
-				return new Page[0];
+				return Array.Empty<Page> ();
 			}
 
 			int count = pages_read;
