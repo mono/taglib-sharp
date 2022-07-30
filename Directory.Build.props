@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-    <ReleaseVersion>2.3.0.0</ReleaseVersion>
+    <ReleaseVersion>2.4.0.0</ReleaseVersion>
     <RepositoryUrl>https://github.com/mono/taglib-sharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
 
