@@ -40,6 +40,8 @@ namespace TagLib.NonContainer
 	{
 		#region Constructors
 
+		public Tag () { }
+
 		/// <summary>
 		///    Constructs and initializes a new instance of <see
 		///    cref="Tag" /> for a specified <see cref="TagLib.File" />.

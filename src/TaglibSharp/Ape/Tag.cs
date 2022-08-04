@@ -10,7 +10,7 @@
 //
 // Copyright (C) 2005-2007 Brian Nickel
 // Copyright (C) 2004 Allan Sandfeld Jensen (Original Implementation)
-// 
+//
 // This library is free software; you can redistribute it and/or modify
 // it  under the terms of the GNU Lesser General Public License version
 // 2.1 as published by the Free Software Foundation.
@@ -40,14 +40,13 @@ namespace TagLib.Ape
 	/// </summary>
 	public class Tag : TagLib.Tag, IEnumerable<string>
 	{
-
 		#region Private Static Fields
 
 		/// <summary>
 		///    Contains names of picture fields, indexed to correspond
 		///    to their picture item names.
 		/// </summary>
-		static readonly string[] picture_item_names = new[] {
+		private static readonly string[] picture_item_names = new[] {
 			"Cover Art (other)",
 			"Cover Art (icon)",
 			"Cover Art (other icon)",
@@ -72,25 +71,21 @@ namespace TagLib.Ape
 			"Embedded Object"
 		};
 
-		#endregion
-
-
+		#endregion Private Static Fields
 
 		#region Private Fields
 
 		/// <summary>
 		///    Contains the tag footer.
 		/// </summary>
-		Footer footer;
+		private Footer footer;
 
 		/// <summary>
 		///    Contains the items in the tag.
 		/// </summary>
-		readonly List<Item> items = new List<Item> ();
+		private readonly List<Item> items = new List<Item> ();
 
-		#endregion
-
-
+		#endregion Private Fields
 
 		#region Public Static Properties
 
@@ -104,9 +99,7 @@ namespace TagLib.Ape
 		[Obsolete ("Use Footer.FileIdentifer")]
 		public static readonly ReadOnlyByteVector FileIdentifier = Footer.FileIdentifier;
 
-		#endregion
-
-
+		#endregion Public Static Properties
 
 		#region Constructors
 
@@ -191,9 +184,7 @@ namespace TagLib.Ape
 			Parse (data.Mid ((int)(data.Count - footer.TagSize), (int)(footer.TagSize - Footer.Size)));
 		}
 
-		#endregion
-
-
+		#endregion Constructors
 
 		#region Public Properties
 
@@ -218,9 +209,7 @@ namespace TagLib.Ape
 			}
 		}
 
-		#endregion
-
-
+		#endregion Public Properties
 
 		#region Public Methods
 
@@ -332,7 +321,7 @@ namespace TagLib.Ape
 			if (string.IsNullOrEmpty (value))
 				return;
 
-			AddValue (key, new [] { value });
+			AddValue (key, new[] { value });
 		}
 
 		/// <summary>
@@ -362,7 +351,7 @@ namespace TagLib.Ape
 			if (string.IsNullOrEmpty (value))
 				RemoveItem (key);
 			else
-				SetValue (key, new [] { value });
+				SetValue (key, new[] { value });
 		}
 
 		/// <summary>
@@ -443,7 +432,6 @@ namespace TagLib.Ape
 				items[index] = item;
 			else
 				items.Add (item);
-
 		}
 
 		/// <summary>
@@ -560,9 +548,7 @@ namespace TagLib.Ape
 			return data;
 		}
 
-		#endregion
-
-
+		#endregion Public Methods
 
 		#region Protected Methods
 
@@ -642,9 +628,7 @@ namespace TagLib.Ape
 			}
 		}
 
-		#endregion
-
-
+		#endregion Protected Methods
 
 		#region Private Methods
 
@@ -663,7 +647,7 @@ namespace TagLib.Ape
 		/// <remarks>
 		///    Keys are compared in a case insensitive manner.
 		/// </remarks>
-		int GetItemIndex (string key)
+		private int GetItemIndex (string key)
 		{
 			var comparison = StringComparison.InvariantCultureIgnoreCase;
 
@@ -686,7 +670,7 @@ namespace TagLib.Ape
 		///    specified frame, or <see langword="null" /> if no value
 		///    was found.
 		/// </returns>
-		string GetItemAsString (string key)
+		private string GetItemAsString (string key)
 		{
 			Item item = GetItem (key);
 			return item?.ToString ();
@@ -704,7 +688,7 @@ namespace TagLib.Ape
 		///    specified frame, or an empty array if no values were
 		///    found.
 		/// </returns>
-		string[] GetItemAsStrings (string key)
+		private string[] GetItemAsStrings (string key)
 		{
 			Item item = GetItem (key);
 			return item != null ? item.ToStringArray () : new string[0];
@@ -726,14 +710,14 @@ namespace TagLib.Ape
 		///    A <see cref="uint" /> value read from the list in the
 		///    frame, or 0 if the value wasn't found.
 		/// </returns>
-		uint GetItemAsUInt32 (string key, int index)
+		private uint GetItemAsUInt32 (string key, int index)
 		{
 			string text = GetItemAsString (key);
 
 			if (text == null)
 				return 0;
 
-			string[] values = text.Split (new [] { '/' }, index + 2);
+			string[] values = text.Split (new[] { '/' }, index + 2);
 
 			if (values.Length < index + 1)
 				return 0;
@@ -744,9 +728,7 @@ namespace TagLib.Ape
 			return 0;
 		}
 
-		#endregion
-
-
+		#endregion Private Methods
 
 		#region IEnumerable
 
@@ -775,9 +757,7 @@ namespace TagLib.Ape
 			return GetEnumerator ();
 		}
 
-		#endregion
-
-
+		#endregion IEnumerable
 
 		#region TagLib.Tag
 
@@ -815,7 +795,7 @@ namespace TagLib.Ape
 		/// <value>
 		///    A <see cref="string" /> containing the sort names for
 		///    the Title of the media described by the current instance,
-		///    or null if no value is present. 
+		///    or null if no value is present.
 		/// </value>
 		/// <remarks>
 		///    This property is implemented using the "TitleSort" item.
@@ -825,22 +805,21 @@ namespace TagLib.Ape
 			set { SetValue ("TitleSort", value); }
 		}
 
-
 		/// <summary>
-		///    Gets and sets a short description, one-liner. 
+		///    Gets and sets a short description, one-liner.
 		///    It represents the tagline of the Video/music.
 		/// </summary>
 		/// <value>
 		///    A <see cref="string" /> containing the subtitle
-		///    the media represented by the current instance 
+		///    the media represented by the current instance
 		///    or an empty array if no value is present.
 		/// </value>
 		/// <remarks>
-		///    <para>This field gives a nice/short precision to 
+		///    <para>This field gives a nice/short precision to
 		///    the title, which is typically below the title on the
 		///    front cover of a media.
-		///    For example, for "Back to the future", this would be 
-		///    "It's About Time". 
+		///    For example, for "Back to the future", this would be
+		///    "It's About Time".
 		///    </para>
 		/// </remarks>
 		/// <remarks>
@@ -854,20 +833,20 @@ namespace TagLib.Ape
 		/// <summary>
 		///    Gets and sets a short description of the media.
 		///    For a music, this could be the comment that the artist
-		///    made of its artwork. For a video, this should be a 
+		///    made of its artwork. For a video, this should be a
 		///    short summary of the story/plot, but a spoiler. This
 		///    should give the impression of what to expect in the
 		///    media.
 		/// </summary>
 		/// <value>
 		///    A <see cref="string" /> containing the subtitle
-		///    the media represented by the current instance 
+		///    the media represented by the current instance
 		///    or an empty array if no value is present.
 		/// </value>
 		/// <remarks>
 		///    <para>This is especially relevant for a movie.
 		///    For example, for "Back to the Future 2", this could be
-		///    "After visiting 2015, Marty McFly must repeat his visit 
+		///    "After visiting 2015, Marty McFly must repeat his visit
 		///    to 1955 to prevent disastrous changes to 1985...without
 		///    interfering with his first trip".
 		///    </para>
@@ -906,7 +885,7 @@ namespace TagLib.Ape
 		///    A <see cref="string" /> array containing the sort names for
 		///    the performers or artists who performed in the media
 		///    described by the current instance, or an empty array if
-		///    no value is present. 
+		///    no value is present.
 		/// </value>
 		/// <remarks>
 		///    This property is implemented using the "ArtistSort" field.
@@ -917,13 +896,12 @@ namespace TagLib.Ape
 			set { SetValue ("ArtistSort", value); }
 		}
 
-
 		/// <summary>
 		///    Gets and sets the Charaters for a video media, or
-		///    instruments played for music media. 
+		///    instruments played for music media.
 		///    This should match the <see cref="Performers"/> array (for
 		///    each person correspond one/more role). Several roles for
-		///    the same artist/actor can be made up with semicolons. 
+		///    the same artist/actor can be made up with semicolons.
 		///    For example, "Marty McFly; Marty McFly Jr.; Marlene McFly".
 		/// </summary>
 		/// <remarks>
@@ -931,18 +909,18 @@ namespace TagLib.Ape
 		///    instrument played by each artist in a music may be of
 		///    relevance.
 		///    </para>
-		///    <para>It is highly important to match each role to the 
-		///    performers. This means that a role may be <see 
+		///    <para>It is highly important to match each role to the
+		///    performers. This means that a role may be <see
 		///    langword="null"/> to keep the match between a
 		///    Performers[i] and PerformersRole[i].
 		///    </para>
 		/// </remarks>
 		/// <remarks>
 		///    This property is implemented using the "TMCL" Text
-		///    Information Frame: The 'Musician credits list' is 
-		///    intended as a mapping between instruments and the 
-		///    musician that played it.Every odd field is an 
-		///    instrument and every even is an artist or a comma 
+		///    Information Frame: The 'Musician credits list' is
+		///    intended as a mapping between instruments and the
+		///    musician that played it.Every odd field is an
+		///    instrument and every even is an artist or a comma
 		///    delimited list of artists.
 		/// </remarks>
 		/// <remarks>
@@ -952,7 +930,6 @@ namespace TagLib.Ape
 			get { return GetItemAsStrings ("PerformersRole"); }
 			set { SetValue ("PerformersRole", value); }
 		}
-
 
 		/// <summary>
 		///    Gets and sets the band or artist who is credited in the
@@ -1065,7 +1042,7 @@ namespace TagLib.Ape
 		///    the media described by the current instance.
 		/// </summary>
 		/// <value>
-		///    A <see cref="string" /> containing the sort name of 
+		///    A <see cref="string" /> containing the sort name of
 		///    the Album Title of the media described by the current
 		///    instance or null if no value is present.
 		/// </value>
@@ -1264,7 +1241,6 @@ namespace TagLib.Ape
 				if (text == null)
 					return 0;
 
-
 				if (double.TryParse (text, out var value))
 					return (uint)Math.Round (value);
 
@@ -1311,8 +1287,8 @@ namespace TagLib.Ape
 		///    Gets and sets the date at which the tag has been written.
 		/// </summary>
 		/// <value>
-		///    A nullable <see cref="DateTime" /> object containing the 
-		///    date at which the tag has been written, or <see 
+		///    A nullable <see cref="DateTime" /> object containing the
+		///    date at which the tag has been written, or <see
 		///    langword="null" /> if no value present.
 		/// </value>
 		/// <remarks>
@@ -1544,7 +1520,7 @@ namespace TagLib.Ape
 		///    per the ReplayGain specification.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the 
+		///    This property is implemented using the
 		///    "REPLAYGAIN_TRACK_GAIN" field. Set the value to double.NaN
 		///    to clear the field.
 		/// </remarks>
@@ -1583,7 +1559,7 @@ namespace TagLib.Ape
 		///    ReplayGain specification.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the 
+		///    This property is implemented using the
 		///    "REPLAYGAIN_TRACK_PEAK" field. Set the value to double.NaN
 		///    to clear the field.
 		/// </remarks>
@@ -1616,7 +1592,7 @@ namespace TagLib.Ape
 		///    per the ReplayGain specification.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the 
+		///    This property is implemented using the
 		///    "REPLAYGAIN_ALBUM_GAIN" field. Set the value to double.NaN
 		///    to clear the field.
 		/// </remarks>
@@ -1654,7 +1630,7 @@ namespace TagLib.Ape
 		///    ReplayGain specification.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the 
+		///    This property is implemented using the
 		///    "REPLAYGAIN_ALBUM_PEAK" field. Set the value to double.NaN
 		///    to clear the field.
 		/// </remarks>
@@ -1698,7 +1674,6 @@ namespace TagLib.Ape
 				var comparison = StringComparison.InvariantCultureIgnoreCase;
 
 				foreach (Item item in items) {
-
 					if (item == null ||
 						item.Type != ItemType.Binary)
 						continue;
@@ -1708,7 +1683,6 @@ namespace TagLib.Ape
 						if (picture_item_names[i].Equals (item.Key, comparison))
 							break;
 					}
-
 
 					if (i >= picture_item_names.Length)
 						continue;
@@ -1773,10 +1747,7 @@ namespace TagLib.Ape
 		/// <summary>
 		///    Clears the values stored in the current instance.
 		/// </summary>
-		public override void Clear ()
-		{
-			items.Clear ();
-		}
+		public override void Clear () { items.Clear (); }
 
 		/// <summary>
 		///    Copies the values from the current instance to another
@@ -1805,7 +1776,6 @@ namespace TagLib.Ape
 			if (target == null)
 				throw new ArgumentNullException (nameof (target));
 
-
 			if (!(target is Tag match)) {
 				base.CopyTo (target, overwrite);
 				return;
@@ -1819,6 +1789,6 @@ namespace TagLib.Ape
 			}
 		}
 
-		#endregion
+		#endregion TagLib.Tag
 	}
 }
