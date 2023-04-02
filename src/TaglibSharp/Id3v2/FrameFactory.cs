@@ -290,6 +290,10 @@ namespace TagLib.Id3v2
 			if (header.FrameId == FrameType.CTOC)
 				return new TableOfContentsFrame (data, position, header, version);
 
+            // Podcast Flag Frame
+			if (header.FrameId == FrameType.PCST)
+				return new PodcastFlagFrame(data, position, header, version);
+
 			return new UnknownFrame (data, position, header, version);
 		}
 

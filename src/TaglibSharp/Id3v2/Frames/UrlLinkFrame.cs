@@ -385,7 +385,11 @@ namespace TagLib.Id3v2
 			var field_list = new List<string> ();
 
 			ByteVector delim = ByteVector.TextDelimiter (encoding);
-
+			
+			// The WFED has a leading null byte so we remove it during parsing. 
+			if (FrameId == FrameType.WFED && data.Count > 1 && data[0] == (byte) 0)	{
+				data.RemoveAt(0);	
+			}
 			if (FrameId != FrameType.WXXX) {
 				field_list.AddRange (data.ToStrings (StringType.Latin1, 0));
 			} else if (data.Count > 1 && !data.Mid (0,
@@ -439,6 +443,9 @@ namespace TagLib.Id3v2
 
 			if (wxxx)
 				v = new ByteVector ((byte)encoding);
+			// The WFED has a leading null byte so we add it during render.
+			else if (FrameId == FrameType.WFED)
+				v = new ByteVector ((byte)0);
 			else
 				v = new ByteVector ();
 			string[] text = text_fields;

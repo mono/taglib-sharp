@@ -31,6 +31,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace TagLib.Id3v2
@@ -2328,6 +2329,106 @@ namespace TagLib.Id3v2
 
 					AddFrame (frame);
 				}
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the podcast flag of the media represented by the 
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> object containing the podcast flag of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "PCST" field.
+		///    This property is supported in version 3 forward.
+		/// </remarks>
+		public bool PodcastFlag 
+		{
+			get 
+			{
+				IEnumerable<PodcastFlagFrame> items = this.GetFrames<PodcastFlagFrame>(FrameType.PCST);
+
+				if (items == null || items.Count() <= 0) {
+					return false;
+				} else {
+					return true;
+				}
+			}
+			set 
+			{ 
+				if (Version < 3)
+					throw new InvalidOperationException("Version must be at least 3.");
+
+				if (PodcastFlag == value) {
+					// No change
+				} else if (value) {
+					PodcastFlagFrame frame = new PodcastFlagFrame();
+					AddFrame(frame);
+				} else {
+					RemoveFrames(FrameType.PCST);
+				}
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the podcast identifier of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the podcast identifier of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TGID" field.
+		///    This property is supported in version 3 forward.
+		/// </remarks>
+		public string PodcastIdentifier {
+			get { return GetTextAsString (FrameType.TGID); }
+			set 
+			{ 
+				if (Version < 3)
+					throw new InvalidOperationException("Version must be at least 3.");
+				
+				SetTextFrame (FrameType.TGID, value); 
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the podcast feed of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the podcast feed of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "WFED" field.
+		///    This property is supported in version 3 forward.
+		/// </remarks>
+		public string PodcastFeed {
+			get { return GetTextAsString (FrameType.WFED); }
+			set { 
+				if (Version < 3)
+					throw new InvalidOperationException("Version must be at least 3.");
+
+				SetTextFrame (FrameType.WFED, value); 
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the podcast description of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the podcast description of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TDES" field.
+		///    This property is supported in version 3 forward.
+		/// </remarks>
+		public string PodcastDescription {
+			get { return GetTextAsString (FrameType.TDES); }
+			set { 
+				if (Version < 3)
+					throw new InvalidOperationException("Version must be at least 3.");
+				
+				SetTextFrame (FrameType.TDES, value); 
 			}
 		}
 
