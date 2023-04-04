@@ -201,8 +201,6 @@ namespace TagLib.Id3v2
 
 		#endregion
 
-
-
 		#region Protected Methods
 
 		/// <summary>
@@ -243,8 +241,6 @@ namespace TagLib.Id3v2
 		}
 
 		#endregion
-
-
 
 		#region ICloneable
 
