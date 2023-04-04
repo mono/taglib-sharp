@@ -101,5 +101,11 @@ namespace TagLib.Id3v2
 		public static readonly ReadOnlyByteVector WPUB = "WPUB";
 		public static readonly ReadOnlyByteVector WXXX = "WXXX";
 		public static readonly ReadOnlyByteVector ETCO = "ETCO";
+		public static readonly ReadOnlyByteVector PCST = "PCST"; // Podcast Flag Frame.
+		public static readonly ReadOnlyByteVector TDES = "TDES"; // Podcast Description Frame.
+		public static readonly ReadOnlyByteVector TGID = "TGID"; // Podcast Identifier Frame.
+		public static readonly ReadOnlyByteVector WFED = "WFED"; // Podcast Feed Url Frame.
+		public static readonly ReadOnlyByteVector TCAT = "TCAT"; // Podcast Category Frame.
+		public static readonly ReadOnlyByteVector TKWD = "TKWD"; // Podcast Keywords Frame.
 	}
 }
