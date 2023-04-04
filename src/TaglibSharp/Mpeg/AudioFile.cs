@@ -71,10 +71,16 @@ namespace TagLib.Mpeg
 		#region Private Static Fields
 
 		/// <summary>
-		///    Specifies whether or not to create ID3v1 and
-		///    ID3v2 tags when they don't exist..
+		///    Specifies whether or not to create ID3v1 
+		///    tag when it doesn't exist.
 		/// </summary>
-		private static bool create_id3_tags = true;
+		private static bool create_id3_v1_tags = true;
+
+		/// <summary>
+		///    Specifies whether or not to create ID3v2 
+		///    tag when it doesn't exist.
+		/// </summary>
+		private static bool create_id3_v2_tags = true;
 
 		#endregion
 
@@ -187,6 +193,63 @@ namespace TagLib.Mpeg
 		public static bool CreateID3Tags {
 			get { return create_id3_tags; }
 			set { create_id3_tags = value; }
+			get { 
+				if (create_id3_v1_tags && create_id3_v2_tags) {
+					return true;
+				} else if (!create_id3_v1_tags && !create_id3_v2_tags) {
+					return false;
+				}
+
+				throw new InvalidOperationException("Inconsistent V1 and V2 state.");
+			}
+			set { 
+				create_id3_v1_tags = value; 
+				create_id3_v2_tags = value;
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets whether or not to create an ID3v1 tag 
+		///    automatically when it is not existing.
+		/// </summary>
+		/// <value>
+		///    <see langword="true" /> if the tag is to be created automatically.
+		///    Otherwise, <see langword="false" />.
+		/// </value>
+		/// <remarks>
+		///    <para>Sometimes an MP3 file should not contain an ID3v1 Tag.
+		///    By setting this property to <see langword="false" />,
+		///    no ID3v1 Tag will be created when creating the file,
+		///    if it doesn't exist.
+		///    It needs to be created explicitly if needed.</para>
+		///    <para>The default is <see langword="true" /> which means that
+		///    an ID3v1 tag is created when it doesn't exist.</para>
+		/// </remarks>
+		public static bool CreateID3V1Tags {
+			get { return create_id3_v1_tags; }
+			set { create_id3_v1_tags = value; }
+		}
+
+		/// <summary>
+		///    Gets and sets whether or not to create an ID3v2 tag 
+		///    automatically when it is not existing.
+		/// </summary>
+		/// <value>
+		///    <see langword="true" /> if the tag is to be created automatically.
+		///    Otherwise, <see langword="false" />.
+		/// </value>
+		/// <remarks>
+		///    <para>Sometimes an MP3 file should not contain an ID3v2 Tag.
+		///    By setting this property to <see langword="false" />,
+		///    no ID3v1 Tag will be created when creating the file,
+		///    if it doesn't exist.
+		///    It needs to be created explicitly if needed.</para>
+		///    <para>The default is <see langword="true" /> which means that
+		///    an ID3v2 tag is created when it doesn't exist.</para>
+		/// </remarks>
+		public static bool CreateID3V2Tags {
+			get { return create_id3_v2_tags; }
+			set { create_id3_v2_tags = value; }
 		}
 
 		#endregion
@@ -290,8 +353,8 @@ namespace TagLib.Mpeg
 		protected override void ReadEnd (long end, ReadStyle propertiesStyle)
 		{
 			// Creation of ID3v1 and ID3v2 tags based on CreateID3Tags property
-			GetTag (TagTypes.Id3v1, create_id3_tags);
-			GetTag (TagTypes.Id3v2, create_id3_tags);
+			GetTag (TagTypes.Id3v1, create_id3_v1_tags);
+			GetTag (TagTypes.Id3v2, create_id3_v2_tags);
 		}
 
 		/// <summary>
