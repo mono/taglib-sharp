@@ -968,6 +968,35 @@ namespace TaglibSharp.Tests.TaggingFormats
 			}
 		}
 
+
+		[Test]
+		public void TestEncodedBy ()
+		{
+			Tag tag = new Tag ();
+			for (byte version = 2; version <= 4; version++) {
+				tag.Version = version;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.EncodedBy, "Initial (Null): " + m);
+				});
+
+				tag.EncodedBy = val_sing;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.EncodedBy, "Value Set (!Null): " + m);
+				});
+
+				tag.EncodedBy = string.Empty;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.EncodedBy, "Value Cleared (Null): " + m);
+				});
+			}
+		}
+
 		[Test]
 		public void TestISRC ()
 		{
