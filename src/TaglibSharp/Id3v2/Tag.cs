@@ -2266,6 +2266,20 @@ namespace TagLib.Id3v2
 		}
 
 		/// <summary>
+		///    Gets and sets the TENC (Encoded by) of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the TENC of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TENC" field.
+		/// </remarks>
+		public string EncodedBy {
+			get { return GetTextAsString (FrameType.TENC); }
+			set { SetTextFrame (FrameType.TENC, value); }
+		}
+
+		/// <summary>
 		///    Gets and sets the ISRC (International Standard Recording Code) of the song.
 		/// </summary>
 		/// <value>
@@ -2277,6 +2291,48 @@ namespace TagLib.Id3v2
 		public override string ISRC {
 			get { return GetTextAsString (FrameType.TSRC); }
 			set { SetTextFrame (FrameType.TSRC, value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the date at which the song has been released.
+		/// </summary>
+		/// <value>
+		///    A nullable <see cref="DateTime" /> object containing the 
+		///    date at which the song has been released, or <see 
+		///    langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    <para>This property is implemented using the "TDRL" field.</para>
+		///    <para>This is a ID3v2.4 type tag.</para>
+		/// </remarks>
+		public DateTime? ReleaseDate {
+			get {
+				string value = GetTextAsString (FrameType.TDRL);
+
+				if (String.IsNullOrWhiteSpace(value)) {
+					return null;
+				} else if (DateTime.TryParseExact (value.Replace ('T', ' '), "yyyy-MM-dd HH:mm:ss", null, DateTimeStyles.None, out DateTime exactDate)) {
+					return exactDate;
+				} else if (DateTime.TryParse(value, out DateTime parsedDate)) {
+					return parsedDate;
+				}
+
+				return null;
+			}
+			set {
+				string date = null;
+
+				if (value != null) {
+					date = $"{value:yyyy-MM-dd HH:mm:ss}";
+					date = date.Replace (' ', 'T');
+				}
+				
+				if (date == null) {
+					RemoveFrames(FrameType.TDRL);
+				} else {
+					SetTextFrame(FrameType.TDRL, date);
+				}
+			}
 		}
 
 		/// <summary>
