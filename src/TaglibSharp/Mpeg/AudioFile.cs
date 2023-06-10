@@ -191,8 +191,6 @@ namespace TagLib.Mpeg
 		///    ID3v1 and Id3v2 tags are created when they don't exist.</para>
 		/// </remarks>
 		public static bool CreateID3Tags {
-			get { return create_id3_tags; }
-			set { create_id3_tags = value; }
 			get { 
 				if (create_id3_v1_tags && create_id3_v2_tags) {
 					return true;
