@@ -579,6 +579,126 @@ namespace TaglibSharp.Tests.TaggingFormats
 		}
 
 		[Test]
+		public void TestPocastFlag ()
+		{
+			Tag tag = new Tag ();
+
+			// This property isn't supported in version 2.
+			for (byte version = 3; version <= 4; version++) {
+				tag.Version = version;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsFalse (t.PodcastFlag, "Initial (False): " + m);
+				}, 3);
+
+				tag.PodcastFlag = true;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.IsTrue (t.PodcastFlag, "Value Set (!False): " + m);
+				}, 3);
+
+				tag.PodcastFlag = false;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsFalse (t.PodcastFlag, "Value Cleared (False): " + m);
+				}, 3);
+			}
+		}
+
+		[Test]
+		public void TestPodcastIdentifier ()
+		{
+			var tag = new Tag ();
+
+			// This property isn't supported in version 2.
+			for (byte version = 3; version <= 4; version++) {
+				tag.Version = version;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.PodcastIdentifier, "Initial (Null): " + m);
+				}, 3);
+
+				tag.PodcastIdentifier = val_sing;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.PodcastIdentifier, "Value Set (!Null): " + m);
+				}, 3);
+
+				tag.PodcastIdentifier = string.Empty;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.PodcastIdentifier, "Value Cleared (Null): " + m);
+				}, 3);
+			}
+		}
+
+		[Test]
+		public void TestPodcastFeed ()
+		{
+			var tag = new Tag ();
+
+			// This property isn't supported in version 2.
+			for (byte version = 3; version <= 4; version++) {
+				tag.Version = version;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.PodcastFeed, "Initial (Null): " + m);
+				}, 3);
+
+				tag.PodcastFeed = val_sing;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.PodcastFeed, "Value Set (!Null): " + m);
+				}, 3);
+
+				tag.PodcastFeed = string.Empty;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.PodcastFeed, "Value Cleared (Null): " + m);
+				}, 3);
+			}
+		}
+
+		[Test]
+		public void TestPodcastDescription ()
+		{
+			var tag = new Tag ();
+
+			// This property isn't supported in version 2.
+			for (byte version = 3; version <= 4; version++) {
+				tag.Version = version;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.PodcastDescription, "Initial (Null): " + m);
+				}, 3);
+
+				tag.PodcastDescription = val_sing;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.PodcastDescription, "Value Set (!Null): " + m);
+				}, 3);
+
+				tag.PodcastDescription = string.Empty;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.PodcastDescription, "Value Cleared (Null): " + m);
+				}, 3);
+			}
+		}
+
+		[Test]
 		public void TestIsCompilation ()
 		{
 			var tag = new Tag ();
@@ -1137,7 +1257,11 @@ namespace TaglibSharp.Tests.TaggingFormats
 				Publisher = "L",
 				ISRC = "M",
 				Length = "L",
-				RemixedBy = "N"
+				RemixedBy = "N",
+				PodcastFlag = true,
+				PodcastDescription = "description here",
+				PodcastFeed = "https://example.org/feed.rss",
+				PodcastIdentifier = "unique id"
 			};
 
 
@@ -1168,6 +1292,10 @@ namespace TaglibSharp.Tests.TaggingFormats
 			Assert.IsNull (tag.ISRC, "ISRC");
 			Assert.IsNull (tag.Length, "Length");
 			Assert.IsNull (tag.RemixedBy, "RemixedBy");
+			Assert.IsFalse (tag.PodcastFlag, "PodcastFlag");
+			Assert.IsNull (tag.PodcastDescription, "PodcastDescription");
+			Assert.IsNull (tag.PodcastFeed, "PodcastFeed");
+			Assert.IsNull (tag.PodcastIdentifier, "PodcastIdentifier");
 		}
 
 		[Test]
