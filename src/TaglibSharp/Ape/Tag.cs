@@ -1420,12 +1420,46 @@ namespace TagLib.Ape
 		///    or <see langword="null" /> if no value is present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "MUSICBRAINZ_TRACKID" item.
+		///    This property is implemented using the "MUSICBRAINZ_RELEASETRACKID" item.
 		///    http://musicbrainz.org/doc/PicardTagMapping
 		/// </remarks>
 		public override string MusicBrainzTrackId {
+			get { return GetItemAsString ("MUSICBRAINZ_RELEASETRACKID"); }
+			set { SetValue ("MUSICBRAINZ_RELEASETRACKID", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz RecordingID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    RecordingID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_TRACKID" frame.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzRecordingId {
 			get { return GetItemAsString ("MUSICBRAINZ_TRACKID"); }
 			set { SetValue ("MUSICBRAINZ_TRACKID", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz WorkID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    WorkID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_WORKID" frame.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzWorkId {
+			get { return GetItemAsString ("MUSICBRAINZ_WORKID"); }
+			set { SetValue ("MUSICBRAINZ_WORKID", value); }
 		}
 
 		/// <summary>
