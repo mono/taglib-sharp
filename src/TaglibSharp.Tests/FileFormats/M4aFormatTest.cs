@@ -54,10 +54,10 @@ namespace TaglibSharp.Tests.FileFormats
 		[Test]
 		public void bgo_701689 ()
 		{
-			// This file contains a musicbrainz track id "883821fc-9bbc-4e04-be79-b4b12c4c4a4e"
+			// This file contains a musicbrainz recording id "883821fc-9bbc-4e04-be79-b4b12c4c4a4e"
 			// This case also handles bgo #701690 as a proper value for the tag must be returned
 			var file = TagLib.File.Create (TestPath.Samples + "bgo_701689.m4a");
-			Assert.AreEqual ("883821fc-9bbc-4e04-be79-b4b12c4c4a4e", file.Tag.MusicBrainzTrackId, "#1");
+			Assert.AreEqual ("883821fc-9bbc-4e04-be79-b4b12c4c4a4e", file.Tag.MusicBrainzRecordingId, "#1");
 		}
 
 		[Test]
