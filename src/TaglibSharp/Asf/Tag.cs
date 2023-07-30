@@ -1176,13 +1176,47 @@ namespace TagLib.Asf
 		///    instance or null if no value is present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "MusicBrainz/Track Id"
+		///    This property is implemented using the "MusicBrainz/Release Track Id"
 		///    field.
 		///    http://musicbrainz.org/doc/PicardTagMapping
 		/// </remarks>
 		public override string MusicBrainzTrackId {
+			get { return GetDescriptorString ("MusicBrainz/Release Track Id"); }
+			set { SetDescriptorString (value, "MusicBrainz/Release Track Id"); }
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz RecordingID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    RecordingID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MusicBrainz/Track Id" field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzRecordingId {
 			get { return GetDescriptorString ("MusicBrainz/Track Id"); }
 			set { SetDescriptorString (value, "MusicBrainz/Track Id"); }
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz WorkID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    WorkID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MusicBrainz/Work Id" field.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzWorkId {
+			get { return GetDescriptorString ("MusicBrainz/Work Id"); }
+			set { SetDescriptorString (value, "MusicBrainz/Work Id"); }
 		}
 
 		/// <summary>

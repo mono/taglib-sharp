@@ -634,6 +634,56 @@ namespace TaglibSharp.Tests.TaggingFormats
 		}
 
 		[Test]
+		public void TestMusicBrainzRecordingID ()
+		{
+			var file = CreateFile (out var abst);
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzRecordingId, "Initial (Null): " + m);
+			});
+
+			file.Tag.MusicBrainzRecordingId = val_sing;
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzRecordingId, "Value Set (!Null): " + m);
+			});
+
+			file.Tag.MusicBrainzRecordingId = string.Empty;
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzRecordingId, "Value Cleared (Null): " + m);
+			});
+		}
+
+		[Test]
+		public void TestMusicBrainzWorkID ()
+		{
+			var file = CreateFile (out var abst);
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzWorkId, "Initial (Null): " + m);
+			});
+
+			file.Tag.MusicBrainzWorkId = val_sing;
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzWorkId, "Value Set (!Null): " + m);
+			});
+
+			file.Tag.MusicBrainzWorkId = string.Empty;
+
+			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzWorkId, "Value Cleared (Null): " + m);
+			});
+		}
+
+		[Test]
 		public void TestMusicBrainzDiscID ()
 		{
 			var file = CreateFile (out var abst);

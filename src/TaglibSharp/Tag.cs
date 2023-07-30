@@ -849,6 +849,42 @@ namespace TagLib
 		}
 
 		/// <summary>
+		///    Gets and sets the MusicBrainz Recording ID of the media represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz RecordingID of the
+		///    media represented by the current instance or an empty
+		///    array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field represents the MusicBrainz RecordingID, and is used
+		///    to uniquely identify a particular recording.</para>
+		/// </remarks>
+		public virtual string MusicBrainzRecordingId {
+			get { return null; }
+			set { }
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Work ID of the media represented by
+		///    the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz WorkID of the
+		///    media represented by the current instance or an empty
+		///    array if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>This field represents the MusicBrainz WorkID, and is used
+		///    to uniquely identify a particular work.</para>
+		/// </remarks>
+		public virtual string MusicBrainzWorkId {
+			get { return null; }
+			set { }
+		}
+
+		/// <summary>
 		///    Gets and sets the MusicBrainz Disc ID of the media represented by
 		///    the current instance.
 		/// </summary>

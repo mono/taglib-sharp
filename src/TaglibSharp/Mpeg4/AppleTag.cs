@@ -1474,8 +1474,42 @@ namespace TagLib.Mpeg4
 		///    http://musicbrainz.org/doc/PicardTagMapping
 		/// </remarks>
 		public override string MusicBrainzTrackId {
+			get { return GetDashBox ("com.apple.iTunes", "MusicBrainz Release Track Id"); }
+			set { SetDashBox ("com.apple.iTunes", "MusicBrainz Release Track Id", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz RecordingID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    RecordingID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dash"/"----" box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzRecordingId {
 			get { return GetDashBox ("com.apple.iTunes", "MusicBrainz Track Id"); }
 			set { SetDashBox ("com.apple.iTunes", "MusicBrainz Track Id", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz WorkID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    WorkID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "dash"/"----" box type.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzWorkId {
+			get { return GetDashBox ("com.apple.iTunes", "MusicBrainz Work Id"); }
+			set { SetDashBox ("com.apple.iTunes", "MusicBrainz Work Id", value); }
 		}
 
 		/// <summary>
