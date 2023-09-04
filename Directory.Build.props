@@ -5,7 +5,6 @@
     <RepositoryUrl>https://github.com/mono/taglib-sharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
 
-    <!-- Make sure to update Directory.Build.targets too! -->
     <ExeTargetFrameworks>net7.0;net472</ExeTargetFrameworks>
     <LibTargetFrameworks>net7.0;netstandard2.0</LibTargetFrameworks>
     <LangVersion>latest</LangVersion>
