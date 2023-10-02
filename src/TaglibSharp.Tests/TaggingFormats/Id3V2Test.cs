@@ -1500,6 +1500,54 @@ namespace TaglibSharp.Tests.TaggingFormats
 		}
 
 		[Test]
+		public void TestMovementNameFrame ()
+		{
+			ByteVector id = "MVNM";
+			var frame = new TextInformationFrame (id) {
+				Text = val_mult
+			};
+
+			FrameTest (frame, 2,
+				delegate (Frame f, StringType e) {
+					(f as TextInformationFrame).TextEncoding = e;
+				},
+				(d, v) => new TextInformationFrame (d, v),
+
+				delegate (Frame f, string m) {
+					var g = (f as TextInformationFrame);
+					Assert.AreEqual (id, g.FrameId, m);
+					Assert.AreEqual (val_mult.Length, g.Text.Length, m);
+					for (int i = 0; i < val_mult.Length; i++) {
+						Assert.AreEqual (val_mult[i], g.Text[i], m);
+					}
+				});
+		}
+
+		[Test]
+		public void TestMovementNumberFrame ()
+		{
+			ByteVector id = "MVIN";
+			var frame = new TextInformationFrame (id) {
+				Text = val_mult
+			};
+
+			FrameTest (frame, 2,
+				delegate (Frame f, StringType e) {
+					(f as TextInformationFrame).TextEncoding = e;
+				},
+				(d, v) => new TextInformationFrame (d, v),
+
+				delegate (Frame f, string m) {
+					var g = (f as TextInformationFrame);
+					Assert.AreEqual (id, g.FrameId, m);
+					Assert.AreEqual (val_mult.Length, g.Text.Length, m);
+					for (int i = 0; i < val_mult.Length; i++) {
+						Assert.AreEqual (val_mult[i], g.Text[i], m);
+					}
+				});
+		}
+
+		[Test]
 		public void TestUniqueFileIdentifierFrame ()
 		{
 			ByteVector data = val_sing;
