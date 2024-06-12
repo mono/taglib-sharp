@@ -6,9 +6,15 @@
     <RepositoryType>git</RepositoryType>
 
     <!-- Make sure to update Directory.Build.targets too! -->
-    <ExeTargetFrameworks>net6.0;net472</ExeTargetFrameworks>
-    <LibTargetFrameworks>net6.0;netstandard2.0</LibTargetFrameworks>
+    <ExeTargetFrameworks>net8.0;net472</ExeTargetFrameworks>
+    <LibTargetFrameworks>net8.0;netstandard2.0</LibTargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <LangVersion>latest</LangVersion>
+    <Deterministic>true</Deterministic>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
 </Project>
