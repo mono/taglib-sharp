@@ -1111,6 +1111,66 @@ namespace TagLib.Ogg
 		}
 
 		/// <summary>
+		///    Gets and sets the MusicBrainz Recording ID.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    RecordingID for the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.MusicBrainzRecordingId" />
+		public override string MusicBrainzRecordingId {
+			get {
+				foreach (XiphComment tag in tags) {
+					string value = tag?.MusicBrainzRecordingId;
+
+					if (!string.IsNullOrEmpty (value))
+						return value;
+				}
+
+				return null;
+			}
+			set { if (tags.Count > 0) tags[0].MusicBrainzRecordingId = value; }
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Work ID.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    WorkID for the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child comments are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in the first
+		///    comment.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.MusicBrainzWorkId" />
+		public override string MusicBrainzWorkId {
+			get {
+				foreach (XiphComment tag in tags) {
+					string value = tag?.MusicBrainzWorkId;
+
+					if (!string.IsNullOrEmpty (value))
+						return value;
+				}
+
+				return null;
+			}
+			set { if (tags.Count > 0) tags[0].MusicBrainzWorkId = value; }
+		}
+
+		/// <summary>
 		///    Gets and sets the MusicBrainz Disc ID.
 		/// </summary>
 		/// <value>

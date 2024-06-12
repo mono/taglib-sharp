@@ -635,6 +635,56 @@ namespace TaglibSharp.Tests.TaggingFormats
 		}
 
 		[Test]
+		public void TestMusicBrainzRecordingID ()
+		{
+			Tag tag = new Tag ();
+
+			TagTestWithSave (ref tag, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzRecordingId, "Initial (Null): " + m);
+			});
+
+			tag.MusicBrainzRecordingId = val_sing;
+
+			TagTestWithSave (ref tag, delegate (Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzRecordingId, "Value Set (!Null): " + m);
+			});
+
+			tag.MusicBrainzRecordingId = string.Empty;
+
+			TagTestWithSave (ref tag, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzRecordingId, "Value Cleared (Null): " + m);
+			});
+		}
+
+		[Test]
+		public void TestMusicBrainzWorkID ()
+		{
+			Tag tag = new Tag ();
+
+			TagTestWithSave (ref tag, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzWorkId, "Initial (Null): " + m);
+			});
+
+			tag.MusicBrainzWorkId = val_sing;
+
+			TagTestWithSave (ref tag, delegate (Tag t, string m) {
+				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				Assert.AreEqual (val_sing, t.MusicBrainzWorkId, "Value Set (!Null): " + m);
+			});
+
+			tag.MusicBrainzWorkId = string.Empty;
+
+			TagTestWithSave (ref tag, delegate (Tag t, string m) {
+				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				Assert.IsNull (t.MusicBrainzWorkId, "Value Cleared (Null): " + m);
+			});
+		}
+
+		[Test]
 		public void TestMusicBrainzDiscID ()
 		{
 			Tag tag = new Tag ();

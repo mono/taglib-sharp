@@ -1291,11 +1291,45 @@ namespace TagLib.Ogg
 		///    instance or <see langword="null" /> if no value present.
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "MUSICBRAINZ_TRACKID" field.
+		///    This property is implemented using the "MUSICBRAINZ_RELEASETRACKID" field.
 		/// </remarks>
 		public override string MusicBrainzTrackId {
+			get { return GetFirstField ("MUSICBRAINZ_RELEASETRACKID"); }
+			set { SetField ("MUSICBRAINZ_RELEASETRACKID", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Recording ID for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    RecordingID for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_TRACKID" field.
+		/// </remarks>
+		public override string MusicBrainzRecordingId {
 			get { return GetFirstField ("MUSICBRAINZ_TRACKID"); }
 			set { SetField ("MUSICBRAINZ_TRACKID", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Work ID for the media
+		///    represented by the current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the MusicBrainz
+		///    WorkID for the media represented by the current
+		///    instance or <see langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "MUSICBRAINZ_WORKID" field.
+		/// </remarks>
+		public override string MusicBrainzWorkId {
+			get { return GetFirstField ("MUSICBRAINZ_WORKID"); }
+			set { SetField ("MUSICBRAINZ_WORKID", value); }
 		}
 
 		/// <summary>
