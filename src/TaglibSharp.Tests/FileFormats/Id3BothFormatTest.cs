@@ -133,5 +133,49 @@ namespace TaglibSharp.Tests.FileFormats
 			file = File.Create (tempFile);
 			Assert.AreEqual (TagTypes.Id3v1 | TagTypes.Id3v2, file.TagTypes);
 		}
+
+		[Test]
+		public void TestCreateId3SeparateTags ()
+		{
+			string tempFile = TestPath.Samples + "tmpwrite_sample_createid3tags.mp3";
+
+			System.IO.File.Copy (sample_file, tempFile, true);
+
+			// Remove All Tags first
+			var file = File.Create (tempFile);
+			file.RemoveTags (TagTypes.AllTags);
+			file.Save ();
+
+			// No TagTypes should exist
+			TagLib.Mpeg.AudioFile.CreateID3V1Tags = false;
+			TagLib.Mpeg.AudioFile.CreateID3V2Tags = false;
+			file = File.Create (tempFile);
+			Assert.AreEqual (TagTypes.None, file.TagTypes);
+			file.RemoveTags (TagTypes.AllTags);
+			file.Save ();
+
+			// Only V1 TagTypes should exist
+			TagLib.Mpeg.AudioFile.CreateID3V1Tags = true;
+			TagLib.Mpeg.AudioFile.CreateID3V2Tags = false;
+			file = File.Create (tempFile);
+			Assert.AreEqual (TagTypes.Id3v1, file.TagTypes);
+			file.RemoveTags (TagTypes.AllTags);
+			file.Save ();
+
+			// Only V2 TagTypes should exist
+			TagLib.Mpeg.AudioFile.CreateID3V1Tags = false;
+			TagLib.Mpeg.AudioFile.CreateID3V2Tags = true;
+			file = File.Create (tempFile);
+			Assert.AreEqual (TagTypes.Id3v2, file.TagTypes);
+			file.RemoveTags (TagTypes.AllTags);
+			file.Save ();
+
+			// Both V1 and V2 TagTypes should exist
+			TagLib.Mpeg.AudioFile.CreateID3V1Tags = true;
+			TagLib.Mpeg.AudioFile.CreateID3V2Tags = true;
+			file = File.Create (tempFile);
+			Assert.AreEqual (TagTypes.Id3v1 | TagTypes.Id3v2, file.TagTypes);
+			file.Save ();
+		}
 	}
 }
