@@ -205,7 +205,7 @@ namespace TagLib.Image
 						return value;
 				}
 
-				return new string[] { };
+				return Array.Empty<string> ();
 			}
 			set {
 				foreach (ImageTag tag in AllTags)

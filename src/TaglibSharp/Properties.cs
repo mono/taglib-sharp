@@ -45,7 +45,7 @@ namespace TagLib
 		/// <summary>
 		///    Contains the codecs.
 		/// </summary>
-		readonly ICodec[] codecs = new ICodec[0];
+		readonly ICodec[] codecs = Array.Empty<ICodec> ();
 
 		/// <summary>
 		///    Contains the duration.

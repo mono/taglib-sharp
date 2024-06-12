@@ -1,3 +1,5 @@
+using System;
+
 using NUnit.Framework;
 using TagLib;
 
@@ -12,7 +14,7 @@ namespace TaglibSharp.Tests.Images.Validators
 		readonly bool tag_present;
 		readonly TagTypes type;
 
-		public TagKeywordsModificationValidator (TagTypes type, bool tag_present) : this (new string[] { }, type, tag_present) { }
+		public TagKeywordsModificationValidator (TagTypes type, bool tag_present) : this (Array.Empty<string> (), type, tag_present) { }
 
 		public TagKeywordsModificationValidator (string[] orig_keywords, TagTypes type, bool tag_present) : base (orig_keywords)
 		{

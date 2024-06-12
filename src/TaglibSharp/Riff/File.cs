@@ -448,7 +448,7 @@ namespace TagLib.Riff
 			long length = Length;
 			uint size = 0;
 			TimeSpan duration = TimeSpan.Zero;
-			ICodec[] codecs = new ICodec[0];
+			ICodec[] codecs = Array.Empty<ICodec> ();
 
 			// Read until there are less than 8 bytes to read.
 			do {
