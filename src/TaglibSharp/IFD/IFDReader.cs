@@ -198,11 +198,13 @@ namespace TagLib.IFD
 		/// </summary>
 		void StartIFDLoopDetect ()
 		{
-			if (!ifd_offsets.ContainsKey (file)) {
-				ifd_offsets[file] = new List<long> ();
-				ifd_loopdetect_refs[file] = 1;
-			} else {
-				ifd_loopdetect_refs[file]++;
+			lock (ifd_sync_object) {
+				if (!ifd_offsets.ContainsKey (file)) {
+					ifd_offsets[file] = new List<long> ();
+					ifd_loopdetect_refs[file] = 1;
+				} else {
+					ifd_loopdetect_refs[file]++;
+				}
 			}
 		}
 
@@ -220,9 +222,13 @@ namespace TagLib.IFD
 		{
 			if (offset == 0)
 				return false;
-			if (ifd_offsets[file].Contains (offset))
-				return true;
-			ifd_offsets[file].Add (offset);
+
+			lock (ifd_sync_object) {
+				if (ifd_offsets[file].Contains (offset))
+					return true;
+				ifd_offsets[file].Add (offset);
+			}
+
 			return false;
 		}
 
@@ -231,13 +237,16 @@ namespace TagLib.IFD
 		/// </summary>
 		void StopIFDLoopDetect ()
 		{
-			ifd_loopdetect_refs[file]--;
-			if (ifd_loopdetect_refs[file] == 0) {
-				ifd_offsets.Remove (file);
-				ifd_loopdetect_refs.Remove (file);
+			lock (ifd_sync_object) {
+				ifd_loopdetect_refs[file]--;
+				if (ifd_loopdetect_refs[file] == 0) {
+					ifd_offsets.Remove (file);
+					ifd_loopdetect_refs.Remove (file);
+				}
 			}
 		}
 
+		static object ifd_sync_object = new object ();
 		static readonly Dictionary<File, List<long>> ifd_offsets = new Dictionary<File, List<long>> ();
 		static readonly Dictionary<File, int> ifd_loopdetect_refs = new Dictionary<File, int> ();
 
