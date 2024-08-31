@@ -1022,7 +1022,7 @@ namespace TagLib.Xmp
 		{
 			if (!NamespacePrefixes.ContainsKey (ns)) {
 				NamespacePrefixes.Add (ns, $"ns{++anon_ns_count}");
-				Console.WriteLine ("TAGLIB# DEBUG: Added {0} prefix for {1} namespace (XMP)", NamespacePrefixes[ns], ns);
+				// Console.WriteLine ("TAGLIB# DEBUG: Added {0} prefix for {1} namespace (XMP)", NamespacePrefixes[ns], ns);
 			}
 		}
 

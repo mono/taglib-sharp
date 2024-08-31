@@ -466,10 +466,17 @@ namespace TagLib.Ape
 
 			Size = pos + 1 + (int)value_length - offset;
 
-			if (Type == ItemType.Binary)
-				this.data = new ReadOnlyByteVector (data.Mid (pos + 1, (int)value_length));
-			else
-				text = data.Mid (pos + 1, (int)value_length).ToStrings (StringType.UTF8, 0);
+			// Store both the binary and string representation, because APE v1. tags don't use the flags.
+			// Because of this the parser can't differentiate between string and binary. 
+			// In this case sting is assumed (because flags == 0).
+			//
+			// If we write both string and binary data, the application can still access the binary data by setting the Type to binary.            
+
+			// Binary representation
+			this.data = new ReadOnlyByteVector (data.Mid (pos + 1, (int)value_length));
+
+			// String representation
+			text = data.Mid (pos + 1, (int)value_length).ToStrings (StringType.UTF8, 0);
 		}
 
 		#endregion

@@ -965,7 +965,7 @@ namespace TagLib.Id3v2
 	///    generic way or getting and setting pictures which is preferable
 	///    to format specific code.</para>
 	/// </remarks>
-	[Obsolete ("Use AttachementFrame instead")]
+	[Obsolete ("Use AttachmentFrame instead")]
 	public class AttachedPictureFrame : AttachmentFrame
 	{
 		#region Constructors
@@ -974,7 +974,7 @@ namespace TagLib.Id3v2
 		///    cref="AttachmentFrame" /> with no contents and the
 		///    default values.
 		/// </summary>
-		[Obsolete ("Use AttachementFrame instead")]
+		[Obsolete ("Use AttachmentFrame instead")]
 		public AttachedPictureFrame ()
 		{
 		}
@@ -1025,7 +1025,7 @@ namespace TagLib.Id3v2
 		/// }
 		///    </code>
 		/// </example>
-		[Obsolete ("Use AttachementFrame instead")]
+		[Obsolete ("Use AttachmentFrame instead")]
 		public AttachedPictureFrame (IPicture picture)
 			: base (picture)
 		{
@@ -1046,7 +1046,7 @@ namespace TagLib.Id3v2
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		[Obsolete ("Use AttachementFrame instead")]
+		[Obsolete ("Use AttachmentFrame instead")]
 		public AttachedPictureFrame (ByteVector data, byte version)
 			: base (data, version)
 		{
@@ -1073,7 +1073,7 @@ namespace TagLib.Id3v2
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		[Obsolete ("Use AttachementFrame instead")]
+		[Obsolete ("Use AttachmentFrame instead")]
 		protected internal AttachedPictureFrame (ByteVector data, int offset, FrameHeader header, byte version)
 			: base (data, offset, header, version)
 		{
@@ -1092,7 +1092,7 @@ namespace TagLib.Id3v2
 	///    used for storing files and other objects relevant to the file but
 	///    not supported by other frames.</para>
 	/// </remarks>
-	[Obsolete ("Use AttachementFrame instead")]
+	[Obsolete ("Use AttachmentFrame instead")]
 	public class GeneralEncapsulatedObjectFrame : AttachmentFrame
 	{
 
@@ -1103,7 +1103,7 @@ namespace TagLib.Id3v2
 		///    cref="GeneralEncapsulatedObjectFrame" /> with no
 		///    contents.
 		/// </summary>
-		[Obsolete ("Use AttachementFrame instead")]
+		[Obsolete ("Use AttachmentFrame instead")]
 		public GeneralEncapsulatedObjectFrame ()
 		{
 			Type = PictureType.NotAPicture;
@@ -1122,7 +1122,7 @@ namespace TagLib.Id3v2
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		[Obsolete ("Use AttachementFrame instead")]
+		[Obsolete ("Use AttachmentFrame instead")]
 		public GeneralEncapsulatedObjectFrame (ByteVector data, byte version)
 			: base (data, version)
 		{
@@ -1151,7 +1151,7 @@ namespace TagLib.Id3v2
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		[Obsolete ("Use AttachementFrame instead")]
+		[Obsolete ("Use AttachmentFrame instead")]
 		protected internal GeneralEncapsulatedObjectFrame (ByteVector data, int offset, FrameHeader header, byte version)
 			: base (data, offset, header, version)
 		{
@@ -1172,7 +1172,7 @@ namespace TagLib.Id3v2
 		///    A <see cref="string" /> containing the file name of the
 		///    object stored in the current instance.
 		/// </value>
-		[Obsolete ("Use AttachementFrame instead")]
+		[Obsolete ("Use AttachmentFrame instead")]
 		public string FileName {
 			get {
 				if (Filename != null)
@@ -1191,7 +1191,7 @@ namespace TagLib.Id3v2
 		///    A <see cref="ByteVector" /> containing the object data
 		///    stored in the current instance.
 		/// </value>
-		[Obsolete ("Use AttachementFrame instead")]
+		[Obsolete ("Use AttachmentFrame instead")]
 		public ByteVector Object {
 			get { return Data ?? new ByteVector (); }
 			set { Data = value; }

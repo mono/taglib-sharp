@@ -1973,12 +1973,46 @@ namespace TagLib.Id3v2
 		///    instance, or null if no value is present. 
 		/// </value>
 		/// <remarks>
-		///    This property is implemented using the "UFID:http://musicbrainz.org" frame.
+		///    This property is implemented using the "TXXX:MusicBrainz Release Track Id" frame.
 		///    http://musicbrainz.org/doc/PicardTagMapping
 		/// </remarks>
 		public override string MusicBrainzTrackId {
+			get { return GetUfidText ("MusicBrainz Release Track Id"); }
+			set { SetUfidText ("MusicBrainz Release Track Id", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz RecordingID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    RecordingID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "UFID:http://musicbrainz.org" frame.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzRecordingId {
 			get { return GetUfidText ("http://musicbrainz.org"); }
 			set { SetUfidText ("http://musicbrainz.org", value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz WorkID
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    WorkID for the media described by the current 
+		///    instance, or null if no value is present. 
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TXXX:MusicBrainz Work Id" frame.
+		///    http://musicbrainz.org/doc/PicardTagMapping
+		/// </remarks>
+		public override string MusicBrainzWorkId {
+			get { return GetUfidText ("MusicBrainz Work Id"); }
+			set { SetUfidText ("MusicBrainz Work Id", value); }
 		}
 
 		/// <summary>
