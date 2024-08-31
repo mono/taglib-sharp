@@ -102,5 +102,7 @@ namespace TagLib.Id3v2
 		public static readonly ReadOnlyByteVector WXXX = "WXXX";
 		public static readonly ReadOnlyByteVector ETCO = "ETCO";
 		public static readonly ReadOnlyByteVector TENC = "TENC"; // Encoded By Frame.
+		public static readonly ReadOnlyByteVector MVNM = "MVNM"; // Movement Name
+		public static readonly ReadOnlyByteVector MVIN = "MVIN"; // Movement Number/Count
 	}
 }

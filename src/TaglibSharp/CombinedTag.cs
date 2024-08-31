@@ -1408,6 +1408,82 @@ namespace TagLib
 						tag.MusicBrainzTrackId = value;
 			}
 		}
+		
+		/// <summary>
+		///    Gets and sets the MusicBrainz Recording ID.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    RecordingID for the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.MusicBrainzRecordingId" />
+		public override string MusicBrainzRecordingId {
+			get {
+				foreach (Tag tag in tags) {
+					if (tag == null)
+						continue;
+
+					string value = tag.MusicBrainzRecordingId;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+
+			set {
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.MusicBrainzRecordingId = value;
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the MusicBrainz Work ID.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> containing the MusicBrainz
+		///    WorkID for the media described by the 
+		///    current instance or null if no value is present.
+		/// </value>
+		/// <remarks>
+		///    <para>When getting the value, the child tags are looped
+		///    through in order and the first non-<see langword="null" />
+		///    and non-empty value is returned.</para>
+		///    <para>When setting the value, it is stored in each child
+		///    tag.</para>
+		/// </remarks>
+		/// <seealso cref="Tag.MusicBrainzWorkId" />
+		public override string MusicBrainzWorkId {
+			get {
+				foreach (Tag tag in tags) {
+					if (tag == null)
+						continue;
+
+					string value = tag.MusicBrainzWorkId;
+
+					if (value != null)
+						return value;
+				}
+
+				return null;
+			}
+
+			set {
+				foreach (Tag tag in tags)
+					if (tag != null)
+						tag.MusicBrainzWorkId = value;
+			}
+		}
 
 		/// <summary>
 		///    Gets and sets the MusicBrainz Disc ID.

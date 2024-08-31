@@ -875,7 +875,9 @@ namespace TagLib.Id3v2
 					FrameId == FrameType.TPE1 ||
 					FrameId == FrameType.TPE2 ||
 					FrameId == FrameType.TPE3 ||
-					FrameId == FrameType.TPE4) {
+					FrameId == FrameType.TPE4 ||
+					FrameId == FrameType.MVNM ||
+					FrameId == FrameType.MVIN) {
 					field_list.AddRange (value.Split ('/'));
 				} else if (FrameId == FrameType.TCON) {
 					while (value.Length > 1 && value[0] == '(') {

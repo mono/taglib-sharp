@@ -216,7 +216,10 @@ namespace TagLib.Id3v2
 			if (header.FrameId == FrameType.TXXX)
 				return new UserTextInformationFrame (data, position, header, version);
 
-			if (header.FrameId[0] == (byte)'T')
+			// Apple proprietary MVNM (Movement Name), MVIN (Movement Number) are in fact text frames.
+			if (header.FrameId[0] == (byte)'T' ||
+				header.FrameId == "MVNM" ||
+				header.FrameId == "MVIN")
 				return new TextInformationFrame (data, position, header, version);
 
 			// Involved People List (frames 4.4 in 2.3. in 2.4 this is a TIPL frame)
