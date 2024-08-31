@@ -18,6 +18,8 @@ namespace TaglibSharp.Tests.TaggingFormats
 		static readonly string[] val_gnre = {"Rap",
 			"Jazz", "Non-Genre", "Blues"};
 
+		static readonly System.DateTime val_date = new System.DateTime (2022, 10, 20, 16, 45, 23, 0, 0);
+
 		[Test]
 		public void TestTitle ()
 		{
@@ -1024,6 +1026,35 @@ namespace TaglibSharp.Tests.TaggingFormats
 			}
 		}
 
+
+		[Test]
+		public void TestEncodedBy ()
+		{
+			Tag tag = new Tag ();
+			for (byte version = 2; version <= 4; version++) {
+				tag.Version = version;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.EncodedBy, "Initial (Null): " + m);
+				});
+
+				tag.EncodedBy = val_sing;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_sing, t.EncodedBy, "Value Set (!Null): " + m);
+				});
+
+				tag.EncodedBy = string.Empty;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.EncodedBy, "Value Cleared (Null): " + m);
+				});
+			}
+		}
+
 		[Test]
 		public void TestISRC ()
 		{
@@ -1049,6 +1080,34 @@ namespace TaglibSharp.Tests.TaggingFormats
 					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
 					Assert.IsNull (t.ISRC, "Value Cleared (Null): " + m);
 				});
+			}
+		}
+
+		[Test]
+		public void TestReleaseDate ()
+		{
+			Tag tag = new Tag ();
+			for (byte version = 4; version <= 4; version++) {
+				tag.Version = version;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+					Assert.IsNull (t.ReleaseDate, "Initial (Null): " + m);
+				}, 4);
+
+				tag.ReleaseDate = val_date;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+					Assert.AreEqual (val_date, t.ReleaseDate.Value, "Value Set (!Null): " + m);
+				}, 4);
+
+				tag.ReleaseDate = null;
+
+				TagTestWithSave (ref tag, delegate (Tag t, string m) {
+					Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+					Assert.IsNull (t.ReleaseDate, "Value Cleared (Null): " + m);
+				}, 4);
 			}
 		}
 
@@ -1738,10 +1797,10 @@ namespace TaglibSharp.Tests.TaggingFormats
 
 		delegate void TagTestFunc (Tag tag, string msg);
 
-		void TagTestWithSave (ref Tag tag, TagTestFunc testFunc)
+		void TagTestWithSave (ref Tag tag, TagTestFunc testFunc, byte minVersion = 2)
 		{
 			testFunc (tag, "Before Save");
-			for (byte version = 2; version <= 4; version++) {
+			for (byte version = minVersion; version <= 4; version++) {
 				tag.Version = version;
 				tag = new Tag (tag.Render ());
 				testFunc (tag, "After Save, Version: " + version);
