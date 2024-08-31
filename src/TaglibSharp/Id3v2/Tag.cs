@@ -2300,6 +2300,20 @@ namespace TagLib.Id3v2
 		}
 
 		/// <summary>
+		///    Gets and sets the TENC (Encoded by) of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the TENC of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TENC" field.
+		/// </remarks>
+		public string EncodedBy {
+			get { return GetTextAsString (FrameType.TENC); }
+			set { SetTextFrame (FrameType.TENC, value); }
+		}
+
+		/// <summary>
 		///    Gets and sets the ISRC (International Standard Recording Code) of the song.
 		/// </summary>
 		/// <value>
