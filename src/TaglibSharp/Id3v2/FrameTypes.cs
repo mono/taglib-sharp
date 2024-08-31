@@ -109,5 +109,7 @@ namespace TagLib.Id3v2
 		public static readonly ReadOnlyByteVector WFED = "WFED"; // Podcast Feed Url Frame.
 		public static readonly ReadOnlyByteVector TCAT = "TCAT"; // Podcast Category Frame.
 		public static readonly ReadOnlyByteVector TKWD = "TKWD"; // Podcast Keywords Frame.
+		public static readonly ReadOnlyByteVector MVNM = "MVNM"; // Movement Name
+		public static readonly ReadOnlyByteVector MVIN = "MVIN"; // Movement Number/Count
 	}
 }

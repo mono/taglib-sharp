@@ -1236,6 +1236,37 @@ namespace TagLib
 		}
 
 		/// <summary>
+		/// Returns true if the file is supported
+		/// </summary>
+		/// <param name="path">The file path</param>
+		/// <returns>True if supported, false otherwise</returns>
+		public static bool IsSupportedFile (string path)
+		{
+			var abstraction = new LocalFileAbstraction (path);
+
+			return IsSupportedFile (abstraction);
+		}
+
+		private static bool IsSupportedFile(IFileAbstraction abstraction)
+		{
+			string mimetype = GetMimeType (abstraction);
+
+			return FileTypes.AvailableTypes.ContainsKey (mimetype);
+		}
+
+		private static string GetMimeType (IFileAbstraction abstraction)
+		{
+			string ext = string.Empty;
+
+			int index = abstraction.Name.LastIndexOf (".") + 1;
+
+			if (index >= 1 && index < abstraction.Name.Length)
+				ext = abstraction.Name.Substring (index, abstraction.Name.Length - index);
+
+			return $"taglib/{ext.ToLower (CultureInfo.InvariantCulture)}";
+		}
+
+		/// <summary>
 		///    Creates a new instance of a <see cref="File" /> subclass
 		///    for a specified file abstraction, mime-type, and read
 		///    style.
@@ -1269,16 +1300,7 @@ namespace TagLib
 		/// </exception>
 		public static File Create (IFileAbstraction abstraction, string mimetype, ReadStyle propertiesStyle)
 		{
-			if (mimetype == null) {
-				string ext = string.Empty;
-
-				int index = abstraction.Name.LastIndexOf (".") + 1;
-
-				if (index >= 1 && index < abstraction.Name.Length)
-					ext = abstraction.Name.Substring (index, abstraction.Name.Length - index);
-
-				mimetype = "taglib/" + ext.ToLower (CultureInfo.InvariantCulture);
-			}
+			mimetype ??= GetMimeType (abstraction);
 
 			foreach (var resolver in file_type_resolvers) {
 				var file = resolver (abstraction, mimetype, propertiesStyle);
@@ -1287,7 +1309,7 @@ namespace TagLib
 					return file;
 			}
 
-			if (!FileTypes.AvailableTypes.ContainsKey (mimetype))
+			if (!IsSupportedFile(abstraction))
 				throw new UnsupportedFormatException (
 					string.Format (CultureInfo.InvariantCulture, "{0} ({1})", abstraction.Name, mimetype));
 
