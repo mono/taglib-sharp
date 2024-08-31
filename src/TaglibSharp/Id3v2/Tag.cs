@@ -31,6 +31,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace TagLib.Id3v2
@@ -2217,7 +2218,6 @@ namespace TagLib.Id3v2
 			}
 			set {
 				if (double.IsNaN (value)) {
-					SetUserTextAsString ("REPLAYGAIN_ALBUM_GAIN", null, false);
 				} else {
 					string text = value.ToString ("0.00 dB", CultureInfo.InvariantCulture);
 					SetUserTextAsString ("REPLAYGAIN_ALBUM_GAIN", text, false);
@@ -2300,6 +2300,20 @@ namespace TagLib.Id3v2
 		}
 
 		/// <summary>
+		///    Gets and sets the TENC (Encoded by) of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the TENC of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TENC" field.
+		/// </remarks>
+		public string EncodedBy {
+			get { return GetTextAsString (FrameType.TENC); }
+			set { SetTextFrame (FrameType.TENC, value); }
+		}
+
+		/// <summary>
 		///    Gets and sets the ISRC (International Standard Recording Code) of the song.
 		/// </summary>
 		/// <value>
@@ -2311,6 +2325,48 @@ namespace TagLib.Id3v2
 		public override string ISRC {
 			get { return GetTextAsString (FrameType.TSRC); }
 			set { SetTextFrame (FrameType.TSRC, value); }
+		}
+
+		/// <summary>
+		///    Gets and sets the date at which the song has been released.
+		/// </summary>
+		/// <value>
+		///    A nullable <see cref="DateTime" /> object containing the 
+		///    date at which the song has been released, or <see 
+		///    langword="null" /> if no value present.
+		/// </value>
+		/// <remarks>
+		///    <para>This property is implemented using the "TDRL" field.</para>
+		///    <para>This is a ID3v2.4 type tag.</para>
+		/// </remarks>
+		public DateTime? ReleaseDate {
+			get {
+				string value = GetTextAsString (FrameType.TDRL);
+
+				if (String.IsNullOrWhiteSpace(value)) {
+					return null;
+				} else if (DateTime.TryParseExact (value.Replace ('T', ' '), "yyyy-MM-dd HH:mm:ss", null, DateTimeStyles.None, out DateTime exactDate)) {
+					return exactDate;
+				} else if (DateTime.TryParse(value, out DateTime parsedDate)) {
+					return parsedDate;
+				}
+
+				return null;
+			}
+			set {
+				string date = null;
+
+				if (value != null) {
+					date = $"{value:yyyy-MM-dd HH:mm:ss}";
+					date = date.Replace (' ', 'T');
+				}
+				
+				if (date == null) {
+					RemoveFrames(FrameType.TDRL);
+				} else {
+					SetTextFrame(FrameType.TDRL, date);
+				}
+			}
 		}
 
 		/// <summary>
@@ -2362,6 +2418,106 @@ namespace TagLib.Id3v2
 
 					AddFrame (frame);
 				}
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the podcast flag of the media represented by the 
+		///    current instance.
+		/// </summary>
+		/// <value>
+		///    A <see cref="bool" /> object containing the podcast flag of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "PCST" field.
+		///    This property is supported in version 3 forward.
+		/// </remarks>
+		public bool PodcastFlag 
+		{
+			get 
+			{
+				IEnumerable<PodcastFlagFrame> items = this.GetFrames<PodcastFlagFrame>(FrameType.PCST);
+
+				if (items == null || items.Count() <= 0) {
+					return false;
+				} else {
+					return true;
+				}
+			}
+			set 
+			{ 
+				if (Version < 3)
+					throw new InvalidOperationException("Version must be at least 3.");
+
+				if (PodcastFlag == value) {
+					// No change
+				} else if (value) {
+					PodcastFlagFrame frame = new PodcastFlagFrame();
+					AddFrame(frame);
+				} else {
+					RemoveFrames(FrameType.PCST);
+				}
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the podcast identifier of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the podcast identifier of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TGID" field.
+		///    This property is supported in version 3 forward.
+		/// </remarks>
+		public string PodcastIdentifier {
+			get { return GetTextAsString (FrameType.TGID); }
+			set 
+			{ 
+				if (Version < 3)
+					throw new InvalidOperationException("Version must be at least 3.");
+				
+				SetTextFrame (FrameType.TGID, value); 
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the podcast feed of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the podcast feed of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "WFED" field.
+		///    This property is supported in version 3 forward.
+		/// </remarks>
+		public string PodcastFeed {
+			get { return GetTextAsString (FrameType.WFED); }
+			set { 
+				if (Version < 3)
+					throw new InvalidOperationException("Version must be at least 3.");
+
+				SetTextFrame (FrameType.WFED, value); 
+			}
+		}
+
+		/// <summary>
+		///    Gets and sets the podcast description of the song.
+		/// </summary>
+		/// <value>
+		///    A <see cref="string" /> object containing the podcast description of the song.
+		/// </value>
+		/// <remarks>
+		///    This property is implemented using the "TDES" field.
+		///    This property is supported in version 3 forward.
+		/// </remarks>
+		public string PodcastDescription {
+			get { return GetTextAsString (FrameType.TDES); }
+			set { 
+				if (Version < 3)
+					throw new InvalidOperationException("Version must be at least 3.");
+				
+				SetTextFrame (FrameType.TDES, value); 
 			}
 		}
 
