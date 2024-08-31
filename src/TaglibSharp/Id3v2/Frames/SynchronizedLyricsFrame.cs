@@ -21,6 +21,7 @@
 // USA
 //
 
+using System;
 using System.Collections.Generic;
 
 namespace TagLib.Id3v2
@@ -42,7 +43,7 @@ namespace TagLib.Id3v2
 		/// <summary>
 		///    Contains the text.
 		/// </summary>
-		SynchedText[] text = new SynchedText[0];
+		SynchedText[] text = Array.Empty<SynchedText> ();
 
 		#endregion
 
@@ -244,7 +245,7 @@ namespace TagLib.Id3v2
 		/// </value>
 		public SynchedText[] Text {
 			get { return text; }
-			set { text = value ?? (new SynchedText[0]); }
+			set { text = value ?? Array.Empty<SynchedText> (); }
 		}
 
 		#endregion

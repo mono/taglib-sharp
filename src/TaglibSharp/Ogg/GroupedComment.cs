@@ -312,7 +312,7 @@ namespace TagLib.Ogg
 						return value;
 				}
 
-				return new string[] { };
+				return Array.Empty<string> ();
 			}
 			set { if (tags.Count > 0) tags[0].Performers = value; }
 		}
@@ -344,7 +344,7 @@ namespace TagLib.Ogg
 						return value;
 				}
 
-				return new string[] { };
+				return Array.Empty<string> ();
 			}
 			set { if (tags.Count > 0) tags[0].PerformersSort = value; }
 		}
@@ -374,7 +374,7 @@ namespace TagLib.Ogg
 						return value;
 				}
 
-				return new string[] { };
+				return Array.Empty<string> ();
 			}
 			set { if (tags.Count > 0) tags[0].PerformersRole = value; }
 		}
@@ -407,7 +407,7 @@ namespace TagLib.Ogg
 						return value;
 				}
 
-				return new string[] { };
+				return Array.Empty<string> ();
 			}
 			set { if (tags.Count > 0) tags[0].AlbumArtists = value; }
 		}
@@ -442,7 +442,7 @@ namespace TagLib.Ogg
 						return value;
 				}
 
-				return new string[] { };
+				return Array.Empty<string> ();
 			}
 
 			set { if (tags.Count > 0) tags[0].AlbumArtistsSort = value; }
@@ -474,7 +474,7 @@ namespace TagLib.Ogg
 						return value;
 				}
 
-				return new string[] { };
+				return Array.Empty<string> ();
 			}
 			set { if (tags.Count > 0) tags[0].Composers = value; }
 		}
@@ -505,7 +505,7 @@ namespace TagLib.Ogg
 						return value;
 				}
 
-				return new string[] { };
+				return Array.Empty<string> ();
 			}
 			set { if (tags.Count > 0) tags[0].ComposersSort = value; }
 		}
@@ -629,7 +629,7 @@ namespace TagLib.Ogg
 						return value;
 				}
 
-				return new string[] { };
+				return Array.Empty<string> ();
 			}
 			set { if (tags.Count > 0) tags[0].Genres = value; }
 		}
@@ -1505,7 +1505,7 @@ namespace TagLib.Ogg
 		/// <seealso cref="Tag.Pictures" />
 		public override IPicture[] Pictures {
 			get {
-				IPicture[] output = new IPicture[0];
+				IPicture[] output = Array.Empty<IPicture> ();
 				foreach (XiphComment tag in tags)
 					if (tag != null && output.Length == 0)
 						output = tag.Pictures;

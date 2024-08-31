@@ -1,3 +1,5 @@
+using System;
+
 using NUnit.Framework;
 using TagLib;
 
@@ -61,7 +63,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 				}
 			});
 
-			tag.Performers = new string[0];
+			tag.Performers = Array.Empty<string> ();
 
 			TagTestWithSave (ref tag, delegate (TagLib.Riff.MovieIdTag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
@@ -124,7 +126,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 				}
 			});
 
-			tag.Genres = new string[0];
+			tag.Genres = Array.Empty<string> ();
 
 			TagTestWithSave (ref tag, delegate (TagLib.Riff.MovieIdTag t, string m) {
 				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);

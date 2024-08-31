@@ -21,8 +21,8 @@ namespace TaglibSharp.Tests.Images
 			Assert.AreEqual (TagTypes.TiffIFD | TagTypes.XMP, file2.TagTypes);
 			Assert.AreEqual ("%test comment%", file1.ImageTag.Comment);
 			Assert.AreEqual (string.Empty, file2.ImageTag.Comment);
-			Assert.AreEqual (new string[] { }, file1.ImageTag.Keywords);
-			Assert.AreEqual (new string[] { }, file2.ImageTag.Keywords);
+			Assert.AreEqual (Array.Empty<string> (), file1.ImageTag.Keywords);
+			Assert.AreEqual (Array.Empty<string> (), file2.ImageTag.Keywords);
 			Assert.AreEqual (null, file1.ImageTag.Rating);
 			Assert.AreEqual (0, file2.ImageTag.Rating);
 			Assert.AreEqual (new DateTime (2009, 8, 9, 19, 12, 44), (DateTime)file1.ImageTag.DateTime);
@@ -62,8 +62,8 @@ namespace TaglibSharp.Tests.Images
 			Assert.AreEqual (TagTypes.TiffIFD | TagTypes.XMP, file2.TagTypes);
 			Assert.AreEqual ("%test comment%", file1.ImageTag.Comment);
 			Assert.AreEqual ("%test comment%", file2.ImageTag.Comment);
-			Assert.AreEqual (new string[] { }, file1.ImageTag.Keywords);
-			Assert.AreEqual (new string[] { }, file2.ImageTag.Keywords);
+			Assert.AreEqual (Array.Empty<string> (), file1.ImageTag.Keywords);
+			Assert.AreEqual (Array.Empty<string> (), file2.ImageTag.Keywords);
 			Assert.AreEqual (null, file1.ImageTag.Rating);
 			Assert.AreEqual (null, file2.ImageTag.Rating);
 			Assert.AreEqual (new DateTime (2009, 8, 9, 19, 12, 44), (DateTime)file1.ImageTag.DateTime);

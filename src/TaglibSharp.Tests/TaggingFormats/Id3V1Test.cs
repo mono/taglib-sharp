@@ -1,3 +1,5 @@
+using System;
+
 using NUnit.Framework;
 
 namespace TaglibSharp.Tests.TaggingFormats
@@ -59,7 +61,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 			Assert.IsFalse (tag.IsEmpty, "Still not empty");
 			Assert.AreEqual ("A123456789; B123456789; C1234567", tag.JoinedPerformers);
 
-			tag.Performers = new string[0];
+			tag.Performers = Array.Empty<string> ();
 			Assert.IsTrue (tag.IsEmpty, "Again empty");
 			Assert.AreEqual (0, tag.Performers.Length, "Again empty");
 
@@ -228,7 +230,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 			Assert.IsTrue (tag.IsEmpty, "Still empty");
 			Assert.AreEqual (0, tag.Genres.Length, "Still empty");
 
-			tag.Genres = new string[0];
+			tag.Genres = Array.Empty<string> ();
 			Assert.IsTrue (tag.IsEmpty, "Again empty");
 			Assert.AreEqual (0, tag.Genres.Length, "Again empty");
 

@@ -357,7 +357,7 @@ namespace TagLib.Ape
 		public string[] ToStringArray ()
 		{
 			if (Type == ItemType.Binary || text == null)
-				return new string[0];
+				return Array.Empty<string> ();
 
 			return text;
 		}
