@@ -561,10 +561,14 @@ namespace TagLib.Jpeg
 			}
 			data.RemoveRange (0, iptc_iim_length + lenToSkip);
 
-			var reader = new IIM.IIMReader (data);
-			var tag = reader.Process ();
-			if (tag != null)
-				ImageTag.AddTag (tag);
+			try {
+				var reader = new IIM.IIMReader (data);
+				var tag = reader.Process ();
+				if (tag != null)
+					ImageTag.AddTag (tag);
+			} catch (Exception) {
+				// There isn't much we handle in the IPTC section, so we just ignore any errors.
+			}
 		}
 
 		/// <summary>
