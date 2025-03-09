@@ -1265,8 +1265,10 @@ namespace TagLib.Ape
 					return 0;
 
 
-				if (double.TryParse (text, out var value))
+				if (double.TryParse (text, NumberStyles.Float, CultureInfo.InvariantCulture,
+					out var value)) {
 					return (uint)Math.Round (value);
+				}
 
 				return 0;
 			}
