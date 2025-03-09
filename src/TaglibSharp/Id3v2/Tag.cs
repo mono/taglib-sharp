@@ -1819,8 +1819,10 @@ namespace TagLib.Id3v2
 				if (text == null)
 					return 0;
 
-				if (double.TryParse (text, out var result) && result >= 0.0)
+				if (double.TryParse (text, NumberStyles.Float, CultureInfo.InvariantCulture,
+					out var result) && result >= 0.0) {
 					return (uint)Math.Round (result);
+				}
 
 				return 0;
 			}
