@@ -28,7 +28,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Linq;
 using System.Text;
+
 
 namespace TagLib.Id3v2
 {
@@ -110,15 +114,7 @@ namespace TagLib.Id3v2
 	{
 		#region Private Fields
 
-		/// <summary>
-		///    Contains the encoding to use for the text.
-		/// </summary>
-		StringType encoding = StringType.Latin1;
-
-		/// <summary>
-		///    Contains the text fields.
-		/// </summary>
-		string[] text_fields = new string[0];
+		string url;
 
 		/// <summary>
 		///    Contains the raw data from the frame, or
@@ -129,7 +125,7 @@ namespace TagLib.Id3v2
 		///    it is parsed on demand, reducing the ammount of
 		///    unnecessary conversion.
 		/// </remarks>
-		ByteVector raw_data;
+		protected ByteVector raw_data;
 
 		/// <summary>
 		///    Contains the ID3v2 version of <see cref="raw_data" />.
@@ -198,6 +194,9 @@ namespace TagLib.Id3v2
 		protected internal UrlLinkFrame (ByteVector data, int offset, FrameHeader header, byte version)
 		  : base (header)
 		{
+			if (data[offset] != (byte)'W') {
+				throw new ArgumentException("Invalid header data. Expecting a WNNN frame");
+			}
 			SetData (data, offset, version, false);
 		}
 
@@ -229,39 +228,35 @@ namespace TagLib.Id3v2
 		/// /* Replacing the value completely: */
 		/// frame.Text = new string [] {"http://www.somewhere.com"};</code>
 		/// </example>
+		[Obsolete("Use property Url instead")]
 		public virtual string[] Text {
 			get {
-				ParseRawData ();
-				return (string[])text_fields.Clone ();
+				return new string[] { Url };
 			}
 			set {
-				raw_data = null;
-				text_fields = value != null ?
-				  (string[])value.Clone () :
-				  new string[0];
+				if (value?.Length > 0){
+					raw_data = null;
+					Url = value[0];
+					return;
+				}
+
+				throw new ArgumentException ("Text must be a one-element array");
 			}
 		}
 
 		/// <summary>
-		///    Gets and sets the text encoding to use when rendering
-		///    the current instance.
+		/// Gets or sets the url of the frame.
 		/// </summary>
-		/// <value>
-		///    A <see cref="StringType" /> value specifying the encoding
-		///    to use when rendering the current instance.
-		/// </value>
-		/// <remarks>
-		///    This value will be overwritten if
-		///    <see cref="TagLib.Id3v2.Tag.ForceDefaultEncoding" /> is
-		///    <see langword="true" />.
-		/// </remarks>
-		public StringType TextEncoding {
+		public string Url {
 			get {
-				ParseRawData ();
-				return encoding;
+				ParseRawData();
+				return url;
 			}
-			set { encoding = value; }
+			set {
+				url = value;
+			}
 		}
+
 
 		#endregion
 
@@ -276,7 +271,7 @@ namespace TagLib.Id3v2
 		public override string ToString ()
 		{
 			ParseRawData ();
-			return string.Join ("; ", Text);
+			return Url;
 		}
 
 		#endregion
@@ -365,6 +360,17 @@ namespace TagLib.Id3v2
 
 		/// <summary>
 		///    Performs the actual parsing of the raw data.
+		///
+		///  <para>
+		///   With these frames dynamic data such as webpages with touring information, price information or plain ordinary news can be added to the tag.
+		///   There may only be one URL link frame of its kind in an tag, except when stated otherwise in the frame description.
+		///   If the textstring is followed by a termination ($00 (00)) all the following information should be ignored and not be displayed.
+		///   All URL link frame identifiers begins with "W".
+		///   Only URL link frame identifiers begins with "W". All URL link frames have the following format:
+		///
+		///   &lt;Header for 'URL link frame', ID: "W000" - "WZZZ", excluding "WXXX" described in 4.3.2.&gt;
+		///   URL&lt;text string&gt;
+		/// </para>
 		/// </summary>
 		/// <remarks>
 		///    Because of the high parsing cost and relatively low usage
@@ -374,44 +380,14 @@ namespace TagLib.Id3v2
 		///    this method is called, and only on the first call does it
 		///    actually parse the data.
 		/// </remarks>
-		protected void ParseRawData ()
+		protected virtual void ParseRawData ()
 		{
 			if (raw_data == null)
 				return;
 
 			ByteVector data = raw_data;
 			raw_data = null;
-
-			var field_list = new List<string> ();
-
-			ByteVector delim = ByteVector.TextDelimiter (encoding);
-
-			if (FrameId != FrameType.WXXX) {
-				field_list.AddRange (data.ToStrings (StringType.Latin1, 0));
-			} else if (data.Count > 1 && !data.Mid (0,
-				delim.Count).Equals (delim)) {
-				string value = data.ToString (StringType.Latin1, 1,
-				  data.Count - 1);
-
-				// Do a fast removal of end bytes.
-				if (value.Length > 1 &&
-				  value[value.Length - 1] == 0)
-					for (int i = value.Length - 1; i >= 0; i--)
-						if (value[i] != 0) {
-							value = value.Substring (0, i + 1);
-							break;
-						}
-
-				field_list.Add (value);
-			}
-
-			// Bad tags may have one or more nul characters at the
-			// end of a string, resulting in empty strings at the
-			// end of the FieldList. Strip them off.
-			while (field_list.Count != 0 && string.IsNullOrEmpty (field_list[field_list.Count - 1]))
-				field_list.RemoveAt (field_list.Count - 1);
-
-			text_fields = field_list.ToArray ();
+			Url = data.ToString ();
 		}
 
 		/// <summary>
@@ -431,33 +407,7 @@ namespace TagLib.Id3v2
 			if (raw_data != null && raw_version == version)
 				return raw_data;
 
-			StringType encoding = CorrectEncoding (TextEncoding, version);
-
-			bool wxxx = FrameId == FrameType.WXXX;
-
-			ByteVector v;
-
-			if (wxxx)
-				v = new ByteVector ((byte)encoding);
-			else
-				v = new ByteVector ();
-			string[] text = text_fields;
-
-			if (version > 3 || wxxx) {
-				if (wxxx) {
-					if (text.Length == 0)
-						text = new string[] { null, null };
-					else if (text.Length == 1)
-						text = new[] {text [0],
-							null};
-				}
-
-				v.Add (ByteVector.FromString (string.Join ("/", text), StringType.Latin1));
-			} else {
-				v.Add (ByteVector.FromString (string.Join ("/", text), StringType.Latin1));
-			}
-
-			return v;
+			return ByteVector.FromString (Url, StringType.Latin1);
 		}
 
 
@@ -476,15 +426,7 @@ namespace TagLib.Id3v2
 		/// </returns>
 		public override Frame Clone ()
 		{
-			UrlLinkFrame frame = (this is UserUrlLinkFrame) ?
-			  new UserUrlLinkFrame (null, encoding) : new UrlLinkFrame (FrameId);
-
-			frame.text_fields = (string[])text_fields.Clone ();
-			if (raw_data != null)
-				frame.raw_data = new ByteVector (raw_data);
-
-			frame.raw_version = raw_version;
-			return frame;
+			return new UrlLinkFrame (header.FrameId) { Url = Url, raw_version = raw_version };
 		}
 
 		#endregion
@@ -496,8 +438,11 @@ namespace TagLib.Id3v2
 	///    This class extends <see cref="UrlLinkFrame" /> to provide
 	///    support for ID3v2 User Url Link (WXXX) Frames.
 	/// </summary>
-	public class UserUrlLinkFrame : UrlLinkFrame
+	public sealed class UserUrlLinkFrame : UrlLinkFrame
 	{
+		string description;
+		private StringType descriptionEncoding;
+
 		#region Constructors
 
 		/// <summary>
@@ -522,7 +467,11 @@ namespace TagLib.Id3v2
 		public UserUrlLinkFrame (string description, StringType encoding)
 		  : base (FrameType.WXXX)
 		{
-			base.Text = new[] { description };
+			if (string.IsNullOrEmpty (description)) {
+				throw new ArgumentException ("A description must not be null or empty.");
+			}
+			Description = description;
+			DescriptionEncoding = encoding;
 		}
 
 		/// <summary>
@@ -541,9 +490,8 @@ namespace TagLib.Id3v2
 		///    creation.
 		/// </remarks>
 		public UserUrlLinkFrame (string description)
-		  : base (FrameType.WXXX)
+		  : this(description, StringType.Latin1)
 		{
-			base.Text = new[] { description };
 		}
 
 		/// <summary>
@@ -585,7 +533,7 @@ namespace TagLib.Id3v2
 		///    A <see cref="byte" /> indicating the ID3v2 version the
 		///    raw frame is encoded in.
 		/// </param>
-		protected internal UserUrlLinkFrame (ByteVector data, int offset, FrameHeader header, byte version)
+		internal UserUrlLinkFrame (ByteVector data, int offset, FrameHeader header, byte version)
 		  : base (data, offset, header, version)
 		{
 		}
@@ -610,19 +558,10 @@ namespace TagLib.Id3v2
 		/// </remarks>
 		public string Description {
 			get {
-				string[] text = base.Text;
-				return text.Length > 0 ? text[0] : null;
+				ParseRawData();
+				return description;
 			}
-
-			set {
-				string[] text = base.Text;
-				if (text.Length > 0)
-					text[0] = value;
-				else
-					text = new[] { value };
-
-				base.Text = text;
-			}
+			set => description = value;
 		}
 
 		/// <summary>
@@ -638,29 +577,26 @@ namespace TagLib.Id3v2
 		///    not modify the contents of the current instance. The
 		///    value must be reassigned for the value to change.</para>
 		/// </remarks>
+		[Obsolete("Use property Url instead.")]
 		public override string[] Text {
 			get {
-				string[] text = base.Text;
-				if (text.Length < 2)
-					return new string[0];
-
-				string[] new_text = new string[text.Length - 1];
-				for (int i = 0; i < new_text.Length; i++)
-					new_text[i] = text[i + 1];
-
-				return new_text;
+				return new string[] { Url };
 			}
 			set {
-				string[] new_value = new string[
-				  value?.Length + 1 ?? 1];
-
-				new_value[0] = Description;
-
-				for (int i = 1; i < new_value.Length; i++)
-					new_value[i] = value[i - 1];
-
-				base.Text = new_value;
+				
+				Url = value[0];
 			}
+		}
+
+		/// <summary>
+		/// The encoding of the description. Defaults to <see cref="StringType.Latin1"/>.
+		/// </summary>
+		public StringType DescriptionEncoding {
+			get {
+				ParseRawData();
+				return descriptionEncoding;
+			}
+			set => descriptionEncoding = value;
 		}
 
 		#endregion
@@ -680,12 +616,72 @@ namespace TagLib.Id3v2
 			return new StringBuilder ().Append ("[")
 			  .Append (Description)
 			  .Append ("] ")
-			  .Append (base.ToString ()).ToString ();
+			  .Append (Url).ToString ();
 		}
 
 		#endregion
 
 
+		/// <summary>
+		/// Performs the actual parsing of the raw data.
+		///
+		/// <para>
+		/// This frame is intended for URL links concerning the audiofile in a similar way to the other "W"-frames.
+		/// The frame body consists of a description of the string, represented as a terminated string, followed by the actual URL.
+		/// The URL is always encoded with ISO-8859-1.
+		/// There may be more than one "WXXX" frame in each tag, but only one with the same description.
+		/// </para>
+		/// <code>
+		///  <![CDATA[
+		///    <Header for 'User defined URL link frame', ID: "WXXX">
+		///    Text encoding	$xx
+		///    Description<text string according to encoding> $00 (00)
+		///    URL<text string>
+		/// ]]>
+		/// </code>
+		/// </summary>
+		protected override void ParseRawData ()
+		{
+			if (raw_data == null) {
+				return;
+			}
+
+			ByteVector data = raw_data;
+			raw_data = null;
+
+			var descUrlSplit = data.Find (ByteVector.TextDelimiter (StringType.Latin1), 1);
+			var urlStartIndex = descUrlSplit + 1;
+			var urlEndOffset = data.Find (ByteVector.TextDelimiter (StringType.Latin1), urlStartIndex);
+			if (urlEndOffset == -1) {
+				urlEndOffset = data.Count;
+			}
+
+			var descriptionText = data.ToString (StringType.Latin1, 1, descUrlSplit - 1);
+			var url = data.ToString (StringType.Latin1, urlStartIndex, urlEndOffset - urlStartIndex);
+
+			Description = descriptionText;
+			Url = url;
+		}
+
+		/// <inheritdoc />
+		public override Frame Clone ()
+		{
+			return new UserUrlLinkFrame (Description, DescriptionEncoding) { Url = Url };
+		}
+
+		/// <inheritdoc />
+		protected override ByteVector RenderFields (byte version)
+		{
+			// render the frame header
+			var result = new ByteVector ();
+			result.Add((byte)DescriptionEncoding);
+			result.Add (ByteVector.FromString(Description, DescriptionEncoding));
+			result.Add (0);
+			result.Add (ByteVector.FromString(Url, StringType.Latin1));
+			result.Add (0);
+
+			return result;
+		}
 
 		#region Public Static Methods
 

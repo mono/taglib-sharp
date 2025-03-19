@@ -442,12 +442,17 @@ namespace TagLib.Id3v2
 
 			// Handle URL Link frames differently
 			if (ident[0] == 'W') {
-				var urlFrame = UrlLinkFrame.Get (this, ident, true);
-
-				urlFrame.Text = text;
-				urlFrame.TextEncoding = DefaultEncoding;
-				return;
-			}
+				var urlLinkFrame = UrlLinkFrame.Get (this, ident, true);
+				var isUserUrlLink = ident[1] == 'X';
+				if (isUserUrlLink) {
+					var userUrlLinkFrame = (UserUrlLinkFrame)urlLinkFrame;
+					userUrlLinkFrame.DescriptionEncoding = DefaultEncoding;
+					userUrlLinkFrame.Description = text[0];
+					userUrlLinkFrame.Url = text[1];
+				} else {
+					urlLinkFrame.Url = text[0];
+				}
+			} 
 
 			var frame = TextInformationFrame.Get (this, ident, true);
 

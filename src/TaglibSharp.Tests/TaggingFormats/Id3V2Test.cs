@@ -18,6 +18,8 @@ namespace TaglibSharp.Tests.TaggingFormats
 		static readonly string[] val_gnre = {"Rap",
 			"Jazz", "Non-Genre", "Blues"};
 
+		static readonly string val_url = "https://example.com/data";
+
 		[Test]
 		public void TestTitle ()
 		{
@@ -1556,6 +1558,43 @@ namespace TaglibSharp.Tests.TaggingFormats
 		}
 
 		[Test]
+		public void TestUrlLinkFrame ()
+		{
+			var frame = new UrlLinkFrame ("WPUB") {
+				Url = val_url
+			};
+
+			FrameTest (frame, 3,
+				delegate (Frame f, StringType e) { },
+				(d, v) => new UrlLinkFrame (d, v),
+
+				delegate (Frame f, string m) {
+					var g = (f as UrlLinkFrame);
+					Assert.AreEqual ("WPUB", g.FrameId, m);
+					Assert.AreEqual (val_url, g.Url, m);
+				});
+		}
+
+		[Test]
+		public void TestUserUrlLinkFrame ()
+		{
+			var frame = new UserUrlLinkFrame(val_sing) {
+				Url = val_url
+			};
+
+			FrameTest (frame, 3,
+				delegate (Frame f, StringType e) { },
+				(d, v) => new UserUrlLinkFrame (d, v),
+
+				delegate (Frame f, string m) {
+					var g = (f as UserUrlLinkFrame);
+					Assert.AreEqual ("WXXX", g.FrameId, m);
+					Assert.AreEqual (val_sing, g.Description, m);
+					Assert.AreEqual (val_url, g.Url, m);
+				});
+		}
+
+		[Test]
 		public void TestMovementNameFrame ()
 		{
 			ByteVector id = "MVNM";
@@ -1777,7 +1816,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 					var tmp = frame.Render (version);
 					//Extras.DumpHex (tmp.Data);
 					frame = createFunc (tmp, version);
-					testFunc (frame, "Render: Version " + version + "; Encoding " + (StringType)encoding);
+					 testFunc (frame, "Render: Version " + version + "; Encoding " + (StringType)encoding);
 					frame = frame.Clone ();
 					testFunc (frame, "Clone: Version " + version + "; Encoding " + (StringType)encoding);
 				}
