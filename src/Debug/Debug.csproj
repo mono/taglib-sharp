@@ -1,16 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>$(ExeTargetFrameworks)</TargetFrameworks>
-    <OutputType>Exe</OutputType>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>$(ExeTargetFrameworks)</TargetFrameworks>
+		<OutputType>Exe</OutputType>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Makefile.am" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\TaglibSharp\TaglibSharp.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\TaglibSharp\TaglibSharp.csproj" />
+	</ItemGroup>
 
 </Project>
