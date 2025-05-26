@@ -2,6 +2,8 @@ using NUnit.Framework;
 using System;
 using TagLib;
 
+using File = TagLib.File;
+
 namespace TaglibSharp.Tests.FileFormats
 {
 	[TestFixture]
@@ -24,26 +26,26 @@ namespace TaglibSharp.Tests.FileFormats
 		[Test]
 		public void ReadAudioProperties ()
 		{
-			Assert.AreEqual (128, file.Properties.AudioBitrate);
-			Assert.AreEqual (2, file.Properties.AudioChannels);
-			Assert.AreEqual (44100, file.Properties.AudioSampleRate);
+			ClassicAssert.AreEqual (128, file.Properties.AudioBitrate);
+			ClassicAssert.AreEqual (2, file.Properties.AudioChannels);
+			ClassicAssert.AreEqual (44100, file.Properties.AudioSampleRate);
 			// NOTE, with .net core it keeps the decimal places. So, for now, we round to match .net behavior
-			Assert.AreEqual (1391, Math.Round (file.Properties.Duration.TotalMilliseconds));
+			ClassicAssert.AreEqual (1391, Math.Round (file.Properties.Duration.TotalMilliseconds));
 
 		}
 
 		[Test]
 		public void ReadVideoProperties ()
 		{
-			Assert.AreEqual (480, file.Properties.VideoHeight);
-			Assert.AreEqual (640, file.Properties.VideoWidth);
+			ClassicAssert.AreEqual (480, file.Properties.VideoHeight);
+			ClassicAssert.AreEqual (640, file.Properties.VideoWidth);
 		}
 
 
 		[Test]
 		public void ReadTags ()
 		{
-			Assert.IsTrue (file.Tag.IsEmpty);
+			ClassicAssert.IsTrue (file.Tag.IsEmpty);
 		}
 
 
@@ -56,10 +58,10 @@ namespace TaglibSharp.Tests.FileFormats
 			File file;
 			System.IO.File.Copy (sample_file, tmp_file);
 			file = File.Create (tmp_file);
-			Assert.NotNull (file);
+			ClassicAssert.NotNull (file);
 
 			var pics = file.Tag.Pictures;
-			Assert.AreEqual (0, pics.Length);
+			ClassicAssert.AreEqual (0, pics.Length);
 
 			// Insert new picture
 			Array.Resize (ref pics, 3);
@@ -80,29 +82,29 @@ namespace TaglibSharp.Tests.FileFormats
 
 			// Read back the Matroska-specific tags
 			file = File.Create (tmp_file);
-			Assert.NotNull (file);
+			ClassicAssert.NotNull (file);
 			pics = file.Tag.Pictures;
 
-			Assert.AreEqual (3, pics.Length);
+			ClassicAssert.AreEqual (3, pics.Length);
 
 			// Filename has been changed to keep the PictureType information
-			Assert.AreEqual (PictureType.BackCover, pics[0].Type);
-			Assert.IsNull (pics[0].Filename);
-			Assert.AreEqual ("TEST description 1", pics[0].Description);
-			Assert.AreEqual ("image/gif", pics[0].MimeType);
-			Assert.AreEqual (73, pics[0].Data.Count);
+			ClassicAssert.AreEqual (PictureType.BackCover, pics[0].Type);
+			ClassicAssert.IsNull (pics[0].Filename);
+			ClassicAssert.AreEqual ("TEST description 1", pics[0].Description);
+			ClassicAssert.AreEqual ("image/gif", pics[0].MimeType);
+			ClassicAssert.AreEqual (73, pics[0].Data.Count);
 
-			Assert.IsNull (pics[1].Filename);
-			Assert.AreEqual ("TEST description 2", pics[1].Description);
-			Assert.AreEqual ("audio/mp4", pics[1].MimeType);
-			Assert.AreEqual (PictureType.NotAPicture, pics[1].Type);
-			Assert.AreEqual (102400, pics[1].Data.Count);
+			ClassicAssert.IsNull (pics[1].Filename);
+			ClassicAssert.AreEqual ("TEST description 2", pics[1].Description);
+			ClassicAssert.AreEqual ("audio/mp4", pics[1].MimeType);
+			ClassicAssert.AreEqual (PictureType.NotAPicture, pics[1].Type);
+			ClassicAssert.AreEqual (102400, pics[1].Data.Count);
 
-			Assert.AreEqual (PictureType.Other, pics[2].Type);
-			Assert.IsNull (pics[2].Filename);
-			Assert.AreEqual ("TEST description 3", pics[2].Description);
-			Assert.AreEqual ("image/gif", pics[2].MimeType);
-			Assert.AreEqual (73, pics[2].Data.Count);
+			ClassicAssert.AreEqual (PictureType.Other, pics[2].Type);
+			ClassicAssert.IsNull (pics[2].Filename);
+			ClassicAssert.AreEqual ("TEST description 3", pics[2].Description);
+			ClassicAssert.AreEqual ("image/gif", pics[2].MimeType);
+			ClassicAssert.AreEqual (73, pics[2].Data.Count);
 		}
 
 

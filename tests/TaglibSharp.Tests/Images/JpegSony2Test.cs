@@ -82,76 +82,76 @@ namespace TaglibSharp.Tests.Images
 
 		public void CheckTags (File file)
 		{
-			Assert.IsTrue (file is TagLib.Jpeg.File, "not a Jpeg file");
+			ClassicAssert.IsTrue (file is TagLib.Jpeg.File, "not a Jpeg file");
 
-			Assert.AreEqual (contained_types, file.TagTypes);
-			Assert.AreEqual (contained_types, file.TagTypesOnDisk);
+			ClassicAssert.AreEqual (contained_types, file.TagTypes);
+			ClassicAssert.AreEqual (contained_types, file.TagTypesOnDisk);
 		}
 
 		public void CheckExif (File file)
 		{
 			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 
-			Assert.IsNotNull (tag, "tag");
+			ClassicAssert.IsNotNull (tag, "tag");
 
 			var exif_ifd = tag.Structure.GetEntry (0, IFDEntryTag.ExifIFD) as SubIFDEntry;
-			Assert.IsNotNull (exif_ifd, "Exif IFD");
+			ClassicAssert.IsNotNull (exif_ifd, "Exif IFD");
 
-			Assert.AreEqual ("SONY ", tag.Make);
-			Assert.AreEqual ("DSLR-A700", tag.Model);
-			Assert.AreEqual (400, tag.ISOSpeedRatings, "ISOSpeedRatings");
-			Assert.AreEqual (1.0d / 125.0d, tag.ExposureTime);
-			Assert.AreEqual (5.6d, tag.FNumber);
-			Assert.AreEqual (70.0d, tag.FocalLength);
-			Assert.AreEqual (new DateTime (2009, 11, 06, 20, 56, 07), tag.DateTime);
-			Assert.AreEqual (new DateTime (2009, 11, 06, 20, 56, 07), tag.DateTimeDigitized);
-			Assert.AreEqual (new DateTime (2009, 11, 06, 20, 56, 07), tag.DateTimeOriginal);
+			ClassicAssert.AreEqual ("SONY ", tag.Make);
+			ClassicAssert.AreEqual ("DSLR-A700", tag.Model);
+			ClassicAssert.AreEqual (400, tag.ISOSpeedRatings, "ISOSpeedRatings");
+			ClassicAssert.AreEqual (1.0d / 125.0d, tag.ExposureTime);
+			ClassicAssert.AreEqual (5.6d, tag.FNumber);
+			ClassicAssert.AreEqual (70.0d, tag.FocalLength);
+			ClassicAssert.AreEqual (new DateTime (2009, 11, 06, 20, 56, 07), tag.DateTime);
+			ClassicAssert.AreEqual (new DateTime (2009, 11, 06, 20, 56, 07), tag.DateTimeDigitized);
+			ClassicAssert.AreEqual (new DateTime (2009, 11, 06, 20, 56, 07), tag.DateTimeOriginal);
 		}
 
 		public void CheckMakerNote (File file)
 		{
 			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
-			Assert.IsNotNull (tag, "tag");
+			ClassicAssert.IsNotNull (tag, "tag");
 
 			var makernote_ifd =
 				tag.ExifIFD.GetEntry (0, (ushort)ExifEntryTag.MakerNote) as MakernoteIFDEntry;
 
-			Assert.IsNotNull (makernote_ifd, "makernote ifd");
-			Assert.AreEqual (MakernoteType.Sony, makernote_ifd.MakernoteType);
+			ClassicAssert.IsNotNull (makernote_ifd, "makernote ifd");
+			ClassicAssert.AreEqual (MakernoteType.Sony, makernote_ifd.MakernoteType);
 
 			var structure = makernote_ifd.Structure;
-			Assert.IsNotNull (structure, "structure");
+			ClassicAssert.IsNotNull (structure, "structure");
 			//Tag info from http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/Sony.html
 			//0x0102: image quality
 			{
 				var entry = structure.GetEntry (0, 0x0102) as LongIFDEntry;
-				Assert.IsNotNull (entry, "entry 0x0102");
-				Assert.AreEqual (5, entry.Value);
+				ClassicAssert.IsNotNull (entry, "entry 0x0102");
+				ClassicAssert.AreEqual (5, entry.Value);
 			}
 			{
 				var entry = structure.GetEntry (0, 0x0104) as SRationalIFDEntry;
-				Assert.IsNotNull (entry, "entry 0x0115");
-				Assert.AreEqual (0.0d, (double)entry.Value);
+				ClassicAssert.IsNotNull (entry, "entry 0x0115");
+				ClassicAssert.AreEqual (0.0d, (double)entry.Value);
 			}
 			//0x0115: white balance
 			{
 				var entry = structure.GetEntry (0, 0x0115) as LongIFDEntry;
-				Assert.IsNotNull (entry, "entry 0x0115");
-				Assert.AreEqual (80, entry.Value);
+				ClassicAssert.IsNotNull (entry, "entry 0x0115");
+				ClassicAssert.AreEqual (80, entry.Value);
 			}
 			//0xb026: image stabilizer
 			{
 				var entry = structure.GetEntry (0, 0xb026) as LongIFDEntry;
-				Assert.IsNotNull (entry, "entry 0xb026");
-				Assert.AreEqual (1, entry.Value);
+				ClassicAssert.IsNotNull (entry, "entry 0xb026");
+				ClassicAssert.AreEqual (1, entry.Value);
 			}
 		}
 
 		public void CheckProperties (File file)
 		{
-			Assert.AreEqual (4272, file.Properties.PhotoWidth);
-			Assert.AreEqual (2848, file.Properties.PhotoHeight);
-			Assert.AreEqual (99, file.Properties.PhotoQuality);
+			ClassicAssert.AreEqual (4272, file.Properties.PhotoWidth);
+			ClassicAssert.AreEqual (2848, file.Properties.PhotoHeight);
+			ClassicAssert.AreEqual (99, file.Properties.PhotoQuality);
 		}
 	}
 }

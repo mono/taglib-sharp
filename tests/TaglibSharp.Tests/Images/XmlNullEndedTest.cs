@@ -16,12 +16,12 @@ namespace TaglibSharp.Tests.Images
 		public void ParseXmp ()
 		{
 			var file = File.Create (sample_file, "taglib/jpeg", ReadStyle.Average) as TagLib.Image.File;
-			Assert.IsNotNull (file, "file");
+			ClassicAssert.IsNotNull (file, "file");
 
 			var tag = file.ImageTag;
-			Assert.IsNotNull (tag, "ImageTag");
-			Assert.AreEqual ("SONY ", tag.Make);
-			Assert.AreEqual ("DSLR-A330", tag.Model);
+			ClassicAssert.IsNotNull (tag, "ImageTag");
+			ClassicAssert.AreEqual ("SONY ", tag.Make);
+			ClassicAssert.AreEqual ("DSLR-A330", tag.Model);
 		}
 	}
 }

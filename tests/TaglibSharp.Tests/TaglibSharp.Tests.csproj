@@ -2,13 +2,11 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>$(ExeTargetFrameworks)</TargetFrameworks>
-		<!--<ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>-->
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\TaglibSharp\TaglibSharp.csproj" />
+		<ProjectReference Include="..\..\src\TaglibSharp\TaglibSharp.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -19,6 +17,10 @@
 		<!--<PackageReference Include="NUnit.Analyzers" />-->
 		<PackageReference Include="coverlet.collector" />
 		<PackageReference Include="SixLabors.ImageSharp" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="NUnit.Framework.Legacy" />
 	</ItemGroup>
 
 </Project>

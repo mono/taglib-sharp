@@ -27,11 +27,11 @@ namespace TaglibSharp.Tests.Images
 	{
 		public void ValidateMetadataInvariants (TagLib.Image.File file)
 		{
-			Assert.IsNotNull (file);
-			Assert.IsNotNull (file.Properties);
+			ClassicAssert.IsNotNull (file);
+			ClassicAssert.IsNotNull (file.Properties);
 
-			Assert.AreEqual (12, file.Properties.PhotoWidth);
-			Assert.AreEqual (37, file.Properties.PhotoHeight);
+			ClassicAssert.AreEqual (12, file.Properties.PhotoWidth);
+			ClassicAssert.AreEqual (37, file.Properties.PhotoHeight);
 		}
 	}
 }

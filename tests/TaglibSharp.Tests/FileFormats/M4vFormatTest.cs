@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using TagLib;
 
+using File = TagLib.File;
+
 namespace TaglibSharp.Tests.FileFormats
 {
 	[TestFixture]
@@ -28,8 +30,8 @@ namespace TaglibSharp.Tests.FileFormats
 		public void ReadAudioProperties ()
 		{
 			// Despite the method name, we're reading the video properties here
-			Assert.AreEqual (632, file.Properties.VideoWidth);
-			Assert.AreEqual (472, file.Properties.VideoHeight);
+			ClassicAssert.AreEqual (632, file.Properties.VideoWidth);
+			ClassicAssert.AreEqual (472, file.Properties.VideoHeight);
 		}
 
 		[Test]
@@ -38,26 +40,26 @@ namespace TaglibSharp.Tests.FileFormats
 			bool gotLongDesc = false;
 			bool gotPurdDate = false;
 
-			Assert.AreEqual ("Will Yapp", file.Tag.FirstPerformer);
-			Assert.AreEqual ("Why I Love Monty Python", file.Tag.Title);
-			Assert.AreEqual (2008, file.Tag.Year);
+			ClassicAssert.AreEqual ("Will Yapp", file.Tag.FirstPerformer);
+			ClassicAssert.AreEqual ("Why I Love Monty Python", file.Tag.Title);
+			ClassicAssert.AreEqual (2008, file.Tag.Year);
 
 			// Test Apple tags
 			var tag = (TagLib.Mpeg4.AppleTag)file.GetTag (TagTypes.Apple, false);
-			Assert.IsNotNull (tag);
+			ClassicAssert.IsNotNull (tag);
 
 			foreach (var adbox in tag.DataBoxes (new[] { BOXTYPE_LDES })) {
-				Assert.AreEqual (LONG_DESC, adbox.Text);
+				ClassicAssert.AreEqual (LONG_DESC, adbox.Text);
 				gotLongDesc = true;
 			}
 
 			foreach (var adbox in tag.DataBoxes (new[] { BOXTYPE_PURD })) {
-				Assert.AreEqual (PURD_DATE, adbox.Text);
+				ClassicAssert.AreEqual (PURD_DATE, adbox.Text);
 				gotPurdDate = true;
 			}
 
-			Assert.IsTrue (gotLongDesc);
-			Assert.IsTrue (gotPurdDate);
+			ClassicAssert.IsTrue (gotLongDesc);
+			ClassicAssert.IsTrue (gotPurdDate);
 		}
 
 		[Test]
@@ -101,7 +103,7 @@ namespace TaglibSharp.Tests.FileFormats
 			tag.Year = 1999;
 
 			var atag = tag;
-			Assert.IsNotNull (atag);
+			ClassicAssert.IsNotNull (atag);
 
 			var newbox1 = new TagLib.Mpeg4.AppleDataBox (
 				ByteVector.FromString ("TEST Long Description", StringType.UTF8),
@@ -115,22 +117,22 @@ namespace TaglibSharp.Tests.FileFormats
 
 		void CheckTags (TagLib.Mpeg4.AppleTag tag)
 		{
-			Assert.AreEqual ("TEST title", tag.Title);
-			Assert.AreEqual ("TEST performer 1; TEST performer 2", tag.JoinedPerformers);
-			Assert.AreEqual ("TEST comment", tag.Comment);
-			Assert.AreEqual ("TEST copyright", tag.Copyright);
-			Assert.AreEqual ("TEST genre 1; TEST genre 2", tag.JoinedGenres);
-			Assert.AreEqual (1999, tag.Year);
+			ClassicAssert.AreEqual ("TEST title", tag.Title);
+			ClassicAssert.AreEqual ("TEST performer 1; TEST performer 2", tag.JoinedPerformers);
+			ClassicAssert.AreEqual ("TEST comment", tag.Comment);
+			ClassicAssert.AreEqual ("TEST copyright", tag.Copyright);
+			ClassicAssert.AreEqual ("TEST genre 1; TEST genre 2", tag.JoinedGenres);
+			ClassicAssert.AreEqual (1999, tag.Year);
 
 			var atag = tag;
-			Assert.IsNotNull (atag);
+			ClassicAssert.IsNotNull (atag);
 
 			foreach (var adbox in atag.DataBoxes (new[] { BOXTYPE_LDES })) {
-				Assert.AreEqual ("TEST Long Description", adbox.Text);
+				ClassicAssert.AreEqual ("TEST Long Description", adbox.Text);
 			}
 
 			foreach (var adbox in atag.DataBoxes (new[] { BOXTYPE_TVSH })) {
-				Assert.AreEqual ("TEST TV Show", adbox.Text);
+				ClassicAssert.AreEqual ("TEST TV Show", adbox.Text);
 			}
 		}
 	}

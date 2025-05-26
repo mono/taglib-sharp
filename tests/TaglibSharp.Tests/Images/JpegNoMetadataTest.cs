@@ -25,7 +25,7 @@ namespace TaglibSharp.Tests.Images
 	{
 		public void ValidateMetadataInvariants (TagLib.Image.File file)
 		{
-			Assert.IsNotNull (file);
+			ClassicAssert.IsNotNull (file);
 		}
 	}
 }

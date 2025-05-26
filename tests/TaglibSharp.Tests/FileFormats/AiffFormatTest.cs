@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using TagLib;
 
+using File = TagLib.File;
+
 namespace TaglibSharp.Tests.FileFormats
 {
 	[TestFixture]
@@ -20,24 +22,24 @@ namespace TaglibSharp.Tests.FileFormats
 		[Test]
 		public void ReadAudioProperties ()
 		{
-			Assert.AreEqual (44100, file.Properties.AudioSampleRate);
-			Assert.AreEqual (2, file.Properties.Duration.Seconds);
+			ClassicAssert.AreEqual (44100, file.Properties.AudioSampleRate);
+			ClassicAssert.AreEqual (2, file.Properties.Duration.Seconds);
 		}
 
 		[Test]
 		public void ReadTags ()
 		{
-			Assert.AreEqual ("Aiff Album", file.Tag.Album);
-			Assert.AreEqual ("Aiff Artist", file.Tag.FirstPerformer);
-			Assert.AreEqual ("Aiff Comment", file.Tag.Comment);
-			Assert.AreEqual ("Blues", file.Tag.FirstGenre);
-			Assert.AreEqual ("Aiff Title", file.Tag.Title);
-			Assert.AreEqual (5, file.Tag.Track);
-			Assert.AreEqual (10, file.Tag.TrackCount);
+			ClassicAssert.AreEqual ("Aiff Album", file.Tag.Album);
+			ClassicAssert.AreEqual ("Aiff Artist", file.Tag.FirstPerformer);
+			ClassicAssert.AreEqual ("Aiff Comment", file.Tag.Comment);
+			ClassicAssert.AreEqual ("Blues", file.Tag.FirstGenre);
+			ClassicAssert.AreEqual ("Aiff Title", file.Tag.Title);
+			ClassicAssert.AreEqual (5, file.Tag.Track);
+			ClassicAssert.AreEqual (10, file.Tag.TrackCount);
 
 			// sample.aif contains a TDAT (and no TYER) with 2009 in it, but TDAT
 			// is supposed to contain MMDD - so the following should not be equal
-			Assert.AreNotEqual (2009, file.Tag.Year);
+			ClassicAssert.AreNotEqual (2009, file.Tag.Year);
 		}
 
 		[Test]

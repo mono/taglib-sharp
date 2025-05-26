@@ -3,6 +3,8 @@ using System.Security.Cryptography;
 using System.Text;
 using TagLib;
 
+using File = TagLib.File;
+
 namespace TaglibSharp.Tests.Images
 {
 	public static class Utils

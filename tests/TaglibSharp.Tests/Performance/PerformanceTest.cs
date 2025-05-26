@@ -2,6 +2,8 @@ using NUnit.Framework;
 using System;
 using TagLib;
 
+using File = TagLib.File;
+
 namespace TaglibSharp.Tests.Performance
 {
 	[TestFixture]
@@ -25,9 +27,9 @@ namespace TaglibSharp.Tests.Performance
 				Console.WriteLine ("Average time: {0}", total_time / iterations);
 			} catch (Exception e) {
 				Console.WriteLine (e);
-				Assert.False (false);
+				ClassicAssert.False (false);
 			}
-			Assert.True (true);
+			ClassicAssert.True (true);
 		}
 
 		[Test]
@@ -48,9 +50,9 @@ namespace TaglibSharp.Tests.Performance
 				Console.WriteLine ("Average time: {0}", total_time / iterations);
 			} catch (Exception e) {
 				Console.WriteLine (e);
-				Assert.False (false);
+				ClassicAssert.False (false);
 			}
-			Assert.True (true);
+			ClassicAssert.True (true);
 		}
 	}
 }

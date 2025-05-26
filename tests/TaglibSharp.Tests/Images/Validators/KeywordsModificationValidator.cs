@@ -24,7 +24,7 @@ namespace TaglibSharp.Tests.Images.Validators
 		/// </summary>
 		public virtual void ValidatePreModification (TagLib.Image.File file)
 		{
-			Assert.AreEqual (orig_keywords, GetTag (file).Keywords);
+			ClassicAssert.AreEqual (orig_keywords, GetTag (file).Keywords);
 		}
 
 		/// <summary>
@@ -40,8 +40,8 @@ namespace TaglibSharp.Tests.Images.Validators
 		/// </summary>
 		public void ValidatePostModification (TagLib.Image.File file)
 		{
-			Assert.IsNotNull (file.GetTag (TagTypes.XMP, false));
-			Assert.AreEqual (test_keywords, GetTag (file).Keywords);
+			ClassicAssert.IsNotNull (file.GetTag (TagTypes.XMP, false));
+			ClassicAssert.AreEqual (test_keywords, GetTag (file).Keywords);
 		}
 
 		/// <summary>

@@ -14,49 +14,49 @@ namespace TaglibSharp.Tests.Collections
 		[Test]
 		public void Length ()
 		{
-			Assert.AreEqual (TestInput.Length, TestVector.Count);
+			ClassicAssert.AreEqual (TestInput.Length, TestVector.Count);
 		}
 
 		[Test]
 		public void StartsWith ()
 		{
-			Assert.IsTrue (TestVector.StartsWith ("ABCDE"));
-			Assert.IsFalse (TestVector.StartsWith ("NOOP"));
+			ClassicAssert.IsTrue (TestVector.StartsWith ("ABCDE"));
+			ClassicAssert.IsFalse (TestVector.StartsWith ("NOOP"));
 		}
 
 		[Test]
 		public void EndsWith ()
 		{
-			Assert.IsTrue (TestVector.EndsWith ("UVWXYZ"));
-			Assert.IsFalse (TestVector.EndsWith ("NOOP"));
+			ClassicAssert.IsTrue (TestVector.EndsWith ("UVWXYZ"));
+			ClassicAssert.IsFalse (TestVector.EndsWith ("NOOP"));
 		}
 
 		[Test]
 		public void ContainsAt ()
 		{
-			Assert.IsTrue (TestVector.ContainsAt ("JKLMNO", 9));
-			Assert.IsFalse (TestVector.ContainsAt ("NOOP", 30));
+			ClassicAssert.IsTrue (TestVector.ContainsAt ("JKLMNO", 9));
+			ClassicAssert.IsFalse (TestVector.ContainsAt ("NOOP", 30));
 		}
 
 		[Test]
 		public void Find ()
 		{
-			Assert.AreEqual (17, TestVector.Find ("RSTUV"));
-			Assert.AreEqual (-1, TestVector.Find ("NOOP"));
+			ClassicAssert.AreEqual (17, TestVector.Find ("RSTUV"));
+			ClassicAssert.AreEqual (-1, TestVector.Find ("NOOP"));
 		}
 
 		[Test]
 		public void RFind ()
 		{
-			Assert.AreEqual (6, TestVector.RFind ("GHIJ"));
-			Assert.AreEqual (-1, TestVector.RFind ("NOOP"));
+			ClassicAssert.AreEqual (6, TestVector.RFind ("GHIJ"));
+			ClassicAssert.AreEqual (-1, TestVector.RFind ("NOOP"));
 		}
 
 		[Test]
 		public void Mid ()
 		{
-			Assert.AreEqual (ByteVector.FromString ("KLMNOPQRSTUVWXYZ", StringType.UTF8), TestVector.Mid (10));
-			Assert.AreEqual (ByteVector.FromString ("PQRSTU", StringType.UTF8), TestVector.Mid (15, 6));
+			ClassicAssert.AreEqual (ByteVector.FromString ("KLMNOPQRSTUVWXYZ", StringType.UTF8), TestVector.Mid (10));
+			ClassicAssert.AreEqual (ByteVector.FromString ("PQRSTU", StringType.UTF8), TestVector.Mid (15, 6));
 		}
 
 		[Test]
@@ -66,55 +66,55 @@ namespace TaglibSharp.Tests.Collections
 			var b = ByteVector.FromString ("ABCDEFGHIJKL", StringType.UTF8);
 			a.Resize (12);
 
-			Assert.AreEqual (b, a);
-			Assert.AreEqual (b.ToString (), a.ToString ());
-			Assert.IsFalse (a.Count == TestVector.Count);
+			ClassicAssert.AreEqual (b, a);
+			ClassicAssert.AreEqual (b.ToString (), a.ToString ());
+			ClassicAssert.IsFalse (a.Count == TestVector.Count);
 		}
 
 		[Test]
 		public void Int ()
 		{
-			Assert.AreEqual (int.MaxValue, ByteVector.FromInt (int.MaxValue).ToInt ());
-			Assert.AreEqual (int.MinValue, ByteVector.FromInt (int.MinValue).ToInt ());
-			Assert.AreEqual (0, ByteVector.FromInt (0).ToInt ());
-			Assert.AreEqual (30292, ByteVector.FromInt (30292).ToInt ());
-			Assert.AreEqual (-30292, ByteVector.FromInt (-30292).ToInt ());
-			Assert.AreEqual (-1, ByteVector.FromInt (-1).ToInt ());
+			ClassicAssert.AreEqual (int.MaxValue, ByteVector.FromInt (int.MaxValue).ToInt ());
+			ClassicAssert.AreEqual (int.MinValue, ByteVector.FromInt (int.MinValue).ToInt ());
+			ClassicAssert.AreEqual (0, ByteVector.FromInt (0).ToInt ());
+			ClassicAssert.AreEqual (30292, ByteVector.FromInt (30292).ToInt ());
+			ClassicAssert.AreEqual (-30292, ByteVector.FromInt (-30292).ToInt ());
+			ClassicAssert.AreEqual (-1, ByteVector.FromInt (-1).ToInt ());
 		}
 
 		[Test]
 		public void UInt ()
 		{
-			Assert.AreEqual (uint.MaxValue, ByteVector.FromUInt (uint.MaxValue).ToUInt ());
-			Assert.AreEqual (uint.MinValue, ByteVector.FromUInt (uint.MinValue).ToUInt ());
-			Assert.AreEqual (0, ByteVector.FromUInt (0).ToUInt ());
-			Assert.AreEqual (30292, ByteVector.FromUInt (30292).ToUInt ());
+			ClassicAssert.AreEqual (uint.MaxValue, ByteVector.FromUInt (uint.MaxValue).ToUInt ());
+			ClassicAssert.AreEqual (uint.MinValue, ByteVector.FromUInt (uint.MinValue).ToUInt ());
+			ClassicAssert.AreEqual (0, ByteVector.FromUInt (0).ToUInt ());
+			ClassicAssert.AreEqual (30292, ByteVector.FromUInt (30292).ToUInt ());
 		}
 
 		[Test]
 		public void Long ()
 		{
-			Assert.AreEqual (ulong.MaxValue, ByteVector.FromULong (ulong.MaxValue).ToULong ());
-			Assert.AreEqual (ulong.MinValue, ByteVector.FromULong (ulong.MinValue).ToULong ());
-			Assert.AreEqual (0, ByteVector.FromULong (0).ToULong ());
-			Assert.AreEqual (30292, ByteVector.FromULong (30292).ToULong ());
+			ClassicAssert.AreEqual (ulong.MaxValue, ByteVector.FromULong (ulong.MaxValue).ToULong ());
+			ClassicAssert.AreEqual (ulong.MinValue, ByteVector.FromULong (ulong.MinValue).ToULong ());
+			ClassicAssert.AreEqual (0, ByteVector.FromULong (0).ToULong ());
+			ClassicAssert.AreEqual (30292, ByteVector.FromULong (30292).ToULong ());
 		}
 
 		[Test]
 		public void Short ()
 		{
-			Assert.AreEqual (ushort.MaxValue, ByteVector.FromUShort (ushort.MaxValue).ToUShort ());
-			Assert.AreEqual (ushort.MinValue, ByteVector.FromUShort (ushort.MinValue).ToUShort ());
-			Assert.AreEqual (0, ByteVector.FromUShort (0).ToUShort ());
-			Assert.AreEqual (8009, ByteVector.FromUShort (8009).ToUShort ());
+			ClassicAssert.AreEqual (ushort.MaxValue, ByteVector.FromUShort (ushort.MaxValue).ToUShort ());
+			ClassicAssert.AreEqual (ushort.MinValue, ByteVector.FromUShort (ushort.MinValue).ToUShort ());
+			ClassicAssert.AreEqual (0, ByteVector.FromUShort (0).ToUShort ());
+			ClassicAssert.AreEqual (8009, ByteVector.FromUShort (8009).ToUShort ());
 		}
 
 		[Test]
 		public void FromUri ()
 		{
 			var vector = ByteVector.FromPath (TestPath.Samples + "vector.bin");
-			Assert.AreEqual (3282169185, vector.Checksum);
-			Assert.AreEqual ("1aaa46c484d70c7c80510a5f99e7805d", MD5Hash (vector.Data));
+			ClassicAssert.AreEqual (3282169185, vector.Checksum);
+			ClassicAssert.AreEqual ("1aaa46c484d70c7c80510a5f99e7805d", MD5Hash (vector.Data));
 		}
 
 		[Test]
@@ -147,7 +147,7 @@ namespace TaglibSharp.Tests.Collections
 			var encoding = (StringType)vector[0];
 			//var language = vector.ToString (StringType.Latin1, 1, 3);
 			var split = vector.ToStrings (encoding, 4, 3);
-			Assert.AreEqual (2, split.Length);
+			ClassicAssert.AreEqual (2, split.Length);
 		}
 
 		static string MD5Hash (byte[] bytes)

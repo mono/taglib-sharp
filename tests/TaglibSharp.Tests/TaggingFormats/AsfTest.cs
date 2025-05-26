@@ -21,22 +21,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.Title, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.Title, "Initial (Null): " + m);
 			});
 
 			file.Tag.Title = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.Title, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.Title, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.Title = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.Title, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.Title, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -46,25 +46,25 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Performers.Length, "Initial (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.Performers.Length, "Initial (Zero): " + m);
 			});
 
 			file.Tag.Performers = val_mult;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_mult.Length, t.Performers.Length, "Value Set: " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_mult.Length, t.Performers.Length, "Value Set: " + m);
 				for (var i = 0; i < val_mult.Length; i++) {
-					Assert.AreEqual (val_mult[i], t.Performers[i], "Value Set: " + m);
+					ClassicAssert.AreEqual (val_mult[i], t.Performers[i], "Value Set: " + m);
 				}
 			});
 
 			file.Tag.Performers = new string[0];
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Performers.Length, "Value Cleared (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.Performers.Length, "Value Cleared (Zero): " + m);
 			});
 		}
 
@@ -74,25 +74,25 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, t.AlbumArtists.Length, "Initial (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.AlbumArtists.Length, "Initial (Zero): " + m);
 			});
 
 			file.Tag.AlbumArtists = val_mult;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_mult.Length, t.AlbumArtists.Length, "Value Set: " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_mult.Length, t.AlbumArtists.Length, "Value Set: " + m);
 				for (var i = 0; i < val_mult.Length; i++) {
-					Assert.AreEqual (val_mult[i], t.AlbumArtists[i], "Value Set: " + m);
+					ClassicAssert.AreEqual (val_mult[i], t.AlbumArtists[i], "Value Set: " + m);
 				}
 			});
 
 			file.Tag.AlbumArtists = new string[0];
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.AlbumArtists.Length, "Value Cleared (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.AlbumArtists.Length, "Value Cleared (Zero): " + m);
 			});
 		}
 
@@ -102,25 +102,25 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Composers.Length, "Initial (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.Composers.Length, "Initial (Zero): " + m);
 			});
 
 			file.Tag.Composers = val_mult;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_mult.Length, t.Composers.Length, "Value Set: " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_mult.Length, t.Composers.Length, "Value Set: " + m);
 				for (var i = 0; i < val_mult.Length; i++) {
-					Assert.AreEqual (val_mult[i], t.Composers[i], "Value Set: " + m);
+					ClassicAssert.AreEqual (val_mult[i], t.Composers[i], "Value Set: " + m);
 				}
 			});
 
 			file.Tag.Composers = new string[0];
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Composers.Length, "Value Cleared (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.Composers.Length, "Value Cleared (Zero): " + m);
 			});
 		}
 
@@ -130,22 +130,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.Album, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.Album, "Initial (Null): " + m);
 			});
 
 			file.Tag.Album = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.Album, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.Album, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.Album = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.Album, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.Album, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -155,22 +155,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.Comment, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.Comment, "Initial (Null): " + m);
 			});
 
 			file.Tag.Comment = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.Comment, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.Comment, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.Comment = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.Comment, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.Comment, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -180,35 +180,35 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Genres.Length, "Initial (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.Genres.Length, "Initial (Zero): " + m);
 			});
 
 			file.Tag.Genres = val_gnre;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_gnre.Length, t.Genres.Length, "Value Set: " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_gnre.Length, t.Genres.Length, "Value Set: " + m);
 				for (var i = 0; i < val_gnre.Length; i++) {
-					Assert.AreEqual (val_gnre[i], t.Genres[i], "Value Set: " + m);
+					ClassicAssert.AreEqual (val_gnre[i], t.Genres[i], "Value Set: " + m);
 				}
 			});
 
 			file.Tag.Genres = val_mult;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_mult.Length, t.Genres.Length, "Value Set: " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_mult.Length, t.Genres.Length, "Value Set: " + m);
 				for (var i = 0; i < val_mult.Length; i++) {
-					Assert.AreEqual (val_mult[i], t.Genres[i], "Value Set: " + m);
+					ClassicAssert.AreEqual (val_mult[i], t.Genres[i], "Value Set: " + m);
 				}
 			});
 
 			file.Tag.Genres = new string[0];
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Genres.Length, "Value Cleared (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.Genres.Length, "Value Cleared (Zero): " + m);
 			});
 		}
 
@@ -218,22 +218,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Year, "Initial (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.Year, "Initial (Zero): " + m);
 			});
 
 			file.Tag.Year = 1999;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (1999, t.Year, "Value Set: " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (1999, t.Year, "Value Set: " + m);
 			});
 
 			file.Tag.Year = 0;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Year, "Value Cleared (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.Year, "Value Cleared (Zero): " + m);
 			});
 		}
 
@@ -243,22 +243,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Track, "Initial (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.Track, "Initial (Zero): " + m);
 			});
 
 			file.Tag.Track = 199;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (199, t.Track, "Value Set: " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (199, t.Track, "Value Set: " + m);
 			});
 
 			file.Tag.Track = 0;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Track, "Value Cleared (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.Track, "Value Cleared (Zero): " + m);
 			});
 		}
 
@@ -268,22 +268,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, t.TrackCount, "Initial (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.TrackCount, "Initial (Zero): " + m);
 			});
 
 			file.Tag.TrackCount = 199;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (199, t.TrackCount, "Value Set: " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (199, t.TrackCount, "Value Set: " + m);
 			});
 
 			file.Tag.TrackCount = 0;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.TrackCount, "Value Cleared (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.TrackCount, "Value Cleared (Zero): " + m);
 			});
 		}
 
@@ -293,22 +293,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Disc, "Initial (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.Disc, "Initial (Zero): " + m);
 			});
 
 			file.Tag.Disc = 199;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (199, t.Disc, "Value Set: " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (199, t.Disc, "Value Set: " + m);
 			});
 
 			file.Tag.Disc = 0;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Disc, "Value Cleared (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.Disc, "Value Cleared (Zero): " + m);
 			});
 		}
 
@@ -318,22 +318,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, t.DiscCount, "Initial (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.DiscCount, "Initial (Zero): " + m);
 			});
 
 			file.Tag.DiscCount = 199;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (199, t.DiscCount, "Value Set: " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (199, t.DiscCount, "Value Set: " + m);
 			});
 
 			file.Tag.DiscCount = 0;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.DiscCount, "Value Cleared (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.DiscCount, "Value Cleared (Zero): " + m);
 			});
 		}
 
@@ -343,22 +343,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.Lyrics, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.Lyrics, "Initial (Null): " + m);
 			});
 
 			file.Tag.Lyrics = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.Lyrics, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.Lyrics, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.Lyrics = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.Lyrics, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.Lyrics, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -368,22 +368,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.Grouping, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.Grouping, "Initial (Null): " + m);
 			});
 
 			file.Tag.Grouping = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.Grouping, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.Grouping, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.Grouping = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.Grouping, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.Grouping, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -393,22 +393,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, t.BeatsPerMinute, "Initial (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.BeatsPerMinute, "Initial (Zero): " + m);
 			});
 
 			file.Tag.BeatsPerMinute = 199;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (199, t.BeatsPerMinute, "Value Set: " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (199, t.BeatsPerMinute, "Value Set: " + m);
 			});
 
 			file.Tag.BeatsPerMinute = 0;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.BeatsPerMinute, "Value Cleared (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.BeatsPerMinute, "Value Cleared (Zero): " + m);
 			});
 		}
 
@@ -418,22 +418,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.Conductor, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.Conductor, "Initial (Null): " + m);
 			});
 
 			file.Tag.Conductor = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.Conductor, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.Conductor, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.Conductor = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.Conductor, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.Conductor, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -443,22 +443,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.Copyright, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.Copyright, "Initial (Null): " + m);
 			});
 
 			file.Tag.Copyright = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.Copyright, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.Copyright, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.Copyright = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.Copyright, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.Copyright, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -482,29 +482,29 @@ namespace TaglibSharp.Tests.TaggingFormats
 			pictures[3].Description = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Pictures.Length, "Initial (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.Pictures.Length, "Initial (Zero): " + m);
 			});
 
 			file.Tag.Pictures = pictures;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (pictures.Length, t.Pictures.Length, "Value Set: " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (pictures.Length, t.Pictures.Length, "Value Set: " + m);
 				for (var i = 0; i < pictures.Length; i++) {
 					var msg = "Value " + i + "Set: " + m;
-					Assert.AreEqual (pictures[i].Data, t.Pictures[i].Data, msg);
-					Assert.AreEqual (pictures[i].Type, t.Pictures[i].Type, msg);
-					Assert.AreEqual (pictures[i].Description, t.Pictures[i].Description, msg);
-					Assert.AreEqual (pictures[i].MimeType, t.Pictures[i].MimeType, msg);
+					ClassicAssert.AreEqual (pictures[i].Data, t.Pictures[i].Data, msg);
+					ClassicAssert.AreEqual (pictures[i].Type, t.Pictures[i].Type, msg);
+					ClassicAssert.AreEqual (pictures[i].Description, t.Pictures[i].Description, msg);
+					ClassicAssert.AreEqual (pictures[i].MimeType, t.Pictures[i].MimeType, msg);
 				}
 			});
 
 			file.Tag.Pictures = new Picture[0];
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.AreEqual (0, t.Pictures.Length, "Value Cleared (Zero): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.AreEqual (0, t.Pictures.Length, "Value Cleared (Zero): " + m);
 			});
 		}
 
@@ -514,22 +514,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzArtistId, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzArtistId, "Initial (Null): " + m);
 			});
 
 			file.Tag.MusicBrainzArtistId = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzArtistId, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.MusicBrainzArtistId, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.MusicBrainzArtistId = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzArtistId, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzArtistId, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -539,22 +539,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseId, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzReleaseId, "Initial (Null): " + m);
 			});
 
 			file.Tag.MusicBrainzReleaseId = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzReleaseId, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.MusicBrainzReleaseId, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.MusicBrainzReleaseId = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseId, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzReleaseId, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -564,22 +564,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseGroupId, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzReleaseGroupId, "Initial (Null): " + m);
 			});
 
 			file.Tag.MusicBrainzReleaseGroupId = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzReleaseGroupId, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.MusicBrainzReleaseGroupId, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.MusicBrainzReleaseGroupId = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseGroupId, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzReleaseGroupId, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -589,22 +589,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseArtistId, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzReleaseArtistId, "Initial (Null): " + m);
 			});
 
 			file.Tag.MusicBrainzReleaseArtistId = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzReleaseArtistId, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.MusicBrainzReleaseArtistId, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.MusicBrainzReleaseArtistId = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseArtistId, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzReleaseArtistId, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -614,22 +614,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzTrackId, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzTrackId, "Initial (Null): " + m);
 			});
 
 			file.Tag.MusicBrainzTrackId = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzTrackId, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.MusicBrainzTrackId, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.MusicBrainzTrackId = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzTrackId, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzTrackId, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -639,22 +639,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzRecordingId, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzRecordingId, "Initial (Null): " + m);
 			});
 
 			file.Tag.MusicBrainzRecordingId = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzRecordingId, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.MusicBrainzRecordingId, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.MusicBrainzRecordingId = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzRecordingId, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzRecordingId, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -664,22 +664,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzWorkId, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzWorkId, "Initial (Null): " + m);
 			});
 
 			file.Tag.MusicBrainzWorkId = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzWorkId, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.MusicBrainzWorkId, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.MusicBrainzWorkId = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzWorkId, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzWorkId, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -689,22 +689,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzDiscId, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzDiscId, "Initial (Null): " + m);
 			});
 
 			file.Tag.MusicBrainzDiscId = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzDiscId, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.MusicBrainzDiscId, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.MusicBrainzDiscId = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzDiscId, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzDiscId, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -714,22 +714,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicIpId, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicIpId, "Initial (Null): " + m);
 			});
 
 			file.Tag.MusicIpId = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicIpId, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.MusicIpId, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.MusicIpId = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicIpId, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicIpId, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -740,22 +740,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.AmazonId, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.AmazonId, "Initial (Null): " + m);
 			});
 
 			file.Tag.AmazonId = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.AmazonId, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.AmazonId, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.AmazonId = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.AmazonId, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.AmazonId, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -765,22 +765,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseStatus, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzReleaseStatus, "Initial (Null): " + m);
 			});
 
 			file.Tag.MusicBrainzReleaseStatus = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzReleaseStatus, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.MusicBrainzReleaseStatus, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.MusicBrainzReleaseStatus = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseStatus, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzReleaseStatus, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -790,22 +790,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseType, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzReleaseType, "Initial (Null): " + m);
 			});
 
 			file.Tag.MusicBrainzReleaseType = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzReleaseType, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.MusicBrainzReleaseType, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.MusicBrainzReleaseType = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseType, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzReleaseType, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -815,22 +815,22 @@ namespace TaglibSharp.Tests.TaggingFormats
 			var file = CreateFile (out var abst);
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseCountry, "Initial (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Initial (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzReleaseCountry, "Initial (Null): " + m);
 			});
 
 			file.Tag.MusicBrainzReleaseCountry = val_sing;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
-				Assert.AreEqual (val_sing, t.MusicBrainzReleaseCountry, "Value Set (!Null): " + m);
+				ClassicAssert.IsFalse (t.IsEmpty, "Value Set (!IsEmpty): " + m);
+				ClassicAssert.AreEqual (val_sing, t.MusicBrainzReleaseCountry, "Value Set (!Null): " + m);
 			});
 
 			file.Tag.MusicBrainzReleaseCountry = string.Empty;
 
 			TagTestWithSave (ref file, abst, delegate (Tag t, string m) {
-				Assert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
-				Assert.IsNull (t.MusicBrainzReleaseCountry, "Value Cleared (Null): " + m);
+				ClassicAssert.IsTrue (t.IsEmpty, "Value Cleared (IsEmpty): " + m);
+				ClassicAssert.IsNull (t.MusicBrainzReleaseCountry, "Value Cleared (Null): " + m);
 			});
 		}
 
@@ -858,28 +858,28 @@ namespace TaglibSharp.Tests.TaggingFormats
 			file.Tag.Copyright = "J";
 			file.Tag.Pictures = new[] { new Picture (TestPath.Covers + "sample_a.png") };
 
-			Assert.IsFalse (file.Tag.IsEmpty, "Should be full.");
+			ClassicAssert.IsFalse (file.Tag.IsEmpty, "Should be full.");
 			file.Tag.Clear ();
 
-			Assert.IsNull (file.Tag.Title, "Title");
-			Assert.AreEqual (0, file.Tag.Performers.Length, "Performers");
-			Assert.AreEqual (0, file.Tag.AlbumArtists.Length, "AlbumArtists");
-			Assert.AreEqual (0, file.Tag.Composers.Length, "Composers");
-			Assert.IsNull (file.Tag.Album, "Album");
-			Assert.IsNull (file.Tag.Comment, "Comment");
-			Assert.AreEqual (0, file.Tag.Genres.Length, "Genres");
-			Assert.AreEqual (0, file.Tag.Year, "Year");
-			Assert.AreEqual (0, file.Tag.Track, "Track");
-			Assert.AreEqual (0, file.Tag.TrackCount, "TrackCount");
-			Assert.AreEqual (0, file.Tag.Disc, "Disc");
-			Assert.AreEqual (0, file.Tag.DiscCount, "DiscCount");
-			Assert.IsNull (file.Tag.Lyrics, "Lyrics");
-			Assert.IsNull (file.Tag.Comment, "Comment");
-			Assert.AreEqual (0, file.Tag.BeatsPerMinute, "BeatsPerMinute");
-			Assert.IsNull (file.Tag.Conductor, "Conductor");
-			Assert.IsNull (file.Tag.Copyright, "Copyright");
-			Assert.AreEqual (0, file.Tag.Pictures.Length, "Pictures");
-			Assert.IsTrue (file.Tag.IsEmpty, "Should be empty.");
+			ClassicAssert.IsNull (file.Tag.Title, "Title");
+			ClassicAssert.AreEqual (0, file.Tag.Performers.Length, "Performers");
+			ClassicAssert.AreEqual (0, file.Tag.AlbumArtists.Length, "AlbumArtists");
+			ClassicAssert.AreEqual (0, file.Tag.Composers.Length, "Composers");
+			ClassicAssert.IsNull (file.Tag.Album, "Album");
+			ClassicAssert.IsNull (file.Tag.Comment, "Comment");
+			ClassicAssert.AreEqual (0, file.Tag.Genres.Length, "Genres");
+			ClassicAssert.AreEqual (0, file.Tag.Year, "Year");
+			ClassicAssert.AreEqual (0, file.Tag.Track, "Track");
+			ClassicAssert.AreEqual (0, file.Tag.TrackCount, "TrackCount");
+			ClassicAssert.AreEqual (0, file.Tag.Disc, "Disc");
+			ClassicAssert.AreEqual (0, file.Tag.DiscCount, "DiscCount");
+			ClassicAssert.IsNull (file.Tag.Lyrics, "Lyrics");
+			ClassicAssert.IsNull (file.Tag.Comment, "Comment");
+			ClassicAssert.AreEqual (0, file.Tag.BeatsPerMinute, "BeatsPerMinute");
+			ClassicAssert.IsNull (file.Tag.Conductor, "Conductor");
+			ClassicAssert.IsNull (file.Tag.Copyright, "Copyright");
+			ClassicAssert.AreEqual (0, file.Tag.Pictures.Length, "Pictures");
+			ClassicAssert.IsTrue (file.Tag.IsEmpty, "Should be empty.");
 		}
 
 		File CreateFile (out MemoryFileAbstraction abst)

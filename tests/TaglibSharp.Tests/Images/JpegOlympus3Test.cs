@@ -88,88 +88,88 @@ namespace TaglibSharp.Tests.Images
 
 		public void CheckTags (File file)
 		{
-			Assert.IsTrue (file is TagLib.Jpeg.File, "not a Jpeg file");
+			ClassicAssert.IsTrue (file is TagLib.Jpeg.File, "not a Jpeg file");
 
-			Assert.AreEqual (contained_types, file.TagTypes);
-			Assert.AreEqual (contained_types, file.TagTypesOnDisk);
+			ClassicAssert.AreEqual (contained_types, file.TagTypes);
+			ClassicAssert.AreEqual (contained_types, file.TagTypesOnDisk);
 		}
 
 		public void CheckExif (File file)
 		{
 			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 
-			Assert.IsNotNull (tag, "tag");
+			ClassicAssert.IsNotNull (tag, "tag");
 
 			var exif_ifd = tag.Structure.GetEntry (0, IFDEntryTag.ExifIFD) as SubIFDEntry;
-			Assert.IsNotNull (exif_ifd, "Exif IFD");
+			ClassicAssert.IsNotNull (exif_ifd, "Exif IFD");
 
-			Assert.AreEqual ("OLYMPUS IMAGING CORP.  ", tag.Make);
-			Assert.AreEqual ("E-410           ", tag.Model);
-			Assert.AreEqual (100, tag.ISOSpeedRatings);
-			Assert.AreEqual (1.0d / 125.0d, tag.ExposureTime);
-			Assert.AreEqual (6.3d, tag.FNumber);
-			Assert.AreEqual (42.0d, tag.FocalLength);
-			Assert.AreEqual (new DateTime (2009, 04, 11, 19, 45, 42), tag.DateTime);
-			Assert.AreEqual (new DateTime (2009, 04, 11, 19, 45, 42), tag.DateTimeDigitized);
-			Assert.AreEqual (new DateTime (2009, 04, 11, 19, 45, 42), tag.DateTimeOriginal);
+			ClassicAssert.AreEqual ("OLYMPUS IMAGING CORP.  ", tag.Make);
+			ClassicAssert.AreEqual ("E-410           ", tag.Model);
+			ClassicAssert.AreEqual (100, tag.ISOSpeedRatings);
+			ClassicAssert.AreEqual (1.0d / 125.0d, tag.ExposureTime);
+			ClassicAssert.AreEqual (6.3d, tag.FNumber);
+			ClassicAssert.AreEqual (42.0d, tag.FocalLength);
+			ClassicAssert.AreEqual (new DateTime (2009, 04, 11, 19, 45, 42), tag.DateTime);
+			ClassicAssert.AreEqual (new DateTime (2009, 04, 11, 19, 45, 42), tag.DateTimeDigitized);
+			ClassicAssert.AreEqual (new DateTime (2009, 04, 11, 19, 45, 42), tag.DateTimeOriginal);
 		}
 
 
 		public void CheckMakerNote (File file)
 		{
 			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
-			Assert.IsNotNull (tag, "tag");
+			ClassicAssert.IsNotNull (tag, "tag");
 
 			var makernote_ifd =
 				tag.ExifIFD.GetEntry (0, (ushort)ExifEntryTag.MakerNote) as MakernoteIFDEntry;
 
-			Assert.IsNotNull (makernote_ifd, "makernote ifd");
-			Assert.AreEqual (MakernoteType.Olympus2, makernote_ifd.MakernoteType);
+			ClassicAssert.IsNotNull (makernote_ifd, "makernote ifd");
+			ClassicAssert.AreEqual (MakernoteType.Olympus2, makernote_ifd.MakernoteType);
 
 			var structure = makernote_ifd.Structure;
-			Assert.IsNotNull (structure, "structure");
+			ClassicAssert.IsNotNull (structure, "structure");
 			/*{
 				var entry = structure.GetEntry (0, 0x01) as UndefinedIFDEntry;
-				Assert.IsNotNull (entry);
+				ClassicAssert.IsNotNull (entry);
 				ByteVector read_bytes = entry.Data;
 				ByteVector expected_bytes = new ByteVector (new byte [] {48, 50, 49, 48});
 
-				Assert.AreEqual (expected_bytes.Count, read_bytes.Count);
+				ClassicAssert.AreEqual (expected_bytes.Count, read_bytes.Count);
 				for (int i = 0; i < expected_bytes.Count; i++)
-					Assert.AreEqual (expected_bytes[i], read_bytes[i]);
+					ClassicAssert.AreEqual (expected_bytes[i], read_bytes[i]);
 			}
 			{
 				var entry = structure.GetEntry (0, 0x04) as StringIFDEntry;
-				Assert.IsNotNull (entry, "entry 0x04");
-				Assert.AreEqual ("FINE   ", entry.Value);
+				ClassicAssert.IsNotNull (entry, "entry 0x04");
+				ClassicAssert.AreEqual ("FINE   ", entry.Value);
 			}
 			{
 				var entry = structure.GetEntry (0, 0x08) as StringIFDEntry;
-				Assert.IsNotNull (entry, "entry 0x08");
-				Assert.AreEqual ("NORMAL      ", entry.Value);
+				ClassicAssert.IsNotNull (entry, "entry 0x08");
+				ClassicAssert.AreEqual ("NORMAL      ", entry.Value);
 			}
 			{
 				var entry = structure.GetEntry (0, 0x92) as SShortIFDEntry;
-				Assert.IsNotNull (entry, "entry 0x92");
-				Assert.AreEqual (0, entry.Value);
+				ClassicAssert.IsNotNull (entry, "entry 0x92");
+				ClassicAssert.AreEqual (0, entry.Value);
 			}
 			{
 				var entry = structure.GetEntry (0, 0x9A) as RationalArrayIFDEntry;
-				Assert.IsNotNull (entry, "entry 0x9A");
+				ClassicAssert.IsNotNull (entry, "entry 0x9A");
 				var values = entry.Values;
 
-				Assert.IsNotNull (values, "values of entry 0x9A");
-				Assert.AreEqual (2, values.Length);
-				Assert.AreEqual (78.0d/10.0d, (double) values[0]);
-				Assert.AreEqual (78.0d/10.0d, (double) values[1]);
+				ClassicAssert.IsNotNull (values, "values of entry 0x9A");
+				ClassicAssert.AreEqual (2, values.Length);
+				ClassicAssert.AreEqual (78.0d/10.0d, (double) values[0]);
+				ClassicAssert.AreEqual (78.0d/10.0d, (double) values[1]);
 			}*/
 		}
 
 		public void CheckProperties (File file)
 		{
-			Assert.AreEqual (3648, file.Properties.PhotoWidth);
-			Assert.AreEqual (2736, file.Properties.PhotoHeight);
-			Assert.AreEqual (96, file.Properties.PhotoQuality);
+			ClassicAssert.AreEqual (3648, file.Properties.PhotoWidth);
+			ClassicAssert.AreEqual (2736, file.Properties.PhotoHeight);
+			ClassicAssert.AreEqual (96, file.Properties.PhotoQuality);
 		}
 	}
 }

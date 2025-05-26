@@ -10,31 +10,31 @@ namespace TaglibSharp.Tests.TaggingFormats
 		{
 			var tag = new TagLib.Riff.DivXTag ();
 
-			Assert.IsTrue (tag.IsEmpty, "Initially empty");
-			Assert.IsNull (tag.Title, "Initially null");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Initially empty");
+			ClassicAssert.IsNull (tag.Title, "Initially null");
 
 			var rendered = tag.Render ();
 			tag = new TagLib.Riff.DivXTag (rendered);
-			Assert.IsTrue (tag.IsEmpty, "Still empty");
-			Assert.IsNull (tag.Title, "Still null");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Still empty");
+			ClassicAssert.IsNull (tag.Title, "Still null");
 
 			tag.Title = "01234567890123456789012345678901234567890123456789";
-			Assert.IsFalse (tag.IsEmpty, "Not empty");
-			Assert.AreEqual ("01234567890123456789012345678901234567890123456789", tag.Title);
+			ClassicAssert.IsFalse (tag.IsEmpty, "Not empty");
+			ClassicAssert.AreEqual ("01234567890123456789012345678901234567890123456789", tag.Title);
 
 			rendered = tag.Render ();
 			tag = new TagLib.Riff.DivXTag (rendered);
-			Assert.IsFalse (tag.IsEmpty, "Still not empty");
-			Assert.AreEqual ("01234567890123456789012345678901", tag.Title);
+			ClassicAssert.IsFalse (tag.IsEmpty, "Still not empty");
+			ClassicAssert.AreEqual ("01234567890123456789012345678901", tag.Title);
 
 			tag.Title = string.Empty;
-			Assert.IsTrue (tag.IsEmpty, "Again empty");
-			Assert.IsNull (tag.Title, "Again null");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Again empty");
+			ClassicAssert.IsNull (tag.Title, "Again null");
 
 			rendered = tag.Render ();
 			tag = new TagLib.Riff.DivXTag (rendered);
-			Assert.IsTrue (tag.IsEmpty, "Still empty");
-			Assert.IsNull (tag.Title, "Still null");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Still empty");
+			ClassicAssert.IsNull (tag.Title, "Still null");
 		}
 
 		[Test]
@@ -42,31 +42,31 @@ namespace TaglibSharp.Tests.TaggingFormats
 		{
 			var tag = new TagLib.Riff.DivXTag ();
 
-			Assert.IsTrue (tag.IsEmpty, "Initially empty");
-			Assert.AreEqual (0, tag.Performers.Length, "Initially empty");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Initially empty");
+			ClassicAssert.AreEqual (0, tag.Performers.Length, "Initially empty");
 
 			var rendered = tag.Render ();
 			tag = new TagLib.Riff.DivXTag (rendered);
-			Assert.IsTrue (tag.IsEmpty, "Still empty");
-			Assert.AreEqual (0, tag.Performers.Length, "Still empty");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Still empty");
+			ClassicAssert.AreEqual (0, tag.Performers.Length, "Still empty");
 
 			tag.Performers = new[] { "A123456789", "B123456789", "C123456789", "D123456789", "E123456789" };
-			Assert.IsFalse (tag.IsEmpty, "Not empty");
-			Assert.AreEqual ("A123456789; B123456789; C123456789; D123456789; E123456789", tag.JoinedPerformers);
+			ClassicAssert.IsFalse (tag.IsEmpty, "Not empty");
+			ClassicAssert.AreEqual ("A123456789; B123456789; C123456789; D123456789; E123456789", tag.JoinedPerformers);
 
 			rendered = tag.Render ();
 			tag = new TagLib.Riff.DivXTag (rendered);
-			Assert.IsFalse (tag.IsEmpty, "Still not empty");
-			Assert.AreEqual ("A123456789; B123456789; C12345", tag.JoinedPerformers);
+			ClassicAssert.IsFalse (tag.IsEmpty, "Still not empty");
+			ClassicAssert.AreEqual ("A123456789; B123456789; C12345", tag.JoinedPerformers);
 
 			tag.Performers = new string[0];
-			Assert.IsTrue (tag.IsEmpty, "Again empty");
-			Assert.AreEqual (0, tag.Performers.Length, "Again empty");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Again empty");
+			ClassicAssert.AreEqual (0, tag.Performers.Length, "Again empty");
 
 			rendered = tag.Render ();
 			tag = new TagLib.Riff.DivXTag (rendered);
-			Assert.IsTrue (tag.IsEmpty, "Still empty");
-			Assert.AreEqual (0, tag.Performers.Length, "Still empty");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Still empty");
+			ClassicAssert.AreEqual (0, tag.Performers.Length, "Still empty");
 		}
 
 		[Test]
@@ -74,31 +74,31 @@ namespace TaglibSharp.Tests.TaggingFormats
 		{
 			var tag = new TagLib.Riff.DivXTag ();
 
-			Assert.IsTrue (tag.IsEmpty, "Initially empty");
-			Assert.AreEqual (0, tag.Year, "Initially zero");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Initially empty");
+			ClassicAssert.AreEqual (0, tag.Year, "Initially zero");
 
 			var rendered = tag.Render ();
 			tag = new TagLib.Riff.DivXTag (rendered);
-			Assert.IsTrue (tag.IsEmpty, "Still empty");
-			Assert.AreEqual (0, tag.Year, "Still zero");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Still empty");
+			ClassicAssert.AreEqual (0, tag.Year, "Still zero");
 
 			tag.Year = 1999;
-			Assert.IsFalse (tag.IsEmpty, "Not empty");
-			Assert.AreEqual (1999, tag.Year);
+			ClassicAssert.IsFalse (tag.IsEmpty, "Not empty");
+			ClassicAssert.AreEqual (1999, tag.Year);
 
 			rendered = tag.Render ();
 			tag = new TagLib.Riff.DivXTag (rendered);
-			Assert.IsFalse (tag.IsEmpty, "Still not empty");
-			Assert.AreEqual (1999, tag.Year);
+			ClassicAssert.IsFalse (tag.IsEmpty, "Still not empty");
+			ClassicAssert.AreEqual (1999, tag.Year);
 
 			tag.Year = 20000;
-			Assert.IsTrue (tag.IsEmpty, "Again empty");
-			Assert.AreEqual (0, tag.Year, "Again zero");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Again empty");
+			ClassicAssert.AreEqual (0, tag.Year, "Again zero");
 
 			rendered = tag.Render ();
 			tag = new TagLib.Riff.DivXTag (rendered);
-			Assert.IsTrue (tag.IsEmpty, "Still empty");
-			Assert.AreEqual (0, tag.Year, "Still zero");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Still empty");
+			ClassicAssert.AreEqual (0, tag.Year, "Still zero");
 		}
 
 		[Test]
@@ -106,31 +106,31 @@ namespace TaglibSharp.Tests.TaggingFormats
 		{
 			var tag = new TagLib.Riff.DivXTag ();
 
-			Assert.IsTrue (tag.IsEmpty, "Initially empty");
-			Assert.IsNull (tag.Comment, "Initially null");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Initially empty");
+			ClassicAssert.IsNull (tag.Comment, "Initially null");
 
 			var rendered = tag.Render ();
 			tag = new TagLib.Riff.DivXTag (rendered);
-			Assert.IsTrue (tag.IsEmpty, "Still empty");
-			Assert.IsNull (tag.Comment, "Still null");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Still empty");
+			ClassicAssert.IsNull (tag.Comment, "Still null");
 
 			tag.Comment = "01234567890123456789012345678901234567890123456789";
-			Assert.IsFalse (tag.IsEmpty, "Not empty");
-			Assert.AreEqual ("01234567890123456789012345678901234567890123456789", tag.Comment);
+			ClassicAssert.IsFalse (tag.IsEmpty, "Not empty");
+			ClassicAssert.AreEqual ("01234567890123456789012345678901234567890123456789", tag.Comment);
 
 			rendered = tag.Render ();
 			tag = new TagLib.Riff.DivXTag (rendered);
-			Assert.IsFalse (tag.IsEmpty, "Still not empty");
-			Assert.AreEqual ("012345678901234567890123456789012345678901234567", tag.Comment);
+			ClassicAssert.IsFalse (tag.IsEmpty, "Still not empty");
+			ClassicAssert.AreEqual ("012345678901234567890123456789012345678901234567", tag.Comment);
 
 			tag.Comment = string.Empty;
-			Assert.IsTrue (tag.IsEmpty, "Again empty");
-			Assert.IsNull (tag.Comment, "Again null");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Again empty");
+			ClassicAssert.IsNull (tag.Comment, "Again null");
 
 			rendered = tag.Render ();
 			tag = new TagLib.Riff.DivXTag (rendered);
-			Assert.IsTrue (tag.IsEmpty, "Still empty");
-			Assert.IsNull (tag.Comment, "Still null");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Still empty");
+			ClassicAssert.IsNull (tag.Comment, "Still null");
 		}
 
 		[Test]
@@ -138,40 +138,40 @@ namespace TaglibSharp.Tests.TaggingFormats
 		{
 			var tag = new TagLib.Riff.DivXTag ();
 
-			Assert.IsTrue (tag.IsEmpty, "Initially empty");
-			Assert.AreEqual (0, tag.Genres.Length, "Initially empty");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Initially empty");
+			ClassicAssert.AreEqual (0, tag.Genres.Length, "Initially empty");
 
 			var rendered = tag.Render ();
 			tag = new TagLib.Riff.DivXTag (rendered);
-			Assert.IsTrue (tag.IsEmpty, "Still empty");
-			Assert.AreEqual (0, tag.Genres.Length, "Still empty");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Still empty");
+			ClassicAssert.AreEqual (0, tag.Genres.Length, "Still empty");
 
 			tag.Genres = new[] { "Action", "Comedy", "Non-Genre", "Claymation" };
-			Assert.IsFalse (tag.IsEmpty, "Not empty");
-			Assert.AreEqual ("Action", tag.JoinedGenres);
+			ClassicAssert.IsFalse (tag.IsEmpty, "Not empty");
+			ClassicAssert.AreEqual ("Action", tag.JoinedGenres);
 
 			rendered = tag.Render ();
 			tag = new TagLib.Riff.DivXTag (rendered);
-			Assert.IsFalse (tag.IsEmpty, "Still not empty");
-			Assert.AreEqual ("Action", tag.JoinedGenres);
+			ClassicAssert.IsFalse (tag.IsEmpty, "Still not empty");
+			ClassicAssert.AreEqual ("Action", tag.JoinedGenres);
 
 			tag.Genres = new[] { "Non-Genre" };
-			Assert.IsTrue (tag.IsEmpty, "Surprisingly empty");
-			Assert.AreEqual (0, tag.Genres.Length, "Surprisingly empty");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Surprisingly empty");
+			ClassicAssert.AreEqual (0, tag.Genres.Length, "Surprisingly empty");
 
 			rendered = tag.Render ();
 			tag = new TagLib.Riff.DivXTag (rendered);
-			Assert.IsTrue (tag.IsEmpty, "Still empty");
-			Assert.AreEqual (0, tag.Genres.Length, "Still empty");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Still empty");
+			ClassicAssert.AreEqual (0, tag.Genres.Length, "Still empty");
 
 			tag.Genres = new string[0];
-			Assert.IsTrue (tag.IsEmpty, "Again empty");
-			Assert.AreEqual (0, tag.Genres.Length, "Again empty");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Again empty");
+			ClassicAssert.AreEqual (0, tag.Genres.Length, "Again empty");
 
 			rendered = tag.Render ();
 			tag = new TagLib.Riff.DivXTag (rendered);
-			Assert.IsTrue (tag.IsEmpty, "Still empty");
-			Assert.AreEqual (0, tag.Genres.Length, "Still empty");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Still empty");
+			ClassicAssert.AreEqual (0, tag.Genres.Length, "Still empty");
 		}
 
 		[Test]
@@ -188,24 +188,24 @@ namespace TaglibSharp.Tests.TaggingFormats
 			};
 
 
-			Assert.IsFalse (tag.IsEmpty, "Should be full.");
+			ClassicAssert.IsFalse (tag.IsEmpty, "Should be full.");
 			tag.Clear ();
-			Assert.IsNull (tag.Title, "Title");
-			Assert.AreEqual (0, tag.Performers.Length, "Performers");
-			Assert.IsNull (tag.Album, "Album");
-			Assert.AreEqual (0, tag.Year, "Year");
-			Assert.IsNull (tag.Comment, "Comment");
-			Assert.AreEqual (0, tag.Track, "Track");
-			Assert.AreEqual (0, tag.Genres.Length, "Genres");
-			Assert.IsTrue (tag.IsEmpty, "Should be empty.");
+			ClassicAssert.IsNull (tag.Title, "Title");
+			ClassicAssert.AreEqual (0, tag.Performers.Length, "Performers");
+			ClassicAssert.IsNull (tag.Album, "Album");
+			ClassicAssert.AreEqual (0, tag.Year, "Year");
+			ClassicAssert.IsNull (tag.Comment, "Comment");
+			ClassicAssert.AreEqual (0, tag.Track, "Track");
+			ClassicAssert.AreEqual (0, tag.Genres.Length, "Genres");
+			ClassicAssert.IsTrue (tag.IsEmpty, "Should be empty.");
 		}
 
 		[Test]
 		public void TestRender ()
 		{
 			var rendered = new TagLib.Riff.DivXTag ().Render ();
-			Assert.AreEqual (128, rendered.Count);
-			Assert.IsTrue (rendered.EndsWith (TagLib.Riff.DivXTag.FileIdentifier));
+			ClassicAssert.AreEqual (128, rendered.Count);
+			ClassicAssert.IsTrue (rendered.EndsWith (TagLib.Riff.DivXTag.FileIdentifier));
 		}
 	}
 }
