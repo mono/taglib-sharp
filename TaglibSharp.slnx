@@ -1,0 +1,29 @@
+<Solution>
+  <Folder Name="/Examples/">
+    <Project Path="examples/BatchSet/BatchSet.csproj" />
+    <Project Path="examples/GenerateTestFixture/GenerateTestFixture.csproj" />
+    <Project Path="examples/ListSupportedMimeTypes/ListSupportedMimeTypes.csproj" />
+    <Project Path="examples/ParsePhoto/ParsePhoto.csproj" />
+    <Project Path="examples/ReadFromUri/ReadFromUri.csproj" />
+    <Project Path="examples/SetPictures/SetPictures.csproj" />
+    <Project Path="examples/StripImageData/StripImageData.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="AUTHORS" />
+    <File Path="ChangeLog" />
+    <File Path="COPYING" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="NEWS" />
+    <File Path="README.md" />
+    <File Path="taglib-sharp.pc.in" />
+  </Folder>
+  <Project Path="src/Debug/Debug.csproj" />
+  <Project Path="src/TaglibSharp/TaglibSharp.csproj" />
+  <Project Path="tests/TaglibSharp.Tests/TaglibSharp.Tests.csproj" />
+</Solution>
