@@ -36,7 +36,7 @@ namespace TaglibSharp.Tests.Images
 			var file = File.Create (TestPath.Samples + "sample_iptc1.jpg");
 			var tag = file.GetTag (TagTypes.XMP) as XmpTag;
 
-			Assert.IsNotNull (tag, "tag");
+			ClassicAssert.IsNotNull (tag, "tag");
 
 			CollectionAssert.AreEqual (new[] { "kw1", "kw2", "kw3 " }, tag.Keywords);
 		}
@@ -47,12 +47,12 @@ namespace TaglibSharp.Tests.Images
 			var file = File.Create (TestPath.Samples + "sample_iptc2.jpg");
 			var tag = file.GetTag (TagTypes.XMP) as XmpTag;
 
-			Assert.IsNotNull (tag, "tag");
+			ClassicAssert.IsNotNull (tag, "tag");
 
 			CollectionAssert.AreEqual (new[] { "kw" }, tag.Keywords);
-			Assert.AreEqual ("Title", tag.Title);
-			Assert.AreEqual ("Creator", tag.Creator);
-			Assert.AreEqual ("Copyright", tag.Copyright);
+			ClassicAssert.AreEqual ("Title", tag.Title);
+			ClassicAssert.AreEqual ("Creator", tag.Creator);
+			ClassicAssert.AreEqual ("Copyright", tag.Copyright);
 		}
 
 		[Test]
@@ -61,12 +61,12 @@ namespace TaglibSharp.Tests.Images
 			var file = File.Create (TestPath.Samples + "sample_iptc3.jpg");
 			var tag = file.GetTag (TagTypes.XMP) as XmpTag;
 
-			Assert.IsNotNull (tag, "tag");
+			ClassicAssert.IsNotNull (tag, "tag");
 
 			CollectionAssert.AreEqual (new[] { "XmpKw" }, tag.Keywords);
-			Assert.AreEqual ("XmpTitle", tag.Title);
-			Assert.AreEqual ("XmpCreator", tag.Creator);
-			Assert.AreEqual ("XmpCopyright", tag.Copyright);
+			ClassicAssert.AreEqual ("XmpTitle", tag.Title);
+			ClassicAssert.AreEqual ("XmpCreator", tag.Creator);
+			ClassicAssert.AreEqual ("XmpCopyright", tag.Copyright);
 		}
 	}
 }

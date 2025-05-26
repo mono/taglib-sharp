@@ -2,6 +2,8 @@ using System.Linq;
 using NUnit.Framework;
 using TagLib;
 
+using File = TagLib.File;
+
 namespace TaglibSharp.Tests.FileFormats
 {
 	[TestFixture]
@@ -22,21 +24,21 @@ namespace TaglibSharp.Tests.FileFormats
 		[Test]
 		public void ReadAudioProperties ()
 		{
-			Assert.AreEqual (44100, file.Properties.AudioSampleRate);
-			Assert.AreEqual (1, file.Properties.Duration.Seconds);
+			ClassicAssert.AreEqual (44100, file.Properties.AudioSampleRate);
+			ClassicAssert.AreEqual (1, file.Properties.Duration.Seconds);
 		}
 
 		[Test]
 		public void ReadTags ()
 		{
-			Assert.AreEqual ("MP3 album", file.Tag.Album);
-			Assert.AreEqual ("MP3 artist", file.Tag.FirstPerformer);
-			Assert.AreEqual ("MP3 comment", file.Tag.Comment);
-			Assert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
-			Assert.AreEqual ("MP3 title", file.Tag.Title);
-			Assert.AreEqual (6, file.Tag.Track);
-			Assert.AreEqual (7, file.Tag.TrackCount);
-			Assert.AreEqual (1234, file.Tag.Year);
+			ClassicAssert.AreEqual ("MP3 album", file.Tag.Album);
+			ClassicAssert.AreEqual ("MP3 artist", file.Tag.FirstPerformer);
+			ClassicAssert.AreEqual ("MP3 comment", file.Tag.Comment);
+			ClassicAssert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
+			ClassicAssert.AreEqual ("MP3 title", file.Tag.Title);
+			ClassicAssert.AreEqual (6, file.Tag.Track);
+			ClassicAssert.AreEqual (7, file.Tag.TrackCount);
+			ClassicAssert.AreEqual (1234, file.Tag.Year);
 		}
 
 		[Test]
@@ -49,10 +51,10 @@ namespace TaglibSharp.Tests.FileFormats
 			var tag = rgFile.Tag;
 			var genres = tag.Genres;
 
-			Assert.AreEqual (3, genres.Length);
-			Assert.AreEqual ("Genre 1", genres[0]);
-			Assert.AreEqual ("Genre 2", genres[1]);
-			Assert.AreEqual ("Genre 3", genres[2]);
+			ClassicAssert.AreEqual (3, genres.Length);
+			ClassicAssert.AreEqual ("Genre 1", genres[0]);
+			ClassicAssert.AreEqual ("Genre 2", genres[1]);
+			ClassicAssert.AreEqual ("Genre 3", genres[2]);
 
 			rgFile.Dispose ();
 			System.IO.File.Delete (tempFile);
@@ -88,7 +90,7 @@ namespace TaglibSharp.Tests.FileFormats
 			System.IO.File.Copy (corrupt_file, tmp_file);
 			var tmp = File.Create (tmp_file);
 
-			Assert.AreEqual ("T", tmp.Tag.Title);
+			ClassicAssert.AreEqual ("T", tmp.Tag.Title);
 		}
 
 		[Test]
@@ -101,7 +103,7 @@ namespace TaglibSharp.Tests.FileFormats
 		{
 			// bgo#604488
 			var file = File.Create (ext_header_file);
-			Assert.AreEqual ("Title v2", file.Tag.Title);
+			ClassicAssert.AreEqual ("Title v2", file.Tag.Title);
 		}
 
 		[Test]
@@ -126,14 +128,14 @@ namespace TaglibSharp.Tests.FileFormats
 
 			urlLinkFile = File.Create (tempFile);
 			id3v2tag = urlLinkFile.GetTag (TagTypes.Id3v2) as TagLib.Id3v2.Tag;
-			Assert.AreEqual ("www.commercial.com", id3v2tag.GetTextAsString ("WCOM"));
-			Assert.AreEqual ("www.copyright.com", id3v2tag.GetTextAsString ("WCOP"));
-			Assert.AreEqual ("www.official-audio.com", id3v2tag.GetTextAsString ("WOAF"));
-			Assert.AreEqual ("www.official-artist.com", id3v2tag.GetTextAsString ("WOAR"));
-			Assert.AreEqual ("www.official-audio-source.com", id3v2tag.GetTextAsString ("WOAS"));
-			Assert.AreEqual ("www.official-internet-radio.com", id3v2tag.GetTextAsString ("WORS"));
-			Assert.AreEqual ("www.payment.com", id3v2tag.GetTextAsString ("WPAY"));
-			Assert.AreEqual ("www.official-publisher.com", id3v2tag.GetTextAsString ("WPUB"));
+			ClassicAssert.AreEqual ("www.commercial.com", id3v2tag.GetTextAsString ("WCOM"));
+			ClassicAssert.AreEqual ("www.copyright.com", id3v2tag.GetTextAsString ("WCOP"));
+			ClassicAssert.AreEqual ("www.official-audio.com", id3v2tag.GetTextAsString ("WOAF"));
+			ClassicAssert.AreEqual ("www.official-artist.com", id3v2tag.GetTextAsString ("WOAR"));
+			ClassicAssert.AreEqual ("www.official-audio-source.com", id3v2tag.GetTextAsString ("WOAS"));
+			ClassicAssert.AreEqual ("www.official-internet-radio.com", id3v2tag.GetTextAsString ("WORS"));
+			ClassicAssert.AreEqual ("www.payment.com", id3v2tag.GetTextAsString ("WPAY"));
+			ClassicAssert.AreEqual ("www.official-publisher.com", id3v2tag.GetTextAsString ("WPUB"));
 			urlLinkFile.Dispose ();
 
 			System.IO.File.Delete (tempFile);
@@ -159,7 +161,7 @@ namespace TaglibSharp.Tests.FileFormats
 			file.Tag.Pictures = new[] { picture };
 			file.Save ();
 
-			Assert.IsTrue (file.Tag.Pictures.Count () == 1, "File should start with 1 picture");
+			ClassicAssert.IsTrue (file.Tag.Pictures.Count () == 1, "File should start with 1 picture");
 
 			// Now construct a new tag with a title, APIC and GEOB frame
 
@@ -186,13 +188,13 @@ namespace TaglibSharp.Tests.FileFormats
 
 			tag.CopyTo (file.Tag, false);
 
-			Assert.AreEqual ("MP3 title", file.Tag.Title, "Title shouldn't be copied if overwrite=false");
-			Assert.AreEqual (1, file.Tag.Pictures.Count (), "GEOB/APIC frames shouldn't be copied if overwrite=false");
+			ClassicAssert.AreEqual ("MP3 title", file.Tag.Title, "Title shouldn't be copied if overwrite=false");
+			ClassicAssert.AreEqual (1, file.Tag.Pictures.Count (), "GEOB/APIC frames shouldn't be copied if overwrite=false");
 
 			tag.CopyTo (file.Tag, true);
 
-			Assert.AreEqual (tag.Title, file.Tag.Title, "Title wasn't copied");
-			Assert.AreEqual (tag.Pictures.Count (), file.Tag.Pictures.Count (), "GEOB/APIC frames weren't copied");
+			ClassicAssert.AreEqual (tag.Title, file.Tag.Title, "Title wasn't copied");
+			ClassicAssert.AreEqual (tag.Pictures.Count (), file.Tag.Pictures.Count (), "GEOB/APIC frames weren't copied");
 		}
 	}
 }

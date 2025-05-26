@@ -2,6 +2,8 @@ using NUnit.Framework;
 using System;
 using TagLib;
 
+using File = TagLib.File;
+
 namespace TaglibSharp.Tests.Images
 {
 	/// <summary>
@@ -18,15 +20,15 @@ namespace TaglibSharp.Tests.Images
 		public void ParseXmp ()
 		{
 			var file = File.Create (sample_file) as TagLib.Image.File;
-			Assert.IsNotNull (file, "file");
+			ClassicAssert.IsNotNull (file, "file");
 
 			var tag = file.ImageTag;
-			Assert.IsNotNull (tag, "ImageTag");
-			Assert.AreEqual ("Asahi Optical Co.,Ltd. ", tag.Make);
-			Assert.AreEqual ("PENTAX Optio 230   ", tag.Model);
-			Assert.AreEqual (null, tag.ISOSpeedRatings, "ISOSpeedRatings");
-			Assert.AreEqual (new[] { "Türkei 2004" }, tag.Keywords);
-			Assert.AreEqual (new DateTime (2004, 08, 23, 11, 20, 57), tag.DateTime);
+			ClassicAssert.IsNotNull (tag, "ImageTag");
+			ClassicAssert.AreEqual ("Asahi Optical Co.,Ltd. ", tag.Make);
+			ClassicAssert.AreEqual ("PENTAX Optio 230   ", tag.Model);
+			ClassicAssert.AreEqual (null, tag.ISOSpeedRatings, "ISOSpeedRatings");
+			ClassicAssert.AreEqual (new[] { "Türkei 2004" }, tag.Keywords);
+			ClassicAssert.AreEqual (new DateTime (2004, 08, 23, 11, 20, 57), tag.DateTime);
 		}
 	}
 }

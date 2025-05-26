@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using TagLib;
 
+using File = TagLib.File;
+
 namespace TaglibSharp.Tests.FileFormats
 {
 	[TestFixture]
@@ -19,20 +21,20 @@ namespace TaglibSharp.Tests.FileFormats
 		[Test]
 		public void ReadAudioProperties ()
 		{
-			Assert.AreEqual (44100, file.Properties.AudioSampleRate);
-			Assert.AreEqual (1, file.Properties.Duration.Seconds);
+			ClassicAssert.AreEqual (44100, file.Properties.AudioSampleRate);
+			ClassicAssert.AreEqual (1, file.Properties.Duration.Seconds);
 		}
 
 		[Test]
 		public void ReadTags ()
 		{
-			Assert.AreEqual ("MP3 album", file.Tag.Album);
-			Assert.AreEqual ("MP3 artist", file.Tag.FirstPerformer);
-			Assert.AreEqual ("MP3 comment", file.Tag.Comment);
-			Assert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
-			Assert.AreEqual ("MP3 title", file.Tag.Title);
-			Assert.AreEqual (6, file.Tag.Track);
-			Assert.AreEqual (1234, file.Tag.Year);
+			ClassicAssert.AreEqual ("MP3 album", file.Tag.Album);
+			ClassicAssert.AreEqual ("MP3 artist", file.Tag.FirstPerformer);
+			ClassicAssert.AreEqual ("MP3 comment", file.Tag.Comment);
+			ClassicAssert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
+			ClassicAssert.AreEqual ("MP3 title", file.Tag.Title);
+			ClassicAssert.AreEqual (6, file.Tag.Track);
+			ClassicAssert.AreEqual (1234, file.Tag.Year);
 		}
 
 		[Test]

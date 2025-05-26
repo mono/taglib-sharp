@@ -138,37 +138,37 @@ namespace TaglibSharp.Tests.Images
 
 		public void CheckTags (File file, int i)
 		{
-			Assert.IsTrue (file is TagLib.Jpeg.File, $"not a Jpeg file: index {i}");
+			ClassicAssert.IsTrue (file is TagLib.Jpeg.File, $"not a Jpeg file: index {i}");
 
-			Assert.AreEqual (contained_types[i], file.TagTypes, $"index {i}");
-			Assert.AreEqual (contained_types[i], file.TagTypesOnDisk, $"index {i}");
+			ClassicAssert.AreEqual (contained_types[i], file.TagTypes, $"index {i}");
+			ClassicAssert.AreEqual (contained_types[i], file.TagTypesOnDisk, $"index {i}");
 		}
 
 		public void CheckExif (File file, int i)
 		{
 			var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
-			Assert.IsNotNull (tag, $"Tiff Tag not contained: index {i}");
+			ClassicAssert.IsNotNull (tag, $"Tiff Tag not contained: index {i}");
 
 			var exif_ifd = tag.Structure.GetEntry (0, IFDEntryTag.ExifIFD) as SubIFDEntry;
-			Assert.IsNotNull (exif_ifd, $"Exif SubIFD not contained: index {i}");
+			ClassicAssert.IsNotNull (exif_ifd, $"Exif SubIFD not contained: index {i}");
 
-			Assert.AreEqual ("test comment", tag.Comment, $"index {i}");
+			ClassicAssert.AreEqual ("test comment", tag.Comment, $"index {i}");
 		}
 
 		public void CheckXmp (File file, int i)
 		{
 			var tag = file.GetTag (TagTypes.XMP) as XmpTag;
-			Assert.IsNotNull (tag, $"XMP Tag not contained: index {i}");
+			ClassicAssert.IsNotNull (tag, $"XMP Tag not contained: index {i}");
 
-			Assert.AreEqual ("test description", tag.Comment);
+			ClassicAssert.AreEqual ("test description", tag.Comment);
 		}
 
 		public void CheckJpegComment (File file, int i)
 		{
 			var tag = file.GetTag (TagTypes.JpegComment) as JpegCommentTag;
-			Assert.IsNotNull (tag, $"JpegTag Tag not contained: index {i}");
+			ClassicAssert.IsNotNull (tag, $"JpegTag Tag not contained: index {i}");
 
-			Assert.AreEqual ("Created with GIMP", tag.Comment, $"index {i}");
+			ClassicAssert.AreEqual ("Created with GIMP", tag.Comment, $"index {i}");
 		}
 	}
 }

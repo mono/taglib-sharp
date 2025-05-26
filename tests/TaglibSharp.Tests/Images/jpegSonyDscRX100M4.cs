@@ -24,6 +24,8 @@ using NUnit.Framework;
 using System;
 using TagLib;
 
+using File = TagLib.File;
+
 namespace TaglibSharp.Tests.Images
 {
 	[TestFixture ()]
@@ -42,7 +44,7 @@ namespace TaglibSharp.Tests.Images
 				// All excetions shall make this test fail
 				isSuccess = false;
 			}
-			Assert.True (isSuccess);
+			ClassicAssert.True (isSuccess);
 		}
 	}
 }

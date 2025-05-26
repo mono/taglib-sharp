@@ -4,9 +4,11 @@ using System.Runtime.InteropServices;
 using NUnit.Framework;
 
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Advanced;
+using SixLabors.ImageSharp.PixelFormats;
 
 using TagLib;
+
+using File = TagLib.File;
 
 namespace TaglibSharp.Tests.Images.Validators
 {
@@ -99,8 +101,8 @@ namespace TaglibSharp.Tests.Images.Validators
 			ModificationValidator.ValidatePreModification (tmp);
 			ModificationValidator.ModifyMetadata (tmp);
 			ModificationValidator.ValidatePostModification (tmp);
-			Assert.IsTrue (tmp.Writeable, "File should be writeable");
-			Assert.IsFalse (tmp.PossiblyCorrupt, "Corrupt files should never be written");
+			ClassicAssert.IsTrue (tmp.Writeable, "File should be writeable");
+			ClassicAssert.IsFalse (tmp.PossiblyCorrupt, "Corrupt files should never be written");
 			tmp.Save ();
 		}
 
@@ -136,30 +138,24 @@ namespace TaglibSharp.Tests.Images.Validators
 		string ReadImageData (TagLib.Image.File file)
 		{
 			if (!IsSupportedImageFile (file))
-				Assert.Fail ("Unsupported type for data reading: " + file);
+				ClassicAssert.Fail ("Unsupported type for data reading: " + file);
 
 			file.Mode = File.AccessMode.Read;
 			var v = file.ReadBlock ((int)file.Length);
-			string md5Sum;
 
-			if (file.MimeType == "taglib/tiff") {
-				// TODO, ImageSharp doesn't support tiff yet (4/25/2020): https://github.com/SixLabors/ImageSharp/issues/12
-				md5Sum = "";// Utils.Md5Encode (v.Data);
-			} else {
-				using var image = Image.Load (v.Data);
-				image.TryGetSinglePixelSpan (out var span);
-				byte[] result = MemoryMarshal.AsBytes (span).ToArray ();
-				md5Sum = Utils.Md5Encode (result);
-			}
+            using var image = Image.Load<Rgba32>(v.Data);
+            byte[] result = new byte[image.Width * image.Height * 4];
+            image.CopyPixelDataTo(result);
+            string md5Sum = Utils.Md5Encode(result);
+            file.Mode = File.AccessMode.Closed;
 
-			file.Mode = File.AccessMode.Closed;
 			return md5Sum;
 		}
 
 		void ValidateImageData ()
 		{
 			string label = $"Image data mismatch for {ImageFileName}/{ModificationValidator}";
-			Assert.AreEqual (pre_hash, post_hash, label);
+			ClassicAssert.AreEqual (pre_hash, post_hash, label);
 		}
 
 		void CreateTmpFile ()

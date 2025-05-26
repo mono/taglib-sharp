@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using TagLib;
 
+using File = TagLib.File;
+
 namespace TaglibSharp.Tests.FileFormats
 {
 	[TestFixture]
@@ -21,34 +23,34 @@ namespace TaglibSharp.Tests.FileFormats
 		[Test]
 		public void ReadAudioProperties ()
 		{
-			Assert.AreEqual (44100, file.Properties.AudioSampleRate);
-			Assert.AreEqual (2000, file.Properties.Duration.TotalMilliseconds);
-			Assert.AreEqual (16, file.Properties.BitsPerSample);
-			Assert.AreEqual (706, file.Properties.AudioBitrate);
-			Assert.AreEqual (1, file.Properties.AudioChannels);
+			ClassicAssert.AreEqual (44100, file.Properties.AudioSampleRate);
+			ClassicAssert.AreEqual (2000, file.Properties.Duration.TotalMilliseconds);
+			ClassicAssert.AreEqual (16, file.Properties.BitsPerSample);
+			ClassicAssert.AreEqual (706, file.Properties.AudioBitrate);
+			ClassicAssert.AreEqual (1, file.Properties.AudioChannels);
 		}
 
 		[Test]
 		public void ReadTags ()
 		{
-			Assert.AreEqual ("Artist", file.Tag.FirstPerformer);
-			Assert.AreEqual ("yepa", file.Tag.Comment);
-			Assert.AreEqual ("Genre", file.Tag.FirstGenre);
-			Assert.AreEqual ("Album", file.Tag.Album);
-			Assert.AreEqual ("Title", file.Tag.Title);
-			Assert.AreEqual (2009, file.Tag.Year);
-			Assert.IsNull (file.Tag.FirstComposer);
-			Assert.IsNull (file.Tag.Conductor);
-			Assert.IsNull (file.Tag.Copyright);
+			ClassicAssert.AreEqual ("Artist", file.Tag.FirstPerformer);
+			ClassicAssert.AreEqual ("yepa", file.Tag.Comment);
+			ClassicAssert.AreEqual ("Genre", file.Tag.FirstGenre);
+			ClassicAssert.AreEqual ("Album", file.Tag.Album);
+			ClassicAssert.AreEqual ("Title", file.Tag.Title);
+			ClassicAssert.AreEqual (2009, file.Tag.Year);
+			ClassicAssert.IsNull (file.Tag.FirstComposer);
+			ClassicAssert.IsNull (file.Tag.Conductor);
+			ClassicAssert.IsNull (file.Tag.Copyright);
 		}
 
 		[Test]
 		public void ReadPictures ()
 		{
 			var pics = file.Tag.Pictures;
-			Assert.AreEqual (PictureType.FrontCover, pics[0].Type);
-			Assert.AreEqual ("image/jpeg", pics[0].MimeType);
-			Assert.AreEqual (10210, pics[0].Data.Count);
+			ClassicAssert.AreEqual (PictureType.FrontCover, pics[0].Type);
+			ClassicAssert.AreEqual ("image/jpeg", pics[0].MimeType);
+			ClassicAssert.AreEqual (10210, pics[0].Data.Count);
 		}
 
 		[Test]

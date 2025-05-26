@@ -19,33 +19,33 @@ namespace TaglibSharp.Tests.Images
 	{
 		public void ValidateMetadataInvariants (TagLib.Image.File file)
 		{
-			Assert.IsNotNull (file);
+			ClassicAssert.IsNotNull (file);
 			//
 			//  ---------- Start of ImageTag tests ----------
 
 			var imagetag = file.ImageTag;
-			Assert.IsNotNull (imagetag);
-			Assert.AreEqual (String.Empty, imagetag.Comment, "Comment");
-			Assert.AreEqual (new string[] { }, imagetag.Keywords, "Keywords");
-			Assert.AreEqual (null, imagetag.Rating, "Rating");
-			Assert.AreEqual (TagLib.Image.ImageOrientation.TopLeft, imagetag.Orientation, "Orientation");
-			Assert.AreEqual (null, imagetag.Software, "Software");
-			Assert.AreEqual (null, imagetag.Latitude, "Latitude");
-			Assert.AreEqual (null, imagetag.Longitude, "Longitude");
-			Assert.AreEqual (null, imagetag.Altitude, "Altitude");
-			Assert.AreEqual (0.004, imagetag.ExposureTime, "ExposureTime");
-			Assert.AreEqual (11, imagetag.FNumber, "FNumber");
-			Assert.AreEqual (100, imagetag.ISOSpeedRatings, "ISOSpeedRatings");
-			Assert.AreEqual (7, imagetag.FocalLength, "FocalLength");
-			Assert.AreEqual (null, imagetag.FocalLengthIn35mmFilm, "FocalLengthIn35mmFilm");
-			Assert.AreEqual ("LEICA", imagetag.Make, "Make");
-			Assert.AreEqual ("DIGILUX 2", imagetag.Model, "Model");
-			Assert.AreEqual (null, imagetag.Creator, "Creator");
+			ClassicAssert.IsNotNull (imagetag);
+			ClassicAssert.AreEqual (String.Empty, imagetag.Comment, "Comment");
+			ClassicAssert.AreEqual (new string[] { }, imagetag.Keywords, "Keywords");
+			ClassicAssert.AreEqual (null, imagetag.Rating, "Rating");
+			ClassicAssert.AreEqual (TagLib.Image.ImageOrientation.TopLeft, imagetag.Orientation, "Orientation");
+			ClassicAssert.AreEqual (null, imagetag.Software, "Software");
+			ClassicAssert.AreEqual (null, imagetag.Latitude, "Latitude");
+			ClassicAssert.AreEqual (null, imagetag.Longitude, "Longitude");
+			ClassicAssert.AreEqual (null, imagetag.Altitude, "Altitude");
+			ClassicAssert.AreEqual (0.004, imagetag.ExposureTime, "ExposureTime");
+			ClassicAssert.AreEqual (11, imagetag.FNumber, "FNumber");
+			ClassicAssert.AreEqual (100, imagetag.ISOSpeedRatings, "ISOSpeedRatings");
+			ClassicAssert.AreEqual (7, imagetag.FocalLength, "FocalLength");
+			ClassicAssert.AreEqual (null, imagetag.FocalLengthIn35mmFilm, "FocalLengthIn35mmFilm");
+			ClassicAssert.AreEqual ("LEICA", imagetag.Make, "Make");
+			ClassicAssert.AreEqual ("DIGILUX 2", imagetag.Model, "Model");
+			ClassicAssert.AreEqual (null, imagetag.Creator, "Creator");
 
 			var properties = file.Properties;
-			Assert.IsNotNull (properties);
-			Assert.AreEqual (2564, properties.PhotoWidth, "PhotoWidth");
-			Assert.AreEqual (1924, properties.PhotoHeight, "PhotoHeight");
+			ClassicAssert.IsNotNull (properties);
+			ClassicAssert.AreEqual (2564, properties.PhotoWidth, "PhotoWidth");
+			ClassicAssert.AreEqual (1924, properties.PhotoHeight, "PhotoHeight");
 
 			//  ---------- End of ImageTag tests ----------
 

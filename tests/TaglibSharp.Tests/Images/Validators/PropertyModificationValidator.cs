@@ -24,7 +24,7 @@ namespace TaglibSharp.Tests.Images.Validators
 
 		public virtual void ValidatePreModification (TagLib.Image.File file)
 		{
-			Assert.AreEqual (orig_value, GetValue (GetTag (file)));
+			ClassicAssert.AreEqual (orig_value, GetValue (GetTag (file)));
 		}
 
 		public virtual void ModifyMetadata (TagLib.Image.File file)
@@ -34,7 +34,7 @@ namespace TaglibSharp.Tests.Images.Validators
 
 		public void ValidatePostModification (TagLib.Image.File file)
 		{
-			Assert.AreEqual (test_value, GetValue (GetTag (file)));
+			ClassicAssert.AreEqual (test_value, GetValue (GetTag (file)));
 		}
 
 		public virtual TagLib.Image.ImageTag GetTag (TagLib.Image.File file)
@@ -44,14 +44,14 @@ namespace TaglibSharp.Tests.Images.Validators
 
 		public void SetValue (TagLib.Image.ImageTag tag, T value)
 		{
-			Assert.IsNotNull (tag);
+			ClassicAssert.IsNotNull (tag);
 
 			property_info.SetValue (tag, value, null);
 		}
 
 		public T GetValue (TagLib.Image.ImageTag tag)
 		{
-			Assert.IsNotNull (tag);
+			ClassicAssert.IsNotNull (tag);
 
 			return (T)property_info.GetValue (tag, null);
 		}

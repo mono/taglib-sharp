@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using TagLib;
 
+using File = TagLib.File;
+
 namespace TaglibSharp.Tests.FileFormats
 {
 	[TestFixture]
@@ -25,14 +27,14 @@ namespace TaglibSharp.Tests.FileFormats
 		[Test]
 		public void ReadTags ()
 		{
-			Assert.AreEqual ("Avi album", file.Tag.Album);
-			Assert.AreEqual ("Dan Drake", file.Tag.FirstAlbumArtist);
-			Assert.AreEqual ("AVI artist", file.Tag.FirstPerformer);
-			Assert.AreEqual ("AVI comment", file.Tag.Comment);
-			Assert.AreEqual ("Brit Pop", file.Tag.FirstGenre);
-			Assert.AreEqual ("AVI title", file.Tag.Title);
-			Assert.AreEqual (5, file.Tag.Track);
-			Assert.AreEqual (2005, file.Tag.Year);
+			ClassicAssert.AreEqual ("Avi album", file.Tag.Album);
+			ClassicAssert.AreEqual ("Dan Drake", file.Tag.FirstAlbumArtist);
+			ClassicAssert.AreEqual ("AVI artist", file.Tag.FirstPerformer);
+			ClassicAssert.AreEqual ("AVI comment", file.Tag.Comment);
+			ClassicAssert.AreEqual ("Brit Pop", file.Tag.FirstGenre);
+			ClassicAssert.AreEqual ("AVI title", file.Tag.Title);
+			ClassicAssert.AreEqual (5, file.Tag.Track);
+			ClassicAssert.AreEqual (2005, file.Tag.Year);
 		}
 
 		[Test]

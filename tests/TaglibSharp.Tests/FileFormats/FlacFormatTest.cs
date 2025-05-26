@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using TagLib;
 
+using File = TagLib.File;
+
 namespace TaglibSharp.Tests.FileFormats
 {
 	[TestFixture]
@@ -25,14 +27,14 @@ namespace TaglibSharp.Tests.FileFormats
 		[Test]
 		public void ReadTags ()
 		{
-			Assert.AreEqual ("FLAC album", file.Tag.Album);
-			Assert.AreEqual ("FLAC artist", file.Tag.FirstPerformer);
-			Assert.AreEqual ("FLAC comment", file.Tag.Description);
-			Assert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
-			Assert.AreEqual ("FLAC title", file.Tag.Title);
-			Assert.AreEqual (6, file.Tag.Track);
-			Assert.AreEqual (7, file.Tag.TrackCount);
-			Assert.AreEqual (1234, file.Tag.Year);
+			ClassicAssert.AreEqual ("FLAC album", file.Tag.Album);
+			ClassicAssert.AreEqual ("FLAC artist", file.Tag.FirstPerformer);
+			ClassicAssert.AreEqual ("FLAC comment", file.Tag.Description);
+			ClassicAssert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
+			ClassicAssert.AreEqual ("FLAC title", file.Tag.Title);
+			ClassicAssert.AreEqual (6, file.Tag.Track);
+			ClassicAssert.AreEqual (7, file.Tag.TrackCount);
+			ClassicAssert.AreEqual (1234, file.Tag.Year);
 		}
 
 		[Test]
@@ -61,7 +63,7 @@ namespace TaglibSharp.Tests.FileFormats
 			try {
 				file.GetTag (TagTypes.Id3v2);
 			} catch (System.NullReferenceException) {
-				Assert.Fail ("Should not throw System.NullReferenceException calling file.GetTag method: http://bugzilla.gnome.org/show_bug.cgi?id=572380");
+				ClassicAssert.Fail ("Should not throw System.NullReferenceException calling file.GetTag method: http://bugzilla.gnome.org/show_bug.cgi?id=572380");
 			}
 		}
 
@@ -78,10 +80,10 @@ namespace TaglibSharp.Tests.FileFormats
 			string tempFile = TestPath.Samples + "tmpwrite_sample_replaygain.flac";
 
 			var rgFile = File.Create (inFile);
-			Assert.AreEqual (1.8d, rgFile.Tag.ReplayGainTrackGain);
-			Assert.AreEqual (0.462341d, rgFile.Tag.ReplayGainTrackPeak);
-			Assert.AreEqual (2.8d, rgFile.Tag.ReplayGainAlbumGain);
-			Assert.AreEqual (0.562341d, rgFile.Tag.ReplayGainAlbumPeak);
+			ClassicAssert.AreEqual (1.8d, rgFile.Tag.ReplayGainTrackGain);
+			ClassicAssert.AreEqual (0.462341d, rgFile.Tag.ReplayGainTrackPeak);
+			ClassicAssert.AreEqual (2.8d, rgFile.Tag.ReplayGainAlbumGain);
+			ClassicAssert.AreEqual (0.562341d, rgFile.Tag.ReplayGainAlbumPeak);
 			rgFile.Dispose ();
 
 			System.IO.File.Copy (inFile, tempFile, true);
@@ -95,10 +97,10 @@ namespace TaglibSharp.Tests.FileFormats
 			rgFile.Dispose ();
 
 			rgFile = File.Create (tempFile);
-			Assert.AreEqual (-1d, rgFile.Tag.ReplayGainTrackGain);
-			Assert.AreEqual (1d, rgFile.Tag.ReplayGainTrackPeak);
-			Assert.AreEqual (2d, rgFile.Tag.ReplayGainAlbumGain);
-			Assert.AreEqual (0d, rgFile.Tag.ReplayGainAlbumPeak);
+			ClassicAssert.AreEqual (-1d, rgFile.Tag.ReplayGainTrackGain);
+			ClassicAssert.AreEqual (1d, rgFile.Tag.ReplayGainTrackPeak);
+			ClassicAssert.AreEqual (2d, rgFile.Tag.ReplayGainAlbumGain);
+			ClassicAssert.AreEqual (0d, rgFile.Tag.ReplayGainAlbumPeak);
 			rgFile.Tag.ReplayGainTrackGain = double.NaN;
 			rgFile.Tag.ReplayGainTrackPeak = double.NaN;
 			rgFile.Tag.ReplayGainAlbumGain = double.NaN;
@@ -107,10 +109,10 @@ namespace TaglibSharp.Tests.FileFormats
 			rgFile.Dispose ();
 
 			rgFile = File.Create (tempFile);
-			Assert.AreEqual (double.NaN, rgFile.Tag.ReplayGainTrackGain);
-			Assert.AreEqual (double.NaN, rgFile.Tag.ReplayGainTrackPeak);
-			Assert.AreEqual (double.NaN, rgFile.Tag.ReplayGainAlbumGain);
-			Assert.AreEqual (double.NaN, rgFile.Tag.ReplayGainAlbumPeak);
+			ClassicAssert.AreEqual (double.NaN, rgFile.Tag.ReplayGainTrackGain);
+			ClassicAssert.AreEqual (double.NaN, rgFile.Tag.ReplayGainTrackPeak);
+			ClassicAssert.AreEqual (double.NaN, rgFile.Tag.ReplayGainAlbumGain);
+			ClassicAssert.AreEqual (double.NaN, rgFile.Tag.ReplayGainAlbumPeak);
 			rgFile.Dispose ();
 
 			System.IO.File.Delete (tempFile);

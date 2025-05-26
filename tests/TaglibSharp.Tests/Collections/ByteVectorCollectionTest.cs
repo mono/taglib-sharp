@@ -19,7 +19,7 @@ namespace TaglibSharp.Tests.Collections
 		[Test]
 		public void Add ()
 		{
-			Assert.AreEqual ("ABC:DEF:GHI", BuildList ().ToByteVector (":").ToString ());
+			ClassicAssert.AreEqual ("ABC:DEF:GHI", BuildList ().ToByteVector (":").ToString ());
 		}
 
 		[Test]
@@ -27,7 +27,7 @@ namespace TaglibSharp.Tests.Collections
 		{
 			var list = BuildList ();
 			list.Remove ("DEF");
-			Assert.AreEqual ("ABCGHI", list.ToByteVector ("").ToString ());
+			ClassicAssert.AreEqual ("ABCGHI", list.ToByteVector ("").ToString ());
 		}
 
 		[Test]
@@ -35,16 +35,16 @@ namespace TaglibSharp.Tests.Collections
 		{
 			var list = BuildList ();
 			list.Insert (1, "QUACK");
-			Assert.AreEqual ("ABC,QUACK,DEF,GHI", list.ToByteVector (",").ToString ());
+			ClassicAssert.AreEqual ("ABC,QUACK,DEF,GHI", list.ToByteVector (",").ToString ());
 		}
 
 		[Test]
 		public void Contains ()
 		{
 			var list = BuildList ();
-			Assert.IsTrue (list.Contains ("DEF"));
-			Assert.IsFalse (list.Contains ("CDEFG"));
-			Assert.AreEqual (2, list.ToByteVector ("").Find ("CDEFG"));
+			ClassicAssert.IsTrue (list.Contains ("DEF"));
+			ClassicAssert.IsFalse (list.Contains ("CDEFG"));
+			ClassicAssert.AreEqual (2, list.ToByteVector ("").Find ("CDEFG"));
 		}
 
 		/*[Test]

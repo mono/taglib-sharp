@@ -1,6 +1,7 @@
 using NUnit.Framework;
-using System;
 using TagLib;
+
+using File = TagLib.File;
 
 namespace TaglibSharp.Tests.FileFormats
 {
@@ -36,10 +37,10 @@ namespace TaglibSharp.Tests.FileFormats
 
 		public static void CheckTags (Tag tag)
 		{
-			Assert.AreEqual (-10.28, tag.ReplayGainTrackGain);
-			Assert.AreEqual (0.999969, tag.ReplayGainTrackPeak);
-			Assert.AreEqual (-9.98, tag.ReplayGainAlbumGain);
-			Assert.AreEqual (0.999980, tag.ReplayGainAlbumPeak);
+			ClassicAssert.AreEqual (-10.28, tag.ReplayGainTrackGain);
+			ClassicAssert.AreEqual (0.999969, tag.ReplayGainTrackPeak);
+			ClassicAssert.AreEqual (-9.98, tag.ReplayGainAlbumGain);
+			ClassicAssert.AreEqual (0.999980, tag.ReplayGainAlbumPeak);
 		}
 
 		public static void TestCorruptionResistance (string path)

@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using TagLib;
 
+using File = TagLib.File;
+
 namespace TaglibSharp.Tests.FileFormats
 {
 	[TestFixture]
@@ -19,23 +21,23 @@ namespace TaglibSharp.Tests.FileFormats
 		[Test]
 		public void ReadAudioProperties ()
 		{
-			Assert.AreEqual (44100, file.Properties.AudioSampleRate);
-			Assert.AreEqual (1, file.Properties.Duration.Seconds);
+			ClassicAssert.AreEqual (44100, file.Properties.AudioSampleRate);
+			ClassicAssert.AreEqual (1, file.Properties.Duration.Seconds);
 		}
 
 		[Test]
 		public void ReadTags ()
 		{
-			Assert.AreEqual ("MP3 album", file.Tag.Album);
-			Assert.IsTrue (file.Tag.Comment.StartsWith ("MP3 comment"));
+			ClassicAssert.AreEqual ("MP3 album", file.Tag.Album);
+			ClassicAssert.IsTrue (file.Tag.Comment.StartsWith ("MP3 comment"));
 			CollectionAssert.AreEqual (file.Tag.Genres, new[] { "Acid Punk" });
 			CollectionAssert.AreEqual (file.Tag.Performers, new[] {
 				"MP3 artist unicode (\u1283\u12ed\u120c \u1308\u1265\u1228\u1225\u120b\u1234)" });
 			CollectionAssert.AreEqual (file.Tag.Composers, new[] { "MP3 composer" });
-			Assert.AreEqual ("MP3 title unicode (\u12a2\u1275\u12ee\u1335\u12eb)", file.Tag.Title);
-			Assert.AreEqual (6, file.Tag.Track);
-			Assert.AreEqual (7, file.Tag.TrackCount);
-			Assert.AreEqual (1234, file.Tag.Year);
+			ClassicAssert.AreEqual ("MP3 title unicode (\u12a2\u1275\u12ee\u1335\u12eb)", file.Tag.Title);
+			ClassicAssert.AreEqual (6, file.Tag.Track);
+			ClassicAssert.AreEqual (7, file.Tag.TrackCount);
+			ClassicAssert.AreEqual (1234, file.Tag.Year);
 		}
 
 		[Test]
@@ -67,10 +69,10 @@ namespace TaglibSharp.Tests.FileFormats
 			string tempFile = TestPath.Samples + "tmpwrite_sample_replaygain.mp3";
 
 			var rgFile = File.Create (inFile);
-			Assert.AreEqual (2.22d, rgFile.Tag.ReplayGainTrackGain);
-			Assert.AreEqual (0.418785d, rgFile.Tag.ReplayGainTrackPeak);
-			Assert.AreEqual (2.32d, rgFile.Tag.ReplayGainAlbumGain);
-			Assert.AreEqual (0.518785d, rgFile.Tag.ReplayGainAlbumPeak);
+			ClassicAssert.AreEqual (2.22d, rgFile.Tag.ReplayGainTrackGain);
+			ClassicAssert.AreEqual (0.418785d, rgFile.Tag.ReplayGainTrackPeak);
+			ClassicAssert.AreEqual (2.32d, rgFile.Tag.ReplayGainAlbumGain);
+			ClassicAssert.AreEqual (0.518785d, rgFile.Tag.ReplayGainAlbumPeak);
 			rgFile.Dispose ();
 
 			System.IO.File.Copy (inFile, tempFile, true);
@@ -84,10 +86,10 @@ namespace TaglibSharp.Tests.FileFormats
 			rgFile.Dispose ();
 
 			rgFile = File.Create (tempFile);
-			Assert.AreEqual (-1d, rgFile.Tag.ReplayGainTrackGain);
-			Assert.AreEqual (1d, rgFile.Tag.ReplayGainTrackPeak);
-			Assert.AreEqual (2d, rgFile.Tag.ReplayGainAlbumGain);
-			Assert.AreEqual (0d, rgFile.Tag.ReplayGainAlbumPeak);
+			ClassicAssert.AreEqual (-1d, rgFile.Tag.ReplayGainTrackGain);
+			ClassicAssert.AreEqual (1d, rgFile.Tag.ReplayGainTrackPeak);
+			ClassicAssert.AreEqual (2d, rgFile.Tag.ReplayGainAlbumGain);
+			ClassicAssert.AreEqual (0d, rgFile.Tag.ReplayGainAlbumPeak);
 			rgFile.Tag.ReplayGainTrackGain = double.NaN;
 			rgFile.Tag.ReplayGainTrackPeak = double.NaN;
 			rgFile.Tag.ReplayGainAlbumGain = double.NaN;
@@ -96,10 +98,10 @@ namespace TaglibSharp.Tests.FileFormats
 			rgFile.Dispose ();
 
 			rgFile = File.Create (tempFile);
-			Assert.AreEqual (double.NaN, rgFile.Tag.ReplayGainTrackGain);
-			Assert.AreEqual (double.NaN, rgFile.Tag.ReplayGainTrackPeak);
-			Assert.AreEqual (double.NaN, rgFile.Tag.ReplayGainAlbumGain);
-			Assert.AreEqual (double.NaN, rgFile.Tag.ReplayGainAlbumPeak);
+			ClassicAssert.AreEqual (double.NaN, rgFile.Tag.ReplayGainTrackGain);
+			ClassicAssert.AreEqual (double.NaN, rgFile.Tag.ReplayGainTrackPeak);
+			ClassicAssert.AreEqual (double.NaN, rgFile.Tag.ReplayGainAlbumGain);
+			ClassicAssert.AreEqual (double.NaN, rgFile.Tag.ReplayGainAlbumPeak);
 			rgFile.Dispose ();
 
 			System.IO.File.Delete (tempFile);
@@ -127,14 +129,14 @@ namespace TaglibSharp.Tests.FileFormats
 
 			urlLinkFile = File.Create (tempFile);
 			id3v2tag = urlLinkFile.GetTag (TagTypes.Id3v2) as TagLib.Id3v2.Tag;
-			Assert.AreEqual ("www.commercial.com", id3v2tag.GetTextAsString ("WCOM"));
-			Assert.AreEqual ("www.copyright.com", id3v2tag.GetTextAsString ("WCOP"));
-			Assert.AreEqual ("www.official-audio.com", id3v2tag.GetTextAsString ("WOAF"));
-			Assert.AreEqual ("www.official-artist.com", id3v2tag.GetTextAsString ("WOAR"));
-			Assert.AreEqual ("www.official-audio-source.com", id3v2tag.GetTextAsString ("WOAS"));
-			Assert.AreEqual ("www.official-internet-radio.com", id3v2tag.GetTextAsString ("WORS"));
-			Assert.AreEqual ("www.payment.com", id3v2tag.GetTextAsString ("WPAY"));
-			Assert.AreEqual ("www.official-publisher.com", id3v2tag.GetTextAsString ("WPUB"));
+			ClassicAssert.AreEqual ("www.commercial.com", id3v2tag.GetTextAsString ("WCOM"));
+			ClassicAssert.AreEqual ("www.copyright.com", id3v2tag.GetTextAsString ("WCOP"));
+			ClassicAssert.AreEqual ("www.official-audio.com", id3v2tag.GetTextAsString ("WOAF"));
+			ClassicAssert.AreEqual ("www.official-artist.com", id3v2tag.GetTextAsString ("WOAR"));
+			ClassicAssert.AreEqual ("www.official-audio-source.com", id3v2tag.GetTextAsString ("WOAS"));
+			ClassicAssert.AreEqual ("www.official-internet-radio.com", id3v2tag.GetTextAsString ("WORS"));
+			ClassicAssert.AreEqual ("www.payment.com", id3v2tag.GetTextAsString ("WPAY"));
+			ClassicAssert.AreEqual ("www.official-publisher.com", id3v2tag.GetTextAsString ("WPUB"));
 			urlLinkFile.Dispose ();
 
 			System.IO.File.Delete (tempFile);

@@ -2,6 +2,8 @@ using NUnit.Framework;
 using System;
 using TagLib;
 
+using File = TagLib.File;
+
 namespace TaglibSharp.Tests.FileFormats
 {
 	[TestFixture]
@@ -24,22 +26,22 @@ namespace TaglibSharp.Tests.FileFormats
 		[Test]
 		public void ReadAudioProperties ()
 		{
-			Assert.AreEqual (48000, file.Properties.AudioSampleRate);
-			Assert.AreEqual (1120, file.Properties.Duration.TotalMilliseconds);
+			ClassicAssert.AreEqual (48000, file.Properties.AudioSampleRate);
+			ClassicAssert.AreEqual (1120, file.Properties.Duration.TotalMilliseconds);
 		}
 
 
 		[Test]
 		public void ReadTags ()
 		{
-			Assert.AreEqual ("Lime", file.Tag.FirstPerformer);
-			Assert.AreEqual ("no comments", file.Tag.Comment);
-			Assert.AreEqual ("Test", file.Tag.FirstGenre);
-			Assert.AreEqual ("Turning Lime", file.Tag.Title);
-			Assert.AreEqual (2017, file.Tag.Year);
-			Assert.AreEqual ("Starwer", file.Tag.FirstComposer);
-			Assert.AreEqual ("Starwer", file.Tag.Conductor);
-			Assert.AreEqual ("Starwer 2017", file.Tag.Copyright);
+			ClassicAssert.AreEqual ("Lime", file.Tag.FirstPerformer);
+			ClassicAssert.AreEqual ("no comments", file.Tag.Comment);
+			ClassicAssert.AreEqual ("Test", file.Tag.FirstGenre);
+			ClassicAssert.AreEqual ("Turning Lime", file.Tag.Title);
+			ClassicAssert.AreEqual (2017, file.Tag.Year);
+			ClassicAssert.AreEqual ("Starwer", file.Tag.FirstComposer);
+			ClassicAssert.AreEqual ("Starwer", file.Tag.Conductor);
+			ClassicAssert.AreEqual ("Starwer 2017", file.Tag.Copyright);
 		}
 
 
@@ -48,25 +50,25 @@ namespace TaglibSharp.Tests.FileFormats
 		{
 			// Specific Matroska Tag test
 			var mkvTag = (TagLib.Matroska.Tag)file.GetTag (TagTypes.Matroska);
-			Assert.AreEqual ("This is a test Video showing a lime moving on a table", mkvTag.SimpleTags["SUMMARY"][0]);
+			ClassicAssert.AreEqual ("This is a test Video showing a lime moving on a table", mkvTag.SimpleTags["SUMMARY"][0]);
 
 			var tracks = mkvTag.Tags.Tracks;
-			Assert.AreEqual (MediaTypes.Video, tracks[0].MediaTypes);
-			Assert.AreEqual (MediaTypes.Audio, tracks[1].MediaTypes);
+			ClassicAssert.AreEqual (MediaTypes.Video, tracks[0].MediaTypes);
+			ClassicAssert.AreEqual (MediaTypes.Audio, tracks[1].MediaTypes);
 
 			var videotag = mkvTag.Tags.Get (tracks[0]);
-			Assert.IsNull (videotag);
+			ClassicAssert.IsNull (videotag);
 
 			var audiotag = mkvTag.Tags.Get (tracks[1]);
 
-			Assert.AreEqual ("The Noise", audiotag.Title);
-			Assert.AreEqual ("Useless background noise", audiotag.SimpleTags["DESCRIPTION"][0]);
-			Assert.AreEqual ("und", audiotag.SimpleTags["DESCRIPTION"][0].TagLanguage);
-			Assert.AreEqual (true, audiotag.SimpleTags["DESCRIPTION"][0].TagDefault);
+			ClassicAssert.AreEqual ("The Noise", audiotag.Title);
+			ClassicAssert.AreEqual ("Useless background noise", audiotag.SimpleTags["DESCRIPTION"][0]);
+			ClassicAssert.AreEqual ("und", audiotag.SimpleTags["DESCRIPTION"][0].TagLanguage);
+			ClassicAssert.AreEqual (true, audiotag.SimpleTags["DESCRIPTION"][0].TagDefault);
 
 			// Recursive read
-			Assert.AreEqual ("Starwer", audiotag.FirstComposer);
-			Assert.AreEqual ("Starwer 2017", audiotag.Copyright);
+			ClassicAssert.AreEqual ("Starwer", audiotag.FirstComposer);
+			ClassicAssert.AreEqual ("Starwer 2017", audiotag.Copyright);
 		}
 
 
@@ -74,10 +76,10 @@ namespace TaglibSharp.Tests.FileFormats
 		public void ReadPictures ()
 		{
 			var pics = file.Tag.Pictures;
-			Assert.AreEqual ("cover.png", pics[0].Description);
-			Assert.AreEqual (PictureType.FrontCover, pics[0].Type);
-			Assert.AreEqual ("image/png", pics[0].MimeType);
-			Assert.AreEqual (17307, pics[0].Data.Count);
+			ClassicAssert.AreEqual ("cover.png", pics[0].Description);
+			ClassicAssert.AreEqual (PictureType.FrontCover, pics[0].Type);
+			ClassicAssert.AreEqual ("image/png", pics[0].MimeType);
+			ClassicAssert.AreEqual (17307, pics[0].Data.Count);
 		}
 
 
@@ -93,10 +95,10 @@ namespace TaglibSharp.Tests.FileFormats
 				file = File.Create (tmp_file);
 			} finally { }
 
-			Assert.NotNull (file);
+			ClassicAssert.NotNull (file);
 
 			var pics = file.Tag.Pictures;
-			Assert.AreEqual (1, pics.Length);
+			ClassicAssert.AreEqual (1, pics.Length);
 
 			// Insert new picture
 			Array.Resize (ref pics, 4);
@@ -116,37 +118,37 @@ namespace TaglibSharp.Tests.FileFormats
 
 			file.Save ();
 
-			// Read back the Matroska-specific tags 
+			// Read back the Matroska-specific tags
 			file = File.Create (tmp_file);
-			Assert.NotNull (file);
+			ClassicAssert.NotNull (file);
 			pics = file.Tag.Pictures;
 
-			Assert.AreEqual (4, pics.Length);
+			ClassicAssert.AreEqual (4, pics.Length);
 
-			Assert.AreEqual ("cover.png", pics[0].Filename);
-			Assert.AreEqual ("TEST description 0", pics[0].Description);
-			Assert.AreEqual ("image/png", pics[0].MimeType);
-			Assert.AreEqual (PictureType.FrontCover, pics[0].Type);
-			Assert.AreEqual (17307, pics[0].Data.Count);
+			ClassicAssert.AreEqual ("cover.png", pics[0].Filename);
+			ClassicAssert.AreEqual ("TEST description 0", pics[0].Description);
+			ClassicAssert.AreEqual ("image/png", pics[0].MimeType);
+			ClassicAssert.AreEqual (PictureType.FrontCover, pics[0].Type);
+			ClassicAssert.AreEqual (17307, pics[0].Data.Count);
 
 			// Filename has been changed to keep the PictureType information
-			Assert.AreEqual (PictureType.BackCover, pics[1].Type);
-			Assert.AreEqual ("BackCover.gif", pics[1].Filename);
-			Assert.AreEqual ("TEST description 1", pics[1].Description);
-			Assert.AreEqual ("image/gif", pics[1].MimeType);
-			Assert.AreEqual (73, pics[1].Data.Count);
+			ClassicAssert.AreEqual (PictureType.BackCover, pics[1].Type);
+			ClassicAssert.AreEqual ("BackCover.gif", pics[1].Filename);
+			ClassicAssert.AreEqual ("TEST description 1", pics[1].Description);
+			ClassicAssert.AreEqual ("image/gif", pics[1].MimeType);
+			ClassicAssert.AreEqual (73, pics[1].Data.Count);
 
-			Assert.AreEqual ("apple_tags.m4a", pics[2].Filename);
-			Assert.AreEqual ("TEST description 2", pics[2].Description);
-			Assert.AreEqual ("audio/mp4", pics[2].MimeType);
-			Assert.AreEqual (PictureType.NotAPicture, pics[2].Type);
-			Assert.AreEqual (102400, pics[2].Data.Count);
+			ClassicAssert.AreEqual ("apple_tags.m4a", pics[2].Filename);
+			ClassicAssert.AreEqual ("TEST description 2", pics[2].Description);
+			ClassicAssert.AreEqual ("audio/mp4", pics[2].MimeType);
+			ClassicAssert.AreEqual (PictureType.NotAPicture, pics[2].Type);
+			ClassicAssert.AreEqual (102400, pics[2].Data.Count);
 
-			Assert.AreEqual (PictureType.Other, pics[3].Type);
-			Assert.AreEqual ("sample_gimp.gif", pics[3].Filename);
-			Assert.AreEqual ("TEST description 3", pics[3].Description);
-			Assert.AreEqual ("image/gif", pics[3].MimeType);
-			Assert.AreEqual (73, pics[3].Data.Count);
+			ClassicAssert.AreEqual (PictureType.Other, pics[3].Type);
+			ClassicAssert.AreEqual ("sample_gimp.gif", pics[3].Filename);
+			ClassicAssert.AreEqual ("TEST description 3", pics[3].Description);
+			ClassicAssert.AreEqual ("image/gif", pics[3].MimeType);
+			ClassicAssert.AreEqual (73, pics[3].Data.Count);
 		}
 
 
@@ -182,11 +184,11 @@ namespace TaglibSharp.Tests.FileFormats
 			File file;
 			System.IO.File.Copy (sample_file, tmp_file);
 			file = File.Create (tmp_file);
-			Assert.NotNull (file);
+			ClassicAssert.NotNull (file);
 
-			// Write Matroska-specific tags 
+			// Write Matroska-specific tags
 			var mtag = (TagLib.Matroska.Tag)file.GetTag (TagTypes.Matroska);
-			Assert.NotNull (mtag);
+			ClassicAssert.NotNull (mtag);
 
 			mtag.PerformersRole = new[] { "TEST role 1", "TEST role 2" };
 			mtag.Set ("CHOREGRAPHER", null, "TEST choregrapher");
@@ -220,48 +222,48 @@ namespace TaglibSharp.Tests.FileFormats
 
 			// Remove Audio tags
 			var audiotag = mtag.Tags.Get (tracks[1]);
-			Assert.NotNull (audiotag);
+			ClassicAssert.NotNull (audiotag);
 			audiotag.Clear ();
 
 			// Eventually save the changes
 			file.Save ();
 
-			// Read back the Matroska-specific tags 
+			// Read back the Matroska-specific tags
 			file = File.Create (tmp_file);
-			Assert.NotNull (mtag);
+			ClassicAssert.NotNull (mtag);
 
 			mtag = (TagLib.Matroska.Tag)file.GetTag (TagTypes.Matroska);
-			Assert.NotNull (mtag);
+			ClassicAssert.NotNull (mtag);
 
-			Assert.AreEqual ("TEST role 1; TEST role 2", string.Join ("; ", mtag.PerformersRole));
-			Assert.AreEqual ("TEST choregrapher", mtag.Get ("CHOREGRAPHER", null)[0]);
-			Assert.AreEqual ("TEST arranger", mtags.Album.Get ("ARRANGER", null)[0]);
-			Assert.AreEqual ("TEST Album title", mtag.Album);
+			ClassicAssert.AreEqual ("TEST role 1; TEST role 2", string.Join ("; ", mtag.PerformersRole));
+			ClassicAssert.AreEqual ("TEST choregrapher", mtag.Get ("CHOREGRAPHER", null)[0]);
+			ClassicAssert.AreEqual ("TEST arranger", mtags.Album.Get ("ARRANGER", null)[0]);
+			ClassicAssert.AreEqual ("TEST Album title", mtag.Album);
 
 			// Get tracks
 			tracks = mtag.Tags.Tracks;
-			Assert.NotNull (tracks);
+			ClassicAssert.NotNull (tracks);
 
 			// Test Video Track Tag
 			videotag = mtag.Tags.Get (tracks[0]);
-			Assert.NotNull (videotag);
-			Assert.AreEqual (TagLib.Matroska.TargetType.CHAPTER, videotag.TargetType);
-			Assert.AreEqual (30, videotag.TargetTypeValue);
-			Assert.AreEqual ("The Video test", videotag.Title);
-			Assert.AreEqual ("Video track Tag test", videotag.SimpleTags["DESCRIPTION"][0]);
-			Assert.AreEqual ("en", videotag.SimpleTags["DESCRIPTION"][0].TagLanguage);
-			Assert.AreEqual (false, videotag.SimpleTags["DESCRIPTION"][0].TagDefault);
+			ClassicAssert.NotNull (videotag);
+			ClassicAssert.AreEqual (TagLib.Matroska.TargetType.CHAPTER, videotag.TargetType);
+			ClassicAssert.AreEqual (30, videotag.TargetTypeValue);
+			ClassicAssert.AreEqual ("The Video test", videotag.Title);
+			ClassicAssert.AreEqual ("Video track Tag test", videotag.SimpleTags["DESCRIPTION"][0]);
+			ClassicAssert.AreEqual ("en", videotag.SimpleTags["DESCRIPTION"][0].TagLanguage);
+			ClassicAssert.AreEqual (false, videotag.SimpleTags["DESCRIPTION"][0].TagDefault);
 
 			// implicit or explicit conversion from TagLib.Matroska.SimpleTag to string is required to ensure a proper encoding
-			Assert.AreEqual ("Test de piste vidéo", videotag.SimpleTags["DESCRIPTION"][1].ToString ());
-			Assert.AreEqual ("fr", videotag.SimpleTags["DESCRIPTION"][1].TagLanguage);
-			Assert.AreEqual (true, videotag.SimpleTags["DESCRIPTION"][1].TagDefault);
+			ClassicAssert.AreEqual ("Test de piste vidéo", videotag.SimpleTags["DESCRIPTION"][1].ToString ());
+			ClassicAssert.AreEqual ("fr", videotag.SimpleTags["DESCRIPTION"][1].TagLanguage);
+			ClassicAssert.AreEqual (true, videotag.SimpleTags["DESCRIPTION"][1].TagDefault);
 
 			// Test Audio Track Tag
 			audiotag = mtag.Tags.Get (tracks[1]);
-			Assert.IsNull (audiotag);
+			ClassicAssert.IsNull (audiotag);
 
-			Assert.AreEqual ("TEST Album title", mtag.Album);
+			ClassicAssert.AreEqual ("TEST Album title", mtag.Album);
 		}
 
 		[Test]

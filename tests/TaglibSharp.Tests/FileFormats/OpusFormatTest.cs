@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using TagLib;
 
+using File = TagLib.File;
+
 namespace TaglibSharp.Tests.FileFormats
 {
 	[TestFixture]
@@ -25,14 +27,14 @@ namespace TaglibSharp.Tests.FileFormats
 		[Test]
 		public void ReadTags ()
 		{
-			Assert.AreEqual ("Opus album", file.Tag.Album);
-			Assert.AreEqual ("Opus artist", file.Tag.FirstPerformer);
-			Assert.AreEqual ("Opus comment", file.Tag.Description);
-			Assert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
-			Assert.AreEqual ("Opus title", file.Tag.Title);
-			Assert.AreEqual (6, file.Tag.Track);
-			Assert.AreEqual (7, file.Tag.TrackCount);
-			Assert.AreEqual (1234, file.Tag.Year);
+			ClassicAssert.AreEqual ("Opus album", file.Tag.Album);
+			ClassicAssert.AreEqual ("Opus artist", file.Tag.FirstPerformer);
+			ClassicAssert.AreEqual ("Opus comment", file.Tag.Description);
+			ClassicAssert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
+			ClassicAssert.AreEqual ("Opus title", file.Tag.Title);
+			ClassicAssert.AreEqual (6, file.Tag.Track);
+			ClassicAssert.AreEqual (7, file.Tag.TrackCount);
+			ClassicAssert.AreEqual (1234, file.Tag.Year);
 		}
 
 		[Test]
@@ -88,7 +90,7 @@ namespace TaglibSharp.Tests.FileFormats
 			var p2 = file.Find("OggS", p1 + 1);
 			var p3 = file.Find("OggS", p2 + 1);
 
-			Assert.AreEqual(p3, file.InvariantStartPosition);
+			ClassicAssert.AreEqual(p3, file.InvariantStartPosition);
 		}
 	}
 }

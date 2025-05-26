@@ -27,13 +27,13 @@ namespace TaglibSharp.Tests.FileFormats
 		[Test]
 		public void ReadTags ()
 		{
-			Assert.AreEqual ("AAC album", file.Tag.Album);
-			Assert.AreEqual ("AAC artist", file.Tag.FirstPerformer);
-			Assert.AreEqual ("AAC comment", file.Tag.Comment);
-			Assert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
-			Assert.AreEqual ("AAC title", file.Tag.Title);
-			Assert.AreEqual (6, file.Tag.Track);
-			Assert.AreEqual (1234, file.Tag.Year);
+			ClassicAssert.AreEqual ("AAC album", file.Tag.Album);
+			ClassicAssert.AreEqual ("AAC artist", file.Tag.FirstPerformer);
+			ClassicAssert.AreEqual ("AAC comment", file.Tag.Comment);
+			ClassicAssert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
+			ClassicAssert.AreEqual ("AAC title", file.Tag.Title);
+			ClassicAssert.AreEqual (6, file.Tag.Track);
+			ClassicAssert.AreEqual (1234, file.Tag.Year);
 		}
 
 		[Test]
@@ -68,7 +68,7 @@ namespace TaglibSharp.Tests.FileFormats
 
 			//  2   5    5      45
 			// (10)(101)(010 1)(0101101)
-			//  0xAA         0xAD       
+			//  0xAA         0xAD
 
 			//  63         745
 			// (111111)(10 11101001)
@@ -78,13 +78,13 @@ namespace TaglibSharp.Tests.FileFormats
 			// (11111111 11111111 11111111)
 			//  0xFF     0xFF     0xFF
 
-			Assert.AreEqual (2, stream.ReadInt32 (2));
-			Assert.AreEqual (5, stream.ReadInt32 (3));
-			Assert.AreEqual (5, stream.ReadInt32 (4));
-			Assert.AreEqual (45, stream.ReadInt32 (7));
-			Assert.AreEqual (63, stream.ReadInt32 (6));
-			Assert.AreEqual (745, stream.ReadInt32 (10));
-			Assert.AreEqual (16777215, stream.ReadInt32 (24));
+			ClassicAssert.AreEqual (2, stream.ReadInt32 (2));
+			ClassicAssert.AreEqual (5, stream.ReadInt32 (3));
+			ClassicAssert.AreEqual (5, stream.ReadInt32 (4));
+			ClassicAssert.AreEqual (45, stream.ReadInt32 (7));
+			ClassicAssert.AreEqual (63, stream.ReadInt32 (6));
+			ClassicAssert.AreEqual (745, stream.ReadInt32 (10));
+			ClassicAssert.AreEqual (16777215, stream.ReadInt32 (24));
 		}
 	}
 }

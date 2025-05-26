@@ -26,9 +26,9 @@ namespace TaglibSharp.Tests.Images.Validators
 		public override void ValidatePreModification (TagLib.Image.File file)
 		{
 			if (!tag_present) {
-				Assert.IsNull (file.GetTag (type, false));
+				ClassicAssert.IsNull (file.GetTag (type, false));
 			} else {
-				Assert.IsNotNull (file.GetTag (type, false));
+				ClassicAssert.IsNotNull (file.GetTag (type, false));
 				base.ValidatePreModification (file);
 			}
 		}
