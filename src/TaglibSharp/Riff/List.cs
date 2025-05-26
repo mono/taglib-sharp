@@ -116,29 +116,6 @@ namespace TagLib.Riff
 			Parse (file.ReadBlock (length));
 		}
 
-		/// <summary>
-		///    Constructs and initializes a new instance of <see
-		///    cref="List" /> from a specified serialization info and
-		///    streaming context.
-		/// </summary>
-		/// <param name="info">
-		///    A <see cref="SerializationInfo" /> object containing the
-		///    serialized data to be used for the new instance.
-		/// </param>
-		/// <param name="context">
-		///    A <see cref="StreamingContext" /> object containing the
-		///    streaming context information for the new instance.
-		/// </param>
-		/// <remarks>
-		///    This constructor is implemented because <see
-		///    cref="List" /> implements the <see cref="ISerializable"
-		///    /> interface.
-		/// </remarks>
-		protected List (SerializationInfo info, StreamingContext context)
-			: base (info, context)
-		{
-		}
-
 		#endregion
 
 		#region Public Properties
