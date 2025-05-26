@@ -1,6 +1,6 @@
-using System;
-
 using TagLib;
+
+using File = TagLib.File;
 
 namespace Examples
 {

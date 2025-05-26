@@ -1,25 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-    <TargetFrameworks>$(ExeTargetFrameworks)</TargetFrameworks>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFrameworks>$(ExeTargetFrameworks)</TargetFrameworks>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Remove="covers\**" />
-    <None Remove="covers\**" />
-    <None Remove="*.cpp" />
-    <None Remove="Makefile.am" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="SetPictures.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\TaglibSharp\TaglibSharp.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\TaglibSharp\TaglibSharp.csproj" />
+	</ItemGroup>
 
 </Project>
