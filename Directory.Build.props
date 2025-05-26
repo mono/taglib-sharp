@@ -1,14 +1,18 @@
 <Project>
 
-  <PropertyGroup>
-    <ReleaseVersion>2.4.0.0</ReleaseVersion>
-    <RepositoryUrl>https://github.com/mono/taglib-sharp</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
+	<PropertyGroup>
+		<ReleaseVersion>2.5.0.0</ReleaseVersion>
+		<RepositoryUrl>https://github.com/mono/taglib-sharp</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
 
-    <!-- Make sure to update Directory.Build.targets too! -->
-    <ExeTargetFrameworks>net6.0;net472</ExeTargetFrameworks>
-    <LibTargetFrameworks>net6.0;netstandard2.0</LibTargetFrameworks>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
+		<!-- Make sure to update Directory.Build.targets too! -->
+		<ExeTargetFrameworks>net8.0;net9.0;net472</ExeTargetFrameworks>
+		<LibTargetFrameworks>net472;net8.0;net9.0;netstandard2.0</LibTargetFrameworks>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<ImplicitUsings>true</ImplicitUsings>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<LangVersion>latest</LangVersion>
+		<Deterministic>true</Deterministic>
+	</PropertyGroup>
 
 </Project>
