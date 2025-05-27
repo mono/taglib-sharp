@@ -20,18 +20,14 @@
 //  License along with this library; if not, write to the Free Software
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-using NUnit.Framework;
-using System;
-using TagLib;
-
 using File = TagLib.File;
 
 namespace TaglibSharp.Tests.Images
 {
-	[TestFixture ()]
+	[TestClass]
 	public class jpegSonyDscRX100M4
 	{
-		[Test ()]
+		[TestMethod]
 		public void Test ()
 		{
 			bool isSuccess = true;
@@ -44,7 +40,7 @@ namespace TaglibSharp.Tests.Images
 				// All excetions shall make this test fail
 				isSuccess = false;
 			}
-			ClassicAssert.True (isSuccess);
+			Assert.IsTrue (isSuccess);
 		}
 	}
 }

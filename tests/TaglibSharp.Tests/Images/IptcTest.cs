@@ -20,53 +20,52 @@
 //  License along with this library; if not, write to the Free Software
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-using NUnit.Framework;
-using TagLib;
 using TagLib.Xmp;
+
 using File = TagLib.File;
 
 namespace TaglibSharp.Tests.Images
 {
-	[TestFixture]
+	[TestClass]
 	public class IptcIimTest
 	{
-		[Test]
+		[TestMethod]
 		public void Iim_Keywords ()
 		{
 			var file = File.Create (TestPath.Samples + "sample_iptc1.jpg");
 			var tag = file.GetTag (TagTypes.XMP) as XmpTag;
 
-			ClassicAssert.IsNotNull (tag, "tag");
+			Assert.IsNotNull (tag, "tag");
 
 			CollectionAssert.AreEqual (new[] { "kw1", "kw2", "kw3 " }, tag.Keywords);
 		}
 
-		[Test]
+		[TestMethod]
 		public void Iim_AllInfo ()
 		{
 			var file = File.Create (TestPath.Samples + "sample_iptc2.jpg");
 			var tag = file.GetTag (TagTypes.XMP) as XmpTag;
 
-			ClassicAssert.IsNotNull (tag, "tag");
+			Assert.IsNotNull (tag, "tag");
 
 			CollectionAssert.AreEqual (new[] { "kw" }, tag.Keywords);
-			ClassicAssert.AreEqual ("Title", tag.Title);
-			ClassicAssert.AreEqual ("Creator", tag.Creator);
-			ClassicAssert.AreEqual ("Copyright", tag.Copyright);
+			Assert.AreEqual ("Title", tag.Title);
+			Assert.AreEqual ("Creator", tag.Creator);
+			Assert.AreEqual ("Copyright", tag.Copyright);
 		}
 
-		[Test]
+		[TestMethod]
 		public void IimAndXmp ()
 		{
 			var file = File.Create (TestPath.Samples + "sample_iptc3.jpg");
 			var tag = file.GetTag (TagTypes.XMP) as XmpTag;
 
-			ClassicAssert.IsNotNull (tag, "tag");
+			Assert.IsNotNull (tag, "tag");
 
 			CollectionAssert.AreEqual (new[] { "XmpKw" }, tag.Keywords);
-			ClassicAssert.AreEqual ("XmpTitle", tag.Title);
-			ClassicAssert.AreEqual ("XmpCreator", tag.Creator);
-			ClassicAssert.AreEqual ("XmpCopyright", tag.Copyright);
+			Assert.AreEqual ("XmpTitle", tag.Title);
+			Assert.AreEqual ("XmpCreator", tag.Creator);
+			Assert.AreEqual ("XmpCopyright", tag.Copyright);
 		}
 	}
 }

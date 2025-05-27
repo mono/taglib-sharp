@@ -1,16 +1,14 @@
-using NUnit.Framework;
-using TagLib;
 using TaglibSharp.Tests.Images.Validators;
 
 namespace TaglibSharp.Tests.Images
 {
-	[TestFixture]
+	[TestClass]
 	public class GifExiftoolLongCommentTest
 	{
 		static readonly string long_comment_orig = "This is a very long comment, because long comments must be stored in mutiple sub-blocks. This comment is used to check that long comments are parsed correctly and that they are written back correctly. So what else to say? taglib rocks - 1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz 1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz 1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz 1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz";
 		static readonly string long_comment_test = "ABCD " + long_comment_orig + " CDEF " + long_comment_orig;
 
-		[Test]
+		[TestMethod]
 		public void Test ()
 		{
 			// This file is originally created with GIMP and the metadata was modified
@@ -36,11 +34,11 @@ namespace TaglibSharp.Tests.Images
 	{
 		public void ValidateMetadataInvariants (TagLib.Image.File file)
 		{
-			ClassicAssert.IsNotNull (file);
-			ClassicAssert.IsNotNull (file.Properties);
+			Assert.IsNotNull (file);
+			Assert.IsNotNull (file.Properties);
 
-			ClassicAssert.AreEqual (12, file.Properties.PhotoWidth);
-			ClassicAssert.AreEqual (37, file.Properties.PhotoHeight);
+			Assert.AreEqual (12, file.Properties.PhotoWidth);
+			Assert.AreEqual (37, file.Properties.PhotoHeight);
 		}
 	}
 }

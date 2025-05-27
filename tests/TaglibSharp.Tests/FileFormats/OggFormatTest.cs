@@ -1,73 +1,69 @@
-using NUnit.Framework;
-using TagLib;
-
 using File = TagLib.File;
 
-namespace TaglibSharp.Tests.FileFormats
+namespace TaglibSharp.Tests.FileFormats;
+
+[TestClass]
+public class OggFormatTest : IFormatTest
 {
-	[TestFixture]
-	public class OggFormatTest : IFormatTest
+	static readonly string sample_file = TestPath.Samples + "sample.ogg";
+	static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite.ogg";
+	static File file;
+
+	[ClassInitialize]
+	public static void Init (TestContext testContext)
 	{
-		static readonly string sample_file = TestPath.Samples + "sample.ogg";
-		static readonly string tmp_file = TestPath.Samples + "tmpwrite.ogg";
-		File file;
+		file = File.Create (sample_file);
+	}
 
-		[OneTimeSetUp]
-		public void Init ()
-		{
-			file = File.Create (sample_file);
-		}
+	[TestMethod]
+	public void ReadAudioProperties ()
+	{
+		StandardTests.ReadAudioProperties (file);
+	}
 
-		[Test]
-		public void ReadAudioProperties ()
-		{
-			StandardTests.ReadAudioProperties (file);
-		}
+	[TestMethod]
+	public void ReadTags ()
+	{
+		Assert.AreEqual ("OGG album", file.Tag.Album);
+		Assert.AreEqual ("OGG artist", file.Tag.FirstPerformer);
+		Assert.AreEqual ("OGG comment", file.Tag.Comment);
+		Assert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
+		Assert.AreEqual ("OGG title", file.Tag.Title);
+		Assert.AreEqual (6u, file.Tag.Track);
+		Assert.AreEqual (7u, file.Tag.TrackCount);
+		Assert.AreEqual (1234u, file.Tag.Year);
+	}
 
-		[Test]
-		public void ReadTags ()
-		{
-			ClassicAssert.AreEqual ("OGG album", file.Tag.Album);
-			ClassicAssert.AreEqual ("OGG artist", file.Tag.FirstPerformer);
-			ClassicAssert.AreEqual ("OGG comment", file.Tag.Comment);
-			ClassicAssert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
-			ClassicAssert.AreEqual ("OGG title", file.Tag.Title);
-			ClassicAssert.AreEqual (6, file.Tag.Track);
-			ClassicAssert.AreEqual (7, file.Tag.TrackCount);
-			ClassicAssert.AreEqual (1234, file.Tag.Year);
-		}
+	[TestMethod]
+	public void WriteStandardTags ()
+	{
+		StandardTests.WriteStandardTags (sample_file, tmp_file, StandardTests.TestTagLevel.Medium);
+	}
 
-		[Test]
-		public void WriteStandardTags ()
-		{
-			StandardTests.WriteStandardTags (sample_file, tmp_file, StandardTests.TestTagLevel.Medium);
-		}
+	[TestMethod]
+	public void WriteExtendedTags ()
+	{
+		ExtendedTests.WriteExtendedTags (sample_file, tmp_file);
+	}
 
-		[Test]
-		public void WriteExtendedTags ()
-		{
-			ExtendedTests.WriteExtendedTags (sample_file, tmp_file);
-		}
+	[TestMethod]
+	public void WriteStandardPictures ()
+	{
+		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None);
+	}
 
-		[Test]
-		public void WriteStandardPictures ()
-		{
-			StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None);
-		}
-
-		[Test]
-		[Ignore ("PictureLazy not supported yet")]
-		public void WriteStandardPicturesLazy ()
-		{
-			StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
-		}
+	[TestMethod]
+	[Ignore ("PictureLazy not supported yet")]
+	public void WriteStandardPicturesLazy ()
+	{
+		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
+	}
 
 
-		[Test]
-		public void TestCorruptionResistance ()
-		{
-			StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/a.ogg");
-			StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/missing_flag.ogg");
-		}
+	[TestMethod]
+	public void TestCorruptionResistance ()
+	{
+		StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/a.ogg");
+		StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/missing_flag.ogg");
 	}
 }

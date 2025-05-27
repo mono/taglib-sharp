@@ -1,66 +1,65 @@
-using NUnit.Framework;
-using TagLib;
 using TagLib.Aac;
+
 using File = TagLib.File;
 
 namespace TaglibSharp.Tests.FileFormats
 {
-	[TestFixture]
+	[TestClass]
 	public class AacFormatTest : IFormatTest
 	{
 		static readonly string sample_file = TestPath.Samples + "sample.aac";
-		static readonly string tmp_file = TestPath.Samples + "tmpwrite.aac";
-		File file;
+		static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite.aac";
+		static File file;
 
-		[OneTimeSetUp]
-		public void Init ()
+		[ClassInitialize]
+		public static void Init (TestContext testContext)
 		{
 			file = File.Create (sample_file);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ReadAudioProperties ()
 		{
 			StandardTests.ReadAudioProperties (file);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ReadTags ()
 		{
-			ClassicAssert.AreEqual ("AAC album", file.Tag.Album);
-			ClassicAssert.AreEqual ("AAC artist", file.Tag.FirstPerformer);
-			ClassicAssert.AreEqual ("AAC comment", file.Tag.Comment);
-			ClassicAssert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
-			ClassicAssert.AreEqual ("AAC title", file.Tag.Title);
-			ClassicAssert.AreEqual (6, file.Tag.Track);
-			ClassicAssert.AreEqual (1234, file.Tag.Year);
+			Assert.AreEqual ("AAC album", file.Tag.Album);
+			Assert.AreEqual ("AAC artist", file.Tag.FirstPerformer);
+			Assert.AreEqual ("AAC comment", file.Tag.Comment);
+			Assert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
+			Assert.AreEqual ("AAC title", file.Tag.Title);
+			Assert.AreEqual (6u, file.Tag.Track);
+			Assert.AreEqual (1234u, file.Tag.Year);
 		}
 
-		[Test]
+		[TestMethod]
 		public void WriteStandardTags ()
 		{
 			StandardTests.WriteStandardTags (sample_file, tmp_file);
 		}
 
-		[Test]
+		[TestMethod]
 		public void WriteStandardPictures ()
 		{
 			StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None);
 		}
 
-		[Test]
+		[TestMethod]
 		public void WriteStandardPicturesLazy ()
 		{
 			StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
 		}
 
-		[Test]
+		[TestMethod]
 		public void TestCorruptionResistance ()
 		{
 			StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/a.aac");
 		}
 
-		[Test]
+		[TestMethod]
 		public void TestBitStream ()
 		{
 			byte[] data = { 0xAA, 0xAD, 0xFE, 0xE9, 0xFF, 0xFF, 0xFF };
@@ -78,13 +77,13 @@ namespace TaglibSharp.Tests.FileFormats
 			// (11111111 11111111 11111111)
 			//  0xFF     0xFF     0xFF
 
-			ClassicAssert.AreEqual (2, stream.ReadInt32 (2));
-			ClassicAssert.AreEqual (5, stream.ReadInt32 (3));
-			ClassicAssert.AreEqual (5, stream.ReadInt32 (4));
-			ClassicAssert.AreEqual (45, stream.ReadInt32 (7));
-			ClassicAssert.AreEqual (63, stream.ReadInt32 (6));
-			ClassicAssert.AreEqual (745, stream.ReadInt32 (10));
-			ClassicAssert.AreEqual (16777215, stream.ReadInt32 (24));
+			Assert.AreEqual (2, stream.ReadInt32 (2));
+			Assert.AreEqual (5, stream.ReadInt32 (3));
+			Assert.AreEqual (5, stream.ReadInt32 (4));
+			Assert.AreEqual (45, stream.ReadInt32 (7));
+			Assert.AreEqual (63, stream.ReadInt32 (6));
+			Assert.AreEqual (745, stream.ReadInt32 (10));
+			Assert.AreEqual (16777215, stream.ReadInt32 (24));
 		}
 	}
 }

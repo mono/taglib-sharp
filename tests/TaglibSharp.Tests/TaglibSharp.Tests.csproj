@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>$(ExeTargetFrameworks)</TargetFrameworks>
@@ -10,17 +10,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.NET.Test.Sdk" />
-		<PackageReference Include="NUnit" />
-		<PackageReference Include="NUnit3TestAdapter" />
-		<!-- This generates a TON of warnings (13k+ warnings) -->
-		<!--<PackageReference Include="NUnit.Analyzers" />-->
-		<PackageReference Include="coverlet.collector" />
+		<PackageReference Include="MSTest" />
 		<PackageReference Include="SixLabors.ImageSharp" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Using Include="NUnit.Framework.Legacy" />
+		<Using Include="TagLib" />
+		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
 	</ItemGroup>
 
 </Project>

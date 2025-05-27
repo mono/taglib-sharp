@@ -1,9 +1,6 @@
-using NUnit.Framework;
-using TagLib;
-
 namespace TaglibSharp.Tests.Collections
 {
-	[TestFixture]
+	[TestClass]
 	public class ByteVectorCollectionTest
 	{
 		static ByteVectorCollection BuildList ()
@@ -16,38 +13,38 @@ namespace TaglibSharp.Tests.Collections
 			return list;
 		}
 
-		[Test]
+		[TestMethod]
 		public void Add ()
 		{
-			ClassicAssert.AreEqual ("ABC:DEF:GHI", BuildList ().ToByteVector (":").ToString ());
+			Assert.AreEqual ("ABC:DEF:GHI", BuildList ().ToByteVector (":").ToString ());
 		}
 
-		[Test]
+		[TestMethod]
 		public void Remove ()
 		{
 			var list = BuildList ();
 			list.Remove ("DEF");
-			ClassicAssert.AreEqual ("ABCGHI", list.ToByteVector ("").ToString ());
+			Assert.AreEqual ("ABCGHI", list.ToByteVector ("").ToString ());
 		}
 
-		[Test]
+		[TestMethod]
 		public void Insert ()
 		{
 			var list = BuildList ();
 			list.Insert (1, "QUACK");
-			ClassicAssert.AreEqual ("ABC,QUACK,DEF,GHI", list.ToByteVector (",").ToString ());
+			Assert.AreEqual ("ABC,QUACK,DEF,GHI", list.ToByteVector (",").ToString ());
 		}
 
-		[Test]
+		[TestMethod]
 		public void Contains ()
 		{
 			var list = BuildList ();
-			ClassicAssert.IsTrue (list.Contains ("DEF"));
-			ClassicAssert.IsFalse (list.Contains ("CDEFG"));
-			ClassicAssert.AreEqual (2, list.ToByteVector ("").Find ("CDEFG"));
+			Assert.IsTrue (list.Contains ("DEF"));
+			Assert.IsFalse (list.Contains ("CDEFG"));
+			Assert.AreEqual (2, list.ToByteVector ("").Find ("CDEFG"));
 		}
 
-		/*[Test]
+		/*[TestMethod]
 		public void SortedInsert()
 		{
 			ByteVectorCollection list = BuildList();

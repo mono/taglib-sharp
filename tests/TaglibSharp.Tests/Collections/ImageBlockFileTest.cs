@@ -1,10 +1,8 @@
-using NUnit.Framework;
-using TagLib;
 using TagLib.Image;
 
 namespace TaglibSharp.Tests.Collections
 {
-	[TestFixture]
+	[TestClass]
 	public class ImageBlockFileTest
 	{
 		static readonly string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -20,7 +18,7 @@ namespace TaglibSharp.Tests.Collections
 			return new TestBlockFile (new MemoryFileAbstraction (data.Length, data));
 		}
 
-		[Test]
+		[TestMethod]
 		public void Test1 ()
 		{
 			var file = CreateFile (26);
@@ -32,10 +30,10 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("", 0);
 
 			file.Seek (0);
-			ClassicAssert.AreEqual ("AEIMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
+			Assert.AreEqual ("AEIMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
 		}
 
-		[Test]
+		[TestMethod]
 		public void Test2 ()
 		{
 			var file = CreateFile (26);
@@ -47,10 +45,10 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("", 0);
 
 			file.Seek (0);
-			ClassicAssert.AreEqual ("AEIMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
+			Assert.AreEqual ("AEIMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
 		}
 
-		[Test]
+		[TestMethod]
 		public void Test3 ()
 		{
 			var file = CreateFile (26);
@@ -62,12 +60,12 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("12345", 0);
 
 			file.Seek (0);
-			ClassicAssert.AreEqual ("12345ABCDEFGHIJKLMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
+			Assert.AreEqual ("12345ABCDEFGHIJKLMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
 
 			file.SaveMetadata ("9", 2);
 
 			file.Seek (0);
-			ClassicAssert.AreEqual ("9ABCDEFGHIJKLMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
+			Assert.AreEqual ("9ABCDEFGHIJKLMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
 
 			file.AddMetadataBlock (8, 3);
 			file.AddMetadataBlock (1, 6);
@@ -75,11 +73,11 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("abcdefghijklmnop", 7);
 
 			file.Seek (0);
-			ClassicAssert.AreEqual ("abcdefghijklmnopGKLMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
+			Assert.AreEqual ("abcdefghijklmnopGKLMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
 
 		}
 
-		[Test]
+		[TestMethod]
 		public void Test4 ()
 		{
 			var file = CreateFile (26);
@@ -93,10 +91,10 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("12", 26);
 
 			file.Seek (0);
-			ClassicAssert.AreEqual ("AIMNOPQRSTUVWXYZ12", file.ReadBlock ((int)file.Length).ToString ());
+			Assert.AreEqual ("AIMNOPQRSTUVWXYZ12", file.ReadBlock ((int)file.Length).ToString ());
 		}
 
-		[Test]
+		[TestMethod]
 		public void Test5 ()
 		{
 			var file = CreateFile (26);
@@ -111,15 +109,15 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("9999999999999999999", 4);
 
 			file.Seek (0);
-			ClassicAssert.AreEqual ("A9999999999999999999IMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
+			Assert.AreEqual ("A9999999999999999999IMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
 
 			file.SaveMetadata ("0", 0);
 
 			file.Seek (0);
-			ClassicAssert.AreEqual ("0AIMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
+			Assert.AreEqual ("0AIMNOPQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
 		}
 
-		[Test]
+		[TestMethod]
 		public void Test6 ()
 		{
 			var file = CreateFile (26);
@@ -134,15 +132,15 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("", 0);
 
 			file.Seek (0);
-			ClassicAssert.AreEqual ("AIMNOPQRST", file.ReadBlock ((int)file.Length).ToString ());
+			Assert.AreEqual ("AIMNOPQRST", file.ReadBlock ((int)file.Length).ToString ());
 
 			file.SaveMetadata ("4564536", 5);
 
 			file.Seek (0);
-			ClassicAssert.AreEqual ("AIMNO4564536PQRST", file.ReadBlock ((int)file.Length).ToString ());
+			Assert.AreEqual ("AIMNO4564536PQRST", file.ReadBlock ((int)file.Length).ToString ());
 		}
 
-		[Test]
+		[TestMethod]
 		public void Test7 ()
 		{
 			var file = CreateFile (26);
@@ -159,10 +157,10 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("", 0);
 
 			file.Seek (0);
-			ClassicAssert.AreEqual ("", file.ReadBlock ((int)file.Length).ToString ());
+			Assert.AreEqual ("", file.ReadBlock ((int)file.Length).ToString ());
 		}
 
-		[Test]
+		[TestMethod]
 		public void Test8 ()
 		{
 			var file = CreateFile (26);
@@ -177,7 +175,7 @@ namespace TaglibSharp.Tests.Collections
 			file.SaveMetadata ("9999999999999999999", 15);
 
 			file.Seek (0);
-			ClassicAssert.AreEqual ("AIMNO9999999999999999999PQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
+			Assert.AreEqual ("AIMNO9999999999999999999PQRSTUVWXYZ", file.ReadBlock ((int)file.Length).ToString ());
 		}
 
 	}

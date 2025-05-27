@@ -1,13 +1,11 @@
-using NUnit.Framework;
-using TagLib;
 using TaglibSharp.Tests.Images.Validators;
 
 namespace TaglibSharp.Tests.Images
 {
-	[TestFixture]
+	[TestClass]
 	public class PngGimpPngcrushTest
 	{
-		[Test]
+		[TestMethod]
 		public void Test ()
 		{
 			// This file is originally created with GIMP and was modified with png crush:
@@ -35,11 +33,11 @@ namespace TaglibSharp.Tests.Images
 	{
 		public void ValidateMetadataInvariants (TagLib.Image.File file)
 		{
-			ClassicAssert.IsNotNull (file);
-			ClassicAssert.IsNotNull (file.Properties);
+			Assert.IsNotNull (file);
+			Assert.IsNotNull (file.Properties);
 
-			ClassicAssert.AreEqual (37, file.Properties.PhotoWidth);
-			ClassicAssert.AreEqual (71, file.Properties.PhotoHeight);
+			Assert.AreEqual (37, file.Properties.PhotoWidth);
+			Assert.AreEqual (71, file.Properties.PhotoHeight);
 		}
 	}
 }

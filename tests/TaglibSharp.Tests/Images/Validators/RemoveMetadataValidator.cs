@@ -1,6 +1,3 @@
-using NUnit.Framework;
-using TagLib;
-
 namespace TaglibSharp.Tests.Images.Validators
 {
 	/// <summary>
@@ -21,7 +18,7 @@ namespace TaglibSharp.Tests.Images.Validators
 
 		public void ValidatePreModification (TagLib.Image.File file)
 		{
-			ClassicAssert.AreEqual (contained_types, file.TagTypes);
+			Assert.AreEqual (contained_types, file.TagTypes);
 		}
 
 		public void ModifyMetadata (TagLib.Image.File file)
@@ -31,7 +28,7 @@ namespace TaglibSharp.Tests.Images.Validators
 
 		public void ValidatePostModification (TagLib.Image.File file)
 		{
-			ClassicAssert.AreEqual (contained_types & (~remove_types), file.TagTypes);
+			Assert.AreEqual (contained_types & (~remove_types), file.TagTypes);
 		}
 	}
 }

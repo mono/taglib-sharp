@@ -1,5 +1,3 @@
-using TagLib;
-
 namespace TaglibSharp.Tests.Images.Validators
 {
 	/// <summary>

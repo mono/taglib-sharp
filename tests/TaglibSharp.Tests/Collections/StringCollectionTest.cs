@@ -1,9 +1,6 @@
-using NUnit.Framework;
-using TagLib;
-
 namespace TaglibSharp.Tests.Collections
 {
-	[TestFixture]
+	[TestClass]
 	public class StringCollectionTest
 	{
 		static StringCollection BuildList ()
@@ -16,34 +13,34 @@ namespace TaglibSharp.Tests.Collections
 			return list;
 		}
 
-		[Test]
+		[TestMethod]
 		public void Add ()
 		{
-			ClassicAssert.AreEqual ("ABC:DEF:GHI", BuildList ().ToString (":"));
+			Assert.AreEqual ("ABC:DEF:GHI", BuildList ().ToString (":"));
 		}
 
-		[Test]
+		[TestMethod]
 		public void Remove ()
 		{
 			var list = BuildList ();
 			list.Remove ("DEF");
-			ClassicAssert.AreEqual ("ABCGHI", list.ToString (string.Empty));
+			Assert.AreEqual ("ABCGHI", list.ToString (string.Empty));
 		}
 
-		[Test]
+		[TestMethod]
 		public void Insert ()
 		{
 			var list = BuildList ();
 			list.Insert (1, "QUACK");
-			ClassicAssert.AreEqual ("ABC,QUACK,DEF,GHI", list.ToString (","));
+			Assert.AreEqual ("ABC,QUACK,DEF,GHI", list.ToString (","));
 		}
 
-		[Test]
+		[TestMethod]
 		public void Contains ()
 		{
 			var list = BuildList ();
-			ClassicAssert.IsTrue (list.Contains ("DEF"));
-			ClassicAssert.IsFalse (list.Contains ("CDEFG"));
+			Assert.IsTrue (list.Contains ("DEF"));
+			Assert.IsFalse (list.Contains ("CDEFG"));
 		}
 	}
 }

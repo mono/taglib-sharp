@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using TagLib.Xmp;
 
 namespace TaglibSharp.Tests.Images
@@ -6,10 +5,10 @@ namespace TaglibSharp.Tests.Images
 	/// <summary>
 	///    This validates some of the examples in the specification.
 	/// </summary>
-	[TestFixture]
+	[TestClass]
 	public class XmpSpecTest
 	{
-		[Test]
+		[TestMethod]
 		public void SimpleTypeTest ()
 		{
 			string metadata =
@@ -24,7 +23,7 @@ namespace TaglibSharp.Tests.Images
 			TestXmp (metadata, ValidateSimpleType);
 		}
 
-		[Test]
+		[TestMethod]
 		public void SimpleTypeShorthandTest ()
 		{
 			string metadata =
@@ -42,15 +41,15 @@ namespace TaglibSharp.Tests.Images
 		{
 			var tree = tag.NodeTree;
 
-			ClassicAssert.IsTrue (tree != null);
-			ClassicAssert.AreEqual (1, tree.Children.Count);
-			ClassicAssert.AreEqual (XmpNodeType.Simple, tree.Children[0].Type);
-			ClassicAssert.AreEqual (XmpTag.XAP_NS, tree.Children[0].Namespace);
-			ClassicAssert.AreEqual ("CreateDate", tree.Children[0].Name);
-			ClassicAssert.AreEqual ("2002-08-15T17:10:04Z", tree.Children[0].Value);
+			Assert.IsNotNull (tree);
+			Assert.AreEqual (1, tree.Children.Count);
+			Assert.AreEqual (XmpNodeType.Simple, tree.Children[0].Type);
+			Assert.AreEqual (XmpTag.XAP_NS, tree.Children[0].Namespace);
+			Assert.AreEqual ("CreateDate", tree.Children[0].Name);
+			Assert.AreEqual ("2002-08-15T17:10:04Z", tree.Children[0].Value);
 		}
 
-		[Test]
+		[TestMethod]
 		public void StructuredTypeTest ()
 		{
 			string metadata =
@@ -71,7 +70,7 @@ namespace TaglibSharp.Tests.Images
 			TestXmp (metadata, ValidateStructuredType);
 		}
 
-		[Test]
+		[TestMethod]
 		public void StructuredTypeShorthandTest ()
 		{
 			string metadata =
@@ -97,32 +96,32 @@ namespace TaglibSharp.Tests.Images
 			var PG_NS = "http://ns.adobe.com/xap/1.0/t/pg/";
 			var DIM_NS = "http://ns.adobe.com/xap/1.0/sType/Dimensions#";
 
-			ClassicAssert.IsTrue (tree != null);
-			ClassicAssert.AreEqual (1, tree.Children.Count);
+			Assert.IsNotNull (tree);
+			Assert.AreEqual (1, tree.Children.Count);
 
 			var node = tree.Children[0];
-			ClassicAssert.AreEqual (XmpNodeType.Struct, node.Type);
-			ClassicAssert.AreEqual (PG_NS, node.Namespace);
-			ClassicAssert.AreEqual ("MaxPageSize", node.Name);
-			ClassicAssert.AreEqual (3, node.Children.Count);
+			Assert.AreEqual (XmpNodeType.Struct, node.Type);
+			Assert.AreEqual (PG_NS, node.Namespace);
+			Assert.AreEqual ("MaxPageSize", node.Name);
+			Assert.AreEqual (3, node.Children.Count);
 
-			ClassicAssert.AreEqual (DIM_NS, node.Children[0].Namespace);
-			ClassicAssert.AreEqual ("w", node.Children[0].Name);
-			ClassicAssert.AreEqual ("4", node.Children[0].Value);
-			ClassicAssert.AreEqual (0, node.Children[0].Children.Count);
+			Assert.AreEqual (DIM_NS, node.Children[0].Namespace);
+			Assert.AreEqual ("w", node.Children[0].Name);
+			Assert.AreEqual ("4", node.Children[0].Value);
+			Assert.AreEqual (0, node.Children[0].Children.Count);
 
-			ClassicAssert.AreEqual (DIM_NS, node.Children[1].Namespace);
-			ClassicAssert.AreEqual ("h", node.Children[1].Name);
-			ClassicAssert.AreEqual ("3", node.Children[1].Value);
-			ClassicAssert.AreEqual (0, node.Children[1].Children.Count);
+			Assert.AreEqual (DIM_NS, node.Children[1].Namespace);
+			Assert.AreEqual ("h", node.Children[1].Name);
+			Assert.AreEqual ("3", node.Children[1].Value);
+			Assert.AreEqual (0, node.Children[1].Children.Count);
 
-			ClassicAssert.AreEqual (DIM_NS, node.Children[2].Namespace);
-			ClassicAssert.AreEqual ("unit", node.Children[2].Name);
-			ClassicAssert.AreEqual ("inch", node.Children[2].Value);
-			ClassicAssert.AreEqual (0, node.Children[2].Children.Count);
+			Assert.AreEqual (DIM_NS, node.Children[2].Namespace);
+			Assert.AreEqual ("unit", node.Children[2].Name);
+			Assert.AreEqual ("inch", node.Children[2].Value);
+			Assert.AreEqual (0, node.Children[2].Children.Count);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ArrayTypeTest ()
 		{
 			string metadata =
@@ -143,29 +142,29 @@ namespace TaglibSharp.Tests.Images
 			TestXmp (metadata, delegate (XmpTag tag) {
 				var tree = tag.NodeTree;
 
-				ClassicAssert.IsTrue (tree != null);
-				ClassicAssert.AreEqual (1, tree.Children.Count);
+				Assert.IsNotNull (tree);
+				Assert.AreEqual (1, tree.Children.Count);
 
 				var node = tree.Children[0];
-				ClassicAssert.AreEqual (XmpNodeType.Bag, node.Type);
-				ClassicAssert.AreEqual (XmpTag.DC_NS, node.Namespace);
-				ClassicAssert.AreEqual ("subject", node.Name);
-				ClassicAssert.AreEqual (3, node.Children.Count);
+				Assert.AreEqual (XmpNodeType.Bag, node.Type);
+				Assert.AreEqual (XmpTag.DC_NS, node.Namespace);
+				Assert.AreEqual ("subject", node.Name);
+				Assert.AreEqual (3, node.Children.Count);
 
-				ClassicAssert.AreEqual (XmpTag.RDF_NS, node.Children[0].Namespace);
-				ClassicAssert.AreEqual ("li", node.Children[0].Name);
-				ClassicAssert.AreEqual ("metadata", node.Children[0].Value);
-				ClassicAssert.AreEqual (0, node.Children[0].Children.Count);
+				Assert.AreEqual (XmpTag.RDF_NS, node.Children[0].Namespace);
+				Assert.AreEqual ("li", node.Children[0].Name);
+				Assert.AreEqual ("metadata", node.Children[0].Value);
+				Assert.AreEqual (0, node.Children[0].Children.Count);
 
-				ClassicAssert.AreEqual (XmpTag.RDF_NS, node.Children[1].Namespace);
-				ClassicAssert.AreEqual ("li", node.Children[1].Name);
-				ClassicAssert.AreEqual ("schema", node.Children[1].Value);
-				ClassicAssert.AreEqual (0, node.Children[1].Children.Count);
+				Assert.AreEqual (XmpTag.RDF_NS, node.Children[1].Namespace);
+				Assert.AreEqual ("li", node.Children[1].Name);
+				Assert.AreEqual ("schema", node.Children[1].Value);
+				Assert.AreEqual (0, node.Children[1].Children.Count);
 
-				ClassicAssert.AreEqual (XmpTag.RDF_NS, node.Children[2].Namespace);
-				ClassicAssert.AreEqual ("li", node.Children[2].Name);
-				ClassicAssert.AreEqual ("XMP", node.Children[2].Value);
-				ClassicAssert.AreEqual (0, node.Children[2].Children.Count);
+				Assert.AreEqual (XmpTag.RDF_NS, node.Children[2].Namespace);
+				Assert.AreEqual ("li", node.Children[2].Name);
+				Assert.AreEqual ("XMP", node.Children[2].Value);
+				Assert.AreEqual (0, node.Children[2].Children.Count);
 			});
 		}
 
@@ -188,7 +187,7 @@ namespace TaglibSharp.Tests.Images
 
 		// An extra note: The parser goes through the xml and turns the code into a tree structure
 		// made up of XmpNode objects.
-		[Test]
+		[TestMethod]
 		[Ignore ("Known failure, needs fixing")]
 		public void QualifierTest ()
 		{
@@ -222,33 +221,33 @@ namespace TaglibSharp.Tests.Images
 			TestXmp (metadata, delegate (XmpTag tag) {
 				var tree = tag.NodeTree;
 
-				ClassicAssert.IsTrue (tree != null);
-				ClassicAssert.AreEqual (1, tree.Children.Count);
+				Assert.IsNotNull (tree);
+				Assert.AreEqual (1, tree.Children.Count);
 
 				var node = tree.Children[0];
-				ClassicAssert.AreEqual (XmpNodeType.Seq, node.Type);
-				ClassicAssert.AreEqual (XmpTag.DC_NS, node.Namespace);
-				ClassicAssert.AreEqual ("creator", node.Name);
-				ClassicAssert.AreEqual (2, node.Children.Count);
+				Assert.AreEqual (XmpNodeType.Seq, node.Type);
+				Assert.AreEqual (XmpTag.DC_NS, node.Namespace);
+				Assert.AreEqual ("creator", node.Name);
+				Assert.AreEqual (2, node.Children.Count);
 
 				// TODO: The stuff below will fail, this is a known bug, it needs fixing.
 				// Check the spec on page 20 for the parsing diagram.
 
-				ClassicAssert.AreEqual (XmpTag.RDF_NS, node.Children[0].Namespace);
-				ClassicAssert.AreEqual ("li", node.Children[0].Name);
-				ClassicAssert.AreEqual ("William Gilbert", node.Children[0].Value);
-				ClassicAssert.AreEqual (0, node.Children[0].Children.Count);
-				ClassicAssert.AreEqual ("lyricist", node.Children[0].GetQualifier ("ns:myNamespace/", "role").Value);
+				Assert.AreEqual (XmpTag.RDF_NS, node.Children[0].Namespace);
+				Assert.AreEqual ("li", node.Children[0].Name);
+				Assert.AreEqual ("William Gilbert", node.Children[0].Value);
+				Assert.AreEqual (0, node.Children[0].Children.Count);
+				Assert.AreEqual ("lyricist", node.Children[0].GetQualifier ("ns:myNamespace/", "role").Value);
 
-				ClassicAssert.AreEqual (XmpTag.RDF_NS, node.Children[1].Namespace);
-				ClassicAssert.AreEqual ("li", node.Children[1].Name);
-				ClassicAssert.AreEqual ("Arthur Sullivan", node.Children[1].Value);
-				ClassicAssert.AreEqual (0, node.Children[1].Children.Count);
-				ClassicAssert.AreEqual ("composer", node.Children[1].GetQualifier ("ns:myNamespace/", "role").Value);
+				Assert.AreEqual (XmpTag.RDF_NS, node.Children[1].Namespace);
+				Assert.AreEqual ("li", node.Children[1].Name);
+				Assert.AreEqual ("Arthur Sullivan", node.Children[1].Value);
+				Assert.AreEqual (0, node.Children[1].Children.Count);
+				Assert.AreEqual ("composer", node.Children[1].GetQualifier ("ns:myNamespace/", "role").Value);
 			});
 		}
 
-		[Test]
+		[TestMethod]
 		public void LangAltTest ()
 		{
 			string metadata =
@@ -270,38 +269,38 @@ namespace TaglibSharp.Tests.Images
 			TestXmp (metadata, delegate (XmpTag tag) {
 				var tree = tag.NodeTree;
 
-				ClassicAssert.IsTrue (tree != null);
-				ClassicAssert.AreEqual (1, tree.Children.Count);
+				Assert.IsNotNull (tree);
+				Assert.AreEqual (1, tree.Children.Count);
 
 				var node = tree.Children[0];
-				ClassicAssert.AreEqual (XmpNodeType.Alt, node.Type);
-				ClassicAssert.AreEqual (XmpTag.XAP_NS, node.Namespace);
-				ClassicAssert.AreEqual ("Title", node.Name);
-				ClassicAssert.AreEqual (4, node.Children.Count);
+				Assert.AreEqual (XmpNodeType.Alt, node.Type);
+				Assert.AreEqual (XmpTag.XAP_NS, node.Namespace);
+				Assert.AreEqual ("Title", node.Name);
+				Assert.AreEqual (4, node.Children.Count);
 
-				ClassicAssert.AreEqual (XmpTag.RDF_NS, node.Children[0].Namespace);
-				ClassicAssert.AreEqual ("li", node.Children[0].Name);
-				ClassicAssert.AreEqual ("XMP - Extensible Metadata Platform", node.Children[0].Value);
-				ClassicAssert.AreEqual (0, node.Children[0].Children.Count);
-				ClassicAssert.AreEqual ("x-default", node.Children[0].GetQualifier (XmpTag.XML_NS, "lang").Value);
+				Assert.AreEqual (XmpTag.RDF_NS, node.Children[0].Namespace);
+				Assert.AreEqual ("li", node.Children[0].Name);
+				Assert.AreEqual ("XMP - Extensible Metadata Platform", node.Children[0].Value);
+				Assert.AreEqual (0, node.Children[0].Children.Count);
+				Assert.AreEqual ("x-default", node.Children[0].GetQualifier (XmpTag.XML_NS, "lang").Value);
 
-				ClassicAssert.AreEqual (XmpTag.RDF_NS, node.Children[1].Namespace);
-				ClassicAssert.AreEqual ("li", node.Children[1].Name);
-				ClassicAssert.AreEqual ("XMP - Extensible Metadata Platform", node.Children[1].Value);
-				ClassicAssert.AreEqual (0, node.Children[1].Children.Count);
-				ClassicAssert.AreEqual ("en-us", node.Children[1].GetQualifier (XmpTag.XML_NS, "lang").Value);
+				Assert.AreEqual (XmpTag.RDF_NS, node.Children[1].Namespace);
+				Assert.AreEqual ("li", node.Children[1].Name);
+				Assert.AreEqual ("XMP - Extensible Metadata Platform", node.Children[1].Value);
+				Assert.AreEqual (0, node.Children[1].Children.Count);
+				Assert.AreEqual ("en-us", node.Children[1].GetQualifier (XmpTag.XML_NS, "lang").Value);
 
-				ClassicAssert.AreEqual (XmpTag.RDF_NS, node.Children[2].Namespace);
-				ClassicAssert.AreEqual ("li", node.Children[2].Name);
-				ClassicAssert.AreEqual ("XMP - Une Platforme Extensible pour les Métadonnées", node.Children[2].Value);
-				ClassicAssert.AreEqual (0, node.Children[2].Children.Count);
-				ClassicAssert.AreEqual ("fr-fr", node.Children[2].GetQualifier (XmpTag.XML_NS, "lang").Value);
+				Assert.AreEqual (XmpTag.RDF_NS, node.Children[2].Namespace);
+				Assert.AreEqual ("li", node.Children[2].Name);
+				Assert.AreEqual ("XMP - Une Platforme Extensible pour les Métadonnées", node.Children[2].Value);
+				Assert.AreEqual (0, node.Children[2].Children.Count);
+				Assert.AreEqual ("fr-fr", node.Children[2].GetQualifier (XmpTag.XML_NS, "lang").Value);
 
-				ClassicAssert.AreEqual (XmpTag.RDF_NS, node.Children[3].Namespace);
-				ClassicAssert.AreEqual ("li", node.Children[3].Name);
-				ClassicAssert.AreEqual ("XMP - Piattaforma Estendibile di Metadata", node.Children[3].Value);
-				ClassicAssert.AreEqual (0, node.Children[3].Children.Count);
-				ClassicAssert.AreEqual ("it-it", node.Children[3].GetQualifier (XmpTag.XML_NS, "lang").Value);
+				Assert.AreEqual (XmpTag.RDF_NS, node.Children[3].Namespace);
+				Assert.AreEqual ("li", node.Children[3].Name);
+				Assert.AreEqual ("XMP - Piattaforma Estendibile di Metadata", node.Children[3].Value);
+				Assert.AreEqual (0, node.Children[3].Children.Count);
+				Assert.AreEqual ("it-it", node.Children[3].GetQualifier (XmpTag.XML_NS, "lang").Value);
 			});
 		}
 

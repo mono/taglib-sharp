@@ -1,10 +1,8 @@
-namespace TaglibSharp.Tests.FileFormats
+namespace TaglibSharp.Tests.FileFormats;
+
+public interface IFormatTest
 {
-	public interface IFormatTest
-	{
-		void Init ();
-		void ReadAudioProperties ();
-		void ReadTags ();
-		void TestCorruptionResistance ();
-	}
+	void ReadAudioProperties ();
+	void ReadTags ();
+	void TestCorruptionResistance ();
 }
