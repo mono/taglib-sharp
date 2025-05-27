@@ -1,18 +1,16 @@
-using NUnit.Framework;
-using System;
-using TagLib;
 using TagLib.IFD;
 using TagLib.Jpeg;
 using TagLib.Xmp;
+
 using File = TagLib.File;
 
 namespace TaglibSharp.Tests.Images
 {
-	[TestFixture]
+	[TestClass]
 	public class JpegSegmentSizeTest
 	{
 		static readonly string sample_file = TestPath.Samples + "sample.jpg";
-		static readonly string tmp_file = TestPath.Samples + "tmpwrite_exceed_segment_size.jpg";
+		static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite_exceed_segment_size.jpg";
 
 		static readonly int max_segment_size = 0xFFFF;
 
@@ -36,7 +34,7 @@ namespace TaglibSharp.Tests.Images
 			return data.ToString ();
 		}
 
-		[Test]
+		[TestMethod]
 		public void ExifExceed ()
 		{
 			var tmp = Utils.CreateTmpFile (sample_file, tmp_file) as File;
@@ -44,15 +42,15 @@ namespace TaglibSharp.Tests.Images
 
 			var exif_tag = tmp.GetTag (TagTypes.TiffIFD) as IFDTag;
 
-			ClassicAssert.IsNotNull (exif_tag, "exif tag");
+			Assert.IsNotNull (exif_tag, "exif tag");
 
 			// ensure data is big enough
 			exif_tag.Comment = CreateDataString (max_segment_size);
 
-			ClassicAssert.IsFalse (SaveFile (tmp), "file with exceed exif segment saved");
+			Assert.IsFalse (SaveFile (tmp), "file with exceed exif segment saved");
 		}
 
-		[Test]
+		[TestMethod]
 		public void XmpExceed ()
 		{
 			var tmp = Utils.CreateTmpFile (sample_file, tmp_file) as File;
@@ -60,15 +58,15 @@ namespace TaglibSharp.Tests.Images
 
 			var xmp_tag = tmp.GetTag (TagTypes.XMP) as XmpTag;
 
-			ClassicAssert.IsNotNull (xmp_tag, "xmp tag");
+			Assert.IsNotNull (xmp_tag, "xmp tag");
 
 			// ensure data is big enough
 			xmp_tag.Comment = CreateDataString (max_segment_size);
 
-			ClassicAssert.IsFalse (SaveFile (tmp), "file with exceed xmp segment saved");
+			Assert.IsFalse (SaveFile (tmp), "file with exceed xmp segment saved");
 		}
 
-		[Test]
+		[TestMethod]
 		public void JpegCommentExceed ()
 		{
 			var tmp = Utils.CreateTmpFile (sample_file, tmp_file) as File;
@@ -76,20 +74,20 @@ namespace TaglibSharp.Tests.Images
 
 			var com_tag = tmp.GetTag (TagTypes.JpegComment) as JpegCommentTag;
 
-			ClassicAssert.IsNotNull (com_tag, "comment tag");
+			Assert.IsNotNull (com_tag, "comment tag");
 
 			// ensure data is big enough
 			com_tag.Comment = CreateDataString (max_segment_size);
 
-			ClassicAssert.IsFalse (SaveFile (tmp), "file with exceed comment segment saved");
+			Assert.IsFalse (SaveFile (tmp), "file with exceed comment segment saved");
 		}
 
 		void CheckTags (File file)
 		{
-			ClassicAssert.IsTrue (file is TagLib.Jpeg.File, "not a Jpeg file");
+			Assert.IsTrue (file is TagLib.Jpeg.File, "not a Jpeg file");
 
-			ClassicAssert.AreEqual (contained_types, file.TagTypes);
-			ClassicAssert.AreEqual (contained_types, file.TagTypesOnDisk);
+			Assert.AreEqual (contained_types, file.TagTypes);
+			Assert.AreEqual (contained_types, file.TagTypesOnDisk);
 		}
 
 		bool SaveFile (File file)

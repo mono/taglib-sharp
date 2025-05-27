@@ -1,12 +1,5 @@
-using System;
-using System.Runtime.InteropServices;
-
-using NUnit.Framework;
-
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
-
-using TagLib;
 
 using File = TagLib.File;
 
@@ -101,8 +94,8 @@ namespace TaglibSharp.Tests.Images.Validators
 			ModificationValidator.ValidatePreModification (tmp);
 			ModificationValidator.ModifyMetadata (tmp);
 			ModificationValidator.ValidatePostModification (tmp);
-			ClassicAssert.IsTrue (tmp.Writeable, "File should be writeable");
-			ClassicAssert.IsFalse (tmp.PossiblyCorrupt, "Corrupt files should never be written");
+			Assert.IsTrue (tmp.Writeable, "File should be writeable");
+			Assert.IsFalse (tmp.PossiblyCorrupt, "Corrupt files should never be written");
 			tmp.Save ();
 		}
 
@@ -138,7 +131,7 @@ namespace TaglibSharp.Tests.Images.Validators
 		string ReadImageData (TagLib.Image.File file)
 		{
 			if (!IsSupportedImageFile (file))
-				ClassicAssert.Fail ("Unsupported type for data reading: " + file);
+				Assert.Fail ("Unsupported type for data reading: " + file);
 
 			file.Mode = File.AccessMode.Read;
 			var v = file.ReadBlock ((int)file.Length);
@@ -155,12 +148,13 @@ namespace TaglibSharp.Tests.Images.Validators
 		void ValidateImageData ()
 		{
 			string label = $"Image data mismatch for {ImageFileName}/{ModificationValidator}";
-			ClassicAssert.AreEqual (pre_hash, post_hash, label);
+			Assert.AreEqual (pre_hash, post_hash, label);
 		}
 
 		void CreateTmpFile ()
 		{
-			if (System.IO.File.Exists (TempImageFile))
+            Directory.CreateDirectory(Path.GetDirectoryName(TempImageFile));
+            if (System.IO.File.Exists (TempImageFile))
 				System.IO.File.Delete (TempImageFile);
 			System.IO.File.Copy (ImageFile, TempImageFile);
 		}
@@ -178,7 +172,7 @@ namespace TaglibSharp.Tests.Images.Validators
 
 		string ImageFile => $"{ImageDirectory}/{ImageFileName}";
 
-		string TempImageFile => $"{TempDirectory}/{TempImageFileName}";
+		string TempImageFile => Path.Combine (TempDirectory, Environment.Version.ToString(), TempImageFileName);
 
 		/// <summary>
 		///    The invariant validator tests for properties that are

@@ -1,65 +1,61 @@
-using NUnit.Framework;
-using TagLib;
-
 using File = TagLib.File;
 
-namespace TaglibSharp.Tests.FileFormats
+namespace TaglibSharp.Tests.FileFormats;
+
+[TestClass]
+public class MpcFormatTest : IFormatTest
 {
-	[TestFixture]
-	public class MpcFormatTest : IFormatTest
+	static readonly string sample_file = TestPath.Samples + "sample.mpc";
+	static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite.mpc";
+	static File file;
+
+	[ClassInitialize]
+	public static void Init (TestContext testContext)
 	{
-		static readonly string sample_file = TestPath.Samples + "sample.mpc";
-		static readonly string tmp_file = TestPath.Samples + "tmpwrite.mpc";
-		File file;
+		file = File.Create (sample_file);
+	}
 
-		[OneTimeSetUp]
-		public void Init ()
-		{
-			file = File.Create (sample_file);
-		}
+	[TestMethod]
+	public void ReadAudioProperties ()
+	{
+		StandardTests.ReadAudioProperties (file);
+	}
 
-		[Test]
-		public void ReadAudioProperties ()
-		{
-			StandardTests.ReadAudioProperties (file);
-		}
+	[TestMethod]
+	public void ReadTags ()
+	{
+		Assert.AreEqual ("MPC album", file.Tag.Album);
+		Assert.AreEqual ("MPC artist", file.Tag.FirstPerformer);
+		Assert.AreEqual ("MPC comment", file.Tag.Comment);
+		Assert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
+		Assert.AreEqual ("MPC title", file.Tag.Title);
+		Assert.AreEqual (6u, file.Tag.Track);
+		Assert.AreEqual (7u, file.Tag.TrackCount);
+		Assert.AreEqual (1234u, file.Tag.Year);
+	}
 
-		[Test]
-		public void ReadTags ()
-		{
-			ClassicAssert.AreEqual ("MPC album", file.Tag.Album);
-			ClassicAssert.AreEqual ("MPC artist", file.Tag.FirstPerformer);
-			ClassicAssert.AreEqual ("MPC comment", file.Tag.Comment);
-			ClassicAssert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
-			ClassicAssert.AreEqual ("MPC title", file.Tag.Title);
-			ClassicAssert.AreEqual (6, file.Tag.Track);
-			ClassicAssert.AreEqual (7, file.Tag.TrackCount);
-			ClassicAssert.AreEqual (1234, file.Tag.Year);
-		}
+	[TestMethod]
+	public void WriteStandardTags ()
+	{
+		StandardTests.WriteStandardTags (sample_file, tmp_file);
+	}
 
-		[Test]
-		public void WriteStandardTags ()
-		{
-			StandardTests.WriteStandardTags (sample_file, tmp_file);
-		}
+	[TestMethod]
+	public void WriteStandardPictures ()
+	{
+		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None, StandardTests.TestTagLevel.Normal);
+	}
 
-		[Test]
-		public void WriteStandardPictures ()
-		{
-			StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None, StandardTests.TestTagLevel.Normal);
-		}
+	[TestMethod]
+	[Ignore ("PictureLazy not supported yet")]
+	public void WriteStandardPicturesLazy ()
+	{
+		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy, StandardTests.TestTagLevel.Normal);
+	}
 
-		[Test]
-		[Ignore ("PictureLazy not supported yet")]
-		public void WriteStandardPicturesLazy ()
-		{
-			StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy, StandardTests.TestTagLevel.Normal);
-		}
-
-		[Test]
-		public void TestCorruptionResistance ()
-		{
-			StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/a.mpc");
-		}
+	[TestMethod]
+	public void TestCorruptionResistance ()
+	{
+		StandardTests.TestCorruptionResistance (TestPath.Samples + "corrupt/a.mpc");
 	}
 }

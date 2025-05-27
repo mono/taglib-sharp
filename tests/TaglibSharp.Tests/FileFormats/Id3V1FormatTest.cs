@@ -1,64 +1,60 @@
-using NUnit.Framework;
-using TagLib;
-
 using File = TagLib.File;
 
-namespace TaglibSharp.Tests.FileFormats
+namespace TaglibSharp.Tests.FileFormats;
+
+[TestClass]
+public class Id3V1FormatTest : IFormatTest
 {
-	[TestFixture]
-	public class Id3V1FormatTest : IFormatTest
+	static readonly string sample_file = TestPath.Samples + "sample_v1_only.mp3";
+	static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite_v1_only.mp3";
+	static File file;
+
+	[ClassInitialize]
+	public static void Init (TestContext testContext)
 	{
-		static readonly string sample_file = TestPath.Samples + "sample_v1_only.mp3";
-		static readonly string tmp_file = TestPath.Samples + "tmpwrite_v1_only.mp3";
-		File file;
+		file = File.Create (sample_file);
+	}
 
-		[OneTimeSetUp]
-		public void Init ()
-		{
-			file = File.Create (sample_file);
-		}
+	[TestMethod]
+	public void ReadAudioProperties ()
+	{
+		Assert.AreEqual (44100, file.Properties.AudioSampleRate);
+		Assert.AreEqual (1, file.Properties.Duration.Seconds);
+	}
 
-		[Test]
-		public void ReadAudioProperties ()
-		{
-			ClassicAssert.AreEqual (44100, file.Properties.AudioSampleRate);
-			ClassicAssert.AreEqual (1, file.Properties.Duration.Seconds);
-		}
+	[TestMethod]
+	public void ReadTags ()
+	{
+		Assert.AreEqual ("MP3 album", file.Tag.Album);
+		Assert.AreEqual ("MP3 artist", file.Tag.FirstPerformer);
+		Assert.AreEqual ("MP3 comment", file.Tag.Comment);
+		Assert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
+		Assert.AreEqual ("MP3 title", file.Tag.Title);
+		Assert.AreEqual (6u, file.Tag.Track);
+		Assert.AreEqual (1234u, file.Tag.Year);
+	}
 
-		[Test]
-		public void ReadTags ()
-		{
-			ClassicAssert.AreEqual ("MP3 album", file.Tag.Album);
-			ClassicAssert.AreEqual ("MP3 artist", file.Tag.FirstPerformer);
-			ClassicAssert.AreEqual ("MP3 comment", file.Tag.Comment);
-			ClassicAssert.AreEqual ("Acid Punk", file.Tag.FirstGenre);
-			ClassicAssert.AreEqual ("MP3 title", file.Tag.Title);
-			ClassicAssert.AreEqual (6, file.Tag.Track);
-			ClassicAssert.AreEqual (1234, file.Tag.Year);
-		}
+	[TestMethod]
+	public void WriteStandardTags ()
+	{
+		StandardTests.WriteStandardTags (sample_file, tmp_file);
+	}
 
-		[Test]
-		public void WriteStandardTags ()
-		{
-			StandardTests.WriteStandardTags (sample_file, tmp_file);
-		}
+	[TestMethod]
+	public void WriteStandardPictures ()
+	{
+		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None);
+	}
 
-		[Test]
-		public void WriteStandardPictures ()
-		{
-			StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None);
-		}
-
-		[Test]
-		public void WriteStandardPicturesLazy ()
-		{
-			StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
-		}
+	[TestMethod]
+	public void WriteStandardPicturesLazy ()
+	{
+		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
+	}
 
 
-		[Test]
-		public void TestCorruptionResistance ()
-		{
-		}
+	[TestMethod]
+	public void TestCorruptionResistance ()
+	{
 	}
 }

@@ -1,13 +1,11 @@
-using NUnit.Framework;
-using TagLib;
 using TaglibSharp.Tests.Images.Validators;
 
 namespace TaglibSharp.Tests.Images
 {
-	[TestFixture]
+	[TestClass]
 	public class JpegNoMetadataTest
 	{
-		[Test]
+		[TestMethod]
 		public void Test ()
 		{
 			ImageTest.Run ("sample_no_metadata.jpg",
@@ -25,7 +23,7 @@ namespace TaglibSharp.Tests.Images
 	{
 		public void ValidateMetadataInvariants (TagLib.Image.File file)
 		{
-			ClassicAssert.IsNotNull (file);
+			Assert.IsNotNull (file);
 		}
 	}
 }

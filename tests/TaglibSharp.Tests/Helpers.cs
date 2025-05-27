@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-using TagLib;
 using File = TagLib.File;
 
 namespace TaglibSharp.Tests

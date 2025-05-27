@@ -1,14 +1,12 @@
-using NUnit.Framework;
-using TagLib;
 using TaglibSharp.Tests.Images.Validators;
 
 namespace TaglibSharp.Tests.Images
 {
 
-	[TestFixture]
+	[TestClass]
 	public class JpegPropertyTest
 	{
-		[Test]
+		[TestMethod]
 		public void Test ()
 		{
 			// This file is originally created with GIMP and the metadata was modified
@@ -48,11 +46,11 @@ namespace TaglibSharp.Tests.Images
 	{
 		public void ValidateMetadataInvariants (TagLib.Image.File file)
 		{
-			ClassicAssert.IsNotNull (file);
-			ClassicAssert.IsNotNull (file.Properties);
+			Assert.IsNotNull (file);
+			Assert.IsNotNull (file.Properties);
 
-			ClassicAssert.AreEqual (42, file.Properties.PhotoWidth);
-			ClassicAssert.AreEqual (50, file.Properties.PhotoHeight);
+			Assert.AreEqual (42, file.Properties.PhotoWidth);
+			Assert.AreEqual (50, file.Properties.PhotoHeight);
 		}
 	}
 }

@@ -1,6 +1,3 @@
-using NUnit.Framework;
-using TagLib;
-
 namespace TaglibSharp.Tests.Images.Validators
 {
 	public class TagPropertyModificationValidator<T> : PropertyModificationValidator<T>
@@ -18,9 +15,9 @@ namespace TaglibSharp.Tests.Images.Validators
 		public override void ValidatePreModification (TagLib.Image.File file)
 		{
 			if (!tag_present) {
-				ClassicAssert.IsNull (GetTag (file));
+				Assert.IsNull (GetTag (file));
 			} else {
-				ClassicAssert.IsNotNull (GetTag (file));
+				Assert.IsNotNull (GetTag (file));
 				base.ValidatePreModification (file);
 			}
 		}
