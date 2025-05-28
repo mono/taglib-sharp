@@ -3,7 +3,8 @@ using System.IO;
 
 using TagLib;
 
-public class ReadFromUri
+namespace ReadFromUri;
+public class Program
 {
 	public static void Write (string name, object value)
 	{
@@ -30,8 +31,8 @@ public class ReadFromUri
 			TagLib.File file;
 
 			try {
-				var file_info = new FileInfo (uri);
-				uri = new Uri (file_info.FullName).ToString ();
+				var fileInfo = new FileInfo (uri);
+				uri = new Uri (fileInfo.FullName).ToString ();
 			} catch {
 			}
 
@@ -136,8 +137,5 @@ public class FileAbstraction : TagLib.File.IFileAbstraction
 
 	public Stream WriteStream => new FileStream (Name, FileMode.Open);
 
-	public void CloseStream (Stream stream)
-	{
-		stream.Close ();
-	}
+	public void CloseStream (Stream stream) => stream.Close ();
 }
