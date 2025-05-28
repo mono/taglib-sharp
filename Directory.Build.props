@@ -1,6 +1,12 @@
 <Project>
 
 	<PropertyGroup>
+		<IsMac>$([MSBuild]::IsOSPlatform('OSX'))</IsMac>
+		<IsWindows>$([MSBuild]::IsOSPlatform('Windows'))</IsWindows>
+		<IsLinux>$([MSBuild]::IsOSPlatform('Linux'))</IsLinux>
+	</PropertyGroup>
+
+	<PropertyGroup>
 		<ReleaseVersion>2.5.0.0</ReleaseVersion>
 		<RepositoryUrl>https://github.com/mono/taglib-sharp</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
