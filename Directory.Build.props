@@ -5,9 +5,8 @@
 		<RepositoryUrl>https://github.com/mono/taglib-sharp</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 
-		<!-- Make sure to update Directory.Build.targets too! -->
-		<ExeTargetFrameworks>net8.0;net9.0;net472</ExeTargetFrameworks>
-		<LibTargetFrameworks>net472;net8.0;net9.0;netstandard2.0</LibTargetFrameworks>
+		<ExeTargetFrameworks>net472;net8.0;net9.0</ExeTargetFrameworks>
+		<LibTargetFrameworks>netstandard2.0;net8.0;net9.0</LibTargetFrameworks>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<ImplicitUsings>true</ImplicitUsings>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
