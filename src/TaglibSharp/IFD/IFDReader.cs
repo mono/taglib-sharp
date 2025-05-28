@@ -308,15 +308,12 @@ namespace TagLib.IFD
 
 				IFDEntry entry;
 
-				try
-				{
-					entry = CreateIFDEntry(entry_tag, type, value_count, baseOffset, offset_data, maxOffset);
-				}
-				catch (OverflowException)
-				{
+				try {
+					entry = CreateIFDEntry (entry_tag, type, value_count, baseOffset, offset_data, maxOffset);
+				} catch (OverflowException) {
 					// This exception occurs when the image does not have data in the expected format at the
 					// requested location.  This has been observed in images taken with an Olympus camera.
-					file.MarkAsCorrupt("Invalid IFD entry");
+					file.MarkAsCorrupt ("Invalid IFD entry");
 					continue;
 				}
 
@@ -549,7 +546,7 @@ namespace TagLib.IFD
 				file.MarkAsCorrupt ("Invalid item type");
 				return null;
 			}
-
+			return null;
 			// TODO: We should ignore unreadable values, erroring for now until we have sufficient coverage.
 			throw new NotImplementedException ($"Unknown type/count {type}/{count} ({offset})");
 		}
