@@ -16,15 +16,16 @@ using TagLib.IFD;
 using TagLib.IFD.Tags;
 using TagLib.Xmp;
 
-public class GenerateTestFixtureApp
+namespace GenerateTestFixture;
+
+public class Program
 {
-	private static MD5 md5 = MD5.Create ();
+	static MD5 md5 = MD5.Create ();
 
 	// Helper to run a process and capture output, error, and exit code
-	private static bool RunProcess(string exe, string args, out string output, out string error, out int exitCode)
+	static bool RunProcess (string exe, string args, out string output, out string error, out int exitCode)
 	{
-		var startInfo = new ProcessStartInfo
-		{
+		var startInfo = new ProcessStartInfo {
 			FileName = exe,
 			Arguments = args,
 			RedirectStandardOutput = true,
@@ -34,17 +35,17 @@ public class GenerateTestFixtureApp
 		};
 
 		using var process = new Process { StartInfo = startInfo };
-		process.Start();
-		output = process.StandardOutput.ReadToEnd();
-		error = process.StandardError.ReadToEnd();
-		process.WaitForExit();
+		process.Start ();
+		output = process.StandardOutput.ReadToEnd ();
+		error = process.StandardError.ReadToEnd ();
+		process.WaitForExit ();
 		exitCode = process.ExitCode;
 		return exitCode == 0;
 	}
 
-	public static void Main (string [] args)
+	public static void Main (string[] args)
 	{
-		if(args.Length != 2) {
+		if (args.Length != 2) {
 			Console.Error.WriteLine ("USAGE: mono GenerateTestFixture.exe NAME PATH");
 			return;
 		}
@@ -64,8 +65,7 @@ public class GenerateTestFixtureApp
 	static void GenerateIFDFixture (string name, string path)
 	{
 		// First run exiv2 on it.
-		string output, err; int code;
-		var result = RunProcess("listData", $"e {path}", out output, out err, out code);
+		var result = RunProcess ("listData", $"e {path}", out var output, out var err, out var code);
 		if (!result) {
 			Console.Error.WriteLine ("Invoking listData failed, are you running from the examples folder?\n" + err);
 			return;
@@ -78,7 +78,7 @@ public class GenerateTestFixtureApp
 			if (parts.Length == 0 || line.Trim ().Equals (string.Empty) || parts.Length != 5)
 				continue;
 			string tag_label = parts[0];
-			ushort tag = ushort.Parse (parts[1].Substring(2), System.Globalization.NumberStyles.HexNumber);
+			ushort tag = ushort.Parse (parts[1].Substring (2), System.Globalization.NumberStyles.HexNumber);
 			string ifd = parts[2];
 			string type = parts[3];
 			uint length = uint.Parse (parts[4]);
@@ -146,15 +146,15 @@ public class GenerateTestFixtureApp
 			} else if (ifd.Equals ("GPSInfo")) {
 				EmitTestIFDEntryOpen ("gps_structure", 0, tag, ifd);
 			} else if (ifd.Equals ("CanonCs")) {
-				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort) CanonMakerNoteEntryTag.CameraSettings, ifd);
+				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort)CanonMakerNoteEntryTag.CameraSettings, ifd);
 			} else if (ifd.Equals ("CanonSi")) {
-				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort) CanonMakerNoteEntryTag.ShotInfo, ifd);
+				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort)CanonMakerNoteEntryTag.ShotInfo, ifd);
 			} else if (ifd.Equals ("CanonCf")) {
-				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort) CanonMakerNoteEntryTag.CustomFunctions, ifd);
+				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort)CanonMakerNoteEntryTag.CustomFunctions, ifd);
 			} else if (ifd.Equals ("CanonPi")) {
-				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort) CanonMakerNoteEntryTag.PictureInfo, ifd);
+				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort)CanonMakerNoteEntryTag.PictureInfo, ifd);
 			} else if (ifd.Equals ("CanonFi")) {
-				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort) 0x93, ifd);
+				EmitTestIFDEntryOpen ("makernote_structure", 0, (ushort)0x93, ifd);
 			} else if (ifd.Equals ("PanasonicRaw")) {
 				EmitTestIFDEntryOpen ("pana_structure", 0, tag, ifd);
 			} else if (sub_ifds.ContainsKey (ifd)) {
@@ -171,7 +171,7 @@ public class GenerateTestFixtureApp
 				// And the fist both entries are combined to a long by exiv2.
 				if (tag == 0x0001) {
 					string val1 = ((ushort)uint.Parse (val)).ToString ();
-					string val2 = ((ushort) (uint.Parse (val) >> 16)).ToString ();
+					string val2 = ((ushort)(uint.Parse (val) >> 16)).ToString ();
 					EmitTestIFDIndexedShortEntry (tag, val1);
 					EmitTestIFDIndexedShortEntry (tag + 1, val2);
 				} else {
@@ -240,8 +240,7 @@ public class GenerateTestFixtureApp
 	static void GenerateXMPFixture (string name, string path)
 	{
 		// First run exiv2 on it.
-		string output, err; int code;
-		var result = RunProcess("listData", $"x {path}", out output, out err, out code);
+		var result = RunProcess ("listData", $"x {path}", out var output, out var err, out var code);
 		if (!result) {
 			Console.Error.WriteLine ("Invoking exiv2 failed, do you have it installed?\n" + err);
 			return;
@@ -257,13 +256,13 @@ public class GenerateTestFixtureApp
 		Write ("XmpTag xmp = file.GetTag (TagTypes.XMP) as XmpTag;");
 
 		// Build prefix lookup dictionary.
-		Type t = typeof(XmpTag);
-		foreach (var member in t.GetMembers()) {
+		Type t = typeof (XmpTag);
+		foreach (var member in t.GetMembers ()) {
 			if (!member.Name.EndsWith ("_NS"))
 				continue;
 			string val = (member as System.Reflection.FieldInfo).GetValue (null) as string;
-			string prefix = XmpTag.NamespacePrefixes [val];
-			xmp_prefixes [prefix] = member.Name;
+			string prefix = XmpTag.NamespacePrefixes[val];
+			xmp_prefixes[prefix] = member.Name;
 		}
 
 		foreach (string line in output.Split ('\n')) {
@@ -303,9 +302,9 @@ public class GenerateTestFixtureApp
 				// Plain node
 				int index = 0;
 				string name = parts[2];
-				if (parts[2].EndsWith("]")) {
+				if (parts[2].EndsWith ("]")) {
 					int index_start = parts[2].LastIndexOf ("[");
-					string index_str = parts[2].Substring (index_start+1, parts[2].Length-index_start-2);
+					string index_str = parts[2].Substring (index_start + 1, parts[2].Length - index_start - 2);
 					index = int.Parse (index_str);
 					name = parts[2].Substring (0, index_start);
 				}
@@ -323,7 +322,7 @@ public class GenerateTestFixtureApp
 				Write ($"node = node.GetChild ({ns}, \"{name}\");");
 				Write ("Assert.IsNotNull (node);");
 			} else {
-				throw new Exception ("Can't navigate to "+node);
+				throw new Exception ("Can't navigate to " + node);
 			}
 		}
 
@@ -338,7 +337,7 @@ public class GenerateTestFixtureApp
 			Write ($"Assert.AreEqual (\"{val}\", node.Children [0].Value);");
 		} else if (type.Equals ("LangAlt") && length == 1) {
 			var langparts = val.Split ([' '], 2);
-			string lang = langparts[0].Substring (langparts[0].IndexOf ('"')+1, langparts [0].Length - langparts[0].IndexOf ('"')-2);
+			string lang = langparts[0].Substring (langparts[0].IndexOf ('"') + 1, langparts[0].Length - langparts[0].IndexOf ('"') - 2);
 			Write ($"Assert.AreEqual (\"{lang}\", node.Children [0].GetQualifier (XmpTag.XML_NS, \"lang\").Value);");
 			Write ($"Assert.AreEqual (\"{langparts[1]}\", node.Children [0].Value);");
 		} else if (type.Equals ("XmpSeq") && length == 1) {
@@ -347,7 +346,7 @@ public class GenerateTestFixtureApp
 			Write ($"Assert.AreEqual ({length}, node.Children.Count);");
 			Write ($"Assert.AreEqual (\"{val}\", node.Children [0].Value);");
 		} else if (type.Equals ("XmpSeq") && length > 1) {
-			string [] vals = val.Split (',');
+			string[] vals = val.Split (',');
 			Write ("Assert.AreEqual (XmpNodeType.Seq, node.Type);");
 			Write ("Assert.AreEqual (\"\", node.Value);");
 			Write ($"Assert.AreEqual ({length}, node.Children.Count);");
@@ -355,12 +354,12 @@ public class GenerateTestFixtureApp
 			for (int i = 0; i < length; i++) {
 				var builder = new List<string> ();
 				for (int j = 0; j < per_iter; j++) {
-					builder.Add (vals[per_iter*i + j].Trim ());
+					builder.Add (vals[per_iter * i + j].Trim ());
 				}
 				Write ($"Assert.AreEqual (\"{string.Join (", ", builder.ToArray ())}\", node.Children [{i}].Value);");
 			}
 		} else if (type.Equals ("XmpBag") && length > 1) {
-			string [] vals = val.Split (',');
+			string[] vals = val.Split (',');
 			Write ("Assert.AreEqual (XmpNodeType.Bag, node.Type);");
 			Write ("Assert.AreEqual (\"\", node.Value);");
 			Write ($"Assert.AreEqual ({length}, node.Children.Count);");
@@ -373,7 +372,7 @@ public class GenerateTestFixtureApp
 			for (int i = 0; i < length; i++) {
 				var builder = new List<string> ();
 				for (int j = 0; j < per_iter; j++) {
-					builder.Add (vals[per_iter*i + j].Trim ());
+					builder.Add (vals[per_iter * i + j].Trim ());
 				}
 				Write ($"Assert.IsTrue (children_array.Contains (\"{string.Join (", ", builder.ToArray ())}\"));");
 			}
@@ -396,8 +395,7 @@ public class GenerateTestFixtureApp
 
 	static string ExtractKey (string file, string key)
 	{
-		string output, err; int code;
-		var result = RunProcess("extractKey", $"{file} {key}", out output, out err, out code);
+		var result = RunProcess ("extractKey", $"{file} {key}", out var output, out var err, out var code);
 		if (!result) {
 			Console.Error.WriteLine ("Invoking extractKey failed, are you running from the examples folder?\n" + err);
 			return string.Empty;
@@ -418,10 +416,11 @@ public class GenerateTestFixtureApp
 			prefix = "MicrosoftPhoto";
 		if (xmp_prefixes.TryGetValue (prefix, out var result))
 			return $"XmpTag.{result}";
-		throw new Exception ("Unknown namespace prefix: "+prefix);
+		throw new Exception ("Unknown namespace prefix: " + prefix);
 	}
 
-	static bool IsPartOfMakernote (string ifd) {
+	static bool IsPartOfMakernote (string ifd)
+	{
 		return ifd.Equals ("MakerNote") ||
 			   ifd.Equals ("Canon") ||
 			   ifd.Equals ("Sony") ||
@@ -436,7 +435,7 @@ public class GenerateTestFixtureApp
 	static void EmitHeader (string name, string path)
 	{
 		int start = path.LastIndexOf ('/');
-		string filename = path.Substring (start+1);
+		string filename = path.Substring (start + 1);
 		Write ("// TODO: This file is automatically generated");
 		Write ("// TODO: Further manual verification is needed");
 		Write ();
@@ -493,7 +492,8 @@ public class GenerateTestFixtureApp
 	static bool iop_emitted = false;
 	static bool gps_emitted = false;
 
-	static void EnsureIFD (string ifd) {
+	static void EnsureIFD (string ifd)
+	{
 		if (ifd.Equals ("PanasonicRaw")) {
 			if (is_panasonic_raw)
 				return;
@@ -691,19 +691,19 @@ public class GenerateTestFixtureApp
 	static void EmitTestIFDRationalEntry (string val)
 	{
 		Write ("Assert.IsNotNull (entry as RationalIFDEntry, \"Entry is not a rational!\");");
-		string[] parts = val.Split('/');
+		string[] parts = val.Split ('/');
 		Write ($"Assert.AreEqual ({parts[0]}, (entry as RationalIFDEntry).Value.Numerator);");
 		Write ($"Assert.AreEqual ({parts[1]}, (entry as RationalIFDEntry).Value.Denominator);");
 	}
 
 	static void EmitTestIFDRationalArrayEntry (string val)
 	{
-		var parts = val.Split(' ');
+		var parts = val.Split (' ');
 		Write ("Assert.IsNotNull (entry as RationalArrayIFDEntry, \"Entry is not a rational array!\");");
 		Write ("var parts = (entry as RationalArrayIFDEntry).Values;");
 		Write ($"Assert.AreEqual ({parts.Length}, parts.Length);");
 		for (int i = 0; i < parts.Length; i++) {
-			var pieces = parts[i].Split('/');
+			var pieces = parts[i].Split ('/');
 			Write ($"Assert.AreEqual ({pieces[0]}, parts[{i}].Numerator);");
 			Write ($"Assert.AreEqual ({pieces[1]}, parts[{i}].Denominator);");
 		}
@@ -712,19 +712,19 @@ public class GenerateTestFixtureApp
 	static void EmitTestIFDSRationalEntry (string val)
 	{
 		Write ("Assert.IsNotNull (entry as SRationalIFDEntry, \"Entry is not a srational!\");");
-		string[] parts = val.Split('/');
+		string[] parts = val.Split ('/');
 		Write ($"Assert.AreEqual ({parts[0]}, (entry as SRationalIFDEntry).Value.Numerator);");
 		Write ($"Assert.AreEqual ({parts[1]}, (entry as SRationalIFDEntry).Value.Denominator);");
 	}
 
 	static void EmitTestIFDSRationalArrayEntry (string val)
 	{
-		var parts = val.Split(' ');
+		var parts = val.Split (' ');
 		Write ("Assert.IsNotNull (entry as SRationalArrayIFDEntry, \"Entry is not a srational array!\");");
 		Write ("var parts = (entry as SRationalArrayIFDEntry).Values;");
 		Write ($"Assert.AreEqual ({parts.Length}, parts.Length);");
 		for (int i = 0; i < parts.Length; i++) {
-			var pieces = parts[i].Split('/');
+			var pieces = parts[i].Split ('/');
 			Write ($"Assert.AreEqual ({pieces[0]}, parts[{i}].Numerator);");
 			Write ($"Assert.AreEqual ({pieces[1]}, parts[{i}].Denominator);");
 		}
@@ -785,26 +785,26 @@ public class GenerateTestFixtureApp
 	{
 		Write ($"Assert.IsNotNull (entry as {type}, \"Entry is not {type_desc}!\");");
 		Write ($"var parsed_bytes = (entry as {type}).Data.Data;");
-		var parts = val.Trim ().Split(' ');
+		var parts = val.Trim ().Split (' ');
 		if (parts.Length < 512) {
 			Write ($"var bytes = new byte [] {{ {string.Join (", ", parts)} }};");
 			Write ("Assert.AreEqual (bytes, parsed_bytes);");
 		} else {
 			// Starting with 512 byte items, we compare based on an MD5 hash, should be faster and reduces
 			// the size of the test fixtures.
-			byte [] data = new byte [parts.Length];
+			byte[] data = new byte[parts.Length];
 			for (int i = 0; i < parts.Length; i++) {
-				data [i] = byte.Parse (parts [i]);
+				data[i] = byte.Parse (parts[i]);
 			}
 			var hash = md5.ComputeHash (data);
 
-			StringBuilder shash = new StringBuilder ();
+			var shash = new StringBuilder ();
 			for (int i = 0; i < hash.Length; i++) {
 				shash.Append (hash[i].ToString ("x2"));
 			}
 
 			Write ("var parsed_hash = Utils.Md5Encode (parsed_bytes);");
-			Write ($"Assert.AreEqual (\"{shash.ToString ()}\", parsed_hash);");
+			Write ($"Assert.AreEqual (\"{shash}\", parsed_hash);");
 			Write ($"Assert.AreEqual ({parts.Length}, parsed_bytes.Length);");
 		}
 	}
@@ -851,7 +851,7 @@ public class GenerateTestFixtureApp
 			Write ($"Assert.AreEqual ({parts[i]}, (entry as ShortArrayIFDEntry).Values [{index + i}]);");
 	}
 
-#region IFD tag names lookup
+	#region IFD tag names lookup
 
 	static Dictionary<string, Dictionary<ushort, string>> tag_names = null;
 
@@ -904,14 +904,14 @@ public class GenerateTestFixtureApp
 		if (!tag_names.ContainsKey (ifd))
 			tag_names[ifd] = new Dictionary<ushort, string> ();
 		foreach (string name in Enum.GetNames (t)) {
-			ushort tag = (ushort) Enum.Parse (t, name);
+			ushort tag = (ushort)Enum.Parse (t, name);
 			tag_names[ifd][tag] = $"{typename}.{name}";
 		}
 	}
 
-#endregion
+	#endregion
 
-#region Code emission
+	#region Code emission
 
 	static int level = 0;
 
@@ -936,5 +936,5 @@ public class GenerateTestFixtureApp
 			level++;
 	}
 
-#endregion
+	#endregion
 }
