@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>$(ExeTargetFrameworks)</TargetFrameworks>
+		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+		<TargetFrameworks Condition="'$(IsLinux)' != 'true'">net472;$(TargetFrameworks)</TargetFrameworks>
 		<EnableMSTestRunner>true</EnableMSTestRunner>
 		<OutputType>Exe</OutputType>
 		<TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
