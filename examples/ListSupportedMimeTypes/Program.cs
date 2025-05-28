@@ -1,7 +1,9 @@
 using System;
 using TagLib;
 
-public class ListSupportedMimeTypes
+namespace ListSupportedMimeTypes;
+
+public class Program
 {
 	public static void Main()
 	{
