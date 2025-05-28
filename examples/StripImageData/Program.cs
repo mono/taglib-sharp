@@ -2,13 +2,15 @@ using TagLib;
 
 using File = TagLib.File;
 
-public class StripImageData
+namespace StripImageData;
+
+public class Program
 {
-	private static byte[] image_data = new byte[] {
+	static readonly byte[] image_data = [
 		0xFF, 0xDA, 0x00, 0x0C, 0x03, 0x01, 0x00,
 		0x02, 0x11, 0x03, 0x11, 0x00, 0x3F, 0x00,
 		0x8C, 0x80, 0x07, 0xFF, 0xD9
-	};
+	];
 
 	public static void Main (string [] args)
 	{
@@ -17,9 +19,9 @@ public class StripImageData
 			return;
 		}
 
-		ImageFile file = new ImageFile (args [0]);
-
-		file.Mode = File.AccessMode.Write;
+		var file = new ImageFile (args[0]) {
+			Mode = File.AccessMode.Write
+		};
 
 		long greatest_segment_position = 0;
 		long greatest_segment_length = 0;
@@ -48,7 +50,7 @@ public class StripImageData
 			return;
 		}
 
-		System.Console.WriteLine ("Stripping data segment at {0}", greatest_segment_position);
+		Console.WriteLine ($"Stripping data segment at {greatest_segment_position}");
 
 		file.RemoveBlock (greatest_segment_position, greatest_segment_length);
 		file.Seek (greatest_segment_position);
@@ -56,17 +58,17 @@ public class StripImageData
 		file.Mode = File.AccessMode.Closed;
 	}
 
-	private static long SkipDataSegment (ImageFile file)
+	static long SkipDataSegment (ImageFile file)
 	{
 		long position = file.Tell;
 
 		// skip sos maker
 		if (file.ReadBlock (2).ToUInt () != 0xFFDA)
-			throw new Exception (String.Format ("Not a data segment at position: {0}", position));
+			throw new Exception ($"Not a data segment at position: {position}");
 
 		while (true) {
-			if (0xFF == (byte) file.ReadBlock (1)[0]) {
-				byte maker = (byte) file.ReadBlock (1)[0];
+			if (0xFF == file.ReadBlock (1)[0]) {
+				byte maker = file.ReadBlock (1)[0];
 
 				if (maker != 0x00 && (maker <= 0xD0 || maker >= 0xD7))
 					break;
@@ -75,42 +77,41 @@ public class StripImageData
 
 		long length = file.Tell - position - 2;
 
-		System.Console.WriteLine ("Data segment of length {0} found at {1}", length, position);
+		Console.WriteLine ($"Data segment of length {length} found at {position}");
 
 		return length;
 	}
 
-	private class ImageFile : File {
+	class ImageFile : File {
 
 		// Hacky implementation to make use of some methods defined in TagLib.File
 
-		public ImageFile (string path)
-		: base (new File.LocalFileAbstraction (path)) {}
+		public ImageFile (string path) : base (new LocalFileAbstraction (path)) {}
 
-		public override Tag GetTag (TagLib.TagTypes type, bool create)
+		public override Tag GetTag (TagTypes type, bool create)
 		{
-			throw new System.NotImplementedException ();
+			throw new NotImplementedException ();
 		}
 
 		public override Properties Properties {
 			get {
-				throw new System.NotImplementedException ();
+				throw new NotImplementedException ();
 			}
 		}
 
-		public override void RemoveTags (TagLib.TagTypes types)
+		public override void RemoveTags (TagTypes types)
 		{
-			throw new System.NotImplementedException ();
+			throw new NotImplementedException ();
 		}
 
 		public override void Save ()
 		{
-			throw new System.NotImplementedException ();
+			throw new NotImplementedException ();
 		}
 
 		public override Tag Tag {
 			get {
-				throw new System.NotImplementedException ();
+				throw new NotImplementedException ();
 			}
 		}
 	}
