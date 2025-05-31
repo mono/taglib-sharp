@@ -3,7 +3,7 @@ using TagLib.IFD.Entries;
 namespace TaglibSharp.Tests.Images;
 
 [TestClass]
-public class RationalTest
+public class RationalTest : TestFixtureBase
 {
 	[TestMethod]
 	public void Rational1 ()

@@ -8,12 +8,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images;
 
 [TestClass]
-public class BadCommentMarkerTest
+public class BadCommentMarkerTest : TestFixtureBase
 {
 	[TestMethod]
 	public void Test ()
 	{
-		ImageTest.Run ("sample_unicode5.jpg",
+		ImageTest.Run (this, "sample_unicode5.jpg",
 			false,
 			new BadCommentMarkerTestInvariantValidator ()
 		);

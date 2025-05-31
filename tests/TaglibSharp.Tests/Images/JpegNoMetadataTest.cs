@@ -3,12 +3,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class JpegNoMetadataTest
+	public class JpegNoMetadataTest : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
 		{
-			ImageTest.Run ("sample_no_metadata.jpg",
+			ImageTest.Run (this, "sample_no_metadata.jpg",
 				new JpegNoMetadataTestInvariantValidator (),
 				NoModificationValidator.Instance,
 				new NoModificationValidator (),

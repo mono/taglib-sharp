@@ -3,11 +3,10 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.FileFormats;
 
 [TestClass]
-public class AiffFormatTest : IFormatTest
+public class AiffFormatTest : TestFixtureBase, IFormatTest
 {
 	static readonly string sample_file = TestPath.Samples + "sample.aif";
 	static readonly string corrupt_file = TestPath.Samples + "corrupta.aif";
-	static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite.aif";
 	static File file;
 
 	[ClassInitialize]
@@ -42,24 +41,28 @@ public class AiffFormatTest : IFormatTest
 	[TestMethod]
 	public void WriteStandardTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.aif");
 		StandardTests.WriteStandardTags (sample_file, tmp_file);
 	}
 
 	[TestMethod]
 	public void WriteExtendedTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.aif");
 		ExtendedTests.WriteExtendedTags (sample_file, tmp_file);
 	}
 
 	[TestMethod]
 	public void WriteStandardPictures ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.aif");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None);
 	}
 
 	[TestMethod]
 	public void WriteStandardPicturesLazy ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.aif");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
 	}
 

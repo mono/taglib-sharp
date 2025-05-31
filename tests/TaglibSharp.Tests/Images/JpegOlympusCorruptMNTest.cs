@@ -8,12 +8,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class JpegOlympusCorruptMNTest
+	public class JpegOlympusCorruptMNTest : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
 		{
-			ImageTest.Run ("sample_olympus_corrupt_mn.jpg",
+			ImageTest.Run (this, "sample_olympus_corrupt_mn.jpg",
 				false,
 				new JpegOlympusCorruptMNTestInvariantValidator ()
 			);

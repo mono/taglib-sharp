@@ -3,7 +3,7 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class GifExiftoolLongCommentTest
+	public class GifExiftoolLongCommentTest : TestFixtureBase
 	{
 		static readonly string long_comment_orig = "This is a very long comment, because long comments must be stored in mutiple sub-blocks. This comment is used to check that long comments are parsed correctly and that they are written back correctly. So what else to say? taglib rocks - 1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz 1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz 1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz 1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz";
 		static readonly string long_comment_test = "ABCD " + long_comment_orig + " CDEF " + long_comment_orig;
@@ -14,7 +14,7 @@ namespace TaglibSharp.Tests.Images
 			// This file is originally created with GIMP and the metadata was modified
 			// by exiftool. A very long comment is added by exiftool because such comments
 			// are stored in multiple sub-blocks. This should be handled by taglib.
-			ImageTest.Run ("sample_exiftool_long_comment.gif",
+			ImageTest.Run (this, "sample_exiftool_long_comment.gif",
 				true,
 				new GifExiftoolLongCommentTestInvariantValidator (),
 				NoModificationValidator.Instance,

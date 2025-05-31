@@ -8,12 +8,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class TiffNikon1Bibble516BitTest
+	public class TiffNikon1Bibble516BitTest : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
 		{
-			ImageTest.Run ("sample_nikon1_bibble5_16bit.tiff",
+			ImageTest.Run (this, "sample_nikon1_bibble5_16bit.tiff",
 				new TiffNikon1Bibble516BitTestInvariantValidator (),
 				NoModificationValidator.Instance,
 				new CommentModificationValidator (string.Empty),

@@ -7,12 +7,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class EmptyCommentTest
+	public class EmptyCommentTest : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
 		{
-			ImageTest.Run ("sample_emptycomment.jpg",
+			ImageTest.Run (this, "sample_emptycomment.jpg",
 				new EmptyCommentTestInvariantValidator (),
 				NoModificationValidator.Instance
 			);

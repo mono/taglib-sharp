@@ -7,12 +7,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images;
 
 [TestClass]
-public class ArwSonyA700
+public class ArwSonyA700 : TestFixtureBase
 {
 	[TestMethod]
 	public void Test ()
 	{
-		ImageTest.Run (TestPath.GetRawSubDirectory ("ARW"), "RAW_SONY_A700.ARW",
+		ImageTest.Run (this, TestPath.GetRawSubDirectory ("ARW"), "RAW_SONY_A700.ARW",
 					   false, new ArwSonyA700InvariantValidator ());
 	}
 }

@@ -6,7 +6,7 @@ namespace TaglibSharp.Tests.Images
 	///    This file contains XMP data ended with null (0x00) value.
 	/// </summary>
 	[TestClass]
-	public class XmpNullEndedTest
+	public class XmpNullEndedTest : TestFixtureBase
 	{
 		static readonly string sample_file = TestPath.Samples + "sample_xmpnullended.jpg";
 

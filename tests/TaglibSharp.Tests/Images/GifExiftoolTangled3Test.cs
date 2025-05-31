@@ -3,7 +3,7 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class GifExiftoolTangled3Test
+	public class GifExiftoolTangled3Test : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
@@ -13,7 +13,7 @@ namespace TaglibSharp.Tests.Images
 			// (1) the blocks which contain the metadata are moved to the end of the file.
 			//     This is allowed and should be handled correctly by taglib.
 			// (2) XMP Block is removed.
-			ImageTest.Run ("sample_exiftool_tangled3.gif",
+			ImageTest.Run (this, "sample_exiftool_tangled3.gif",
 				true,
 				new GifExiftoolTangled3TestInvariantValidator (),
 				NoModificationValidator.Instance,

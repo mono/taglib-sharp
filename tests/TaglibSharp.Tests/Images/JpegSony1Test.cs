@@ -29,10 +29,11 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.Images;
 
 [TestClass]
-public class JpegSony1Test
+public class JpegSony1Test : TestFixtureBase
 {
 	static readonly string sample_file = TestPath.Samples + "sample_sony1.jpg";
-	static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite_sony1.jpg";
+	// Use only the filename part
+	static readonly string tmp_filename = "tmpwrite_sony1.jpg";
 
 	readonly TagTypes contained_types = TagTypes.TiffIFD;
 
@@ -65,10 +66,11 @@ public class JpegSony1Test
 	[TestMethod]
 	public void Rewrite ()
 	{
-		var tmp = Utils.CreateTmpFile (sample_file, tmp_file);
+		var tmp = TestFileHelper.CreateTempFile(this, sample_file, tmp_filename);
 		tmp.Save ();
 
-		tmp = File.Create (tmp_file);
+		// Load the file from the temporary path
+		tmp = TestFileHelper.LoadTempFile(this, sample_file, tmp_filename);
 
 		CheckTags (tmp);
 		CheckExif (tmp);
@@ -79,25 +81,25 @@ public class JpegSony1Test
 	[TestMethod]
 	public void AddExif ()
 	{
-		AddImageMetadataTests.AddExifTest (sample_file, tmp_file, true);
+		AddImageMetadataTests.AddExifTest (this, sample_file, tmp_filename, true);
 	}
 
 	[TestMethod]
 	public void AddGPS ()
 	{
-		AddImageMetadataTests.AddGPSTest (sample_file, tmp_file, true);
+		AddImageMetadataTests.AddGPSTest (this, sample_file, tmp_filename, true);
 	}
 
 	[TestMethod]
 	public void AddXMP1 ()
 	{
-		AddImageMetadataTests.AddXMPTest1 (sample_file, tmp_file, false);
+		AddImageMetadataTests.AddXMPTest1 (this, sample_file, tmp_filename, false);
 	}
 
 	[TestMethod]
 	public void AddXMP2 ()
 	{
-		AddImageMetadataTests.AddXMPTest2 (sample_file, tmp_file, false);
+		AddImageMetadataTests.AddXMPTest2 (this, sample_file, tmp_filename, false);
 	}
 
 	public void CheckTags (File file)
@@ -135,8 +137,7 @@ public class JpegSony1Test
 		var tag = file.GetTag (TagTypes.TiffIFD) as IFDTag;
 		Assert.IsNotNull (tag, "tag");
 
-		var makernote_ifd =
-			tag.ExifIFD.GetEntry (0, (ushort)ExifEntryTag.MakerNote) as MakernoteIFDEntry;
+		var makernote_ifd = tag.ExifIFD.GetEntry (0, (ushort)ExifEntryTag.MakerNote) as MakernoteIFDEntry;
 
 		Assert.IsNotNull (makernote_ifd, "makernote ifd");
 		Assert.AreEqual (MakernoteType.Sony, makernote_ifd.MakernoteType);

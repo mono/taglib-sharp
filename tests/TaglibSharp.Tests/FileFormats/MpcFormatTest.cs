@@ -3,10 +3,9 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.FileFormats;
 
 [TestClass]
-public class MpcFormatTest : IFormatTest
+public class MpcFormatTest : TestFixtureBase, IFormatTest
 {
 	static readonly string sample_file = TestPath.Samples + "sample.mpc";
-	static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite.mpc";
 	static File file;
 
 	[ClassInitialize]
@@ -37,12 +36,14 @@ public class MpcFormatTest : IFormatTest
 	[TestMethod]
 	public void WriteStandardTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.mpc");
 		StandardTests.WriteStandardTags (sample_file, tmp_file);
 	}
 
 	[TestMethod]
 	public void WriteStandardPictures ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.mpc");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None, StandardTests.TestTagLevel.Normal);
 	}
 
@@ -50,6 +51,7 @@ public class MpcFormatTest : IFormatTest
 	[Ignore ("PictureLazy not supported yet")]
 	public void WriteStandardPicturesLazy ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.mpc");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy, StandardTests.TestTagLevel.Normal);
 	}
 

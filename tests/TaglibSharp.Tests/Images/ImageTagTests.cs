@@ -6,7 +6,7 @@ namespace TaglibSharp.Tests.Images;
 ///    This test validates the correct mapping of different metadata formats onto ImageTag.
 /// </summary>
 [TestClass]
-public class ImageTagTests
+public class ImageTagTests : TestFixtureBase
 {
 	[TestMethod]
 	public void TestXMPImageTag ()

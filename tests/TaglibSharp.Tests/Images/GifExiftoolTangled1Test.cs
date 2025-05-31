@@ -3,7 +3,7 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images;
 
 [TestClass]
-public class GifExiftoolTangled1Test
+public class GifExiftoolTangled1Test : TestFixtureBase
 {
 	[TestMethod]
 	public void Test ()
@@ -14,7 +14,7 @@ public class GifExiftoolTangled1Test
 		//     file, but we change the version if we write metadata.
 		// (2) the blocks which contain the metadata are moved to the end of the file.
 		//     This is allowed and should be handled correctly by taglib.
-		ImageTest.Run ("sample_exiftool_tangled1.gif",
+		ImageTest.Run (this, "sample_exiftool_tangled1.gif",
 			true,
 			new GifExiftoolTangled1TestInvariantValidator (),
 			NoModificationValidator.Instance,

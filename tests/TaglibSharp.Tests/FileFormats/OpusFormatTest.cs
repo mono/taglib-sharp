@@ -3,10 +3,9 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.FileFormats;
 
 [TestClass]
-public class OpusFormatTest : IFormatTest
+public class OpusFormatTest : TestFixtureBase, IFormatTest
 {
 	static readonly string sample_file = TestPath.Samples + "sample.opus";
-	static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite.opus";
 	static File file;
 
 	[ClassInitialize]
@@ -37,12 +36,14 @@ public class OpusFormatTest : IFormatTest
 	[TestMethod]
 	public void WriteStandardTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.opus");
 		StandardTests.WriteStandardTags (sample_file, tmp_file);
 	}
 
 	[TestMethod]
 	public void WriteExtendedTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.opus");
 		ExtendedTests.WriteExtendedTags (sample_file, tmp_file);
 	}
 
@@ -50,6 +51,7 @@ public class OpusFormatTest : IFormatTest
 	[TestMethod]
 	public void WriteStandardPictures ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.opus");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None);
 	}
 
@@ -57,6 +59,7 @@ public class OpusFormatTest : IFormatTest
 	[Ignore ("PictureLazy not supported yet")]
 	public void WriteStandardPicturesLazy ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.opus");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
 	}
 

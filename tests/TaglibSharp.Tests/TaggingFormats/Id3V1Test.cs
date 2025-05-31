@@ -2,7 +2,7 @@
 namespace TaglibSharp.Tests.TaggingFormats;
 
 [TestClass]
-public class Id3V1Test
+public class Id3V1Test : TestFixtureBase
 {
 	[TestMethod]
 	public void TestTitle ()

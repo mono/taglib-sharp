@@ -8,7 +8,7 @@ namespace TaglibSharp.Tests.Images
 	///    This is valid, so we need to take it into account.
 	/// </summary>
 	[TestClass]
-	public class XmpCrashTest
+	public class XmpCrashTest : TestFixtureBase
 	{
 		static readonly string sample_file = TestPath.Samples + "sample_xmpcrash.jpg";
 

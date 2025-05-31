@@ -4,7 +4,7 @@ namespace TaglibSharp.Tests.Images
 {
 
 	[TestClass]
-	public class JpegPropertyTest
+	public class JpegPropertyTest : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
@@ -12,7 +12,7 @@ namespace TaglibSharp.Tests.Images
 			// This file is originally created with GIMP and the metadata was modified
 			// by exiftool.
 			// The test is to test some properties of ImageTag
-			ImageTest.Run ("sample_gimp_exiftool.jpg",
+			ImageTest.Run (this, "sample_gimp_exiftool.jpg",
 				true,
 				new JpegPropertyTestInvariantValidator (),
 				NoModificationValidator.Instance,

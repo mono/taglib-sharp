@@ -27,7 +27,7 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class IptcIimTest
+	public class IptcIimTest : TestFixtureBase
 	{
 		[TestMethod]
 		public void Iim_Keywords ()

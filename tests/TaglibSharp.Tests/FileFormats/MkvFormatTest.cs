@@ -3,12 +3,11 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.FileFormats
 {
 	[TestClass]
-	public class MkvFormatTest : IFormatTest
+	public class MkvFormatTest : TestFixtureBase, IFormatTest
 	{
 		static readonly string sample_file = TestPath.Samples + "Turning Lime.mkv";
 		static readonly string sample_picture = TestPath.Samples + "sample_gimp.gif";
 		static readonly string sample_other = TestPath.Samples + "apple_tags.m4a";
-		static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite.mkv";
 		static File file;
 
 		[ClassInitialize]
@@ -80,12 +79,9 @@ namespace TaglibSharp.Tests.FileFormats
 		[TestMethod]
 		public void WritePictures ()
 		{
-			if (System.IO.File.Exists (tmp_file))
-				System.IO.File.Delete (tmp_file);
-
+			var tmp_file = CreateTempFile(sample_file, "tmpwrite.mkv");
 			File file;
 			try {
-				System.IO.File.Copy (sample_file, tmp_file);
 				file = File.Create (tmp_file);
 			} finally { }
 
@@ -149,6 +145,7 @@ namespace TaglibSharp.Tests.FileFormats
 		[TestMethod]
 		public void WriteStandardTags ()
 		{
+			var tmp_file = CreateTempFile(sample_file, "tmpwrite.mkv");
 			StandardTests.WriteStandardTags (sample_file, tmp_file, StandardTests.TestTagLevel.Medium);
 		}
 
@@ -156,12 +153,14 @@ namespace TaglibSharp.Tests.FileFormats
 		[TestMethod]
 		public void WriteStandardPictures ()
 		{
+			var tmp_file = CreateTempFile(sample_file, "tmpwrite.mkv");
 			StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None, StandardTests.TestTagLevel.High);
 		}
 
 		[TestMethod]
 		public void WriteStandardPicturesLazy ()
 		{
+			var tmp_file = CreateTempFile(sample_file, "tmpwrite.mkv");
 			StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy, StandardTests.TestTagLevel.High);
 		}
 
@@ -172,11 +171,8 @@ namespace TaglibSharp.Tests.FileFormats
 		[TestMethod]
 		public void WriteSpecificTags ()
 		{
-			if (System.IO.File.Exists (tmp_file))
-				System.IO.File.Delete (tmp_file);
-
+			var tmp_file = CreateTempFile(sample_file, "tmpwrite.mkv");
 			File file;
-			System.IO.File.Copy (sample_file, tmp_file);
 			file = File.Create (tmp_file);
 			Assert.IsNotNull (file);
 
@@ -263,6 +259,7 @@ namespace TaglibSharp.Tests.FileFormats
 		[TestMethod]
 		public void RemoveStandardTags ()
 		{
+			var tmp_file = CreateTempFile(sample_file, "tmpwrite.mkv");
 			StandardTests.RemoveStandardTags (sample_file, tmp_file);
 		}
 

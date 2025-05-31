@@ -14,21 +14,82 @@ namespace TaglibSharp.Tests.Images.Validators
 
 		public bool CompareImageData { get; set; }
 
+		/// <summary>
+		/// Run image tests with TestFixtureBase for proper file isolation
+		/// </summary>
+		public static void Run (TestFixtureBase testFixture, string filename, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
+		{
+			Run (testFixture, filename, true, invariant, modifications);
+		}
+
+		/// <summary>
+		/// Run image tests with TestFixtureBase for proper file isolation
+		/// </summary>
+		public static void Run (TestFixtureBase testFixture, string directory, string filename, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
+		{
+			Run (testFixture, directory, filename, true, invariant, modifications);
+		}
+
+		/// <summary>
+		/// Run image tests with TestFixtureBase for proper file isolation
+		/// </summary>
+		public static void Run (TestFixtureBase testFixture, string filename, bool compare_image_data, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
+		{
+			Run (testFixture, TestPath.Samples, filename, compare_image_data, invariant, modifications);
+		}
+
+		/// <summary>
+		/// Run image tests with TestFixtureBase for proper file isolation
+		/// </summary>
+		public static void Run (TestFixtureBase testFixture, string directory, string filename, bool compare_image_data, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
+		{
+			if (modifications.Length == 0) {
+				var test = new ImageTest {
+					TestFixture = testFixture,
+					ImageFileName = filename,
+					ImageDirectory = directory,
+					CompareImageData = compare_image_data,
+					InvariantValidator = invariant,
+					ModificationValidator = null
+				};
+				test.TestImage ();
+			} else {
+				foreach (var modification in modifications) {
+					var test = new ImageTest {
+						TestFixture = testFixture,
+						ImageFileName = filename,
+						ImageDirectory = directory,
+						CompareImageData = compare_image_data,
+						InvariantValidator = invariant,
+						ModificationValidator = modification
+					};
+					test.TestImage ();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Legacy methods for backwards compatibility - these should be avoided in new tests
+		/// </summary>
+		[Obsolete("Use Run(TestFixtureBase, ...) overloads instead for proper file isolation")]
 		public static void Run (string filename, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
 		{
 			Run (filename, true, invariant, modifications);
 		}
 
+		[Obsolete("Use Run(TestFixtureBase, ...) overloads instead for proper file isolation")]
 		public static void Run (string directory, string filename, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
 		{
 			Run (directory, filename, true, invariant, modifications);
 		}
 
+		[Obsolete("Use Run(TestFixtureBase, ...) overloads instead for proper file isolation")]
 		public static void Run (string filename, bool compare_image_data, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
 		{
 			Run (TestPath.Samples, filename, compare_image_data, invariant, modifications);
 		}
 
+		[Obsolete("Use Run(TestFixtureBase, ...) overloads instead for proper file isolation")]
 		public static void Run (string directory, string filename, bool compare_image_data, IMetadataInvariantValidator invariant, params IMetadataModificationValidator[] modifications)
 		{
 			if (modifications.Length == 0) {
@@ -89,7 +150,7 @@ namespace TaglibSharp.Tests.Images.Validators
 		void ModifyFile ()
 		{
 			CreateTmpFile ();
-			var tmp = ReadFile (TempImageFile);
+			var tmp = ReadFile (TempImageFilePath ?? TempImageFile);
 			InvariantValidator.ValidateMetadataInvariants (tmp);
 			ModificationValidator.ValidatePreModification (tmp);
 			ModificationValidator.ModifyMetadata (tmp);
@@ -104,7 +165,7 @@ namespace TaglibSharp.Tests.Images.Validators
 		/// </summary>
 		void ParseModifiedFile ()
 		{
-			var tmp = ReadFile (TempImageFile);
+			var tmp = ReadFile (TempImageFilePath ?? TempImageFile);
 			InvariantValidator.ValidateMetadataInvariants (tmp);
 			ModificationValidator.ValidatePostModification (tmp);
 			if (CompareImageData) {
@@ -153,11 +214,23 @@ namespace TaglibSharp.Tests.Images.Validators
 
 		void CreateTmpFile ()
 		{
-            Directory.CreateDirectory(Path.GetDirectoryName(TempImageFile));
-            if (System.IO.File.Exists (TempImageFile))
-				System.IO.File.Delete (TempImageFile);
-			System.IO.File.Copy (ImageFile, TempImageFile);
+			if (TestFixture != null) {
+				// Use TestFixtureBase for proper file isolation
+				TempImageFilePath = TestFixture.CreateTempFile(ImageFile, TempImageFileName);
+			} else {
+				// Legacy behavior for backwards compatibility
+				Directory.CreateDirectory(Path.GetDirectoryName(TempImageFile));
+				if (System.IO.File.Exists (TempImageFile))
+					System.IO.File.Delete (TempImageFile);
+				System.IO.File.Copy (ImageFile, TempImageFile);
+				TempImageFilePath = TempImageFile;
+			}
 		}
+
+		/// <summary>
+		///    The TestFixtureBase instance for file management (null for legacy behavior)
+		/// </summary>
+		TestFixtureBase TestFixture { get; set; }
 
 		/// <summary>
 		///    The filename of the file to test. Name only, no paths.
@@ -173,6 +246,11 @@ namespace TaglibSharp.Tests.Images.Validators
 		string ImageFile => $"{ImageDirectory}/{ImageFileName}";
 
 		string TempImageFile => Path.Combine (TempDirectory, Environment.Version.ToString(), TempImageFileName);
+
+		/// <summary>
+		///    The actual path to the temporary image file (set by CreateTmpFile)
+		/// </summary>
+		string TempImageFilePath { get; set; }
 
 		/// <summary>
 		///    The invariant validator tests for properties that are

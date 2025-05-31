@@ -10,12 +10,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class TiffGimp1Test
+	public class TiffGimp1Test : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
 		{
-			ImageTest.Run ("sample_gimp_lzw.tiff",
+			ImageTest.Run (this, "sample_gimp_lzw.tiff",
 				ImageTest.CompareLargeImages,
 				new TiffGimp1TestInvariantValidator (),
 				NoModificationValidator.Instance

@@ -3,7 +3,7 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class GifExiftoolTangled2Test
+	public class GifExiftoolTangled2Test : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
@@ -15,7 +15,7 @@ namespace TaglibSharp.Tests.Images
 			// (2) the blocks which contain the metadata are moved to the end of the file.
 			//     This is allowed and should be handled correctly by taglib.
 			// (3) Gif Comment block is removed
-			ImageTest.Run ("sample_exiftool_tangled2.gif",
+			ImageTest.Run (this, "sample_exiftool_tangled2.gif",
 				true,
 				new GifExiftoolTangled2TestInvariantValidator (),
 				NoModificationValidator.Instance,

@@ -2,7 +2,7 @@
 namespace TaglibSharp.Tests.TaggingFormats;
 
 [TestClass]
-public class DivXTest
+public class DivXTest : TestFixtureBase
 {
 	[TestMethod]
 	public void TestTitle ()

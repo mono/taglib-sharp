@@ -1,5 +1,5 @@
 //
-//  jpegSonyDscRX100M4.cs
+//  JpegSonyDscRX100M4.cs
 //
 //  Author:
 //       david <codingdave@gmail.com>
@@ -22,26 +22,25 @@
 
 using File = TagLib.File;
 
-namespace TaglibSharp.Tests.Images
+namespace TaglibSharp.Tests.Images;
+
+[TestClass]
+public class JpegSonyDscRX100M4 : TestFixtureBase
 {
-	[TestClass]
-	public class jpegSonyDscRX100M4
+	[TestMethod]
+	public void Test ()
 	{
-		[TestMethod]
-		public void Test ()
-		{
-			bool isSuccess = true;
-			try {
-				File.Create (TestPath.Samples + "sample_sony_DSC-RX100M4.jpg");
-			} catch (ArithmeticException) {
-				// Old versions of TagLib were throwing an ArithmeticException on reading in Sony DSC RX100M4 images
-				isSuccess = false;
-			} catch (Exception) {
-				// All excetions shall make this test fail
-				isSuccess = false;
-			}
-			Assert.IsTrue (isSuccess);
+		bool isSuccess = true;
+		try {
+			File.Create (TestPath.Samples + "sample_sony_DSC-RX100M4.jpg");
+		} catch (ArithmeticException) {
+			// Old versions of TagLib were throwing an ArithmeticException on reading in Sony DSC RX100M4 images
+			isSuccess = false;
+		} catch (Exception) {
+			// All excetions shall make this test fail
+			isSuccess = false;
 		}
+		Assert.IsTrue (isSuccess);
 	}
 }
 

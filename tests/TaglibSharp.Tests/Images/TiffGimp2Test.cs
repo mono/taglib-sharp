@@ -8,12 +8,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class TiffGimp2Test
+	public class TiffGimp2Test : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
 		{
-			ImageTest.Run ("sample_gimp.tiff",
+			ImageTest.Run (this, "sample_gimp.tiff",
 				new TiffGimp2TestInvariantValidator (),
 				NoModificationValidator.Instance
 			);

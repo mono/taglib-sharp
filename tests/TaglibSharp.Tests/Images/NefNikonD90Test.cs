@@ -7,12 +7,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images;
 
 [TestClass]
-public class Nikon
+public class Nikon : TestFixtureBase
 {
 	[TestMethod]
 	public void Test ()
 	{
-		ImageTest.Run (TestPath.GetRawSubDirectory ("NEF"), "RAW_NIKON_D90.NEF",
+		ImageTest.Run (this, TestPath.GetRawSubDirectory ("NEF"), "RAW_NIKON_D90.NEF",
 					   false, new NikonInvariantValidator ());
 	}
 }

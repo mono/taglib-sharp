@@ -3,10 +3,9 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.FileFormats;
 
 [TestClass]
-public class AviFormatTest : IFormatTest
+public class AviFormatTest : TestFixtureBase, IFormatTest
 {
 	static readonly string sample_file = TestPath.Samples + "sample.avi";
-	static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite.avi";
 	static File file;
 
 	[ClassInitialize]
@@ -37,6 +36,7 @@ public class AviFormatTest : IFormatTest
 	[TestMethod]
 	public void WriteStandardTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.avi");
 		StandardTests.WriteStandardTags (sample_file, tmp_file, StandardTests.TestTagLevel.Medium);
 	}
 
@@ -44,12 +44,14 @@ public class AviFormatTest : IFormatTest
 	[TestMethod]
 	public void WriteStandardPictures ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.avi");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None);
 	}
 
 	[TestMethod]
 	public void WriteStandardPicturesLazy ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.avi");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
 	}
 
@@ -57,6 +59,7 @@ public class AviFormatTest : IFormatTest
 	[TestMethod]
 	public void WriteStandardTagsID3v2 ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.avi");
 		StandardTests.WriteStandardTags (sample_file, tmp_file, StandardTests.TestTagLevel.Medium, TagTypes.Id3v2);
 	}
 

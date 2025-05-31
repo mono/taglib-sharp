@@ -3,11 +3,10 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.FileFormats;
 
 [TestClass]
-public class Id3V2FormatTest : IFormatTest
+public class Id3V2FormatTest : TestFixtureBase, IFormatTest
 {
 	static readonly string sample_file = TestPath.Samples + "sample_v2_only.mp3";
 	static readonly string corrupt_file = TestPath.Samples + "corrupt/null_title_v2.mp3";
-	static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite_v2_only.mp3";
 	static readonly string ext_header_file = TestPath.Samples + "sample_v2_3_ext_header.mp3";
 	static File file;
 
@@ -41,7 +40,7 @@ public class Id3V2FormatTest : IFormatTest
 	public void MultiGenresTest ()
 	{
 		string inFile = TestPath.Samples + "sample.mp3";
-		string tempFile = TestPath.Samples + "tmpwrite.mp3";
+		string tempFile = CreateTempFile(inFile, "tmpwrite.mp3");
 
 		var rgFile = File.Create (inFile);
 		var tag = rgFile.Tag;
@@ -53,13 +52,13 @@ public class Id3V2FormatTest : IFormatTest
 		Assert.AreEqual ("Genre 3", genres[2]);
 
 		rgFile.Dispose ();
-		System.IO.File.Delete (tempFile);
 	}
 
 
 	[TestMethod]
 	public void WriteStandardTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite_v2_only.mp3");
 		StandardTests.WriteStandardTags (sample_file, tmp_file);
 	}
 
@@ -67,23 +66,21 @@ public class Id3V2FormatTest : IFormatTest
 	[TestMethod]
 	public void WriteStandardPictures ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite_v2_only.mp3");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None);
 	}
 
 	[TestMethod]
 	public void WriteExtendedTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite_v2_only.mp3");
 		ExtendedTests.WriteExtendedTags (sample_file, tmp_file);
 	}
 
 	[TestMethod] // http://bugzilla.gnome.org/show_bug.cgi?id=558123
 	public void TestTruncateOnNull ()
 	{
-		if (System.IO.File.Exists (tmp_file)) {
-			System.IO.File.Delete (tmp_file);
-		}
-
-		System.IO.File.Copy (corrupt_file, tmp_file);
+		var tmp_file = CreateTempFile(corrupt_file, "tmpwrite_v2_only.mp3");
 		var tmp = File.Create (tmp_file);
 
 		Assert.AreEqual ("T", tmp.Tag.Title);
@@ -105,10 +102,7 @@ public class Id3V2FormatTest : IFormatTest
 	[TestMethod]
 	public void URLLinkFrameTest ()
 	{
-		string tempFile = TestPath.SamplesTmp + "tmpwrite_sample_v2_only.mp3";
-		Directory.CreateDirectory (Path.GetDirectoryName (tempFile));
-
-        System.IO.File.Copy (sample_file, tempFile, true);
+		string tempFile = CreateTempFile(sample_file, "tmpwrite_sample_v2_only.mp3");
 
 		var urlLinkFile = File.Create (tempFile);
 		var id3v2tag = urlLinkFile.GetTag (TagTypes.Id3v2) as TagLib.Id3v2.Tag;
@@ -134,8 +128,6 @@ public class Id3V2FormatTest : IFormatTest
 		Assert.AreEqual ("www.payment.com", id3v2tag.GetTextAsString ("WPAY"));
 		Assert.AreEqual ("www.official-publisher.com", id3v2tag.GetTextAsString ("WPUB"));
 		urlLinkFile.Dispose ();
-
-		System.IO.File.Delete (tempFile);
 	}
 
 	/// <summary>
@@ -145,10 +137,7 @@ public class Id3V2FormatTest : IFormatTest
 	[TestMethod]
 	public void TestPicturesAreCopied ()
 	{
-		string tempFile = TestPath.SamplesTmp + "tmpwrite_sample_v2_only.mp3";
-        Directory.CreateDirectory (Path.GetDirectoryName (tempFile));
-
-        System.IO.File.Copy (sample_file, tempFile, true);
+		string tempFile = CreateTempFile(sample_file, "tmpwrite_sample_v2_only.mp3");
 
 		// Put a picture on the starting file
 		File file = TagLib.File.Create (tempFile);

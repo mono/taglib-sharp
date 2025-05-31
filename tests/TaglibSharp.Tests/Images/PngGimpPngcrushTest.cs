@@ -3,13 +3,13 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class PngGimpPngcrushTest
+	public class PngGimpPngcrushTest : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
 		{
 			// This file is originally created with GIMP and was modified with png crush:
-			ImageTest.Run ("sample_gimp_pngcrush.png",
+			ImageTest.Run (this, "sample_gimp_pngcrush.png",
 				true,
 				new PngGimpPngcrushTestInvariantValidator (),
 				NoModificationValidator.Instance,

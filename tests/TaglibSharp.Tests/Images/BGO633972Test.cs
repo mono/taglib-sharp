@@ -7,12 +7,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class BGO633972Test
+	public class BGO633972Test : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
 		{
-			ImageTest.Run (TestPath.GetRawSubDirectory ("CR2"), "sample_canon_350d_broken.cr2",
+			ImageTest.Run (this, TestPath.GetRawSubDirectory ("CR2"), "sample_canon_350d_broken.cr2",
 						   false, new BGO633972TestInvariantValidator ());
 		}
 	}

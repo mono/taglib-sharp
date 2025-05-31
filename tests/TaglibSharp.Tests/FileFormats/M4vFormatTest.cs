@@ -3,7 +3,7 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.FileFormats;
 
 [TestClass]
-public class M4vFormatTest : IFormatTest
+public class M4vFormatTest : TestFixtureBase, IFormatTest
 {
 	readonly ReadOnlyByteVector BOXTYPE_LDES = "ldes"; // long description
 	readonly ReadOnlyByteVector BOXTYPE_TVSH = "tvsh"; // TV Show or series
@@ -14,7 +14,6 @@ public class M4vFormatTest : IFormatTest
 	const string TV_SHOW = "Ask An Astronomer";
 
 	readonly static string sample_file = TestPath.Samples + "sample.m4v";
-	readonly static string tmp_file = TestPath.SamplesTmp + "tmpwrite.m4v";
 	static File file;
 
 	[ClassInitialize]
@@ -62,11 +61,7 @@ public class M4vFormatTest : IFormatTest
 	[TestMethod]
 	public void WriteAppleTags ()
 	{
-		if (System.IO.File.Exists (tmp_file))
-			System.IO.File.Delete (tmp_file);
-
-		System.IO.File.Copy (sample_file, tmp_file);
-
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.m4v");
 		var tmp = File.Create (tmp_file);
 		var tag = (TagLib.Mpeg4.AppleTag)tmp.GetTag (TagTypes.Apple, false);
 		SetTags (tag);
@@ -81,6 +76,7 @@ public class M4vFormatTest : IFormatTest
 	[Ignore ("PictureLazy not supported yet")]
 	public void WriteStandardPicturesLazy ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.m4v");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
 	}
 

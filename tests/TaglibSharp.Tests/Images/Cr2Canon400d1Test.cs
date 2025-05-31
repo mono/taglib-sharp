@@ -7,12 +7,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class Cr2Canon400d1Test
+	public class Cr2Canon400d1Test : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
 		{
-			ImageTest.Run (TestPath.GetRawSubDirectory ("CR2"), "sample_canon_400d1.cr2",
+			ImageTest.Run (this, TestPath.GetRawSubDirectory ("CR2"), "sample_canon_400d1.cr2",
 						   false, new Cr2Canon400d1TestInvariantValidator ());
 		}
 	}

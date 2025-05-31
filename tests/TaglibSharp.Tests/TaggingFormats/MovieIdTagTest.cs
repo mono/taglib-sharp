@@ -1,7 +1,7 @@
 namespace TaglibSharp.Tests.TaggingFormats
 {
 	[TestClass]
-	public class MovieIdTagTest
+	public class MovieIdTagTest : TestFixtureBase
 	{
 		static readonly string val_sing =
 			"01234567890123456789012345678901234567890123456789";

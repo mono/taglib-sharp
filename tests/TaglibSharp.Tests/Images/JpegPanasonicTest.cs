@@ -7,12 +7,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class JpegPanasonicTest
+	public class JpegPanasonicTest : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
 		{
-			ImageTest.Run ("sample_panasonic.jpg",
+			ImageTest.Run (this, "sample_panasonic.jpg",
 				new JpegPanasonicTestInvariantValidator (),
 				NoModificationValidator.Instance,
 				new CommentModificationValidator (),

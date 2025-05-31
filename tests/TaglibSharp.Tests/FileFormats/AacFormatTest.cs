@@ -5,10 +5,9 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.FileFormats
 {
 	[TestClass]
-	public class AacFormatTest : IFormatTest
+	public class AacFormatTest : TestFixtureBase, IFormatTest
 	{
 		static readonly string sample_file = TestPath.Samples + "sample.aac";
-		static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite.aac";
 		static File file;
 
 		[ClassInitialize]
@@ -38,18 +37,21 @@ namespace TaglibSharp.Tests.FileFormats
 		[TestMethod]
 		public void WriteStandardTags ()
 		{
+			var tmp_file = CreateTempFile(sample_file, "tmpwrite.aac");
 			StandardTests.WriteStandardTags (sample_file, tmp_file);
 		}
 
 		[TestMethod]
 		public void WriteStandardPictures ()
 		{
+			var tmp_file = CreateTempFile(sample_file, "tmpwrite.aac");
 			StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None);
 		}
 
 		[TestMethod]
 		public void WriteStandardPicturesLazy ()
 		{
+			var tmp_file = CreateTempFile(sample_file, "tmpwrite.aac");
 			StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
 		}
 

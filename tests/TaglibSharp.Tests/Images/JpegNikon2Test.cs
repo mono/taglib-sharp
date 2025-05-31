@@ -8,10 +8,11 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.Images;
 
 [TestClass]
-public class JpegNikon2Test
+public class JpegNikon2Test : TestFixtureBase
 {
 	static readonly string sample_file = TestPath.Samples + "sample_nikon2.jpg";
-	static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite_nikon2.jpg";
+	// We'll keep the tmp_file name but will use TestFixtureBase for the actual path
+	static readonly string tmp_filename = "tmpwrite_nikon2.jpg";
 
 	readonly TagTypes contained_types = TagTypes.TiffIFD | TagTypes.XMP;
 
@@ -56,10 +57,11 @@ public class JpegNikon2Test
 	[TestMethod]
 	public void Rewrite ()
 	{
-		var tmp = Utils.CreateTmpFile (sample_file, tmp_file);
+		var tmp = TestFileHelper.CreateTempFile(this, sample_file, tmp_filename);
 		tmp.Save ();
 
-		tmp = File.Create (tmp_file);
+		// Load the file from the temporary path
+		tmp = TestFileHelper.LoadTempFile(this, sample_file, tmp_filename);
 
 		CheckTags (tmp);
 		CheckExif (tmp);
@@ -71,25 +73,25 @@ public class JpegNikon2Test
 	[TestMethod]
 	public void AddExif ()
 	{
-		AddImageMetadataTests.AddExifTest (sample_file, tmp_file, true);
+		AddImageMetadataTests.AddExifTest (this, sample_file, tmp_filename, true);
 	}
 
 	[TestMethod]
 	public void AddGPS ()
 	{
-		AddImageMetadataTests.AddGPSTest (sample_file, tmp_file, true);
+		AddImageMetadataTests.AddGPSTest (this, sample_file, tmp_filename, true);
 	}
 
 	[TestMethod]
 	public void AddXMP1 ()
 	{
-		AddImageMetadataTests.AddXMPTest1 (sample_file, tmp_file, true);
+		AddImageMetadataTests.AddXMPTest1 (this, sample_file, tmp_filename, true);
 	}
 
 	[TestMethod]
 	public void AddXMP2 ()
 	{
-		AddImageMetadataTests.AddXMPTest2 (sample_file, tmp_file, true);
+		AddImageMetadataTests.AddXMPTest2 (this, sample_file, tmp_filename, true);
 	}
 
 	public void CheckTags (File file)

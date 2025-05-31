@@ -5,7 +5,7 @@ namespace TaglibSharp.Tests.TaggingFormats
 	// NOTE: If StringType == UTF8 (default) then don't set it during the test.
 	//       We want to make sure that default still works as expected
 	[TestClass]
-	public class InfoTagTest
+	public class InfoTagTest : TestFixtureBase
 	{
 		static readonly string val_sing =
 			"01234567890123456789012345678901234567890123456789";

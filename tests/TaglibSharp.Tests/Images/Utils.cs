@@ -9,6 +9,31 @@ public static class Utils
 {
 	static readonly MD5 md5 = MD5.Create ();
 
+	/// <summary>
+	/// Creates a temporary file by copying from a source file using TestFixtureBase
+	/// </summary>
+	/// <param name="testFixture">The test fixture instance to use for file management</param>
+	/// <param name="sample_file">Source file to copy from</param>
+	/// <param name="tmp_file">Target temporary file path (can be just a filename)</param>
+	/// <returns>TagLib File instance for the temporary file</returns>
+	public static File CreateTmpFile (TestFixtureBase testFixture, string sample_file, string tmp_file)
+	{
+		if (sample_file == tmp_file)
+			throw new Exception ("files cannot be equal");
+
+		// Use TestFixtureBase to create the temporary file
+		// Extract just the filename if a full path is provided
+		var tempFileName = Path.GetFileName(tmp_file);
+		var tempFilePath = testFixture.CreateTempFile(sample_file, tempFileName);
+		
+		return File.Create (tempFilePath);
+	}
+
+	/// <summary>
+	/// Legacy method for backwards compatibility - creates temporary file without TestFixtureBase
+	/// This method should be avoided in new tests in favor of the TestFixtureBase version
+	/// </summary>
+	[Obsolete("Use CreateTmpFile(TestFixtureBase, string, string) instead for proper file isolation")]
 	public static File CreateTmpFile (string sample_file, string tmp_file)
 	{
 		if (sample_file == tmp_file)

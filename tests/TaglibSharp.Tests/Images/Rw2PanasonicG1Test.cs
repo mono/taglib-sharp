@@ -10,12 +10,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images;
 
 [TestClass]
-public class Rw2PanasonicG1Test
+public class Rw2PanasonicG1Test : TestFixtureBase
 {
 	[TestMethod]
 	public void Test ()
 	{
-		ImageTest.Run (TestPath.GetRawSubDirectory ("RW2"), "RAW_PANASONIC_G1.RW2",
+		ImageTest.Run (this, TestPath.GetRawSubDirectory ("RW2"), "RAW_PANASONIC_G1.RW2",
 					   false, new Rw2PanasonicG1TestInvariantValidator ());
 	}
 }

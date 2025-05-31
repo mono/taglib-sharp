@@ -3,12 +3,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images;
 
 [TestClass]
-public class RawLeicaDigilux2Test
+public class RawLeicaDigilux2Test : TestFixtureBase
 {
 	[TestMethod]
 	public void Test ()
 	{
-		ImageTest.Run (TestPath.GetRawSubDirectory ("RAW"), "RAW_LEICA_DIGILUX2_SRGB.RAW",
+		ImageTest.Run (this, TestPath.GetRawSubDirectory ("RAW"), "RAW_LEICA_DIGILUX2_SRGB.RAW",
 					   false, new RawLeicaDigilux2TestInvariantValidator ());
 	}
 }

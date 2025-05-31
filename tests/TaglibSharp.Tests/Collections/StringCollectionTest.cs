@@ -1,7 +1,7 @@
 namespace TaglibSharp.Tests.Collections
 {
 	[TestClass]
-	public class StringCollectionTest
+	public class StringCollectionTest : TestFixtureBase
 	{
 		static StringCollection BuildList ()
 		{

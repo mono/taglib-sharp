@@ -7,12 +7,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class BGO625367Test
+	public class BGO625367Test : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
 		{
-			ImageTest.Run ("sample_bgo625367.jpg", false, new BGO625367TestInvariantValidator ());
+			ImageTest.Run (this, "sample_bgo625367.jpg", false, new BGO625367TestInvariantValidator ());
 		}
 	}
 

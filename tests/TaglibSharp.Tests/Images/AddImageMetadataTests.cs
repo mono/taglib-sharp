@@ -11,9 +11,12 @@ public static class AddImageMetadataTests
 
 	public static readonly string[] keywords = { "keyword 1", "§$&§%", "99 dsf" };
 
-	public static void AddExifTest (string sample_file, string tmp_file, bool contains_exif)
+	public static void AddExifTest (TestFixtureBase testFixture, string sample_file, string tmp_file, bool contains_exif)
 	{
-		var file = Utils.CreateTmpFile (sample_file, tmp_file);
+		// Create a temp file in the TestFixtureBase's temp directory and get the actual path
+		string tempFilePath = testFixture.CreateTempFile(sample_file, tmp_file);
+		var file = File.Create(tempFilePath);
+		
 		IFDTag exif_tag;
 
 		if (!contains_exif) {
@@ -35,7 +38,9 @@ public static class AddImageMetadataTests
 
 		// Store and reload file
 		file.Save ();
-		file = File.Create (tmp_file);
+		
+		// Reopen the same file - don't create a new one
+		file = File.Create(tempFilePath);
 
 		exif_tag = file.GetTag (TagTypes.TiffIFD, false) as IFDTag;
 		Assert.IsNotNull (exif_tag, "Tiff Tag not read");
@@ -46,19 +51,22 @@ public static class AddImageMetadataTests
 		Assert.AreEqual (date_time, exif_tag.DateTimeOriginal);
 	}
 
-	public static void AddGPSTest (string sample_file, string tmp_file, bool contains_tiff)
+	public static void AddGPSTest (TestFixtureBase testFixture, string sample_file, string tmp_file, bool contains_tiff)
 	{
-		AddGPSTest (sample_file, tmp_file, contains_tiff, +53.231d, +168.19823d, 40.0d);
-		AddGPSTest (sample_file, tmp_file, contains_tiff, -21.342d, +88.18232d, -39.0d);
-		AddGPSTest (sample_file, tmp_file, contains_tiff, +75.12931d, -8.98712d, -10.0d);
-		AddGPSTest (sample_file, tmp_file, contains_tiff, -42.1023d, -113.12432d, 1920.0d);
-		AddGPSTest (sample_file, tmp_file, contains_tiff, -87.23d, +23.9743d, 0.0000123d);
-		AddGPSTest (sample_file, tmp_file, contains_tiff, +72.123d, +17.432d, -0.0000089d);
+		AddGPSTest (testFixture, sample_file, tmp_file, contains_tiff, +53.231d, +168.19823d, 40.0d);
+		AddGPSTest (testFixture, sample_file, tmp_file, contains_tiff, -21.342d, +88.18232d, -39.0d);
+		AddGPSTest (testFixture, sample_file, tmp_file, contains_tiff, +75.12931d, -8.98712d, -10.0d);
+		AddGPSTest (testFixture, sample_file, tmp_file, contains_tiff, -42.1023d, -113.12432d, 1920.0d);
+		AddGPSTest (testFixture, sample_file, tmp_file, contains_tiff, -87.23d, +23.9743d, 0.0000123d);
+		AddGPSTest (testFixture, sample_file, tmp_file, contains_tiff, +72.123d, +17.432d, -0.0000089d);
 	}
 
-	public static void AddXMPTest1 (string sample_file, string tmp_file, bool contains_xmp)
+	public static void AddXMPTest1 (TestFixtureBase testFixture, string sample_file, string tmp_file, bool contains_xmp)
 	{
-		var file = Utils.CreateTmpFile (sample_file, tmp_file);
+		// Create a temp file in the TestFixtureBase's temp directory and get the actual path
+		string tempFilePath = testFixture.CreateTempFile(sample_file, tmp_file);
+		var file = File.Create(tempFilePath);
+		
 		XmpTag xmp_tag;
 
 		if (!contains_xmp) {
@@ -79,7 +87,9 @@ public static class AddImageMetadataTests
 
 		// Store and reload file
 		file.Save ();
-		file = File.Create (tmp_file);
+		
+		// Reopen the same file - don't create a new one
+		file = File.Create(tempFilePath);
 
 		xmp_tag = file.GetTag (TagTypes.XMP, false) as XmpTag;
 		Assert.IsNotNull (xmp_tag, "XMP Tag not read");
@@ -89,9 +99,12 @@ public static class AddImageMetadataTests
 		Assert.IsNull (xmp_tag.Software);
 	}
 
-	public static void AddXMPTest2 (string sample_file, string tmp_file, bool contains_xmp)
+	public static void AddXMPTest2 (TestFixtureBase testFixture, string sample_file, string tmp_file, bool contains_xmp)
 	{
-		var file = Utils.CreateTmpFile (sample_file, tmp_file);
+		// Create a temp file in the TestFixtureBase's temp directory and get the actual path
+		string tempFilePath = testFixture.CreateTempFile(sample_file, tmp_file);
+		var file = File.Create(tempFilePath);
+		
 		XmpTag xmp_tag;
 
 		if (!contains_xmp) {
@@ -112,7 +125,9 @@ public static class AddImageMetadataTests
 
 		// Store and reload file
 		file.Save ();
-		file = File.Create (tmp_file);
+		
+		// Reopen the same file - don't create a new one
+		file = File.Create(tempFilePath);
 
 		xmp_tag = file.GetTag (TagTypes.XMP, false) as XmpTag;
 		Assert.IsNotNull (xmp_tag, "XMP Tag not read");
@@ -122,9 +137,11 @@ public static class AddImageMetadataTests
 		Assert.AreEqual (test_comment, xmp_tag.Software);
 	}
 
-	public static void AddAllTest (string sample_file, string tmp_file)
+	public static void AddAllTest (TestFixtureBase testFixture, string sample_file, string tmp_file)
 	{
-		var file = Utils.CreateTmpFile (sample_file, tmp_file) as TagLib.Image.File;
+		// Create a temp file in the TestFixtureBase's temp directory and get the actual path
+		string tempFilePath = testFixture.CreateTempFile(sample_file, tmp_file);
+		var file = File.Create(tempFilePath) as TagLib.Image.File;
 
 		Assert.IsNotNull (file, "file");
 
@@ -150,7 +167,9 @@ public static class AddImageMetadataTests
 
 		// Store and reload file
 		file.Save ();
-		file = File.Create (tmp_file) as TagLib.Image.File;
+		
+		// Reopen the same file - don't create a new one
+		file = File.Create(tempFilePath) as TagLib.Image.File;
 
 		Assert.IsNotNull (file, "tmp file");
 
@@ -177,9 +196,12 @@ public static class AddImageMetadataTests
 		Assert.AreEqual (3.0, ifd_tag.Altitude);
 	}
 
-	static void AddGPSTest (string sample_file, string tmp_file, bool contains_tiff, double latitude, double longitude, double altitude)
+	static void AddGPSTest (TestFixtureBase testFixture, string sample_file, string tmp_file, bool contains_tiff, double latitude, double longitude, double altitude)
 	{
-		var file = Utils.CreateTmpFile (sample_file, tmp_file);
+		// Create a temp file in the TestFixtureBase's temp directory and get the actual path
+		string tempFilePath = testFixture.CreateTempFile(sample_file, tmp_file);
+		var file = File.Create(tempFilePath);
+		
 		IFDTag ifd;
 
 		if (!contains_tiff) {
@@ -203,7 +225,9 @@ public static class AddImageMetadataTests
 
 		// Store and reload file
 		file.Save ();
-		file = File.Create (tmp_file);
+		
+		// Reopen the same file - don't create a new one
+		file = File.Create(tempFilePath);
 
 		ifd = file.GetTag (TagTypes.TiffIFD, false) as IFDTag;
 		Assert.IsNotNull (ifd, "Tiff IFD not read");

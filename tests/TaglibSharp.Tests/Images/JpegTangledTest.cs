@@ -9,12 +9,13 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.Images;
 
 [TestClass]
-public class JpegTangledTest
+public class JpegTangledTest : TestFixtureBase
 {
 	static readonly int count = 6;
 
 	static readonly string sample_file = TestPath.Samples + "sample_tangled{0}.jpg";
-	static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite_tangled{0}.jpg";
+	// Keep just the filename pattern for temp files
+	static readonly string tmp_filename = "tmpwrite_tangled{0}.jpg";
 
 	static readonly TagTypes[] contained_types = {
 			TagTypes.JpegComment | TagTypes.TiffIFD | TagTypes.XMP,
@@ -32,9 +33,9 @@ public class JpegTangledTest
 		return string.Format (sample_file, i + 1);
 	}
 
-	static string GetTmpFilename (int i)
+	string GetTmpFilename (int i)
 	{
-		return string.Format (tmp_file, i + 1);
+		return string.Format (tmp_filename, i + 1);
 	}
 
 	[ClassInitialize]
@@ -80,13 +81,12 @@ public class JpegTangledTest
 	[TestMethod]
 	public void Rewrite ()
 	{
-
 		for (int i = 0; i < count; i++) {
-			var tmp = Utils.CreateTmpFile (GetSampleFilename (i), GetTmpFilename (i));
+			var tmp = TestFileHelper.CreateTempFile(this, GetSampleFilename(i), GetTmpFilename(i));
+			tmp.Save();
 
-			tmp.Save ();
-
-			tmp = File.Create (GetTmpFilename (i));
+			// Load the file from the temporary path
+			tmp = TestFileHelper.LoadTempFile(this, GetSampleFilename(i), GetTmpFilename(i));
 
 			if ((TagTypes.TiffIFD & contained_types[i]) != 0)
 				CheckExif (tmp, i);
@@ -103,7 +103,7 @@ public class JpegTangledTest
 	public void AddExif ()
 	{
 		for (int i = 0; i < count; i++)
-			AddImageMetadataTests.AddExifTest (GetSampleFilename (i),
+			AddImageMetadataTests.AddExifTest (this, GetSampleFilename (i),
 											   GetTmpFilename (i),
 											   (TagTypes.TiffIFD & contained_types[i]) != 0);
 	}
@@ -112,7 +112,7 @@ public class JpegTangledTest
 	public void AddGPS ()
 	{
 		for (int i = 0; i < count; i++)
-			AddImageMetadataTests.AddGPSTest (GetSampleFilename (i),
+			AddImageMetadataTests.AddGPSTest (this, GetSampleFilename (i),
 											  GetTmpFilename (i),
 											  (TagTypes.TiffIFD & contained_types[i]) != 0);
 	}
@@ -121,7 +121,7 @@ public class JpegTangledTest
 	public void AddXMP1 ()
 	{
 		for (int i = 0; i < count; i++)
-			AddImageMetadataTests.AddXMPTest1 (GetSampleFilename (i),
+			AddImageMetadataTests.AddXMPTest1 (this, GetSampleFilename (i),
 											  GetTmpFilename (i),
 											  (TagTypes.XMP & contained_types[i]) != 0);
 	}
@@ -130,7 +130,7 @@ public class JpegTangledTest
 	public void AddXMP2 ()
 	{
 		for (int i = 0; i < count; i++)
-			AddImageMetadataTests.AddXMPTest2 (GetSampleFilename (i),
+			AddImageMetadataTests.AddXMPTest2 (this, GetSampleFilename (i),
 											  GetTmpFilename (i),
 											  (TagTypes.XMP & contained_types[i]) != 0);
 	}

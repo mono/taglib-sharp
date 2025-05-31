@@ -3,7 +3,7 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.Performance;
 
 [TestClass]
-public class PerformanceTest
+public class PerformanceTest : TestFixtureBase
 {
 	[TestMethod]
 	public void CreateM4a ()

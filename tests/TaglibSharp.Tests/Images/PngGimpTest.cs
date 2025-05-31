@@ -3,13 +3,13 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class PngGimpTest
+	public class PngGimpTest : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
 		{
 			// This file is originally created with GIMP.
-			ImageTest.Run ("sample_gimp.png",
+			ImageTest.Run (this, "sample_gimp.png",
 				true,
 				new PngGimpTestInvariantValidator (),
 				NoModificationValidator.Instance,

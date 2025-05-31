@@ -7,12 +7,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class InvalidIFDEntryTypeTest
+	public class InvalidIFDEntryTypeTest : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
 		{
-			ImageTest.Run ("sample_badifdentrytype.jpg",
+			ImageTest.Run (this, "sample_badifdentrytype.jpg",
 				false,
 				new InvalidIFDEntryTypeTestInvariantValidator ()
 			);

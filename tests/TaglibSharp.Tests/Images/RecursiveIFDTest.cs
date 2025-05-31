@@ -7,12 +7,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class RecursiveIFDTest
+	public class RecursiveIFDTest : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
 		{
-			ImageTest.Run ("sample_recursive_ifd.jpg",
+			ImageTest.Run (this, "sample_recursive_ifd.jpg",
 				false,
 				new RecursiveIFDTestInvariantValidator ()
 			);

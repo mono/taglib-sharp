@@ -5,7 +5,7 @@ using Tag = TagLib.Id3v2.Tag;
 namespace TaglibSharp.Tests.TaggingFormats;
 
 [TestClass]
-public class Id3V2Test
+public class Id3V2Test : TestFixtureBase
 {
 	static readonly string val_sing =
 		"01234567890123456789012345678901234567890123456789";

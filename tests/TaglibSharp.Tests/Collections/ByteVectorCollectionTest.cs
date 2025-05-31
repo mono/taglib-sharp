@@ -1,7 +1,7 @@
 namespace TaglibSharp.Tests.Collections
 {
 	[TestClass]
-	public class ByteVectorCollectionTest
+	public class ByteVectorCollectionTest : TestFixtureBase
 	{
 		static ByteVectorCollection BuildList ()
 		{

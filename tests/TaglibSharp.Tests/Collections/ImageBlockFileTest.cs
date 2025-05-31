@@ -3,7 +3,7 @@ using TagLib.Image;
 namespace TaglibSharp.Tests.Collections
 {
 	[TestClass]
-	public class ImageBlockFileTest
+	public class ImageBlockFileTest : TestFixtureBase
 	{
 		static readonly string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 

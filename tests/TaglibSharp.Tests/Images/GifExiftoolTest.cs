@@ -3,14 +3,14 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class GifExiftoolTest
+	public class GifExiftoolTest : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
 		{
 			// This file is originally created with GIMP and the metadata was modified
 			// by exiftool.
-			ImageTest.Run ("sample_exiftool.gif",
+			ImageTest.Run (this, "sample_exiftool.gif",
 				true,
 				new GifExiftoolTestInvariantValidator (),
 				NoModificationValidator.Instance,

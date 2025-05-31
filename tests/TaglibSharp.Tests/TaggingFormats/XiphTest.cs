@@ -4,7 +4,7 @@ using XiphComment = TagLib.Ogg.XiphComment;
 namespace TaglibSharp.Tests.TaggingFormats
 {
 	[TestClass]
-	public class OggTest
+	public class OggTest : TestFixtureBase
 	{
 		static readonly string val_sing =
 			"01234567890123456789012345678901234567890123456789";

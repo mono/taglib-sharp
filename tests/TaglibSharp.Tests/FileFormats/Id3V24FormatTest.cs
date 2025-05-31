@@ -3,10 +3,9 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.FileFormats;
 
 [TestClass]
-public class Id3V24FormatTest : IFormatTest
+public class Id3V24FormatTest : TestFixtureBase, IFormatTest
 {
 	readonly static string sample_file = TestPath.Samples + "sample_v2_4_unsynch.mp3";
-	readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite_v2_4_unsynch.mp3";
 	static File file;
 
 	[ClassInitialize]
@@ -40,18 +39,21 @@ public class Id3V24FormatTest : IFormatTest
 	[TestMethod]
 	public void WriteStandardTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite_v2_4_unsynch.mp3");
 		StandardTests.WriteStandardTags (sample_file, tmp_file);
 	}
 
 	[TestMethod]
 	public void WriteStandardPictures ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite_v2_4_unsynch.mp3");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None);
 	}
 
 	[TestMethod]
 	public void WriteStandardPicturesLazy ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite_v2_4_unsynch.mp3");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
 	}
 
@@ -63,7 +65,7 @@ public class Id3V24FormatTest : IFormatTest
 	public void ReplayGainTest ()
 	{
 		string inFile = TestPath.Samples + "sample_replaygain.mp3";
-		string tempFile = TestPath.Samples + "tmpwrite_sample_replaygain.mp3";
+		string tempFile = CreateTempFile(inFile, "tmpwrite_sample_replaygain.mp3");
 
 		var rgFile = File.Create (inFile);
 		Assert.AreEqual (2.22d, rgFile.Tag.ReplayGainTrackGain);
@@ -72,7 +74,6 @@ public class Id3V24FormatTest : IFormatTest
 		Assert.AreEqual (0.518785d, rgFile.Tag.ReplayGainAlbumPeak);
 		rgFile.Dispose ();
 
-		System.IO.File.Copy (inFile, tempFile, true);
 
 		rgFile = File.Create (tempFile);
 		rgFile.Tag.ReplayGainTrackGain = -1;
@@ -100,16 +101,12 @@ public class Id3V24FormatTest : IFormatTest
 		Assert.AreEqual (double.NaN, rgFile.Tag.ReplayGainAlbumGain);
 		Assert.AreEqual (double.NaN, rgFile.Tag.ReplayGainAlbumPeak);
 		rgFile.Dispose ();
-
-		System.IO.File.Delete (tempFile);
 	}
 
 	[TestMethod]
 	public void URLLinkFrameTest ()
 	{
-		string tempFile = TestPath.Samples + "tmpwrite_urllink_v2_4_unsynch.mp3";
-
-		System.IO.File.Copy (sample_file, tempFile, true);
+		string tempFile = CreateTempFile(sample_file, "tmpwrite_urllink_v2_4_unsynch.mp3");
 
 		var urlLinkFile = File.Create (tempFile);
 		var id3v2tag = urlLinkFile.GetTag (TagTypes.Id3v2) as TagLib.Id3v2.Tag;
@@ -135,7 +132,5 @@ public class Id3V24FormatTest : IFormatTest
 		Assert.AreEqual ("www.payment.com", id3v2tag.GetTextAsString ("WPAY"));
 		Assert.AreEqual ("www.official-publisher.com", id3v2tag.GetTextAsString ("WPUB"));
 		urlLinkFile.Dispose ();
-
-		System.IO.File.Delete (tempFile);
 	}
 }

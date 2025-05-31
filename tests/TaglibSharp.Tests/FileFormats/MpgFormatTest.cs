@@ -3,12 +3,11 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.FileFormats;
 
 [TestClass]
-public class MpgFormatTest : IFormatTest
+public class MpgFormatTest : TestFixtureBase, IFormatTest
 {
 	static readonly string sample_file = TestPath.Samples + "Turning Lime.mpg";
 	static readonly string sample_picture = TestPath.Samples + "sample_gimp.gif";
 	static readonly string sample_other = TestPath.Samples + "apple_tags.m4a";
-	static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite.mpg";
 	static File file;
 
 	[ClassInitialize]
@@ -46,11 +45,8 @@ public class MpgFormatTest : IFormatTest
 	[TestMethod]
 	public void WritePictures ()
 	{
-		if (System.IO.File.Exists (tmp_file))
-			System.IO.File.Delete (tmp_file);
-
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.mpg");
 		File file;
-		System.IO.File.Copy (sample_file, tmp_file);
 		file = File.Create (tmp_file);
 		Assert.IsNotNull (file);
 
@@ -105,24 +101,28 @@ public class MpgFormatTest : IFormatTest
 	[TestMethod]
 	public void WriteStandardTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.mpg");
 		StandardTests.WriteStandardTags (sample_file, tmp_file, StandardTests.TestTagLevel.Medium);
 	}
 
 	[TestMethod]
 	public void WriteStandardPictures ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.mpg");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None);
 	}
 
 	[TestMethod]
 	public void WriteStandardPicturesLazy ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.mpg");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
 	}
 
 	[TestMethod]
 	public void RemoveStandardTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.mpg");
 		StandardTests.RemoveStandardTags (sample_file, tmp_file);
 	}
 

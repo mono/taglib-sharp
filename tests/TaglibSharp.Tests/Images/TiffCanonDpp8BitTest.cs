@@ -10,13 +10,13 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class TiffCanonDpp8BitTest
+	public class TiffCanonDpp8BitTest : TestFixtureBase
 	{
 		[TestMethod]
         [Ignore("ImageSharp has a problem with this file: TIFF image contains circular directory")]
         public void Test ()
 		{
-			ImageTest.Run ("sample_canon_dpp_8bit.tiff",
+			ImageTest.Run (this, "sample_canon_dpp_8bit.tiff",
 				new TiffCanonDpp8BitTestInvariantValidator (),
 				NoModificationValidator.Instance,
 				new CommentModificationValidator (string.Empty),

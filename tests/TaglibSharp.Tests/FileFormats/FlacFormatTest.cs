@@ -3,10 +3,9 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.FileFormats;
 
 [TestClass]
-public class FlacFormatTest : IFormatTest
+public class FlacFormatTest : TestFixtureBase, IFormatTest
 {
 	static readonly string sample_file = TestPath.Samples + "sample.flac";
-	static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite.flac";
 	static File file;
 
 	[ClassInitialize]
@@ -37,12 +36,14 @@ public class FlacFormatTest : IFormatTest
 	[TestMethod]
 	public void WriteStandardTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.flac");
 		StandardTests.WriteStandardTags (sample_file, tmp_file);
 	}
 
 	[TestMethod]
 	public void WriteStandardPictures ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.flac");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None);
 	}
 
@@ -50,6 +51,7 @@ public class FlacFormatTest : IFormatTest
 	[Ignore ("PictureLazy not supported yet")]
 	public void WriteStandardPicturesLazy ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.flac");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
 	}
 
@@ -74,7 +76,7 @@ public class FlacFormatTest : IFormatTest
 	public void ReplayGainTest ()
 	{
 		string inFile = TestPath.Samples + "sample_replaygain.flac";
-		string tempFile = TestPath.Samples + "tmpwrite_sample_replaygain.flac";
+		string tempFile = CreateTempFile(inFile, "tmpwrite_sample_replaygain.flac");
 
 		var rgFile = File.Create (inFile);
 		Assert.AreEqual (1.8d, rgFile.Tag.ReplayGainTrackGain);
@@ -82,8 +84,6 @@ public class FlacFormatTest : IFormatTest
 		Assert.AreEqual (2.8d, rgFile.Tag.ReplayGainAlbumGain);
 		Assert.AreEqual (0.562341d, rgFile.Tag.ReplayGainAlbumPeak);
 		rgFile.Dispose ();
-
-		System.IO.File.Copy (inFile, tempFile, true);
 
 		rgFile = File.Create (tempFile);
 		rgFile.Tag.ReplayGainTrackGain = -1;
@@ -111,7 +111,5 @@ public class FlacFormatTest : IFormatTest
 		Assert.AreEqual (double.NaN, rgFile.Tag.ReplayGainAlbumGain);
 		Assert.AreEqual (double.NaN, rgFile.Tag.ReplayGainAlbumPeak);
 		rgFile.Dispose ();
-
-		System.IO.File.Delete (tempFile);
 	}
 }

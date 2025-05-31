@@ -7,12 +7,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class JpegCanonZoombrowserTest
+	public class JpegCanonZoombrowserTest : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
 		{
-			ImageTest.Run ("sample_canon_zoombrowser.jpg",
+			ImageTest.Run (this, "sample_canon_zoombrowser.jpg",
 				new JpegCanonZoombrowserTestInvariantValidator (),
 				new NoModificationValidator (),
 				new CommentModificationValidator ("%test comment%"),

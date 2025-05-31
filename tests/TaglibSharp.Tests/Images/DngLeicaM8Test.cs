@@ -7,12 +7,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images;
 
 [TestClass]
-public class DngLeicaM8Test
+public class DngLeicaM8Test : TestFixtureBase
 {
 	[TestMethod]
 	public void Test ()
 	{
-		ImageTest.Run (TestPath.GetRawSubDirectory ("DNG"), "RAW_LEICA_M8.DNG",
+		ImageTest.Run (this, TestPath.GetRawSubDirectory ("DNG"), "RAW_LEICA_M8.DNG",
 					   false, new DngLeicaM8InvariantValidator ());
 	}
 }

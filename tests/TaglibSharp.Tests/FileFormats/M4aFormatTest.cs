@@ -5,7 +5,7 @@ using File = TagLib.Mpeg4.File;
 namespace TaglibSharp.Tests.FileFormats;
 
 [TestClass]
-public class M4aFormatTest : IFormatTest
+public class M4aFormatTest : TestFixtureBase, IFormatTest
 {
 	class Mpeg4TestFile : File
 	{
@@ -19,7 +19,6 @@ public class M4aFormatTest : IFormatTest
 
 	static readonly string sample_file = TestPath.Samples + "sample.m4a";
 	static readonly string sample_file_rg = TestPath.Samples + "sample_replaygain.m4a";
-	static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite.m4a";
 	static readonly string aac_broken_tags = TestPath.Samples + "bgo_658920.m4a";
 	static TagLib.File file;
 
@@ -101,12 +100,14 @@ public class M4aFormatTest : IFormatTest
 	[TestMethod]
 	public void WriteStandardTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.m4a");
 		StandardTests.WriteStandardTags (sample_file, tmp_file, StandardTests.TestTagLevel.Medium);
 	}
 
 	[TestMethod]
 	public void WriteExtendedTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.m4a");
 		ExtendedTests.WriteExtendedTags (sample_file, tmp_file);
 	}
 

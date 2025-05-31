@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 namespace TaglibSharp.Tests.Collections;
 
 [TestClass]
-public class ByteVectorTest
+public class ByteVectorTest : TestFixtureBase
 {
 	static readonly string TestInput = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	static readonly ByteVector TestVector = ByteVector.FromString (TestInput, StringType.UTF8);

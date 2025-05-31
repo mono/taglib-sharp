@@ -3,7 +3,7 @@ using TagLib.Image;
 namespace TaglibSharp.Tests.Images;
 
 [TestClass]
-public class CopyFromTest
+public class CopyFromTest : TestFixtureBase
 {
 	[TestMethod]
 	public void TestJPGtoTIFF ()

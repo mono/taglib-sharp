@@ -3,10 +3,9 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.FileFormats;
 
 [TestClass]
-public class AsfFormatTest : IFormatTest
+public class AsfFormatTest : TestFixtureBase, IFormatTest
 {
 	static readonly string sample_file = TestPath.Samples + "sample.wma";
-	static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite.wma";
 	static File file;
 
 	[ClassInitialize]
@@ -42,12 +41,14 @@ public class AsfFormatTest : IFormatTest
 	[TestMethod]
 	public void WriteStandardTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.wma");
 		StandardTests.WriteStandardTags (sample_file, tmp_file);
 	}
 
 	[TestMethod]
 	public void WriteStandardPictures ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.wma");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None);
 	}
 
@@ -55,12 +56,14 @@ public class AsfFormatTest : IFormatTest
 	[Ignore ("PictureLazy not supported yet")]
 	public void WriteStandardPicturesLazy ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.wma");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
 	}
 
 	[TestMethod]
 	public void WriteExtendedTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.wma");
 		ExtendedTests.WriteExtendedTags (sample_file, tmp_file);
 	}
 

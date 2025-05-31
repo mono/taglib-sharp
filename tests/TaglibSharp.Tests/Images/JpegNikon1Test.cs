@@ -8,12 +8,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images;
 
 [TestClass]
-public class JpegNikon1Test
+public class JpegNikon1Test : TestFixtureBase
 {
 	[TestMethod]
 	public void Test ()
 	{
-		ImageTest.Run ("sample_nikon1.jpg",
+		ImageTest.Run (this, "sample_nikon1.jpg",
 			ImageTest.CompareLargeImages,
 			new JpegNikon1TestInvariantValidator (),
 			new NoModificationValidator (),

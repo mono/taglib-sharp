@@ -3,7 +3,7 @@ using File = TagLib.Asf.File;
 namespace TaglibSharp.Tests.TaggingFormats;
 
 [TestClass]
-public class AsfTest
+public class AsfTest : TestFixtureBase
 {
 	static readonly string val_sing =
 		"01234567890123456789012345678901234567890123456789";

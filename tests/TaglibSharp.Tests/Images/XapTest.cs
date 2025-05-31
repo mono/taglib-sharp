@@ -8,12 +8,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images;
 
 [TestClass]
-public class XapTest
+public class XapTest : TestFixtureBase
 {
 	[TestMethod]
 	public void Test ()
 	{
-		ImageTest.Run ("sample_xap.jpg",
+		ImageTest.Run (this, "sample_xap.jpg",
 			new XapTestInvariantValidator (),
 			new NoModificationValidator (),
 			new CommentModificationValidator ("Communications"),

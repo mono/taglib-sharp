@@ -7,12 +7,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images;
 
 [TestClass]
-public class PefPentaxKd10Test
+public class PefPentaxKd10Test : TestFixtureBase
 {
 	[TestMethod]
 	public void Test ()
 	{
-		ImageTest.Run (TestPath.GetRawSubDirectory ("PEF"), "RAW_PENTAX_KD10.PEF",
+		ImageTest.Run (this, TestPath.GetRawSubDirectory ("PEF"), "RAW_PENTAX_KD10.PEF",
 					   false, new PefPentaxKd10TestInvariantValidator ());
 	}
 }

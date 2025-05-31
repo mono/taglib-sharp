@@ -3,10 +3,9 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.FileFormats;
 
 [TestClass]
-public class Id3BothFormatTest : IFormatTest
+public class Id3BothFormatTest : TestFixtureBase, IFormatTest
 {
 	static readonly string sample_file = TestPath.Samples + "sample_both.mp3";
-	static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite_both.mp3";
 	static File file;
 
 	[ClassInitialize]
@@ -60,18 +59,21 @@ public class Id3BothFormatTest : IFormatTest
 	[TestMethod]
 	public void WriteStandardTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite_both.mp3");
 		StandardTests.WriteStandardTags (sample_file, tmp_file);
 	}
 
 	[TestMethod]
 	public void WriteStandardPictures ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite_both.mp3");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None);
 	}
 
 	[TestMethod]
 	public void WriteStandardPicturesLazy ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite_both.mp3");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
 	}
 
@@ -112,10 +114,7 @@ public class Id3BothFormatTest : IFormatTest
 	[TestMethod]
 	public void TestCreateId3Tags ()
 	{
-		string tempFile = TestPath.SamplesTmp + "tmpwrite_sample_createid3tags.mp3";
-        Directory.CreateDirectory (Path.GetDirectoryName (tempFile));
-
-        System.IO.File.Copy (sample_file, tempFile, true);
+		string tempFile = CreateTempFile(sample_file, "tmpwrite_sample_createid3tags.mp3");
 
 		// Remove All Tags first
 		var file = File.Create (tempFile);

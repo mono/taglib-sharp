@@ -10,12 +10,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images;
 
 [TestClass]
-public class TiffNikon1ViewNX8BitTest
+public class TiffNikon1ViewNX8BitTest : TestFixtureBase
 {
 	[TestMethod]
 	public void Test ()
 	{
-		ImageTest.Run ("sample_nikon1_viewnx_8bit.tiff",
+		ImageTest.Run (this, "sample_nikon1_viewnx_8bit.tiff",
 			ImageTest.CompareLargeImages,
 			new TiffNikon1ViewNX8BitTestInvariantValidator (),
 			NoModificationValidator.Instance,

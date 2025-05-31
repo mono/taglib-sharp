@@ -3,7 +3,7 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.Collections
 {
 	[TestClass]
-	public class FileTest
+	public class FileTest : TestFixtureBase
 	{
 		static readonly string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		static readonly string Pattern1 = "efg";

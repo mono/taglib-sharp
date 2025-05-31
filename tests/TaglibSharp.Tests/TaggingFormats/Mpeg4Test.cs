@@ -2,7 +2,7 @@
 namespace TaglibSharp.Tests.TaggingFormats;
 
 [TestClass]
-public class Mpeg4Test
+public class Mpeg4Test : TestFixtureBase
 {
 	static readonly string val_sing =
 		"01234567890123456789012345678901234567890123456789";

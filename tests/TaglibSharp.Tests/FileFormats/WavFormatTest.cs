@@ -3,12 +3,11 @@ using File = TagLib.File;
 namespace TaglibSharp.Tests.FileFormats;
 
 [TestClass]
-public class WavFormatTest : IFormatTest
+public class WavFormatTest : TestFixtureBase, IFormatTest
 {
 	static readonly string sample_file = TestPath.Samples + "sample.wav";
 	static readonly string sample_picture = TestPath.Samples + "sample_gimp.gif";
 	static readonly string sample_other = TestPath.Samples + "apple_tags.m4a";
-	static readonly string tmp_file = TestPath.SamplesTmp + "tmpwrite.wav";
 	static File file;
 
 	[ClassInitialize]
@@ -53,24 +52,28 @@ public class WavFormatTest : IFormatTest
 	[TestMethod]
 	public void WriteStandardPictures ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.wav");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.None);
 	}
 
 	[TestMethod]
 	public void WriteStandardPicturesLazy ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.wav");
 		StandardTests.WriteStandardPictures (sample_file, tmp_file, ReadStyle.PictureLazy);
 	}
 
 	[TestMethod]
 	public void WriteStandardTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.wav");
 		StandardTests.WriteStandardTags (sample_file, tmp_file, StandardTests.TestTagLevel.Medium);
 	}
 
 	[TestMethod]
 	public void RemoveStandardTags ()
 	{
+		var tmp_file = CreateTempFile(sample_file, "tmpwrite.wav");
 		StandardTests.RemoveStandardTags (sample_file, tmp_file);
 	}
 

@@ -6,7 +6,7 @@ namespace TaglibSharp.Tests.Images
 	///    This validates some of the examples in the specification.
 	/// </summary>
 	[TestClass]
-	public class XmpSpecTest
+	public class XmpSpecTest : TestFixtureBase
 	{
 		[TestMethod]
 		public void SimpleTypeTest ()

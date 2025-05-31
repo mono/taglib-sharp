@@ -7,12 +7,12 @@ using TaglibSharp.Tests.Images.Validators;
 namespace TaglibSharp.Tests.Images
 {
 	[TestClass]
-	public class InvalidIFDOffsetTest
+	public class InvalidIFDOffsetTest : TestFixtureBase
 	{
 		[TestMethod]
 		public void Test ()
 		{
-			ImageTest.Run ("sample_invalidifdoffset.jpg",
+			ImageTest.Run (this, "sample_invalidifdoffset.jpg",
 				false,
 				new InvalidIFDOffsetTestInvariantValidator ()
 			);
