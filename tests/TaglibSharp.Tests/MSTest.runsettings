@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <!-- Test execution timeout in milliseconds -->
+    <TestSessionTimeout>300000</TestSessionTimeout>
+
+    <!-- Enable/disable data collection -->
+    <CollectSourceInformation>true</CollectSourceInformation>
+
+    <!-- Results directory -->
+    <ResultsDirectory>../TestResults</ResultsDirectory>
+  </RunConfiguration>
+
+  <!-- MSTest Runner specific settings -->
+  <MSTest>
+    <!-- Enable parallel execution -->
+    <Parallelize>
+      <!-- Number of workers (0 = auto-detect) -->
+      <Workers>0</Workers>
+      <!-- Scope of parallelization -->
+      <Scope>MethodLevel</Scope>
+    </Parallelize>
+
+    <!-- Default test timeout (60 seconds) -->
+    <TestTimeout>60000</TestTimeout>
+
+    <!-- Use class and method names as display names -->
+    <TreatClassAndMethodNamesAsDisplayName>true</TreatClassAndMethodNamesAsDisplayName>
+
+    <!-- Enable test discovery timeout -->
+    <DiscoveryTimeoutInSeconds>120</DiscoveryTimeoutInSeconds>
+
+    <!-- Force list content to be written to console -->
+    <ForcedLegacyMode>false</ForcedLegacyMode>
+  </MSTest>
+
+  <!-- Data Collection Configuration -->
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <!-- Code Coverage -->
+      <DataCollector friendlyName="Code Coverage" uri="datacollector://Microsoft/CodeCoverage/2.0" assemblyQualifiedName="Microsoft.VisualStudio.Coverage.DynamicCoverageDataCollector, Microsoft.VisualStudio.TraceCollector, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" enabled="true">
+        <Configuration>
+          <CodeCoverage>
+            <ModulePaths>
+              <Include>
+                <ModulePath>.*TaglibSharp\.dll$</ModulePath>
+              </Include>
+              <Exclude>
+                <ModulePath>.*Tests\.dll$</ModulePath>
+                <ModulePath>.*TestFramework\.dll$</ModulePath>
+                <ModulePath>.*Moq\.dll$</ModulePath>
+                <ModulePath>.*FluentAssertions\.dll$</ModulePath>
+              </Exclude>
+            </ModulePaths>
+            <!-- Exclude generated and compiler code -->
+            <Attributes>
+              <Exclude>
+                <Attribute>^System\.Diagnostics\.CodeAnalysis\.ExcludeFromCodeCoverageAttribute$</Attribute>
+                <Attribute>^System\.Runtime\.CompilerServices\.CompilerGeneratedAttribute$</Attribute>
+                <Attribute>^System\.CodeDom\.Compiler\.GeneratedCodeAttribute$</Attribute>
+              </Exclude>
+            </Attributes>
+            <!-- Include source files -->
+            <Sources>
+              <Include>
+                <Source>.*\\src\\TaglibSharp\\.*</Source>
+              </Include>
+              <Exclude>
+                <Source>.*\\tests\\.*</Source>
+                <Source>.*\\obj\\.*</Source>
+                <Source>.*\\bin\\.*</Source>
+              </Exclude>
+            </Sources>
+          </CodeCoverage>
+        </Configuration>
+      </DataCollector>
+
+      <!-- Blame data collector for crash analysis -->
+      <DataCollector friendlyName="blame" enabled="true">
+        <Configuration>
+          <CollectProcessDump>true</CollectProcessDump>
+          <CollectDumpOnTestSessionHang>true</CollectDumpOnTestSessionHang>
+          <TestSessionHangTimeoutInMinutes>5</TestSessionHangTimeoutInMinutes>
+        </Configuration>
+      </DataCollector>
+
+      <!-- XPlat Code Coverage for cross-platform scenarios -->
+      <DataCollector friendlyName="XPlat code coverage" enabled="true">
+        <Configuration>
+          <Format>opencover</Format>
+          <Include>[TaglibSharp]*</Include>
+          <Exclude>[TaglibSharp.Tests]*,[*]*.Program,[*]*.Startup</Exclude>
+          <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
+          <UseSourceLink>true</UseSourceLink>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+
+  <!-- Test Platform Configuration -->
+  <TestPlatform>
+    <!-- Use the latest test platform -->
+    <TestAdaptersPaths>%USERPROFILE%\.nuget\packages</TestAdaptersPaths>
+  </TestPlatform>
+
+</RunSettings>

@@ -1,0 +1,218 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+jobs:
+  build-and-test:
+    name: Build and Test (${{ matrix.os }}, ${{ matrix.framework }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        framework: [net8.0, net9.0]
+        include:
+          - os: windows-latest
+            framework: net462
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |
+          8.0.x
+          9.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+
+    - name: Test with Coverage
+      run: |
+        dotnet test --no-build --configuration Release \
+          --verbosity normal \
+          --collect:"XPlat Code Coverage" \
+          --results-directory ./coverage \
+          --logger trx \
+          --logger "console;verbosity=detailed" \
+          --settings tests/TaglibSharp.Tests/MSTest.runsettings \
+          -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+
+    - name: Install ReportGenerator
+      if: matrix.os == 'ubuntu-latest' && matrix.framework == 'net8.0'
+      run: dotnet tool install -g dotnet-reportgenerator-globaltool
+
+    - name: Generate Coverage Report
+      if: matrix.os == 'ubuntu-latest' && matrix.framework == 'net8.0'
+      run: |
+        reportgenerator \
+          -reports:"coverage/**/coverage.opencover.xml" \
+          -targetdir:"coverage/report" \
+          -reporttypes:"Html;TextSummary;Badges;Cobertura;JsonSummary" \
+          -verbosity:Info \
+          -classfilters:"-*.Tests*;-*.Benchmarks*" \
+          -filefilters:"-**/bin/**;-**/obj/**"
+
+    - name: Coverage Summary
+      if: matrix.os == 'ubuntu-latest' && matrix.framework == 'net8.0'
+      run: |
+        echo "📊 Coverage Summary:"
+        cat coverage/report/Summary.txt
+        echo ""
+
+        # Extract coverage percentage for status check
+        if [ -f "coverage/report/Summary.json" ]; then
+          echo "📈 Detailed Coverage Metrics:"
+          cat coverage/report/Summary.json | jq '.summary'
+        fi
+
+    - name: Coverage Threshold Check
+      if: matrix.os == 'ubuntu-latest' && matrix.framework == 'net8.0'
+      run: |
+        # Run the coverage validation tests
+        dotnet test --no-build --configuration Release \
+          --filter "TestCategory=Coverage" \
+          --logger "console;verbosity=detailed"
+
+    - name: Upload coverage reports to Codecov
+      if: matrix.os == 'ubuntu-latest' && matrix.framework == 'net8.0'
+      uses: codecov/codecov-action@v4
+      with:
+        directory: ./coverage
+        files: ./coverage/report/Cobertura.xml
+        fail_ci_if_error: true
+        token: ${{ secrets.CODECOV_TOKEN }}
+        flags: unittests
+        name: taglib-sharp-coverage
+
+    - name: Upload Coverage Artifacts
+      if: matrix.os == 'ubuntu-latest' && matrix.framework == 'net8.0'
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: coverage/report/
+
+    - name: Test Result Analysis
+      if: always()
+      run: |
+        echo "📋 Test Results Summary:"
+        find ./coverage -name "*.trx" -exec echo "Processing {}" \;
+
+        # Count test results
+        if [ -d "./coverage" ]; then
+          echo "✅ Test artifacts generated successfully"
+          find ./coverage -name "*.xml" -o -name "*.trx" | wc -l | xargs echo "Coverage files found:"
+        fi
+
+  quality-gates:
+    name: Quality Gates
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |
+          8.0.x
+          9.0.x
+
+    - name: Download Coverage Report
+      uses: actions/download-artifact@v4
+      with:
+        name: coverage-report
+        path: ./coverage-report
+
+    - name: Quality Gate - Coverage Threshold
+      run: |
+        if [ -f "./coverage-report/Summary.txt" ]; then
+          echo "📊 Coverage Summary:"
+          cat ./coverage-report/Summary.txt
+
+          # Extract line coverage percentage using more robust regex
+          COVERAGE=$(grep -oP 'Line coverage:\s*\K[\d.]+' ./coverage-report/Summary.txt || echo "0")
+          echo "📈 Line Coverage: ${COVERAGE}%"
+
+          # Extract branch coverage if available
+          BRANCH_COVERAGE=$(grep -oP 'Branch coverage:\s*\K[\d.]+' ./coverage-report/Summary.txt || echo "0")
+          echo "🌿 Branch Coverage: ${BRANCH_COVERAGE}%"
+
+          # Set thresholds
+          LINE_THRESHOLD=80
+          BRANCH_THRESHOLD=70
+
+          # Validate coverage thresholds
+          if (( $(echo "$COVERAGE >= $LINE_THRESHOLD" | bc -l) )); then
+            echo "✅ Line coverage ${COVERAGE}% meets ${LINE_THRESHOLD}% threshold"
+          else
+            echo "❌ Line coverage ${COVERAGE}% is below ${LINE_THRESHOLD}% threshold"
+            exit 1
+          fi
+
+          if (( $(echo "$BRANCH_COVERAGE >= $BRANCH_THRESHOLD" | bc -l) )); then
+            echo "✅ Branch coverage ${BRANCH_COVERAGE}% meets ${BRANCH_THRESHOLD}% threshold"
+          else
+            echo "⚠️  Branch coverage ${BRANCH_COVERAGE}% is below ${BRANCH_THRESHOLD}% threshold (warning only)"
+          fi
+        else
+          echo "❌ Coverage report not found"
+          exit 1
+        fi
+
+    - name: Generate Coverage Badge
+      run: |
+        if [ -f "./coverage-report/Summary.json" ]; then
+          echo "🏷️  Coverage badge data available"
+          # This could be used to update a coverage badge
+        fi
+
+  package:
+    name: Package
+    runs-on: ubuntu-latest
+    needs: [build-and-test, quality-gates]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |
+          8.0.x
+          9.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Pack
+      run: dotnet pack --configuration Release --no-restore --output ./packages
+
+    - name: Upload packages
+      uses: actions/upload-artifact@v4
+      with:
+        name: nuget-packages
+        path: ./packages/*.nupkg
