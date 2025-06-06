@@ -189,6 +189,12 @@ namespace TagLib
 		/// </summary>
 		List<string> corruption_reasons;
 
+		/// <summary>
+		///    Specifies whether the file should be readable by other
+		///    threads while being written to by the thread that opened it.
+		/// </summary>
+		public bool read_share_when_writing;
+
 		#endregion
 
 
@@ -1621,7 +1627,15 @@ namespace TagLib
 			/// </value>
 			public Stream WriteStream => System.IO.File.Open (Name,
 				FileMode.Open,
-				FileAccess.ReadWrite);
+				FileAccess.ReadWrite,
+				ReadShareWhenWriting ? FileShare.Read : FileShare.None);
+
+			/// <summary>
+			///    Gets or sets a value indicating whether the file should
+			///    be readable by other threads while being written to by
+			///    the thread that opened it.
+			/// </summary>
+			public bool ReadShareWhenWriting { get; set; }
 
 			/// <summary>
 			///    Closes a stream created by the current instance.
@@ -1792,6 +1806,19 @@ namespace TagLib
 			///    way to keep it open.
 			/// </remarks>
 			Stream WriteStream { get; }
+
+			/// <summary>
+			///    Gets or sets a value indicating whether the file
+			///    should be readable by other threads while being
+			///    written to by the thread that opened it.
+			/// </summary>
+			/// <remarks>
+			///    This property is useful when editing ID3 tags of
+			///    MP3 files.  In particular, setting it to true
+			///    ensures you can listen to a song in one application
+			///    while simultaneously editing its ID3 tags in another.
+			/// </remarks>
+			bool ReadShareWhenWriting { get; set; }
 
 			/// <summary>
 			///    Closes a stream originating from the current

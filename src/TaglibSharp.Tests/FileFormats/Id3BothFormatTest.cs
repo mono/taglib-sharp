@@ -1,4 +1,6 @@
 using NUnit.Framework;
+using System.Threading;
+using System.Threading.Tasks;
 using TagLib;
 
 namespace TaglibSharp.Tests.FileFormats
@@ -132,6 +134,44 @@ namespace TaglibSharp.Tests.FileFormats
 			TagLib.Mpeg.AudioFile.CreateID3Tags = true;
 			file = File.Create (tempFile);
 			Assert.AreEqual (TagTypes.Id3v1 | TagTypes.Id3v2, file.TagTypes);
+		}
+
+		[Test]
+		public async Task TestReadShareWhenWriting ()
+		{
+			// Simulate having another thread open the file and begin playing it (by
+			// keeping it open) until we tell it to stop playback and close the file.
+			SemaphoreSlim playbackStarted = new SemaphoreSlim (0);
+			SemaphoreSlim stopPlayback = new SemaphoreSlim (0);
+			_ = Task.Run (async () => {
+				using (var fileToPlay = System.IO.File.Open (tmp_file, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite)) {
+					playbackStarted.Release();
+					await stopPlayback.WaitAsync();
+				}
+			});
+
+			// Wait until playback in the other thread has begun.
+			await playbackStarted.WaitAsync();
+
+			// Now that the file is in use, ensure writing to it leads to an IOException
+			// due to the AudioFile's write stream not being shared for reading.
+			Assert.Catch (typeof (System.IO.IOException), () => {
+				var file = File.Create (tmp_file);
+				file.RemoveTags (TagTypes.AllTags);
+				file.Save ();
+			});
+
+			// Now try writing again, but this time explicitly mark the write
+			// stream as being shared for reading.  Ensure no exception occurs.
+			Assert.DoesNotThrow (() => {
+				var file = File.Create (tmp_file);
+				file.FileAbstraction.ReadShareWhenWriting = true;
+				file.RemoveTags (TagTypes.AllTags);
+				file.Save ();
+			});
+
+			// Finally, tell the other thread it can now "stop" playback and close the file.
+			stopPlayback.Release();
 		}
 	}
 }

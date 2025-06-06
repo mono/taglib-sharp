@@ -21,6 +21,7 @@
 // USA
 //
 
+using System;
 using System.IO;
 using TagLib.IFD;
 
@@ -132,6 +133,11 @@ namespace TagLib.Tiff.Rw2
 
 		public Stream WriteStream {
 			get { return ReadStream; }
+		}
+
+		public bool ReadShareWhenWriting {
+			get => throw new NotSupportedException ();
+			set => throw new NotSupportedException ();
 		}
 	}
 }

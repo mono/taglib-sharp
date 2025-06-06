@@ -78,6 +78,11 @@ namespace TaglibSharp.Tests
 
 		public Stream WriteStream => stream;
 
+		public bool ReadShareWhenWriting {
+			get => throw new NotSupportedException ();
+			set => throw new NotSupportedException ();
+		}
+
 		public void CloseStream (Stream stream)
 		{
 			// This causes a stackoverflow

@@ -136,6 +136,11 @@ public class FileAbstraction : TagLib.File.IFileAbstraction
 
 	public Stream WriteStream => new FileStream (Name, FileMode.Open);
 
+	public bool ReadShareWhenWriting {
+		get => throw new NotSupportedException ();
+		set => throw new NotSupportedException ();
+	}
+
 	public void CloseStream (Stream stream)
 	{
 		stream.Close ();
